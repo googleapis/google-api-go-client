@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"uUWyYHXmEn-ab7WLvo8qNz2S8ws/EwV4gYVmk5LEINhBU1aGpQEMk2I\"",
+ "etag": "\"l66ggWbucbkBw9Lpos72oziyefE/5LmbKArdAmdomrkIZXAniXdeq9c\"",
  "discoveryVersion": "v1",
  "id": "cloudmonitoring:v2beta1",
  "name": "cloudmonitoring",
  "canonicalName": "Cloud Monitoring",
  "version": "v2beta1",
- "revision": "20140904",
+ "revision": "20140929",
  "title": "Cloud Monitoring API",
  "description": "API for accessing Google Cloud and API monitoring data.",
  "ownerDomain": "google.com",
@@ -282,7 +282,7 @@
     },
     "end": {
      "type": "string",
-     "description": "The interval [start, end] is the time period to which the point's value applies. For gauge metrics, whose values are instantaneous measurements, this interval should be empty (start should equal end). For cumulative metrics (of which deltas and rates are special cases), the interval should be non-empty. Both start and end are RFC 3999 strings.",
+     "description": "The interval [start, end] is the time period to which the point's value applies. For gauge metrics, whose values are instantaneous measurements, this interval should be empty (start should equal end). For cumulative metrics (of which deltas and rates are special cases), the interval should be non-empty. Both start and end are RFC 3339 strings.",
      "format": "date-time"
     },
     "int64Value": {
@@ -292,7 +292,7 @@
     },
     "start": {
      "type": "string",
-     "description": "The interval [start, end] is the time period to which the point's value applies. For gauge metrics, whose values are instantaneous measurements, this interval should be empty (start should equal end). For cumulative metrics (of which deltas and rates are special cases), the interval should be non-empty. Both start and end are RFC 3999 strings.",
+     "description": "The interval [start, end] is the time period to which the point's value applies. For gauge metrics, whose values are instantaneous measurements, this interval should be empty (start should equal end). For cumulative metrics (of which deltas and rates are special cases), the interval should be non-empty. Both start and end are RFC 3339 strings.",
      "format": "date-time"
     },
     "stringValue": {
@@ -404,7 +404,7 @@
    "properties": {
     "labels": {
      "type": "object",
-     "description": "The set of key-value pairs that describe this time series, including target-specific labels and metric-specific labels.",
+     "description": "The label's name.",
      "additionalProperties": {
       "type": "string",
       "description": "The label's name."
@@ -417,6 +417,20 @@
     "project": {
      "type": "string",
      "description": "The Developers Console project number to which this time series belongs."
+    }
+   }
+  },
+  "TimeseriesDescriptorLabel": {
+   "id": "TimeseriesDescriptorLabel",
+   "type": "object",
+   "properties": {
+    "key": {
+     "type": "string",
+     "description": "The label's name."
+    },
+    "value": {
+     "type": "string",
+     "description": "The label's value."
     }
    }
   }

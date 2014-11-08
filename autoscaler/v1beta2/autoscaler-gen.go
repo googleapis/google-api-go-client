@@ -55,6 +55,7 @@ func New(client *http.Client) (*Service, error) {
 	s := &Service{client: client, BasePath: basePath}
 	s.Autoscalers = NewAutoscalersService(s)
 	s.ZoneOperations = NewZoneOperationsService(s)
+	s.Zones = NewZonesService(s)
 	return s, nil
 }
 
@@ -65,6 +66,8 @@ type Service struct {
 	Autoscalers *AutoscalersService
 
 	ZoneOperations *ZoneOperationsService
+
+	Zones *ZonesService
 }
 
 func NewAutoscalersService(s *Service) *AutoscalersService {
@@ -82,6 +85,15 @@ func NewZoneOperationsService(s *Service) *ZoneOperationsService {
 }
 
 type ZoneOperationsService struct {
+	s *Service
+}
+
+func NewZonesService(s *Service) *ZonesService {
+	rs := &ZonesService{s: s}
+	return rs
+}
+
+type ZonesService struct {
 	s *Service
 }
 
@@ -198,6 +210,18 @@ type AutoscalingPolicyLoadBalancingUtilization struct {
 	UtilizationTarget float64 `json:"utilizationTarget,omitempty"`
 }
 
+type DeprecationStatus struct {
+	Deleted string `json:"deleted,omitempty"`
+
+	Deprecated string `json:"deprecated,omitempty"`
+
+	Obsolete string `json:"obsolete,omitempty"`
+
+	Replacement string `json:"replacement,omitempty"`
+
+	State string `json:"state,omitempty"`
+}
+
 type Operation struct {
 	ClientOperationId string `json:"clientOperationId,omitempty"`
 
@@ -281,6 +305,54 @@ type OperationList struct {
 
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
+	SelfLink string `json:"selfLink,omitempty"`
+}
+
+type Zone struct {
+	CreationTimestamp string `json:"creationTimestamp,omitempty"`
+
+	Deprecated *DeprecationStatus `json:"deprecated,omitempty"`
+
+	Description string `json:"description,omitempty"`
+
+	Id uint64 `json:"id,omitempty,string"`
+
+	// Kind: Type of the resource.
+	Kind string `json:"kind,omitempty"`
+
+	MaintenanceWindows []*ZoneMaintenanceWindows `json:"maintenanceWindows,omitempty"`
+
+	Name string `json:"name,omitempty"`
+
+	Region string `json:"region,omitempty"`
+
+	// SelfLink: Server defined URL for the resource (output only).
+	SelfLink string `json:"selfLink,omitempty"`
+
+	Status string `json:"status,omitempty"`
+}
+
+type ZoneMaintenanceWindows struct {
+	BeginTime string `json:"beginTime,omitempty"`
+
+	Description string `json:"description,omitempty"`
+
+	EndTime string `json:"endTime,omitempty"`
+
+	Name string `json:"name,omitempty"`
+}
+
+type ZoneList struct {
+	Id string `json:"id,omitempty"`
+
+	Items []*Zone `json:"items,omitempty"`
+
+	// Kind: Type of resource.
+	Kind string `json:"kind,omitempty"`
+
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SelfLink: Server defined URL for this resource (output only).
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
@@ -1227,6 +1299,126 @@ func (c *ZoneOperationsListCall) Do() (*OperationList, error) {
 	//   "path": "{project}/zones/{zone}/operations",
 	//   "response": {
 	//     "$ref": "OperationList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "autoscaler.zones.list":
+
+type ZonesListCall struct {
+	s       *Service
+	project string
+	opt_    map[string]interface{}
+}
+
+// List:
+func (r *ZonesService) List(project string) *ZonesListCall {
+	c := &ZonesListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	return c
+}
+
+// Filter sets the optional parameter "filter":
+func (c *ZonesListCall) Filter(filter string) *ZonesListCall {
+	c.opt_["filter"] = filter
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults":
+func (c *ZonesListCall) MaxResults(maxResults int64) *ZonesListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken":
+func (c *ZonesListCall) PageToken(pageToken string) *ZonesListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ZonesListCall) Fields(s ...googleapi.Field) *ZonesListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *ZonesListCall) Do() (*ZoneList, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["filter"]; ok {
+		params.Set("filter", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+	})
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *ZoneList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "",
+	//   "httpMethod": "GET",
+	//   "id": "autoscaler.zones.list",
+	//   "parameterOrder": [
+	//     "project"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "default": "500",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "maximum": "500",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/zones",
+	//   "response": {
+	//     "$ref": "ZoneList"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/compute",

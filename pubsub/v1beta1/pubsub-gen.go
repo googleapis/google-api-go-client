@@ -165,11 +165,26 @@ type ModifyPushConfigRequest struct {
 	Subscription string `json:"subscription,omitempty"`
 }
 
+type PublishBatchRequest struct {
+	// Messages: The messages to publish.
+	Messages []*PubsubMessage `json:"messages,omitempty"`
+
+	// Topic: The messages in the request will be published on this topic.
+	Topic string `json:"topic,omitempty"`
+}
+
+type PublishBatchResponse struct {
+	// MessageIds: The server-assigned ID of each published message, in the
+	// same order as the messages in the request. IDs are guaranteed to be
+	// unique within the topic.
+	MessageIds []string `json:"messageIds,omitempty"`
+}
+
 type PublishRequest struct {
 	// Message: The message to publish.
 	Message *PubsubMessage `json:"message,omitempty"`
 
-	// Topic: The name of the topic for which the message is being added.
+	// Topic: The message in the request will be published on this topic.
 	Topic string `json:"topic,omitempty"`
 }
 
@@ -197,6 +212,40 @@ type PubsubMessage struct {
 	// Label: Optional list of labels for this message. Keys in this
 	// collection must be unique.
 	Label []*Label `json:"label,omitempty"`
+
+	// MessageId: ID of this message assigned by the server at publication
+	// time. Guaranteed to be unique within the topic. This value may be
+	// read by a subscriber that receives a PubsubMessage via a Pull call or
+	// a push delivery. It must not be populated by a publisher in a Publish
+	// call.
+	MessageId string `json:"messageId,omitempty"`
+}
+
+type PullBatchRequest struct {
+	// MaxEvents: The maximum number of PubsubEvents returned for this
+	// request. The Pub/Sub system may return fewer than the number of
+	// events specified.
+	MaxEvents int64 `json:"maxEvents,omitempty"`
+
+	// ReturnImmediately: If this is specified as true the system will
+	// respond immediately even if it is not able to return a message in the
+	// Pull response. Otherwise the system is allowed to wait until at least
+	// one message is available rather than returning no messages. The
+	// client may cancel the request if it does not wish to wait any longer
+	// for the response.
+	ReturnImmediately bool `json:"returnImmediately,omitempty"`
+
+	// Subscription: The subscription from which messages should be pulled.
+	Subscription string `json:"subscription,omitempty"`
+}
+
+type PullBatchResponse struct {
+	// PullResponses: Received Pub/Sub messages or status events. The
+	// Pub/Sub system will return zero messages if there are no more
+	// messages available in the backlog. The Pub/Sub system may return
+	// fewer than the max_events requested even if there are more messages
+	// available in the backlog.
+	PullResponses []*PullResponse `json:"pullResponses,omitempty"`
 }
 
 type PullRequest struct {
@@ -351,6 +400,10 @@ type SubscriptionsCreateCall struct {
 // subscriber. If the subscription already exists, returns
 // ALREADY_EXISTS. If the corresponding topic doesn't exist, returns
 // NOT_FOUND.
+//
+// If the name is not provided in the request, the server
+// will assign a random name for this subscription on the same project
+// as the topic.
 func (r *SubscriptionsService) Create(subscription *Subscription) *SubscriptionsCreateCall {
 	c := &SubscriptionsCreateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.subscription = subscription
@@ -397,7 +450,7 @@ func (c *SubscriptionsCreateCall) Do() (*Subscription, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a subscription on a given topic for a given subscriber. If the subscription already exists, returns ALREADY_EXISTS. If the corresponding topic doesn't exist, returns NOT_FOUND.",
+	//   "description": "Creates a subscription on a given topic for a given subscriber. If the subscription already exists, returns ALREADY_EXISTS. If the corresponding topic doesn't exist, returns NOT_FOUND.\n\nIf the name is not provided in the request, the server will assign a random name for this subscription on the same project as the topic.",
 	//   "httpMethod": "POST",
 	//   "id": "pubsub.subscriptions.create",
 	//   "path": "subscriptions",
@@ -888,6 +941,82 @@ func (c *SubscriptionsPullCall) Do() (*PullResponse, error) {
 
 }
 
+// method id "pubsub.subscriptions.pullBatch":
+
+type SubscriptionsPullBatchCall struct {
+	s                *Service
+	pullbatchrequest *PullBatchRequest
+	opt_             map[string]interface{}
+}
+
+// PullBatch: Pulls messages from the server. Returns an empty list if
+// there are no messages available in the backlog. The system is free to
+// return UNAVAILABLE if there too many pull requests outstanding for a
+// given subscription.
+func (r *SubscriptionsService) PullBatch(pullbatchrequest *PullBatchRequest) *SubscriptionsPullBatchCall {
+	c := &SubscriptionsPullBatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c.pullbatchrequest = pullbatchrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SubscriptionsPullBatchCall) Fields(s ...googleapi.Field) *SubscriptionsPullBatchCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *SubscriptionsPullBatchCall) Do() (*PullBatchResponse, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.pullbatchrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "subscriptions/pullBatch")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *PullBatchResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Pulls messages from the server. Returns an empty list if there are no messages available in the backlog. The system is free to return UNAVAILABLE if there too many pull requests outstanding for a given subscription.",
+	//   "httpMethod": "POST",
+	//   "id": "pubsub.subscriptions.pullBatch",
+	//   "path": "subscriptions/pullBatch",
+	//   "request": {
+	//     "$ref": "PullBatchRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "PullBatchResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/pubsub"
+	//   ]
+	// }
+
+}
+
 // method id "pubsub.topics.create":
 
 type TopicsCreateCall struct {
@@ -1282,6 +1411,80 @@ func (c *TopicsPublishCall) Do() error {
 	//   "path": "topics/publish",
 	//   "request": {
 	//     "$ref": "PublishRequest"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/pubsub"
+	//   ]
+	// }
+
+}
+
+// method id "pubsub.topics.publishBatch":
+
+type TopicsPublishBatchCall struct {
+	s                   *Service
+	publishbatchrequest *PublishBatchRequest
+	opt_                map[string]interface{}
+}
+
+// PublishBatch: Adds one or more messages to the topic. Returns
+// NOT_FOUND if the topic does not exist.
+func (r *TopicsService) PublishBatch(publishbatchrequest *PublishBatchRequest) *TopicsPublishBatchCall {
+	c := &TopicsPublishBatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c.publishbatchrequest = publishbatchrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TopicsPublishBatchCall) Fields(s ...googleapi.Field) *TopicsPublishBatchCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *TopicsPublishBatchCall) Do() (*PublishBatchResponse, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.publishbatchrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "topics/publishBatch")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *PublishBatchResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Adds one or more messages to the topic. Returns NOT_FOUND if the topic does not exist.",
+	//   "httpMethod": "POST",
+	//   "id": "pubsub.topics.publishBatch",
+	//   "path": "topics/publishBatch",
+	//   "request": {
+	//     "$ref": "PublishBatchRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "PublishBatchResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",

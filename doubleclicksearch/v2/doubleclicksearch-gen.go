@@ -193,7 +193,7 @@ type Conversion struct {
 	SegmentationType string `json:"segmentationType,omitempty"`
 
 	// State: The state of the conversion, that is, either ACTIVE or
-	// DELETED.
+	// REMOVED. Note: state DELETED is deprecated.
 	State string `json:"state,omitempty"`
 
 	// Type: The type of the conversion, that is, either ACTION or
@@ -288,7 +288,16 @@ type ReportApiColumnSpec struct {
 	// dimension must already be set up in DoubleClick Search. The custom
 	// dimension name, which appears in DoubleClick Search, is case
 	// sensitive.
+	// If used in a conversion report, returns the value of the
+	// specified custom dimension for the given conversion, if set. This
+	// column does not segment the conversion report.
 	CustomDimensionName string `json:"customDimensionName,omitempty"`
+
+	// CustomMetricName: Name of a custom metric to include in the report.
+	// The report must be scoped to an advertiser or lower, and the custom
+	// metric must already be set up in DoubleClick Search. The custom
+	// metric name, which appears in DoubleClick Search, is case sensitive.
+	CustomMetricName string `json:"customMetricName,omitempty"`
 
 	// EndDate: Inclusive day in YYYY-MM-DD format. When provided, this
 	// overrides the overall time range of the report for this column only.

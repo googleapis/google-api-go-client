@@ -179,8 +179,20 @@ type Label struct {
 	// list in the Gmail web interface.
 	MessageListVisibility string `json:"messageListVisibility,omitempty"`
 
+	// MessagesTotal: The total number of messages with the label.
+	MessagesTotal int64 `json:"messagesTotal,omitempty"`
+
+	// MessagesUnread: The number of unread messages with the label.
+	MessagesUnread int64 `json:"messagesUnread,omitempty"`
+
 	// Name: The display name of the label.
 	Name string `json:"name,omitempty"`
+
+	// ThreadsTotal: The total number of threads with the label.
+	ThreadsTotal int64 `json:"threadsTotal,omitempty"`
+
+	// ThreadsUnread: The number of unread threads with the label.
+	ThreadsUnread int64 `json:"threadsUnread,omitempty"`
 
 	// Type: The owner type for the label. User labels are created by the
 	// user and can be modified and deleted by the user and can be applied
@@ -278,10 +290,9 @@ type Message struct {
 	// The requested threadId must be specified on the Message or
 	// Draft.Message you supply with your request.
 	// - The References and
-	// In-Reply-To headers must be set in compliance with the <a
-	// href="https://tools.ietf.org/html/rfc2822"RFC 2822 standard.
-	// - The
-	// Subject headers must match.
+	// In-Reply-To headers must be set in compliance with the RFC 2822
+	// standard.
+	// - The Subject headers must match.
 	ThreadId string `json:"threadId,omitempty"`
 }
 
@@ -355,6 +366,20 @@ type ModifyThreadRequest struct {
 	RemoveLabelIds []string `json:"removeLabelIds,omitempty"`
 }
 
+type Profile struct {
+	// EmailAddress: The user's email address.
+	EmailAddress string `json:"emailAddress,omitempty"`
+
+	// HistoryId: The ID of the mailbox's current history record.
+	HistoryId uint64 `json:"historyId,omitempty,string"`
+
+	// MessagesTotal: The total number of messages in the mailbox.
+	MessagesTotal int64 `json:"messagesTotal,omitempty"`
+
+	// ThreadsTotal: The total number of threads in the mailbox.
+	ThreadsTotal int64 `json:"threadsTotal,omitempty"`
+}
+
 type Thread struct {
 	// HistoryId: The ID of the last history record that modified this
 	// thread.
@@ -368,6 +393,86 @@ type Thread struct {
 
 	// Snippet: A short part of the message text.
 	Snippet string `json:"snippet,omitempty"`
+}
+
+// method id "gmail.users.getProfile":
+
+type UsersGetProfileCall struct {
+	s      *Service
+	userId string
+	opt_   map[string]interface{}
+}
+
+// GetProfile: Gets the current user's Gmail profile.
+func (r *UsersService) GetProfile(userId string) *UsersGetProfileCall {
+	c := &UsersGetProfileCall{s: r.s, opt_: make(map[string]interface{})}
+	c.userId = userId
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UsersGetProfileCall) Fields(s ...googleapi.Field) *UsersGetProfileCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *UsersGetProfileCall) Do() (*Profile, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/profile")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"userId": c.userId,
+	})
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Profile
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the current user's Gmail profile.",
+	//   "httpMethod": "GET",
+	//   "id": "gmail.users.getProfile",
+	//   "parameterOrder": [
+	//     "userId"
+	//   ],
+	//   "parameters": {
+	//     "userId": {
+	//       "default": "me",
+	//       "description": "The user's email address. The special value me can be used to indicate the authenticated user.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{userId}/profile",
+	//   "response": {
+	//     "$ref": "Profile"
+	//   },
+	//   "scopes": [
+	//     "https://mail.google.com/",
+	//     "https://www.googleapis.com/auth/gmail.compose",
+	//     "https://www.googleapis.com/auth/gmail.modify",
+	//     "https://www.googleapis.com/auth/gmail.readonly"
+	//   ]
+	// }
+
 }
 
 // method id "gmail.users.drafts.create":
@@ -2067,6 +2172,7 @@ func (c *UsersMessagesImportCall) Do() (*Message, error) {
 	//   ],
 	//   "parameters": {
 	//     "internalDateSource": {
+	//       "default": "dateHeader",
 	//       "description": "Source for Gmail's internal date of the message.",
 	//       "enum": [
 	//         "dateHeader",
@@ -2211,6 +2317,7 @@ func (c *UsersMessagesInsertCall) Do() (*Message, error) {
 	//   ],
 	//   "parameters": {
 	//     "internalDateSource": {
+	//       "default": "receivedTime",
 	//       "description": "Source for Gmail's internal date of the message.",
 	//       "enum": [
 	//         "dateHeader",
@@ -2999,6 +3106,20 @@ func (r *UsersThreadsService) Get(userId string, id string) *UsersThreadsGetCall
 	return c
 }
 
+// Format sets the optional parameter "format": The format to return the
+// messages in.
+func (c *UsersThreadsGetCall) Format(format string) *UsersThreadsGetCall {
+	c.opt_["format"] = format
+	return c
+}
+
+// MetadataHeaders sets the optional parameter "metadataHeaders": When
+// given and format is METADATA, only include headers specified.
+func (c *UsersThreadsGetCall) MetadataHeaders(metadataHeaders string) *UsersThreadsGetCall {
+	c.opt_["metadataHeaders"] = metadataHeaders
+	return c
+}
+
 // Fields allows partial responses to be retrieved.
 // See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3011,6 +3132,12 @@ func (c *UsersThreadsGetCall) Do() (*Thread, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["format"]; ok {
+		params.Set("format", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["metadataHeaders"]; ok {
+		params.Set("metadataHeaders", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -3044,10 +3171,32 @@ func (c *UsersThreadsGetCall) Do() (*Thread, error) {
 	//     "id"
 	//   ],
 	//   "parameters": {
+	//     "format": {
+	//       "default": "full",
+	//       "description": "The format to return the messages in.",
+	//       "enum": [
+	//         "full",
+	//         "metadata",
+	//         "minimal"
+	//       ],
+	//       "enumDescriptions": [
+	//         "",
+	//         "",
+	//         ""
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "id": {
 	//       "description": "The ID of the thread to retrieve.",
 	//       "location": "path",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "metadataHeaders": {
+	//       "description": "When given and format is METADATA, only include headers specified.",
+	//       "location": "query",
+	//       "repeated": true,
 	//       "type": "string"
 	//     },
 	//     "userId": {

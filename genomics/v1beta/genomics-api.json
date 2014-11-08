@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"uUWyYHXmEn-ab7WLvo8qNz2S8ws/LyDpj2M2nmYqqMH0OKjUSFfCl0I\"",
+ "etag": "\"l66ggWbucbkBw9Lpos72oziyefE/780oiWFAekHFuFERR4WQucmTJ2k\"",
  "discoveryVersion": "v1",
  "id": "genomics:v1beta",
  "name": "genomics",
  "version": "v1beta",
- "revision": "20140923",
+ "revision": "20141105",
  "title": "Genomics API",
  "description": "Provides access to Genomics data.",
  "ownerDomain": "google.com",
@@ -85,22 +85,10 @@
   }
  },
  "schemas": {
-  "Beacon": {
-   "id": "Beacon",
-   "type": "object",
-   "description": "A beacon represents whether any variant call in a variant set has a specific allele at a particular position.",
-   "externalTypeName": "cloud.genomics.varstore.Beacon",
-   "properties": {
-    "exists": {
-     "type": "boolean",
-     "description": "True if the allele exists on any variant call, false otherwise."
-    }
-   }
-  },
   "Call": {
    "id": "Call",
    "type": "object",
-   "description": "A Call represents the determination of genotype with respect to a particular variant. It may include associated information such as quality and phasing. For example, a Call might assign a probability of 0.32 to the occurrence of a SNP named rs1234 in a call set with the name NA12345.",
+   "description": "A call represents the determination of genotype with respect to a particular variant. It may include associated information such as quality and phasing. For example, a call might assign a probability of 0.32 to the occurrence of a SNP named rs1234 in a call set with the name NA12345.",
    "externalTypeName": "cloud.genomics.varstore.Call",
    "properties": {
     "callSetId": {
@@ -147,7 +135,7 @@
   "CallSet": {
    "id": "CallSet",
    "type": "object",
-   "description": "A CallSet is a collection of variant calls. It belongs to a variant set.",
+   "description": "A call set is a collection of variant calls, typically for one sample. It belongs to a variant set.",
    "externalTypeName": "cloud.genomics.varstore.CallSet",
    "properties": {
     "created": {
@@ -161,7 +149,7 @@
     },
     "info": {
      "type": "object",
-     "description": "A map of additional callset information.",
+     "description": "A map of additional call set information.",
      "additionalProperties": {
       "type": "array",
       "description": "A string which maps to an array of values.",
@@ -172,7 +160,7 @@
     },
     "name": {
      "type": "string",
-     "description": "The callset name."
+     "description": "The call set name."
     },
     "sampleId": {
      "type": "string",
@@ -232,24 +220,20 @@
   "ExperimentalCreateJobRequest": {
    "id": "ExperimentalCreateJobRequest",
    "type": "object",
-   "description": "The job creation request. Next ID: 12",
+   "description": "The job creation request.",
    "externalTypeName": "cloud.genomics.jobs.ExperimentalCreateJobRequest",
    "properties": {
     "align": {
      "type": "boolean",
-     "description": "Specifies whether or not to run the alignment pipeline. At least one of align or callVariants must be provided."
+     "description": "Specifies whether or not to run the alignment pipeline. Either align or callVariants must be set."
     },
     "callVariants": {
      "type": "boolean",
-     "description": "Specifies whether or not to run the variant calling pipeline. If specified, alignment will be performed first and the aligned BAMs will passed as input to the variant caller. At least one of align or callVariants must be provided."
+     "description": "Specifies whether or not to run the variant calling pipeline. Either align or callVariants must be set."
     },
     "gcsOutputPath": {
      "type": "string",
      "description": "Specifies where to copy the results of certain pipelines. This should be in the form of gs://bucket/path."
-    },
-    "libraryName": {
-     "type": "string",
-     "description": "For alignment from FASTQ files, this specifies the library name."
     },
     "pairedSourceUris": {
      "type": "array",
@@ -258,26 +242,10 @@
       "type": "string"
      }
     },
-    "platformName": {
-     "type": "string",
-     "description": "For alignment from FASTQ files, this specifies the platform name."
-    },
-    "platformUnit": {
-     "type": "string",
-     "description": "For alignment from FASTQ files, this specifies the platform unit."
-    },
     "projectId": {
      "type": "string",
      "description": "Required. The Google Cloud Project ID with which to associate the request.",
      "format": "int64"
-    },
-    "readGroupId": {
-     "type": "string",
-     "description": "For alignment from FASTQ files, this specifies the read group ID."
-    },
-    "sampleName": {
-     "type": "string",
-     "description": "For alignment from FASTQ files, this specifies the sample name."
     },
     "sourceUris": {
      "type": "array",
@@ -656,6 +624,8 @@
      "type": "string",
      "description": "The original request type.",
      "enum": [
+      "alignReadsets",
+      "callReadsets",
       "experimentalCreateJob",
       "exportReadsets",
       "exportVariants",
@@ -664,6 +634,8 @@
       "unknownType"
      ],
      "enumDescriptions": [
+      "",
+      "",
       "",
       "",
       "",
@@ -713,6 +685,20 @@
     "nextPageToken": {
      "type": "string",
      "description": "The continuation token, which is used to page through large result sets. Provide this value in a subsequent request to return the next page of results. This field will be empty if there aren't any additional results."
+    }
+   }
+  },
+  "MergeVariantsRequest": {
+   "id": "MergeVariantsRequest",
+   "type": "object",
+   "externalTypeName": "cloud.genomics.varstore.MergeVariantsRequest",
+   "properties": {
+    "variants": {
+     "type": "array",
+     "description": "The variants to be merged with existing variants.",
+     "items": {
+      "$ref": "Variant"
+     }
     }
    }
   },
@@ -1292,7 +1278,7 @@
    "properties": {
     "callSetIds": {
      "type": "array",
-     "description": "Only return variant calls which belong to call sets with these ids. Leaving this blank returns all variant calls.",
+     "description": "Only return variant calls which belong to call sets with these ids. Leaving this blank returns all variant calls. If a variant has no calls belonging to any of these call sets, it won't be returned at all. Currently, variants with no calls from any call set will never be returned.",
      "items": {
       "type": "string"
      }
@@ -1360,7 +1346,7 @@
   "Variant": {
    "id": "Variant",
    "type": "object",
-   "description": "A Variant represents a change in DNA sequence relative to some reference. For example, a Variant could represent a SNP or an insertion. Variants belong to a variant set.",
+   "description": "A variant represents a change in DNA sequence relative to a reference sequence. For example, a variant could represent a SNP or an insertion. Variants belong to a variant set. Each of the calls on a variant represent a determination of genotype with respect to that variant. For example, a call might assign probability of 0.32 to the occurrence of a SNP named rs1234 in a sample named NA12345. A call belongs to a call set, which contains related calls typically from one sample.",
    "externalTypeName": "cloud.genomics.varstore.Variant",
    "properties": {
     "alternateBases": {
@@ -1387,6 +1373,13 @@
      "description": "The end position (0-based) of this variant. This corresponds to the first base after the last base in the reference allele. So, the length of the reference allele is (end - start). This is useful for variants that don't explicitly give alternate bases, for example large deletions.",
      "format": "int64"
     },
+    "filter": {
+     "type": "array",
+     "description": "A list of filters (normally quality filters) this variant has failed. PASS indicates this variant has passed all filters.",
+     "items": {
+      "type": "string"
+     }
+    },
     "id": {
      "type": "string",
      "description": "The Google generated ID of the variant, immutable."
@@ -1408,6 +1401,11 @@
      "items": {
       "type": "string"
      }
+    },
+    "quality": {
+     "type": "number",
+     "description": "A measure of how likely this variant is to be real. A higher value is better.",
+     "format": "double"
     },
     "referenceBases": {
      "type": "string",
@@ -1431,7 +1429,7 @@
   "VariantSet": {
    "id": "VariantSet",
    "type": "object",
-   "description": "A VariantSet represents a collection of Variants and their summary statistics.",
+   "description": "A variant set is a collection of call sets and variants. It contains summary statistics of those contents. A variant set belongs to a dataset.",
    "externalTypeName": "cloud.genomics.varstore.VariantSet",
    "properties": {
     "datasetId": {
@@ -1460,46 +1458,6 @@
   }
  },
  "resources": {
-  "beacons": {
-   "methods": {
-    "get": {
-     "id": "genomics.beacons.get",
-     "path": "beacons/{variantSetId}",
-     "httpMethod": "GET",
-     "description": "This is an experimental API that provides a Global Alliance for Genomics and Health Beacon. It may change at any time.",
-     "parameters": {
-      "allele": {
-       "type": "string",
-       "description": "Required. The allele to look for ('A', 'C', 'G' or 'T').",
-       "location": "query"
-      },
-      "position": {
-       "type": "string",
-       "description": "Required. The 0-based position to query.",
-       "format": "int64",
-       "location": "query"
-      },
-      "referenceName": {
-       "type": "string",
-       "description": "Required. The reference to query over.",
-       "location": "query"
-      },
-      "variantSetId": {
-       "type": "string",
-       "description": "The ID of the variant set to query over. It must be public. Private variant sets will return an unauthorized exception.",
-       "required": true,
-       "location": "path"
-      }
-     },
-     "parameterOrder": [
-      "variantSetId"
-     ],
-     "response": {
-      "$ref": "Beacon"
-     }
-    }
-   }
-  },
   "callsets": {
    "methods": {
     "create": {
@@ -1525,7 +1483,7 @@
      "parameters": {
       "callSetId": {
        "type": "string",
-       "description": "The ID of the callset to be deleted.",
+       "description": "The ID of the call set to be deleted.",
        "required": true,
        "location": "path"
       }
@@ -1545,7 +1503,7 @@
      "parameters": {
       "callSetId": {
        "type": "string",
-       "description": "The ID of the callset.",
+       "description": "The ID of the call set.",
        "required": true,
        "location": "path"
       }
@@ -1569,7 +1527,7 @@
      "parameters": {
       "callSetId": {
        "type": "string",
-       "description": "The ID of the callset to be updated.",
+       "description": "The ID of the call set to be updated.",
        "required": true,
        "location": "path"
       }
@@ -1591,7 +1549,7 @@
      "id": "genomics.callsets.search",
      "path": "callsets/search",
      "httpMethod": "POST",
-     "description": "Gets a list of call sets matching the criteria.",
+     "description": "Gets a list of call sets matching the criteria.\n\nImplements GlobalAllianceApi.searchCallSets.",
      "request": {
       "$ref": "SearchCallSetsRequest"
      },
@@ -1611,7 +1569,7 @@
      "parameters": {
       "callSetId": {
        "type": "string",
-       "description": "The ID of the callset to be updated.",
+       "description": "The ID of the call set to be updated.",
        "required": true,
        "location": "path"
       }
@@ -1712,7 +1670,7 @@
       },
       "projectId": {
        "type": "string",
-       "description": "Only return datasets which belong to this Google Developers Console project. Only accepts project numbers.",
+       "description": "Only return datasets which belong to this Google Developers Console project. Only accepts project numbers. Returns all public projects if no project number is specified.",
        "format": "int64",
        "location": "query"
       }
@@ -2204,7 +2162,7 @@
      "id": "genomics.variants.import",
      "path": "variants/import",
      "httpMethod": "POST",
-     "description": "Creates variant data by asynchronously importing the provided information. If the destination variant set already contains data, new variants will be merged according to the behavior of mergeVariants.",
+     "description": "Creates variant data by asynchronously importing the provided information. The variants for import will be merged with any existing data and each other according to the behavior of mergeVariants. In particular, this means for merged VCF variants that have conflicting INFO fields, some data will be arbitrarily discarded. As a special case, for single-sample VCF files, QUAL and FILTER fields will be moved to the call level; these are sometimes interpreted in a call-specific context. Imported VCF headers are appended to the metadata already in a variant set.",
      "request": {
       "$ref": "ImportVariantsRequest"
      },
@@ -2220,7 +2178,7 @@
      "id": "genomics.variants.search",
      "path": "variants/search",
      "httpMethod": "POST",
-     "description": "Gets a list of variants matching the criteria.",
+     "description": "Gets a list of variants matching the criteria.\n\nImplements GlobalAllianceApi.searchVariants.",
      "request": {
       "$ref": "SearchVariantsRequest"
      },
@@ -2323,14 +2281,40 @@
       "variantSetId"
      ],
      "request": {
-      "$ref": "Variant"
+      "$ref": "MergeVariantsRequest"
      }
+    },
+    "patch": {
+     "id": "genomics.variantsets.patch",
+     "path": "variantsets/{variantSetId}",
+     "httpMethod": "PATCH",
+     "description": "Updates a variant set's metadata. All other modifications are silently ignored. This method supports patch semantics.",
+     "parameters": {
+      "variantSetId": {
+       "type": "string",
+       "description": "The ID of the variant to be updated.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "variantSetId"
+     ],
+     "request": {
+      "$ref": "VariantSet"
+     },
+     "response": {
+      "$ref": "VariantSet"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/genomics"
+     ]
     },
     "search": {
      "id": "genomics.variantsets.search",
      "path": "variantsets/search",
      "httpMethod": "POST",
-     "description": "Returns a list of all variant sets matching search criteria.",
+     "description": "Returns a list of all variant sets matching search criteria.\n\nImplements GlobalAllianceApi.searchVariantSets.",
      "request": {
       "$ref": "SearchVariantSetsRequest"
      },
@@ -2340,6 +2324,32 @@
      "scopes": [
       "https://www.googleapis.com/auth/genomics",
       "https://www.googleapis.com/auth/genomics.readonly"
+     ]
+    },
+    "update": {
+     "id": "genomics.variantsets.update",
+     "path": "variantsets/{variantSetId}",
+     "httpMethod": "PUT",
+     "description": "Updates a variant set's metadata. All other modifications are silently ignored.",
+     "parameters": {
+      "variantSetId": {
+       "type": "string",
+       "description": "The ID of the variant to be updated.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "variantSetId"
+     ],
+     "request": {
+      "$ref": "VariantSet"
+     },
+     "response": {
+      "$ref": "VariantSet"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/genomics"
      ]
     }
    }

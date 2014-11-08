@@ -1,18 +1,18 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/i9zrKH7a71FIACHf4pP1Da2VYE4\"",
+ "etag": "\"l66ggWbucbkBw9Lpos72oziyefE/k7__axf7Cxo27tXc6R4odLjm2cg\"",
  "discoveryVersion": "v1",
  "id": "pagespeedonline:v1",
  "name": "pagespeedonline",
  "version": "v1",
- "revision": "20140528",
+ "revision": "20141027",
  "title": "PageSpeed Insights API",
  "description": "Lets you analyze the performance of a web page and get tailored suggestions to make that page faster.",
  "ownerDomain": "google.com",
  "ownerName": "Google",
  "icons": {
-  "x16": "http://www.google.com/images/icons/product/pagespeed-16.png",
-  "x32": "http://www.google.com/images/icons/product/pagespeed-32.png"
+  "x16": "https://www.google.com/images/icons/product/pagespeed-16.png",
+  "x32": "https://www.google.com/images/icons/product/pagespeed-32.png"
  },
  "documentationLink": "https://developers.google.com/speed/docs/insights/v1/getting_started",
  "protocol": "rest",

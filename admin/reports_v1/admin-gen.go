@@ -961,7 +961,7 @@ func (c *CustomerUsageReportsGetCall) Do() (*UsageReports, error) {
 	//     "parameters": {
 	//       "description": "Represents the application name, parameter name pairs to fetch in csv as app_name1:param_name1, app_name2:param_name2.",
 	//       "location": "query",
-	//       "pattern": "(((accounts)|(gmail)|(calendar)|(docs)|(gplus)):.+,)*(((accounts)|(gmail)|(calendar)|(docs)|(gplus)):.+)",
+	//       "pattern": "(((accounts)|(cros)|(gmail)|(calendar)|(docs)|(gplus)):.+,)*(((accounts)|(cros)|(gmail)|(calendar)|(docs)|(gplus)):.+)",
 	//       "type": "string"
 	//     }
 	//   },
@@ -1106,7 +1106,7 @@ func (c *UserUsageReportGetCall) Do() (*UsageReports, error) {
 	//     "filters": {
 	//       "description": "Represents the set of filters including parameter operator value.",
 	//       "location": "query",
-	//       "pattern": "(((accounts)|(gmail)|(calendar)|(docs)|(gplus)):.+[\u003c,\u003c=,==,\u003e=,\u003e,!=].+,)*(((accounts)|(gmail)|(calendar)|(docs)|(gplus)):.+[\u003c,\u003c=,==,\u003e=,\u003e,!=].+)",
+	//       "pattern": "(((accounts)|(cros)|(gmail)|(calendar)|(docs)|(gplus)):.+[\u003c,\u003c=,==,\u003e=,\u003e,!=].+,)*(((accounts)|(cros)|(gmail)|(calendar)|(docs)|(gplus)):.+[\u003c,\u003c=,==,\u003e=,\u003e,!=].+)",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
@@ -1124,7 +1124,7 @@ func (c *UserUsageReportGetCall) Do() (*UsageReports, error) {
 	//     "parameters": {
 	//       "description": "Represents the application name, parameter name pairs to fetch in csv as app_name1:param_name1, app_name2:param_name2.",
 	//       "location": "query",
-	//       "pattern": "(((accounts)|(gmail)|(calendar)|(docs)|(gplus)):.+,)*(((accounts)|(gmail)|(calendar)|(docs)|(gplus)):.+)",
+	//       "pattern": "(((accounts)|(cros)|(gmail)|(calendar)|(docs)|(gplus)):.+,)*(((accounts)|(cros)|(gmail)|(calendar)|(docs)|(gplus)):.+)",
 	//       "type": "string"
 	//     },
 	//     "userKey": {

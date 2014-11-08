@@ -167,6 +167,16 @@ type AchievementResetAllResponse struct {
 	Results []*AchievementResetResponse `json:"results,omitempty"`
 }
 
+type AchievementResetMultipleForAllRequest struct {
+	// Achievement_ids: The IDs of achievements to reset.
+	Achievement_ids []string `json:"achievement_ids,omitempty"`
+
+	// Kind: Uniquely identifies the type of this resource. Value is always
+	// the fixed string
+	// gamesManagement#achievementResetMultipleForAllRequest.
+	Kind string `json:"kind,omitempty"`
+}
+
 type AchievementResetResponse struct {
 	// CurrentState: The current state of the achievement. This is the same
 	// as the initial state of the achievement.
@@ -189,6 +199,15 @@ type AchievementResetResponse struct {
 	// UpdateOccurred: Flag to indicate if the requested update actually
 	// occurred.
 	UpdateOccurred bool `json:"updateOccurred,omitempty"`
+}
+
+type EventsResetMultipleForAllRequest struct {
+	// Event_ids: The IDs of events to reset.
+	Event_ids []string `json:"event_ids,omitempty"`
+
+	// Kind: Uniquely identifies the type of this resource. Value is always
+	// the fixed string gamesManagement#eventsResetMultipleForAllRequest.
+	Kind string `json:"kind,omitempty"`
 }
 
 type GamesPlayedResource struct {
@@ -295,7 +314,20 @@ type PlayerName struct {
 	GivenName string `json:"givenName,omitempty"`
 }
 
+type PlayerScoreResetAllResponse struct {
+	// Kind: Uniquely identifies the type of this resource. Value is always
+	// the fixed string gamesManagement#playerScoreResetResponse.
+	Kind string `json:"kind,omitempty"`
+
+	// Results: The leaderboard reset results.
+	Results []*PlayerScoreResetResponse `json:"results,omitempty"`
+}
+
 type PlayerScoreResetResponse struct {
+	// DefinitionId: The ID of an leaderboard for which player state has
+	// been updated.
+	DefinitionId string `json:"definitionId,omitempty"`
+
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string gamesManagement#playerScoreResetResponse.
 	Kind string `json:"kind,omitempty"`
@@ -309,6 +341,24 @@ type PlayerScoreResetResponse struct {
 	// - "DAILY" - The score is a
 	// daily score.
 	ResetScoreTimeSpans []string `json:"resetScoreTimeSpans,omitempty"`
+}
+
+type QuestsResetMultipleForAllRequest struct {
+	// Kind: Uniquely identifies the type of this resource. Value is always
+	// the fixed string gamesManagement#questsResetMultipleForAllRequest.
+	Kind string `json:"kind,omitempty"`
+
+	// Quest_ids: The IDs of quests to reset.
+	Quest_ids []string `json:"quest_ids,omitempty"`
+}
+
+type ScoresResetMultipleForAllRequest struct {
+	// Kind: Uniquely identifies the type of this resource. Value is always
+	// the fixed string gamesManagement#scoresResetMultipleForAllRequest.
+	Kind string `json:"kind,omitempty"`
+
+	// Leaderboard_ids: The IDs of leaderboards to reset.
+	Leaderboard_ids []string `json:"leaderboard_ids,omitempty"`
 }
 
 // method id "gamesManagement.achievements.reset":
@@ -454,6 +504,63 @@ func (c *AchievementsResetAllCall) Do() (*AchievementResetAllResponse, error) {
 
 }
 
+// method id "gamesManagement.achievements.resetAllForAllPlayers":
+
+type AchievementsResetAllForAllPlayersCall struct {
+	s    *Service
+	opt_ map[string]interface{}
+}
+
+// ResetAllForAllPlayers: Resets all draft achievements for all players.
+// This method is only available to user accounts for your developer
+// console.
+func (r *AchievementsService) ResetAllForAllPlayers() *AchievementsResetAllForAllPlayersCall {
+	c := &AchievementsResetAllForAllPlayersCall{s: r.s, opt_: make(map[string]interface{})}
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AchievementsResetAllForAllPlayersCall) Fields(s ...googleapi.Field) *AchievementsResetAllForAllPlayersCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *AchievementsResetAllForAllPlayersCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "achievements/resetAllForAllPlayers")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Resets all draft achievements for all players. This method is only available to user accounts for your developer console.",
+	//   "httpMethod": "POST",
+	//   "id": "gamesManagement.achievements.resetAllForAllPlayers",
+	//   "path": "achievements/resetAllForAllPlayers",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.login"
+	//   ]
+	// }
+
+}
+
 // method id "gamesManagement.achievements.resetForAllPlayers":
 
 type AchievementsResetForAllPlayersCall struct {
@@ -462,8 +569,8 @@ type AchievementsResetForAllPlayersCall struct {
 	opt_          map[string]interface{}
 }
 
-// ResetForAllPlayers: Resets the achievement with the given ID for the
-// all players. This method is only available to user accounts for your
+// ResetForAllPlayers: Resets the achievement with the given ID for all
+// players. This method is only available to user accounts for your
 // developer console. Only draft achievements can be reset.
 func (r *AchievementsService) ResetForAllPlayers(achievementId string) *AchievementsResetForAllPlayersCall {
 	c := &AchievementsResetForAllPlayersCall{s: r.s, opt_: make(map[string]interface{})}
@@ -503,7 +610,7 @@ func (c *AchievementsResetForAllPlayersCall) Do() error {
 	}
 	return nil
 	// {
-	//   "description": "Resets the achievement with the given ID for the all players. This method is only available to user accounts for your developer console. Only draft achievements can be reset.",
+	//   "description": "Resets the achievement with the given ID for all players. This method is only available to user accounts for your developer console. Only draft achievements can be reset.",
 	//   "httpMethod": "POST",
 	//   "id": "gamesManagement.achievements.resetForAllPlayers",
 	//   "parameterOrder": [
@@ -518,6 +625,74 @@ func (c *AchievementsResetForAllPlayersCall) Do() error {
 	//     }
 	//   },
 	//   "path": "achievements/{achievementId}/resetForAllPlayers",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.login"
+	//   ]
+	// }
+
+}
+
+// method id "gamesManagement.achievements.resetMultipleForAllPlayers":
+
+type AchievementsResetMultipleForAllPlayersCall struct {
+	s                                     *Service
+	achievementresetmultipleforallrequest *AchievementResetMultipleForAllRequest
+	opt_                                  map[string]interface{}
+}
+
+// ResetMultipleForAllPlayers: Resets achievements with the given IDs
+// for all players. This method is only available to user accounts for
+// your developer console. Only draft achievements may be reset.
+func (r *AchievementsService) ResetMultipleForAllPlayers(achievementresetmultipleforallrequest *AchievementResetMultipleForAllRequest) *AchievementsResetMultipleForAllPlayersCall {
+	c := &AchievementsResetMultipleForAllPlayersCall{s: r.s, opt_: make(map[string]interface{})}
+	c.achievementresetmultipleforallrequest = achievementresetmultipleforallrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AchievementsResetMultipleForAllPlayersCall) Fields(s ...googleapi.Field) *AchievementsResetMultipleForAllPlayersCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *AchievementsResetMultipleForAllPlayersCall) Do() error {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.achievementresetmultipleforallrequest)
+	if err != nil {
+		return err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "achievements/resetMultipleForAllPlayers")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Resets achievements with the given IDs for all players. This method is only available to user accounts for your developer console. Only draft achievements may be reset.",
+	//   "httpMethod": "POST",
+	//   "id": "gamesManagement.achievements.resetMultipleForAllPlayers",
+	//   "path": "achievements/resetMultipleForAllPlayers",
+	//   "request": {
+	//     "$ref": "AchievementResetMultipleForAllRequest"
+	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/games",
 	//     "https://www.googleapis.com/auth/plus.login"
@@ -609,7 +784,7 @@ func (c *ApplicationsListHiddenCall) Do() (*HiddenPlayerList, error) {
 	//   ],
 	//   "parameters": {
 	//     "applicationId": {
-	//       "description": "The application being requested.",
+	//       "description": "The application ID from the Google Play developer console.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -648,10 +823,10 @@ type EventsResetCall struct {
 	opt_    map[string]interface{}
 }
 
-// Reset: Reset all player progress on the event for the currently
-// authenticated player. This method is only accessible to whitelisted
-// tester accounts for your application. All resources that use the
-// event will also be reset.
+// Reset: Resets all player progress on the event with the given ID for
+// the currently authenticated player. This method is only accessible to
+// whitelisted tester accounts for your application. All quests for this
+// player that use the event will also be reset.
 func (r *EventsService) Reset(eventId string) *EventsResetCall {
 	c := &EventsResetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.eventId = eventId
@@ -690,7 +865,7 @@ func (c *EventsResetCall) Do() error {
 	}
 	return nil
 	// {
-	//   "description": "Reset all player progress on the event for the currently authenticated player. This method is only accessible to whitelisted tester accounts for your application. All resources that use the event will also be reset.",
+	//   "description": "Resets all player progress on the event with the given ID for the currently authenticated player. This method is only accessible to whitelisted tester accounts for your application. All quests for this player that use the event will also be reset.",
 	//   "httpMethod": "POST",
 	//   "id": "gamesManagement.events.reset",
 	//   "parameterOrder": [
@@ -720,10 +895,10 @@ type EventsResetAllCall struct {
 	opt_ map[string]interface{}
 }
 
-// ResetAll: Reset all player progress on all unpublished events for the
-// currently authenticated player. This method is only accessible to
-// whitelisted tester accounts for your application. All resources that
-// use the events will also be reset.
+// ResetAll: Resets all player progress on all events for the currently
+// authenticated player. This method is only accessible to whitelisted
+// tester accounts for your application. All quests for this player will
+// also be reset.
 func (r *EventsService) ResetAll() *EventsResetAllCall {
 	c := &EventsResetAllCall{s: r.s, opt_: make(map[string]interface{})}
 	return c
@@ -759,10 +934,67 @@ func (c *EventsResetAllCall) Do() error {
 	}
 	return nil
 	// {
-	//   "description": "Reset all player progress on all unpublished events for the currently authenticated player. This method is only accessible to whitelisted tester accounts for your application. All resources that use the events will also be reset.",
+	//   "description": "Resets all player progress on all events for the currently authenticated player. This method is only accessible to whitelisted tester accounts for your application. All quests for this player will also be reset.",
 	//   "httpMethod": "POST",
 	//   "id": "gamesManagement.events.resetAll",
 	//   "path": "events/reset",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.login"
+	//   ]
+	// }
+
+}
+
+// method id "gamesManagement.events.resetAllForAllPlayers":
+
+type EventsResetAllForAllPlayersCall struct {
+	s    *Service
+	opt_ map[string]interface{}
+}
+
+// ResetAllForAllPlayers: Resets all draft events for all players. This
+// method is only available to user accounts for your developer console.
+// All quests that use any of these events will also be reset.
+func (r *EventsService) ResetAllForAllPlayers() *EventsResetAllForAllPlayersCall {
+	c := &EventsResetAllForAllPlayersCall{s: r.s, opt_: make(map[string]interface{})}
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *EventsResetAllForAllPlayersCall) Fields(s ...googleapi.Field) *EventsResetAllForAllPlayersCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *EventsResetAllForAllPlayersCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "events/resetAllForAllPlayers")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Resets all draft events for all players. This method is only available to user accounts for your developer console. All quests that use any of these events will also be reset.",
+	//   "httpMethod": "POST",
+	//   "id": "gamesManagement.events.resetAllForAllPlayers",
+	//   "path": "events/resetAllForAllPlayers",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/games",
 	//     "https://www.googleapis.com/auth/plus.login"
@@ -779,9 +1011,9 @@ type EventsResetForAllPlayersCall struct {
 	opt_    map[string]interface{}
 }
 
-// ResetForAllPlayers: Reset all player progress on the event for all
+// ResetForAllPlayers: Resets the event with the given ID for all
 // players. This method is only available to user accounts for your
-// developer console. Only draft events can be reset. All resources that
+// developer console. Only draft events can be reset. All quests that
 // use the event will also be reset.
 func (r *EventsService) ResetForAllPlayers(eventId string) *EventsResetForAllPlayersCall {
 	c := &EventsResetForAllPlayersCall{s: r.s, opt_: make(map[string]interface{})}
@@ -821,7 +1053,7 @@ func (c *EventsResetForAllPlayersCall) Do() error {
 	}
 	return nil
 	// {
-	//   "description": "Reset all player progress on the event for all players. This method is only available to user accounts for your developer console. Only draft events can be reset. All resources that use the event will also be reset.",
+	//   "description": "Resets the event with the given ID for all players. This method is only available to user accounts for your developer console. Only draft events can be reset. All quests that use the event will also be reset.",
 	//   "httpMethod": "POST",
 	//   "id": "gamesManagement.events.resetForAllPlayers",
 	//   "parameterOrder": [
@@ -836,6 +1068,75 @@ func (c *EventsResetForAllPlayersCall) Do() error {
 	//     }
 	//   },
 	//   "path": "events/{eventId}/resetForAllPlayers",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.login"
+	//   ]
+	// }
+
+}
+
+// method id "gamesManagement.events.resetMultipleForAllPlayers":
+
+type EventsResetMultipleForAllPlayersCall struct {
+	s                                *Service
+	eventsresetmultipleforallrequest *EventsResetMultipleForAllRequest
+	opt_                             map[string]interface{}
+}
+
+// ResetMultipleForAllPlayers: Resets events with the given IDs for all
+// players. This method is only available to user accounts for your
+// developer console. Only draft events may be reset. All quests that
+// use any of the events will also be reset.
+func (r *EventsService) ResetMultipleForAllPlayers(eventsresetmultipleforallrequest *EventsResetMultipleForAllRequest) *EventsResetMultipleForAllPlayersCall {
+	c := &EventsResetMultipleForAllPlayersCall{s: r.s, opt_: make(map[string]interface{})}
+	c.eventsresetmultipleforallrequest = eventsresetmultipleforallrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *EventsResetMultipleForAllPlayersCall) Fields(s ...googleapi.Field) *EventsResetMultipleForAllPlayersCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *EventsResetMultipleForAllPlayersCall) Do() error {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.eventsresetmultipleforallrequest)
+	if err != nil {
+		return err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "events/resetMultipleForAllPlayers")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Resets events with the given IDs for all players. This method is only available to user accounts for your developer console. Only draft events may be reset. All quests that use any of the events will also be reset.",
+	//   "httpMethod": "POST",
+	//   "id": "gamesManagement.events.resetMultipleForAllPlayers",
+	//   "path": "events/resetMultipleForAllPlayers",
+	//   "request": {
+	//     "$ref": "EventsResetMultipleForAllRequest"
+	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/games",
 	//     "https://www.googleapis.com/auth/plus.login"
@@ -905,7 +1206,7 @@ func (c *PlayersHideCall) Do() error {
 	//   ],
 	//   "parameters": {
 	//     "applicationId": {
-	//       "description": "The application being requested.",
+	//       "description": "The application ID from the Google Play developer console.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -987,7 +1288,7 @@ func (c *PlayersUnhideCall) Do() error {
 	//   ],
 	//   "parameters": {
 	//     "applicationId": {
-	//       "description": "The application being requested.",
+	//       "description": "The application ID from the Google Play developer console.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1016,9 +1317,9 @@ type QuestsResetCall struct {
 	opt_    map[string]interface{}
 }
 
-// Reset: Reset all player progress on the quest for the currently
-// authenticated player. This method is only accessible to whitelisted
-// tester accounts for your application.
+// Reset: Resets all player progress on the quest with the given ID for
+// the currently authenticated player. This method is only accessible to
+// whitelisted tester accounts for your application.
 func (r *QuestsService) Reset(questId string) *QuestsResetCall {
 	c := &QuestsResetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.questId = questId
@@ -1057,7 +1358,7 @@ func (c *QuestsResetCall) Do() error {
 	}
 	return nil
 	// {
-	//   "description": "Reset all player progress on the quest for the currently authenticated player. This method is only accessible to whitelisted tester accounts for your application.",
+	//   "description": "Resets all player progress on the quest with the given ID for the currently authenticated player. This method is only accessible to whitelisted tester accounts for your application.",
 	//   "httpMethod": "POST",
 	//   "id": "gamesManagement.quests.reset",
 	//   "parameterOrder": [
@@ -1072,6 +1373,259 @@ func (c *QuestsResetCall) Do() error {
 	//     }
 	//   },
 	//   "path": "quests/{questId}/reset",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.login"
+	//   ]
+	// }
+
+}
+
+// method id "gamesManagement.quests.resetAll":
+
+type QuestsResetAllCall struct {
+	s    *Service
+	opt_ map[string]interface{}
+}
+
+// ResetAll: Resets all player progress on all quests for the currently
+// authenticated player. This method is only accessible to whitelisted
+// tester accounts for your application.
+func (r *QuestsService) ResetAll() *QuestsResetAllCall {
+	c := &QuestsResetAllCall{s: r.s, opt_: make(map[string]interface{})}
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *QuestsResetAllCall) Fields(s ...googleapi.Field) *QuestsResetAllCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *QuestsResetAllCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "quests/reset")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Resets all player progress on all quests for the currently authenticated player. This method is only accessible to whitelisted tester accounts for your application.",
+	//   "httpMethod": "POST",
+	//   "id": "gamesManagement.quests.resetAll",
+	//   "path": "quests/reset",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.login"
+	//   ]
+	// }
+
+}
+
+// method id "gamesManagement.quests.resetAllForAllPlayers":
+
+type QuestsResetAllForAllPlayersCall struct {
+	s    *Service
+	opt_ map[string]interface{}
+}
+
+// ResetAllForAllPlayers: Resets all draft quests for all players. This
+// method is only available to user accounts for your developer console.
+func (r *QuestsService) ResetAllForAllPlayers() *QuestsResetAllForAllPlayersCall {
+	c := &QuestsResetAllForAllPlayersCall{s: r.s, opt_: make(map[string]interface{})}
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *QuestsResetAllForAllPlayersCall) Fields(s ...googleapi.Field) *QuestsResetAllForAllPlayersCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *QuestsResetAllForAllPlayersCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "quests/resetAllForAllPlayers")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Resets all draft quests for all players. This method is only available to user accounts for your developer console.",
+	//   "httpMethod": "POST",
+	//   "id": "gamesManagement.quests.resetAllForAllPlayers",
+	//   "path": "quests/resetAllForAllPlayers",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.login"
+	//   ]
+	// }
+
+}
+
+// method id "gamesManagement.quests.resetForAllPlayers":
+
+type QuestsResetForAllPlayersCall struct {
+	s       *Service
+	questId string
+	opt_    map[string]interface{}
+}
+
+// ResetForAllPlayers: Resets all player progress on the quest with the
+// given ID for all players. This method is only available to user
+// accounts for your developer console. Only draft quests can be reset.
+func (r *QuestsService) ResetForAllPlayers(questId string) *QuestsResetForAllPlayersCall {
+	c := &QuestsResetForAllPlayersCall{s: r.s, opt_: make(map[string]interface{})}
+	c.questId = questId
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *QuestsResetForAllPlayersCall) Fields(s ...googleapi.Field) *QuestsResetForAllPlayersCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *QuestsResetForAllPlayersCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "quests/{questId}/resetForAllPlayers")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"questId": c.questId,
+	})
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Resets all player progress on the quest with the given ID for all players. This method is only available to user accounts for your developer console. Only draft quests can be reset.",
+	//   "httpMethod": "POST",
+	//   "id": "gamesManagement.quests.resetForAllPlayers",
+	//   "parameterOrder": [
+	//     "questId"
+	//   ],
+	//   "parameters": {
+	//     "questId": {
+	//       "description": "The ID of the quest.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "quests/{questId}/resetForAllPlayers",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.login"
+	//   ]
+	// }
+
+}
+
+// method id "gamesManagement.quests.resetMultipleForAllPlayers":
+
+type QuestsResetMultipleForAllPlayersCall struct {
+	s                                *Service
+	questsresetmultipleforallrequest *QuestsResetMultipleForAllRequest
+	opt_                             map[string]interface{}
+}
+
+// ResetMultipleForAllPlayers: Resets quests with the given IDs for all
+// players. This method is only available to user accounts for your
+// developer console. Only draft quests may be reset.
+func (r *QuestsService) ResetMultipleForAllPlayers(questsresetmultipleforallrequest *QuestsResetMultipleForAllRequest) *QuestsResetMultipleForAllPlayersCall {
+	c := &QuestsResetMultipleForAllPlayersCall{s: r.s, opt_: make(map[string]interface{})}
+	c.questsresetmultipleforallrequest = questsresetmultipleforallrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *QuestsResetMultipleForAllPlayersCall) Fields(s ...googleapi.Field) *QuestsResetMultipleForAllPlayersCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *QuestsResetMultipleForAllPlayersCall) Do() error {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.questsresetmultipleforallrequest)
+	if err != nil {
+		return err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "quests/resetMultipleForAllPlayers")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Resets quests with the given IDs for all players. This method is only available to user accounts for your developer console. Only draft quests may be reset.",
+	//   "httpMethod": "POST",
+	//   "id": "gamesManagement.quests.resetMultipleForAllPlayers",
+	//   "path": "quests/resetMultipleForAllPlayers",
+	//   "request": {
+	//     "$ref": "QuestsResetMultipleForAllRequest"
+	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/games",
 	//     "https://www.googleapis.com/auth/plus.login"
@@ -1137,6 +1691,63 @@ func (c *RoomsResetCall) Do() error {
 
 }
 
+// method id "gamesManagement.rooms.resetForAllPlayers":
+
+type RoomsResetForAllPlayersCall struct {
+	s    *Service
+	opt_ map[string]interface{}
+}
+
+// ResetForAllPlayers: Deletes rooms where the only room participants
+// are from whitelisted tester accounts for your application. This
+// method is only available to user accounts for your developer console.
+func (r *RoomsService) ResetForAllPlayers() *RoomsResetForAllPlayersCall {
+	c := &RoomsResetForAllPlayersCall{s: r.s, opt_: make(map[string]interface{})}
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RoomsResetForAllPlayersCall) Fields(s ...googleapi.Field) *RoomsResetForAllPlayersCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *RoomsResetForAllPlayersCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "rooms/resetForAllPlayers")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Deletes rooms where the only room participants are from whitelisted tester accounts for your application. This method is only available to user accounts for your developer console.",
+	//   "httpMethod": "POST",
+	//   "id": "gamesManagement.rooms.resetForAllPlayers",
+	//   "path": "rooms/resetForAllPlayers",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.login"
+	//   ]
+	// }
+
+}
+
 // method id "gamesManagement.scores.reset":
 
 type ScoresResetCall struct {
@@ -1145,9 +1756,9 @@ type ScoresResetCall struct {
 	opt_          map[string]interface{}
 }
 
-// Reset: Reset scores for the specified leaderboard for the currently
-// authenticated player. This method is only accessible to whitelisted
-// tester accounts for your application.
+// Reset: Resets scores for the leaderboard with the given ID for the
+// currently authenticated player. This method is only accessible to
+// whitelisted tester accounts for your application.
 func (r *ScoresService) Reset(leaderboardId string) *ScoresResetCall {
 	c := &ScoresResetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.leaderboardId = leaderboardId
@@ -1190,7 +1801,7 @@ func (c *ScoresResetCall) Do() (*PlayerScoreResetResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Reset scores for the specified leaderboard for the currently authenticated player. This method is only accessible to whitelisted tester accounts for your application.",
+	//   "description": "Resets scores for the leaderboard with the given ID for the currently authenticated player. This method is only accessible to whitelisted tester accounts for your application.",
 	//   "httpMethod": "POST",
 	//   "id": "gamesManagement.scores.reset",
 	//   "parameterOrder": [
@@ -1216,6 +1827,127 @@ func (c *ScoresResetCall) Do() (*PlayerScoreResetResponse, error) {
 
 }
 
+// method id "gamesManagement.scores.resetAll":
+
+type ScoresResetAllCall struct {
+	s    *Service
+	opt_ map[string]interface{}
+}
+
+// ResetAll: Resets all scores for all leaderboards for the currently
+// authenticated players. This method is only accessible to whitelisted
+// tester accounts for your application.
+func (r *ScoresService) ResetAll() *ScoresResetAllCall {
+	c := &ScoresResetAllCall{s: r.s, opt_: make(map[string]interface{})}
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ScoresResetAllCall) Fields(s ...googleapi.Field) *ScoresResetAllCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *ScoresResetAllCall) Do() (*PlayerScoreResetAllResponse, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "scores/reset")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *PlayerScoreResetAllResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Resets all scores for all leaderboards for the currently authenticated players. This method is only accessible to whitelisted tester accounts for your application.",
+	//   "httpMethod": "POST",
+	//   "id": "gamesManagement.scores.resetAll",
+	//   "path": "scores/reset",
+	//   "response": {
+	//     "$ref": "PlayerScoreResetAllResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.login"
+	//   ]
+	// }
+
+}
+
+// method id "gamesManagement.scores.resetAllForAllPlayers":
+
+type ScoresResetAllForAllPlayersCall struct {
+	s    *Service
+	opt_ map[string]interface{}
+}
+
+// ResetAllForAllPlayers: Resets scores for all draft leaderboards for
+// all players. This method is only available to user accounts for your
+// developer console.
+func (r *ScoresService) ResetAllForAllPlayers() *ScoresResetAllForAllPlayersCall {
+	c := &ScoresResetAllForAllPlayersCall{s: r.s, opt_: make(map[string]interface{})}
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ScoresResetAllForAllPlayersCall) Fields(s ...googleapi.Field) *ScoresResetAllForAllPlayersCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *ScoresResetAllForAllPlayersCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "scores/resetAllForAllPlayers")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Resets scores for all draft leaderboards for all players. This method is only available to user accounts for your developer console.",
+	//   "httpMethod": "POST",
+	//   "id": "gamesManagement.scores.resetAllForAllPlayers",
+	//   "path": "scores/resetAllForAllPlayers",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.login"
+	//   ]
+	// }
+
+}
+
 // method id "gamesManagement.scores.resetForAllPlayers":
 
 type ScoresResetForAllPlayersCall struct {
@@ -1224,9 +1956,9 @@ type ScoresResetForAllPlayersCall struct {
 	opt_          map[string]interface{}
 }
 
-// ResetForAllPlayers: Reset scores for the specified leaderboard for
-// all players. This method is only available to user accounts for your
-// developer console. Only draft leaderboards can be reset.
+// ResetForAllPlayers: Resets scores for the leaderboard with the given
+// ID for all players. This method is only available to user accounts
+// for your developer console. Only draft leaderboards can be reset.
 func (r *ScoresService) ResetForAllPlayers(leaderboardId string) *ScoresResetForAllPlayersCall {
 	c := &ScoresResetForAllPlayersCall{s: r.s, opt_: make(map[string]interface{})}
 	c.leaderboardId = leaderboardId
@@ -1265,7 +1997,7 @@ func (c *ScoresResetForAllPlayersCall) Do() error {
 	}
 	return nil
 	// {
-	//   "description": "Reset scores for the specified leaderboard for all players. This method is only available to user accounts for your developer console. Only draft leaderboards can be reset.",
+	//   "description": "Resets scores for the leaderboard with the given ID for all players. This method is only available to user accounts for your developer console. Only draft leaderboards can be reset.",
 	//   "httpMethod": "POST",
 	//   "id": "gamesManagement.scores.resetForAllPlayers",
 	//   "parameterOrder": [
@@ -1280,6 +2012,75 @@ func (c *ScoresResetForAllPlayersCall) Do() error {
 	//     }
 	//   },
 	//   "path": "leaderboards/{leaderboardId}/scores/resetForAllPlayers",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.login"
+	//   ]
+	// }
+
+}
+
+// method id "gamesManagement.scores.resetMultipleForAllPlayers":
+
+type ScoresResetMultipleForAllPlayersCall struct {
+	s                                *Service
+	scoresresetmultipleforallrequest *ScoresResetMultipleForAllRequest
+	opt_                             map[string]interface{}
+}
+
+// ResetMultipleForAllPlayers: Resets scores for the leaderboards with
+// the given IDs for all players. This method is only available to user
+// accounts for your developer console. Only draft leaderboards may be
+// reset.
+func (r *ScoresService) ResetMultipleForAllPlayers(scoresresetmultipleforallrequest *ScoresResetMultipleForAllRequest) *ScoresResetMultipleForAllPlayersCall {
+	c := &ScoresResetMultipleForAllPlayersCall{s: r.s, opt_: make(map[string]interface{})}
+	c.scoresresetmultipleforallrequest = scoresresetmultipleforallrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ScoresResetMultipleForAllPlayersCall) Fields(s ...googleapi.Field) *ScoresResetMultipleForAllPlayersCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *ScoresResetMultipleForAllPlayersCall) Do() error {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.scoresresetmultipleforallrequest)
+	if err != nil {
+		return err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "scores/resetMultipleForAllPlayers")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Resets scores for the leaderboards with the given IDs for all players. This method is only available to user accounts for your developer console. Only draft leaderboards may be reset.",
+	//   "httpMethod": "POST",
+	//   "id": "gamesManagement.scores.resetMultipleForAllPlayers",
+	//   "path": "scores/resetMultipleForAllPlayers",
+	//   "request": {
+	//     "$ref": "ScoresResetMultipleForAllRequest"
+	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/games",
 	//     "https://www.googleapis.com/auth/plus.login"
@@ -1336,6 +2137,64 @@ func (c *TurnBasedMatchesResetCall) Do() error {
 	//   "httpMethod": "POST",
 	//   "id": "gamesManagement.turnBasedMatches.reset",
 	//   "path": "turnbasedmatches/reset",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.login"
+	//   ]
+	// }
+
+}
+
+// method id "gamesManagement.turnBasedMatches.resetForAllPlayers":
+
+type TurnBasedMatchesResetForAllPlayersCall struct {
+	s    *Service
+	opt_ map[string]interface{}
+}
+
+// ResetForAllPlayers: Deletes turn-based matches where the only match
+// participants are from whitelisted tester accounts for your
+// application. This method is only available to user accounts for your
+// developer console.
+func (r *TurnBasedMatchesService) ResetForAllPlayers() *TurnBasedMatchesResetForAllPlayersCall {
+	c := &TurnBasedMatchesResetForAllPlayersCall{s: r.s, opt_: make(map[string]interface{})}
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TurnBasedMatchesResetForAllPlayersCall) Fields(s ...googleapi.Field) *TurnBasedMatchesResetForAllPlayersCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *TurnBasedMatchesResetForAllPlayersCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "turnbasedmatches/resetForAllPlayers")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Deletes turn-based matches where the only match participants are from whitelisted tester accounts for your application. This method is only available to user accounts for your developer console.",
+	//   "httpMethod": "POST",
+	//   "id": "gamesManagement.turnBasedMatches.resetForAllPlayers",
+	//   "path": "turnbasedmatches/resetForAllPlayers",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/games",
 	//     "https://www.googleapis.com/auth/plus.login"

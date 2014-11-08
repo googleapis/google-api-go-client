@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"uUWyYHXmEn-ab7WLvo8qNz2S8ws/vWqMsHvvvKs-y7bO-cWrAXLs9SU\"",
+ "etag": "\"l66ggWbucbkBw9Lpos72oziyefE/ChhI5_AHHLTSiJjr6RSC6c9iFo0\"",
  "discoveryVersion": "v1",
  "id": "calendar:v3",
  "name": "calendar",
  "version": "v3",
- "revision": "20140914",
+ "revision": "20141020",
  "title": "Calendar API",
  "description": "Lets you manipulate events and other calendar data.",
  "ownerDomain": "google.com",
@@ -777,6 +777,16 @@
     }
    }
   },
+  "EventAttachment": {
+   "id": "EventAttachment",
+   "type": "object",
+   "properties": {
+    "title": {
+     "type": "string",
+     "description": "File name."
+    }
+   }
+  },
   "EventAttendee": {
    "id": "EventAttendee",
    "type": "object",
@@ -851,7 +861,7 @@
     },
     "timeZone": {
      "type": "string",
-     "description": "The name of the time zone in which the time is specified (e.g. \"Europe/Zurich\"). Optional. The default is the time zone of the calendar."
+     "description": "The name of the time zone in which the time is specified (e.g. \"Europe/Zurich\"). For recurring events this field is required and specifies the time zone in which the recurrence is expanded. For single events this field is optional and indicates a custom time zone for the event start/end."
     }
    }
   },

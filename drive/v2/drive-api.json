@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"uUWyYHXmEn-ab7WLvo8qNz2S8ws/-2NkK8k7_hT4MS2pNsIOEUlM2A0\"",
+ "etag": "\"l66ggWbucbkBw9Lpos72oziyefE/8QMIKXQb4gLNnKU_aYZeGRdMS08\"",
  "discoveryVersion": "v1",
  "id": "drive:v2",
  "name": "drive",
  "version": "v2",
- "revision": "20140916",
+ "revision": "20141024",
  "title": "Drive API",
  "description": "The API to interact with Drive.",
  "ownerDomain": "google.com",
@@ -2199,8 +2199,7 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/drive",
-      "https://www.googleapis.com/auth/drive.file",
-      "https://www.googleapis.com/auth/drive.readonly"
+      "https://www.googleapis.com/auth/drive.file"
      ]
     },
     "list": {
@@ -2438,6 +2437,12 @@
      "httpMethod": "GET",
      "description": "Gets a file's metadata by ID.",
      "parameters": {
+      "acknowledgeAbuse": {
+       "type": "boolean",
+       "description": "Whether the user is acknowledging the risk of downloading known malware or other abusive files.",
+       "default": "false",
+       "location": "query"
+      },
       "fileId": {
        "type": "string",
        "description": "The ID for the file in question.",
@@ -2478,6 +2483,7 @@
       "https://www.googleapis.com/auth/drive.metadata.readonly",
       "https://www.googleapis.com/auth/drive.readonly"
      ],
+     "supportsMediaDownload": true,
      "supportsSubscription": true
     },
     "insert": {
@@ -2927,6 +2933,12 @@
      "httpMethod": "POST",
      "description": "Subscribe to changes on a file",
      "parameters": {
+      "acknowledgeAbuse": {
+       "type": "boolean",
+       "description": "Whether the user is acknowledging the risk of downloading known malware or other abusive files.",
+       "default": "false",
+       "location": "query"
+      },
       "fileId": {
        "type": "string",
        "description": "The ID for the file in question.",
@@ -2971,6 +2983,7 @@
       "https://www.googleapis.com/auth/drive.metadata.readonly",
       "https://www.googleapis.com/auth/drive.readonly"
      ],
+     "supportsMediaDownload": true,
      "supportsSubscription": true
     }
    }

@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"uUWyYHXmEn-ab7WLvo8qNz2S8ws/mlJDKE1HzG8DtFFjgMyndChytW8\"",
+ "etag": "\"l66ggWbucbkBw9Lpos72oziyefE/n221EXnWB-_c9ZoW6aKBS2bRLq8\"",
  "discoveryVersion": "v1",
  "id": "mapsengine:exp2",
  "name": "mapsengine",
  "canonicalName": "Maps Engine",
  "version": "exp2",
- "revision": "20140919",
+ "revision": "20141030",
  "title": "Google Maps Engine API",
  "description": "The Google Maps Engine API allows developers to store and query geospatial vector and raster data.",
  "ownerDomain": "google.com",
@@ -1650,6 +1650,10 @@
     "fill": {
      "$ref": "Color",
      "description": "Fill color of the polygon. If not provided, the polygon will be transparent and not visible if there is no border."
+    },
+    "label": {
+     "$ref": "LabelStyle",
+     "description": "Label style for the polygon."
     },
     "stroke": {
      "$ref": "Border",

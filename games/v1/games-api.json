@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"uUWyYHXmEn-ab7WLvo8qNz2S8ws/xvi2uGQDV15HRXwhaUx6I3l2kvA\"",
+ "etag": "\"l66ggWbucbkBw9Lpos72oziyefE/skEqViAiDZlWolu5EmMUpxKtI9o\"",
  "discoveryVersion": "v1",
  "id": "games:v1",
  "name": "games",
  "canonicalName": "Games",
  "version": "v1",
- "revision": "20140918",
+ "revision": "20141106",
  "title": "Google Play Game Services API",
  "description": "The API for Google Play Game Services.",
  "ownerDomain": "google.com",
@@ -458,6 +458,10 @@
     "name": {
      "type": "string",
      "description": "The name of the application."
+    },
+    "themeColor": {
+     "type": "string",
+     "description": "A hint to the client UI for what color to use as an app-themed color. The color is given as an RGB triplet (e.g. \"E0E0E0\")."
     }
    }
   },
@@ -2516,6 +2520,11 @@
      "description": "The timestamp (in millis since Unix epoch) of the last modification to this snapshot.",
      "format": "int64"
     },
+    "progressValue": {
+     "type": "string",
+     "description": "The progress value (64-bit integer set by developer) associated with this snapshot.",
+     "format": "int64"
+    },
     "title": {
      "type": "string",
      "description": "The title of this snapshot."
@@ -3209,7 +3218,7 @@
      "parameters": {
       "applicationId": {
        "type": "string",
-       "description": "The application being requested.",
+       "description": "The application ID from the Google Play developer console.",
        "required": true,
        "location": "path"
       },

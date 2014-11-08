@@ -1147,6 +1147,9 @@ type PolygonStyle struct {
 	// transparent and not visible if there is no border.
 	Fill *Color `json:"fill,omitempty"`
 
+	// Label: Label style for the polygon.
+	Label *LabelStyle `json:"label,omitempty"`
+
 	// Stroke: Border of the polygon. 0 < border.width <= 10.
 	Stroke *Border `json:"stroke,omitempty"`
 }

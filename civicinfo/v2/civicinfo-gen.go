@@ -435,11 +435,11 @@ type Official struct {
 }
 
 type PollingLocation struct {
-	// Address: The address of the location
+	// Address: The address of the location.
 	Address *SimpleAddressType `json:"address,omitempty"`
 
-	// EndDate: The last date that this early vote site may be used. This
-	// field is not populated for polling locations.
+	// EndDate: The last date that this early vote site or drop off location
+	// may be used. This field is not populated for polling locations.
 	EndDate string `json:"endDate,omitempty"`
 
 	// Id: An ID for this object. IDs may change in future requests and
@@ -447,12 +447,12 @@ type PollingLocation struct {
 	// that can be requested from the Request more link on the Quotas page.
 	Id string `json:"id,omitempty"`
 
-	// Name: The name of the early vote site. This field is not populated
-	// for polling locations.
+	// Name: The name of the early vote site or drop off location. This
+	// field is not populated for polling locations.
 	Name string `json:"name,omitempty"`
 
 	// Notes: Notes about this location (e.g. accessibility ramp or entrance
-	// to use)
+	// to use).
 	Notes string `json:"notes,omitempty"`
 
 	// PollingHours: A description of when this location is open.
@@ -462,12 +462,13 @@ type PollingLocation struct {
 	// listed the data has been aggregated from those sources.
 	Sources []*Source `json:"sources,omitempty"`
 
-	// StartDate: The first date that this early vote site may be used. This
-	// field is not populated for polling locations.
+	// StartDate: The first date that this early vote site or drop off
+	// location may be used. This field is not populated for polling
+	// locations.
 	StartDate string `json:"startDate,omitempty"`
 
-	// VoterServices: The services provided by this early vote site. This
-	// field is not populated for polling locations.
+	// VoterServices: The services provided by this early vote site or drop
+	// off location. This field is not populated for polling locations.
 	VoterServices string `json:"voterServices,omitempty"`
 }
 
@@ -538,11 +539,18 @@ type Source struct {
 }
 
 type VoterInfoResponse struct {
-	// Contests: Contests that will appear on the voter's ballot
+	// Contests: Contests that will appear on the voter's ballot.
 	Contests []*Contest `json:"contests,omitempty"`
 
+	// DropOffLocations: Locations where a voter is eligible to drop off a
+	// completed ballot. The voter must have received and completed a ballot
+	// prior to arriving at the location. The location may not have ballots
+	// available on the premises. These locations could be open on or before
+	// election day as indicated in the pollingHours field.
+	DropOffLocations []*PollingLocation `json:"dropOffLocations,omitempty"`
+
 	// EarlyVoteSites: Locations where the voter is eligible to vote early,
-	// prior to election day
+	// prior to election day.
 	EarlyVoteSites []*PollingLocation `json:"earlyVoteSites,omitempty"`
 
 	// Election: The election that was queried.
@@ -561,9 +569,7 @@ type VoterInfoResponse struct {
 	OtherElections []*Election `json:"otherElections,omitempty"`
 
 	// PollingLocations: Locations where the voter is eligible to vote on
-	// election day. For states with mail-in voting only, these locations
-	// will be nearby drop box locations. Drop box locations are free to the
-	// voter and may be used instead of placing the ballot in the mail.
+	// election day.
 	PollingLocations []*PollingLocation `json:"pollingLocations,omitempty"`
 
 	PrecinctId string `json:"precinctId,omitempty"`

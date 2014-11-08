@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"uUWyYHXmEn-ab7WLvo8qNz2S8ws/cDXLFXdAKoVJxexk1KP6NnN8bk8\"",
+ "etag": "\"l66ggWbucbkBw9Lpos72oziyefE/-HU_GNTJ9u3BxQRIIJ0_rrVAs9s\"",
  "discoveryVersion": "v1",
  "id": "adexchangebuyer:v1.2",
  "name": "adexchangebuyer",
  "canonicalName": "Ad Exchange Buyer",
  "version": "v1.2",
- "revision": "20140904",
+ "revision": "20141101",
  "title": "Ad Exchange Buyer API",
  "description": "Accesses your bidding-account information, submits creatives for validation, finds available direct deals, and retrieves performance reports.",
  "ownerDomain": "google.com",
@@ -122,9 +122,19 @@
      "description": "Resource type.",
      "default": "adexchangebuyer#account"
     },
+    "maximumActiveCreatives": {
+     "type": "integer",
+     "description": "The maximum number of active creatives that an account can have, where a creative is active if it was inserted or bid with in the last 30 days. Please contact your technical account manager if you need to change this.",
+     "format": "int32"
+    },
     "maximumTotalQps": {
      "type": "integer",
      "description": "The sum of all bidderLocation.maximumQps values cannot exceed this. Please contact your technical account manager if you need to change this.",
+     "format": "int32"
+    },
+    "numberActiveCreatives": {
+     "type": "integer",
+     "description": "The number of creatives that this account inserted or bid with in the last 30 days.",
      "format": "int32"
     }
    }

@@ -169,6 +169,12 @@ type Seats struct {
 	// Kind: Identifies the resource as a subscription change plan request.
 	Kind string `json:"kind,omitempty"`
 
+	// LicensedNumberOfSeats: Read only field containing the current number
+	// of licensed seats. Resellers can utilize this field to gather
+	// insights into usage for FLEXIBLE Google-Apps subscriptions and other
+	// secondary subscriptions (e.g. Google-Vault, Drive-storage).
+	LicensedNumberOfSeats int64 `json:"licensedNumberOfSeats,omitempty"`
+
 	// MaximumNumberOfSeats: Maximum number of seats that can be purchased.
 	// This needs to be provided only for a non-commitment plan. For a
 	// commitment plan it is decided by the contract.
@@ -609,6 +615,93 @@ func (c *CustomersUpdateCall) Do() (*Customer, error) {
 	//   },
 	//   "response": {
 	//     "$ref": "Customer"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/apps.order"
+	//   ]
+	// }
+
+}
+
+// method id "reseller.subscriptions.activate":
+
+type SubscriptionsActivateCall struct {
+	s              *Service
+	customerId     string
+	subscriptionId string
+	opt_           map[string]interface{}
+}
+
+// Activate: Activates a subscription previously suspended by the
+// reseller
+func (r *SubscriptionsService) Activate(customerId string, subscriptionId string) *SubscriptionsActivateCall {
+	c := &SubscriptionsActivateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.customerId = customerId
+	c.subscriptionId = subscriptionId
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SubscriptionsActivateCall) Fields(s ...googleapi.Field) *SubscriptionsActivateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *SubscriptionsActivateCall) Do() (*Subscription, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "customers/{customerId}/subscriptions/{subscriptionId}/activate")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"customerId":     c.customerId,
+		"subscriptionId": c.subscriptionId,
+	})
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Subscription
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Activates a subscription previously suspended by the reseller",
+	//   "httpMethod": "POST",
+	//   "id": "reseller.subscriptions.activate",
+	//   "parameterOrder": [
+	//     "customerId",
+	//     "subscriptionId"
+	//   ],
+	//   "parameters": {
+	//     "customerId": {
+	//       "description": "Id of the Customer",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "subscriptionId": {
+	//       "description": "Id of the subscription, which is unique for a customer",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "customers/{customerId}/subscriptions/{subscriptionId}/activate",
+	//   "response": {
+	//     "$ref": "Subscription"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/apps.order"
@@ -1419,6 +1512,92 @@ func (c *SubscriptionsStartPaidServiceCall) Do() (*Subscription, error) {
 	//     }
 	//   },
 	//   "path": "customers/{customerId}/subscriptions/{subscriptionId}/startPaidService",
+	//   "response": {
+	//     "$ref": "Subscription"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/apps.order"
+	//   ]
+	// }
+
+}
+
+// method id "reseller.subscriptions.suspend":
+
+type SubscriptionsSuspendCall struct {
+	s              *Service
+	customerId     string
+	subscriptionId string
+	opt_           map[string]interface{}
+}
+
+// Suspend: Suspends an active subscription
+func (r *SubscriptionsService) Suspend(customerId string, subscriptionId string) *SubscriptionsSuspendCall {
+	c := &SubscriptionsSuspendCall{s: r.s, opt_: make(map[string]interface{})}
+	c.customerId = customerId
+	c.subscriptionId = subscriptionId
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SubscriptionsSuspendCall) Fields(s ...googleapi.Field) *SubscriptionsSuspendCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *SubscriptionsSuspendCall) Do() (*Subscription, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "customers/{customerId}/subscriptions/{subscriptionId}/suspend")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"customerId":     c.customerId,
+		"subscriptionId": c.subscriptionId,
+	})
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Subscription
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Suspends an active subscription",
+	//   "httpMethod": "POST",
+	//   "id": "reseller.subscriptions.suspend",
+	//   "parameterOrder": [
+	//     "customerId",
+	//     "subscriptionId"
+	//   ],
+	//   "parameters": {
+	//     "customerId": {
+	//       "description": "Id of the Customer",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "subscriptionId": {
+	//       "description": "Id of the subscription, which is unique for a customer",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "customers/{customerId}/subscriptions/{subscriptionId}/suspend",
 	//   "response": {
 	//     "$ref": "Subscription"
 	//   },

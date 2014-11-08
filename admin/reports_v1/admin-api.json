@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"uUWyYHXmEn-ab7WLvo8qNz2S8ws/kIY0aqiDkZ24yMy88cSNtVuMbHk\"",
+ "etag": "\"l66ggWbucbkBw9Lpos72oziyefE/xAcUzwpzdxH1jAgqcRwqHIGqlSk\"",
  "discoveryVersion": "v1",
  "id": "admin:reports_v1",
  "name": "admin",
  "canonicalName": "reports",
  "version": "reports_v1",
- "revision": "20140912",
+ "revision": "20141024",
  "title": "Admin Reports API",
  "description": "Allows the administrators of Google Apps customers to fetch reports about the usage, collaboration, security and risk for their users.",
  "ownerDomain": "google.com",
@@ -659,7 +659,7 @@
       "parameters": {
        "type": "string",
        "description": "Represents the application name, parameter name pairs to fetch in csv as app_name1:param_name1, app_name2:param_name2.",
-       "pattern": "(((accounts)|(gmail)|(calendar)|(docs)|(gplus)):.+,)*(((accounts)|(gmail)|(calendar)|(docs)|(gplus)):.+)",
+       "pattern": "(((accounts)|(cros)|(gmail)|(calendar)|(docs)|(gplus)):.+,)*(((accounts)|(cros)|(gmail)|(calendar)|(docs)|(gplus)):.+)",
        "location": "query"
       }
      },
@@ -699,7 +699,7 @@
       "filters": {
        "type": "string",
        "description": "Represents the set of filters including parameter operator value.",
-       "pattern": "(((accounts)|(gmail)|(calendar)|(docs)|(gplus)):.+[\u003c,\u003c=,==,\u003e=,\u003e,!=].+,)*(((accounts)|(gmail)|(calendar)|(docs)|(gplus)):.+[\u003c,\u003c=,==,\u003e=,\u003e,!=].+)",
+       "pattern": "(((accounts)|(cros)|(gmail)|(calendar)|(docs)|(gplus)):.+[\u003c,\u003c=,==,\u003e=,\u003e,!=].+,)*(((accounts)|(cros)|(gmail)|(calendar)|(docs)|(gplus)):.+[\u003c,\u003c=,==,\u003e=,\u003e,!=].+)",
        "location": "query"
       },
       "maxResults": {
@@ -717,7 +717,7 @@
       "parameters": {
        "type": "string",
        "description": "Represents the application name, parameter name pairs to fetch in csv as app_name1:param_name1, app_name2:param_name2.",
-       "pattern": "(((accounts)|(gmail)|(calendar)|(docs)|(gplus)):.+,)*(((accounts)|(gmail)|(calendar)|(docs)|(gplus)):.+)",
+       "pattern": "(((accounts)|(cros)|(gmail)|(calendar)|(docs)|(gplus)):.+,)*(((accounts)|(cros)|(gmail)|(calendar)|(docs)|(gplus)):.+)",
        "location": "query"
       },
       "userKey": {

@@ -252,10 +252,11 @@ type DatasetListDatasets struct {
 
 type DatasetReference struct {
 	// DatasetId: [Required] A unique ID for this dataset, without the
-	// project name.
+	// project name. The ID must contain only letters (a-z, A-Z), numbers
+	// (0-9), or underscores (_). The maximum length is 1,024 characters.
 	DatasetId string `json:"datasetId,omitempty"`
 
-	// ProjectId: [Optional] The ID of the container project.
+	// ProjectId: [Optional] The ID of the project containing this dataset.
 	ProjectId string `json:"projectId,omitempty"`
 }
 
@@ -519,7 +520,8 @@ type JobConfigurationLoad struct {
 	SourceFormat string `json:"sourceFormat,omitempty"`
 
 	// SourceUris: [Required] The fully-qualified URIs that point to your
-	// data on Google Cloud Storage.
+	// data in Google Cloud Storage. Wildcard names are only supported when
+	// they appear at the end of the URI.
 	SourceUris []string `json:"sourceUris,omitempty"`
 
 	// WriteDisposition: [Optional] Specifies the action that occurs if the
@@ -678,10 +680,12 @@ type JobListJobs struct {
 }
 
 type JobReference struct {
-	// JobId: [Required] ID of the job.
+	// JobId: [Required] The ID of the job. The ID must contain only letters
+	// (a-z, A-Z), numbers (0-9), underscores (_), or dashes (-). The
+	// maximum length is 1,024 characters.
 	JobId string `json:"jobId,omitempty"`
 
-	// ProjectId: [Required] Project ID being billed for the job.
+	// ProjectId: [Required] The ID of the project containing this job.
 	ProjectId string `json:"projectId,omitempty"`
 }
 
@@ -916,10 +920,14 @@ type Table struct {
 	// modified, in milliseconds since the epoch.
 	LastModifiedTime int64 `json:"lastModifiedTime,omitempty,string"`
 
-	// NumBytes: [Output-only] The size of the table in bytes.
+	// NumBytes: [Output-only] The size of the table in bytes. This property
+	// is unavailable for tables that are actively receiving streaming
+	// inserts.
 	NumBytes int64 `json:"numBytes,omitempty,string"`
 
-	// NumRows: [Output-only] The number of rows of data in this table.
+	// NumRows: [Output-only] The number of rows of data in this table. This
+	// property is unavailable for tables that are actively receiving
+	// streaming inserts.
 	NumRows uint64 `json:"numRows,omitempty,string"`
 
 	// Schema: [Optional] Describes the schema of this table.
@@ -1002,7 +1010,8 @@ type TableDataList struct {
 }
 
 type TableFieldSchema struct {
-	// Description: [Optional] The field description.
+	// Description: [Optional] The field description. The maximum length is
+	// 16K characters.
 	Description string `json:"description,omitempty"`
 
 	// Fields: [Optional] Describes the nested schema fields if the type
@@ -1013,7 +1022,9 @@ type TableFieldSchema struct {
 	// REQUIRED and REPEATED. The default value is NULLABLE.
 	Mode string `json:"mode,omitempty"`
 
-	// Name: [Required] The field name.
+	// Name: [Required] The field name. The name must contain only letters
+	// (a-z, A-Z), numbers (0-9), or underscores (_), and must start with a
+	// letter or underscore. The maximum length is 128 characters.
 	Name string `json:"name,omitempty"`
 
 	// Type: [Required] The field data type. Possible values include STRING,
@@ -1057,14 +1068,15 @@ type TableListTables struct {
 }
 
 type TableReference struct {
-	// DatasetId: [Required] ID of the dataset containing the table.
+	// DatasetId: [Required] The ID of the dataset containing this table.
 	DatasetId string `json:"datasetId,omitempty"`
 
-	// ProjectId: [Required] ID of the project billed for storage of the
-	// table.
+	// ProjectId: [Required] The ID of the project containing this table.
 	ProjectId string `json:"projectId,omitempty"`
 
-	// TableId: [Required] ID of the table.
+	// TableId: [Required] The ID of the table. The ID must contain only
+	// letters (a-z, A-Z), numbers (0-9), or underscores (_). The maximum
+	// length is 1,024 characters.
 	TableId string `json:"tableId,omitempty"`
 }
 

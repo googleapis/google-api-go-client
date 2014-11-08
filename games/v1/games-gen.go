@@ -521,6 +521,11 @@ type Application struct {
 
 	// Name: The name of the application.
 	Name string `json:"name,omitempty"`
+
+	// ThemeColor: A hint to the client UI for what color to use as an
+	// app-themed color. The color is given as an RGB triplet (e.g.
+	// "E0E0E0").
+	ThemeColor string `json:"themeColor,omitempty"`
 }
 
 type ApplicationCategory struct {
@@ -2141,6 +2146,10 @@ type Snapshot struct {
 	// last modification to this snapshot.
 	LastModifiedMillis int64 `json:"lastModifiedMillis,omitempty,string"`
 
+	// ProgressValue: The progress value (64-bit integer set by developer)
+	// associated with this snapshot.
+	ProgressValue int64 `json:"progressValue,omitempty,string"`
+
 	// Title: The title of this snapshot.
 	Title string `json:"title,omitempty"`
 
@@ -3282,7 +3291,7 @@ func (c *ApplicationsGetCall) Do() (*Application, error) {
 	//   ],
 	//   "parameters": {
 	//     "applicationId": {
-	//       "description": "The application being requested.",
+	//       "description": "The application ID from the Google Play developer console.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"

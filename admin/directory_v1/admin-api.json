@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"uUWyYHXmEn-ab7WLvo8qNz2S8ws/JayrKKEnIqmNj16l21fqKTyl5PU\"",
+ "etag": "\"l66ggWbucbkBw9Lpos72oziyefE/l5pod8YqQveewbHEUdz0VFkXQt0\"",
  "discoveryVersion": "v1",
  "id": "admin:directory_v1",
  "name": "admin",
  "canonicalName": "directory",
  "version": "directory_v1",
- "revision": "20140919",
+ "revision": "20141014",
  "title": "Admin Directory API",
  "description": "The Admin SDK Directory API lets you view and manage enterprise resources such as users and groups, administrative notifications, security features, and more.",
  "ownerDomain": "google.com",
@@ -302,6 +302,25 @@
    "type": "object",
    "description": "JSON template for Chrome Os Device resource in Directory API.",
    "properties": {
+    "activeTimeRanges": {
+     "type": "array",
+     "description": "List of active time ranges (Read-only)",
+     "items": {
+      "type": "object",
+      "properties": {
+       "activeTime": {
+        "type": "integer",
+        "description": "Duration in milliseconds",
+        "format": "int32"
+       },
+       "date": {
+        "type": "string",
+        "description": "Date of usage",
+        "format": "date"
+       }
+      }
+     }
+    },
     "annotatedLocation": {
      "type": "string",
      "description": "Address or location of the device as noted by the administrator"
@@ -1012,13 +1031,7 @@
     },
     "multiValued": {
      "type": "boolean",
-     "description": "Boolean specifying whether this is a multi-valued field or not.",
-     "annotations": {
-      "required": [
-       "directory.schemas.insert",
-       "directory.schemas.update"
-      ]
-     }
+     "description": "Boolean specifying whether this is a multi-valued field or not."
     },
     "numericIndexingSpec": {
      "type": "object",

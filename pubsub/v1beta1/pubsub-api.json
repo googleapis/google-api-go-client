@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"uUWyYHXmEn-ab7WLvo8qNz2S8ws/ywePitQXGabB9vHcCh_sNtCXjDU\"",
+ "etag": "\"l66ggWbucbkBw9Lpos72oziyefE/ndJAoL1i87Wmt3FRu81GYCnYaNQ\"",
  "discoveryVersion": "v1",
  "id": "pubsub:v1beta1",
  "name": "pubsub",
  "version": "v1beta1",
- "revision": "20140919",
+ "revision": "20141104",
  "title": "Cloud Pub/Sub API",
  "description": "Provides reliable, many-to-many, asynchronous messaging between applications.",
  "ownerDomain": "google.com",
@@ -192,6 +192,38 @@
     }
    }
   },
+  "PublishBatchRequest": {
+   "id": "PublishBatchRequest",
+   "type": "object",
+   "externalTypeName": "tech.pubsub.PublishBatchRequest",
+   "properties": {
+    "messages": {
+     "type": "array",
+     "description": "The messages to publish.",
+     "items": {
+      "$ref": "PubsubMessage"
+     }
+    },
+    "topic": {
+     "type": "string",
+     "description": "The messages in the request will be published on this topic."
+    }
+   }
+  },
+  "PublishBatchResponse": {
+   "id": "PublishBatchResponse",
+   "type": "object",
+   "externalTypeName": "tech.pubsub.PublishBatchResponse",
+   "properties": {
+    "messageIds": {
+     "type": "array",
+     "description": "The server-assigned ID of each published message, in the same order as the messages in the request. IDs are guaranteed to be unique within the topic.",
+     "items": {
+      "type": "string"
+     }
+    }
+   }
+  },
   "PublishRequest": {
    "id": "PublishRequest",
    "type": "object",
@@ -203,7 +235,7 @@
     },
     "topic": {
      "type": "string",
-     "description": "The name of the topic for which the message is being added."
+     "description": "The message in the request will be published on this topic."
     }
    }
   },
@@ -247,6 +279,44 @@
      "description": "Optional list of labels for this message. Keys in this collection must be unique.",
      "items": {
       "$ref": "Label"
+     }
+    },
+    "messageId": {
+     "type": "string",
+     "description": "ID of this message assigned by the server at publication time. Guaranteed to be unique within the topic. This value may be read by a subscriber that receives a PubsubMessage via a Pull call or a push delivery. It must not be populated by a publisher in a Publish call."
+    }
+   }
+  },
+  "PullBatchRequest": {
+   "id": "PullBatchRequest",
+   "type": "object",
+   "externalTypeName": "tech.pubsub.PullBatchRequest",
+   "properties": {
+    "maxEvents": {
+     "type": "integer",
+     "description": "The maximum number of PubsubEvents returned for this request. The Pub/Sub system may return fewer than the number of events specified.",
+     "format": "int32"
+    },
+    "returnImmediately": {
+     "type": "boolean",
+     "description": "If this is specified as true the system will respond immediately even if it is not able to return a message in the Pull response. Otherwise the system is allowed to wait until at least one message is available rather than returning no messages. The client may cancel the request if it does not wish to wait any longer for the response."
+    },
+    "subscription": {
+     "type": "string",
+     "description": "The subscription from which messages should be pulled."
+    }
+   }
+  },
+  "PullBatchResponse": {
+   "id": "PullBatchResponse",
+   "type": "object",
+   "externalTypeName": "tech.pubsub.PullBatchResponse",
+   "properties": {
+    "pullResponses": {
+     "type": "array",
+     "description": "Received Pub/Sub messages or status events. The Pub/Sub system will return zero messages if there are no more messages available in the backlog. The Pub/Sub system may return fewer than the max_events requested even if there are more messages available in the backlog.",
+     "items": {
+      "$ref": "PullResponse"
      }
     }
    }
@@ -352,7 +422,7 @@
      "id": "pubsub.subscriptions.create",
      "path": "subscriptions",
      "httpMethod": "POST",
-     "description": "Creates a subscription on a given topic for a given subscriber. If the subscription already exists, returns ALREADY_EXISTS. If the corresponding topic doesn't exist, returns NOT_FOUND.",
+     "description": "Creates a subscription on a given topic for a given subscriber. If the subscription already exists, returns ALREADY_EXISTS. If the corresponding topic doesn't exist, returns NOT_FOUND.\n\nIf the name is not provided in the request, the server will assign a random name for this subscription on the same project as the topic.",
      "request": {
       "$ref": "Subscription"
      },
@@ -481,6 +551,22 @@
       "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/pubsub"
      ]
+    },
+    "pullBatch": {
+     "id": "pubsub.subscriptions.pullBatch",
+     "path": "subscriptions/pullBatch",
+     "httpMethod": "POST",
+     "description": "Pulls messages from the server. Returns an empty list if there are no messages available in the backlog. The system is free to return UNAVAILABLE if there too many pull requests outstanding for a given subscription.",
+     "request": {
+      "$ref": "PullBatchRequest"
+     },
+     "response": {
+      "$ref": "PullBatchResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/pubsub"
+     ]
     }
    }
   },
@@ -585,6 +671,22 @@
      "description": "Adds a message to the topic. Returns NOT_FOUND if the topic does not exist.",
      "request": {
       "$ref": "PublishRequest"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/pubsub"
+     ]
+    },
+    "publishBatch": {
+     "id": "pubsub.topics.publishBatch",
+     "path": "topics/publishBatch",
+     "httpMethod": "POST",
+     "description": "Adds one or more messages to the topic. Returns NOT_FOUND if the topic does not exist.",
+     "request": {
+      "$ref": "PublishBatchRequest"
+     },
+     "response": {
+      "$ref": "PublishBatchResponse"
      },
      "scopes": [
       "https://www.googleapis.com/auth/cloud-platform",

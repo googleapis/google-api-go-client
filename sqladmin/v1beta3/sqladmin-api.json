@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"uUWyYHXmEn-ab7WLvo8qNz2S8ws/9fwQA8H2k5NmzsvEUWIyM_KlxbQ\"",
+ "etag": "\"l66ggWbucbkBw9Lpos72oziyefE/hSgBYRvTI2dDR9CzjHO6eIajaXc\"",
  "discoveryVersion": "v1",
  "id": "sqladmin:v1beta3",
  "name": "sqladmin",
  "canonicalName": "SQL Admin",
  "version": "v1beta3",
- "revision": "20140827",
+ "revision": "20141020",
  "title": "Cloud SQL Administration API",
  "description": "API for Cloud SQL database instance management.",
  "ownerDomain": "google.com",
@@ -277,6 +277,10 @@
      "items": {
       "$ref": "IpMapping"
      }
+    },
+    "ipv6Address": {
+     "type": "string",
+     "description": "The IPv6 address assigned to the instance."
     },
     "kind": {
      "type": "string",
@@ -764,6 +768,11 @@
      "type": "boolean",
      "description": "Whether the instance should be assigned an IP address or not."
     },
+    "kind": {
+     "type": "string",
+     "description": "This is always sql#ipConfiguration.",
+     "default": "sql#ipConfiguration"
+    },
     "requireSsl": {
      "type": "boolean",
      "description": "Whether the mysqld should default to 'REQUIRE X509' for users connecting over IP."
@@ -1131,7 +1140,7 @@
       },
       "dueTime": {
        "type": "string",
-       "description": "The time when this run is due to start in RFC 3339 format, for example 2012-11-15T16:19:00.094Z.",
+       "description": "The start time of the four-hour backup window. The backup can occur any time in the window. The time is in RFC 3339 format, for example 2012-11-15T16:19:00.094Z.",
        "required": true,
        "location": "query"
       },
@@ -1578,7 +1587,7 @@
       },
       "dueTime": {
        "type": "string",
-       "description": "The time when this run is due to start in RFC 3339 format, for example 2012-11-15T16:19:00.094Z.",
+       "description": "The start time of the four-hour backup window. The backup can occur any time in the window. The time is in RFC 3339 format, for example 2012-11-15T16:19:00.094Z.",
        "required": true,
        "location": "query"
       },

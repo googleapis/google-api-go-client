@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"uUWyYHXmEn-ab7WLvo8qNz2S8ws/KLvHOFhlqcmmjqmNE4lM_SMZ6_s\"",
+ "etag": "\"l66ggWbucbkBw9Lpos72oziyefE/S3CrUoJ8uvc_hw3CQly01B5yfX4\"",
  "discoveryVersion": "v1",
  "id": "mapsengine:v1",
  "name": "mapsengine",
  "canonicalName": "Maps Engine",
  "version": "v1",
- "revision": "20140919",
+ "revision": "20141030",
  "title": "Google Maps Engine API",
  "description": "The Google Maps Engine API allows developers to store and query geospatial vector and raster data.",
  "ownerDomain": "google.com",
@@ -1651,6 +1651,10 @@
      "$ref": "Color",
      "description": "Fill color of the polygon. If not provided, the polygon will be transparent and not visible if there is no border."
     },
+    "label": {
+     "$ref": "LabelStyle",
+     "description": "Label style for the polygon."
+    },
     "stroke": {
      "$ref": "Border",
      "description": "Border of the polygon. 0 \u003c border.width \u003c= 10."
@@ -1665,15 +1669,15 @@
   "Project": {
    "id": "Project",
    "type": "object",
-   "description": "A project groups a collection of resources.",
+   "description": "A Maps Engine project groups a collection of resources.",
    "properties": {
     "id": {
      "type": "string",
-     "description": "An ID used to refer to this project."
+     "description": "An ID used to refer to this Maps Engine project."
     },
     "name": {
      "type": "string",
-     "description": "A user provided name for this project."
+     "description": "A user provided name for this Maps Engine project."
     }
    }
   },

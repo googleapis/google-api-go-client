@@ -1144,6 +1144,9 @@ type PolygonStyle struct {
 	// transparent and not visible if there is no border.
 	Fill *Color `json:"fill,omitempty"`
 
+	// Label: Label style for the polygon.
+	Label *LabelStyle `json:"label,omitempty"`
+
 	// Stroke: Border of the polygon. 0 < border.width <= 10.
 	Stroke *Border `json:"stroke,omitempty"`
 }
@@ -1152,10 +1155,10 @@ type ProcessResponse struct {
 }
 
 type Project struct {
-	// Id: An ID used to refer to this project.
+	// Id: An ID used to refer to this Maps Engine project.
 	Id string `json:"id,omitempty"`
 
-	// Name: A user provided name for this project.
+	// Name: A user provided name for this Maps Engine project.
 	Name string `json:"name,omitempty"`
 }
 

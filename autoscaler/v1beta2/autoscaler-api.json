@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"uUWyYHXmEn-ab7WLvo8qNz2S8ws/OGrwqagtFyzrQU63rEsuM0hbVC4\"",
+ "etag": "\"l66ggWbucbkBw9Lpos72oziyefE/5UzSOWUO3ZYn_NUebnJd-hd4w8w\"",
  "discoveryVersion": "v1",
  "id": "autoscaler:v1beta2",
  "name": "autoscaler",
  "version": "v1beta2",
- "revision": "20140909",
+ "revision": "20141024",
  "title": "Google Compute Engine Autoscaler API",
  "description": "The Google Compute Engine Autoscaler API provides autoscaling for groups of Cloud VMs.",
  "ownerDomain": "google.com",
@@ -226,6 +226,27 @@
     }
    }
   },
+  "DeprecationStatus": {
+   "id": "DeprecationStatus",
+   "type": "object",
+   "properties": {
+    "deleted": {
+     "type": "string"
+    },
+    "deprecated": {
+     "type": "string"
+    },
+    "obsolete": {
+     "type": "string"
+    },
+    "replacement": {
+     "type": "string"
+    },
+    "state": {
+     "type": "string"
+    }
+   }
+  },
   "Operation": {
    "id": "Operation",
    "type": "object",
@@ -371,6 +392,90 @@
     },
     "selfLink": {
      "type": "string"
+    }
+   }
+  },
+  "Zone": {
+   "id": "Zone",
+   "type": "object",
+   "properties": {
+    "creationTimestamp": {
+     "type": "string"
+    },
+    "deprecated": {
+     "$ref": "DeprecationStatus"
+    },
+    "description": {
+     "type": "string"
+    },
+    "id": {
+     "type": "string",
+     "format": "uint64"
+    },
+    "kind": {
+     "type": "string",
+     "description": "Type of the resource.",
+     "default": "autoscaler#zone"
+    },
+    "maintenanceWindows": {
+     "type": "array",
+     "items": {
+      "type": "object",
+      "properties": {
+       "beginTime": {
+        "type": "string"
+       },
+       "description": {
+        "type": "string"
+       },
+       "endTime": {
+        "type": "string"
+       },
+       "name": {
+        "type": "string"
+       }
+      }
+     }
+    },
+    "name": {
+     "type": "string"
+    },
+    "region": {
+     "type": "string"
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "Server defined URL for the resource (output only)."
+    },
+    "status": {
+     "type": "string"
+    }
+   }
+  },
+  "ZoneList": {
+   "id": "ZoneList",
+   "type": "object",
+   "properties": {
+    "id": {
+     "type": "string"
+    },
+    "items": {
+     "type": "array",
+     "items": {
+      "$ref": "Zone"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Type of resource.",
+     "default": "autoscaler#zoneList"
+    },
+    "nextPageToken": {
+     "type": "string"
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "Server defined URL for this resource (output only)."
     }
    }
   }
@@ -730,6 +835,50 @@
      ],
      "response": {
       "$ref": "OperationList"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    }
+   }
+  },
+  "zones": {
+   "methods": {
+    "list": {
+     "id": "autoscaler.zones.list",
+     "path": "{project}/zones",
+     "httpMethod": "GET",
+     "description": "",
+     "parameters": {
+      "filter": {
+       "type": "string",
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "default": "500",
+       "format": "uint32",
+       "minimum": "0",
+       "maximum": "500",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "location": "query"
+      },
+      "project": {
+       "type": "string",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project"
+     ],
+     "response": {
+      "$ref": "ZoneList"
      },
      "scopes": [
       "https://www.googleapis.com/auth/compute",

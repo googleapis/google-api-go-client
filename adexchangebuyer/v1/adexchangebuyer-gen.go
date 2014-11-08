@@ -100,15 +100,35 @@ type Account struct {
 	// Kind: Resource type.
 	Kind string `json:"kind,omitempty"`
 
+	// MaximumActiveCreatives: The maximum number of active creatives that
+	// an account can have, where a creative is active if it was inserted or
+	// bid with in the last 30 days. Please contact your technical account
+	// manager if you need to change this.
+	MaximumActiveCreatives int64 `json:"maximumActiveCreatives,omitempty"`
+
 	// MaximumTotalQps: The sum of all bidderLocation.maximumQps values
 	// cannot exceed this. Please contact your technical account manager if
 	// you need to change this.
 	MaximumTotalQps int64 `json:"maximumTotalQps,omitempty"`
+
+	// NumberActiveCreatives: The number of creatives that this account
+	// inserted or bid with in the last 30 days.
+	NumberActiveCreatives int64 `json:"numberActiveCreatives,omitempty"`
 }
 
 type AccountBidderLocation struct {
 	// MaximumQps: The maximum queries per second the Ad Exchange will send.
 	MaximumQps int64 `json:"maximumQps,omitempty"`
+
+	// Region: The geographical region the Ad Exchange should send requests
+	// from. Only used by some quota systems, but always setting the value
+	// is recommended. Allowed values:
+	// - ASIA
+	// - EUROPE
+	// - US_EAST
+	// -
+	// US_WEST
+	Region string `json:"region,omitempty"`
 
 	// Url: The URL to which the Ad Exchange will send bid requests.
 	Url string `json:"url,omitempty"`

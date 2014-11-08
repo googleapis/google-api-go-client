@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"uUWyYHXmEn-ab7WLvo8qNz2S8ws/SnsF096M9PHKlmCnRlQrCODnADg\"",
+ "etag": "\"l66ggWbucbkBw9Lpos72oziyefE/VmVtGEcRnD3shWg7g2I7NxKyL0I\"",
  "discoveryVersion": "v1",
  "id": "gamesManagement:v1management",
  "name": "gamesManagement",
  "canonicalName": "Games Management",
  "version": "v1management",
- "revision": "20140918",
+ "revision": "20141106",
  "title": "Google Play Game Services Management API",
  "description": "The Management API for Google Play Game Services.",
  "ownerDomain": "google.com",
@@ -99,6 +99,25 @@
     }
    }
   },
+  "AchievementResetMultipleForAllRequest": {
+   "id": "AchievementResetMultipleForAllRequest",
+   "type": "object",
+   "description": "This is a JSON template for multiple achievements reset all request.",
+   "properties": {
+    "achievement_ids": {
+     "type": "array",
+     "description": "The IDs of achievements to reset.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Uniquely identifies the type of this resource. Value is always the fixed string gamesManagement#achievementResetMultipleForAllRequest.",
+     "default": "gamesManagement#achievementResetMultipleForAllRequest"
+    }
+   }
+  },
   "AchievementResetResponse": {
    "id": "AchievementResetResponse",
    "type": "object",
@@ -120,6 +139,25 @@
     "updateOccurred": {
      "type": "boolean",
      "description": "Flag to indicate if the requested update actually occurred."
+    }
+   }
+  },
+  "EventsResetMultipleForAllRequest": {
+   "id": "EventsResetMultipleForAllRequest",
+   "type": "object",
+   "description": "This is a JSON template for multiple events reset all request.",
+   "properties": {
+    "event_ids": {
+     "type": "array",
+     "description": "The IDs of events to reset.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Uniquely identifies the type of this resource. Value is always the fixed string gamesManagement#eventsResetMultipleForAllRequest.",
+     "default": "gamesManagement#eventsResetMultipleForAllRequest"
     }
    }
   },
@@ -280,11 +318,34 @@
     }
    }
   },
+  "PlayerScoreResetAllResponse": {
+   "id": "PlayerScoreResetAllResponse",
+   "type": "object",
+   "description": "This is a JSON template for a list of leaderboard reset resources.",
+   "properties": {
+    "kind": {
+     "type": "string",
+     "description": "Uniquely identifies the type of this resource. Value is always the fixed string gamesManagement#playerScoreResetResponse.",
+     "default": "gamesManagement#playerScoreResetAllResponse"
+    },
+    "results": {
+     "type": "array",
+     "description": "The leaderboard reset results.",
+     "items": {
+      "$ref": "PlayerScoreResetResponse"
+     }
+    }
+   }
+  },
   "PlayerScoreResetResponse": {
    "id": "PlayerScoreResetResponse",
    "type": "object",
    "description": "This is a JSON template for a list of reset leaderboard entry resources.",
    "properties": {
+    "definitionId": {
+     "type": "string",
+     "description": "The ID of an leaderboard for which player state has been updated."
+    },
     "kind": {
      "type": "string",
      "description": "Uniquely identifies the type of this resource. Value is always the fixed string gamesManagement#playerScoreResetResponse.",
@@ -293,6 +354,44 @@
     "resetScoreTimeSpans": {
      "type": "array",
      "description": "The time spans of the updated score.\nPossible values are:  \n- \"ALL_TIME\" - The score is an all-time score. \n- \"WEEKLY\" - The score is a weekly score. \n- \"DAILY\" - The score is a daily score.",
+     "items": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  "QuestsResetMultipleForAllRequest": {
+   "id": "QuestsResetMultipleForAllRequest",
+   "type": "object",
+   "description": "This is a JSON template for multiple quests reset all request.",
+   "properties": {
+    "kind": {
+     "type": "string",
+     "description": "Uniquely identifies the type of this resource. Value is always the fixed string gamesManagement#questsResetMultipleForAllRequest.",
+     "default": "gamesManagement#questsResetMultipleForAllRequest"
+    },
+    "quest_ids": {
+     "type": "array",
+     "description": "The IDs of quests to reset.",
+     "items": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  "ScoresResetMultipleForAllRequest": {
+   "id": "ScoresResetMultipleForAllRequest",
+   "type": "object",
+   "description": "This is a JSON template for multiple scores reset all request.",
+   "properties": {
+    "kind": {
+     "type": "string",
+     "description": "Uniquely identifies the type of this resource. Value is always the fixed string gamesManagement#scoresResetMultipleForAllRequest.",
+     "default": "gamesManagement#scoresResetMultipleForAllRequest"
+    },
+    "leaderboard_ids": {
+     "type": "array",
+     "description": "The IDs of leaderboards to reset.",
      "items": {
       "type": "string"
      }
@@ -340,11 +439,21 @@
       "https://www.googleapis.com/auth/plus.login"
      ]
     },
+    "resetAllForAllPlayers": {
+     "id": "gamesManagement.achievements.resetAllForAllPlayers",
+     "path": "achievements/resetAllForAllPlayers",
+     "httpMethod": "POST",
+     "description": "Resets all draft achievements for all players. This method is only available to user accounts for your developer console.",
+     "scopes": [
+      "https://www.googleapis.com/auth/games",
+      "https://www.googleapis.com/auth/plus.login"
+     ]
+    },
     "resetForAllPlayers": {
      "id": "gamesManagement.achievements.resetForAllPlayers",
      "path": "achievements/{achievementId}/resetForAllPlayers",
      "httpMethod": "POST",
-     "description": "Resets the achievement with the given ID for the all players. This method is only available to user accounts for your developer console. Only draft achievements can be reset.",
+     "description": "Resets the achievement with the given ID for all players. This method is only available to user accounts for your developer console. Only draft achievements can be reset.",
      "parameters": {
       "achievementId": {
        "type": "string",
@@ -356,6 +465,19 @@
      "parameterOrder": [
       "achievementId"
      ],
+     "scopes": [
+      "https://www.googleapis.com/auth/games",
+      "https://www.googleapis.com/auth/plus.login"
+     ]
+    },
+    "resetMultipleForAllPlayers": {
+     "id": "gamesManagement.achievements.resetMultipleForAllPlayers",
+     "path": "achievements/resetMultipleForAllPlayers",
+     "httpMethod": "POST",
+     "description": "Resets achievements with the given IDs for all players. This method is only available to user accounts for your developer console. Only draft achievements may be reset.",
+     "request": {
+      "$ref": "AchievementResetMultipleForAllRequest"
+     },
      "scopes": [
       "https://www.googleapis.com/auth/games",
       "https://www.googleapis.com/auth/plus.login"
@@ -373,7 +495,7 @@
      "parameters": {
       "applicationId": {
        "type": "string",
-       "description": "The application being requested.",
+       "description": "The application ID from the Google Play developer console.",
        "required": true,
        "location": "path"
       },
@@ -410,7 +532,7 @@
      "id": "gamesManagement.events.reset",
      "path": "events/{eventId}/reset",
      "httpMethod": "POST",
-     "description": "Reset all player progress on the event for the currently authenticated player. This method is only accessible to whitelisted tester accounts for your application. All resources that use the event will also be reset.",
+     "description": "Resets all player progress on the event with the given ID for the currently authenticated player. This method is only accessible to whitelisted tester accounts for your application. All quests for this player that use the event will also be reset.",
      "parameters": {
       "eventId": {
        "type": "string",
@@ -431,7 +553,17 @@
      "id": "gamesManagement.events.resetAll",
      "path": "events/reset",
      "httpMethod": "POST",
-     "description": "Reset all player progress on all unpublished events for the currently authenticated player. This method is only accessible to whitelisted tester accounts for your application. All resources that use the events will also be reset.",
+     "description": "Resets all player progress on all events for the currently authenticated player. This method is only accessible to whitelisted tester accounts for your application. All quests for this player will also be reset.",
+     "scopes": [
+      "https://www.googleapis.com/auth/games",
+      "https://www.googleapis.com/auth/plus.login"
+     ]
+    },
+    "resetAllForAllPlayers": {
+     "id": "gamesManagement.events.resetAllForAllPlayers",
+     "path": "events/resetAllForAllPlayers",
+     "httpMethod": "POST",
+     "description": "Resets all draft events for all players. This method is only available to user accounts for your developer console. All quests that use any of these events will also be reset.",
      "scopes": [
       "https://www.googleapis.com/auth/games",
       "https://www.googleapis.com/auth/plus.login"
@@ -441,7 +573,7 @@
      "id": "gamesManagement.events.resetForAllPlayers",
      "path": "events/{eventId}/resetForAllPlayers",
      "httpMethod": "POST",
-     "description": "Reset all player progress on the event for all players. This method is only available to user accounts for your developer console. Only draft events can be reset. All resources that use the event will also be reset.",
+     "description": "Resets the event with the given ID for all players. This method is only available to user accounts for your developer console. Only draft events can be reset. All quests that use the event will also be reset.",
      "parameters": {
       "eventId": {
        "type": "string",
@@ -453,6 +585,19 @@
      "parameterOrder": [
       "eventId"
      ],
+     "scopes": [
+      "https://www.googleapis.com/auth/games",
+      "https://www.googleapis.com/auth/plus.login"
+     ]
+    },
+    "resetMultipleForAllPlayers": {
+     "id": "gamesManagement.events.resetMultipleForAllPlayers",
+     "path": "events/resetMultipleForAllPlayers",
+     "httpMethod": "POST",
+     "description": "Resets events with the given IDs for all players. This method is only available to user accounts for your developer console. Only draft events may be reset. All quests that use any of the events will also be reset.",
+     "request": {
+      "$ref": "EventsResetMultipleForAllRequest"
+     },
      "scopes": [
       "https://www.googleapis.com/auth/games",
       "https://www.googleapis.com/auth/plus.login"
@@ -470,7 +615,7 @@
      "parameters": {
       "applicationId": {
        "type": "string",
-       "description": "The application being requested.",
+       "description": "The application ID from the Google Play developer console.",
        "required": true,
        "location": "path"
       },
@@ -498,7 +643,7 @@
      "parameters": {
       "applicationId": {
        "type": "string",
-       "description": "The application being requested.",
+       "description": "The application ID from the Google Play developer console.",
        "required": true,
        "location": "path"
       },
@@ -526,7 +671,7 @@
      "id": "gamesManagement.quests.reset",
      "path": "quests/{questId}/reset",
      "httpMethod": "POST",
-     "description": "Reset all player progress on the quest for the currently authenticated player. This method is only accessible to whitelisted tester accounts for your application.",
+     "description": "Resets all player progress on the quest with the given ID for the currently authenticated player. This method is only accessible to whitelisted tester accounts for your application.",
      "parameters": {
       "questId": {
        "type": "string",
@@ -538,6 +683,60 @@
      "parameterOrder": [
       "questId"
      ],
+     "scopes": [
+      "https://www.googleapis.com/auth/games",
+      "https://www.googleapis.com/auth/plus.login"
+     ]
+    },
+    "resetAll": {
+     "id": "gamesManagement.quests.resetAll",
+     "path": "quests/reset",
+     "httpMethod": "POST",
+     "description": "Resets all player progress on all quests for the currently authenticated player. This method is only accessible to whitelisted tester accounts for your application.",
+     "scopes": [
+      "https://www.googleapis.com/auth/games",
+      "https://www.googleapis.com/auth/plus.login"
+     ]
+    },
+    "resetAllForAllPlayers": {
+     "id": "gamesManagement.quests.resetAllForAllPlayers",
+     "path": "quests/resetAllForAllPlayers",
+     "httpMethod": "POST",
+     "description": "Resets all draft quests for all players. This method is only available to user accounts for your developer console.",
+     "scopes": [
+      "https://www.googleapis.com/auth/games",
+      "https://www.googleapis.com/auth/plus.login"
+     ]
+    },
+    "resetForAllPlayers": {
+     "id": "gamesManagement.quests.resetForAllPlayers",
+     "path": "quests/{questId}/resetForAllPlayers",
+     "httpMethod": "POST",
+     "description": "Resets all player progress on the quest with the given ID for all players. This method is only available to user accounts for your developer console. Only draft quests can be reset.",
+     "parameters": {
+      "questId": {
+       "type": "string",
+       "description": "The ID of the quest.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "questId"
+     ],
+     "scopes": [
+      "https://www.googleapis.com/auth/games",
+      "https://www.googleapis.com/auth/plus.login"
+     ]
+    },
+    "resetMultipleForAllPlayers": {
+     "id": "gamesManagement.quests.resetMultipleForAllPlayers",
+     "path": "quests/resetMultipleForAllPlayers",
+     "httpMethod": "POST",
+     "description": "Resets quests with the given IDs for all players. This method is only available to user accounts for your developer console. Only draft quests may be reset.",
+     "request": {
+      "$ref": "QuestsResetMultipleForAllRequest"
+     },
      "scopes": [
       "https://www.googleapis.com/auth/games",
       "https://www.googleapis.com/auth/plus.login"
@@ -556,6 +755,16 @@
       "https://www.googleapis.com/auth/games",
       "https://www.googleapis.com/auth/plus.login"
      ]
+    },
+    "resetForAllPlayers": {
+     "id": "gamesManagement.rooms.resetForAllPlayers",
+     "path": "rooms/resetForAllPlayers",
+     "httpMethod": "POST",
+     "description": "Deletes rooms where the only room participants are from whitelisted tester accounts for your application. This method is only available to user accounts for your developer console.",
+     "scopes": [
+      "https://www.googleapis.com/auth/games",
+      "https://www.googleapis.com/auth/plus.login"
+     ]
     }
    }
   },
@@ -565,7 +774,7 @@
      "id": "gamesManagement.scores.reset",
      "path": "leaderboards/{leaderboardId}/scores/reset",
      "httpMethod": "POST",
-     "description": "Reset scores for the specified leaderboard for the currently authenticated player. This method is only accessible to whitelisted tester accounts for your application.",
+     "description": "Resets scores for the leaderboard with the given ID for the currently authenticated player. This method is only accessible to whitelisted tester accounts for your application.",
      "parameters": {
       "leaderboardId": {
        "type": "string",
@@ -585,11 +794,34 @@
       "https://www.googleapis.com/auth/plus.login"
      ]
     },
+    "resetAll": {
+     "id": "gamesManagement.scores.resetAll",
+     "path": "scores/reset",
+     "httpMethod": "POST",
+     "description": "Resets all scores for all leaderboards for the currently authenticated players. This method is only accessible to whitelisted tester accounts for your application.",
+     "response": {
+      "$ref": "PlayerScoreResetAllResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/games",
+      "https://www.googleapis.com/auth/plus.login"
+     ]
+    },
+    "resetAllForAllPlayers": {
+     "id": "gamesManagement.scores.resetAllForAllPlayers",
+     "path": "scores/resetAllForAllPlayers",
+     "httpMethod": "POST",
+     "description": "Resets scores for all draft leaderboards for all players. This method is only available to user accounts for your developer console.",
+     "scopes": [
+      "https://www.googleapis.com/auth/games",
+      "https://www.googleapis.com/auth/plus.login"
+     ]
+    },
     "resetForAllPlayers": {
      "id": "gamesManagement.scores.resetForAllPlayers",
      "path": "leaderboards/{leaderboardId}/scores/resetForAllPlayers",
      "httpMethod": "POST",
-     "description": "Reset scores for the specified leaderboard for all players. This method is only available to user accounts for your developer console. Only draft leaderboards can be reset.",
+     "description": "Resets scores for the leaderboard with the given ID for all players. This method is only available to user accounts for your developer console. Only draft leaderboards can be reset.",
      "parameters": {
       "leaderboardId": {
        "type": "string",
@@ -605,6 +837,19 @@
       "https://www.googleapis.com/auth/games",
       "https://www.googleapis.com/auth/plus.login"
      ]
+    },
+    "resetMultipleForAllPlayers": {
+     "id": "gamesManagement.scores.resetMultipleForAllPlayers",
+     "path": "scores/resetMultipleForAllPlayers",
+     "httpMethod": "POST",
+     "description": "Resets scores for the leaderboards with the given IDs for all players. This method is only available to user accounts for your developer console. Only draft leaderboards may be reset.",
+     "request": {
+      "$ref": "ScoresResetMultipleForAllRequest"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/games",
+      "https://www.googleapis.com/auth/plus.login"
+     ]
     }
    }
   },
@@ -615,6 +860,16 @@
      "path": "turnbasedmatches/reset",
      "httpMethod": "POST",
      "description": "Reset all turn-based match data for a user. This method is only accessible to whitelisted tester accounts for your application.",
+     "scopes": [
+      "https://www.googleapis.com/auth/games",
+      "https://www.googleapis.com/auth/plus.login"
+     ]
+    },
+    "resetForAllPlayers": {
+     "id": "gamesManagement.turnBasedMatches.resetForAllPlayers",
+     "path": "turnbasedmatches/resetForAllPlayers",
+     "httpMethod": "POST",
+     "description": "Deletes turn-based matches where the only match participants are from whitelisted tester accounts for your application. This method is only available to user accounts for your developer console.",
      "scopes": [
       "https://www.googleapis.com/auth/games",
       "https://www.googleapis.com/auth/plus.login"

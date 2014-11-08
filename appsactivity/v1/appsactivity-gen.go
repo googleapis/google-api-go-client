@@ -41,7 +41,7 @@ const basePath = "https://www.googleapis.com/appsactivity/v1/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View historical activity for Google services
+	// View the activity history of your Google Apps
 	ActivityScope = "https://www.googleapis.com/auth/activity"
 
 	// View and manage the files and documents in your Google Drive

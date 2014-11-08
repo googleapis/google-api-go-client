@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"uUWyYHXmEn-ab7WLvo8qNz2S8ws/rvEzY_KAgBOlUM1lQqukKQLrl6Y\"",
+ "etag": "\"l66ggWbucbkBw9Lpos72oziyefE/DrMyiBR493_IBfZvqlikbYuZEB0\"",
  "discoveryVersion": "v1",
  "id": "androidpublisher:v2",
  "name": "androidpublisher",
  "canonicalName": "Android Publisher",
  "version": "v2",
- "revision": "20140813",
+ "revision": "20141022",
  "title": "Google Play Android Developer API",
  "description": "Lets Android application developers access their Google Play accounts.",
  "ownerDomain": "google.com",
@@ -317,7 +317,7 @@
     },
     "trialPeriod": {
      "type": "string",
-     "description": "Trial duration (if any) of the subscription, defined as ISO 8601. i.e. \"P10D\" means an initial period of 10 days during which ownership is granted prior to any payment. Acceptable values are between \"P7D\" and \"P999D\". Seasonal subscriptions cannot have a trial period."
+     "description": "Trial period, specified in ISO 8601 format. Acceptable values are anything between \"P7D\" (seven days) and \"P999D\" (999 days). Seasonal subscriptions cannot have a trial period."
     }
    }
   },

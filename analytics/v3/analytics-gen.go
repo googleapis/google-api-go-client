@@ -1345,21 +1345,22 @@ type FilterExpression struct {
 	// - IS_MOBILE,
 	// -
 	// IS_TABLET,
+	// - DEVICE_CATEGORY,
 	// - MOBILE_HAS_QWERTY_KEYBOARD,
-	// - MOBILE_HAS_NFC_SUPPORT,
-	//
+	// -
+	// MOBILE_HAS_NFC_SUPPORT,
 	// - MOBILE_HAS_CELLULAR_RADIO,
-	// - MOBILE_HAS_WIFI_SUPPORT,
 	// -
-	// MOBILE_BRAND_NAME,
+	// MOBILE_HAS_WIFI_SUPPORT,
+	// - MOBILE_BRAND_NAME,
 	// - MOBILE_MODEL_NAME,
+	//
 	// - MOBILE_MARKETING_NAME,
-	// -
-	// MOBILE_POINTING_METHOD,
+	// - MOBILE_POINTING_METHOD,
 	// - Social
-	// - SOCIAL_NETWORK,
 	// -
-	// SOCIAL_ACTION,
+	// SOCIAL_NETWORK,
+	// - SOCIAL_ACTION,
 	// - SOCIAL_ACTION_TARGET,
 	Field string `json:"field,omitempty"`
 
@@ -1932,6 +1933,11 @@ type Profile struct {
 	// ECommerceTracking: Indicates whether ecommerce tracking is enabled
 	// for this view (profile).
 	ECommerceTracking bool `json:"eCommerceTracking,omitempty"`
+
+	// EnhancedECommerceTracking: Indicates whether enhanced ecommerce
+	// tracking is enabled for this view (profile). This property can only
+	// be enabled if ecommerce tracking is enabled.
+	EnhancedECommerceTracking bool `json:"enhancedECommerceTracking,omitempty"`
 
 	// ExcludeQueryParameters: The query parameters that are excluded from
 	// this view (profile).
@@ -3275,7 +3281,8 @@ func (r *ManagementAccountSummariesService) List() *ManagementAccountSummariesLi
 }
 
 // MaxResults sets the optional parameter "max-results": The maximum
-// number of filters to include in this response.
+// number of account summaries to include in this response, where the
+// largest acceptable value is 1000.
 func (c *ManagementAccountSummariesListCall) MaxResults(maxResults int64) *ManagementAccountSummariesListCall {
 	c.opt_["max-results"] = maxResults
 	return c
@@ -3334,7 +3341,7 @@ func (c *ManagementAccountSummariesListCall) Do() (*AccountSummaries, error) {
 	//   "id": "analytics.management.accountSummaries.list",
 	//   "parameters": {
 	//     "max-results": {
-	//       "description": "The maximum number of filters to include in this response.",
+	//       "description": "The maximum number of account summaries to include in this response, where the largest acceptable value is 1000.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"

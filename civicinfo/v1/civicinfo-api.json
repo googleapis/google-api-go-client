@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"uUWyYHXmEn-ab7WLvo8qNz2S8ws/8e9yfjQviGE-Eza63-qXipcXCgI\"",
+ "etag": "\"l66ggWbucbkBw9Lpos72oziyefE/m-jfWpr9P6EusWc0QHxRJ5ZUj0Y\"",
  "discoveryVersion": "v1",
  "id": "civicinfo:v1",
  "name": "civicinfo",
  "canonicalName": "Civic Info",
  "version": "v1",
- "revision": "20140814",
+ "revision": "20141023",
  "title": "Google Civic Information API",
  "description": "An API for accessing civic information.",
  "ownerDomain": "google.com",
@@ -549,15 +549,15 @@
   "PollingLocation": {
    "id": "PollingLocation",
    "type": "object",
-   "description": "A location where a voter can vote. This may be an early vote site or an election day voting location.",
+   "description": "A location where a voter can vote. This may be an early vote site, an election day voting location, or a drop off location for a completed ballot.",
    "properties": {
     "address": {
      "$ref": "SimpleAddressType",
-     "description": "The address of the location"
+     "description": "The address of the location."
     },
     "endDate": {
      "type": "string",
-     "description": "The last date that this early vote site may be used. This field is not populated for polling locations."
+     "description": "The last date that this early vote site or drop off location may be used. This field is not populated for polling locations."
     },
     "id": {
      "type": "string",
@@ -565,11 +565,11 @@
     },
     "name": {
      "type": "string",
-     "description": "The name of the early vote site. This field is not populated for polling locations."
+     "description": "The name of the early vote site or drop off location. This field is not populated for polling locations."
     },
     "notes": {
      "type": "string",
-     "description": "Notes about this location (e.g. accessibility ramp or entrance to use)"
+     "description": "Notes about this location (e.g. accessibility ramp or entrance to use)."
     },
     "pollingHours": {
      "type": "string",
@@ -584,11 +584,11 @@
     },
     "startDate": {
      "type": "string",
-     "description": "The first date that this early vote site may be used. This field is not populated for polling locations."
+     "description": "The first date that this early vote site or drop off location may be used. This field is not populated for polling locations."
     },
     "voterServices": {
      "type": "string",
-     "description": "The services provided by this early vote site. This field is not populated for polling locations."
+     "description": "The services provided by this early vote site or drop off location. This field is not populated for polling locations."
     }
    }
   },
@@ -715,14 +715,21 @@
    "properties": {
     "contests": {
      "type": "array",
-     "description": "Contests that will appear on the voter's ballot",
+     "description": "Contests that will appear on the voter's ballot.",
      "items": {
       "$ref": "Contest"
      }
     },
+    "dropOffLocations": {
+     "type": "array",
+     "description": "Locations where a voter is eligible to drop off a completed ballot. The voter must have received and completed a ballot prior to arriving at the location. The location may not have ballots available on the premises. These locations could be open on or before election day as indicated in the pollingHours field.",
+     "items": {
+      "$ref": "PollingLocation"
+     }
+    },
     "earlyVoteSites": {
      "type": "array",
-     "description": "Locations where the voter is eligible to vote early, prior to election day",
+     "description": "Locations where the voter is eligible to vote early, prior to election day.",
      "items": {
       "$ref": "PollingLocation"
      }
@@ -742,7 +749,7 @@
     },
     "pollingLocations": {
      "type": "array",
-     "description": "Locations where the voter is eligible to vote on election day. For states with mail-in voting only, these locations will be nearby drop box locations. Drop box locations are free to the voter and may be used instead of placing the ballot in the mail.",
+     "description": "Locations where the voter is eligible to vote on election day.",
      "items": {
       "$ref": "PollingLocation"
      }

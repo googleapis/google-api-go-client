@@ -249,6 +249,7 @@ type AccountUser struct {
 }
 
 type AccountsCustomBatchRequest struct {
+	// Entries: The request entries to be processed in the batch.
 	Entries []*AccountsCustomBatchRequestEntry `json:"entries,omitempty"`
 }
 
@@ -267,11 +268,11 @@ type AccountsCustomBatchRequestEntry struct {
 	// MerchantId: The ID of the managing account.
 	MerchantId uint64 `json:"merchantId,omitempty,string"`
 
-	// Method: The method (get, insert, update, or delete).
 	Method string `json:"method,omitempty"`
 }
 
 type AccountsCustomBatchResponse struct {
+	// Entries: The result of the execution of the batch requests.
 	Entries []*AccountsCustomBatchResponseEntry `json:"entries,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -300,12 +301,15 @@ type AccountsListResponse struct {
 	// string "content#accountsListResponse".
 	Kind string `json:"kind,omitempty"`
 
+	// NextPageToken: The token for the retrieval of the next page of
+	// accounts.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	Resources []*Account `json:"resources,omitempty"`
 }
 
 type AccountstatusesCustomBatchRequest struct {
+	// Entries: The request entries to be processed in the batch.
 	Entries []*AccountstatusesCustomBatchRequestEntry `json:"entries,omitempty"`
 }
 
@@ -324,6 +328,7 @@ type AccountstatusesCustomBatchRequestEntry struct {
 }
 
 type AccountstatusesCustomBatchResponse struct {
+	// Entries: The result of the execution of the batch requests.
 	Entries []*AccountstatusesCustomBatchResponseEntry `json:"entries,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -348,6 +353,8 @@ type AccountstatusesListResponse struct {
 	// string "content#accountstatusesListResponse".
 	Kind string `json:"kind,omitempty"`
 
+	// NextPageToken: The token for the retrieval of the next page of
+	// account statuses.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	Resources []*AccountStatus `json:"resources,omitempty"`
@@ -489,6 +496,7 @@ type DatafeedStatusExample struct {
 }
 
 type DatafeedsCustomBatchRequest struct {
+	// Entries: The request entries to be processed in the batch.
 	Entries []*DatafeedsCustomBatchRequestEntry `json:"entries,omitempty"`
 }
 
@@ -505,11 +513,11 @@ type DatafeedsCustomBatchRequestEntry struct {
 	// MerchantId: The ID of the managing account.
 	MerchantId uint64 `json:"merchantId,omitempty,string"`
 
-	// Method: The method (get, insert, update, or delete).
 	Method string `json:"method,omitempty"`
 }
 
 type DatafeedsCustomBatchResponse struct {
+	// Entries: The result of the execution of the batch requests.
 	Entries []*DatafeedsCustomBatchResponseEntry `json:"entries,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -534,10 +542,15 @@ type DatafeedsListResponse struct {
 	// string "content#datafeedsListResponse".
 	Kind string `json:"kind,omitempty"`
 
+	// NextPageToken: The token for the retrieval of the next page of
+	// datafeeds.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
 	Resources []*Datafeed `json:"resources,omitempty"`
 }
 
 type DatafeedstatusesCustomBatchRequest struct {
+	// Entries: The request entries to be processed in the batch.
 	Entries []*DatafeedstatusesCustomBatchRequestEntry `json:"entries,omitempty"`
 }
 
@@ -551,11 +564,11 @@ type DatafeedstatusesCustomBatchRequestEntry struct {
 	// MerchantId: The ID of the managing account.
 	MerchantId uint64 `json:"merchantId,omitempty,string"`
 
-	// Method: The method (get).
 	Method string `json:"method,omitempty"`
 }
 
 type DatafeedstatusesCustomBatchResponse struct {
+	// Entries: The result of the execution of the batch requests.
 	Entries []*DatafeedstatusesCustomBatchResponseEntry `json:"entries,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -579,6 +592,10 @@ type DatafeedstatusesListResponse struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "content#datafeedstatusesListResponse".
 	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: The token for the retrieval of the next page of
+	// datafeed statuses.
+	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	Resources []*DatafeedStatus `json:"resources,omitempty"`
 }
@@ -631,6 +648,7 @@ type Inventory struct {
 }
 
 type InventoryCustomBatchRequest struct {
+	// Entries: The request entries to be processed in the batch.
 	Entries []*InventoryCustomBatchRequestEntry `json:"entries,omitempty"`
 }
 
@@ -655,6 +673,7 @@ type InventoryCustomBatchRequestEntry struct {
 }
 
 type InventoryCustomBatchResponse struct {
+	// Entries: The result of the execution of the batch requests.
 	Entries []*InventoryCustomBatchResponseEntry `json:"entries,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -1110,6 +1129,7 @@ type ProductUnitPricingMeasure struct {
 }
 
 type ProductsCustomBatchRequest struct {
+	// Entries: The request entries to be processed in the batch.
 	Entries []*ProductsCustomBatchRequestEntry `json:"entries,omitempty"`
 }
 
@@ -1120,7 +1140,6 @@ type ProductsCustomBatchRequestEntry struct {
 	// MerchantId: The ID of the managing account.
 	MerchantId uint64 `json:"merchantId,omitempty,string"`
 
-	// Method: The method (get, insert or delete).
 	Method string `json:"method,omitempty"`
 
 	// Product: The product to insert. Only required if the method is
@@ -1133,6 +1152,7 @@ type ProductsCustomBatchRequestEntry struct {
 }
 
 type ProductsCustomBatchResponse struct {
+	// Entries: The result of the execution of the batch requests.
 	Entries []*ProductsCustomBatchResponseEntry `json:"entries,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -1161,12 +1181,15 @@ type ProductsListResponse struct {
 	// string "content#productsListResponse".
 	Kind string `json:"kind,omitempty"`
 
+	// NextPageToken: The token for the retrieval of the next page of
+	// products.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	Resources []*Product `json:"resources,omitempty"`
 }
 
 type ProductstatusesCustomBatchRequest struct {
+	// Entries: The request entries to be processed in the batch.
 	Entries []*ProductstatusesCustomBatchRequestEntry `json:"entries,omitempty"`
 }
 
@@ -1177,7 +1200,6 @@ type ProductstatusesCustomBatchRequestEntry struct {
 	// MerchantId: The ID of the managing account.
 	MerchantId uint64 `json:"merchantId,omitempty,string"`
 
-	// Method: The method (get).
 	Method string `json:"method,omitempty"`
 
 	// ProductId: The ID of the product whose status to get.
@@ -1185,6 +1207,7 @@ type ProductstatusesCustomBatchRequestEntry struct {
 }
 
 type ProductstatusesCustomBatchResponse struct {
+	// Entries: The result of the execution of the batch requests.
 	Entries []*ProductstatusesCustomBatchResponseEntry `json:"entries,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -1213,6 +1236,8 @@ type ProductstatusesListResponse struct {
 	// string "content#productstatusesListResponse".
 	Kind string `json:"kind,omitempty"`
 
+	// NextPageToken: The token for the retrieval of the next page of
+	// products statuses.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	Resources []*ProductStatus `json:"resources,omitempty"`
@@ -2462,6 +2487,20 @@ func (r *DatafeedsService) List(merchantId uint64) *DatafeedsListCall {
 	return c
 }
 
+// MaxResults sets the optional parameter "maxResults": The maximum
+// number of products to return in the response, used for paging.
+func (c *DatafeedsListCall) MaxResults(maxResults int64) *DatafeedsListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The token returned
+// by the previous request.
+func (c *DatafeedsListCall) PageToken(pageToken string) *DatafeedsListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
 // Fields allows partial responses to be retrieved.
 // See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2474,6 +2513,12 @@ func (c *DatafeedsListCall) Do() (*DatafeedsListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -2505,10 +2550,22 @@ func (c *DatafeedsListCall) Do() (*DatafeedsListResponse, error) {
 	//     "merchantId"
 	//   ],
 	//   "parameters": {
+	//     "maxResults": {
+	//       "description": "The maximum number of products to return in the response, used for paging.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
 	//     "merchantId": {
+	//       "description": "The ID of the managing account.",
 	//       "format": "uint64",
 	//       "location": "path",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageToken": {
+	//       "description": "The token returned by the previous request.",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -2892,6 +2949,20 @@ func (r *DatafeedstatusesService) List(merchantId uint64) *DatafeedstatusesListC
 	return c
 }
 
+// MaxResults sets the optional parameter "maxResults": The maximum
+// number of products to return in the response, used for paging.
+func (c *DatafeedstatusesListCall) MaxResults(maxResults int64) *DatafeedstatusesListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The token returned
+// by the previous request.
+func (c *DatafeedstatusesListCall) PageToken(pageToken string) *DatafeedstatusesListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
 // Fields allows partial responses to be retrieved.
 // See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2904,6 +2975,12 @@ func (c *DatafeedstatusesListCall) Do() (*DatafeedstatusesListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -2935,10 +3012,22 @@ func (c *DatafeedstatusesListCall) Do() (*DatafeedstatusesListResponse, error) {
 	//     "merchantId"
 	//   ],
 	//   "parameters": {
+	//     "maxResults": {
+	//       "description": "The maximum number of products to return in the response, used for paging.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
 	//     "merchantId": {
+	//       "description": "The ID of the managing account.",
 	//       "format": "uint64",
 	//       "location": "path",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageToken": {
+	//       "description": "The token returned by the previous request.",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },

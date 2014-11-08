@@ -401,6 +401,9 @@ type Channel struct {
 }
 
 type ChromeOsDevice struct {
+	// ActiveTimeRanges: List of active time ranges (Read-only)
+	ActiveTimeRanges []*ChromeOsDeviceActiveTimeRanges `json:"activeTimeRanges,omitempty"`
+
 	// AnnotatedLocation: Address or location of the device as noted by the
 	// administrator
 	AnnotatedLocation string `json:"annotatedLocation,omitempty"`
@@ -478,6 +481,14 @@ type ChromeOsDevice struct {
 	// WillAutoRenew: Will Chromebook auto renew after support end date
 	// (Read-only)
 	WillAutoRenew bool `json:"willAutoRenew,omitempty"`
+}
+
+type ChromeOsDeviceActiveTimeRanges struct {
+	// ActiveTime: Duration in milliseconds
+	ActiveTime int64 `json:"activeTime,omitempty"`
+
+	// Date: Date of usage
+	Date string `json:"date,omitempty"`
 }
 
 type ChromeOsDeviceRecentUsers struct {

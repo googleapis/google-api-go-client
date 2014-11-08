@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"uUWyYHXmEn-ab7WLvo8qNz2S8ws/lSpXo4dql_m7xuje0Y2WPH_dsVA\"",
+ "etag": "\"l66ggWbucbkBw9Lpos72oziyefE/0zYm3U9WhfJU7WORU2EWqKp-P40\"",
  "discoveryVersion": "v1",
  "id": "appsactivity:v1",
  "name": "appsactivity",
@@ -70,7 +70,7 @@
   "oauth2": {
    "scopes": {
     "https://www.googleapis.com/auth/activity": {
-     "description": "View historical activity for Google services"
+     "description": "View the activity history of your Google Apps"
     },
     "https://www.googleapis.com/auth/drive": {
      "description": "View and manage the files and documents in your Google Drive"

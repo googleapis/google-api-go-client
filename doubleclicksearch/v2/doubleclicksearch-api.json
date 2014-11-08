@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"uUWyYHXmEn-ab7WLvo8qNz2S8ws/fGqvJFn3J0Pke36WoleMuVHFod4\"",
+ "etag": "\"l66ggWbucbkBw9Lpos72oziyefE/olnNoM2FZr43Cdq75yAMe9UNVWM\"",
  "discoveryVersion": "v1",
  "id": "doubleclicksearch:v2",
  "name": "doubleclicksearch",
  "version": "v2",
- "revision": "20140909",
+ "revision": "20141021",
  "title": "DoubleClick Search API",
  "description": "Report and modify your advertising data in DoubleClick Search (for example, campaigns, ad groups, keywords, and conversions).",
  "ownerDomain": "google.com",
@@ -256,7 +256,7 @@
     },
     "state": {
      "type": "string",
-     "description": "The state of the conversion, that is, either ACTIVE or DELETED."
+     "description": "The state of the conversion, that is, either ACTIVE or REMOVED. Note: state DELETED is deprecated."
     },
     "type": {
      "type": "string",
@@ -387,7 +387,11 @@
     },
     "customDimensionName": {
      "type": "string",
-     "description": "Segments a report by a custom dimension. The report must be scoped to an advertiser or lower, and the custom dimension must already be set up in DoubleClick Search. The custom dimension name, which appears in DoubleClick Search, is case sensitive."
+     "description": "Segments a report by a custom dimension. The report must be scoped to an advertiser or lower, and the custom dimension must already be set up in DoubleClick Search. The custom dimension name, which appears in DoubleClick Search, is case sensitive.\nIf used in a conversion report, returns the value of the specified custom dimension for the given conversion, if set. This column does not segment the conversion report."
+    },
+    "customMetricName": {
+     "type": "string",
+     "description": "Name of a custom metric to include in the report. The report must be scoped to an advertiser or lower, and the custom metric must already be set up in DoubleClick Search. The custom metric name, which appears in DoubleClick Search, is case sensitive."
     },
     "endDate": {
      "type": "string",

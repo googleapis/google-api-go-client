@@ -1,18 +1,18 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/2OzpktTyb8G1n0lJqDrsLrojoIY\"",
+ "etag": "\"l66ggWbucbkBw9Lpos72oziyefE/KGWAadJXyIQhHMwmLhtcS8SUf-4\"",
  "discoveryVersion": "v1",
  "id": "tasks:v1",
  "name": "tasks",
  "version": "v1",
- "revision": "20130403",
+ "revision": "20141024",
  "title": "Tasks API",
  "description": "Lets you manage your tasks and task lists.",
  "ownerDomain": "google.com",
  "ownerName": "Google",
  "icons": {
-  "x16": "http://www.google.com/images/icons/product/tasks-16.png",
-  "x32": "http://www.google.com/images/icons/product/tasks-32.png"
+  "x16": "https://www.google.com/images/icons/product/tasks-16.png",
+  "x32": "https://www.google.com/images/icons/product/tasks-32.png"
  },
  "documentationLink": "https://developers.google.com/google-apps/tasks/firstapp",
  "protocol": "rest",

@@ -2838,6 +2838,7 @@ func (c *MediaInsertCall) Do() (*Media, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/plus.login",
+	//     "https://www.googleapis.com/auth/plus.me",
 	//     "https://www.googleapis.com/auth/plus.media.upload"
 	//   ],
 	//   "supportsMediaUpload": true

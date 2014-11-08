@@ -743,6 +743,11 @@ type EventSource struct {
 	Url string `json:"url,omitempty"`
 }
 
+type EventAttachment struct {
+	// Title: File name.
+	Title string `json:"title,omitempty"`
+}
+
 type EventAttendee struct {
 	// AdditionalGuests: Number of additional guests. Optional. The default
 	// is 0.
@@ -800,8 +805,10 @@ type EventDateTime struct {
 	DateTime string `json:"dateTime,omitempty"`
 
 	// TimeZone: The name of the time zone in which the time is specified
-	// (e.g. "Europe/Zurich"). Optional. The default is the time zone of the
-	// calendar.
+	// (e.g. "Europe/Zurich"). For recurring events this field is required
+	// and specifies the time zone in which the recurrence is expanded. For
+	// single events this field is optional and indicates a custom time zone
+	// for the event start/end.
 	TimeZone string `json:"timeZone,omitempty"`
 }
 

@@ -2803,8 +2803,7 @@ func (c *CommentsInsertCall) Do() (*Comment, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
-	//     "https://www.googleapis.com/auth/drive.file",
-	//     "https://www.googleapis.com/auth/drive.readonly"
+	//     "https://www.googleapis.com/auth/drive.file"
 	//   ]
 	// }
 
@@ -3503,6 +3502,14 @@ func (r *FilesService) Get(fileId string) *FilesGetCall {
 	return c
 }
 
+// AcknowledgeAbuse sets the optional parameter "acknowledgeAbuse":
+// Whether the user is acknowledging the risk of downloading known
+// malware or other abusive files.
+func (c *FilesGetCall) AcknowledgeAbuse(acknowledgeAbuse bool) *FilesGetCall {
+	c.opt_["acknowledgeAbuse"] = acknowledgeAbuse
+	return c
+}
+
 // Projection sets the optional parameter "projection": This parameter
 // is deprecated and has no function.
 func (c *FilesGetCall) Projection(projection string) *FilesGetCall {
@@ -3530,6 +3537,9 @@ func (c *FilesGetCall) Do() (*File, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["acknowledgeAbuse"]; ok {
+		params.Set("acknowledgeAbuse", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["projection"]; ok {
 		params.Set("projection", fmt.Sprintf("%v", v))
 	}
@@ -3567,6 +3577,12 @@ func (c *FilesGetCall) Do() (*File, error) {
 	//     "fileId"
 	//   ],
 	//   "parameters": {
+	//     "acknowledgeAbuse": {
+	//       "default": "false",
+	//       "description": "Whether the user is acknowledging the risk of downloading known malware or other abusive files.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "fileId": {
 	//       "description": "The ID for the file in question.",
 	//       "location": "path",
@@ -3605,6 +3621,7 @@ func (c *FilesGetCall) Do() (*File, error) {
 	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
 	//     "https://www.googleapis.com/auth/drive.readonly"
 	//   ],
+	//   "supportsMediaDownload": true,
 	//   "supportsSubscription": true
 	// }
 
@@ -4861,6 +4878,14 @@ func (r *FilesService) Watch(fileId string, channel *Channel) *FilesWatchCall {
 	return c
 }
 
+// AcknowledgeAbuse sets the optional parameter "acknowledgeAbuse":
+// Whether the user is acknowledging the risk of downloading known
+// malware or other abusive files.
+func (c *FilesWatchCall) AcknowledgeAbuse(acknowledgeAbuse bool) *FilesWatchCall {
+	c.opt_["acknowledgeAbuse"] = acknowledgeAbuse
+	return c
+}
+
 // Projection sets the optional parameter "projection": This parameter
 // is deprecated and has no function.
 func (c *FilesWatchCall) Projection(projection string) *FilesWatchCall {
@@ -4893,6 +4918,9 @@ func (c *FilesWatchCall) Do() (*Channel, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["acknowledgeAbuse"]; ok {
+		params.Set("acknowledgeAbuse", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["projection"]; ok {
 		params.Set("projection", fmt.Sprintf("%v", v))
 	}
@@ -4931,6 +4959,12 @@ func (c *FilesWatchCall) Do() (*Channel, error) {
 	//     "fileId"
 	//   ],
 	//   "parameters": {
+	//     "acknowledgeAbuse": {
+	//       "default": "false",
+	//       "description": "Whether the user is acknowledging the risk of downloading known malware or other abusive files.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "fileId": {
 	//       "description": "The ID for the file in question.",
 	//       "location": "path",
@@ -4973,6 +5007,7 @@ func (c *FilesWatchCall) Do() (*Channel, error) {
 	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
 	//     "https://www.googleapis.com/auth/drive.readonly"
 	//   ],
+	//   "supportsMediaDownload": true,
 	//   "supportsSubscription": true
 	// }
 

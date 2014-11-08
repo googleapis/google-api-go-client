@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"uUWyYHXmEn-ab7WLvo8qNz2S8ws/bCrngnv7JtIETg5qek5ney_qxpk\"",
+ "etag": "\"l66ggWbucbkBw9Lpos72oziyefE/u6v0r4lRtzQRqADbpijYZqPYNM4\"",
  "discoveryVersion": "v1",
  "id": "adexchangebuyer:v1",
  "name": "adexchangebuyer",
  "canonicalName": "Ad Exchange Buyer",
  "version": "v1",
- "revision": "20140904",
+ "revision": "20141101",
  "title": "Ad Exchange Buyer API",
  "description": "Accesses your bidding-account information, submits creatives for validation, finds available direct deals, and retrieves performance reports.",
  "ownerDomain": "google.com",
@@ -93,6 +93,10 @@
         "description": "The maximum queries per second the Ad Exchange will send.",
         "format": "int32"
        },
+       "region": {
+        "type": "string",
+        "description": "The geographical region the Ad Exchange should send requests from. Only used by some quota systems, but always setting the value is recommended. Allowed values:  \n- ASIA \n- EUROPE \n- US_EAST \n- US_WEST"
+       },
        "url": {
         "type": "string",
         "description": "The URL to which the Ad Exchange will send bid requests."
@@ -118,9 +122,19 @@
      "description": "Resource type.",
      "default": "adexchangebuyer#account"
     },
+    "maximumActiveCreatives": {
+     "type": "integer",
+     "description": "The maximum number of active creatives that an account can have, where a creative is active if it was inserted or bid with in the last 30 days. Please contact your technical account manager if you need to change this.",
+     "format": "int32"
+    },
     "maximumTotalQps": {
      "type": "integer",
      "description": "The sum of all bidderLocation.maximumQps values cannot exceed this. Please contact your technical account manager if you need to change this.",
+     "format": "int32"
+    },
+    "numberActiveCreatives": {
+     "type": "integer",
+     "description": "The number of creatives that this account inserted or bid with in the last 30 days.",
      "format": "int32"
     }
    }

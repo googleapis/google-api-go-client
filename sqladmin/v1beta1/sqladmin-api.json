@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"uUWyYHXmEn-ab7WLvo8qNz2S8ws/VjjLx1ep_xBZPTxXbdhJFkSaqbc\"",
+ "etag": "\"l66ggWbucbkBw9Lpos72oziyefE/1ieQeQF1YXKs9Dj9dy0V3Fc-il4\"",
  "discoveryVersion": "v1",
  "id": "sqladmin:v1beta1",
  "name": "sqladmin",
  "canonicalName": "SQL Admin",
  "version": "v1beta1",
- "revision": "20140827",
+ "revision": "20141020",
  "title": "Cloud SQL Administration API",
  "description": "API for Cloud SQL database instance management.",
  "ownerDomain": "google.com",
@@ -671,7 +671,7 @@
       },
       "dueTime": {
        "type": "string",
-       "description": "The time when this run is due to start in RFC 3339 format, for example 2012-11-15T16:19:00.094Z.",
+       "description": "The start time of the four-hour backup window. The backup can occur any time in the window. The time is in RFC 3339 format, for example 2012-11-15T16:19:00.094Z.",
        "required": true,
        "location": "query"
       },
@@ -1016,7 +1016,7 @@
       },
       "dueTime": {
        "type": "string",
-       "description": "The time when this run is due to start in RFC 3339 format, for example 2012-11-15T16:19:00.094Z.",
+       "description": "The start time of the four-hour backup window. The backup can occur any time in the window. The time is in RFC 3339 format, for example 2012-11-15T16:19:00.094Z.",
        "required": true,
        "location": "query"
       },

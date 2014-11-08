@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"uUWyYHXmEn-ab7WLvo8qNz2S8ws/WKtj4perod7wdCJHRIDRqG7zj-U\"",
+ "etag": "\"l66ggWbucbkBw9Lpos72oziyefE/EfYKK5AfY2_HGyMN7vFlDQDdSbY\"",
  "discoveryVersion": "v1",
  "id": "content:v2",
  "name": "content",
  "canonicalName": "Shopping Content",
  "version": "v2",
- "revision": "20140916",
+ "revision": "20141028",
  "title": "Content API for Shopping",
  "description": "Manage product items, inventory, and Merchant Center accounts for Google Shopping.",
  "ownerDomain": "google.com",
@@ -80,6 +80,7 @@
   "Account": {
    "id": "Account",
    "type": "object",
+   "description": "Account data.",
    "properties": {
     "adultContent": {
      "type": "boolean",
@@ -265,6 +266,7 @@
    "properties": {
     "entries": {
      "type": "array",
+     "description": "The request entries to be processed in the batch.",
      "items": {
       "$ref": "AccountsCustomBatchRequestEntry"
      }
@@ -296,8 +298,7 @@
      "format": "uint64"
     },
     "method": {
-     "type": "string",
-     "description": "The method (get, insert, update, or delete)."
+     "type": "string"
     }
    }
   },
@@ -307,6 +308,7 @@
    "properties": {
     "entries": {
      "type": "array",
+     "description": "The result of the execution of the batch requests.",
      "items": {
       "$ref": "AccountsCustomBatchResponseEntry"
      }
@@ -353,7 +355,8 @@
      "default": "content#accountsListResponse"
     },
     "nextPageToken": {
-     "type": "string"
+     "type": "string",
+     "description": "The token for the retrieval of the next page of accounts."
     },
     "resources": {
      "type": "array",
@@ -369,6 +372,7 @@
    "properties": {
     "entries": {
      "type": "array",
+     "description": "The request entries to be processed in the batch.",
      "items": {
       "$ref": "AccountstatusesCustomBatchRequestEntry"
      }
@@ -407,6 +411,7 @@
    "properties": {
     "entries": {
      "type": "array",
+     "description": "The result of the execution of the batch requests.",
      "items": {
       "$ref": "AccountstatusesCustomBatchResponseEntry"
      }
@@ -448,7 +453,8 @@
      "default": "content#accountstatusesListResponse"
     },
     "nextPageToken": {
-     "type": "string"
+     "type": "string",
+     "description": "The token for the retrieval of the next page of account statuses."
     },
     "resources": {
      "type": "array",
@@ -461,6 +467,7 @@
   "Datafeed": {
    "id": "Datafeed",
    "type": "object",
+   "description": "Datafeed data.",
    "properties": {
     "attributeLanguage": {
      "type": "string",
@@ -604,6 +611,7 @@
   "DatafeedStatus": {
    "id": "DatafeedStatus",
    "type": "object",
+   "description": "The status of a datafeed, i.e., the result of the last retrieval of the datafeed computed asynchronously when the feed processing is finished.",
    "properties": {
     "datafeedId": {
      "type": "string",
@@ -698,6 +706,7 @@
    "properties": {
     "entries": {
      "type": "array",
+     "description": "The request entries to be processed in the batch.",
      "items": {
       "$ref": "DatafeedsCustomBatchRequestEntry"
      }
@@ -729,8 +738,7 @@
      "format": "uint64"
     },
     "method": {
-     "type": "string",
-     "description": "The method (get, insert, update, or delete)."
+     "type": "string"
     }
    }
   },
@@ -740,6 +748,7 @@
    "properties": {
     "entries": {
      "type": "array",
+     "description": "The result of the execution of the batch requests.",
      "items": {
       "$ref": "DatafeedsCustomBatchResponseEntry"
      }
@@ -780,6 +789,10 @@
      "description": "Identifies what kind of resource this is. Value: the fixed string \"content#datafeedsListResponse\".",
      "default": "content#datafeedsListResponse"
     },
+    "nextPageToken": {
+     "type": "string",
+     "description": "The token for the retrieval of the next page of datafeeds."
+    },
     "resources": {
      "type": "array",
      "items": {
@@ -794,6 +807,7 @@
    "properties": {
     "entries": {
      "type": "array",
+     "description": "The request entries to be processed in the batch.",
      "items": {
       "$ref": "DatafeedstatusesCustomBatchRequestEntry"
      }
@@ -821,8 +835,7 @@
      "format": "uint64"
     },
     "method": {
-     "type": "string",
-     "description": "The method (get)."
+     "type": "string"
     }
    }
   },
@@ -832,6 +845,7 @@
    "properties": {
     "entries": {
      "type": "array",
+     "description": "The result of the execution of the batch requests.",
      "items": {
       "$ref": "DatafeedstatusesCustomBatchResponseEntry"
      }
@@ -871,6 +885,10 @@
      "type": "string",
      "description": "Identifies what kind of resource this is. Value: the fixed string \"content#datafeedstatusesListResponse\".",
      "default": "content#datafeedstatusesListResponse"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "The token for the retrieval of the next page of datafeed statuses."
     },
     "resources": {
      "type": "array",
@@ -960,6 +978,7 @@
    "properties": {
     "entries": {
      "type": "array",
+     "description": "The request entries to be processed in the batch.",
      "items": {
       "$ref": "InventoryCustomBatchRequestEntry"
      }
@@ -1001,6 +1020,7 @@
    "properties": {
     "entries": {
      "type": "array",
+     "description": "The result of the execution of the batch requests.",
      "items": {
       "$ref": "InventoryCustomBatchResponseEntry"
      }
@@ -1685,6 +1705,7 @@
    "properties": {
     "entries": {
      "type": "array",
+     "description": "The request entries to be processed in the batch.",
      "items": {
       "$ref": "ProductsCustomBatchRequestEntry"
      }
@@ -1707,8 +1728,7 @@
      "format": "uint64"
     },
     "method": {
-     "type": "string",
-     "description": "The method (get, insert or delete)."
+     "type": "string"
     },
     "product": {
      "$ref": "Product",
@@ -1726,6 +1746,7 @@
    "properties": {
     "entries": {
      "type": "array",
+     "description": "The result of the execution of the batch requests.",
      "items": {
       "$ref": "ProductsCustomBatchResponseEntry"
      }
@@ -1772,7 +1793,8 @@
      "default": "content#productsListResponse"
     },
     "nextPageToken": {
-     "type": "string"
+     "type": "string",
+     "description": "The token for the retrieval of the next page of products."
     },
     "resources": {
      "type": "array",
@@ -1788,6 +1810,7 @@
    "properties": {
     "entries": {
      "type": "array",
+     "description": "The request entries to be processed in the batch.",
      "items": {
       "$ref": "ProductstatusesCustomBatchRequestEntry"
      }
@@ -1810,8 +1833,7 @@
      "format": "uint64"
     },
     "method": {
-     "type": "string",
-     "description": "The method (get)."
+     "type": "string"
     },
     "productId": {
      "type": "string",
@@ -1825,6 +1847,7 @@
    "properties": {
     "entries": {
      "type": "array",
+     "description": "The result of the execution of the batch requests.",
      "items": {
       "$ref": "ProductstatusesCustomBatchResponseEntry"
      }
@@ -1871,7 +1894,8 @@
      "default": "content#productstatusesListResponse"
     },
     "nextPageToken": {
-     "type": "string"
+     "type": "string",
+     "description": "The token for the retrieval of the next page of products statuses."
     },
     "resources": {
      "type": "array",
@@ -2285,11 +2309,23 @@
      "httpMethod": "GET",
      "description": "Lists the datafeeds in your Merchant Center account.",
      "parameters": {
+      "maxResults": {
+       "type": "integer",
+       "description": "The maximum number of products to return in the response, used for paging.",
+       "format": "uint32",
+       "location": "query"
+      },
       "merchantId": {
        "type": "string",
+       "description": "The ID of the managing account.",
        "required": true,
        "format": "uint64",
        "location": "path"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "The token returned by the previous request.",
+       "location": "query"
       }
      },
      "parameterOrder": [
@@ -2422,11 +2458,23 @@
      "httpMethod": "GET",
      "description": "Lists the statuses of the datafeeds in your Merchant Center account.",
      "parameters": {
+      "maxResults": {
+       "type": "integer",
+       "description": "The maximum number of products to return in the response, used for paging.",
+       "format": "uint32",
+       "location": "query"
+      },
       "merchantId": {
        "type": "string",
+       "description": "The ID of the managing account.",
        "required": true,
        "format": "uint64",
        "location": "path"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "The token returned by the previous request.",
+       "location": "query"
       }
      },
      "parameterOrder": [

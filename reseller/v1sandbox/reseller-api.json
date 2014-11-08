@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/75BYrgCdMdHqCupPK8UXGNZ39xA\"",
+ "etag": "\"l66ggWbucbkBw9Lpos72oziyefE/YC4k2HSQWcnQUrh-4yOyG5WxRbQ\"",
  "discoveryVersion": "v1",
  "id": "reseller:v1sandbox",
  "name": "reseller",
  "version": "v1sandbox",
- "revision": "20131109",
+ "revision": "20140821",
  "title": "Enterprise Apps Reseller API",
  "description": "Lets you create and manage your customers and their subscriptions.",
  "ownerDomain": "google.com",
@@ -215,6 +215,11 @@
      "type": "string",
      "description": "Identifies the resource as a subscription change plan request.",
      "default": "subscriptions#seats"
+    },
+    "licensedNumberOfSeats": {
+     "type": "integer",
+     "description": "Read only field containing the current number of licensed seats. Resellers can utilize this field to gather insights into usage for FLEXIBLE Google-Apps subscriptions and other secondary subscriptions (e.g. Google-Vault, Drive-storage).",
+     "format": "int32"
     },
     "maximumNumberOfSeats": {
      "type": "integer",
@@ -466,6 +471,36 @@
   },
   "subscriptions": {
    "methods": {
+    "activate": {
+     "id": "reseller.subscriptions.activate",
+     "path": "customers/{customerId}/subscriptions/{subscriptionId}/activate",
+     "httpMethod": "POST",
+     "description": "Activates a subscription previously suspended by the reseller",
+     "parameters": {
+      "customerId": {
+       "type": "string",
+       "description": "Id of the Customer",
+       "required": true,
+       "location": "path"
+      },
+      "subscriptionId": {
+       "type": "string",
+       "description": "Id of the subscription, which is unique for a customer",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "customerId",
+      "subscriptionId"
+     ],
+     "response": {
+      "$ref": "Subscription"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/apps.order"
+     ]
+    },
     "changePlan": {
      "id": "reseller.subscriptions.changePlan",
      "path": "customers/{customerId}/subscriptions/{subscriptionId}/changePlan",
@@ -719,6 +754,36 @@
      "path": "customers/{customerId}/subscriptions/{subscriptionId}/startPaidService",
      "httpMethod": "POST",
      "description": "Starts paid service of a trial subscription",
+     "parameters": {
+      "customerId": {
+       "type": "string",
+       "description": "Id of the Customer",
+       "required": true,
+       "location": "path"
+      },
+      "subscriptionId": {
+       "type": "string",
+       "description": "Id of the subscription, which is unique for a customer",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "customerId",
+      "subscriptionId"
+     ],
+     "response": {
+      "$ref": "Subscription"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/apps.order"
+     ]
+    },
+    "suspend": {
+     "id": "reseller.subscriptions.suspend",
+     "path": "customers/{customerId}/subscriptions/{subscriptionId}/suspend",
+     "httpMethod": "POST",
+     "description": "Suspends an active subscription",
      "parameters": {
       "customerId": {
        "type": "string",

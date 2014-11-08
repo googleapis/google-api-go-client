@@ -73,6 +73,7 @@ func New(client *http.Client) (*Service, error) {
 	s.GlobalOperations = NewGlobalOperationsService(s)
 	s.HttpHealthChecks = NewHttpHealthChecksService(s)
 	s.Images = NewImagesService(s)
+	s.InstanceTemplates = NewInstanceTemplatesService(s)
 	s.Instances = NewInstancesService(s)
 	s.Licenses = NewLicensesService(s)
 	s.MachineTypes = NewMachineTypesService(s)
@@ -116,6 +117,8 @@ type Service struct {
 	HttpHealthChecks *HttpHealthChecksService
 
 	Images *ImagesService
+
+	InstanceTemplates *InstanceTemplatesService
 
 	Instances *InstancesService
 
@@ -244,6 +247,15 @@ func NewImagesService(s *Service) *ImagesService {
 }
 
 type ImagesService struct {
+	s *Service
+}
+
+func NewInstanceTemplatesService(s *Service) *InstanceTemplatesService {
+	rs := &InstanceTemplatesService{s: s}
+	return rs
+}
+
+type InstanceTemplatesService struct {
 	s *Service
 }
 
@@ -528,6 +540,8 @@ type AttachedDisk struct {
 	// InitializeParams: Initialization parameters.
 	InitializeParams *AttachedDiskInitializeParams `json:"initializeParams,omitempty"`
 
+	Interface string `json:"interface,omitempty"`
+
 	// Kind: Type of the resource.
 	Kind string `json:"kind,omitempty"`
 
@@ -638,8 +652,8 @@ type BackendService struct {
 	// RFC1035.
 	Name string `json:"name,omitempty"`
 
-	// Port: The TCP port to connect on the backend. The default value is
-	// 80.
+	// Port: Deprecated in favor of port_name. The TCP port to connect on
+	// the backend. The default value is 80.
 	Port int64 `json:"port,omitempty"`
 
 	// PortName: Name of backend port. The same name should appear in the
@@ -744,9 +758,7 @@ type Disk struct {
 	// otherwise it is required.
 	SizeGb int64 `json:"sizeGb,omitempty,string"`
 
-	// SourceImage: The source image used to create this disk. Once the
-	// source image has been deleted from the system, this field will not be
-	// set, even if an image with the same name has been re-created.
+	// SourceImage: The source image used to create this disk.
 	SourceImage string `json:"sourceImage,omitempty"`
 
 	// SourceImageId: The 'id' value of the image used to create this disk.
@@ -754,10 +766,7 @@ type Disk struct {
 	// the current or a previous instance of a given image.
 	SourceImageId string `json:"sourceImageId,omitempty"`
 
-	// SourceSnapshot: The source snapshot used to create this disk. Once
-	// the source snapshot has been deleted from the system, this field will
-	// be cleared, and will not be set even if a snapshot with the same name
-	// has been re-created.
+	// SourceSnapshot: The source snapshot used to create this disk.
 	SourceSnapshot string `json:"sourceSnapshot,omitempty"`
 
 	// SourceSnapshotId: The 'id' value of the snapshot used to create this
@@ -1299,10 +1308,7 @@ type Image struct {
 	// SelfLink: Server defined URL for the resource (output only).
 	SelfLink string `json:"selfLink,omitempty"`
 
-	// SourceDisk: The source disk used to create this image. Once the
-	// source disk has been deleted from the system, this field will be
-	// cleared, and will not be set even if a disk with the same name has
-	// been re-created.
+	// SourceDisk: The source disk used to create this image.
 	SourceDisk string `json:"sourceDisk,omitempty"`
 
 	// SourceDiskId: The 'id' value of the disk used to create this image.
@@ -1476,8 +1482,110 @@ type InstanceList struct {
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
+type InstanceProperties struct {
+	// CanIpForward: Allows instances created based on this template to send
+	// packets with source IP addresses other than their own and receive
+	// packets with destination IP addresses other than their own. If these
+	// instances will be used as an IP gateway or it will be set as the
+	// next-hop in a Route resource, say true. If unsure, leave this set to
+	// false.
+	CanIpForward bool `json:"canIpForward,omitempty"`
+
+	// Description: An optional textual description for the instances
+	// created based on the instance template resource; provided by the
+	// client when the template is created.
+	Description string `json:"description,omitempty"`
+
+	// Disks: Array of disks associated with instance created based on this
+	// template.
+	Disks []*AttachedDisk `json:"disks,omitempty"`
+
+	// MachineType: Name of the machine type resource describing which
+	// machine type to use to host the instances created based on this
+	// template; provided by the client when the instance template is
+	// created.
+	MachineType string `json:"machineType,omitempty"`
+
+	// Metadata: Metadata key/value pairs assigned to instances created
+	// based on this template. Consists of custom metadata or predefined
+	// keys; see Instance documentation for more information.
+	Metadata *Metadata `json:"metadata,omitempty"`
+
+	// NetworkInterfaces: Array of configurations for this interface. This
+	// specifies how this interface is configured to interact with other
+	// network services, such as connecting to the internet. Currently,
+	// ONE_TO_ONE_NAT is the only access config supported. If there are no
+	// accessConfigs specified, then this instances created based based on
+	// this template will have no external internet access.
+	NetworkInterfaces []*NetworkInterface `json:"networkInterfaces,omitempty"`
+
+	// Scheduling: Scheduling options for the instances created based on
+	// this template.
+	Scheduling *Scheduling `json:"scheduling,omitempty"`
+
+	// ServiceAccounts: A list of service accounts each with specified
+	// scopes, for which access tokens are to be made available to the
+	// instances created based on this template, through metadata queries.
+	ServiceAccounts []*ServiceAccount `json:"serviceAccounts,omitempty"`
+
+	// Tags: A list of tags to be applied to the instances created based on
+	// this template used to identify valid sources or targets for network
+	// firewalls. Provided by the client on instance creation. The tags can
+	// be later modified by the setTags method. Each tag within the list
+	// must comply with RFC1035.
+	Tags *Tags `json:"tags,omitempty"`
+}
+
 type InstanceReference struct {
 	Instance string `json:"instance,omitempty"`
+}
+
+type InstanceTemplate struct {
+	// CreationTimestamp: Creation timestamp in RFC3339 text format (output
+	// only).
+	CreationTimestamp string `json:"creationTimestamp,omitempty"`
+
+	// Description: An optional textual description of the instance template
+	// resource; provided by the client when the resource is created.
+	Description string `json:"description,omitempty"`
+
+	// Id: Unique identifier for the resource; defined by the server (output
+	// only).
+	Id uint64 `json:"id,omitempty,string"`
+
+	// Kind: Type of the resource.
+	Kind string `json:"kind,omitempty"`
+
+	// Name: Name of the instance template resource; provided by the client
+	// when the resource is created. The name must be 1-63 characters long,
+	// and comply with RFC1035
+	Name string `json:"name,omitempty"`
+
+	// Properties: The instance properties portion of this instance template
+	// resource.
+	Properties *InstanceProperties `json:"properties,omitempty"`
+
+	// SelfLink: Server defined URL for the resource (output only).
+	SelfLink string `json:"selfLink,omitempty"`
+}
+
+type InstanceTemplateList struct {
+	// Id: Unique identifier for the resource; defined by the server (output
+	// only).
+	Id string `json:"id,omitempty"`
+
+	// Items: A list of instance template resources.
+	Items []*InstanceTemplate `json:"items,omitempty"`
+
+	// Kind: Type of resource.
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: A token used to continue a truncated list request
+	// (output only).
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SelfLink: Server defined URL for this resource (output only).
+	SelfLink string `json:"selfLink,omitempty"`
 }
 
 type InstancesScopedList struct {
@@ -2233,10 +2341,7 @@ type Snapshot struct {
 	// SelfLink: Server defined URL for the resource (output only).
 	SelfLink string `json:"selfLink,omitempty"`
 
-	// SourceDisk: The source disk used to create this snapshot. Once the
-	// source disk has been deleted from the system, this field will be
-	// cleared, and will not be set even if a disk with the same name has
-	// been re-created (output only).
+	// SourceDisk: The source disk used to create this snapshot.
 	SourceDisk string `json:"sourceDisk,omitempty"`
 
 	// SourceDiskId: The 'id' value of the disk used to create this
@@ -8835,6 +8940,402 @@ func (c *ImagesListCall) Do() (*ImageList, error) {
 	//   "path": "{project}/global/images",
 	//   "response": {
 	//     "$ref": "ImageList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.instanceTemplates.delete":
+
+type InstanceTemplatesDeleteCall struct {
+	s                *Service
+	project          string
+	instanceTemplate string
+	opt_             map[string]interface{}
+}
+
+// Delete: Deletes the specified instance template resource.
+func (r *InstanceTemplatesService) Delete(project string, instanceTemplate string) *InstanceTemplatesDeleteCall {
+	c := &InstanceTemplatesDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.instanceTemplate = instanceTemplate
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InstanceTemplatesDeleteCall) Fields(s ...googleapi.Field) *InstanceTemplatesDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *InstanceTemplatesDeleteCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/instanceTemplates/{instanceTemplate}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project":          c.project,
+		"instanceTemplate": c.instanceTemplate,
+	})
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes the specified instance template resource.",
+	//   "httpMethod": "DELETE",
+	//   "id": "compute.instanceTemplates.delete",
+	//   "parameterOrder": [
+	//     "project",
+	//     "instanceTemplate"
+	//   ],
+	//   "parameters": {
+	//     "instanceTemplate": {
+	//       "description": "Name of the instance template resource to delete.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/instanceTemplates/{instanceTemplate}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.instanceTemplates.get":
+
+type InstanceTemplatesGetCall struct {
+	s                *Service
+	project          string
+	instanceTemplate string
+	opt_             map[string]interface{}
+}
+
+// Get: Returns the specified instance template resource.
+func (r *InstanceTemplatesService) Get(project string, instanceTemplate string) *InstanceTemplatesGetCall {
+	c := &InstanceTemplatesGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.instanceTemplate = instanceTemplate
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InstanceTemplatesGetCall) Fields(s ...googleapi.Field) *InstanceTemplatesGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *InstanceTemplatesGetCall) Do() (*InstanceTemplate, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/instanceTemplates/{instanceTemplate}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project":          c.project,
+		"instanceTemplate": c.instanceTemplate,
+	})
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *InstanceTemplate
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns the specified instance template resource.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.instanceTemplates.get",
+	//   "parameterOrder": [
+	//     "project",
+	//     "instanceTemplate"
+	//   ],
+	//   "parameters": {
+	//     "instanceTemplate": {
+	//       "description": "Name of the instance template resource to return.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/instanceTemplates/{instanceTemplate}",
+	//   "response": {
+	//     "$ref": "InstanceTemplate"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.instanceTemplates.insert":
+
+type InstanceTemplatesInsertCall struct {
+	s                *Service
+	project          string
+	instancetemplate *InstanceTemplate
+	opt_             map[string]interface{}
+}
+
+// Insert: Creates an instance template resource in the specified
+// project using the data included in the request.
+func (r *InstanceTemplatesService) Insert(project string, instancetemplate *InstanceTemplate) *InstanceTemplatesInsertCall {
+	c := &InstanceTemplatesInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.instancetemplate = instancetemplate
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InstanceTemplatesInsertCall) Fields(s ...googleapi.Field) *InstanceTemplatesInsertCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *InstanceTemplatesInsertCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.instancetemplate)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/instanceTemplates")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates an instance template resource in the specified project using the data included in the request.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.instanceTemplates.insert",
+	//   "parameterOrder": [
+	//     "project"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/instanceTemplates",
+	//   "request": {
+	//     "$ref": "InstanceTemplate"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.instanceTemplates.list":
+
+type InstanceTemplatesListCall struct {
+	s       *Service
+	project string
+	opt_    map[string]interface{}
+}
+
+// List: Retrieves the list of instance template resources contained
+// within the specified project.
+func (r *InstanceTemplatesService) List(project string) *InstanceTemplatesListCall {
+	c := &InstanceTemplatesListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter expression for
+// filtering listed resources.
+func (c *InstanceTemplatesListCall) Filter(filter string) *InstanceTemplatesListCall {
+	c.opt_["filter"] = filter
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Maximum count of
+// results to be returned. Maximum value is 500 and default value is
+// 500.
+func (c *InstanceTemplatesListCall) MaxResults(maxResults int64) *InstanceTemplatesListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Tag returned by a
+// previous list request truncated by maxResults. Used to continue a
+// previous list request.
+func (c *InstanceTemplatesListCall) PageToken(pageToken string) *InstanceTemplatesListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InstanceTemplatesListCall) Fields(s ...googleapi.Field) *InstanceTemplatesListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *InstanceTemplatesListCall) Do() (*InstanceTemplateList, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["filter"]; ok {
+		params.Set("filter", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/instanceTemplates")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+	})
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *InstanceTemplateList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the list of instance template resources contained within the specified project.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.instanceTemplates.list",
+	//   "parameterOrder": [
+	//     "project"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Filter expression for filtering listed resources.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "default": "500",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "maximum": "500",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/instanceTemplates",
+	//   "response": {
+	//     "$ref": "InstanceTemplateList"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/compute",

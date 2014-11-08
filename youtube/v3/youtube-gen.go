@@ -930,6 +930,9 @@ type ChannelStatus struct {
 	// YouTube identity.
 	IsLinked bool `json:"isLinked,omitempty"`
 
+	// LongUploadsStatus: The long uploads status of this channel. See
+	LongUploadsStatus string `json:"longUploadsStatus,omitempty"`
+
 	// PrivacyStatus: Privacy status of the channel.
 	PrivacyStatus string `json:"privacyStatus,omitempty"`
 }
@@ -1470,6 +1473,13 @@ type InvideoPromotion struct {
 	// Position: The spatial position within the video where the promoted
 	// item will be displayed.
 	Position *InvideoPosition `json:"position,omitempty"`
+
+	// UseSmartTiming: Indicates whether the channel's promotional campaign
+	// uses "smart timing." This feature attempts to show promotions at a
+	// point in the video when they are more likely to be clicked and less
+	// likely to disrupt the viewing experience. This feature also picks up
+	// a single promotion to show on each video.
+	UseSmartTiming bool `json:"useSmartTiming,omitempty"`
 }
 
 type InvideoTiming struct {
@@ -1711,6 +1721,26 @@ type LiveStreamContentDetails struct {
 	// ClosedCaptionsIngestionUrl: The ingestion URL where the closed
 	// captions of this stream are sent.
 	ClosedCaptionsIngestionUrl string `json:"closedCaptionsIngestionUrl,omitempty"`
+
+	// IsReusable: Indicates whether the stream is reusable, which means
+	// that it can be bound to multiple broadcasts. It is common for
+	// broadcasters to reuse the same stream for many different broadcasts
+	// if those broadcasts occur at different times.
+	//
+	// If you set this value
+	// to false, then the stream will not be reusable, which means that it
+	// can only be bound to one broadcast. Non-reusable streams differ from
+	// reusable streams in the following ways:
+	// - A non-reusable stream can
+	// only be bound to one broadcast.
+	// - A non-reusable stream might be
+	// deleted by an automated process after the broadcast ends.
+	// - The
+	// liveStreams.list method does not list non-reusable streams if you
+	// call the method and set the mine parameter to true. The only way to
+	// use that method to retrieve the resource for a non-reusable stream is
+	// to use the id parameter to identify the stream.
+	IsReusable bool `json:"isReusable,omitempty"`
 }
 
 type LiveStreamListResponse struct {

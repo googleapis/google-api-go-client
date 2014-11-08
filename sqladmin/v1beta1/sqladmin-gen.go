@@ -558,7 +558,7 @@ func (c *BackupRunsGetCall) Do() (*BackupRun, error) {
 	//       "type": "string"
 	//     },
 	//     "dueTime": {
-	//       "description": "The time when this run is due to start in RFC 3339 format, for example 2012-11-15T16:19:00.094Z.",
+	//       "description": "The start time of the four-hour backup window. The backup can occur any time in the window. The time is in RFC 3339 format, for example 2012-11-15T16:19:00.094Z.",
 	//       "location": "query",
 	//       "required": true,
 	//       "type": "string"
@@ -1545,7 +1545,7 @@ func (c *InstancesRestoreBackupCall) Do() (*InstancesRestoreBackupResponse, erro
 	//       "type": "string"
 	//     },
 	//     "dueTime": {
-	//       "description": "The time when this run is due to start in RFC 3339 format, for example 2012-11-15T16:19:00.094Z.",
+	//       "description": "The start time of the four-hour backup window. The backup can occur any time in the window. The time is in RFC 3339 format, for example 2012-11-15T16:19:00.094Z.",
 	//       "location": "query",
 	//       "required": true,
 	//       "type": "string"

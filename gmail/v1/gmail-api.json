@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"uUWyYHXmEn-ab7WLvo8qNz2S8ws/5fnY39OGLjxI_epC657MRv3fFjE\"",
+ "etag": "\"l66ggWbucbkBw9Lpos72oziyefE/oTc1ZFBBKYPWVfuhl_PGLzRZK7E\"",
  "discoveryVersion": "v1",
  "id": "gmail:v1",
  "name": "gmail",
  "version": "v1",
- "revision": "20140902",
+ "revision": "20141017",
  "title": "Gmail API",
  "description": "The Gmail REST API.",
  "ownerDomain": "google.com",
@@ -179,6 +179,16 @@
       ]
      }
     },
+    "messagesTotal": {
+     "type": "integer",
+     "description": "The total number of messages with the label.",
+     "format": "int32"
+    },
+    "messagesUnread": {
+     "type": "integer",
+     "description": "The number of unread messages with the label.",
+     "format": "int32"
+    },
     "name": {
      "type": "string",
      "description": "The display name of the label.",
@@ -188,6 +198,16 @@
        "gmail.users.labels.update"
       ]
      }
+    },
+    "threadsTotal": {
+     "type": "integer",
+     "description": "The total number of threads with the label.",
+     "format": "int32"
+    },
+    "threadsUnread": {
+     "type": "integer",
+     "description": "The number of unread threads with the label.",
+     "format": "int32"
     },
     "type": {
      "type": "string",
@@ -359,7 +379,7 @@
     },
     "threadId": {
      "type": "string",
-     "description": "The ID of the thread the message belongs to. To add a message or draft to a thread, the following criteria must be met: \n- The requested threadId must be specified on the Message or Draft.Message you supply with your request. \n- The References and In-Reply-To headers must be set in compliance with the \u003ca href=\"https://tools.ietf.org/html/rfc2822\"RFC 2822 standard. \n- The Subject headers must match."
+     "description": "The ID of the thread the message belongs to. To add a message or draft to a thread, the following criteria must be met: \n- The requested threadId must be specified on the Message or Draft.Message you supply with your request. \n- The References and In-Reply-To headers must be set in compliance with the RFC 2822 standard. \n- The Subject headers must match."
     }
    }
   },
@@ -480,6 +500,33 @@
     }
    }
   },
+  "Profile": {
+   "id": "Profile",
+   "type": "object",
+   "description": "Profile for a Gmail user.",
+   "externalTypeName": "caribou.api.proto.Profile",
+   "properties": {
+    "emailAddress": {
+     "type": "string",
+     "description": "The user's email address."
+    },
+    "historyId": {
+     "type": "string",
+     "description": "The ID of the mailbox's current history record.",
+     "format": "uint64"
+    },
+    "messagesTotal": {
+     "type": "integer",
+     "description": "The total number of messages in the mailbox.",
+     "format": "int32"
+    },
+    "threadsTotal": {
+     "type": "integer",
+     "description": "The total number of threads in the mailbox.",
+     "format": "int32"
+    }
+   }
+  },
   "Thread": {
    "id": "Thread",
    "type": "object",
@@ -511,6 +558,35 @@
  },
  "resources": {
   "users": {
+   "methods": {
+    "getProfile": {
+     "id": "gmail.users.getProfile",
+     "path": "{userId}/profile",
+     "httpMethod": "GET",
+     "description": "Gets the current user's Gmail profile.",
+     "parameters": {
+      "userId": {
+       "type": "string",
+       "description": "The user's email address. The special value me can be used to indicate the authenticated user.",
+       "default": "me",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "userId"
+     ],
+     "response": {
+      "$ref": "Profile"
+     },
+     "scopes": [
+      "https://mail.google.com/",
+      "https://www.googleapis.com/auth/gmail.compose",
+      "https://www.googleapis.com/auth/gmail.modify",
+      "https://www.googleapis.com/auth/gmail.readonly"
+     ]
+    }
+   },
    "resources": {
     "drafts": {
      "methods": {
@@ -1121,6 +1197,7 @@
         "internalDateSource": {
          "type": "string",
          "description": "Source for Gmail's internal date of the message.",
+         "default": "dateHeader",
          "enum": [
           "dateHeader",
           "receivedTime"
@@ -1179,6 +1256,7 @@
         "internalDateSource": {
          "type": "string",
          "description": "Source for Gmail's internal date of the message.",
+         "default": "receivedTime",
          "enum": [
           "dateHeader",
           "receivedTime"
@@ -1512,11 +1590,33 @@
        "httpMethod": "GET",
        "description": "Gets the specified thread.",
        "parameters": {
+        "format": {
+         "type": "string",
+         "description": "The format to return the messages in.",
+         "default": "full",
+         "enum": [
+          "full",
+          "metadata",
+          "minimal"
+         ],
+         "enumDescriptions": [
+          "",
+          "",
+          ""
+         ],
+         "location": "query"
+        },
         "id": {
          "type": "string",
          "description": "The ID of the thread to retrieve.",
          "required": true,
          "location": "path"
+        },
+        "metadataHeaders": {
+         "type": "string",
+         "description": "When given and format is METADATA, only include headers specified.",
+         "repeated": true,
+         "location": "query"
         },
         "userId": {
          "type": "string",

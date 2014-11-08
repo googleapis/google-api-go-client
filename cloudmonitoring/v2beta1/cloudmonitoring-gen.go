@@ -227,7 +227,7 @@ type Point struct {
 	// instantaneous measurements, this interval should be empty (start
 	// should equal end). For cumulative metrics (of which deltas and rates
 	// are special cases), the interval should be non-empty. Both start and
-	// end are RFC 3999 strings.
+	// end are RFC 3339 strings.
 	End string `json:"end,omitempty"`
 
 	// Int64Value: The value of this data point as a 64-bit integer.
@@ -238,7 +238,7 @@ type Point struct {
 	// instantaneous measurements, this interval should be empty (start
 	// should equal end). For cumulative metrics (of which deltas and rates
 	// are special cases), the interval should be non-empty. Both start and
-	// end are RFC 3999 strings.
+	// end are RFC 3339 strings.
 	Start string `json:"start,omitempty"`
 
 	// StringValue: The value of this data point in string format.
@@ -300,8 +300,7 @@ type Timeseries struct {
 }
 
 type TimeseriesDescriptor struct {
-	// Labels: The set of key-value pairs that describe this time series,
-	// including target-specific labels and metric-specific labels.
+	// Labels: The label's name.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// Metric: The name of the metric.
@@ -310,6 +309,14 @@ type TimeseriesDescriptor struct {
 	// Project: The Developers Console project number to which this time
 	// series belongs.
 	Project string `json:"project,omitempty"`
+}
+
+type TimeseriesDescriptorLabel struct {
+	// Key: The label's name.
+	Key string `json:"key,omitempty"`
+
+	// Value: The label's value.
+	Value string `json:"value,omitempty"`
 }
 
 // method id "cloudmonitoring.metricDescriptors.list":

@@ -59,7 +59,6 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client, BasePath: basePath}
-	s.Beacons = NewBeaconsService(s)
 	s.Callsets = NewCallsetsService(s)
 	s.Datasets = NewDatasetsService(s)
 	s.Experimental = NewExperimentalService(s)
@@ -74,8 +73,6 @@ func New(client *http.Client) (*Service, error) {
 type Service struct {
 	client   *http.Client
 	BasePath string // API endpoint base URL
-
-	Beacons *BeaconsService
 
 	Callsets *CallsetsService
 
@@ -92,15 +89,6 @@ type Service struct {
 	Variants *VariantsService
 
 	Variantsets *VariantsetsService
-}
-
-func NewBeaconsService(s *Service) *BeaconsService {
-	rs := &BeaconsService{s: s}
-	return rs
-}
-
-type BeaconsService struct {
-	s *Service
 }
 
 func NewCallsetsService(s *Service) *CallsetsService {
@@ -199,12 +187,6 @@ type VariantsetsService struct {
 	s *Service
 }
 
-type Beacon struct {
-	// Exists: True if the allele exists on any variant call, false
-	// otherwise.
-	Exists bool `json:"exists,omitempty"`
-}
-
 type Call struct {
 	// CallSetId: The ID of the call set this variant call belongs to.
 	CallSetId string `json:"callSetId,omitempty"`
@@ -249,10 +231,10 @@ type CallSet struct {
 	// Id: The Google generated ID of the call set, immutable.
 	Id string `json:"id,omitempty"`
 
-	// Info: A map of additional callset information.
+	// Info: A map of additional call set information.
 	Info map[string][]string `json:"info,omitempty"`
 
-	// Name: The callset name.
+	// Name: The call set name.
 	Name string `json:"name,omitempty"`
 
 	// SampleId: The sample ID this call set corresponds to.
@@ -289,23 +271,17 @@ type Dataset struct {
 }
 
 type ExperimentalCreateJobRequest struct {
-	// Align: Specifies whether or not to run the alignment pipeline. At
-	// least one of align or callVariants must be provided.
+	// Align: Specifies whether or not to run the alignment pipeline. Either
+	// align or callVariants must be set.
 	Align bool `json:"align,omitempty"`
 
 	// CallVariants: Specifies whether or not to run the variant calling
-	// pipeline. If specified, alignment will be performed first and the
-	// aligned BAMs will passed as input to the variant caller. At least one
-	// of align or callVariants must be provided.
+	// pipeline. Either align or callVariants must be set.
 	CallVariants bool `json:"callVariants,omitempty"`
 
 	// GcsOutputPath: Specifies where to copy the results of certain
 	// pipelines. This should be in the form of gs://bucket/path.
 	GcsOutputPath string `json:"gcsOutputPath,omitempty"`
-
-	// LibraryName: For alignment from FASTQ files, this specifies the
-	// library name.
-	LibraryName string `json:"libraryName,omitempty"`
 
 	// PairedSourceUris: A list of Google Cloud Storage URIs of paired end
 	// .fastq files to operate upon. If specified, this represents the
@@ -313,25 +289,9 @@ type ExperimentalCreateJobRequest struct {
 	// should be specified in sourceUris.
 	PairedSourceUris []string `json:"pairedSourceUris,omitempty"`
 
-	// PlatformName: For alignment from FASTQ files, this specifies the
-	// platform name.
-	PlatformName string `json:"platformName,omitempty"`
-
-	// PlatformUnit: For alignment from FASTQ files, this specifies the
-	// platform unit.
-	PlatformUnit string `json:"platformUnit,omitempty"`
-
 	// ProjectId: Required. The Google Cloud Project ID with which to
 	// associate the request.
 	ProjectId int64 `json:"projectId,omitempty,string"`
-
-	// ReadGroupId: For alignment from FASTQ files, this specifies the read
-	// group ID.
-	ReadGroupId string `json:"readGroupId,omitempty"`
-
-	// SampleName: For alignment from FASTQ files, this specifies the sample
-	// name.
-	SampleName string `json:"sampleName,omitempty"`
 
 	// SourceUris: A list of Google Cloud Storage URIs of data files to
 	// operate upon. These can be .bam, interleaved .fastq, or paired
@@ -560,6 +520,11 @@ type ListDatasetsResponse struct {
 	// return the next page of results. This field will be empty if there
 	// aren't any additional results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+}
+
+type MergeVariantsRequest struct {
+	// Variants: The variants to be merged with existing variants.
+	Variants []*Variant `json:"variants,omitempty"`
 }
 
 type Metadata struct {
@@ -927,7 +892,10 @@ type SearchVariantSetsResponse struct {
 
 type SearchVariantsRequest struct {
 	// CallSetIds: Only return variant calls which belong to call sets with
-	// these ids. Leaving this blank returns all variant calls.
+	// these ids. Leaving this blank returns all variant calls. If a variant
+	// has no calls belonging to any of these call sets, it won't be
+	// returned at all. Currently, variants with no calls from any call set
+	// will never be returned.
 	CallSetIds []string `json:"callSetIds,omitempty"`
 
 	// End: Required. The end of the window (0-based, exclusive) for which
@@ -994,6 +962,10 @@ type Variant struct {
 	// large deletions.
 	End int64 `json:"end,omitempty,string"`
 
+	// Filter: A list of filters (normally quality filters) this variant has
+	// failed. PASS indicates this variant has passed all filters.
+	Filter []string `json:"filter,omitempty"`
+
 	// Id: The Google generated ID of the variant, immutable.
 	Id string `json:"id,omitempty"`
 
@@ -1002,6 +974,10 @@ type Variant struct {
 
 	// Names: Names for the variant, for example a RefSNP ID.
 	Names []string `json:"names,omitempty"`
+
+	// Quality: A measure of how likely this variant is to be real. A higher
+	// value is better.
+	Quality float64 `json:"quality,omitempty"`
 
 	// ReferenceBases: The reference bases for this variant. They start at
 	// the given position.
@@ -1032,126 +1008,6 @@ type VariantSet struct {
 	// ReferenceBounds: A list of all references used by the variants in a
 	// variant set with associated coordinate upper bounds for each one.
 	ReferenceBounds []*ReferenceBound `json:"referenceBounds,omitempty"`
-}
-
-// method id "genomics.beacons.get":
-
-type BeaconsGetCall struct {
-	s            *Service
-	variantSetId string
-	opt_         map[string]interface{}
-}
-
-// Get: This is an experimental API that provides a Global Alliance for
-// Genomics and Health Beacon. It may change at any time.
-func (r *BeaconsService) Get(variantSetId string) *BeaconsGetCall {
-	c := &BeaconsGetCall{s: r.s, opt_: make(map[string]interface{})}
-	c.variantSetId = variantSetId
-	return c
-}
-
-// Allele sets the optional parameter "allele": Required. The allele to
-// look for ('A', 'C', 'G' or 'T').
-func (c *BeaconsGetCall) Allele(allele string) *BeaconsGetCall {
-	c.opt_["allele"] = allele
-	return c
-}
-
-// Position sets the optional parameter "position": Required. The
-// 0-based position to query.
-func (c *BeaconsGetCall) Position(position int64) *BeaconsGetCall {
-	c.opt_["position"] = position
-	return c
-}
-
-// ReferenceName sets the optional parameter "referenceName": Required.
-// The reference to query over.
-func (c *BeaconsGetCall) ReferenceName(referenceName string) *BeaconsGetCall {
-	c.opt_["referenceName"] = referenceName
-	return c
-}
-
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *BeaconsGetCall) Fields(s ...googleapi.Field) *BeaconsGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
-	return c
-}
-
-func (c *BeaconsGetCall) Do() (*Beacon, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	if v, ok := c.opt_["allele"]; ok {
-		params.Set("allele", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["position"]; ok {
-		params.Set("position", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["referenceName"]; ok {
-		params.Set("referenceName", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "beacons/{variantSetId}")
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	googleapi.Expand(req.URL, map[string]string{
-		"variantSetId": c.variantSetId,
-	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	var ret *Beacon
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "This is an experimental API that provides a Global Alliance for Genomics and Health Beacon. It may change at any time.",
-	//   "httpMethod": "GET",
-	//   "id": "genomics.beacons.get",
-	//   "parameterOrder": [
-	//     "variantSetId"
-	//   ],
-	//   "parameters": {
-	//     "allele": {
-	//       "description": "Required. The allele to look for ('A', 'C', 'G' or 'T').",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "position": {
-	//       "description": "Required. The 0-based position to query.",
-	//       "format": "int64",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "referenceName": {
-	//       "description": "Required. The reference to query over.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "variantSetId": {
-	//       "description": "The ID of the variant set to query over. It must be public. Private variant sets will return an unauthorized exception.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "beacons/{variantSetId}",
-	//   "response": {
-	//     "$ref": "Beacon"
-	//   }
-	// }
-
 }
 
 // method id "genomics.callsets.create":
@@ -1281,7 +1137,7 @@ func (c *CallsetsDeleteCall) Do() error {
 	//   ],
 	//   "parameters": {
 	//     "callSetId": {
-	//       "description": "The ID of the callset to be deleted.",
+	//       "description": "The ID of the call set to be deleted.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1354,7 +1210,7 @@ func (c *CallsetsGetCall) Do() (*CallSet, error) {
 	//   ],
 	//   "parameters": {
 	//     "callSetId": {
-	//       "description": "The ID of the callset.",
+	//       "description": "The ID of the call set.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1439,7 +1295,7 @@ func (c *CallsetsPatchCall) Do() (*CallSet, error) {
 	//   ],
 	//   "parameters": {
 	//     "callSetId": {
-	//       "description": "The ID of the callset to be updated.",
+	//       "description": "The ID of the call set to be updated.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1468,6 +1324,9 @@ type CallsetsSearchCall struct {
 }
 
 // Search: Gets a list of call sets matching the criteria.
+//
+// Implements
+// GlobalAllianceApi.searchCallSets.
 func (r *CallsetsService) Search(searchcallsetsrequest *SearchCallSetsRequest) *CallsetsSearchCall {
 	c := &CallsetsSearchCall{s: r.s, opt_: make(map[string]interface{})}
 	c.searchcallsetsrequest = searchcallsetsrequest
@@ -1514,7 +1373,7 @@ func (c *CallsetsSearchCall) Do() (*SearchCallSetsResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a list of call sets matching the criteria.",
+	//   "description": "Gets a list of call sets matching the criteria.\n\nImplements GlobalAllianceApi.searchCallSets.",
 	//   "httpMethod": "POST",
 	//   "id": "genomics.callsets.search",
 	//   "path": "callsets/search",
@@ -1599,7 +1458,7 @@ func (c *CallsetsUpdateCall) Do() (*CallSet, error) {
 	//   ],
 	//   "parameters": {
 	//     "callSetId": {
-	//       "description": "The ID of the callset to be updated.",
+	//       "description": "The ID of the call set to be updated.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1868,7 +1727,8 @@ func (c *DatasetsListCall) PageToken(pageToken string) *DatasetsListCall {
 
 // ProjectId sets the optional parameter "projectId": Only return
 // datasets which belong to this Google Developers Console project. Only
-// accepts project numbers.
+// accepts project numbers. Returns all public projects if no project
+// number is specified.
 func (c *DatasetsListCall) ProjectId(projectId int64) *DatasetsListCall {
 	c.opt_["projectId"] = projectId
 	return c
@@ -1934,7 +1794,7 @@ func (c *DatasetsListCall) Do() (*ListDatasetsResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Only return datasets which belong to this Google Developers Console project. Only accepts project numbers.",
+	//       "description": "Only return datasets which belong to this Google Developers Console project. Only accepts project numbers. Returns all public projects if no project number is specified.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
@@ -3616,9 +3476,14 @@ type VariantsImportCall struct {
 }
 
 // Import: Creates variant data by asynchronously importing the provided
-// information. If the destination variant set already contains data,
-// new variants will be merged according to the behavior of
-// mergeVariants.
+// information. The variants for import will be merged with any existing
+// data and each other according to the behavior of mergeVariants. In
+// particular, this means for merged VCF variants that have conflicting
+// INFO fields, some data will be arbitrarily discarded. As a special
+// case, for single-sample VCF files, QUAL and FILTER fields will be
+// moved to the call level; these are sometimes interpreted in a
+// call-specific context. Imported VCF headers are appended to the
+// metadata already in a variant set.
 func (r *VariantsService) Import(importvariantsrequest *ImportVariantsRequest) *VariantsImportCall {
 	c := &VariantsImportCall{s: r.s, opt_: make(map[string]interface{})}
 	c.importvariantsrequest = importvariantsrequest
@@ -3665,7 +3530,7 @@ func (c *VariantsImportCall) Do() (*ImportVariantsResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates variant data by asynchronously importing the provided information. If the destination variant set already contains data, new variants will be merged according to the behavior of mergeVariants.",
+	//   "description": "Creates variant data by asynchronously importing the provided information. The variants for import will be merged with any existing data and each other according to the behavior of mergeVariants. In particular, this means for merged VCF variants that have conflicting INFO fields, some data will be arbitrarily discarded. As a special case, for single-sample VCF files, QUAL and FILTER fields will be moved to the call level; these are sometimes interpreted in a call-specific context. Imported VCF headers are appended to the metadata already in a variant set.",
 	//   "httpMethod": "POST",
 	//   "id": "genomics.variants.import",
 	//   "path": "variants/import",
@@ -3692,6 +3557,9 @@ type VariantsSearchCall struct {
 }
 
 // Search: Gets a list of variants matching the criteria.
+//
+// Implements
+// GlobalAllianceApi.searchVariants.
 func (r *VariantsService) Search(searchvariantsrequest *SearchVariantsRequest) *VariantsSearchCall {
 	c := &VariantsSearchCall{s: r.s, opt_: make(map[string]interface{})}
 	c.searchvariantsrequest = searchvariantsrequest
@@ -3738,7 +3606,7 @@ func (c *VariantsSearchCall) Do() (*SearchVariantsResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a list of variants matching the criteria.",
+	//   "description": "Gets a list of variants matching the criteria.\n\nImplements GlobalAllianceApi.searchVariants.",
 	//   "httpMethod": "POST",
 	//   "id": "genomics.variants.search",
 	//   "path": "variants/search",
@@ -3995,10 +3863,10 @@ func (c *VariantsetsGetCall) Do() (*VariantSet, error) {
 // method id "genomics.variantsets.mergeVariants":
 
 type VariantsetsMergeVariantsCall struct {
-	s            *Service
-	variantSetId string
-	variant      *Variant
-	opt_         map[string]interface{}
+	s                    *Service
+	variantSetId         string
+	mergevariantsrequest *MergeVariantsRequest
+	opt_                 map[string]interface{}
 }
 
 // MergeVariants: Merges the given variants with existing variants. Each
@@ -4010,10 +3878,10 @@ type VariantsetsMergeVariantsCall struct {
 // variants are merged, the call information from the new variant is
 // added to the existing variant, and other fields (such as key/value
 // pairs) are discarded.
-func (r *VariantsetsService) MergeVariants(variantSetId string, variant *Variant) *VariantsetsMergeVariantsCall {
+func (r *VariantsetsService) MergeVariants(variantSetId string, mergevariantsrequest *MergeVariantsRequest) *VariantsetsMergeVariantsCall {
 	c := &VariantsetsMergeVariantsCall{s: r.s, opt_: make(map[string]interface{})}
 	c.variantSetId = variantSetId
-	c.variant = variant
+	c.mergevariantsrequest = mergevariantsrequest
 	return c
 }
 
@@ -4027,7 +3895,7 @@ func (c *VariantsetsMergeVariantsCall) Fields(s ...googleapi.Field) *Variantsets
 
 func (c *VariantsetsMergeVariantsCall) Do() error {
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.variant)
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.mergevariantsrequest)
 	if err != nil {
 		return err
 	}
@@ -4071,8 +3939,96 @@ func (c *VariantsetsMergeVariantsCall) Do() error {
 	//   },
 	//   "path": "variantsets/{variantSetId}/mergeVariants",
 	//   "request": {
-	//     "$ref": "Variant"
+	//     "$ref": "MergeVariantsRequest"
 	//   }
+	// }
+
+}
+
+// method id "genomics.variantsets.patch":
+
+type VariantsetsPatchCall struct {
+	s            *Service
+	variantSetId string
+	variantset   *VariantSet
+	opt_         map[string]interface{}
+}
+
+// Patch: Updates a variant set's metadata. All other modifications are
+// silently ignored. This method supports patch semantics.
+func (r *VariantsetsService) Patch(variantSetId string, variantset *VariantSet) *VariantsetsPatchCall {
+	c := &VariantsetsPatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c.variantSetId = variantSetId
+	c.variantset = variantset
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *VariantsetsPatchCall) Fields(s ...googleapi.Field) *VariantsetsPatchCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *VariantsetsPatchCall) Do() (*VariantSet, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.variantset)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "variantsets/{variantSetId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"variantSetId": c.variantSetId,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *VariantSet
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a variant set's metadata. All other modifications are silently ignored. This method supports patch semantics.",
+	//   "httpMethod": "PATCH",
+	//   "id": "genomics.variantsets.patch",
+	//   "parameterOrder": [
+	//     "variantSetId"
+	//   ],
+	//   "parameters": {
+	//     "variantSetId": {
+	//       "description": "The ID of the variant to be updated.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "variantsets/{variantSetId}",
+	//   "request": {
+	//     "$ref": "VariantSet"
+	//   },
+	//   "response": {
+	//     "$ref": "VariantSet"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/genomics"
+	//   ]
 	// }
 
 }
@@ -4085,7 +4041,10 @@ type VariantsetsSearchCall struct {
 	opt_                     map[string]interface{}
 }
 
-// Search: Returns a list of all variant sets matching search criteria.
+// Search: Returns a list of all variant sets matching search
+// criteria.
+//
+// Implements GlobalAllianceApi.searchVariantSets.
 func (r *VariantsetsService) Search(searchvariantsetsrequest *SearchVariantSetsRequest) *VariantsetsSearchCall {
 	c := &VariantsetsSearchCall{s: r.s, opt_: make(map[string]interface{})}
 	c.searchvariantsetsrequest = searchvariantsetsrequest
@@ -4132,7 +4091,7 @@ func (c *VariantsetsSearchCall) Do() (*SearchVariantSetsResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns a list of all variant sets matching search criteria.",
+	//   "description": "Returns a list of all variant sets matching search criteria.\n\nImplements GlobalAllianceApi.searchVariantSets.",
 	//   "httpMethod": "POST",
 	//   "id": "genomics.variantsets.search",
 	//   "path": "variantsets/search",
@@ -4145,6 +4104,94 @@ func (c *VariantsetsSearchCall) Do() (*SearchVariantSetsResponse, error) {
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/genomics",
 	//     "https://www.googleapis.com/auth/genomics.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "genomics.variantsets.update":
+
+type VariantsetsUpdateCall struct {
+	s            *Service
+	variantSetId string
+	variantset   *VariantSet
+	opt_         map[string]interface{}
+}
+
+// Update: Updates a variant set's metadata. All other modifications are
+// silently ignored.
+func (r *VariantsetsService) Update(variantSetId string, variantset *VariantSet) *VariantsetsUpdateCall {
+	c := &VariantsetsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.variantSetId = variantSetId
+	c.variantset = variantset
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *VariantsetsUpdateCall) Fields(s ...googleapi.Field) *VariantsetsUpdateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *VariantsetsUpdateCall) Do() (*VariantSet, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.variantset)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "variantsets/{variantSetId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"variantSetId": c.variantSetId,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *VariantSet
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a variant set's metadata. All other modifications are silently ignored.",
+	//   "httpMethod": "PUT",
+	//   "id": "genomics.variantsets.update",
+	//   "parameterOrder": [
+	//     "variantSetId"
+	//   ],
+	//   "parameters": {
+	//     "variantSetId": {
+	//       "description": "The ID of the variant to be updated.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "variantsets/{variantSetId}",
+	//   "request": {
+	//     "$ref": "VariantSet"
+	//   },
+	//   "response": {
+	//     "$ref": "VariantSet"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/genomics"
 	//   ]
 	// }
 

@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"os"
 
-	drive "code.google.com/p/google-api-go-client/drive/v2"
+	drive "google.golang.org/api/drive/v2"
 )
 
 func init() {

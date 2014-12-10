@@ -4,17 +4,17 @@
 //
 // Usage example:
 //
-//   import "code.google.com/p/google-api-go-client/adexchangeseller/v2.0"
+//   import "google.golang.org/api/adexchangeseller/v2.0"
 //   ...
 //   adexchangesellerService, err := adexchangeseller.New(oauthHttpClient)
 package adexchangeseller
 
 import (
 	"bytes"
-	"code.google.com/p/google-api-go-client/googleapi"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"

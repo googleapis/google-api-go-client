@@ -4,17 +4,17 @@
 //
 // Usage example:
 //
-//   import "code.google.com/p/google-api-go-client/admin/directory_v1"
+//   import "google.golang.org/api/admin/directory_v1"
 //   ...
 //   adminService, err := admin.New(oauthHttpClient)
 package admin
 
 import (
 	"bytes"
-	"code.google.com/p/google-api-go-client/googleapi"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"

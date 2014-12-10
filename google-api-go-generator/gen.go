@@ -39,7 +39,7 @@ var (
 
 	jsonFile     = flag.String("api_json_file", "", "If non-empty, the path to a local file on disk containing the API to generate. Exclusive with setting --api.")
 	output       = flag.String("output", "", "(optional) Path to source output file. If not specified, the API name and version are used to construct an output path (e.g. tasks/v1).")
-	googleAPIPkg = flag.String("googleapi_pkg", "code.google.com/p/google-api-go-client/googleapi", "Go package path of the 'googleapi' support package.")
+	googleAPIPkg = flag.String("googleapi_pkg", "google.golang.org/api/googleapi", "Go package path of the 'googleapi' support package.")
 )
 
 // API represents an API to generate, as well as its state while it's
@@ -312,7 +312,7 @@ func (a *API) Package() string {
 }
 
 func (a *API) Target() string {
-	return fmt.Sprintf("code.google.com/p/google-api-go-client/%s/%s", a.Package(), a.Version)
+	return fmt.Sprintf("google.golang.org/api/%s/%s", a.Package(), a.Version)
 }
 
 // GetName returns a free top-level function/type identifier in the package.

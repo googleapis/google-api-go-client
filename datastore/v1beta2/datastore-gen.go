@@ -4,17 +4,17 @@
 //
 // Usage example:
 //
-//   import "code.google.com/p/google-api-go-client/datastore/v1beta2"
+//   import "google.golang.org/api/datastore/v1beta2"
 //   ...
 //   datastoreService, err := datastore.New(oauthHttpClient)
 package datastore
 
 import (
 	"bytes"
-	"code.google.com/p/google-api-go-client/googleapi"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"

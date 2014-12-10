@@ -4,17 +4,17 @@
 //
 // Usage example:
 //
-//   import "code.google.com/p/google-api-go-client/groupssettings/v1"
+//   import "google.golang.org/api/groupssettings/v1"
 //   ...
 //   groupssettingsService, err := groupssettings.New(oauthHttpClient)
 package groupssettings
 
 import (
 	"bytes"
-	"code.google.com/p/google-api-go-client/googleapi"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"

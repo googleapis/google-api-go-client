@@ -4,17 +4,17 @@
 //
 // Usage example:
 //
-//   import "code.google.com/p/google-api-go-client/autoscaler/v1beta2"
+//   import "google.golang.org/api/autoscaler/v1beta2"
 //   ...
 //   autoscalerService, err := autoscaler.New(oauthHttpClient)
 package autoscaler
 
 import (
 	"bytes"
-	"code.google.com/p/google-api-go-client/googleapi"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"

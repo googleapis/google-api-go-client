@@ -12,7 +12,7 @@ import (
 	"strings"
 	"time"
 
-	fitness "code.google.com/p/google-api-go-client/fitness/v1"
+	fitness "google.golang.org/api/fitness/v1"
 )
 
 const (

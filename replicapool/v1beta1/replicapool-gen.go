@@ -4,17 +4,17 @@
 //
 // Usage example:
 //
-//   import "code.google.com/p/google-api-go-client/replicapool/v1beta1"
+//   import "google.golang.org/api/replicapool/v1beta1"
 //   ...
 //   replicapoolService, err := replicapool.New(oauthHttpClient)
 package replicapool
 
 import (
 	"bytes"
-	"code.google.com/p/google-api-go-client/googleapi"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"

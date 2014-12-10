@@ -4,17 +4,17 @@
 //
 // Usage example:
 //
-//   import "code.google.com/p/google-api-go-client/doubleclickbidmanager/v1"
+//   import "google.golang.org/api/doubleclickbidmanager/v1"
 //   ...
 //   doubleclickbidmanagerService, err := doubleclickbidmanager.New(oauthHttpClient)
 package doubleclickbidmanager
 
 import (
 	"bytes"
-	"code.google.com/p/google-api-go-client/googleapi"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"

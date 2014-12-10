@@ -2,17 +2,17 @@
 //
 // Usage example:
 //
-//   import "code.google.com/p/google-api-go-client/fitness/v1"
+//   import "google.golang.org/api/fitness/v1"
 //   ...
 //   fitnessService, err := fitness.New(oauthHttpClient)
 package fitness
 
 import (
 	"bytes"
-	"code.google.com/p/google-api-go-client/googleapi"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"

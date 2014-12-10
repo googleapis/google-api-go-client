@@ -4,17 +4,17 @@
 //
 // Usage example:
 //
-//   import "code.google.com/p/google-api-go-client/siteverification/v1"
+//   import "google.golang.org/api/siteverification/v1"
 //   ...
 //   siteverificationService, err := siteverification.New(oauthHttpClient)
 package siteverification
 
 import (
 	"bytes"
-	"code.google.com/p/google-api-go-client/googleapi"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"

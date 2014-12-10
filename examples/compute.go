@@ -7,7 +7,7 @@ import (
 	"os"
 	"strings"
 
-	compute "code.google.com/p/google-api-go-client/compute/v1"
+	compute "google.golang.org/api/compute/v1"
 )
 
 func init() {

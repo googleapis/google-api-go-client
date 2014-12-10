@@ -2,14 +2,14 @@
 //
 // Usage example:
 //
-//   import "code.google.com/p/google-api-go-client/getwithoutbody/v1"
+//   import "google.golang.org/api/getwithoutbody/v1"
 //   ...
 //   getwithoutbodyService, err := getwithoutbody.New(oauthHttpClient)
 package getwithoutbody
 
 import (
 	"bytes"
-	"code.google.com/p/google-api-go-client/googleapi"
+	"google.golang.org/api/googleapi"
 	"encoding/json"
 	"errors"
 	"fmt"

@@ -12,8 +12,8 @@ import (
 	"path/filepath"
 	"strings"
 
-	"code.google.com/p/google-api-go-client/googleapi"
-	prediction "code.google.com/p/google-api-go-client/prediction/v1.6"
+	"google.golang.org/api/googleapi"
+	prediction "google.golang.org/api/prediction/v1.6"
 )
 
 func init() {

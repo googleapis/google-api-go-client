@@ -4,17 +4,17 @@
 //
 // Usage example:
 //
-//   import "code.google.com/p/google-api-go-client/gan/v1beta1"
+//   import "google.golang.org/api/gan/v1beta1"
 //   ...
 //   ganService, err := gan.New(oauthHttpClient)
 package gan
 
 import (
 	"bytes"
-	"code.google.com/p/google-api-go-client/googleapi"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"

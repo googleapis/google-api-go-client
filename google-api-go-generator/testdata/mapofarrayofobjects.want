@@ -2,14 +2,14 @@
 //
 // Usage example:
 //
-//   import "code.google.com/p/google-api-go-client/additionalprops/v1"
+//   import "google.golang.org/api/additionalprops/v1"
 //   ...
 //   additionalpropsService, err := additionalprops.New(oauthHttpClient)
 package additionalprops
 
 import (
 	"bytes"
-	"code.google.com/p/google-api-go-client/googleapi"
+	"google.golang.org/api/googleapi"
 	"encoding/json"
 	"errors"
 	"fmt"

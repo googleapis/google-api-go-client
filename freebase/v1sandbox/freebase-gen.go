@@ -4,17 +4,17 @@
 //
 // Usage example:
 //
-//   import "code.google.com/p/google-api-go-client/freebase/v1sandbox"
+//   import "google.golang.org/api/freebase/v1sandbox"
 //   ...
 //   freebaseService, err := freebase.New(oauthHttpClient)
 package freebase
 
 import (
 	"bytes"
-	"code.google.com/p/google-api-go-client/googleapi"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"

@@ -4,17 +4,17 @@
 //
 // Usage example:
 //
-//   import "code.google.com/p/google-api-go-client/dns/v1beta1"
+//   import "google.golang.org/api/dns/v1beta1"
 //   ...
 //   dnsService, err := dns.New(oauthHttpClient)
 package dns
 
 import (
 	"bytes"
-	"code.google.com/p/google-api-go-client/googleapi"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"

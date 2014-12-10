@@ -4,17 +4,17 @@
 //
 // Usage example:
 //
-//   import "code.google.com/p/google-api-go-client/discovery/v1"
+//   import "google.golang.org/api/discovery/v1"
 //   ...
 //   discoveryService, err := discovery.New(oauthHttpClient)
 package discovery
 
 import (
 	"bytes"
-	"code.google.com/p/google-api-go-client/googleapi"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"

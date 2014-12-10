@@ -4,17 +4,17 @@
 //
 // Usage example:
 //
-//   import "code.google.com/p/google-api-go-client/mirror/v1"
+//   import "google.golang.org/api/mirror/v1"
 //   ...
 //   mirrorService, err := mirror.New(oauthHttpClient)
 package mirror
 
 import (
 	"bytes"
-	"code.google.com/p/google-api-go-client/googleapi"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"

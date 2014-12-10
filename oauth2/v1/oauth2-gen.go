@@ -4,17 +4,17 @@
 //
 // Usage example:
 //
-//   import "code.google.com/p/google-api-go-client/oauth2/v1"
+//   import "google.golang.org/api/oauth2/v1"
 //   ...
 //   oauth2Service, err := oauth2.New(oauthHttpClient)
 package oauth2
 
 import (
 	"bytes"
-	"code.google.com/p/google-api-go-client/googleapi"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"

@@ -4,17 +4,17 @@
 //
 // Usage example:
 //
-//   import "code.google.com/p/google-api-go-client/bigquery/v2"
+//   import "google.golang.org/api/bigquery/v2"
 //   ...
 //   bigqueryService, err := bigquery.New(oauthHttpClient)
 package bigquery
 
 import (
 	"bytes"
-	"code.google.com/p/google-api-go-client/googleapi"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"

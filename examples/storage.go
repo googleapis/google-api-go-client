@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"os"
 
-	storage "code.google.com/p/google-api-go-client/storage/v1"
+	storage "google.golang.org/api/storage/v1"
 )
 
 func init() {

@@ -4,17 +4,17 @@
 //
 // Usage example:
 //
-//   import "code.google.com/p/google-api-go-client/blogger/v2"
+//   import "google.golang.org/api/blogger/v2"
 //   ...
 //   bloggerService, err := blogger.New(oauthHttpClient)
 package blogger
 
 import (
 	"bytes"
-	"code.google.com/p/google-api-go-client/googleapi"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"

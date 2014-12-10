@@ -4,17 +4,17 @@
 //
 // Usage example:
 //
-//   import "code.google.com/p/google-api-go-client/civicinfo/v1"
+//   import "google.golang.org/api/civicinfo/v1"
 //   ...
 //   civicinfoService, err := civicinfo.New(oauthHttpClient)
 package civicinfo
 
 import (
 	"bytes"
-	"code.google.com/p/google-api-go-client/googleapi"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"

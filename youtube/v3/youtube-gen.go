@@ -4,17 +4,17 @@
 //
 // Usage example:
 //
-//   import "code.google.com/p/google-api-go-client/youtube/v3"
+//   import "google.golang.org/api/youtube/v3"
 //   ...
 //   youtubeService, err := youtube.New(oauthHttpClient)
 package youtube
 
 import (
 	"bytes"
-	"code.google.com/p/google-api-go-client/googleapi"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"

@@ -2,14 +2,14 @@
 //
 // Usage example:
 //
-//   import "code.google.com/p/google-api-go-client/arrayofarray/v1"
+//   import "google.golang.org/api/arrayofarray/v1"
 //   ...
 //   arrayofarrayService, err := arrayofarray.New(oauthHttpClient)
 package arrayofarray
 
 import (
 	"bytes"
-	"code.google.com/p/google-api-go-client/googleapi"
+	"google.golang.org/api/googleapi"
 	"encoding/json"
 	"errors"
 	"fmt"

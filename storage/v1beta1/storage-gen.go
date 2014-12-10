@@ -4,17 +4,17 @@
 //
 // Usage example:
 //
-//   import "code.google.com/p/google-api-go-client/storage/v1beta1"
+//   import "google.golang.org/api/storage/v1beta1"
 //   ...
 //   storageService, err := storage.New(oauthHttpClient)
 package storage
 
 import (
 	"bytes"
-	"code.google.com/p/google-api-go-client/googleapi"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"

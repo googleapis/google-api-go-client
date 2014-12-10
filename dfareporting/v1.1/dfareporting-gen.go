@@ -4,17 +4,17 @@
 //
 // Usage example:
 //
-//   import "code.google.com/p/google-api-go-client/dfareporting/v1.1"
+//   import "google.golang.org/api/dfareporting/v1.1"
 //   ...
 //   dfareportingService, err := dfareporting.New(oauthHttpClient)
 package dfareporting
 
 import (
 	"bytes"
-	"code.google.com/p/google-api-go-client/googleapi"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"

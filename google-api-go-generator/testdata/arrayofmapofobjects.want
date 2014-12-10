@@ -2,14 +2,14 @@
 //
 // Usage example:
 //
-//   import "code.google.com/p/google-api-go-client/arrayofmapofstrings/v1"
+//   import "google.golang.org/api/arrayofmapofstrings/v1"
 //   ...
 //   arrayofmapofstringsService, err := arrayofmapofstrings.New(oauthHttpClient)
 package arrayofmapofstrings
 
 import (
 	"bytes"
-	"code.google.com/p/google-api-go-client/googleapi"
+	"google.golang.org/api/googleapi"
 	"encoding/json"
 	"errors"
 	"fmt"

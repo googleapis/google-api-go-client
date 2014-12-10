@@ -4,17 +4,17 @@
 //
 // Usage example:
 //
-//   import "code.google.com/p/google-api-go-client/identitytoolkit/v3"
+//   import "google.golang.org/api/identitytoolkit/v3"
 //   ...
 //   identitytoolkitService, err := identitytoolkit.New(oauthHttpClient)
 package identitytoolkit
 
 import (
 	"bytes"
-	"code.google.com/p/google-api-go-client/googleapi"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"

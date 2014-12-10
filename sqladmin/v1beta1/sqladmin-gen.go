@@ -4,17 +4,17 @@
 //
 // Usage example:
 //
-//   import "code.google.com/p/google-api-go-client/sqladmin/v1beta1"
+//   import "google.golang.org/api/sqladmin/v1beta1"
 //   ...
 //   sqladminService, err := sqladmin.New(oauthHttpClient)
 package sqladmin
 
 import (
 	"bytes"
-	"code.google.com/p/google-api-go-client/googleapi"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"

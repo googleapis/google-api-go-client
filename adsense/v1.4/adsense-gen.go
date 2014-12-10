@@ -4,17 +4,17 @@
 //
 // Usage example:
 //
-//   import "code.google.com/p/google-api-go-client/adsense/v1.4"
+//   import "google.golang.org/api/adsense/v1.4"
 //   ...
 //   adsenseService, err := adsense.New(oauthHttpClient)
 package adsense
 
 import (
 	"bytes"
-	"code.google.com/p/google-api-go-client/googleapi"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"

@@ -2,17 +2,17 @@
 //
 // Usage example:
 //
-//   import "code.google.com/p/google-api-go-client/container/v1beta1"
+//   import "google.golang.org/api/container/v1beta1"
 //   ...
 //   containerService, err := container.New(oauthHttpClient)
 package container
 
 import (
 	"bytes"
-	"code.google.com/p/google-api-go-client/googleapi"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"

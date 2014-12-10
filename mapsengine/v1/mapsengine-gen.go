@@ -4,17 +4,17 @@
 //
 // Usage example:
 //
-//   import "code.google.com/p/google-api-go-client/mapsengine/v1"
+//   import "google.golang.org/api/mapsengine/v1"
 //   ...
 //   mapsengineService, err := mapsengine.New(oauthHttpClient)
 package mapsengine
 
 import (
 	"bytes"
-	"code.google.com/p/google-api-go-client/googleapi"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"

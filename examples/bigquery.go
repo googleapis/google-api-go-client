@@ -17,8 +17,8 @@ import (
 	"strings"
 	"time"
 
-	bigquery "code.google.com/p/google-api-go-client/bigquery/v2"
-	storage "code.google.com/p/google-api-go-client/storage/v1"
+	bigquery "google.golang.org/api/bigquery/v2"
+	storage "google.golang.org/api/storage/v1"
 )
 
 const (

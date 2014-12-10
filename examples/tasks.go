@@ -4,7 +4,7 @@ import (
 	"log"
 	"net/http"
 
-	tasks "code.google.com/p/google-api-go-client/tasks/v1"
+	tasks "google.golang.org/api/tasks/v1"
 )
 
 func init() {

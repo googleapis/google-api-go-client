@@ -4,17 +4,17 @@
 //
 // Usage example:
 //
-//   import "code.google.com/p/google-api-go-client/gamesmanagement/v1management"
+//   import "google.golang.org/api/gamesmanagement/v1management"
 //   ...
 //   gamesmanagementService, err := gamesmanagement.New(oauthHttpClient)
 package gamesmanagement
 
 import (
 	"bytes"
-	"code.google.com/p/google-api-go-client/googleapi"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"

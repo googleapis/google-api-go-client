@@ -1,0 +1,163 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04b20612_21b82ae5",
+        "filename": "examples/pubsub.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-12-11T23:22:28Z",
+      "side": 1,
+      "message": "or just: `req :\u003d ...`",
+      "range": {
+        "startLine": 240,
+        "startChar": 3,
+        "endLine": 240,
+        "endChar": 22
+      },
+      "revId": "b8b146a4ef2fc73a3aac0e36c7a8a6f7314849c3",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "04b20612_01a40ebc",
+        "filename": "examples/pubsub.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-12-11T23:22:28Z",
+      "side": 1,
+      "message": "or just `msg :\u003d ...`",
+      "revId": "b8b146a4ef2fc73a3aac0e36c7a8a6f7314849c3",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "04b20612_e1a80294",
+        "filename": "examples/pubsub.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-12-11T23:22:28Z",
+      "side": 1,
+      "message": "or just `req :\u003d ...`",
+      "revId": "b8b146a4ef2fc73a3aac0e36c7a8a6f7314849c3",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "04b20612_a1a2faad",
+        "filename": "examples/pubsub.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-12-11T23:22:28Z",
+      "side": 1,
+      "message": "I don\u0027t think the \"\\n\" is necessary in a log.Printf",
+      "revId": "b8b146a4ef2fc73a3aac0e36c7a8a6f7314849c3",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "04b20612_81981e86",
+        "filename": "examples/pubsub.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-12-11T23:22:28Z",
+      "side": 1,
+      "message": "or just `req :\u003d ...`",
+      "revId": "b8b146a4ef2fc73a3aac0e36c7a8a6f7314849c3",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "04b20612_6195124a",
+        "filename": "examples/pubsub.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-12-11T23:22:28Z",
+      "side": 1,
+      "message": "or `res, err :\u003d ...`",
+      "revId": "b8b146a4ef2fc73a3aac0e36c7a8a6f7314849c3",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "04b20612_41921664",
+        "filename": "examples/pubsub.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-12-11T23:22:28Z",
+      "side": 1,
+      "message": "I don\u0027t think \"\\n\" is necessary in a log.Printf",
+      "revId": "b8b146a4ef2fc73a3aac0e36c7a8a6f7314849c3",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "04b20612_0103ee03",
+        "filename": "examples/pubsub.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-12-11T23:22:28Z",
+      "side": 1,
+      "message": "or just `for _, v :\u003d ...`",
+      "revId": "b8b146a4ef2fc73a3aac0e36c7a8a6f7314849c3",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "04b20612_218f0a3a",
+        "filename": "examples/pubsub.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-12-11T23:22:28Z",
+      "side": 1,
+      "message": "or just `req :\u003d ...`",
+      "revId": "b8b146a4ef2fc73a3aac0e36c7a8a6f7314849c3",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

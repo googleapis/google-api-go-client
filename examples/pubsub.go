@@ -15,7 +15,9 @@ import (
 	pubsub "google.golang.org/api/pubsub/v1beta1"
 )
 
-const USAGE = `Available arguments are:
+const (
+	batchSize = 100
+	usageArgs = `Available arguments are:
     PROJ list_topics
     PROJ create_topic TOPIC
     PROJ delete_topic TOPIC
@@ -23,8 +25,10 @@ const USAGE = `Available arguments are:
     PROJ create_subscription SUBSCRIPTION LINKED_TOPIC
     PROJ delete_subscription SUBSCRIPTION
     PROJ connect_irc TOPIC SERVER CHANNEL
+    PROJ publish_message TOPIC MESSAGE
     PROJ pull_messages SUBSCRIPTION
 `
+)
 
 type IRCBot struct {
 	server   string
@@ -95,7 +99,7 @@ func init() {
 }
 
 func pubsubUsage() {
-	fmt.Fprint(os.Stderr, USAGE)
+	fmt.Fprint(os.Stderr, usageArgs)
 }
 
 // Returns a fully qualified resource name for Cloud Pub/Sub.
@@ -126,14 +130,14 @@ func listTopics(service *pubsub.Service, argv []string) {
 			fmt.Sprintf(
 				"cloud.googleapis.com/project in (/projects/%s)",
 				argv[0])).PageToken(nextPageToken)
-		topicsList, err := query.Do()
+		resp, err := query.Do()
 		if err != nil {
 			log.Fatal("Got an error: %v", err)
 		}
-		for _, topic := range topicsList.Topic {
+		for _, topic := range resp.Topic {
 			fmt.Println(topic.Name)
 		}
-		nextPageToken = topicsList.NextPageToken
+		nextPageToken = resp.NextPageToken
 		if nextPageToken == "" {
 			break
 		}
@@ -152,12 +156,12 @@ func createTopic(service *pubsub.Service, argv []string) {
 
 func deleteTopic(service *pubsub.Service, argv []string) {
 	checkArgs(argv, 3)
-	topicName := fullTopicName(argv[0], argv[2])
-	err := service.Topics.Delete(topicName).Do()
+	topic := fullTopicName(argv[0], argv[2])
+	err := service.Topics.Delete(topic).Do()
 	if err != nil {
 		log.Fatal("Got an error: %v", err)
 	}
-	fmt.Printf("Topic %s was deleted.\n", topicName)
+	fmt.Printf("Topic %s was deleted.\n", topic)
 }
 
 func listSubscriptions(service *pubsub.Service, argv []string) {
@@ -167,15 +171,15 @@ func listSubscriptions(service *pubsub.Service, argv []string) {
 			fmt.Sprintf(
 				"cloud.googleapis.com/project in (/projects/%s)",
 				argv[0])).PageToken(nextPageToken)
-		subscriptionsList, err := query.Do()
+		resp, err := query.Do()
 		if err != nil {
 			log.Fatal("Got an error: %v", err)
 		}
-		for _, subscription := range subscriptionsList.Subscription {
-			sub_text, _ := json.MarshalIndent(subscription, "", "  ")
+		for _, sub := range resp.Subscription {
+			sub_text, _ := json.MarshalIndent(sub, "", "  ")
 			fmt.Printf("%s\n", sub_text)
 		}
-		nextPageToken = subscriptionsList.NextPageToken
+		nextPageToken = resp.NextPageToken
 		if nextPageToken == "" {
 			break
 		}
@@ -184,30 +188,30 @@ func listSubscriptions(service *pubsub.Service, argv []string) {
 
 func createSubscription(service *pubsub.Service, argv []string) {
 	checkArgs(argv, 4)
-	subscription := &pubsub.Subscription{
+	sub := &pubsub.Subscription{
 		Name:  fullSubscriptionName(argv[0], argv[2]),
 		Topic: fullTopicName(argv[0], argv[3]),
 	}
-	subscription, err := service.Subscriptions.Create(subscription).Do()
+	sub, err := service.Subscriptions.Create(sub).Do()
 	if err != nil {
 		log.Fatal("Got an error: %v", err)
 	}
-	fmt.Printf("Subscription %s was created.\n", subscription.Name)
+	fmt.Printf("Subscription %s was created.\n", sub.Name)
 }
 
 func deleteSubscription(service *pubsub.Service, argv []string) {
 	checkArgs(argv, 3)
-	subscriptionName := fullSubscriptionName(argv[0], argv[2])
-	err := service.Subscriptions.Delete(subscriptionName).Do()
+	sub := fullSubscriptionName(argv[0], argv[2])
+	err := service.Subscriptions.Delete(sub).Do()
 	if err != nil {
 		log.Fatal("Got an error: %v", err)
 	}
-	fmt.Printf("Subscription %s was deleted.\n", subscriptionName)
+	fmt.Printf("Subscription %s was deleted.\n", sub)
 }
 
 func connectIRC(service *pubsub.Service, argv []string) {
 	checkArgs(argv, 5)
-	topicName := fullTopicName(argv[0], argv[2])
+	topic := fullTopicName(argv[0], argv[2])
 	server := argv[3]
 	channel := argv[4]
 	nick := fmt.Sprintf("bot-%s", argv[2])
@@ -230,44 +234,67 @@ func connectIRC(service *pubsub.Service, argv []string) {
 				continue
 			}
 			privMsg := line[pos+len(privMark) : len(line)]
-			pubsubMessage := &pubsub.PubsubMessage{
+			msg := &pubsub.PubsubMessage{
 				Data: base64.StdEncoding.EncodeToString([]byte(privMsg)),
 			}
-			publishRequest := &pubsub.PublishRequest{
-				Message: pubsubMessage,
-				Topic:   topicName,
+			req := &pubsub.PublishBatchRequest{
+				Messages: []*pubsub.PubsubMessage{msg},
+				Topic:    topic,
 			}
-			service.Topics.Publish(publishRequest).Do()
+			service.Topics.PublishBatch(req).Do()
 			log.Println("Published a message to the topic.")
 		}
 	}
 }
 
+func publishMessage(service *pubsub.Service, argv []string) {
+	checkArgs(argv, 4)
+	topic := fullTopicName(argv[0], argv[2])
+	body := argv[3]
+	msg := &pubsub.PubsubMessage{
+		Data: base64.StdEncoding.EncodeToString([]byte(body)),
+	}
+	req := &pubsub.PublishBatchRequest{
+		Messages: []*pubsub.PubsubMessage{msg},
+		Topic:    topic,
+	}
+	resp, err := service.Topics.PublishBatch(req).Do()
+	if err != nil {
+		log.Fatalf("PublishBatch failed: %v", err)
+	}
+	log.Printf("Published a message to the topic with message_id: %s.", resp.MessageIds[0])
+}
+
 func pullMessages(service *pubsub.Service, argv []string) {
 	checkArgs(argv, 3)
-	subscriptionName := fullSubscriptionName(argv[0], argv[2])
-	pullRequest := &pubsub.PullRequest{
+	sub := fullSubscriptionName(argv[0], argv[2])
+	req := &pubsub.PullBatchRequest{
 		ReturnImmediately: false,
-		Subscription:      subscriptionName,
+		MaxEvents:         batchSize,
+		Subscription:      sub,
 	}
 	for {
-		pullResponse, err := service.Subscriptions.Pull(pullRequest).Do()
+		resp, err := service.Subscriptions.PullBatch(req).Do()
 		if err != nil {
-			log.Fatal("Got an error while pull a message: %v", err)
+			log.Printf("Got an error while pull a message: %v", err)
+			break
 		}
-		if pullResponse.PubsubEvent.Message != nil {
-			data, err := base64.StdEncoding.DecodeString(
-				pullResponse.PubsubEvent.Message.Data)
-			if err != nil {
-				log.Fatal("Got an error while decoding the message: %v", err)
+		ackIds := []string{}
+		for _, pullResp := range resp.PullResponses {
+			if pullResp.PubsubEvent.Message != nil {
+				data, err := base64.StdEncoding.DecodeString(pullResp.PubsubEvent.Message.Data)
+				if err != nil {
+					log.Fatalf("Got an error while decoding the message: %v", err)
+				}
+				fmt.Printf("%s\n", data)
+				ackIds = append(ackIds, pullResp.AckId)
 			}
-			fmt.Printf("%s\n", data)
-			ackRequest := &pubsub.AcknowledgeRequest{
-				AckId:        []string{pullResponse.AckId},
-				Subscription: subscriptionName,
-			}
-			service.Subscriptions.Acknowledge(ackRequest).Do()
 		}
+		ackReq := &pubsub.AcknowledgeRequest{
+			AckId:        ackIds,
+			Subscription: sub,
+		}
+		service.Subscriptions.Acknowledge(ackReq).Do()
 	}
 }
 
@@ -290,6 +317,7 @@ func pullMessages(service *pubsub.Service, argv []string) {
 // PROJ create_subscription SUBSCRIPTION LINKED_TOPIC
 // PROJ delete_subscription SUBSCRIPTION
 // PROJ connect_irc TOPIC SERVER CHANNEL
+// PROJ publish_message TOPIC MESSAGE
 // PROJ pull_messages SUBSCRIPTION
 //
 // You can use either of your alphanumerical or numerial Cloud Project
@@ -314,6 +342,7 @@ func pubsubMain(client *http.Client, argv []string) {
 		"create_subscription": createSubscription,
 		"delete_subscription": deleteSubscription,
 		"connect_irc":         connectIRC,
+		"publish_message":     publishMessage,
 		"pull_messages":       pullMessages,
 	}
 	f, ok := m[argv[1]]

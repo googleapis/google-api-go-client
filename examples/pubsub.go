@@ -15,7 +15,9 @@ import (
 	pubsub "google.golang.org/api/pubsub/v1beta1"
 )
 
-const USAGE = `Available arguments are:
+const (
+	batchSize = 100
+	usageArgs = `Available arguments are:
     PROJ list_topics
     PROJ create_topic TOPIC
     PROJ delete_topic TOPIC
@@ -23,8 +25,10 @@ const USAGE = `Available arguments are:
     PROJ create_subscription SUBSCRIPTION LINKED_TOPIC
     PROJ delete_subscription SUBSCRIPTION
     PROJ connect_irc TOPIC SERVER CHANNEL
+    PROJ publish_message TOPIC MESSAGE
     PROJ pull_messages SUBSCRIPTION
 `
+)
 
 type IRCBot struct {
 	server   string
@@ -95,7 +99,7 @@ func init() {
 }
 
 func pubsubUsage() {
-	fmt.Fprint(os.Stderr, USAGE)
+	fmt.Fprint(os.Stderr, usageArgs)
 }
 
 // Returns a fully qualified resource name for Cloud Pub/Sub.
@@ -233,41 +237,64 @@ func connectIRC(service *pubsub.Service, argv []string) {
 			pubsubMessage := &pubsub.PubsubMessage{
 				Data: base64.StdEncoding.EncodeToString([]byte(privMsg)),
 			}
-			publishRequest := &pubsub.PublishRequest{
-				Message: pubsubMessage,
-				Topic:   topicName,
+			publishBatchRequest := &pubsub.PublishBatchRequest{
+				Messages: []*pubsub.PubsubMessage{pubsubMessage},
+				Topic:    topicName,
 			}
-			service.Topics.Publish(publishRequest).Do()
+			service.Topics.PublishBatch(publishBatchRequest).Do()
 			log.Println("Published a message to the topic.")
 		}
 	}
 }
 
+func publishMessage(service *pubsub.Service, argv []string) {
+	checkArgs(argv, 4)
+	topicName := fullTopicName(argv[0], argv[2])
+	message := argv[3]
+	pubsubMessage := &pubsub.PubsubMessage{
+		Data: base64.StdEncoding.EncodeToString([]byte(message)),
+	}
+	publishBatchRequest := &pubsub.PublishBatchRequest{
+		Messages: []*pubsub.PubsubMessage{pubsubMessage},
+		Topic:    topicName,
+	}
+	resp, err := service.Topics.PublishBatch(publishBatchRequest).Do()
+	if err != nil {
+		log.Fatalf("PublishBatch failed: %v", err)
+	}
+	log.Printf("Published a message to the topic with message_id: %s.\n", resp.MessageIds[0])
+}
+
 func pullMessages(service *pubsub.Service, argv []string) {
 	checkArgs(argv, 3)
 	subscriptionName := fullSubscriptionName(argv[0], argv[2])
-	pullRequest := &pubsub.PullRequest{
+	pullBatchRequest := &pubsub.PullBatchRequest{
 		ReturnImmediately: false,
+		MaxEvents:         batchSize,
 		Subscription:      subscriptionName,
 	}
 	for {
-		pullResponse, err := service.Subscriptions.Pull(pullRequest).Do()
+		pullBatchResponse, err := service.Subscriptions.PullBatch(pullBatchRequest).Do()
 		if err != nil {
-			log.Fatal("Got an error while pull a message: %v", err)
+			log.Printf("Got an error while pull a message: %v\n", err)
+			break
 		}
-		if pullResponse.PubsubEvent.Message != nil {
-			data, err := base64.StdEncoding.DecodeString(
-				pullResponse.PubsubEvent.Message.Data)
-			if err != nil {
-				log.Fatal("Got an error while decoding the message: %v", err)
+		ackIds := []string{}
+		for _, pullResponse := range pullBatchResponse.PullResponses {
+			if pullResponse.PubsubEvent.Message != nil {
+				data, err := base64.StdEncoding.DecodeString(pullResponse.PubsubEvent.Message.Data)
+				if err != nil {
+					log.Fatalf("Got an error while decoding the message: %v", err)
+				}
+				fmt.Printf("%s\n", data)
+				ackIds = append(ackIds, pullResponse.AckId)
 			}
-			fmt.Printf("%s\n", data)
-			ackRequest := &pubsub.AcknowledgeRequest{
-				AckId:        []string{pullResponse.AckId},
-				Subscription: subscriptionName,
-			}
-			service.Subscriptions.Acknowledge(ackRequest).Do()
 		}
+		ackRequest := &pubsub.AcknowledgeRequest{
+			AckId:        ackIds,
+			Subscription: subscriptionName,
+		}
+		service.Subscriptions.Acknowledge(ackRequest).Do()
 	}
 }
 
@@ -290,6 +317,7 @@ func pullMessages(service *pubsub.Service, argv []string) {
 // PROJ create_subscription SUBSCRIPTION LINKED_TOPIC
 // PROJ delete_subscription SUBSCRIPTION
 // PROJ connect_irc TOPIC SERVER CHANNEL
+// PROJ publish_message TOPIC MESSAGE
 // PROJ pull_messages SUBSCRIPTION
 //
 // You can use either of your alphanumerical or numerial Cloud Project
@@ -314,6 +342,7 @@ func pubsubMain(client *http.Client, argv []string) {
 		"create_subscription": createSubscription,
 		"delete_subscription": deleteSubscription,
 		"connect_irc":         connectIRC,
+		"publish_message":     publishMessage,
 		"pull_messages":       pullMessages,
 	}
 	f, ok := m[argv[1]]

@@ -17,7 +17,11 @@ import (
 	"net/textproto"
 	"net/url"
 	"os"
+	"regexp"
+	"strconv"
 	"strings"
+	"sync"
+	"time"
 
 	"code.google.com/p/google-api-go-client/googleapi/internal/uritemplates"
 )
@@ -30,7 +34,15 @@ type ContentTyper interface {
 	ContentType() string
 }
 
-const Version = "0.5"
+const (
+	Version = "0.5"
+
+	// statusResumeIncomplete is the code returned by the Google uploader when the transfer is not yet complete.
+	statusResumeIncomplete = 308
+
+	// userAgent is the header string used to identify itself to the Google uploader.
+	userAgent = "google-api-go-client/0.5"
+)
 
 // Error contains an error response from the server.
 type Error struct {
@@ -145,7 +157,7 @@ type Lengther interface {
 }
 
 // endingWithErrorReader from r until it returns an error.  If the
-// final error from r is os.EOF and e is non-nil, e is used instead.
+// final error from r is io.EOF and e is non-nil, e is used instead.
 type endingWithErrorReader struct {
 	r io.Reader
 	e error
@@ -273,6 +285,138 @@ func ConditionallyIncludeMedia(media io.Reader, bodyp *io.Reader, ctypep *string
 		}
 	}()
 	return totalContentLength, true
+}
+
+// ProgressUpdater is an interface that provides a callback function that is called upon every progress update of a resumable upload.
+// This is the only part of a resumable upload (from googleapi) that is usable by the developer.
+// The remaining usable pieces of resumable uploads will be exposed in each auto-generated API.
+type ProgressUpdater interface {
+	ProgressUpdate(current, total int64)
+}
+
+// ResumableUpload is used by the generated APIs to provide resumable uploads.
+// It is not used by developers directly.
+type ResumableUpload struct {
+	Client *http.Client
+	// URI is the resumable resource destination provided by the server after specifying "&uploadType=resumable".
+	URI string
+	// Media is the object being uploaded.
+	Media io.ReaderAt
+	// MediaType defines the media type, e.g. "image/jpeg".
+	MediaType string
+	// ContentLength is the full size of the object being uploaded.
+	ContentLength int64
+
+	mu sync.Mutex // guards progress
+	// progress keeps track of the number of bytes uploaded so far.
+	progress int64
+
+	// Callback is a function that will be called upon every progress update.
+	Callback ProgressUpdater
+}
+
+var (
+	// rangeRE matches the transfer status response from the server. $1 is the last byte index uploaded.
+	rangeRE = regexp.MustCompile(`^0\-(\d+)$`)
+	// chunkSize is the size of the chunks created during a resumable upload and should be a power of two.
+	// 1<<18 is the minimum size supported by the Google uploader, and there is no maximum.
+	chunkSize int64 = 1 << 18
+)
+
+// Progress returns the number of bytes uploaded at this point.
+func (rx *ResumableUpload) Progress() int64 {
+	rx.mu.Lock()
+	defer rx.mu.Unlock()
+	return rx.progress
+}
+
+func (rx *ResumableUpload) transferStatus() (int64, *http.Response, error) {
+	req, _ := http.NewRequest("POST", rx.URI, nil)
+	req.ContentLength = 0
+	req.Header.Set("User-Agent", userAgent)
+	req.Header.Set("Content-Range", fmt.Sprintf("bytes */%v", rx.ContentLength))
+	res, err := rx.Client.Do(req)
+	defer res.Body.Close()
+	if err != nil || res.StatusCode != statusResumeIncomplete {
+		return 0, res, err
+	}
+	var start int64
+	if m := rangeRE.FindStringSubmatch(res.Header.Get("Range")); len(m) == 2 {
+		start, err = strconv.ParseInt(m[1], 10, 64)
+		if err != nil {
+			return 0, nil, fmt.Errorf("unable to parse range size %v", m[1])
+		}
+		start += 1 // Start at the next byte
+	}
+	return start, res, nil
+}
+
+type chunk struct {
+	body io.Reader
+	size int64
+	err  error
+}
+
+func (rx *ResumableUpload) transferChunks() (*http.Response, error) {
+	start, res, err := rx.transferStatus()
+	if err != nil || res.StatusCode != statusResumeIncomplete {
+		return res, err
+	}
+
+	for {
+		reqSize := rx.ContentLength - start
+		if reqSize > chunkSize {
+			reqSize = chunkSize
+		}
+		r := io.NewSectionReader(rx.Media, start, reqSize)
+		buf := make([]byte, reqSize)
+		_, err = r.Read(buf)
+		if err != nil && err != io.EOF {
+			return nil, fmt.Errorf("unable to read %v bytes from media: %v", reqSize, err)
+		}
+		req, _ := http.NewRequest("POST", rx.URI, bytes.NewBuffer(buf))
+		req.ContentLength = reqSize
+		req.Header.Set("Content-Range", fmt.Sprintf("bytes %v-%v/%v", start, start+reqSize-1, rx.ContentLength))
+		req.Header.Set("Content-Type", rx.MediaType)
+		req.Header.Set("User-Agent", userAgent)
+		res, err = rx.Client.Do(req)
+		start += reqSize
+		if err == nil && (res.StatusCode == statusResumeIncomplete || res.StatusCode == http.StatusOK) {
+			rx.mu.Lock()
+			rx.progress = start // keep track of number of bytes sent so far
+			rx.mu.Unlock()
+			if pu, ok := rx.Callback.(ProgressUpdater); ok {
+				pu.ProgressUpdate(start, rx.ContentLength)
+			}
+		}
+		if err != nil || res.StatusCode != statusResumeIncomplete {
+			break
+		}
+	}
+	return res, err
+}
+
+var sleep = time.Sleep // override in unit tests
+
+// Upload starts the process of a resumable upload with exponential backoff on errors.
+// The maximum backoff is set to 60 seconds and will retry forever.  A timer can be used
+// if the user wishes to give up after a certain period of time.
+func (rx *ResumableUpload) Upload() (*http.Response, error) {
+	expBackoff := 1 * time.Second
+	var res *http.Response
+	var err error
+	for {
+		res, err = rx.transferChunks()
+		if err != nil || res.StatusCode == http.StatusCreated || res.StatusCode == http.StatusOK {
+			return res, err
+		}
+		sleep(expBackoff)
+		expBackoff *= 2
+		if expBackoff > 60*time.Second {
+			expBackoff = 60 * time.Second
+		}
+	}
+	return res, err
 }
 
 func ResolveRelative(basestr, relstr string) string {

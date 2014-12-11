@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "04b20612_6114f236",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-12-11T23:41:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4ba1aec_9bcbef80",
+      "revId": "c3bac770863057d82f3b006a87b442f55d07186e",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4ba1aec_7bb13b03",
         "filename": "googleapi/googleapi.go",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2014-12-11T23:07:03Z",
       "side": 1,
       "message": "progress int64 // number of bytes uploaded so far",
+      "revId": "c3bac770863057d82f3b006a87b442f55d07186e",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "04b20612_211eea56",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-12-11T23:41:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4ba1aec_7bb13b03",
       "revId": "c3bac770863057d82f3b006a87b442f55d07186e",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "04b20612_012ace6b",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-12-11T23:41:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4ba1aec_3bbbc3e5",
+      "range": {
+        "startLine": 318,
+        "startChar": 17,
+        "endLine": 318,
+        "endChar": 18
+      },
+      "revId": "c3bac770863057d82f3b006a87b442f55d07186e",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4ba1aec_1bb8ffe4",
         "filename": "googleapi/googleapi.go",
         "patchSetId": 3
@@ -70,6 +130,24 @@
       "writtenOn": "2014-12-11T23:07:03Z",
       "side": 1,
       "message": "Callback func(current, total int64)\n\nNo need for the interface. If they have an interface, they can have their own interface, they can pass its method value here instead.\n\nSo you can delete the ProgressUpdater type above.",
+      "revId": "c3bac770863057d82f3b006a87b442f55d07186e",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "04b20612_813edeab",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-12-11T23:41:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4ba1aec_1bb8ffe4",
       "revId": "c3bac770863057d82f3b006a87b442f55d07186e",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "04b20612_613bd2bd",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-12-11T23:41:08Z",
+      "side": 1,
+      "message": "Because if I don\u0027t declare it here, I must cast it twice below.",
+      "parentUuid": "a4ba1aec_fba30bb5",
+      "revId": "c3bac770863057d82f3b006a87b442f55d07186e",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4ba1aec_bb9d9378",
         "filename": "googleapi/googleapi.go",
         "patchSetId": 3
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "04b20612_e1d5a2ff",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-12-11T23:41:08Z",
+      "side": 1,
+      "message": "Sweet!  Thanks!",
+      "parentUuid": "a4ba1aec_bb9d9378",
+      "revId": "c3bac770863057d82f3b006a87b442f55d07186e",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4ba1aec_dba84794",
         "filename": "googleapi/googleapi.go",
         "patchSetId": 3
@@ -121,6 +235,24 @@
       "writtenOn": "2014-12-11T23:07:03Z",
       "side": 1,
       "message": "bytes.NewReader",
+      "revId": "c3bac770863057d82f3b006a87b442f55d07186e",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "04b20612_c1daa62f",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-12-11T23:41:08Z",
+      "side": 1,
+      "message": "Fixed by passing the SectionReader directly.",
+      "parentUuid": "a4ba1aec_dba84794",
       "revId": "c3bac770863057d82f3b006a87b442f55d07186e",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false

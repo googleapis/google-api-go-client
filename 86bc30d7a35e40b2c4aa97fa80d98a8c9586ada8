@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4ba1aec_780dc159",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2014-12-11T01:34:21Z",
+      "side": 1,
+      "message": "hm, there shouldn\u0027t be any code.google.com references anymore",
+      "revId": "86bc30d7a35e40b2c4aa97fa80d98a8c9586ada8",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a4ba1aec_580afd43",
+        "filename": "googleapi/googleapi_test.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2014-12-11T01:34:21Z",
+      "side": 1,
+      "message": "type unexpectedReader ?",
+      "revId": "86bc30d7a35e40b2c4aa97fa80d98a8c9586ada8",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a4ba1aec_3817496c",
+        "filename": "googleapi/googleapi_test.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2014-12-11T01:34:21Z",
+      "side": 1,
+      "message": "delete and use ioutil.NopCloser instead?",
+      "revId": "86bc30d7a35e40b2c4aa97fa80d98a8c9586ada8",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

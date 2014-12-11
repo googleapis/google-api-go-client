@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4ba1aec_9bcbef80",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2014-12-11T23:07:03Z",
+      "side": 1,
+      "message": "\"google-api-go-client/\" + Version",
+      "revId": "c3bac770863057d82f3b006a87b442f55d07186e",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a4ba1aec_7bb13b03",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2014-12-11T23:07:03Z",
+      "side": 1,
+      "message": "progress int64 // number of bytes uploaded so far",
+      "revId": "c3bac770863057d82f3b006a87b442f55d07186e",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a4ba1aec_3bbbc3e5",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2014-12-11T23:07:03Z",
+      "side": 1,
+      "message": "an optional function\n\nor\n\n// Callback if non-nil is a function ...",
+      "range": {
+        "startLine": 318,
+        "startChar": 17,
+        "endLine": 318,
+        "endChar": 18
+      },
+      "revId": "c3bac770863057d82f3b006a87b442f55d07186e",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a4ba1aec_1bb8ffe4",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2014-12-11T23:07:03Z",
+      "side": 1,
+      "message": "Callback func(current, total int64)\n\nNo need for the interface. If they have an interface, they can have their own interface, they can pass its method value here instead.\n\nSo you can delete the ProgressUpdater type above.",
+      "revId": "c3bac770863057d82f3b006a87b442f55d07186e",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a4ba1aec_fba30bb5",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2014-12-11T23:07:03Z",
+      "side": 1,
+      "message": "why does this need the int64 type?",
+      "revId": "c3bac770863057d82f3b006a87b442f55d07186e",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a4ba1aec_bb9d9378",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2014-12-11T23:07:03Z",
+      "side": 1,
+      "message": "wrong use of Read. I think you mean io.ReadFull. Read isn\u0027t guaranteed to read the size you asked, unlike Write.\n\nBut why are you slurping it into memory anyway? Can\u0027t you pass the SectionReader directly to http.NewRequest?",
+      "revId": "c3bac770863057d82f3b006a87b442f55d07186e",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a4ba1aec_dba84794",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2014-12-11T23:07:03Z",
+      "side": 1,
+      "message": "bytes.NewReader",
+      "revId": "c3bac770863057d82f3b006a87b442f55d07186e",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

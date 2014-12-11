@@ -289,7 +289,7 @@ func (a *API) SourceDir() string {
 	if *genDir == "" {
 		paths := filepath.SplitList(os.Getenv("GOPATH"))
 		if len(paths) > 0 && paths[0] != "" {
-			*genDir = filepath.Join(paths[0], "src", "code.google.com", "p", "google-api-go-client")
+			*genDir = filepath.Join(paths[0], "src", "google.golang.org", "api")
 		}
 	}
 	return filepath.Join(*genDir, a.Package(), a.Version)

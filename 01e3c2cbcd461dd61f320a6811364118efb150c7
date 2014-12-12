@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c421ce32_9cd42953",
+        "filename": "examples/pubsub.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-12-12T18:02:41Z",
+      "side": 1,
+      "message": "It may be confusing to the readers of your code to re-use the `sub` variable by creating a new one...\nI would either rename the 2nd use or I would change this `:\u003d` to `\u003d`.",
+      "revId": "01e3c2cbcd461dd61f320a6811364118efb150c7",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c421ce32_fcf685ee",
+        "filename": "examples/pubsub.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-12-12T18:02:41Z",
+      "side": 1,
+      "message": "Do you want to check the result of Do() here to report any possible errors?",
+      "revId": "01e3c2cbcd461dd61f320a6811364118efb150c7",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c421ce32_9c22e9c7",
+        "filename": "examples/pubsub.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-12-12T18:02:41Z",
+      "side": 1,
+      "message": "Do you want to check the result of Do() here to report any possible errors?",
+      "revId": "01e3c2cbcd461dd61f320a6811364118efb150c7",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

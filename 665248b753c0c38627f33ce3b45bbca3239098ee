@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c421ce32_1c8d7958",
+        "filename": "examples/pubsub.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-12-12T18:06:55Z",
+      "side": 1,
+      "message": "Do you want to check the length of resp.MessageIds before using item [0]?",
+      "revId": "665248b753c0c38627f33ce3b45bbca3239098ee",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c421ce32_5c6a11d1",
+        "filename": "examples/pubsub.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-12-12T18:06:55Z",
+      "side": 1,
+      "message": "I\u0027ve been told to use `var ackIds []string` in cases like this where it is being appended to.",
+      "revId": "665248b753c0c38627f33ce3b45bbca3239098ee",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

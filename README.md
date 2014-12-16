@@ -1,5 +1,8 @@
 # Google APIs Client Library for Go
 
+## Status
+[![Build Status](https://travis-ci.org/google/google-api-go-client.png)](https://travis-ci.org/google/google-api-go-client)
+
 These are auto-generated Go libraries from the Google Discovery Service's JSON description files of the available "new style" Google APIs.
 
 Announcement email:

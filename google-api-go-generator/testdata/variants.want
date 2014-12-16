@@ -9,10 +9,10 @@ package additionalpropsobjs
 
 import (
 	"bytes"
-	"google.golang.org/api/googleapi"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"

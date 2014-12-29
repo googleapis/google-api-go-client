@@ -892,8 +892,8 @@ func (s *Schema) writeSchemaCode(api *API) {
 		return
 	}
 
-	if _, ok := s.Type().ArrayType(); ok {
-		log.Printf("TODO writeSchemaCode for arrays for %s", s.GoName())
+	if arrayType, ok := s.Type().ArrayType(); ok {
+		s.api.p("\ntype %s []%s", s.GoName(), arrayType.AsGo())
 		return
 	}
 

@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a12ccc7b_ce88d706",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 7
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-01-02T21:10:04Z",
+      "side": 1,
+      "message": "this loop is not a good strategy. see my comment elsewhere.\n\nI don\u0027t think we should have a SizeAndType function.",
+      "revId": "da2d649947f727e41707043f0f80d40925745def",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a12ccc7b_ae93a33b",
+        "filename": "storage/v1/storage-gen.go",
+        "patchSetId": 7
+      },
+      "lineNbr": 4511,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-01-02T21:10:04Z",
+      "side": 1,
+      "message": "The ContentLength was optional before but with the new way it\u0027s required, so we can\u0027t use SizeAndType.  We need to make the size more explicit.\n\nResumableMedia needs to either take a size, or take a SizeReaderAt interface (ala http://talks.golang.org/2013/oscon-dl.slide#51)\n\n   type SizeReaderAt interface {\n         io.ReaderAt\n         Size() int64\n   }\n\nWhich is then satisfied by a SectionReader (http://talks.golang.org/2013/oscon-dl.slide#50)",
+      "revId": "da2d649947f727e41707043f0f80d40925745def",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a12ccc7b_0ea3cf84",
+        "filename": "storage/v1/storage-gen.go",
+        "patchSetId": 7
+      },
+      "lineNbr": 4541,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-01-02T21:10:04Z",
+      "side": 1,
+      "message": "this will always succeed. the type of c.resumable_ is io.ReaderAt",
+      "revId": "da2d649947f727e41707043f0f80d40925745def",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

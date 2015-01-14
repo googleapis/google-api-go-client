@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"l66ggWbucbkBw9Lpos72oziyefE/olnNoM2FZr43Cdq75yAMe9UNVWM\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/1ZhpxHDNubbx8bryhI0Ks6XcxaA\"",
  "discoveryVersion": "v1",
  "id": "doubleclicksearch:v2",
  "name": "doubleclicksearch",
  "version": "v2",
- "revision": "20141021",
+ "revision": "20141113",
  "title": "DoubleClick Search API",
  "description": "Report and modify your advertising data in DoubleClick Search (for example, campaigns, ad groups, keywords, and conversions).",
  "ownerDomain": "google.com",
@@ -156,6 +156,10 @@
      "description": "DS agency ID.",
      "format": "int64"
     },
+    "attributionModel": {
+     "type": "string",
+     "description": "Attribution model name."
+    },
     "campaignId": {
      "type": "string",
      "description": "DS campaign ID.",
@@ -188,6 +192,11 @@
        "doubleclicksearch.conversion.insert"
       ]
      }
+    },
+    "countMillis": {
+     "type": "string",
+     "description": "Conversion count in millis.",
+     "format": "int64"
     },
     "criterionId": {
      "type": "string",

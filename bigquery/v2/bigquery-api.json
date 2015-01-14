@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"l66ggWbucbkBw9Lpos72oziyefE/DImit3OwoHT-lVKpVZV2I0QVANw\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/1ZGpzzKS4Zm-lRDWSuLtbVCf49E\"",
  "discoveryVersion": "v1",
  "id": "bigquery:v2",
  "name": "bigquery",
  "version": "v2",
- "revision": "20141106",
+ "revision": "20141211",
  "title": "BigQuery API",
  "description": "A data platform for customers to create, manage, share and query data.",
  "ownerDomain": "google.com",
@@ -301,6 +301,11 @@
     "schema": {
      "$ref": "TableSchema",
      "description": "The schema of the results. Present only when the query completes successfully."
+    },
+    "totalBytesProcessed": {
+     "type": "string",
+     "description": "The total number of bytes processed for this query.",
+     "format": "int64"
     },
     "totalRows": {
      "type": "string",
@@ -698,6 +703,10 @@
      "description": "[Output-only] End time of this job, in milliseconds since the epoch. This field will be present whenever a job is in the DONE state.",
      "format": "int64"
     },
+    "extract": {
+     "$ref": "JobStatistics4",
+     "description": "[Output-only] Statistics for an extract job."
+    },
     "load": {
      "$ref": "JobStatistics3",
      "description": "[Output-only] Statistics for a load job."
@@ -756,6 +765,20 @@
      "type": "string",
      "description": "[Output-only] Number of rows imported in a load job. Note that while an import job is in the running state, this value may change.",
      "format": "int64"
+    }
+   }
+  },
+  "JobStatistics4": {
+   "id": "JobStatistics4",
+   "type": "object",
+   "properties": {
+    "destinationUriFileCounts": {
+     "type": "array",
+     "description": "[Experimental] Number of files per destination URI or URI pattern specified in the extract configuration. These values will be in the same order as the URIs specified in the 'destinationUris' field.",
+     "items": {
+      "type": "string",
+      "format": "int64"
+     }
     }
    }
   },

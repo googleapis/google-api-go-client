@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"l66ggWbucbkBw9Lpos72oziyefE/n221EXnWB-_c9ZoW6aKBS2bRLq8\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/XDr7bmgk6_TzpUGFqVmOQUHb1wI\"",
  "discoveryVersion": "v1",
  "id": "mapsengine:exp2",
  "name": "mapsengine",
  "canonicalName": "Maps Engine",
  "version": "exp2",
- "revision": "20141030",
+ "revision": "20141126",
  "title": "Google Maps Engine API",
  "description": "The Google Maps Engine API allows developers to store and query geospatial vector and raster data.",
  "ownerDomain": "google.com",
@@ -71,10 +71,10 @@
   "oauth2": {
    "scopes": {
     "https://www.googleapis.com/auth/mapsengine": {
-     "description": "View and manage your Google Maps Engine data"
+     "description": "View and manage your Google My Maps data"
     },
     "https://www.googleapis.com/auth/mapsengine.readonly": {
-     "description": "View your Google Maps Engine data"
+     "description": "View your Google My Maps data"
     }
    }
   }
@@ -3077,6 +3077,11 @@
        "type": "string",
        "description": "The ID of a Maps Engine project, used to filter the response. To list all available projects with their IDs, send a Projects: list request. You can also find your project ID as the value of the DashboardPlace:cid URL parameter when signed in to mapsengine.google.com.",
        "location": "query"
+      },
+      "search": {
+       "type": "string",
+       "description": "An unstructured search string used to filter the set of results based on asset metadata.",
+       "location": "query"
       }
      },
      "response": {
@@ -3544,6 +3549,11 @@
       "projectId": {
        "type": "string",
        "description": "The ID of a Maps Engine project, used to filter the response. To list all available projects with their IDs, send a Projects: list request. You can also find your project ID as the value of the DashboardPlace:cid URL parameter when signed in to mapsengine.google.com.",
+       "location": "query"
+      },
+      "search": {
+       "type": "string",
+       "description": "An unstructured search string used to filter the set of results based on asset metadata.",
        "location": "query"
       }
      },

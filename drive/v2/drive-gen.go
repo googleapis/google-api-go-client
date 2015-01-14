@@ -1140,9 +1140,9 @@ type Permission struct {
 	// user, group or domain.
 	Domain string `json:"domain,omitempty"`
 
-	// EmailAddress: The email address of the user this permission refers
-	// to. This is an output-only field which is present when the permission
-	// type is user.
+	// EmailAddress: The email address of the user or group this permission
+	// refers to. This is an output-only field which is present when the
+	// permission type is user or group.
 	EmailAddress string `json:"emailAddress,omitempty"`
 
 	// Etag: The ETag of the permission.
@@ -4464,6 +4464,7 @@ func (c *FilesTrashCall) Do() (*File, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.appdata",
 	//     "https://www.googleapis.com/auth/drive.apps.readonly",
 	//     "https://www.googleapis.com/auth/drive.file"
 	//   ]
@@ -4542,6 +4543,7 @@ func (c *FilesUntrashCall) Do() (*File, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.appdata",
 	//     "https://www.googleapis.com/auth/drive.apps.readonly",
 	//     "https://www.googleapis.com/auth/drive.file"
 	//   ]

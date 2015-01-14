@@ -248,7 +248,8 @@ type Calendar struct {
 	// Summary: Title of the calendar.
 	Summary string `json:"summary,omitempty"`
 
-	// TimeZone: The time zone of the calendar. Optional.
+	// TimeZone: The time zone of the calendar. (Formatted as an IANA Time
+	// Zone Database name, e.g. "Europe/Zurich".) Optional.
 	TimeZone string `json:"timeZone,omitempty"`
 }
 
@@ -744,8 +745,6 @@ type EventSource struct {
 }
 
 type EventAttachment struct {
-	// Title: File name.
-	Title string `json:"title,omitempty"`
 }
 
 type EventAttendee struct {
@@ -804,11 +803,11 @@ type EventDateTime struct {
 	// zone is explicitly specified in timeZone.
 	DateTime string `json:"dateTime,omitempty"`
 
-	// TimeZone: The name of the time zone in which the time is specified
-	// (e.g. "Europe/Zurich"). For recurring events this field is required
-	// and specifies the time zone in which the recurrence is expanded. For
-	// single events this field is optional and indicates a custom time zone
-	// for the event start/end.
+	// TimeZone: The time zone in which the time is specified. (Formatted as
+	// an IANA Time Zone Database name, e.g. "Europe/Zurich".) For recurring
+	// events this field is required and specifies the time zone in which
+	// the recurrence is expanded. For single events this field is optional
+	// and indicates a custom time zone for the event start/end.
 	TimeZone string `json:"timeZone,omitempty"`
 }
 

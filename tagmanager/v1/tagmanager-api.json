@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"l66ggWbucbkBw9Lpos72oziyefE/pVfb1ajMeYIw5IrU4jq20F5dMAg\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/xcGgQKwhk2lzAuNnzm2cQsk-PZM\"",
  "discoveryVersion": "v1",
  "id": "tagmanager:v1",
  "name": "tagmanager",
  "canonicalName": "Tag Manager",
  "version": "v1",
- "revision": "20141024",
+ "revision": "20141112",
  "title": "Tag Manager API",
  "description": "API for accessing Tag Manager accounts and containers.",
  "ownerDomain": "google.com",
@@ -225,6 +225,75 @@
      "description": "Optional list of domain names associated with the Container.",
      "items": {
       "type": "string"
+     }
+    },
+    "enabledBuiltInVariable": {
+     "type": "array",
+     "description": "List of enabled built-in variables.",
+     "items": {
+      "type": "string",
+      "enum": [
+       "clickClasses",
+       "clickElement",
+       "clickId",
+       "clickTarget",
+       "clickText",
+       "clickUrl",
+       "containerId",
+       "containerVersion",
+       "debugMode",
+       "errorLine",
+       "errorMessage",
+       "errorUrl",
+       "event",
+       "formClasses",
+       "formElement",
+       "formId",
+       "formTarget",
+       "formText",
+       "formUrl",
+       "historySource",
+       "newHistoryFragment",
+       "newHistoryState",
+       "oldHistoryFragment",
+       "oldHistoryState",
+       "pageHostname",
+       "pagePath",
+       "pageUrl",
+       "randomNumber",
+       "referrer"
+      ],
+      "enumDescriptions": [
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       ""
+      ]
      }
     },
     "fingerprint": {
@@ -847,10 +916,6 @@
     "containerId": {
      "type": "string",
      "description": "GTM Container ID."
-    },
-    "dependencies": {
-     "$ref": "Parameter",
-     "description": "An optional list of tag names that this tag depends on to fire. Execution of this tag will be prevented until the tags with the given names complete their execution."
     },
     "fingerprint": {
      "type": "string",

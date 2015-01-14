@@ -208,7 +208,10 @@ type Call struct {
 	// GenotypeLikelihood: The genotype likelihoods for this variant call.
 	// Each array entry represents how likely a specific genotype is for
 	// this call. The value ordering is defined by the GL tag in the VCF
-	// spec.
+	// spec. If Phred-scaled genotype likelihood scores (PL) are available
+	// and log10(P) genotype likelihood scores (GL) are not, PL scores are
+	// converted to GL scores. If both are available, PL scores are stored
+	// in info.
 	GenotypeLikelihood []float64 `json:"genotypeLikelihood,omitempty"`
 
 	// Info: A map of additional variant call information.

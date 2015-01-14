@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"l66ggWbucbkBw9Lpos72oziyefE/ZrZBeDfQYPqAxFURJt0IhCOLUHQ\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/O8FpeLrV7oJ_TJYD5E7IAdYY0iY\"",
  "discoveryVersion": "v1",
  "id": "container:v1beta1",
  "name": "container",
  "version": "v1beta1",
- "revision": "20141103",
+ "revision": "20150105",
  "title": "Google Container Engine API",
  "description": "The Google Container Engine API is used for building and managing container based applications, powered by the open source Kubernetes technology.",
  "ownerDomain": "google.com",
@@ -14,6 +14,7 @@
   "x16": "http://www.google.com/images/icons/product/search-16.gif",
   "x32": "http://www.google.com/images/icons/product/search-32.gif"
  },
+ "documentationLink": "https://cloud.google.com/container-engine/docs/v1beta1/",
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/container/v1beta1/projects/",
  "basePath": "/container/v1beta1/projects/",
@@ -82,7 +83,7 @@
    "properties": {
     "clusterApiVersion": {
      "type": "string",
-     "description": "The API version of the Kubernetes master and kubelets running in this cluster. Allowed value is 0.4.2, or leave blank to pick up the latest stable release."
+     "description": "The API version of the Kubernetes master and kubelets running in this cluster. Leave blank to pick up the latest stable release, or specify a version of the form \"x.y.z\". The Google Container Engine release notes lists the currently supported versions. If an incorrect version is specified, the server returns an error listing the currently supported versions."
     },
     "containerIpv4Cidr": {
      "type": "string",
@@ -108,6 +109,10 @@
      "type": "string",
      "description": "The name of this cluster. The name must be unique within this project and zone, and can be up to 40 characters with the following restrictions:  \n- Lowercase letters, numbers, and hyphens only.\n- Must start with a letter.\n- Must end with a number or a letter."
     },
+    "network": {
+     "type": "string",
+     "description": "The name of the Google Compute Engine network to which the cluster is connected."
+    },
     "nodeConfig": {
      "$ref": "NodeConfig",
      "description": "The machine type and image to use for all nodes in this cluster. See the descriptions of the child properties of nodeConfig."
@@ -121,6 +126,10 @@
      "type": "integer",
      "description": "The number of nodes to create in this cluster. You must ensure that your Compute Engine resource quota is sufficient for this number of instances plus one (to include the master). You must also have available firewall and routes quota.",
      "format": "int32"
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "[Output only] Server-defined URL for the resource."
     },
     "servicesIpv4Cidr": {
      "type": "string",
@@ -275,6 +284,10 @@
       ""
      ]
     },
+    "selfLink": {
+     "type": "string",
+     "description": "Server-defined URL for the resource."
+    },
     "status": {
      "type": "string",
      "description": "The current status of the operation.",
@@ -292,6 +305,10 @@
     "target": {
      "type": "string",
      "description": "[Optional] The URL of the cluster resource that this operation is associated with."
+    },
+    "targetLink": {
+     "type": "string",
+     "description": "Server-defined URL for the target of the operation."
     },
     "zone": {
      "type": "string",

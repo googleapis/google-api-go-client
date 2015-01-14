@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"l66ggWbucbkBw9Lpos72oziyefE/780oiWFAekHFuFERR4WQucmTJ2k\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/6ml16nkfiebLShEb_izFUqhiTAg\"",
  "discoveryVersion": "v1",
  "id": "genomics:v1beta",
  "name": "genomics",
  "version": "v1beta",
- "revision": "20141105",
+ "revision": "20150109",
  "title": "Genomics API",
  "description": "Provides access to Genomics data.",
  "ownerDomain": "google.com",
@@ -109,7 +109,7 @@
     },
     "genotypeLikelihood": {
      "type": "array",
-     "description": "The genotype likelihoods for this variant call. Each array entry represents how likely a specific genotype is for this call. The value ordering is defined by the GL tag in the VCF spec.",
+     "description": "The genotype likelihoods for this variant call. Each array entry represents how likely a specific genotype is for this call. The value ordering is defined by the GL tag in the VCF spec. If Phred-scaled genotype likelihood scores (PL) are available and log10(P) genotype likelihood scores (GL) are not, PL scores are converted to GL scores. If both are available, PL scores are stored in info.",
      "items": {
       "type": "number",
       "format": "double"

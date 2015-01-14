@@ -131,6 +131,9 @@ type Conversion struct {
 	// AgencyId: DS agency ID.
 	AgencyId int64 `json:"agencyId,omitempty,string"`
 
+	// AttributionModel: Attribution model name.
+	AttributionModel string `json:"attributionModel,omitempty"`
+
 	// CampaignId: DS campaign ID.
 	CampaignId int64 `json:"campaignId,omitempty,string"`
 
@@ -148,6 +151,9 @@ type Conversion struct {
 	// ConversionTimestamp: The time at which the conversion took place, in
 	// epoch millis UTC.
 	ConversionTimestamp uint64 `json:"conversionTimestamp,omitempty,string"`
+
+	// CountMillis: Conversion count in millis.
+	CountMillis int64 `json:"countMillis,omitempty,string"`
 
 	// CriterionId: DS criterion (keyword) ID.
 	CriterionId int64 `json:"criterionId,omitempty,string"`

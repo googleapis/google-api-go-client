@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"l66ggWbucbkBw9Lpos72oziyefE/zxsqVn0Yn5fs87TjHWbdqkRtKVI\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/30NaCo58E-23RA5z0DPpA4cSWB8\"",
  "discoveryVersion": "v1",
  "id": "reseller:v1",
  "name": "reseller",
  "version": "v1",
- "revision": "20140821",
+ "revision": "20141112",
  "title": "Enterprise Apps Reseller API",
  "description": "Lets you create and manage your customers and their subscriptions.",
  "ownerDomain": "google.com",
@@ -218,7 +218,7 @@
     },
     "licensedNumberOfSeats": {
      "type": "integer",
-     "description": "Read only field containing the current number of licensed seats. Resellers can utilize this field to gather insights into usage for FLEXIBLE Google-Apps subscriptions and other secondary subscriptions (e.g. Google-Vault, Drive-storage).",
+     "description": "Read-only field containing the current number of licensed seats for FLEXIBLE Google-Apps subscriptions and secondary subscriptions such as Google-Vault and Drive-storage.",
      "format": "int32"
     },
     "maximumNumberOfSeats": {
@@ -238,6 +238,10 @@
    "type": "object",
    "description": "JSON template for a subscription.",
    "properties": {
+    "billingMethod": {
+     "type": "string",
+     "description": "Billing method of this subscription."
+    },
     "creationTime": {
      "type": "string",
      "description": "Creation time of this subscription in milliseconds since Unix epoch.",
@@ -619,12 +623,14 @@
        "enum": [
         "cancel",
         "downgrade",
-        "suspend"
+        "suspend",
+        "transfer_to_direct"
        ],
        "enumDescriptions": [
         "Cancels the subscription immediately",
         "Downgrades a Google Apps for Business subscription to Google Apps",
-        "Suspends the subscriptions for 4 days before cancelling it"
+        "Suspends the subscriptions for 4 days before cancelling it",
+        "Transfers a subscription directly to Google"
        ],
        "location": "query"
       },

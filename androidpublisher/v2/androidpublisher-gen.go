@@ -1813,7 +1813,7 @@ func (c *EditsApksUploadCall) Do() (*Apk, error) {
 	//       "application/octet-stream",
 	//       "application/vnd.android.package-archive"
 	//     ],
-	//     "maxSize": "50MB",
+	//     "maxSize": "1GB",
 	//     "protocols": {
 	//       "resumable": {
 	//         "multipart": true,
@@ -2742,9 +2742,13 @@ func (c *EditsImagesDeleteCall) Do() error {
 	//         "phoneScreenshots",
 	//         "promoGraphic",
 	//         "sevenInchScreenshots",
-	//         "tenInchScreenshots"
+	//         "tenInchScreenshots",
+	//         "tvBanner",
+	//         "tvScreenshots"
 	//       ],
 	//       "enumDescriptions": [
+	//         "",
+	//         "",
 	//         "",
 	//         "",
 	//         "",
@@ -2861,9 +2865,13 @@ func (c *EditsImagesDeleteallCall) Do() (*ImagesDeleteAllResponse, error) {
 	//         "phoneScreenshots",
 	//         "promoGraphic",
 	//         "sevenInchScreenshots",
-	//         "tenInchScreenshots"
+	//         "tenInchScreenshots",
+	//         "tvBanner",
+	//         "tvScreenshots"
 	//       ],
 	//       "enumDescriptions": [
+	//         "",
+	//         "",
 	//         "",
 	//         "",
 	//         "",
@@ -2982,9 +2990,13 @@ func (c *EditsImagesListCall) Do() (*ImagesListResponse, error) {
 	//         "phoneScreenshots",
 	//         "promoGraphic",
 	//         "sevenInchScreenshots",
-	//         "tenInchScreenshots"
+	//         "tenInchScreenshots",
+	//         "tvBanner",
+	//         "tvScreenshots"
 	//       ],
 	//       "enumDescriptions": [
+	//         "",
+	//         "",
 	//         "",
 	//         "",
 	//         "",
@@ -3136,9 +3148,13 @@ func (c *EditsImagesUploadCall) Do() (*ImagesUploadResponse, error) {
 	//         "phoneScreenshots",
 	//         "promoGraphic",
 	//         "sevenInchScreenshots",
-	//         "tenInchScreenshots"
+	//         "tenInchScreenshots",
+	//         "tvBanner",
+	//         "tvScreenshots"
 	//       ],
 	//       "enumDescriptions": [
+	//         "",
+	//         "",
 	//         "",
 	//         "",
 	//         "",

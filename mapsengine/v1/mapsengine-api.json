@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"l66ggWbucbkBw9Lpos72oziyefE/S3CrUoJ8uvc_hw3CQly01B5yfX4\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/yYnxzo1XQvFrShjfnboGeo8rHnM\"",
  "discoveryVersion": "v1",
  "id": "mapsengine:v1",
  "name": "mapsengine",
  "canonicalName": "Maps Engine",
  "version": "v1",
- "revision": "20141030",
+ "revision": "20141126",
  "title": "Google Maps Engine API",
  "description": "The Google Maps Engine API allows developers to store and query geospatial vector and raster data.",
  "ownerDomain": "google.com",
@@ -71,10 +71,10 @@
   "oauth2": {
    "scopes": {
     "https://www.googleapis.com/auth/mapsengine": {
-     "description": "View and manage your Google Maps Engine data"
+     "description": "View and manage your Google My Maps data"
     },
     "https://www.googleapis.com/auth/mapsengine.readonly": {
-     "description": "View your Google Maps Engine data"
+     "description": "View your Google My Maps data"
     }
    }
   }

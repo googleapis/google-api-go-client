@@ -300,9 +300,9 @@ type DatabaseInstance struct {
 	// instance. The Google apps domain is prefixed if applicable.
 	Project string `json:"project,omitempty"`
 
-	// Region: The geographical region. Can be us-east1, us-central,
-	// asia-east1 or europe-west1. Defaults to us-central. The region can
-	// not be changed after instance creation.
+	// Region: The geographical region. Can be us-central, asia-east1 or
+	// europe-west1. Defaults to us-central. The region can not be changed
+	// after instance creation.
 	Region string `json:"region,omitempty"`
 
 	// ReplicaNames: The replicas of the instance.
@@ -310,6 +310,10 @@ type DatabaseInstance struct {
 
 	// ServerCaCert: SSL configuration.
 	ServerCaCert *SslCert `json:"serverCaCert,omitempty"`
+
+	// ServiceAccountEmailAddress: The service account email address
+	// assigned to the instance.
+	ServiceAccountEmailAddress string `json:"serviceAccountEmailAddress,omitempty"`
 
 	// Settings: The user settings.
 	Settings *Settings `json:"settings,omitempty"`

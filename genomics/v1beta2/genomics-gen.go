@@ -283,7 +283,10 @@ type Call struct {
 	// GenotypeLikelihood: The genotype likelihoods for this variant call.
 	// Each array entry represents how likely a specific genotype is for
 	// this call. The value ordering is defined by the GL tag in the VCF
-	// spec.
+	// spec. If Phred-scaled genotype likelihood scores (PL) are available
+	// and log10(P) genotype likelihood scores (GL) are not, PL scores are
+	// converted to GL scores. If both are available, PL scores are stored
+	// in info.
 	GenotypeLikelihood []float64 `json:"genotypeLikelihood,omitempty"`
 
 	// Info: A map of additional variant call information.
@@ -499,6 +502,10 @@ type ImportReadGroupSetsRequest struct {
 	// DatasetId: Required. The ID of the dataset these read group sets will
 	// belong to. The caller must have WRITE permissions to this dataset.
 	DatasetId string `json:"datasetId,omitempty"`
+
+	// PartitionStrategy: The partition strategy describes how read groups
+	// are partitioned into read group sets.
+	PartitionStrategy string `json:"partitionStrategy,omitempty"`
 
 	// ReferenceSetId: The reference set to which the imported read group
 	// sets are aligned to, if any. The reference names of this reference
@@ -744,12 +751,12 @@ type Read struct {
 	AlignedQuality []int64 `json:"alignedQuality,omitempty"`
 
 	// AlignedSequence: The bases of the read sequence contained in this
-	// alignment record. alignedSequence and alignedQuality may be shorter
-	// than the full read sequence and quality. This will occur if the
-	// alignment is part of a chimeric alignment, or if the read was
-	// trimmed. When this occurs, the CIGAR for this read will begin/end
-	// with a hard clip operator that will indicate the length of the
-	// excised sequence.
+	// alignment record, without CIGAR operations applied. alignedSequence
+	// and alignedQuality may be shorter than the full read sequence and
+	// quality. This will occur if the alignment is part of a chimeric
+	// alignment, or if the read was trimmed. When this occurs, the CIGAR
+	// for this read will begin/end with a hard clip operator that will
+	// indicate the length of the excised sequence.
 	AlignedSequence string `json:"alignedSequence,omitempty"`
 
 	// Alignment: The linear alignment for this alignment record. This field
@@ -788,8 +795,8 @@ type Read struct {
 	NumberReads int64 `json:"numberReads,omitempty"`
 
 	// ProperPlacement: The orientation and the distance between reads from
-	// the fragment are consistent with the sequencing protocol (extension
-	// to SAM flag 0x2)
+	// the fragment are consistent with the sequencing protocol (SAM flag
+	// 0x2)
 	ProperPlacement bool `json:"properPlacement,omitempty"`
 
 	// ReadGroupId: The ID of the read group this read belongs to. (Every
@@ -917,6 +924,9 @@ type ReadGroupSet struct {
 
 	// Id: The read group set ID.
 	Id string `json:"id,omitempty"`
+
+	// Info: A map of additional read group set information.
+	Info map[string][]string `json:"info,omitempty"`
 
 	// Name: The read group set name. By default this will be initialized to
 	// the sample name of the sequenced data contained in this set.
@@ -2784,6 +2794,7 @@ func (c *ReadgroupsetsAlignCall) Do() (*AlignReadGroupSetsResponse, error) {
 	//     "$ref": "AlignReadGroupSetsResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/devstorage.read_write",
 	//     "https://www.googleapis.com/auth/genomics"
 	//   ]
 	// }
@@ -2858,6 +2869,7 @@ func (c *ReadgroupsetsCallCall) Do() (*CallReadGroupSetsResponse, error) {
 	//     "$ref": "CallReadGroupSetsResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/devstorage.read_write",
 	//     "https://www.googleapis.com/auth/genomics"
 	//   ]
 	// }
@@ -2947,7 +2959,8 @@ type ReadgroupsetsExportCall struct {
 // Note that currently there may be some differences between
 // exported BAM files and the original BAM file at the time of import.
 // In particular, comments in the input file header will not be
-// preserved, and some custom tags will be converted to strings.
+// preserved, some custom tags will be converted to strings, and
+// original reference sequence order is not necessarily preserved.
 func (r *ReadgroupsetsService) Export(exportreadgroupsetsrequest *ExportReadGroupSetsRequest) *ReadgroupsetsExportCall {
 	c := &ReadgroupsetsExportCall{s: r.s, opt_: make(map[string]interface{})}
 	c.exportreadgroupsetsrequest = exportreadgroupsetsrequest
@@ -2994,7 +3007,7 @@ func (c *ReadgroupsetsExportCall) Do() (*ExportReadGroupSetsResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Exports read group sets to a BAM file in Google Cloud Storage.\n\nNote that currently there may be some differences between exported BAM files and the original BAM file at the time of import. In particular, comments in the input file header will not be preserved, and some custom tags will be converted to strings.",
+	//   "description": "Exports read group sets to a BAM file in Google Cloud Storage.\n\nNote that currently there may be some differences between exported BAM files and the original BAM file at the time of import. In particular, comments in the input file header will not be preserved, some custom tags will be converted to strings, and original reference sequence order is not necessarily preserved.",
 	//   "httpMethod": "POST",
 	//   "id": "genomics.readgroupsets.export",
 	//   "path": "readgroupsets/export",

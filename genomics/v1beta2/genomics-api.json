@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"l66ggWbucbkBw9Lpos72oziyefE/tO2ouNOLUy2rlPBbNm8-LsXw7Hc\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/bWh0LiO6dtNe4IUMpiPkMfyIZWI\"",
  "discoveryVersion": "v1",
  "id": "genomics:v1beta2",
  "name": "genomics",
  "version": "v1beta2",
- "revision": "20141105",
+ "revision": "20150109",
  "title": "Genomics API",
  "description": "Provides access to Genomics data.",
  "ownerDomain": "google.com",
@@ -155,7 +155,7 @@
     },
     "genotypeLikelihood": {
      "type": "array",
-     "description": "The genotype likelihoods for this variant call. Each array entry represents how likely a specific genotype is for this call. The value ordering is defined by the GL tag in the VCF spec.",
+     "description": "The genotype likelihoods for this variant call. Each array entry represents how likely a specific genotype is for this call. The value ordering is defined by the GL tag in the VCF spec. If Phred-scaled genotype likelihood scores (PL) are available and log10(P) genotype likelihood scores (GL) are not, PL scores are converted to GL scores. If both are available, PL scores are stored in info.",
      "items": {
       "type": "number",
       "format": "double"
@@ -523,6 +523,18 @@
     "datasetId": {
      "type": "string",
      "description": "Required. The ID of the dataset these read group sets will belong to. The caller must have WRITE permissions to this dataset."
+    },
+    "partitionStrategy": {
+     "type": "string",
+     "description": "The partition strategy describes how read groups are partitioned into read group sets.",
+     "enum": [
+      "MERGE_ALL",
+      "PER_FILE_PER_SAMPLE"
+     ],
+     "enumDescriptions": [
+      "",
+      ""
+     ]
     },
     "referenceSetId": {
      "type": "string",
@@ -957,7 +969,7 @@
   "Read": {
    "id": "Read",
    "type": "object",
-   "description": "A read alignment describes a linear alignment of a string of DNA to a reference sequence, in addition to metadata about the fragment (the molecule of DNA sequenced) and the read (the bases which were read by the sequencer). A read is equivalent to a line in a SAM file. A read belongs to exactly one read group and exactly one read group set.",
+   "description": "A read alignment describes a linear alignment of a string of DNA to a reference sequence, in addition to metadata about the fragment (the molecule of DNA sequenced) and the read (the bases which were read by the sequencer). A read is equivalent to a line in a SAM file. A read belongs to exactly one read group and exactly one read group set. Generating a reference-aligned sequence string When interacting with mapped reads, it's often useful to produce a string representing the local alignment of the read to reference. The following pseudocode demonstrates one way of doing this:\nout = \"\" offset = 0 for c in read.alignment.cigar { switch c.operation { case \"ALIGNMENT_MATCH\", \"SEQUENCE_MATCH\", \"SEQUENCE_MISMATCH\": out += read.alignedSequence[offset:offset+c.operationLength] offset += c.operationLength break case \"CLIP_SOFT\", \"INSERT\": offset += c.operationLength break case \"PAD\": out += repeat(\"*\", c.operationLength) break case \"DELETE\": out += repeat(\"-\", c.operationLength) break case \"SKIP\": out += repeat(\" \", c.operationLength) break case \"CLIP_HARD\": break } } return out\nConverting to SAM's CIGAR string The following pseudocode generates a SAM CIGAR string from the cigar field. Note that this is a lossy conversion (cigar.referenceSequence is lost).\ncigarMap = { \"ALIGNMENT_MATCH\": \"M\", \"INSERT\": \"I\", \"DELETE\": \"D\", \"SKIP\": \"N\", \"CLIP_SOFT\": \"S\", \"CLIP_HARD\": \"H\", \"PAD\": \"P\", \"SEQUENCE_MATCH\": \"=\", \"SEQUENCE_MISMATCH\": \"X\", } cigarStr = \"\" for c in read.alignment.cigar { cigarStr += c.operationLength + cigarMap[c.operation] } return cigarStr",
    "externalTypeName": "cloud.genomics.readstore.Read",
    "properties": {
     "alignedQuality": {
@@ -970,7 +982,7 @@
     },
     "alignedSequence": {
      "type": "string",
-     "description": "The bases of the read sequence contained in this alignment record. alignedSequence and alignedQuality may be shorter than the full read sequence and quality. This will occur if the alignment is part of a chimeric alignment, or if the read was trimmed. When this occurs, the CIGAR for this read will begin/end with a hard clip operator that will indicate the length of the excised sequence."
+     "description": "The bases of the read sequence contained in this alignment record, without CIGAR operations applied. alignedSequence and alignedQuality may be shorter than the full read sequence and quality. This will occur if the alignment is part of a chimeric alignment, or if the read was trimmed. When this occurs, the CIGAR for this read will begin/end with a hard clip operator that will indicate the length of the excised sequence."
     },
     "alignment": {
      "$ref": "LinearAlignment",
@@ -1019,7 +1031,7 @@
     },
     "properPlacement": {
      "type": "boolean",
-     "description": "The orientation and the distance between reads from the fragment are consistent with the sequencing protocol (extension to SAM flag 0x2)"
+     "description": "The orientation and the distance between reads from the fragment are consistent with the sequencing protocol (SAM flag 0x2)"
     },
     "readGroupId": {
      "type": "string",
@@ -1170,6 +1182,17 @@
     "id": {
      "type": "string",
      "description": "The read group set ID."
+    },
+    "info": {
+     "type": "object",
+     "description": "A map of additional read group set information.",
+     "additionalProperties": {
+      "type": "array",
+      "description": "A string which maps to an array of values.",
+      "items": {
+       "type": "string"
+      }
+     }
     },
     "name": {
      "type": "string",
@@ -2263,6 +2286,7 @@
       "$ref": "AlignReadGroupSetsResponse"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/devstorage.read_write",
       "https://www.googleapis.com/auth/genomics"
      ]
     },
@@ -2278,6 +2302,7 @@
       "$ref": "CallReadGroupSetsResponse"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/devstorage.read_write",
       "https://www.googleapis.com/auth/genomics"
      ]
     },
@@ -2305,7 +2330,7 @@
      "id": "genomics.readgroupsets.export",
      "path": "readgroupsets/export",
      "httpMethod": "POST",
-     "description": "Exports read group sets to a BAM file in Google Cloud Storage.\n\nNote that currently there may be some differences between exported BAM files and the original BAM file at the time of import. In particular, comments in the input file header will not be preserved, and some custom tags will be converted to strings.",
+     "description": "Exports read group sets to a BAM file in Google Cloud Storage.\n\nNote that currently there may be some differences between exported BAM files and the original BAM file at the time of import. In particular, comments in the input file header will not be preserved, some custom tags will be converted to strings, and original reference sequence order is not necessarily preserved.",
      "request": {
       "$ref": "ExportReadGroupSetsRequest"
      },

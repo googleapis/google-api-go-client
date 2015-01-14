@@ -984,6 +984,8 @@ type User struct {
 	// NonEditableAliases: List of non editable aliases (Read-only)
 	NonEditableAliases []string `json:"nonEditableAliases,omitempty"`
 
+	Notes interface{} `json:"notes,omitempty"`
+
 	// OrgUnitPath: OrgUnit of User
 	OrgUnitPath string `json:"orgUnitPath,omitempty"`
 
@@ -1007,6 +1009,18 @@ type User struct {
 
 	// ThumbnailPhotoUrl: Photo Url of the user (Read-only)
 	ThumbnailPhotoUrl string `json:"thumbnailPhotoUrl,omitempty"`
+
+	Websites interface{} `json:"websites,omitempty"`
+}
+
+type UserAbout struct {
+	// ContentType: About entry can have a type which indicates the content
+	// type. It can either be plain or html. By default, notes contents are
+	// assumed to contain plain text.
+	ContentType string `json:"contentType,omitempty"`
+
+	// Value: Actual value of notes.
+	Value string `json:"value,omitempty"`
 }
 
 type UserAddress struct {
@@ -1232,6 +1246,24 @@ type UserRelation struct {
 type UserUndelete struct {
 	// OrgUnitPath: OrgUnit of User
 	OrgUnitPath string `json:"orgUnitPath,omitempty"`
+}
+
+type UserWebsite struct {
+	// CustomType: Custom Type.
+	CustomType string `json:"customType,omitempty"`
+
+	// Primary: If this is user's primary website or not.
+	Primary bool `json:"primary,omitempty"`
+
+	// Type: Each entry can have a type which indicates standard types of
+	// that entry. For example website could be of home, work, blog etc. In
+	// addition to the standard type, an entry can have a custom type and
+	// can give it any name. Such types should have the CUSTOM value as type
+	// and also have a customType value.
+	Type string `json:"type,omitempty"`
+
+	// Value: Website.
+	Value string `json:"value,omitempty"`
 }
 
 type Users struct {

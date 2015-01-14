@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"l66ggWbucbkBw9Lpos72oziyefE/skEqViAiDZlWolu5EmMUpxKtI9o\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/hKogzlFCeoQ2aH_L_DGXt68-_r4\"",
  "discoveryVersion": "v1",
  "id": "games:v1",
  "name": "games",
  "canonicalName": "Games",
  "version": "v1",
- "revision": "20141106",
+ "revision": "20150105",
  "title": "Google Play Game Services API",
  "description": "The API for Google Play Game Services.",
  "ownerDomain": "google.com",
@@ -4027,7 +4027,7 @@
        "description": "The maximum number of leaderboard scores to return in the response. For any response, the actual number of leaderboard scores returned may be less than the specified maxResults.",
        "format": "int32",
        "minimum": "1",
-       "maximum": "25",
+       "maximum": "30",
        "location": "query"
       },
       "pageToken": {
@@ -4109,7 +4109,7 @@
        "description": "The maximum number of leaderboard scores to return in the response. For any response, the actual number of leaderboard scores returned may be less than the specified maxResults.",
        "format": "int32",
        "minimum": "1",
-       "maximum": "25",
+       "maximum": "30",
        "location": "query"
       },
       "pageToken": {
@@ -4183,7 +4183,7 @@
        "description": "The maximum number of leaderboard scores to return in the response. For any response, the actual number of leaderboard scores returned may be less than the specified maxResults.",
        "format": "int32",
        "minimum": "1",
-       "maximum": "25",
+       "maximum": "30",
        "location": "query"
       },
       "pageToken": {

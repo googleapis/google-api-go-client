@@ -1,5 +1,7 @@
 // Package fitness provides access to the Fitness.
 //
+// See https://developers.google.com/fit/rest/
+//
 // Usage example:
 //
 //   import "google.golang.org/api/fitness/v1"
@@ -291,9 +293,17 @@ type Dataset struct {
 	// dataset identifier.
 	MinStartTimeNs int64 `json:"minStartTimeNs,omitempty,string"`
 
-	// Point: A partial list of data points contained in the dataset. This
-	// list is considered complete when retrieving a dataset and partial
-	// when patching a dataset.
+	// NextPageToken: This token will be set when a dataset is received in
+	// response to a GET request and the dataset is too large to be included
+	// in a single response. Provide this value in a subsequent GET request
+	// to return the next page of data points within this dataset.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Point: A partial list of data points contained in the dataset,
+	// ordered by largest endTimeNanos first. This list is considered
+	// complete when retrieving a small dataset and partial when patching a
+	// dataset or retrieving a dataset that is too large to include in a
+	// single response.
 	Point []*DataPoint `json:"point,omitempty"`
 }
 
@@ -368,10 +378,11 @@ type Session struct {
 }
 
 type Value struct {
-	// FpVal: Floating point value.
+	// FpVal: Floating point value. When this is set, intVal must not be
+	// set.
 	FpVal float64 `json:"fpVal,omitempty"`
 
-	// IntVal: Integer value.
+	// IntVal: Integer value. When this is set, fpVal must not be set.
 	IntVal int64 `json:"intVal,omitempty"`
 }
 
@@ -1027,6 +1038,26 @@ func (r *UsersDataSourcesDatasetsService) Get(userId string, dataSourceId string
 	return c
 }
 
+// Limit sets the optional parameter "limit": If specified, no more than
+// this many data points will be included in the dataset. If the there
+// are more data points in the dataset, nextPageToken will be set in the
+// dataset response.
+func (c *UsersDataSourcesDatasetsGetCall) Limit(limit int64) *UsersDataSourcesDatasetsGetCall {
+	c.opt_["limit"] = limit
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The continuation
+// token, which is used to page through large datasets. To get the next
+// page of a dataset, set this parameter to the value of nextPageToken
+// from the previous response. Each subsequent call will yield a partial
+// dataset with data point end timestamps that are strictly smaller than
+// those in the previous partial response.
+func (c *UsersDataSourcesDatasetsGetCall) PageToken(pageToken string) *UsersDataSourcesDatasetsGetCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
 // Fields allows partial responses to be retrieved.
 // See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1039,6 +1070,12 @@ func (c *UsersDataSourcesDatasetsGetCall) Do() (*Dataset, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["limit"]; ok {
+		params.Set("limit", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1084,6 +1121,17 @@ func (c *UsersDataSourcesDatasetsGetCall) Do() (*Dataset, error) {
 	//       "description": "Dataset identifier that is a composite of the minimum data point start time and maximum data point end time represented as nanoseconds from the epoch. The ID is formatted like: \"startTime-endTime\" where startTime and endTime are 64 bit integers.",
 	//       "location": "path",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "limit": {
+	//       "description": "If specified, no more than this many data points will be included in the dataset. If the there are more data points in the dataset, nextPageToken will be set in the dataset response.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The continuation token, which is used to page through large datasets. To get the next page of a dataset, set this parameter to the value of nextPageToken from the previous response. Each subsequent call will yield a partial dataset with data point end timestamps that are strictly smaller than those in the previous partial response.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "userId": {

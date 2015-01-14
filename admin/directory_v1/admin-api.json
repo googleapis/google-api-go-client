@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"l66ggWbucbkBw9Lpos72oziyefE/l5pod8YqQveewbHEUdz0VFkXQt0\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/G0v1rWSx70VoKr67jXxgcXZaRUc\"",
  "discoveryVersion": "v1",
  "id": "admin:directory_v1",
  "name": "admin",
  "canonicalName": "directory",
  "version": "directory_v1",
- "revision": "20141014",
+ "revision": "20141113",
  "title": "Admin Directory API",
  "description": "The Admin SDK Directory API lets you view and manage enterprise resources such as users and groups, administrative notifications, security features, and more.",
  "ownerDomain": "google.com",
@@ -1255,6 +1255,9 @@
       "type": "string"
      }
     },
+    "notes": {
+     "type": "any"
+    },
     "orgUnitPath": {
      "type": "string",
      "description": "OrgUnit of User"
@@ -1297,6 +1300,24 @@
     "thumbnailPhotoUrl": {
      "type": "string",
      "description": "Photo Url of the user (Read-only)"
+    },
+    "websites": {
+     "type": "any"
+    }
+   }
+  },
+  "UserAbout": {
+   "id": "UserAbout",
+   "type": "object",
+   "description": "JSON template for About (notes) of a user in Directory API.",
+   "properties": {
+    "contentType": {
+     "type": "string",
+     "description": "About entry can have a type which indicates the content type. It can either be plain or html. By default, notes contents are assumed to contain plain text."
+    },
+    "value": {
+     "type": "string",
+     "description": "Actual value of notes."
     }
    }
   },
@@ -1634,6 +1655,29 @@
     "orgUnitPath": {
      "type": "string",
      "description": "OrgUnit of User"
+    }
+   }
+  },
+  "UserWebsite": {
+   "id": "UserWebsite",
+   "type": "object",
+   "description": "JSON template for a website entry.",
+   "properties": {
+    "customType": {
+     "type": "string",
+     "description": "Custom Type."
+    },
+    "primary": {
+     "type": "boolean",
+     "description": "If this is user's primary website or not."
+    },
+    "type": {
+     "type": "string",
+     "description": "Each entry can have a type which indicates standard types of that entry. For example website could be of home, work, blog etc. In addition to the standard type, an entry can have a custom type and can give it any name. Such types should have the CUSTOM value as type and also have a customType value."
+    },
+    "value": {
+     "type": "string",
+     "description": "Website."
     }
    }
   },

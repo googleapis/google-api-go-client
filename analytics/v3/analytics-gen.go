@@ -50,6 +50,9 @@ const (
 	// Manage Google Analytics Account users by email address
 	AnalyticsManageUsersScope = "https://www.googleapis.com/auth/analytics.manage.users"
 
+	// View Google Analytics user permissions
+	AnalyticsManageUsersReadonlyScope = "https://www.googleapis.com/auth/analytics.manage.users.readonly"
+
 	// Create a new Google Analytics account along with its default property
 	// and view
 	AnalyticsProvisionScope = "https://www.googleapis.com/auth/analytics.provision"
@@ -1249,19 +1252,17 @@ type FilterExpression struct {
 	ExpressionValue string `json:"expressionValue,omitempty"`
 
 	// Field: Field to filter. Possible values:
-	// - Reserved
-	// - UNUSED,
-	//
 	// - Content and Traffic
-	// - PAGE_REQUEST_URI,
+	// -
+	// PAGE_REQUEST_URI,
 	// - PAGE_HOSTNAME,
-	// -
-	// PAGE_TITLE,
+	// - PAGE_TITLE,
 	// - REFERRAL,
-	// - COST_DATA_URI (Campaign target URL),
 	// -
-	// HIT_TYPE,
-	// - INTERNAL_SEARCH_TERM,
+	// COST_DATA_URI (Campaign target URL),
+	// - HIT_TYPE,
+	// -
+	// INTERNAL_SEARCH_TERM,
 	// - INTERNAL_SEARCH_TYPE,
 	// -
 	// SOURCE_PROPERTY_TRACKING_ID,
@@ -1304,63 +1305,67 @@ type FilterExpression struct {
 	// - SCREEN_RESOLUTION,
 	// -
 	// SCREEN_COLORS,
-	// - JAVA_ENABLED,
+	// - JAVA_ENABLED (Boolean Field),
 	// - FLASH_VERSION,
-	// - GEO_SPEED
-	// (Connection speed),
+	// -
+	// GEO_SPEED (Connection speed),
 	// - VISITOR_TYPE,
-	// - GEO_ORGANIZATION (ISP
-	// organization),
+	// - GEO_ORGANIZATION
+	// (ISP organization),
 	// - GEO_DOMAIN,
 	// - GEO_IP_ADDRESS,
-	// - GEO_IP_VERSION,
-	//
+	// -
+	// GEO_IP_VERSION,
 	// - Location
 	// - GEO_COUNTRY,
 	// - GEO_REGION,
-	// - GEO_CITY,
+	// -
+	// GEO_CITY,
 	// - Event
-	//
 	// - EVENT_CATEGORY,
 	// - EVENT_ACTION,
-	// - EVENT_LABEL,
+	// -
+	// EVENT_LABEL,
 	// - Other
-	// -
-	// CUSTOM_FIELD_1,
+	// - CUSTOM_FIELD_1,
 	// - CUSTOM_FIELD_2,
-	// - USER_DEFINED_VALUE,
 	// -
-	// Application
+	// USER_DEFINED_VALUE,
+	// - Application
 	// - APP_ID,
 	// - APP_INSTALLER_ID,
-	// - APP_NAME,
-	// -
-	// APP_VERSION,
-	// - SCREEN,
-	// - IS_APP,
-	// - IS_FATAL_EXCEPTION,
-	// -
-	// EXCEPTION_DESCRIPTION,
-	// - Mobile device
-	// - IS_MOBILE,
-	// -
-	// IS_TABLET,
-	// - DEVICE_CATEGORY,
-	// - MOBILE_HAS_QWERTY_KEYBOARD,
-	// -
-	// MOBILE_HAS_NFC_SUPPORT,
-	// - MOBILE_HAS_CELLULAR_RADIO,
-	// -
-	// MOBILE_HAS_WIFI_SUPPORT,
-	// - MOBILE_BRAND_NAME,
-	// - MOBILE_MODEL_NAME,
 	//
-	// - MOBILE_MARKETING_NAME,
-	// - MOBILE_POINTING_METHOD,
-	// - Social
+	// - APP_NAME,
+	// - APP_VERSION,
+	// - SCREEN,
+	// - IS_APP (Boolean Field),
 	// -
-	// SOCIAL_NETWORK,
-	// - SOCIAL_ACTION,
+	// IS_FATAL_EXCEPTION (Boolean Field),
+	// - EXCEPTION_DESCRIPTION,
+	// -
+	// Mobile device
+	// - IS_MOBILE (Boolean Field, Deprecated. Use
+	// DEVICE_CATEGORY=mobile),
+	// - IS_TABLET (Boolean Field, Deprecated. Use
+	// DEVICE_CATEGORY=tablet),
+	// - DEVICE_CATEGORY,
+	// -
+	// MOBILE_HAS_QWERTY_KEYBOARD (Boolean Field),
+	// - MOBILE_HAS_NFC_SUPPORT
+	// (Boolean Field),
+	// - MOBILE_HAS_CELLULAR_RADIO (Boolean Field),
+	// -
+	// MOBILE_HAS_WIFI_SUPPORT (Boolean Field),
+	// - MOBILE_BRAND_NAME,
+	// -
+	// MOBILE_MODEL_NAME,
+	// - MOBILE_MARKETING_NAME,
+	// -
+	// MOBILE_POINTING_METHOD,
+	// - Social
+	// - SOCIAL_NETWORK,
+	// -
+	// SOCIAL_ACTION,
 	// - SOCIAL_ACTION_TARGET,
 	Field string `json:"field,omitempty"`
 
@@ -3636,7 +3641,8 @@ func (c *ManagementAccountUserLinksListCall) Do() (*EntityUserLinks, error) {
 	//     "$ref": "EntityUserLinks"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.manage.users"
+	//     "https://www.googleapis.com/auth/analytics.manage.users",
+	//     "https://www.googleapis.com/auth/analytics.manage.users.readonly"
 	//   ]
 	// }
 
@@ -7294,7 +7300,8 @@ func (c *ManagementProfileUserLinksListCall) Do() (*EntityUserLinks, error) {
 	//     "$ref": "EntityUserLinks"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.manage.users"
+	//     "https://www.googleapis.com/auth/analytics.manage.users",
+	//     "https://www.googleapis.com/auth/analytics.manage.users.readonly"
 	//   ]
 	// }
 
@@ -10472,7 +10479,8 @@ func (c *ManagementWebpropertyUserLinksListCall) Do() (*EntityUserLinks, error) 
 	//     "$ref": "EntityUserLinks"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics.manage.users"
+	//     "https://www.googleapis.com/auth/analytics.manage.users",
+	//     "https://www.googleapis.com/auth/analytics.manage.users.readonly"
 	//   ]
 	// }
 

@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"uUWyYHXmEn-ab7WLvo8qNz2S8ws/ZxGMdKOFWdB9SO_oU5OJFlm46Mw\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/MBdb_2wPLVZ-z9ZaAuo8xEjfMbY\"",
  "discoveryVersion": "v1",
  "id": "spectrum:v1explorer",
  "name": "spectrum",
  "version": "v1explorer",
- "revision": "20140917",
+ "revision": "20150112",
  "title": "Google Spectrum Database API",
  "description": "API for spectrum-management functions.",
  "ownerDomain": "google.com",

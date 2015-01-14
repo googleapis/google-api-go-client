@@ -238,6 +238,9 @@ type Container struct {
 	// Container.
 	DomainName []string `json:"domainName,omitempty"`
 
+	// EnabledBuiltInVariable: List of enabled built-in variables.
+	EnabledBuiltInVariable []string `json:"enabledBuiltInVariable,omitempty"`
+
 	// Fingerprint: The fingerprint of the GTM Container as computed at
 	// storage time. This value is recomputed whenever the account is
 	// modified.
@@ -547,11 +550,6 @@ type Tag struct {
 
 	// ContainerId: GTM Container ID.
 	ContainerId string `json:"containerId,omitempty"`
-
-	// Dependencies: An optional list of tag names that this tag depends on
-	// to fire. Execution of this tag will be prevented until the tags with
-	// the given names complete their execution.
-	Dependencies *Parameter `json:"dependencies,omitempty"`
 
 	// Fingerprint: The fingerprint of the GTM Tag as computed at storage
 	// time. This value is recomputed whenever the tag is modified.

@@ -1443,6 +1443,14 @@ func (c *BucketsInsertCall) PredefinedAcl(predefinedAcl string) *BucketsInsertCa
 	return c
 }
 
+// PredefinedDefaultObjectAcl sets the optional parameter
+// "predefinedDefaultObjectAcl": Apply a predefined set of default
+// object access controls to this bucket.
+func (c *BucketsInsertCall) PredefinedDefaultObjectAcl(predefinedDefaultObjectAcl string) *BucketsInsertCall {
+	c.opt_["predefinedDefaultObjectAcl"] = predefinedDefaultObjectAcl
+	return c
+}
+
 // Projection sets the optional parameter "projection": Set of
 // properties to return. Defaults to noAcl, unless the bucket resource
 // specifies acl or defaultObjectAcl properties, when it defaults to
@@ -1472,6 +1480,9 @@ func (c *BucketsInsertCall) Do() (*Bucket, error) {
 	params.Set("project", fmt.Sprintf("%v", c.projectid))
 	if v, ok := c.opt_["predefinedAcl"]; ok {
 		params.Set("predefinedAcl", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["predefinedDefaultObjectAcl"]; ok {
+		params.Set("predefinedDefaultObjectAcl", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["projection"]; ok {
 		params.Set("projection", fmt.Sprintf("%v", v))
@@ -1521,6 +1532,27 @@ func (c *BucketsInsertCall) Do() (*Bucket, error) {
 	//         "Project team members get access according to their roles.",
 	//         "Project team owners get OWNER access, and allUsers get READER access.",
 	//         "Project team owners get OWNER access, and allUsers get WRITER access."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "predefinedDefaultObjectAcl": {
+	//       "description": "Apply a predefined set of default object access controls to this bucket.",
+	//       "enum": [
+	//         "authenticatedRead",
+	//         "bucketOwnerFullControl",
+	//         "bucketOwnerRead",
+	//         "private",
+	//         "projectPrivate",
+	//         "publicRead"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Object owner gets OWNER access, and allAuthenticatedUsers get READER access.",
+	//         "Object owner gets OWNER access, and project team owners get OWNER access.",
+	//         "Object owner gets OWNER access, and project team owners get READER access.",
+	//         "Object owner gets OWNER access.",
+	//         "Object owner gets OWNER access, and project team members get access according to their roles.",
+	//         "Object owner gets OWNER access, and allUsers get READER access."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -1737,6 +1769,14 @@ func (c *BucketsPatchCall) PredefinedAcl(predefinedAcl string) *BucketsPatchCall
 	return c
 }
 
+// PredefinedDefaultObjectAcl sets the optional parameter
+// "predefinedDefaultObjectAcl": Apply a predefined set of default
+// object access controls to this bucket.
+func (c *BucketsPatchCall) PredefinedDefaultObjectAcl(predefinedDefaultObjectAcl string) *BucketsPatchCall {
+	c.opt_["predefinedDefaultObjectAcl"] = predefinedDefaultObjectAcl
+	return c
+}
+
 // Projection sets the optional parameter "projection": Set of
 // properties to return. Defaults to full.
 func (c *BucketsPatchCall) Projection(projection string) *BucketsPatchCall {
@@ -1769,6 +1809,9 @@ func (c *BucketsPatchCall) Do() (*Bucket, error) {
 	}
 	if v, ok := c.opt_["predefinedAcl"]; ok {
 		params.Set("predefinedAcl", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["predefinedDefaultObjectAcl"]; ok {
+		params.Set("predefinedDefaultObjectAcl", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["projection"]; ok {
 		params.Set("projection", fmt.Sprintf("%v", v))
@@ -1838,6 +1881,27 @@ func (c *BucketsPatchCall) Do() (*Bucket, error) {
 	//         "Project team members get access according to their roles.",
 	//         "Project team owners get OWNER access, and allUsers get READER access.",
 	//         "Project team owners get OWNER access, and allUsers get WRITER access."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "predefinedDefaultObjectAcl": {
+	//       "description": "Apply a predefined set of default object access controls to this bucket.",
+	//       "enum": [
+	//         "authenticatedRead",
+	//         "bucketOwnerFullControl",
+	//         "bucketOwnerRead",
+	//         "private",
+	//         "projectPrivate",
+	//         "publicRead"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Object owner gets OWNER access, and allAuthenticatedUsers get READER access.",
+	//         "Object owner gets OWNER access, and project team owners get OWNER access.",
+	//         "Object owner gets OWNER access, and project team owners get READER access.",
+	//         "Object owner gets OWNER access.",
+	//         "Object owner gets OWNER access, and project team members get access according to their roles.",
+	//         "Object owner gets OWNER access, and allUsers get READER access."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -1914,6 +1978,14 @@ func (c *BucketsUpdateCall) PredefinedAcl(predefinedAcl string) *BucketsUpdateCa
 	return c
 }
 
+// PredefinedDefaultObjectAcl sets the optional parameter
+// "predefinedDefaultObjectAcl": Apply a predefined set of default
+// object access controls to this bucket.
+func (c *BucketsUpdateCall) PredefinedDefaultObjectAcl(predefinedDefaultObjectAcl string) *BucketsUpdateCall {
+	c.opt_["predefinedDefaultObjectAcl"] = predefinedDefaultObjectAcl
+	return c
+}
+
 // Projection sets the optional parameter "projection": Set of
 // properties to return. Defaults to full.
 func (c *BucketsUpdateCall) Projection(projection string) *BucketsUpdateCall {
@@ -1946,6 +2018,9 @@ func (c *BucketsUpdateCall) Do() (*Bucket, error) {
 	}
 	if v, ok := c.opt_["predefinedAcl"]; ok {
 		params.Set("predefinedAcl", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["predefinedDefaultObjectAcl"]; ok {
+		params.Set("predefinedDefaultObjectAcl", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["projection"]; ok {
 		params.Set("projection", fmt.Sprintf("%v", v))
@@ -2015,6 +2090,27 @@ func (c *BucketsUpdateCall) Do() (*Bucket, error) {
 	//         "Project team members get access according to their roles.",
 	//         "Project team owners get OWNER access, and allUsers get READER access.",
 	//         "Project team owners get OWNER access, and allUsers get WRITER access."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "predefinedDefaultObjectAcl": {
+	//       "description": "Apply a predefined set of default object access controls to this bucket.",
+	//       "enum": [
+	//         "authenticatedRead",
+	//         "bucketOwnerFullControl",
+	//         "bucketOwnerRead",
+	//         "private",
+	//         "projectPrivate",
+	//         "publicRead"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Object owner gets OWNER access, and allAuthenticatedUsers get READER access.",
+	//         "Object owner gets OWNER access, and project team owners get OWNER access.",
+	//         "Object owner gets OWNER access, and project team owners get READER access.",
+	//         "Object owner gets OWNER access.",
+	//         "Object owner gets OWNER access, and project team members get access according to their roles.",
+	//         "Object owner gets OWNER access, and allUsers get READER access."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"

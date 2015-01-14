@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"l66ggWbucbkBw9Lpos72oziyefE/VaANii_xZfXrY-yG-wavppujV5w\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/WHM2lx-j98vybVJkjwCHJJehKwc\"",
  "discoveryVersion": "v1",
  "id": "storage:v1",
  "name": "storage",
  "version": "v1",
- "revision": "20141026",
+ "revision": "20141112",
  "title": "Cloud Storage API",
  "description": "Lets you store and retrieve potentially-large, immutable data objects.",
  "ownerDomain": "google.com",
@@ -1069,6 +1069,27 @@
        ],
        "location": "query"
       },
+      "predefinedDefaultObjectAcl": {
+       "type": "string",
+       "description": "Apply a predefined set of default object access controls to this bucket.",
+       "enum": [
+        "authenticatedRead",
+        "bucketOwnerFullControl",
+        "bucketOwnerRead",
+        "private",
+        "projectPrivate",
+        "publicRead"
+       ],
+       "enumDescriptions": [
+        "Object owner gets OWNER access, and allAuthenticatedUsers get READER access.",
+        "Object owner gets OWNER access, and project team owners get OWNER access.",
+        "Object owner gets OWNER access, and project team owners get READER access.",
+        "Object owner gets OWNER access.",
+        "Object owner gets OWNER access, and project team members get access according to their roles.",
+        "Object owner gets OWNER access, and allUsers get READER access."
+       ],
+       "location": "query"
+      },
       "project": {
        "type": "string",
        "description": "A valid API project identifier.",
@@ -1198,6 +1219,27 @@
        ],
        "location": "query"
       },
+      "predefinedDefaultObjectAcl": {
+       "type": "string",
+       "description": "Apply a predefined set of default object access controls to this bucket.",
+       "enum": [
+        "authenticatedRead",
+        "bucketOwnerFullControl",
+        "bucketOwnerRead",
+        "private",
+        "projectPrivate",
+        "publicRead"
+       ],
+       "enumDescriptions": [
+        "Object owner gets OWNER access, and allAuthenticatedUsers get READER access.",
+        "Object owner gets OWNER access, and project team owners get OWNER access.",
+        "Object owner gets OWNER access, and project team owners get READER access.",
+        "Object owner gets OWNER access.",
+        "Object owner gets OWNER access, and project team members get access according to their roles.",
+        "Object owner gets OWNER access, and allUsers get READER access."
+       ],
+       "location": "query"
+      },
       "projection": {
        "type": "string",
        "description": "Set of properties to return. Defaults to full.",
@@ -1267,6 +1309,27 @@
         "Project team members get access according to their roles.",
         "Project team owners get OWNER access, and allUsers get READER access.",
         "Project team owners get OWNER access, and allUsers get WRITER access."
+       ],
+       "location": "query"
+      },
+      "predefinedDefaultObjectAcl": {
+       "type": "string",
+       "description": "Apply a predefined set of default object access controls to this bucket.",
+       "enum": [
+        "authenticatedRead",
+        "bucketOwnerFullControl",
+        "bucketOwnerRead",
+        "private",
+        "projectPrivate",
+        "publicRead"
+       ],
+       "enumDescriptions": [
+        "Object owner gets OWNER access, and allAuthenticatedUsers get READER access.",
+        "Object owner gets OWNER access, and project team owners get OWNER access.",
+        "Object owner gets OWNER access, and project team owners get READER access.",
+        "Object owner gets OWNER access.",
+        "Object owner gets OWNER access, and project team members get access according to their roles.",
+        "Object owner gets OWNER access, and allUsers get READER access."
        ],
        "location": "query"
       },

@@ -1,18 +1,18 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/kTDiVESNLycoqIbveRofH5KPD08\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/b42JL4j5Mj0i9yGv-ODgLLktQPQ\"",
  "discoveryVersion": "v1",
  "id": "freebase:v1",
  "name": "freebase",
  "version": "v1",
- "revision": "20140418",
+ "revision": "20141210",
  "title": "Freebase Search",
  "description": "Find Freebase entities using textual queries and other constraints.",
  "ownerDomain": "google.com",
  "ownerName": "Google",
  "icons": {
-  "x16": "http://www.google.com/images/icons/product/freebase-16.png",
-  "x32": "http://www.google.com/images/icons/product/freebase-32.png"
+  "x16": "https://www.google.com/images/icons/product/freebase-16.png",
+  "x32": "https://www.google.com/images/icons/product/freebase-32.png"
  },
  "documentationLink": "https://developers.google.com/freebase/",
  "protocol": "rest",

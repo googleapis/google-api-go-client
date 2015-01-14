@@ -52,6 +52,7 @@ func New(client *http.Client) (*Service, error) {
 	s := &Service{client: client, BasePath: basePath}
 	s.Accounts = NewAccountsService(s)
 	s.BillingInfo = NewBillingInfoService(s)
+	s.Budget = NewBudgetService(s)
 	s.Creatives = NewCreativesService(s)
 	s.DirectDeals = NewDirectDealsService(s)
 	s.PerformanceReport = NewPerformanceReportService(s)
@@ -66,6 +67,8 @@ type Service struct {
 	Accounts *AccountsService
 
 	BillingInfo *BillingInfoService
+
+	Budget *BudgetService
 
 	Creatives *CreativesService
 
@@ -91,6 +94,15 @@ func NewBillingInfoService(s *Service) *BillingInfoService {
 }
 
 type BillingInfoService struct {
+	s *Service
+}
+
+func NewBudgetService(s *Service) *BudgetService {
+	rs := &BudgetService{s: s}
+	return rs
+}
+
+type BudgetService struct {
 	s *Service
 }
 
@@ -211,6 +223,30 @@ type BillingInfoList struct {
 	Items []*BillingInfo `json:"items,omitempty"`
 
 	// Kind: Resource type.
+	Kind string `json:"kind,omitempty"`
+}
+
+type Budget struct {
+	// AccountId: The id of the account. This is required for get and update
+	// requests.
+	AccountId int64 `json:"accountId,omitempty,string"`
+
+	// BillingId: The billing id to determine which adgroup to provide
+	// budget information for. This is required for get and update requests.
+	BillingId int64 `json:"billingId,omitempty,string"`
+
+	// BudgetAmount: The budget amount to apply for the billingId provided.
+	// This is required for update requests.
+	BudgetAmount int64 `json:"budgetAmount,omitempty,string"`
+
+	// CurrencyCode: The currency code for the buyer. This cannot be altered
+	// here.
+	CurrencyCode string `json:"currencyCode,omitempty"`
+
+	// Id: The unique id that describes this item.
+	Id string `json:"id,omitempty"`
+
+	// Kind: The kind of the resource, i.e. "adexchangebuyer#budget".
 	Kind string `json:"kind,omitempty"`
 }
 
@@ -1056,6 +1092,297 @@ func (c *BillingInfoListCall) Do() (*BillingInfoList, error) {
 	//   "path": "billinginfo",
 	//   "response": {
 	//     "$ref": "BillingInfoList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// method id "adexchangebuyer.budget.get":
+
+type BudgetGetCall struct {
+	s         *Service
+	accountId int64
+	billingId int64
+	opt_      map[string]interface{}
+}
+
+// Get: Returns the budget information for the adgroup specified by the
+// accountId and billingId.
+func (r *BudgetService) Get(accountId int64, billingId int64) *BudgetGetCall {
+	c := &BudgetGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.billingId = billingId
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BudgetGetCall) Fields(s ...googleapi.Field) *BudgetGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *BudgetGetCall) Do() (*Budget, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "billinginfo/{accountId}/{billingId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"accountId": strconv.FormatInt(c.accountId, 10),
+		"billingId": strconv.FormatInt(c.billingId, 10),
+	})
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Budget
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns the budget information for the adgroup specified by the accountId and billingId.",
+	//   "httpMethod": "GET",
+	//   "id": "adexchangebuyer.budget.get",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "billingId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "The account id to get the budget information for.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "billingId": {
+	//       "description": "The billing id to get the budget information for.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "billinginfo/{accountId}/{billingId}",
+	//   "response": {
+	//     "$ref": "Budget"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// method id "adexchangebuyer.budget.patch":
+
+type BudgetPatchCall struct {
+	s         *Service
+	accountId int64
+	billingId int64
+	budget    *Budget
+	opt_      map[string]interface{}
+}
+
+// Patch: Updates the budget amount for the budget of the adgroup
+// specified by the accountId and billingId, with the budget amount in
+// the request. This method supports patch semantics.
+func (r *BudgetService) Patch(accountId int64, billingId int64, budget *Budget) *BudgetPatchCall {
+	c := &BudgetPatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.billingId = billingId
+	c.budget = budget
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BudgetPatchCall) Fields(s ...googleapi.Field) *BudgetPatchCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *BudgetPatchCall) Do() (*Budget, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.budget)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "billinginfo/{accountId}/{billingId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"accountId": strconv.FormatInt(c.accountId, 10),
+		"billingId": strconv.FormatInt(c.billingId, 10),
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Budget
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the budget amount for the budget of the adgroup specified by the accountId and billingId, with the budget amount in the request. This method supports patch semantics.",
+	//   "httpMethod": "PATCH",
+	//   "id": "adexchangebuyer.budget.patch",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "billingId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "The account id associated with the budget being updated.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "billingId": {
+	//       "description": "The billing id associated with the budget being updated.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "billinginfo/{accountId}/{billingId}",
+	//   "request": {
+	//     "$ref": "Budget"
+	//   },
+	//   "response": {
+	//     "$ref": "Budget"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// method id "adexchangebuyer.budget.update":
+
+type BudgetUpdateCall struct {
+	s         *Service
+	accountId int64
+	billingId int64
+	budget    *Budget
+	opt_      map[string]interface{}
+}
+
+// Update: Updates the budget amount for the budget of the adgroup
+// specified by the accountId and billingId, with the budget amount in
+// the request.
+func (r *BudgetService) Update(accountId int64, billingId int64, budget *Budget) *BudgetUpdateCall {
+	c := &BudgetUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.billingId = billingId
+	c.budget = budget
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BudgetUpdateCall) Fields(s ...googleapi.Field) *BudgetUpdateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *BudgetUpdateCall) Do() (*Budget, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.budget)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "billinginfo/{accountId}/{billingId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"accountId": strconv.FormatInt(c.accountId, 10),
+		"billingId": strconv.FormatInt(c.billingId, 10),
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Budget
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the budget amount for the budget of the adgroup specified by the accountId and billingId, with the budget amount in the request.",
+	//   "httpMethod": "PUT",
+	//   "id": "adexchangebuyer.budget.update",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "billingId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "The account id associated with the budget being updated.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "billingId": {
+	//       "description": "The billing id associated with the budget being updated.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "billinginfo/{accountId}/{billingId}",
+	//   "request": {
+	//     "$ref": "Budget"
+	//   },
+	//   "response": {
+	//     "$ref": "Budget"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/adexchange.buyer"

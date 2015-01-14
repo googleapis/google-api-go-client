@@ -86,8 +86,8 @@ type TopicsService struct {
 }
 
 type AcknowledgeRequest struct {
-	// AckId: The Ack ID for the message being acknowledged. This was
-	// returned by the Pub/Sub system in the Pull response.
+	// AckId: The acknowledgment ID for the message being acknowledged. This
+	// was returned by the Pub/Sub system in the Pull response.
 	AckId []string `json:"ackId,omitempty"`
 
 	// Subscription: The subscription whose message is being acknowledged.
@@ -148,7 +148,7 @@ type ModifyAckDeadlineRequest struct {
 	// AckDeadlineSeconds: The new Ack deadline. Must be >= 0.
 	AckDeadlineSeconds int64 `json:"ackDeadlineSeconds,omitempty"`
 
-	// AckId: The Ack ID.
+	// AckId: The acknowledgment ID.
 	AckId string `json:"ackId,omitempty"`
 
 	// Subscription: The name of the subscription from which messages are
@@ -804,7 +804,7 @@ type SubscriptionsModifyPushConfigCall struct {
 
 // ModifyPushConfig: Modifies the PushConfig for a specified
 // subscription. This method can be used to suspend the flow of messages
-// to an end point by clearing the PushConfig field in the request.
+// to an endpoint by clearing the PushConfig field in the request.
 // Messages will be accumulated for delivery even if no push
 // configuration is defined or while the configuration is modified.
 func (r *SubscriptionsService) ModifyPushConfig(modifypushconfigrequest *ModifyPushConfigRequest) *SubscriptionsModifyPushConfigCall {
@@ -849,7 +849,7 @@ func (c *SubscriptionsModifyPushConfigCall) Do() error {
 	}
 	return nil
 	// {
-	//   "description": "Modifies the PushConfig for a specified subscription. This method can be used to suspend the flow of messages to an end point by clearing the PushConfig field in the request. Messages will be accumulated for delivery even if no push configuration is defined or while the configuration is modified.",
+	//   "description": "Modifies the PushConfig for a specified subscription. This method can be used to suspend the flow of messages to an endpoint by clearing the PushConfig field in the request. Messages will be accumulated for delivery even if no push configuration is defined or while the configuration is modified.",
 	//   "httpMethod": "POST",
 	//   "id": "pubsub.subscriptions.modifyPushConfig",
 	//   "path": "subscriptions/modifyPushConfig",
@@ -951,8 +951,8 @@ type SubscriptionsPullBatchCall struct {
 
 // PullBatch: Pulls messages from the server. Returns an empty list if
 // there are no messages available in the backlog. The system is free to
-// return UNAVAILABLE if there too many pull requests outstanding for a
-// given subscription.
+// return UNAVAILABLE if there are too many pull requests outstanding
+// for the given subscription.
 func (r *SubscriptionsService) PullBatch(pullbatchrequest *PullBatchRequest) *SubscriptionsPullBatchCall {
 	c := &SubscriptionsPullBatchCall{s: r.s, opt_: make(map[string]interface{})}
 	c.pullbatchrequest = pullbatchrequest
@@ -999,7 +999,7 @@ func (c *SubscriptionsPullBatchCall) Do() (*PullBatchResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Pulls messages from the server. Returns an empty list if there are no messages available in the backlog. The system is free to return UNAVAILABLE if there too many pull requests outstanding for a given subscription.",
+	//   "description": "Pulls messages from the server. Returns an empty list if there are no messages available in the backlog. The system is free to return UNAVAILABLE if there are too many pull requests outstanding for the given subscription.",
 	//   "httpMethod": "POST",
 	//   "id": "pubsub.subscriptions.pullBatch",
 	//   "path": "subscriptions/pullBatch",

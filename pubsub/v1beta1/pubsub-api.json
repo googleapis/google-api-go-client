@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"l66ggWbucbkBw9Lpos72oziyefE/ndJAoL1i87Wmt3FRu81GYCnYaNQ\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/O6c4hqlf7a-JwyG37WvCKR3ZHMk\"",
  "discoveryVersion": "v1",
  "id": "pubsub:v1beta1",
  "name": "pubsub",
  "version": "v1beta1",
- "revision": "20141104",
+ "revision": "20141230",
  "title": "Cloud Pub/Sub API",
  "description": "Provides reliable, many-to-many, asynchronous messaging between applications.",
  "ownerDomain": "google.com",
@@ -85,11 +85,12 @@
   "AcknowledgeRequest": {
    "id": "AcknowledgeRequest",
    "type": "object",
+   "description": "Request for the Acknowledge method.",
    "externalTypeName": "tech.pubsub.AcknowledgeRequest",
    "properties": {
     "ackId": {
      "type": "array",
-     "description": "The Ack ID for the message being acknowledged. This was returned by the Pub/Sub system in the Pull response.",
+     "description": "The acknowledgment ID for the message being acknowledged. This was returned by the Pub/Sub system in the Pull response.",
      "items": {
       "type": "string"
      }
@@ -124,6 +125,7 @@
   "ListSubscriptionsResponse": {
    "id": "ListSubscriptionsResponse",
    "type": "object",
+   "description": "Response for the ListSubscriptions method.",
    "externalTypeName": "tech.pubsub.ListSubscriptionsResponse",
    "properties": {
     "nextPageToken": {
@@ -142,6 +144,7 @@
   "ListTopicsResponse": {
    "id": "ListTopicsResponse",
    "type": "object",
+   "description": "Response for the ListTopics method.",
    "externalTypeName": "tech.pubsub.ListTopicsResponse",
    "properties": {
     "nextPageToken": {
@@ -160,6 +163,7 @@
   "ModifyAckDeadlineRequest": {
    "id": "ModifyAckDeadlineRequest",
    "type": "object",
+   "description": "Request for the ModifyAckDeadline method.",
    "externalTypeName": "tech.pubsub.ModifyAckDeadlineRequest",
    "properties": {
     "ackDeadlineSeconds": {
@@ -169,7 +173,7 @@
     },
     "ackId": {
      "type": "string",
-     "description": "The Ack ID."
+     "description": "The acknowledgment ID."
     },
     "subscription": {
      "type": "string",
@@ -180,6 +184,7 @@
   "ModifyPushConfigRequest": {
    "id": "ModifyPushConfigRequest",
    "type": "object",
+   "description": "Request for the ModifyPushConfig method.",
    "externalTypeName": "tech.pubsub.ModifyPushConfigRequest",
    "properties": {
     "pushConfig": {
@@ -195,6 +200,7 @@
   "PublishBatchRequest": {
    "id": "PublishBatchRequest",
    "type": "object",
+   "description": "Request for the PublishBatch method.",
    "externalTypeName": "tech.pubsub.PublishBatchRequest",
    "properties": {
     "messages": {
@@ -213,6 +219,7 @@
   "PublishBatchResponse": {
    "id": "PublishBatchResponse",
    "type": "object",
+   "description": "Response for the PublishBatch method.",
    "externalTypeName": "tech.pubsub.PublishBatchResponse",
    "properties": {
     "messageIds": {
@@ -227,6 +234,7 @@
   "PublishRequest": {
    "id": "PublishRequest",
    "type": "object",
+   "description": "Request for the Publish method.",
    "externalTypeName": "tech.pubsub.PublishRequest",
    "properties": {
     "message": {
@@ -290,6 +298,7 @@
   "PullBatchRequest": {
    "id": "PullBatchRequest",
    "type": "object",
+   "description": "Request for the PullBatch method.",
    "externalTypeName": "tech.pubsub.PullBatchRequest",
    "properties": {
     "maxEvents": {
@@ -310,6 +319,7 @@
   "PullBatchResponse": {
    "id": "PullBatchResponse",
    "type": "object",
+   "description": "Response for the PullBatch method.",
    "externalTypeName": "tech.pubsub.PullBatchResponse",
    "properties": {
     "pullResponses": {
@@ -324,6 +334,7 @@
   "PullRequest": {
    "id": "PullRequest",
    "type": "object",
+   "description": "Request for the Pull method.",
    "externalTypeName": "tech.pubsub.PullRequest",
    "properties": {
     "returnImmediately": {
@@ -527,7 +538,7 @@
      "id": "pubsub.subscriptions.modifyPushConfig",
      "path": "subscriptions/modifyPushConfig",
      "httpMethod": "POST",
-     "description": "Modifies the PushConfig for a specified subscription. This method can be used to suspend the flow of messages to an end point by clearing the PushConfig field in the request. Messages will be accumulated for delivery even if no push configuration is defined or while the configuration is modified.",
+     "description": "Modifies the PushConfig for a specified subscription. This method can be used to suspend the flow of messages to an endpoint by clearing the PushConfig field in the request. Messages will be accumulated for delivery even if no push configuration is defined or while the configuration is modified.",
      "request": {
       "$ref": "ModifyPushConfigRequest"
      },
@@ -556,7 +567,7 @@
      "id": "pubsub.subscriptions.pullBatch",
      "path": "subscriptions/pullBatch",
      "httpMethod": "POST",
-     "description": "Pulls messages from the server. Returns an empty list if there are no messages available in the backlog. The system is free to return UNAVAILABLE if there too many pull requests outstanding for a given subscription.",
+     "description": "Pulls messages from the server. Returns an empty list if there are no messages available in the backlog. The system is free to return UNAVAILABLE if there are too many pull requests outstanding for the given subscription.",
      "request": {
       "$ref": "PullBatchRequest"
      },

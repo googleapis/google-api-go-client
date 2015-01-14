@@ -239,7 +239,8 @@ type Operation struct {
 
 	InsertTime string `json:"insertTime,omitempty"`
 
-	// Kind: Type of the resource.
+	// Kind: [Output Only] Type of the resource. Always kind#operation for
+	// Operation resources.
 	Kind string `json:"kind,omitempty"`
 
 	Name string `json:"name,omitempty"`
@@ -300,7 +301,8 @@ type OperationList struct {
 
 	Items []*Operation `json:"items,omitempty"`
 
-	// Kind: Type of resource.
+	// Kind: Type of resource. Always compute#operations for Operations
+	// resource.
 	Kind string `json:"kind,omitempty"`
 
 	NextPageToken string `json:"nextPageToken,omitempty"`

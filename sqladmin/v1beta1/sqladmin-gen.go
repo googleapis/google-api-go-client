@@ -201,9 +201,9 @@ type DatabaseInstance struct {
 	// instance. The Google apps domain is prefixed if applicable.
 	Project string `json:"project,omitempty"`
 
-	// Region: The geographical region. Can be us-east1, us-central or
-	// europe-west1. Defaults to us-central. The region can not be changed
-	// after instance creation.
+	// Region: The geographical region. Can be us-central or europe-west1.
+	// Defaults to us-central. The region can not be changed after instance
+	// creation.
 	Region string `json:"region,omitempty"`
 
 	// Settings: The user settings.

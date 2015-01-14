@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"l66ggWbucbkBw9Lpos72oziyefE/1ieQeQF1YXKs9Dj9dy0V3Fc-il4\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/I4iKbsjpB6NlSlVsjsxJtMO4wbc\"",
  "discoveryVersion": "v1",
  "id": "sqladmin:v1beta1",
  "name": "sqladmin",
  "canonicalName": "SQL Admin",
  "version": "v1beta1",
- "revision": "20141020",
+ "revision": "20141112",
  "title": "Cloud SQL Administration API",
  "description": "API for Cloud SQL database instance management.",
  "ownerDomain": "google.com",
@@ -230,7 +230,7 @@
     },
     "region": {
      "type": "string",
-     "description": "The geographical region. Can be us-east1, us-central or europe-west1. Defaults to us-central. The region can not be changed after instance creation."
+     "description": "The geographical region. Can be us-central or europe-west1. Defaults to us-central. The region can not be changed after instance creation."
     },
     "settings": {
      "$ref": "Settings",

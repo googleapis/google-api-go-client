@@ -1,5 +1,7 @@
 // Package container provides access to the Google Container Engine API.
 //
+// See https://cloud.google.com/container-engine/docs/v1beta1/
+//
 // Usage example:
 //
 //   import "google.golang.org/api/container/v1beta1"
@@ -130,8 +132,11 @@ type ProjectsZonesOperationsService struct {
 
 type Cluster struct {
 	// ClusterApiVersion: The API version of the Kubernetes master and
-	// kubelets running in this cluster. Allowed value is 0.4.2, or leave
-	// blank to pick up the latest stable release.
+	// kubelets running in this cluster. Leave blank to pick up the latest
+	// stable release, or specify a version of the form "x.y.z". The Google
+	// Container Engine release notes lists the currently supported
+	// versions. If an incorrect version is specified, the server returns an
+	// error listing the currently supported versions.
 	ClusterApiVersion string `json:"clusterApiVersion,omitempty"`
 
 	// ContainerIpv4Cidr: [Output only] The IP addresses of the container
@@ -167,6 +172,10 @@ type Cluster struct {
 	// - Must end with a number or a letter.
 	Name string `json:"name,omitempty"`
 
+	// Network: The name of the Google Compute Engine network to which the
+	// cluster is connected.
+	Network string `json:"network,omitempty"`
+
 	// NodeConfig: The machine type and image to use for all nodes in this
 	// cluster. See the descriptions of the child properties of nodeConfig.
 	NodeConfig *NodeConfig `json:"nodeConfig,omitempty"`
@@ -180,6 +189,9 @@ type Cluster struct {
 	// number of instances plus one (to include the master). You must also
 	// have available firewall and routes quota.
 	NumNodes int64 `json:"numNodes,omitempty"`
+
+	// SelfLink: [Output only] Server-defined URL for the resource.
+	SelfLink string `json:"selfLink,omitempty"`
 
 	// ServicesIpv4Cidr: [Output only] The IP addresses of the Kubernetes
 	// services in this cluster, in  CIDR notation (e.g. 1.2.3.4/29).
@@ -267,12 +279,18 @@ type Operation struct {
 	// OperationType: The operation type.
 	OperationType string `json:"operationType,omitempty"`
 
+	// SelfLink: Server-defined URL for the resource.
+	SelfLink string `json:"selfLink,omitempty"`
+
 	// Status: The current status of the operation.
 	Status string `json:"status,omitempty"`
 
 	// Target: [Optional] The URL of the cluster resource that this
 	// operation is associated with.
 	Target string `json:"target,omitempty"`
+
+	// TargetLink: Server-defined URL for the target of the operation.
+	TargetLink string `json:"targetLink,omitempty"`
 
 	// Zone: The name of the Google Compute Engine zone in which the
 	// operation is taking place.

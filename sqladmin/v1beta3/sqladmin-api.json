@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"l66ggWbucbkBw9Lpos72oziyefE/hSgBYRvTI2dDR9CzjHO6eIajaXc\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/hsbAfC9SMMz0njrqp0sUQ-CdpcQ\"",
  "discoveryVersion": "v1",
  "id": "sqladmin:v1beta3",
  "name": "sqladmin",
  "canonicalName": "SQL Admin",
  "version": "v1beta3",
- "revision": "20141020",
+ "revision": "20141112",
  "title": "Cloud SQL Administration API",
  "description": "API for Cloud SQL database instance management.",
  "ownerDomain": "google.com",
@@ -308,7 +308,7 @@
     },
     "region": {
      "type": "string",
-     "description": "The geographical region. Can be us-east1, us-central, asia-east1 or europe-west1. Defaults to us-central. The region can not be changed after instance creation."
+     "description": "The geographical region. Can be us-central, asia-east1 or europe-west1. Defaults to us-central. The region can not be changed after instance creation."
     },
     "replicaNames": {
      "type": "array",
@@ -320,6 +320,10 @@
     "serverCaCert": {
      "$ref": "SslCert",
      "description": "SSL configuration."
+    },
+    "serviceAccountEmailAddress": {
+     "type": "string",
+     "description": "The service account email address assigned to the instance."
     },
     "settings": {
      "$ref": "Settings",

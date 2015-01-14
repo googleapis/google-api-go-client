@@ -1241,7 +1241,8 @@ type HttpHealthCheck struct {
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// TimeoutSec: How long (in seconds) to wait before claiming failure.
-	// The default value is 5 seconds.
+	// The default value is 5 seconds. It is invalid for timeoutSec to have
+	// greater value than checkIntervalSec.
 	TimeoutSec int64 `json:"timeoutSec,omitempty"`
 
 	// UnhealthyThreshold: A so-far healthy VM will be marked unhealthy
@@ -1634,8 +1635,8 @@ type License struct {
 }
 
 type MachineType struct {
-	// CreationTimestamp: Creation timestamp in RFC3339 text format (output
-	// only).
+	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
+	// format.
 	CreationTimestamp string `json:"creationTimestamp,omitempty"`
 
 	// Deprecated: The deprecation status associated with this machine type.
@@ -1647,8 +1648,8 @@ type MachineType struct {
 	// GuestCpus: Count of CPUs exposed to the instance.
 	GuestCpus int64 `json:"guestCpus,omitempty"`
 
-	// Id: Unique identifier for the resource; defined by the server (output
-	// only).
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
 	Id uint64 `json:"id,omitempty,string"`
 
 	// ImageSpaceGb: Space allotted for the image, defined in GB.
@@ -1674,10 +1675,11 @@ type MachineType struct {
 	// instance.
 	ScratchDisks []*MachineTypeScratchDisks `json:"scratchDisks,omitempty"`
 
-	// SelfLink: Server defined URL for the resource (output only).
+	// SelfLink: [Output Only] Server defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
-	// Zone: Url of the zone where the machine type resides (output only).
+	// Zone: [Output Only] The name of the zone where the machine type
+	// resides, such as us-central1-a.
 	Zone string `json:"zone,omitempty"`
 }
 
@@ -1687,8 +1689,8 @@ type MachineTypeScratchDisks struct {
 }
 
 type MachineTypeAggregatedList struct {
-	// Id: Unique identifier for the resource; defined by the server (output
-	// only).
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
 	Id string `json:"id,omitempty"`
 
 	// Items: A map of scoped machine type lists.
@@ -1697,8 +1699,8 @@ type MachineTypeAggregatedList struct {
 	// Kind: Type of resource.
 	Kind string `json:"kind,omitempty"`
 
-	// NextPageToken: A token used to continue a truncated list request
-	// (output only).
+	// NextPageToken: [Output Only] A token used to continue a truncated
+	// list request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// SelfLink: Server defined URL for this resource (output only).
@@ -1728,8 +1730,8 @@ type MachineTypesScopedList struct {
 	// MachineTypes: List of machine types contained in this scope.
 	MachineTypes []*MachineType `json:"machineTypes,omitempty"`
 
-	// Warning: Informational warning which replaces the list of machine
-	// types when the list is empty.
+	// Warning: An informational warning that appears when the machine types
+	// list is empty.
 	Warning *MachineTypesScopedListWarning `json:"warning,omitempty"`
 }
 
@@ -1859,109 +1861,92 @@ type NetworkList struct {
 }
 
 type Operation struct {
-	// ClientOperationId: An optional identifier specified by the client
-	// when the mutation was initiated. Must be unique for all operation
-	// resources in the project (output only).
 	ClientOperationId string `json:"clientOperationId,omitempty"`
 
-	// CreationTimestamp: Creation timestamp in RFC3339 text format (output
-	// only).
+	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
+	// format (output only).
 	CreationTimestamp string `json:"creationTimestamp,omitempty"`
 
-	// EndTime: The time that this operation was completed. This is in RFC
-	// 3339 format (output only).
 	EndTime string `json:"endTime,omitempty"`
 
-	// Error: If errors occurred during processing of this operation, this
-	// field will be populated (output only).
+	// Error: [Output Only] If errors occurred during processing of this
+	// operation, this field will be populated.
 	Error *OperationError `json:"error,omitempty"`
 
-	// HttpErrorMessage: If operation fails, the HTTP error message
-	// returned, e.g. NOT FOUND. (output only).
 	HttpErrorMessage string `json:"httpErrorMessage,omitempty"`
 
-	// HttpErrorStatusCode: If operation fails, the HTTP error status code
-	// returned, e.g. 404. (output only).
 	HttpErrorStatusCode int64 `json:"httpErrorStatusCode,omitempty"`
 
-	// Id: Unique identifier for the resource; defined by the server (output
-	// only).
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
 	Id uint64 `json:"id,omitempty,string"`
 
-	// InsertTime: The time that this operation was requested. This is in
-	// RFC 3339 format (output only).
+	// InsertTime: [Output Only] The time that this operation was requested.
+	// This is in RFC 3339 format.
 	InsertTime string `json:"insertTime,omitempty"`
 
-	// Kind: Type of the resource.
+	// Kind: [Output Only] Type of the resource. Always kind#operation for
+	// Operation resources.
 	Kind string `json:"kind,omitempty"`
 
-	// Name: Name of the resource (output only).
+	// Name: [Output Only] Name of the resource (output only).
 	Name string `json:"name,omitempty"`
 
-	// OperationType: Type of the operation. Examples include "insert",
-	// "update", and "delete" (output only).
 	OperationType string `json:"operationType,omitempty"`
 
-	// Progress: An optional progress indicator that ranges from 0 to 100.
-	// There is no requirement that this be linear or support any
-	// granularity of operations. This should not be used to guess at when
-	// the operation will be complete. This number should be monotonically
-	// increasing as the operation progresses (output only).
 	Progress int64 `json:"progress,omitempty"`
 
-	// Region: URL of the region where the operation resides (output only).
+	// Region: [Output Only] URL of the region where the operation resides
+	// (output only).
 	Region string `json:"region,omitempty"`
 
-	// SelfLink: Server defined URL for the resource (output only).
+	// SelfLink: [Output Only] Server defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
-	// StartTime: The time that this operation was started by the server.
-	// This is in RFC 3339 format (output only).
+	// StartTime: [Output Only] The time that this operation was started by
+	// the server. This is in RFC 3339 format.
 	StartTime string `json:"startTime,omitempty"`
 
-	// Status: Status of the operation. Can be one of the following:
-	// "PENDING", "RUNNING", or "DONE" (output only).
+	// Status: [Output Only] Status of the operation. Can be one of the
+	// following: "PENDING", "RUNNING", or "DONE".
 	Status string `json:"status,omitempty"`
 
-	// StatusMessage: An optional textual description of the current status
-	// of the operation (output only).
+	// StatusMessage: [Output Only] An optional textual description of the
+	// current status of the operation.
 	StatusMessage string `json:"statusMessage,omitempty"`
 
-	// TargetId: Unique target id which identifies a particular incarnation
-	// of the target (output only).
+	// TargetId: [Output Only] Unique target id which identifies a
+	// particular incarnation of the target.
 	TargetId uint64 `json:"targetId,omitempty,string"`
 
-	// TargetLink: URL of the resource the operation is mutating (output
-	// only).
+	// TargetLink: [Output Only] URL of the resource the operation is
+	// mutating (output only).
 	TargetLink string `json:"targetLink,omitempty"`
 
-	// User: User who requested the operation, for example
-	// "user@example.com" (output only).
 	User string `json:"user,omitempty"`
 
-	// Warnings: If warning messages generated during processing of this
-	// operation, this field will be populated (output only).
 	Warnings []*OperationWarnings `json:"warnings,omitempty"`
 
-	// Zone: URL of the zone where the operation resides (output only).
+	// Zone: [Output Only] URL of the zone where the operation resides
+	// (output only).
 	Zone string `json:"zone,omitempty"`
 }
 
 type OperationError struct {
-	// Errors: The array of errors encountered while processing this
-	// operation.
+	// Errors: [Output Only] The array of errors encountered while
+	// processing this operation.
 	Errors []*OperationErrorErrors `json:"errors,omitempty"`
 }
 
 type OperationErrorErrors struct {
-	// Code: The error type identifier for this error.
+	// Code: [Output Only] The error type identifier for this error.
 	Code string `json:"code,omitempty"`
 
-	// Location: Indicates the field in the request which caused the error.
-	// This property is optional.
+	// Location: [Output Only] Indicates the field in the request which
+	// caused the error. This property is optional.
 	Location string `json:"location,omitempty"`
 
-	// Message: An optional, human-readable error message.
+	// Message: [Output Only] An optional, human-readable error message.
 	Message string `json:"message,omitempty"`
 }
 
@@ -1985,49 +1970,49 @@ type OperationWarningsData struct {
 }
 
 type OperationAggregatedList struct {
-	// Id: Unique identifier for the resource; defined by the server (output
-	// only).
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
 	Id string `json:"id,omitempty"`
 
-	// Items: A map of scoped operation lists.
+	// Items: [Output Only] A map of scoped operation lists.
 	Items map[string]OperationsScopedList `json:"items,omitempty"`
 
 	// Kind: Type of resource.
 	Kind string `json:"kind,omitempty"`
 
-	// NextPageToken: A token used to continue a truncated list request
-	// (output only).
+	// NextPageToken: [Output Only] A token used to continue a truncated
+	// list request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: Server defined URL for this resource (output only).
+	// SelfLink: [Output Only] Server defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
 type OperationList struct {
-	// Id: Unique identifier for the resource; defined by the server (output
-	// only).
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
 	Id string `json:"id,omitempty"`
 
-	// Items: The operation resources.
+	// Items: [Output Only] The operation resources.
 	Items []*Operation `json:"items,omitempty"`
 
-	// Kind: Type of resource.
+	// Kind: Type of resource. Always compute#operations for Operations
+	// resource.
 	Kind string `json:"kind,omitempty"`
 
-	// NextPageToken: A token used to continue a truncated list request
-	// (output only).
+	// NextPageToken: [Output Only] A token used to continue a truncate.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: Server defined URL for this resource (output only).
+	// SelfLink: [Output Only] Server defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
 type OperationsScopedList struct {
-	// Operations: List of operations contained in this scope.
+	// Operations: [Output Only] List of operations contained in this scope.
 	Operations []*Operation `json:"operations,omitempty"`
 
-	// Warning: Informational warning which replaces the list of operations
-	// when the list is empty.
+	// Warning: [Output Only] Informational warning which replaces the list
+	// of operations when the list is empty.
 	Warning *OperationsScopedListWarning `json:"warning,omitempty"`
 }
 
@@ -11027,6 +11012,204 @@ func (c *InstancesSetTagsCall) Do() (*Operation, error) {
 
 }
 
+// method id "compute.instances.start":
+
+type InstancesStartCall struct {
+	s        *Service
+	project  string
+	zone     string
+	instance string
+	opt_     map[string]interface{}
+}
+
+// Start: Starts an instance
+func (r *InstancesService) Start(project string, zone string, instance string) *InstancesStartCall {
+	c := &InstancesStartCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.zone = zone
+	c.instance = instance
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InstancesStartCall) Fields(s ...googleapi.Field) *InstancesStartCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *InstancesStartCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/instances/{instance}/start")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project":  c.project,
+		"zone":     c.zone,
+		"instance": c.instance,
+	})
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Starts an instance",
+	//   "httpMethod": "POST",
+	//   "id": "compute.instances.start",
+	//   "parameterOrder": [
+	//     "project",
+	//     "zone",
+	//     "instance"
+	//   ],
+	//   "parameters": {
+	//     "instance": {
+	//       "description": "Name of the instance resource to start.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "Name of the zone scoping this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/zones/{zone}/instances/{instance}/start",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.instances.stop":
+
+type InstancesStopCall struct {
+	s        *Service
+	project  string
+	zone     string
+	instance string
+	opt_     map[string]interface{}
+}
+
+// Stop: Stops an instance
+func (r *InstancesService) Stop(project string, zone string, instance string) *InstancesStopCall {
+	c := &InstancesStopCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.zone = zone
+	c.instance = instance
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InstancesStopCall) Fields(s ...googleapi.Field) *InstancesStopCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *InstancesStopCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/instances/{instance}/stop")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project":  c.project,
+		"zone":     c.zone,
+		"instance": c.instance,
+	})
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Stops an instance",
+	//   "httpMethod": "POST",
+	//   "id": "compute.instances.stop",
+	//   "parameterOrder": [
+	//     "project",
+	//     "zone",
+	//     "instance"
+	//   ],
+	//   "parameters": {
+	//     "instance": {
+	//       "description": "Name of the instance resource to start.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "Name of the zone scoping this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/zones/{zone}/instances/{instance}/stop",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
 // method id "compute.licenses.get":
 
 type LicensesGetCall struct {
@@ -11227,7 +11410,7 @@ func (c *MachineTypesAggregatedListCall) Do() (*MachineTypeAggregatedList, error
 	//       "type": "string"
 	//     },
 	//     "project": {
-	//       "description": "Name of the project scoping this request.",
+	//       "description": "Project ID for this request.",
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
@@ -11320,7 +11503,7 @@ func (c *MachineTypesGetCall) Do() (*MachineType, error) {
 	//       "type": "string"
 	//     },
 	//     "project": {
-	//       "description": "Name of the project scoping this request.",
+	//       "description": "Project ID for this request.",
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
@@ -11461,7 +11644,7 @@ func (c *MachineTypesListCall) Do() (*MachineTypeList, error) {
 	//       "type": "string"
 	//     },
 	//     "project": {
-	//       "description": "Name of the project scoping this request.",
+	//       "description": "Project ID for this request.",
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,

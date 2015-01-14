@@ -169,10 +169,9 @@ type Seats struct {
 	// Kind: Identifies the resource as a subscription change plan request.
 	Kind string `json:"kind,omitempty"`
 
-	// LicensedNumberOfSeats: Read only field containing the current number
-	// of licensed seats. Resellers can utilize this field to gather
-	// insights into usage for FLEXIBLE Google-Apps subscriptions and other
-	// secondary subscriptions (e.g. Google-Vault, Drive-storage).
+	// LicensedNumberOfSeats: Read-only field containing the current number
+	// of licensed seats for FLEXIBLE Google-Apps subscriptions and
+	// secondary subscriptions such as Google-Vault and Drive-storage.
 	LicensedNumberOfSeats int64 `json:"licensedNumberOfSeats,omitempty"`
 
 	// MaximumNumberOfSeats: Maximum number of seats that can be purchased.
@@ -186,6 +185,9 @@ type Seats struct {
 }
 
 type Subscription struct {
+	// BillingMethod: Billing method of this subscription.
+	BillingMethod string `json:"billingMethod,omitempty"`
+
 	// CreationTime: Creation time of this subscription in milliseconds
 	// since Unix epoch.
 	CreationTime int64 `json:"creationTime,omitempty,string"`
@@ -1074,12 +1076,14 @@ func (c *SubscriptionsDeleteCall) Do() error {
 	//       "enum": [
 	//         "cancel",
 	//         "downgrade",
-	//         "suspend"
+	//         "suspend",
+	//         "transfer_to_direct"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Cancels the subscription immediately",
 	//         "Downgrades a Google Apps for Business subscription to Google Apps",
-	//         "Suspends the subscriptions for 4 days before cancelling it"
+	//         "Suspends the subscriptions for 4 days before cancelling it",
+	//         "Transfers a subscription directly to Google"
 	//       ],
 	//       "location": "query",
 	//       "required": true,

@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"l66ggWbucbkBw9Lpos72oziyefE/AH-IEbavfgCCcxMvonELgSqtbcY\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/BNAEvscDvyjuuQJV9l3B3Bhfhag\"",
  "discoveryVersion": "v1",
  "id": "youtube:v3",
  "name": "youtube",
  "canonicalName": "YouTube",
  "version": "v3",
- "revision": "20140930",
+ "revision": "20141207",
  "title": "YouTube Data API",
  "description": "Programmatic access to YouTube features.",
  "ownerDomain": "google.com",
@@ -551,9 +551,11 @@
      "type": "string",
      "description": "The method or protocol used to transmit the video stream.",
      "enum": [
+      "dash",
       "rtmp"
      ],
      "enumDescriptions": [
+      "",
       ""
      ],
      "annotations": {
@@ -606,6 +608,14 @@
      "type": "string",
      "description": "Identifies what kind of resource this is. Value: the fixed string \"youtube#channel\".",
      "default": "youtube#channel"
+    },
+    "localizations": {
+     "type": "object",
+     "description": "Localizations for different languages",
+     "additionalProperties": {
+      "$ref": "ChannelLocalization",
+      "description": "The language tag, using string since map_key require simple types."
+     }
     },
     "snippet": {
      "$ref": "ChannelSnippet",
@@ -829,6 +839,21 @@
     }
    }
   },
+  "ChannelLocalization": {
+   "id": "ChannelLocalization",
+   "type": "object",
+   "description": "Channel localization setting",
+   "properties": {
+    "description": {
+     "type": "string",
+     "description": "The localized strings for channel's description."
+    },
+    "title": {
+     "type": "string",
+     "description": "The localized strings for channel's title, read-only."
+    }
+   }
+  },
   "ChannelSection": {
    "id": "ChannelSection",
    "type": "object",
@@ -989,6 +1014,9 @@
    "type": "object",
    "description": "Branding properties for the channel view.",
    "properties": {
+    "defaultLanguage": {
+     "type": "string"
+    },
     "defaultTab": {
      "type": "string",
      "description": "Which content tab users should see when viewing the channel."
@@ -1047,9 +1075,17 @@
    "type": "object",
    "description": "Basic details about a channel, including title, description and thumbnails.",
    "properties": {
+    "defaultLanguage": {
+     "type": "string",
+     "description": "The language of the channel's default title and description."
+    },
     "description": {
      "type": "string",
      "description": "The description of the channel."
+    },
+    "localized": {
+     "$ref": "ChannelLocalization",
+     "description": "Localized title and description, read-only."
     },
     "publishedAt": {
      "type": "string",
@@ -1155,7 +1191,7 @@
   "ContentRating": {
    "id": "ContentRating",
    "type": "object",
-   "description": "Ratings schemes. The country-specific ratings are mostly for movies and shows.",
+   "description": "Ratings schemes. The country-specific ratings are mostly for movies and shows. NEXT_ID: 65",
    "properties": {
     "acbRating": {
      "type": "string",
@@ -1554,6 +1590,40 @@
       "",
       ""
      ]
+    },
+    "djctqRatingReasons": {
+     "type": "array",
+     "items": {
+      "type": "string",
+      "enum": [
+       "djctqCriminalActs",
+       "djctqDrugs",
+       "djctqExplicitSex",
+       "djctqExtremeViolence",
+       "djctqIllegalDrugs",
+       "djctqImpactingContent",
+       "djctqInappropriateLanguage",
+       "djctqLegalDrugs",
+       "djctqNudity",
+       "djctqSex",
+       "djctqSexualContent",
+       "djctqViolence"
+      ],
+      "enumDescriptions": [
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       ""
+      ]
+     }
     },
     "eefilmRating": {
      "type": "string",
@@ -2932,6 +3002,15 @@
     }
    }
   },
+  "LanguageTag": {
+   "id": "LanguageTag",
+   "type": "object",
+   "properties": {
+    "value": {
+     "type": "string"
+    }
+   }
+  },
   "LiveBroadcast": {
    "id": "LiveBroadcast",
    "type": "object",
@@ -3382,15 +3461,16 @@
   "LocalizedProperty": {
    "id": "LocalizedProperty",
    "type": "object",
-   "description": "Represent a property available in different languages.",
    "properties": {
     "default": {
-     "type": "string",
-     "description": "Default value for the localized property."
+     "type": "string"
+    },
+    "defaultLanguage": {
+     "$ref": "LanguageTag",
+     "description": "The language of the default property."
     },
     "localized": {
      "type": "array",
-     "description": "The localized values.",
      "items": {
       "$ref": "LocalizedString"
      }
@@ -3400,15 +3480,12 @@
   "LocalizedString": {
    "id": "LocalizedString",
    "type": "object",
-   "description": "A localized string.",
    "properties": {
     "language": {
-     "type": "string",
-     "description": "Language associated to this value."
+     "type": "string"
     },
     "value": {
-     "type": "string",
-     "description": "Value of the property."
+     "type": "string"
     }
    }
   },
@@ -4743,6 +4820,10 @@
      "type": "string",
      "description": "Etag of this resource."
     },
+    "eventId": {
+     "type": "string",
+     "description": "Serialized EventId of the request which produced this response."
+    },
     "items": {
      "type": "array",
      "description": "A list of ratings that match the request criteria.",
@@ -4754,6 +4835,10 @@
      "type": "string",
      "description": "Identifies what kind of resource this is. Value: the fixed string \"youtube#videoGetRatingResponse\".",
      "default": "youtube#videoGetRatingResponse"
+    },
+    "visitorId": {
+     "type": "string",
+     "description": "The visitorId identifies the visitor."
     }
    }
   },
@@ -5512,6 +5597,11 @@
        "description": "The id parameter specifies the YouTube channelSection ID for the resource that is being deleted. In a channelSection resource, the id property specifies the YouTube channelSection ID.",
        "required": true,
        "location": "query"
+      },
+      "onBehalfOfContentOwner": {
+       "type": "string",
+       "description": "Note: This parameter is intended exclusively for YouTube content partners.\n\nThe onBehalfOfContentOwner parameter indicates that the request's authorization credentials identify a YouTube CMS user who is acting on behalf of the content owner specified in the parameter value. This parameter is intended for YouTube content partners that own and manage many different YouTube channels. It allows content owners to authenticate once and get access to all their video and channel data, without having to provide authentication credentials for each individual channel. The CMS account that the user authenticates with must be linked to the specified YouTube content owner.",
+       "location": "query"
       }
      },
      "parameterOrder": [
@@ -5610,6 +5700,11 @@
      "httpMethod": "PUT",
      "description": "Update a channelSection.",
      "parameters": {
+      "onBehalfOfContentOwner": {
+       "type": "string",
+       "description": "Note: This parameter is intended exclusively for YouTube content partners.\n\nThe onBehalfOfContentOwner parameter indicates that the request's authorization credentials identify a YouTube CMS user who is acting on behalf of the content owner specified in the parameter value. This parameter is intended for YouTube content partners that own and manage many different YouTube channels. It allows content owners to authenticate once and get access to all their video and channel data, without having to provide authentication credentials for each individual channel. The CMS account that the user authenticates with must be linked to the specified YouTube content owner.",
+       "location": "query"
+      },
       "part": {
        "type": "string",
        "description": "The part parameter serves two purposes in this operation. It identifies the properties that the write operation will set as well as the properties that the API response will include.\n\nThe part names that you can include in the parameter value are snippet and contentDetails.",

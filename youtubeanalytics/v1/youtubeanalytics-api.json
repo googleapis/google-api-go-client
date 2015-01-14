@@ -1,19 +1,19 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/nlDKGR94Mbaj_YAIBNSZijmIvJQ\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/eGqJquL_sNm8tPEGcWYyPXL72uM\"",
  "discoveryVersion": "v1",
  "id": "youtubeAnalytics:v1",
  "name": "youtubeAnalytics",
  "canonicalName": "YouTube Analytics",
  "version": "v1",
- "revision": "20140724",
+ "revision": "20141124",
  "title": "YouTube Analytics API",
  "description": "Retrieve your YouTube Analytics reports.",
  "ownerDomain": "google.com",
  "ownerName": "Google",
  "icons": {
-  "x16": "http://www.google.com/images/icons/product/youtube-16.png",
-  "x32": "http://www.google.com/images/icons/product/youtube-32.png"
+  "x16": "https://www.google.com/images/icons/product/youtube-16.png",
+  "x32": "https://www.google.com/images/icons/product/youtube-32.png"
  },
  "documentationLink": "http://developers.google.com/youtube/analytics/",
  "protocol": "rest",
@@ -82,93 +82,19 @@
   }
  },
  "schemas": {
-  "BatchReportDefinitionList": {
-   "id": "BatchReportDefinitionList",
-   "type": "object",
-   "description": "A paginated list of batchReportDefinition resources returned in response to a youtubeAnalytics.batchReportDefinitions.list request.",
-   "properties": {
-    "items": {
-     "type": "array",
-     "description": "A list of batchReportDefinition resources that match the request criteria.",
-     "items": {
-      "$ref": "BatchReportDefinitionTemplate"
-     }
-    },
-    "kind": {
-     "type": "string",
-     "description": "This value specifies the type of data included in the API response. For the list method, the kind property value is youtubeAnalytics#batchReportDefinitionList.",
-     "default": "youtubeAnalytics#batchReportDefinitionList"
-    }
-   }
-  },
-  "BatchReportDefinitionTemplate": {
-   "id": "BatchReportDefinitionTemplate",
-   "type": "object",
-   "description": "Contains single batchReportDefinition resource.",
-   "properties": {
-    "defaultOutput": {
-     "type": "array",
-     "description": "Default report definition's output.",
-     "items": {
-      "type": "object",
-      "properties": {
-       "format": {
-        "type": "string",
-        "description": "Format of the output."
-       },
-       "type": {
-        "type": "string",
-        "description": "Type of the output.",
-        "default": "cloudStorageOutput"
-       }
-      }
-     }
-    },
-    "id": {
-     "type": "string",
-     "description": "The ID that YouTube assigns and uses to uniquely identify the report definition."
-    },
-    "name": {
-     "type": "string",
-     "description": "Name of the report definition."
-    },
-    "status": {
-     "type": "string",
-     "description": "Status of the report definition."
-    },
-    "type": {
-     "type": "string",
-     "description": "Type of the report definition."
-    }
-   }
-  },
-  "BatchReportList": {
-   "id": "BatchReportList",
-   "type": "object",
-   "description": "A paginated list of batchReport resources returned in response to a youtubeAnalytics.batchReport.list request.",
-   "properties": {
-    "items": {
-     "type": "array",
-     "description": "A list of batchReport resources that match the request criteria.",
-     "items": {
-      "$ref": "BatchReportTemplate"
-     }
-    },
-    "kind": {
-     "type": "string",
-     "description": "This value specifies the type of data included in the API response. For the list method, the kind property value is youtubeAnalytics#batchReportList.",
-     "default": "youtubeAnalytics#batchReportList"
-    }
-   }
-  },
-  "BatchReportTemplate": {
-   "id": "BatchReportTemplate",
+  "BatchReport": {
+   "id": "BatchReport",
    "type": "object",
    "description": "Contains single batchReport resource.",
    "properties": {
     "id": {
      "type": "string",
      "description": "The ID that YouTube assigns and uses to uniquely identify the report."
+    },
+    "kind": {
+     "type": "string",
+     "description": "This value specifies the type of data of this item. For batch report the kind property value is youtubeAnalytics#batchReport.",
+     "default": "youtubeAnalytics#batchReport"
     },
     "outputs": {
      "type": "array",
@@ -192,7 +118,7 @@
       }
      }
     },
-    "report_id": {
+    "reportId": {
      "type": "string",
      "description": "The ID of the the report definition."
     },
@@ -216,6 +142,72 @@
      "type": "string",
      "description": "The time when the report was updated.",
      "format": "date-time"
+    }
+   }
+  },
+  "BatchReportDefinition": {
+   "id": "BatchReportDefinition",
+   "type": "object",
+   "description": "Contains single batchReportDefinition resource.",
+   "properties": {
+    "id": {
+     "type": "string",
+     "description": "The ID that YouTube assigns and uses to uniquely identify the report definition."
+    },
+    "kind": {
+     "type": "string",
+     "description": "This value specifies the type of data of this item. For batch report definition the kind property value is youtubeAnalytics#batchReportDefinition.",
+     "default": "youtubeAnalytics#batchReportDefinition"
+    },
+    "name": {
+     "type": "string",
+     "description": "Name of the report definition."
+    },
+    "status": {
+     "type": "string",
+     "description": "Status of the report definition."
+    },
+    "type": {
+     "type": "string",
+     "description": "Type of the report definition."
+    }
+   }
+  },
+  "BatchReportDefinitionList": {
+   "id": "BatchReportDefinitionList",
+   "type": "object",
+   "description": "A paginated list of batchReportDefinition resources returned in response to a youtubeAnalytics.batchReportDefinitions.list request.",
+   "properties": {
+    "items": {
+     "type": "array",
+     "description": "A list of batchReportDefinition resources that match the request criteria.",
+     "items": {
+      "$ref": "BatchReportDefinition"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "This value specifies the type of data included in the API response. For the list method, the kind property value is youtubeAnalytics#batchReportDefinitionList.",
+     "default": "youtubeAnalytics#batchReportDefinitionList"
+    }
+   }
+  },
+  "BatchReportList": {
+   "id": "BatchReportList",
+   "type": "object",
+   "description": "A paginated list of batchReport resources returned in response to a youtubeAnalytics.batchReport.list request.",
+   "properties": {
+    "items": {
+     "type": "array",
+     "description": "A list of batchReport resources that match the request criteria.",
+     "items": {
+      "$ref": "BatchReport"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "This value specifies the type of data included in the API response. For the list method, the kind property value is youtubeAnalytics#batchReportList.",
+     "default": "youtubeAnalytics#batchReportList"
     }
    }
   },

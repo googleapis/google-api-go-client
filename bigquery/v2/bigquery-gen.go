@@ -311,6 +311,10 @@ type GetQueryResultsResponse struct {
 	// completes successfully.
 	Schema *TableSchema `json:"schema,omitempty"`
 
+	// TotalBytesProcessed: The total number of bytes processed for this
+	// query.
+	TotalBytesProcessed int64 `json:"totalBytesProcessed,omitempty,string"`
+
 	// TotalRows: The total number of rows in the complete query result set,
 	// which can be more than the number of rows in this single page of
 	// results. Present only when the query completes successfully.
@@ -699,6 +703,9 @@ type JobStatistics struct {
 	// state.
 	EndTime int64 `json:"endTime,omitempty,string"`
 
+	// Extract: [Output-only] Statistics for an extract job.
+	Extract *JobStatistics4 `json:"extract,omitempty"`
+
 	// Load: [Output-only] Statistics for a load job.
 	Load *JobStatistics3 `json:"load,omitempty"`
 
@@ -742,6 +749,14 @@ type JobStatistics3 struct {
 	// that while an import job is in the running state, this value may
 	// change.
 	OutputRows int64 `json:"outputRows,omitempty,string"`
+}
+
+type JobStatistics4 struct {
+	// DestinationUriFileCounts: [Experimental] Number of files per
+	// destination URI or URI pattern specified in the extract
+	// configuration. These values will be in the same order as the URIs
+	// specified in the 'destinationUris' field.
+	DestinationUriFileCounts googleapi.Int64s `json:"destinationUriFileCounts,omitempty"`
 }
 
 type JobStatus struct {

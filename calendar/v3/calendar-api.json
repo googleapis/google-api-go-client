@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"l66ggWbucbkBw9Lpos72oziyefE/ChhI5_AHHLTSiJjr6RSC6c9iFo0\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/Oih410CQXyK1bm6hFIQSVxW_CZo\"",
  "discoveryVersion": "v1",
  "id": "calendar:v3",
  "name": "calendar",
  "version": "v3",
- "revision": "20141020",
+ "revision": "20141223",
  "title": "Calendar API",
  "description": "Lets you manipulate events and other calendar data.",
  "ownerDomain": "google.com",
@@ -197,7 +197,7 @@
     },
     "timeZone": {
      "type": "string",
-     "description": "The time zone of the calendar. Optional."
+     "description": "The time zone of the calendar. (Formatted as an IANA Time Zone Database name, e.g. \"Europe/Zurich\".) Optional."
     }
    }
   },
@@ -779,13 +779,7 @@
   },
   "EventAttachment": {
    "id": "EventAttachment",
-   "type": "object",
-   "properties": {
-    "title": {
-     "type": "string",
-     "description": "File name."
-    }
-   }
+   "type": "object"
   },
   "EventAttendee": {
    "id": "EventAttendee",
@@ -861,7 +855,7 @@
     },
     "timeZone": {
      "type": "string",
-     "description": "The name of the time zone in which the time is specified (e.g. \"Europe/Zurich\"). For recurring events this field is required and specifies the time zone in which the recurrence is expanded. For single events this field is optional and indicates a custom time zone for the event start/end."
+     "description": "The time zone in which the time is specified. (Formatted as an IANA Time Zone Database name, e.g. \"Europe/Zurich\".) For recurring events this field is required and specifies the time zone in which the recurrence is expanded. For single events this field is optional and indicates a custom time zone for the event start/end."
     }
    }
   },

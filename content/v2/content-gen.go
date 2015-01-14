@@ -1091,9 +1091,7 @@ type ProductTax struct {
 	Country string `json:"country,omitempty"`
 
 	// LocationId: The numeric id of a location that the tax rate applies to
-	// as defined in the Adwords API
-	// (https://developers.google.com/adwords/api/docs/appendix/geotargeting)
-	// .
+	// as defined in the AdWords API.
 	LocationId int64 `json:"locationId,omitempty,string"`
 
 	// PostalCode: The postal code range that the tax rate applies to,

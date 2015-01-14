@@ -41,10 +41,10 @@ const basePath = "https://www.googleapis.com/mapsengine/exp2/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your Google Maps Engine data
+	// View and manage your Google My Maps data
 	MapsengineScope = "https://www.googleapis.com/auth/mapsengine"
 
-	// View your Google Maps Engine data
+	// View your Google My Maps data
 	MapsengineReadonlyScope = "https://www.googleapis.com/auth/mapsengine.readonly"
 )
 
@@ -2954,6 +2954,13 @@ func (c *LayersListPublishedCall) ProjectId(projectId string) *LayersListPublish
 	return c
 }
 
+// Search sets the optional parameter "search": An unstructured search
+// string used to filter the set of results based on asset metadata.
+func (c *LayersListPublishedCall) Search(search string) *LayersListPublishedCall {
+	c.opt_["search"] = search
+	return c
+}
+
 // Fields allows partial responses to be retrieved.
 // See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2974,6 +2981,9 @@ func (c *LayersListPublishedCall) Do() (*PublishedLayersListResponse, error) {
 	}
 	if v, ok := c.opt_["projectId"]; ok {
 		params.Set("projectId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["search"]; ok {
+		params.Set("search", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
@@ -3014,6 +3024,11 @@ func (c *LayersListPublishedCall) Do() (*PublishedLayersListResponse, error) {
 	//     },
 	//     "projectId": {
 	//       "description": "The ID of a Maps Engine project, used to filter the response. To list all available projects with their IDs, send a Projects: list request. You can also find your project ID as the value of the DashboardPlace:cid URL parameter when signed in to mapsengine.google.com.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "search": {
+	//       "description": "An unstructured search string used to filter the set of results based on asset metadata.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -4407,6 +4422,13 @@ func (c *MapsListPublishedCall) ProjectId(projectId string) *MapsListPublishedCa
 	return c
 }
 
+// Search sets the optional parameter "search": An unstructured search
+// string used to filter the set of results based on asset metadata.
+func (c *MapsListPublishedCall) Search(search string) *MapsListPublishedCall {
+	c.opt_["search"] = search
+	return c
+}
+
 // Fields allows partial responses to be retrieved.
 // See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -4427,6 +4449,9 @@ func (c *MapsListPublishedCall) Do() (*PublishedMapsListResponse, error) {
 	}
 	if v, ok := c.opt_["projectId"]; ok {
 		params.Set("projectId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["search"]; ok {
+		params.Set("search", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
@@ -4467,6 +4492,11 @@ func (c *MapsListPublishedCall) Do() (*PublishedMapsListResponse, error) {
 	//     },
 	//     "projectId": {
 	//       "description": "The ID of a Maps Engine project, used to filter the response. To list all available projects with their IDs, send a Projects: list request. You can also find your project ID as the value of the DashboardPlace:cid URL parameter when signed in to mapsengine.google.com.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "search": {
+	//       "description": "An unstructured search string used to filter the set of results based on asset metadata.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }

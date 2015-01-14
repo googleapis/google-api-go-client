@@ -612,6 +612,9 @@ type Channel struct {
 	// string "youtube#channel".
 	Kind string `json:"kind,omitempty"`
 
+	// Localizations: Localizations for different languages
+	Localizations map[string]ChannelLocalization `json:"localizations,omitempty"`
+
 	// Snippet: The snippet object contains basic details about the channel,
 	// such as its title, description, and thumbnail images.
 	Snippet *ChannelSnippet `json:"snippet,omitempty"`
@@ -775,6 +778,14 @@ type ChannelListResponse struct {
 	VisitorId string `json:"visitorId,omitempty"`
 }
 
+type ChannelLocalization struct {
+	// Description: The localized strings for channel's description.
+	Description string `json:"description,omitempty"`
+
+	// Title: The localized strings for channel's title, read-only.
+	Title string `json:"title,omitempty"`
+}
+
 type ChannelSection struct {
 	// ContentDetails: The contentDetails object contains details about the
 	// ChannelSection content, such as playlists and channels.
@@ -844,6 +855,8 @@ type ChannelSectionSnippet struct {
 }
 
 type ChannelSettings struct {
+	DefaultLanguage string `json:"defaultLanguage,omitempty"`
+
 	// DefaultTab: Which content tab users should see when viewing the
 	// channel.
 	DefaultTab string `json:"defaultTab,omitempty"`
@@ -889,8 +902,15 @@ type ChannelSettings struct {
 }
 
 type ChannelSnippet struct {
+	// DefaultLanguage: The language of the channel's default title and
+	// description.
+	DefaultLanguage string `json:"defaultLanguage,omitempty"`
+
 	// Description: The description of the channel.
 	Description string `json:"description,omitempty"`
+
+	// Localized: Localized title and description, read-only.
+	Localized *ChannelLocalization `json:"localized,omitempty"`
 
 	// PublishedAt: The date and time that the channel was created. The
 	// value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.
@@ -1016,6 +1036,8 @@ type ContentRating struct {
 	// DjctqRating: Rating system in Brazil - Department of Justice, Rating,
 	// Titles and Qualification
 	DjctqRating string `json:"djctqRating,omitempty"`
+
+	DjctqRatingReasons []string `json:"djctqRatingReasons,omitempty"`
 
 	// EefilmRating: Rating system for Estonia - Estonia Rating System
 	EefilmRating string `json:"eefilmRating,omitempty"`
@@ -1501,6 +1523,10 @@ type InvideoTiming struct {
 	Type string `json:"type,omitempty"`
 }
 
+type LanguageTag struct {
+	Value string `json:"value,omitempty"`
+}
+
 type LiveBroadcast struct {
 	// ContentDetails: The contentDetails object contains information about
 	// the event's video content, such as whether the content can be shown
@@ -1797,18 +1823,17 @@ type LiveStreamStatus struct {
 }
 
 type LocalizedProperty struct {
-	// Default: Default value for the localized property.
 	Default string `json:"default,omitempty"`
 
-	// Localized: The localized values.
+	// DefaultLanguage: The language of the default property.
+	DefaultLanguage *LanguageTag `json:"defaultLanguage,omitempty"`
+
 	Localized []*LocalizedString `json:"localized,omitempty"`
 }
 
 type LocalizedString struct {
-	// Language: Language associated to this value.
 	Language string `json:"language,omitempty"`
 
-	// Value: Value of the property.
 	Value string `json:"value,omitempty"`
 }
 
@@ -2734,12 +2759,19 @@ type VideoGetRatingResponse struct {
 	// Etag: Etag of this resource.
 	Etag string `json:"etag,omitempty"`
 
+	// EventId: Serialized EventId of the request which produced this
+	// response.
+	EventId string `json:"eventId,omitempty"`
+
 	// Items: A list of ratings that match the request criteria.
 	Items []*VideoRating `json:"items,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "youtube#videoGetRatingResponse".
 	Kind string `json:"kind,omitempty"`
+
+	// VisitorId: The visitorId identifies the visitor.
+	VisitorId string `json:"visitorId,omitempty"`
 }
 
 type VideoListResponse struct {
@@ -3561,6 +3593,25 @@ func (r *ChannelSectionsService) Delete(id string) *ChannelSectionsDeleteCall {
 	return c
 }
 
+// OnBehalfOfContentOwner sets the optional parameter
+// "onBehalfOfContentOwner": Note: This parameter is intended
+// exclusively for YouTube content partners.
+//
+// The onBehalfOfContentOwner
+// parameter indicates that the request's authorization credentials
+// identify a YouTube CMS user who is acting on behalf of the content
+// owner specified in the parameter value. This parameter is intended
+// for YouTube content partners that own and manage many different
+// YouTube channels. It allows content owners to authenticate once and
+// get access to all their video and channel data, without having to
+// provide authentication credentials for each individual channel. The
+// CMS account that the user authenticates with must be linked to the
+// specified YouTube content owner.
+func (c *ChannelSectionsDeleteCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *ChannelSectionsDeleteCall {
+	c.opt_["onBehalfOfContentOwner"] = onBehalfOfContentOwner
+	return c
+}
+
 // Fields allows partial responses to be retrieved.
 // See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3574,6 +3625,9 @@ func (c *ChannelSectionsDeleteCall) Do() error {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("id", fmt.Sprintf("%v", c.id))
+	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
+		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -3603,6 +3657,11 @@ func (c *ChannelSectionsDeleteCall) Do() error {
 	//       "description": "The id parameter specifies the YouTube channelSection ID for the resource that is being deleted. In a channelSection resource, the id property specifies the YouTube channelSection ID.",
 	//       "location": "query",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "onBehalfOfContentOwner": {
+	//       "description": "Note: This parameter is intended exclusively for YouTube content partners.\n\nThe onBehalfOfContentOwner parameter indicates that the request's authorization credentials identify a YouTube CMS user who is acting on behalf of the content owner specified in the parameter value. This parameter is intended for YouTube content partners that own and manage many different YouTube channels. It allows content owners to authenticate once and get access to all their video and channel data, without having to provide authentication credentials for each individual channel. The CMS account that the user authenticates with must be linked to the specified YouTube content owner.",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -3936,6 +3995,25 @@ func (r *ChannelSectionsService) Update(part string, channelsection *ChannelSect
 	return c
 }
 
+// OnBehalfOfContentOwner sets the optional parameter
+// "onBehalfOfContentOwner": Note: This parameter is intended
+// exclusively for YouTube content partners.
+//
+// The onBehalfOfContentOwner
+// parameter indicates that the request's authorization credentials
+// identify a YouTube CMS user who is acting on behalf of the content
+// owner specified in the parameter value. This parameter is intended
+// for YouTube content partners that own and manage many different
+// YouTube channels. It allows content owners to authenticate once and
+// get access to all their video and channel data, without having to
+// provide authentication credentials for each individual channel. The
+// CMS account that the user authenticates with must be linked to the
+// specified YouTube content owner.
+func (c *ChannelSectionsUpdateCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *ChannelSectionsUpdateCall {
+	c.opt_["onBehalfOfContentOwner"] = onBehalfOfContentOwner
+	return c
+}
+
 // Fields allows partial responses to be retrieved.
 // See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3954,6 +4032,9 @@ func (c *ChannelSectionsUpdateCall) Do() (*ChannelSection, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("part", fmt.Sprintf("%v", c.part))
+	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
+		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -3984,6 +4065,11 @@ func (c *ChannelSectionsUpdateCall) Do() (*ChannelSection, error) {
 	//     "part"
 	//   ],
 	//   "parameters": {
+	//     "onBehalfOfContentOwner": {
+	//       "description": "Note: This parameter is intended exclusively for YouTube content partners.\n\nThe onBehalfOfContentOwner parameter indicates that the request's authorization credentials identify a YouTube CMS user who is acting on behalf of the content owner specified in the parameter value. This parameter is intended for YouTube content partners that own and manage many different YouTube channels. It allows content owners to authenticate once and get access to all their video and channel data, without having to provide authentication credentials for each individual channel. The CMS account that the user authenticates with must be linked to the specified YouTube content owner.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "part": {
 	//       "description": "The part parameter serves two purposes in this operation. It identifies the properties that the write operation will set as well as the properties that the API response will include.\n\nThe part names that you can include in the parameter value are snippet and contentDetails.",
 	//       "location": "query",

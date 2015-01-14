@@ -1,18 +1,18 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/XYINYydMW1yxY9sZ7pYYpIG24qI\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/c7w4Ctd4BI5F_nfpCMLtv6FlZkE\"",
  "discoveryVersion": "v1",
  "id": "books:v1",
  "name": "books",
  "version": "v1",
- "revision": "20140507",
+ "revision": "20141216",
  "title": "Books API",
  "description": "Lets you search for books and manage your Google Books library.",
  "ownerDomain": "google.com",
  "ownerName": "Google",
  "icons": {
-  "x16": "http://www.google.com/images/icons/product/ebooks-16.png",
-  "x32": "http://www.google.com/images/icons/product/ebooks-32.png"
+  "x16": "https://www.google.com/images/icons/product/ebooks-16.png",
+  "x32": "https://www.google.com/images/icons/product/ebooks-32.png"
  },
  "documentationLink": "https://developers.google.com/books/docs/v1/getting_started",
  "protocol": "rest",
@@ -465,6 +465,35 @@
      "type": "string",
      "description": "Resource type.",
      "default": "books#bookshelves"
+    }
+   }
+  },
+  "Category": {
+   "id": "Category",
+   "type": "object",
+   "properties": {
+    "items": {
+     "type": "array",
+     "description": "A list of onboarding categories.",
+     "items": {
+      "type": "object",
+      "properties": {
+       "badgeUrl": {
+        "type": "string"
+       },
+       "categoryId": {
+        "type": "string"
+       },
+       "name": {
+        "type": "string"
+       }
+      }
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Resource type.",
+     "default": "onboarding#category"
     }
    }
   },
@@ -1003,6 +1032,43 @@
     }
    }
   },
+  "Metadata": {
+   "id": "Metadata",
+   "type": "object",
+   "properties": {
+    "items": {
+     "type": "array",
+     "description": "A list of offline dictionary metadata.",
+     "items": {
+      "type": "object",
+      "properties": {
+       "download_url": {
+        "type": "string"
+       },
+       "encrypted_key": {
+        "type": "string"
+       },
+       "language": {
+        "type": "string"
+       },
+       "size": {
+        "type": "string",
+        "format": "int64"
+       },
+       "version": {
+        "type": "string",
+        "format": "int64"
+       }
+      }
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Resource type.",
+     "default": "dictionary#metadata"
+    }
+   }
+  },
   "Offers": {
    "id": "Offers",
    "type": "object",
@@ -1174,6 +1240,29 @@
     "volumeId": {
      "type": "string",
      "description": "Volume that this review is for."
+    }
+   }
+  },
+  "Usersettings": {
+   "id": "Usersettings",
+   "type": "object",
+   "properties": {
+    "kind": {
+     "type": "string",
+     "description": "Resource type.",
+     "default": "books#usersettings"
+    },
+    "notesExport": {
+     "type": "object",
+     "description": "User settings in sub-objects, each for different purposes.",
+     "properties": {
+      "folderName": {
+       "type": "string"
+      },
+      "isEnabled": {
+       "type": "boolean"
+      }
+     }
     }
    }
   },
@@ -1682,6 +1771,27 @@
     }
    }
   },
+  "Volume2": {
+   "id": "Volume2",
+   "type": "object",
+   "properties": {
+    "items": {
+     "type": "array",
+     "description": "A list of volumes.",
+     "items": {
+      "$ref": "Volume"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Resource type.",
+     "default": "onboarding#volume"
+    },
+    "nextPageToken": {
+     "type": "string"
+    }
+   }
+  },
   "Volumeannotation": {
    "id": "Volumeannotation",
    "type": "object",
@@ -2015,6 +2125,33 @@
      },
      "response": {
       "$ref": "BooksCloudloadingResource"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/books"
+     ]
+    }
+   }
+  },
+  "dictionary": {
+   "methods": {
+    "listOfflineMetadata": {
+     "id": "books.dictionary.listOfflineMetadata",
+     "path": "dictionary/listOfflineMetadata",
+     "httpMethod": "GET",
+     "description": "Returns a list of offline dictionary meatadata available",
+     "parameters": {
+      "cpksver": {
+       "type": "string",
+       "description": "The device/version ID from which to request the data.",
+       "required": true,
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "cpksver"
+     ],
+     "response": {
+      "$ref": "Metadata"
      },
      "scopes": [
       "https://www.googleapis.com/auth/books"
@@ -2444,6 +2581,18 @@
   },
   "myconfig": {
    "methods": {
+    "getUserSettings": {
+     "id": "books.myconfig.getUserSettings",
+     "path": "myconfig/getUserSettings",
+     "httpMethod": "GET",
+     "description": "Gets the current settings for the user.",
+     "response": {
+      "$ref": "Usersettings"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/books"
+     ]
+    },
     "releaseDownloadAccess": {
      "id": "books.myconfig.releaseDownloadAccess",
      "path": "myconfig/releaseDownloadAccess",
@@ -2613,6 +2762,21 @@
      "scopes": [
       "https://www.googleapis.com/auth/books"
      ]
+    },
+    "updateUserSettings": {
+     "id": "books.myconfig.updateUserSettings",
+     "path": "myconfig/updateUserSettings",
+     "httpMethod": "POST",
+     "description": "Sets the settings for the user. Unspecified sub-objects will retain the existing value.",
+     "request": {
+      "$ref": "Usersettings"
+     },
+     "response": {
+      "$ref": "Usersettings"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/books"
+     ]
     }
    }
   },
@@ -2679,6 +2843,11 @@
        "httpMethod": "POST",
        "description": "Inserts a new annotation.",
        "parameters": {
+        "country": {
+         "type": "string",
+         "description": "ISO-3166-1 code to override the IP-based location.",
+         "location": "query"
+        },
         "showOnlySummaryInResponse": {
          "type": "boolean",
          "description": "Requests that only the summary of the specified layer be provided in the response.",
@@ -2846,6 +3015,17 @@
        "httpMethod": "POST",
        "description": "Adds a volume to a bookshelf.",
        "parameters": {
+        "reason": {
+         "type": "string",
+         "description": "The reason for which the book is added to the library.",
+         "enum": [
+          "ONBOARDING"
+         ],
+         "enumDescriptions": [
+          "Volumes added from onboarding flow."
+         ],
+         "location": "query"
+        },
         "shelf": {
          "type": "string",
          "description": "ID of bookshelf to which to add a volume.",
@@ -3200,6 +3380,65 @@
        ]
       }
      }
+    }
+   }
+  },
+  "onboarding": {
+   "methods": {
+    "listCategories": {
+     "id": "books.onboarding.listCategories",
+     "path": "onboarding/listCategories",
+     "httpMethod": "GET",
+     "description": "List categories for onboarding experience.",
+     "parameters": {
+      "locale": {
+       "type": "string",
+       "description": "ISO-639-1 language and ISO-3166-1 country code. Default is en-US if unset.",
+       "location": "query"
+      }
+     },
+     "response": {
+      "$ref": "Category"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/books"
+     ]
+    },
+    "listCategoryVolumes": {
+     "id": "books.onboarding.listCategoryVolumes",
+     "path": "onboarding/listCategoryVolumes",
+     "httpMethod": "GET",
+     "description": "List available volumes under categories for onboarding experience.",
+     "parameters": {
+      "categoryId": {
+       "type": "string",
+       "description": "List of category ids requested.",
+       "repeated": true,
+       "location": "query"
+      },
+      "locale": {
+       "type": "string",
+       "description": "ISO-639-1 language and ISO-3166-1 country code. Default is en-US if unset.",
+       "location": "query"
+      },
+      "pageSize": {
+       "type": "integer",
+       "description": "Number of maximum results per page to be included in the response.",
+       "format": "uint32",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "The value of the nextToken from the previous page.",
+       "location": "query"
+      }
+     },
+     "response": {
+      "$ref": "Volume2"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/books"
+     ]
     }
    }
   },

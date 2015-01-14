@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"l66ggWbucbkBw9Lpos72oziyefE/TfpgqPaBHwKM6ZXQvQNWyFJhjHY\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/gKV_MRd0rwxyq49wtWHS6wrGc3Y\"",
  "discoveryVersion": "v1",
  "id": "fitness:v1",
  "name": "fitness",
  "version": "v1",
- "revision": "20141030",
+ "revision": "20141115",
  "title": "Fitness",
  "description": "Google Fit API",
  "ownerDomain": "google.com",
@@ -14,6 +14,7 @@
   "x16": "http://www.google.com/images/icons/product/search-16.gif",
   "x32": "http://www.google.com/images/icons/product/search-32.gif"
  },
+ "documentationLink": "https://developers.google.com/fit/rest/",
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/fitness/v1/users/",
  "basePath": "/fitness/v1/users/",
@@ -364,9 +365,13 @@
       ]
      }
     },
+    "nextPageToken": {
+     "type": "string",
+     "description": "This token will be set when a dataset is received in response to a GET request and the dataset is too large to be included in a single response. Provide this value in a subsequent GET request to return the next page of data points within this dataset."
+    },
     "point": {
      "type": "array",
-     "description": "A partial list of data points contained in the dataset. This list is considered complete when retrieving a dataset and partial when patching a dataset.",
+     "description": "A partial list of data points contained in the dataset, ordered by largest endTimeNanos first. This list is considered complete when retrieving a small dataset and partial when patching a dataset or retrieving a dataset that is too large to include in a single response.",
      "items": {
       "$ref": "DataPoint"
      },
@@ -573,23 +578,13 @@
    "properties": {
     "fpVal": {
      "type": "number",
-     "description": "Floating point value.",
-     "format": "double",
-     "annotations": {
-      "required": [
-       "fitness.users.dataSources.datasets.patch"
-      ]
-     }
+     "description": "Floating point value. When this is set, intVal must not be set.",
+     "format": "double"
     },
     "intVal": {
      "type": "integer",
-     "description": "Integer value.",
-     "format": "int32",
-     "annotations": {
-      "required": [
-       "fitness.users.dataSources.datasets.patch"
-      ]
-     }
+     "description": "Integer value. When this is set, fpVal must not be set.",
+     "format": "int32"
     }
    }
   }
@@ -835,6 +830,17 @@
            "description": "Dataset identifier that is a composite of the minimum data point start time and maximum data point end time represented as nanoseconds from the epoch. The ID is formatted like: \"startTime-endTime\" where startTime and endTime are 64 bit integers.",
            "required": true,
            "location": "path"
+          },
+          "limit": {
+           "type": "integer",
+           "description": "If specified, no more than this many data points will be included in the dataset. If the there are more data points in the dataset, nextPageToken will be set in the dataset response.",
+           "format": "int32",
+           "location": "query"
+          },
+          "pageToken": {
+           "type": "string",
+           "description": "The continuation token, which is used to page through large datasets. To get the next page of a dataset, set this parameter to the value of nextPageToken from the previous response. Each subsequent call will yield a partial dataset with data point end timestamps that are strictly smaller than those in the previous partial response.",
+           "location": "query"
           },
           "userId": {
            "type": "string",

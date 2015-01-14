@@ -1,6 +1,6 @@
 // Package replicapoolupdater provides access to the Google Compute Engine Instance Group Updater API.
 //
-// See https://developers.google.com/compute/docs/instance-groups/manager/v1beta2
+// See https://cloud.google.com/compute/docs/instance-groups/manager/#applying_rolling_updates_using_the_updater_service
 //
 // Usage example:
 //
@@ -56,7 +56,7 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client, BasePath: basePath}
-	s.Updates = NewUpdatesService(s)
+	s.RollingUpdates = NewRollingUpdatesService(s)
 	return s, nil
 }
 
@@ -64,150 +64,199 @@ type Service struct {
 	client   *http.Client
 	BasePath string // API endpoint base URL
 
-	Updates *UpdatesService
+	RollingUpdates *RollingUpdatesService
 }
 
-func NewUpdatesService(s *Service) *UpdatesService {
-	rs := &UpdatesService{s: s}
+func NewRollingUpdatesService(s *Service) *RollingUpdatesService {
+	rs := &RollingUpdatesService{s: s}
 	return rs
 }
 
-type UpdatesService struct {
+type RollingUpdatesService struct {
 	s *Service
 }
 
 type InsertResponse struct {
-	// Update: Unique (in the context of a group) handle of an update.
-	Update string `json:"update,omitempty"`
+	// RollingUpdate: The name of the update.
+	RollingUpdate string `json:"rollingUpdate,omitempty"`
 }
 
 type InstanceUpdate struct {
-	// InstanceName: Name of an instance.
-	InstanceName string `json:"instanceName,omitempty"`
+	// Instance: URL of the instance being updated.
+	Instance string `json:"instance,omitempty"`
 
-	// State: State of an instance update.
-	State string `json:"state,omitempty"`
+	// Status: Status of the instance update. Possible values are:
+	// -
+	// "PENDING": The instance update is pending execution.
+	// -
+	// "ROLLING_FORWARD": The instance update is going forward.
+	// -
+	// "ROLLING_BACK": The instance update is being rolled back.
+	// -
+	// "PAUSED": The instance update is temporarily paused (inactive).
+	// -
+	// "ROLLED_OUT": The instance update is finished, the instance is
+	// running the new template.
+	// - "ROLLED_BACK": The instance update is
+	// finished, the instance has been reverted to the previous template.
+	// -
+	// "CANCELLED": The instance update is paused and no longer can be
+	// resumed, undefined in which template the instance is running.
+	Status string `json:"status,omitempty"`
 }
 
-type Update struct {
-	// Details: [Output Only] Human-readable description of an update
-	// progress.
-	Details string `json:"details,omitempty"`
+type InstanceUpdateList struct {
+	// Items: Collection of requested instance updates.
+	Items []*InstanceUpdate `json:"items,omitempty"`
 
-	// Handle: [Output Only] Unique (in the context of a group) handle
-	// assigned to this update.
-	Handle string `json:"handle,omitempty"`
-
-	// InstanceTemplate: Url of an instance template to be applied.
-	InstanceTemplate string `json:"instanceTemplate,omitempty"`
-
-	// InstanceUpdates: [Output Only] Collection of instance updates.
-	InstanceUpdates []*InstanceUpdate `json:"instanceUpdates,omitempty"`
-
-	// Kind: [Output only] The resource type. Always
-	// replicapoolupdater#update.
+	// Kind: [Output Only] Type of the resource.
 	Kind string `json:"kind,omitempty"`
-
-	// Policy: Parameters of an update process.
-	Policy *UpdatePolicy `json:"policy,omitempty"`
-
-	// SelfLink: [Output only] The fully qualified URL for this resource.
-	SelfLink string `json:"selfLink,omitempty"`
-
-	// State: [Output Only] Current state of an update.
-	State string `json:"state,omitempty"`
-
-	// TargetState: [Output Only] Requested state of an update. This is the
-	// state that the updater is moving towards. Acceptable values are:
-	// -
-	// "ROLLED_OUT": The user has requested the update to go forward.
-	// -
-	// "ROLLED_BACK": The user has requested the update to be rolled back.
-	//
-	// - "PAUSED": The user has requested the update to be paused.
-	//
-	// -
-	// "CANCELLED": The user has requested the update to be cancelled. The
-	// updater service is in the process of canceling the update.
-	TargetState string `json:"targetState,omitempty"`
-}
-
-type UpdateList struct {
-	// Items: Collection of requested updates.
-	Items []*Update `json:"items,omitempty"`
 
 	// NextPageToken: A token used to continue a truncated list request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SelfLink: [Output Only] The fully qualified URL for the resource.
+	SelfLink string `json:"selfLink,omitempty"`
 }
 
-type UpdatePolicy struct {
+type RollingUpdate struct {
+	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
+	// format.
+	CreationTimestamp string `json:"creationTimestamp,omitempty"`
+
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
+	Id string `json:"id,omitempty"`
+
+	// InstanceGroupManager: URL of an instance group manager being updated.
+	InstanceGroupManager string `json:"instanceGroupManager,omitempty"`
+
+	// InstanceTemplate: URL of an instance template to apply.
+	InstanceTemplate string `json:"instanceTemplate,omitempty"`
+
+	// Kind: [Output Only] Type of the resource.
+	Kind string `json:"kind,omitempty"`
+
+	// Policy: Parameters of the update process. Setting
+	// (api.field).field_number manually is a workaround for b/16512602.
+	Policy *RollingUpdatePolicy `json:"policy,omitempty"`
+
+	// Progress: [Output Only] An optional progress indicator that ranges
+	// from 0 to 100. There is no requirement that this be linear or support
+	// any granularity of operations. This should not be used to guess at
+	// when the update will be complete. This number should be monotonically
+	// increasing as the update progresses.
+	Progress int64 `json:"progress,omitempty"`
+
+	// SelfLink: [Output Only] The fully qualified URL for the resource.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// Status: [Output Only] Status of the update. Possible values are:
+	// -
+	// "ROLLING_FORWARD": The update is going forward.
+	// - "ROLLING_BACK":
+	// The update is being rolled back.
+	// - "PAUSED": The update is
+	// temporarily paused (inactive).
+	// - "ROLLED_OUT": The update is
+	// finished, all instances have been updated successfully.
+	// -
+	// "ROLLED_BACK": The update is finished, all instances have been
+	// reverted to the previous template.
+	// - "CANCELLED": The update is
+	// paused and no longer can be resumed, undefined how many instances are
+	// running in which template.
+	Status string `json:"status,omitempty"`
+
+	// StatusMessage: [Output Only] An optional textual description of the
+	// current status of the update.
+	StatusMessage string `json:"statusMessage,omitempty"`
+
+	// User: [Output Only] User who requested the update, for example:
+	// user@example.com.
+	User string `json:"user,omitempty"`
+}
+
+type RollingUpdatePolicy struct {
 	// Canary: Parameters of a canary phase. If absent, canary will NOT be
 	// performed.
-	Canary *UpdatePolicyCanary `json:"canary,omitempty"`
+	Canary *RollingUpdatePolicyCanary `json:"canary,omitempty"`
 
 	// MaxNumConcurrentInstances: Maximum number of instances that can be
 	// updated simultaneously (concurrently). An update of an instance
 	// starts when the instance is about to be restarted and finishes after
 	// the instance has been restarted and the sleep period (defined by
-	// sleep_after_instance_restart_sec) has passed.
+	// sleepAfterInstanceRestartSec) has passed.
 	MaxNumConcurrentInstances int64 `json:"maxNumConcurrentInstances,omitempty"`
 
-	// SleepAfterInstanceRestartSec: Time period after the instance has been
-	// restarted but before marking the update of this instance as done.
+	// SleepAfterInstanceRestartSec: The number of seconds to wait between
+	// when the instance has been successfully updated and restarted, to
+	// when it is marked as done.
 	SleepAfterInstanceRestartSec int64 `json:"sleepAfterInstanceRestartSec,omitempty"`
 }
 
-type UpdatePolicyCanary struct {
+type RollingUpdatePolicyCanary struct {
 	// NumInstances: Number of instances updated as a part of canary phase.
 	// If absent, the default number of instances will be used.
 	NumInstances int64 `json:"numInstances,omitempty"`
 }
 
-// method id "replicapoolupdater.updates.cancel":
+type RollingUpdateList struct {
+	// Items: Collection of requested updates.
+	Items []*RollingUpdate `json:"items,omitempty"`
 
-type UpdatesCancelCall struct {
-	s                    *Service
-	project              string
-	zone                 string
-	instanceGroupManager string
-	update               string
-	opt_                 map[string]interface{}
+	// Kind: [Output Only] Type of the resource.
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: A token used to continue a truncated list request.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SelfLink: [Output Only] The fully qualified URL for the resource.
+	SelfLink string `json:"selfLink,omitempty"`
 }
 
-// Cancel: Called on the particular Update endpoint. Cancels the update
-// in state PAUSED. No-op if invoked in state CANCELLED.
-func (r *UpdatesService) Cancel(project string, zone string, instanceGroupManager string, update string) *UpdatesCancelCall {
-	c := &UpdatesCancelCall{s: r.s, opt_: make(map[string]interface{})}
+// method id "replicapoolupdater.rollingUpdates.cancel":
+
+type RollingUpdatesCancelCall struct {
+	s             *Service
+	project       string
+	zone          string
+	rollingUpdate string
+	opt_          map[string]interface{}
+}
+
+// Cancel: Cancels an update. The update must be PAUSED before it can be
+// cancelled. This has no effect if the update is already CANCELLED.
+func (r *RollingUpdatesService) Cancel(project string, zone string, rollingUpdate string) *RollingUpdatesCancelCall {
+	c := &RollingUpdatesCancelCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
 	c.zone = zone
-	c.instanceGroupManager = instanceGroupManager
-	c.update = update
+	c.rollingUpdate = rollingUpdate
 	return c
 }
 
 // Fields allows partial responses to be retrieved.
 // See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *UpdatesCancelCall) Fields(s ...googleapi.Field) *UpdatesCancelCall {
+func (c *RollingUpdatesCancelCall) Fields(s ...googleapi.Field) *RollingUpdatesCancelCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-func (c *UpdatesCancelCall) Do() error {
+func (c *RollingUpdatesCancelCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}/updates/{update}/cancel")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/rollingUpdates/{rollingUpdate}/cancel")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
-		"project":              c.project,
-		"zone":                 c.zone,
-		"instanceGroupManager": c.instanceGroupManager,
-		"update":               c.update,
+		"project":       c.project,
+		"zone":          c.zone,
+		"rollingUpdate": c.rollingUpdate,
 	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -220,42 +269,36 @@ func (c *UpdatesCancelCall) Do() error {
 	}
 	return nil
 	// {
-	//   "description": "Called on the particular Update endpoint. Cancels the update in state PAUSED. No-op if invoked in state CANCELLED.",
+	//   "description": "Cancels an update. The update must be PAUSED before it can be cancelled. This has no effect if the update is already CANCELLED.",
 	//   "httpMethod": "POST",
-	//   "id": "replicapoolupdater.updates.cancel",
+	//   "id": "replicapoolupdater.rollingUpdates.cancel",
 	//   "parameterOrder": [
 	//     "project",
 	//     "zone",
-	//     "instanceGroupManager",
-	//     "update"
+	//     "rollingUpdate"
 	//   ],
 	//   "parameters": {
-	//     "instanceGroupManager": {
-	//       "description": "Name of the instance group manager for this request.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
 	//     "project": {
-	//       "description": "Project ID for this request.",
+	//       "description": "The Google Developers Console project name.",
 	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
 	//     },
-	//     "update": {
-	//       "description": "Unique (in the context of a group) handle of an update.",
+	//     "rollingUpdate": {
+	//       "description": "The name of the update.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "zone": {
-	//       "description": "Zone for the instance group manager.",
+	//       "description": "The name of the zone in which the update's target resides.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}/updates/{update}/cancel",
+	//   "path": "{project}/zones/{zone}/rollingUpdates/{rollingUpdate}/cancel",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/replicapool"
@@ -264,51 +307,47 @@ func (c *UpdatesCancelCall) Do() error {
 
 }
 
-// method id "replicapoolupdater.updates.get":
+// method id "replicapoolupdater.rollingUpdates.get":
 
-type UpdatesGetCall struct {
-	s                    *Service
-	project              string
-	zone                 string
-	instanceGroupManager string
-	update               string
-	opt_                 map[string]interface{}
+type RollingUpdatesGetCall struct {
+	s             *Service
+	project       string
+	zone          string
+	rollingUpdate string
+	opt_          map[string]interface{}
 }
 
-// Get: Called on the particular Update endpoint. Returns the Update
-// resource.
-func (r *UpdatesService) Get(project string, zone string, instanceGroupManager string, update string) *UpdatesGetCall {
-	c := &UpdatesGetCall{s: r.s, opt_: make(map[string]interface{})}
+// Get: Returns information about an update.
+func (r *RollingUpdatesService) Get(project string, zone string, rollingUpdate string) *RollingUpdatesGetCall {
+	c := &RollingUpdatesGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
 	c.zone = zone
-	c.instanceGroupManager = instanceGroupManager
-	c.update = update
+	c.rollingUpdate = rollingUpdate
 	return c
 }
 
 // Fields allows partial responses to be retrieved.
 // See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *UpdatesGetCall) Fields(s ...googleapi.Field) *UpdatesGetCall {
+func (c *RollingUpdatesGetCall) Fields(s ...googleapi.Field) *RollingUpdatesGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-func (c *UpdatesGetCall) Do() (*Update, error) {
+func (c *RollingUpdatesGetCall) Do() (*RollingUpdate, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}/updates/{update}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/rollingUpdates/{rollingUpdate}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
-		"project":              c.project,
-		"zone":                 c.zone,
-		"instanceGroupManager": c.instanceGroupManager,
-		"update":               c.update,
+		"project":       c.project,
+		"zone":          c.zone,
+		"rollingUpdate": c.rollingUpdate,
 	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -319,50 +358,44 @@ func (c *UpdatesGetCall) Do() (*Update, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Update
+	var ret *RollingUpdate
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Called on the particular Update endpoint. Returns the Update resource.",
+	//   "description": "Returns information about an update.",
 	//   "httpMethod": "GET",
-	//   "id": "replicapoolupdater.updates.get",
+	//   "id": "replicapoolupdater.rollingUpdates.get",
 	//   "parameterOrder": [
 	//     "project",
 	//     "zone",
-	//     "instanceGroupManager",
-	//     "update"
+	//     "rollingUpdate"
 	//   ],
 	//   "parameters": {
-	//     "instanceGroupManager": {
-	//       "description": "Name of the instance group manager for this request.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
 	//     "project": {
-	//       "description": "Project ID for this request.",
+	//       "description": "The Google Developers Console project name.",
 	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
 	//     },
-	//     "update": {
-	//       "description": "Unique (in the context of a group) handle of an update.",
+	//     "rollingUpdate": {
+	//       "description": "The name of the update.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "zone": {
-	//       "description": "Zone for the instance group manager.",
+	//       "description": "The name of the zone in which the update's target resides.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}/updates/{update}",
+	//   "path": "{project}/zones/{zone}/rollingUpdates/{rollingUpdate}",
 	//   "response": {
-	//     "$ref": "Update"
+	//     "$ref": "RollingUpdate"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
@@ -373,39 +406,36 @@ func (c *UpdatesGetCall) Do() (*Update, error) {
 
 }
 
-// method id "replicapoolupdater.updates.insert":
+// method id "replicapoolupdater.rollingUpdates.insert":
 
-type UpdatesInsertCall struct {
-	s                    *Service
-	project              string
-	zone                 string
-	instanceGroupManager string
-	update               *Update
-	opt_                 map[string]interface{}
+type RollingUpdatesInsertCall struct {
+	s             *Service
+	project       string
+	zone          string
+	rollingupdate *RollingUpdate
+	opt_          map[string]interface{}
 }
 
-// Insert: Called on the collection endpoint. Inserts the new Update
-// resource and starts the update.
-func (r *UpdatesService) Insert(project string, zone string, instanceGroupManager string, update *Update) *UpdatesInsertCall {
-	c := &UpdatesInsertCall{s: r.s, opt_: make(map[string]interface{})}
+// Insert: Inserts and starts a new update.
+func (r *RollingUpdatesService) Insert(project string, zone string, rollingupdate *RollingUpdate) *RollingUpdatesInsertCall {
+	c := &RollingUpdatesInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
 	c.zone = zone
-	c.instanceGroupManager = instanceGroupManager
-	c.update = update
+	c.rollingupdate = rollingupdate
 	return c
 }
 
 // Fields allows partial responses to be retrieved.
 // See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *UpdatesInsertCall) Fields(s ...googleapi.Field) *UpdatesInsertCall {
+func (c *RollingUpdatesInsertCall) Fields(s ...googleapi.Field) *RollingUpdatesInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-func (c *UpdatesInsertCall) Do() (*InsertResponse, error) {
+func (c *RollingUpdatesInsertCall) Do() (*InsertResponse, error) {
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.update)
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.rollingupdate)
 	if err != nil {
 		return nil, err
 	}
@@ -415,13 +445,12 @@ func (c *UpdatesInsertCall) Do() (*InsertResponse, error) {
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}/updates")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/rollingUpdates")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
-		"project":              c.project,
-		"zone":                 c.zone,
-		"instanceGroupManager": c.instanceGroupManager,
+		"project": c.project,
+		"zone":    c.zone,
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
@@ -439,37 +468,31 @@ func (c *UpdatesInsertCall) Do() (*InsertResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Called on the collection endpoint. Inserts the new Update resource and starts the update.",
+	//   "description": "Inserts and starts a new update.",
 	//   "httpMethod": "POST",
-	//   "id": "replicapoolupdater.updates.insert",
+	//   "id": "replicapoolupdater.rollingUpdates.insert",
 	//   "parameterOrder": [
 	//     "project",
-	//     "zone",
-	//     "instanceGroupManager"
+	//     "zone"
 	//   ],
 	//   "parameters": {
-	//     "instanceGroupManager": {
-	//       "description": "Name of the instance group manager for this request.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
 	//     "project": {
-	//       "description": "Project ID for this request.",
+	//       "description": "The Google Developers Console project name.",
 	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "zone": {
-	//       "description": "Zone for the instance group manager.",
+	//       "description": "The name of the zone in which the update's target resides.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}/updates",
+	//   "path": "{project}/zones/{zone}/rollingUpdates",
 	//   "request": {
-	//     "$ref": "Update"
+	//     "$ref": "RollingUpdate"
 	//   },
 	//   "response": {
 	//     "$ref": "InsertResponse"
@@ -482,31 +505,35 @@ func (c *UpdatesInsertCall) Do() (*InsertResponse, error) {
 
 }
 
-// method id "replicapoolupdater.updates.list":
+// method id "replicapoolupdater.rollingUpdates.list":
 
-type UpdatesListCall struct {
-	s                    *Service
-	project              string
-	zone                 string
-	instanceGroupManager string
-	opt_                 map[string]interface{}
+type RollingUpdatesListCall struct {
+	s       *Service
+	project string
+	zone    string
+	opt_    map[string]interface{}
 }
 
-// List: Called on the collection endpoint. Lists updates for a given
-// instance group, in reverse chronological order. Pagination is
-// supported, see ListRequestHeader.
-func (r *UpdatesService) List(project string, zone string, instanceGroupManager string) *UpdatesListCall {
-	c := &UpdatesListCall{s: r.s, opt_: make(map[string]interface{})}
+// List: Lists recent updates for a given managed instance group, in
+// reverse chronological order and paginated format.
+func (r *RollingUpdatesService) List(project string, zone string) *RollingUpdatesListCall {
+	c := &RollingUpdatesListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
 	c.zone = zone
-	c.instanceGroupManager = instanceGroupManager
+	return c
+}
+
+// InstanceGroupManager sets the optional parameter
+// "instanceGroupManager": The name of the instance group manager.
+func (c *RollingUpdatesListCall) InstanceGroupManager(instanceGroupManager string) *RollingUpdatesListCall {
+	c.opt_["instanceGroupManager"] = instanceGroupManager
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned. Acceptable values are 1 to 100, inclusive.
 // (Default: 50)
-func (c *UpdatesListCall) MaxResults(maxResults int64) *UpdatesListCall {
+func (c *RollingUpdatesListCall) MaxResults(maxResults int64) *RollingUpdatesListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
 }
@@ -514,7 +541,7 @@ func (c *UpdatesListCall) MaxResults(maxResults int64) *UpdatesListCall {
 // PageToken sets the optional parameter "pageToken": Set this to the
 // nextPageToken value returned by a previous list request to obtain the
 // next page of results from the previous list request.
-func (c *UpdatesListCall) PageToken(pageToken string) *UpdatesListCall {
+func (c *RollingUpdatesListCall) PageToken(pageToken string) *RollingUpdatesListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
 }
@@ -522,15 +549,18 @@ func (c *UpdatesListCall) PageToken(pageToken string) *UpdatesListCall {
 // Fields allows partial responses to be retrieved.
 // See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *UpdatesListCall) Fields(s ...googleapi.Field) *UpdatesListCall {
+func (c *RollingUpdatesListCall) Fields(s ...googleapi.Field) *RollingUpdatesListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-func (c *UpdatesListCall) Do() (*UpdateList, error) {
+func (c *RollingUpdatesListCall) Do() (*RollingUpdateList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["instanceGroupManager"]; ok {
+		params.Set("instanceGroupManager", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
@@ -540,13 +570,12 @@ func (c *UpdatesListCall) Do() (*UpdateList, error) {
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}/updates")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/rollingUpdates")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
-		"project":              c.project,
-		"zone":                 c.zone,
-		"instanceGroupManager": c.instanceGroupManager,
+		"project": c.project,
+		"zone":    c.zone,
 	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -557,25 +586,23 @@ func (c *UpdatesListCall) Do() (*UpdateList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *UpdateList
+	var ret *RollingUpdateList
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Called on the collection endpoint. Lists updates for a given instance group, in reverse chronological order. Pagination is supported, see ListRequestHeader.",
+	//   "description": "Lists recent updates for a given managed instance group, in reverse chronological order and paginated format.",
 	//   "httpMethod": "GET",
-	//   "id": "replicapoolupdater.updates.list",
+	//   "id": "replicapoolupdater.rollingUpdates.list",
 	//   "parameterOrder": [
 	//     "project",
-	//     "zone",
-	//     "instanceGroupManager"
+	//     "zone"
 	//   ],
 	//   "parameters": {
 	//     "instanceGroupManager": {
-	//       "description": "Name of the instance group manager for this request.",
-	//       "location": "path",
-	//       "required": true,
+	//       "description": "The name of the instance group manager.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
@@ -593,21 +620,22 @@ func (c *UpdatesListCall) Do() (*UpdateList, error) {
 	//       "type": "string"
 	//     },
 	//     "project": {
-	//       "description": "Project ID for this request.",
+	//       "description": "The Google Developers Console project name.",
 	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "zone": {
-	//       "description": "Zone for the instance group manager.",
+	//       "description": "The name of the zone in which the update's target resides.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}/updates",
+	//   "path": "{project}/zones/{zone}/rollingUpdates",
 	//   "response": {
-	//     "$ref": "UpdateList"
+	//     "$ref": "RollingUpdateList"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
@@ -618,52 +646,185 @@ func (c *UpdatesListCall) Do() (*UpdateList, error) {
 
 }
 
-// method id "replicapoolupdater.updates.pause":
+// method id "replicapoolupdater.rollingUpdates.listInstanceUpdates":
 
-type UpdatesPauseCall struct {
-	s                    *Service
-	project              string
-	zone                 string
-	instanceGroupManager string
-	update               string
-	opt_                 map[string]interface{}
+type RollingUpdatesListInstanceUpdatesCall struct {
+	s             *Service
+	project       string
+	zone          string
+	rollingUpdate string
+	opt_          map[string]interface{}
 }
 
-// Pause: Called on the particular Update endpoint. Pauses the update in
-// state from { ROLLING_FORWARD, ROLLING_BACK, PAUSED }. No-op if
-// invoked in state PAUSED.
-func (r *UpdatesService) Pause(project string, zone string, instanceGroupManager string, update string) *UpdatesPauseCall {
-	c := &UpdatesPauseCall{s: r.s, opt_: make(map[string]interface{})}
+// ListInstanceUpdates: Lists the current status for each instance
+// within a given update.
+func (r *RollingUpdatesService) ListInstanceUpdates(project string, zone string, rollingUpdate string) *RollingUpdatesListInstanceUpdatesCall {
+	c := &RollingUpdatesListInstanceUpdatesCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
 	c.zone = zone
-	c.instanceGroupManager = instanceGroupManager
-	c.update = update
+	c.rollingUpdate = rollingUpdate
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Maximum count of
+// results to be returned. Acceptable values are 1 to 100, inclusive.
+// (Default: 50)
+func (c *RollingUpdatesListInstanceUpdatesCall) MaxResults(maxResults int64) *RollingUpdatesListInstanceUpdatesCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Set this to the
+// nextPageToken value returned by a previous list request to obtain the
+// next page of results from the previous list request.
+func (c *RollingUpdatesListInstanceUpdatesCall) PageToken(pageToken string) *RollingUpdatesListInstanceUpdatesCall {
+	c.opt_["pageToken"] = pageToken
 	return c
 }
 
 // Fields allows partial responses to be retrieved.
 // See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *UpdatesPauseCall) Fields(s ...googleapi.Field) *UpdatesPauseCall {
+func (c *RollingUpdatesListInstanceUpdatesCall) Fields(s ...googleapi.Field) *RollingUpdatesListInstanceUpdatesCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-func (c *UpdatesPauseCall) Do() error {
+func (c *RollingUpdatesListInstanceUpdatesCall) Do() (*InstanceUpdateList, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/rollingUpdates/{rollingUpdate}/instanceUpdates")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project":       c.project,
+		"zone":          c.zone,
+		"rollingUpdate": c.rollingUpdate,
+	})
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *InstanceUpdateList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the current status for each instance within a given update.",
+	//   "httpMethod": "GET",
+	//   "id": "replicapoolupdater.rollingUpdates.listInstanceUpdates",
+	//   "parameterOrder": [
+	//     "project",
+	//     "zone",
+	//     "rollingUpdate"
+	//   ],
+	//   "parameters": {
+	//     "maxResults": {
+	//       "default": "50",
+	//       "description": "Maximum count of results to be returned. Acceptable values are 1 to 100, inclusive. (Default: 50)",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "maximum": "100",
+	//       "minimum": "1",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Set this to the nextPageToken value returned by a previous list request to obtain the next page of results from the previous list request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "The Google Developers Console project name.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "rollingUpdate": {
+	//       "description": "The name of the update.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "The name of the zone in which the update's target resides.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/zones/{zone}/rollingUpdates/{rollingUpdate}/instanceUpdates",
+	//   "response": {
+	//     "$ref": "InstanceUpdateList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/replicapool",
+	//     "https://www.googleapis.com/auth/replicapool.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "replicapoolupdater.rollingUpdates.pause":
+
+type RollingUpdatesPauseCall struct {
+	s             *Service
+	project       string
+	zone          string
+	rollingUpdate string
+	opt_          map[string]interface{}
+}
+
+// Pause: Pauses the update in state from ROLLING_FORWARD or
+// ROLLING_BACK. Has no effect if invoked when the state of the update
+// is PAUSED.
+func (r *RollingUpdatesService) Pause(project string, zone string, rollingUpdate string) *RollingUpdatesPauseCall {
+	c := &RollingUpdatesPauseCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.zone = zone
+	c.rollingUpdate = rollingUpdate
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RollingUpdatesPauseCall) Fields(s ...googleapi.Field) *RollingUpdatesPauseCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *RollingUpdatesPauseCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}/updates/{update}/pause")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/rollingUpdates/{rollingUpdate}/pause")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
-		"project":              c.project,
-		"zone":                 c.zone,
-		"instanceGroupManager": c.instanceGroupManager,
-		"update":               c.update,
+		"project":       c.project,
+		"zone":          c.zone,
+		"rollingUpdate": c.rollingUpdate,
 	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -676,42 +837,36 @@ func (c *UpdatesPauseCall) Do() error {
 	}
 	return nil
 	// {
-	//   "description": "Called on the particular Update endpoint. Pauses the update in state from { ROLLING_FORWARD, ROLLING_BACK, PAUSED }. No-op if invoked in state PAUSED.",
+	//   "description": "Pauses the update in state from ROLLING_FORWARD or ROLLING_BACK. Has no effect if invoked when the state of the update is PAUSED.",
 	//   "httpMethod": "POST",
-	//   "id": "replicapoolupdater.updates.pause",
+	//   "id": "replicapoolupdater.rollingUpdates.pause",
 	//   "parameterOrder": [
 	//     "project",
 	//     "zone",
-	//     "instanceGroupManager",
-	//     "update"
+	//     "rollingUpdate"
 	//   ],
 	//   "parameters": {
-	//     "instanceGroupManager": {
-	//       "description": "Name of the instance group manager for this request.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
 	//     "project": {
-	//       "description": "Project ID for this request.",
+	//       "description": "The Google Developers Console project name.",
 	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
 	//     },
-	//     "update": {
-	//       "description": "Unique (in the context of a group) handle of an update.",
+	//     "rollingUpdate": {
+	//       "description": "The name of the update.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "zone": {
-	//       "description": "Zone for the instance group manager.",
+	//       "description": "The name of the zone in which the update's target resides.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}/updates/{update}/pause",
+	//   "path": "{project}/zones/{zone}/rollingUpdates/{rollingUpdate}/pause",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/replicapool"
@@ -720,52 +875,48 @@ func (c *UpdatesPauseCall) Do() error {
 
 }
 
-// method id "replicapoolupdater.updates.rollback":
+// method id "replicapoolupdater.rollingUpdates.resume":
 
-type UpdatesRollbackCall struct {
-	s                    *Service
-	project              string
-	zone                 string
-	instanceGroupManager string
-	update               string
-	opt_                 map[string]interface{}
+type RollingUpdatesResumeCall struct {
+	s             *Service
+	project       string
+	zone          string
+	rollingUpdate string
+	opt_          map[string]interface{}
 }
 
-// Rollback: Called on the particular Update endpoint. Rolls back the
-// update in state from { ROLLING_FORWARD, ROLLING_BACK, PAUSED }. No-op
-// if invoked in state ROLLED_BACK.
-func (r *UpdatesService) Rollback(project string, zone string, instanceGroupManager string, update string) *UpdatesRollbackCall {
-	c := &UpdatesRollbackCall{s: r.s, opt_: make(map[string]interface{})}
+// Resume: Continues an update in PAUSED state. Has no effect if invoked
+// when the state of the update is ROLLED_OUT.
+func (r *RollingUpdatesService) Resume(project string, zone string, rollingUpdate string) *RollingUpdatesResumeCall {
+	c := &RollingUpdatesResumeCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
 	c.zone = zone
-	c.instanceGroupManager = instanceGroupManager
-	c.update = update
+	c.rollingUpdate = rollingUpdate
 	return c
 }
 
 // Fields allows partial responses to be retrieved.
 // See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *UpdatesRollbackCall) Fields(s ...googleapi.Field) *UpdatesRollbackCall {
+func (c *RollingUpdatesResumeCall) Fields(s ...googleapi.Field) *RollingUpdatesResumeCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-func (c *UpdatesRollbackCall) Do() error {
+func (c *RollingUpdatesResumeCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}/updates/{update}/rollback")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/rollingUpdates/{rollingUpdate}/resume")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
-		"project":              c.project,
-		"zone":                 c.zone,
-		"instanceGroupManager": c.instanceGroupManager,
-		"update":               c.update,
+		"project":       c.project,
+		"zone":          c.zone,
+		"rollingUpdate": c.rollingUpdate,
 	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -778,42 +929,36 @@ func (c *UpdatesRollbackCall) Do() error {
 	}
 	return nil
 	// {
-	//   "description": "Called on the particular Update endpoint. Rolls back the update in state from { ROLLING_FORWARD, ROLLING_BACK, PAUSED }. No-op if invoked in state ROLLED_BACK.",
+	//   "description": "Continues an update in PAUSED state. Has no effect if invoked when the state of the update is ROLLED_OUT.",
 	//   "httpMethod": "POST",
-	//   "id": "replicapoolupdater.updates.rollback",
+	//   "id": "replicapoolupdater.rollingUpdates.resume",
 	//   "parameterOrder": [
 	//     "project",
 	//     "zone",
-	//     "instanceGroupManager",
-	//     "update"
+	//     "rollingUpdate"
 	//   ],
 	//   "parameters": {
-	//     "instanceGroupManager": {
-	//       "description": "Name of the instance group manager for this request.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
 	//     "project": {
-	//       "description": "Project ID for this request.",
+	//       "description": "The Google Developers Console project name.",
 	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
 	//     },
-	//     "update": {
-	//       "description": "Unique (in the context of a group) handle of an update.",
+	//     "rollingUpdate": {
+	//       "description": "The name of the update.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "zone": {
-	//       "description": "Zone for the instance group manager.",
+	//       "description": "The name of the zone in which the update's target resides.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}/updates/{update}/rollback",
+	//   "path": "{project}/zones/{zone}/rollingUpdates/{rollingUpdate}/resume",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/replicapool"
@@ -822,52 +967,49 @@ func (c *UpdatesRollbackCall) Do() error {
 
 }
 
-// method id "replicapoolupdater.updates.rollforward":
+// method id "replicapoolupdater.rollingUpdates.rollback":
 
-type UpdatesRollforwardCall struct {
-	s                    *Service
-	project              string
-	zone                 string
-	instanceGroupManager string
-	update               string
-	opt_                 map[string]interface{}
+type RollingUpdatesRollbackCall struct {
+	s             *Service
+	project       string
+	zone          string
+	rollingUpdate string
+	opt_          map[string]interface{}
 }
 
-// Rollforward: Called on the particular Update endpoint. Rolls forward
-// the update in state from { ROLLING_FORWARD, ROLLING_BACK, PAUSED }.
-// No-op if invoked in state ROLLED_OUT.
-func (r *UpdatesService) Rollforward(project string, zone string, instanceGroupManager string, update string) *UpdatesRollforwardCall {
-	c := &UpdatesRollforwardCall{s: r.s, opt_: make(map[string]interface{})}
+// Rollback: Rolls back the update in state from ROLLING_FORWARD or
+// PAUSED. Has no effect if invoked when the state of the update is
+// ROLLED_BACK.
+func (r *RollingUpdatesService) Rollback(project string, zone string, rollingUpdate string) *RollingUpdatesRollbackCall {
+	c := &RollingUpdatesRollbackCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
 	c.zone = zone
-	c.instanceGroupManager = instanceGroupManager
-	c.update = update
+	c.rollingUpdate = rollingUpdate
 	return c
 }
 
 // Fields allows partial responses to be retrieved.
 // See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *UpdatesRollforwardCall) Fields(s ...googleapi.Field) *UpdatesRollforwardCall {
+func (c *RollingUpdatesRollbackCall) Fields(s ...googleapi.Field) *RollingUpdatesRollbackCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-func (c *UpdatesRollforwardCall) Do() error {
+func (c *RollingUpdatesRollbackCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}/updates/{update}/rollforward")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/rollingUpdates/{rollingUpdate}/rollback")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
-		"project":              c.project,
-		"zone":                 c.zone,
-		"instanceGroupManager": c.instanceGroupManager,
-		"update":               c.update,
+		"project":       c.project,
+		"zone":          c.zone,
+		"rollingUpdate": c.rollingUpdate,
 	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
@@ -880,42 +1022,36 @@ func (c *UpdatesRollforwardCall) Do() error {
 	}
 	return nil
 	// {
-	//   "description": "Called on the particular Update endpoint. Rolls forward the update in state from { ROLLING_FORWARD, ROLLING_BACK, PAUSED }. No-op if invoked in state ROLLED_OUT.",
+	//   "description": "Rolls back the update in state from ROLLING_FORWARD or PAUSED. Has no effect if invoked when the state of the update is ROLLED_BACK.",
 	//   "httpMethod": "POST",
-	//   "id": "replicapoolupdater.updates.rollforward",
+	//   "id": "replicapoolupdater.rollingUpdates.rollback",
 	//   "parameterOrder": [
 	//     "project",
 	//     "zone",
-	//     "instanceGroupManager",
-	//     "update"
+	//     "rollingUpdate"
 	//   ],
 	//   "parameters": {
-	//     "instanceGroupManager": {
-	//       "description": "Name of the instance group manager for this request.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
 	//     "project": {
-	//       "description": "Project ID for this request.",
+	//       "description": "The Google Developers Console project name.",
 	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
 	//     },
-	//     "update": {
-	//       "description": "Unique (in the context of a group) handle of an update.",
+	//     "rollingUpdate": {
+	//       "description": "The name of the update.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "zone": {
-	//       "description": "Zone for the instance group manager.",
+	//       "description": "The name of the zone in which the update's target resides.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}/updates/{update}/rollforward",
+	//   "path": "{project}/zones/{zone}/rollingUpdates/{rollingUpdate}/rollback",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/replicapool"

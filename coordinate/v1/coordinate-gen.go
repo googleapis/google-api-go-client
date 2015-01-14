@@ -37,7 +37,7 @@ var _ = strings.Replace
 const apiId = "coordinate:v1"
 const apiName = "coordinate"
 const apiVersion = "v1"
-const basePath = "https://www.googleapis.com/coordinate/v1/teams/"
+const basePath = "https://www.googleapis.com/coordinate/v1/"
 
 // OAuth2 scopes used by this API.
 const (
@@ -57,6 +57,7 @@ func New(client *http.Client) (*Service, error) {
 	s.Jobs = NewJobsService(s)
 	s.Location = NewLocationService(s)
 	s.Schedule = NewScheduleService(s)
+	s.Team = NewTeamService(s)
 	s.Worker = NewWorkerService(s)
 	return s, nil
 }
@@ -72,6 +73,8 @@ type Service struct {
 	Location *LocationService
 
 	Schedule *ScheduleService
+
+	Team *TeamService
 
 	Worker *WorkerService
 }
@@ -112,6 +115,15 @@ type ScheduleService struct {
 	s *Service
 }
 
+func NewTeamService(s *Service) *TeamService {
+	rs := &TeamService{s: s}
+	return rs
+}
+
+type TeamService struct {
+	s *Service
+}
+
 func NewWorkerService(s *Service) *WorkerService {
 	rs := &WorkerService{s: s}
 	return rs
@@ -135,6 +147,11 @@ type CustomField struct {
 type CustomFieldDef struct {
 	// Enabled: Whether the field is enabled.
 	Enabled bool `json:"enabled,omitempty"`
+
+	// Enumitems: List of enum items for this custom field. Populated only
+	// if the field type is enum. Enum fields appear as 'lists' in the
+	// Coordinate web and mobile UI.
+	Enumitems []*EnumItemDef `json:"enumitems,omitempty"`
 
 	// Id: Custom field id.
 	Id int64 `json:"id,omitempty,string"`
@@ -167,6 +184,19 @@ type CustomFields struct {
 
 	// Kind: Identifies this object as a collection of custom fields.
 	Kind string `json:"kind,omitempty"`
+}
+
+type EnumItemDef struct {
+	// Active: Whether the enum item is active. Jobs may contain inactive
+	// enum values; however, setting an enum to an inactive value when
+	// creating or updating a job will result in a 500 error.
+	Active bool `json:"active,omitempty"`
+
+	// Kind: Identifies this object as an enum item definition.
+	Kind string `json:"kind,omitempty"`
+
+	// Value: Custom field value.
+	Value string `json:"value,omitempty"`
 }
 
 type Job struct {
@@ -208,7 +238,8 @@ type JobListResponse struct {
 }
 
 type JobState struct {
-	// Assignee: Email address of the assignee.
+	// Assignee: Email address of the assignee, or the string "DELETED_USER"
+	// if the account is no longer available.
 	Assignee string `json:"assignee,omitempty"`
 
 	// CustomFields: Custom fields.
@@ -300,6 +331,26 @@ type Schedule struct {
 	StartTime uint64 `json:"startTime,omitempty,string"`
 }
 
+type Team struct {
+	// Id: Team id, as found in a coordinate team url e.g.
+	// https://coordinate.google.com/f/xyz where "xyz" is the team id.
+	Id string `json:"id,omitempty"`
+
+	// Kind: Identifies this object as a team.
+	Kind string `json:"kind,omitempty"`
+
+	// Name: Team name
+	Name string `json:"name,omitempty"`
+}
+
+type TeamListResponse struct {
+	// Items: Teams in the collection.
+	Items []*Team `json:"items,omitempty"`
+
+	// Kind: Identifies this object as a list of teams.
+	Kind string `json:"kind,omitempty"`
+}
+
 type TokenPagination struct {
 	// Kind: Identifies this object as pagination information.
 	Kind string `json:"kind,omitempty"`
@@ -313,7 +364,8 @@ type TokenPagination struct {
 }
 
 type Worker struct {
-	// Id: Worker email address.
+	// Id: Worker email address. If a worker has been deleted from your
+	// team, the email address will appear as DELETED_USER.
 	Id string `json:"id,omitempty"`
 
 	// Kind: Identifies this object as a worker.
@@ -358,7 +410,7 @@ func (c *CustomFieldDefListCall) Do() (*CustomFieldDefListResponse, error) {
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "{teamId}/custom_fields")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "teams/{teamId}/custom_fields")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
@@ -393,7 +445,7 @@ func (c *CustomFieldDefListCall) Do() (*CustomFieldDefListResponse, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{teamId}/custom_fields",
+	//   "path": "teams/{teamId}/custom_fields",
 	//   "response": {
 	//     "$ref": "CustomFieldDefListResponse"
 	//   },
@@ -437,7 +489,7 @@ func (c *JobsGetCall) Do() (*Job, error) {
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "{teamId}/jobs/{jobId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "teams/{teamId}/jobs/{jobId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
@@ -481,7 +533,7 @@ func (c *JobsGetCall) Do() (*Job, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{teamId}/jobs/{jobId}",
+	//   "path": "teams/{teamId}/jobs/{jobId}",
 	//   "response": {
 	//     "$ref": "Job"
 	//   },
@@ -526,9 +578,13 @@ func (c *JobsInsertCall) Assignee(assignee string) *JobsInsertCall {
 	return c
 }
 
-// CustomField sets the optional parameter "customField": Map from
-// custom field id (from /team//custom_fields) to the field value. For
-// example '123=Alice'
+// CustomField sets the optional parameter "customField": Sets the value
+// of custom fields. To set a custom field, pass the field id (from
+// /team/teamId/custom_fields), a URL escaped '=' character, and the
+// desired value as a parameter. For example, customField=12%3DAlice.
+// Repeat the parameter for each custom field. Note that '=' cannot
+// appear in the parameter value. Specifying an invalid, or inactive
+// enum field will result in an error 500.
 func (c *JobsInsertCall) CustomField(customField string) *JobsInsertCall {
 	c.opt_["customField"] = customField
 	return c
@@ -594,7 +650,7 @@ func (c *JobsInsertCall) Do() (*Job, error) {
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "{teamId}/jobs")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "teams/{teamId}/jobs")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
@@ -639,7 +695,7 @@ func (c *JobsInsertCall) Do() (*Job, error) {
 	//       "type": "string"
 	//     },
 	//     "customField": {
-	//       "description": "Map from custom field id (from /team//custom_fields) to the field value. For example '123=Alice'",
+	//       "description": "Sets the value of custom fields. To set a custom field, pass the field id (from /team/teamId/custom_fields), a URL escaped '=' character, and the desired value as a parameter. For example, customField=12%3DAlice. Repeat the parameter for each custom field. Note that '=' cannot appear in the parameter value. Specifying an invalid, or inactive enum field will result in an error 500.",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
@@ -686,7 +742,7 @@ func (c *JobsInsertCall) Do() (*Job, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{teamId}/jobs",
+	//   "path": "teams/{teamId}/jobs",
 	//   "request": {
 	//     "$ref": "Job"
 	//   },
@@ -760,7 +816,7 @@ func (c *JobsListCall) Do() (*JobListResponse, error) {
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "{teamId}/jobs")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "teams/{teamId}/jobs")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
@@ -812,7 +868,7 @@ func (c *JobsListCall) Do() (*JobListResponse, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{teamId}/jobs",
+	//   "path": "teams/{teamId}/jobs",
 	//   "response": {
 	//     "$ref": "JobListResponse"
 	//   },
@@ -858,9 +914,13 @@ func (c *JobsPatchCall) Assignee(assignee string) *JobsPatchCall {
 	return c
 }
 
-// CustomField sets the optional parameter "customField": Map from
-// custom field id (from /team//custom_fields) to the field value. For
-// example '123=Alice'
+// CustomField sets the optional parameter "customField": Sets the value
+// of custom fields. To set a custom field, pass the field id (from
+// /team/teamId/custom_fields), a URL escaped '=' character, and the
+// desired value as a parameter. For example, customField=12%3DAlice.
+// Repeat the parameter for each custom field. Note that '=' cannot
+// appear in the parameter value. Specifying an invalid, or inactive
+// enum field will result in an error 500.
 func (c *JobsPatchCall) CustomField(customField string) *JobsPatchCall {
 	c.opt_["customField"] = customField
 	return c
@@ -963,7 +1023,7 @@ func (c *JobsPatchCall) Do() (*Job, error) {
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "{teamId}/jobs/{jobId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "teams/{teamId}/jobs/{jobId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
@@ -1005,7 +1065,7 @@ func (c *JobsPatchCall) Do() (*Job, error) {
 	//       "type": "string"
 	//     },
 	//     "customField": {
-	//       "description": "Map from custom field id (from /team//custom_fields) to the field value. For example '123=Alice'",
+	//       "description": "Sets the value of custom fields. To set a custom field, pass the field id (from /team/teamId/custom_fields), a URL escaped '=' character, and the desired value as a parameter. For example, customField=12%3DAlice. Repeat the parameter for each custom field. Note that '=' cannot appear in the parameter value. Specifying an invalid, or inactive enum field will result in an error 500.",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
@@ -1075,7 +1135,7 @@ func (c *JobsPatchCall) Do() (*Job, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{teamId}/jobs/{jobId}",
+	//   "path": "teams/{teamId}/jobs/{jobId}",
 	//   "request": {
 	//     "$ref": "Job"
 	//   },
@@ -1123,9 +1183,13 @@ func (c *JobsUpdateCall) Assignee(assignee string) *JobsUpdateCall {
 	return c
 }
 
-// CustomField sets the optional parameter "customField": Map from
-// custom field id (from /team//custom_fields) to the field value. For
-// example '123=Alice'
+// CustomField sets the optional parameter "customField": Sets the value
+// of custom fields. To set a custom field, pass the field id (from
+// /team/teamId/custom_fields), a URL escaped '=' character, and the
+// desired value as a parameter. For example, customField=12%3DAlice.
+// Repeat the parameter for each custom field. Note that '=' cannot
+// appear in the parameter value. Specifying an invalid, or inactive
+// enum field will result in an error 500.
 func (c *JobsUpdateCall) CustomField(customField string) *JobsUpdateCall {
 	c.opt_["customField"] = customField
 	return c
@@ -1228,7 +1292,7 @@ func (c *JobsUpdateCall) Do() (*Job, error) {
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "{teamId}/jobs/{jobId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "teams/{teamId}/jobs/{jobId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
@@ -1270,7 +1334,7 @@ func (c *JobsUpdateCall) Do() (*Job, error) {
 	//       "type": "string"
 	//     },
 	//     "customField": {
-	//       "description": "Map from custom field id (from /team//custom_fields) to the field value. For example '123=Alice'",
+	//       "description": "Sets the value of custom fields. To set a custom field, pass the field id (from /team/teamId/custom_fields), a URL escaped '=' character, and the desired value as a parameter. For example, customField=12%3DAlice. Repeat the parameter for each custom field. Note that '=' cannot appear in the parameter value. Specifying an invalid, or inactive enum field will result in an error 500.",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
@@ -1340,7 +1404,7 @@ func (c *JobsUpdateCall) Do() (*Job, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{teamId}/jobs/{jobId}",
+	//   "path": "teams/{teamId}/jobs/{jobId}",
 	//   "request": {
 	//     "$ref": "Job"
 	//   },
@@ -1408,7 +1472,7 @@ func (c *LocationListCall) Do() (*LocationListResponse, error) {
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "{teamId}/workers/{workerEmail}/locations")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "teams/{teamId}/workers/{workerEmail}/locations")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
@@ -1470,7 +1534,7 @@ func (c *LocationListCall) Do() (*LocationListResponse, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{teamId}/workers/{workerEmail}/locations",
+	//   "path": "teams/{teamId}/workers/{workerEmail}/locations",
 	//   "response": {
 	//     "$ref": "LocationListResponse"
 	//   },
@@ -1514,7 +1578,7 @@ func (c *ScheduleGetCall) Do() (*Schedule, error) {
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "{teamId}/jobs/{jobId}/schedule")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "teams/{teamId}/jobs/{jobId}/schedule")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
@@ -1558,7 +1622,7 @@ func (c *ScheduleGetCall) Do() (*Schedule, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{teamId}/jobs/{jobId}/schedule",
+	//   "path": "teams/{teamId}/jobs/{jobId}/schedule",
 	//   "response": {
 	//     "$ref": "Schedule"
 	//   },
@@ -1651,7 +1715,7 @@ func (c *SchedulePatchCall) Do() (*Schedule, error) {
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "{teamId}/jobs/{jobId}/schedule")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "teams/{teamId}/jobs/{jobId}/schedule")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
@@ -1719,7 +1783,7 @@ func (c *SchedulePatchCall) Do() (*Schedule, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{teamId}/jobs/{jobId}/schedule",
+	//   "path": "teams/{teamId}/jobs/{jobId}/schedule",
 	//   "request": {
 	//     "$ref": "Schedule"
 	//   },
@@ -1813,7 +1877,7 @@ func (c *ScheduleUpdateCall) Do() (*Schedule, error) {
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "{teamId}/jobs/{jobId}/schedule")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "teams/{teamId}/jobs/{jobId}/schedule")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
@@ -1881,7 +1945,7 @@ func (c *ScheduleUpdateCall) Do() (*Schedule, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{teamId}/jobs/{jobId}/schedule",
+	//   "path": "teams/{teamId}/jobs/{jobId}/schedule",
 	//   "request": {
 	//     "$ref": "Schedule"
 	//   },
@@ -1890,6 +1954,115 @@ func (c *ScheduleUpdateCall) Do() (*Schedule, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/coordinate"
+	//   ]
+	// }
+
+}
+
+// method id "coordinate.team.list":
+
+type TeamListCall struct {
+	s    *Service
+	opt_ map[string]interface{}
+}
+
+// List: Retrieves a list of teams for a user.
+func (r *TeamService) List() *TeamListCall {
+	c := &TeamListCall{s: r.s, opt_: make(map[string]interface{})}
+	return c
+}
+
+// Admin sets the optional parameter "admin": Whether to include teams
+// for which the user has the Admin role.
+func (c *TeamListCall) Admin(admin bool) *TeamListCall {
+	c.opt_["admin"] = admin
+	return c
+}
+
+// Dispatcher sets the optional parameter "dispatcher": Whether to
+// include teams for which the user has the Dispatcher role.
+func (c *TeamListCall) Dispatcher(dispatcher bool) *TeamListCall {
+	c.opt_["dispatcher"] = dispatcher
+	return c
+}
+
+// Worker sets the optional parameter "worker": Whether to include teams
+// for which the user has the Worker role.
+func (c *TeamListCall) Worker(worker bool) *TeamListCall {
+	c.opt_["worker"] = worker
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TeamListCall) Fields(s ...googleapi.Field) *TeamListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *TeamListCall) Do() (*TeamListResponse, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["admin"]; ok {
+		params.Set("admin", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["dispatcher"]; ok {
+		params.Set("dispatcher", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["worker"]; ok {
+		params.Set("worker", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "teams")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *TeamListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves a list of teams for a user.",
+	//   "httpMethod": "GET",
+	//   "id": "coordinate.team.list",
+	//   "parameters": {
+	//     "admin": {
+	//       "description": "Whether to include teams for which the user has the Admin role.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "dispatcher": {
+	//       "description": "Whether to include teams for which the user has the Dispatcher role.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "worker": {
+	//       "description": "Whether to include teams for which the user has the Worker role.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
+	//   "path": "teams",
+	//   "response": {
+	//     "$ref": "TeamListResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/coordinate",
+	//     "https://www.googleapis.com/auth/coordinate.readonly"
 	//   ]
 	// }
 
@@ -1925,7 +2098,7 @@ func (c *WorkerListCall) Do() (*WorkerListResponse, error) {
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "{teamId}/workers")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "teams/{teamId}/workers")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
@@ -1960,7 +2133,7 @@ func (c *WorkerListCall) Do() (*WorkerListResponse, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{teamId}/workers",
+	//   "path": "teams/{teamId}/workers",
 	//   "response": {
 	//     "$ref": "WorkerListResponse"
 	//   },

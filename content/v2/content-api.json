@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"l66ggWbucbkBw9Lpos72oziyefE/EfYKK5AfY2_HGyMN7vFlDQDdSbY\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/mxJxnaJAFqBnZvQqixN7zqS1MSM\"",
  "discoveryVersion": "v1",
  "id": "content:v2",
  "name": "content",
  "canonicalName": "Shopping Content",
  "version": "v2",
- "revision": "20141028",
+ "revision": "20141203",
  "title": "Content API for Shopping",
  "description": "Manage product items, inventory, and Merchant Center accounts for Google Shopping.",
  "ownerDomain": "google.com",
@@ -1398,12 +1398,7 @@
     },
     "title": {
      "type": "string",
-     "description": "Title of the item.",
-     "annotations": {
-      "required": [
-       "content.products.insert"
-      ]
-     }
+     "description": "Title of the item."
     },
     "unitPricingBaseMeasure": {
      "$ref": "ProductUnitPricingBaseMeasure",
@@ -1647,7 +1642,7 @@
     },
     "locationId": {
      "type": "string",
-     "description": "The numeric id of a location that the tax rate applies to as defined in the Adwords API (https://developers.google.com/adwords/api/docs/appendix/geotargeting).",
+     "description": "The numeric id of a location that the tax rate applies to as defined in the AdWords API.",
      "format": "int64"
     },
     "postalCode": {

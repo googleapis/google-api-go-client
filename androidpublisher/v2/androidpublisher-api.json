@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"l66ggWbucbkBw9Lpos72oziyefE/DrMyiBR493_IBfZvqlikbYuZEB0\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/xy4W57xFkYdtUdm4rpPIU-7grtg\"",
  "discoveryVersion": "v1",
  "id": "androidpublisher:v2",
  "name": "androidpublisher",
  "canonicalName": "Android Publisher",
  "version": "v2",
- "revision": "20141022",
+ "revision": "20141117",
  "title": "Google Play Android Developer API",
  "description": "Lets Android application developers access their Google Play accounts.",
  "ownerDomain": "google.com",
@@ -1197,7 +1197,7 @@
          "application/octet-stream",
          "application/vnd.android.package-archive"
         ],
-        "maxSize": "50MB",
+        "maxSize": "1GB",
         "protocols": {
          "simple": {
           "multipart": true,
@@ -1576,9 +1576,13 @@
           "phoneScreenshots",
           "promoGraphic",
           "sevenInchScreenshots",
-          "tenInchScreenshots"
+          "tenInchScreenshots",
+          "tvBanner",
+          "tvScreenshots"
          ],
          "enumDescriptions": [
+          "",
+          "",
           "",
           "",
           "",
@@ -1633,9 +1637,13 @@
           "phoneScreenshots",
           "promoGraphic",
           "sevenInchScreenshots",
-          "tenInchScreenshots"
+          "tenInchScreenshots",
+          "tvBanner",
+          "tvScreenshots"
          ],
          "enumDescriptions": [
+          "",
+          "",
           "",
           "",
           "",
@@ -1692,9 +1700,13 @@
           "phoneScreenshots",
           "promoGraphic",
           "sevenInchScreenshots",
-          "tenInchScreenshots"
+          "tenInchScreenshots",
+          "tvBanner",
+          "tvScreenshots"
          ],
          "enumDescriptions": [
+          "",
+          "",
           "",
           "",
           "",
@@ -1751,9 +1763,13 @@
           "phoneScreenshots",
           "promoGraphic",
           "sevenInchScreenshots",
-          "tenInchScreenshots"
+          "tenInchScreenshots",
+          "tvBanner",
+          "tvScreenshots"
          ],
          "enumDescriptions": [
+          "",
+          "",
           "",
           "",
           "",

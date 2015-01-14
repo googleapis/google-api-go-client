@@ -5791,7 +5791,7 @@ func (c *ScoresGetCall) Do() (*PlayerLeaderboardScoreListResponse, error) {
 	//       "description": "The maximum number of leaderboard scores to return in the response. For any response, the actual number of leaderboard scores returned may be less than the specified maxResults.",
 	//       "format": "int32",
 	//       "location": "query",
-	//       "maximum": "25",
+	//       "maximum": "30",
 	//       "minimum": "1",
 	//       "type": "integer"
 	//     },
@@ -5964,7 +5964,7 @@ func (c *ScoresListCall) Do() (*LeaderboardScores, error) {
 	//       "description": "The maximum number of leaderboard scores to return in the response. For any response, the actual number of leaderboard scores returned may be less than the specified maxResults.",
 	//       "format": "int32",
 	//       "location": "query",
-	//       "maximum": "25",
+	//       "maximum": "30",
 	//       "minimum": "1",
 	//       "type": "integer"
 	//     },
@@ -6154,7 +6154,7 @@ func (c *ScoresListWindowCall) Do() (*LeaderboardScores, error) {
 	//       "description": "The maximum number of leaderboard scores to return in the response. For any response, the actual number of leaderboard scores returned may be less than the specified maxResults.",
 	//       "format": "int32",
 	//       "location": "query",
-	//       "maximum": "25",
+	//       "maximum": "30",
 	//       "minimum": "1",
 	//       "type": "integer"
 	//     },

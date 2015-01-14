@@ -52,9 +52,11 @@ func New(client *http.Client) (*Service, error) {
 	s := &Service{client: client, BasePath: basePath}
 	s.Bookshelves = NewBookshelvesService(s)
 	s.Cloudloading = NewCloudloadingService(s)
+	s.Dictionary = NewDictionaryService(s)
 	s.Layers = NewLayersService(s)
 	s.Myconfig = NewMyconfigService(s)
 	s.Mylibrary = NewMylibraryService(s)
+	s.Onboarding = NewOnboardingService(s)
 	s.Promooffer = NewPromoofferService(s)
 	s.Volumes = NewVolumesService(s)
 	return s, nil
@@ -68,11 +70,15 @@ type Service struct {
 
 	Cloudloading *CloudloadingService
 
+	Dictionary *DictionaryService
+
 	Layers *LayersService
 
 	Myconfig *MyconfigService
 
 	Mylibrary *MylibraryService
+
+	Onboarding *OnboardingService
 
 	Promooffer *PromoofferService
 
@@ -106,6 +112,15 @@ func NewCloudloadingService(s *Service) *CloudloadingService {
 }
 
 type CloudloadingService struct {
+	s *Service
+}
+
+func NewDictionaryService(s *Service) *DictionaryService {
+	rs := &DictionaryService{s: s}
+	return rs
+}
+
+type DictionaryService struct {
 	s *Service
 }
 
@@ -205,6 +220,15 @@ func NewMylibraryReadingpositionsService(s *Service) *MylibraryReadingpositionsS
 }
 
 type MylibraryReadingpositionsService struct {
+	s *Service
+}
+
+func NewOnboardingService(s *Service) *OnboardingService {
+	rs := &OnboardingService{s: s}
+	return rs
+}
+
+type OnboardingService struct {
 	s *Service
 }
 
@@ -533,6 +557,22 @@ type Bookshelves struct {
 
 	// Kind: Resource type.
 	Kind string `json:"kind,omitempty"`
+}
+
+type Category struct {
+	// Items: A list of onboarding categories.
+	Items []*CategoryItems `json:"items,omitempty"`
+
+	// Kind: Resource type.
+	Kind string `json:"kind,omitempty"`
+}
+
+type CategoryItems struct {
+	BadgeUrl string `json:"badgeUrl,omitempty"`
+
+	CategoryId string `json:"categoryId,omitempty"`
+
+	Name string `json:"name,omitempty"`
 }
 
 type ConcurrentAccessRestriction struct {
@@ -901,6 +941,26 @@ type Layersummary struct {
 	VolumeId string `json:"volumeId,omitempty"`
 }
 
+type Metadata struct {
+	// Items: A list of offline dictionary metadata.
+	Items []*MetadataItems `json:"items,omitempty"`
+
+	// Kind: Resource type.
+	Kind string `json:"kind,omitempty"`
+}
+
+type MetadataItems struct {
+	Download_url string `json:"download_url,omitempty"`
+
+	Encrypted_key string `json:"encrypted_key,omitempty"`
+
+	Language string `json:"language,omitempty"`
+
+	Size int64 `json:"size,omitempty,string"`
+
+	Version int64 `json:"version,omitempty,string"`
+}
+
 type Offers struct {
 	// Items: A list of offers.
 	Items []*OffersItems `json:"items,omitempty"`
@@ -1016,6 +1076,21 @@ type ReviewSource struct {
 
 	// Url: URL of the source of the review.
 	Url string `json:"url,omitempty"`
+}
+
+type Usersettings struct {
+	// Kind: Resource type.
+	Kind string `json:"kind,omitempty"`
+
+	// NotesExport: User settings in sub-objects, each for different
+	// purposes.
+	NotesExport *UsersettingsNotesExport `json:"notesExport,omitempty"`
+}
+
+type UsersettingsNotesExport struct {
+	FolderName string `json:"folderName,omitempty"`
+
+	IsEnabled bool `json:"isEnabled,omitempty"`
 }
 
 type Volume struct {
@@ -1449,6 +1524,16 @@ type VolumeVolumeInfoIndustryIdentifiers struct {
 	// Type: Identifier type. Possible values are ISBN_10, ISBN_13, ISSN and
 	// OTHER.
 	Type string `json:"type,omitempty"`
+}
+
+type Volume2 struct {
+	// Items: A list of volumes.
+	Items []*Volume `json:"items,omitempty"`
+
+	// Kind: Resource type.
+	Kind string `json:"kind,omitempty"`
+
+	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
 type Volumeannotation struct {
@@ -2144,6 +2229,82 @@ func (c *CloudloadingUpdateBookCall) Do() (*BooksCloudloadingResource, error) {
 	//   },
 	//   "response": {
 	//     "$ref": "BooksCloudloadingResource"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/books"
+	//   ]
+	// }
+
+}
+
+// method id "books.dictionary.listOfflineMetadata":
+
+type DictionaryListOfflineMetadataCall struct {
+	s       *Service
+	cpksver string
+	opt_    map[string]interface{}
+}
+
+// ListOfflineMetadata: Returns a list of offline dictionary meatadata
+// available
+func (r *DictionaryService) ListOfflineMetadata(cpksver string) *DictionaryListOfflineMetadataCall {
+	c := &DictionaryListOfflineMetadataCall{s: r.s, opt_: make(map[string]interface{})}
+	c.cpksver = cpksver
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *DictionaryListOfflineMetadataCall) Fields(s ...googleapi.Field) *DictionaryListOfflineMetadataCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *DictionaryListOfflineMetadataCall) Do() (*Metadata, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	params.Set("cpksver", fmt.Sprintf("%v", c.cpksver))
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "dictionary/listOfflineMetadata")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Metadata
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns a list of offline dictionary meatadata available",
+	//   "httpMethod": "GET",
+	//   "id": "books.dictionary.listOfflineMetadata",
+	//   "parameterOrder": [
+	//     "cpksver"
+	//   ],
+	//   "parameters": {
+	//     "cpksver": {
+	//       "description": "The device/version ID from which to request the data.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "dictionary/listOfflineMetadata",
+	//   "response": {
+	//     "$ref": "Metadata"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/books"
@@ -3278,6 +3439,67 @@ func (c *LayersVolumeAnnotationsListCall) Do() (*Volumeannotations, error) {
 
 }
 
+// method id "books.myconfig.getUserSettings":
+
+type MyconfigGetUserSettingsCall struct {
+	s    *Service
+	opt_ map[string]interface{}
+}
+
+// GetUserSettings: Gets the current settings for the user.
+func (r *MyconfigService) GetUserSettings() *MyconfigGetUserSettingsCall {
+	c := &MyconfigGetUserSettingsCall{s: r.s, opt_: make(map[string]interface{})}
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MyconfigGetUserSettingsCall) Fields(s ...googleapi.Field) *MyconfigGetUserSettingsCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *MyconfigGetUserSettingsCall) Do() (*Usersettings, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "myconfig/getUserSettings")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Usersettings
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the current settings for the user.",
+	//   "httpMethod": "GET",
+	//   "id": "books.myconfig.getUserSettings",
+	//   "path": "myconfig/getUserSettings",
+	//   "response": {
+	//     "$ref": "Usersettings"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/books"
+	//   ]
+	// }
+
+}
+
 // method id "books.myconfig.releaseDownloadAccess":
 
 type MyconfigReleaseDownloadAccessCall struct {
@@ -3705,6 +3927,79 @@ func (c *MyconfigSyncVolumeLicensesCall) Do() (*Volumes, error) {
 
 }
 
+// method id "books.myconfig.updateUserSettings":
+
+type MyconfigUpdateUserSettingsCall struct {
+	s            *Service
+	usersettings *Usersettings
+	opt_         map[string]interface{}
+}
+
+// UpdateUserSettings: Sets the settings for the user. Unspecified
+// sub-objects will retain the existing value.
+func (r *MyconfigService) UpdateUserSettings(usersettings *Usersettings) *MyconfigUpdateUserSettingsCall {
+	c := &MyconfigUpdateUserSettingsCall{s: r.s, opt_: make(map[string]interface{})}
+	c.usersettings = usersettings
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MyconfigUpdateUserSettingsCall) Fields(s ...googleapi.Field) *MyconfigUpdateUserSettingsCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *MyconfigUpdateUserSettingsCall) Do() (*Usersettings, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.usersettings)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "myconfig/updateUserSettings")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Usersettings
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Sets the settings for the user. Unspecified sub-objects will retain the existing value.",
+	//   "httpMethod": "POST",
+	//   "id": "books.myconfig.updateUserSettings",
+	//   "path": "myconfig/updateUserSettings",
+	//   "request": {
+	//     "$ref": "Usersettings"
+	//   },
+	//   "response": {
+	//     "$ref": "Usersettings"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/books"
+	//   ]
+	// }
+
+}
+
 // method id "books.mylibrary.annotations.delete":
 
 type MylibraryAnnotationsDeleteCall struct {
@@ -3895,6 +4190,13 @@ func (r *MylibraryAnnotationsService) Insert(annotation *Annotation) *MylibraryA
 	return c
 }
 
+// Country sets the optional parameter "country": ISO-3166-1 code to
+// override the IP-based location.
+func (c *MylibraryAnnotationsInsertCall) Country(country string) *MylibraryAnnotationsInsertCall {
+	c.opt_["country"] = country
+	return c
+}
+
 // ShowOnlySummaryInResponse sets the optional parameter
 // "showOnlySummaryInResponse": Requests that only the summary of the
 // specified layer be provided in the response.
@@ -3927,6 +4229,9 @@ func (c *MylibraryAnnotationsInsertCall) Do() (*Annotation, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["country"]; ok {
+		params.Set("country", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["showOnlySummaryInResponse"]; ok {
 		params.Set("showOnlySummaryInResponse", fmt.Sprintf("%v", v))
 	}
@@ -3960,6 +4265,11 @@ func (c *MylibraryAnnotationsInsertCall) Do() (*Annotation, error) {
 	//   "httpMethod": "POST",
 	//   "id": "books.mylibrary.annotations.insert",
 	//   "parameters": {
+	//     "country": {
+	//       "description": "ISO-3166-1 code to override the IP-based location.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "showOnlySummaryInResponse": {
 	//       "description": "Requests that only the summary of the specified layer be provided in the response.",
 	//       "location": "query",
@@ -4428,6 +4738,13 @@ func (r *MylibraryBookshelvesService) AddVolume(shelf string, volumeId string) *
 	return c
 }
 
+// Reason sets the optional parameter "reason": The reason for which the
+// book is added to the library.
+func (c *MylibraryBookshelvesAddVolumeCall) Reason(reason string) *MylibraryBookshelvesAddVolumeCall {
+	c.opt_["reason"] = reason
+	return c
+}
+
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *MylibraryBookshelvesAddVolumeCall) Source(source string) *MylibraryBookshelvesAddVolumeCall {
@@ -4448,6 +4765,9 @@ func (c *MylibraryBookshelvesAddVolumeCall) Do() error {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("volumeId", fmt.Sprintf("%v", c.volumeId))
+	if v, ok := c.opt_["reason"]; ok {
+		params.Set("reason", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))
 	}
@@ -4479,6 +4799,17 @@ func (c *MylibraryBookshelvesAddVolumeCall) Do() error {
 	//     "volumeId"
 	//   ],
 	//   "parameters": {
+	//     "reason": {
+	//       "description": "The reason for which the book is added to the library.",
+	//       "enum": [
+	//         "ONBOARDING"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Volumes added from onboarding flow."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "shelf": {
 	//       "description": "ID of bookshelf to which to add a volume.",
 	//       "location": "path",
@@ -5416,6 +5747,210 @@ func (c *MylibraryReadingpositionsSetPositionCall) Do() error {
 	//     }
 	//   },
 	//   "path": "mylibrary/readingpositions/{volumeId}/setPosition",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/books"
+	//   ]
+	// }
+
+}
+
+// method id "books.onboarding.listCategories":
+
+type OnboardingListCategoriesCall struct {
+	s    *Service
+	opt_ map[string]interface{}
+}
+
+// ListCategories: List categories for onboarding experience.
+func (r *OnboardingService) ListCategories() *OnboardingListCategoriesCall {
+	c := &OnboardingListCategoriesCall{s: r.s, opt_: make(map[string]interface{})}
+	return c
+}
+
+// Locale sets the optional parameter "locale": ISO-639-1 language and
+// ISO-3166-1 country code. Default is en-US if unset.
+func (c *OnboardingListCategoriesCall) Locale(locale string) *OnboardingListCategoriesCall {
+	c.opt_["locale"] = locale
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OnboardingListCategoriesCall) Fields(s ...googleapi.Field) *OnboardingListCategoriesCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *OnboardingListCategoriesCall) Do() (*Category, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["locale"]; ok {
+		params.Set("locale", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "onboarding/listCategories")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Category
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List categories for onboarding experience.",
+	//   "httpMethod": "GET",
+	//   "id": "books.onboarding.listCategories",
+	//   "parameters": {
+	//     "locale": {
+	//       "description": "ISO-639-1 language and ISO-3166-1 country code. Default is en-US if unset.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "onboarding/listCategories",
+	//   "response": {
+	//     "$ref": "Category"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/books"
+	//   ]
+	// }
+
+}
+
+// method id "books.onboarding.listCategoryVolumes":
+
+type OnboardingListCategoryVolumesCall struct {
+	s    *Service
+	opt_ map[string]interface{}
+}
+
+// ListCategoryVolumes: List available volumes under categories for
+// onboarding experience.
+func (r *OnboardingService) ListCategoryVolumes() *OnboardingListCategoryVolumesCall {
+	c := &OnboardingListCategoryVolumesCall{s: r.s, opt_: make(map[string]interface{})}
+	return c
+}
+
+// CategoryId sets the optional parameter "categoryId": List of category
+// ids requested.
+func (c *OnboardingListCategoryVolumesCall) CategoryId(categoryId string) *OnboardingListCategoryVolumesCall {
+	c.opt_["categoryId"] = categoryId
+	return c
+}
+
+// Locale sets the optional parameter "locale": ISO-639-1 language and
+// ISO-3166-1 country code. Default is en-US if unset.
+func (c *OnboardingListCategoryVolumesCall) Locale(locale string) *OnboardingListCategoryVolumesCall {
+	c.opt_["locale"] = locale
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Number of maximum
+// results per page to be included in the response.
+func (c *OnboardingListCategoryVolumesCall) PageSize(pageSize int64) *OnboardingListCategoryVolumesCall {
+	c.opt_["pageSize"] = pageSize
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The value of the
+// nextToken from the previous page.
+func (c *OnboardingListCategoryVolumesCall) PageToken(pageToken string) *OnboardingListCategoryVolumesCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OnboardingListCategoryVolumesCall) Fields(s ...googleapi.Field) *OnboardingListCategoryVolumesCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *OnboardingListCategoryVolumesCall) Do() (*Volume2, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["categoryId"]; ok {
+		params.Set("categoryId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["locale"]; ok {
+		params.Set("locale", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageSize"]; ok {
+		params.Set("pageSize", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "onboarding/listCategoryVolumes")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Volume2
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List available volumes under categories for onboarding experience.",
+	//   "httpMethod": "GET",
+	//   "id": "books.onboarding.listCategoryVolumes",
+	//   "parameters": {
+	//     "categoryId": {
+	//       "description": "List of category ids requested.",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "locale": {
+	//       "description": "ISO-639-1 language and ISO-3166-1 country code. Default is en-US if unset.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Number of maximum results per page to be included in the response.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The value of the nextToken from the previous page.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "onboarding/listCategoryVolumes",
+	//   "response": {
+	//     "$ref": "Volume2"
+	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/books"
 	//   ]

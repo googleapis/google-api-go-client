@@ -41,10 +41,10 @@ const basePath = "https://www.googleapis.com/mapsengine/v1/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your Google Maps Engine data
+	// View and manage your Google My Maps data
 	MapsengineScope = "https://www.googleapis.com/auth/mapsengine"
 
-	// View your Google Maps Engine data
+	// View your Google My Maps data
 	MapsengineReadonlyScope = "https://www.googleapis.com/auth/mapsengine.readonly"
 )
 

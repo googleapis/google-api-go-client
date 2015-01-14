@@ -97,75 +97,31 @@ type ReportsService struct {
 	s *Service
 }
 
-type BatchReportDefinitionList struct {
-	// Items: A list of batchReportDefinition resources that match the
-	// request criteria.
-	Items []*BatchReportDefinitionTemplate `json:"items,omitempty"`
-
-	// Kind: This value specifies the type of data included in the API
-	// response. For the list method, the kind property value is
-	// youtubeAnalytics#batchReportDefinitionList.
-	Kind string `json:"kind,omitempty"`
-}
-
-type BatchReportDefinitionTemplate struct {
-	// DefaultOutput: Default report definition's output.
-	DefaultOutput []*BatchReportDefinitionTemplateDefaultOutput `json:"defaultOutput,omitempty"`
-
-	// Id: The ID that YouTube assigns and uses to uniquely identify the
-	// report definition.
-	Id string `json:"id,omitempty"`
-
-	// Name: Name of the report definition.
-	Name string `json:"name,omitempty"`
-
-	// Status: Status of the report definition.
-	Status string `json:"status,omitempty"`
-
-	// Type: Type of the report definition.
-	Type string `json:"type,omitempty"`
-}
-
-type BatchReportDefinitionTemplateDefaultOutput struct {
-	// Format: Format of the output.
-	Format string `json:"format,omitempty"`
-
-	// Type: Type of the output.
-	Type string `json:"type,omitempty"`
-}
-
-type BatchReportList struct {
-	// Items: A list of batchReport resources that match the request
-	// criteria.
-	Items []*BatchReportTemplate `json:"items,omitempty"`
-
-	// Kind: This value specifies the type of data included in the API
-	// response. For the list method, the kind property value is
-	// youtubeAnalytics#batchReportList.
-	Kind string `json:"kind,omitempty"`
-}
-
-type BatchReportTemplate struct {
+type BatchReport struct {
 	// Id: The ID that YouTube assigns and uses to uniquely identify the
 	// report.
 	Id string `json:"id,omitempty"`
 
-	// Outputs: Report outputs.
-	Outputs []*BatchReportTemplateOutputs `json:"outputs,omitempty"`
+	// Kind: This value specifies the type of data of this item. For batch
+	// report the kind property value is youtubeAnalytics#batchReport.
+	Kind string `json:"kind,omitempty"`
 
-	// Report_id: The ID of the the report definition.
-	Report_id string `json:"report_id,omitempty"`
+	// Outputs: Report outputs.
+	Outputs []*BatchReportOutputs `json:"outputs,omitempty"`
+
+	// ReportId: The ID of the the report definition.
+	ReportId string `json:"reportId,omitempty"`
 
 	// TimeSpan: Period included in the report. For reports containing all
 	// entities endTime is not set. Both startTime and endTime are
 	// inclusive.
-	TimeSpan *BatchReportTemplateTimeSpan `json:"timeSpan,omitempty"`
+	TimeSpan *BatchReportTimeSpan `json:"timeSpan,omitempty"`
 
 	// TimeUpdated: The time when the report was updated.
 	TimeUpdated string `json:"timeUpdated,omitempty"`
 }
 
-type BatchReportTemplateOutputs struct {
+type BatchReportOutputs struct {
 	// DownloadUrl: Cloud storage URL to download this report. This URL is
 	// valid for 30 minutes.
 	DownloadUrl string `json:"downloadUrl,omitempty"`
@@ -177,13 +133,55 @@ type BatchReportTemplateOutputs struct {
 	Type string `json:"type,omitempty"`
 }
 
-type BatchReportTemplateTimeSpan struct {
+type BatchReportTimeSpan struct {
 	// EndTime: End of the period included in the report. Inclusive. For
 	// reports containing all entities endTime is not set.
 	EndTime string `json:"endTime,omitempty"`
 
 	// StartTime: Start of the period included in the report. Inclusive.
 	StartTime string `json:"startTime,omitempty"`
+}
+
+type BatchReportDefinition struct {
+	// Id: The ID that YouTube assigns and uses to uniquely identify the
+	// report definition.
+	Id string `json:"id,omitempty"`
+
+	// Kind: This value specifies the type of data of this item. For batch
+	// report definition the kind property value is
+	// youtubeAnalytics#batchReportDefinition.
+	Kind string `json:"kind,omitempty"`
+
+	// Name: Name of the report definition.
+	Name string `json:"name,omitempty"`
+
+	// Status: Status of the report definition.
+	Status string `json:"status,omitempty"`
+
+	// Type: Type of the report definition.
+	Type string `json:"type,omitempty"`
+}
+
+type BatchReportDefinitionList struct {
+	// Items: A list of batchReportDefinition resources that match the
+	// request criteria.
+	Items []*BatchReportDefinition `json:"items,omitempty"`
+
+	// Kind: This value specifies the type of data included in the API
+	// response. For the list method, the kind property value is
+	// youtubeAnalytics#batchReportDefinitionList.
+	Kind string `json:"kind,omitempty"`
+}
+
+type BatchReportList struct {
+	// Items: A list of batchReport resources that match the request
+	// criteria.
+	Items []*BatchReport `json:"items,omitempty"`
+
+	// Kind: This value specifies the type of data included in the API
+	// response. For the list method, the kind property value is
+	// youtubeAnalytics#batchReportList.
+	Kind string `json:"kind,omitempty"`
 }
 
 type ResultTable struct {

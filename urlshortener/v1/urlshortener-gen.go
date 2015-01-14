@@ -1,6 +1,6 @@
 // Package urlshortener provides access to the URL Shortener API.
 //
-// See http://code.google.com/apis/urlshortener/v1/getting_started.html
+// See https://developers.google.com/url-shortener/v1/getting_started
 //
 // Usage example:
 //

@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"l66ggWbucbkBw9Lpos72oziyefE/qp3DHGvWPpREzEdWk7WwxnpgC9w\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/q0HPcsO3_Sdy-4PCTKTzL-JtI64\"",
  "discoveryVersion": "v1",
  "id": "compute:v1",
  "name": "compute",
  "version": "v1",
- "revision": "20141014",
+ "revision": "20141112",
  "title": "Compute Engine API",
  "description": "API for the Google Compute Engine service.",
  "ownerDomain": "google.com",
@@ -1485,7 +1485,7 @@
     },
     "timeoutSec": {
      "type": "integer",
-     "description": "How long (in seconds) to wait before claiming failure. The default value is 5 seconds.",
+     "description": "How long (in seconds) to wait before claiming failure. The default value is 5 seconds. It is invalid for timeoutSec to have greater value than checkIntervalSec.",
      "format": "int32"
     },
     "unhealthyThreshold": {
@@ -2104,7 +2104,7 @@
    "properties": {
     "creationTimestamp": {
      "type": "string",
-     "description": "Creation timestamp in RFC3339 text format (output only)."
+     "description": "[Output Only] Creation timestamp in RFC3339 text format."
     },
     "deprecated": {
      "$ref": "DeprecationStatus",
@@ -2121,7 +2121,7 @@
     },
     "id": {
      "type": "string",
-     "description": "Unique identifier for the resource; defined by the server (output only).",
+     "description": "[Output Only] Unique identifier for the resource; defined by the server.",
      "format": "uint64"
     },
     "imageSpaceGb": {
@@ -2170,11 +2170,11 @@
     },
     "selfLink": {
      "type": "string",
-     "description": "Server defined URL for the resource (output only)."
+     "description": "[Output Only] Server defined URL for the resource."
     },
     "zone": {
      "type": "string",
-     "description": "Url of the zone where the machine type resides (output only)."
+     "description": "[Output Only] The name of the zone where the machine type resides, such as us-central1-a."
     }
    }
   },
@@ -2184,7 +2184,7 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "Unique identifier for the resource; defined by the server (output only)."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "object",
@@ -2201,7 +2201,7 @@
     },
     "nextPageToken": {
      "type": "string",
-     "description": "A token used to continue a truncated list request (output only)."
+     "description": "[Output Only] A token used to continue a truncated list request."
     },
     "selfLink": {
      "type": "string",
@@ -2253,7 +2253,7 @@
     },
     "warning": {
      "type": "object",
-     "description": "Informational warning which replaces the list of machine types when the list is empty.",
+     "description": "An informational warning that appears when the machine types list is empty.",
      "properties": {
       "code": {
        "type": "string",
@@ -2481,38 +2481,36 @@
    "description": "An operation resource, used to manage asynchronous API requests.",
    "properties": {
     "clientOperationId": {
-     "type": "string",
-     "description": "An optional identifier specified by the client when the mutation was initiated. Must be unique for all operation resources in the project (output only)."
+     "type": "string"
     },
     "creationTimestamp": {
      "type": "string",
-     "description": "Creation timestamp in RFC3339 text format (output only)."
+     "description": "[Output Only] Creation timestamp in RFC3339 text format (output only)."
     },
     "endTime": {
-     "type": "string",
-     "description": "The time that this operation was completed. This is in RFC 3339 format (output only)."
+     "type": "string"
     },
     "error": {
      "type": "object",
-     "description": "If errors occurred during processing of this operation, this field will be populated (output only).",
+     "description": "[Output Only] If errors occurred during processing of this operation, this field will be populated.",
      "properties": {
       "errors": {
        "type": "array",
-       "description": "The array of errors encountered while processing this operation.",
+       "description": "[Output Only] The array of errors encountered while processing this operation.",
        "items": {
         "type": "object",
         "properties": {
          "code": {
           "type": "string",
-          "description": "The error type identifier for this error."
+          "description": "[Output Only] The error type identifier for this error."
          },
          "location": {
           "type": "string",
-          "description": "Indicates the field in the request which caused the error. This property is optional."
+          "description": "[Output Only] Indicates the field in the request which caused the error. This property is optional."
          },
          "message": {
           "type": "string",
-          "description": "An optional, human-readable error message."
+          "description": "[Output Only] An optional, human-readable error message."
          }
         }
        }
@@ -2520,56 +2518,52 @@
      }
     },
     "httpErrorMessage": {
-     "type": "string",
-     "description": "If operation fails, the HTTP error message returned, e.g. NOT FOUND. (output only)."
+     "type": "string"
     },
     "httpErrorStatusCode": {
      "type": "integer",
-     "description": "If operation fails, the HTTP error status code returned, e.g. 404. (output only).",
      "format": "int32"
     },
     "id": {
      "type": "string",
-     "description": "Unique identifier for the resource; defined by the server (output only).",
+     "description": "[Output Only] Unique identifier for the resource; defined by the server.",
      "format": "uint64"
     },
     "insertTime": {
      "type": "string",
-     "description": "The time that this operation was requested. This is in RFC 3339 format (output only)."
+     "description": "[Output Only] The time that this operation was requested. This is in RFC 3339 format."
     },
     "kind": {
      "type": "string",
-     "description": "Type of the resource.",
+     "description": "[Output Only] Type of the resource. Always kind#operation for Operation resources.",
      "default": "compute#operation"
     },
     "name": {
      "type": "string",
-     "description": "Name of the resource (output only)."
+     "description": "[Output Only] Name of the resource (output only)."
     },
     "operationType": {
-     "type": "string",
-     "description": "Type of the operation. Examples include \"insert\", \"update\", and \"delete\" (output only)."
+     "type": "string"
     },
     "progress": {
      "type": "integer",
-     "description": "An optional progress indicator that ranges from 0 to 100. There is no requirement that this be linear or support any granularity of operations. This should not be used to guess at when the operation will be complete. This number should be monotonically increasing as the operation progresses (output only).",
      "format": "int32"
     },
     "region": {
      "type": "string",
-     "description": "URL of the region where the operation resides (output only)."
+     "description": "[Output Only] URL of the region where the operation resides (output only)."
     },
     "selfLink": {
      "type": "string",
-     "description": "Server defined URL for the resource (output only)."
+     "description": "[Output Only] Server defined URL for the resource."
     },
     "startTime": {
      "type": "string",
-     "description": "The time that this operation was started by the server. This is in RFC 3339 format (output only)."
+     "description": "[Output Only] The time that this operation was started by the server. This is in RFC 3339 format."
     },
     "status": {
      "type": "string",
-     "description": "Status of the operation. Can be one of the following: \"PENDING\", \"RUNNING\", or \"DONE\" (output only).",
+     "description": "[Output Only] Status of the operation. Can be one of the following: \"PENDING\", \"RUNNING\", or \"DONE\".",
      "enum": [
       "DONE",
       "PENDING",
@@ -2583,24 +2577,22 @@
     },
     "statusMessage": {
      "type": "string",
-     "description": "An optional textual description of the current status of the operation (output only)."
+     "description": "[Output Only] An optional textual description of the current status of the operation."
     },
     "targetId": {
      "type": "string",
-     "description": "Unique target id which identifies a particular incarnation of the target (output only).",
+     "description": "[Output Only] Unique target id which identifies a particular incarnation of the target.",
      "format": "uint64"
     },
     "targetLink": {
      "type": "string",
-     "description": "URL of the resource the operation is mutating (output only)."
+     "description": "[Output Only] URL of the resource the operation is mutating (output only)."
     },
     "user": {
-     "type": "string",
-     "description": "User who requested the operation, for example \"user@example.com\" (output only)."
+     "type": "string"
     },
     "warnings": {
      "type": "array",
-     "description": "If warning messages generated during processing of this operation, this field will be populated (output only).",
      "items": {
       "type": "object",
       "properties": {
@@ -2662,7 +2654,7 @@
     },
     "zone": {
      "type": "string",
-     "description": "URL of the zone where the operation resides (output only)."
+     "description": "[Output Only] URL of the zone where the operation resides (output only)."
     }
    }
   },
@@ -2672,14 +2664,14 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "Unique identifier for the resource; defined by the server (output only)."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "object",
-     "description": "A map of scoped operation lists.",
+     "description": "[Output Only] A map of scoped operation lists.",
      "additionalProperties": {
       "$ref": "OperationsScopedList",
-      "description": "Name of the scope containing this set of operations."
+      "description": "[Output Only] Name of the scope containing this set of operations."
      }
     },
     "kind": {
@@ -2689,11 +2681,11 @@
     },
     "nextPageToken": {
      "type": "string",
-     "description": "A token used to continue a truncated list request (output only)."
+     "description": "[Output Only] A token used to continue a truncated list request."
     },
     "selfLink": {
      "type": "string",
-     "description": "Server defined URL for this resource (output only)."
+     "description": "[Output Only] Server defined URL for this resource."
     }
    }
   },
@@ -2704,27 +2696,27 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "Unique identifier for the resource; defined by the server (output only)."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "array",
-     "description": "The operation resources.",
+     "description": "[Output Only] The operation resources.",
      "items": {
       "$ref": "Operation"
      }
     },
     "kind": {
      "type": "string",
-     "description": "Type of resource.",
+     "description": "Type of resource. Always compute#operations for Operations resource.",
      "default": "compute#operationList"
     },
     "nextPageToken": {
      "type": "string",
-     "description": "A token used to continue a truncated list request (output only)."
+     "description": "[Output Only] A token used to continue a truncate."
     },
     "selfLink": {
      "type": "string",
-     "description": "Server defined URL for this resource (output only)."
+     "description": "[Output Only] Server defined URL for this resource."
     }
    }
   },
@@ -2734,14 +2726,14 @@
    "properties": {
     "operations": {
      "type": "array",
-     "description": "List of operations contained in this scope.",
+     "description": "[Output Only] List of operations contained in this scope.",
      "items": {
       "$ref": "Operation"
      }
     },
     "warning": {
      "type": "object",
-     "description": "Informational warning which replaces the list of operations when the list is empty.",
+     "description": "[Output Only] Informational warning which replaces the list of operations when the list is empty.",
      "properties": {
       "code": {
        "type": "string",
@@ -7320,6 +7312,86 @@
      "scopes": [
       "https://www.googleapis.com/auth/compute"
      ]
+    },
+    "start": {
+     "id": "compute.instances.start",
+     "path": "{project}/zones/{zone}/instances/{instance}/start",
+     "httpMethod": "POST",
+     "description": "Starts an instance",
+     "parameters": {
+      "instance": {
+       "type": "string",
+       "description": "Name of the instance resource to start.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "zone": {
+       "type": "string",
+       "description": "Name of the zone scoping this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "zone",
+      "instance"
+     ],
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "stop": {
+     "id": "compute.instances.stop",
+     "path": "{project}/zones/{zone}/instances/{instance}/stop",
+     "httpMethod": "POST",
+     "description": "Stops an instance",
+     "parameters": {
+      "instance": {
+       "type": "string",
+       "description": "Name of the instance resource to start.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "zone": {
+       "type": "string",
+       "description": "Name of the zone scoping this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "zone",
+      "instance"
+     ],
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/compute"
+     ]
     }
    }
   },
@@ -7389,7 +7461,7 @@
       },
       "project": {
        "type": "string",
-       "description": "Name of the project scoping this request.",
+       "description": "Project ID for this request.",
        "required": true,
        "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
@@ -7421,7 +7493,7 @@
       },
       "project": {
        "type": "string",
-       "description": "Name of the project scoping this request.",
+       "description": "Project ID for this request.",
        "required": true,
        "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
@@ -7474,7 +7546,7 @@
       },
       "project": {
        "type": "string",
-       "description": "Name of the project scoping this request.",
+       "description": "Project ID for this request.",
        "required": true,
        "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"

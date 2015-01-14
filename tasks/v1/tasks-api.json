@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"l66ggWbucbkBw9Lpos72oziyefE/KGWAadJXyIQhHMwmLhtcS8SUf-4\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/0TjOHp0h7jdMsIEfc7wjsU7Gx9k\"",
  "discoveryVersion": "v1",
  "id": "tasks:v1",
  "name": "tasks",
  "version": "v1",
- "revision": "20141024",
+ "revision": "20141121",
  "title": "Tasks API",
  "description": "Lets you manage your tasks and task lists.",
  "ownerDomain": "google.com",

@@ -2923,6 +2923,7 @@ type AddressesAggregatedListCall struct {
 }
 
 // AggregatedList: Retrieves the list of addresses grouped by scope.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/addresses/aggregatedList
 func (r *AddressesService) AggregatedList(project string) *AddressesAggregatedListCall {
 	c := &AddressesAggregatedListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -3054,6 +3055,7 @@ type AddressesDeleteCall struct {
 }
 
 // Delete: Deletes the specified address resource.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/addresses/delete
 func (r *AddressesService) Delete(project string, region string, address string) *AddressesDeleteCall {
 	c := &AddressesDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -3153,6 +3155,7 @@ type AddressesGetCall struct {
 }
 
 // Get: Returns the specified address resource.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/addresses/get
 func (r *AddressesService) Get(project string, region string, address string) *AddressesGetCall {
 	c := &AddressesGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -3254,6 +3257,7 @@ type AddressesInsertCall struct {
 
 // Insert: Creates an address resource in the specified project using
 // the data included in the request.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/addresses/insert
 func (r *AddressesService) Insert(project string, region string, address *Address) *AddressesInsertCall {
 	c := &AddressesInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -3353,6 +3357,7 @@ type AddressesListCall struct {
 
 // List: Retrieves the list of address resources contained within the
 // specified region.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/addresses/list
 func (r *AddressesService) List(project string, region string) *AddressesListCall {
 	c := &AddressesListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -3493,6 +3498,7 @@ type BackendServicesDeleteCall struct {
 }
 
 // Delete: Deletes the specified BackendService resource.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/backendServices/delete
 func (r *BackendServicesService) Delete(project string, backendService string) *BackendServicesDeleteCall {
 	c := &BackendServicesDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -3581,6 +3587,7 @@ type BackendServicesGetCall struct {
 }
 
 // Get: Returns the specified BackendService resource.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/backendServices/get
 func (r *BackendServicesService) Get(project string, backendService string) *BackendServicesGetCall {
 	c := &BackendServicesGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -3672,6 +3679,7 @@ type BackendServicesGetHealthCall struct {
 
 // GetHealth: Gets the most recent health check results for this
 // BackendService.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/backendServices/getHealth
 func (r *BackendServicesService) GetHealth(project string, backendService string, resourcegroupreference *ResourceGroupReference) *BackendServicesGetHealthCall {
 	c := &BackendServicesGetHealthCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -3771,6 +3779,7 @@ type BackendServicesInsertCall struct {
 
 // Insert: Creates a BackendService resource in the specified project
 // using the data included in the request.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/backendServices/insert
 func (r *BackendServicesService) Insert(project string, backendservice *BackendService) *BackendServicesInsertCall {
 	c := &BackendServicesInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -3859,6 +3868,7 @@ type BackendServicesListCall struct {
 
 // List: Retrieves the list of BackendService resources available to the
 // specified project.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/backendServices/list
 func (r *BackendServicesService) List(project string) *BackendServicesListCall {
 	c := &BackendServicesListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -3991,6 +4001,7 @@ type BackendServicesPatchCall struct {
 
 // Patch: Update the entire content of the BackendService resource. This
 // method supports patch semantics.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/backendServices/patch
 func (r *BackendServicesService) Patch(project string, backendService string, backendservice *BackendService) *BackendServicesPatchCall {
 	c := &BackendServicesPatchCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -4090,6 +4101,7 @@ type BackendServicesUpdateCall struct {
 }
 
 // Update: Update the entire content of the BackendService resource.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/backendServices/update
 func (r *BackendServicesService) Update(project string, backendService string, backendservice *BackendService) *BackendServicesUpdateCall {
 	c := &BackendServicesUpdateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -4188,6 +4200,7 @@ type DiskTypesAggregatedListCall struct {
 
 // AggregatedList: Retrieves the list of disk type resources grouped by
 // scope.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/diskTypes/aggregatedList
 func (r *DiskTypesService) AggregatedList(project string) *DiskTypesAggregatedListCall {
 	c := &DiskTypesAggregatedListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -4319,6 +4332,7 @@ type DiskTypesGetCall struct {
 }
 
 // Get: Returns the specified disk type resource.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/diskTypes/get
 func (r *DiskTypesService) Get(project string, zone string, diskType string) *DiskTypesGetCall {
 	c := &DiskTypesGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -4419,6 +4433,7 @@ type DiskTypesListCall struct {
 
 // List: Retrieves the list of disk type resources available to the
 // specified project.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/diskTypes/list
 func (r *DiskTypesService) List(project string, zone string) *DiskTypesListCall {
 	c := &DiskTypesListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -4558,6 +4573,7 @@ type DisksAggregatedListCall struct {
 }
 
 // AggregatedList: Retrieves the list of disks grouped by scope.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/disks/aggregatedList
 func (r *DisksService) AggregatedList(project string) *DisksAggregatedListCall {
 	c := &DisksAggregatedListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -4690,6 +4706,7 @@ type DisksCreateSnapshotCall struct {
 }
 
 // CreateSnapshot:
+// For details, see https://cloud.google.com/compute/docs/reference/latest/disks/createSnapshot
 func (r *DisksService) CreateSnapshot(project string, zone string, disk string, snapshot *Snapshot) *DisksCreateSnapshotCall {
 	c := &DisksCreateSnapshotCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -4798,6 +4815,7 @@ type DisksDeleteCall struct {
 }
 
 // Delete: Deletes the specified persistent disk resource.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/disks/delete
 func (r *DisksService) Delete(project string, zone string, disk string) *DisksDeleteCall {
 	c := &DisksDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -4897,6 +4915,7 @@ type DisksGetCall struct {
 }
 
 // Get: Returns the specified persistent disk resource.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/disks/get
 func (r *DisksService) Get(project string, zone string, disk string) *DisksGetCall {
 	c := &DisksGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -4998,6 +5017,7 @@ type DisksInsertCall struct {
 
 // Insert: Creates a persistent disk resource in the specified project
 // using the data included in the request.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/disks/insert
 func (r *DisksService) Insert(project string, zone string, disk *Disk) *DisksInsertCall {
 	c := &DisksInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -5112,6 +5132,7 @@ type DisksListCall struct {
 
 // List: Retrieves the list of persistent disk resources contained
 // within the specified zone.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/disks/list
 func (r *DisksService) List(project string, zone string) *DisksListCall {
 	c := &DisksListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -5252,6 +5273,7 @@ type FirewallsDeleteCall struct {
 }
 
 // Delete: Deletes the specified firewall resource.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/firewalls/delete
 func (r *FirewallsService) Delete(project string, firewall string) *FirewallsDeleteCall {
 	c := &FirewallsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -5340,6 +5362,7 @@ type FirewallsGetCall struct {
 }
 
 // Get: Returns the specified firewall resource.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/firewalls/get
 func (r *FirewallsService) Get(project string, firewall string) *FirewallsGetCall {
 	c := &FirewallsGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -5430,6 +5453,7 @@ type FirewallsInsertCall struct {
 
 // Insert: Creates a firewall resource in the specified project using
 // the data included in the request.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/firewalls/insert
 func (r *FirewallsService) Insert(project string, firewall *Firewall) *FirewallsInsertCall {
 	c := &FirewallsInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -5518,6 +5542,7 @@ type FirewallsListCall struct {
 
 // List: Retrieves the list of firewall resources available to the
 // specified project.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/firewalls/list
 func (r *FirewallsService) List(project string) *FirewallsListCall {
 	c := &FirewallsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -5650,6 +5675,7 @@ type FirewallsPatchCall struct {
 
 // Patch: Updates the specified firewall resource with the data included
 // in the request. This method supports patch semantics.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/firewalls/patch
 func (r *FirewallsService) Patch(project string, firewall string, firewall2 *Firewall) *FirewallsPatchCall {
 	c := &FirewallsPatchCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -5750,6 +5776,7 @@ type FirewallsUpdateCall struct {
 
 // Update: Updates the specified firewall resource with the data
 // included in the request.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/firewalls/update
 func (r *FirewallsService) Update(project string, firewall string, firewall2 *Firewall) *FirewallsUpdateCall {
 	c := &FirewallsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -5848,6 +5875,7 @@ type ForwardingRulesAggregatedListCall struct {
 
 // AggregatedList: Retrieves the list of forwarding rules grouped by
 // scope.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/forwardingRules/aggregatedList
 func (r *ForwardingRulesService) AggregatedList(project string) *ForwardingRulesAggregatedListCall {
 	c := &ForwardingRulesAggregatedListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -5979,6 +6007,7 @@ type ForwardingRulesDeleteCall struct {
 }
 
 // Delete: Deletes the specified ForwardingRule resource.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/forwardingRules/delete
 func (r *ForwardingRulesService) Delete(project string, region string, forwardingRule string) *ForwardingRulesDeleteCall {
 	c := &ForwardingRulesDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -6078,6 +6107,7 @@ type ForwardingRulesGetCall struct {
 }
 
 // Get: Returns the specified ForwardingRule resource.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/forwardingRules/get
 func (r *ForwardingRulesService) Get(project string, region string, forwardingRule string) *ForwardingRulesGetCall {
 	c := &ForwardingRulesGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -6179,6 +6209,7 @@ type ForwardingRulesInsertCall struct {
 
 // Insert: Creates a ForwardingRule resource in the specified project
 // and region using the data included in the request.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/forwardingRules/insert
 func (r *ForwardingRulesService) Insert(project string, region string, forwardingrule *ForwardingRule) *ForwardingRulesInsertCall {
 	c := &ForwardingRulesInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -6278,6 +6309,7 @@ type ForwardingRulesListCall struct {
 
 // List: Retrieves the list of ForwardingRule resources available to the
 // specified project and region.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/forwardingRules/list
 func (r *ForwardingRulesService) List(project string, region string) *ForwardingRulesListCall {
 	c := &ForwardingRulesListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -6420,6 +6452,7 @@ type ForwardingRulesSetTargetCall struct {
 }
 
 // SetTarget: Changes target url for forwarding rule.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/forwardingRules/setTarget
 func (r *ForwardingRulesService) SetTarget(project string, region string, forwardingRule string, targetreference *TargetReference) *ForwardingRulesSetTargetCall {
 	c := &ForwardingRulesSetTargetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -6528,6 +6561,7 @@ type GlobalAddressesDeleteCall struct {
 }
 
 // Delete: Deletes the specified address resource.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/globalAddresses/delete
 func (r *GlobalAddressesService) Delete(project string, address string) *GlobalAddressesDeleteCall {
 	c := &GlobalAddressesDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -6616,6 +6650,7 @@ type GlobalAddressesGetCall struct {
 }
 
 // Get: Returns the specified address resource.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/globalAddresses/get
 func (r *GlobalAddressesService) Get(project string, address string) *GlobalAddressesGetCall {
 	c := &GlobalAddressesGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -6706,6 +6741,7 @@ type GlobalAddressesInsertCall struct {
 
 // Insert: Creates an address resource in the specified project using
 // the data included in the request.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/globalAddresses/insert
 func (r *GlobalAddressesService) Insert(project string, address *Address) *GlobalAddressesInsertCall {
 	c := &GlobalAddressesInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -6793,6 +6829,7 @@ type GlobalAddressesListCall struct {
 }
 
 // List: Retrieves the list of global address resources.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/globalAddresses/list
 func (r *GlobalAddressesService) List(project string) *GlobalAddressesListCall {
 	c := &GlobalAddressesListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -6923,6 +6960,7 @@ type GlobalForwardingRulesDeleteCall struct {
 }
 
 // Delete: Deletes the specified ForwardingRule resource.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/globalForwardingRules/delete
 func (r *GlobalForwardingRulesService) Delete(project string, forwardingRule string) *GlobalForwardingRulesDeleteCall {
 	c := &GlobalForwardingRulesDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -7011,6 +7049,7 @@ type GlobalForwardingRulesGetCall struct {
 }
 
 // Get: Returns the specified ForwardingRule resource.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/globalForwardingRules/get
 func (r *GlobalForwardingRulesService) Get(project string, forwardingRule string) *GlobalForwardingRulesGetCall {
 	c := &GlobalForwardingRulesGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -7101,6 +7140,7 @@ type GlobalForwardingRulesInsertCall struct {
 
 // Insert: Creates a ForwardingRule resource in the specified project
 // and region using the data included in the request.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/globalForwardingRules/insert
 func (r *GlobalForwardingRulesService) Insert(project string, forwardingrule *ForwardingRule) *GlobalForwardingRulesInsertCall {
 	c := &GlobalForwardingRulesInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -7189,6 +7229,7 @@ type GlobalForwardingRulesListCall struct {
 
 // List: Retrieves the list of ForwardingRule resources available to the
 // specified project.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/globalForwardingRules/list
 func (r *GlobalForwardingRulesService) List(project string) *GlobalForwardingRulesListCall {
 	c := &GlobalForwardingRulesListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -7320,6 +7361,7 @@ type GlobalForwardingRulesSetTargetCall struct {
 }
 
 // SetTarget: Changes target url for forwarding rule.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/globalForwardingRules/setTarget
 func (r *GlobalForwardingRulesService) SetTarget(project string, forwardingRule string, targetreference *TargetReference) *GlobalForwardingRulesSetTargetCall {
 	c := &GlobalForwardingRulesSetTargetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -7418,6 +7460,7 @@ type GlobalOperationsAggregatedListCall struct {
 
 // AggregatedList: Retrieves the list of all operations grouped by
 // scope.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/globalOperations/aggregatedList
 func (r *GlobalOperationsService) AggregatedList(project string) *GlobalOperationsAggregatedListCall {
 	c := &GlobalOperationsAggregatedListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -7548,6 +7591,7 @@ type GlobalOperationsDeleteCall struct {
 }
 
 // Delete: Deletes the specified operation resource.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/globalOperations/delete
 func (r *GlobalOperationsService) Delete(project string, operation string) *GlobalOperationsDeleteCall {
 	c := &GlobalOperationsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -7629,6 +7673,7 @@ type GlobalOperationsGetCall struct {
 }
 
 // Get: Retrieves the specified operation resource.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/globalOperations/get
 func (r *GlobalOperationsService) Get(project string, operation string) *GlobalOperationsGetCall {
 	c := &GlobalOperationsGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -7718,6 +7763,7 @@ type GlobalOperationsListCall struct {
 
 // List: Retrieves the list of operation resources contained within the
 // specified project.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/globalOperations/list
 func (r *GlobalOperationsService) List(project string) *GlobalOperationsListCall {
 	c := &GlobalOperationsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -7848,6 +7894,7 @@ type HttpHealthChecksDeleteCall struct {
 }
 
 // Delete: Deletes the specified HttpHealthCheck resource.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/httpHealthChecks/delete
 func (r *HttpHealthChecksService) Delete(project string, httpHealthCheck string) *HttpHealthChecksDeleteCall {
 	c := &HttpHealthChecksDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -7936,6 +7983,7 @@ type HttpHealthChecksGetCall struct {
 }
 
 // Get: Returns the specified HttpHealthCheck resource.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/httpHealthChecks/get
 func (r *HttpHealthChecksService) Get(project string, httpHealthCheck string) *HttpHealthChecksGetCall {
 	c := &HttpHealthChecksGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -8026,6 +8074,7 @@ type HttpHealthChecksInsertCall struct {
 
 // Insert: Creates a HttpHealthCheck resource in the specified project
 // using the data included in the request.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/httpHealthChecks/insert
 func (r *HttpHealthChecksService) Insert(project string, httphealthcheck *HttpHealthCheck) *HttpHealthChecksInsertCall {
 	c := &HttpHealthChecksInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -8114,6 +8163,7 @@ type HttpHealthChecksListCall struct {
 
 // List: Retrieves the list of HttpHealthCheck resources available to
 // the specified project.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/httpHealthChecks/list
 func (r *HttpHealthChecksService) List(project string) *HttpHealthChecksListCall {
 	c := &HttpHealthChecksListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -8247,6 +8297,7 @@ type HttpHealthChecksPatchCall struct {
 // Patch: Updates a HttpHealthCheck resource in the specified project
 // using the data included in the request. This method supports patch
 // semantics.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/httpHealthChecks/patch
 func (r *HttpHealthChecksService) Patch(project string, httpHealthCheck string, httphealthcheck *HttpHealthCheck) *HttpHealthChecksPatchCall {
 	c := &HttpHealthChecksPatchCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -8347,6 +8398,7 @@ type HttpHealthChecksUpdateCall struct {
 
 // Update: Updates a HttpHealthCheck resource in the specified project
 // using the data included in the request.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/httpHealthChecks/update
 func (r *HttpHealthChecksService) Update(project string, httpHealthCheck string, httphealthcheck *HttpHealthCheck) *HttpHealthChecksUpdateCall {
 	c := &HttpHealthChecksUpdateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -8445,6 +8497,7 @@ type ImagesDeleteCall struct {
 }
 
 // Delete: Deletes the specified image resource.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/images/delete
 func (r *ImagesService) Delete(project string, image string) *ImagesDeleteCall {
 	c := &ImagesDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -8535,6 +8588,7 @@ type ImagesDeprecateCall struct {
 
 // Deprecate: Sets the deprecation status of an image. If no message
 // body is given, clears the deprecation status instead.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/images/deprecate
 func (r *ImagesService) Deprecate(project string, image string, deprecationstatus *DeprecationStatus) *ImagesDeprecateCall {
 	c := &ImagesDeprecateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -8633,6 +8687,7 @@ type ImagesGetCall struct {
 }
 
 // Get: Returns the specified image resource.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/images/get
 func (r *ImagesService) Get(project string, image string) *ImagesGetCall {
 	c := &ImagesGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -8723,6 +8778,7 @@ type ImagesInsertCall struct {
 
 // Insert: Creates an image resource in the specified project using the
 // data included in the request.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/images/insert
 func (r *ImagesService) Insert(project string, image *Image) *ImagesInsertCall {
 	c := &ImagesInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -8814,6 +8870,7 @@ type ImagesListCall struct {
 
 // List: Retrieves the list of image resources available to the
 // specified project.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/images/list
 func (r *ImagesService) List(project string) *ImagesListCall {
 	c := &ImagesListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -8944,6 +9001,7 @@ type InstanceTemplatesDeleteCall struct {
 }
 
 // Delete: Deletes the specified instance template resource.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/instanceTemplates/delete
 func (r *InstanceTemplatesService) Delete(project string, instanceTemplate string) *InstanceTemplatesDeleteCall {
 	c := &InstanceTemplatesDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -9032,6 +9090,7 @@ type InstanceTemplatesGetCall struct {
 }
 
 // Get: Returns the specified instance template resource.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/instanceTemplates/get
 func (r *InstanceTemplatesService) Get(project string, instanceTemplate string) *InstanceTemplatesGetCall {
 	c := &InstanceTemplatesGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -9122,6 +9181,7 @@ type InstanceTemplatesInsertCall struct {
 
 // Insert: Creates an instance template resource in the specified
 // project using the data included in the request.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/instanceTemplates/insert
 func (r *InstanceTemplatesService) Insert(project string, instancetemplate *InstanceTemplate) *InstanceTemplatesInsertCall {
 	c := &InstanceTemplatesInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -9210,6 +9270,7 @@ type InstanceTemplatesListCall struct {
 
 // List: Retrieves the list of instance template resources contained
 // within the specified project.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/instanceTemplates/list
 func (r *InstanceTemplatesService) List(project string) *InstanceTemplatesListCall {
 	c := &InstanceTemplatesListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -9344,6 +9405,7 @@ type InstancesAddAccessConfigCall struct {
 
 // AddAccessConfig: Adds an access config to an instance's network
 // interface.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/instances/addAccessConfig
 func (r *InstancesService) AddAccessConfig(project string, zone string, instance string, networkInterface string, accessconfig *AccessConfig) *InstancesAddAccessConfigCall {
 	c := &InstancesAddAccessConfigCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -9460,6 +9522,7 @@ type InstancesAggregatedListCall struct {
 }
 
 // AggregatedList:
+// For details, see https://cloud.google.com/compute/docs/reference/latest/instances/aggregatedList
 func (r *InstancesService) AggregatedList(project string) *InstancesAggregatedListCall {
 	c := &InstancesAggregatedListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -9591,6 +9654,7 @@ type InstancesAttachDiskCall struct {
 }
 
 // AttachDisk: Attaches a disk resource to an instance.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/instances/attachDisk
 func (r *InstancesService) AttachDisk(project string, zone string, instance string, attacheddisk *AttachedDisk) *InstancesAttachDiskCall {
 	c := &InstancesAttachDiskCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -9700,6 +9764,7 @@ type InstancesDeleteCall struct {
 }
 
 // Delete: Deletes the specified instance resource.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/instances/delete
 func (r *InstancesService) Delete(project string, zone string, instance string) *InstancesDeleteCall {
 	c := &InstancesDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -9802,6 +9867,7 @@ type InstancesDeleteAccessConfigCall struct {
 
 // DeleteAccessConfig: Deletes an access config from an instance's
 // network interface.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/instances/deleteAccessConfig
 func (r *InstancesService) DeleteAccessConfig(project string, zone string, instance string, accessConfig string, networkInterface string) *InstancesDeleteAccessConfigCall {
 	c := &InstancesDeleteAccessConfigCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -9920,6 +9986,7 @@ type InstancesDetachDiskCall struct {
 }
 
 // DetachDisk: Detaches a disk from an instance.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/instances/detachDisk
 func (r *InstancesService) DetachDisk(project string, zone string, instance string, deviceName string) *InstancesDetachDiskCall {
 	c := &InstancesDetachDiskCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -10029,6 +10096,7 @@ type InstancesGetCall struct {
 }
 
 // Get: Returns the specified instance resource.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/instances/get
 func (r *InstancesService) Get(project string, zone string, instance string) *InstancesGetCall {
 	c := &InstancesGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -10130,6 +10198,7 @@ type InstancesGetSerialPortOutputCall struct {
 
 // GetSerialPortOutput: Returns the specified instance's serial port
 // output.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/instances/getSerialPortOutput
 func (r *InstancesService) GetSerialPortOutput(project string, zone string, instance string) *InstancesGetSerialPortOutputCall {
 	c := &InstancesGetSerialPortOutputCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -10231,6 +10300,7 @@ type InstancesInsertCall struct {
 
 // Insert: Creates an instance resource in the specified project using
 // the data included in the request.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/instances/insert
 func (r *InstancesService) Insert(project string, zone string, instance *Instance) *InstancesInsertCall {
 	c := &InstancesInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -10330,6 +10400,7 @@ type InstancesListCall struct {
 
 // List: Retrieves the list of instance resources contained within the
 // specified zone.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/instances/list
 func (r *InstancesService) List(project string, zone string) *InstancesListCall {
 	c := &InstancesListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -10471,6 +10542,7 @@ type InstancesResetCall struct {
 }
 
 // Reset: Performs a hard reset on the instance.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/instances/reset
 func (r *InstancesService) Reset(project string, zone string, instance string) *InstancesResetCall {
 	c := &InstancesResetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -10573,6 +10645,7 @@ type InstancesSetDiskAutoDeleteCall struct {
 
 // SetDiskAutoDelete: Sets the auto-delete flag for a disk attached to
 // an instance
+// For details, see https://cloud.google.com/compute/docs/reference/latest/instances/setDiskAutoDelete
 func (r *InstancesService) SetDiskAutoDelete(project string, zone string, instance string, autoDelete bool, deviceName string) *InstancesSetDiskAutoDeleteCall {
 	c := &InstancesSetDiskAutoDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -10693,6 +10766,7 @@ type InstancesSetMetadataCall struct {
 
 // SetMetadata: Sets metadata for the specified instance to the data
 // included in the request.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/instances/setMetadata
 func (r *InstancesService) SetMetadata(project string, zone string, instance string, metadata *Metadata) *InstancesSetMetadataCall {
 	c := &InstancesSetMetadataCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -10803,6 +10877,7 @@ type InstancesSetSchedulingCall struct {
 }
 
 // SetScheduling: Sets an instance's scheduling options.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/instances/setScheduling
 func (r *InstancesService) SetScheduling(project string, zone string, instance string, scheduling *Scheduling) *InstancesSetSchedulingCall {
 	c := &InstancesSetSchedulingCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -10914,6 +10989,7 @@ type InstancesSetTagsCall struct {
 
 // SetTags: Sets tags for the specified instance to the data included in
 // the request.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/instances/setTags
 func (r *InstancesService) SetTags(project string, zone string, instance string, tags *Tags) *InstancesSetTagsCall {
 	c := &InstancesSetTagsCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -11023,6 +11099,7 @@ type InstancesStartCall struct {
 }
 
 // Start: Starts an instance
+// For details, see https://cloud.google.com/compute/docs/reference/latest/instances/start
 func (r *InstancesService) Start(project string, zone string, instance string) *InstancesStartCall {
 	c := &InstancesStartCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -11122,6 +11199,7 @@ type InstancesStopCall struct {
 }
 
 // Stop: Stops an instance
+// For details, see https://cloud.google.com/compute/docs/reference/latest/instances/stop
 func (r *InstancesService) Stop(project string, zone string, instance string) *InstancesStopCall {
 	c := &InstancesStopCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -11220,6 +11298,7 @@ type LicensesGetCall struct {
 }
 
 // Get: Returns the specified license resource.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/licenses/get
 func (r *LicensesService) Get(project string, license string) *LicensesGetCall {
 	c := &LicensesGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -11309,6 +11388,7 @@ type MachineTypesAggregatedListCall struct {
 
 // AggregatedList: Retrieves the list of machine type resources grouped
 // by scope.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/machineTypes/aggregatedList
 func (r *MachineTypesService) AggregatedList(project string) *MachineTypesAggregatedListCall {
 	c := &MachineTypesAggregatedListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -11440,6 +11520,7 @@ type MachineTypesGetCall struct {
 }
 
 // Get: Returns the specified machine type resource.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/machineTypes/get
 func (r *MachineTypesService) Get(project string, zone string, machineType string) *MachineTypesGetCall {
 	c := &MachineTypesGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -11540,6 +11621,7 @@ type MachineTypesListCall struct {
 
 // List: Retrieves the list of machine type resources available to the
 // specified project.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/machineTypes/list
 func (r *MachineTypesService) List(project string, zone string) *MachineTypesListCall {
 	c := &MachineTypesListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -11680,6 +11762,7 @@ type NetworksDeleteCall struct {
 }
 
 // Delete: Deletes the specified network resource.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/networks/delete
 func (r *NetworksService) Delete(project string, network string) *NetworksDeleteCall {
 	c := &NetworksDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -11768,6 +11851,7 @@ type NetworksGetCall struct {
 }
 
 // Get: Returns the specified network resource.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/networks/get
 func (r *NetworksService) Get(project string, network string) *NetworksGetCall {
 	c := &NetworksGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -11858,6 +11942,7 @@ type NetworksInsertCall struct {
 
 // Insert: Creates a network resource in the specified project using the
 // data included in the request.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/networks/insert
 func (r *NetworksService) Insert(project string, network *Network) *NetworksInsertCall {
 	c := &NetworksInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -11946,6 +12031,7 @@ type NetworksListCall struct {
 
 // List: Retrieves the list of network resources available to the
 // specified project.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/networks/list
 func (r *NetworksService) List(project string) *NetworksListCall {
 	c := &NetworksListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -12075,6 +12161,7 @@ type ProjectsGetCall struct {
 }
 
 // Get: Returns the specified project resource.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/projects/get
 func (r *ProjectsService) Get(project string) *ProjectsGetCall {
 	c := &ProjectsGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -12155,6 +12242,7 @@ type ProjectsSetCommonInstanceMetadataCall struct {
 
 // SetCommonInstanceMetadata: Sets metadata common to all instances
 // within the specified project using the data included in the request.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/projects/setCommonInstanceMetadata
 func (r *ProjectsService) SetCommonInstanceMetadata(project string, metadata *Metadata) *ProjectsSetCommonInstanceMetadataCall {
 	c := &ProjectsSetCommonInstanceMetadataCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -12243,6 +12331,7 @@ type ProjectsSetUsageExportBucketCall struct {
 }
 
 // SetUsageExportBucket: Sets usage export location
+// For details, see https://cloud.google.com/compute/docs/reference/latest/projects/setUsageExportBucket
 func (r *ProjectsService) SetUsageExportBucket(project string, usageexportlocation *UsageExportLocation) *ProjectsSetUsageExportBucketCall {
 	c := &ProjectsSetUsageExportBucketCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -12335,6 +12424,7 @@ type RegionOperationsDeleteCall struct {
 }
 
 // Delete: Deletes the specified region-specific operation resource.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/regionOperations/delete
 func (r *RegionOperationsService) Delete(project string, region string, operation string) *RegionOperationsDeleteCall {
 	c := &RegionOperationsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -12427,6 +12517,7 @@ type RegionOperationsGetCall struct {
 }
 
 // Get: Retrieves the specified region-specific operation resource.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/regionOperations/get
 func (r *RegionOperationsService) Get(project string, region string, operation string) *RegionOperationsGetCall {
 	c := &RegionOperationsGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -12527,6 +12618,7 @@ type RegionOperationsListCall struct {
 
 // List: Retrieves the list of operation resources contained within the
 // specified region.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/regionOperations/list
 func (r *RegionOperationsService) List(project string, region string) *RegionOperationsListCall {
 	c := &RegionOperationsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -12667,6 +12759,7 @@ type RegionsGetCall struct {
 }
 
 // Get: Returns the specified region resource.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/regions/get
 func (r *RegionsService) Get(project string, region string) *RegionsGetCall {
 	c := &RegionsGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -12756,6 +12849,7 @@ type RegionsListCall struct {
 
 // List: Retrieves the list of region resources available to the
 // specified project.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/regions/list
 func (r *RegionsService) List(project string) *RegionsListCall {
 	c := &RegionsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -12886,6 +12980,7 @@ type RoutesDeleteCall struct {
 }
 
 // Delete: Deletes the specified route resource.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/routes/delete
 func (r *RoutesService) Delete(project string, route string) *RoutesDeleteCall {
 	c := &RoutesDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -12974,6 +13069,7 @@ type RoutesGetCall struct {
 }
 
 // Get: Returns the specified route resource.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/routes/get
 func (r *RoutesService) Get(project string, route string) *RoutesGetCall {
 	c := &RoutesGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -13064,6 +13160,7 @@ type RoutesInsertCall struct {
 
 // Insert: Creates a route resource in the specified project using the
 // data included in the request.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/routes/insert
 func (r *RoutesService) Insert(project string, route *Route) *RoutesInsertCall {
 	c := &RoutesInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -13152,6 +13249,7 @@ type RoutesListCall struct {
 
 // List: Retrieves the list of route resources available to the
 // specified project.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/routes/list
 func (r *RoutesService) List(project string) *RoutesListCall {
 	c := &RoutesListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -13282,6 +13380,7 @@ type SnapshotsDeleteCall struct {
 }
 
 // Delete: Deletes the specified persistent disk snapshot resource.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/snapshots/delete
 func (r *SnapshotsService) Delete(project string, snapshot string) *SnapshotsDeleteCall {
 	c := &SnapshotsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -13370,6 +13469,7 @@ type SnapshotsGetCall struct {
 }
 
 // Get: Returns the specified persistent disk snapshot resource.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/snapshots/get
 func (r *SnapshotsService) Get(project string, snapshot string) *SnapshotsGetCall {
 	c := &SnapshotsGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -13459,6 +13559,7 @@ type SnapshotsListCall struct {
 
 // List: Retrieves the list of persistent disk snapshot resources
 // contained within the specified project.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/snapshots/list
 func (r *SnapshotsService) List(project string) *SnapshotsListCall {
 	c := &SnapshotsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -13589,6 +13690,7 @@ type TargetHttpProxiesDeleteCall struct {
 }
 
 // Delete: Deletes the specified TargetHttpProxy resource.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/targetHttpProxies/delete
 func (r *TargetHttpProxiesService) Delete(project string, targetHttpProxy string) *TargetHttpProxiesDeleteCall {
 	c := &TargetHttpProxiesDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -13677,6 +13779,7 @@ type TargetHttpProxiesGetCall struct {
 }
 
 // Get: Returns the specified TargetHttpProxy resource.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/targetHttpProxies/get
 func (r *TargetHttpProxiesService) Get(project string, targetHttpProxy string) *TargetHttpProxiesGetCall {
 	c := &TargetHttpProxiesGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -13767,6 +13870,7 @@ type TargetHttpProxiesInsertCall struct {
 
 // Insert: Creates a TargetHttpProxy resource in the specified project
 // using the data included in the request.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/targetHttpProxies/insert
 func (r *TargetHttpProxiesService) Insert(project string, targethttpproxy *TargetHttpProxy) *TargetHttpProxiesInsertCall {
 	c := &TargetHttpProxiesInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -13855,6 +13959,7 @@ type TargetHttpProxiesListCall struct {
 
 // List: Retrieves the list of TargetHttpProxy resources available to
 // the specified project.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/targetHttpProxies/list
 func (r *TargetHttpProxiesService) List(project string) *TargetHttpProxiesListCall {
 	c := &TargetHttpProxiesListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -13986,6 +14091,7 @@ type TargetHttpProxiesSetUrlMapCall struct {
 }
 
 // SetUrlMap: Changes the URL map for TargetHttpProxy.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/targetHttpProxies/setUrlMap
 func (r *TargetHttpProxiesService) SetUrlMap(project string, targetHttpProxy string, urlmapreference *UrlMapReference) *TargetHttpProxiesSetUrlMapCall {
 	c := &TargetHttpProxiesSetUrlMapCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -14084,6 +14190,7 @@ type TargetInstancesAggregatedListCall struct {
 
 // AggregatedList: Retrieves the list of target instances grouped by
 // scope.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/targetInstances/aggregatedList
 func (r *TargetInstancesService) AggregatedList(project string) *TargetInstancesAggregatedListCall {
 	c := &TargetInstancesAggregatedListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -14215,6 +14322,7 @@ type TargetInstancesDeleteCall struct {
 }
 
 // Delete: Deletes the specified TargetInstance resource.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/targetInstances/delete
 func (r *TargetInstancesService) Delete(project string, zone string, targetInstance string) *TargetInstancesDeleteCall {
 	c := &TargetInstancesDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -14314,6 +14422,7 @@ type TargetInstancesGetCall struct {
 }
 
 // Get: Returns the specified TargetInstance resource.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/targetInstances/get
 func (r *TargetInstancesService) Get(project string, zone string, targetInstance string) *TargetInstancesGetCall {
 	c := &TargetInstancesGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -14415,6 +14524,7 @@ type TargetInstancesInsertCall struct {
 
 // Insert: Creates a TargetInstance resource in the specified project
 // and zone using the data included in the request.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/targetInstances/insert
 func (r *TargetInstancesService) Insert(project string, zone string, targetinstance *TargetInstance) *TargetInstancesInsertCall {
 	c := &TargetInstancesInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -14514,6 +14624,7 @@ type TargetInstancesListCall struct {
 
 // List: Retrieves the list of TargetInstance resources available to the
 // specified project and zone.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/targetInstances/list
 func (r *TargetInstancesService) List(project string, zone string) *TargetInstancesListCall {
 	c := &TargetInstancesListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -14656,6 +14767,7 @@ type TargetPoolsAddHealthCheckCall struct {
 }
 
 // AddHealthCheck: Adds health check URL to targetPool.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/targetPools/addHealthCheck
 func (r *TargetPoolsService) AddHealthCheck(project string, region string, targetPool string, targetpoolsaddhealthcheckrequest *TargetPoolsAddHealthCheckRequest) *TargetPoolsAddHealthCheckCall {
 	c := &TargetPoolsAddHealthCheckCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -14765,6 +14877,7 @@ type TargetPoolsAddInstanceCall struct {
 }
 
 // AddInstance: Adds instance url to targetPool.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/targetPools/addInstance
 func (r *TargetPoolsService) AddInstance(project string, region string, targetPool string, targetpoolsaddinstancerequest *TargetPoolsAddInstanceRequest) *TargetPoolsAddInstanceCall {
 	c := &TargetPoolsAddInstanceCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -14871,6 +14984,7 @@ type TargetPoolsAggregatedListCall struct {
 }
 
 // AggregatedList: Retrieves the list of target pools grouped by scope.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/targetPools/aggregatedList
 func (r *TargetPoolsService) AggregatedList(project string) *TargetPoolsAggregatedListCall {
 	c := &TargetPoolsAggregatedListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -15002,6 +15116,7 @@ type TargetPoolsDeleteCall struct {
 }
 
 // Delete: Deletes the specified TargetPool resource.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/targetPools/delete
 func (r *TargetPoolsService) Delete(project string, region string, targetPool string) *TargetPoolsDeleteCall {
 	c := &TargetPoolsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -15101,6 +15216,7 @@ type TargetPoolsGetCall struct {
 }
 
 // Get: Returns the specified TargetPool resource.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/targetPools/get
 func (r *TargetPoolsService) Get(project string, region string, targetPool string) *TargetPoolsGetCall {
 	c := &TargetPoolsGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -15203,6 +15319,7 @@ type TargetPoolsGetHealthCall struct {
 
 // GetHealth: Gets the most recent health check results for each IP for
 // the given instance that is referenced by given TargetPool.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/targetPools/getHealth
 func (r *TargetPoolsService) GetHealth(project string, region string, targetPool string, instancereference *InstanceReference) *TargetPoolsGetHealthCall {
 	c := &TargetPoolsGetHealthCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -15313,6 +15430,7 @@ type TargetPoolsInsertCall struct {
 
 // Insert: Creates a TargetPool resource in the specified project and
 // region using the data included in the request.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/targetPools/insert
 func (r *TargetPoolsService) Insert(project string, region string, targetpool *TargetPool) *TargetPoolsInsertCall {
 	c := &TargetPoolsInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -15412,6 +15530,7 @@ type TargetPoolsListCall struct {
 
 // List: Retrieves the list of TargetPool resources available to the
 // specified project and region.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/targetPools/list
 func (r *TargetPoolsService) List(project string, region string) *TargetPoolsListCall {
 	c := &TargetPoolsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -15554,6 +15673,7 @@ type TargetPoolsRemoveHealthCheckCall struct {
 }
 
 // RemoveHealthCheck: Removes health check URL from targetPool.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/targetPools/removeHealthCheck
 func (r *TargetPoolsService) RemoveHealthCheck(project string, region string, targetPool string, targetpoolsremovehealthcheckrequest *TargetPoolsRemoveHealthCheckRequest) *TargetPoolsRemoveHealthCheckCall {
 	c := &TargetPoolsRemoveHealthCheckCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -15663,6 +15783,7 @@ type TargetPoolsRemoveInstanceCall struct {
 }
 
 // RemoveInstance: Removes instance URL from targetPool.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/targetPools/removeInstance
 func (r *TargetPoolsService) RemoveInstance(project string, region string, targetPool string, targetpoolsremoveinstancerequest *TargetPoolsRemoveInstanceRequest) *TargetPoolsRemoveInstanceCall {
 	c := &TargetPoolsRemoveInstanceCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -15772,6 +15893,7 @@ type TargetPoolsSetBackupCall struct {
 }
 
 // SetBackup: Changes backup pool configurations.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/targetPools/setBackup
 func (r *TargetPoolsService) SetBackup(project string, region string, targetPool string, targetreference *TargetReference) *TargetPoolsSetBackupCall {
 	c := &TargetPoolsSetBackupCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -15896,6 +16018,7 @@ type UrlMapsDeleteCall struct {
 }
 
 // Delete: Deletes the specified UrlMap resource.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/urlMaps/delete
 func (r *UrlMapsService) Delete(project string, urlMap string) *UrlMapsDeleteCall {
 	c := &UrlMapsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -15984,6 +16107,7 @@ type UrlMapsGetCall struct {
 }
 
 // Get: Returns the specified UrlMap resource.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/urlMaps/get
 func (r *UrlMapsService) Get(project string, urlMap string) *UrlMapsGetCall {
 	c := &UrlMapsGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -16074,6 +16198,7 @@ type UrlMapsInsertCall struct {
 
 // Insert: Creates a UrlMap resource in the specified project using the
 // data included in the request.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/urlMaps/insert
 func (r *UrlMapsService) Insert(project string, urlmap *UrlMap) *UrlMapsInsertCall {
 	c := &UrlMapsInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -16162,6 +16287,7 @@ type UrlMapsListCall struct {
 
 // List: Retrieves the list of UrlMap resources available to the
 // specified project.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/urlMaps/list
 func (r *UrlMapsService) List(project string) *UrlMapsListCall {
 	c := &UrlMapsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -16294,6 +16420,7 @@ type UrlMapsPatchCall struct {
 
 // Patch: Update the entire content of the UrlMap resource. This method
 // supports patch semantics.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/urlMaps/patch
 func (r *UrlMapsService) Patch(project string, urlMap string, urlmap *UrlMap) *UrlMapsPatchCall {
 	c := &UrlMapsPatchCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -16393,6 +16520,7 @@ type UrlMapsUpdateCall struct {
 }
 
 // Update: Update the entire content of the UrlMap resource.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/urlMaps/update
 func (r *UrlMapsService) Update(project string, urlMap string, urlmap *UrlMap) *UrlMapsUpdateCall {
 	c := &UrlMapsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -16494,6 +16622,7 @@ type UrlMapsValidateCall struct {
 // Validate: Run static validation for the UrlMap. In particular, the
 // tests of the provided UrlMap will be run. Calling this method does
 // NOT create the UrlMap.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/urlMaps/validate
 func (r *UrlMapsService) Validate(project string, urlMap string, urlmapsvalidaterequest *UrlMapsValidateRequest) *UrlMapsValidateCall {
 	c := &UrlMapsValidateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -16593,6 +16722,7 @@ type ZoneOperationsDeleteCall struct {
 }
 
 // Delete: Deletes the specified zone-specific operation resource.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/zoneOperations/delete
 func (r *ZoneOperationsService) Delete(project string, zone string, operation string) *ZoneOperationsDeleteCall {
 	c := &ZoneOperationsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -16685,6 +16815,7 @@ type ZoneOperationsGetCall struct {
 }
 
 // Get: Retrieves the specified zone-specific operation resource.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/zoneOperations/get
 func (r *ZoneOperationsService) Get(project string, zone string, operation string) *ZoneOperationsGetCall {
 	c := &ZoneOperationsGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -16785,6 +16916,7 @@ type ZoneOperationsListCall struct {
 
 // List: Retrieves the list of operation resources contained within the
 // specified zone.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/zoneOperations/list
 func (r *ZoneOperationsService) List(project string, zone string) *ZoneOperationsListCall {
 	c := &ZoneOperationsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -16925,6 +17057,7 @@ type ZonesGetCall struct {
 }
 
 // Get: Returns the specified zone resource.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/zones/get
 func (r *ZonesService) Get(project string, zone string) *ZonesGetCall {
 	c := &ZonesGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -17014,6 +17147,7 @@ type ZonesListCall struct {
 
 // List: Retrieves the list of zone resources available to the specified
 // project.
+// For details, see https://cloud.google.com/compute/docs/reference/latest/zones/list
 func (r *ZonesService) List(project string) *ZonesListCall {
 	c := &ZonesListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project

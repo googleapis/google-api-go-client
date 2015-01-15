@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0b7777c2_33d10890",
+        "filename": "google-api-go-generator/whitelist.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-01-15T22:55:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b6b67dc_775a1047",
+      "revId": "4c1b7250b3ab376ed79c0d14ab2b9e44038ec215",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b6b67dc_174f1488",
         "filename": "google-api-go-generator/whitelist.go",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2015-01-15T21:49:42Z",
       "side": 1,
       "message": "document what the keys and values mean. It\u0027s not obvious.\n\nAlso, how is this updated?",
+      "revId": "4c1b7250b3ab376ed79c0d14ab2b9e44038ec215",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0b7777c2_b3bc3838",
+        "filename": "google-api-go-generator/whitelist.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-01-15T22:55:02Z",
+      "side": 1,
+      "message": "Currently, manually.  Added comments and TODO.",
+      "parentUuid": "8b6b67dc_174f1488",
       "revId": "4c1b7250b3ab376ed79c0d14ab2b9e44038ec215",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false

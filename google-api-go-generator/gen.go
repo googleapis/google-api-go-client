@@ -367,6 +367,8 @@ func (a *API) WriteGeneratedCode() error {
 	return err
 }
 
+var docsLink string
+
 func (a *API) GenerateCode() ([]byte, error) {
 	pkg := a.Package()
 
@@ -394,9 +396,10 @@ func (a *API) GenerateCode() ([]byte, error) {
 	reslist := a.Resources(a.m, "")
 
 	p("// Package %s provides access to the %s.\n", pkg, jstr(m, "title"))
-	if docs := jstr(m, "documentationLink"); docs != "" {
+	docsLink = jstr(m, "documentationLink")
+	if docsLink != "" {
 		p("//\n")
-		p("// See %s\n", docs)
+		p("// See %s\n", docsLink)
 	}
 	p("//\n// Usage example:\n")
 	p("//\n")
@@ -1168,7 +1171,6 @@ func (meth *Method) generateCode() {
 
 	args := meth.NewArguments()
 	methodName := initialCap(meth.name)
-
 	prefix := ""
 	if res != nil {
 		prefix = initialCap(fmt.Sprintf("%s.%s", res.parent, res.name))
@@ -1187,6 +1189,11 @@ func (meth *Method) generateCode() {
 	p("}\n")
 
 	p("\n%s", asComment("", methodName+": "+jstr(meth.m, "description")))
+	if res != nil {
+		if url := validateURL(fmt.Sprintf("%v%v/%v", docsLink, res.name, meth.name)); url != "" {
+			pn("// For details, see %v", url)
+		}
+	}
 
 	var servicePtr string
 	if res == nil {
@@ -1724,4 +1731,23 @@ func jstrlist(m map[string]interface{}, key string) []string {
 		sl = append(sl, si.(string))
 	}
 	return sl
+}
+
+// validateURL checks the URL to see if it is valid (200 OK).
+// It follows up to 10 redirects and returns the final URL.
+// If the URL is invalid, the empty string is returned.
+func validateURL(url string) string {
+	if res, ok := whitelist[url]; ok {
+		return res
+	}
+	res, err := http.Head(url)
+	if err != nil || res.StatusCode != http.StatusOK {
+		log.Printf(`whitelist needs updating: %q: "",`, url)
+		whitelist[url] = ""
+		return ""
+	}
+	v := res.Request.URL.String()
+	log.Printf(`whitelist needs updating: %q: %q,`, url, v)
+	whitelist[url] = v
+	return v
 }

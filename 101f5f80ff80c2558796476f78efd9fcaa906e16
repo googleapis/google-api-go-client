@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "4b940fff_7d48b78e",
+        "filename": "examples/main.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 5125
+      },
+      "writtenOn": "2015-01-15T23:58:48Z",
+      "side": 1,
+      "message": "Why don\u0027t we construct it in the main?",
+      "revId": "101f5f80ff80c2558796476f78efd9fcaa906e16",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b6b67dc_57a4ac98",
         "filename": "examples/main.go",
         "patchSetId": 1
@@ -13,6 +30,80 @@
       "writtenOn": "2015-01-15T23:40:32Z",
       "side": 1,
       "message": "don\u0027t want to just say:\n\n   Endpoint: google.Endpoint,\n\n?\n\nOr is the concern that it brings in a billion dependencies that way?  Somebody else raised that concern. Maybe we need to make an endpoints package, so we can write endpoints.Google instead, and have it be a leaf package.",
+      "revId": "101f5f80ff80c2558796476f78efd9fcaa906e16",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2b7a7baa_7448c88e",
+        "filename": "examples/main.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 5125
+      },
+      "writtenOn": "2015-01-15T23:58:48Z",
+      "side": 1,
+      "message": "OAuth 2.0. OAuth stands for OAuth 1.1.",
+      "revId": "101f5f80ff80c2558796476f78efd9fcaa906e16",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0b7777c2_796bdf0f",
+        "filename": "examples/main.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 5125
+      },
+      "writtenOn": "2015-01-15T23:58:48Z",
+      "side": 1,
+      "message": "clientid-file",
+      "revId": "101f5f80ff80c2558796476f78efd9fcaa906e16",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0b7777c2_993cbb01",
+        "filename": "examples/main.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 5125
+      },
+      "writtenOn": "2015-01-15T23:58:48Z",
+      "side": 1,
+      "message": "This is deprecated.\n\nUse developers.google.com/console.\n\nWhat exactly is a clientid.data?",
+      "range": {
+        "startLine": 43,
+        "startChar": 69,
+        "endLine": 43,
+        "endChar": 106
+      },
+      "revId": "101f5f80ff80c2558796476f78efd9fcaa906e16",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2bcfdb48_8c178769",
+        "filename": "examples/main.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 5125
+      },
+      "writtenOn": "2015-01-15T23:58:48Z",
+      "side": 1,
+      "message": "Why? You should never call tokenFromFile is cacheToken is not set.",
       "revId": "101f5f80ff80c2558796476f78efd9fcaa906e16",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false

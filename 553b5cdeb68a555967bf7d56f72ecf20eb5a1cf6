@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0b7777c2_59a703c6",
+        "filename": "google-api-go-generator/whitelist.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-01-15T23:22:26Z",
+      "side": 1,
+      "message": "Doh.  Thanks.",
+      "parentUuid": "8b6b67dc_d73c3cb4",
+      "revId": "553b5cdeb68a555967bf7d56f72ecf20eb5a1cf6",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b6b67dc_f73940c1",
         "filename": "google-api-go-generator/whitelist.go",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2015-01-15T23:08:20Z",
       "side": 1,
       "message": "I don\u0027t think we need every URL. I think a map from API-\u003etrue bool (without false entries even) is sufficient.\n\nIf an API has these docs, it\u0027ll be for everything, won\u0027t it?\n\nOr are there APIs with only partial docs?",
+      "revId": "553b5cdeb68a555967bf7d56f72ecf20eb5a1cf6",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0b7777c2_99c11b31",
+        "filename": "google-api-go-generator/whitelist.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-01-15T23:22:26Z",
+      "side": 1,
+      "message": "I thought it was a really nice feature to already perform the 301 Redirects prior to updating the documentation to minimize confusion.\n\nIf we map from API\u003d\u003etrue, when we get none of the benefits of capturing the redirections or 404 detection.\n\nIdeally, if an API has docs, it should have all Resource/Verb combinations listed, but I\u0027m betting that there might be holes, in which case it would be even more frustrating to a developer to attempt to jump to a link that gives \"404 - Not Found\" when they were expecting more information.\n\nSo I would vote to keep it as-is.",
+      "parentUuid": "8b6b67dc_f73940c1",
       "revId": "553b5cdeb68a555967bf7d56f72ecf20eb5a1cf6",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false

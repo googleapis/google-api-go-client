@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b6b67dc_d73c3cb4",
+        "filename": "google-api-go-generator/whitelist.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-01-15T23:08:20Z",
+      "side": 1,
+      "message": "wrong year",
+      "revId": "553b5cdeb68a555967bf7d56f72ecf20eb5a1cf6",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8b6b67dc_f73940c1",
+        "filename": "google-api-go-generator/whitelist.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-01-15T23:08:20Z",
+      "side": 1,
+      "message": "I don\u0027t think we need every URL. I think a map from API-\u003etrue bool (without false entries even) is sufficient.\n\nIf an API has these docs, it\u0027ll be for everything, won\u0027t it?\n\nOr are there APIs with only partial docs?",
+      "revId": "553b5cdeb68a555967bf7d56f72ecf20eb5a1cf6",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

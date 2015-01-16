@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b6b67dc_b7be689e",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 7
+      },
+      "lineNbr": 1740,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-01-16T00:02:47Z",
+      "side": 1,
+      "message": "Now I realize this could just be:\n\nreturn whitelist[url]\n\nBut then this whole function is useless, and the map could be renamed to canonicalDocsURL and the caller can access the map directly.",
+      "revId": "d9d271a2b10454b91c8767d59dd7a40598b382ba",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8b6b67dc_578d8c16",
+        "filename": "google-api-go-generator/whitelist.go",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-01-16T00:02:47Z",
+      "side": 1,
+      "message": "yeah, rename this to canonicalDocsURL and ditch the function",
+      "revId": "d9d271a2b10454b91c8767d59dd7a40598b382ba",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

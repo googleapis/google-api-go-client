@@ -9,8 +9,16 @@ package main
 // If the auto-generated URL is not valid, then it maps to "" and will not
 // be added to the auto-generated API comments.
 // Note that this map is currently updated manually.
-// TODO(gmlewis): write automated updating tool for map.
 var canonicalDocsURL = map[string]string{
+	"https://cloud.google.com/compute/docs/instance-groups/manager/#applying_rolling_updates_using_the_updater_servicerollingUpdates/cancel":              "https://cloud.google.com/compute/docs/instance-groups/manager/#cancelrollingupdate",
+	"https://cloud.google.com/compute/docs/instance-groups/manager/#applying_rolling_updates_using_the_updater_servicerollingUpdates/get":                 "https://cloud.google.com/compute/docs/instance-groups/manager/#getlistrollingupdate",
+	"https://cloud.google.com/compute/docs/instance-groups/manager/#applying_rolling_updates_using_the_updater_servicerollingUpdates/insert":              "https://cloud.google.com/compute/docs/instance-groups/manager/#starting_an_update",
+	"https://cloud.google.com/compute/docs/instance-groups/manager/#applying_rolling_updates_using_the_updater_servicerollingUpdates/list":                "https://cloud.google.com/compute/docs/instance-groups/manager/#getlistrollingupdate",
+	"https://cloud.google.com/compute/docs/instance-groups/manager/#applying_rolling_updates_using_the_updater_servicerollingUpdates/listInstanceUpdates": "https://cloud.google.com/compute/docs/instance-groups/manager/#getlistrollingupdate",
+	"https://cloud.google.com/compute/docs/instance-groups/manager/#applying_rolling_updates_using_the_updater_servicerollingUpdates/pause":               "https://cloud.google.com/compute/docs/instance-groups/manager/#pausing_a_rolling_update",
+	"https://cloud.google.com/compute/docs/instance-groups/manager/#applying_rolling_updates_using_the_updater_servicerollingUpdates/resume":              "https://cloud.google.com/compute/docs/instance-groups/manager/#continuerollingupdate",
+	"https://cloud.google.com/compute/docs/instance-groups/manager/#applying_rolling_updates_using_the_updater_servicerollingUpdates/rollback":            "https://cloud.google.com/compute/docs/instance-groups/manager/#rollingbackupdate",
+
 	"https://developers.google.com/compute/docs/reference/latest/addresses/aggregatedList":           "https://cloud.google.com/compute/docs/reference/latest/addresses/aggregatedList",
 	"https://developers.google.com/compute/docs/reference/latest/addresses/delete":                   "https://cloud.google.com/compute/docs/reference/latest/addresses/delete",
 	"https://developers.google.com/compute/docs/reference/latest/addresses/get":                      "https://cloud.google.com/compute/docs/reference/latest/addresses/get",

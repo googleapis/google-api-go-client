@@ -227,6 +227,7 @@ type RollingUpdatesCancelCall struct {
 
 // Cancel: Cancels an update. The update must be PAUSED before it can be
 // cancelled. This has no effect if the update is already CANCELLED.
+// For details, see https://cloud.google.com/compute/docs/instance-groups/manager/#cancelrollingupdate
 func (r *RollingUpdatesService) Cancel(project string, zone string, rollingUpdate string) *RollingUpdatesCancelCall {
 	c := &RollingUpdatesCancelCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -318,6 +319,7 @@ type RollingUpdatesGetCall struct {
 }
 
 // Get: Returns information about an update.
+// For details, see https://cloud.google.com/compute/docs/instance-groups/manager/#getlistrollingupdate
 func (r *RollingUpdatesService) Get(project string, zone string, rollingUpdate string) *RollingUpdatesGetCall {
 	c := &RollingUpdatesGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -417,6 +419,7 @@ type RollingUpdatesInsertCall struct {
 }
 
 // Insert: Inserts and starts a new update.
+// For details, see https://cloud.google.com/compute/docs/instance-groups/manager/#starting_an_update
 func (r *RollingUpdatesService) Insert(project string, zone string, rollingupdate *RollingUpdate) *RollingUpdatesInsertCall {
 	c := &RollingUpdatesInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -516,6 +519,7 @@ type RollingUpdatesListCall struct {
 
 // List: Lists recent updates for a given managed instance group, in
 // reverse chronological order and paginated format.
+// For details, see https://cloud.google.com/compute/docs/instance-groups/manager/#getlistrollingupdate
 func (r *RollingUpdatesService) List(project string, zone string) *RollingUpdatesListCall {
 	c := &RollingUpdatesListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -658,6 +662,7 @@ type RollingUpdatesListInstanceUpdatesCall struct {
 
 // ListInstanceUpdates: Lists the current status for each instance
 // within a given update.
+// For details, see https://cloud.google.com/compute/docs/instance-groups/manager/#getlistrollingupdate
 func (r *RollingUpdatesService) ListInstanceUpdates(project string, zone string, rollingUpdate string) *RollingUpdatesListInstanceUpdatesCall {
 	c := &RollingUpdatesListInstanceUpdatesCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -795,6 +800,7 @@ type RollingUpdatesPauseCall struct {
 // Pause: Pauses the update in state from ROLLING_FORWARD or
 // ROLLING_BACK. Has no effect if invoked when the state of the update
 // is PAUSED.
+// For details, see https://cloud.google.com/compute/docs/instance-groups/manager/#pausing_a_rolling_update
 func (r *RollingUpdatesService) Pause(project string, zone string, rollingUpdate string) *RollingUpdatesPauseCall {
 	c := &RollingUpdatesPauseCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -887,6 +893,7 @@ type RollingUpdatesResumeCall struct {
 
 // Resume: Continues an update in PAUSED state. Has no effect if invoked
 // when the state of the update is ROLLED_OUT.
+// For details, see https://cloud.google.com/compute/docs/instance-groups/manager/#continuerollingupdate
 func (r *RollingUpdatesService) Resume(project string, zone string, rollingUpdate string) *RollingUpdatesResumeCall {
 	c := &RollingUpdatesResumeCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -980,6 +987,7 @@ type RollingUpdatesRollbackCall struct {
 // Rollback: Rolls back the update in state from ROLLING_FORWARD or
 // PAUSED. Has no effect if invoked when the state of the update is
 // ROLLED_BACK.
+// For details, see https://cloud.google.com/compute/docs/instance-groups/manager/#rollingbackupdate
 func (r *RollingUpdatesService) Rollback(project string, zone string, rollingUpdate string) *RollingUpdatesRollbackCall {
 	c := &RollingUpdatesRollbackCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project

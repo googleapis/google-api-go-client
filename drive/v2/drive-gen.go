@@ -1431,10 +1431,10 @@ func (c *AboutGetCall) Fields(s ...googleapi.Field) *AboutGetCall {
 	return c
 }
 
-func (c *AboutGetCall) Do() (*About, error) {
+func (c *AboutGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["includeSubscribed"]; ok {
 		params.Set("includeSubscribed", fmt.Sprintf("%v", v))
 	}
@@ -1452,7 +1452,11 @@ func (c *AboutGetCall) Do() (*About, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AboutGetCall) Do() (*About, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1528,10 +1532,10 @@ func (c *AppsGetCall) Fields(s ...googleapi.Field) *AppsGetCall {
 	return c
 }
 
-func (c *AppsGetCall) Do() (*App, error) {
+func (c *AppsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1542,7 +1546,11 @@ func (c *AppsGetCall) Do() (*App, error) {
 		"appId": c.appId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AppsGetCall) Do() (*App, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1637,10 +1645,10 @@ func (c *AppsListCall) Fields(s ...googleapi.Field) *AppsListCall {
 	return c
 }
 
-func (c *AppsListCall) Do() (*AppList, error) {
+func (c *AppsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["appFilterExtensions"]; ok {
 		params.Set("appFilterExtensions", fmt.Sprintf("%v", v))
 	}
@@ -1658,7 +1666,11 @@ func (c *AppsListCall) Do() (*AppList, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AppsListCall) Do() (*AppList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1728,10 +1740,10 @@ func (c *ChangesGetCall) Fields(s ...googleapi.Field) *ChangesGetCall {
 	return c
 }
 
-func (c *ChangesGetCall) Do() (*Change, error) {
+func (c *ChangesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1742,7 +1754,11 @@ func (c *ChangesGetCall) Do() (*Change, error) {
 		"changeId": c.changeId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ChangesGetCall) Do() (*Change, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1844,10 +1860,10 @@ func (c *ChangesListCall) Fields(s ...googleapi.Field) *ChangesListCall {
 	return c
 }
 
-func (c *ChangesListCall) Do() (*ChangeList, error) {
+func (c *ChangesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["includeDeleted"]; ok {
 		params.Set("includeDeleted", fmt.Sprintf("%v", v))
 	}
@@ -1871,7 +1887,11 @@ func (c *ChangesListCall) Do() (*ChangeList, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ChangesListCall) Do() (*ChangeList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1998,7 +2018,7 @@ func (c *ChangesWatchCall) Fields(s ...googleapi.Field) *ChangesWatchCall {
 	return c
 }
 
-func (c *ChangesWatchCall) Do() (*Channel, error) {
+func (c *ChangesWatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channel)
 	if err != nil {
@@ -2006,7 +2026,7 @@ func (c *ChangesWatchCall) Do() (*Channel, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["includeDeleted"]; ok {
 		params.Set("includeDeleted", fmt.Sprintf("%v", v))
 	}
@@ -2031,7 +2051,11 @@ func (c *ChangesWatchCall) Do() (*Channel, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ChangesWatchCall) Do() (*Channel, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2125,15 +2149,15 @@ func (c *ChannelsStopCall) Fields(s ...googleapi.Field) *ChannelsStopCall {
 	return c
 }
 
-func (c *ChannelsStopCall) Do() error {
+func (c *ChannelsStopCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channel)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -2143,7 +2167,11 @@ func (c *ChannelsStopCall) Do() error {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ChannelsStopCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -2198,10 +2226,10 @@ func (c *ChildrenDeleteCall) Fields(s ...googleapi.Field) *ChildrenDeleteCall {
 	return c
 }
 
-func (c *ChildrenDeleteCall) Do() error {
+func (c *ChildrenDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -2213,7 +2241,11 @@ func (c *ChildrenDeleteCall) Do() error {
 		"childId":  c.childId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ChildrenDeleteCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -2278,10 +2310,10 @@ func (c *ChildrenGetCall) Fields(s ...googleapi.Field) *ChildrenGetCall {
 	return c
 }
 
-func (c *ChildrenGetCall) Do() (*ChildReference, error) {
+func (c *ChildrenGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -2293,7 +2325,11 @@ func (c *ChildrenGetCall) Do() (*ChildReference, error) {
 		"childId":  c.childId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ChildrenGetCall) Do() (*ChildReference, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2368,7 +2404,7 @@ func (c *ChildrenInsertCall) Fields(s ...googleapi.Field) *ChildrenInsertCall {
 	return c
 }
 
-func (c *ChildrenInsertCall) Do() (*ChildReference, error) {
+func (c *ChildrenInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.childreference)
 	if err != nil {
@@ -2376,7 +2412,7 @@ func (c *ChildrenInsertCall) Do() (*ChildReference, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -2388,7 +2424,11 @@ func (c *ChildrenInsertCall) Do() (*ChildReference, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ChildrenInsertCall) Do() (*ChildReference, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2476,10 +2516,10 @@ func (c *ChildrenListCall) Fields(s ...googleapi.Field) *ChildrenListCall {
 	return c
 }
 
-func (c *ChildrenListCall) Do() (*ChildList, error) {
+func (c *ChildrenListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
@@ -2499,7 +2539,11 @@ func (c *ChildrenListCall) Do() (*ChildList, error) {
 		"folderId": c.folderId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ChildrenListCall) Do() (*ChildList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2585,10 +2629,10 @@ func (c *CommentsDeleteCall) Fields(s ...googleapi.Field) *CommentsDeleteCall {
 	return c
 }
 
-func (c *CommentsDeleteCall) Do() error {
+func (c *CommentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -2600,7 +2644,11 @@ func (c *CommentsDeleteCall) Do() error {
 		"commentId": c.commentId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *CommentsDeleteCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -2674,10 +2722,10 @@ func (c *CommentsGetCall) Fields(s ...googleapi.Field) *CommentsGetCall {
 	return c
 }
 
-func (c *CommentsGetCall) Do() (*Comment, error) {
+func (c *CommentsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["includeDeleted"]; ok {
 		params.Set("includeDeleted", fmt.Sprintf("%v", v))
 	}
@@ -2692,7 +2740,11 @@ func (c *CommentsGetCall) Do() (*Comment, error) {
 		"commentId": c.commentId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *CommentsGetCall) Do() (*Comment, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2771,7 +2823,7 @@ func (c *CommentsInsertCall) Fields(s ...googleapi.Field) *CommentsInsertCall {
 	return c
 }
 
-func (c *CommentsInsertCall) Do() (*Comment, error) {
+func (c *CommentsInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.comment)
 	if err != nil {
@@ -2779,7 +2831,7 @@ func (c *CommentsInsertCall) Do() (*Comment, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -2791,7 +2843,11 @@ func (c *CommentsInsertCall) Do() (*Comment, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *CommentsInsertCall) Do() (*Comment, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2889,10 +2945,10 @@ func (c *CommentsListCall) Fields(s ...googleapi.Field) *CommentsListCall {
 	return c
 }
 
-func (c *CommentsListCall) Do() (*CommentList, error) {
+func (c *CommentsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["includeDeleted"]; ok {
 		params.Set("includeDeleted", fmt.Sprintf("%v", v))
 	}
@@ -2915,7 +2971,11 @@ func (c *CommentsListCall) Do() (*CommentList, error) {
 		"fileId": c.fileId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *CommentsListCall) Do() (*CommentList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3009,7 +3069,7 @@ func (c *CommentsPatchCall) Fields(s ...googleapi.Field) *CommentsPatchCall {
 	return c
 }
 
-func (c *CommentsPatchCall) Do() (*Comment, error) {
+func (c *CommentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.comment)
 	if err != nil {
@@ -3017,7 +3077,7 @@ func (c *CommentsPatchCall) Do() (*Comment, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -3030,7 +3090,11 @@ func (c *CommentsPatchCall) Do() (*Comment, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *CommentsPatchCall) Do() (*Comment, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3107,7 +3171,7 @@ func (c *CommentsUpdateCall) Fields(s ...googleapi.Field) *CommentsUpdateCall {
 	return c
 }
 
-func (c *CommentsUpdateCall) Do() (*Comment, error) {
+func (c *CommentsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.comment)
 	if err != nil {
@@ -3115,7 +3179,7 @@ func (c *CommentsUpdateCall) Do() (*Comment, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -3128,7 +3192,11 @@ func (c *CommentsUpdateCall) Do() (*Comment, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *CommentsUpdateCall) Do() (*Comment, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3254,7 +3322,7 @@ func (c *FilesCopyCall) Fields(s ...googleapi.Field) *FilesCopyCall {
 	return c
 }
 
-func (c *FilesCopyCall) Do() (*File, error) {
+func (c *FilesCopyCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.file)
 	if err != nil {
@@ -3262,7 +3330,7 @@ func (c *FilesCopyCall) Do() (*File, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["convert"]; ok {
 		params.Set("convert", fmt.Sprintf("%v", v))
 	}
@@ -3295,7 +3363,11 @@ func (c *FilesCopyCall) Do() (*File, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *FilesCopyCall) Do() (*File, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3411,10 +3483,10 @@ func (c *FilesDeleteCall) Fields(s ...googleapi.Field) *FilesDeleteCall {
 	return c
 }
 
-func (c *FilesDeleteCall) Do() error {
+func (c *FilesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -3425,7 +3497,11 @@ func (c *FilesDeleteCall) Do() error {
 		"fileId": c.fileId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *FilesDeleteCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -3480,10 +3556,10 @@ func (c *FilesEmptyTrashCall) Fields(s ...googleapi.Field) *FilesEmptyTrashCall 
 	return c
 }
 
-func (c *FilesEmptyTrashCall) Do() error {
+func (c *FilesEmptyTrashCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -3492,7 +3568,11 @@ func (c *FilesEmptyTrashCall) Do() error {
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *FilesEmptyTrashCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -3559,10 +3639,10 @@ func (c *FilesGetCall) Fields(s ...googleapi.Field) *FilesGetCall {
 	return c
 }
 
-func (c *FilesGetCall) Do() (*File, error) {
+func (c *FilesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["acknowledgeAbuse"]; ok {
 		params.Set("acknowledgeAbuse", fmt.Sprintf("%v", v))
 	}
@@ -3582,7 +3662,27 @@ func (c *FilesGetCall) Do() (*File, error) {
 		"fileId": c.fileId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+// Download fetches the media instead of the API response, replacing
+// the stanard call to Do(). The http Response is returned for all
+// successful requests (2xx) and the caller is responsible for closing
+// the response body as usual. Other codes are reported as an error.
+func (c *FilesGetCall) Download() (*http.Response, error) {
+	res, err := c.doRequest("media")
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckMediaResponse(res); err != nil {
+		res.Body.Close()
+		return nil, err
+	}
+	return res, nil
+}
+
+func (c *FilesGetCall) Do() (*File, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3767,7 +3867,7 @@ func (c *FilesInsertCall) Fields(s ...googleapi.Field) *FilesInsertCall {
 	return c
 }
 
-func (c *FilesInsertCall) Do() (*File, error) {
+func (c *FilesInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.file)
 	if err != nil {
@@ -3775,7 +3875,7 @@ func (c *FilesInsertCall) Do() (*File, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["convert"]; ok {
 		params.Set("convert", fmt.Sprintf("%v", v))
 	}
@@ -3804,12 +3904,6 @@ func (c *FilesInsertCall) Do() (*File, error) {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files")
-	var progressUpdater_ googleapi.ProgressUpdater
-	if v, ok := c.opt_["progressUpdater"]; ok {
-		if pu, ok := v.(googleapi.ProgressUpdater); ok {
-			progressUpdater_ = pu
-		}
-	}
 	if c.media_ != nil || c.resumable_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
 		params.Set("uploadType", c.protocol_)
@@ -3835,13 +3929,23 @@ func (c *FilesInsertCall) Do() (*File, error) {
 		req.Header.Set("Content-Type", ctype)
 	}
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *FilesInsertCall) Do() (*File, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
+	}
+	var progressUpdater_ googleapi.ProgressUpdater
+	if v, ok := c.opt_["progressUpdater"]; ok {
+		if pu, ok := v.(googleapi.ProgressUpdater); ok {
+			progressUpdater_ = pu
+		}
 	}
 	if c.protocol_ == "resumable" {
 		loc := res.Header.Get("Location")
@@ -4014,10 +4118,10 @@ func (c *FilesListCall) Fields(s ...googleapi.Field) *FilesListCall {
 	return c
 }
 
-func (c *FilesListCall) Do() (*FileList, error) {
+func (c *FilesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["corpus"]; ok {
 		params.Set("corpus", fmt.Sprintf("%v", v))
 	}
@@ -4041,7 +4145,11 @@ func (c *FilesListCall) Do() (*FileList, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *FilesListCall) Do() (*FileList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -4234,7 +4342,7 @@ func (c *FilesPatchCall) Fields(s ...googleapi.Field) *FilesPatchCall {
 	return c
 }
 
-func (c *FilesPatchCall) Do() (*File, error) {
+func (c *FilesPatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.file)
 	if err != nil {
@@ -4242,7 +4350,7 @@ func (c *FilesPatchCall) Do() (*File, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["addParents"]; ok {
 		params.Set("addParents", fmt.Sprintf("%v", v))
 	}
@@ -4290,7 +4398,11 @@ func (c *FilesPatchCall) Do() (*File, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *FilesPatchCall) Do() (*File, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -4426,10 +4538,10 @@ func (c *FilesTouchCall) Fields(s ...googleapi.Field) *FilesTouchCall {
 	return c
 }
 
-func (c *FilesTouchCall) Do() (*File, error) {
+func (c *FilesTouchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -4440,7 +4552,11 @@ func (c *FilesTouchCall) Do() (*File, error) {
 		"fileId": c.fileId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *FilesTouchCall) Do() (*File, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -4505,10 +4621,10 @@ func (c *FilesTrashCall) Fields(s ...googleapi.Field) *FilesTrashCall {
 	return c
 }
 
-func (c *FilesTrashCall) Do() (*File, error) {
+func (c *FilesTrashCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -4519,7 +4635,11 @@ func (c *FilesTrashCall) Do() (*File, error) {
 		"fileId": c.fileId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *FilesTrashCall) Do() (*File, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -4584,10 +4704,10 @@ func (c *FilesUntrashCall) Fields(s ...googleapi.Field) *FilesUntrashCall {
 	return c
 }
 
-func (c *FilesUntrashCall) Do() (*File, error) {
+func (c *FilesUntrashCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -4598,7 +4718,11 @@ func (c *FilesUntrashCall) Do() (*File, error) {
 		"fileId": c.fileId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *FilesUntrashCall) Do() (*File, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -4786,7 +4910,7 @@ func (c *FilesUpdateCall) Fields(s ...googleapi.Field) *FilesUpdateCall {
 	return c
 }
 
-func (c *FilesUpdateCall) Do() (*File, error) {
+func (c *FilesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.file)
 	if err != nil {
@@ -4794,7 +4918,7 @@ func (c *FilesUpdateCall) Do() (*File, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["addParents"]; ok {
 		params.Set("addParents", fmt.Sprintf("%v", v))
 	}
@@ -4835,12 +4959,6 @@ func (c *FilesUpdateCall) Do() (*File, error) {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}")
-	var progressUpdater_ googleapi.ProgressUpdater
-	if v, ok := c.opt_["progressUpdater"]; ok {
-		if pu, ok := v.(googleapi.ProgressUpdater); ok {
-			progressUpdater_ = pu
-		}
-	}
 	if c.media_ != nil || c.resumable_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
 		params.Set("uploadType", c.protocol_)
@@ -4868,13 +4986,23 @@ func (c *FilesUpdateCall) Do() (*File, error) {
 		req.Header.Set("Content-Type", ctype)
 	}
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *FilesUpdateCall) Do() (*File, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
+	}
+	var progressUpdater_ googleapi.ProgressUpdater
+	if v, ok := c.opt_["progressUpdater"]; ok {
+		if pu, ok := v.(googleapi.ProgressUpdater); ok {
+			progressUpdater_ = pu
+		}
 	}
 	if c.protocol_ == "resumable" {
 		loc := res.Header.Get("Location")
@@ -5063,7 +5191,7 @@ func (c *FilesWatchCall) Fields(s ...googleapi.Field) *FilesWatchCall {
 	return c
 }
 
-func (c *FilesWatchCall) Do() (*Channel, error) {
+func (c *FilesWatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channel)
 	if err != nil {
@@ -5071,7 +5199,7 @@ func (c *FilesWatchCall) Do() (*Channel, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["acknowledgeAbuse"]; ok {
 		params.Set("acknowledgeAbuse", fmt.Sprintf("%v", v))
 	}
@@ -5092,7 +5220,27 @@ func (c *FilesWatchCall) Do() (*Channel, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+// Download fetches the media instead of the API response, replacing
+// the stanard call to Do(). The http Response is returned for all
+// successful requests (2xx) and the caller is responsible for closing
+// the response body as usual. Other codes are reported as an error.
+func (c *FilesWatchCall) Download() (*http.Response, error) {
+	res, err := c.doRequest("media")
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckMediaResponse(res); err != nil {
+		res.Body.Close()
+		return nil, err
+	}
+	return res, nil
+}
+
+func (c *FilesWatchCall) Do() (*Channel, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -5192,10 +5340,10 @@ func (c *ParentsDeleteCall) Fields(s ...googleapi.Field) *ParentsDeleteCall {
 	return c
 }
 
-func (c *ParentsDeleteCall) Do() error {
+func (c *ParentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -5207,7 +5355,11 @@ func (c *ParentsDeleteCall) Do() error {
 		"parentId": c.parentId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ParentsDeleteCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -5272,10 +5424,10 @@ func (c *ParentsGetCall) Fields(s ...googleapi.Field) *ParentsGetCall {
 	return c
 }
 
-func (c *ParentsGetCall) Do() (*ParentReference, error) {
+func (c *ParentsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -5287,7 +5439,11 @@ func (c *ParentsGetCall) Do() (*ParentReference, error) {
 		"parentId": c.parentId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ParentsGetCall) Do() (*ParentReference, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -5362,7 +5518,7 @@ func (c *ParentsInsertCall) Fields(s ...googleapi.Field) *ParentsInsertCall {
 	return c
 }
 
-func (c *ParentsInsertCall) Do() (*ParentReference, error) {
+func (c *ParentsInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.parentreference)
 	if err != nil {
@@ -5370,7 +5526,7 @@ func (c *ParentsInsertCall) Do() (*ParentReference, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -5382,7 +5538,11 @@ func (c *ParentsInsertCall) Do() (*ParentReference, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ParentsInsertCall) Do() (*ParentReference, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -5449,10 +5609,10 @@ func (c *ParentsListCall) Fields(s ...googleapi.Field) *ParentsListCall {
 	return c
 }
 
-func (c *ParentsListCall) Do() (*ParentList, error) {
+func (c *ParentsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -5463,7 +5623,11 @@ func (c *ParentsListCall) Do() (*ParentList, error) {
 		"fileId": c.fileId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ParentsListCall) Do() (*ParentList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -5531,10 +5695,10 @@ func (c *PermissionsDeleteCall) Fields(s ...googleapi.Field) *PermissionsDeleteC
 	return c
 }
 
-func (c *PermissionsDeleteCall) Do() error {
+func (c *PermissionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -5546,7 +5710,11 @@ func (c *PermissionsDeleteCall) Do() error {
 		"permissionId": c.permissionId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *PermissionsDeleteCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -5611,10 +5779,10 @@ func (c *PermissionsGetCall) Fields(s ...googleapi.Field) *PermissionsGetCall {
 	return c
 }
 
-func (c *PermissionsGetCall) Do() (*Permission, error) {
+func (c *PermissionsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -5626,7 +5794,11 @@ func (c *PermissionsGetCall) Do() (*Permission, error) {
 		"permissionId": c.permissionId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *PermissionsGetCall) Do() (*Permission, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -5698,10 +5870,10 @@ func (c *PermissionsGetIdForEmailCall) Fields(s ...googleapi.Field) *Permissions
 	return c
 }
 
-func (c *PermissionsGetIdForEmailCall) Do() (*PermissionId, error) {
+func (c *PermissionsGetIdForEmailCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -5712,7 +5884,11 @@ func (c *PermissionsGetIdForEmailCall) Do() (*PermissionId, error) {
 		"email": c.email,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *PermissionsGetIdForEmailCall) Do() (*PermissionId, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -5797,7 +5973,7 @@ func (c *PermissionsInsertCall) Fields(s ...googleapi.Field) *PermissionsInsertC
 	return c
 }
 
-func (c *PermissionsInsertCall) Do() (*Permission, error) {
+func (c *PermissionsInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.permission)
 	if err != nil {
@@ -5805,7 +5981,7 @@ func (c *PermissionsInsertCall) Do() (*Permission, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["emailMessage"]; ok {
 		params.Set("emailMessage", fmt.Sprintf("%v", v))
 	}
@@ -5823,7 +5999,11 @@ func (c *PermissionsInsertCall) Do() (*Permission, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *PermissionsInsertCall) Do() (*Permission, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -5900,10 +6080,10 @@ func (c *PermissionsListCall) Fields(s ...googleapi.Field) *PermissionsListCall 
 	return c
 }
 
-func (c *PermissionsListCall) Do() (*PermissionList, error) {
+func (c *PermissionsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -5914,7 +6094,11 @@ func (c *PermissionsListCall) Do() (*PermissionList, error) {
 		"fileId": c.fileId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *PermissionsListCall) Do() (*PermissionList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -5991,7 +6175,7 @@ func (c *PermissionsPatchCall) Fields(s ...googleapi.Field) *PermissionsPatchCal
 	return c
 }
 
-func (c *PermissionsPatchCall) Do() (*Permission, error) {
+func (c *PermissionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.permission)
 	if err != nil {
@@ -5999,7 +6183,7 @@ func (c *PermissionsPatchCall) Do() (*Permission, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["transferOwnership"]; ok {
 		params.Set("transferOwnership", fmt.Sprintf("%v", v))
 	}
@@ -6015,7 +6199,11 @@ func (c *PermissionsPatchCall) Do() (*Permission, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *PermissionsPatchCall) Do() (*Permission, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -6106,7 +6294,7 @@ func (c *PermissionsUpdateCall) Fields(s ...googleapi.Field) *PermissionsUpdateC
 	return c
 }
 
-func (c *PermissionsUpdateCall) Do() (*Permission, error) {
+func (c *PermissionsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.permission)
 	if err != nil {
@@ -6114,7 +6302,7 @@ func (c *PermissionsUpdateCall) Do() (*Permission, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["transferOwnership"]; ok {
 		params.Set("transferOwnership", fmt.Sprintf("%v", v))
 	}
@@ -6130,7 +6318,11 @@ func (c *PermissionsUpdateCall) Do() (*Permission, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *PermissionsUpdateCall) Do() (*Permission, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -6218,10 +6410,10 @@ func (c *PropertiesDeleteCall) Fields(s ...googleapi.Field) *PropertiesDeleteCal
 	return c
 }
 
-func (c *PropertiesDeleteCall) Do() error {
+func (c *PropertiesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["visibility"]; ok {
 		params.Set("visibility", fmt.Sprintf("%v", v))
 	}
@@ -6236,7 +6428,11 @@ func (c *PropertiesDeleteCall) Do() error {
 		"propertyKey": c.propertyKey,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *PropertiesDeleteCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -6315,10 +6511,10 @@ func (c *PropertiesGetCall) Fields(s ...googleapi.Field) *PropertiesGetCall {
 	return c
 }
 
-func (c *PropertiesGetCall) Do() (*Property, error) {
+func (c *PropertiesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["visibility"]; ok {
 		params.Set("visibility", fmt.Sprintf("%v", v))
 	}
@@ -6333,7 +6529,11 @@ func (c *PropertiesGetCall) Do() (*Property, error) {
 		"propertyKey": c.propertyKey,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *PropertiesGetCall) Do() (*Property, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -6414,7 +6614,7 @@ func (c *PropertiesInsertCall) Fields(s ...googleapi.Field) *PropertiesInsertCal
 	return c
 }
 
-func (c *PropertiesInsertCall) Do() (*Property, error) {
+func (c *PropertiesInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.property)
 	if err != nil {
@@ -6422,7 +6622,7 @@ func (c *PropertiesInsertCall) Do() (*Property, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -6434,7 +6634,11 @@ func (c *PropertiesInsertCall) Do() (*Property, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *PropertiesInsertCall) Do() (*Property, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -6501,10 +6705,10 @@ func (c *PropertiesListCall) Fields(s ...googleapi.Field) *PropertiesListCall {
 	return c
 }
 
-func (c *PropertiesListCall) Do() (*PropertyList, error) {
+func (c *PropertiesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -6515,7 +6719,11 @@ func (c *PropertiesListCall) Do() (*PropertyList, error) {
 		"fileId": c.fileId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *PropertiesListCall) Do() (*PropertyList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -6592,7 +6800,7 @@ func (c *PropertiesPatchCall) Fields(s ...googleapi.Field) *PropertiesPatchCall 
 	return c
 }
 
-func (c *PropertiesPatchCall) Do() (*Property, error) {
+func (c *PropertiesPatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.property)
 	if err != nil {
@@ -6600,7 +6808,7 @@ func (c *PropertiesPatchCall) Do() (*Property, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["visibility"]; ok {
 		params.Set("visibility", fmt.Sprintf("%v", v))
 	}
@@ -6616,7 +6824,11 @@ func (c *PropertiesPatchCall) Do() (*Property, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *PropertiesPatchCall) Do() (*Property, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -6707,7 +6919,7 @@ func (c *PropertiesUpdateCall) Fields(s ...googleapi.Field) *PropertiesUpdateCal
 	return c
 }
 
-func (c *PropertiesUpdateCall) Do() (*Property, error) {
+func (c *PropertiesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.property)
 	if err != nil {
@@ -6715,7 +6927,7 @@ func (c *PropertiesUpdateCall) Do() (*Property, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["visibility"]; ok {
 		params.Set("visibility", fmt.Sprintf("%v", v))
 	}
@@ -6731,7 +6943,11 @@ func (c *PropertiesUpdateCall) Do() (*Property, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *PropertiesUpdateCall) Do() (*Property, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -6821,10 +7037,10 @@ func (c *RealtimeGetCall) Fields(s ...googleapi.Field) *RealtimeGetCall {
 	return c
 }
 
-func (c *RealtimeGetCall) Do() error {
+func (c *RealtimeGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["revision"]; ok {
 		params.Set("revision", fmt.Sprintf("%v", v))
 	}
@@ -6838,7 +7054,27 @@ func (c *RealtimeGetCall) Do() error {
 		"fileId": c.fileId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+// Download fetches the media instead of the API response, replacing
+// the stanard call to Do(). The http Response is returned for all
+// successful requests (2xx) and the caller is responsible for closing
+// the response body as usual. Other codes are reported as an error.
+func (c *RealtimeGetCall) Download() (*http.Response, error) {
+	res, err := c.doRequest("media")
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckMediaResponse(res); err != nil {
+		res.Body.Close()
+		return nil, err
+	}
+	return res, nil
+}
+
+func (c *RealtimeGetCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -6948,10 +7184,10 @@ func (c *RealtimeUpdateCall) Fields(s ...googleapi.Field) *RealtimeUpdateCall {
 	return c
 }
 
-func (c *RealtimeUpdateCall) Do() error {
+func (c *RealtimeUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["baseRevision"]; ok {
 		params.Set("baseRevision", fmt.Sprintf("%v", v))
 	}
@@ -6959,12 +7195,6 @@ func (c *RealtimeUpdateCall) Do() error {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/realtime")
-	var progressUpdater_ googleapi.ProgressUpdater
-	if v, ok := c.opt_["progressUpdater"]; ok {
-		if pu, ok := v.(googleapi.ProgressUpdater); ok {
-			progressUpdater_ = pu
-		}
-	}
 	if c.media_ != nil || c.resumable_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
 		params.Set("uploadType", c.protocol_)
@@ -6994,13 +7224,23 @@ func (c *RealtimeUpdateCall) Do() error {
 		req.Header.Set("Content-Type", ctype)
 	}
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *RealtimeUpdateCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
+	}
+	var progressUpdater_ googleapi.ProgressUpdater
+	if v, ok := c.opt_["progressUpdater"]; ok {
+		if pu, ok := v.(googleapi.ProgressUpdater); ok {
+			progressUpdater_ = pu
+		}
 	}
 	if c.protocol_ == "resumable" {
 		loc := res.Header.Get("Location")
@@ -7093,10 +7333,10 @@ func (c *RepliesDeleteCall) Fields(s ...googleapi.Field) *RepliesDeleteCall {
 	return c
 }
 
-func (c *RepliesDeleteCall) Do() error {
+func (c *RepliesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -7109,7 +7349,11 @@ func (c *RepliesDeleteCall) Do() error {
 		"replyId":   c.replyId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *RepliesDeleteCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -7190,10 +7434,10 @@ func (c *RepliesGetCall) Fields(s ...googleapi.Field) *RepliesGetCall {
 	return c
 }
 
-func (c *RepliesGetCall) Do() (*CommentReply, error) {
+func (c *RepliesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["includeDeleted"]; ok {
 		params.Set("includeDeleted", fmt.Sprintf("%v", v))
 	}
@@ -7209,7 +7453,11 @@ func (c *RepliesGetCall) Do() (*CommentReply, error) {
 		"replyId":   c.replyId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *RepliesGetCall) Do() (*CommentReply, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -7297,7 +7545,7 @@ func (c *RepliesInsertCall) Fields(s ...googleapi.Field) *RepliesInsertCall {
 	return c
 }
 
-func (c *RepliesInsertCall) Do() (*CommentReply, error) {
+func (c *RepliesInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.commentreply)
 	if err != nil {
@@ -7305,7 +7553,7 @@ func (c *RepliesInsertCall) Do() (*CommentReply, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -7318,7 +7566,11 @@ func (c *RepliesInsertCall) Do() (*CommentReply, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *RepliesInsertCall) Do() (*CommentReply, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -7417,10 +7669,10 @@ func (c *RepliesListCall) Fields(s ...googleapi.Field) *RepliesListCall {
 	return c
 }
 
-func (c *RepliesListCall) Do() (*CommentReplyList, error) {
+func (c *RepliesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["includeDeleted"]; ok {
 		params.Set("includeDeleted", fmt.Sprintf("%v", v))
 	}
@@ -7441,7 +7693,11 @@ func (c *RepliesListCall) Do() (*CommentReplyList, error) {
 		"commentId": c.commentId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *RepliesListCall) Do() (*CommentReplyList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -7539,7 +7795,7 @@ func (c *RepliesPatchCall) Fields(s ...googleapi.Field) *RepliesPatchCall {
 	return c
 }
 
-func (c *RepliesPatchCall) Do() (*CommentReply, error) {
+func (c *RepliesPatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.commentreply)
 	if err != nil {
@@ -7547,7 +7803,7 @@ func (c *RepliesPatchCall) Do() (*CommentReply, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -7561,7 +7817,11 @@ func (c *RepliesPatchCall) Do() (*CommentReply, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *RepliesPatchCall) Do() (*CommentReply, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -7647,7 +7907,7 @@ func (c *RepliesUpdateCall) Fields(s ...googleapi.Field) *RepliesUpdateCall {
 	return c
 }
 
-func (c *RepliesUpdateCall) Do() (*CommentReply, error) {
+func (c *RepliesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.commentreply)
 	if err != nil {
@@ -7655,7 +7915,7 @@ func (c *RepliesUpdateCall) Do() (*CommentReply, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -7669,7 +7929,11 @@ func (c *RepliesUpdateCall) Do() (*CommentReply, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *RepliesUpdateCall) Do() (*CommentReply, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -7751,10 +8015,10 @@ func (c *RevisionsDeleteCall) Fields(s ...googleapi.Field) *RevisionsDeleteCall 
 	return c
 }
 
-func (c *RevisionsDeleteCall) Do() error {
+func (c *RevisionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -7766,7 +8030,11 @@ func (c *RevisionsDeleteCall) Do() error {
 		"revisionId": c.revisionId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *RevisionsDeleteCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -7832,10 +8100,10 @@ func (c *RevisionsGetCall) Fields(s ...googleapi.Field) *RevisionsGetCall {
 	return c
 }
 
-func (c *RevisionsGetCall) Do() (*Revision, error) {
+func (c *RevisionsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -7847,7 +8115,11 @@ func (c *RevisionsGetCall) Do() (*Revision, error) {
 		"revisionId": c.revisionId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *RevisionsGetCall) Do() (*Revision, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -7920,10 +8192,10 @@ func (c *RevisionsListCall) Fields(s ...googleapi.Field) *RevisionsListCall {
 	return c
 }
 
-func (c *RevisionsListCall) Do() (*RevisionList, error) {
+func (c *RevisionsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -7934,7 +8206,11 @@ func (c *RevisionsListCall) Do() (*RevisionList, error) {
 		"fileId": c.fileId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *RevisionsListCall) Do() (*RevisionList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -8004,7 +8280,7 @@ func (c *RevisionsPatchCall) Fields(s ...googleapi.Field) *RevisionsPatchCall {
 	return c
 }
 
-func (c *RevisionsPatchCall) Do() (*Revision, error) {
+func (c *RevisionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.revision)
 	if err != nil {
@@ -8012,7 +8288,7 @@ func (c *RevisionsPatchCall) Do() (*Revision, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -8025,7 +8301,11 @@ func (c *RevisionsPatchCall) Do() (*Revision, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *RevisionsPatchCall) Do() (*Revision, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -8103,7 +8383,7 @@ func (c *RevisionsUpdateCall) Fields(s ...googleapi.Field) *RevisionsUpdateCall 
 	return c
 }
 
-func (c *RevisionsUpdateCall) Do() (*Revision, error) {
+func (c *RevisionsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.revision)
 	if err != nil {
@@ -8111,7 +8391,7 @@ func (c *RevisionsUpdateCall) Do() (*Revision, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -8124,7 +8404,11 @@ func (c *RevisionsUpdateCall) Do() (*Revision, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *RevisionsUpdateCall) Do() (*Revision, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}

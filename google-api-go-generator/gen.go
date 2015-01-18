@@ -1100,6 +1100,19 @@ func (m *Method) mediaUploadPath() string {
 	return jstr(jobj(jobj(jobj(m.m, "mediaUpload"), "protocols"), "simple"), "path")
 }
 
+func (m *Method) supportsMediaDownload() bool {
+	if m.supportsMediaUpload() {
+		// storage.objects.insert claims support for download in
+		// addition to upload but attempting to do so fails.
+		// This situation doesn't apply to any other methods.
+		return false
+	}
+	if v, ok := m.m["supportsMediaDownload"].(bool); ok {
+		return v
+	}
+	return false
+}
+
 func (m *Method) Params() []*Param {
 	if m.params == nil {
 		paramMap := jobj(m.m, "parameters")
@@ -1241,12 +1254,7 @@ func (meth *Method) generateCode() {
 	pn("return c")
 	pn("}")
 
-	pn("\nfunc (c *%s) Do() (%serror) {", callName, retTypeComma)
-
-	nilRet := ""
-	if retTypeComma != "" {
-		nilRet = "nil, "
-	}
+	pn("\nfunc (c *%s) doRequest(alt string) (*http.Response, error) {", callName)
 	pn("var body io.Reader = nil")
 	hasContentType := false
 	httpMethod := jstr(meth.m, "httpMethod")
@@ -1256,14 +1264,12 @@ func (meth *Method) generateCode() {
 			style = "WithDataWrapper"
 		}
 		pn("body, err := googleapi.%s.JSONReader(c.%s)", style, ba.goname)
-		pn("if err != nil { return %serr }", nilRet)
+		pn("if err != nil { return nil, err }")
 		pn(`ctype := "application/json"`)
 		hasContentType = true
 	}
 	pn("params := make(url.Values)")
-	// Set this first. if they override it, though, might be gross.  We don't expect
-	// XML replies elsewhere.  TODO(bradfitz): hide this option in the generated code?
-	pn(`params.Set("alt", "json")`)
+	pn(`params.Set("alt", alt)`)
 	for _, p := range meth.RequiredQueryParams() {
 		pn("params.Set(%q, fmt.Sprintf(\"%%v\", c.%s))", p.name, p.goCallFieldName())
 	}
@@ -1319,7 +1325,27 @@ func (meth *Method) generateCode() {
 		pn(`req.Header.Set("Content-Type", ctype)`)
 	}
 	pn(`req.Header.Set("User-Agent", "google-api-go-client/` + goGenVersion + `")`)
-	pn("res, err := c.s.client.Do(req);")
+	pn("return c.s.client.Do(req)")
+	pn("}")
+
+	if meth.supportsMediaDownload() {
+		pn("\nfunc (c *%s) Download() (*http.Response, error) {", callName)
+		pn(`res, err := c.doRequest("media")`)
+		pn("if err != nil { return nil, err }")
+		pn("if err := googleapi.CheckMediaResponse(res); err != nil {")
+		pn("res.Body.Close()")
+		pn("return nil, err")
+		pn("}")
+		pn("return res, nil")
+		pn("}")
+	}
+
+	pn("\nfunc (c *%s) Do() (%serror) {", callName, retTypeComma)
+	nilRet := ""
+	if retTypeComma != "" {
+		nilRet = "nil, "
+	}
+	pn(`res, err := c.doRequest("json")`)
 	pn("if err != nil { return %serr }", nilRet)
 	pn("defer googleapi.CloseBody(res)")
 	pn("if err := googleapi.CheckResponse(res); err != nil { return %serr }", nilRet)

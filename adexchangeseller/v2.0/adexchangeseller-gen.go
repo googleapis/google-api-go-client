@@ -576,10 +576,10 @@ func (c *AccountsGetCall) Fields(s ...googleapi.Field) *AccountsGetCall {
 	return c
 }
 
-func (c *AccountsGetCall) Do() (*Account, error) {
+func (c *AccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -590,7 +590,11 @@ func (c *AccountsGetCall) Do() (*Account, error) {
 		"accountId": c.accountId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsGetCall) Do() (*Account, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -667,10 +671,10 @@ func (c *AccountsListCall) Fields(s ...googleapi.Field) *AccountsListCall {
 	return c
 }
 
-func (c *AccountsListCall) Do() (*Accounts, error) {
+func (c *AccountsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
@@ -685,7 +689,11 @@ func (c *AccountsListCall) Do() (*Accounts, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsListCall) Do() (*Accounts, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -768,10 +776,10 @@ func (c *AccountsAdclientsListCall) Fields(s ...googleapi.Field) *AccountsAdclie
 	return c
 }
 
-func (c *AccountsAdclientsListCall) Do() (*AdClients, error) {
+func (c *AccountsAdclientsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
@@ -788,7 +796,11 @@ func (c *AccountsAdclientsListCall) Do() (*AdClients, error) {
 		"accountId": c.accountId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsAdclientsListCall) Do() (*AdClients, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -873,10 +885,10 @@ func (c *AccountsAlertsListCall) Fields(s ...googleapi.Field) *AccountsAlertsLis
 	return c
 }
 
-func (c *AccountsAlertsListCall) Do() (*Alerts, error) {
+func (c *AccountsAlertsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["locale"]; ok {
 		params.Set("locale", fmt.Sprintf("%v", v))
 	}
@@ -890,7 +902,11 @@ func (c *AccountsAlertsListCall) Do() (*Alerts, error) {
 		"accountId": c.accountId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsAlertsListCall) Do() (*Alerts, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -962,10 +978,10 @@ func (c *AccountsCustomchannelsGetCall) Fields(s ...googleapi.Field) *AccountsCu
 	return c
 }
 
-func (c *AccountsCustomchannelsGetCall) Do() (*CustomChannel, error) {
+func (c *AccountsCustomchannelsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -978,7 +994,11 @@ func (c *AccountsCustomchannelsGetCall) Do() (*CustomChannel, error) {
 		"customChannelId": c.customChannelId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsCustomchannelsGetCall) Do() (*CustomChannel, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1075,10 +1095,10 @@ func (c *AccountsCustomchannelsListCall) Fields(s ...googleapi.Field) *AccountsC
 	return c
 }
 
-func (c *AccountsCustomchannelsListCall) Do() (*CustomChannels, error) {
+func (c *AccountsCustomchannelsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
@@ -1096,7 +1116,11 @@ func (c *AccountsCustomchannelsListCall) Do() (*CustomChannels, error) {
 		"adClientId": c.adClientId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsCustomchannelsListCall) Do() (*CustomChannels, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1180,10 +1204,10 @@ func (c *AccountsMetadataDimensionsListCall) Fields(s ...googleapi.Field) *Accou
 	return c
 }
 
-func (c *AccountsMetadataDimensionsListCall) Do() (*Metadata, error) {
+func (c *AccountsMetadataDimensionsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1194,7 +1218,11 @@ func (c *AccountsMetadataDimensionsListCall) Do() (*Metadata, error) {
 		"accountId": c.accountId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsMetadataDimensionsListCall) Do() (*Metadata, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1258,10 +1286,10 @@ func (c *AccountsMetadataMetricsListCall) Fields(s ...googleapi.Field) *Accounts
 	return c
 }
 
-func (c *AccountsMetadataMetricsListCall) Do() (*Metadata, error) {
+func (c *AccountsMetadataMetricsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1272,7 +1300,11 @@ func (c *AccountsMetadataMetricsListCall) Do() (*Metadata, error) {
 		"accountId": c.accountId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsMetadataMetricsListCall) Do() (*Metadata, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1337,10 +1369,10 @@ func (c *AccountsPreferreddealsGetCall) Fields(s ...googleapi.Field) *AccountsPr
 	return c
 }
 
-func (c *AccountsPreferreddealsGetCall) Do() (*PreferredDeal, error) {
+func (c *AccountsPreferreddealsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1352,7 +1384,11 @@ func (c *AccountsPreferreddealsGetCall) Do() (*PreferredDeal, error) {
 		"dealId":    c.dealId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsPreferreddealsGetCall) Do() (*PreferredDeal, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1422,10 +1458,10 @@ func (c *AccountsPreferreddealsListCall) Fields(s ...googleapi.Field) *AccountsP
 	return c
 }
 
-func (c *AccountsPreferreddealsListCall) Do() (*PreferredDeals, error) {
+func (c *AccountsPreferreddealsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1436,7 +1472,11 @@ func (c *AccountsPreferreddealsListCall) Do() (*PreferredDeals, error) {
 		"accountId": c.accountId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsPreferreddealsListCall) Do() (*PreferredDeals, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1557,10 +1597,10 @@ func (c *AccountsReportsGenerateCall) Fields(s ...googleapi.Field) *AccountsRepo
 	return c
 }
 
-func (c *AccountsReportsGenerateCall) Do() (*Report, error) {
+func (c *AccountsReportsGenerateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	params.Set("endDate", fmt.Sprintf("%v", c.endDate))
 	params.Set("startDate", fmt.Sprintf("%v", c.startDate))
 	if v, ok := c.opt_["dimension"]; ok {
@@ -1594,7 +1634,26 @@ func (c *AccountsReportsGenerateCall) Do() (*Report, error) {
 		"accountId": c.accountId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+// Download fetches the API endpoint's "media" value, instead of the normal
+// API response value. If the returned error is nil, the Response is guaranteed to
+// have a 2xx status code. Callers must close the Response.Body as usual.
+func (c *AccountsReportsGenerateCall) Download() (*http.Response, error) {
+	res, err := c.doRequest("media")
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckMediaResponse(res); err != nil {
+		res.Body.Close()
+		return nil, err
+	}
+	return res, nil
+}
+
+func (c *AccountsReportsGenerateCall) Do() (*Report, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1749,10 +1808,10 @@ func (c *AccountsReportsSavedGenerateCall) Fields(s ...googleapi.Field) *Account
 	return c
 }
 
-func (c *AccountsReportsSavedGenerateCall) Do() (*Report, error) {
+func (c *AccountsReportsSavedGenerateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["locale"]; ok {
 		params.Set("locale", fmt.Sprintf("%v", v))
 	}
@@ -1773,7 +1832,11 @@ func (c *AccountsReportsSavedGenerateCall) Do() (*Report, error) {
 		"savedReportId": c.savedReportId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsReportsSavedGenerateCall) Do() (*Report, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1881,10 +1944,10 @@ func (c *AccountsReportsSavedListCall) Fields(s ...googleapi.Field) *AccountsRep
 	return c
 }
 
-func (c *AccountsReportsSavedListCall) Do() (*SavedReports, error) {
+func (c *AccountsReportsSavedListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
@@ -1901,7 +1964,11 @@ func (c *AccountsReportsSavedListCall) Do() (*SavedReports, error) {
 		"accountId": c.accountId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsReportsSavedListCall) Do() (*SavedReports, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1996,10 +2063,10 @@ func (c *AccountsUrlchannelsListCall) Fields(s ...googleapi.Field) *AccountsUrlc
 	return c
 }
 
-func (c *AccountsUrlchannelsListCall) Do() (*UrlChannels, error) {
+func (c *AccountsUrlchannelsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
@@ -2017,7 +2084,11 @@ func (c *AccountsUrlchannelsListCall) Do() (*UrlChannels, error) {
 		"adClientId": c.adClientId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsUrlchannelsListCall) Do() (*UrlChannels, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}

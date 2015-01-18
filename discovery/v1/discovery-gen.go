@@ -472,10 +472,10 @@ func (c *ApisGetRestCall) Fields(s ...googleapi.Field) *ApisGetRestCall {
 	return c
 }
 
-func (c *ApisGetRestCall) Do() (*RestDescription, error) {
+func (c *ApisGetRestCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -487,7 +487,11 @@ func (c *ApisGetRestCall) Do() (*RestDescription, error) {
 		"version": c.version,
 	})
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ApisGetRestCall) Do() (*RestDescription, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -565,10 +569,10 @@ func (c *ApisListCall) Fields(s ...googleapi.Field) *ApisListCall {
 	return c
 }
 
-func (c *ApisListCall) Do() (*DirectoryList, error) {
+func (c *ApisListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["name"]; ok {
 		params.Set("name", fmt.Sprintf("%v", v))
 	}
@@ -583,7 +587,11 @@ func (c *ApisListCall) Do() (*DirectoryList, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ApisListCall) Do() (*DirectoryList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}

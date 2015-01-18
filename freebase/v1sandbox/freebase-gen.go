@@ -193,10 +193,10 @@ func (c *ReconcileCall) Fields(s ...googleapi.Field) *ReconcileCall {
 	return c
 }
 
-func (c *ReconcileCall) Do() (*ReconcileGet, error) {
+func (c *ReconcileCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["confidence"]; ok {
 		params.Set("confidence", fmt.Sprintf("%v", v))
 	}
@@ -223,7 +223,11 @@ func (c *ReconcileCall) Do() (*ReconcileGet, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ReconcileCall) Do() (*ReconcileGet, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -506,10 +510,10 @@ func (c *SearchCall) Fields(s ...googleapi.Field) *SearchCall {
 	return c
 }
 
-func (c *SearchCall) Do() error {
+func (c *SearchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["as_of_time"]; ok {
 		params.Set("as_of_time", fmt.Sprintf("%v", v))
 	}
@@ -587,7 +591,26 @@ func (c *SearchCall) Do() error {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+// Download fetches the API endpoint's "media" value, instead of the normal
+// API response value. If the returned error is nil, the Response is guaranteed to
+// have a 2xx status code. Callers must close the Response.Body as usual.
+func (c *SearchCall) Download() (*http.Response, error) {
+	res, err := c.doRequest("media")
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckMediaResponse(res); err != nil {
+		res.Body.Close()
+		return nil, err
+	}
+	return res, nil
+}
+
+func (c *SearchCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}

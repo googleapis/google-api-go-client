@@ -614,10 +614,10 @@ func (c *ConversionGetCall) Fields(s ...googleapi.Field) *ConversionGetCall {
 	return c
 }
 
-func (c *ConversionGetCall) Do() (*ConversionList, error) {
+func (c *ConversionGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	params.Set("endDate", fmt.Sprintf("%v", c.endDate))
 	params.Set("rowCount", fmt.Sprintf("%v", c.rowCount))
 	params.Set("startDate", fmt.Sprintf("%v", c.startDate))
@@ -646,7 +646,11 @@ func (c *ConversionGetCall) Do() (*ConversionList, error) {
 		"engineAccountId": strconv.FormatInt(c.engineAccountId, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ConversionGetCall) Do() (*ConversionList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -787,7 +791,7 @@ func (c *ConversionInsertCall) Fields(s ...googleapi.Field) *ConversionInsertCal
 	return c
 }
 
-func (c *ConversionInsertCall) Do() (*ConversionList, error) {
+func (c *ConversionInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.conversionlist)
 	if err != nil {
@@ -795,7 +799,7 @@ func (c *ConversionInsertCall) Do() (*ConversionList, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -805,7 +809,11 @@ func (c *ConversionInsertCall) Do() (*ConversionList, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ConversionInsertCall) Do() (*ConversionList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -874,7 +882,7 @@ func (c *ConversionPatchCall) Fields(s ...googleapi.Field) *ConversionPatchCall 
 	return c
 }
 
-func (c *ConversionPatchCall) Do() (*ConversionList, error) {
+func (c *ConversionPatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.conversionlist)
 	if err != nil {
@@ -882,7 +890,7 @@ func (c *ConversionPatchCall) Do() (*ConversionList, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	params.Set("advertiserId", fmt.Sprintf("%v", c.advertiserId))
 	params.Set("agencyId", fmt.Sprintf("%v", c.agencyId))
 	params.Set("endDate", fmt.Sprintf("%v", c.endDate))
@@ -899,7 +907,11 @@ func (c *ConversionPatchCall) Do() (*ConversionList, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ConversionPatchCall) Do() (*ConversionList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1019,7 +1031,7 @@ func (c *ConversionUpdateCall) Fields(s ...googleapi.Field) *ConversionUpdateCal
 	return c
 }
 
-func (c *ConversionUpdateCall) Do() (*ConversionList, error) {
+func (c *ConversionUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.conversionlist)
 	if err != nil {
@@ -1027,7 +1039,7 @@ func (c *ConversionUpdateCall) Do() (*ConversionList, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1037,7 +1049,11 @@ func (c *ConversionUpdateCall) Do() (*ConversionList, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ConversionUpdateCall) Do() (*ConversionList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1092,7 +1108,7 @@ func (c *ConversionUpdateAvailabilityCall) Fields(s ...googleapi.Field) *Convers
 	return c
 }
 
-func (c *ConversionUpdateAvailabilityCall) Do() (*UpdateAvailabilityResponse, error) {
+func (c *ConversionUpdateAvailabilityCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.updateavailabilityrequest)
 	if err != nil {
@@ -1100,7 +1116,7 @@ func (c *ConversionUpdateAvailabilityCall) Do() (*UpdateAvailabilityResponse, er
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1110,7 +1126,11 @@ func (c *ConversionUpdateAvailabilityCall) Do() (*UpdateAvailabilityResponse, er
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ConversionUpdateAvailabilityCall) Do() (*UpdateAvailabilityResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1165,7 +1185,7 @@ func (c *ReportsGenerateCall) Fields(s ...googleapi.Field) *ReportsGenerateCall 
 	return c
 }
 
-func (c *ReportsGenerateCall) Do() (*Report, error) {
+func (c *ReportsGenerateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.reportrequest)
 	if err != nil {
@@ -1173,7 +1193,7 @@ func (c *ReportsGenerateCall) Do() (*Report, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1183,7 +1203,11 @@ func (c *ReportsGenerateCall) Do() (*Report, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ReportsGenerateCall) Do() (*Report, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1238,10 +1262,10 @@ func (c *ReportsGetCall) Fields(s ...googleapi.Field) *ReportsGetCall {
 	return c
 }
 
-func (c *ReportsGetCall) Do() (*Report, error) {
+func (c *ReportsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1252,7 +1276,11 @@ func (c *ReportsGetCall) Do() (*Report, error) {
 		"reportId": c.reportId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ReportsGetCall) Do() (*Report, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1316,10 +1344,10 @@ func (c *ReportsGetFileCall) Fields(s ...googleapi.Field) *ReportsGetFileCall {
 	return c
 }
 
-func (c *ReportsGetFileCall) Do() error {
+func (c *ReportsGetFileCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1331,7 +1359,26 @@ func (c *ReportsGetFileCall) Do() error {
 		"reportFragment": strconv.FormatInt(c.reportFragment, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+// Download fetches the API endpoint's "media" value, instead of the normal
+// API response value. If the returned error is nil, the Response is guaranteed to
+// have a 2xx status code. Callers must close the Response.Body as usual.
+func (c *ReportsGetFileCall) Download() (*http.Response, error) {
+	res, err := c.doRequest("media")
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckMediaResponse(res); err != nil {
+		res.Body.Close()
+		return nil, err
+	}
+	return res, nil
+}
+
+func (c *ReportsGetFileCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -1396,7 +1443,7 @@ func (c *ReportsRequestCall) Fields(s ...googleapi.Field) *ReportsRequestCall {
 	return c
 }
 
-func (c *ReportsRequestCall) Do() (*Report, error) {
+func (c *ReportsRequestCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.reportrequest)
 	if err != nil {
@@ -1404,7 +1451,7 @@ func (c *ReportsRequestCall) Do() (*Report, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1414,7 +1461,11 @@ func (c *ReportsRequestCall) Do() (*Report, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ReportsRequestCall) Do() (*Report, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1471,10 +1522,10 @@ func (c *SavedColumnsListCall) Fields(s ...googleapi.Field) *SavedColumnsListCal
 	return c
 }
 
-func (c *SavedColumnsListCall) Do() (*SavedColumnList, error) {
+func (c *SavedColumnsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1486,7 +1537,11 @@ func (c *SavedColumnsListCall) Do() (*SavedColumnList, error) {
 		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *SavedColumnsListCall) Do() (*SavedColumnList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}

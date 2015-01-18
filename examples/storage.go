@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"io"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
@@ -29,4 +31,20 @@ func storageMain(client *http.Client, argv []string) {
 	}
 	storageObject, err := service.Objects.Insert(bucket, &storage.Object{Name: filename}).Media(goFile).Do()
 	log.Printf("Got storage.Object, err: %#v, %v", storageObject, err)
+	if err != nil {
+		return
+	}
+
+	resp, err := service.Objects.Get(bucket, filename).Download()
+	if err != nil {
+		log.Fatalf("error downloading %q: %v", filename, err)
+	}
+	defer resp.Body.Close()
+
+	n, err := io.Copy(ioutil.Discard, resp.Body)
+	if err != nil {
+		log.Fatalf("error downloading %q: %v", filename, err)
+	}
+
+	log.Printf("Downloaded %d bytes", n)
 }

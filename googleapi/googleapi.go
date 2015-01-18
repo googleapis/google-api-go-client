@@ -128,6 +128,20 @@ func CheckResponse(res *http.Response) error {
 	}
 }
 
+// CheckMediaResponse returns an error (of type *Error) if the response
+// status code is not 2xx. Unlike CheckResponse it does not assume the
+// body is a JSON error document.
+func CheckMediaResponse(res *http.Response) error {
+	if res.StatusCode >= 200 && res.StatusCode <= 299 {
+		return nil
+	}
+	slurp, _ := ioutil.ReadAll(res.Body)
+	return &Error{
+		Code: res.StatusCode,
+		Body: string(slurp),
+	}
+}
+
 type MarshalStyle bool
 
 var WithDataWrapper = MarshalStyle(true)

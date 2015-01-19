@@ -1095,11 +1095,11 @@ func (m *Method) Id() string {
 	return jstr(m.m, "id")
 }
 
-func (m *Method) supportsMedia() bool {
+func (m *Method) supportsMediaUpload() bool {
 	return jobj(m.m, "mediaUpload") != nil
 }
 
-func (m *Method) mediaPath() string {
+func (m *Method) mediaUploadPath() string {
 	return jstr(jobj(jobj(jobj(m.m, "mediaUpload"), "protocols"), "simple"), "path")
 }
 
@@ -1186,7 +1186,7 @@ func (meth *Method) generateCode() {
 		p("\t%s %s\n", arg.goname, arg.gotype)
 	}
 	p("\topt_ map[string]interface{}\n")
-	if meth.supportsMedia() {
+	if meth.supportsMediaUpload() {
 		p("\tmedia_     io.Reader\n")
 		p("\tresumable_ googleapi.SizeReaderAt\n")
 		p("\tmediaType_ string\n")
@@ -1233,7 +1233,7 @@ func (meth *Method) generateCode() {
 		p("}\n")
 	}
 
-	if meth.supportsMedia() {
+	if meth.supportsMediaUpload() {
 		pn("\n// Media specifies the media to upload in a single chunk.")
 		pn("// At most one of Media and ResumableMedia may be set.")
 		pn("func (c *%s) Media(r io.Reader) *%s {", callName, callName)
@@ -1307,7 +1307,7 @@ func (meth *Method) generateCode() {
 	}
 
 	p("urls := googleapi.ResolveRelative(c.s.BasePath, %q)\n", jstr(meth.m, "path"))
-	if meth.supportsMedia() {
+	if meth.supportsMediaUpload() {
 		pn("var progressUpdater_ googleapi.ProgressUpdater")
 		pn("if v, ok := c.opt_[\"progressUpdater\"]; ok {")
 		pn(" if pu, ok := v.(googleapi.ProgressUpdater); ok {")
@@ -1316,14 +1316,14 @@ func (meth *Method) generateCode() {
 		pn("}")
 		pn("if c.media_ != nil || c.resumable_ != nil {")
 		// Hack guess, since we get a 404 otherwise:
-		//pn("urls = googleapi.ResolveRelative(%q, %q)", a.apiBaseURL(), meth.mediaPath())
+		//pn("urls = googleapi.ResolveRelative(%q, %q)", a.apiBaseURL(), meth.mediaUploadPath())
 		// Further hack.  Discovery doc is wrong?
 		pn("urls = strings.Replace(urls, %q, %q, 1)", "https://www.googleapis.com/", "https://www.googleapis.com/upload/")
 		pn(`params.Set("uploadType", c.protocol_)`)
 		pn("}")
 	}
 	pn("urls += \"?\" + params.Encode()")
-	if meth.supportsMedia() && httpMethod != "GET" {
+	if meth.supportsMediaUpload() && httpMethod != "GET" {
 		if !hasContentType { // Support mediaUpload but no ctype set.
 			pn("body = new(bytes.Buffer)")
 			pn(`ctype := "application/json"`)
@@ -1350,7 +1350,7 @@ func (meth *Method) generateCode() {
 		pn(`googleapi.SetOpaque(req.URL)`)
 	}
 
-	if meth.supportsMedia() {
+	if meth.supportsMediaUpload() {
 		pn(`if c.protocol_ == "resumable" {`)
 		pn(" req.ContentLength = 0")
 		pn(` if c.mediaType_ == "" {`)

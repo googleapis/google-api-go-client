@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "cb02bf41_1ac3a16d",
+        "filename": "googleapi/googleapi_test.go",
+        "patchSetId": 10
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-01-21T16:28:30Z",
+      "side": 1,
+      "message": "always restore things you override in tests.\n\noldChunkSize :\u003d chunkSize\ndefer func() { chunkSize \u003d oldChunkSize }()\nchunkSize \u003d 100",
+      "revId": "9dc78a731af9c6d4b61b3c545bc76e9039e41c07",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb02bf41_fa621df6",
         "filename": "storage/v1/storage-gen.go",
         "patchSetId": 10

@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb02bf41_fa621df6",
+        "filename": "storage/v1/storage-gen.go",
+        "patchSetId": 10
+      },
+      "lineNbr": 4428,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-01-21T16:26:53Z",
+      "side": 1,
+      "message": "How would one choose? I think I\u0027d drop the word \"choose\".\n\nIs ResumableMedia always the better choice?\n\nI think I\u0027d just say:\n\n   // At most one of Media and ResumableMedia may be set.\n\nOr something along those lines.",
+      "revId": "9dc78a731af9c6d4b61b3c545bc76e9039e41c07",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb02bf41_da5f592e",
+        "filename": "storage/v1/storage-gen.go",
+        "patchSetId": 10
+      },
+      "lineNbr": 4437,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-01-21T16:26:53Z",
+      "side": 1,
+      "message": "Go docs avoid things like e.g. or i.e.\n\nWrite instead \"identifies the MIME type of the upload, such as \"image/png\".\n\nAlso: do we auto-detect it if that parameter is blank? Could we?",
+      "revId": "9dc78a731af9c6d4b61b3c545bc76e9039e41c07",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb02bf41_7a4f4d87",
+        "filename": "storage/v1/storage-gen.go",
+        "patchSetId": 10
+      },
+      "lineNbr": 4438,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-01-21T16:26:53Z",
+      "side": 1,
+      "message": "if we\u0027re already taking a context and mediaType string, it\u0027s a little weird to mix size and the readerat together into SizeReaderAt.  It\u0027s a fine abstraction to use internally if it helps, and I loved it for dl.google.com, since it composed so nicely when it carries its own size info along, but exposing it to users here seems unnecessary.",
+      "revId": "9dc78a731af9c6d4b61b3c545bc76e9039e41c07",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

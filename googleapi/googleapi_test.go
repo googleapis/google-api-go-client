@@ -573,6 +573,8 @@ func TestCancelUpload(t *testing.T) {
 		statusCode: 308,
 		buf:        make([]byte, 0, st.Size()),
 	}
+	oldChunkSize := chunkSize
+	defer func() { chunkSize = oldChunkSize }()
 	chunkSize = 100 // override to process small chunks for test.
 
 	sleep = func(time.Duration) {} // override time.Sleep

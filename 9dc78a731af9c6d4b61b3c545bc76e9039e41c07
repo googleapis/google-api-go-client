@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "4b732f24_4eae2778",
+        "filename": "storage/v1/storage-gen.go",
+        "patchSetId": 10
+      },
+      "lineNbr": 4437,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-01-22T18:11:44Z",
+      "side": 1,
+      "message": "It was the size guessing that was suspicious.",
+      "parentUuid": "0bbf77c3_1cfc54c6",
+      "revId": "9dc78a731af9c6d4b61b3c545bc76e9039e41c07",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb02bf41_7a4f4d87",
         "filename": "storage/v1/storage-gen.go",
         "patchSetId": 10
@@ -136,6 +154,24 @@
       "side": 1,
       "message": "OK, so before I change it again, what would be a good API here?\n\nHow about this:\nfunc (c *ObjectsInsertCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *ObjectsInsertCall {\n?\n\nYour comment here:\nhttps://code-review.googlesource.com/#/c/1500/7/storage/v1/storage-gen.go@4511\nsaid we need to make the size more explicit... so that is what I was trying to do here.",
       "parentUuid": "cb02bf41_7a4f4d87",
+      "revId": "9dc78a731af9c6d4b61b3c545bc76e9039e41c07",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4b732f24_6eb3e3dc",
+        "filename": "storage/v1/storage-gen.go",
+        "patchSetId": 10
+      },
+      "lineNbr": 4438,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-01-22T18:11:44Z",
+      "side": 1,
+      "message": "LGTM",
+      "parentUuid": "0bbf77c3_bc360002",
       "revId": "9dc78a731af9c6d4b61b3c545bc76e9039e41c07",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false

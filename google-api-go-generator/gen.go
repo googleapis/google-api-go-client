@@ -1353,7 +1353,7 @@ func (meth *Method) generateCode() {
 		pn(` req.Header.Set("X-Upload-Content-Type", c.mediaType_)`)
 		pn(" req.Body = nil")
 		pn(` if params.Get("name") == "" {`)
-		pn(`  return nil, fmt.Errorf("resumable uploads must set the Name parameter.")`)
+		pn(`  return %sfmt.Errorf("resumable uploads must set the Name parameter.")`, nilRet)
 		pn(" }")
 		pn("} else {")
 		pn(" contentLength_, hasMedia_ := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)")
@@ -1382,9 +1382,7 @@ func (meth *Method) generateCode() {
 		pn("  Callback:      progressUpdater_,")
 		pn(" }")
 		pn(" res, err = rx.Upload(c.ctx_)")
-		pn(" if err != nil {")
-		pn("  return nil, err")
-		pn(" }")
+		pn(" if err != nil { return %serr }", nilRet)
 		pn("}")
 	}
 	if retTypeComma == "" {

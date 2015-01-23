@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b724f59_2d1b6d65",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 5125
+      },
+      "writtenOn": "2015-01-23T18:38:09Z",
+      "side": 1,
+      "message": "google-api-go-client: fix the missing media upload bodies (or anything that explains the problem.)\n\nAdd a link to the previous CL on the description line.",
+      "revId": "86b08b068cc2444953324e1bcaf9c054999f1d4a",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4b724f59_8d22a192",
+        "filename": "storage/v1/storage-gen.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 4501,
+      "author": {
+        "id": 5125
+      },
+      "writtenOn": "2015-01-23T18:38:09Z",
+      "side": 1,
+      "message": "I\u0027d suggest to break down this block into two. Normal media uploads and resumable uploads. There are a lot of conditional cases which makes it impossible to read.",
+      "revId": "86b08b068cc2444953324e1bcaf9c054999f1d4a",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

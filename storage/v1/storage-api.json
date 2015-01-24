@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/ojqzpkOHgCznIuY1zli7zQC6mTc\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/5Bhk48G739sjHde-Z8-H45qQoc8\"",
  "discoveryVersion": "v1",
  "id": "storage:v1",
  "name": "storage",
@@ -1141,6 +1141,11 @@
       "pageToken": {
        "type": "string",
        "description": "A previously-returned page token representing part of the larger set of results to view.",
+       "location": "query"
+      },
+      "prefix": {
+       "type": "string",
+       "description": "Filter results to buckets whose names begin with this prefix.",
        "location": "query"
       },
       "project": {

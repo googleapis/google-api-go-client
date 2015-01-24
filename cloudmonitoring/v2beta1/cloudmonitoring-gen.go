@@ -14,6 +14,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"golang.org/x/net/context"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -33,6 +34,7 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
+var _ = context.Background
 
 const apiId = "cloudmonitoring:v2beta1"
 const apiName = "cloudmonitoring"
@@ -485,6 +487,14 @@ func (r *TimeseriesService) List(project string, metric string, youngest string,
 	return c
 }
 
+// Aggregator sets the optional parameter "aggregator": The aggregation
+// function that will reduce the data points in each window to a single
+// point. This parameter is only valid for non-cumulative metric types.
+func (c *TimeseriesListCall) Aggregator(aggregator string) *TimeseriesListCall {
+	c.opt_["aggregator"] = aggregator
+	return c
+}
+
 // Count sets the optional parameter "count": Maximum number of data
 // points per page, which is used for pagination of results.
 func (c *TimeseriesListCall) Count(count int64) *TimeseriesListCall {
@@ -547,6 +557,21 @@ func (c *TimeseriesListCall) Timespan(timespan string) *TimeseriesListCall {
 	return c
 }
 
+// Window sets the optional parameter "window": The sampling window. At
+// most one data point will be returned for each window in the requested
+// time interval. This parameter is only valid for non-cumulative metric
+// types. Units:
+// - m: minute
+// - h: hour
+// - d: day
+// - w: week
+// Examples: 3m, 4w. Only one unit is allowed, for example: 2w3d is not
+// allowed; you should use 17d instead.
+func (c *TimeseriesListCall) Window(window string) *TimeseriesListCall {
+	c.opt_["window"] = window
+	return c
+}
+
 // Fields allows partial responses to be retrieved.
 // See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -560,6 +585,9 @@ func (c *TimeseriesListCall) Do() (*ListTimeseriesResponse, error) {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("youngest", fmt.Sprintf("%v", c.youngest))
+	if v, ok := c.opt_["aggregator"]; ok {
+		params.Set("aggregator", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["count"]; ok {
 		params.Set("count", fmt.Sprintf("%v", v))
 	}
@@ -574,6 +602,9 @@ func (c *TimeseriesListCall) Do() (*ListTimeseriesResponse, error) {
 	}
 	if v, ok := c.opt_["timespan"]; ok {
 		params.Set("timespan", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["window"]; ok {
+		params.Set("window", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
@@ -609,6 +640,23 @@ func (c *TimeseriesListCall) Do() (*ListTimeseriesResponse, error) {
 	//     "youngest"
 	//   ],
 	//   "parameters": {
+	//     "aggregator": {
+	//       "description": "The aggregation function that will reduce the data points in each window to a single point. This parameter is only valid for non-cumulative metric types.",
+	//       "enum": [
+	//         "max",
+	//         "mean",
+	//         "min",
+	//         "sum"
+	//       ],
+	//       "enumDescriptions": [
+	//         "",
+	//         "",
+	//         "",
+	//         ""
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "count": {
 	//       "default": "6000",
 	//       "description": "Maximum number of data points per page, which is used for pagination of results.",
@@ -651,6 +699,12 @@ func (c *TimeseriesListCall) Do() (*ListTimeseriesResponse, error) {
 	//       "description": "Length of the time interval to query, which is an alternative way to declare the interval: (youngest - timespan, youngest]. The timespan and oldest parameters should not be used together. Units:  \n- s: second \n- m: minute \n- h: hour \n- d: day \n- w: week  Examples: 2s, 3m, 4w. Only one unit is allowed, for example: 2w3d is not allowed; you should use 17d instead.\n\nIf neither oldest nor timespan is specified, the default time interval will be (youngest - 4 hours, youngest].",
 	//       "location": "query",
 	//       "pattern": "[0-9]+[smhdw]?",
+	//       "type": "string"
+	//     },
+	//     "window": {
+	//       "description": "The sampling window. At most one data point will be returned for each window in the requested time interval. This parameter is only valid for non-cumulative metric types. Units:  \n- m: minute \n- h: hour \n- d: day \n- w: week  Examples: 3m, 4w. Only one unit is allowed, for example: 2w3d is not allowed; you should use 17d instead.",
+	//       "location": "query",
+	//       "pattern": "[0-9]+[mhdw]?",
 	//       "type": "string"
 	//     },
 	//     "youngest": {
@@ -696,6 +750,14 @@ func (r *TimeseriesDescriptorsService) List(project string, metric string, young
 	c.metric = metric
 	c.youngest = youngest
 	c.listtimeseriesdescriptorsrequest = listtimeseriesdescriptorsrequest
+	return c
+}
+
+// Aggregator sets the optional parameter "aggregator": The aggregation
+// function that will reduce the data points in each window to a single
+// point. This parameter is only valid for non-cumulative metric types.
+func (c *TimeseriesDescriptorsListCall) Aggregator(aggregator string) *TimeseriesDescriptorsListCall {
+	c.opt_["aggregator"] = aggregator
 	return c
 }
 
@@ -762,6 +824,21 @@ func (c *TimeseriesDescriptorsListCall) Timespan(timespan string) *TimeseriesDes
 	return c
 }
 
+// Window sets the optional parameter "window": The sampling window. At
+// most one data point will be returned for each window in the requested
+// time interval. This parameter is only valid for non-cumulative metric
+// types. Units:
+// - m: minute
+// - h: hour
+// - d: day
+// - w: week
+// Examples: 3m, 4w. Only one unit is allowed, for example: 2w3d is not
+// allowed; you should use 17d instead.
+func (c *TimeseriesDescriptorsListCall) Window(window string) *TimeseriesDescriptorsListCall {
+	c.opt_["window"] = window
+	return c
+}
+
 // Fields allows partial responses to be retrieved.
 // See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -775,6 +852,9 @@ func (c *TimeseriesDescriptorsListCall) Do() (*ListTimeseriesDescriptorsResponse
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("youngest", fmt.Sprintf("%v", c.youngest))
+	if v, ok := c.opt_["aggregator"]; ok {
+		params.Set("aggregator", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["count"]; ok {
 		params.Set("count", fmt.Sprintf("%v", v))
 	}
@@ -789,6 +869,9 @@ func (c *TimeseriesDescriptorsListCall) Do() (*ListTimeseriesDescriptorsResponse
 	}
 	if v, ok := c.opt_["timespan"]; ok {
 		params.Set("timespan", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["window"]; ok {
+		params.Set("window", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
@@ -824,6 +907,23 @@ func (c *TimeseriesDescriptorsListCall) Do() (*ListTimeseriesDescriptorsResponse
 	//     "youngest"
 	//   ],
 	//   "parameters": {
+	//     "aggregator": {
+	//       "description": "The aggregation function that will reduce the data points in each window to a single point. This parameter is only valid for non-cumulative metric types.",
+	//       "enum": [
+	//         "max",
+	//         "mean",
+	//         "min",
+	//         "sum"
+	//       ],
+	//       "enumDescriptions": [
+	//         "",
+	//         "",
+	//         "",
+	//         ""
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "count": {
 	//       "default": "100",
 	//       "description": "Maximum number of time series descriptors per page. Used for pagination. If not specified, count = 100.",
@@ -866,6 +966,12 @@ func (c *TimeseriesDescriptorsListCall) Do() (*ListTimeseriesDescriptorsResponse
 	//       "description": "Length of the time interval to query, which is an alternative way to declare the interval: (youngest - timespan, youngest]. The timespan and oldest parameters should not be used together. Units:  \n- s: second \n- m: minute \n- h: hour \n- d: day \n- w: week  Examples: 2s, 3m, 4w. Only one unit is allowed, for example: 2w3d is not allowed; you should use 17d instead.\n\nIf neither oldest nor timespan is specified, the default time interval will be (youngest - 4 hours, youngest].",
 	//       "location": "query",
 	//       "pattern": "[0-9]+[smhdw]?",
+	//       "type": "string"
+	//     },
+	//     "window": {
+	//       "description": "The sampling window. At most one data point will be returned for each window in the requested time interval. This parameter is only valid for non-cumulative metric types. Units:  \n- m: minute \n- h: hour \n- d: day \n- w: week  Examples: 3m, 4w. Only one unit is allowed, for example: 2w3d is not allowed; you should use 17d instead.",
+	//       "location": "query",
+	//       "pattern": "[0-9]+[mhdw]?",
 	//       "type": "string"
 	//     },
 	//     "youngest": {

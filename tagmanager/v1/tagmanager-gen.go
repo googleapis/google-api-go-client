@@ -14,6 +14,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"golang.org/x/net/context"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -33,6 +34,7 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
+var _ = context.Background
 
 const apiId = "tagmanager:v1"
 const apiName = "tagmanager"
@@ -238,7 +240,13 @@ type Container struct {
 	// Container.
 	DomainName []string `json:"domainName,omitempty"`
 
-	// EnabledBuiltInVariable: List of enabled built-in variables.
+	// EnabledBuiltInVariable: List of enabled built-in variables. Valid
+	// values include: pageUrl, pageHostname, pagePath, referrer, event,
+	// clickElement, clickClasses, clickId, clickTarget, clickUrl,
+	// clickText, formElement, formClasses, formId, formTarget, formUrl,
+	// formText, errorMessage, errorUrl, errorLine, newHistoryFragment,
+	// oldHistoryFragment, newHistoryState, oldHistoryState, historySource,
+	// containerVersion, debugMode, randomNumber, containerId.
 	EnabledBuiltInVariable []string `json:"enabledBuiltInVariable,omitempty"`
 
 	// Fingerprint: The fingerprint of the GTM Container as computed at
@@ -654,11 +662,11 @@ type Trigger struct {
 	Type string `json:"type,omitempty"`
 
 	// UniqueTriggerId: Globally unique id of the trigger that
-	// auto-generates this Form Submit or Link Click listeners if any. Used
-	// to make incompatible auto-events work together with trigger filtering
-	// based on trigger ids. This value is populated during output
+	// auto-generates this (a Form Submit, Link Click or Timer listener) if
+	// any. Used to make incompatible auto-events work together with trigger
+	// filtering based on trigger ids. This value is populated during output
 	// generation since the tags implied by triggers don't exist until then.
-	// Only valid for Form Submission and Link Click triggers.
+	// Only valid for Form Submit, Link Click and Timer triggers.
 	UniqueTriggerId *Parameter `json:"uniqueTriggerId,omitempty"`
 
 	// VideoPercentageList: List of integer percentage values. The trigger

@@ -14,6 +14,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"golang.org/x/net/context"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -33,6 +34,7 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
+var _ = context.Background
 
 const apiId = "oauth2:v1"
 const apiName = "oauth2"
@@ -101,6 +103,20 @@ func NewUserinfoV2MeService(s *Service) *UserinfoV2MeService {
 
 type UserinfoV2MeService struct {
 	s *Service
+}
+
+type Raw struct {
+	Keyvalues []*RawKeyvalues `json:"keyvalues,omitempty"`
+}
+
+type RawKeyvalues struct {
+	Algorithm string `json:"algorithm,omitempty"`
+
+	Exponent string `json:"exponent,omitempty"`
+
+	Keyid string `json:"keyid,omitempty"`
+
+	Modulus string `json:"modulus,omitempty"`
 }
 
 type Tokeninfo struct {
@@ -184,6 +200,264 @@ type Userinfoplus struct {
 	// verified. Always verified because we only return the user's primary
 	// email address.
 	Verified_email bool `json:"verified_email,omitempty"`
+}
+
+// method id "oauth2.getCertForOpenIdConnect":
+
+type GetCertForOpenIdConnectCall struct {
+	s    *Service
+	opt_ map[string]interface{}
+}
+
+// GetCertForOpenIdConnect:
+func (s *Service) GetCertForOpenIdConnect() *GetCertForOpenIdConnectCall {
+	c := &GetCertForOpenIdConnectCall{s: s, opt_: make(map[string]interface{})}
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *GetCertForOpenIdConnectCall) Fields(s ...googleapi.Field) *GetCertForOpenIdConnectCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *GetCertForOpenIdConnectCall) Do() (map[string]string, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "oauth2/v1/certs")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret map[string]string
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "httpMethod": "GET",
+	//   "id": "oauth2.getCertForOpenIdConnect",
+	//   "path": "oauth2/v1/certs",
+	//   "response": {
+	//     "$ref": "X509"
+	//   }
+	// }
+
+}
+
+// method id "oauth2.getCertForOpenIdConnectRaw":
+
+type GetCertForOpenIdConnectRawCall struct {
+	s    *Service
+	opt_ map[string]interface{}
+}
+
+// GetCertForOpenIdConnectRaw:
+func (s *Service) GetCertForOpenIdConnectRaw() *GetCertForOpenIdConnectRawCall {
+	c := &GetCertForOpenIdConnectRawCall{s: s, opt_: make(map[string]interface{})}
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *GetCertForOpenIdConnectRawCall) Fields(s ...googleapi.Field) *GetCertForOpenIdConnectRawCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *GetCertForOpenIdConnectRawCall) Do() (*Raw, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "oauth2/v1/raw_public_keys")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Raw
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "httpMethod": "GET",
+	//   "id": "oauth2.getCertForOpenIdConnectRaw",
+	//   "path": "oauth2/v1/raw_public_keys",
+	//   "response": {
+	//     "$ref": "Raw"
+	//   }
+	// }
+
+}
+
+// method id "oauth2.getRobotMetadataRaw":
+
+type GetRobotMetadataRawCall struct {
+	s          *Service
+	robotEmail string
+	opt_       map[string]interface{}
+}
+
+// GetRobotMetadataRaw:
+func (s *Service) GetRobotMetadataRaw(robotEmail string) *GetRobotMetadataRawCall {
+	c := &GetRobotMetadataRawCall{s: s, opt_: make(map[string]interface{})}
+	c.robotEmail = robotEmail
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *GetRobotMetadataRawCall) Fields(s ...googleapi.Field) *GetRobotMetadataRawCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *GetRobotMetadataRawCall) Do() (*Raw, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "service_accounts/v1/metadata/raw/{robotEmail}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"robotEmail": c.robotEmail,
+	})
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Raw
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "httpMethod": "GET",
+	//   "id": "oauth2.getRobotMetadataRaw",
+	//   "parameterOrder": [
+	//     "robotEmail"
+	//   ],
+	//   "parameters": {
+	//     "robotEmail": {
+	//       "description": "The email of robot account.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "service_accounts/v1/metadata/raw/{robotEmail}",
+	//   "response": {
+	//     "$ref": "Raw"
+	//   }
+	// }
+
+}
+
+// method id "oauth2.getRobotMetadataX509":
+
+type GetRobotMetadataX509Call struct {
+	s          *Service
+	robotEmail string
+	opt_       map[string]interface{}
+}
+
+// GetRobotMetadataX509:
+func (s *Service) GetRobotMetadataX509(robotEmail string) *GetRobotMetadataX509Call {
+	c := &GetRobotMetadataX509Call{s: s, opt_: make(map[string]interface{})}
+	c.robotEmail = robotEmail
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *GetRobotMetadataX509Call) Fields(s ...googleapi.Field) *GetRobotMetadataX509Call {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *GetRobotMetadataX509Call) Do() (map[string]string, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "service_accounts/v1/metadata/x509/{robotEmail}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"robotEmail": c.robotEmail,
+	})
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret map[string]string
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "httpMethod": "GET",
+	//   "id": "oauth2.getRobotMetadataX509",
+	//   "parameterOrder": [
+	//     "robotEmail"
+	//   ],
+	//   "parameters": {
+	//     "robotEmail": {
+	//       "description": "The email of robot account.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "service_accounts/v1/metadata/x509/{robotEmail}",
+	//   "response": {
+	//     "$ref": "X509"
+	//   }
+	// }
+
 }
 
 // method id "oauth2.tokeninfo":

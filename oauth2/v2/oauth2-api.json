@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/rUypcW3W8YGLTpyNoUxcj8xEnns\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/x7FThRC1OZmHwbkYbDOWKsWuUA8\"",
  "discoveryVersion": "v1",
  "id": "oauth2:v2",
  "name": "oauth2",
  "version": "v2",
- "revision": "20150106",
+ "revision": "20150120",
  "title": "Google OAuth2 API",
  "description": "Lets you access OAuth2 protocol related APIs.",
  "ownerDomain": "google.com",
@@ -85,6 +85,41 @@
   }
  },
  "schemas": {
+  "Jwk": {
+   "id": "Jwk",
+   "type": "object",
+   "properties": {
+    "keys": {
+     "type": "array",
+     "items": {
+      "type": "object",
+      "properties": {
+       "alg": {
+        "type": "string",
+        "default": "RS256"
+       },
+       "e": {
+        "type": "string"
+       },
+       "kid": {
+        "type": "string"
+       },
+       "kty": {
+        "type": "string",
+        "default": "RSA"
+       },
+       "n": {
+        "type": "string"
+       },
+       "use": {
+        "type": "string",
+        "default": "sig"
+       }
+      }
+     }
+    }
+   }
+  },
   "Tokeninfo": {
    "id": "Tokeninfo",
    "type": "object",
@@ -177,6 +212,14 @@
   }
  },
  "methods": {
+  "getCertForOpenIdConnect": {
+   "id": "oauth2.getCertForOpenIdConnect",
+   "path": "oauth2/v2/certs",
+   "httpMethod": "GET",
+   "response": {
+    "$ref": "Jwk"
+   }
+  },
   "tokeninfo": {
    "id": "oauth2.tokeninfo",
    "path": "oauth2/v2/tokeninfo",

@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/mxJxnaJAFqBnZvQqixN7zqS1MSM\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/UrgZohBY2VvsAHPm512CPTQfBLs\"",
  "discoveryVersion": "v1",
  "id": "content:v2",
  "name": "content",
  "canonicalName": "Shopping Content",
  "version": "v2",
- "revision": "20141203",
+ "revision": "20150115",
  "title": "Content API for Shopping",
  "description": "Manage product items, inventory, and Merchant Center accounts for Google Shopping.",
  "ownerDomain": "google.com",
@@ -154,6 +154,360 @@
     }
    }
   },
+  "AccountShipping": {
+   "id": "AccountShipping",
+   "type": "object",
+   "description": "The shipping settings of a merchant account.",
+   "properties": {
+    "accountId": {
+     "type": "string",
+     "description": "The ID of the account to which these account shipping settings belong.",
+     "format": "uint64",
+     "annotations": {
+      "required": [
+       "content.accountshipping.update"
+      ]
+     }
+    },
+    "carrierRates": {
+     "type": "array",
+     "description": "Carrier-based shipping calculations.",
+     "items": {
+      "$ref": "AccountShippingCarrierRate"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"content#accountShipping\".",
+     "default": "content#accountShipping"
+    },
+    "locationGroups": {
+     "type": "array",
+     "description": "Location groups for shipping.",
+     "items": {
+      "$ref": "AccountShippingLocationGroup"
+     }
+    },
+    "rateTables": {
+     "type": "array",
+     "description": "Rate tables definitions.",
+     "items": {
+      "$ref": "AccountShippingRateTable"
+     }
+    },
+    "services": {
+     "type": "array",
+     "description": "Shipping services describing shipping fees calculation.",
+     "items": {
+      "$ref": "AccountShippingShippingService"
+     }
+    }
+   }
+  },
+  "AccountShippingCarrierRate": {
+   "id": "AccountShippingCarrierRate",
+   "type": "object",
+   "description": "A carrier-calculated shipping rate.",
+   "properties": {
+    "carrier": {
+     "type": "string",
+     "description": "The carrier that is responsible for the shipping, such as \"UPS\", \"FedEx\", or \"USPS\".",
+     "annotations": {
+      "required": [
+       "content.accountshipping.update"
+      ]
+     }
+    },
+    "carrierService": {
+     "type": "string",
+     "description": "The carrier service, such as \"Ground\" or \"2Day\".",
+     "annotations": {
+      "required": [
+       "content.accountshipping.update"
+      ]
+     }
+    },
+    "modifierFlatRate": {
+     "$ref": "Price",
+     "description": "Additive shipping rate modifier."
+    },
+    "modifierPercent": {
+     "type": "string",
+     "description": "Multiplicative shipping rate modifier in percent. Represented as a floating point number without the percentage character."
+    },
+    "name": {
+     "type": "string",
+     "description": "The name of the carrier rate.",
+     "annotations": {
+      "required": [
+       "content.accountshipping.update"
+      ]
+     }
+    },
+    "saleCountry": {
+     "type": "string",
+     "description": "Sale country for which this carrier rate is valid, represented as an ISO_3166-1 Alpha-2 code.",
+     "annotations": {
+      "required": [
+       "content.accountshipping.update"
+      ]
+     }
+    },
+    "shippingOrigin": {
+     "type": "string",
+     "description": "Shipping origin represented as a postal code.",
+     "annotations": {
+      "required": [
+       "content.accountshipping.update"
+      ]
+     }
+    }
+   }
+  },
+  "AccountShippingCondition": {
+   "id": "AccountShippingCondition",
+   "type": "object",
+   "properties": {
+    "deliveryLocationGroup": {
+     "type": "string",
+     "description": "Delivery location in terms of a location group name. A location group with this name must be specified among location groups."
+    },
+    "deliveryLocationId": {
+     "type": "string",
+     "description": "Delivery location in terms of a location ID. Can be used to represent administrative areas, smaller country subdivisions, or cities.",
+     "format": "int64"
+    },
+    "deliveryPostalCode": {
+     "type": "string",
+     "description": "Delivery location in terms of a postal code."
+    },
+    "deliveryPostalCodeRange": {
+     "$ref": "AccountShippingPostalCodeRange",
+     "description": "Delivery location in terms of a postal code range."
+    },
+    "priceMax": {
+     "$ref": "Price",
+     "description": "Maximum shipping price. Forms an interval between the maximum of smaller prices (exclusive) and this price (inclusive)."
+    },
+    "shippingLabel": {
+     "type": "string",
+     "description": "Shipping label of the product. The products with the label are matched."
+    },
+    "weightMax": {
+     "$ref": "Weight",
+     "description": "Maximum shipping weight. Forms an interval between the maximum of smaller weight (exclusive) and this weight (inclusive)."
+    }
+   }
+  },
+  "AccountShippingLocationGroup": {
+   "id": "AccountShippingLocationGroup",
+   "type": "object",
+   "description": "A user-defined locations group in a given country. All the locations of the group must be of the same type.",
+   "properties": {
+    "country": {
+     "type": "string",
+     "description": "The country in which this location group is, represented as ISO_3166-1 Alpha-2 code.",
+     "annotations": {
+      "required": [
+       "content.accountshipping.update"
+      ]
+     }
+    },
+    "locationIds": {
+     "type": "array",
+     "description": "A location ID (also called criteria ID) representing administrative areas, smaller country subdivisions (counties), or cities.",
+     "items": {
+      "type": "string",
+      "format": "int64"
+     }
+    },
+    "name": {
+     "type": "string",
+     "description": "The name of the location group.",
+     "annotations": {
+      "required": [
+       "content.accountshipping.update"
+      ]
+     }
+    },
+    "postalCodeRanges": {
+     "type": "array",
+     "description": "A postal code range representing a city or a set of cities.",
+     "items": {
+      "$ref": "AccountShippingPostalCodeRange"
+     }
+    },
+    "postalCodes": {
+     "type": "array",
+     "description": "A postal code representing a city or a set of cities.  \n- A single postal code (e.g., 12345)\n- A postal code prefix followed by a star (e.g., 1234*)",
+     "items": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  "AccountShippingPostalCodeRange": {
+   "id": "AccountShippingPostalCodeRange",
+   "type": "object",
+   "description": "A postal code range, that can be either:  \n- A range of postal codes (e.g., start=12340, end=12359)\n- A range of postal codes prefixes (e.g., start=1234* end=1235*). Prefixes must be of the same length (e.g., start=12* end=2* is invalid).",
+   "properties": {
+    "end": {
+     "type": "string",
+     "description": "The last (inclusive) postal code or prefix of the range.",
+     "annotations": {
+      "required": [
+       "content.accountshipping.update"
+      ]
+     }
+    },
+    "start": {
+     "type": "string",
+     "description": "The first (inclusive) postal code or prefix of the range.",
+     "annotations": {
+      "required": [
+       "content.accountshipping.update"
+      ]
+     }
+    }
+   }
+  },
+  "AccountShippingRateTable": {
+   "id": "AccountShippingRateTable",
+   "type": "object",
+   "description": "A single or bi-dimensional table of shipping rates. Each dimension is defined in terms of consecutive price/weight ranges, delivery locations, or shipping labels.",
+   "properties": {
+    "content": {
+     "type": "array",
+     "description": "One-dimensional table cells define one condition along the same dimension. Bi-dimensional table cells use two dimension with respectively M and N distinct values and must contain exactly M * N cells with distinct conditions (for each possible value pairs).",
+     "items": {
+      "$ref": "AccountShippingRateTableCell"
+     }
+    },
+    "name": {
+     "type": "string",
+     "description": "The name of the rate table.",
+     "annotations": {
+      "required": [
+       "content.accountshipping.update"
+      ]
+     }
+    },
+    "saleCountry": {
+     "type": "string",
+     "description": "Sale country for which this table is valid, represented as an ISO_3166-1 Alpha-2 code.",
+     "annotations": {
+      "required": [
+       "content.accountshipping.update"
+      ]
+     }
+    }
+   }
+  },
+  "AccountShippingRateTableCell": {
+   "id": "AccountShippingRateTableCell",
+   "type": "object",
+   "properties": {
+    "condition": {
+     "$ref": "AccountShippingCondition",
+     "description": "Conditions for which the cell is valid. All cells in a table must use the same dimension or pair of dimensions among price, weight, shipping_label or delivery location. If no condition is specified, the cell acts as a catch-all and matches all the elements that are not matched by other cells in this dimension."
+    },
+    "rate": {
+     "$ref": "Price",
+     "description": "The rate applicable if the cell conditions are matched.",
+     "annotations": {
+      "required": [
+       "content.accountshipping.update"
+      ]
+     }
+    }
+   }
+  },
+  "AccountShippingShippingService": {
+   "id": "AccountShippingShippingService",
+   "type": "object",
+   "description": "Shipping services provided in a country.",
+   "properties": {
+    "active": {
+     "type": "boolean",
+     "description": "Whether the shipping service is available."
+    },
+    "calculationMethod": {
+     "$ref": "AccountShippingShippingServiceCalculationMethod",
+     "description": "Calculation method for the \"simple\" case that needs no rules."
+    },
+    "costRuleTree": {
+     "$ref": "AccountShippingShippingServiceCostRule",
+     "description": "Decision tree for \"complicated\" shipping cost calculation."
+    },
+    "name": {
+     "type": "string",
+     "description": "The name of this shipping service.",
+     "annotations": {
+      "required": [
+       "content.accountshipping.update"
+      ]
+     }
+    },
+    "saleCountry": {
+     "type": "string",
+     "description": "Sale country for which this service can be used, represented as an ISO_3166-1 Alpha-2 code.",
+     "annotations": {
+      "required": [
+       "content.accountshipping.update"
+      ]
+     }
+    }
+   }
+  },
+  "AccountShippingShippingServiceCalculationMethod": {
+   "id": "AccountShippingShippingServiceCalculationMethod",
+   "type": "object",
+   "description": "Shipping cost calculation method. Exactly one of the field is set.",
+   "properties": {
+    "carrierRate": {
+     "type": "string",
+     "description": "Name of the carrier rate to use for the calculation."
+    },
+    "excluded": {
+     "type": "boolean",
+     "description": "Delivery is excluded. Valid only within cost rules tree."
+    },
+    "flatRate": {
+     "$ref": "Price",
+     "description": "Fixed price shipping, represented as a floating point number associated with a currency."
+    },
+    "percentageRate": {
+     "type": "string",
+     "description": "Percentage of the price, represented as a floating point number without the percentage character."
+    },
+    "rateTable": {
+     "type": "string",
+     "description": "Name of the rate table to use for the calculation."
+    }
+   }
+  },
+  "AccountShippingShippingServiceCostRule": {
+   "id": "AccountShippingShippingServiceCostRule",
+   "type": "object",
+   "description": "Building block of the cost calculation decision tree.  \n- The tree root should have no condition and no calculation method.\n- All the children must have a condition on the same dimension. The first child matching a condition is entered, therefore, price and weight conditions form contiguous intervals.\n- The last child of an element must have no condition and matches all elements not previously matched.\n- Children and calculation method are mutually exclusive, and exactly one of them must be defined; the root must only have children.",
+   "properties": {
+    "calculationMethod": {
+     "$ref": "AccountShippingShippingServiceCalculationMethod",
+     "description": "Final calculation method to be used only in leaf nodes."
+    },
+    "children": {
+     "type": "array",
+     "description": "Subsequent rules to be applied, only for inner nodes. The last child must not specify a condition and acts as a catch-all.",
+     "items": {
+      "$ref": "AccountShippingShippingServiceCostRule"
+     }
+    },
+    "condition": {
+     "$ref": "AccountShippingCondition",
+     "description": "Condition for this rule to be applicable. If no condition is specified, the rule acts as a catch-all."
+    }
+   }
+  },
   "AccountStatus": {
    "id": "AccountStatus",
    "type": "object",
@@ -246,6 +600,68 @@
     }
    }
   },
+  "AccountTax": {
+   "id": "AccountTax",
+   "type": "object",
+   "description": "The tax settings of a merchant account.",
+   "properties": {
+    "accountId": {
+     "type": "string",
+     "description": "The ID of the account to which these account tax settings belong.",
+     "format": "uint64",
+     "annotations": {
+      "required": [
+       "content.accounttax.update"
+      ]
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"content#accountTax\".",
+     "default": "content#accountTax"
+    },
+    "rules": {
+     "type": "array",
+     "description": "Tax rules. Updating the tax rules will enable US taxes (not reversible). Defining no rules is equivalent to not charging tax at all.",
+     "items": {
+      "$ref": "AccountTaxTaxRule"
+     }
+    }
+   }
+  },
+  "AccountTaxTaxRule": {
+   "id": "AccountTaxTaxRule",
+   "type": "object",
+   "description": "Tax calculation rule to apply in a state or province (USA only).",
+   "properties": {
+    "country": {
+     "type": "string",
+     "description": "Country code in which tax is applicable."
+    },
+    "locationId": {
+     "type": "string",
+     "description": "State (or province) is which the tax is applicable, described by its location id (also called criteria id).",
+     "format": "uint64",
+     "annotations": {
+      "required": [
+       "content.accounttax.update"
+      ]
+     }
+    },
+    "ratePercent": {
+     "type": "string",
+     "description": "Explicit tax rate in percent, represented as a floating point number without the percentage character. Must not be negative."
+    },
+    "shippingTaxed": {
+     "type": "boolean",
+     "description": "If true, shipping charges are also taxed."
+    },
+    "useGlobalRate": {
+     "type": "boolean",
+     "description": "Whether the tax rate is taken from a global tax table or specified explicitly."
+    }
+   }
+  },
   "AccountUser": {
    "id": "AccountUser",
    "type": "object",
@@ -276,7 +692,7 @@
   "AccountsCustomBatchRequestEntry": {
    "id": "AccountsCustomBatchRequestEntry",
    "type": "object",
-   "description": "A batch entry encoding a single non-batch request to the accounts service of the Content API for Shopping.",
+   "description": "A batch entry encoding a single non-batch accounts request.",
    "properties": {
     "account": {
      "$ref": "Account",
@@ -323,7 +739,7 @@
   "AccountsCustomBatchResponseEntry": {
    "id": "AccountsCustomBatchResponseEntry",
    "type": "object",
-   "description": "A batch entry encoding a single non-batch response from the accounts service of the Content API for Shopping.",
+   "description": "A batch entry encoding a single non-batch accounts response.",
    "properties": {
     "account": {
      "$ref": "Account",
@@ -366,6 +782,112 @@
     }
    }
   },
+  "AccountshippingCustomBatchRequest": {
+   "id": "AccountshippingCustomBatchRequest",
+   "type": "object",
+   "properties": {
+    "entries": {
+     "type": "array",
+     "description": "The request entries to be processed in the batch.",
+     "items": {
+      "$ref": "AccountshippingCustomBatchRequestEntry"
+     }
+    }
+   }
+  },
+  "AccountshippingCustomBatchRequestEntry": {
+   "id": "AccountshippingCustomBatchRequestEntry",
+   "type": "object",
+   "description": "A batch entry encoding a single non-batch accountshipping request.",
+   "properties": {
+    "accountId": {
+     "type": "string",
+     "description": "The ID of the account for which to get/update account shipping settings.",
+     "format": "uint64"
+    },
+    "accountShipping": {
+     "$ref": "AccountShipping",
+     "description": "The account shipping settings to update. Only defined if the method is update."
+    },
+    "batchId": {
+     "type": "integer",
+     "description": "An entry ID, unique within the batch request.",
+     "format": "uint32"
+    },
+    "merchantId": {
+     "type": "string",
+     "description": "The ID of the managing account.",
+     "format": "uint64"
+    },
+    "method": {
+     "type": "string"
+    }
+   }
+  },
+  "AccountshippingCustomBatchResponse": {
+   "id": "AccountshippingCustomBatchResponse",
+   "type": "object",
+   "properties": {
+    "entries": {
+     "type": "array",
+     "description": "The result of the execution of the batch requests.",
+     "items": {
+      "$ref": "AccountshippingCustomBatchResponseEntry"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"content#accountshippingCustomBatchResponse\".",
+     "default": "content#accountshippingCustomBatchResponse"
+    }
+   }
+  },
+  "AccountshippingCustomBatchResponseEntry": {
+   "id": "AccountshippingCustomBatchResponseEntry",
+   "type": "object",
+   "description": "A batch entry encoding a single non-batch accountshipping response.",
+   "properties": {
+    "accountShipping": {
+     "$ref": "AccountShipping",
+     "description": "The retrieved or updated account shipping settings."
+    },
+    "batchId": {
+     "type": "integer",
+     "description": "The ID of the request entry this entry responds to.",
+     "format": "uint32"
+    },
+    "errors": {
+     "$ref": "Errors",
+     "description": "A list of errors defined if and only if the request failed."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"content#accountshippingCustomBatchResponseEntry\".",
+     "default": "content#accountshippingCustomBatchResponseEntry"
+    }
+   }
+  },
+  "AccountshippingListResponse": {
+   "id": "AccountshippingListResponse",
+   "type": "object",
+   "properties": {
+    "kind": {
+     "type": "string",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"content#accountshippingListResponse\".",
+     "default": "content#accountshippingListResponse"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "The token for the retrieval of the next page of account shipping settings."
+    },
+    "resources": {
+     "type": "array",
+     "items": {
+      "$ref": "AccountShipping"
+     }
+    }
+   }
+  },
   "AccountstatusesCustomBatchRequest": {
    "id": "AccountstatusesCustomBatchRequest",
    "type": "object",
@@ -382,7 +904,7 @@
   "AccountstatusesCustomBatchRequestEntry": {
    "id": "AccountstatusesCustomBatchRequestEntry",
    "type": "object",
-   "description": "A batch entry encoding a single non-batch request to the accountstatuses service of the Content API for Shopping.",
+   "description": "A batch entry encoding a single non-batch accountstatuses request.",
    "properties": {
     "accountId": {
      "type": "string",
@@ -426,7 +948,7 @@
   "AccountstatusesCustomBatchResponseEntry": {
    "id": "AccountstatusesCustomBatchResponseEntry",
    "type": "object",
-   "description": "A batch entry encoding a single non-batch response from the accountstatuses service of the Content API for Shopping.",
+   "description": "A batch entry encoding a single non-batch accountstatuses response.",
    "properties": {
     "accountStatus": {
      "$ref": "AccountStatus",
@@ -460,6 +982,112 @@
      "type": "array",
      "items": {
       "$ref": "AccountStatus"
+     }
+    }
+   }
+  },
+  "AccounttaxCustomBatchRequest": {
+   "id": "AccounttaxCustomBatchRequest",
+   "type": "object",
+   "properties": {
+    "entries": {
+     "type": "array",
+     "description": "The request entries to be processed in the batch.",
+     "items": {
+      "$ref": "AccounttaxCustomBatchRequestEntry"
+     }
+    }
+   }
+  },
+  "AccounttaxCustomBatchRequestEntry": {
+   "id": "AccounttaxCustomBatchRequestEntry",
+   "type": "object",
+   "description": "A batch entry encoding a single non-batch accounttax request.",
+   "properties": {
+    "accountId": {
+     "type": "string",
+     "description": "The ID of the account for which to get/update account tax settings.",
+     "format": "uint64"
+    },
+    "accountTax": {
+     "$ref": "AccountTax",
+     "description": "The account tax settings to update. Only defined if the method is update."
+    },
+    "batchId": {
+     "type": "integer",
+     "description": "An entry ID, unique within the batch request.",
+     "format": "uint32"
+    },
+    "merchantId": {
+     "type": "string",
+     "description": "The ID of the managing account.",
+     "format": "uint64"
+    },
+    "method": {
+     "type": "string"
+    }
+   }
+  },
+  "AccounttaxCustomBatchResponse": {
+   "id": "AccounttaxCustomBatchResponse",
+   "type": "object",
+   "properties": {
+    "entries": {
+     "type": "array",
+     "description": "The result of the execution of the batch requests.",
+     "items": {
+      "$ref": "AccounttaxCustomBatchResponseEntry"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"content#accounttaxCustomBatchResponse\".",
+     "default": "content#accounttaxCustomBatchResponse"
+    }
+   }
+  },
+  "AccounttaxCustomBatchResponseEntry": {
+   "id": "AccounttaxCustomBatchResponseEntry",
+   "type": "object",
+   "description": "A batch entry encoding a single non-batch accounttax response.",
+   "properties": {
+    "accountTax": {
+     "$ref": "AccountTax",
+     "description": "The retrieved or updated account tax settings."
+    },
+    "batchId": {
+     "type": "integer",
+     "description": "The ID of the request entry this entry responds to.",
+     "format": "uint32"
+    },
+    "errors": {
+     "$ref": "Errors",
+     "description": "A list of errors defined if and only if the request failed."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"content#accounttaxCustomBatchResponseEntry\".",
+     "default": "content#accounttaxCustomBatchResponseEntry"
+    }
+   }
+  },
+  "AccounttaxListResponse": {
+   "id": "AccounttaxListResponse",
+   "type": "object",
+   "properties": {
+    "kind": {
+     "type": "string",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"content#accounttaxListResponse\".",
+     "default": "content#accounttaxListResponse"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "The token for the retrieval of the next page of account tax settings."
+    },
+    "resources": {
+     "type": "array",
+     "items": {
+      "$ref": "AccountTax"
      }
     }
    }
@@ -716,7 +1344,7 @@
   "DatafeedsCustomBatchRequestEntry": {
    "id": "DatafeedsCustomBatchRequestEntry",
    "type": "object",
-   "description": "A batch entry encoding a single non-batch request to the datafeeds service of the Content API for Shopping.",
+   "description": "A batch entry encoding a single non-batch datafeeds request.",
    "properties": {
     "batchId": {
      "type": "integer",
@@ -763,7 +1391,7 @@
   "DatafeedsCustomBatchResponseEntry": {
    "id": "DatafeedsCustomBatchResponseEntry",
    "type": "object",
-   "description": "A batch entry encoding a single non-batch response from the datafeeds service of the Content API for Shopping.",
+   "description": "A batch entry encoding a single non-batch datafeeds response.",
    "properties": {
     "batchId": {
      "type": "integer",
@@ -817,7 +1445,7 @@
   "DatafeedstatusesCustomBatchRequestEntry": {
    "id": "DatafeedstatusesCustomBatchRequestEntry",
    "type": "object",
-   "description": "A batch entry encoding a single non-batch request to the datafeedstatuses service of the Content API for Shopping.",
+   "description": "A batch entry encoding a single non-batch datafeedstatuses request.",
    "properties": {
     "batchId": {
      "type": "integer",
@@ -860,7 +1488,7 @@
   "DatafeedstatusesCustomBatchResponseEntry": {
    "id": "DatafeedstatusesCustomBatchResponseEntry",
    "type": "object",
-   "description": "A batch entry encoding a single non-batch response from the datafeedstatuses service of the Content API for Shopping.",
+   "description": "A batch entry encoding a single non-batch datafeedstatuses response.",
    "properties": {
     "batchId": {
      "type": "integer",
@@ -988,7 +1616,7 @@
   "InventoryCustomBatchRequestEntry": {
    "id": "InventoryCustomBatchRequestEntry",
    "type": "object",
-   "description": "A batch entry encoding a single non-batch request to the inventory service of the Content API for Shopping.",
+   "description": "A batch entry encoding a single non-batch inventory request.",
    "properties": {
     "batchId": {
      "type": "integer",
@@ -1035,7 +1663,7 @@
   "InventoryCustomBatchResponseEntry": {
    "id": "InventoryCustomBatchResponseEntry",
    "type": "object",
-   "description": "A batch entry encoding a single non-batch response from the inventory service of the Content API for Shopping.",
+   "description": "A batch entry encoding a single non-batch inventory response.",
    "properties": {
     "batchId": {
      "type": "integer",
@@ -1200,7 +1828,7 @@
     },
     "customAttributes": {
      "type": "array",
-     "description": "A list of custom (merchant-provided) attributes.",
+     "description": "A list of custom (merchant-provided) attributes. It can also be used for submitting any attribute of the feed specification in its generic form (e.g., { \"name\": \"size type\", \"type\": \"text\", \"value\": \"regular\" }). This is useful for submitting attributes not explicitly exposed by the API.",
      "items": {
       "$ref": "ProductCustomAttribute"
      }
@@ -1249,7 +1877,7 @@
     },
     "expirationDate": {
      "type": "string",
-     "description": "Date that an item will expire."
+     "description": "Date on which the item should expire, as specified upon insertion. The actual expiration date in Google Shopping is exposed in productstatuses as googleExpirationDate and might be earlier if expirationDate is too far in the future."
     },
     "gender": {
      "type": "string",
@@ -1430,7 +2058,7 @@
    "properties": {
     "name": {
      "type": "string",
-     "description": "The name of the attribute."
+     "description": "The name of the attribute. Underscores will be replaced by spaces upon insertion."
     },
     "type": {
      "type": "string",
@@ -1459,7 +2087,7 @@
     },
     "name": {
      "type": "string",
-     "description": "The name of the group."
+     "description": "The name of the group. Underscores will be replaced by spaces upon insertion."
     }
    }
   },
@@ -1547,6 +2175,10 @@
    "type": "object",
    "description": "The status of a product, i.e., information about a product computed asynchronously by the data quality analysis.",
    "properties": {
+    "creationDate": {
+     "type": "string",
+     "description": "Date on which the item has been created."
+    },
     "dataQualityIssues": {
      "type": "array",
      "description": "A list of data quality issues associated with the product.",
@@ -1561,10 +2193,18 @@
       "$ref": "ProductStatusDestinationStatus"
      }
     },
+    "googleExpirationDate": {
+     "type": "string",
+     "description": "Date on which the item expires in Google Shopping."
+    },
     "kind": {
      "type": "string",
      "description": "Identifies what kind of resource this is. Value: the fixed string \"content#productStatus\".",
      "default": "content#productStatus"
+    },
+    "lastUpdateDate": {
+     "type": "string",
+     "description": "Date on which the item has been last updated."
     },
     "link": {
      "type": "string",
@@ -1710,7 +2350,7 @@
   "ProductsCustomBatchRequestEntry": {
    "id": "ProductsCustomBatchRequestEntry",
    "type": "object",
-   "description": "A batch entry encoding a single non-batch request to the products service of the Content API for Shopping.",
+   "description": "A batch entry encoding a single non-batch products request.",
    "properties": {
     "batchId": {
      "type": "integer",
@@ -1756,7 +2396,7 @@
   "ProductsCustomBatchResponseEntry": {
    "id": "ProductsCustomBatchResponseEntry",
    "type": "object",
-   "description": "A batch entry encoding a single non-batch response from the products service of the Content API for Shopping.",
+   "description": "A batch entry encoding a single non-batch products response.",
    "properties": {
     "batchId": {
      "type": "integer",
@@ -1815,7 +2455,7 @@
   "ProductstatusesCustomBatchRequestEntry": {
    "id": "ProductstatusesCustomBatchRequestEntry",
    "type": "object",
-   "description": "A batch entry encoding a single non-batch request to the productstatuses service of the Content API for Shopping.",
+   "description": "A batch entry encoding a single non-batch productstatuses request.",
    "properties": {
     "batchId": {
      "type": "integer",
@@ -1857,7 +2497,7 @@
   "ProductstatusesCustomBatchResponseEntry": {
    "id": "ProductstatusesCustomBatchResponseEntry",
    "type": "object",
-   "description": "A batch entry encoding a single non-batch response from the productstatuses service of the Content API for Shopping.",
+   "description": "A batch entry encoding a single non-batch productstatuses response.",
    "properties": {
     "batchId": {
      "type": "integer",
@@ -1896,6 +2536,30 @@
      "type": "array",
      "items": {
       "$ref": "ProductStatus"
+     }
+    }
+   }
+  },
+  "Weight": {
+   "id": "Weight",
+   "type": "object",
+   "properties": {
+    "unit": {
+     "type": "string",
+     "description": "The weight unit.",
+     "annotations": {
+      "required": [
+       "content.accountshipping.update"
+      ]
+     }
+    },
+    "value": {
+     "type": "string",
+     "description": "The weight represented as a number.",
+     "annotations": {
+      "required": [
+       "content.accountshipping.update"
+      ]
      }
     }
    }
@@ -2114,6 +2778,162 @@
     }
    }
   },
+  "accountshipping": {
+   "methods": {
+    "custombatch": {
+     "id": "content.accountshipping.custombatch",
+     "path": "accountshipping/batch",
+     "httpMethod": "POST",
+     "description": "Retrieves and updates the shipping settings of multiple accounts in a single request.",
+     "request": {
+      "$ref": "AccountshippingCustomBatchRequest"
+     },
+     "response": {
+      "$ref": "AccountshippingCustomBatchResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/content"
+     ]
+    },
+    "get": {
+     "id": "content.accountshipping.get",
+     "path": "{merchantId}/accountshipping/{accountId}",
+     "httpMethod": "GET",
+     "description": "Retrieves the shipping settings of the account.",
+     "parameters": {
+      "accountId": {
+       "type": "string",
+       "description": "The ID of the account for which to get/update account shipping settings.",
+       "required": true,
+       "format": "uint64",
+       "location": "path"
+      },
+      "merchantId": {
+       "type": "string",
+       "description": "The ID of the managing account.",
+       "required": true,
+       "format": "uint64",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "merchantId",
+      "accountId"
+     ],
+     "response": {
+      "$ref": "AccountShipping"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/content"
+     ]
+    },
+    "list": {
+     "id": "content.accountshipping.list",
+     "path": "{merchantId}/accountshipping",
+     "httpMethod": "GET",
+     "description": "Lists the shipping settings of the sub-accounts in your Merchant Center account.",
+     "parameters": {
+      "maxResults": {
+       "type": "integer",
+       "description": "The maximum number of shipping settings to return in the response, used for paging.",
+       "format": "uint32",
+       "location": "query"
+      },
+      "merchantId": {
+       "type": "string",
+       "description": "The ID of the managing account.",
+       "required": true,
+       "format": "uint64",
+       "location": "path"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "The token returned by the previous request.",
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "merchantId"
+     ],
+     "response": {
+      "$ref": "AccountshippingListResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/content"
+     ]
+    },
+    "patch": {
+     "id": "content.accountshipping.patch",
+     "path": "{merchantId}/accountshipping/{accountId}",
+     "httpMethod": "PATCH",
+     "description": "Updates the shipping settings of the account. This method supports patch semantics.",
+     "parameters": {
+      "accountId": {
+       "type": "string",
+       "description": "The ID of the account for which to get/update account shipping settings.",
+       "required": true,
+       "format": "uint64",
+       "location": "path"
+      },
+      "merchantId": {
+       "type": "string",
+       "description": "The ID of the managing account.",
+       "required": true,
+       "format": "uint64",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "merchantId",
+      "accountId"
+     ],
+     "request": {
+      "$ref": "AccountShipping"
+     },
+     "response": {
+      "$ref": "AccountShipping"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/content"
+     ]
+    },
+    "update": {
+     "id": "content.accountshipping.update",
+     "path": "{merchantId}/accountshipping/{accountId}",
+     "httpMethod": "PUT",
+     "description": "Updates the shipping settings of the account.",
+     "parameters": {
+      "accountId": {
+       "type": "string",
+       "description": "The ID of the account for which to get/update account shipping settings.",
+       "required": true,
+       "format": "uint64",
+       "location": "path"
+      },
+      "merchantId": {
+       "type": "string",
+       "description": "The ID of the managing account.",
+       "required": true,
+       "format": "uint64",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "merchantId",
+      "accountId"
+     ],
+     "request": {
+      "$ref": "AccountShipping"
+     },
+     "response": {
+      "$ref": "AccountShipping"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/content"
+     ]
+    }
+   }
+  },
   "accountstatuses": {
    "methods": {
     "custombatch": {
@@ -2192,6 +3012,162 @@
      ],
      "response": {
       "$ref": "AccountstatusesListResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/content"
+     ]
+    }
+   }
+  },
+  "accounttax": {
+   "methods": {
+    "custombatch": {
+     "id": "content.accounttax.custombatch",
+     "path": "accounttax/batch",
+     "httpMethod": "POST",
+     "description": "Retrieves and updates tax settings of multiple accounts in a single request.",
+     "request": {
+      "$ref": "AccounttaxCustomBatchRequest"
+     },
+     "response": {
+      "$ref": "AccounttaxCustomBatchResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/content"
+     ]
+    },
+    "get": {
+     "id": "content.accounttax.get",
+     "path": "{merchantId}/accounttax/{accountId}",
+     "httpMethod": "GET",
+     "description": "Retrieves the tax settings of the account.",
+     "parameters": {
+      "accountId": {
+       "type": "string",
+       "description": "The ID of the account for which to get/update account tax settings.",
+       "required": true,
+       "format": "uint64",
+       "location": "path"
+      },
+      "merchantId": {
+       "type": "string",
+       "description": "The ID of the managing account.",
+       "required": true,
+       "format": "uint64",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "merchantId",
+      "accountId"
+     ],
+     "response": {
+      "$ref": "AccountTax"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/content"
+     ]
+    },
+    "list": {
+     "id": "content.accounttax.list",
+     "path": "{merchantId}/accounttax",
+     "httpMethod": "GET",
+     "description": "Lists the tax settings of the sub-accounts in your Merchant Center account.",
+     "parameters": {
+      "maxResults": {
+       "type": "integer",
+       "description": "The maximum number of tax settings to return in the response, used for paging.",
+       "format": "uint32",
+       "location": "query"
+      },
+      "merchantId": {
+       "type": "string",
+       "description": "The ID of the managing account.",
+       "required": true,
+       "format": "uint64",
+       "location": "path"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "The token returned by the previous request.",
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "merchantId"
+     ],
+     "response": {
+      "$ref": "AccounttaxListResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/content"
+     ]
+    },
+    "patch": {
+     "id": "content.accounttax.patch",
+     "path": "{merchantId}/accounttax/{accountId}",
+     "httpMethod": "PATCH",
+     "description": "Updates the tax settings of the account. This method supports patch semantics.",
+     "parameters": {
+      "accountId": {
+       "type": "string",
+       "description": "The ID of the account for which to get/update account tax settings.",
+       "required": true,
+       "format": "uint64",
+       "location": "path"
+      },
+      "merchantId": {
+       "type": "string",
+       "description": "The ID of the managing account.",
+       "required": true,
+       "format": "uint64",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "merchantId",
+      "accountId"
+     ],
+     "request": {
+      "$ref": "AccountTax"
+     },
+     "response": {
+      "$ref": "AccountTax"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/content"
+     ]
+    },
+    "update": {
+     "id": "content.accounttax.update",
+     "path": "{merchantId}/accounttax/{accountId}",
+     "httpMethod": "PUT",
+     "description": "Updates the tax settings of the account.",
+     "parameters": {
+      "accountId": {
+       "type": "string",
+       "description": "The ID of the account for which to get/update account tax settings.",
+       "required": true,
+       "format": "uint64",
+       "location": "path"
+      },
+      "merchantId": {
+       "type": "string",
+       "description": "The ID of the managing account.",
+       "required": true,
+       "format": "uint64",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "merchantId",
+      "accountId"
+     ],
+     "request": {
+      "$ref": "AccountTax"
+     },
+     "response": {
+      "$ref": "AccountTax"
      },
      "scopes": [
       "https://www.googleapis.com/auth/content"

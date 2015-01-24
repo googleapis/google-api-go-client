@@ -14,6 +14,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"golang.org/x/net/context"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -33,6 +34,7 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
+var _ = context.Background
 
 const apiId = "books:v1"
 const apiName = "books"
@@ -971,6 +973,8 @@ type Offers struct {
 
 type OffersItems struct {
 	ArtUrl string `json:"artUrl,omitempty"`
+
+	GservicesKey string `json:"gservicesKey,omitempty"`
 
 	Id string `json:"id,omitempty"`
 

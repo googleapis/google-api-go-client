@@ -14,6 +14,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"golang.org/x/net/context"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -33,6 +34,7 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
+var _ = context.Background
 
 const apiId = "genomics:v1beta2"
 const apiName = "genomics"
@@ -59,6 +61,8 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client, BasePath: basePath}
+	s.AnnotationSets = NewAnnotationSetsService(s)
+	s.Annotations = NewAnnotationsService(s)
 	s.Callsets = NewCallsetsService(s)
 	s.Datasets = NewDatasetsService(s)
 	s.Experimental = NewExperimentalService(s)
@@ -75,6 +79,10 @@ func New(client *http.Client) (*Service, error) {
 type Service struct {
 	client   *http.Client
 	BasePath string // API endpoint base URL
+
+	AnnotationSets *AnnotationSetsService
+
+	Annotations *AnnotationsService
 
 	Callsets *CallsetsService
 
@@ -95,6 +103,24 @@ type Service struct {
 	Variants *VariantsService
 
 	Variantsets *VariantsetsService
+}
+
+func NewAnnotationSetsService(s *Service) *AnnotationSetsService {
+	rs := &AnnotationSetsService{s: s}
+	return rs
+}
+
+type AnnotationSetsService struct {
+	s *Service
+}
+
+func NewAnnotationsService(s *Service) *AnnotationsService {
+	rs := &AnnotationsService{s: s}
+	return rs
+}
+
+type AnnotationsService struct {
+	s *Service
 }
 
 func NewCallsetsService(s *Service) *CallsetsService {
@@ -225,7 +251,7 @@ type VariantsetsService struct {
 
 type AlignReadGroupSetsRequest struct {
 	// BamSourceUris: The BAM source files for alignment. Exactly one of
-	// readGroupSetIds, bamSourceUris, interleavedFastqSource or
+	// readGroupSetId, bamSourceUris, interleavedFastqSource or
 	// pairedFastqSource must be provided. The caller must have READ
 	// permissions for these files.
 	BamSourceUris []string `json:"bamSourceUris,omitempty"`
@@ -238,28 +264,87 @@ type AlignReadGroupSetsRequest struct {
 	// InterleavedFastqSource: The interleaved FASTQ source files for
 	// alignment, where both members of each pair of reads are found on
 	// consecutive records within the same FASTQ file. Exactly one of
-	// readGroupSetIds, bamSourceUris, interleavedFastqSource or
+	// readGroupSetId, bamSourceUris, interleavedFastqSource or
 	// pairedFastqSource must be provided.
 	InterleavedFastqSource *InterleavedFastqSource `json:"interleavedFastqSource,omitempty"`
 
 	// PairedFastqSource: The paired end FASTQ source files for alignment,
 	// where each member of a pair of reads are found in separate files.
-	// Exactly one of readGroupSetIds, bamSourceUris, interleavedFastqSource
+	// Exactly one of readGroupSetId, bamSourceUris, interleavedFastqSource
 	// or pairedFastqSource must be provided.
 	PairedFastqSource *PairedFastqSource `json:"pairedFastqSource,omitempty"`
 
-	// ReadGroupSetIds: The IDs of the read group sets which will be
-	// aligned. New read group sets will be generated to hold the aligned
-	// data, the originals will not be modified. The caller must have READ
-	// permissions for these read group sets. Exactly one of
-	// readGroupSetIds, bamSourceUris, interleavedFastqSource or
-	// pairedFastqSource must be provided.
-	ReadGroupSetIds []string `json:"readGroupSetIds,omitempty"`
+	// ReadGroupSetId: The ID of the read group set which will be aligned. A
+	// new read group set will be generated to hold the aligned data, the
+	// originals will not be modified. The caller must have READ permissions
+	// for this read group set. Exactly one of readGroupSetId,
+	// bamSourceUris, interleavedFastqSource or pairedFastqSource must be
+	// provided.
+	ReadGroupSetId string `json:"readGroupSetId,omitempty"`
 }
 
 type AlignReadGroupSetsResponse struct {
 	// JobId: A job ID that can be used to get status information.
 	JobId string `json:"jobId,omitempty"`
+}
+
+type Annotation struct {
+	// AnnotationSetId: The ID of the containing annotation set.
+	AnnotationSetId string `json:"annotationSetId,omitempty"`
+
+	// Id: The generated unique ID for this annotation.
+	Id string `json:"id,omitempty"`
+
+	// Info: A map of additional data for this annotation.
+	Info map[string][]string `json:"info,omitempty"`
+
+	// Name: The display name of this annotation.
+	Name string `json:"name,omitempty"`
+
+	// Position: The position of this annotation on the reference sequence.
+	Position *RangePosition `json:"position,omitempty"`
+
+	// Transcript: A transcript value represents the assertion that a
+	// particular region of the reference genome may be transcribed as RNA.
+	// An alternate splicing pattern would be represented as separate
+	// transcript object. This field is only set for annotations of type
+	// TRANSCRIPT.
+	Transcript *Transcript `json:"transcript,omitempty"`
+
+	// Type: The data type for this annotation. Must match the containing
+	// annotation set's type.
+	Type string `json:"type,omitempty"`
+
+	// Variant: A variant annotation which describes the effect of a variant
+	// on the genome, the coding sequence, and/or higher level consequences
+	// at the organism level e.g. pathogenicity. This field is only set for
+	// annotations of type VARIANT.
+	Variant *VariantAnnotation `json:"variant,omitempty"`
+}
+
+type AnnotationSet struct {
+	// DatasetId: The ID of the containing dataset.
+	DatasetId string `json:"datasetId,omitempty"`
+
+	// Id: The generated unique ID for this annotation set.
+	Id string `json:"id,omitempty"`
+
+	// Info: A map of additional data for this annotation set.
+	Info map[string][]string `json:"info,omitempty"`
+
+	// Name: The display name for this annotation set.
+	Name string `json:"name,omitempty"`
+
+	// ReferenceSetId: The ID of the reference set which defines the
+	// coordinate-space for this set's annotations.
+	ReferenceSetId string `json:"referenceSetId,omitempty"`
+
+	// SourceUri: The source URI describing the file from which this
+	// annotation set was generated, if any.
+	SourceUri string `json:"sourceUri,omitempty"`
+
+	// Type: The type of annotations contained within this set.
+	Type string `json:"type,omitempty"`
 }
 
 type Call struct {
@@ -306,14 +391,14 @@ type CallReadGroupSetsRequest struct {
 	// belong to. The caller must have WRITE permissions to this dataset.
 	DatasetId string `json:"datasetId,omitempty"`
 
-	// ReadGroupSetIds: The IDs of the read group sets which will be called.
+	// ReadGroupSetId: The IDs of the read group sets which will be called.
 	// The caller must have READ permissions for these read group sets. One
-	// of readGroupSetIds or sourceUris must be provided.
-	ReadGroupSetIds []string `json:"readGroupSetIds,omitempty"`
+	// of readGroupSetId or sourceUris must be provided.
+	ReadGroupSetId string `json:"readGroupSetId,omitempty"`
 
 	// SourceUris: A list of URIs pointing at BAM files in Google Cloud
 	// Storage which will be called. FASTQ files are not allowed. The caller
-	// must have READ permissions for these files. One of readGroupSetIds or
+	// must have READ permissions for these files. One of readGroupSetId or
 	// sourceUris must be provided.
 	SourceUris []string `json:"sourceUris,omitempty"`
 }
@@ -474,6 +559,14 @@ type ExportVariantSetResponse struct {
 	JobId string `json:"jobId,omitempty"`
 }
 
+type ExternalId struct {
+	// Id: The id used by the source of this data.
+	Id string `json:"id,omitempty"`
+
+	// SourceName: The name of the source of this data.
+	SourceName string `json:"sourceName,omitempty"`
+}
+
 type FastqMetadata struct {
 	// LibraryName: Optionally specifies the library name for alignment from
 	// FASTQ.
@@ -537,6 +630,11 @@ type ImportVariantsRequest struct {
 type ImportVariantsResponse struct {
 	// JobId: A job ID that can be used to get status information.
 	JobId string `json:"jobId,omitempty"`
+}
+
+type Int32Value struct {
+	// Value: The int32 value.
+	Value int64 `json:"value,omitempty"`
 }
 
 type InterleavedFastqSource struct {
@@ -726,6 +824,27 @@ type Position struct {
 	ReverseStrand bool `json:"reverseStrand,omitempty"`
 }
 
+type QueryRange struct {
+	// End: The end position of the range on the reference, 0-based
+	// exclusive. If specified, referenceId or referenceName must also be
+	// specified. If unset or 0, defaults to the length of the reference.
+	End int64 `json:"end,omitempty,string"`
+
+	// ReferenceId: The ID of the reference to query. At most one of
+	// referenceId and referenceName should be specified.
+	ReferenceId string `json:"referenceId,omitempty"`
+
+	// ReferenceName: The name of the reference to query, within the
+	// reference set associated with this query. At most one of referenceId
+	// and referenceName pshould be specified.
+	ReferenceName string `json:"referenceName,omitempty"`
+
+	// Start: The start position of the range on the reference, 0-based
+	// inclusive. If specified, referenceId or referenceName must also be
+	// specified. Defaults to 0.
+	Start int64 `json:"start,omitempty,string"`
+}
+
 type Range struct {
 	// End: The end position of the range on the reference, 0-based
 	// exclusive. If specified, referenceName must also be specified.
@@ -737,6 +856,30 @@ type Range struct {
 
 	// Start: The start position of the range on the reference, 0-based
 	// inclusive. If specified, referenceName must also be specified.
+	Start int64 `json:"start,omitempty,string"`
+}
+
+type RangePosition struct {
+	// End: The end position of the range on the reference, 0-based
+	// exclusive.
+	End int64 `json:"end,omitempty,string"`
+
+	// ReferenceId: The ID of the Google Genomics reference associated with
+	// this range.
+	ReferenceId string `json:"referenceId,omitempty"`
+
+	// ReferenceName: The display name corresponding to the reference
+	// specified by referenceId, for example chr1, 1, or chrX.
+	ReferenceName string `json:"referenceName,omitempty"`
+
+	// ReverseStrand: Whether this range refers to the reverse strand, as
+	// opposed to the forward strand. Note that regardless of this field,
+	// the start/end position of the range always refer to the forward
+	// strand.
+	ReverseStrand bool `json:"reverseStrand,omitempty"`
+
+	// Start: The start position of the range on the reference, 0-based
+	// inclusive.
 	Start int64 `json:"start,omitempty,string"`
 }
 
@@ -1016,6 +1159,74 @@ type ReferenceSet struct {
 
 	// SourceURI: The URI from which the references were obtained.
 	SourceURI string `json:"sourceURI,omitempty"`
+}
+
+type SearchAnnotationSetsRequest struct {
+	// DatasetIds: The dataset IDs to search within. Caller must have READ
+	// access to these datasets.
+	DatasetIds []string `json:"datasetIds,omitempty"`
+
+	// Name: Only return annotations sets for which a substring of the name
+	// matches this string (case insensitive).
+	Name string `json:"name,omitempty"`
+
+	// PageSize: Specifies number of results to return in a single page. If
+	// unspecified, it will default to 128. The maximum value is 1024.
+	PageSize int64 `json:"pageSize,omitempty"`
+
+	// PageToken: The continuation token, which is used to page through
+	// large result sets. To get the next page of results, set this
+	// parameter to the value of nextPageToken from the previous response.
+	PageToken string `json:"pageToken,omitempty"`
+
+	// ReferenceSetId: If specified, only annotation sets associated with
+	// the given reference set are returned.
+	ReferenceSetId string `json:"referenceSetId,omitempty"`
+
+	// Types: If specified, only annotation sets which have any of these
+	// types are returned.
+	Types []string `json:"types,omitempty"`
+}
+
+type SearchAnnotationSetsResponse struct {
+	// AnnotationSets: The matching annotation sets.
+	AnnotationSets []*AnnotationSet `json:"annotationSets,omitempty"`
+
+	// NextPageToken: The continuation token, which is used to page through
+	// large result sets. Provide this value in a subsequent request to
+	// return the next page of results. This field will be empty if there
+	// aren't any additional results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+}
+
+type SearchAnnotationsRequest struct {
+	// AnnotationSetIds: The annotation sets to search within. The caller
+	// must have READ access to these annotation sets. Required.
+	AnnotationSetIds []string `json:"annotationSetIds,omitempty"`
+
+	// PageSize: Specifies number of results to return in a single page. If
+	// unspecified, it will default to 256. The maximum value is 2048.
+	PageSize int64 `json:"pageSize,omitempty"`
+
+	// PageToken: The continuation token, which is used to page through
+	// large result sets. To get the next page of results, set this
+	// parameter to the value of nextPageToken from the previous response.
+	PageToken string `json:"pageToken,omitempty"`
+
+	// Range: If specified, this query matches only annotations which
+	// overlap this range.
+	Range *QueryRange `json:"range,omitempty"`
+}
+
+type SearchAnnotationsResponse struct {
+	// Annotations: The matching annotations.
+	Annotations []*Annotation `json:"annotations,omitempty"`
+
+	// NextPageToken: The continuation token, which is used to page through
+	// large result sets. Provide this value in a subsequent request to
+	// return the next page of results. This field will be empty if there
+	// aren't any additional results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
 type SearchCallSetsRequest struct {
@@ -1310,6 +1521,87 @@ type SearchVariantsResponse struct {
 	Variants []*Variant `json:"variants,omitempty"`
 }
 
+type Transcript struct {
+	// CodingSequence: The range of the coding sequence for this transcript,
+	// if any. To determine the exact ranges of coding sequence, intersect
+	// this range with those of the exons, if any. If there are any exons,
+	// the codingSequence must start and end within them.
+	//
+	// Note that in some
+	// cases, the reference genome will not exactly match the observed mRNA
+	// transcript e.g. due to variance in the source genome from reference.
+	// In these cases, exon.frame will not necessarily match the expected
+	// reference reading frame and coding exon reference bases cannot
+	// necessarily be concatenated to produce the original transcript mRNA.
+	CodingSequence *TranscriptCodingSequence `json:"codingSequence,omitempty"`
+
+	// Exons: The exons which compose this transcript. Exons are the pieces
+	// of the transcript which are spliced together, may be exported from a
+	// cell's nucleus, and may then be translated to protein. This field
+	// should be unset for genomes where transcript splicing does not occur,
+	// for example prokaryotes.
+	//
+	//
+	// Introns are regions of the transcript
+	// which are not included in the spliced RNA product. Though not
+	// explicitly modeled here, intron ranges can be deduced; all regions of
+	// this transcript which are not exons are introns.
+	//
+	//
+	// Exonic sequences
+	// do not necessarily code for a translational product (amino acids).
+	// Only the regions of exons bounded by the codingSequence correspond to
+	// coding DNA sequence.
+	//
+	//
+	// Exons are ordered by start position and may
+	// not overlap.
+	Exons []*TranscriptExon `json:"exons,omitempty"`
+
+	// GeneId: The annotation ID of the gene from which this transcript is
+	// transcribed.
+	GeneId string `json:"geneId,omitempty"`
+}
+
+type TranscriptCodingSequence struct {
+	// End: The end of the coding sequence on this annotation's reference
+	// sequence, 0-based exclusive. Note that this position is relative to
+	// the reference start, and not the containing annotation start.
+	End int64 `json:"end,omitempty,string"`
+
+	// Start: The start of the coding sequence on this annotation's
+	// reference sequence, 0-based inclusive. Note that this position is
+	// relative to the reference start, and not the containing annotation
+	// start.
+	Start int64 `json:"start,omitempty,string"`
+}
+
+type TranscriptExon struct {
+	// End: The end position of the exon on this annotation's reference
+	// sequence, 0-based exclusive. Note that this is relative to the
+	// reference start, and not the containing annotation start.
+	End int64 `json:"end,omitempty,string"`
+
+	// Frame: The frame of this exon. Contains a value of 0, 1, or 2 which
+	// indicates the offset of the first coding base of the exon within the
+	// reading frame of the coding DNA sequence, if any. This field is
+	// dependent on the strandedness of this annotation (see
+	// Annotation.position.reverseStrand). For forward stranded annotations,
+	// this offset is relative to the exon.start. For reverse strand
+	// annotations, this offset is relative to the exon.end-1.
+	//
+	// Unset if
+	// this exon does not intersect the coding sequence. Upon creation of a
+	// transcript, the frame must be populated for all or none of the coding
+	// exons.
+	Frame *Int32Value `json:"frame,omitempty"`
+
+	// Start: The start position of the exon on this annotation's reference
+	// sequence, 0-based inclusive. Note that this is relative to the
+	// reference start, and not the containing annotation start.
+	Start int64 `json:"start,omitempty,string"`
+}
+
 type Variant struct {
 	// AlternateBases: The bases that appear instead of the reference bases.
 	AlternateBases []string `json:"alternateBases,omitempty"`
@@ -1363,6 +1655,53 @@ type Variant struct {
 	VariantSetId string `json:"variantSetId,omitempty"`
 }
 
+type VariantAnnotation struct {
+	// AlternateBases: The alternate allele for this variant. If multiple
+	// alternate alleles exist at this location, create a separate variant
+	// for each one, as they may represent distinct conditions.
+	AlternateBases string `json:"alternateBases,omitempty"`
+
+	// ClinicalSignificance: Describes the clinical significance of a
+	// variant. It is adapted from the ClinVar controlled vocabulary for
+	// clinical significance described at:
+	// http://www.ncbi.nlm.nih.gov/clinvar/docs/clinsig/
+	ClinicalSignificance string `json:"clinicalSignificance,omitempty"`
+
+	// Conditions: The set of conditions associated with this variant. A
+	// condition describes the way a variant influences human health.
+	Conditions []*VariantAnnotationCondition `json:"conditions,omitempty"`
+
+	// Effect: Effect of the variant on the coding sequence.
+	Effect string `json:"effect,omitempty"`
+
+	// GeneId: Google annotation ID of the gene affected by this variant.
+	// This should be provided when the variant is created.
+	GeneId string `json:"geneId,omitempty"`
+
+	// TranscriptIds: Google annotation ID of the transcripts affected by
+	// this variant. These should be provided when the variant is created.
+	TranscriptIds []string `json:"transcriptIds,omitempty"`
+
+	// Type: Type has been adapted from ClinVar's list of variant types.
+	Type string `json:"type,omitempty"`
+}
+
+type VariantAnnotationCondition struct {
+	// ConceptId: The MedGen concept id associated with this gene. Search
+	// for these IDs at http://www.ncbi.nlm.nih.gov/medgen/
+	ConceptId string `json:"conceptId,omitempty"`
+
+	// ExternalIds: The set of external ids for this condition.
+	ExternalIds []*ExternalId `json:"externalIds,omitempty"`
+
+	// Names: A set of names for the condition.
+	Names []string `json:"names,omitempty"`
+
+	// OmimId: The OMIM id for this condition. Search for these IDs at
+	// http://omim.org/
+	OmimId string `json:"omimId,omitempty"`
+}
+
 type VariantSet struct {
 	// DatasetId: The dataset to which this variant set belongs. Immutable.
 	DatasetId string `json:"datasetId,omitempty"`
@@ -1376,6 +1715,959 @@ type VariantSet struct {
 	// ReferenceBounds: A list of all references used by the variants in a
 	// variant set with associated coordinate upper bounds for each one.
 	ReferenceBounds []*ReferenceBound `json:"referenceBounds,omitempty"`
+}
+
+// method id "genomics.annotationSets.create":
+
+type AnnotationSetsCreateCall struct {
+	s             *Service
+	annotationset *AnnotationSet
+	opt_          map[string]interface{}
+}
+
+// Create: Creates a new annotation set. Caller must have WRITE
+// permission for the associated dataset.
+func (r *AnnotationSetsService) Create(annotationset *AnnotationSet) *AnnotationSetsCreateCall {
+	c := &AnnotationSetsCreateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.annotationset = annotationset
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AnnotationSetsCreateCall) Fields(s ...googleapi.Field) *AnnotationSetsCreateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *AnnotationSetsCreateCall) Do() (*AnnotationSet, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.annotationset)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "annotationSets")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *AnnotationSet
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new annotation set. Caller must have WRITE permission for the associated dataset.",
+	//   "httpMethod": "POST",
+	//   "id": "genomics.annotationSets.create",
+	//   "path": "annotationSets",
+	//   "request": {
+	//     "$ref": "AnnotationSet"
+	//   },
+	//   "response": {
+	//     "$ref": "AnnotationSet"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/genomics"
+	//   ]
+	// }
+
+}
+
+// method id "genomics.annotationSets.delete":
+
+type AnnotationSetsDeleteCall struct {
+	s               *Service
+	annotationSetId string
+	opt_            map[string]interface{}
+}
+
+// Delete: Deletes an annotation set. Caller must have WRITE permission
+// for the associated annotation set.
+func (r *AnnotationSetsService) Delete(annotationSetId string) *AnnotationSetsDeleteCall {
+	c := &AnnotationSetsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.annotationSetId = annotationSetId
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AnnotationSetsDeleteCall) Fields(s ...googleapi.Field) *AnnotationSetsDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *AnnotationSetsDeleteCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "annotationSets/{annotationSetId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"annotationSetId": c.annotationSetId,
+	})
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Deletes an annotation set. Caller must have WRITE permission for the associated annotation set.",
+	//   "httpMethod": "DELETE",
+	//   "id": "genomics.annotationSets.delete",
+	//   "parameterOrder": [
+	//     "annotationSetId"
+	//   ],
+	//   "parameters": {
+	//     "annotationSetId": {
+	//       "description": "The ID of the annotation set to be deleted.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "annotationSets/{annotationSetId}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/genomics"
+	//   ]
+	// }
+
+}
+
+// method id "genomics.annotationSets.get":
+
+type AnnotationSetsGetCall struct {
+	s               *Service
+	annotationSetId string
+	opt_            map[string]interface{}
+}
+
+// Get: Gets an annotation set. Caller must have READ permission for the
+// associated dataset.
+func (r *AnnotationSetsService) Get(annotationSetId string) *AnnotationSetsGetCall {
+	c := &AnnotationSetsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.annotationSetId = annotationSetId
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AnnotationSetsGetCall) Fields(s ...googleapi.Field) *AnnotationSetsGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *AnnotationSetsGetCall) Do() (*AnnotationSet, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "annotationSets/{annotationSetId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"annotationSetId": c.annotationSetId,
+	})
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *AnnotationSet
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets an annotation set. Caller must have READ permission for the associated dataset.",
+	//   "httpMethod": "GET",
+	//   "id": "genomics.annotationSets.get",
+	//   "parameterOrder": [
+	//     "annotationSetId"
+	//   ],
+	//   "parameters": {
+	//     "annotationSetId": {
+	//       "description": "The ID of the annotation set to be retrieved.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "annotationSets/{annotationSetId}",
+	//   "response": {
+	//     "$ref": "AnnotationSet"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/genomics",
+	//     "https://www.googleapis.com/auth/genomics.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "genomics.annotationSets.patch":
+
+type AnnotationSetsPatchCall struct {
+	s               *Service
+	annotationSetId string
+	annotationset   *AnnotationSet
+	opt_            map[string]interface{}
+}
+
+// Patch: Updates an annotation set. The update must respect all
+// mutability restrictions and other invariants described on the
+// annotation set resource. Caller must have WRITE permission for the
+// associated dataset. This method supports patch semantics.
+func (r *AnnotationSetsService) Patch(annotationSetId string, annotationset *AnnotationSet) *AnnotationSetsPatchCall {
+	c := &AnnotationSetsPatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c.annotationSetId = annotationSetId
+	c.annotationset = annotationset
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AnnotationSetsPatchCall) Fields(s ...googleapi.Field) *AnnotationSetsPatchCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *AnnotationSetsPatchCall) Do() (*AnnotationSet, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.annotationset)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "annotationSets/{annotationSetId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"annotationSetId": c.annotationSetId,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *AnnotationSet
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an annotation set. The update must respect all mutability restrictions and other invariants described on the annotation set resource. Caller must have WRITE permission for the associated dataset. This method supports patch semantics.",
+	//   "httpMethod": "PATCH",
+	//   "id": "genomics.annotationSets.patch",
+	//   "parameterOrder": [
+	//     "annotationSetId"
+	//   ],
+	//   "parameters": {
+	//     "annotationSetId": {
+	//       "description": "The ID of the annotation set to be updated.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "annotationSets/{annotationSetId}",
+	//   "request": {
+	//     "$ref": "AnnotationSet"
+	//   },
+	//   "response": {
+	//     "$ref": "AnnotationSet"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/genomics"
+	//   ]
+	// }
+
+}
+
+// method id "genomics.annotationSets.search":
+
+type AnnotationSetsSearchCall struct {
+	s                           *Service
+	searchannotationsetsrequest *SearchAnnotationSetsRequest
+	opt_                        map[string]interface{}
+}
+
+// Search: Searches for annotation sets which match the given criteria.
+// Results are returned in a deterministic order. Caller must have READ
+// permission for the queried datasets.
+func (r *AnnotationSetsService) Search(searchannotationsetsrequest *SearchAnnotationSetsRequest) *AnnotationSetsSearchCall {
+	c := &AnnotationSetsSearchCall{s: r.s, opt_: make(map[string]interface{})}
+	c.searchannotationsetsrequest = searchannotationsetsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AnnotationSetsSearchCall) Fields(s ...googleapi.Field) *AnnotationSetsSearchCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *AnnotationSetsSearchCall) Do() (*SearchAnnotationSetsResponse, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.searchannotationsetsrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "annotationSets/search")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *SearchAnnotationSetsResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Searches for annotation sets which match the given criteria. Results are returned in a deterministic order. Caller must have READ permission for the queried datasets.",
+	//   "httpMethod": "POST",
+	//   "id": "genomics.annotationSets.search",
+	//   "path": "annotationSets/search",
+	//   "request": {
+	//     "$ref": "SearchAnnotationSetsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "SearchAnnotationSetsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/genomics",
+	//     "https://www.googleapis.com/auth/genomics.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "genomics.annotationSets.update":
+
+type AnnotationSetsUpdateCall struct {
+	s               *Service
+	annotationSetId string
+	annotationset   *AnnotationSet
+	opt_            map[string]interface{}
+}
+
+// Update: Updates an annotation set. The update must respect all
+// mutability restrictions and other invariants described on the
+// annotation set resource. Caller must have WRITE permission for the
+// associated dataset.
+func (r *AnnotationSetsService) Update(annotationSetId string, annotationset *AnnotationSet) *AnnotationSetsUpdateCall {
+	c := &AnnotationSetsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.annotationSetId = annotationSetId
+	c.annotationset = annotationset
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AnnotationSetsUpdateCall) Fields(s ...googleapi.Field) *AnnotationSetsUpdateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *AnnotationSetsUpdateCall) Do() (*AnnotationSet, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.annotationset)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "annotationSets/{annotationSetId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"annotationSetId": c.annotationSetId,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *AnnotationSet
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an annotation set. The update must respect all mutability restrictions and other invariants described on the annotation set resource. Caller must have WRITE permission for the associated dataset.",
+	//   "httpMethod": "PUT",
+	//   "id": "genomics.annotationSets.update",
+	//   "parameterOrder": [
+	//     "annotationSetId"
+	//   ],
+	//   "parameters": {
+	//     "annotationSetId": {
+	//       "description": "The ID of the annotation set to be updated.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "annotationSets/{annotationSetId}",
+	//   "request": {
+	//     "$ref": "AnnotationSet"
+	//   },
+	//   "response": {
+	//     "$ref": "AnnotationSet"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/genomics"
+	//   ]
+	// }
+
+}
+
+// method id "genomics.annotations.create":
+
+type AnnotationsCreateCall struct {
+	s          *Service
+	annotation *Annotation
+	opt_       map[string]interface{}
+}
+
+// Create: Creates a new annotation. Caller must have WRITE permission
+// for the associated annotation set.
+func (r *AnnotationsService) Create(annotation *Annotation) *AnnotationsCreateCall {
+	c := &AnnotationsCreateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.annotation = annotation
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AnnotationsCreateCall) Fields(s ...googleapi.Field) *AnnotationsCreateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *AnnotationsCreateCall) Do() (*Annotation, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.annotation)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "annotations")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Annotation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new annotation. Caller must have WRITE permission for the associated annotation set.",
+	//   "httpMethod": "POST",
+	//   "id": "genomics.annotations.create",
+	//   "path": "annotations",
+	//   "request": {
+	//     "$ref": "Annotation"
+	//   },
+	//   "response": {
+	//     "$ref": "Annotation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/genomics"
+	//   ]
+	// }
+
+}
+
+// method id "genomics.annotations.delete":
+
+type AnnotationsDeleteCall struct {
+	s            *Service
+	annotationId string
+	opt_         map[string]interface{}
+}
+
+// Delete: Deletes an annotation. Caller must have WRITE permission for
+// the associated annotation set.
+func (r *AnnotationsService) Delete(annotationId string) *AnnotationsDeleteCall {
+	c := &AnnotationsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.annotationId = annotationId
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AnnotationsDeleteCall) Fields(s ...googleapi.Field) *AnnotationsDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *AnnotationsDeleteCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "annotations/{annotationId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"annotationId": c.annotationId,
+	})
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Deletes an annotation. Caller must have WRITE permission for the associated annotation set.",
+	//   "httpMethod": "DELETE",
+	//   "id": "genomics.annotations.delete",
+	//   "parameterOrder": [
+	//     "annotationId"
+	//   ],
+	//   "parameters": {
+	//     "annotationId": {
+	//       "description": "The ID of the annotation set to be deleted.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "annotations/{annotationId}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/genomics"
+	//   ]
+	// }
+
+}
+
+// method id "genomics.annotations.get":
+
+type AnnotationsGetCall struct {
+	s            *Service
+	annotationId string
+	opt_         map[string]interface{}
+}
+
+// Get: Gets an annotation. Caller must have READ permission for the
+// associated annotation set.
+func (r *AnnotationsService) Get(annotationId string) *AnnotationsGetCall {
+	c := &AnnotationsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.annotationId = annotationId
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AnnotationsGetCall) Fields(s ...googleapi.Field) *AnnotationsGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *AnnotationsGetCall) Do() (*Annotation, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "annotations/{annotationId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"annotationId": c.annotationId,
+	})
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Annotation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets an annotation. Caller must have READ permission for the associated annotation set.",
+	//   "httpMethod": "GET",
+	//   "id": "genomics.annotations.get",
+	//   "parameterOrder": [
+	//     "annotationId"
+	//   ],
+	//   "parameters": {
+	//     "annotationId": {
+	//       "description": "The ID of the annotation set to be retrieved.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "annotations/{annotationId}",
+	//   "response": {
+	//     "$ref": "Annotation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/genomics",
+	//     "https://www.googleapis.com/auth/genomics.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "genomics.annotations.patch":
+
+type AnnotationsPatchCall struct {
+	s            *Service
+	annotationId string
+	annotation   *Annotation
+	opt_         map[string]interface{}
+}
+
+// Patch: Updates an annotation. The update must respect all mutability
+// restrictions and other invariants described on the annotation
+// resource. Caller must have WRITE permission for the associated
+// dataset. This method supports patch semantics.
+func (r *AnnotationsService) Patch(annotationId string, annotation *Annotation) *AnnotationsPatchCall {
+	c := &AnnotationsPatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c.annotationId = annotationId
+	c.annotation = annotation
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AnnotationsPatchCall) Fields(s ...googleapi.Field) *AnnotationsPatchCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *AnnotationsPatchCall) Do() (*Annotation, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.annotation)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "annotations/{annotationId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"annotationId": c.annotationId,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Annotation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an annotation. The update must respect all mutability restrictions and other invariants described on the annotation resource. Caller must have WRITE permission for the associated dataset. This method supports patch semantics.",
+	//   "httpMethod": "PATCH",
+	//   "id": "genomics.annotations.patch",
+	//   "parameterOrder": [
+	//     "annotationId"
+	//   ],
+	//   "parameters": {
+	//     "annotationId": {
+	//       "description": "The ID of the annotation set to be updated.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "annotations/{annotationId}",
+	//   "request": {
+	//     "$ref": "Annotation"
+	//   },
+	//   "response": {
+	//     "$ref": "Annotation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/genomics"
+	//   ]
+	// }
+
+}
+
+// method id "genomics.annotations.search":
+
+type AnnotationsSearchCall struct {
+	s                        *Service
+	searchannotationsrequest *SearchAnnotationsRequest
+	opt_                     map[string]interface{}
+}
+
+// Search: Searches for annotations which match the given criteria.
+// Results are returned ordered by start position. Annotations which
+// have matching start positions are ordered deterministically. Caller
+// must have READ permission for the queried annotation sets.
+func (r *AnnotationsService) Search(searchannotationsrequest *SearchAnnotationsRequest) *AnnotationsSearchCall {
+	c := &AnnotationsSearchCall{s: r.s, opt_: make(map[string]interface{})}
+	c.searchannotationsrequest = searchannotationsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AnnotationsSearchCall) Fields(s ...googleapi.Field) *AnnotationsSearchCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *AnnotationsSearchCall) Do() (*SearchAnnotationsResponse, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.searchannotationsrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "annotations/search")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *SearchAnnotationsResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Searches for annotations which match the given criteria. Results are returned ordered by start position. Annotations which have matching start positions are ordered deterministically. Caller must have READ permission for the queried annotation sets.",
+	//   "httpMethod": "POST",
+	//   "id": "genomics.annotations.search",
+	//   "path": "annotations/search",
+	//   "request": {
+	//     "$ref": "SearchAnnotationsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "SearchAnnotationsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/genomics",
+	//     "https://www.googleapis.com/auth/genomics.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "genomics.annotations.update":
+
+type AnnotationsUpdateCall struct {
+	s            *Service
+	annotationId string
+	annotation   *Annotation
+	opt_         map[string]interface{}
+}
+
+// Update: Updates an annotation. The update must respect all mutability
+// restrictions and other invariants described on the annotation
+// resource. Caller must have WRITE permission for the associated
+// dataset.
+func (r *AnnotationsService) Update(annotationId string, annotation *Annotation) *AnnotationsUpdateCall {
+	c := &AnnotationsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.annotationId = annotationId
+	c.annotation = annotation
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AnnotationsUpdateCall) Fields(s ...googleapi.Field) *AnnotationsUpdateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *AnnotationsUpdateCall) Do() (*Annotation, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.annotation)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "annotations/{annotationId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"annotationId": c.annotationId,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Annotation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an annotation. The update must respect all mutability restrictions and other invariants described on the annotation resource. Caller must have WRITE permission for the associated dataset.",
+	//   "httpMethod": "PUT",
+	//   "id": "genomics.annotations.update",
+	//   "parameterOrder": [
+	//     "annotationId"
+	//   ],
+	//   "parameters": {
+	//     "annotationId": {
+	//       "description": "The ID of the annotation set to be updated.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "annotations/{annotationId}",
+	//   "request": {
+	//     "$ref": "Annotation"
+	//   },
+	//   "response": {
+	//     "$ref": "Annotation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/genomics"
+	//   ]
+	// }
+
 }
 
 // method id "genomics.callsets.create":

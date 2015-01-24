@@ -14,6 +14,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"golang.org/x/net/context"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -33,6 +34,7 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
+var _ = context.Background
 
 const apiId = "content:v2"
 const apiName = "content"
@@ -51,7 +53,9 @@ func New(client *http.Client) (*Service, error) {
 	}
 	s := &Service{client: client, BasePath: basePath}
 	s.Accounts = NewAccountsService(s)
+	s.Accountshipping = NewAccountshippingService(s)
 	s.Accountstatuses = NewAccountstatusesService(s)
+	s.Accounttax = NewAccounttaxService(s)
 	s.Datafeeds = NewDatafeedsService(s)
 	s.Datafeedstatuses = NewDatafeedstatusesService(s)
 	s.Inventory = NewInventoryService(s)
@@ -66,7 +70,11 @@ type Service struct {
 
 	Accounts *AccountsService
 
+	Accountshipping *AccountshippingService
+
 	Accountstatuses *AccountstatusesService
+
+	Accounttax *AccounttaxService
 
 	Datafeeds *DatafeedsService
 
@@ -88,12 +96,30 @@ type AccountsService struct {
 	s *Service
 }
 
+func NewAccountshippingService(s *Service) *AccountshippingService {
+	rs := &AccountshippingService{s: s}
+	return rs
+}
+
+type AccountshippingService struct {
+	s *Service
+}
+
 func NewAccountstatusesService(s *Service) *AccountstatusesService {
 	rs := &AccountstatusesService{s: s}
 	return rs
 }
 
 type AccountstatusesService struct {
+	s *Service
+}
+
+func NewAccounttaxService(s *Service) *AccounttaxService {
+	rs := &AccounttaxService{s: s}
+	return rs
+}
+
+type AccounttaxService struct {
 	s *Service
 }
 
@@ -184,6 +210,199 @@ type AccountAdwordsLink struct {
 	Status string `json:"status,omitempty"`
 }
 
+type AccountShipping struct {
+	// AccountId: The ID of the account to which these account shipping
+	// settings belong.
+	AccountId uint64 `json:"accountId,omitempty,string"`
+
+	// CarrierRates: Carrier-based shipping calculations.
+	CarrierRates []*AccountShippingCarrierRate `json:"carrierRates,omitempty"`
+
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "content#accountShipping".
+	Kind string `json:"kind,omitempty"`
+
+	// LocationGroups: Location groups for shipping.
+	LocationGroups []*AccountShippingLocationGroup `json:"locationGroups,omitempty"`
+
+	// RateTables: Rate tables definitions.
+	RateTables []*AccountShippingRateTable `json:"rateTables,omitempty"`
+
+	// Services: Shipping services describing shipping fees calculation.
+	Services []*AccountShippingShippingService `json:"services,omitempty"`
+}
+
+type AccountShippingCarrierRate struct {
+	// Carrier: The carrier that is responsible for the shipping, such as
+	// "UPS", "FedEx", or "USPS".
+	Carrier string `json:"carrier,omitempty"`
+
+	// CarrierService: The carrier service, such as "Ground" or "2Day".
+	CarrierService string `json:"carrierService,omitempty"`
+
+	// ModifierFlatRate: Additive shipping rate modifier.
+	ModifierFlatRate *Price `json:"modifierFlatRate,omitempty"`
+
+	// ModifierPercent: Multiplicative shipping rate modifier in percent.
+	// Represented as a floating point number without the percentage
+	// character.
+	ModifierPercent string `json:"modifierPercent,omitempty"`
+
+	// Name: The name of the carrier rate.
+	Name string `json:"name,omitempty"`
+
+	// SaleCountry: Sale country for which this carrier rate is valid,
+	// represented as an ISO_3166-1 Alpha-2 code.
+	SaleCountry string `json:"saleCountry,omitempty"`
+
+	// ShippingOrigin: Shipping origin represented as a postal code.
+	ShippingOrigin string `json:"shippingOrigin,omitempty"`
+}
+
+type AccountShippingCondition struct {
+	// DeliveryLocationGroup: Delivery location in terms of a location group
+	// name. A location group with this name must be specified among
+	// location groups.
+	DeliveryLocationGroup string `json:"deliveryLocationGroup,omitempty"`
+
+	// DeliveryLocationId: Delivery location in terms of a location ID. Can
+	// be used to represent administrative areas, smaller country
+	// subdivisions, or cities.
+	DeliveryLocationId int64 `json:"deliveryLocationId,omitempty,string"`
+
+	// DeliveryPostalCode: Delivery location in terms of a postal code.
+	DeliveryPostalCode string `json:"deliveryPostalCode,omitempty"`
+
+	// DeliveryPostalCodeRange: Delivery location in terms of a postal code
+	// range.
+	DeliveryPostalCodeRange *AccountShippingPostalCodeRange `json:"deliveryPostalCodeRange,omitempty"`
+
+	// PriceMax: Maximum shipping price. Forms an interval between the
+	// maximum of smaller prices (exclusive) and this price (inclusive).
+	PriceMax *Price `json:"priceMax,omitempty"`
+
+	// ShippingLabel: Shipping label of the product. The products with the
+	// label are matched.
+	ShippingLabel string `json:"shippingLabel,omitempty"`
+
+	// WeightMax: Maximum shipping weight. Forms an interval between the
+	// maximum of smaller weight (exclusive) and this weight (inclusive).
+	WeightMax *Weight `json:"weightMax,omitempty"`
+}
+
+type AccountShippingLocationGroup struct {
+	// Country: The country in which this location group is, represented as
+	// ISO_3166-1 Alpha-2 code.
+	Country string `json:"country,omitempty"`
+
+	// LocationIds: A location ID (also called criteria ID) representing
+	// administrative areas, smaller country subdivisions (counties), or
+	// cities.
+	LocationIds googleapi.Int64s `json:"locationIds,omitempty"`
+
+	// Name: The name of the location group.
+	Name string `json:"name,omitempty"`
+
+	// PostalCodeRanges: A postal code range representing a city or a set of
+	// cities.
+	PostalCodeRanges []*AccountShippingPostalCodeRange `json:"postalCodeRanges,omitempty"`
+
+	// PostalCodes: A postal code representing a city or a set of cities.
+	//
+	// - A single postal code (e.g., 12345)
+	// - A postal code prefix followed
+	// by a star (e.g., 1234*)
+	PostalCodes []string `json:"postalCodes,omitempty"`
+}
+
+type AccountShippingPostalCodeRange struct {
+	// End: The last (inclusive) postal code or prefix of the range.
+	End string `json:"end,omitempty"`
+
+	// Start: The first (inclusive) postal code or prefix of the range.
+	Start string `json:"start,omitempty"`
+}
+
+type AccountShippingRateTable struct {
+	// Content: One-dimensional table cells define one condition along the
+	// same dimension. Bi-dimensional table cells use two dimension with
+	// respectively M and N distinct values and must contain exactly M * N
+	// cells with distinct conditions (for each possible value pairs).
+	Content []*AccountShippingRateTableCell `json:"content,omitempty"`
+
+	// Name: The name of the rate table.
+	Name string `json:"name,omitempty"`
+
+	// SaleCountry: Sale country for which this table is valid, represented
+	// as an ISO_3166-1 Alpha-2 code.
+	SaleCountry string `json:"saleCountry,omitempty"`
+}
+
+type AccountShippingRateTableCell struct {
+	// Condition: Conditions for which the cell is valid. All cells in a
+	// table must use the same dimension or pair of dimensions among price,
+	// weight, shipping_label or delivery location. If no condition is
+	// specified, the cell acts as a catch-all and matches all the elements
+	// that are not matched by other cells in this dimension.
+	Condition *AccountShippingCondition `json:"condition,omitempty"`
+
+	// Rate: The rate applicable if the cell conditions are matched.
+	Rate *Price `json:"rate,omitempty"`
+}
+
+type AccountShippingShippingService struct {
+	// Active: Whether the shipping service is available.
+	Active bool `json:"active,omitempty"`
+
+	// CalculationMethod: Calculation method for the "simple" case that
+	// needs no rules.
+	CalculationMethod *AccountShippingShippingServiceCalculationMethod `json:"calculationMethod,omitempty"`
+
+	// CostRuleTree: Decision tree for "complicated" shipping cost
+	// calculation.
+	CostRuleTree *AccountShippingShippingServiceCostRule `json:"costRuleTree,omitempty"`
+
+	// Name: The name of this shipping service.
+	Name string `json:"name,omitempty"`
+
+	// SaleCountry: Sale country for which this service can be used,
+	// represented as an ISO_3166-1 Alpha-2 code.
+	SaleCountry string `json:"saleCountry,omitempty"`
+}
+
+type AccountShippingShippingServiceCalculationMethod struct {
+	// CarrierRate: Name of the carrier rate to use for the calculation.
+	CarrierRate string `json:"carrierRate,omitempty"`
+
+	// Excluded: Delivery is excluded. Valid only within cost rules tree.
+	Excluded bool `json:"excluded,omitempty"`
+
+	// FlatRate: Fixed price shipping, represented as a floating point
+	// number associated with a currency.
+	FlatRate *Price `json:"flatRate,omitempty"`
+
+	// PercentageRate: Percentage of the price, represented as a floating
+	// point number without the percentage character.
+	PercentageRate string `json:"percentageRate,omitempty"`
+
+	// RateTable: Name of the rate table to use for the calculation.
+	RateTable string `json:"rateTable,omitempty"`
+}
+
+type AccountShippingShippingServiceCostRule struct {
+	// CalculationMethod: Final calculation method to be used only in leaf
+	// nodes.
+	CalculationMethod *AccountShippingShippingServiceCalculationMethod `json:"calculationMethod,omitempty"`
+
+	// Children: Subsequent rules to be applied, only for inner nodes. The
+	// last child must not specify a condition and acts as a catch-all.
+	Children []*AccountShippingShippingServiceCostRule `json:"children,omitempty"`
+
+	// Condition: Condition for this rule to be applicable. If no condition
+	// is specified, the rule acts as a catch-all.
+	Condition *AccountShippingCondition `json:"condition,omitempty"`
+}
+
 type AccountStatus struct {
 	// AccountId: The ID of the account for which the status is reported.
 	AccountId string `json:"accountId,omitempty"`
@@ -238,6 +457,41 @@ type AccountStatusExampleItem struct {
 
 	// ValueOnLandingPage: The actual value on the landing page.
 	ValueOnLandingPage string `json:"valueOnLandingPage,omitempty"`
+}
+
+type AccountTax struct {
+	// AccountId: The ID of the account to which these account tax settings
+	// belong.
+	AccountId uint64 `json:"accountId,omitempty,string"`
+
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "content#accountTax".
+	Kind string `json:"kind,omitempty"`
+
+	// Rules: Tax rules. Updating the tax rules will enable US taxes (not
+	// reversible). Defining no rules is equivalent to not charging tax at
+	// all.
+	Rules []*AccountTaxTaxRule `json:"rules,omitempty"`
+}
+
+type AccountTaxTaxRule struct {
+	// Country: Country code in which tax is applicable.
+	Country string `json:"country,omitempty"`
+
+	// LocationId: State (or province) is which the tax is applicable,
+	// described by its location id (also called criteria id).
+	LocationId uint64 `json:"locationId,omitempty,string"`
+
+	// RatePercent: Explicit tax rate in percent, represented as a floating
+	// point number without the percentage character. Must not be negative.
+	RatePercent string `json:"ratePercent,omitempty"`
+
+	// ShippingTaxed: If true, shipping charges are also taxed.
+	ShippingTaxed bool `json:"shippingTaxed,omitempty"`
+
+	// UseGlobalRate: Whether the tax rate is taken from a global tax table
+	// or specified explicitly.
+	UseGlobalRate bool `json:"useGlobalRate,omitempty"`
 }
 
 type AccountUser struct {
@@ -308,6 +562,65 @@ type AccountsListResponse struct {
 	Resources []*Account `json:"resources,omitempty"`
 }
 
+type AccountshippingCustomBatchRequest struct {
+	// Entries: The request entries to be processed in the batch.
+	Entries []*AccountshippingCustomBatchRequestEntry `json:"entries,omitempty"`
+}
+
+type AccountshippingCustomBatchRequestEntry struct {
+	// AccountId: The ID of the account for which to get/update account
+	// shipping settings.
+	AccountId uint64 `json:"accountId,omitempty,string"`
+
+	// AccountShipping: The account shipping settings to update. Only
+	// defined if the method is update.
+	AccountShipping *AccountShipping `json:"accountShipping,omitempty"`
+
+	// BatchId: An entry ID, unique within the batch request.
+	BatchId int64 `json:"batchId,omitempty"`
+
+	// MerchantId: The ID of the managing account.
+	MerchantId uint64 `json:"merchantId,omitempty,string"`
+
+	Method string `json:"method,omitempty"`
+}
+
+type AccountshippingCustomBatchResponse struct {
+	// Entries: The result of the execution of the batch requests.
+	Entries []*AccountshippingCustomBatchResponseEntry `json:"entries,omitempty"`
+
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "content#accountshippingCustomBatchResponse".
+	Kind string `json:"kind,omitempty"`
+}
+
+type AccountshippingCustomBatchResponseEntry struct {
+	// AccountShipping: The retrieved or updated account shipping settings.
+	AccountShipping *AccountShipping `json:"accountShipping,omitempty"`
+
+	// BatchId: The ID of the request entry this entry responds to.
+	BatchId int64 `json:"batchId,omitempty"`
+
+	// Errors: A list of errors defined if and only if the request failed.
+	Errors *Errors `json:"errors,omitempty"`
+
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "content#accountshippingCustomBatchResponseEntry".
+	Kind string `json:"kind,omitempty"`
+}
+
+type AccountshippingListResponse struct {
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "content#accountshippingListResponse".
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: The token for the retrieval of the next page of
+	// account shipping settings.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	Resources []*AccountShipping `json:"resources,omitempty"`
+}
+
 type AccountstatusesCustomBatchRequest struct {
 	// Entries: The request entries to be processed in the batch.
 	Entries []*AccountstatusesCustomBatchRequestEntry `json:"entries,omitempty"`
@@ -358,6 +671,65 @@ type AccountstatusesListResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	Resources []*AccountStatus `json:"resources,omitempty"`
+}
+
+type AccounttaxCustomBatchRequest struct {
+	// Entries: The request entries to be processed in the batch.
+	Entries []*AccounttaxCustomBatchRequestEntry `json:"entries,omitempty"`
+}
+
+type AccounttaxCustomBatchRequestEntry struct {
+	// AccountId: The ID of the account for which to get/update account tax
+	// settings.
+	AccountId uint64 `json:"accountId,omitempty,string"`
+
+	// AccountTax: The account tax settings to update. Only defined if the
+	// method is update.
+	AccountTax *AccountTax `json:"accountTax,omitempty"`
+
+	// BatchId: An entry ID, unique within the batch request.
+	BatchId int64 `json:"batchId,omitempty"`
+
+	// MerchantId: The ID of the managing account.
+	MerchantId uint64 `json:"merchantId,omitempty,string"`
+
+	Method string `json:"method,omitempty"`
+}
+
+type AccounttaxCustomBatchResponse struct {
+	// Entries: The result of the execution of the batch requests.
+	Entries []*AccounttaxCustomBatchResponseEntry `json:"entries,omitempty"`
+
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "content#accounttaxCustomBatchResponse".
+	Kind string `json:"kind,omitempty"`
+}
+
+type AccounttaxCustomBatchResponseEntry struct {
+	// AccountTax: The retrieved or updated account tax settings.
+	AccountTax *AccountTax `json:"accountTax,omitempty"`
+
+	// BatchId: The ID of the request entry this entry responds to.
+	BatchId int64 `json:"batchId,omitempty"`
+
+	// Errors: A list of errors defined if and only if the request failed.
+	Errors *Errors `json:"errors,omitempty"`
+
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "content#accounttaxCustomBatchResponseEntry".
+	Kind string `json:"kind,omitempty"`
+}
+
+type AccounttaxListResponse struct {
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "content#accounttaxListResponse".
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: The token for the retrieval of the next page of
+	// account tax settings.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	Resources []*AccountTax `json:"resources,omitempty"`
 }
 
 type Datafeed struct {
@@ -785,7 +1157,11 @@ type Product struct {
 	// ContentLanguage: The two-letter ISO 639-1 language code for the item.
 	ContentLanguage string `json:"contentLanguage,omitempty"`
 
-	// CustomAttributes: A list of custom (merchant-provided) attributes.
+	// CustomAttributes: A list of custom (merchant-provided) attributes. It
+	// can also be used for submitting any attribute of the feed
+	// specification in its generic form (e.g., { "name": "size type",
+	// "type": "text", "value": "regular" }). This is useful for submitting
+	// attributes not explicitly exposed by the API.
 	CustomAttributes []*ProductCustomAttribute `json:"customAttributes,omitempty"`
 
 	// CustomGroups: A list of custom (merchant-provided) custom attribute
@@ -822,7 +1198,10 @@ type Product struct {
 	// directive 2010/30/EU.
 	EnergyEfficiencyClass string `json:"energyEfficiencyClass,omitempty"`
 
-	// ExpirationDate: Date that an item will expire.
+	// ExpirationDate: Date on which the item should expire, as specified
+	// upon insertion. The actual expiration date in Google Shopping is
+	// exposed in productstatuses as googleExpirationDate and might be
+	// earlier if expirationDate is too far in the future.
 	ExpirationDate string `json:"expirationDate,omitempty"`
 
 	// Gender: Target gender of the item.
@@ -948,7 +1327,8 @@ type Product struct {
 }
 
 type ProductCustomAttribute struct {
-	// Name: The name of the attribute.
+	// Name: The name of the attribute. Underscores will be replaced by
+	// spaces upon insertion.
 	Name string `json:"name,omitempty"`
 
 	// Type: The type of the attribute.
@@ -966,7 +1346,8 @@ type ProductCustomGroup struct {
 	// Attributes: The sub-attributes.
 	Attributes []*ProductCustomAttribute `json:"attributes,omitempty"`
 
-	// Name: The name of the group.
+	// Name: The name of the group. Underscores will be replaced by spaces
+	// upon insertion.
 	Name string `json:"name,omitempty"`
 }
 
@@ -1028,6 +1409,9 @@ type ProductShippingWeight struct {
 }
 
 type ProductStatus struct {
+	// CreationDate: Date on which the item has been created.
+	CreationDate string `json:"creationDate,omitempty"`
+
 	// DataQualityIssues: A list of data quality issues associated with the
 	// product.
 	DataQualityIssues []*ProductStatusDataQualityIssue `json:"dataQualityIssues,omitempty"`
@@ -1035,9 +1419,16 @@ type ProductStatus struct {
 	// DestinationStatuses: The intended destinations for the product.
 	DestinationStatuses []*ProductStatusDestinationStatus `json:"destinationStatuses,omitempty"`
 
+	// GoogleExpirationDate: Date on which the item expires in Google
+	// Shopping.
+	GoogleExpirationDate string `json:"googleExpirationDate,omitempty"`
+
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "content#productStatus".
 	Kind string `json:"kind,omitempty"`
+
+	// LastUpdateDate: Date on which the item has been last updated.
+	LastUpdateDate string `json:"lastUpdateDate,omitempty"`
 
 	// Link: The link to the product.
 	Link string `json:"link,omitempty"`
@@ -1239,6 +1630,14 @@ type ProductstatusesListResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	Resources []*ProductStatus `json:"resources,omitempty"`
+}
+
+type Weight struct {
+	// Unit: The weight unit.
+	Unit string `json:"unit,omitempty"`
+
+	// Value: The weight represented as a number.
+	Value string `json:"value,omitempty"`
 }
 
 // method id "content.accounts.custombatch":
@@ -1878,6 +2277,476 @@ func (c *AccountsUpdateCall) Do() (*Account, error) {
 
 }
 
+// method id "content.accountshipping.custombatch":
+
+type AccountshippingCustombatchCall struct {
+	s                                 *Service
+	accountshippingcustombatchrequest *AccountshippingCustomBatchRequest
+	opt_                              map[string]interface{}
+}
+
+// Custombatch: Retrieves and updates the shipping settings of multiple
+// accounts in a single request.
+func (r *AccountshippingService) Custombatch(accountshippingcustombatchrequest *AccountshippingCustomBatchRequest) *AccountshippingCustombatchCall {
+	c := &AccountshippingCustombatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountshippingcustombatchrequest = accountshippingcustombatchrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountshippingCustombatchCall) Fields(s ...googleapi.Field) *AccountshippingCustombatchCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *AccountshippingCustombatchCall) Do() (*AccountshippingCustomBatchResponse, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.accountshippingcustombatchrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "accountshipping/batch")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *AccountshippingCustomBatchResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves and updates the shipping settings of multiple accounts in a single request.",
+	//   "httpMethod": "POST",
+	//   "id": "content.accountshipping.custombatch",
+	//   "path": "accountshipping/batch",
+	//   "request": {
+	//     "$ref": "AccountshippingCustomBatchRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "AccountshippingCustomBatchResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/content"
+	//   ]
+	// }
+
+}
+
+// method id "content.accountshipping.get":
+
+type AccountshippingGetCall struct {
+	s          *Service
+	merchantId uint64
+	accountId  uint64
+	opt_       map[string]interface{}
+}
+
+// Get: Retrieves the shipping settings of the account.
+func (r *AccountshippingService) Get(merchantId uint64, accountId uint64) *AccountshippingGetCall {
+	c := &AccountshippingGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.merchantId = merchantId
+	c.accountId = accountId
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountshippingGetCall) Fields(s ...googleapi.Field) *AccountshippingGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *AccountshippingGetCall) Do() (*AccountShipping, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/accountshipping/{accountId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"merchantId": strconv.FormatUint(c.merchantId, 10),
+		"accountId":  strconv.FormatUint(c.accountId, 10),
+	})
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *AccountShipping
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the shipping settings of the account.",
+	//   "httpMethod": "GET",
+	//   "id": "content.accountshipping.get",
+	//   "parameterOrder": [
+	//     "merchantId",
+	//     "accountId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "The ID of the account for which to get/update account shipping settings.",
+	//       "format": "uint64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "merchantId": {
+	//       "description": "The ID of the managing account.",
+	//       "format": "uint64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{merchantId}/accountshipping/{accountId}",
+	//   "response": {
+	//     "$ref": "AccountShipping"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/content"
+	//   ]
+	// }
+
+}
+
+// method id "content.accountshipping.list":
+
+type AccountshippingListCall struct {
+	s          *Service
+	merchantId uint64
+	opt_       map[string]interface{}
+}
+
+// List: Lists the shipping settings of the sub-accounts in your
+// Merchant Center account.
+func (r *AccountshippingService) List(merchantId uint64) *AccountshippingListCall {
+	c := &AccountshippingListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.merchantId = merchantId
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum
+// number of shipping settings to return in the response, used for
+// paging.
+func (c *AccountshippingListCall) MaxResults(maxResults int64) *AccountshippingListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The token returned
+// by the previous request.
+func (c *AccountshippingListCall) PageToken(pageToken string) *AccountshippingListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountshippingListCall) Fields(s ...googleapi.Field) *AccountshippingListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *AccountshippingListCall) Do() (*AccountshippingListResponse, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/accountshipping")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"merchantId": strconv.FormatUint(c.merchantId, 10),
+	})
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *AccountshippingListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the shipping settings of the sub-accounts in your Merchant Center account.",
+	//   "httpMethod": "GET",
+	//   "id": "content.accountshipping.list",
+	//   "parameterOrder": [
+	//     "merchantId"
+	//   ],
+	//   "parameters": {
+	//     "maxResults": {
+	//       "description": "The maximum number of shipping settings to return in the response, used for paging.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "merchantId": {
+	//       "description": "The ID of the managing account.",
+	//       "format": "uint64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageToken": {
+	//       "description": "The token returned by the previous request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{merchantId}/accountshipping",
+	//   "response": {
+	//     "$ref": "AccountshippingListResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/content"
+	//   ]
+	// }
+
+}
+
+// method id "content.accountshipping.patch":
+
+type AccountshippingPatchCall struct {
+	s               *Service
+	merchantId      uint64
+	accountId       uint64
+	accountshipping *AccountShipping
+	opt_            map[string]interface{}
+}
+
+// Patch: Updates the shipping settings of the account. This method
+// supports patch semantics.
+func (r *AccountshippingService) Patch(merchantId uint64, accountId uint64, accountshipping *AccountShipping) *AccountshippingPatchCall {
+	c := &AccountshippingPatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c.merchantId = merchantId
+	c.accountId = accountId
+	c.accountshipping = accountshipping
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountshippingPatchCall) Fields(s ...googleapi.Field) *AccountshippingPatchCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *AccountshippingPatchCall) Do() (*AccountShipping, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.accountshipping)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/accountshipping/{accountId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"merchantId": strconv.FormatUint(c.merchantId, 10),
+		"accountId":  strconv.FormatUint(c.accountId, 10),
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *AccountShipping
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the shipping settings of the account. This method supports patch semantics.",
+	//   "httpMethod": "PATCH",
+	//   "id": "content.accountshipping.patch",
+	//   "parameterOrder": [
+	//     "merchantId",
+	//     "accountId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "The ID of the account for which to get/update account shipping settings.",
+	//       "format": "uint64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "merchantId": {
+	//       "description": "The ID of the managing account.",
+	//       "format": "uint64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{merchantId}/accountshipping/{accountId}",
+	//   "request": {
+	//     "$ref": "AccountShipping"
+	//   },
+	//   "response": {
+	//     "$ref": "AccountShipping"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/content"
+	//   ]
+	// }
+
+}
+
+// method id "content.accountshipping.update":
+
+type AccountshippingUpdateCall struct {
+	s               *Service
+	merchantId      uint64
+	accountId       uint64
+	accountshipping *AccountShipping
+	opt_            map[string]interface{}
+}
+
+// Update: Updates the shipping settings of the account.
+func (r *AccountshippingService) Update(merchantId uint64, accountId uint64, accountshipping *AccountShipping) *AccountshippingUpdateCall {
+	c := &AccountshippingUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.merchantId = merchantId
+	c.accountId = accountId
+	c.accountshipping = accountshipping
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountshippingUpdateCall) Fields(s ...googleapi.Field) *AccountshippingUpdateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *AccountshippingUpdateCall) Do() (*AccountShipping, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.accountshipping)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/accountshipping/{accountId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"merchantId": strconv.FormatUint(c.merchantId, 10),
+		"accountId":  strconv.FormatUint(c.accountId, 10),
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *AccountShipping
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the shipping settings of the account.",
+	//   "httpMethod": "PUT",
+	//   "id": "content.accountshipping.update",
+	//   "parameterOrder": [
+	//     "merchantId",
+	//     "accountId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "The ID of the account for which to get/update account shipping settings.",
+	//       "format": "uint64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "merchantId": {
+	//       "description": "The ID of the managing account.",
+	//       "format": "uint64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{merchantId}/accountshipping/{accountId}",
+	//   "request": {
+	//     "$ref": "AccountShipping"
+	//   },
+	//   "response": {
+	//     "$ref": "AccountShipping"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/content"
+	//   ]
+	// }
+
+}
+
 // method id "content.accountstatuses.custombatch":
 
 type AccountstatusesCustombatchCall struct {
@@ -2139,6 +3008,475 @@ func (c *AccountstatusesListCall) Do() (*AccountstatusesListResponse, error) {
 	//   "path": "{merchantId}/accountstatuses",
 	//   "response": {
 	//     "$ref": "AccountstatusesListResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/content"
+	//   ]
+	// }
+
+}
+
+// method id "content.accounttax.custombatch":
+
+type AccounttaxCustombatchCall struct {
+	s                            *Service
+	accounttaxcustombatchrequest *AccounttaxCustomBatchRequest
+	opt_                         map[string]interface{}
+}
+
+// Custombatch: Retrieves and updates tax settings of multiple accounts
+// in a single request.
+func (r *AccounttaxService) Custombatch(accounttaxcustombatchrequest *AccounttaxCustomBatchRequest) *AccounttaxCustombatchCall {
+	c := &AccounttaxCustombatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accounttaxcustombatchrequest = accounttaxcustombatchrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccounttaxCustombatchCall) Fields(s ...googleapi.Field) *AccounttaxCustombatchCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *AccounttaxCustombatchCall) Do() (*AccounttaxCustomBatchResponse, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.accounttaxcustombatchrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "accounttax/batch")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *AccounttaxCustomBatchResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves and updates tax settings of multiple accounts in a single request.",
+	//   "httpMethod": "POST",
+	//   "id": "content.accounttax.custombatch",
+	//   "path": "accounttax/batch",
+	//   "request": {
+	//     "$ref": "AccounttaxCustomBatchRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "AccounttaxCustomBatchResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/content"
+	//   ]
+	// }
+
+}
+
+// method id "content.accounttax.get":
+
+type AccounttaxGetCall struct {
+	s          *Service
+	merchantId uint64
+	accountId  uint64
+	opt_       map[string]interface{}
+}
+
+// Get: Retrieves the tax settings of the account.
+func (r *AccounttaxService) Get(merchantId uint64, accountId uint64) *AccounttaxGetCall {
+	c := &AccounttaxGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.merchantId = merchantId
+	c.accountId = accountId
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccounttaxGetCall) Fields(s ...googleapi.Field) *AccounttaxGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *AccounttaxGetCall) Do() (*AccountTax, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/accounttax/{accountId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"merchantId": strconv.FormatUint(c.merchantId, 10),
+		"accountId":  strconv.FormatUint(c.accountId, 10),
+	})
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *AccountTax
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the tax settings of the account.",
+	//   "httpMethod": "GET",
+	//   "id": "content.accounttax.get",
+	//   "parameterOrder": [
+	//     "merchantId",
+	//     "accountId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "The ID of the account for which to get/update account tax settings.",
+	//       "format": "uint64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "merchantId": {
+	//       "description": "The ID of the managing account.",
+	//       "format": "uint64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{merchantId}/accounttax/{accountId}",
+	//   "response": {
+	//     "$ref": "AccountTax"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/content"
+	//   ]
+	// }
+
+}
+
+// method id "content.accounttax.list":
+
+type AccounttaxListCall struct {
+	s          *Service
+	merchantId uint64
+	opt_       map[string]interface{}
+}
+
+// List: Lists the tax settings of the sub-accounts in your Merchant
+// Center account.
+func (r *AccounttaxService) List(merchantId uint64) *AccounttaxListCall {
+	c := &AccounttaxListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.merchantId = merchantId
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum
+// number of tax settings to return in the response, used for paging.
+func (c *AccounttaxListCall) MaxResults(maxResults int64) *AccounttaxListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The token returned
+// by the previous request.
+func (c *AccounttaxListCall) PageToken(pageToken string) *AccounttaxListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccounttaxListCall) Fields(s ...googleapi.Field) *AccounttaxListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *AccounttaxListCall) Do() (*AccounttaxListResponse, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/accounttax")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"merchantId": strconv.FormatUint(c.merchantId, 10),
+	})
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *AccounttaxListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the tax settings of the sub-accounts in your Merchant Center account.",
+	//   "httpMethod": "GET",
+	//   "id": "content.accounttax.list",
+	//   "parameterOrder": [
+	//     "merchantId"
+	//   ],
+	//   "parameters": {
+	//     "maxResults": {
+	//       "description": "The maximum number of tax settings to return in the response, used for paging.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "merchantId": {
+	//       "description": "The ID of the managing account.",
+	//       "format": "uint64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageToken": {
+	//       "description": "The token returned by the previous request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{merchantId}/accounttax",
+	//   "response": {
+	//     "$ref": "AccounttaxListResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/content"
+	//   ]
+	// }
+
+}
+
+// method id "content.accounttax.patch":
+
+type AccounttaxPatchCall struct {
+	s          *Service
+	merchantId uint64
+	accountId  uint64
+	accounttax *AccountTax
+	opt_       map[string]interface{}
+}
+
+// Patch: Updates the tax settings of the account. This method supports
+// patch semantics.
+func (r *AccounttaxService) Patch(merchantId uint64, accountId uint64, accounttax *AccountTax) *AccounttaxPatchCall {
+	c := &AccounttaxPatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c.merchantId = merchantId
+	c.accountId = accountId
+	c.accounttax = accounttax
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccounttaxPatchCall) Fields(s ...googleapi.Field) *AccounttaxPatchCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *AccounttaxPatchCall) Do() (*AccountTax, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.accounttax)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/accounttax/{accountId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"merchantId": strconv.FormatUint(c.merchantId, 10),
+		"accountId":  strconv.FormatUint(c.accountId, 10),
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *AccountTax
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the tax settings of the account. This method supports patch semantics.",
+	//   "httpMethod": "PATCH",
+	//   "id": "content.accounttax.patch",
+	//   "parameterOrder": [
+	//     "merchantId",
+	//     "accountId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "The ID of the account for which to get/update account tax settings.",
+	//       "format": "uint64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "merchantId": {
+	//       "description": "The ID of the managing account.",
+	//       "format": "uint64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{merchantId}/accounttax/{accountId}",
+	//   "request": {
+	//     "$ref": "AccountTax"
+	//   },
+	//   "response": {
+	//     "$ref": "AccountTax"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/content"
+	//   ]
+	// }
+
+}
+
+// method id "content.accounttax.update":
+
+type AccounttaxUpdateCall struct {
+	s          *Service
+	merchantId uint64
+	accountId  uint64
+	accounttax *AccountTax
+	opt_       map[string]interface{}
+}
+
+// Update: Updates the tax settings of the account.
+func (r *AccounttaxService) Update(merchantId uint64, accountId uint64, accounttax *AccountTax) *AccounttaxUpdateCall {
+	c := &AccounttaxUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.merchantId = merchantId
+	c.accountId = accountId
+	c.accounttax = accounttax
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccounttaxUpdateCall) Fields(s ...googleapi.Field) *AccounttaxUpdateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *AccounttaxUpdateCall) Do() (*AccountTax, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.accounttax)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/accounttax/{accountId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"merchantId": strconv.FormatUint(c.merchantId, 10),
+		"accountId":  strconv.FormatUint(c.accountId, 10),
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *AccountTax
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the tax settings of the account.",
+	//   "httpMethod": "PUT",
+	//   "id": "content.accounttax.update",
+	//   "parameterOrder": [
+	//     "merchantId",
+	//     "accountId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "The ID of the account for which to get/update account tax settings.",
+	//       "format": "uint64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "merchantId": {
+	//       "description": "The ID of the managing account.",
+	//       "format": "uint64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{merchantId}/accounttax/{accountId}",
+	//   "request": {
+	//     "$ref": "AccountTax"
+	//   },
+	//   "response": {
+	//     "$ref": "AccountTax"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/content"

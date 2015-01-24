@@ -14,6 +14,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"golang.org/x/net/context"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -33,6 +34,7 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
+var _ = context.Background
 
 const apiId = "gmail:v1"
 const apiName = "gmail"
@@ -478,11 +480,15 @@ func (c *UsersGetProfileCall) Do() (*Profile, error) {
 // method id "gmail.users.drafts.create":
 
 type UsersDraftsCreateCall struct {
-	s      *Service
-	userId string
-	draft  *Draft
-	opt_   map[string]interface{}
-	media_ io.Reader
+	s          *Service
+	userId     string
+	draft      *Draft
+	opt_       map[string]interface{}
+	media_     io.Reader
+	resumable_ googleapi.SizeReaderAt
+	mediaType_ string
+	ctx_       context.Context
+	protocol_  string
 }
 
 // Create: Creates a new draft with the DRAFT label.
@@ -492,8 +498,32 @@ func (r *UsersDraftsService) Create(userId string, draft *Draft) *UsersDraftsCre
 	c.draft = draft
 	return c
 }
+
+// Media specifies the media to upload in a single chunk.
+// At most one of Media and ResumableMedia may be set.
 func (c *UsersDraftsCreateCall) Media(r io.Reader) *UsersDraftsCreateCall {
 	c.media_ = r
+	c.protocol_ = "multipart"
+	return c
+}
+
+// ResumableMedia specifies the media to upload in chunks and can be cancelled with ctx.
+// At most one of Media and ResumableMedia may be set.
+// mediaType identifies the MIME media type of the upload, such as "image/png".
+// If mediaType is "", it will be auto-detected.
+func (c *UsersDraftsCreateCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *UsersDraftsCreateCall {
+	c.ctx_ = ctx
+	c.resumable_ = io.NewSectionReader(r, 0, size)
+	c.mediaType_ = mediaType
+	c.protocol_ = "resumable"
+	return c
+}
+
+// ProgressUpdater provides a callback function that will be called after every chunk.
+// It should be a low-latency function in order to not slow down the upload operation.
+// This should only be called when using ResumableMedia (as opposed to Media).
+func (c *UsersDraftsCreateCall) ProgressUpdater(pu googleapi.ProgressUpdater) *UsersDraftsCreateCall {
+	c.opt_["progressUpdater"] = pu
 	return c
 }
 
@@ -518,20 +548,42 @@ func (c *UsersDraftsCreateCall) Do() (*Draft, error) {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/drafts")
-	if c.media_ != nil {
+	var progressUpdater_ googleapi.ProgressUpdater
+	if v, ok := c.opt_["progressUpdater"]; ok {
+		if pu, ok := v.(googleapi.ProgressUpdater); ok {
+			progressUpdater_ = pu
+		}
+	}
+	if c.media_ != nil || c.resumable_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
-		params.Set("uploadType", "multipart")
+		params.Set("uploadType", c.protocol_)
 	}
 	urls += "?" + params.Encode()
-	contentLength_, hasMedia_ := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+	var hasMedia_ bool
+	if c.protocol_ != "resumable" {
+		var cancel func()
+		cancel, hasMedia_ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+		if cancel != nil {
+			defer cancel()
+		}
+	}
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"userId": c.userId,
 	})
-	if hasMedia_ {
-		req.ContentLength = contentLength_
+	if c.protocol_ == "resumable" {
+		req.ContentLength = 0
+		if c.mediaType_ == "" {
+			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
+		}
+		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
+		req.Body = nil
+		if params.Get("name") == "" {
+			return nil, fmt.Errorf("resumable uploads must set the Name parameter.")
+		}
+	} else if hasMedia_ {
+		req.Header.Set("Content-Type", ctype)
 	}
-	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -540,6 +592,21 @@ func (c *UsersDraftsCreateCall) Do() (*Draft, error) {
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
+	}
+	if c.protocol_ == "resumable" {
+		loc := res.Header.Get("Location")
+		rx := &googleapi.ResumableUpload{
+			Client:        c.s.client,
+			URI:           loc,
+			Media:         c.resumable_,
+			MediaType:     c.mediaType_,
+			ContentLength: c.resumable_.Size(),
+			Callback:      progressUpdater_,
+		}
+		res, err = rx.Upload(c.ctx_)
+		if err != nil {
+			return nil, err
+		}
 	}
 	var ret *Draft
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
@@ -911,11 +978,15 @@ func (c *UsersDraftsListCall) Do() (*ListDraftsResponse, error) {
 // method id "gmail.users.drafts.send":
 
 type UsersDraftsSendCall struct {
-	s      *Service
-	userId string
-	draft  *Draft
-	opt_   map[string]interface{}
-	media_ io.Reader
+	s          *Service
+	userId     string
+	draft      *Draft
+	opt_       map[string]interface{}
+	media_     io.Reader
+	resumable_ googleapi.SizeReaderAt
+	mediaType_ string
+	ctx_       context.Context
+	protocol_  string
 }
 
 // Send: Sends the specified, existing draft to the recipients in the
@@ -926,8 +997,32 @@ func (r *UsersDraftsService) Send(userId string, draft *Draft) *UsersDraftsSendC
 	c.draft = draft
 	return c
 }
+
+// Media specifies the media to upload in a single chunk.
+// At most one of Media and ResumableMedia may be set.
 func (c *UsersDraftsSendCall) Media(r io.Reader) *UsersDraftsSendCall {
 	c.media_ = r
+	c.protocol_ = "multipart"
+	return c
+}
+
+// ResumableMedia specifies the media to upload in chunks and can be cancelled with ctx.
+// At most one of Media and ResumableMedia may be set.
+// mediaType identifies the MIME media type of the upload, such as "image/png".
+// If mediaType is "", it will be auto-detected.
+func (c *UsersDraftsSendCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *UsersDraftsSendCall {
+	c.ctx_ = ctx
+	c.resumable_ = io.NewSectionReader(r, 0, size)
+	c.mediaType_ = mediaType
+	c.protocol_ = "resumable"
+	return c
+}
+
+// ProgressUpdater provides a callback function that will be called after every chunk.
+// It should be a low-latency function in order to not slow down the upload operation.
+// This should only be called when using ResumableMedia (as opposed to Media).
+func (c *UsersDraftsSendCall) ProgressUpdater(pu googleapi.ProgressUpdater) *UsersDraftsSendCall {
+	c.opt_["progressUpdater"] = pu
 	return c
 }
 
@@ -952,20 +1047,42 @@ func (c *UsersDraftsSendCall) Do() (*Message, error) {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/drafts/send")
-	if c.media_ != nil {
+	var progressUpdater_ googleapi.ProgressUpdater
+	if v, ok := c.opt_["progressUpdater"]; ok {
+		if pu, ok := v.(googleapi.ProgressUpdater); ok {
+			progressUpdater_ = pu
+		}
+	}
+	if c.media_ != nil || c.resumable_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
-		params.Set("uploadType", "multipart")
+		params.Set("uploadType", c.protocol_)
 	}
 	urls += "?" + params.Encode()
-	contentLength_, hasMedia_ := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+	var hasMedia_ bool
+	if c.protocol_ != "resumable" {
+		var cancel func()
+		cancel, hasMedia_ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+		if cancel != nil {
+			defer cancel()
+		}
+	}
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"userId": c.userId,
 	})
-	if hasMedia_ {
-		req.ContentLength = contentLength_
+	if c.protocol_ == "resumable" {
+		req.ContentLength = 0
+		if c.mediaType_ == "" {
+			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
+		}
+		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
+		req.Body = nil
+		if params.Get("name") == "" {
+			return nil, fmt.Errorf("resumable uploads must set the Name parameter.")
+		}
+	} else if hasMedia_ {
+		req.Header.Set("Content-Type", ctype)
 	}
-	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -974,6 +1091,21 @@ func (c *UsersDraftsSendCall) Do() (*Message, error) {
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
+	}
+	if c.protocol_ == "resumable" {
+		loc := res.Header.Get("Location")
+		rx := &googleapi.ResumableUpload{
+			Client:        c.s.client,
+			URI:           loc,
+			Media:         c.resumable_,
+			MediaType:     c.mediaType_,
+			ContentLength: c.resumable_.Size(),
+			Callback:      progressUpdater_,
+		}
+		res, err = rx.Upload(c.ctx_)
+		if err != nil {
+			return nil, err
+		}
 	}
 	var ret *Message
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
@@ -1032,12 +1164,16 @@ func (c *UsersDraftsSendCall) Do() (*Message, error) {
 // method id "gmail.users.drafts.update":
 
 type UsersDraftsUpdateCall struct {
-	s      *Service
-	userId string
-	id     string
-	draft  *Draft
-	opt_   map[string]interface{}
-	media_ io.Reader
+	s          *Service
+	userId     string
+	id         string
+	draft      *Draft
+	opt_       map[string]interface{}
+	media_     io.Reader
+	resumable_ googleapi.SizeReaderAt
+	mediaType_ string
+	ctx_       context.Context
+	protocol_  string
 }
 
 // Update: Replaces a draft's content.
@@ -1048,8 +1184,32 @@ func (r *UsersDraftsService) Update(userId string, id string, draft *Draft) *Use
 	c.draft = draft
 	return c
 }
+
+// Media specifies the media to upload in a single chunk.
+// At most one of Media and ResumableMedia may be set.
 func (c *UsersDraftsUpdateCall) Media(r io.Reader) *UsersDraftsUpdateCall {
 	c.media_ = r
+	c.protocol_ = "multipart"
+	return c
+}
+
+// ResumableMedia specifies the media to upload in chunks and can be cancelled with ctx.
+// At most one of Media and ResumableMedia may be set.
+// mediaType identifies the MIME media type of the upload, such as "image/png".
+// If mediaType is "", it will be auto-detected.
+func (c *UsersDraftsUpdateCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *UsersDraftsUpdateCall {
+	c.ctx_ = ctx
+	c.resumable_ = io.NewSectionReader(r, 0, size)
+	c.mediaType_ = mediaType
+	c.protocol_ = "resumable"
+	return c
+}
+
+// ProgressUpdater provides a callback function that will be called after every chunk.
+// It should be a low-latency function in order to not slow down the upload operation.
+// This should only be called when using ResumableMedia (as opposed to Media).
+func (c *UsersDraftsUpdateCall) ProgressUpdater(pu googleapi.ProgressUpdater) *UsersDraftsUpdateCall {
+	c.opt_["progressUpdater"] = pu
 	return c
 }
 
@@ -1074,21 +1234,43 @@ func (c *UsersDraftsUpdateCall) Do() (*Draft, error) {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/drafts/{id}")
-	if c.media_ != nil {
+	var progressUpdater_ googleapi.ProgressUpdater
+	if v, ok := c.opt_["progressUpdater"]; ok {
+		if pu, ok := v.(googleapi.ProgressUpdater); ok {
+			progressUpdater_ = pu
+		}
+	}
+	if c.media_ != nil || c.resumable_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
-		params.Set("uploadType", "multipart")
+		params.Set("uploadType", c.protocol_)
 	}
 	urls += "?" + params.Encode()
-	contentLength_, hasMedia_ := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+	var hasMedia_ bool
+	if c.protocol_ != "resumable" {
+		var cancel func()
+		cancel, hasMedia_ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+		if cancel != nil {
+			defer cancel()
+		}
+	}
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"userId": c.userId,
 		"id":     c.id,
 	})
-	if hasMedia_ {
-		req.ContentLength = contentLength_
+	if c.protocol_ == "resumable" {
+		req.ContentLength = 0
+		if c.mediaType_ == "" {
+			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
+		}
+		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
+		req.Body = nil
+		if params.Get("name") == "" {
+			return nil, fmt.Errorf("resumable uploads must set the Name parameter.")
+		}
+	} else if hasMedia_ {
+		req.Header.Set("Content-Type", ctype)
 	}
-	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -1097,6 +1279,21 @@ func (c *UsersDraftsUpdateCall) Do() (*Draft, error) {
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
+	}
+	if c.protocol_ == "resumable" {
+		loc := res.Header.Get("Location")
+		rx := &googleapi.ResumableUpload{
+			Client:        c.s.client,
+			URI:           loc,
+			Media:         c.resumable_,
+			MediaType:     c.mediaType_,
+			ContentLength: c.resumable_.Size(),
+			Callback:      progressUpdater_,
+		}
+		res, err = rx.Upload(c.ctx_)
+		if err != nil {
+			return nil, err
+		}
 	}
 	var ret *Draft
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
@@ -2067,11 +2264,15 @@ func (c *UsersMessagesGetCall) Do() (*Message, error) {
 // method id "gmail.users.messages.import":
 
 type UsersMessagesImportCall struct {
-	s       *Service
-	userId  string
-	message *Message
-	opt_    map[string]interface{}
-	media_  io.Reader
+	s          *Service
+	userId     string
+	message    *Message
+	opt_       map[string]interface{}
+	media_     io.Reader
+	resumable_ googleapi.SizeReaderAt
+	mediaType_ string
+	ctx_       context.Context
+	protocol_  string
 }
 
 // Import: Imports a message into only this user's mailbox, with
@@ -2090,8 +2291,32 @@ func (c *UsersMessagesImportCall) InternalDateSource(internalDateSource string) 
 	c.opt_["internalDateSource"] = internalDateSource
 	return c
 }
+
+// Media specifies the media to upload in a single chunk.
+// At most one of Media and ResumableMedia may be set.
 func (c *UsersMessagesImportCall) Media(r io.Reader) *UsersMessagesImportCall {
 	c.media_ = r
+	c.protocol_ = "multipart"
+	return c
+}
+
+// ResumableMedia specifies the media to upload in chunks and can be cancelled with ctx.
+// At most one of Media and ResumableMedia may be set.
+// mediaType identifies the MIME media type of the upload, such as "image/png".
+// If mediaType is "", it will be auto-detected.
+func (c *UsersMessagesImportCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *UsersMessagesImportCall {
+	c.ctx_ = ctx
+	c.resumable_ = io.NewSectionReader(r, 0, size)
+	c.mediaType_ = mediaType
+	c.protocol_ = "resumable"
+	return c
+}
+
+// ProgressUpdater provides a callback function that will be called after every chunk.
+// It should be a low-latency function in order to not slow down the upload operation.
+// This should only be called when using ResumableMedia (as opposed to Media).
+func (c *UsersMessagesImportCall) ProgressUpdater(pu googleapi.ProgressUpdater) *UsersMessagesImportCall {
+	c.opt_["progressUpdater"] = pu
 	return c
 }
 
@@ -2119,20 +2344,42 @@ func (c *UsersMessagesImportCall) Do() (*Message, error) {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/messages/import")
-	if c.media_ != nil {
+	var progressUpdater_ googleapi.ProgressUpdater
+	if v, ok := c.opt_["progressUpdater"]; ok {
+		if pu, ok := v.(googleapi.ProgressUpdater); ok {
+			progressUpdater_ = pu
+		}
+	}
+	if c.media_ != nil || c.resumable_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
-		params.Set("uploadType", "multipart")
+		params.Set("uploadType", c.protocol_)
 	}
 	urls += "?" + params.Encode()
-	contentLength_, hasMedia_ := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+	var hasMedia_ bool
+	if c.protocol_ != "resumable" {
+		var cancel func()
+		cancel, hasMedia_ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+		if cancel != nil {
+			defer cancel()
+		}
+	}
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"userId": c.userId,
 	})
-	if hasMedia_ {
-		req.ContentLength = contentLength_
+	if c.protocol_ == "resumable" {
+		req.ContentLength = 0
+		if c.mediaType_ == "" {
+			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
+		}
+		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
+		req.Body = nil
+		if params.Get("name") == "" {
+			return nil, fmt.Errorf("resumable uploads must set the Name parameter.")
+		}
+	} else if hasMedia_ {
+		req.Header.Set("Content-Type", ctype)
 	}
-	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -2141,6 +2388,21 @@ func (c *UsersMessagesImportCall) Do() (*Message, error) {
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
+	}
+	if c.protocol_ == "resumable" {
+		loc := res.Header.Get("Location")
+		rx := &googleapi.ResumableUpload{
+			Client:        c.s.client,
+			URI:           loc,
+			Media:         c.resumable_,
+			MediaType:     c.mediaType_,
+			ContentLength: c.resumable_.Size(),
+			Callback:      progressUpdater_,
+		}
+		res, err = rx.Upload(c.ctx_)
+		if err != nil {
+			return nil, err
+		}
 	}
 	var ret *Message
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
@@ -2212,11 +2474,15 @@ func (c *UsersMessagesImportCall) Do() (*Message, error) {
 // method id "gmail.users.messages.insert":
 
 type UsersMessagesInsertCall struct {
-	s       *Service
-	userId  string
-	message *Message
-	opt_    map[string]interface{}
-	media_  io.Reader
+	s          *Service
+	userId     string
+	message    *Message
+	opt_       map[string]interface{}
+	media_     io.Reader
+	resumable_ googleapi.SizeReaderAt
+	mediaType_ string
+	ctx_       context.Context
+	protocol_  string
 }
 
 // Insert: Directly inserts a message into only this user's mailbox
@@ -2235,8 +2501,32 @@ func (c *UsersMessagesInsertCall) InternalDateSource(internalDateSource string) 
 	c.opt_["internalDateSource"] = internalDateSource
 	return c
 }
+
+// Media specifies the media to upload in a single chunk.
+// At most one of Media and ResumableMedia may be set.
 func (c *UsersMessagesInsertCall) Media(r io.Reader) *UsersMessagesInsertCall {
 	c.media_ = r
+	c.protocol_ = "multipart"
+	return c
+}
+
+// ResumableMedia specifies the media to upload in chunks and can be cancelled with ctx.
+// At most one of Media and ResumableMedia may be set.
+// mediaType identifies the MIME media type of the upload, such as "image/png".
+// If mediaType is "", it will be auto-detected.
+func (c *UsersMessagesInsertCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *UsersMessagesInsertCall {
+	c.ctx_ = ctx
+	c.resumable_ = io.NewSectionReader(r, 0, size)
+	c.mediaType_ = mediaType
+	c.protocol_ = "resumable"
+	return c
+}
+
+// ProgressUpdater provides a callback function that will be called after every chunk.
+// It should be a low-latency function in order to not slow down the upload operation.
+// This should only be called when using ResumableMedia (as opposed to Media).
+func (c *UsersMessagesInsertCall) ProgressUpdater(pu googleapi.ProgressUpdater) *UsersMessagesInsertCall {
+	c.opt_["progressUpdater"] = pu
 	return c
 }
 
@@ -2264,20 +2554,42 @@ func (c *UsersMessagesInsertCall) Do() (*Message, error) {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/messages")
-	if c.media_ != nil {
+	var progressUpdater_ googleapi.ProgressUpdater
+	if v, ok := c.opt_["progressUpdater"]; ok {
+		if pu, ok := v.(googleapi.ProgressUpdater); ok {
+			progressUpdater_ = pu
+		}
+	}
+	if c.media_ != nil || c.resumable_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
-		params.Set("uploadType", "multipart")
+		params.Set("uploadType", c.protocol_)
 	}
 	urls += "?" + params.Encode()
-	contentLength_, hasMedia_ := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+	var hasMedia_ bool
+	if c.protocol_ != "resumable" {
+		var cancel func()
+		cancel, hasMedia_ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+		if cancel != nil {
+			defer cancel()
+		}
+	}
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"userId": c.userId,
 	})
-	if hasMedia_ {
-		req.ContentLength = contentLength_
+	if c.protocol_ == "resumable" {
+		req.ContentLength = 0
+		if c.mediaType_ == "" {
+			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
+		}
+		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
+		req.Body = nil
+		if params.Get("name") == "" {
+			return nil, fmt.Errorf("resumable uploads must set the Name parameter.")
+		}
+	} else if hasMedia_ {
+		req.Header.Set("Content-Type", ctype)
 	}
-	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -2286,6 +2598,21 @@ func (c *UsersMessagesInsertCall) Do() (*Message, error) {
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
+	}
+	if c.protocol_ == "resumable" {
+		loc := res.Header.Get("Location")
+		rx := &googleapi.ResumableUpload{
+			Client:        c.s.client,
+			URI:           loc,
+			Media:         c.resumable_,
+			MediaType:     c.mediaType_,
+			ContentLength: c.resumable_.Size(),
+			Callback:      progressUpdater_,
+		}
+		res, err = rx.Upload(c.ctx_)
+		if err != nil {
+			return nil, err
+		}
 	}
 	var ret *Message
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
@@ -2615,11 +2942,15 @@ func (c *UsersMessagesModifyCall) Do() (*Message, error) {
 // method id "gmail.users.messages.send":
 
 type UsersMessagesSendCall struct {
-	s       *Service
-	userId  string
-	message *Message
-	opt_    map[string]interface{}
-	media_  io.Reader
+	s          *Service
+	userId     string
+	message    *Message
+	opt_       map[string]interface{}
+	media_     io.Reader
+	resumable_ googleapi.SizeReaderAt
+	mediaType_ string
+	ctx_       context.Context
+	protocol_  string
 }
 
 // Send: Sends the specified message to the recipients in the To, Cc,
@@ -2630,8 +2961,32 @@ func (r *UsersMessagesService) Send(userId string, message *Message) *UsersMessa
 	c.message = message
 	return c
 }
+
+// Media specifies the media to upload in a single chunk.
+// At most one of Media and ResumableMedia may be set.
 func (c *UsersMessagesSendCall) Media(r io.Reader) *UsersMessagesSendCall {
 	c.media_ = r
+	c.protocol_ = "multipart"
+	return c
+}
+
+// ResumableMedia specifies the media to upload in chunks and can be cancelled with ctx.
+// At most one of Media and ResumableMedia may be set.
+// mediaType identifies the MIME media type of the upload, such as "image/png".
+// If mediaType is "", it will be auto-detected.
+func (c *UsersMessagesSendCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *UsersMessagesSendCall {
+	c.ctx_ = ctx
+	c.resumable_ = io.NewSectionReader(r, 0, size)
+	c.mediaType_ = mediaType
+	c.protocol_ = "resumable"
+	return c
+}
+
+// ProgressUpdater provides a callback function that will be called after every chunk.
+// It should be a low-latency function in order to not slow down the upload operation.
+// This should only be called when using ResumableMedia (as opposed to Media).
+func (c *UsersMessagesSendCall) ProgressUpdater(pu googleapi.ProgressUpdater) *UsersMessagesSendCall {
+	c.opt_["progressUpdater"] = pu
 	return c
 }
 
@@ -2656,20 +3011,42 @@ func (c *UsersMessagesSendCall) Do() (*Message, error) {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/messages/send")
-	if c.media_ != nil {
+	var progressUpdater_ googleapi.ProgressUpdater
+	if v, ok := c.opt_["progressUpdater"]; ok {
+		if pu, ok := v.(googleapi.ProgressUpdater); ok {
+			progressUpdater_ = pu
+		}
+	}
+	if c.media_ != nil || c.resumable_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
-		params.Set("uploadType", "multipart")
+		params.Set("uploadType", c.protocol_)
 	}
 	urls += "?" + params.Encode()
-	contentLength_, hasMedia_ := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+	var hasMedia_ bool
+	if c.protocol_ != "resumable" {
+		var cancel func()
+		cancel, hasMedia_ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+		if cancel != nil {
+			defer cancel()
+		}
+	}
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"userId": c.userId,
 	})
-	if hasMedia_ {
-		req.ContentLength = contentLength_
+	if c.protocol_ == "resumable" {
+		req.ContentLength = 0
+		if c.mediaType_ == "" {
+			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
+		}
+		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
+		req.Body = nil
+		if params.Get("name") == "" {
+			return nil, fmt.Errorf("resumable uploads must set the Name parameter.")
+		}
+	} else if hasMedia_ {
+		req.Header.Set("Content-Type", ctype)
 	}
-	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -2678,6 +3055,21 @@ func (c *UsersMessagesSendCall) Do() (*Message, error) {
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
+	}
+	if c.protocol_ == "resumable" {
+		loc := res.Header.Get("Location")
+		rx := &googleapi.ResumableUpload{
+			Client:        c.s.client,
+			URI:           loc,
+			Media:         c.resumable_,
+			MediaType:     c.mediaType_,
+			ContentLength: c.resumable_.Size(),
+			Callback:      progressUpdater_,
+		}
+		res, err = rx.Upload(c.ctx_)
+		if err != nil {
+			return nil, err
+		}
 	}
 	var ret *Message
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {

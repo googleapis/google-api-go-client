@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/xcGgQKwhk2lzAuNnzm2cQsk-PZM\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/Ob5VAt9jPBqja2_DA3xCwh8JLjs\"",
  "discoveryVersion": "v1",
  "id": "tagmanager:v1",
  "name": "tagmanager",
  "canonicalName": "Tag Manager",
  "version": "v1",
- "revision": "20141112",
+ "revision": "20150121",
  "title": "Tag Manager API",
  "description": "API for accessing Tag Manager accounts and containers.",
  "ownerDomain": "google.com",
@@ -229,7 +229,7 @@
     },
     "enabledBuiltInVariable": {
      "type": "array",
-     "description": "List of enabled built-in variables.",
+     "description": "List of enabled built-in variables. Valid values include: pageUrl, pageHostname, pagePath, referrer, event, clickElement, clickClasses, clickId, clickTarget, clickUrl, clickText, formElement, formClasses, formId, formTarget, formUrl, formText, errorMessage, errorUrl, errorLine, newHistoryFragment, oldHistoryFragment, newHistoryState, oldHistoryState, historySource, containerVersion, debugMode, randomNumber, containerId.",
      "items": {
       "type": "string",
       "enum": [
@@ -1101,7 +1101,7 @@
     },
     "uniqueTriggerId": {
      "$ref": "Parameter",
-     "description": "Globally unique id of the trigger that auto-generates this Form Submit or Link Click listeners if any. Used to make incompatible auto-events work together with trigger filtering based on trigger ids. This value is populated during output generation since the tags implied by triggers don't exist until then. Only valid for Form Submission and Link Click triggers."
+     "description": "Globally unique id of the trigger that auto-generates this (a Form Submit, Link Click or Timer listener) if any. Used to make incompatible auto-events work together with trigger filtering based on trigger ids. This value is populated during output generation since the tags implied by triggers don't exist until then. Only valid for Form Submit, Link Click and Timer triggers."
     },
     "videoPercentageList": {
      "$ref": "Parameter",

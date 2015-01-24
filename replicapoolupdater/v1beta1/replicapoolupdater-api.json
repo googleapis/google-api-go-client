@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/AT-fnbTxTHlPDlbWlx4KZrEt53M\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/MuNbTn-U7uo4q5kIHWudYUMbnVc\"",
  "discoveryVersion": "v1",
  "id": "replicapoolupdater:v1beta1",
  "name": "replicapoolupdater",
  "version": "v1beta1",
- "revision": "20141227",
+ "revision": "20150114",
  "title": "Google Compute Engine Instance Group Updater API",
  "description": "The Google Compute Engine Instance Group Updater API provides services for updating groups of Compute Engine Instances.",
  "ownerDomain": "google.com",
@@ -143,6 +143,10 @@
    "type": "object",
    "description": "Resource describing a single update (rollout) of a group of instances to the given template.",
    "properties": {
+    "actionType": {
+     "type": "string",
+     "description": "Action to be performed for each instance. Possible values are:  \n- \"RECREATE\": Instance will be recreated."
+    },
     "creationTimestamp": {
      "type": "string",
      "description": "[Output Only] Creation timestamp in RFC3339 text format."
@@ -362,6 +366,11 @@
      "httpMethod": "GET",
      "description": "Lists recent updates for a given managed instance group, in reverse chronological order and paginated format.",
      "parameters": {
+      "filter": {
+       "type": "string",
+       "description": "Optional. Filter expression for filtering listed resources.",
+       "location": "query"
+      },
       "instanceGroupManager": {
        "type": "string",
        "description": "The name of the instance group manager.",
@@ -369,16 +378,16 @@
       },
       "maxResults": {
        "type": "integer",
-       "description": "Maximum count of results to be returned. Acceptable values are 1 to 100, inclusive. (Default: 50)",
-       "default": "50",
-       "format": "int32",
-       "minimum": "1",
-       "maximum": "100",
+       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "default": "500",
+       "format": "uint32",
+       "minimum": "0",
+       "maximum": "500",
        "location": "query"
       },
       "pageToken": {
        "type": "string",
-       "description": "Set this to the nextPageToken value returned by a previous list request to obtain the next page of results from the previous list request.",
+       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
        "location": "query"
       },
       "project": {
@@ -414,18 +423,23 @@
      "httpMethod": "GET",
      "description": "Lists the current status for each instance within a given update.",
      "parameters": {
+      "filter": {
+       "type": "string",
+       "description": "Optional. Filter expression for filtering listed resources.",
+       "location": "query"
+      },
       "maxResults": {
        "type": "integer",
-       "description": "Maximum count of results to be returned. Acceptable values are 1 to 100, inclusive. (Default: 50)",
-       "default": "50",
-       "format": "int32",
-       "minimum": "1",
-       "maximum": "100",
+       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "default": "500",
+       "format": "uint32",
+       "minimum": "0",
+       "maximum": "500",
        "location": "query"
       },
       "pageToken": {
        "type": "string",
-       "description": "Set this to the nextPageToken value returned by a previous list request to obtain the next page of results from the previous list request.",
+       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
        "location": "query"
       },
       "project": {

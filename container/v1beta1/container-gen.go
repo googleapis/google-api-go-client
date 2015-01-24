@@ -14,6 +14,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"golang.org/x/net/context"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -33,6 +34,7 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
+var _ = context.Background
 
 const apiId = "container:v1beta1"
 const apiName = "container"
@@ -254,6 +256,17 @@ type NodeConfig struct {
 	// n1-standard-1.
 	MachineType string `json:"machineType,omitempty"`
 
+	// ServiceAccounts: The optional list of ServiceAccounts, each with
+	// their specified scopes, to be made available on all of the node VMs.
+	// In addition to the service accounts and scopes specified, the
+	// "default" account will always be created with the following scopes to
+	// ensure the correct functioning of the cluster:
+	// -
+	// https://www.googleapis.com/auth/compute,
+	// -
+	// https://www.googleapis.com/auth/devstorage.read_only
+	ServiceAccounts []*ServiceAccount `json:"serviceAccounts,omitempty"`
+
 	// SourceImage: The fully-specified name of a Google Compute Engine
 	// image. For example:
 	// https://www.googleapis.com/compute/v1/projects/debian-cloud/global/ima
@@ -295,6 +308,15 @@ type Operation struct {
 	// Zone: The name of the Google Compute Engine zone in which the
 	// operation is taking place.
 	Zone string `json:"zone,omitempty"`
+}
+
+type ServiceAccount struct {
+	// Email: Email address of the service account.
+	Email string `json:"email,omitempty"`
+
+	// Scopes: The list of scopes to be made available for this service
+	// account.
+	Scopes []string `json:"scopes,omitempty"`
 }
 
 // method id "container.projects.clusters.list":

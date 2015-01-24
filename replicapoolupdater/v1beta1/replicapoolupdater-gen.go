@@ -14,6 +14,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"golang.org/x/net/context"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -33,6 +34,7 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
+var _ = context.Background
 
 const apiId = "replicapoolupdater:v1beta1"
 const apiName = "replicapoolupdater"
@@ -120,6 +122,11 @@ type InstanceUpdateList struct {
 }
 
 type RollingUpdate struct {
+	// ActionType: Action to be performed for each instance. Possible values
+	// are:
+	// - "RECREATE": Instance will be recreated.
+	ActionType string `json:"actionType,omitempty"`
+
 	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
 	// format.
 	CreationTimestamp string `json:"creationTimestamp,omitempty"`
@@ -527,6 +534,13 @@ func (r *RollingUpdatesService) List(project string, zone string) *RollingUpdate
 	return c
 }
 
+// Filter sets the optional parameter "filter": Filter expression for
+// filtering listed resources.
+func (c *RollingUpdatesListCall) Filter(filter string) *RollingUpdatesListCall {
+	c.opt_["filter"] = filter
+	return c
+}
+
 // InstanceGroupManager sets the optional parameter
 // "instanceGroupManager": The name of the instance group manager.
 func (c *RollingUpdatesListCall) InstanceGroupManager(instanceGroupManager string) *RollingUpdatesListCall {
@@ -535,16 +549,16 @@ func (c *RollingUpdatesListCall) InstanceGroupManager(instanceGroupManager strin
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Acceptable values are 1 to 100, inclusive.
-// (Default: 50)
+// results to be returned. Maximum value is 500 and default value is
+// 500.
 func (c *RollingUpdatesListCall) MaxResults(maxResults int64) *RollingUpdatesListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Set this to the
-// nextPageToken value returned by a previous list request to obtain the
-// next page of results from the previous list request.
+// PageToken sets the optional parameter "pageToken": Tag returned by a
+// previous list request truncated by maxResults. Used to continue a
+// previous list request.
 func (c *RollingUpdatesListCall) PageToken(pageToken string) *RollingUpdatesListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -562,6 +576,9 @@ func (c *RollingUpdatesListCall) Do() (*RollingUpdateList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["filter"]; ok {
+		params.Set("filter", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["instanceGroupManager"]; ok {
 		params.Set("instanceGroupManager", fmt.Sprintf("%v", v))
 	}
@@ -604,22 +621,27 @@ func (c *RollingUpdatesListCall) Do() (*RollingUpdateList, error) {
 	//     "zone"
 	//   ],
 	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Filter expression for filtering listed resources.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "instanceGroupManager": {
 	//       "description": "The name of the instance group manager.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "default": "50",
-	//       "description": "Maximum count of results to be returned. Acceptable values are 1 to 100, inclusive. (Default: 50)",
-	//       "format": "int32",
+	//       "default": "500",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "100",
-	//       "minimum": "1",
+	//       "maximum": "500",
+	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Set this to the nextPageToken value returned by a previous list request to obtain the next page of results from the previous list request.",
+	//       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -671,17 +693,24 @@ func (r *RollingUpdatesService) ListInstanceUpdates(project string, zone string,
 	return c
 }
 
+// Filter sets the optional parameter "filter": Filter expression for
+// filtering listed resources.
+func (c *RollingUpdatesListInstanceUpdatesCall) Filter(filter string) *RollingUpdatesListInstanceUpdatesCall {
+	c.opt_["filter"] = filter
+	return c
+}
+
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Acceptable values are 1 to 100, inclusive.
-// (Default: 50)
+// results to be returned. Maximum value is 500 and default value is
+// 500.
 func (c *RollingUpdatesListInstanceUpdatesCall) MaxResults(maxResults int64) *RollingUpdatesListInstanceUpdatesCall {
 	c.opt_["maxResults"] = maxResults
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Set this to the
-// nextPageToken value returned by a previous list request to obtain the
-// next page of results from the previous list request.
+// PageToken sets the optional parameter "pageToken": Tag returned by a
+// previous list request truncated by maxResults. Used to continue a
+// previous list request.
 func (c *RollingUpdatesListInstanceUpdatesCall) PageToken(pageToken string) *RollingUpdatesListInstanceUpdatesCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -699,6 +728,9 @@ func (c *RollingUpdatesListInstanceUpdatesCall) Do() (*InstanceUpdateList, error
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["filter"]; ok {
+		params.Set("filter", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
@@ -740,17 +772,22 @@ func (c *RollingUpdatesListInstanceUpdatesCall) Do() (*InstanceUpdateList, error
 	//     "rollingUpdate"
 	//   ],
 	//   "parameters": {
-	//     "maxResults": {
-	//       "default": "50",
-	//       "description": "Maximum count of results to be returned. Acceptable values are 1 to 100, inclusive. (Default: 50)",
-	//       "format": "int32",
+	//     "filter": {
+	//       "description": "Optional. Filter expression for filtering listed resources.",
 	//       "location": "query",
-	//       "maximum": "100",
-	//       "minimum": "1",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "default": "500",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "maximum": "500",
+	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Set this to the nextPageToken value returned by a previous list request to obtain the next page of results from the previous list request.",
+	//       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

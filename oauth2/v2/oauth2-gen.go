@@ -14,6 +14,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"golang.org/x/net/context"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -33,6 +34,7 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
+var _ = context.Background
 
 const apiId = "oauth2:v2"
 const apiName = "oauth2"
@@ -103,6 +105,24 @@ type UserinfoV2MeService struct {
 	s *Service
 }
 
+type Jwk struct {
+	Keys []*JwkKeys `json:"keys,omitempty"`
+}
+
+type JwkKeys struct {
+	Alg string `json:"alg,omitempty"`
+
+	E string `json:"e,omitempty"`
+
+	Kid string `json:"kid,omitempty"`
+
+	Kty string `json:"kty,omitempty"`
+
+	N string `json:"n,omitempty"`
+
+	Use string `json:"use,omitempty"`
+}
+
 type Tokeninfo struct {
 	// Access_type: The access type granted with this token. It can be
 	// offline or online.
@@ -171,6 +191,63 @@ type Userinfoplus struct {
 	// verified. Always verified because we only return the user's primary
 	// email address.
 	Verified_email bool `json:"verified_email,omitempty"`
+}
+
+// method id "oauth2.getCertForOpenIdConnect":
+
+type GetCertForOpenIdConnectCall struct {
+	s    *Service
+	opt_ map[string]interface{}
+}
+
+// GetCertForOpenIdConnect:
+func (s *Service) GetCertForOpenIdConnect() *GetCertForOpenIdConnectCall {
+	c := &GetCertForOpenIdConnectCall{s: s, opt_: make(map[string]interface{})}
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *GetCertForOpenIdConnectCall) Fields(s ...googleapi.Field) *GetCertForOpenIdConnectCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *GetCertForOpenIdConnectCall) Do() (*Jwk, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "oauth2/v2/certs")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Jwk
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "httpMethod": "GET",
+	//   "id": "oauth2.getCertForOpenIdConnect",
+	//   "path": "oauth2/v2/certs",
+	//   "response": {
+	//     "$ref": "Jwk"
+	//   }
+	// }
+
 }
 
 // method id "oauth2.tokeninfo":

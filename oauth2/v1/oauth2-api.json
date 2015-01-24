@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/YHYuOKmsUcxnyDdYX9TyTF0HnOg\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/9Yyv0tXok5k5vzXMjMvbTiT4GAM\"",
  "discoveryVersion": "v1",
  "id": "oauth2:v1",
  "name": "oauth2",
  "version": "v1",
- "revision": "20150106",
+ "revision": "20150120",
  "title": "Google OAuth2 API",
  "description": "Lets you access OAuth2 protocol related APIs.",
  "ownerDomain": "google.com",
@@ -85,6 +85,33 @@
   }
  },
  "schemas": {
+  "Raw": {
+   "id": "Raw",
+   "type": "object",
+   "properties": {
+    "keyvalues": {
+     "type": "array",
+     "items": {
+      "type": "object",
+      "properties": {
+       "algorithm": {
+        "type": "string",
+        "default": "RSA"
+       },
+       "exponent": {
+        "type": "string"
+       },
+       "keyid": {
+        "type": "string"
+       },
+       "modulus": {
+        "type": "string"
+       }
+      }
+     }
+    }
+   }
+  },
   "Tokeninfo": {
    "id": "Tokeninfo",
    "type": "object",
@@ -191,9 +218,70 @@
      "default": "true"
     }
    }
+  },
+  "X509": {
+   "id": "X509",
+   "type": "object",
+   "additionalProperties": {
+    "type": "string"
+   }
   }
  },
  "methods": {
+  "getCertForOpenIdConnect": {
+   "id": "oauth2.getCertForOpenIdConnect",
+   "path": "oauth2/v1/certs",
+   "httpMethod": "GET",
+   "response": {
+    "$ref": "X509"
+   }
+  },
+  "getCertForOpenIdConnectRaw": {
+   "id": "oauth2.getCertForOpenIdConnectRaw",
+   "path": "oauth2/v1/raw_public_keys",
+   "httpMethod": "GET",
+   "response": {
+    "$ref": "Raw"
+   }
+  },
+  "getRobotMetadataRaw": {
+   "id": "oauth2.getRobotMetadataRaw",
+   "path": "service_accounts/v1/metadata/raw/{robotEmail}",
+   "httpMethod": "GET",
+   "parameters": {
+    "robotEmail": {
+     "type": "string",
+     "description": "The email of robot account.",
+     "required": true,
+     "location": "path"
+    }
+   },
+   "parameterOrder": [
+    "robotEmail"
+   ],
+   "response": {
+    "$ref": "Raw"
+   }
+  },
+  "getRobotMetadataX509": {
+   "id": "oauth2.getRobotMetadataX509",
+   "path": "service_accounts/v1/metadata/x509/{robotEmail}",
+   "httpMethod": "GET",
+   "parameters": {
+    "robotEmail": {
+     "type": "string",
+     "description": "The email of robot account.",
+     "required": true,
+     "location": "path"
+    }
+   },
+   "parameterOrder": [
+    "robotEmail"
+   ],
+   "response": {
+    "$ref": "X509"
+   }
+  },
   "tokeninfo": {
    "id": "oauth2.tokeninfo",
    "path": "oauth2/v1/tokeninfo",

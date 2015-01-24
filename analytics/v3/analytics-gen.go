@@ -14,6 +14,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"golang.org/x/net/context"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -33,6 +34,7 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
+var _ = context.Background
 
 const apiId = "analytics:v3"
 const apiName = "analytics"
@@ -137,6 +139,8 @@ func NewManagementService(s *Service) *ManagementService {
 	rs.AccountUserLinks = NewManagementAccountUserLinksService(s)
 	rs.Accounts = NewManagementAccountsService(s)
 	rs.CustomDataSources = NewManagementCustomDataSourcesService(s)
+	rs.CustomDimensions = NewManagementCustomDimensionsService(s)
+	rs.CustomMetrics = NewManagementCustomMetricsService(s)
 	rs.DailyUploads = NewManagementDailyUploadsService(s)
 	rs.Experiments = NewManagementExperimentsService(s)
 	rs.Filters = NewManagementFiltersService(s)
@@ -163,6 +167,10 @@ type ManagementService struct {
 	Accounts *ManagementAccountsService
 
 	CustomDataSources *ManagementCustomDataSourcesService
+
+	CustomDimensions *ManagementCustomDimensionsService
+
+	CustomMetrics *ManagementCustomMetricsService
 
 	DailyUploads *ManagementDailyUploadsService
 
@@ -224,6 +232,24 @@ func NewManagementCustomDataSourcesService(s *Service) *ManagementCustomDataSour
 }
 
 type ManagementCustomDataSourcesService struct {
+	s *Service
+}
+
+func NewManagementCustomDimensionsService(s *Service) *ManagementCustomDimensionsService {
+	rs := &ManagementCustomDimensionsService{s: s}
+	return rs
+}
+
+type ManagementCustomDimensionsService struct {
+	s *Service
+}
+
+func NewManagementCustomMetricsService(s *Service) *ManagementCustomMetricsService {
+	rs := &ManagementCustomMetricsService{s: s}
+	return rs
+}
+
+type ManagementCustomMetricsService struct {
 	s *Service
 }
 
@@ -658,6 +684,175 @@ type CustomDataSources struct {
 	NextLink string `json:"nextLink,omitempty"`
 
 	// PreviousLink: Link to previous page for this custom data source
+	// collection.
+	PreviousLink string `json:"previousLink,omitempty"`
+
+	// StartIndex: The starting index of the resources, which is 1 by
+	// default or otherwise specified by the start-index query parameter.
+	StartIndex int64 `json:"startIndex,omitempty"`
+
+	// TotalResults: The total number of results for the query, regardless
+	// of the number of results in the response.
+	TotalResults int64 `json:"totalResults,omitempty"`
+
+	// Username: Email ID of the authenticated user
+	Username string `json:"username,omitempty"`
+}
+
+type CustomDimension struct {
+	// AccountId: Account ID.
+	AccountId string `json:"accountId,omitempty"`
+
+	// Active: Boolean indicating whether the custom dimension is active.
+	Active bool `json:"active,omitempty"`
+
+	// Created: Time the custom dimension was created.
+	Created string `json:"created,omitempty"`
+
+	// Id: Custom dimension ID.
+	Id string `json:"id,omitempty"`
+
+	// Index: Index of the custom dimension.
+	Index int64 `json:"index,omitempty"`
+
+	// Kind: Kind value for a custom dimension. Set to
+	// "analytics#customDimension". It is a read-only field.
+	Kind string `json:"kind,omitempty"`
+
+	// Name: Name of the custom dimension.
+	Name string `json:"name,omitempty"`
+
+	// ParentLink: Parent link for the custom dimension. Points to the
+	// property to which the custom dimension belongs.
+	ParentLink *CustomDimensionParentLink `json:"parentLink,omitempty"`
+
+	// Scope: Scope of the custom dimension: HIT, SESSION, USER or PRODUCT.
+	Scope string `json:"scope,omitempty"`
+
+	// SelfLink: Link for the custom dimension
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// Updated: Time the custom dimension was last modified.
+	Updated string `json:"updated,omitempty"`
+
+	// WebPropertyId: Property ID.
+	WebPropertyId string `json:"webPropertyId,omitempty"`
+}
+
+type CustomDimensionParentLink struct {
+	// Href: Link to the property to which the custom dimension belongs.
+	Href string `json:"href,omitempty"`
+
+	// Type: Type of the parent link. Set to "analytics#webproperty".
+	Type string `json:"type,omitempty"`
+}
+
+type CustomDimensions struct {
+	// Items: Collection of custom dimensions.
+	Items []*CustomDimension `json:"items,omitempty"`
+
+	// ItemsPerPage: The maximum number of resources the response can
+	// contain, regardless of the actual number of resources returned. Its
+	// value ranges from 1 to 1000 with a value of 1000 by default, or
+	// otherwise specified by the max-results query parameter.
+	ItemsPerPage int64 `json:"itemsPerPage,omitempty"`
+
+	// Kind: Collection type.
+	Kind string `json:"kind,omitempty"`
+
+	// NextLink: Link to next page for this custom dimension collection.
+	NextLink string `json:"nextLink,omitempty"`
+
+	// PreviousLink: Link to previous page for this custom dimension
+	// collection.
+	PreviousLink string `json:"previousLink,omitempty"`
+
+	// StartIndex: The starting index of the resources, which is 1 by
+	// default or otherwise specified by the start-index query parameter.
+	StartIndex int64 `json:"startIndex,omitempty"`
+
+	// TotalResults: The total number of results for the query, regardless
+	// of the number of results in the response.
+	TotalResults int64 `json:"totalResults,omitempty"`
+
+	// Username: Email ID of the authenticated user
+	Username string `json:"username,omitempty"`
+}
+
+type CustomMetric struct {
+	// AccountId: Account ID.
+	AccountId string `json:"accountId,omitempty"`
+
+	// Active: Boolean indicating whether the custom metric is active.
+	Active bool `json:"active,omitempty"`
+
+	// Created: Time the custom metric was created.
+	Created string `json:"created,omitempty"`
+
+	// Id: Custom metric ID.
+	Id string `json:"id,omitempty"`
+
+	// Index: Index of the custom metric.
+	Index int64 `json:"index,omitempty"`
+
+	// Kind: Kind value for a custom metric. Set to
+	// "analytics#customMetric". It is a read-only field.
+	Kind string `json:"kind,omitempty"`
+
+	// Max_value: Max value of custom metric.
+	Max_value string `json:"max_value,omitempty"`
+
+	// Min_value: Min value of custom metric.
+	Min_value string `json:"min_value,omitempty"`
+
+	// Name: Name of the custom metric.
+	Name string `json:"name,omitempty"`
+
+	// ParentLink: Parent link for the custom metric. Points to the property
+	// to which the custom metric belongs.
+	ParentLink *CustomMetricParentLink `json:"parentLink,omitempty"`
+
+	// Scope: Scope of the custom metric: HIT or PRODUCT.
+	Scope string `json:"scope,omitempty"`
+
+	// SelfLink: Link for the custom metric
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// Type: Data type of custom metric.
+	Type string `json:"type,omitempty"`
+
+	// Updated: Time the custom metric was last modified.
+	Updated string `json:"updated,omitempty"`
+
+	// WebPropertyId: Property ID.
+	WebPropertyId string `json:"webPropertyId,omitempty"`
+}
+
+type CustomMetricParentLink struct {
+	// Href: Link to the property to which the custom metric belongs.
+	Href string `json:"href,omitempty"`
+
+	// Type: Type of the parent link. Set to "analytics#webproperty".
+	Type string `json:"type,omitempty"`
+}
+
+type CustomMetrics struct {
+	// Items: Collection of custom metrics.
+	Items []*CustomMetric `json:"items,omitempty"`
+
+	// ItemsPerPage: The maximum number of resources the response can
+	// contain, regardless of the actual number of resources returned. Its
+	// value ranges from 1 to 1000 with a value of 1000 by default, or
+	// otherwise specified by the max-results query parameter.
+	ItemsPerPage int64 `json:"itemsPerPage,omitempty"`
+
+	// Kind: Collection type.
+	Kind string `json:"kind,omitempty"`
+
+	// NextLink: Link to next page for this custom metric collection.
+	NextLink string `json:"nextLink,omitempty"`
+
+	// PreviousLink: Link to previous page for this custom metric
 	// collection.
 	PreviousLink string `json:"previousLink,omitempty"`
 
@@ -3970,6 +4165,1138 @@ func (c *ManagementCustomDataSourcesListCall) Do() (*CustomDataSources, error) {
 
 }
 
+// method id "analytics.management.customDimensions.get":
+
+type ManagementCustomDimensionsGetCall struct {
+	s                 *Service
+	accountId         string
+	webPropertyId     string
+	customDimensionId string
+	opt_              map[string]interface{}
+}
+
+// Get: Get a custom dimension to which the user has access.
+func (r *ManagementCustomDimensionsService) Get(accountId string, webPropertyId string, customDimensionId string) *ManagementCustomDimensionsGetCall {
+	c := &ManagementCustomDimensionsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.webPropertyId = webPropertyId
+	c.customDimensionId = customDimensionId
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ManagementCustomDimensionsGetCall) Fields(s ...googleapi.Field) *ManagementCustomDimensionsGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *ManagementCustomDimensionsGetCall) Do() (*CustomDimension, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/webproperties/{webPropertyId}/customDimensions/{customDimensionId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"accountId":         c.accountId,
+		"webPropertyId":     c.webPropertyId,
+		"customDimensionId": c.customDimensionId,
+	})
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *CustomDimension
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get a custom dimension to which the user has access.",
+	//   "httpMethod": "GET",
+	//   "id": "analytics.management.customDimensions.get",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "webPropertyId",
+	//     "customDimensionId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account ID for the custom dimension to retrieve.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "customDimensionId": {
+	//       "description": "The ID of the custom dimension to retrieve.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "webPropertyId": {
+	//       "description": "Web property ID for the custom dimension to retrieve.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/customDimensions/{customDimensionId}",
+	//   "response": {
+	//     "$ref": "CustomDimension"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit",
+	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "analytics.management.customDimensions.insert":
+
+type ManagementCustomDimensionsInsertCall struct {
+	s               *Service
+	accountId       string
+	webPropertyId   string
+	customdimension *CustomDimension
+	opt_            map[string]interface{}
+}
+
+// Insert: Create a new custom dimension.
+func (r *ManagementCustomDimensionsService) Insert(accountId string, webPropertyId string, customdimension *CustomDimension) *ManagementCustomDimensionsInsertCall {
+	c := &ManagementCustomDimensionsInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.webPropertyId = webPropertyId
+	c.customdimension = customdimension
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ManagementCustomDimensionsInsertCall) Fields(s ...googleapi.Field) *ManagementCustomDimensionsInsertCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *ManagementCustomDimensionsInsertCall) Do() (*CustomDimension, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.customdimension)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/webproperties/{webPropertyId}/customDimensions")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"accountId":     c.accountId,
+		"webPropertyId": c.webPropertyId,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *CustomDimension
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Create a new custom dimension.",
+	//   "httpMethod": "POST",
+	//   "id": "analytics.management.customDimensions.insert",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "webPropertyId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account ID for the custom dimension to create.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "webPropertyId": {
+	//       "description": "Web property ID for the custom dimension to create.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/customDimensions",
+	//   "request": {
+	//     "$ref": "CustomDimension"
+	//   },
+	//   "response": {
+	//     "$ref": "CustomDimension"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit"
+	//   ]
+	// }
+
+}
+
+// method id "analytics.management.customDimensions.list":
+
+type ManagementCustomDimensionsListCall struct {
+	s             *Service
+	accountId     string
+	webPropertyId string
+	opt_          map[string]interface{}
+}
+
+// List: Lists custom dimensions to which the user has access.
+func (r *ManagementCustomDimensionsService) List(accountId string, webPropertyId string) *ManagementCustomDimensionsListCall {
+	c := &ManagementCustomDimensionsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.webPropertyId = webPropertyId
+	return c
+}
+
+// MaxResults sets the optional parameter "max-results": The maximum
+// number of custom dimensions to include in this response.
+func (c *ManagementCustomDimensionsListCall) MaxResults(maxResults int64) *ManagementCustomDimensionsListCall {
+	c.opt_["max-results"] = maxResults
+	return c
+}
+
+// StartIndex sets the optional parameter "start-index": An index of the
+// first entity to retrieve. Use this parameter as a pagination
+// mechanism along with the max-results parameter.
+func (c *ManagementCustomDimensionsListCall) StartIndex(startIndex int64) *ManagementCustomDimensionsListCall {
+	c.opt_["start-index"] = startIndex
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ManagementCustomDimensionsListCall) Fields(s ...googleapi.Field) *ManagementCustomDimensionsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *ManagementCustomDimensionsListCall) Do() (*CustomDimensions, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["max-results"]; ok {
+		params.Set("max-results", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["start-index"]; ok {
+		params.Set("start-index", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/webproperties/{webPropertyId}/customDimensions")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"accountId":     c.accountId,
+		"webPropertyId": c.webPropertyId,
+	})
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *CustomDimensions
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists custom dimensions to which the user has access.",
+	//   "httpMethod": "GET",
+	//   "id": "analytics.management.customDimensions.list",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "webPropertyId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account ID for the custom dimensions to retrieve.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "max-results": {
+	//       "description": "The maximum number of custom dimensions to include in this response.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "start-index": {
+	//       "description": "An index of the first entity to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "minimum": "1",
+	//       "type": "integer"
+	//     },
+	//     "webPropertyId": {
+	//       "description": "Web property ID for the custom dimensions to retrieve.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/customDimensions",
+	//   "response": {
+	//     "$ref": "CustomDimensions"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics",
+	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "analytics.management.customDimensions.patch":
+
+type ManagementCustomDimensionsPatchCall struct {
+	s                 *Service
+	accountId         string
+	webPropertyId     string
+	customDimensionId string
+	customdimension   *CustomDimension
+	opt_              map[string]interface{}
+}
+
+// Patch: Updates an existing custom dimension. This method supports
+// patch semantics.
+func (r *ManagementCustomDimensionsService) Patch(accountId string, webPropertyId string, customDimensionId string, customdimension *CustomDimension) *ManagementCustomDimensionsPatchCall {
+	c := &ManagementCustomDimensionsPatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.webPropertyId = webPropertyId
+	c.customDimensionId = customDimensionId
+	c.customdimension = customdimension
+	return c
+}
+
+// IgnoreCustomDataSourceLinks sets the optional parameter
+// "ignoreCustomDataSourceLinks": Force the update and ignore any
+// warnings related to the custom dimension being linked to a custom
+// data source / data set.
+func (c *ManagementCustomDimensionsPatchCall) IgnoreCustomDataSourceLinks(ignoreCustomDataSourceLinks bool) *ManagementCustomDimensionsPatchCall {
+	c.opt_["ignoreCustomDataSourceLinks"] = ignoreCustomDataSourceLinks
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ManagementCustomDimensionsPatchCall) Fields(s ...googleapi.Field) *ManagementCustomDimensionsPatchCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *ManagementCustomDimensionsPatchCall) Do() (*CustomDimension, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.customdimension)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["ignoreCustomDataSourceLinks"]; ok {
+		params.Set("ignoreCustomDataSourceLinks", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/webproperties/{webPropertyId}/customDimensions/{customDimensionId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"accountId":         c.accountId,
+		"webPropertyId":     c.webPropertyId,
+		"customDimensionId": c.customDimensionId,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *CustomDimension
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an existing custom dimension. This method supports patch semantics.",
+	//   "httpMethod": "PATCH",
+	//   "id": "analytics.management.customDimensions.patch",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "webPropertyId",
+	//     "customDimensionId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account ID for the custom dimension to update.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "customDimensionId": {
+	//       "description": "Custom dimension ID for the custom dimension to update.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "ignoreCustomDataSourceLinks": {
+	//       "default": "false",
+	//       "description": "Force the update and ignore any warnings related to the custom dimension being linked to a custom data source / data set.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "webPropertyId": {
+	//       "description": "Web property ID for the custom dimension to update.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/customDimensions/{customDimensionId}",
+	//   "request": {
+	//     "$ref": "CustomDimension"
+	//   },
+	//   "response": {
+	//     "$ref": "CustomDimension"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit"
+	//   ]
+	// }
+
+}
+
+// method id "analytics.management.customDimensions.update":
+
+type ManagementCustomDimensionsUpdateCall struct {
+	s                 *Service
+	accountId         string
+	webPropertyId     string
+	customDimensionId string
+	customdimension   *CustomDimension
+	opt_              map[string]interface{}
+}
+
+// Update: Updates an existing custom dimension.
+func (r *ManagementCustomDimensionsService) Update(accountId string, webPropertyId string, customDimensionId string, customdimension *CustomDimension) *ManagementCustomDimensionsUpdateCall {
+	c := &ManagementCustomDimensionsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.webPropertyId = webPropertyId
+	c.customDimensionId = customDimensionId
+	c.customdimension = customdimension
+	return c
+}
+
+// IgnoreCustomDataSourceLinks sets the optional parameter
+// "ignoreCustomDataSourceLinks": Force the update and ignore any
+// warnings related to the custom dimension being linked to a custom
+// data source / data set.
+func (c *ManagementCustomDimensionsUpdateCall) IgnoreCustomDataSourceLinks(ignoreCustomDataSourceLinks bool) *ManagementCustomDimensionsUpdateCall {
+	c.opt_["ignoreCustomDataSourceLinks"] = ignoreCustomDataSourceLinks
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ManagementCustomDimensionsUpdateCall) Fields(s ...googleapi.Field) *ManagementCustomDimensionsUpdateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *ManagementCustomDimensionsUpdateCall) Do() (*CustomDimension, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.customdimension)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["ignoreCustomDataSourceLinks"]; ok {
+		params.Set("ignoreCustomDataSourceLinks", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/webproperties/{webPropertyId}/customDimensions/{customDimensionId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"accountId":         c.accountId,
+		"webPropertyId":     c.webPropertyId,
+		"customDimensionId": c.customDimensionId,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *CustomDimension
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an existing custom dimension.",
+	//   "httpMethod": "PUT",
+	//   "id": "analytics.management.customDimensions.update",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "webPropertyId",
+	//     "customDimensionId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account ID for the custom dimension to update.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "customDimensionId": {
+	//       "description": "Custom dimension ID for the custom dimension to update.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "ignoreCustomDataSourceLinks": {
+	//       "default": "false",
+	//       "description": "Force the update and ignore any warnings related to the custom dimension being linked to a custom data source / data set.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "webPropertyId": {
+	//       "description": "Web property ID for the custom dimension to update.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/customDimensions/{customDimensionId}",
+	//   "request": {
+	//     "$ref": "CustomDimension"
+	//   },
+	//   "response": {
+	//     "$ref": "CustomDimension"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit"
+	//   ]
+	// }
+
+}
+
+// method id "analytics.management.customMetrics.get":
+
+type ManagementCustomMetricsGetCall struct {
+	s              *Service
+	accountId      string
+	webPropertyId  string
+	customMetricId string
+	opt_           map[string]interface{}
+}
+
+// Get: Get a custom metric to which the user has access.
+func (r *ManagementCustomMetricsService) Get(accountId string, webPropertyId string, customMetricId string) *ManagementCustomMetricsGetCall {
+	c := &ManagementCustomMetricsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.webPropertyId = webPropertyId
+	c.customMetricId = customMetricId
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ManagementCustomMetricsGetCall) Fields(s ...googleapi.Field) *ManagementCustomMetricsGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *ManagementCustomMetricsGetCall) Do() (*CustomMetric, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/webproperties/{webPropertyId}/customMetrics/{customMetricId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"accountId":      c.accountId,
+		"webPropertyId":  c.webPropertyId,
+		"customMetricId": c.customMetricId,
+	})
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *CustomMetric
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get a custom metric to which the user has access.",
+	//   "httpMethod": "GET",
+	//   "id": "analytics.management.customMetrics.get",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "webPropertyId",
+	//     "customMetricId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account ID for the custom metric to retrieve.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "customMetricId": {
+	//       "description": "The ID of the custom metric to retrieve.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "webPropertyId": {
+	//       "description": "Web property ID for the custom metric to retrieve.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/customMetrics/{customMetricId}",
+	//   "response": {
+	//     "$ref": "CustomMetric"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit",
+	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "analytics.management.customMetrics.insert":
+
+type ManagementCustomMetricsInsertCall struct {
+	s             *Service
+	accountId     string
+	webPropertyId string
+	custommetric  *CustomMetric
+	opt_          map[string]interface{}
+}
+
+// Insert: Create a new custom metric.
+func (r *ManagementCustomMetricsService) Insert(accountId string, webPropertyId string, custommetric *CustomMetric) *ManagementCustomMetricsInsertCall {
+	c := &ManagementCustomMetricsInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.webPropertyId = webPropertyId
+	c.custommetric = custommetric
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ManagementCustomMetricsInsertCall) Fields(s ...googleapi.Field) *ManagementCustomMetricsInsertCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *ManagementCustomMetricsInsertCall) Do() (*CustomMetric, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.custommetric)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/webproperties/{webPropertyId}/customMetrics")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"accountId":     c.accountId,
+		"webPropertyId": c.webPropertyId,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *CustomMetric
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Create a new custom metric.",
+	//   "httpMethod": "POST",
+	//   "id": "analytics.management.customMetrics.insert",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "webPropertyId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account ID for the custom metric to create.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "webPropertyId": {
+	//       "description": "Web property ID for the custom dimension to create.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/customMetrics",
+	//   "request": {
+	//     "$ref": "CustomMetric"
+	//   },
+	//   "response": {
+	//     "$ref": "CustomMetric"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit"
+	//   ]
+	// }
+
+}
+
+// method id "analytics.management.customMetrics.list":
+
+type ManagementCustomMetricsListCall struct {
+	s             *Service
+	accountId     string
+	webPropertyId string
+	opt_          map[string]interface{}
+}
+
+// List: Lists custom metrics to which the user has access.
+func (r *ManagementCustomMetricsService) List(accountId string, webPropertyId string) *ManagementCustomMetricsListCall {
+	c := &ManagementCustomMetricsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.webPropertyId = webPropertyId
+	return c
+}
+
+// MaxResults sets the optional parameter "max-results": The maximum
+// number of custom metrics to include in this response.
+func (c *ManagementCustomMetricsListCall) MaxResults(maxResults int64) *ManagementCustomMetricsListCall {
+	c.opt_["max-results"] = maxResults
+	return c
+}
+
+// StartIndex sets the optional parameter "start-index": An index of the
+// first entity to retrieve. Use this parameter as a pagination
+// mechanism along with the max-results parameter.
+func (c *ManagementCustomMetricsListCall) StartIndex(startIndex int64) *ManagementCustomMetricsListCall {
+	c.opt_["start-index"] = startIndex
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ManagementCustomMetricsListCall) Fields(s ...googleapi.Field) *ManagementCustomMetricsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *ManagementCustomMetricsListCall) Do() (*CustomMetrics, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["max-results"]; ok {
+		params.Set("max-results", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["start-index"]; ok {
+		params.Set("start-index", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/webproperties/{webPropertyId}/customMetrics")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"accountId":     c.accountId,
+		"webPropertyId": c.webPropertyId,
+	})
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *CustomMetrics
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists custom metrics to which the user has access.",
+	//   "httpMethod": "GET",
+	//   "id": "analytics.management.customMetrics.list",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "webPropertyId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account ID for the custom metrics to retrieve.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "max-results": {
+	//       "description": "The maximum number of custom metrics to include in this response.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "start-index": {
+	//       "description": "An index of the first entity to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "minimum": "1",
+	//       "type": "integer"
+	//     },
+	//     "webPropertyId": {
+	//       "description": "Web property ID for the custom metrics to retrieve.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/customMetrics",
+	//   "response": {
+	//     "$ref": "CustomMetrics"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics",
+	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "analytics.management.customMetrics.patch":
+
+type ManagementCustomMetricsPatchCall struct {
+	s              *Service
+	accountId      string
+	webPropertyId  string
+	customMetricId string
+	custommetric   *CustomMetric
+	opt_           map[string]interface{}
+}
+
+// Patch: Updates an existing custom metric. This method supports patch
+// semantics.
+func (r *ManagementCustomMetricsService) Patch(accountId string, webPropertyId string, customMetricId string, custommetric *CustomMetric) *ManagementCustomMetricsPatchCall {
+	c := &ManagementCustomMetricsPatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.webPropertyId = webPropertyId
+	c.customMetricId = customMetricId
+	c.custommetric = custommetric
+	return c
+}
+
+// IgnoreCustomDataSourceLinks sets the optional parameter
+// "ignoreCustomDataSourceLinks": Force the update and ignore any
+// warnings related to the custom metric being linked to a custom data
+// source / data set.
+func (c *ManagementCustomMetricsPatchCall) IgnoreCustomDataSourceLinks(ignoreCustomDataSourceLinks bool) *ManagementCustomMetricsPatchCall {
+	c.opt_["ignoreCustomDataSourceLinks"] = ignoreCustomDataSourceLinks
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ManagementCustomMetricsPatchCall) Fields(s ...googleapi.Field) *ManagementCustomMetricsPatchCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *ManagementCustomMetricsPatchCall) Do() (*CustomMetric, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.custommetric)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["ignoreCustomDataSourceLinks"]; ok {
+		params.Set("ignoreCustomDataSourceLinks", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/webproperties/{webPropertyId}/customMetrics/{customMetricId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"accountId":      c.accountId,
+		"webPropertyId":  c.webPropertyId,
+		"customMetricId": c.customMetricId,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *CustomMetric
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an existing custom metric. This method supports patch semantics.",
+	//   "httpMethod": "PATCH",
+	//   "id": "analytics.management.customMetrics.patch",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "webPropertyId",
+	//     "customMetricId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account ID for the custom metric to update.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "customMetricId": {
+	//       "description": "Custom metric ID for the custom metric to update.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "ignoreCustomDataSourceLinks": {
+	//       "default": "false",
+	//       "description": "Force the update and ignore any warnings related to the custom metric being linked to a custom data source / data set.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "webPropertyId": {
+	//       "description": "Web property ID for the custom metric to update.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/customMetrics/{customMetricId}",
+	//   "request": {
+	//     "$ref": "CustomMetric"
+	//   },
+	//   "response": {
+	//     "$ref": "CustomMetric"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit"
+	//   ]
+	// }
+
+}
+
+// method id "analytics.management.customMetrics.update":
+
+type ManagementCustomMetricsUpdateCall struct {
+	s              *Service
+	accountId      string
+	webPropertyId  string
+	customMetricId string
+	custommetric   *CustomMetric
+	opt_           map[string]interface{}
+}
+
+// Update: Updates an existing custom metric.
+func (r *ManagementCustomMetricsService) Update(accountId string, webPropertyId string, customMetricId string, custommetric *CustomMetric) *ManagementCustomMetricsUpdateCall {
+	c := &ManagementCustomMetricsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.webPropertyId = webPropertyId
+	c.customMetricId = customMetricId
+	c.custommetric = custommetric
+	return c
+}
+
+// IgnoreCustomDataSourceLinks sets the optional parameter
+// "ignoreCustomDataSourceLinks": Force the update and ignore any
+// warnings related to the custom metric being linked to a custom data
+// source / data set.
+func (c *ManagementCustomMetricsUpdateCall) IgnoreCustomDataSourceLinks(ignoreCustomDataSourceLinks bool) *ManagementCustomMetricsUpdateCall {
+	c.opt_["ignoreCustomDataSourceLinks"] = ignoreCustomDataSourceLinks
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ManagementCustomMetricsUpdateCall) Fields(s ...googleapi.Field) *ManagementCustomMetricsUpdateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *ManagementCustomMetricsUpdateCall) Do() (*CustomMetric, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.custommetric)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["ignoreCustomDataSourceLinks"]; ok {
+		params.Set("ignoreCustomDataSourceLinks", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/webproperties/{webPropertyId}/customMetrics/{customMetricId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"accountId":      c.accountId,
+		"webPropertyId":  c.webPropertyId,
+		"customMetricId": c.customMetricId,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *CustomMetric
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an existing custom metric.",
+	//   "httpMethod": "PUT",
+	//   "id": "analytics.management.customMetrics.update",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "webPropertyId",
+	//     "customMetricId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account ID for the custom metric to update.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "customMetricId": {
+	//       "description": "Custom metric ID for the custom metric to update.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "ignoreCustomDataSourceLinks": {
+	//       "default": "false",
+	//       "description": "Force the update and ignore any warnings related to the custom metric being linked to a custom data source / data set.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "webPropertyId": {
+	//       "description": "Web property ID for the custom metric to update.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/customMetrics/{customMetricId}",
+	//   "request": {
+	//     "$ref": "CustomMetric"
+	//   },
+	//   "response": {
+	//     "$ref": "CustomMetric"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit"
+	//   ]
+	// }
+
+}
+
 // method id "analytics.management.dailyUploads.delete":
 
 type ManagementDailyUploadsDeleteCall struct {
@@ -4258,6 +5585,10 @@ type ManagementDailyUploadsUploadCall struct {
 	type_              string
 	opt_               map[string]interface{}
 	media_             io.Reader
+	resumable_         googleapi.SizeReaderAt
+	mediaType_         string
+	ctx_               context.Context
+	protocol_          string
 }
 
 // Upload: Update/Overwrite data for a custom data source.
@@ -4279,8 +5610,32 @@ func (c *ManagementDailyUploadsUploadCall) Reset(reset bool) *ManagementDailyUpl
 	c.opt_["reset"] = reset
 	return c
 }
+
+// Media specifies the media to upload in a single chunk.
+// At most one of Media and ResumableMedia may be set.
 func (c *ManagementDailyUploadsUploadCall) Media(r io.Reader) *ManagementDailyUploadsUploadCall {
 	c.media_ = r
+	c.protocol_ = "multipart"
+	return c
+}
+
+// ResumableMedia specifies the media to upload in chunks and can be cancelled with ctx.
+// At most one of Media and ResumableMedia may be set.
+// mediaType identifies the MIME media type of the upload, such as "image/png".
+// If mediaType is "", it will be auto-detected.
+func (c *ManagementDailyUploadsUploadCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *ManagementDailyUploadsUploadCall {
+	c.ctx_ = ctx
+	c.resumable_ = io.NewSectionReader(r, 0, size)
+	c.mediaType_ = mediaType
+	c.protocol_ = "resumable"
+	return c
+}
+
+// ProgressUpdater provides a callback function that will be called after every chunk.
+// It should be a low-latency function in order to not slow down the upload operation.
+// This should only be called when using ResumableMedia (as opposed to Media).
+func (c *ManagementDailyUploadsUploadCall) ProgressUpdater(pu googleapi.ProgressUpdater) *ManagementDailyUploadsUploadCall {
+	c.opt_["progressUpdater"] = pu
 	return c
 }
 
@@ -4305,14 +5660,27 @@ func (c *ManagementDailyUploadsUploadCall) Do() (*DailyUploadAppend, error) {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/dailyUploads/{date}/uploads")
-	if c.media_ != nil {
+	var progressUpdater_ googleapi.ProgressUpdater
+	if v, ok := c.opt_["progressUpdater"]; ok {
+		if pu, ok := v.(googleapi.ProgressUpdater); ok {
+			progressUpdater_ = pu
+		}
+	}
+	if c.media_ != nil || c.resumable_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
-		params.Set("uploadType", "multipart")
+		params.Set("uploadType", c.protocol_)
 	}
 	urls += "?" + params.Encode()
 	body = new(bytes.Buffer)
 	ctype := "application/json"
-	contentLength_, hasMedia_ := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+	var hasMedia_ bool
+	if c.protocol_ != "resumable" {
+		var cancel func()
+		cancel, hasMedia_ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+		if cancel != nil {
+			defer cancel()
+		}
+	}
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId":          c.accountId,
@@ -4320,10 +5688,19 @@ func (c *ManagementDailyUploadsUploadCall) Do() (*DailyUploadAppend, error) {
 		"customDataSourceId": c.customDataSourceId,
 		"date":               c.date,
 	})
-	if hasMedia_ {
-		req.ContentLength = contentLength_
+	if c.protocol_ == "resumable" {
+		req.ContentLength = 0
+		if c.mediaType_ == "" {
+			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
+		}
+		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
+		req.Body = nil
+		if params.Get("name") == "" {
+			return nil, fmt.Errorf("resumable uploads must set the Name parameter.")
+		}
+	} else if hasMedia_ {
+		req.Header.Set("Content-Type", ctype)
 	}
-	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -4332,6 +5709,21 @@ func (c *ManagementDailyUploadsUploadCall) Do() (*DailyUploadAppend, error) {
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
+	}
+	if c.protocol_ == "resumable" {
+		loc := res.Header.Get("Location")
+		rx := &googleapi.ResumableUpload{
+			Client:        c.s.client,
+			URI:           loc,
+			Media:         c.resumable_,
+			MediaType:     c.mediaType_,
+			ContentLength: c.resumable_.Size(),
+			Callback:      progressUpdater_,
+		}
+		res, err = rx.Upload(c.ctx_)
+		if err != nil {
+			return nil, err
+		}
 	}
 	var ret *DailyUploadAppend
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
@@ -8950,6 +10342,10 @@ type ManagementUploadsUploadDataCall struct {
 	customDataSourceId string
 	opt_               map[string]interface{}
 	media_             io.Reader
+	resumable_         googleapi.SizeReaderAt
+	mediaType_         string
+	ctx_               context.Context
+	protocol_          string
 }
 
 // UploadData: Upload data for a custom data source.
@@ -8960,8 +10356,32 @@ func (r *ManagementUploadsService) UploadData(accountId string, webPropertyId st
 	c.customDataSourceId = customDataSourceId
 	return c
 }
+
+// Media specifies the media to upload in a single chunk.
+// At most one of Media and ResumableMedia may be set.
 func (c *ManagementUploadsUploadDataCall) Media(r io.Reader) *ManagementUploadsUploadDataCall {
 	c.media_ = r
+	c.protocol_ = "multipart"
+	return c
+}
+
+// ResumableMedia specifies the media to upload in chunks and can be cancelled with ctx.
+// At most one of Media and ResumableMedia may be set.
+// mediaType identifies the MIME media type of the upload, such as "image/png".
+// If mediaType is "", it will be auto-detected.
+func (c *ManagementUploadsUploadDataCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *ManagementUploadsUploadDataCall {
+	c.ctx_ = ctx
+	c.resumable_ = io.NewSectionReader(r, 0, size)
+	c.mediaType_ = mediaType
+	c.protocol_ = "resumable"
+	return c
+}
+
+// ProgressUpdater provides a callback function that will be called after every chunk.
+// It should be a low-latency function in order to not slow down the upload operation.
+// This should only be called when using ResumableMedia (as opposed to Media).
+func (c *ManagementUploadsUploadDataCall) ProgressUpdater(pu googleapi.ProgressUpdater) *ManagementUploadsUploadDataCall {
+	c.opt_["progressUpdater"] = pu
 	return c
 }
 
@@ -8981,24 +10401,46 @@ func (c *ManagementUploadsUploadDataCall) Do() (*Upload, error) {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/uploads")
-	if c.media_ != nil {
+	var progressUpdater_ googleapi.ProgressUpdater
+	if v, ok := c.opt_["progressUpdater"]; ok {
+		if pu, ok := v.(googleapi.ProgressUpdater); ok {
+			progressUpdater_ = pu
+		}
+	}
+	if c.media_ != nil || c.resumable_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
-		params.Set("uploadType", "multipart")
+		params.Set("uploadType", c.protocol_)
 	}
 	urls += "?" + params.Encode()
 	body = new(bytes.Buffer)
 	ctype := "application/json"
-	contentLength_, hasMedia_ := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+	var hasMedia_ bool
+	if c.protocol_ != "resumable" {
+		var cancel func()
+		cancel, hasMedia_ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+		if cancel != nil {
+			defer cancel()
+		}
+	}
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId":          c.accountId,
 		"webPropertyId":      c.webPropertyId,
 		"customDataSourceId": c.customDataSourceId,
 	})
-	if hasMedia_ {
-		req.ContentLength = contentLength_
+	if c.protocol_ == "resumable" {
+		req.ContentLength = 0
+		if c.mediaType_ == "" {
+			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
+		}
+		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
+		req.Body = nil
+		if params.Get("name") == "" {
+			return nil, fmt.Errorf("resumable uploads must set the Name parameter.")
+		}
+	} else if hasMedia_ {
+		req.Header.Set("Content-Type", ctype)
 	}
-	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
@@ -9007,6 +10449,21 @@ func (c *ManagementUploadsUploadDataCall) Do() (*Upload, error) {
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
+	}
+	if c.protocol_ == "resumable" {
+		loc := res.Header.Get("Location")
+		rx := &googleapi.ResumableUpload{
+			Client:        c.s.client,
+			URI:           loc,
+			Media:         c.resumable_,
+			MediaType:     c.mediaType_,
+			ContentLength: c.resumable_.Size(),
+			Callback:      progressUpdater_,
+		}
+		res, err = rx.Upload(c.ctx_)
+		if err != nil {
+			return nil, err
+		}
 	}
 	var ret *Upload
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {

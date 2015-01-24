@@ -9,6 +9,7 @@ package googleapi
 import (
 	"bytes"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"io/ioutil"
@@ -16,7 +17,6 @@ import (
 	"net/http"
 	"net/textproto"
 	"net/url"
-	"os"
 	"regexp"
 	"strconv"
 	"strings"
@@ -199,38 +199,6 @@ func (er endingWithErrorReader) Read(p []byte) (n int, err error) {
 	return
 }
 
-func getReaderSize(r io.Reader) (io.Reader, int64) {
-	// Ideal case, the reader knows its own size.
-	if lr, ok := r.(Lengther); ok {
-		return r, int64(lr.Len())
-	}
-
-	// But maybe it's a seeker and we can seek to the end to find its size.
-	if s, ok := r.(io.Seeker); ok {
-		pos0, err := s.Seek(0, os.SEEK_CUR)
-		if err == nil {
-			posend, err := s.Seek(0, os.SEEK_END)
-			if err == nil {
-				_, err = s.Seek(pos0, os.SEEK_SET)
-				if err == nil {
-					return r, posend - pos0
-				} else {
-					// We moved it forward but can't restore it.
-					// Seems unlikely, but can't really restore now.
-					return endingWithErrorReader{strings.NewReader(""), err}, posend - pos0
-				}
-			}
-		}
-	}
-
-	// Otherwise we have to make a copy to calculate how big the reader is.
-	buf := new(bytes.Buffer)
-	// TODO(bradfitz): put a cap on this copy? spill to disk after
-	// a certain point?
-	_, err := io.Copy(buf, r)
-	return endingWithErrorReader{buf, err}, int64(buf.Len())
-}
-
 func typeHeader(contentType string) textproto.MIMEHeader {
 	h := make(textproto.MIMEHeader)
 	h.Set("Content-Type", contentType)
@@ -259,7 +227,7 @@ func (w countingWriter) Write(p []byte) (int, error) {
 // to the "multipart/related" content type, with random boundary.
 //
 // The return value is the content-length of the entire multpart body.
-func ConditionallyIncludeMedia(media io.Reader, bodyp *io.Reader, ctypep *string) (totalContentLength int64, ok bool) {
+func ConditionallyIncludeMedia(media io.Reader, bodyp *io.Reader, ctypep *string) (cancel func(), ok bool) {
 	if media == nil {
 		return
 	}
@@ -267,24 +235,9 @@ func ConditionallyIncludeMedia(media io.Reader, bodyp *io.Reader, ctypep *string
 	// different reader instance, so do the size check first,
 	// which looks at the specific type of the io.Reader.
 	var mediaType string
-	if typer, ok := media.(ContentTyper); ok {
-		mediaType = typer.ContentType()
-	}
-	media, mediaSize := getReaderSize(media)
-	if mediaType == "" {
-		media, mediaType = getMediaType(media)
-	}
-	body, bodyType := *bodyp, *ctypep
-	body, bodySize := getReaderSize(body)
+	media, mediaType = getMediaType(media)
 
-	// Calculate how big the the multipart will be.
-	{
-		totalContentLength = bodySize + mediaSize
-		mpw := multipart.NewWriter(countingWriter{&totalContentLength})
-		mpw.CreatePart(typeHeader(bodyType))
-		mpw.CreatePart(typeHeader(mediaType))
-		mpw.Close()
-	}
+	body, bodyType := *bodyp, *ctypep
 
 	pr, pw := io.Pipe()
 	mpw := multipart.NewWriter(pw)
@@ -312,8 +265,11 @@ func ConditionallyIncludeMedia(media io.Reader, bodyp *io.Reader, ctypep *string
 			return
 		}
 	}()
-	return totalContentLength, true
+	cancel = func() { pw.CloseWithError(errAborted) }
+	return cancel, true
 }
+
+var errAborted = errors.New("googleapi: upload aborted")
 
 // ProgressUpdater is a function that is called upon every progress update of a resumable upload.
 // This is the only part of a resumable upload (from googleapi) that is usable by the developer.

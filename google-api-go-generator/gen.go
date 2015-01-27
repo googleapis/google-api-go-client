@@ -1328,10 +1328,9 @@ func (meth *Method) generateCode() {
 			pn(`ctype := "application/json"`)
 			hasContentType = true
 		}
-		pn("var hasMedia_ bool")
 		pn(`if c.protocol_ != "resumable" {`)
 		pn(`  var cancel func()`)
-		pn("  cancel, hasMedia_ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)")
+		pn("  cancel, _ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)")
 		pn("  if cancel != nil { defer cancel() }")
 		pn("}")
 	}
@@ -1361,7 +1360,7 @@ func (meth *Method) generateCode() {
 		pn(` if params.Get("name") == "" {`)
 		pn(`  return %sfmt.Errorf("resumable uploads must set the Name parameter.")`, nilRet)
 		pn(" }")
-		pn("} else if hasMedia_ {")
+		pn("} else {")
 		pn(` req.Header.Set("Content-Type", ctype)`)
 		pn("}")
 	} else if hasContentType {

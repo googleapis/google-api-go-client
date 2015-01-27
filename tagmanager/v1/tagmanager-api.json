@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/Ob5VAt9jPBqja2_DA3xCwh8JLjs\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/VOqeEOPH-o9v8dt3uW3tHJ6u1a4\"",
  "discoveryVersion": "v1",
  "id": "tagmanager:v1",
  "name": "tagmanager",
@@ -99,7 +99,6 @@
    "id": "Account",
    "type": "object",
    "description": "Represents a Google Tag Manager Account.",
-   "externalTypeName": "container_tag.apiary.Account",
    "properties": {
     "accountId": {
      "type": "string",
@@ -123,7 +122,6 @@
    "id": "AccountAccess",
    "type": "object",
    "description": "Defines the Google Tag Manager Account access permissions.",
-   "externalTypeName": "container_tag.apiary.AccountAccess",
    "properties": {
     "permission": {
      "type": "array",
@@ -157,7 +155,6 @@
    "id": "Condition",
    "type": "object",
    "description": "Represents a predicate.",
-   "externalTypeName": "container_tag.apiary.Condition",
    "properties": {
     "parameter": {
      "type": "array",
@@ -210,7 +207,6 @@
    "id": "Container",
    "type": "object",
    "description": "Represents a Google Tag Manager Container.",
-   "externalTypeName": "container_tag.apiary.Container",
    "properties": {
     "accountId": {
      "type": "string",
@@ -363,7 +359,6 @@
    "id": "ContainerAccess",
    "type": "object",
    "description": "Defines the Google Tag Manager Container access permissions.",
-   "externalTypeName": "container_tag.apiary.ContainerAccess",
    "properties": {
     "containerId": {
      "type": "string",
@@ -396,7 +391,6 @@
    "id": "ContainerVersion",
    "type": "object",
    "description": "Represents a Google Tag Manager Container Version.",
-   "externalTypeName": "container_tag.apiary.ContainerVersion",
    "properties": {
     "accountId": {
      "type": "string",
@@ -471,7 +465,6 @@
    "id": "ContainerVersionHeader",
    "type": "object",
    "description": "Represents a Google Tag Manager Container Version Header.",
-   "externalTypeName": "container_tag.apiary.ContainerVersionHeader",
    "properties": {
     "accountId": {
      "type": "string",
@@ -519,7 +512,6 @@
    "id": "CreateContainerVersionRequestVersionOptions",
    "type": "object",
    "description": "Options for new container versions.",
-   "externalTypeName": "container_tag.apiary.CreateContainerVersionRequest.VersionOptions",
    "properties": {
     "name": {
      "type": "string",
@@ -539,7 +531,6 @@
    "id": "CreateContainerVersionResponse",
    "type": "object",
    "description": "Create container versions response.",
-   "externalTypeName": "container_tag.apiary.CreateContainerVersionResponse",
    "properties": {
     "compilerError": {
      "type": "boolean",
@@ -555,7 +546,6 @@
    "id": "ListAccountUsersResponse",
    "type": "object",
    "description": "List AccountUsers Response.",
-   "externalTypeName": "container_tag.apiary.ListAccountUsersResponse",
    "properties": {
     "userAccess": {
      "type": "array",
@@ -570,7 +560,6 @@
    "id": "ListAccountsResponse",
    "type": "object",
    "description": "List Accounts Response.",
-   "externalTypeName": "container_tag.apiary.ListAccountsResponse",
    "properties": {
     "accounts": {
      "type": "array",
@@ -585,7 +574,6 @@
    "id": "ListContainerVersionsResponse",
    "type": "object",
    "description": "List container versions response.",
-   "externalTypeName": "container_tag.apiary.ListContainerVersionsResponse",
    "properties": {
     "containerVersion": {
      "type": "array",
@@ -607,7 +595,6 @@
    "id": "ListContainersResponse",
    "type": "object",
    "description": "List Containers Response.",
-   "externalTypeName": "container_tag.apiary.ListContainersResponse",
    "properties": {
     "containers": {
      "type": "array",
@@ -622,7 +609,6 @@
    "id": "ListMacrosResponse",
    "type": "object",
    "description": "List Macros Response.",
-   "externalTypeName": "container_tag.apiary.ListMacrosResponse",
    "properties": {
     "macros": {
      "type": "array",
@@ -637,7 +623,6 @@
    "id": "ListRulesResponse",
    "type": "object",
    "description": "List Rules Response.",
-   "externalTypeName": "container_tag.apiary.ListRulesResponse",
    "properties": {
     "rules": {
      "type": "array",
@@ -652,7 +637,6 @@
    "id": "ListTagsResponse",
    "type": "object",
    "description": "List Tags Response.",
-   "externalTypeName": "container_tag.apiary.ListTagsResponse",
    "properties": {
     "tags": {
      "type": "array",
@@ -667,7 +651,6 @@
    "id": "ListTriggersResponse",
    "type": "object",
    "description": "List triggers response.",
-   "externalTypeName": "container_tag.apiary.ListTriggersResponse",
    "properties": {
     "triggers": {
      "type": "array",
@@ -682,7 +665,6 @@
    "id": "ListVariablesResponse",
    "type": "object",
    "description": "List Variables Response.",
-   "externalTypeName": "container_tag.apiary.ListVariablesResponse",
    "properties": {
     "variables": {
      "type": "array",
@@ -697,7 +679,6 @@
    "id": "Macro",
    "type": "object",
    "description": "Represents a Google Tag Manager Macro.",
-   "externalTypeName": "container_tag.apiary.Macro",
    "properties": {
     "accountId": {
      "type": "string",
@@ -775,7 +756,6 @@
    "id": "Parameter",
    "type": "object",
    "description": "Represents a Google Tag Manager Parameter.",
-   "externalTypeName": "container_tag.apiary.Parameter",
    "properties": {
     "key": {
      "type": "string",
@@ -833,7 +813,6 @@
    "id": "PublishContainerVersionResponse",
    "type": "object",
    "description": "Publish container version response.",
-   "externalTypeName": "container_tag.apiary.PublishContainerVersionResponse",
    "properties": {
     "compilerError": {
      "type": "boolean",
@@ -849,7 +828,6 @@
    "id": "Rule",
    "type": "object",
    "description": "Represents a Google Tag Manager Rule.",
-   "externalTypeName": "container_tag.apiary.Rule",
    "properties": {
     "accountId": {
      "type": "string",
@@ -893,7 +871,6 @@
    "id": "Tag",
    "type": "object",
    "description": "Represents a Google Tag Manager Tag.",
-   "externalTypeName": "container_tag.apiary.Tag",
    "properties": {
     "accountId": {
      "type": "string",
@@ -992,7 +969,6 @@
    "id": "Trigger",
    "type": "object",
    "description": "Represents a Google Tag Manager Trigger",
-   "externalTypeName": "container_tag.apiary.Trigger",
    "properties": {
     "accountId": {
      "type": "string",
@@ -1121,7 +1097,6 @@
    "id": "UserAccess",
    "type": "object",
    "description": "Represents a user's permissions to an account and its container.",
-   "externalTypeName": "container_tag.apiary.UserAccess",
    "properties": {
     "accountAccess": {
      "$ref": "AccountAccess",
@@ -1162,7 +1137,6 @@
    "id": "Variable",
    "type": "object",
    "description": "Represents a Google Tag Manager Variable.",
-   "externalTypeName": "container_tag.apiary.Variable",
    "properties": {
     "accountId": {
      "type": "string",

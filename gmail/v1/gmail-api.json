@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/B1g8jsdV_WYGpoHkWS2kMzxXR0s\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/j0Efh5Bxm1SLI-knMEgTvLMrAOs\"",
  "discoveryVersion": "v1",
  "id": "gmail:v1",
  "name": "gmail",
@@ -89,7 +89,6 @@
    "id": "Draft",
    "type": "object",
    "description": "A draft email in the user's mailbox.",
-   "externalTypeName": "caribou.api.proto.Draft",
    "properties": {
     "id": {
      "type": "string",
@@ -110,7 +109,6 @@
    "id": "History",
    "type": "object",
    "description": "A record of a change to the user's mailbox. Each history contains a list of the messages that were affected by this change.",
-   "externalTypeName": "caribou.api.proto.History",
    "properties": {
     "id": {
      "type": "string",
@@ -130,7 +128,6 @@
    "id": "Label",
    "type": "object",
    "description": "Labels are used to categorize messages and threads within the user's mailbox.",
-   "externalTypeName": "caribou.api.proto.Label",
    "properties": {
     "id": {
      "type": "string",
@@ -226,7 +223,6 @@
   "ListDraftsResponse": {
    "id": "ListDraftsResponse",
    "type": "object",
-   "externalTypeName": "caribou.api.proto.ListDraftsResponse",
    "properties": {
     "drafts": {
      "type": "array",
@@ -249,7 +245,6 @@
   "ListHistoryResponse": {
    "id": "ListHistoryResponse",
    "type": "object",
-   "externalTypeName": "caribou.api.proto.ListHistoryResponse",
    "properties": {
     "history": {
      "type": "array",
@@ -272,7 +267,6 @@
   "ListLabelsResponse": {
    "id": "ListLabelsResponse",
    "type": "object",
-   "externalTypeName": "caribou.api.proto.ListLabelsResponse",
    "properties": {
     "labels": {
      "type": "array",
@@ -286,7 +280,6 @@
   "ListMessagesResponse": {
    "id": "ListMessagesResponse",
    "type": "object",
-   "externalTypeName": "caribou.api.proto.ListMessagesResponse",
    "properties": {
     "messages": {
      "type": "array",
@@ -309,7 +302,6 @@
   "ListThreadsResponse": {
    "id": "ListThreadsResponse",
    "type": "object",
-   "externalTypeName": "caribou.api.proto.ListThreadsResponse",
    "properties": {
     "nextPageToken": {
      "type": "string",
@@ -333,7 +325,6 @@
    "id": "Message",
    "type": "object",
    "description": "An email message.",
-   "externalTypeName": "caribou.api.proto.Message",
    "properties": {
     "historyId": {
      "type": "string",
@@ -387,7 +378,6 @@
    "id": "MessagePart",
    "type": "object",
    "description": "A single MIME message part.",
-   "externalTypeName": "caribou.api.proto.MessagePart",
    "properties": {
     "body": {
      "$ref": "MessagePartBody",
@@ -425,7 +415,6 @@
    "id": "MessagePartBody",
    "type": "object",
    "description": "The body of a single MIME message part.",
-   "externalTypeName": "caribou.api.proto.MessagePartBody",
    "properties": {
     "attachmentId": {
      "type": "string",
@@ -446,7 +435,6 @@
   "MessagePartHeader": {
    "id": "MessagePartHeader",
    "type": "object",
-   "externalTypeName": "caribou.api.proto.MessagePart.Header",
    "properties": {
     "name": {
      "type": "string",
@@ -461,7 +449,6 @@
   "ModifyMessageRequest": {
    "id": "ModifyMessageRequest",
    "type": "object",
-   "externalTypeName": "caribou.api.proto.ModifyMessageRequest",
    "properties": {
     "addLabelIds": {
      "type": "array",
@@ -482,7 +469,6 @@
   "ModifyThreadRequest": {
    "id": "ModifyThreadRequest",
    "type": "object",
-   "externalTypeName": "caribou.api.proto.ModifyThreadRequest",
    "properties": {
     "addLabelIds": {
      "type": "array",
@@ -504,7 +490,6 @@
    "id": "Profile",
    "type": "object",
    "description": "Profile for a Gmail user.",
-   "externalTypeName": "caribou.api.proto.Profile",
    "properties": {
     "emailAddress": {
      "type": "string",
@@ -531,7 +516,6 @@
    "id": "Thread",
    "type": "object",
    "description": "A collection of messages representing a conversation.",
-   "externalTypeName": "caribou.api.proto.Thread",
    "properties": {
     "historyId": {
      "type": "string",

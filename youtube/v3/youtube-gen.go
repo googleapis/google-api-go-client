@@ -3548,10 +3548,9 @@ func (c *ChannelBannersInsertCall) Do() (*ChannelBannerResource, error) {
 		params.Set("uploadType", c.protocol_)
 	}
 	urls += "?" + params.Encode()
-	var hasMedia_ bool
 	if c.protocol_ != "resumable" {
 		var cancel func()
-		cancel, hasMedia_ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+		cancel, _ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
 		if cancel != nil {
 			defer cancel()
 		}
@@ -3568,7 +3567,7 @@ func (c *ChannelBannersInsertCall) Do() (*ChannelBannerResource, error) {
 		if params.Get("name") == "" {
 			return nil, fmt.Errorf("resumable uploads must set the Name parameter.")
 		}
-	} else if hasMedia_ {
+	} else {
 		req.Header.Set("Content-Type", ctype)
 	}
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
@@ -8978,10 +8977,9 @@ func (c *ThumbnailsSetCall) Do() (*ThumbnailSetResponse, error) {
 	urls += "?" + params.Encode()
 	body = new(bytes.Buffer)
 	ctype := "application/json"
-	var hasMedia_ bool
 	if c.protocol_ != "resumable" {
 		var cancel func()
-		cancel, hasMedia_ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+		cancel, _ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
 		if cancel != nil {
 			defer cancel()
 		}
@@ -8998,7 +8996,7 @@ func (c *ThumbnailsSetCall) Do() (*ThumbnailSetResponse, error) {
 		if params.Get("name") == "" {
 			return nil, fmt.Errorf("resumable uploads must set the Name parameter.")
 		}
-	} else if hasMedia_ {
+	} else {
 		req.Header.Set("Content-Type", ctype)
 	}
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
@@ -9579,10 +9577,9 @@ func (c *VideosInsertCall) Do() (*Video, error) {
 		params.Set("uploadType", c.protocol_)
 	}
 	urls += "?" + params.Encode()
-	var hasMedia_ bool
 	if c.protocol_ != "resumable" {
 		var cancel func()
-		cancel, hasMedia_ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+		cancel, _ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
 		if cancel != nil {
 			defer cancel()
 		}
@@ -9599,7 +9596,7 @@ func (c *VideosInsertCall) Do() (*Video, error) {
 		if params.Get("name") == "" {
 			return nil, fmt.Errorf("resumable uploads must set the Name parameter.")
 		}
-	} else if hasMedia_ {
+	} else {
 		req.Header.Set("Content-Type", ctype)
 	}
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
@@ -10301,10 +10298,9 @@ func (c *WatermarksSetCall) Do() error {
 		params.Set("uploadType", c.protocol_)
 	}
 	urls += "?" + params.Encode()
-	var hasMedia_ bool
 	if c.protocol_ != "resumable" {
 		var cancel func()
-		cancel, hasMedia_ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+		cancel, _ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
 		if cancel != nil {
 			defer cancel()
 		}
@@ -10321,7 +10317,7 @@ func (c *WatermarksSetCall) Do() error {
 		if params.Get("name") == "" {
 			return fmt.Errorf("resumable uploads must set the Name parameter.")
 		}
-	} else if hasMedia_ {
+	} else {
 		req.Header.Set("Content-Type", ctype)
 	}
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")

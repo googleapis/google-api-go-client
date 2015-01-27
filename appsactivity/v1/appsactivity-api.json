@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"l66ggWbucbkBw9Lpos72oziyefE/0zYm3U9WhfJU7WORU2EWqKp-P40\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/forNnhAfI3dddvWHUgiTD-7URCo\"",
  "discoveryVersion": "v1",
  "id": "appsactivity:v1",
  "name": "appsactivity",
@@ -89,7 +89,6 @@
    "id": "Activity",
    "type": "object",
    "description": "An Activity resource is a combined view of multiple events. An activity has a list of individual events and a combined view of the common fields among all events.",
-   "externalTypeName": "google.appsactivity.v1.Activity",
    "properties": {
     "combinedEvent": {
      "$ref": "Event",
@@ -108,7 +107,6 @@
    "id": "Event",
    "type": "object",
    "description": "Represents the changes associated with an action taken by a user.",
-   "externalTypeName": "google.appsactivity.v1.Event",
    "properties": {
     "additionalEventTypes": {
      "type": "array",
@@ -211,7 +209,6 @@
    "id": "ListActivitiesResponse",
    "type": "object",
    "description": "The response from the list request. Contains a list of activities and a token to retrieve the next page of results.",
-   "externalTypeName": "google.appsactivity.v1.ListActivitiesResponse",
    "properties": {
     "activities": {
      "type": "array",
@@ -230,7 +227,6 @@
    "id": "Move",
    "type": "object",
    "description": "Contains information about changes in an object's parents as a result of a move type event.",
-   "externalTypeName": "google.appsactivity.v1.Move",
    "properties": {
     "addedParents": {
      "type": "array",
@@ -252,7 +248,6 @@
    "id": "Parent",
    "type": "object",
    "description": "Contains information about a parent object. For example, a folder in Drive is a parent for all files within it.",
-   "externalTypeName": "google.appsactivity.v1.Parent",
    "properties": {
     "id": {
      "type": "string",
@@ -272,7 +267,6 @@
    "id": "Permission",
    "type": "object",
    "description": "Contains information about the permissions and type of access allowed with regards to a Google Drive object. This is a subset of the fields contained in a corresponding Drive Permissions object.",
-   "externalTypeName": "google.appsactivity.v1.Permission",
    "properties": {
     "name": {
      "type": "string",
@@ -328,7 +322,6 @@
    "id": "PermissionChange",
    "type": "object",
    "description": "Contains information about a Drive object's permissions that changed as a result of a permissionChange type event.",
-   "externalTypeName": "google.appsactivity.v1.PermissionChange",
    "properties": {
     "addedPermissions": {
      "type": "array",
@@ -350,7 +343,6 @@
    "id": "Photo",
    "type": "object",
    "description": "Photo information for a user.",
-   "externalTypeName": "google.appsactivity.v1.Photo",
    "properties": {
     "url": {
      "type": "string",
@@ -362,7 +354,6 @@
    "id": "Rename",
    "type": "object",
    "description": "Contains information about a renametype event.",
-   "externalTypeName": "google.appsactivity.v1.Rename",
    "properties": {
     "newTitle": {
      "type": "string",
@@ -378,7 +369,6 @@
    "id": "Target",
    "type": "object",
    "description": "Information about the object modified by the event.",
-   "externalTypeName": "google.appsactivity.v1.Target",
    "properties": {
     "id": {
      "type": "string",
@@ -398,7 +388,6 @@
    "id": "User",
    "type": "object",
    "description": "A representation of a user.",
-   "externalTypeName": "google.appsactivity.v1.User",
    "properties": {
     "name": {
      "type": "string",

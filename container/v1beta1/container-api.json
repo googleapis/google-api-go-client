@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/SXN1CJBboRcuoJhIRmlw8WIpB8c\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/AlGO7dz3sDTBKgLgnWPYGlYVP9g\"",
  "discoveryVersion": "v1",
  "id": "container:v1beta1",
  "name": "container",
@@ -79,7 +79,6 @@
   "Cluster": {
    "id": "Cluster",
    "type": "object",
-   "externalTypeName": "container.v1beta1.Cluster",
    "properties": {
     "clusterApiVersion": {
      "type": "string",
@@ -164,7 +163,6 @@
   "CreateClusterRequest": {
    "id": "CreateClusterRequest",
    "type": "object",
-   "externalTypeName": "container.v1beta1.CreateClusterRequest",
    "properties": {
     "cluster": {
      "$ref": "Cluster",
@@ -175,7 +173,6 @@
   "ListAggregatedClustersResponse": {
    "id": "ListAggregatedClustersResponse",
    "type": "object",
-   "externalTypeName": "container.v1beta1.ListAggregatedClustersResponse",
    "properties": {
     "clusters": {
      "type": "array",
@@ -189,7 +186,6 @@
   "ListAggregatedOperationsResponse": {
    "id": "ListAggregatedOperationsResponse",
    "type": "object",
-   "externalTypeName": "container.v1beta1.ListAggregatedOperationsResponse",
    "properties": {
     "operations": {
      "type": "array",
@@ -203,7 +199,6 @@
   "ListClustersResponse": {
    "id": "ListClustersResponse",
    "type": "object",
-   "externalTypeName": "container.v1beta1.ListClustersResponse",
    "properties": {
     "clusters": {
      "type": "array",
@@ -217,7 +212,6 @@
   "ListOperationsResponse": {
    "id": "ListOperationsResponse",
    "type": "object",
-   "externalTypeName": "container.v1beta1.ListOperationsResponse",
    "properties": {
     "operations": {
      "type": "array",
@@ -231,7 +225,6 @@
   "MasterAuth": {
    "id": "MasterAuth",
    "type": "object",
-   "externalTypeName": "container.v1beta1.MasterAuth",
    "properties": {
     "password": {
      "type": "string",
@@ -246,7 +239,6 @@
   "NodeConfig": {
    "id": "NodeConfig",
    "type": "object",
-   "externalTypeName": "container.v1beta1.NodeConfig",
    "properties": {
     "machineType": {
      "type": "string",
@@ -269,7 +261,6 @@
    "id": "Operation",
    "type": "object",
    "description": "Defines the operation resource. All fields are output only.",
-   "externalTypeName": "container.v1beta1.Operation",
    "properties": {
     "errorMessage": {
      "type": "string",
@@ -327,7 +318,6 @@
    "id": "ServiceAccount",
    "type": "object",
    "description": "A Compute Engine service account.",
-   "externalTypeName": "container.v1beta1.ServiceAccount",
    "properties": {
     "email": {
      "type": "string",

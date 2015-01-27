@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/Yu9XQwdntsFmfyGwouzi5PXM_Vc\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/hhVDITVmyhfKZ7lgzSCcyF5BTcw\"",
  "discoveryVersion": "v1",
  "id": "dataflow:v1beta3",
  "name": "dataflow",
@@ -81,7 +81,6 @@
   "ApproximateProgress": {
    "id": "ApproximateProgress",
    "type": "object",
-   "externalTypeName": "google.dataflow.v1beta3.ApproximateProgress",
    "properties": {
     "percentComplete": {
      "type": "number",
@@ -98,7 +97,6 @@
   "AutoscalingSettings": {
    "id": "AutoscalingSettings",
    "type": "object",
-   "externalTypeName": "google.dataflow.v1beta3.AutoscalingSettings",
    "properties": {
     "algorithm": {
      "type": "string",
@@ -122,7 +120,6 @@
   "ComputationTopology": {
    "id": "ComputationTopology",
    "type": "object",
-   "externalTypeName": "google.dataflow.v1beta3.ComputationTopology",
    "properties": {
     "computationId": {
      "type": "string"
@@ -150,7 +147,6 @@
   "DataDiskAssignment": {
    "id": "DataDiskAssignment",
    "type": "object",
-   "externalTypeName": "google.dataflow.v1beta3.DataDiskAssignment",
    "properties": {
     "dataDisks": {
      "type": "array",
@@ -166,7 +162,6 @@
   "Disk": {
    "id": "Disk",
    "type": "object",
-   "externalTypeName": "google.dataflow.v1beta3.Disk",
    "properties": {
     "diskType": {
      "type": "string"
@@ -183,7 +178,6 @@
   "Environment": {
    "id": "Environment",
    "type": "object",
-   "externalTypeName": "google.dataflow.v1beta3.Environment",
    "properties": {
     "clusterManagerApiService": {
      "type": "string"
@@ -223,7 +217,6 @@
   "FlattenInstruction": {
    "id": "FlattenInstruction",
    "type": "object",
-   "externalTypeName": "google.dataflow.v1beta3.FlattenInstruction",
    "properties": {
     "inputs": {
      "type": "array",
@@ -240,7 +233,6 @@
   "InstructionInput": {
    "id": "InstructionInput",
    "type": "object",
-   "externalTypeName": "google.dataflow.v1beta3.InstructionInput",
    "properties": {
     "outputNum": {
      "type": "integer",
@@ -255,7 +247,6 @@
   "InstructionOutput": {
    "id": "InstructionOutput",
    "type": "object",
-   "externalTypeName": "google.dataflow.v1beta3.InstructionOutput",
    "properties": {
     "codec": {
      "type": "object",
@@ -271,7 +262,6 @@
   "Job": {
    "id": "Job",
    "type": "object",
-   "externalTypeName": "google.dataflow.v1beta3.Job",
    "properties": {
     "createTime": {
      "type": "string"
@@ -356,7 +346,6 @@
   "JobExecutionInfo": {
    "id": "JobExecutionInfo",
    "type": "object",
-   "externalTypeName": "google.dataflow.v1beta3.JobExecutionInfo",
    "properties": {
     "stages": {
      "type": "object",
@@ -369,7 +358,6 @@
   "JobExecutionStageInfo": {
    "id": "JobExecutionStageInfo",
    "type": "object",
-   "externalTypeName": "google.dataflow.v1beta3.JobExecutionStageInfo",
    "properties": {
     "stepName": {
      "type": "array",
@@ -382,7 +370,6 @@
   "JobMessage": {
    "id": "JobMessage",
    "type": "object",
-   "externalTypeName": "google.dataflow.v1beta3.JobMessage",
    "properties": {
     "id": {
      "type": "string"
@@ -415,7 +402,6 @@
   "JobMetrics": {
    "id": "JobMetrics",
    "type": "object",
-   "externalTypeName": "google.dataflow.v1beta3.JobMetrics",
    "properties": {
     "metricTime": {
      "type": "string"
@@ -431,7 +417,6 @@
   "KeyRangeLocation": {
    "id": "KeyRangeLocation",
    "type": "object",
-   "externalTypeName": "google.dataflow.v1beta3.KeyRangeLocation",
    "properties": {
     "dataDisk": {
      "type": "string"
@@ -453,7 +438,6 @@
   "LeaseWorkItemRequest": {
    "id": "LeaseWorkItemRequest",
    "type": "object",
-   "externalTypeName": "google.dataflow.v1beta3.LeaseWorkItemRequest",
    "properties": {
     "currentWorkerTime": {
      "type": "string"
@@ -481,7 +465,6 @@
   "LeaseWorkItemResponse": {
    "id": "LeaseWorkItemResponse",
    "type": "object",
-   "externalTypeName": "google.dataflow.v1beta3.LeaseWorkItemResponse",
    "properties": {
     "workItems": {
      "type": "array",
@@ -494,7 +477,6 @@
   "ListJobMessagesResponse": {
    "id": "ListJobMessagesResponse",
    "type": "object",
-   "externalTypeName": "google.dataflow.v1beta3.ListJobMessagesResponse",
    "properties": {
     "jobMessages": {
      "type": "array",
@@ -510,7 +492,6 @@
   "ListJobsResponse": {
    "id": "ListJobsResponse",
    "type": "object",
-   "externalTypeName": "google.dataflow.v1beta3.ListJobsResponse",
    "properties": {
     "jobs": {
      "type": "array",
@@ -526,7 +507,6 @@
   "MapTask": {
    "id": "MapTask",
    "type": "object",
-   "externalTypeName": "google.dataflow.v1beta3.MapTask",
    "properties": {
     "instructions": {
      "type": "array",
@@ -545,7 +525,6 @@
   "MetricStructuredName": {
    "id": "MetricStructuredName",
    "type": "object",
-   "externalTypeName": "google.dataflow.v1beta3.MetricStructuredName",
    "properties": {
     "context": {
      "type": "object",
@@ -564,7 +543,6 @@
   "MetricUpdate": {
    "id": "MetricUpdate",
    "type": "object",
-   "externalTypeName": "google.dataflow.v1beta3.MetricUpdate",
    "properties": {
     "cumulative": {
      "type": "boolean"
@@ -598,7 +576,6 @@
   "MultiOutputInfo": {
    "id": "MultiOutputInfo",
    "type": "object",
-   "externalTypeName": "google.dataflow.v1beta3.MultiOutputInfo",
    "properties": {
     "tag": {
      "type": "string"
@@ -608,7 +585,6 @@
   "Package": {
    "id": "Package",
    "type": "object",
-   "externalTypeName": "google.dataflow.v1beta3.Package",
    "properties": {
     "location": {
      "type": "string"
@@ -621,7 +597,6 @@
   "ParDoInstruction": {
    "id": "ParDoInstruction",
    "type": "object",
-   "externalTypeName": "google.dataflow.v1beta3.ParDoInstruction",
    "properties": {
     "input": {
      "$ref": "InstructionInput"
@@ -653,7 +628,6 @@
   "ParallelInstruction": {
    "id": "ParallelInstruction",
    "type": "object",
-   "externalTypeName": "google.dataflow.v1beta3.ParallelInstruction",
    "properties": {
     "flatten": {
      "$ref": "FlattenInstruction"
@@ -687,7 +661,6 @@
   "PartialGroupByKeyInstruction": {
    "id": "PartialGroupByKeyInstruction",
    "type": "object",
-   "externalTypeName": "google.dataflow.v1beta3.PartialGroupByKeyInstruction",
    "properties": {
     "input": {
      "$ref": "InstructionInput"
@@ -703,7 +676,6 @@
   "Position": {
    "id": "Position",
    "type": "object",
-   "externalTypeName": "google.dataflow.v1beta3.Position",
    "properties": {
     "byteOffset": {
      "type": "string",
@@ -727,7 +699,6 @@
   "PubsubLocation": {
    "id": "PubsubLocation",
    "type": "object",
-   "externalTypeName": "google.dataflow.v1beta3.PubsubLocation",
    "properties": {
     "subscription": {
      "type": "string"
@@ -740,7 +711,6 @@
   "ReadInstruction": {
    "id": "ReadInstruction",
    "type": "object",
-   "externalTypeName": "google.dataflow.v1beta3.ReadInstruction",
    "properties": {
     "source": {
      "$ref": "Source"
@@ -750,7 +720,6 @@
   "ReportWorkItemStatusRequest": {
    "id": "ReportWorkItemStatusRequest",
    "type": "object",
-   "externalTypeName": "google.dataflow.v1beta3.ReportWorkItemStatusRequest",
    "properties": {
     "currentWorkerTime": {
      "type": "string"
@@ -769,7 +738,6 @@
   "ReportWorkItemStatusResponse": {
    "id": "ReportWorkItemStatusResponse",
    "type": "object",
-   "externalTypeName": "google.dataflow.v1beta3.ReportWorkItemStatusResponse",
    "properties": {
     "workItemServiceStates": {
      "type": "array",
@@ -782,7 +750,6 @@
   "SeqMapTask": {
    "id": "SeqMapTask",
    "type": "object",
-   "externalTypeName": "google.dataflow.v1beta3.SeqMapTask",
    "properties": {
     "inputs": {
      "type": "array",
@@ -816,7 +783,6 @@
   "SeqMapTaskOutputInfo": {
    "id": "SeqMapTaskOutputInfo",
    "type": "object",
-   "externalTypeName": "google.dataflow.v1beta3.SeqMapTaskOutputInfo",
    "properties": {
     "sink": {
      "$ref": "Sink"
@@ -829,7 +795,6 @@
   "ShellTask": {
    "id": "ShellTask",
    "type": "object",
-   "externalTypeName": "google.dataflow.v1beta3.ShellTask",
    "properties": {
     "command": {
      "type": "string"
@@ -843,7 +808,6 @@
   "SideInputInfo": {
    "id": "SideInputInfo",
    "type": "object",
-   "externalTypeName": "google.dataflow.v1beta3.SideInputInfo",
    "properties": {
     "kind": {
      "type": "object",
@@ -865,7 +829,6 @@
   "Sink": {
    "id": "Sink",
    "type": "object",
-   "externalTypeName": "google.dataflow.v1beta3.Sink",
    "properties": {
     "codec": {
      "type": "object",
@@ -884,7 +847,6 @@
   "Source": {
    "id": "Source",
    "type": "object",
-   "externalTypeName": "google.dataflow.v1beta3.Source",
    "properties": {
     "baseSpecs": {
      "type": "array",
@@ -918,7 +880,6 @@
   "SourceGetMetadataRequest": {
    "id": "SourceGetMetadataRequest",
    "type": "object",
-   "externalTypeName": "google.dataflow.v1beta3.SourceGetMetadataRequest",
    "properties": {
     "source": {
      "$ref": "Source"
@@ -928,7 +889,6 @@
   "SourceGetMetadataResponse": {
    "id": "SourceGetMetadataResponse",
    "type": "object",
-   "externalTypeName": "google.dataflow.v1beta3.SourceGetMetadataResponse",
    "properties": {
     "metadata": {
      "$ref": "SourceMetadata"
@@ -938,7 +898,6 @@
   "SourceMetadata": {
    "id": "SourceMetadata",
    "type": "object",
-   "externalTypeName": "google.dataflow.v1beta3.SourceMetadata",
    "properties": {
     "estimatedSizeBytes": {
      "type": "string",
@@ -955,7 +914,6 @@
   "SourceOperationRequest": {
    "id": "SourceOperationRequest",
    "type": "object",
-   "externalTypeName": "google.dataflow.v1beta3.SourceOperationRequest",
    "properties": {
     "getMetadata": {
      "$ref": "SourceGetMetadataRequest"
@@ -968,7 +926,6 @@
   "SourceOperationResponse": {
    "id": "SourceOperationResponse",
    "type": "object",
-   "externalTypeName": "google.dataflow.v1beta3.SourceOperationResponse",
    "properties": {
     "getMetadata": {
      "$ref": "SourceGetMetadataResponse"
@@ -981,7 +938,6 @@
   "SourceSplitOptions": {
    "id": "SourceSplitOptions",
    "type": "object",
-   "externalTypeName": "google.dataflow.v1beta3.SourceSplitOptions",
    "properties": {
     "desiredShardSizeBytes": {
      "type": "string",
@@ -992,7 +948,6 @@
   "SourceSplitRequest": {
    "id": "SourceSplitRequest",
    "type": "object",
-   "externalTypeName": "google.dataflow.v1beta3.SourceSplitRequest",
    "properties": {
     "options": {
      "$ref": "SourceSplitOptions"
@@ -1005,7 +960,6 @@
   "SourceSplitResponse": {
    "id": "SourceSplitResponse",
    "type": "object",
-   "externalTypeName": "google.dataflow.v1beta3.SourceSplitResponse",
    "properties": {
     "outcome": {
      "type": "string",
@@ -1031,7 +985,6 @@
   "SourceSplitShard": {
    "id": "SourceSplitShard",
    "type": "object",
-   "externalTypeName": "google.dataflow.v1beta3.SourceSplitShard",
    "properties": {
     "derivationMode": {
      "type": "string",
@@ -1056,7 +1009,6 @@
   "Status": {
    "id": "Status",
    "type": "object",
-   "externalTypeName": "google.rpc.Status",
    "properties": {
     "code": {
      "type": "integer",
@@ -1079,7 +1031,6 @@
   "Step": {
    "id": "Step",
    "type": "object",
-   "externalTypeName": "google.dataflow.v1beta3.Step",
    "properties": {
     "kind": {
      "type": "string"
@@ -1098,7 +1049,6 @@
   "StreamLocation": {
    "id": "StreamLocation",
    "type": "object",
-   "externalTypeName": "google.dataflow.v1beta3.StreamLocation",
    "properties": {
     "pubsubLocation": {
      "$ref": "PubsubLocation"
@@ -1111,7 +1061,6 @@
   "StreamingSetupTask": {
    "id": "StreamingSetupTask",
    "type": "object",
-   "externalTypeName": "google.dataflow.v1beta3.StreamingSetupTask",
    "properties": {
     "receiveWorkPort": {
      "type": "integer",
@@ -1129,7 +1078,6 @@
   "StreamingStageLocation": {
    "id": "StreamingStageLocation",
    "type": "object",
-   "externalTypeName": "google.dataflow.v1beta3.StreamingStageLocation",
    "properties": {
     "streamId": {
      "type": "string"
@@ -1139,7 +1087,6 @@
   "TaskRunnerSettings": {
    "id": "TaskRunnerSettings",
    "type": "object",
-   "externalTypeName": "google.dataflow.v1beta3.TaskRunnerSettings",
    "properties": {
     "alsologtostderr": {
      "type": "boolean"
@@ -1203,7 +1150,6 @@
   "TopologyConfig": {
    "id": "TopologyConfig",
    "type": "object",
-   "externalTypeName": "google.dataflow.v1beta3.TopologyConfig",
    "properties": {
     "computations": {
      "type": "array",
@@ -1222,7 +1168,6 @@
   "WorkItem": {
    "id": "WorkItem",
    "type": "object",
-   "externalTypeName": "google.dataflow.v1beta3.WorkItem",
    "properties": {
     "configuration": {
      "type": "string"
@@ -1269,7 +1214,6 @@
   "WorkItemServiceState": {
    "id": "WorkItemServiceState",
    "type": "object",
-   "externalTypeName": "google.dataflow.v1beta3.WorkItemServiceState",
    "properties": {
     "harnessData": {
      "type": "object",
@@ -1294,7 +1238,6 @@
   "WorkItemStatus": {
    "id": "WorkItemStatus",
    "type": "object",
-   "externalTypeName": "google.dataflow.v1beta3.WorkItemStatus",
    "properties": {
     "completed": {
      "type": "boolean"
@@ -1335,7 +1278,6 @@
   "WorkerPool": {
    "id": "WorkerPool",
    "type": "object",
-   "externalTypeName": "google.dataflow.v1beta3.WorkerPool",
    "properties": {
     "autoscalingSettings": {
      "$ref": "AutoscalingSettings"
@@ -1419,7 +1361,6 @@
   "WorkerSettings": {
    "id": "WorkerSettings",
    "type": "object",
-   "externalTypeName": "google.dataflow.v1beta3.WorkerSettings",
    "properties": {
     "baseUrl": {
      "type": "string"
@@ -1444,7 +1385,6 @@
   "WriteInstruction": {
    "id": "WriteInstruction",
    "type": "object",
-   "externalTypeName": "google.dataflow.v1beta3.WriteInstruction",
    "properties": {
     "input": {
      "$ref": "InstructionInput"

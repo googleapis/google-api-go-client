@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/N3vFCsYu1QJGio8bKL3zMSJ7SoY\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/2l7hAtOHmRicOQxScx6pGt2eI-I\"",
  "discoveryVersion": "v1",
  "id": "dfareporting:v2.0",
  "name": "dfareporting",
@@ -82,7 +82,6 @@
   "Account": {
    "id": "Account",
    "type": "object",
-   "externalTypeName": "ads_xfa_proto_rosyapi_accounts.Account",
    "properties": {
     "accountPermissionIds": {
      "type": "array",
@@ -202,7 +201,6 @@
   "AccountActiveAdSummary": {
    "id": "AccountActiveAdSummary",
    "type": "object",
-   "externalTypeName": "ads_xfa_proto_rosyapi_accounts.AccountActiveAdSummary",
    "properties": {
     "accountId": {
      "type": "string",
@@ -247,7 +245,6 @@
   "AccountPermission": {
    "id": "AccountPermission",
    "type": "object",
-   "externalTypeName": "ads_xfa_proto_rosyapi_accountpermissions.AccountPermission",
    "properties": {
     "accountProfiles": {
      "type": "array",
@@ -300,7 +297,6 @@
   "AccountPermissionGroup": {
    "id": "AccountPermissionGroup",
    "type": "object",
-   "externalTypeName": "ads_xfa_proto_rosyapi_accountpermissiongroups.AccountPermissionGroup",
    "properties": {
     "id": {
      "type": "string",
@@ -322,7 +318,6 @@
    "id": "AccountPermissionGroupsListResponse",
    "type": "object",
    "description": "Account Permission Group List Response",
-   "externalTypeName": "ads_xfa_proto_rosyapi_accountpermissiongroups.AccountPermissionGroupsListResponse",
    "properties": {
     "accountPermissionGroups": {
      "type": "array",
@@ -342,7 +337,6 @@
    "id": "AccountPermissionsListResponse",
    "type": "object",
    "description": "Account Permission List Response",
-   "externalTypeName": "ads_xfa_proto_rosyapi_accountpermissions.AccountPermissionsListResponse",
    "properties": {
     "accountPermissions": {
      "type": "array",
@@ -361,7 +355,6 @@
   "AccountUserProfile": {
    "id": "AccountUserProfile",
    "type": "object",
-   "externalTypeName": "ads_xfa_proto_rosyapi_accountuserprofiles.AccountUserProfile",
    "properties": {
     "accountId": {
      "type": "string",
@@ -460,7 +453,6 @@
    "id": "AccountUserProfilesListResponse",
    "type": "object",
    "description": "Account User Profile List Response",
-   "externalTypeName": "ads_xfa_proto_rosyapi_accountuserprofiles.AccountUserProfilesListResponse",
    "properties": {
     "accountUserProfiles": {
      "type": "array",
@@ -484,7 +476,6 @@
    "id": "AccountsListResponse",
    "type": "object",
    "description": "Account List Response",
-   "externalTypeName": "ads_xfa_proto_rosyapi_accounts.AccountsListResponse",
    "properties": {
     "accounts": {
      "type": "array",
@@ -533,7 +524,6 @@
   "Ad": {
    "id": "Ad",
    "type": "object",
-   "externalTypeName": "ads_xfa_proto_rosyapi_ads.Ad",
    "properties": {
     "accountId": {
      "type": "string",
@@ -733,7 +723,6 @@
    "id": "AdsListResponse",
    "type": "object",
    "description": "Ad List Response",
-   "externalTypeName": "ads_xfa_proto_rosyapi_ads.AdsListResponse",
    "properties": {
     "ads": {
      "type": "array",
@@ -756,7 +745,6 @@
   "Advertiser": {
    "id": "Advertiser",
    "type": "object",
-   "externalTypeName": "ads_xfa_proto_rosyapi_advertisers.Advertiser",
    "properties": {
     "accountId": {
      "type": "string",
@@ -830,7 +818,6 @@
   "AdvertiserGroup": {
    "id": "AdvertiserGroup",
    "type": "object",
-   "externalTypeName": "ads_xfa_proto_rosyapi_advertisergroups.AdvertiserGroup",
    "properties": {
     "accountId": {
      "type": "string",
@@ -857,7 +844,6 @@
    "id": "AdvertiserGroupsListResponse",
    "type": "object",
    "description": "Advertiser Group List Response",
-   "externalTypeName": "ads_xfa_proto_rosyapi_advertisergroups.AdvertiserGroupsListResponse",
    "properties": {
     "advertiserGroups": {
      "type": "array",
@@ -881,7 +867,6 @@
    "id": "AdvertisersListResponse",
    "type": "object",
    "description": "Advertiser List Response",
-   "externalTypeName": "ads_xfa_proto_rosyapi_advertisers.AdvertisersListResponse",
    "properties": {
     "advertisers": {
      "type": "array",
@@ -905,7 +890,6 @@
    "id": "AudienceSegment",
    "type": "object",
    "description": "Audience Segment.",
-   "externalTypeName": "ads_xfa_proto_rosyapi_campaigns.AudienceSegment",
    "properties": {
     "allocation": {
      "type": "integer",
@@ -927,7 +911,6 @@
    "id": "AudienceSegmentGroup",
    "type": "object",
    "description": "Audience Segment Group.",
-   "externalTypeName": "ads_xfa_proto_rosyapi_campaigns.AudienceSegmentGroup",
    "properties": {
     "audienceSegments": {
      "type": "array",
@@ -950,7 +933,6 @@
   "Browser": {
    "id": "Browser",
    "type": "object",
-   "externalTypeName": "ads_xfa_proto_rosyapi_browsers.Browser",
    "properties": {
     "browserVersionId": {
      "type": "string",
@@ -985,7 +967,6 @@
    "id": "BrowsersListResponse",
    "type": "object",
    "description": "Browser List Response",
-   "externalTypeName": "ads_xfa_proto_rosyapi_browsers.BrowsersListResponse",
    "properties": {
     "browsers": {
      "type": "array",
@@ -1004,7 +985,6 @@
   "Campaign": {
    "id": "Campaign",
    "type": "object",
-   "externalTypeName": "ads_xfa_proto_rosyapi_campaigns.Campaign",
    "properties": {
     "accountId": {
      "type": "string",
@@ -1147,7 +1127,6 @@
   "CampaignCreativeAssociation": {
    "id": "CampaignCreativeAssociation",
    "type": "object",
-   "externalTypeName": "ads_xfa_proto_rosyapi_campaigns.CampaignCreativeAssociation",
    "properties": {
     "creativeId": {
      "type": "string",
@@ -1165,7 +1144,6 @@
    "id": "CampaignCreativeAssociationsListResponse",
    "type": "object",
    "description": "Campaign Creative Association List Response",
-   "externalTypeName": "ads_xfa_proto_rosyapi_campaigns.CampaignCreativeAssociationsListResponse",
    "properties": {
     "campaignCreativeAssociations": {
      "type": "array",
@@ -1189,7 +1167,6 @@
    "id": "CampaignsListResponse",
    "type": "object",
    "description": "Campaign List Response",
-   "externalTypeName": "ads_xfa_proto_rosyapi_campaigns.CampaignsListResponse",
    "properties": {
     "campaigns": {
      "type": "array",
@@ -1212,7 +1189,6 @@
   "ChangeLog": {
    "id": "ChangeLog",
    "type": "object",
-   "externalTypeName": "ads_xfa_proto_rosyapi_changelogs.ChangeLog",
    "properties": {
     "accountId": {
      "type": "string",
@@ -1284,7 +1260,6 @@
    "id": "ChangeLogsListResponse",
    "type": "object",
    "description": "Change Log List Response",
-   "externalTypeName": "ads_xfa_proto_rosyapi_changelogs.ChangeLogsListResponse",
    "properties": {
     "changeLogs": {
      "type": "array",
@@ -1308,7 +1283,6 @@
    "id": "CitiesListResponse",
    "type": "object",
    "description": "City List Response",
-   "externalTypeName": "ads_xfa_proto_rosyapi_cities.CitiesListResponse",
    "properties": {
     "cities": {
      "type": "array",
@@ -1327,7 +1301,6 @@
   "City": {
    "id": "City",
    "type": "object",
-   "externalTypeName": "ads_xfa_proto_rosyapi_cities.City",
    "properties": {
     "countryCode": {
      "type": "string",
@@ -1376,7 +1349,6 @@
    "id": "ClickTag",
    "type": "object",
    "description": "Creative Click Tag.",
-   "externalTypeName": "ads_xfa_proto_rosyapi_creativeassets.ClickTag",
    "properties": {
     "eventName": {
      "type": "string",
@@ -1396,7 +1368,6 @@
    "id": "ClickThroughUrl",
    "type": "object",
    "description": "Click-through URL",
-   "externalTypeName": "ads_xfa_proto_rosyapi_ads.ClickThroughUrl",
    "properties": {
     "customClickThroughUrl": {
      "type": "string",
@@ -1417,7 +1388,6 @@
    "id": "ClickThroughUrlSuffixProperties",
    "type": "object",
    "description": "Click Through URL Suffix settings.",
-   "externalTypeName": "ads_xfa_proto_rosyapi_eventtags.ClickThroughUrlSuffixProperties",
    "properties": {
     "clickThroughUrlSuffix": {
      "type": "string",
@@ -1433,7 +1403,6 @@
    "id": "CompanionClickThroughOverride",
    "type": "object",
    "description": "Companion Click-through override.",
-   "externalTypeName": "ads_xfa_proto_rosyapi_ads.CompanionClickThroughOverride",
    "properties": {
     "clickThroughUrl": {
      "$ref": "ClickThroughUrl",
@@ -1481,7 +1450,6 @@
   "ConnectionType": {
    "id": "ConnectionType",
    "type": "object",
-   "externalTypeName": "ads_xfa_proto_rosyapi_connectiontypes.ConnectionType",
    "properties": {
     "id": {
      "type": "string",
@@ -1503,7 +1471,6 @@
    "id": "ConnectionTypesListResponse",
    "type": "object",
    "description": "Connection Type List Response",
-   "externalTypeName": "ads_xfa_proto_rosyapi_connectiontypes.ConnectionTypesListResponse",
    "properties": {
     "connectionTypes": {
      "type": "array",
@@ -1523,7 +1490,6 @@
    "id": "ContentCategoriesListResponse",
    "type": "object",
    "description": "Content Category List Response",
-   "externalTypeName": "ads_xfa_proto_rosyapi_contentcategories.ContentCategoriesListResponse",
    "properties": {
     "contentCategories": {
      "type": "array",
@@ -1546,7 +1512,6 @@
   "ContentCategory": {
    "id": "ContentCategory",
    "type": "object",
-   "externalTypeName": "ads_xfa_proto_rosyapi_contentcategories.ContentCategory",
    "properties": {
     "accountId": {
      "type": "string",
@@ -1577,7 +1542,6 @@
    "id": "CountriesListResponse",
    "type": "object",
    "description": "Country List Response",
-   "externalTypeName": "ads_xfa_proto_rosyapi_countries.CountriesListResponse",
    "properties": {
     "countries": {
      "type": "array",
@@ -1596,7 +1560,6 @@
   "Country": {
    "id": "Country",
    "type": "object",
-   "externalTypeName": "ads_xfa_proto_rosyapi_countries.Country",
    "properties": {
     "countryCode": {
      "type": "string",
@@ -1625,7 +1588,6 @@
   "Creative": {
    "id": "Creative",
    "type": "object",
-   "externalTypeName": "ads_xfa_proto_rosyapi_creatives.Creative",
    "properties": {
     "accountId": {
      "type": "string",
@@ -2122,7 +2084,6 @@
    "id": "CreativeAsset",
    "type": "object",
    "description": "Creative Asset.",
-   "externalTypeName": "ads_xfa_proto_rosyapi_creatives.CreativeAsset",
    "properties": {
     "actionScript3": {
      "type": "boolean",
@@ -2568,7 +2529,6 @@
    "id": "CreativeAssetId",
    "type": "object",
    "description": "Creative Asset ID.",
-   "externalTypeName": "ads_xfa_proto_rosyapi_creativeassets.CreativeAssetId",
    "properties": {
     "name": {
      "type": "string",
@@ -2597,7 +2557,6 @@
   "CreativeAssetMetadata": {
    "id": "CreativeAssetMetadata",
    "type": "object",
-   "externalTypeName": "ads_xfa_proto_rosyapi_creativeassets.CreativeAssetMetadata",
    "properties": {
     "assetIdentifier": {
      "$ref": "CreativeAssetId",
@@ -2817,7 +2776,6 @@
    "id": "CreativeAssignment",
    "type": "object",
    "description": "Creative Assignment.",
-   "externalTypeName": "ads_xfa_proto_rosyapi_ads.CreativeAssignment",
    "properties": {
     "active": {
      "type": "boolean",
@@ -2891,7 +2849,6 @@
    "id": "CreativeCustomEvent",
    "type": "object",
    "description": "Creative Custom Event.",
-   "externalTypeName": "ads_xfa_proto_rosyapi_creatives.CreativeCustomEvent",
    "properties": {
     "active": {
      "type": "boolean",
@@ -2973,7 +2930,6 @@
   "CreativeField": {
    "id": "CreativeField",
    "type": "object",
-   "externalTypeName": "ads_xfa_proto_rosyapi_creativefields.CreativeField",
    "properties": {
     "accountId": {
      "type": "string",
@@ -3014,7 +2970,6 @@
    "id": "CreativeFieldAssignment",
    "type": "object",
    "description": "Creative Field Assignment.",
-   "externalTypeName": "ads_xfa_proto_rosyapi_creatives.CreativeFieldAssignment",
    "properties": {
     "creativeFieldId": {
      "type": "string",
@@ -3031,7 +2986,6 @@
   "CreativeFieldValue": {
    "id": "CreativeFieldValue",
    "type": "object",
-   "externalTypeName": "ads_xfa_proto_rosyapi_creativefields.CreativeFieldValue",
    "properties": {
     "id": {
      "type": "string",
@@ -3053,7 +3007,6 @@
    "id": "CreativeFieldValuesListResponse",
    "type": "object",
    "description": "Creative Field Value List Response",
-   "externalTypeName": "ads_xfa_proto_rosyapi_creativefields.CreativeFieldValuesListResponse",
    "properties": {
     "creativeFieldValues": {
      "type": "array",
@@ -3077,7 +3030,6 @@
    "id": "CreativeFieldsListResponse",
    "type": "object",
    "description": "Creative Field List Response",
-   "externalTypeName": "ads_xfa_proto_rosyapi_creativefields.CreativeFieldsListResponse",
    "properties": {
     "creativeFields": {
      "type": "array",
@@ -3100,7 +3052,6 @@
   "CreativeGroup": {
    "id": "CreativeGroup",
    "type": "object",
-   "externalTypeName": "ads_xfa_proto_rosyapi_creativegroups.CreativeGroup",
    "properties": {
     "accountId": {
      "type": "string",
@@ -3146,7 +3097,6 @@
    "id": "CreativeGroupAssignment",
    "type": "object",
    "description": "Creative Group Assignment.",
-   "externalTypeName": "ads_xfa_proto_rosyapi_ads.CreativeGroupAssignment",
    "properties": {
     "creativeGroupId": {
      "type": "string",
@@ -3171,7 +3121,6 @@
    "id": "CreativeGroupsListResponse",
    "type": "object",
    "description": "Creative Group List Response",
-   "externalTypeName": "ads_xfa_proto_rosyapi_creativegroups.CreativeGroupsListResponse",
    "properties": {
     "creativeGroups": {
      "type": "array",
@@ -3195,7 +3144,6 @@
    "id": "CreativeOptimizationConfiguration",
    "type": "object",
    "description": "Creative optimization settings.",
-   "externalTypeName": "ads_xfa_proto_rosyapi_campaigns.CreativeOptimizationConfiguration",
    "properties": {
     "id": {
      "type": "string",
@@ -3235,7 +3183,6 @@
    "id": "CreativeRotation",
    "type": "object",
    "description": "Creative Rotation.",
-   "externalTypeName": "ads_xfa_proto_rosyapi_ads.CreativeRotation",
    "properties": {
     "creativeAssignments": {
      "type": "array",
@@ -3283,7 +3230,6 @@
    "id": "CreativeSettings",
    "type": "object",
    "description": "Creative Settings",
-   "externalTypeName": "ads_xfa_proto_rosyapi_sites.CreativeSettings",
    "properties": {
     "iFrameFooter": {
      "type": "string",
@@ -3299,7 +3245,6 @@
    "id": "CreativesListResponse",
    "type": "object",
    "description": "Creative List Response",
-   "externalTypeName": "ads_xfa_proto_rosyapi_creatives.CreativesListResponse",
    "properties": {
     "creatives": {
      "type": "array",
@@ -3442,7 +3387,6 @@
    "id": "DayPartTargeting",
    "type": "object",
    "description": "Day Part Targeting.",
-   "externalTypeName": "ads_xfa_proto_rosyapi_ads.DayPartTargeting",
    "properties": {
     "daysOfWeek": {
      "type": "array",
@@ -3487,7 +3431,6 @@
    "id": "DefaultClickThroughEventTagProperties",
    "type": "object",
    "description": "Properties of inheriting and overriding the default click-through event tag. A campaign may override the event tag defined at the advertiser level, and an ad may also override the campaign's setting further.",
-   "externalTypeName": "ads_xfa_proto_rosyapi_eventtags.DefaultClickThroughEventTagProperties",
    "properties": {
     "defaultClickThroughEventTagId": {
      "type": "string",
@@ -3504,7 +3447,6 @@
    "id": "DeliverySchedule",
    "type": "object",
    "description": "Delivery Schedule.",
-   "externalTypeName": "ads_xfa_proto_rosyapi_ads.DeliverySchedule",
    "properties": {
     "frequencyCap": {
      "$ref": "FrequencyCap",
@@ -3565,7 +3507,6 @@
    "id": "DfpSettings",
    "type": "object",
    "description": "DFP Settings",
-   "externalTypeName": "ads_xfa_proto_rosyapi_directorysites.DfpSettings",
    "properties": {
     "dfp_network_code": {
      "type": "string",
@@ -3747,7 +3688,6 @@
   "DirectorySite": {
    "id": "DirectorySite",
    "type": "object",
-   "externalTypeName": "ads_xfa_proto_rosyapi_directorysites.DirectorySite",
    "properties": {
     "active": {
      "type": "boolean",
@@ -3846,7 +3786,6 @@
   "DirectorySiteContact": {
    "id": "DirectorySiteContact",
    "type": "object",
-   "externalTypeName": "ads_xfa_proto_rosyapi_directorysites.DirectorySiteContact",
    "properties": {
     "email": {
      "type": "string",
@@ -3906,7 +3845,6 @@
    "id": "DirectorySiteContactAssignment",
    "type": "object",
    "description": "Directory Site Contact Assignment",
-   "externalTypeName": "ads_xfa_proto_rosyapi_directorysites.DirectorySiteContactAssignment",
    "properties": {
     "contactId": {
      "type": "string",
@@ -3931,7 +3869,6 @@
    "id": "DirectorySiteContactsListResponse",
    "type": "object",
    "description": "Directory Site Contact List Response",
-   "externalTypeName": "ads_xfa_proto_rosyapi_directorysites.DirectorySiteContactsListResponse",
    "properties": {
     "directorySiteContacts": {
      "type": "array",
@@ -3955,7 +3892,6 @@
    "id": "DirectorySiteSettings",
    "type": "object",
    "description": "Directory Site Settings",
-   "externalTypeName": "ads_xfa_proto_rosyapi_directorysites.DirectorySiteSettings",
    "properties": {
     "activeViewOptOut": {
      "type": "boolean",
@@ -3991,7 +3927,6 @@
    "id": "DirectorySitesListResponse",
    "type": "object",
    "description": "Directory Site List Response",
-   "externalTypeName": "ads_xfa_proto_rosyapi_directorysites.DirectorySitesListResponse",
    "properties": {
     "directorySites": {
      "type": "array",
@@ -4014,7 +3949,6 @@
   "EventTag": {
    "id": "EventTag",
    "type": "object",
-   "externalTypeName": "ads_xfa_proto_rosyapi_eventtags.EventTag",
    "properties": {
     "accountId": {
      "type": "string",
@@ -4127,7 +4061,6 @@
    "id": "EventTagOverride",
    "type": "object",
    "description": "Event tag override information.",
-   "externalTypeName": "ads_xfa_proto_rosyapi_eventtags.EventTagOverride",
    "properties": {
     "enabled": {
      "type": "boolean",
@@ -4144,7 +4077,6 @@
    "id": "EventTagsListResponse",
    "type": "object",
    "description": "Event Tag List Response",
-   "externalTypeName": "ads_xfa_proto_rosyapi_eventtags.EventTagsListResponse",
    "properties": {
     "eventTags": {
      "type": "array",
@@ -4272,7 +4204,6 @@
    "id": "FloodlightActivitiesGenerateTagResponse",
    "type": "object",
    "description": "Floodlight Activity GenerateTag Response",
-   "externalTypeName": "ads_xfa_proto_rosyapi_floodlights.FloodlightActivitiesGenerateTagResponse",
    "properties": {
     "floodlightActivityTag": {
      "type": "string",
@@ -4289,7 +4220,6 @@
    "id": "FloodlightActivitiesListResponse",
    "type": "object",
    "description": "Floodlight Activity List Response",
-   "externalTypeName": "ads_xfa_proto_rosyapi_floodlights.FloodlightActivitiesListResponse",
    "properties": {
     "floodlightActivities": {
      "type": "array",
@@ -4312,7 +4242,6 @@
   "FloodlightActivity": {
    "id": "FloodlightActivity",
    "type": "object",
-   "externalTypeName": "ads_xfa_proto_rosyapi_floodlights.FloodlightActivity",
    "properties": {
     "accountId": {
      "type": "string",
@@ -4536,7 +4465,6 @@
    "id": "FloodlightActivityDynamicTag",
    "type": "object",
    "description": "Dynamic Tag",
-   "externalTypeName": "ads_xfa_proto_rosyapi_floodlights.FloodlightActivity.DynamicTag",
    "properties": {
     "id": {
      "type": "string",
@@ -4556,7 +4484,6 @@
   "FloodlightActivityGroup": {
    "id": "FloodlightActivityGroup",
    "type": "object",
-   "externalTypeName": "ads_xfa_proto_rosyapi_floodlights.FloodlightActivityGroup",
    "properties": {
     "accountId": {
      "type": "string",
@@ -4626,7 +4553,6 @@
    "id": "FloodlightActivityGroupsListResponse",
    "type": "object",
    "description": "Floodlight Activity Group List Response",
-   "externalTypeName": "ads_xfa_proto_rosyapi_floodlights.FloodlightActivityGroupsListResponse",
    "properties": {
     "floodlightActivityGroups": {
      "type": "array",
@@ -4650,7 +4576,6 @@
    "id": "FloodlightActivityPublisherDynamicTag",
    "type": "object",
    "description": "Publisher Dynamic Tag",
-   "externalTypeName": "ads_xfa_proto_rosyapi_floodlights.FloodlightActivity.PublisherDynamicTag",
    "properties": {
     "clickThrough": {
      "type": "boolean",
@@ -4683,7 +4608,6 @@
   "FloodlightConfiguration": {
    "id": "FloodlightConfiguration",
    "type": "object",
-   "externalTypeName": "ads_xfa_proto_rosyapi_floodlights.FloodlightConfiguration",
    "properties": {
     "accountId": {
      "type": "string",
@@ -4800,7 +4724,6 @@
    "id": "FloodlightConfigurationsListResponse",
    "type": "object",
    "description": "Floodlight Configuration List Response",
-   "externalTypeName": "ads_xfa_proto_rosyapi_floodlights.FloodlightConfigurationsListResponse",
    "properties": {
     "floodlightConfigurations": {
      "type": "array",
@@ -4853,7 +4776,6 @@
    "id": "FrequencyCap",
    "type": "object",
    "description": "Frequency Cap.",
-   "externalTypeName": "ads_xfa_proto_rosyapi_ads.FrequencyCap",
    "properties": {
     "duration": {
      "type": "string",
@@ -4871,7 +4793,6 @@
    "id": "FsCommand",
    "type": "object",
    "description": "FsCommand.",
-   "externalTypeName": "ads_xfa_proto_rosyapi_creatives.FsCommand",
    "properties": {
     "left": {
      "type": "integer",
@@ -4911,7 +4832,6 @@
    "id": "GeoTargeting",
    "type": "object",
    "description": "Geographical Targeting.",
-   "externalTypeName": "ads_xfa_proto_rosyapi_ads.GeoTargeting",
    "properties": {
     "cities": {
      "type": "array",
@@ -4958,7 +4878,6 @@
    "id": "KeyValueTargetingExpression",
    "type": "object",
    "description": "Key Value Targeting Expression.",
-   "externalTypeName": "ads_xfa_proto_rosyapi_ads.KeyValueTargetingExpression",
    "properties": {
     "expression": {
      "type": "string",
@@ -4969,7 +4888,6 @@
   "LandingPage": {
    "id": "LandingPage",
    "type": "object",
-   "externalTypeName": "ads_xfa_proto_rosyapi_campaigns.LandingPage",
    "properties": {
     "default": {
      "type": "boolean",
@@ -4999,7 +4917,6 @@
    "id": "LandingPagesListResponse",
    "type": "object",
    "description": "Landing Page List Response",
-   "externalTypeName": "ads_xfa_proto_rosyapi_campaigns.LandingPagesListResponse",
    "properties": {
     "kind": {
      "type": "string",
@@ -5019,7 +4936,6 @@
    "id": "LastModifiedInfo",
    "type": "object",
    "description": "Modification timestamp.",
-   "externalTypeName": "ads_xfa_proto_rosyapi_common.LastModifiedInfo",
    "properties": {
     "time": {
      "type": "string",
@@ -5032,7 +4948,6 @@
    "id": "ListTargetingExpression",
    "type": "object",
    "description": "Remarketing List Targeting Expression.",
-   "externalTypeName": "ads_xfa_proto_rosyapi_ads.ListTargetingExpression",
    "properties": {
     "expression": {
      "type": "string",
@@ -5044,7 +4959,6 @@
    "id": "LookbackConfiguration",
    "type": "object",
    "description": "Lookback configuration settings.",
-   "externalTypeName": "ads_xfa_proto_rosyapi_common.LookbackConfiguration",
    "properties": {
     "clickDuration": {
      "type": "integer",
@@ -5077,7 +4991,6 @@
   "Metro": {
    "id": "Metro",
    "type": "object",
-   "externalTypeName": "ads_xfa_proto_rosyapi_metros.Metro",
    "properties": {
     "countryCode": {
      "type": "string",
@@ -5117,7 +5030,6 @@
    "id": "MetrosListResponse",
    "type": "object",
    "description": "Metro List Response",
-   "externalTypeName": "ads_xfa_proto_rosyapi_metros.MetrosListResponse",
    "properties": {
     "kind": {
      "type": "string",
@@ -5136,7 +5048,6 @@
   "MobileCarrier": {
    "id": "MobileCarrier",
    "type": "object",
-   "externalTypeName": "ads_xfa_proto_rosyapi_mobilecarriers.MobileCarrier",
    "properties": {
     "countryCode": {
      "type": "string",
@@ -5167,7 +5078,6 @@
    "id": "MobileCarriersListResponse",
    "type": "object",
    "description": "Mobile Carrier List Response",
-   "externalTypeName": "ads_xfa_proto_rosyapi_mobilecarriers.MobileCarriersListResponse",
    "properties": {
     "kind": {
      "type": "string",
@@ -5187,7 +5097,6 @@
    "id": "ObjectFilter",
    "type": "object",
    "description": "Object Filter.",
-   "externalTypeName": "ads_xfa_proto_rosyapi_accountuserprofiles.ObjectFilter",
    "properties": {
     "kind": {
      "type": "string",
@@ -5222,7 +5131,6 @@
    "id": "OffsetPosition",
    "type": "object",
    "description": "Offset Position.",
-   "externalTypeName": "ads_xfa_proto_rosyapi_creatives.OffsetPosition",
    "properties": {
     "left": {
      "type": "integer",
@@ -5240,7 +5148,6 @@
    "id": "OmnitureSettings",
    "type": "object",
    "description": "Omniture Integration Settings.",
-   "externalTypeName": "ads_xfa_proto_rosyapi_floodlights.OmnitureSettings",
    "properties": {
     "omnitureCostDataEnabled": {
      "type": "boolean",
@@ -5255,7 +5162,6 @@
   "OperatingSystem": {
    "id": "OperatingSystem",
    "type": "object",
-   "externalTypeName": "ads_xfa_proto_rosyapi_operatingsystems.OperatingSystem",
    "properties": {
     "dartId": {
      "type": "string",
@@ -5284,7 +5190,6 @@
   "OperatingSystemVersion": {
    "id": "OperatingSystemVersion",
    "type": "object",
-   "externalTypeName": "ads_xfa_proto_rosyapi_operatingsystemversions.OperatingSystemVersion",
    "properties": {
     "id": {
      "type": "string",
@@ -5318,7 +5223,6 @@
    "id": "OperatingSystemVersionsListResponse",
    "type": "object",
    "description": "Operating System Version List Response",
-   "externalTypeName": "ads_xfa_proto_rosyapi_operatingsystemversions.OperatingSystemVersionsListResponse",
    "properties": {
     "kind": {
      "type": "string",
@@ -5338,7 +5242,6 @@
    "id": "OperatingSystemsListResponse",
    "type": "object",
    "description": "Operating System List Response",
-   "externalTypeName": "ads_xfa_proto_rosyapi_operatingsystems.OperatingSystemsListResponse",
    "properties": {
     "kind": {
      "type": "string",
@@ -5358,7 +5261,6 @@
    "id": "OptimizationActivity",
    "type": "object",
    "description": "Creative optimization activity.",
-   "externalTypeName": "ads_xfa_proto_rosyapi_campaigns.OptimizationActivity",
    "properties": {
     "floodlightActivityId": {
      "type": "string",
@@ -5419,7 +5321,6 @@
   "Placement": {
    "id": "Placement",
    "type": "object",
-   "externalTypeName": "ads_xfa_proto_rosyapi_placements.Placement",
    "properties": {
     "accountId": {
      "type": "string",
@@ -5653,7 +5554,6 @@
    "id": "PlacementAssignment",
    "type": "object",
    "description": "Placement Assignment.",
-   "externalTypeName": "ads_xfa_proto_rosyapi_ads.PlacementAssignment",
    "properties": {
     "active": {
      "type": "boolean",
@@ -5677,7 +5577,6 @@
   "PlacementGroup": {
    "id": "PlacementGroup",
    "type": "object",
-   "externalTypeName": "ads_xfa_proto_rosyapi_placements.PlacementGroup",
    "properties": {
     "accountId": {
      "type": "string",
@@ -5816,7 +5715,6 @@
    "id": "PlacementGroupsListResponse",
    "type": "object",
    "description": "Placement Group List Response",
-   "externalTypeName": "ads_xfa_proto_rosyapi_placements.PlacementGroupsListResponse",
    "properties": {
     "kind": {
      "type": "string",
@@ -5840,7 +5738,6 @@
    "id": "PlacementStrategiesListResponse",
    "type": "object",
    "description": "Placement Strategy List Response",
-   "externalTypeName": "ads_xfa_proto_rosyapi_placementstrategies.PlacementStrategiesListResponse",
    "properties": {
     "kind": {
      "type": "string",
@@ -5863,7 +5760,6 @@
   "PlacementStrategy": {
    "id": "PlacementStrategy",
    "type": "object",
-   "externalTypeName": "ads_xfa_proto_rosyapi_placementstrategies.PlacementStrategy",
    "properties": {
     "accountId": {
      "type": "string",
@@ -5890,7 +5786,6 @@
    "id": "PlacementTag",
    "type": "object",
    "description": "Placement Tag",
-   "externalTypeName": "ads_xfa_proto_rosyapi_placements.PlacementTag",
    "properties": {
     "placementId": {
      "type": "string",
@@ -5910,7 +5805,6 @@
    "id": "PlacementsGenerateTagsResponse",
    "type": "object",
    "description": "Placement GenerateTags Response",
-   "externalTypeName": "ads_xfa_proto_rosyapi_placements.PlacementsGenerateTagsResponse",
    "properties": {
     "kind": {
      "type": "string",
@@ -5930,7 +5824,6 @@
    "id": "PlacementsListResponse",
    "type": "object",
    "description": "Placement List Response",
-   "externalTypeName": "ads_xfa_proto_rosyapi_placements.PlacementsListResponse",
    "properties": {
     "kind": {
      "type": "string",
@@ -5953,7 +5846,6 @@
   "PlatformType": {
    "id": "PlatformType",
    "type": "object",
-   "externalTypeName": "ads_xfa_proto_rosyapi_platformtypes.PlatformType",
    "properties": {
     "id": {
      "type": "string",
@@ -5975,7 +5867,6 @@
    "id": "PlatformTypesListResponse",
    "type": "object",
    "description": "Platform Type List Response",
-   "externalTypeName": "ads_xfa_proto_rosyapi_platformtypes.PlatformTypesListResponse",
    "properties": {
     "kind": {
      "type": "string",
@@ -5995,7 +5886,6 @@
    "id": "PopupWindowProperties",
    "type": "object",
    "description": "Popup Window Properties.",
-   "externalTypeName": "ads_xfa_proto_rosyapi_creatives.PopupWindowProperties",
    "properties": {
     "dimension": {
      "$ref": "Size",
@@ -6046,7 +5936,6 @@
   "PostalCode": {
    "id": "PostalCode",
    "type": "object",
-   "externalTypeName": "ads_xfa_proto_rosyapi_postalcodes.PostalCode",
    "properties": {
     "countryCode": {
      "type": "string",
@@ -6072,7 +5961,6 @@
    "id": "PostalCodesListResponse",
    "type": "object",
    "description": "Postal Code List Response",
-   "externalTypeName": "ads_xfa_proto_rosyapi_postalcodes.PostalCodesListResponse",
    "properties": {
     "kind": {
      "type": "string",
@@ -6092,7 +5980,6 @@
    "id": "PricingSchedule",
    "type": "object",
    "description": "Pricing Schedule",
-   "externalTypeName": "ads_xfa_proto_rosyapi_placements.PricingSchedule",
    "properties": {
     "capCostOption": {
      "type": "string",
@@ -6167,7 +6054,6 @@
    "id": "PricingSchedulePricingPeriod",
    "type": "object",
    "description": "Pricing Period",
-   "externalTypeName": "ads_xfa_proto_rosyapi_placements.PricingSchedule.PricingPeriod",
    "properties": {
     "endDate": {
      "type": "string",
@@ -6199,7 +6085,6 @@
    "id": "ProgrammaticSetting",
    "type": "object",
    "description": "Programmatic Setting",
-   "externalTypeName": "ads_xfa_proto_rosyapi_placements.ProgrammaticSetting",
    "properties": {
     "adxDealIds": {
      "type": "array",
@@ -6325,7 +6210,6 @@
   "Region": {
    "id": "Region",
    "type": "object",
-   "externalTypeName": "ads_xfa_proto_rosyapi_regions.Region",
    "properties": {
     "countryCode": {
      "type": "string",
@@ -6360,7 +6244,6 @@
    "id": "RegionsListResponse",
    "type": "object",
    "description": "Region List Response",
-   "externalTypeName": "ads_xfa_proto_rosyapi_regions.RegionsListResponse",
    "properties": {
     "kind": {
      "type": "string",
@@ -6991,7 +6874,6 @@
    "id": "ReportsConfiguration",
    "type": "object",
    "description": "Reporting Configuration",
-   "externalTypeName": "ads_xfa_proto_rosyapi_accounts.ReportsConfiguration",
    "properties": {
     "exposureToConversionEnabled": {
      "type": "boolean",
@@ -7012,7 +6894,6 @@
    "id": "RichMediaExitOverride",
    "type": "object",
    "description": "Rich Media Exit Override.",
-   "externalTypeName": "ads_xfa_proto_rosyapi_ads.RichMediaExitOverride",
    "properties": {
     "customExitUrl": {
      "type": "string",
@@ -7032,7 +6913,6 @@
   "Site": {
    "id": "Site",
    "type": "object",
-   "externalTypeName": "ads_xfa_proto_rosyapi_sites.Site",
    "properties": {
     "accountId": {
      "type": "string",
@@ -7096,7 +6976,6 @@
    "id": "SiteContact",
    "type": "object",
    "description": "Site Contact",
-   "externalTypeName": "ads_xfa_proto_rosyapi_sites.SiteContact",
    "properties": {
     "contactType": {
      "type": "string",
@@ -7133,7 +7012,6 @@
    "id": "SiteSettings",
    "type": "object",
    "description": "Site Settings",
-   "externalTypeName": "ads_xfa_proto_rosyapi_sites.SiteSettings",
    "properties": {
     "activeViewOptOut": {
      "type": "boolean",
@@ -7165,7 +7043,6 @@
    "id": "SitesListResponse",
    "type": "object",
    "description": "Site List Response",
-   "externalTypeName": "ads_xfa_proto_rosyapi_sites.SitesListResponse",
    "properties": {
     "kind": {
      "type": "string",
@@ -7188,7 +7065,6 @@
   "Size": {
    "id": "Size",
    "type": "object",
-   "externalTypeName": "ads_xfa_proto_rosyapi_sizes.Size",
    "properties": {
     "height": {
      "type": "integer",
@@ -7220,7 +7096,6 @@
    "id": "SizesListResponse",
    "type": "object",
    "description": "Size List Response",
-   "externalTypeName": "ads_xfa_proto_rosyapi_sizes.SizesListResponse",
    "properties": {
     "kind": {
      "type": "string",
@@ -7268,7 +7143,6 @@
    "id": "Subaccount",
    "type": "object",
    "description": "Subaccount",
-   "externalTypeName": "ads_xfa_proto_rosyapi_subaccounts.Subaccount",
    "properties": {
     "accountId": {
      "type": "string",
@@ -7303,7 +7177,6 @@
    "id": "SubaccountsListResponse",
    "type": "object",
    "description": "Subaccount List Response",
-   "externalTypeName": "ads_xfa_proto_rosyapi_subaccounts.SubaccountsListResponse",
    "properties": {
     "kind": {
      "type": "string",
@@ -7327,7 +7200,6 @@
    "id": "TagData",
    "type": "object",
    "description": "Placement Tag Data",
-   "externalTypeName": "ads_xfa_proto_rosyapi_placements.TagData",
    "properties": {
     "adId": {
      "type": "string",
@@ -7387,7 +7259,6 @@
    "id": "TagSetting",
    "type": "object",
    "description": "Tag Settings",
-   "externalTypeName": "ads_xfa_proto_rosyapi_sites.TagSetting",
    "properties": {
     "additionalKeyValues": {
      "type": "string",
@@ -7421,7 +7292,6 @@
    "id": "TagSettings",
    "type": "object",
    "description": "Dynamic and Image Tag Settings.",
-   "externalTypeName": "ads_xfa_proto_rosyapi_floodlights.TagSettings",
    "properties": {
     "dynamicTagEnabled": {
      "type": "boolean",
@@ -7437,7 +7307,6 @@
    "id": "TargetWindow",
    "type": "object",
    "description": "Target Window.",
-   "externalTypeName": "ads_xfa_proto_rosyapi_creatives.TargetWindow",
    "properties": {
     "customHtml": {
      "type": "string",
@@ -7463,7 +7332,6 @@
    "id": "TechnologyTargeting",
    "type": "object",
    "description": "Technology Targeting.",
-   "externalTypeName": "ads_xfa_proto_rosyapi_ads.TechnologyTargeting",
    "properties": {
     "browsers": {
      "type": "array",
@@ -7513,7 +7381,6 @@
    "id": "ThirdPartyTrackingUrl",
    "type": "object",
    "description": "Third Party Tracking URL.",
-   "externalTypeName": "ads_xfa_proto_rosyapi_creatives.ThirdPartyTrackingUrl",
    "properties": {
     "thirdPartyUrlType": {
      "type": "string",
@@ -7567,7 +7434,6 @@
    "id": "UserDefinedVariableConfiguration",
    "type": "object",
    "description": "User Defined Variable configuration.",
-   "externalTypeName": "ads_xfa_proto_rosyapi_floodlights.UserDefinedVariableConfiguration",
    "properties": {
     "dataType": {
      "type": "string",
@@ -7704,7 +7570,6 @@
   "UserRole": {
    "id": "UserRole",
    "type": "object",
-   "externalTypeName": "ads_xfa_proto_rosyapi_userroles.UserRole",
    "properties": {
     "accountId": {
      "type": "string",
@@ -7752,7 +7617,6 @@
    "id": "UserRolePermission",
    "type": "object",
    "description": "UserRolePermission",
-   "externalTypeName": "ads_xfa_proto_rosyapi_userrolepermissions.UserRolePermission",
    "properties": {
     "availability": {
      "type": "string",
@@ -7796,7 +7660,6 @@
   "UserRolePermissionGroup": {
    "id": "UserRolePermissionGroup",
    "type": "object",
-   "externalTypeName": "ads_xfa_proto_rosyapi_userrolepermissiongroups.UserRolePermissionGroup",
    "properties": {
     "id": {
      "type": "string",
@@ -7818,7 +7681,6 @@
    "id": "UserRolePermissionGroupsListResponse",
    "type": "object",
    "description": "User Role Permission Group List Response",
-   "externalTypeName": "ads_xfa_proto_rosyapi_userrolepermissiongroups.UserRolePermissionGroupsListResponse",
    "properties": {
     "kind": {
      "type": "string",
@@ -7838,7 +7700,6 @@
    "id": "UserRolePermissionsListResponse",
    "type": "object",
    "description": "User Role Permission List Response",
-   "externalTypeName": "ads_xfa_proto_rosyapi_userrolepermissions.UserRolePermissionsListResponse",
    "properties": {
     "kind": {
      "type": "string",
@@ -7858,7 +7719,6 @@
    "id": "UserRolesListResponse",
    "type": "object",
    "description": "User Role List Response",
-   "externalTypeName": "ads_xfa_proto_rosyapi_userroles.UserRolesListResponse",
    "properties": {
     "kind": {
      "type": "string",

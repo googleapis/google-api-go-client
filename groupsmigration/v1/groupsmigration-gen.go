@@ -151,10 +151,9 @@ func (c *ArchiveInsertCall) Do() (*Groups, error) {
 	urls += "?" + params.Encode()
 	body = new(bytes.Buffer)
 	ctype := "application/json"
-	var hasMedia_ bool
 	if c.protocol_ != "resumable" {
 		var cancel func()
-		cancel, hasMedia_ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+		cancel, _ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
 		if cancel != nil {
 			defer cancel()
 		}
@@ -173,7 +172,7 @@ func (c *ArchiveInsertCall) Do() (*Groups, error) {
 		if params.Get("name") == "" {
 			return nil, fmt.Errorf("resumable uploads must set the Name parameter.")
 		}
-	} else if hasMedia_ {
+	} else {
 		req.Header.Set("Content-Type", ctype)
 	}
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")

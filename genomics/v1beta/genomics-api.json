@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/bPDqLaAkd2IdqCX0_JVWgMmdl14\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/dmRibRFL6-a8I83UrorOCGxt1tY\"",
  "discoveryVersion": "v1",
  "id": "genomics:v1beta",
  "name": "genomics",
@@ -89,7 +89,6 @@
    "id": "Call",
    "type": "object",
    "description": "A call represents the determination of genotype with respect to a particular variant. It may include associated information such as quality and phasing. For example, a call might assign a probability of 0.32 to the occurrence of a SNP named rs1234 in a call set with the name NA12345.",
-   "externalTypeName": "cloud.genomics.varstore.Call",
    "properties": {
     "callSetId": {
      "type": "string",
@@ -136,7 +135,6 @@
    "id": "CallSet",
    "type": "object",
    "description": "A call set is a collection of variant calls, typically for one sample. It belongs to a variant set.",
-   "externalTypeName": "cloud.genomics.varstore.CallSet",
    "properties": {
     "created": {
      "type": "string",
@@ -179,7 +177,6 @@
    "id": "CoverageBucket",
    "type": "object",
    "description": "A bucket over which read coverage has been precomputed. A bucket corresponds to a specific range of the reference sequence.",
-   "externalTypeName": "cloud.genomics.readstore.v1beta.CoverageBucket",
    "properties": {
     "meanCoverage": {
      "type": "number",
@@ -196,7 +193,6 @@
    "id": "Dataset",
    "type": "object",
    "description": "A Dataset is a collection of genomic data.",
-   "externalTypeName": "cloud.genomics.datasets.Dataset",
    "properties": {
     "id": {
      "type": "string",
@@ -221,7 +217,6 @@
    "id": "ExperimentalCreateJobRequest",
    "type": "object",
    "description": "The job creation request.",
-   "externalTypeName": "cloud.genomics.jobs.ExperimentalCreateJobRequest",
    "properties": {
     "align": {
      "type": "boolean",
@@ -260,7 +255,6 @@
    "id": "ExperimentalCreateJobResponse",
    "type": "object",
    "description": "The job creation response.",
-   "externalTypeName": "cloud.genomics.jobs.ExperimentalCreateJobResponse",
    "properties": {
     "jobId": {
      "type": "string",
@@ -272,7 +266,6 @@
    "id": "ExportReadsetsRequest",
    "type": "object",
    "description": "The readset export request.",
-   "externalTypeName": "cloud.genomics.readstore.v1beta.ExportReadsetsRequest",
    "properties": {
     "exportUri": {
      "type": "string",
@@ -303,7 +296,6 @@
    "id": "ExportReadsetsResponse",
    "type": "object",
    "description": "The readset export response.",
-   "externalTypeName": "cloud.genomics.readstore.v1beta.ExportReadsetsResponse",
    "properties": {
     "jobId": {
      "type": "string",
@@ -315,7 +307,6 @@
    "id": "ExportVariantsRequest",
    "type": "object",
    "description": "The variant data export request.",
-   "externalTypeName": "cloud.genomics.varstore.ExportVariantsRequest",
    "properties": {
     "bigqueryDataset": {
      "type": "string",
@@ -357,7 +348,6 @@
    "id": "ExportVariantsResponse",
    "type": "object",
    "description": "The variant data export response.",
-   "externalTypeName": "cloud.genomics.varstore.ExportVariantsResponse",
    "properties": {
     "jobId": {
      "type": "string",
@@ -369,7 +359,6 @@
    "id": "GenomicRange",
    "type": "object",
    "description": "An inclusive, exclusive genomic coordinate range over a reference sequence.",
-   "externalTypeName": "cloud.genomics.readstore.v1beta.GenomicRange",
    "properties": {
     "sequenceEnd": {
      "type": "string",
@@ -390,7 +379,6 @@
   "Header": {
    "id": "Header",
    "type": "object",
-   "externalTypeName": "cloud.genomics.parser.bam.Header",
    "properties": {
     "sortingOrder": {
      "type": "string",
@@ -406,7 +394,6 @@
    "id": "HeaderSection",
    "type": "object",
    "description": "The header section of the BAM/SAM file.",
-   "externalTypeName": "cloud.genomics.parser.bam.HeaderSection",
    "properties": {
     "comments": {
      "type": "array",
@@ -457,7 +444,6 @@
    "id": "ImportReadsetsRequest",
    "type": "object",
    "description": "The readset import request.",
-   "externalTypeName": "cloud.genomics.readstore.v1beta.ImportReadsetsRequest",
    "properties": {
     "datasetId": {
      "type": "string",
@@ -476,7 +462,6 @@
    "id": "ImportReadsetsResponse",
    "type": "object",
    "description": "The readset import response.",
-   "externalTypeName": "cloud.genomics.readstore.v1beta.ImportReadsetsResponse",
    "properties": {
     "jobId": {
      "type": "string",
@@ -488,7 +473,6 @@
    "id": "ImportVariantsRequest",
    "type": "object",
    "description": "The variant data import request.",
-   "externalTypeName": "cloud.genomics.varstore.ImportVariantsRequest",
    "properties": {
     "format": {
      "type": "string",
@@ -519,7 +503,6 @@
    "id": "ImportVariantsResponse",
    "type": "object",
    "description": "The variant data import response.",
-   "externalTypeName": "cloud.genomics.varstore.ImportVariantsResponse",
    "properties": {
     "jobId": {
      "type": "string",
@@ -531,7 +514,6 @@
    "id": "Job",
    "type": "object",
    "description": "A Job represents an ongoing process that can be monitored for status information.",
-   "externalTypeName": "cloud.genomics.jobs.Job",
    "properties": {
     "created": {
      "type": "string",
@@ -604,7 +586,6 @@
    "id": "JobRequest",
    "type": "object",
    "description": "A summary representation of the service request that spawned the job.",
-   "externalTypeName": "cloud.genomics.jobs.JobRequest",
    "properties": {
     "destination": {
      "type": "array",
@@ -649,7 +630,6 @@
   "ListCoverageBucketsResponse": {
    "id": "ListCoverageBucketsResponse",
    "type": "object",
-   "externalTypeName": "cloud.genomics.readstore.v1beta.ListCoverageBucketsResponse",
    "properties": {
     "bucketWidth": {
      "type": "string",
@@ -673,7 +653,6 @@
    "id": "ListDatasetsResponse",
    "type": "object",
    "description": "The dataset list response.",
-   "externalTypeName": "cloud.genomics.datasets.ListDatasetsResponse",
    "properties": {
     "datasets": {
      "type": "array",
@@ -691,7 +670,6 @@
   "MergeVariantsRequest": {
    "id": "MergeVariantsRequest",
    "type": "object",
-   "externalTypeName": "cloud.genomics.varstore.MergeVariantsRequest",
    "properties": {
     "variants": {
      "type": "array",
@@ -706,7 +684,6 @@
    "id": "Metadata",
    "type": "object",
    "description": "Metadata describes a single piece of variant call metadata. These data include a top level key and either a single value string (value) or a list of key-value pairs (info.) Value and info are mutually exclusive.",
-   "externalTypeName": "cloud.genomics.varstore.Metadata",
    "properties": {
     "description": {
      "type": "string",
@@ -764,7 +741,6 @@
   "Program": {
    "id": "Program",
    "type": "object",
-   "externalTypeName": "cloud.genomics.parser.bam.Program",
    "properties": {
     "commandLine": {
      "type": "string",
@@ -792,7 +768,6 @@
    "id": "Read",
    "type": "object",
    "description": "A Read is a group of bases that may or may not have been aligned to a reference. It contains quality information and other metadata.",
-   "externalTypeName": "cloud.genomics.readstore.v1beta.Read",
    "properties": {
     "alignedBases": {
      "type": "string",
@@ -871,7 +846,6 @@
   "ReadGroup": {
    "id": "ReadGroup",
    "type": "object",
-   "externalTypeName": "cloud.genomics.parser.bam.ReadGroup",
    "properties": {
     "date": {
      "type": "string",
@@ -928,7 +902,6 @@
    "id": "Readset",
    "type": "object",
    "description": "A Readset is a collection of Reads.",
-   "externalTypeName": "cloud.genomics.readstore.v1beta.Readset",
    "properties": {
     "datasetId": {
      "type": "string",
@@ -955,7 +928,6 @@
    "id": "ReferenceBound",
    "type": "object",
    "description": "ReferenceBound records an upper bound for the starting coordinate of variants in a particular reference.",
-   "externalTypeName": "cloud.genomics.varstore.ReferenceBound",
    "properties": {
     "referenceName": {
      "type": "string",
@@ -971,7 +943,6 @@
   "ReferenceSequence": {
    "id": "ReferenceSequence",
    "type": "object",
-   "externalTypeName": "cloud.genomics.parser.bam.ReferenceSequence",
    "properties": {
     "assemblyId": {
      "type": "string",
@@ -1004,7 +975,6 @@
    "id": "SearchCallSetsRequest",
    "type": "object",
    "description": "The call set search request.",
-   "externalTypeName": "cloud.genomics.varstore.SearchCallSetsRequest",
    "properties": {
     "name": {
      "type": "string",
@@ -1032,7 +1002,6 @@
    "id": "SearchCallSetsResponse",
    "type": "object",
    "description": "The call set search response.",
-   "externalTypeName": "cloud.genomics.varstore.SearchCallSetsResponse",
    "properties": {
     "callSets": {
      "type": "array",
@@ -1051,7 +1020,6 @@
    "id": "SearchJobsRequest",
    "type": "object",
    "description": "The jobs search request.",
-   "externalTypeName": "cloud.genomics.jobs.SearchJobsRequest",
    "properties": {
     "createdAfter": {
      "type": "string",
@@ -1108,7 +1076,6 @@
    "id": "SearchJobsResponse",
    "type": "object",
    "description": "The job search response.",
-   "externalTypeName": "cloud.genomics.jobs.SearchJobsResponse",
    "properties": {
     "jobs": {
      "type": "array",
@@ -1127,7 +1094,6 @@
    "id": "SearchReadsRequest",
    "type": "object",
    "description": "The read search request.",
-   "externalTypeName": "cloud.genomics.readstore.v1beta.SearchReadsRequest",
    "properties": {
     "maxResults": {
      "type": "string",
@@ -1165,7 +1131,6 @@
    "id": "SearchReadsResponse",
    "type": "object",
    "description": "The read search response.",
-   "externalTypeName": "cloud.genomics.readstore.v1beta.SearchReadsResponse",
    "properties": {
     "nextPageToken": {
      "type": "string",
@@ -1184,7 +1149,6 @@
    "id": "SearchReadsetsRequest",
    "type": "object",
    "description": "The readset search request.",
-   "externalTypeName": "cloud.genomics.readstore.v1beta.SearchReadsetsRequest",
    "properties": {
     "datasetIds": {
      "type": "array",
@@ -1212,7 +1176,6 @@
    "id": "SearchReadsetsResponse",
    "type": "object",
    "description": "The readset search response.",
-   "externalTypeName": "cloud.genomics.readstore.v1beta.SearchReadsetsResponse",
    "properties": {
     "nextPageToken": {
      "type": "string",
@@ -1231,7 +1194,6 @@
    "id": "SearchVariantSetsRequest",
    "type": "object",
    "description": "The search variant sets request.",
-   "externalTypeName": "cloud.genomics.varstore.SearchVariantSetsRequest",
    "properties": {
     "datasetIds": {
      "type": "array",
@@ -1255,7 +1217,6 @@
    "id": "SearchVariantSetsResponse",
    "type": "object",
    "description": "The search variant sets response.",
-   "externalTypeName": "cloud.genomics.varstore.SearchVariantSetsResponse",
    "properties": {
     "nextPageToken": {
      "type": "string",
@@ -1274,7 +1235,6 @@
    "id": "SearchVariantsRequest",
    "type": "object",
    "description": "The variant search request.",
-   "externalTypeName": "cloud.genomics.varstore.SearchVariantsRequest",
    "properties": {
     "callSetIds": {
      "type": "array",
@@ -1328,7 +1288,6 @@
    "id": "SearchVariantsResponse",
    "type": "object",
    "description": "The variant search response.",
-   "externalTypeName": "cloud.genomics.varstore.SearchVariantsResponse",
    "properties": {
     "nextPageToken": {
      "type": "string",
@@ -1347,7 +1306,6 @@
    "id": "Variant",
    "type": "object",
    "description": "A variant represents a change in DNA sequence relative to a reference sequence. For example, a variant could represent a SNP or an insertion. Variants belong to a variant set. Each of the calls on a variant represent a determination of genotype with respect to that variant. For example, a call might assign probability of 0.32 to the occurrence of a SNP named rs1234 in a sample named NA12345. A call belongs to a call set, which contains related calls typically from one sample.",
-   "externalTypeName": "cloud.genomics.varstore.Variant",
    "properties": {
     "alternateBases": {
      "type": "array",
@@ -1430,7 +1388,6 @@
    "id": "VariantSet",
    "type": "object",
    "description": "A variant set is a collection of call sets and variants. It contains summary statistics of those contents. A variant set belongs to a dataset.",
-   "externalTypeName": "cloud.genomics.varstore.VariantSet",
    "properties": {
     "datasetId": {
      "type": "string",

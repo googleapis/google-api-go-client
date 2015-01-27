@@ -559,10 +559,9 @@ func (c *UsersDraftsCreateCall) Do() (*Draft, error) {
 		params.Set("uploadType", c.protocol_)
 	}
 	urls += "?" + params.Encode()
-	var hasMedia_ bool
 	if c.protocol_ != "resumable" {
 		var cancel func()
-		cancel, hasMedia_ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+		cancel, _ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
 		if cancel != nil {
 			defer cancel()
 		}
@@ -581,7 +580,7 @@ func (c *UsersDraftsCreateCall) Do() (*Draft, error) {
 		if params.Get("name") == "" {
 			return nil, fmt.Errorf("resumable uploads must set the Name parameter.")
 		}
-	} else if hasMedia_ {
+	} else {
 		req.Header.Set("Content-Type", ctype)
 	}
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
@@ -1058,10 +1057,9 @@ func (c *UsersDraftsSendCall) Do() (*Message, error) {
 		params.Set("uploadType", c.protocol_)
 	}
 	urls += "?" + params.Encode()
-	var hasMedia_ bool
 	if c.protocol_ != "resumable" {
 		var cancel func()
-		cancel, hasMedia_ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+		cancel, _ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
 		if cancel != nil {
 			defer cancel()
 		}
@@ -1080,7 +1078,7 @@ func (c *UsersDraftsSendCall) Do() (*Message, error) {
 		if params.Get("name") == "" {
 			return nil, fmt.Errorf("resumable uploads must set the Name parameter.")
 		}
-	} else if hasMedia_ {
+	} else {
 		req.Header.Set("Content-Type", ctype)
 	}
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
@@ -1245,10 +1243,9 @@ func (c *UsersDraftsUpdateCall) Do() (*Draft, error) {
 		params.Set("uploadType", c.protocol_)
 	}
 	urls += "?" + params.Encode()
-	var hasMedia_ bool
 	if c.protocol_ != "resumable" {
 		var cancel func()
-		cancel, hasMedia_ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+		cancel, _ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
 		if cancel != nil {
 			defer cancel()
 		}
@@ -1268,7 +1265,7 @@ func (c *UsersDraftsUpdateCall) Do() (*Draft, error) {
 		if params.Get("name") == "" {
 			return nil, fmt.Errorf("resumable uploads must set the Name parameter.")
 		}
-	} else if hasMedia_ {
+	} else {
 		req.Header.Set("Content-Type", ctype)
 	}
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
@@ -2355,10 +2352,9 @@ func (c *UsersMessagesImportCall) Do() (*Message, error) {
 		params.Set("uploadType", c.protocol_)
 	}
 	urls += "?" + params.Encode()
-	var hasMedia_ bool
 	if c.protocol_ != "resumable" {
 		var cancel func()
-		cancel, hasMedia_ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+		cancel, _ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
 		if cancel != nil {
 			defer cancel()
 		}
@@ -2377,7 +2373,7 @@ func (c *UsersMessagesImportCall) Do() (*Message, error) {
 		if params.Get("name") == "" {
 			return nil, fmt.Errorf("resumable uploads must set the Name parameter.")
 		}
-	} else if hasMedia_ {
+	} else {
 		req.Header.Set("Content-Type", ctype)
 	}
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
@@ -2565,10 +2561,9 @@ func (c *UsersMessagesInsertCall) Do() (*Message, error) {
 		params.Set("uploadType", c.protocol_)
 	}
 	urls += "?" + params.Encode()
-	var hasMedia_ bool
 	if c.protocol_ != "resumable" {
 		var cancel func()
-		cancel, hasMedia_ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+		cancel, _ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
 		if cancel != nil {
 			defer cancel()
 		}
@@ -2587,7 +2582,7 @@ func (c *UsersMessagesInsertCall) Do() (*Message, error) {
 		if params.Get("name") == "" {
 			return nil, fmt.Errorf("resumable uploads must set the Name parameter.")
 		}
-	} else if hasMedia_ {
+	} else {
 		req.Header.Set("Content-Type", ctype)
 	}
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
@@ -3022,10 +3017,9 @@ func (c *UsersMessagesSendCall) Do() (*Message, error) {
 		params.Set("uploadType", c.protocol_)
 	}
 	urls += "?" + params.Encode()
-	var hasMedia_ bool
 	if c.protocol_ != "resumable" {
 		var cancel func()
-		cancel, hasMedia_ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+		cancel, _ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
 		if cancel != nil {
 			defer cancel()
 		}
@@ -3044,7 +3038,7 @@ func (c *UsersMessagesSendCall) Do() (*Message, error) {
 		if params.Get("name") == "" {
 			return nil, fmt.Errorf("resumable uploads must set the Name parameter.")
 		}
-	} else if hasMedia_ {
+	} else {
 		req.Header.Set("Content-Type", ctype)
 	}
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")

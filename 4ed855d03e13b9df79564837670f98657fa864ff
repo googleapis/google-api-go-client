@@ -16,6 +16,24 @@
       "revId": "4ed855d03e13b9df79564837670f98657fa864ff",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "97b46fb1_4b3c19f5",
+        "filename": "storage/v1/storage-gen.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 4558,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-01-28T20:32:55Z",
+      "side": 1,
+      "message": "Yes, this is also a fix.  I\u0027ll edit the CL description.\nThis was needed to make the unit tests pass.",
+      "parentUuid": "97b46fb1_48509f4b",
+      "revId": "4ed855d03e13b9df79564837670f98657fa864ff",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
     }
   ]
 }

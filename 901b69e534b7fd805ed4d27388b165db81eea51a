@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97b46fb1_284f6baa",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-01-28T20:26:12Z",
+      "side": 0,
+      "message": "the CL description says this is just unit tests, but is this also a fix?",
+      "revId": "901b69e534b7fd805ed4d27388b165db81eea51a",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "97b46fb1_8866973b",
+        "filename": "storage/v1/storage-gen.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 1628,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-01-28T20:26:12Z",
+      "side": 0,
+      "message": "why are you reverting these?",
+      "revId": "901b69e534b7fd805ed4d27388b165db81eea51a",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

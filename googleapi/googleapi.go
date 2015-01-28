@@ -315,7 +315,6 @@ func (rx *ResumableUpload) transferStatus() (int64, *http.Response, error) {
 	req.Header.Set("User-Agent", userAgent)
 	req.Header.Set("Content-Range", fmt.Sprintf("bytes */%v", rx.ContentLength))
 	res, err := rx.Client.Do(req)
-	defer res.Body.Close()
 	if err != nil || res.StatusCode != statusResumeIncomplete {
 		return 0, res, err
 	}

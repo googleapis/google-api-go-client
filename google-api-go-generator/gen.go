@@ -1384,6 +1384,7 @@ func (meth *Method) generateCode() {
 		pn(" }")
 		pn(" res, err = rx.Upload(c.ctx_)")
 		pn(" if err != nil { return %serr }", nilRet)
+		pn(" defer res.Body.Close()")
 		pn("}")
 	}
 	if retTypeComma == "" {

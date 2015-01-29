@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "17fb1f87_0c1a579c",
+        "filename": "google-api-go-generator/storage_test.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-01-29T18:43:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f79dab26_be3ab510",
+      "revId": "07172a952df80b0a64572ad4267f7b25239c9f79",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f79dab26_41d6364f",
         "filename": "google-api-go-generator/storage_test.go",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2015-01-29T13:23:56Z",
       "side": 1,
       "message": "rather than RewriteTransport, can\u0027t you just set the BasePath on the *Service?\n\nhttps://code.googlesource.com/google-api-go-client/+/master/storage/v1/storage-gen.go#73\n\nHas:\n      BasePath string // API endpoint base URL",
+      "revId": "07172a952df80b0a64572ad4267f7b25239c9f79",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "17fb1f87_ac08634f",
+        "filename": "google-api-go-generator/storage_test.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-01-29T18:43:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f79dab26_41d6364f",
       "revId": "07172a952df80b0a64572ad4267f7b25239c9f79",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "17fb1f87_6c367b14",
+        "filename": "google-api-go-generator/storage_test.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-01-29T18:43:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f79dab26_61c7b29b",
+      "revId": "07172a952df80b0a64572ad4267f7b25239c9f79",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f79dab26_81cc3ebf",
         "filename": "google-api-go-generator/storage_test.go",
         "patchSetId": 4
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "17fb1f87_4c3bbffa",
+        "filename": "google-api-go-generator/storage_test.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-01-29T18:43:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f79dab26_81cc3ebf",
+      "revId": "07172a952df80b0a64572ad4267f7b25239c9f79",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f79dab26_01d82e76",
         "filename": "googleapi/googleapi.go",
         "patchSetId": 4
@@ -81,6 +153,24 @@
       "writtenOn": "2015-01-29T13:23:56Z",
       "side": 1,
       "message": "so the caller needs to close res.Body if res is non-nil?",
+      "revId": "07172a952df80b0a64572ad4267f7b25239c9f79",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "17fb1f87_4ced7f13",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-01-29T18:43:49Z",
+      "side": 1,
+      "message": "Yes, correct.",
+      "parentUuid": "f79dab26_01d82e76",
       "revId": "07172a952df80b0a64572ad4267f7b25239c9f79",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false

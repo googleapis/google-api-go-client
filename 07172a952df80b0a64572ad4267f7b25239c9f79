@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f79dab26_be3ab510",
+        "filename": "google-api-go-generator/storage_test.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-01-29T13:23:56Z",
+      "side": 1,
+      "message": "weird name for a global.  not even sure what \"f\" means here.  I guess file?\n\nBut it\u0027s not clear what it\u0027s for.\n\nJust test data I guess?  But why involve the filesystem and the error checks at all?  You can make an in-memory Reader/etc.",
+      "revId": "07172a952df80b0a64572ad4267f7b25239c9f79",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f79dab26_41d6364f",
+        "filename": "google-api-go-generator/storage_test.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-01-29T13:23:56Z",
+      "side": 1,
+      "message": "rather than RewriteTransport, can\u0027t you just set the BasePath on the *Service?\n\nhttps://code.googlesource.com/google-api-go-client/+/master/storage/v1/storage-gen.go#73\n\nHas:\n      BasePath string // API endpoint base URL",
+      "revId": "07172a952df80b0a64572ad4267f7b25239c9f79",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f79dab26_61c7b29b",
+        "filename": "google-api-go-generator/storage_test.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-01-29T13:23:56Z",
+      "side": 1,
+      "message": "Method \u003d %q; want %q",
+      "revId": "07172a952df80b0a64572ad4267f7b25239c9f79",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f79dab26_81cc3ebf",
+        "filename": "google-api-go-generator/storage_test.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-01-29T13:23:56Z",
+      "side": 1,
+      "message": "\"Proto \u003d %q; want %q\"\n\netc. (in all places)",
+      "revId": "07172a952df80b0a64572ad4267f7b25239c9f79",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f79dab26_01d82e76",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-01-29T13:23:56Z",
+      "side": 1,
+      "message": "so the caller needs to close res.Body if res is non-nil?",
+      "revId": "07172a952df80b0a64572ad4267f7b25239c9f79",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

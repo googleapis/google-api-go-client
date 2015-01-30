@@ -267,6 +267,63 @@ func ConditionallyIncludeMedia(media io.Reader, bodyp *io.Reader, ctypep *string
 	return cancel, true
 }
 
+// ConditionallyIncludeMediaWithMime does nothing if media is nil.
+// It can have default MIME type of media and it will detect automatically
+// if the default MIME is empty.
+//
+// bodyp is an in/out parameter.  It should initially point to the
+// reader of the application/json (or whatever) payload to send in the
+// API request.  It's updated to point to the multipart body reader.
+//
+// ctypep is an in/out parameter.  It should initially point to the
+// content type of the bodyp, usually "application/json".  It's updated
+// to the "multipart/related" content type, with random boundary.
+//
+// The return value is the content-length of the entire multpart body.
+func ConditionallyIncludeMediaWithMime(media io.Reader, defaultMediaType string, bodyp *io.Reader, ctypep *string) (cancel func(), ok bool) {
+	if media == nil {
+		return
+	}
+	// Get the media type, which might return a different reader instance.
+	var mediaType string
+	if defaultMediaType == "" {
+		media, mediaType = getMediaType(media)
+	} else {
+		mediaType = defaultMediaType
+	}
+
+	body, bodyType := *bodyp, *ctypep
+
+	pr, pw := io.Pipe()
+	mpw := multipart.NewWriter(pw)
+	*bodyp = pr
+	*ctypep = "multipart/related; boundary=" + mpw.Boundary()
+	go func() {
+		defer pw.Close()
+		defer mpw.Close()
+
+		w, err := mpw.CreatePart(typeHeader(bodyType))
+		if err != nil {
+			return
+		}
+		_, err = io.Copy(w, body)
+		if err != nil {
+			return
+		}
+
+		w, err = mpw.CreatePart(typeHeader(mediaType))
+		if err != nil {
+			return
+		}
+		_, err = io.Copy(w, media)
+		if err != nil {
+			return
+		}
+	}()
+	cancel = func() { pw.CloseWithError(errAborted) }
+	return cancel, true
+}
+
 var errAborted = errors.New("googleapi: upload aborted")
 
 // ProgressUpdater is a function that is called upon every progress update of a resumable upload.

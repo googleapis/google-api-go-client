@@ -3804,7 +3804,7 @@ func (c *FilesInsertCall) Do() (*File, error) {
 	urls += "?" + params.Encode()
 	if c.protocol_ != "resumable" {
 		var cancel func()
-		cancel, _ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+		cancel, _ = googleapi.ConditionallyIncludeMediaWithMime(c.media_, c.file.MimeType, &body, &ctype)
 		if cancel != nil {
 			defer cancel()
 		}

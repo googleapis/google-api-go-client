@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77637bc4_572d4c8f",
+        "filename": "google-api-go-generator/storage_test.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-02-03T12:51:47Z",
+      "side": 1,
+      "message": "strings.NewReader?",
+      "revId": "544444b7ea4b7c04a5c7499538d2494490894b7c",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

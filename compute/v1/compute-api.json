@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/q0HPcsO3_Sdy-4PCTKTzL-JtI64\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/WbG3AXMWFf0w_iF5R9bFvZ0uaXw\"",
  "discoveryVersion": "v1",
  "id": "compute:v1",
  "name": "compute",
  "version": "v1",
- "revision": "20141112",
+ "revision": "20150104",
  "title": "Compute Engine API",
  "description": "API for the Google Compute Engine service.",
  "ownerDomain": "google.com",
@@ -69,6 +69,9 @@
  "auth": {
   "oauth2": {
    "scopes": {
+    "https://www.googleapis.com/auth/cloud-platform": {
+     "description": "View and manage your data across Google Cloud Platform services"
+    },
     "https://www.googleapis.com/auth/compute": {
      "description": "View and manage your Google Compute Engine resources"
     },
@@ -227,7 +230,7 @@
     },
     "items": {
      "type": "array",
-     "description": "The address resources.",
+     "description": "A list of Address resources.",
      "items": {
       "$ref": "Address"
      }
@@ -578,7 +581,7 @@
     },
     "items": {
      "type": "array",
-     "description": "The BackendService resources.",
+     "description": "A list of BackendService resources.",
      "items": {
       "$ref": "BackendService"
      }
@@ -772,7 +775,7 @@
     },
     "items": {
      "type": "array",
-     "description": "The persistent disk resources.",
+     "description": "A list of Disk resources.",
      "items": {
       "$ref": "Disk"
      }
@@ -885,7 +888,7 @@
     },
     "items": {
      "type": "array",
-     "description": "The disk type resources.",
+     "description": "A list of DiskType resources.",
      "items": {
       "$ref": "DiskType"
      }
@@ -1145,7 +1148,7 @@
     },
     "items": {
      "type": "array",
-     "description": "The firewall resources.",
+     "description": "A list of Firewall resources.",
      "items": {
       "$ref": "Firewall"
      }
@@ -1275,7 +1278,7 @@
     },
     "items": {
      "type": "array",
-     "description": "The ForwardingRule resources.",
+     "description": "A list of ForwardingRule resources.",
      "items": {
       "$ref": "ForwardingRule"
      }
@@ -1506,7 +1509,7 @@
     },
     "items": {
      "type": "array",
-     "description": "The HttpHealthCheck resources.",
+     "description": "A list of HttpHealthCheck resources.",
      "items": {
       "$ref": "HttpHealthCheck"
      }
@@ -1660,7 +1663,7 @@
     },
     "items": {
      "type": "array",
-     "description": "The disk image resources.",
+     "description": "A list of Image resources.",
      "items": {
       "$ref": "Image"
      }
@@ -1835,7 +1838,7 @@
     },
     "items": {
      "type": "array",
-     "description": "A list of instance resources.",
+     "description": "A list of Instance resources.",
      "items": {
       "$ref": "Instance"
      }
@@ -1975,7 +1978,7 @@
     },
     "items": {
      "type": "array",
-     "description": "A list of instance template resources.",
+     "description": "A list of InstanceTemplate resources.",
      "items": {
       "$ref": "InstanceTemplate"
      }
@@ -2220,7 +2223,7 @@
     },
     "items": {
      "type": "array",
-     "description": "The machine type resources.",
+     "description": "A list of MachineType resources.",
      "items": {
       "$ref": "MachineType"
      }
@@ -2455,7 +2458,7 @@
     },
     "items": {
      "type": "array",
-     "description": "The network resources.",
+     "description": "A list of Network resources.",
      "items": {
       "$ref": "Network"
      }
@@ -3032,7 +3035,7 @@
     },
     "items": {
      "type": "array",
-     "description": "The region resources.",
+     "description": "A list of Region resources.",
      "items": {
       "$ref": "Region"
      }
@@ -3230,7 +3233,7 @@
     },
     "items": {
      "type": "array",
-     "description": "The route resources.",
+     "description": "A list of Route resources.",
      "items": {
       "$ref": "Route"
      }
@@ -3411,7 +3414,7 @@
     },
     "items": {
      "type": "array",
-     "description": "The persistent snapshot resources.",
+     "description": "A list of Snapshot resources.",
      "items": {
       "$ref": "Snapshot"
      }
@@ -3499,7 +3502,7 @@
     },
     "items": {
      "type": "array",
-     "description": "The TargetHttpProxy resources.",
+     "description": "A list of TargetHttpProxy resources.",
      "items": {
       "$ref": "TargetHttpProxy"
      }
@@ -3613,7 +3616,7 @@
     },
     "items": {
      "type": "array",
-     "description": "The TargetInstance resources.",
+     "description": "A list of TargetInstance resources.",
      "items": {
       "$ref": "TargetInstance"
      }
@@ -3839,7 +3842,7 @@
     },
     "items": {
      "type": "array",
-     "description": "The TargetPool resources.",
+     "description": "A list of TargetPool resources.",
      "items": {
       "$ref": "TargetPool"
      }
@@ -4085,7 +4088,7 @@
     },
     "items": {
      "type": "array",
-     "description": "The UrlMap resources.",
+     "description": "A list of UrlMap resources.",
      "items": {
       "$ref": "UrlMap"
      }
@@ -4287,7 +4290,7 @@
     },
     "items": {
      "type": "array",
-     "description": "The zone resources.",
+     "description": "A list of Zone resources.",
      "items": {
       "$ref": "Zone"
      }
@@ -4351,6 +4354,7 @@
       "$ref": "AddressAggregatedList"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
@@ -4392,6 +4396,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     },
@@ -4432,6 +4437,7 @@
       "$ref": "Address"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
@@ -4468,6 +4474,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     },
@@ -4519,6 +4526,7 @@
       "$ref": "AddressList"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
@@ -4556,6 +4564,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     },
@@ -4588,6 +4597,7 @@
       "$ref": "BackendService"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
@@ -4623,6 +4633,7 @@
       "$ref": "BackendServiceGroupHealth"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
@@ -4651,6 +4662,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     },
@@ -4694,6 +4706,7 @@
       "$ref": "BackendServiceList"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
@@ -4730,6 +4743,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     },
@@ -4765,6 +4779,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     }
@@ -4812,6 +4827,7 @@
       "$ref": "DiskTypeAggregatedList"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
@@ -4853,6 +4869,7 @@
       "$ref": "DiskType"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
@@ -4905,6 +4922,7 @@
       "$ref": "DiskTypeList"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
@@ -4953,6 +4971,7 @@
       "$ref": "DiskAggregatedList"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
@@ -4996,6 +5015,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     },
@@ -5036,6 +5056,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     },
@@ -5076,6 +5097,7 @@
       "$ref": "Disk"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
@@ -5117,6 +5139,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     },
@@ -5168,6 +5191,7 @@
       "$ref": "DiskList"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
@@ -5205,6 +5229,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     },
@@ -5237,6 +5262,7 @@
       "$ref": "Firewall"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
@@ -5265,6 +5291,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     },
@@ -5308,6 +5335,7 @@
       "$ref": "FirewallList"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
@@ -5344,6 +5372,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     },
@@ -5379,6 +5408,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     }
@@ -5426,6 +5456,7 @@
       "$ref": "ForwardingRuleAggregatedList"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
@@ -5467,6 +5498,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     },
@@ -5507,6 +5539,7 @@
       "$ref": "ForwardingRule"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
@@ -5543,6 +5576,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     },
@@ -5594,6 +5628,7 @@
       "$ref": "ForwardingRuleList"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
@@ -5638,6 +5673,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     }
@@ -5674,6 +5710,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     },
@@ -5706,6 +5743,7 @@
       "$ref": "Address"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
@@ -5734,6 +5772,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     },
@@ -5777,6 +5816,7 @@
       "$ref": "AddressList"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
@@ -5814,6 +5854,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     },
@@ -5846,6 +5887,7 @@
       "$ref": "ForwardingRule"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
@@ -5874,6 +5916,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     },
@@ -5917,6 +5960,7 @@
       "$ref": "ForwardingRuleList"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
@@ -5953,6 +5997,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     }
@@ -6000,6 +6045,7 @@
       "$ref": "OperationAggregatedList"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
@@ -6030,6 +6076,7 @@
       "operation"
      ],
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     },
@@ -6062,6 +6109,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
@@ -6106,6 +6154,7 @@
       "$ref": "OperationList"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
@@ -6143,6 +6192,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     },
@@ -6175,6 +6225,7 @@
       "$ref": "HttpHealthCheck"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
@@ -6203,6 +6254,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     },
@@ -6246,6 +6298,7 @@
       "$ref": "HttpHealthCheckList"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
@@ -6282,6 +6335,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     },
@@ -6317,6 +6371,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     }
@@ -6353,6 +6408,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     },
@@ -6388,6 +6444,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     },
@@ -6420,6 +6477,7 @@
       "$ref": "Image"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
@@ -6448,6 +6506,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/devstorage.full_control",
       "https://www.googleapis.com/auth/devstorage.read_only",
@@ -6494,6 +6553,7 @@
       "$ref": "ImageList"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
@@ -6531,6 +6591,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     },
@@ -6563,6 +6624,7 @@
       "$ref": "InstanceTemplate"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
@@ -6591,6 +6653,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     },
@@ -6634,6 +6697,7 @@
       "$ref": "InstanceTemplateList"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
@@ -6689,6 +6753,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     },
@@ -6731,6 +6796,7 @@
       "$ref": "InstanceAggregatedList"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
@@ -6775,6 +6841,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     },
@@ -6815,6 +6882,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     },
@@ -6869,6 +6937,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     },
@@ -6917,6 +6986,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     },
@@ -6957,6 +7027,7 @@
       "$ref": "Instance"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
@@ -6998,6 +7069,7 @@
       "$ref": "SerialPortOutput"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
@@ -7034,6 +7106,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     },
@@ -7085,6 +7158,7 @@
       "$ref": "InstanceList"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
@@ -7126,6 +7200,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     },
@@ -7181,6 +7256,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     },
@@ -7224,6 +7300,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     },
@@ -7267,6 +7344,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     },
@@ -7310,6 +7388,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     },
@@ -7350,6 +7429,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     },
@@ -7390,6 +7470,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     }
@@ -7426,6 +7507,7 @@
       "$ref": "License"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
@@ -7474,6 +7556,7 @@
       "$ref": "MachineTypeAggregatedList"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
@@ -7515,6 +7598,7 @@
       "$ref": "MachineType"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
@@ -7567,6 +7651,7 @@
       "$ref": "MachineTypeList"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
@@ -7604,6 +7689,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     },
@@ -7636,6 +7722,7 @@
       "$ref": "Network"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
@@ -7664,6 +7751,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     },
@@ -7707,6 +7795,7 @@
       "$ref": "NetworkList"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
@@ -7736,6 +7825,7 @@
       "$ref": "Project"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
@@ -7764,6 +7854,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     },
@@ -7791,6 +7882,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/devstorage.full_control",
       "https://www.googleapis.com/auth/devstorage.read_only",
@@ -7835,6 +7927,7 @@
       "operation"
      ],
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     },
@@ -7875,6 +7968,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
@@ -7927,6 +8021,7 @@
       "$ref": "OperationList"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
@@ -7964,6 +8059,7 @@
       "$ref": "Region"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
@@ -8008,6 +8104,7 @@
       "$ref": "RegionList"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
@@ -8045,6 +8142,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     },
@@ -8077,6 +8175,7 @@
       "$ref": "Route"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
@@ -8105,6 +8204,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     },
@@ -8148,6 +8248,7 @@
       "$ref": "RouteList"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
@@ -8185,6 +8286,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     },
@@ -8217,6 +8319,7 @@
       "$ref": "Snapshot"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
@@ -8261,6 +8364,7 @@
       "$ref": "SnapshotList"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
@@ -8298,6 +8402,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     },
@@ -8330,6 +8435,7 @@
       "$ref": "TargetHttpProxy"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
@@ -8358,6 +8464,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     },
@@ -8401,6 +8508,7 @@
       "$ref": "TargetHttpProxyList"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
@@ -8437,6 +8545,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     }
@@ -8484,6 +8593,7 @@
       "$ref": "TargetInstanceAggregatedList"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
@@ -8525,6 +8635,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     },
@@ -8565,6 +8676,7 @@
       "$ref": "TargetInstance"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
@@ -8601,6 +8713,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     },
@@ -8652,6 +8765,7 @@
       "$ref": "TargetInstanceList"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
@@ -8699,6 +8813,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     },
@@ -8741,6 +8856,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     },
@@ -8784,6 +8900,7 @@
       "$ref": "TargetPoolAggregatedList"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
@@ -8825,6 +8942,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     },
@@ -8865,6 +8983,7 @@
       "$ref": "TargetPool"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
@@ -8908,6 +9027,7 @@
       "$ref": "TargetPoolInstanceHealth"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
@@ -8944,6 +9064,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     },
@@ -8995,6 +9116,7 @@
       "$ref": "TargetPoolList"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
@@ -9038,6 +9160,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     },
@@ -9080,6 +9203,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     },
@@ -9129,6 +9253,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     }
@@ -9165,6 +9290,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     },
@@ -9197,6 +9323,7 @@
       "$ref": "UrlMap"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
@@ -9225,6 +9352,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     },
@@ -9268,6 +9396,7 @@
       "$ref": "UrlMapList"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
@@ -9304,6 +9433,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     },
@@ -9339,6 +9469,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     },
@@ -9374,6 +9505,7 @@
       "$ref": "UrlMapsValidateResponse"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     }
@@ -9415,6 +9547,7 @@
       "operation"
      ],
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
      ]
     },
@@ -9455,6 +9588,7 @@
       "$ref": "Operation"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
@@ -9507,6 +9641,7 @@
       "$ref": "OperationList"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
@@ -9544,6 +9679,7 @@
       "$ref": "Zone"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]
@@ -9588,6 +9724,7 @@
       "$ref": "ZoneList"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly"
      ]

@@ -775,7 +775,7 @@ type SearchJobsRequest struct {
 	PageToken string `json:"pageToken,omitempty"`
 
 	// ProjectId: Required. Only return jobs which belong to this Google
-	// Developers
+	// Developers Console project.
 	ProjectId int64 `json:"projectId,omitempty,string"`
 
 	// Status: Only return jobs which have a matching status.

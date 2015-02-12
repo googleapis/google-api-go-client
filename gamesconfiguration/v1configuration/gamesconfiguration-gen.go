@@ -974,6 +974,7 @@ func (c *ImageConfigurationsUploadCall) Do() (*ImageConfiguration, error) {
 		if err != nil {
 			return nil, err
 		}
+		defer res.Body.Close()
 	}
 	var ret *ImageConfiguration
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {

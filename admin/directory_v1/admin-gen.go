@@ -1038,7 +1038,7 @@ type UserAddress struct {
 	// ExtendedAddress: Extended Address.
 	ExtendedAddress string `json:"extendedAddress,omitempty"`
 
-	// Formatted: Formatted address (read-only field)
+	// Formatted: Formatted address.
 	Formatted string `json:"formatted,omitempty"`
 
 	// Locality: Locality.

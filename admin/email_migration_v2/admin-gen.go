@@ -230,6 +230,7 @@ func (c *MailInsertCall) Do() error {
 		if err != nil {
 			return err
 		}
+		defer res.Body.Close()
 	}
 	return nil
 	// {

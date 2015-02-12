@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/O6c4hqlf7a-JwyG37WvCKR3ZHMk\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/l0JgsjBWjI1NlzVxkARuHEA3uK8\"",
  "discoveryVersion": "v1",
  "id": "pubsub:v1beta1",
  "name": "pubsub",
@@ -86,7 +86,6 @@
    "id": "AcknowledgeRequest",
    "type": "object",
    "description": "Request for the Acknowledge method.",
-   "externalTypeName": "tech.pubsub.AcknowledgeRequest",
    "properties": {
     "ackId": {
      "type": "array",
@@ -105,7 +104,6 @@
    "id": "Label",
    "type": "object",
    "description": "A key-value pair applied to a given object.",
-   "externalTypeName": "tech.label.Label",
    "properties": {
     "key": {
      "type": "string",
@@ -126,7 +124,6 @@
    "id": "ListSubscriptionsResponse",
    "type": "object",
    "description": "Response for the ListSubscriptions method.",
-   "externalTypeName": "tech.pubsub.ListSubscriptionsResponse",
    "properties": {
     "nextPageToken": {
      "type": "string",
@@ -145,7 +142,6 @@
    "id": "ListTopicsResponse",
    "type": "object",
    "description": "Response for the ListTopics method.",
-   "externalTypeName": "tech.pubsub.ListTopicsResponse",
    "properties": {
     "nextPageToken": {
      "type": "string",
@@ -164,7 +160,6 @@
    "id": "ModifyAckDeadlineRequest",
    "type": "object",
    "description": "Request for the ModifyAckDeadline method.",
-   "externalTypeName": "tech.pubsub.ModifyAckDeadlineRequest",
    "properties": {
     "ackDeadlineSeconds": {
      "type": "integer",
@@ -185,7 +180,6 @@
    "id": "ModifyPushConfigRequest",
    "type": "object",
    "description": "Request for the ModifyPushConfig method.",
-   "externalTypeName": "tech.pubsub.ModifyPushConfigRequest",
    "properties": {
     "pushConfig": {
      "$ref": "PushConfig",
@@ -201,7 +195,6 @@
    "id": "PublishBatchRequest",
    "type": "object",
    "description": "Request for the PublishBatch method.",
-   "externalTypeName": "tech.pubsub.PublishBatchRequest",
    "properties": {
     "messages": {
      "type": "array",
@@ -220,7 +213,6 @@
    "id": "PublishBatchResponse",
    "type": "object",
    "description": "Response for the PublishBatch method.",
-   "externalTypeName": "tech.pubsub.PublishBatchResponse",
    "properties": {
     "messageIds": {
      "type": "array",
@@ -235,7 +227,6 @@
    "id": "PublishRequest",
    "type": "object",
    "description": "Request for the Publish method.",
-   "externalTypeName": "tech.pubsub.PublishRequest",
    "properties": {
     "message": {
      "$ref": "PubsubMessage",
@@ -251,7 +242,6 @@
    "id": "PubsubEvent",
    "type": "object",
    "description": "An event indicating a received message or truncation event.",
-   "externalTypeName": "tech.pubsub.PubsubEvent",
    "properties": {
     "deleted": {
      "type": "boolean",
@@ -275,7 +265,6 @@
    "id": "PubsubMessage",
    "type": "object",
    "description": "A message data and its labels.",
-   "externalTypeName": "tech.pubsub.PubsubMessage",
    "properties": {
     "data": {
      "type": "string",
@@ -299,7 +288,6 @@
    "id": "PullBatchRequest",
    "type": "object",
    "description": "Request for the PullBatch method.",
-   "externalTypeName": "tech.pubsub.PullBatchRequest",
    "properties": {
     "maxEvents": {
      "type": "integer",
@@ -320,7 +308,6 @@
    "id": "PullBatchResponse",
    "type": "object",
    "description": "Response for the PullBatch method.",
-   "externalTypeName": "tech.pubsub.PullBatchResponse",
    "properties": {
     "pullResponses": {
      "type": "array",
@@ -335,7 +322,6 @@
    "id": "PullRequest",
    "type": "object",
    "description": "Request for the Pull method.",
-   "externalTypeName": "tech.pubsub.PullRequest",
    "properties": {
     "returnImmediately": {
      "type": "boolean",
@@ -351,7 +337,6 @@
    "id": "PullResponse",
    "type": "object",
    "description": "Either a PubsubMessage or a truncation event. One of these two must be populated.",
-   "externalTypeName": "tech.pubsub.PullResponse",
    "properties": {
     "ackId": {
      "type": "string",
@@ -367,7 +352,6 @@
    "id": "PushConfig",
    "type": "object",
    "description": "Configuration for a push delivery endpoint.",
-   "externalTypeName": "tech.pubsub.PushConfig",
    "properties": {
     "pushEndpoint": {
      "type": "string",
@@ -379,7 +363,6 @@
    "id": "Subscription",
    "type": "object",
    "description": "A subscription resource.",
-   "externalTypeName": "tech.pubsub.Subscription",
    "properties": {
     "ackDeadlineSeconds": {
      "type": "integer",
@@ -404,7 +387,6 @@
    "id": "Topic",
    "type": "object",
    "description": "A topic resource.",
-   "externalTypeName": "tech.pubsub.Topic",
    "properties": {
     "name": {
      "type": "string",

@@ -351,6 +351,9 @@ type Job struct {
 	// Status: [Output-only] The status of this job. Examine this value when
 	// polling an asynchronous job to see if the job is complete.
 	Status *JobStatus `json:"status,omitempty"`
+
+	// User_email: [Output-only] Email address of the user who ran the job.
+	User_email string `json:"user_email,omitempty"`
 }
 
 type JobConfiguration struct {
@@ -681,7 +684,8 @@ type JobListJobs struct {
 	// Status: [Full-projection-only] Describes the state of the job.
 	Status *JobStatus `json:"status,omitempty"`
 
-	// User_email: [Full-projection-only] User who ran the job.
+	// User_email: [Full-projection-only] Email address of the user who ran
+	// the job.
 	User_email string `json:"user_email,omitempty"`
 }
 
@@ -824,10 +828,10 @@ type QueryRequest struct {
 	// format 'datasetId.tableId'.
 	DefaultDataset *DatasetReference `json:"defaultDataset,omitempty"`
 
-	// DryRun: [Optional] If set, don't actually run the query. A valid
-	// query will return an empty response, while an invalid query will
-	// return the same error it would if it wasn't a dry run. The default
-	// value is false.
+	// DryRun: [Optional] If set, don't actually run this job. A valid query
+	// will return a mostly empty response with some processing statistics,
+	// while an invalid query will return the same error it would if it
+	// wasn't a dry run.
 	DryRun bool `json:"dryRun,omitempty"`
 
 	// Kind: The resource type of the request.
@@ -2080,6 +2084,7 @@ func (c *JobsInsertCall) Do() (*Job, error) {
 		if err != nil {
 			return nil, err
 		}
+		defer res.Body.Close()
 	}
 	var ret *Job
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {

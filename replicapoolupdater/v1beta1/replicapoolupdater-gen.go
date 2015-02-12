@@ -59,6 +59,7 @@ func New(client *http.Client) (*Service, error) {
 	}
 	s := &Service{client: client, BasePath: basePath}
 	s.RollingUpdates = NewRollingUpdatesService(s)
+	s.ZoneOperations = NewZoneOperationsService(s)
 	return s, nil
 }
 
@@ -67,6 +68,8 @@ type Service struct {
 	BasePath string // API endpoint base URL
 
 	RollingUpdates *RollingUpdatesService
+
+	ZoneOperations *ZoneOperationsService
 }
 
 func NewRollingUpdatesService(s *Service) *RollingUpdatesService {
@@ -78,12 +81,20 @@ type RollingUpdatesService struct {
 	s *Service
 }
 
-type InsertResponse struct {
-	// RollingUpdate: The name of the update.
-	RollingUpdate string `json:"rollingUpdate,omitempty"`
+func NewZoneOperationsService(s *Service) *ZoneOperationsService {
+	rs := &ZoneOperationsService{s: s}
+	return rs
+}
+
+type ZoneOperationsService struct {
+	s *Service
 }
 
 type InstanceUpdate struct {
+	// Error: Errors that occurred during the instance update. Setting
+	// (api.field).field_number manually is a workaround for b/16512602.
+	Error *InstanceUpdateError `json:"error,omitempty"`
+
 	// Instance: URL of the instance being updated.
 	Instance string `json:"instance,omitempty"`
 
@@ -107,6 +118,24 @@ type InstanceUpdate struct {
 	Status string `json:"status,omitempty"`
 }
 
+type InstanceUpdateError struct {
+	// Errors: [Output Only] The array of errors encountered while
+	// processing this operation.
+	Errors []*InstanceUpdateErrorErrors `json:"errors,omitempty"`
+}
+
+type InstanceUpdateErrorErrors struct {
+	// Code: [Output Only] The error type identifier for this error.
+	Code string `json:"code,omitempty"`
+
+	// Location: [Output Only] Indicates the field in the request which
+	// caused the error. This property is optional.
+	Location string `json:"location,omitempty"`
+
+	// Message: [Output Only] An optional, human-readable error message.
+	Message string `json:"message,omitempty"`
+}
+
 type InstanceUpdateList struct {
 	// Items: Collection of requested instance updates.
 	Items []*InstanceUpdate `json:"items,omitempty"`
@@ -121,21 +150,143 @@ type InstanceUpdateList struct {
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
+type Operation struct {
+	ClientOperationId string `json:"clientOperationId,omitempty"`
+
+	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
+	// format (output only).
+	CreationTimestamp string `json:"creationTimestamp,omitempty"`
+
+	EndTime string `json:"endTime,omitempty"`
+
+	// Error: [Output Only] If errors occurred during processing of this
+	// operation, this field will be populated.
+	Error *OperationError `json:"error,omitempty"`
+
+	HttpErrorMessage string `json:"httpErrorMessage,omitempty"`
+
+	HttpErrorStatusCode int64 `json:"httpErrorStatusCode,omitempty"`
+
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
+	Id uint64 `json:"id,omitempty,string"`
+
+	// InsertTime: [Output Only] The time that this operation was requested.
+	// This is in RFC 3339 format.
+	InsertTime string `json:"insertTime,omitempty"`
+
+	// Kind: [Output Only] Type of the resource. Always kind#operation for
+	// Operation resources.
+	Kind string `json:"kind,omitempty"`
+
+	// Name: [Output Only] Name of the resource (output only).
+	Name string `json:"name,omitempty"`
+
+	OperationType string `json:"operationType,omitempty"`
+
+	Progress int64 `json:"progress,omitempty"`
+
+	// Region: [Output Only] URL of the region where the operation resides
+	// (output only).
+	Region string `json:"region,omitempty"`
+
+	// SelfLink: [Output Only] Server defined URL for the resource.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// StartTime: [Output Only] The time that this operation was started by
+	// the server. This is in RFC 3339 format.
+	StartTime string `json:"startTime,omitempty"`
+
+	// Status: [Output Only] Status of the operation. Can be one of the
+	// following: "PENDING", "RUNNING", or "DONE".
+	Status string `json:"status,omitempty"`
+
+	// StatusMessage: [Output Only] An optional textual description of the
+	// current status of the operation.
+	StatusMessage string `json:"statusMessage,omitempty"`
+
+	// TargetId: [Output Only] Unique target id which identifies a
+	// particular incarnation of the target.
+	TargetId uint64 `json:"targetId,omitempty,string"`
+
+	// TargetLink: [Output Only] URL of the resource the operation is
+	// mutating (output only).
+	TargetLink string `json:"targetLink,omitempty"`
+
+	User string `json:"user,omitempty"`
+
+	Warnings []*OperationWarnings `json:"warnings,omitempty"`
+
+	// Zone: [Output Only] URL of the zone where the operation resides
+	// (output only).
+	Zone string `json:"zone,omitempty"`
+}
+
+type OperationError struct {
+	// Errors: [Output Only] The array of errors encountered while
+	// processing this operation.
+	Errors []*OperationErrorErrors `json:"errors,omitempty"`
+}
+
+type OperationErrorErrors struct {
+	// Code: [Output Only] The error type identifier for this error.
+	Code string `json:"code,omitempty"`
+
+	// Location: [Output Only] Indicates the field in the request which
+	// caused the error. This property is optional.
+	Location string `json:"location,omitempty"`
+
+	// Message: [Output Only] An optional, human-readable error message.
+	Message string `json:"message,omitempty"`
+}
+
+type OperationWarnings struct {
+	// Code: [Output only] The warning type identifier for this warning.
+	Code string `json:"code,omitempty"`
+
+	// Data: [Output only] Metadata for this warning in key:value format.
+	Data []*OperationWarningsData `json:"data,omitempty"`
+
+	// Message: [Output only] Optional human-readable details for this
+	// warning.
+	Message string `json:"message,omitempty"`
+}
+
+type OperationWarningsData struct {
+	// Key: [Output Only] Metadata key for this warning.
+	Key string `json:"key,omitempty"`
+
+	// Value: [Output Only] Metadata value for this warning.
+	Value string `json:"value,omitempty"`
+}
+
 type RollingUpdate struct {
 	// ActionType: Action to be performed for each instance. Possible values
 	// are:
-	// - "RECREATE": Instance will be recreated.
+	// - "RECREATE": Instance will be recreated. Only for managed
+	// instance groups.
+	// - "REBOOT": Soft reboot will be performed on an
+	// instance. Only for non-managed instance groups.
 	ActionType string `json:"actionType,omitempty"`
 
 	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
 	// format.
 	CreationTimestamp string `json:"creationTimestamp,omitempty"`
 
+	// Description: An optional textual description of the resource;
+	// provided by the client when the resource is created.
+	Description string `json:"description,omitempty"`
+
 	// Id: [Output Only] Unique identifier for the resource; defined by the
 	// server.
 	Id string `json:"id,omitempty"`
 
+	// InstanceGroup: URL of an instance group being updated. Exactly one of
+	// instance_group_manager and instance_group must be set.
+	InstanceGroup string `json:"instanceGroup,omitempty"`
+
 	// InstanceGroupManager: URL of an instance group manager being updated.
+	// Exactly one of instance_group_manager and instance_group must be set.
 	InstanceGroupManager string `json:"instanceGroupManager,omitempty"`
 
 	// InstanceTemplate: URL of an instance template to apply.
@@ -251,7 +402,7 @@ func (c *RollingUpdatesCancelCall) Fields(s ...googleapi.Field) *RollingUpdatesC
 	return c
 }
 
-func (c *RollingUpdatesCancelCall) Do() error {
+func (c *RollingUpdatesCancelCall) Do() (*Operation, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -269,13 +420,17 @@ func (c *RollingUpdatesCancelCall) Do() error {
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return nil, err
 	}
-	return nil
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
 	// {
 	//   "description": "Cancels an update. The update must be PAUSED before it can be cancelled. This has no effect if the update is already CANCELLED.",
 	//   "httpMethod": "POST",
@@ -307,6 +462,9 @@ func (c *RollingUpdatesCancelCall) Do() error {
 	//     }
 	//   },
 	//   "path": "{project}/zones/{zone}/rollingUpdates/{rollingUpdate}/cancel",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/replicapool"
@@ -443,7 +601,7 @@ func (c *RollingUpdatesInsertCall) Fields(s ...googleapi.Field) *RollingUpdatesI
 	return c
 }
 
-func (c *RollingUpdatesInsertCall) Do() (*InsertResponse, error) {
+func (c *RollingUpdatesInsertCall) Do() (*Operation, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.rollingupdate)
 	if err != nil {
@@ -472,7 +630,7 @@ func (c *RollingUpdatesInsertCall) Do() (*InsertResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *InsertResponse
+	var ret *Operation
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -505,7 +663,7 @@ func (c *RollingUpdatesInsertCall) Do() (*InsertResponse, error) {
 	//     "$ref": "RollingUpdate"
 	//   },
 	//   "response": {
-	//     "$ref": "InsertResponse"
+	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
@@ -542,7 +700,8 @@ func (c *RollingUpdatesListCall) Filter(filter string) *RollingUpdatesListCall {
 }
 
 // InstanceGroupManager sets the optional parameter
-// "instanceGroupManager": The name of the instance group manager.
+// "instanceGroupManager": The name of the instance group manager used
+// for filtering.
 func (c *RollingUpdatesListCall) InstanceGroupManager(instanceGroupManager string) *RollingUpdatesListCall {
 	c.opt_["instanceGroupManager"] = instanceGroupManager
 	return c
@@ -627,7 +786,7 @@ func (c *RollingUpdatesListCall) Do() (*RollingUpdateList, error) {
 	//       "type": "string"
 	//     },
 	//     "instanceGroupManager": {
-	//       "description": "The name of the instance group manager.",
+	//       "description": "The name of the instance group manager used for filtering.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -854,7 +1013,7 @@ func (c *RollingUpdatesPauseCall) Fields(s ...googleapi.Field) *RollingUpdatesPa
 	return c
 }
 
-func (c *RollingUpdatesPauseCall) Do() error {
+func (c *RollingUpdatesPauseCall) Do() (*Operation, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -872,13 +1031,17 @@ func (c *RollingUpdatesPauseCall) Do() error {
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return nil, err
 	}
-	return nil
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
 	// {
 	//   "description": "Pauses the update in state from ROLLING_FORWARD or ROLLING_BACK. Has no effect if invoked when the state of the update is PAUSED.",
 	//   "httpMethod": "POST",
@@ -910,6 +1073,9 @@ func (c *RollingUpdatesPauseCall) Do() error {
 	//     }
 	//   },
 	//   "path": "{project}/zones/{zone}/rollingUpdates/{rollingUpdate}/pause",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/replicapool"
@@ -947,7 +1113,7 @@ func (c *RollingUpdatesResumeCall) Fields(s ...googleapi.Field) *RollingUpdatesR
 	return c
 }
 
-func (c *RollingUpdatesResumeCall) Do() error {
+func (c *RollingUpdatesResumeCall) Do() (*Operation, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -965,13 +1131,17 @@ func (c *RollingUpdatesResumeCall) Do() error {
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return nil, err
 	}
-	return nil
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
 	// {
 	//   "description": "Continues an update in PAUSED state. Has no effect if invoked when the state of the update is ROLLED_OUT.",
 	//   "httpMethod": "POST",
@@ -1003,6 +1173,9 @@ func (c *RollingUpdatesResumeCall) Do() error {
 	//     }
 	//   },
 	//   "path": "{project}/zones/{zone}/rollingUpdates/{rollingUpdate}/resume",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/replicapool"
@@ -1041,7 +1214,7 @@ func (c *RollingUpdatesRollbackCall) Fields(s ...googleapi.Field) *RollingUpdate
 	return c
 }
 
-func (c *RollingUpdatesRollbackCall) Do() error {
+func (c *RollingUpdatesRollbackCall) Do() (*Operation, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1059,13 +1232,17 @@ func (c *RollingUpdatesRollbackCall) Do() error {
 	req.Header.Set("User-Agent", "google-api-go-client/0.5")
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return nil, err
 	}
-	return nil
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
 	// {
 	//   "description": "Rolls back the update in state from ROLLING_FORWARD or PAUSED. Has no effect if invoked when the state of the update is ROLLED_BACK.",
 	//   "httpMethod": "POST",
@@ -1097,6 +1274,107 @@ func (c *RollingUpdatesRollbackCall) Do() error {
 	//     }
 	//   },
 	//   "path": "{project}/zones/{zone}/rollingUpdates/{rollingUpdate}/rollback",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/replicapool"
+	//   ]
+	// }
+
+}
+
+// method id "replicapoolupdater.zoneOperations.get":
+
+type ZoneOperationsGetCall struct {
+	s         *Service
+	project   string
+	zone      string
+	operation string
+	opt_      map[string]interface{}
+}
+
+// Get: Retrieves the specified zone-specific operation resource.
+func (r *ZoneOperationsService) Get(project string, zone string, operation string) *ZoneOperationsGetCall {
+	c := &ZoneOperationsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.zone = zone
+	c.operation = operation
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ZoneOperationsGetCall) Fields(s ...googleapi.Field) *ZoneOperationsGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *ZoneOperationsGetCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/operations/{operation}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project":   c.project,
+		"zone":      c.zone,
+		"operation": c.operation,
+	})
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the specified zone-specific operation resource.",
+	//   "httpMethod": "GET",
+	//   "id": "replicapoolupdater.zoneOperations.get",
+	//   "parameterOrder": [
+	//     "project",
+	//     "zone",
+	//     "operation"
+	//   ],
+	//   "parameters": {
+	//     "operation": {
+	//       "description": "Name of the operation resource to return.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "Name of the zone scoping this request.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/zones/{zone}/operations/{operation}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/replicapool"

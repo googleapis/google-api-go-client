@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/G0v1rWSx70VoKr67jXxgcXZaRUc\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/kiEe27ASVaXFaTazonTUuT5jr1o\"",
  "discoveryVersion": "v1",
  "id": "admin:directory_v1",
  "name": "admin",
  "canonicalName": "directory",
  "version": "directory_v1",
- "revision": "20141113",
+ "revision": "20150123",
  "title": "Admin Directory API",
  "description": "The Admin SDK Directory API lets you view and manage enterprise resources such as users and groups, administrative notifications, security features, and more.",
  "ownerDomain": "google.com",
@@ -1344,7 +1344,7 @@
     },
     "formatted": {
      "type": "string",
-     "description": "Formatted address (read-only field)"
+     "description": "Formatted address."
     },
     "locality": {
      "type": "string",

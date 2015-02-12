@@ -247,6 +247,18 @@ type ApkListingsListResponse struct {
 	Listings []*ApkListing `json:"listings,omitempty"`
 }
 
+type ApksAddExternallyHostedRequest struct {
+	// ExternallyHostedApk: The definition of the externally-hosted APK and
+	// where it is located.
+	ExternallyHostedApk *ExternallyHostedApk `json:"externallyHostedApk,omitempty"`
+}
+
+type ApksAddExternallyHostedResponse struct {
+	// ExternallyHostedApk: The definition of the externally-hosted APK and
+	// where it is located.
+	ExternallyHostedApk *ExternallyHostedApk `json:"externallyHostedApk,omitempty"`
+}
+
 type ApksListResponse struct {
 	Apks []*Apk `json:"apks,omitempty"`
 
@@ -294,6 +306,69 @@ type ExpansionFile struct {
 
 type ExpansionFilesUploadResponse struct {
 	ExpansionFile *ExpansionFile `json:"expansionFile,omitempty"`
+}
+
+type ExternallyHostedApk struct {
+	// ApplicationLabel: The application label.
+	ApplicationLabel string `json:"applicationLabel,omitempty"`
+
+	// CertificateBase64s: A certificate (or array of certificates if a
+	// certificate-chain is used) used to signed this APK, represented as a
+	// base64 encoded byte array.
+	CertificateBase64s []string `json:"certificateBase64s,omitempty"`
+
+	// ExternallyHostedUrl: The URL at which the APK is hosted. This must be
+	// an https URL.
+	ExternallyHostedUrl string `json:"externallyHostedUrl,omitempty"`
+
+	// FileSha1Base64: The SHA1 checksum of this APK, represented as a
+	// base64 encoded byte array.
+	FileSha1Base64 string `json:"fileSha1Base64,omitempty"`
+
+	// FileSha256Base64: The SHA256 checksum of this APK, represented as a
+	// base64 encoded byte array.
+	FileSha256Base64 string `json:"fileSha256Base64,omitempty"`
+
+	// FileSize: The file size in bytes of this APK.
+	FileSize int64 `json:"fileSize,omitempty,string"`
+
+	// IconBase64: The icon image from the APK, as a base64 encoded byte
+	// array.
+	IconBase64 string `json:"iconBase64,omitempty"`
+
+	// MaximumSdk: The maximum SDK supported by this APK (optional).
+	MaximumSdk int64 `json:"maximumSdk,omitempty"`
+
+	// MinimumSdk: The minimum SDK targeted by this APK.
+	MinimumSdk int64 `json:"minimumSdk,omitempty"`
+
+	// NativeCodes: The native code environments supported by this APK
+	// (optional).
+	NativeCodes []string `json:"nativeCodes,omitempty"`
+
+	// PackageName: The package name.
+	PackageName string `json:"packageName,omitempty"`
+
+	// UsesFeatures: The features required by this APK (optional).
+	UsesFeatures []string `json:"usesFeatures,omitempty"`
+
+	// UsesPermissions: The permissions requested by this APK.
+	UsesPermissions []*ExternallyHostedApkUsesPermission `json:"usesPermissions,omitempty"`
+
+	// VersionCode: The version code of this APK.
+	VersionCode int64 `json:"versionCode,omitempty"`
+
+	// VersionName: The version name of this APK.
+	VersionName string `json:"versionName,omitempty"`
+}
+
+type ExternallyHostedApkUsesPermission struct {
+	// MaxSdkVersion: Optionally, the maximum SDK version for which the
+	// permission is required.
+	MaxSdkVersion int64 `json:"maxSdkVersion,omitempty"`
+
+	// Name: The name of the permission requested.
+	Name string `json:"name,omitempty"`
 }
 
 type Image struct {
@@ -1653,6 +1728,107 @@ func (c *EditsApklistingsUpdateCall) Do() (*ApkListing, error) {
 
 }
 
+// method id "androidpublisher.edits.apks.addexternallyhosted":
+
+type EditsApksAddexternallyhostedCall struct {
+	s                              *Service
+	packageNameid                  string
+	editId                         string
+	apksaddexternallyhostedrequest *ApksAddExternallyHostedRequest
+	opt_                           map[string]interface{}
+}
+
+// Addexternallyhosted: Creates a new APK without uploading the APK
+// itself to Google Play, instead hosting the APK at a specified URL.
+// This function is only available to enterprises using Android for
+// Work, for applications distributed within the enterprise Private
+// Channel.
+func (r *EditsApksService) Addexternallyhosted(packageNameid string, editId string, apksaddexternallyhostedrequest *ApksAddExternallyHostedRequest) *EditsApksAddexternallyhostedCall {
+	c := &EditsApksAddexternallyhostedCall{s: r.s, opt_: make(map[string]interface{})}
+	c.packageNameid = packageNameid
+	c.editId = editId
+	c.apksaddexternallyhostedrequest = apksaddexternallyhostedrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *EditsApksAddexternallyhostedCall) Fields(s ...googleapi.Field) *EditsApksAddexternallyhostedCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *EditsApksAddexternallyhostedCall) Do() (*ApksAddExternallyHostedResponse, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.apksaddexternallyhostedrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{packageName}/edits/{editId}/apks/externallyHosted")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName": c.packageNameid,
+		"editId":      c.editId,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *ApksAddExternallyHostedResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new APK without uploading the APK itself to Google Play, instead hosting the APK at a specified URL. This function is only available to enterprises using Android for Work, for applications distributed within the enterprise Private Channel.",
+	//   "httpMethod": "POST",
+	//   "id": "androidpublisher.edits.apks.addexternallyhosted",
+	//   "parameterOrder": [
+	//     "packageName",
+	//     "editId"
+	//   ],
+	//   "parameters": {
+	//     "editId": {
+	//       "description": "Unique identifier for this edit.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "packageName": {
+	//       "description": "Unique identifier for the Android app that is being updated; for example, \"com.spiffygame\".",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{packageName}/edits/{editId}/apks/externallyHosted",
+	//   "request": {
+	//     "$ref": "ApksAddExternallyHostedRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "ApksAddExternallyHostedResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidpublisher"
+	//   ]
+	// }
+
+}
+
 // method id "androidpublisher.edits.apks.list":
 
 type EditsApksListCall struct {
@@ -1865,6 +2041,7 @@ func (c *EditsApksUploadCall) Do() (*Apk, error) {
 		if err != nil {
 			return nil, err
 		}
+		defer res.Body.Close()
 	}
 	var ret *Apk
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
@@ -2705,6 +2882,7 @@ func (c *EditsExpansionfilesUploadCall) Do() (*ExpansionFilesUploadResponse, err
 		if err != nil {
 			return nil, err
 		}
+		defer res.Body.Close()
 	}
 	var ret *ExpansionFilesUploadResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
@@ -3296,6 +3474,7 @@ func (c *EditsImagesUploadCall) Do() (*ImagesUploadResponse, error) {
 		if err != nil {
 			return nil, err
 		}
+		defer res.Body.Close()
 	}
 	var ret *ImagesUploadResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
@@ -4498,7 +4677,9 @@ type EditsTracksPatchCall struct {
 }
 
 // Patch: Updates the track configuration for the specified track type.
-// This method supports patch semantics.
+// When halted, the rollout track cannot be updated without adding new
+// APKs, and adding new APKs will cause it to resume. This method
+// supports patch semantics.
 func (r *EditsTracksService) Patch(packageNameid string, editId string, track string, track2 *Track) *EditsTracksPatchCall {
 	c := &EditsTracksPatchCall{s: r.s, opt_: make(map[string]interface{})}
 	c.packageNameid = packageNameid
@@ -4552,7 +4733,7 @@ func (c *EditsTracksPatchCall) Do() (*Track, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the track configuration for the specified track type. This method supports patch semantics.",
+	//   "description": "Updates the track configuration for the specified track type. When halted, the rollout track cannot be updated without adding new APKs, and adding new APKs will cause it to resume. This method supports patch semantics.",
 	//   "httpMethod": "PATCH",
 	//   "id": "androidpublisher.edits.tracks.patch",
 	//   "parameterOrder": [
@@ -4618,6 +4799,8 @@ type EditsTracksUpdateCall struct {
 }
 
 // Update: Updates the track configuration for the specified track type.
+// When halted, the rollout track cannot be updated without adding new
+// APKs, and adding new APKs will cause it to resume.
 func (r *EditsTracksService) Update(packageNameid string, editId string, track string, track2 *Track) *EditsTracksUpdateCall {
 	c := &EditsTracksUpdateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.packageNameid = packageNameid
@@ -4671,7 +4854,7 @@ func (c *EditsTracksUpdateCall) Do() (*Track, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the track configuration for the specified track type.",
+	//   "description": "Updates the track configuration for the specified track type. When halted, the rollout track cannot be updated without adding new APKs, and adding new APKs will cause it to resume.",
 	//   "httpMethod": "PUT",
 	//   "id": "androidpublisher.edits.tracks.update",
 	//   "parameterOrder": [

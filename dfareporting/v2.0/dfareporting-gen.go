@@ -668,10 +668,11 @@ type Account struct {
 	// AccountPermissionIds: Account permissions assigned to this account.
 	AccountPermissionIds googleapi.Int64s `json:"accountPermissionIds,omitempty"`
 
-	// AccountProfile: Profile for this account.
+	// AccountProfile: Profile for this account. This is a read-only field
+	// that can be left blank.
 	AccountProfile string `json:"accountProfile,omitempty"`
 
-	// Active: Active status of this account.
+	// Active: Whether this account is active.
 	Active bool `json:"active,omitempty"`
 
 	// ActiveAdsLimitTier: Maximum number of active ads allowed for this
@@ -691,10 +692,56 @@ type Account struct {
 	// enabled for comScore vCE by default.
 	ComscoreVceEnabled bool `json:"comscoreVceEnabled,omitempty"`
 
-	// CountryId: ID of country associated with this account.
+	// CountryId: ID of the country associated with this account.
 	CountryId int64 `json:"countryId,omitempty,string"`
 
-	// CurrencyId: ID of currency associated with this account.
+	// CurrencyId: ID of currency associated with this account. This is a
+	// required field.
+	// Acceptable values are:
+	// - "1" for USD
+	// - "2" for GBP
+	//
+	// - "3" for ESP
+	// - "4" for SEK
+	// - "5" for CAD
+	// - "6" for JPY
+	// - "7"
+	// for DEM
+	// - "8" for AUD
+	// - "9" for FRF
+	// - "10" for ITL
+	// - "11" for DKK
+	//
+	// - "12" for NOK
+	// - "13" for FIM
+	// - "14" for ZAR
+	// - "15" for IEP
+	// -
+	// "16" for NLG
+	// - "17" for EUR
+	// - "18" for KRW
+	// - "19" for TWD
+	// - "20"
+	// for SGD
+	// - "21" for CNY
+	// - "22" for HKD
+	// - "23" for NZD
+	// - "24" for
+	// MYR
+	// - "25" for BRL
+	// - "26" for PTE
+	// - "27" for MXP
+	// - "28" for CLP
+	//
+	// - "29" for TRY
+	// - "30" for ARS
+	// - "31" for PEN
+	// - "32" for ILS
+	// -
+	// "33" for CHF
+	// - "34" for VEF
+	// - "35" for COP
+	// - "36" for GTQ
 	CurrencyId int64 `json:"currencyId,omitempty,string"`
 
 	// DefaultCreativeSizeId: Default placement dimensions for this account.
@@ -710,33 +757,36 @@ type Account struct {
 	// string "dfareporting#account".
 	Kind string `json:"kind,omitempty"`
 
-	// Locale: Locale of this account. Supported values:
-	// - "cs" (Czech)
-	// -
-	// "de" (German)
+	// Locale: Locale of this account.
+	// Acceptable values are:
+	// - "cs"
+	// (Czech)
+	// - "de" (German)
 	// - "en" (English)
+	// - "en-GB" (English United
+	// Kingdom)
 	// - "es" (Spanish)
 	// - "fr" (French)
-	// -
-	// "it" (Italian)
-	// - "ja" (Japanese)
+	// - "it" (Italian)
+	// - "ja"
+	// (Japanese)
 	// - "ko" (Korean)
 	// - "pl" (Polish)
-	//
-	// - "pt_BR" (Portuguese Brazil)
+	// - "pt-BR" (Portuguese
+	// Brazil)
 	// - "ru" (Russian)
 	// - "sv" (Swedish)
+	// - "tr" (Turkish)
 	// -
-	// "tr" (Turkish)
-	// - "zh_CN" (Chinese Simplified)
-	// - "zh_TW" (Chinese
-	// Traditional)
+	// "zh-CN" (Chinese Simplified)
+	// - "zh-TW" (Chinese Traditional)
 	Locale string `json:"locale,omitempty"`
 
 	// MaximumImageSize: Maximum image size allowed for this account.
 	MaximumImageSize int64 `json:"maximumImageSize,omitempty,string"`
 
-	// Name: Name of this account.
+	// Name: Name of this account. This is a required field, and must be
+	// less than 128 characters long and be globally unique.
 	Name string `json:"name,omitempty"`
 
 	// NielsenOcrEnabled: Whether campaigns created in this account will be
@@ -747,25 +797,22 @@ type Account struct {
 	ReportsConfiguration *ReportsConfiguration `json:"reportsConfiguration,omitempty"`
 
 	// TeaserSizeLimit: File size limit in kilobytes of Rich Media teaser
-	// creatives.
+	// creatives. Must be between 1 and 10240.
 	TeaserSizeLimit int64 `json:"teaserSizeLimit,omitempty,string"`
 }
 
 type AccountActiveAdSummary struct {
-	// AccountId: ID of this account. This is a read-only, auto-generated
-	// field.
+	// AccountId: ID of the account.
 	AccountId int64 `json:"accountId,omitempty,string"`
 
-	// ActiveAds: Ads that have been activated for this account. This is a
-	// read-only field.
+	// ActiveAds: Ads that have been activated for the account
 	ActiveAds int64 `json:"activeAds,omitempty,string"`
 
-	// ActiveAdsLimitTier: Maximum number of active ads allowed for this
-	// account. This is a read-only field.
+	// ActiveAdsLimitTier: Maximum number of active ads allowed for the
+	// account.
 	ActiveAdsLimitTier string `json:"activeAdsLimitTier,omitempty"`
 
-	// AvailableAds: Ads that can be activated for this account. This is a
-	// read-only field.
+	// AvailableAds: Ads that can be activated for the account.
 	AvailableAds int64 `json:"availableAds,omitempty,string"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -777,14 +824,13 @@ type AccountPermission struct {
 	// AccountProfiles: Account profiles associated with this account
 	// permission.
 	//
-	// Acceptable values are:
+	// Possible values are:
 	// - "ACCOUNT_PROFILE_BASIC"
 	// -
 	// "ACCOUNT_PROFILE_STANDARD"
 	AccountProfiles []string `json:"accountProfiles,omitempty"`
 
-	// Id: ID of this account permission. This is a read-only,
-	// auto-generated field.
+	// Id: ID of this account permission.
 	Id int64 `json:"id,omitempty,string"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -803,8 +849,7 @@ type AccountPermission struct {
 }
 
 type AccountPermissionGroup struct {
-	// Id: ID of this account permission group. This is a read-only,
-	// auto-generated field.
+	// Id: ID of this account permission group.
 	Id int64 `json:"id,omitempty,string"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -834,24 +879,28 @@ type AccountPermissionsListResponse struct {
 }
 
 type AccountUserProfile struct {
-	// AccountId: Account ID of the user profile.
+	// AccountId: Account ID of the user profile. This is a read-only field
+	// that can be left blank.
 	AccountId int64 `json:"accountId,omitempty,string"`
 
-	// Active: Whether this user profile is active.
+	// Active: Whether this user profile is active. This defaults to false,
+	// and must be set true on insert for the user profile to be usable.
 	Active bool `json:"active,omitempty"`
 
-	// AdvertiserFilter: Describes which advertisers are visible to the user
-	// profile.
+	// AdvertiserFilter: Filter that describes which advertisers are visible
+	// to the user profile.
 	AdvertiserFilter *ObjectFilter `json:"advertiserFilter,omitempty"`
 
-	// CampaignFilter: Describes which campaigns are visible to the user
-	// profile.
+	// CampaignFilter: Filter that describes which campaigns are visible to
+	// the user profile.
 	CampaignFilter *ObjectFilter `json:"campaignFilter,omitempty"`
 
 	// Comments: Comments for this user profile.
 	Comments string `json:"comments,omitempty"`
 
-	// Email: Email of the user profile.
+	// Email: Email of the user profile. The email addresss must be linked
+	// to a Google Account. This field is required on insertion and is
+	// read-only after insertion.
 	Email string `json:"email,omitempty"`
 
 	// Id: ID of the user profile. This is a read-only, auto-generated
@@ -862,50 +911,58 @@ type AccountUserProfile struct {
 	// string "dfareporting#accountUserProfile".
 	Kind string `json:"kind,omitempty"`
 
-	// Locale: Locale of the user profile. Supported values:
-	// - "cs"
-	// (Czech)
+	// Locale: Locale of the user profile. This is a required
+	// field.
+	// Acceptable values are:
+	// - "cs" (Czech)
 	// - "de" (German)
-	// - "en" (English)
+	// -
+	// "en" (English)
+	// - "en-GB" (English United Kingdom)
 	// - "es" (Spanish)
-	// - "fr"
-	// (French)
+	//
+	// - "fr" (French)
 	// - "it" (Italian)
 	// - "ja" (Japanese)
-	// - "ko" (Korean)
-	// -
-	// "pl" (Polish)
-	// - "pt_BR" (Portuguese Brazil)
-	// - "ru" (Russian)
-	// - "sv"
-	// (Swedish)
+	// - "ko"
+	// (Korean)
+	// - "pl" (Polish)
+	// - "pt-BR" (Portuguese Brazil)
+	// - "ru"
+	// (Russian)
+	// - "sv" (Swedish)
 	// - "tr" (Turkish)
-	// - "zh_CN" (Chinese Simplified)
-	// -
-	// "zh_TW" (Chinese Traditional)
+	// - "zh-CN" (Chinese
+	// Simplified)
+	// - "zh-TW" (Chinese Traditional)
 	Locale string `json:"locale,omitempty"`
 
-	// Name: Name of the user profile.
+	// Name: Name of the user profile. This is a required field. Must be
+	// less than 64 characters long, must be globally unique, and cannot
+	// contain whitespace or any of the following characters: "&;"#%,".
 	Name string `json:"name,omitempty"`
 
-	// SiteFilter: Describes which sites are visible to the user profile.
+	// SiteFilter: Filter that describes which sites are visible to the user
+	// profile.
 	SiteFilter *ObjectFilter `json:"siteFilter,omitempty"`
 
-	// SubaccountId: Subaccount ID of the user profile.
+	// SubaccountId: Subaccount ID of the user profile. This is a read-only
+	// field that can be left blank.
 	SubaccountId int64 `json:"subaccountId,omitempty,string"`
 
 	// TraffickerType: Trafficker type of this user profile.
 	TraffickerType string `json:"traffickerType,omitempty"`
 
 	// UserAccessType: User type of the user profile. This is a read-only
-	// field.
+	// field that can be left blank.
 	UserAccessType string `json:"userAccessType,omitempty"`
 
-	// UserRoleFilter: Describes which user roles are visible to the user
-	// profile.
+	// UserRoleFilter: Filter that describes which user roles are visible to
+	// the user profile.
 	UserRoleFilter *ObjectFilter `json:"userRoleFilter,omitempty"`
 
-	// UserRoleId: User Role ID of the user profile.
+	// UserRoleId: User role ID of the user profile. This is a required
+	// field.
 	UserRoleId int64 `json:"userRoleId,omitempty,string"`
 }
 
@@ -949,14 +1006,15 @@ type Activities struct {
 }
 
 type Ad struct {
-	// AccountId: Account ID of this ad.
+	// AccountId: Account ID of this ad. This is a read-only field that can
+	// be left blank.
 	AccountId int64 `json:"accountId,omitempty,string"`
 
 	// Active: Whether this ad is active.
 	Active bool `json:"active,omitempty"`
 
 	// AdvertiserId: Advertiser ID of this ad. This is a required field on
-	// creation.
+	// insertion.
 	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
 
 	// AdvertiserIdDimensionValue: Dimension value for the ID of the
@@ -966,20 +1024,20 @@ type Ad struct {
 	// Archived: Whether this ad is archived.
 	Archived bool `json:"archived,omitempty"`
 
-	// AudienceSegmentId: Applicable when type is AD_SERVING_STANDARD_AD.
-	// Audience segment ID that is being targeted for this ad.
+	// AudienceSegmentId: Audience segment ID that is being targeted for
+	// this ad. Applicable when type is AD_SERVING_STANDARD_AD.
 	AudienceSegmentId int64 `json:"audienceSegmentId,omitempty,string"`
 
 	// CampaignId: Campaign ID of this ad. This is a required field on
-	// creation.
+	// insertion.
 	CampaignId int64 `json:"campaignId,omitempty,string"`
 
 	// CampaignIdDimensionValue: Dimension value for the ID of the campaign.
 	// This is a read-only, auto-generated field.
 	CampaignIdDimensionValue *DimensionValue `json:"campaignIdDimensionValue,omitempty"`
 
-	// ClickThroughUrl: Applicable when type is AD_SERVING_CLICK_TRACKER.
-	// Click-through URL for this ad. This is a required field on creation.
+	// ClickThroughUrl: Click-through URL for this ad. This is a required
+	// field on insertion. Applicable when type is AD_SERVING_CLICK_TRACKER.
 	ClickThroughUrl *ClickThroughUrl `json:"clickThroughUrl,omitempty"`
 
 	// ClickThroughUrlSuffixProperties: Click-through URL suffix properties
@@ -990,58 +1048,59 @@ type Ad struct {
 	// Comments: Comments for this ad.
 	Comments string `json:"comments,omitempty"`
 
-	// Compatibility: Applicable when type is AD_SERVING_DEFAULT_AD.
-	// Compatibility of this ad. WEB and WEB_INTERSTITIAL refer to rendering
+	// Compatibility: Compatibility of this ad. Applicable when type is
+	// AD_SERVING_DEFAULT_AD. WEB and WEB_INTERSTITIAL refer to rendering
 	// either on desktop or on mobile devices for regular or interstitial
-	// ads respectively. APP and APP_INTERSTITIAL are for rendering in
-	// mobile apps. IN_STREAM_VIDEO refers to rendering in in-stream video
+	// ads, respectively. APP and APP_INTERSTITIAL are for rendering in
+	// mobile apps. IN_STREAM_VIDEO refers to rendering an in-stream video
 	// ads developed with the VAST standard.
 	Compatibility string `json:"compatibility,omitempty"`
 
-	// CreateInfo: Ad creation information.
+	// CreateInfo: Information about the creation of this ad.This is a
+	// read-only field.
 	CreateInfo *LastModifiedInfo `json:"createInfo,omitempty"`
 
-	// CreativeGroupAssignments: Applicable when type is
-	// AD_SERVING_CLICK_TRACKER. Creative group assignments for this ad.
-	// Only one assignment per creative group number is allowed for a
-	// maximum of two assignments.
+	// CreativeGroupAssignments: Creative group assignments for this ad.
+	// Applicable when type is AD_SERVING_CLICK_TRACKER. Only one assignment
+	// per creative group number is allowed for a maximum of two
+	// assignments.
 	CreativeGroupAssignments []*CreativeGroupAssignment `json:"creativeGroupAssignments,omitempty"`
 
-	// CreativeRotation: Applicable when type is AD_SERVING_DEFAULT_AD,
-	// AD_SERVING_STANDARD_AD, or AD_SERVING_TRACKING. Creative rotation for
-	// this ad. When type is AD_SERVING_DEFAULT_AD, this field should have
-	// exactly one creativeAssignment.
+	// CreativeRotation: Creative rotation for this ad. Applicable when type
+	// is AD_SERVING_DEFAULT_AD, AD_SERVING_STANDARD_AD, or
+	// AD_SERVING_TRACKING. When type is AD_SERVING_DEFAULT_AD, this field
+	// should have exactly one creativeAssignment.
 	CreativeRotation *CreativeRotation `json:"creativeRotation,omitempty"`
 
-	// DayPartTargeting: Applicable when type is AD_SERVING_STANDARD_AD.
-	// Time and day targeting information for this ad.
+	// DayPartTargeting: Time and day targeting information for this ad.
+	// Applicable when type is AD_SERVING_STANDARD_AD.
 	DayPartTargeting *DayPartTargeting `json:"dayPartTargeting,omitempty"`
 
 	// DefaultClickThroughEventTagProperties: Default click-through event
 	// tag properties for this ad.
 	DefaultClickThroughEventTagProperties *DefaultClickThroughEventTagProperties `json:"defaultClickThroughEventTagProperties,omitempty"`
 
-	// DeliverySchedule: Applicable when type is AD_SERVING_STANDARD_AD or
-	// AD_SERVING_TRACKING. Delivery schedule information for this ad. This
-	// field along with subfields priority and impressionRatio are required
-	// on creation when type is AD_SERVING_STANDARD_AD.
+	// DeliverySchedule: Delivery schedule information for this ad.
+	// Applicable when type is AD_SERVING_STANDARD_AD or
+	// AD_SERVING_TRACKING. This field along with subfields priority and
+	// impressionRatio are required on insertion when type is
+	// AD_SERVING_STANDARD_AD.
 	DeliverySchedule *DeliverySchedule `json:"deliverySchedule,omitempty"`
 
-	// DynamicClickTracker: Applicable when type is
-	// AD_SERVING_CLICK_TRACKER. Whether this ad is a dynamic click tracker.
-	// This is a required field on creation, and is read-only after
-	// creation.
+	// DynamicClickTracker: Whether this ad is a dynamic click tracker.
+	// Applicable when type is AD_SERVING_CLICK_TRACKER. This is a required
+	// field on insert, and is read-only after insert.
 	DynamicClickTracker bool `json:"dynamicClickTracker,omitempty"`
 
-	// EndTime: The date and time that this ad should stop serving. Must be
-	// after the start time. This is a required field on creation.
+	// EndTime: Date and time that this ad should stop serving. Must be
+	// later than the start time. This is a required field on insertion.
 	EndTime string `json:"endTime,omitempty"`
 
 	// EventTagOverrides: Event tag overrides for this ad.
 	EventTagOverrides []*EventTagOverride `json:"eventTagOverrides,omitempty"`
 
-	// GeoTargeting: Applicable when type is AD_SERVING_STANDARD_AD.
-	// Geography targeting information for this ad.
+	// GeoTargeting: Geographical targeting information for this
+	// ad.Applicable when type is AD_SERVING_STANDARD_AD.
 	GeoTargeting *GeoTargeting `json:"geoTargeting,omitempty"`
 
 	// Id: ID of this ad. This is a read-only, auto-generated field.
@@ -1051,18 +1110,20 @@ type Ad struct {
 	// read-only, auto-generated field.
 	IdDimensionValue *DimensionValue `json:"idDimensionValue,omitempty"`
 
-	// KeyValueTargetingExpression: Applicable when type is
-	// AD_SERVING_STANDARD_AD. Key value targeting information for this ad.
+	// KeyValueTargetingExpression: Key-value targeting information for this
+	// ad. Applicable when type is AD_SERVING_STANDARD_AD.
 	KeyValueTargetingExpression *KeyValueTargetingExpression `json:"keyValueTargetingExpression,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "dfareporting#ad".
 	Kind string `json:"kind,omitempty"`
 
-	// LastModifiedInfo: Ad last modification information.
+	// LastModifiedInfo: Information about the most recent modification of
+	// this ad. This is a read-only field.
 	LastModifiedInfo *LastModifiedInfo `json:"lastModifiedInfo,omitempty"`
 
-	// Name: Name of this ad.
+	// Name: Name of this ad. This is a required field and must be less than
+	// 256 characters long.
 	Name string `json:"name,omitempty"`
 
 	// PlacementAssignments: Placement assignments for this ad.
@@ -1073,30 +1134,31 @@ type Ad struct {
 	// this ad.
 	Remarketing_list_expression *ListTargetingExpression `json:"remarketing_list_expression,omitempty"`
 
-	// Size: Applicable when type is AD_SERVING_DEFAULT_AD. Size of this ad.
+	// Size: Size of this ad. Applicable when type is AD_SERVING_DEFAULT_AD.
 	Size *Size `json:"size,omitempty"`
 
 	// SslCompliant: Whether this ad is ssl compliant. This is a read-only
-	// field derived from the assigned creatives.
+	// field that is auto-generated when the ad is inserted or updated.
 	SslCompliant bool `json:"sslCompliant,omitempty"`
 
 	// SslRequired: Whether this ad requires ssl. This is a read-only field
-	// derived from the assigned placements.
+	// that is auto-generated when the ad is inserted or updated.
 	SslRequired bool `json:"sslRequired,omitempty"`
 
-	// StartTime: The date and time that this ad should start serving. If
+	// StartTime: Date and time that this ad should start serving. If
 	// creating an ad, this field must be a time in the future. This is a
-	// required field on creation.
+	// required field on insertion.
 	StartTime string `json:"startTime,omitempty"`
 
-	// SubaccountId: Subaccount ID of this ad.
+	// SubaccountId: Subaccount ID of this ad. This is a read-only field
+	// that can be left blank.
 	SubaccountId int64 `json:"subaccountId,omitempty,string"`
 
-	// TechnologyTargeting: Applicable when type is AD_SERVING_STANDARD_AD.
-	// Technology platform targeting information for this ad.
+	// TechnologyTargeting: Technology platform targeting information for
+	// this ad. Applicable when type is AD_SERVING_STANDARD_AD.
 	TechnologyTargeting *TechnologyTargeting `json:"technologyTargeting,omitempty"`
 
-	// Type: Type of ad. This is a required field on creation. Note that
+	// Type: Type of ad. This is a required field on insertion. Note that
 	// default ads (AD_SERVING_DEFAULT_AD) cannot be created directly (see
 	// Creative resource).
 	Type string `json:"type,omitempty"`
@@ -1116,21 +1178,22 @@ type AdsListResponse struct {
 }
 
 type Advertiser struct {
-	// AccountId: Account ID of this advertiser.
+	// AccountId: Account ID of this advertiser.This is a read-only field
+	// that can be left blank.
 	AccountId int64 `json:"accountId,omitempty,string"`
 
-	// AdvertiserGroupId: The ID of the advertiser group the advertiser
-	// belongs to. You can group advertisers for reporting purposes,
-	// allowing you to see aggregated information for all advertisers in
-	// each group.
+	// AdvertiserGroupId: ID of the advertiser group this advertiser belongs
+	// to. You can group advertisers for reporting purposes, allowing you to
+	// see aggregated information for all advertisers in each group.
 	AdvertiserGroupId int64 `json:"advertiserGroupId,omitempty,string"`
 
 	// ClickThroughUrlSuffix: Suffix added to click-through URL of ad
-	// creative associations under this advertiser.
+	// creative associations under this advertiser. Must be less than 129
+	// characters long.
 	ClickThroughUrlSuffix string `json:"clickThroughUrlSuffix,omitempty"`
 
-	// DefaultClickThroughEventTagId: The ID of the click-through event tag
-	// to apply by default to this advertiser's campaigns' landing pages.
+	// DefaultClickThroughEventTagId: ID of the click-through event tag to
+	// apply by default to the landing pages of this advertiser's campaigns.
 	DefaultClickThroughEventTagId int64 `json:"defaultClickThroughEventTagId,omitempty,string"`
 
 	// DefaultEmail: Default email address used in sender field for tag
@@ -1140,7 +1203,14 @@ type Advertiser struct {
 	// FloodlightConfigurationId: Floodlight configuration ID of this
 	// advertiser. The floodlight configuration ID will be created
 	// automatically, so on insert this field should be left blank. This
-	// field is presently read-only.
+	// field can be set to another advertiser's floodlight configuration ID
+	// in order to share that advertiser's floodlight configuration with
+	// this advertiser, so long as:
+	// - This advertiser's original floodlight
+	// configuration is not already associated with floodlight activities or
+	// floodlight activity groups.
+	// - This advertiser's original floodlight
+	// configuration is not already shared with another advertiser.
 	FloodlightConfigurationId int64 `json:"floodlightConfigurationId,omitempty,string"`
 
 	// FloodlightConfigurationIdDimensionValue: Dimension value for the ID
@@ -1159,18 +1229,22 @@ type Advertiser struct {
 	// string "dfareporting#advertiser".
 	Kind string `json:"kind,omitempty"`
 
-	// Name: Name of this advertiser.
+	// Name: Name of this advertiser. This is a required field and must be
+	// less than 256 characters long and unique among advertisers of the
+	// same account.
 	Name string `json:"name,omitempty"`
 
 	// Status: Status of this advertiser.
 	Status string `json:"status,omitempty"`
 
-	// SubaccountId: Sub-account ID of this advertiser.
+	// SubaccountId: Subaccount ID of this advertiser.This is a read-only
+	// field that can be left blank.
 	SubaccountId int64 `json:"subaccountId,omitempty,string"`
 }
 
 type AdvertiserGroup struct {
-	// AccountId: Account ID of this advertiser group.
+	// AccountId: Account ID of this advertiser group. This is a read-only
+	// field that can be left blank.
 	AccountId int64 `json:"accountId,omitempty,string"`
 
 	// Id: ID of this advertiser group. This is a read-only, auto-generated
@@ -1181,7 +1255,9 @@ type AdvertiserGroup struct {
 	// string "dfareporting#advertiserGroup".
 	Kind string `json:"kind,omitempty"`
 
-	// Name: Name of this advertiser group.
+	// Name: Name of this advertiser group. This is a required field and
+	// must be less than 256 characters long and unique among advertiser
+	// groups of the same account.
 	Name string `json:"name,omitempty"`
 }
 
@@ -1212,36 +1288,40 @@ type AdvertisersListResponse struct {
 }
 
 type AudienceSegment struct {
-	// Allocation: Percentage allocated to this segment.
+	// Allocation: Weight allocated to this segment. Must be between 1 and
+	// 1000. The weight assigned will be understood in proportion to the
+	// weights assigned to other segments in the same segment group.
 	Allocation int64 `json:"allocation,omitempty"`
 
 	// Id: ID of this audience segment. This is a read-only, auto-generated
 	// field.
 	Id int64 `json:"id,omitempty,string"`
 
-	// Name: Name of this audience segment.
+	// Name: Name of this audience segment. This is a required field and
+	// must be less than 65 characters long.
 	Name string `json:"name,omitempty"`
 }
 
 type AudienceSegmentGroup struct {
-	// AudienceSegments: Audience segments assigned to this group.
+	// AudienceSegments: Audience segments assigned to this group. The
+	// number of segments must be between 2 and 100.
 	AudienceSegments []*AudienceSegment `json:"audienceSegments,omitempty"`
 
 	// Id: ID of this audience segment group. This is a read-only,
 	// auto-generated field.
 	Id int64 `json:"id,omitempty,string"`
 
-	// Name: Name of this audience segment group.
+	// Name: Name of this audience segment group. This is a required field
+	// and must be less than 65 characters long.
 	Name string `json:"name,omitempty"`
 }
 
 type Browser struct {
 	// BrowserVersionId: ID referring to this grouping of browser and
-	// version numbers. This is the ID used for targeting. If not known,
-	// this ID will be derived from the dartId and version numbers.
+	// version numbers. This is the ID used for targeting.
 	BrowserVersionId int64 `json:"browserVersionId,omitempty,string"`
 
-	// DartId: DART ID of this browser.This is the ID used when generating
+	// DartId: DART ID of this browser. This is the ID used when generating
 	// reports.
 	DartId int64 `json:"dartId,omitempty,string"`
 
@@ -1249,14 +1329,15 @@ type Browser struct {
 	// string "dfareporting#browser".
 	Kind string `json:"kind,omitempty"`
 
-	// MajorVersion: Major version number (left-most number) of this
-	// browser. For example, for Chrome 5.0.376.86 beta, this field should
-	// be set to 5. An asterisk (*) may be used to target any version
-	// number, and a question mark (?) may be used to target cases where the
-	// version number cannot be identified. For example, Chrome *.* targets
-	// any version of Chrome: 1.2, 2.5, 3.5, etc. Chrome 3.* targets e.g.
-	// Chrome 3.1, 3.5, etc but not 4.0. Firefox ?.? targets cases where the
-	// ad server knows the browser is Firefox but can't tell which version.
+	// MajorVersion: Major version number (leftmost number) of this browser.
+	// For example, for Chrome 5.0.376.86 beta, this field should be set to
+	// 5. An asterisk (*) may be used to target any version number, and a
+	// question mark (?) may be used to target cases where the version
+	// number cannot be identified. For example, Chrome *.* targets any
+	// version of Chrome: 1.2, 2.5, 3.5, and so on. Chrome 3.* targets
+	// Chrome 3.1, 3.5, but not 4.0. Firefox ?.? targets cases where the ad
+	// server knows the browser is Firefox but can't tell which version it
+	// is.
 	MajorVersion string `json:"majorVersion,omitempty"`
 
 	// MinorVersion: Minor version number (number after first dot on left)
@@ -1264,9 +1345,10 @@ type Browser struct {
 	// should be set to 0. An asterisk (*) may be used to target any version
 	// number, and a question mark (?) may be used to target cases where the
 	// version number cannot be identified. For example, Chrome *.* targets
-	// any version of Chrome: 1.2, 2.5, 3.5, etc. Chrome 3.* targets e.g.
-	// Chrome 3.1, 3.5, etc but not 4.0. Firefox ?.? targets cases where the
-	// ad server knows the browser is Firefox but can't tell which version.
+	// any version of Chrome: 1.2, 2.5, 3.5, and so on. Chrome 3.* targets
+	// Chrome 3.1, 3.5, but not 4.0. Firefox ?.? targets cases where the ad
+	// server knows the browser is Firefox but can't tell which version it
+	// is.
 	MinorVersion string `json:"minorVersion,omitempty"`
 
 	// Name: Name of this browser.
@@ -1283,7 +1365,8 @@ type BrowsersListResponse struct {
 }
 
 type Campaign struct {
-	// AccountId: Account ID of this campaign.
+	// AccountId: Account ID of this campaign. This is a read-only field
+	// that can be left blank.
 	AccountId int64 `json:"accountId,omitempty,string"`
 
 	// AdditionalCreativeOptimizationConfigurations: Additional creative
@@ -1293,39 +1376,42 @@ type Campaign struct {
 	// AdvertiserGroupId: Advertiser group ID of the associated advertiser.
 	AdvertiserGroupId int64 `json:"advertiserGroupId,omitempty,string"`
 
-	// AdvertiserId: Advertiser ID of this campaign.
+	// AdvertiserId: Advertiser ID of this campaign. This is a required
+	// field.
 	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
 
 	// AdvertiserIdDimensionValue: Dimension value for the advertiser ID of
 	// this campaign. This is a read-only, auto-generated field.
 	AdvertiserIdDimensionValue *DimensionValue `json:"advertiserIdDimensionValue,omitempty"`
 
-	// Archived: Indicates whether this campaign has been archived.
+	// Archived: Whether this campaign has been archived.
 	Archived bool `json:"archived,omitempty"`
 
 	// AudienceSegmentGroups: Audience segment groups assigned to this
-	// campaign.
+	// campaign. Cannot have more than 300 segment groups.
 	AudienceSegmentGroups []*AudienceSegmentGroup `json:"audienceSegmentGroups,omitempty"`
 
-	// BillingInvoiceCode: This billing invoice code is included in the DFA
-	// client billing invoices in association with the campaign, along with
-	// the advertiser and campaign names.
+	// BillingInvoiceCode: Billing invoice code included in the DCM client
+	// billing invoices associated with the campaign.
 	BillingInvoiceCode string `json:"billingInvoiceCode,omitempty"`
 
 	// ClickThroughUrlSuffixProperties: Click-through URL suffix override
 	// properties for this campaign.
 	ClickThroughUrlSuffixProperties *ClickThroughUrlSuffixProperties `json:"clickThroughUrlSuffixProperties,omitempty"`
 
-	// Comment: Arbitrary comments about this campaign.
+	// Comment: Arbitrary comments about this campaign. Must be less than
+	// 256 characters long.
 	Comment string `json:"comment,omitempty"`
 
-	// ComscoreVceEnabled: Enables comScore vCE reports for this campaign.
+	// ComscoreVceEnabled: Whether comScore vCE reports are enabled for this
+	// campaign.
 	ComscoreVceEnabled bool `json:"comscoreVceEnabled,omitempty"`
 
-	// CreateInfo: Campaign creation information. This is a read-only field.
+	// CreateInfo: Information about the creation of this campaign. This is
+	// a read-only field.
 	CreateInfo *LastModifiedInfo `json:"createInfo,omitempty"`
 
-	// CreativeGroupIds: List of Creative group IDs that are assigned to the
+	// CreativeGroupIds: List of creative group IDs that are assigned to the
 	// campaign.
 	CreativeGroupIds googleapi.Int64s `json:"creativeGroupIds,omitempty"`
 
@@ -1337,23 +1423,23 @@ type Campaign struct {
 	// override properties for this campaign.
 	DefaultClickThroughEventTagProperties *DefaultClickThroughEventTagProperties `json:"defaultClickThroughEventTagProperties,omitempty"`
 
-	// EndDate: Date on which the campaign will stop running. On creation
-	// the end date must be today or a future date. In all cases the end
-	// date must come after the start date. The end date can be the same
-	// date as the start date. For example, if you set 6/25/2010 in both the
-	// start and end date, the effective campaign run date is just
-	// 6/25/2010. The hours, minutes and seconds of the end date should not
-	// be set as doing so will result in an error. This is a required field.
+	// EndDate: Date on which the campaign will stop running. On insert, the
+	// end date must be today or a future date. The end date must be later
+	// than or be the same as the start date. If, for example, you set
+	// 6/25/2015 as both the start and end dates, the effective campaign run
+	// date is just that day only, 6/25/2015. The hours, minutes, and
+	// seconds of the end date should not be set, as doing so will result in
+	// an error. This is a required field.
 	EndDate string `json:"endDate,omitempty"`
 
-	// EventTagOverrides: Overrides can be used to activate/deactivate
-	// advertiser event tags.
+	// EventTagOverrides: Overrides that can be used to activate or
+	// deactivate advertiser event tags.
 	EventTagOverrides []*EventTagOverride `json:"eventTagOverrides,omitempty"`
 
 	// ExternalId: External ID for this campaign.
 	ExternalId string `json:"externalId,omitempty"`
 
-	// Id: ID of this campaign. This is always auto-generated upon creation.
+	// Id: ID of this campaign. This is a read-only auto-generated field.
 	Id int64 `json:"id,omitempty,string"`
 
 	// IdDimensionValue: Dimension value for the ID of this campaign. This
@@ -1364,26 +1450,30 @@ type Campaign struct {
 	// string "dfareporting#campaign".
 	Kind string `json:"kind,omitempty"`
 
-	// LastModifiedInfo: Campaign last modification information. This is a
-	// read-only field.
+	// LastModifiedInfo: Information about the most recent modification of
+	// this campaign. This is a read-only field.
 	LastModifiedInfo *LastModifiedInfo `json:"lastModifiedInfo,omitempty"`
 
-	// LookbackConfiguration: Look-back window settings for the campaign.
+	// LookbackConfiguration: Lookback window settings for the campaign.
 	LookbackConfiguration *LookbackConfiguration `json:"lookbackConfiguration,omitempty"`
 
-	// Name: Name of this campaign.
+	// Name: Name of this campaign. This is a required field and must be
+	// less than 256 characters long and unique among campaigns of the same
+	// advertiser.
 	Name string `json:"name,omitempty"`
 
-	// NielsenOcrEnabled: Enables Nielsen reports for this campaign.
+	// NielsenOcrEnabled: Whether Nielsen reports are enabled for this
+	// campaign.
 	NielsenOcrEnabled bool `json:"nielsenOcrEnabled,omitempty"`
 
-	// StartDate: Date on which the campaign will start running. The start
-	// date can be any date. The hours, minutes and seconds of the start
-	// date should not be set as doing so will result in an error. This is a
+	// StartDate: Date on which the campaign starts running. The start date
+	// can be any date. The hours, minutes, and seconds of the start date
+	// should not be set, as doing so will result in an error. This is a
 	// required field.
 	StartDate string `json:"startDate,omitempty"`
 
-	// SubaccountId: Subaccount ID of this campaign.
+	// SubaccountId: Subaccount ID of this campaign. This is a read-only
+	// field that can be left blank.
 	SubaccountId int64 `json:"subaccountId,omitempty,string"`
 
 	// TraffickerEmails: Campaign trafficker contact emails.
@@ -1391,8 +1481,8 @@ type Campaign struct {
 }
 
 type CampaignCreativeAssociation struct {
-	// CreativeId: ID of the creative associated with the campaign.This is a
-	// required field.
+	// CreativeId: ID of the creative associated with the campaign. This is
+	// a required field.
 	CreativeId int64 `json:"creativeId,omitempty,string"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -1471,7 +1561,8 @@ type ChangeLog struct {
 	// UserProfileId: ID of the user who modified the object.
 	UserProfileId int64 `json:"userProfileId,omitempty,string"`
 
-	// UserProfileName: User profile name of user who modified the object.
+	// UserProfileName: User profile name of the user who modified the
+	// object.
 	UserProfileName string `json:"userProfileName,omitempty"`
 }
 
@@ -1535,13 +1626,13 @@ type ClickTag struct {
 	// creatives.
 	EventName string `json:"eventName,omitempty"`
 
-	// Name: Parameter name for specified click tag. For ENHANCED_IMAGE
-	// creative assets this field must match the value of the creative
+	// Name: Parameter name for the specified click tag. For ENHANCED_IMAGE
+	// creative assets, this field must match the value of the creative
 	// asset's creativeAssetId.name field.
 	Name string `json:"name,omitempty"`
 
-	// Value: Parameter value for specified click tag. This field contains
-	// click-through url.
+	// Value: Parameter value for the specified click tag. This field
+	// contains a click-through url.
 	Value string `json:"value,omitempty"`
 }
 
@@ -1551,8 +1642,8 @@ type ClickThroughUrl struct {
 	// is left unset.
 	CustomClickThroughUrl string `json:"customClickThroughUrl,omitempty"`
 
-	// DefaultLandingPage: Specifies whether the campaign default landing
-	// page is used or not.
+	// DefaultLandingPage: Whether the campaign default landing page is
+	// used.
 	DefaultLandingPage bool `json:"defaultLandingPage,omitempty"`
 
 	// LandingPageId: ID of the landing page for the click-through URL.
@@ -1561,8 +1652,8 @@ type ClickThroughUrl struct {
 }
 
 type ClickThroughUrlSuffixProperties struct {
-	// ClickThroughUrlSuffix: The click-through URL suffix to apply to all
-	// ads in this entity's scope.
+	// ClickThroughUrlSuffix: Click-through URL suffix to apply to all ads
+	// in this entity's scope. Must be less than 128 characters long.
 	ClickThroughUrlSuffix string `json:"clickThroughUrlSuffix,omitempty"`
 
 	// OverrideInheritedSuffix: Whether this entity should override the
@@ -1642,7 +1733,8 @@ type ContentCategoriesListResponse struct {
 }
 
 type ContentCategory struct {
-	// AccountId: Account ID of this content category.
+	// AccountId: Account ID of this content category.This is a read-only
+	// field that can be left blank.
 	AccountId int64 `json:"accountId,omitempty,string"`
 
 	// Description: Description of this content category.
@@ -1656,7 +1748,9 @@ type ContentCategory struct {
 	// string "dfareporting#contentCategory".
 	Kind string `json:"kind,omitempty"`
 
-	// Name: Name of this content category.
+	// Name: Name of this content category. This is a required field and
+	// must be less than 256 characters long and unique among content
+	// categories of the same account.
 	Name string `json:"name,omitempty"`
 }
 
@@ -1695,8 +1789,8 @@ type Creative struct {
 	// Applicable to all creative types.
 	AccountId int64 `json:"accountId,omitempty,string"`
 
-	// Active: Status indicating creative is active. Applicable to all
-	// creative types.
+	// Active: Whether the creative is active. Applicable to all creative
+	// types.
 	Active bool `json:"active,omitempty"`
 
 	// AdParameters: Ad parameters user for VPAID creative. This is a
@@ -1704,24 +1798,25 @@ type Creative struct {
 	// VPAID.
 	AdParameters string `json:"adParameters,omitempty"`
 
-	// AdTagKeys: Keywords let you customize the creative settings of a Rich
-	// Media ad running on your site without having to contact the
-	// advertiser. You can use keywords to dynamically change the look or
-	// functionality of a creative. Applicable to the following creative
-	// types: all RICH_MEDIA, and all VPAID.
+	// AdTagKeys: Keywords for a Rich Media creative. Keywords let you
+	// customize the creative settings of a Rich Media ad running on your
+	// site without having to contact the advertiser. You can use keywords
+	// to dynamically change the look or functionality of a creative.
+	// Applicable to the following creative types: all RICH_MEDIA, and all
+	// VPAID.
 	AdTagKeys []string `json:"adTagKeys,omitempty"`
 
 	// AdvertiserId: Advertiser ID of this creative. This is a required
 	// field. Applicable to all creative types.
 	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
 
-	// AllowScriptAccess: Flag indicating if script access is allowed for
-	// flash creatives. This is a read-only and deprecated field which will
+	// AllowScriptAccess: Whether script access is allowed for this
+	// creative. This is a read-only and deprecated field which will
 	// automatically be set to true on update. Applicable to the following
 	// creative types: FLASH_INPAGE.
 	AllowScriptAccess bool `json:"allowScriptAccess,omitempty"`
 
-	// Archived: Status indicating creative is archived. Applicable to all
+	// Archived: Whether the creative is archived. Applicable to all
 	// creative types.
 	Archived bool `json:"archived,omitempty"`
 
@@ -1735,9 +1830,9 @@ type Creative struct {
 	// HTML5_BANNER.
 	AuthoringTool string `json:"authoringTool,omitempty"`
 
-	// Auto_advance_images: Flag indicating images are automatically
-	// advanced for enhanced image creatives. Applicable to the following
-	// creative types: ENHANCED_IMAGE.
+	// Auto_advance_images: Whether images are automatically advanced for
+	// enhanced image creatives. Applicable to the following creative types:
+	// ENHANCED_IMAGE.
 	Auto_advance_images bool `json:"auto_advance_images,omitempty"`
 
 	// BackgroundColor: The 6-character HTML color code, beginning with #,
@@ -1751,15 +1846,15 @@ type Creative struct {
 	// FLASH_INPAGE, and HTML5_BANNER.
 	BackupImageClickThroughUrl string `json:"backupImageClickThroughUrl,omitempty"`
 
-	// BackupImageFeatures: Feature dependencies are features that a browser
-	// must be able to support in order to render your HTML5 creative asset
-	// correctly. If DCM detects that a browser can't handle one of these
-	// features, it sends the backup image instead. This field is initially
-	// auto-generated to contain all features detected by DCM for all the
-	// assets of this creative and can then be modified by the client. To
-	// reset this field copy over all the creativeAssets' detected features.
-	// Applicable to the following creative types: ENHANCED_BANNER and
-	// HTML5_BANNER.
+	// BackupImageFeatures: List of feature dependencies that will cause a
+	// backup image to be served if the browser that serves the ad does not
+	// support them. Feature dependencies are features that a browser must
+	// be able to support in order to render your HTML5 creative asset
+	// correctly. This field is initially auto-generated to contain all
+	// features detected by DCM for all the assets of this creative and can
+	// then be modified by the client. To reset this field, copy over all
+	// the creativeAssets' detected features. Applicable to the following
+	// creative types: ENHANCED_BANNER and HTML5_BANNER.
 	BackupImageFeatures []string `json:"backupImageFeatures,omitempty"`
 
 	// BackupImageReportingLabel: Reporting label used for HTML5 banner
@@ -1772,18 +1867,18 @@ type Creative struct {
 	// HTML5_BANNER.
 	BackupImageTargetWindow *TargetWindow `json:"backupImageTargetWindow,omitempty"`
 
-	// ClickTags: For ENHANCED_BANNER, FLASH_INPAGE, and HTML5_BANNER
-	// creatives this is a subset of detected click tags for the assets
-	// associated with this creative. After creating a flash asset, detected
-	// click tags will be returned in the creativeAssetMetadata. When
-	// inserting the creative, populate the creative clickTags field using
-	// the creativeAssetMetadata.clickTags field. For ENHANCED_IMAGE
-	// creatives there should be exactly one entry in this list for each
-	// image creative asset. A click tag is matched with a corresponding
-	// creative asset by matching the clickTag.name field with the
-	// creativeAsset.assetIdentifier.name field. Applicable to the following
-	// creative types: ENHANCED_BANNER, ENHANCED_IMAGE, FLASH_INPAGE,
-	// HTML5_BANNER.
+	// ClickTags: Click tags of the creative. For ENHANCED_BANNER,
+	// FLASH_INPAGE, and HTML5_BANNER creatives, this is a subset of
+	// detected click tags for the assets associated with this creative.
+	// After creating a flash asset, detected click tags will be returned in
+	// the creativeAssetMetadata. When inserting the creative, populate the
+	// creative clickTags field using the creativeAssetMetadata.clickTags
+	// field. For ENHANCED_IMAGE creatives, there should be exactly one
+	// entry in this list for each image creative asset. A click tag is
+	// matched with a corresponding creative asset by matching the
+	// clickTag.name field with the creativeAsset.assetIdentifier.name
+	// field. Applicable to the following creative types: ENHANCED_BANNER,
+	// ENHANCED_IMAGE, FLASH_INPAGE, HTML5_BANNER.
 	ClickTags []*ClickTag `json:"clickTags,omitempty"`
 
 	// CommercialId: Industry standard ID assigned to creative for reach and
@@ -1799,7 +1894,7 @@ type Creative struct {
 
 	// Compatibility: Compatibilities associated with this creative. This is
 	// a read-only field. WEB and WEB_INTERSTITIAL refer to rendering either
-	// on desktop or on mobile devices for regular or interstitial ads
+	// on desktop or on mobile devices for regular or interstitial ads,
 	// respectively. APP and APP_INTERSTITIAL are for rendering in mobile
 	// apps. IN_STREAM_VIDEO refers to rendering in in-stream video ads
 	// developed with the VAST standard. Applicable to all creative
@@ -1819,8 +1914,8 @@ type Creative struct {
 	// and all VPAID.
 	CounterCustomEvents []*CreativeCustomEvent `json:"counterCustomEvents,omitempty"`
 
-	// CreativeAssets: Assets associated with a creative. Applicable to the
-	// following creative types: INTERNAL_REDIRECT,
+	// CreativeAssets: Assets associated with a creative. Applicable to all
+	// but the following creative types: INTERNAL_REDIRECT,
 	// INTERSTITIAL_INTERNAL_REDIRECT, and REDIRECT
 	CreativeAssets []*CreativeAsset `json:"creativeAssets,omitempty"`
 
@@ -1828,11 +1923,12 @@ type Creative struct {
 	// creative. Applicable to all creative types.
 	CreativeFieldAssignments []*CreativeFieldAssignment `json:"creativeFieldAssignments,omitempty"`
 
-	// CustomKeyValues: Key-values let you customize the creative settings
-	// of a Rich Media ad running on your site without having to contact the
-	// advertiser. You can use key-values to dynamically change the look or
-	// functionality of a creative. Applicable to the following creative
-	// types: all RICH_MEDIA, and all VPAID.
+	// CustomKeyValues: Custom key-values for a Rich Media creative.
+	// Key-values let you customize the creative settings of a Rich Media ad
+	// running on your site without having to contact the advertiser. You
+	// can use key-values to dynamically change the look or functionality of
+	// a creative. Applicable to the following creative types: all
+	// RICH_MEDIA, and all VPAID.
 	CustomKeyValues []string `json:"customKeyValues,omitempty"`
 
 	// ExitCustomEvents: List of exit events configured for the creative.
@@ -1840,10 +1936,11 @@ type Creative struct {
 	// VPAID.
 	ExitCustomEvents []*CreativeCustomEvent `json:"exitCustomEvents,omitempty"`
 
-	// FsCommand: OpenWindow FSCommand lets the SWF file communicate with
-	// either Flash Player or the program hosting Flash Player, such as a
-	// web browser. This is only triggered if allowScriptAccess field is
-	// true. Applicable to the following creative types: FLASH_INPAGE.
+	// FsCommand: OpenWindow FSCommand of this creative. This lets the SWF
+	// file communicate with either Flash Player or the program hosting
+	// Flash Player, such as a web browser. This is only triggered if
+	// allowScriptAccess field is true. Applicable to the following creative
+	// types: FLASH_INPAGE.
 	FsCommand *FsCommand `json:"fsCommand,omitempty"`
 
 	// HtmlCode: HTML code for the creative. This is a required field when
@@ -1852,15 +1949,13 @@ type Creative struct {
 	// and HTML5_BANNER, and all RICH_MEDIA.
 	HtmlCode string `json:"htmlCode,omitempty"`
 
-	// HtmlCodeLocked: Flag indicating whether HTML code is DCM generated or
-	// manually entered. Set to true to ignore changes to htmlCode.
-	// Applicable to the following creative types: FLASH_INPAGE and
-	// HTML5_BANNER.
+	// HtmlCodeLocked: Whether HTML code is DCM generated or manually
+	// entered. Set to true to ignore changes to htmlCode. Applicable to the
+	// following creative types: FLASH_INPAGE and HTML5_BANNER.
 	HtmlCodeLocked bool `json:"htmlCodeLocked,omitempty"`
 
-	// Id: ID of this creative. This field is auto-generated during insert
-	// operations; it is required for update operations. Applicable to all
-	// creative types.
+	// Id: ID of this creative. This is a read-only, auto-generated field.
+	// Applicable to all creative types.
 	Id int64 `json:"id,omitempty,string"`
 
 	// IdDimensionValue: Dimension value for the ID of this creative. This
@@ -1875,14 +1970,14 @@ type Creative struct {
 	// read-only field. Applicable to all creative types.
 	LastModifiedInfo *LastModifiedInfo `json:"lastModifiedInfo,omitempty"`
 
-	// LatestTraffickedCreativeId: Latest studio trafficked creative ID
+	// LatestTraffickedCreativeId: Latest Studio trafficked creative ID
 	// associated with rich media and VPAID creatives. This is a read-only
 	// field. Applicable to the following creative types: all RICH_MEDIA,
 	// and all VPAID.
 	LatestTraffickedCreativeId int64 `json:"latestTraffickedCreativeId,omitempty,string"`
 
-	// Name: Name of the creative. This is a required field. Applicable to
-	// all creative types.
+	// Name: Name of the creative. This is a required field and must be less
+	// than 256 characters long. Applicable to all creative types.
 	Name string `json:"name,omitempty"`
 
 	// OverrideCss: Override CSS value for rich media creatives. Applicable
@@ -1926,11 +2021,11 @@ type Creative struct {
 	// RICH_MEDIA.
 	Size *Size `json:"size,omitempty"`
 
-	// Skippable: User can choose to skip the creative. Applicable to the
-	// following creative types: INSTREAM_VIDEO.
+	// Skippable: Whether the user can choose to skip the creative.
+	// Applicable to the following creative types: INSTREAM_VIDEO.
 	Skippable bool `json:"skippable,omitempty"`
 
-	// SslCompliant: Status indicating creative is SSL compliant. This is a
+	// SslCompliant: Whether the creative is SSL-compliant. This is a
 	// read-only field. Applicable to all creative types.
 	SslCompliant bool `json:"sslCompliant,omitempty"`
 
@@ -1955,17 +2050,17 @@ type Creative struct {
 	// Applicable to all creative types.
 	SubaccountId int64 `json:"subaccountId,omitempty,string"`
 
-	// ThirdPartyBackupImageImpressionsUrl: Third party URL used to record
+	// ThirdPartyBackupImageImpressionsUrl: Third-party URL used to record
 	// backup image impressions. Applicable to the following creative types:
 	// all RICH_MEDIA
 	ThirdPartyBackupImageImpressionsUrl string `json:"thirdPartyBackupImageImpressionsUrl,omitempty"`
 
-	// ThirdPartyRichMediaImpressionsUrl: Third party URL used to record
+	// ThirdPartyRichMediaImpressionsUrl: Third-party URL used to record
 	// rich media impressions. Applicable to the following creative types:
 	// all RICH_MEDIA
 	ThirdPartyRichMediaImpressionsUrl string `json:"thirdPartyRichMediaImpressionsUrl,omitempty"`
 
-	// ThirdPartyUrls: Third party URLs for tracking in-stream video
+	// ThirdPartyUrls: Third-party URLs for tracking in-stream video
 	// creative events. Applicable to the following creative types:
 	// INSTREAM_VIDEO and all VPAID.
 	ThirdPartyUrls []*ThirdPartyTrackingUrl `json:"thirdPartyUrls,omitempty"`
@@ -2005,14 +2100,14 @@ type Creative struct {
 }
 
 type CreativeAsset struct {
-	// ActionScript3: Flag indicating ActionScript3 is enabled for the flash
-	// asset. This is a read-only field. Applicable to the following
-	// creative types: FLASH_INPAGE and ENHANCED_BANNER.
+	// ActionScript3: Whether ActionScript3 is enabled for the flash asset.
+	// This is a read-only field. Applicable to the following creative
+	// types: FLASH_INPAGE and ENHANCED_BANNER.
 	ActionScript3 bool `json:"actionScript3,omitempty"`
 
-	// Active: Status indicating video asset is active. This is a read-only
-	// field for VPAID_NON_LINEAR assets. Applicable to the following
-	// creative types: INSTREAM_VIDEO and all VPAID.
+	// Active: Whether the video asset is active. This is a read-only field
+	// for VPAID_NON_LINEAR assets. Applicable to the following creative
+	// types: INSTREAM_VIDEO and all VPAID.
 	Active bool `json:"active,omitempty"`
 
 	// Alignment: Possible alignments for an asset. This is a read-only
@@ -2054,12 +2149,12 @@ type CreativeAsset struct {
 	// RICH_MEDIA.
 	CustomStartTimeValue int64 `json:"customStartTimeValue,omitempty"`
 
-	// DetectedFeatures: Feature dependencies are features that a browser
-	// must be able to support in order to render your HTML5 creative
-	// correctly. If DCM detects that a browser can't handle one of these
-	// features, it sends the backup image instead. DCM generates this list
-	// automatically. This is a read-only field. Applicable to the following
-	// creative types: ENHANCED_BANNER and HTML5_BANNER.
+	// DetectedFeatures: List of feature dependencies for the creative asset
+	// that are detected by DCM. Feature dependencies are features that a
+	// browser must be able to support in order to render your HTML5
+	// creative correctly. This is a read-only, auto-generated field.
+	// Applicable to the following creative types: ENHANCED_BANNER and
+	// HTML5_BANNER.
 	DetectedFeatures []string `json:"detectedFeatures,omitempty"`
 
 	// DisplayType: Type of rich media asset. This is a read-only field.
@@ -2090,16 +2185,16 @@ type CreativeAsset struct {
 	// ENHANCED_BANNER, all RICH_MEDIA, and all VPAID.
 	FlashVersion int64 `json:"flashVersion,omitempty"`
 
-	// HideFlashObjects: Hide Flash objects flag for an asset. Applicable to
-	// the following creative types: all RICH_MEDIA.
+	// HideFlashObjects: Whether to hide Flash objects flag for an asset.
+	// Applicable to the following creative types: all RICH_MEDIA.
 	HideFlashObjects bool `json:"hideFlashObjects,omitempty"`
 
-	// HideSelectionBoxes: Hide selection boxes flag for an asset.
-	// Applicable to the following creative types: all RICH_MEDIA.
+	// HideSelectionBoxes: Whether to hide selection boxes flag for an
+	// asset. Applicable to the following creative types: all RICH_MEDIA.
 	HideSelectionBoxes bool `json:"hideSelectionBoxes,omitempty"`
 
-	// HorizontallyLocked: Horizontal lock flag for an asset. This is a
-	// read-only field. Applicable to the following creative types: all
+	// HorizontallyLocked: Wheter the asset is horizontally locked. This is
+	// a read-only field. Applicable to the following creative types: all
 	// RICH_MEDIA.
 	HorizontallyLocked bool `json:"horizontallyLocked,omitempty"`
 
@@ -2120,8 +2215,8 @@ type CreativeAsset struct {
 	// ASSET_DISPLAY_TYPE_PEEL_DOWN.
 	Offset *OffsetPosition `json:"offset,omitempty"`
 
-	// OriginalBackup: Flag indicating backup asset is original or changed
-	// by user in DCM. Applicable to the following creative types: all
+	// OriginalBackup: Whether the backup asset is original or changed by
+	// the user in DCM. Applicable to the following creative types: all
 	// RICH_MEDIA.
 	OriginalBackup bool `json:"originalBackup,omitempty"`
 
@@ -2143,10 +2238,11 @@ type CreativeAsset struct {
 	// INSTREAM_VIDEO and all VPAID.
 	ProgressiveServingUrl string `json:"progressiveServingUrl,omitempty"`
 
-	// Pushdown: Pushdown flag for an asset. Applicable to the following
-	// creative types: all RICH_MEDIA. Additionally, only applicable when
-	// the asset offsets are 0, the collapsedSize.width matches size.width,
-	// and the collapsedSize.height is less than size.height.
+	// Pushdown: Whether the asset pushes down other content. Applicable to
+	// the following creative types: all RICH_MEDIA. Additionally, only
+	// applicable when the asset offsets are 0, the collapsedSize.width
+	// matches size.width, and the collapsedSize.height is less than
+	// size.height.
 	Pushdown bool `json:"pushdown,omitempty"`
 
 	// PushdownDuration: Pushdown duration in seconds for an asset. Must be
@@ -2156,9 +2252,35 @@ type CreativeAsset struct {
 	// size.width, and the collapsedSize.height is less than size.height.
 	PushdownDuration float64 `json:"pushdownDuration,omitempty"`
 
-	// Role: Role of the asset in relation to creative. This is a required
-	// field. Applicable to all but the following creative types: all
-	// REDIRECT and TRACKING_TEXT.
+	// Role: Role of the asset in relation to creative. Applicable to all
+	// but the following creative types: all REDIRECT and TRACKING_TEXT.
+	// This is a required field.
+	// PRIMARY applies to ENHANCED_BANNER,
+	// FLASH_INPAGE, HTML5_BANNER, IMAGE, IMAGE_GALLERY, all RICH_MEDIA
+	// (which may contain multiple primary assets), and all VPAID
+	// creatives.
+	// BACKUP_IMAGE applies to ENHANCED_BANNER, FLASH_INPAGE,
+	// HTML5_BANNER, all RICH_MEDIA, and all VPAID
+	// creatives.
+	// ADDITIONAL_IMAGE and ADDITIONAL_FLASH apply to
+	// FLASH_INPAGE creatives.
+	// OTHER refers to assets from sources other
+	// than DCM, such as Studio uploaded assets, applicable to all
+	// RICH_MEDIA and all VPAID creatives.
+	// PARENT_VIDEO refers to videos
+	// uploaded by the user in DCM and is applicable to INSTREAM_VIDEO and
+	// VPAID_LINEAR creatives.
+	// TRANSCODED_VIDEO refers to videos transcoded
+	// by DCM from PARENT_VIDEO assets and is applicable to INSTREAM_VIDEO
+	// and VPAID_LINEAR creatives.
+	// ALTERNATE_VIDEO refers to the DCM
+	// representation of child asset videos from Studio, and is applicable
+	// to VPAID_LINEAR creatives. These cannot be added or removed within
+	// DCM.
+	// For VPAID_LINEAR creatives, PARENT_VIDEO, TRANSCODED_VIDEO and
+	// ALTERNATE_VIDEO assets that are marked active serve as backup in case
+	// the VPAID creative cannot be served. Only PARENT_VIDEO assets can be
+	// added or removed for an INSTREAM_VIDEO or VPAID_LINEAR creative.
 	Role string `json:"role,omitempty"`
 
 	// Size: Size associated with this creative asset. This is a required
@@ -2169,9 +2291,9 @@ type CreativeAsset struct {
 	// HTML5_BANNER, IMAGE, and all RICH_MEDIA.
 	Size *Size `json:"size,omitempty"`
 
-	// SslCompliant: Status indicating asset is SSL compliant. This is a
-	// read-only field. Applicable to all but the following creative types:
-	// all REDIRECT and TRACKING_TEXT.
+	// SslCompliant: Whether the asset is SSL-compliant. This is a read-only
+	// field. Applicable to all but the following creative types: all
+	// REDIRECT and TRACKING_TEXT.
 	SslCompliant bool `json:"sslCompliant,omitempty"`
 
 	// StartTimeType: Initial wait time type before making the asset
@@ -2183,12 +2305,12 @@ type CreativeAsset struct {
 	// INSTREAM_VIDEO and all VPAID.
 	StreamingServingUrl string `json:"streamingServingUrl,omitempty"`
 
-	// Transparency: Transparency flag for an asset. Applicable to the
+	// Transparency: Whether the asset is transparent. Applicable to the
 	// following creative types: all RICH_MEDIA. Additionally, only
 	// applicable to HTML5 assets.
 	Transparency bool `json:"transparency,omitempty"`
 
-	// VerticallyLocked: Vertical lock flag for an asset. This is a
+	// VerticallyLocked: Whether the asset is vertically locked. This is a
 	// read-only field. Applicable to the following creative types: all
 	// RICH_MEDIA.
 	VerticallyLocked bool `json:"verticallyLocked,omitempty"`
@@ -2222,26 +2344,29 @@ type CreativeAsset struct {
 
 type CreativeAssetId struct {
 	// Name: Name of the creative asset. This is a required field while
-	// creating an asset. This field will be the unique asset name after
-	// asset creation.
+	// inserting an asset. After insertion, this assetIdentifier is used to
+	// identify the uploaded asset. Characters in the name must be
+	// alphanumeric or one of the following: ".-_ ". Spaces are allowed.
 	Name string `json:"name,omitempty"`
 
-	// Type: Type of asset to upload. This is a required field.
+	// Type: Type of asset to upload. This is a required field. IMAGE is
+	// solely used for IMAGE creatives. Other image assets should use
+	// HTML_IMAGE.
 	Type string `json:"type,omitempty"`
 }
 
 type CreativeAssetMetadata struct {
-	// AssetIdentifier: ID of the creative asset. This is a required field
+	// AssetIdentifier: ID of the creative asset. This is a required field.
 	AssetIdentifier *CreativeAssetId `json:"assetIdentifier,omitempty"`
 
 	// ClickTags: List of detected click tags for assets. This is a
 	// read-only auto-generated field.
 	ClickTags []*ClickTag `json:"clickTags,omitempty"`
 
-	// DetectedFeatures: Feature dependencies are features that a browser
-	// must be able to support in order to render your HTML5 creative
-	// correctly. This is a list of features detected by DCM. This is a
-	// read-only auto-generated field.
+	// DetectedFeatures: List of feature dependencies for the creative asset
+	// that are detected by DCM. Feature dependencies are features that a
+	// browser must be able to support in order to render your HTML5
+	// creative correctly. This is a read-only, auto-generated field.
 	DetectedFeatures []string `json:"detectedFeatures,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -2249,10 +2374,10 @@ type CreativeAssetMetadata struct {
 	Kind string `json:"kind,omitempty"`
 
 	// WarnedValidationRules: Rules validated during code generation that
-	// generated a warning. This is a read-only auto-generated
+	// generated a warning. This is a read-only, auto-generated
 	// field.
 	//
-	// Acceptable values are:
+	// Possible values are:
 	// - "CLICK_TAG_NON_TOP_LEVEL"
 	// -
 	// "CLICK_TAG_MISSING"
@@ -2292,10 +2417,10 @@ type CreativeAssignment struct {
 	Active bool `json:"active,omitempty"`
 
 	// ApplyEventTags: Whether applicable event tags should fire when this
-	// creative assignment is rendered. If this value is unset when saved,
-	// it will default to true for all creative types EXCEPT for
-	// INTERNAL_REDIRECT, INTERSTITIAL_INTERNAL_REDIRECT, and
-	// INSTREAM_VIDEO.
+	// creative assignment is rendered. If this value is unset when the ad
+	// is inserted or updated, it will default to true for all creative
+	// types EXCEPT for INTERNAL_REDIRECT, INTERSTITIAL_INTERNAL_REDIRECT,
+	// and INSTREAM_VIDEO.
 	ApplyEventTags bool `json:"applyEventTags,omitempty"`
 
 	// ClickThroughUrl: Click-through URL of the creative assignment.
@@ -2310,21 +2435,23 @@ type CreativeAssignment struct {
 	// allowed for a maximum of two assignments.
 	CreativeGroupAssignments []*CreativeGroupAssignment `json:"creativeGroupAssignments,omitempty"`
 
-	// CreativeId: ID of the creative to be assigned.
+	// CreativeId: ID of the creative to be assigned. This is a required
+	// field.
 	CreativeId int64 `json:"creativeId,omitempty,string"`
 
 	// CreativeIdDimensionValue: Dimension value for the ID of the creative.
 	// This is a read-only, auto-generated field.
 	CreativeIdDimensionValue *DimensionValue `json:"creativeIdDimensionValue,omitempty"`
 
-	// EndTime: The date and time that the assigned creative should stop
-	// serving. Must be after the start time.
+	// EndTime: Date and time that the assigned creative should stop
+	// serving. Must be later than the start time.
 	EndTime string `json:"endTime,omitempty"`
 
 	// RichMediaExitOverrides: Rich media exit overrides for this creative
-	// assignment. Applicable to the following creative types:
-	// -
-	// RICH_MEDIA_INPAGE
+	// assignment.
+	// Applicable when the creative type is any of the
+	// following:
+	// - RICH_MEDIA_INPAGE
 	// - RICH_MEDIA_INPAGE_FLOATING
 	// -
 	// RICH_MEDIA_IM_EXPAND
@@ -2345,11 +2472,12 @@ type CreativeAssignment struct {
 	// the rotation type is CREATIVE_ROTATION_TYPE_SEQUENTIAL.
 	Sequence int64 `json:"sequence,omitempty"`
 
-	// SslCompliant: Whether the creative to be assigned is ssl compliant.
-	// This is a read-only field determined from the creative.
+	// SslCompliant: Whether the creative to be assigned is SSL-compliant.
+	// This is a read-only field that is auto-generated when the ad is
+	// inserted or updated.
 	SslCompliant bool `json:"sslCompliant,omitempty"`
 
-	// StartTime: The date and time that the assigned creative should start
+	// StartTime: Date and time that the assigned creative should start
 	// serving.
 	StartTime string `json:"startTime,omitempty"`
 
@@ -2359,51 +2487,52 @@ type CreativeAssignment struct {
 }
 
 type CreativeCustomEvent struct {
-	// Active: Status indicating event is active.
+	// Active: Whether the event is active.
 	Active bool `json:"active,omitempty"`
 
-	// AdvertiserCustomEventName: User entered name for the event.
+	// AdvertiserCustomEventName: User-entered name for the event.
 	AdvertiserCustomEventName string `json:"advertiserCustomEventName,omitempty"`
 
 	// AdvertiserCustomEventType: Type of the event. This is a read-only
 	// field.
 	AdvertiserCustomEventType string `json:"advertiserCustomEventType,omitempty"`
 
-	// ArtworkLabel: Artwork label column is used to link events in DCM back
+	// ArtworkLabel: Artwork label column, used to link events in DCM back
 	// to events in Studio. This is a required field and should not be
-	// modified.
+	// modified after insertion.
 	ArtworkLabel string `json:"artworkLabel,omitempty"`
 
 	// ArtworkType: Artwork type used by the creative.This is a read-only
 	// field.
 	ArtworkType string `json:"artworkType,omitempty"`
 
-	// ExitUrl: Exit URL of the event. This is only used for exit events.
+	// ExitUrl: Exit URL of the event. This field is used only for exit
+	// events.
 	ExitUrl string `json:"exitUrl,omitempty"`
 
 	// Id: ID of this event. This is a required field and should not be
-	// modified.
+	// modified after insertion.
 	Id int64 `json:"id,omitempty,string"`
 
 	// PopupWindowProperties: Properties for rich media pop-up windows. This
-	// is only used for exit events.
+	// field is used only for exit events.
 	PopupWindowProperties *PopupWindowProperties `json:"popupWindowProperties,omitempty"`
 
 	// TargetType: Target type used by the event.
 	TargetType string `json:"targetType,omitempty"`
 
-	// VideoReportingId: The reporting ID is used to differentiate multiple
-	// videos in a single creative.
+	// VideoReportingId: Reporting ID, used to differentiate multiple videos
+	// in a single creative.
 	VideoReportingId string `json:"videoReportingId,omitempty"`
 }
 
 type CreativeField struct {
-	// AccountId: Account ID of this creative field. This field can be left
-	// blank.
+	// AccountId: Account ID of this creative field. This is a read-only
+	// field that can be left blank.
 	AccountId int64 `json:"accountId,omitempty,string"`
 
-	// AdvertiserId: Advertiser ID of this creative field. This field is
-	// only required on creation.
+	// AdvertiserId: Advertiser ID of this creative field. This is a
+	// required field on insertion.
 	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
 
 	// AdvertiserIdDimensionValue: Dimension value for the ID of the
@@ -2418,12 +2547,13 @@ type CreativeField struct {
 	// string "dfareporting#creativeField".
 	Kind string `json:"kind,omitempty"`
 
-	// Name: Name of this creative field. It needs to be less than 256
-	// characters in length and unique per advertiser.
+	// Name: Name of this creative field. This is a required field and must
+	// be less than 256 characters long and unique among creative fields of
+	// the same advertiser.
 	Name string `json:"name,omitempty"`
 
-	// SubaccountId: Subaccount ID of this creative field. This field can be
-	// left blank.
+	// SubaccountId: Subaccount ID of this creative field. This is a
+	// read-only field that can be left blank.
 	SubaccountId int64 `json:"subaccountId,omitempty,string"`
 }
 
@@ -2476,23 +2606,23 @@ type CreativeFieldsListResponse struct {
 }
 
 type CreativeGroup struct {
-	// AccountId: Account ID of this creative group. This field can be left
-	// blank.
+	// AccountId: Account ID of this creative group. This is a read-only
+	// field that can be left blank.
 	AccountId int64 `json:"accountId,omitempty,string"`
 
-	// AdvertiserId: Advertiser ID of this creative group. This field is
-	// only required on creation.
+	// AdvertiserId: Advertiser ID of this creative group. This is a
+	// required field on insertion.
 	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
 
 	// AdvertiserIdDimensionValue: Dimension value for the ID of the
 	// advertiser. This is a read-only, auto-generated field.
 	AdvertiserIdDimensionValue *DimensionValue `json:"advertiserIdDimensionValue,omitempty"`
 
-	// GroupNumber: The creative group's subgroup. Assign your creative
+	// GroupNumber: Subgroup of the creative group. Assign your creative
 	// groups to one of the following subgroups in order to filter or manage
-	// them more easily. This field is only required on creation and can't
-	// be changed once the creative group has been created. Here are the
-	// supported values:
+	// them more easily. This field is required on insertion and is
+	// read-only after insertion.
+	// Acceptable values are:
 	// - 1
 	// - 2
 	GroupNumber int64 `json:"groupNumber,omitempty"`
@@ -2505,12 +2635,13 @@ type CreativeGroup struct {
 	// string "dfareporting#creativeGroup".
 	Kind string `json:"kind,omitempty"`
 
-	// Name: Name of this creative group. It needs to be less than 256
-	// characters in length and unique per advertiser.
+	// Name: Name of this creative group. This is a required field and must
+	// be less than 256 characters long and unique among creative groups of
+	// the same advertiser.
 	Name string `json:"name,omitempty"`
 
-	// SubaccountId: Subaccount ID of this creative group. This field can be
-	// left blank.
+	// SubaccountId: Subaccount ID of this creative group. This is a
+	// read-only field that can be left blank.
 	SubaccountId int64 `json:"subaccountId,omitempty,string"`
 }
 
@@ -2537,12 +2668,13 @@ type CreativeGroupsListResponse struct {
 }
 
 type CreativeOptimizationConfiguration struct {
-	// Id: ID of this creative optimization config. This value is
-	// auto-generated when campaign is saved. It can be null for existing
-	// campaigns.
+	// Id: ID of this creative optimization config. This field is
+	// auto-generated when the campaign is inserted or updated. It can be
+	// null for existing campaigns.
 	Id int64 `json:"id,omitempty,string"`
 
-	// Name: Name of this creative optimization config.
+	// Name: Name of this creative optimization config. This is a required
+	// field and must be less than 129 characters long.
 	Name string `json:"name,omitempty"`
 
 	// OptimizationActivitys: List of optimization activities associated
@@ -2574,12 +2706,12 @@ type CreativeRotation struct {
 }
 
 type CreativeSettings struct {
-	// IFrameFooter: Header text for iFrames for this site. 2000 character
-	// limit.
+	// IFrameFooter: Header text for iFrames for this site. Must be less
+	// than or equal to 2000 characters long.
 	IFrameFooter string `json:"iFrameFooter,omitempty"`
 
-	// IFrameHeader: Header text for iFrames for this site. 2000 character
-	// limit.
+	// IFrameHeader: Header text for iFrames for this site. Must be less
+	// than or equal to 2000 characters long.
 	IFrameHeader string `json:"iFrameHeader,omitempty"`
 }
 
@@ -2661,22 +2793,23 @@ type DayPartTargeting struct {
 	// - "SATURDAY"
 	DaysOfWeek []string `json:"daysOfWeek,omitempty"`
 
-	// HoursOfDay: Hours of the day when the ad will serve. Supported
-	// values: 0 to 23, where 0 is midnight to 1 AM, and 23 is 11 PM to
-	// midnight. Can be specified with days of week, in which case the ad
-	// would serve during these hours on the specified days. For example, if
-	// Monday, Wednesday, Friday are the days of week specified and 9-10am,
-	// 3-5pm (hours 9, 15, and 16) is specified, the ad would serve Monday,
-	// Wednesdays, and Fridays at 9-10am and 3-5pm.
+	// HoursOfDay: Hours of the day when the ad will serve. Must be an
+	// integer between 0 and 23 (inclusive), where 0 is midnight to 1 AM,
+	// and 23 is 11 PM to midnight. Can be specified with days of week, in
+	// which case the ad would serve during these hours on the specified
+	// days. For example, if Monday, Wednesday, Friday are the days of week
+	// specified and 9-10am, 3-5pm (hours 9, 15, and 16) is specified, the
+	// ad would serve Monday, Wednesdays, and Fridays at 9-10am and 3-5pm.
 	HoursOfDay []int64 `json:"hoursOfDay,omitempty"`
 
-	// UserLocalTime: If false, the America/New York time zone applies.
+	// UserLocalTime: Whether or not to use the user's local time. If false,
+	// the America/New York time zone applies.
 	UserLocalTime bool `json:"userLocalTime,omitempty"`
 }
 
 type DefaultClickThroughEventTagProperties struct {
-	// DefaultClickThroughEventTagId: The click-through event tag to apply
-	// to all ads in this entity's scope.
+	// DefaultClickThroughEventTagId: ID of the click-through event tag to
+	// apply to all ads in this entity's scope.
 	DefaultClickThroughEventTagId int64 `json:"defaultClickThroughEventTagId,omitempty,string"`
 
 	// OverrideInheritedEventTag: Whether this entity should override the
@@ -2685,25 +2818,25 @@ type DefaultClickThroughEventTagProperties struct {
 }
 
 type DeliverySchedule struct {
-	// FrequencyCap: Limit the number of times an individual user can be
+	// FrequencyCap: Limit on the number of times an individual user can be
 	// served the ad within a specified period of time.
 	FrequencyCap *FrequencyCap `json:"frequencyCap,omitempty"`
 
-	// HardCutoff: Enable hard cutoff to stop the ad from being served past
-	// the end date and time. If this not enabled, the ad will continue to
-	// be served until it has reached its delivery goals.
+	// HardCutoff: Whether or not hard cutoff is enabled. If true, the ad
+	// will not serve after the end date and time. Otherwise the ad will
+	// continue to be served until it has reached its delivery goals.
 	HardCutoff bool `json:"hardCutoff,omitempty"`
 
-	// ImpressionRatio: The impression ratio for this ad. This determines
+	// ImpressionRatio: Impression ratio for this ad. This ratio determines
 	// how often each ad is served relative to the others. For example, if
 	// ad A has an impression ratio of 1 and ad B has an impression ratio of
 	// 3, then DCM will serve ad B three times as often as ad A. Must be
 	// between 1 and 10.
 	ImpressionRatio int64 `json:"impressionRatio,omitempty,string"`
 
-	// Priority: The priority of an ad is how it is served in relation to
-	// other ads. The lower the priority number, the greater the priority
-	// with which it is served.
+	// Priority: Serving priority of an ad, with respect to other ads. The
+	// lower the priority number, the greater the priority with which it is
+	// served.
 	Priority string `json:"priority,omitempty"`
 }
 
@@ -2815,7 +2948,7 @@ type DimensionValueRequest struct {
 }
 
 type DirectorySite struct {
-	// Active: Active status of this directory site.
+	// Active: Whether this directory site is active.
 	Active bool `json:"active,omitempty"`
 
 	// ContactAssignments: Directory site contacts.
@@ -2825,6 +2958,52 @@ type DirectorySite struct {
 	CountryId int64 `json:"countryId,omitempty,string"`
 
 	// CurrencyId: Currency ID of this directory site.
+	// Possible values are:
+	//
+	// - "1" for USD
+	// - "2" for GBP
+	// - "3" for ESP
+	// - "4" for SEK
+	// - "5"
+	// for CAD
+	// - "6" for JPY
+	// - "7" for DEM
+	// - "8" for AUD
+	// - "9" for FRF
+	//
+	// - "10" for ITL
+	// - "11" for DKK
+	// - "12" for NOK
+	// - "13" for FIM
+	// -
+	// "14" for ZAR
+	// - "15" for IEP
+	// - "16" for NLG
+	// - "17" for EUR
+	// - "18"
+	// for KRW
+	// - "19" for TWD
+	// - "20" for SGD
+	// - "21" for CNY
+	// - "22" for
+	// HKD
+	// - "23" for NZD
+	// - "24" for MYR
+	// - "25" for BRL
+	// - "26" for PTE
+	//
+	// - "27" for MXP
+	// - "28" for CLP
+	// - "29" for TRY
+	// - "30" for ARS
+	// -
+	// "31" for PEN
+	// - "32" for ILS
+	// - "33" for CHF
+	// - "34" for VEF
+	// - "35"
+	// for COP
+	// - "36" for GTQ
 	CurrencyId int64 `json:"currencyId,omitempty,string"`
 
 	// Description: Description of this directory site.
@@ -2969,12 +3148,12 @@ type DirectorySitesListResponse struct {
 }
 
 type EventTag struct {
-	// AccountId: Account ID of this event tag. This field can be left
-	// blank.
+	// AccountId: Account ID of this event tag. This is a read-only field
+	// that can be left blank.
 	AccountId int64 `json:"accountId,omitempty,string"`
 
 	// AdvertiserId: Advertiser ID of this event tag. This field or the
-	// campaignId field is required on creation.
+	// campaignId field is required on insertion.
 	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
 
 	// AdvertiserIdDimensionValue: Dimension value for the ID of the
@@ -2982,7 +3161,7 @@ type EventTag struct {
 	AdvertiserIdDimensionValue *DimensionValue `json:"advertiserIdDimensionValue,omitempty"`
 
 	// CampaignId: Campaign ID of this event tag. This field or the
-	// advertiserId field is required on creation.
+	// advertiserId field is required on insertion.
 	CampaignId int64 `json:"campaignId,omitempty,string"`
 
 	// CampaignIdDimensionValue: Dimension value for the ID of the campaign.
@@ -3000,36 +3179,39 @@ type EventTag struct {
 	// string "dfareporting#eventTag".
 	Kind string `json:"kind,omitempty"`
 
-	// Name: Name of this event tag.
+	// Name: Name of this event tag. This is a required field and must be
+	// less than 256 characters long.
 	Name string `json:"name,omitempty"`
 
 	// SiteFilterType: Site filter type for this event tag. If no type is
 	// specified then the event tag will be applied to all sites.
 	SiteFilterType string `json:"siteFilterType,omitempty"`
 
-	// SiteIds: Filter list of site ids associated with this event tag. The
-	// siteFilterType determines if this is a whitelist or blacklist filter.
+	// SiteIds: Filter list of site IDs associated with this event tag. The
+	// siteFilterType determines whether this is a whitelist or blacklist
+	// filter.
 	SiteIds googleapi.Int64s `json:"siteIds,omitempty"`
 
-	// SslCompliant: Whether this tag is ssl compliant or not.
+	// SslCompliant: Whether this tag is SSL-compliant or not.
 	SslCompliant bool `json:"sslCompliant,omitempty"`
 
-	// Status: Whether this event tag should fire at all in any case.
+	// Status: Status of this event tag. Must be ENABLED for this event tag
+	// to fire. This is a required field.
 	Status string `json:"status,omitempty"`
 
-	// SubaccountId: Subaccount ID of this event tag. This field can be left
-	// blank.
+	// SubaccountId: Subaccount ID of this event tag. This is a read-only
+	// field that can be left blank.
 	SubaccountId int64 `json:"subaccountId,omitempty,string"`
 
 	// Type: Event tag type. Can be used to specify whether to use a
 	// third-party pixel, a third-party JavaScript URL, or a third-party
-	// click-through URL for either impression or click tracking. This field
-	// is required on creation.
+	// click-through URL for either impression or click tracking. This is a
+	// required field.
 	Type string `json:"type,omitempty"`
 
-	// Url: Payload URL for this event tag. The URL on a click-through
-	// should have a landing page URL appended to the end of it. This field
-	// is required on creation.
+	// Url: Payload URL for this event tag. The URL on a click-through event
+	// tag should have a landing page URL appended to the end of it. This
+	// field is required on insertion.
 	Url string `json:"url,omitempty"`
 
 	// UrlEscapeLevels: Number of times the landing page URL should be
@@ -3043,8 +3225,8 @@ type EventTagOverride struct {
 	// Enabled: Whether this override is enabled.
 	Enabled bool `json:"enabled,omitempty"`
 
-	// Id: ID of this event tag override. This is always auto-generated upon
-	// creation.
+	// Id: ID of this event tag override. This is a read-only,
+	// auto-generated field.
 	Id int64 `json:"id,omitempty,string"`
 }
 
@@ -3142,13 +3324,13 @@ type FloodlightActivitiesListResponse struct {
 }
 
 type FloodlightActivity struct {
-	// AccountId: Account ID of this floodlight activity.
+	// AccountId: Account ID of this floodlight activity.This is a read-only
+	// field that can be left blank.
 	AccountId int64 `json:"accountId,omitempty,string"`
 
-	// AdvertiserId: Advertiser ID of this floodlight activity. When
-	// creating or updating an activity, it could be blank in which case the
-	// value will be copied over either from the floodlight activity group's
-	// advertiser or the existing activity's advertiser.
+	// AdvertiserId: Advertiser ID of this floodlight activity. If this
+	// field is left blank, the value will be copied over either from the
+	// activity group's advertiser or the existing activity's advertiser.
 	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
 
 	// AdvertiserIdDimensionValue: Dimension value for the ID of the
@@ -3156,38 +3338,40 @@ type FloodlightActivity struct {
 	AdvertiserIdDimensionValue *DimensionValue `json:"advertiserIdDimensionValue,omitempty"`
 
 	// CacheBustingType: Code type used for cache busting in the generated
-	// tag. This is only applicable for old spotlight tags. New floodlight
-	// tags don't really need this as they are always JavaScript.
+	// tag.
 	CacheBustingType string `json:"cacheBustingType,omitempty"`
 
-	// CountingMethod: Counting methods for conversions for floodlight
-	// activity.
+	// CountingMethod: Counting method for conversions for this floodlight
+	// activity. This is a required field.
 	CountingMethod string `json:"countingMethod,omitempty"`
 
 	// DefaultTags: Dynamic floodlight tags.
 	DefaultTags []*FloodlightActivityDynamicTag `json:"defaultTags,omitempty"`
 
-	// ExpectedUrl: URL where this tag will be deployed.
+	// ExpectedUrl: URL where this tag will be deployed. If specified, must
+	// be less than 256 characters long.
 	ExpectedUrl string `json:"expectedUrl,omitempty"`
 
 	// FloodlightActivityGroupId: Floodlight activity group ID of this
-	// floodlight activity.
+	// floodlight activity. This is a required field.
 	FloodlightActivityGroupId int64 `json:"floodlightActivityGroupId,omitempty,string"`
 
-	// FloodlightActivityGroupName: The name of the associated floodlight
+	// FloodlightActivityGroupName: Name of the associated floodlight
 	// activity group. This is a read-only field.
 	FloodlightActivityGroupName string `json:"floodlightActivityGroupName,omitempty"`
 
-	// FloodlightActivityGroupTagString: The tag string of the associated
+	// FloodlightActivityGroupTagString: Tag string of the associated
 	// floodlight activity group. This is a read-only field.
 	FloodlightActivityGroupTagString string `json:"floodlightActivityGroupTagString,omitempty"`
 
-	// FloodlightActivityGroupType: The type of the associated floodlight
+	// FloodlightActivityGroupType: Type of the associated floodlight
 	// activity group. This is a read-only field.
 	FloodlightActivityGroupType string `json:"floodlightActivityGroupType,omitempty"`
 
 	// FloodlightConfigurationId: Floodlight configuration ID of this
-	// floodlight activity.
+	// floodlight activity. If this field is left blank, the value will be
+	// copied over either from the activity group's floodlight configuration
+	// or from the existing activity's floodlight configuration.
 	FloodlightConfigurationId int64 `json:"floodlightConfigurationId,omitempty,string"`
 
 	// FloodlightConfigurationIdDimensionValue: Dimension value for the ID
@@ -3206,14 +3390,15 @@ type FloodlightActivity struct {
 	// activity.This is a read-only, auto-generated field.
 	IdDimensionValue *DimensionValue `json:"idDimensionValue,omitempty"`
 
-	// ImageTagEnabled: Enable image tag for this activity.
+	// ImageTagEnabled: Whether the image tag is enabled for this activity.
 	ImageTagEnabled bool `json:"imageTagEnabled,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "dfareporting#floodlightActivity".
 	Kind string `json:"kind,omitempty"`
 
-	// Name: Name of this floodlight activity.
+	// Name: Name of this floodlight activity. This is a required field.
+	// Must be less than 129 characters long and cannot contain quotes.
 	Name string `json:"name,omitempty"`
 
 	// Notes: General notes or implementation instructions for the tag.
@@ -3225,35 +3410,39 @@ type FloodlightActivity struct {
 	// Secure: Whether this tag should use SSL.
 	Secure bool `json:"secure,omitempty"`
 
-	// SslCompliant: Whether the floodlight activity is ssl compliant. This
-	// is a read-only field, its value detected by the system from tag.
+	// SslCompliant: Whether the floodlight activity is SSL-compliant. This
+	// is a read-only field, its value detected by the system from the
+	// floodlight tags.
 	SslCompliant bool `json:"sslCompliant,omitempty"`
 
-	// SslRequired: Indicates floodlight activity must be compliant.
+	// SslRequired: Whether this floodlight activity must be SSL-compliant.
 	SslRequired bool `json:"sslRequired,omitempty"`
 
-	// SubaccountId: Subaccount ID of this floodlight activity.
+	// SubaccountId: Subaccount ID of this floodlight activity.This is a
+	// read-only field that can be left blank.
 	SubaccountId int64 `json:"subaccountId,omitempty,string"`
 
-	// TagFormat: Tag format type for floodlight activity. If left blank,
-	// tag format will default to HTML.
+	// TagFormat: Tag format type for the floodlight activity. If left
+	// blank, the tag format will default to HTML.
 	TagFormat string `json:"tagFormat,omitempty"`
 
-	// TagString: This key-value identifies the floodlight activity. Use a
-	// custom value or leave blank to use the default value based on the
-	// activity name. Once you save the floodlight activity, this value is
-	// final. You can't change it later.
+	// TagString: Value of the cat= paramter in the floodlight tag, which
+	// the ad servers use to identify the activity. This is optional: if
+	// empty, a new tag string will be generated for you. This string must
+	// be 1 to 8 characters long, with valid characters being
+	// [a-z][A-Z][0-9][-][ _ ]. This tag string must also be unique among
+	// activities of the same activity group. This field is read-only after
+	// insertion.
 	TagString string `json:"tagString,omitempty"`
 
-	// UserDefinedVariableTypes: List of user defined variables used by this
-	// conversion tag. These map to the u[1-20]=" in the tags. Each of these
-	// can have a user defined type.
-	//
+	// UserDefinedVariableTypes: List of the user-defined variables used by
+	// this conversion tag. These map to the "u[1-20]=" in the tags. Each of
+	// these can have a user defined type.
 	// Acceptable values are:
 	// - "U1"
-	// - "U2"
 	// -
-	// "U3"
+	// "U2"
+	// - "U3"
 	// - "U4"
 	// - "U5"
 	// - "U6"
@@ -3261,16 +3450,17 @@ type FloodlightActivity struct {
 	// - "U8"
 	// - "U9"
 	// - "U10"
-	// - "U11"
 	// -
-	// "U12"
+	// "U11"
+	// - "U12"
 	// - "U13"
 	// - "U14"
 	// - "U15"
 	// - "U16"
 	// - "U17"
 	// - "U18"
-	// - "U19"
+	// -
+	// "U19"
 	// - "U20"
 	UserDefinedVariableTypes []string `json:"userDefinedVariableTypes,omitempty"`
 }
@@ -3288,13 +3478,14 @@ type FloodlightActivityDynamicTag struct {
 }
 
 type FloodlightActivityGroup struct {
-	// AccountId: Account ID of this floodlight activity group.
+	// AccountId: Account ID of this floodlight activity group.This is a
+	// read-only field that can be left blank.
 	AccountId int64 `json:"accountId,omitempty,string"`
 
-	// AdvertiserId: Advertiser ID of this floodlight activity group. When
-	// creating or updating an activity group, it could be blank in which
-	// case the value will be copied over either from floodlight
-	// configuration's advertiser or existing activity group's advertiser.
+	// AdvertiserId: Advertiser ID of this floodlight activity group. If
+	// this field is left blank, the value will be copied over either from
+	// the floodlight configuration's advertiser or from the existing
+	// activity group's advertiser.
 	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
 
 	// AdvertiserIdDimensionValue: Dimension value for the ID of the
@@ -3302,7 +3493,7 @@ type FloodlightActivityGroup struct {
 	AdvertiserIdDimensionValue *DimensionValue `json:"advertiserIdDimensionValue,omitempty"`
 
 	// FloodlightConfigurationId: Floodlight configuration ID of this
-	// floodlight activity group.
+	// floodlight activity group. This is a required field.
 	FloodlightConfigurationId int64 `json:"floodlightConfigurationId,omitempty,string"`
 
 	// FloodlightConfigurationIdDimensionValue: Dimension value for the ID
@@ -3322,22 +3513,26 @@ type FloodlightActivityGroup struct {
 	// string "dfareporting#floodlightActivityGroup".
 	Kind string `json:"kind,omitempty"`
 
-	// Name: Name of this floodlight activity group.
+	// Name: Name of this floodlight activity group. This is a required
+	// field. Must be less than 65 characters long and cannot contain
+	// quotes.
 	Name string `json:"name,omitempty"`
 
-	// SubaccountId: Subaccount ID of this floodlight activity group.
+	// SubaccountId: Subaccount ID of this floodlight activity group. This
+	// is a read-only field that can be left blank.
 	SubaccountId int64 `json:"subaccountId,omitempty,string"`
 
-	// TagString: The value of the type= parameter in the floodlight tag,
-	// which the ad servers use to identify the activity group that the
-	// activity belongs to. This is optional; if empty, a new tag string
-	// will be generated for you. This string must be 1 to 8 characters
-	// long, with valid characters being [a-z][A-Z][0-9][-][ _ ]. You cannot
-	// modify this property later.
+	// TagString: Value of the type= parameter in the floodlight tag, which
+	// the ad servers use to identify the activity group that the activity
+	// belongs to. This is optional: if empty, a new tag string will be
+	// generated for you. This string must be 1 to 8 characters long, with
+	// valid characters being [a-z][A-Z][0-9][-][ _ ]. This tag string must
+	// also be unique among activity groups of the same floodlight
+	// configuration. This field is read-only after insertion.
 	TagString string `json:"tagString,omitempty"`
 
-	// Type: The type of floodlight activity group. This can be set on
-	// creation only.
+	// Type: The type of floodlight activity group. This is a required field
+	// that is read-only after insertion.
 	Type string `json:"type,omitempty"`
 }
 
@@ -3355,13 +3550,13 @@ type FloodlightActivityGroupsListResponse struct {
 }
 
 type FloodlightActivityPublisherDynamicTag struct {
-	// ClickThrough: Flag to indicate whether this tag is applicable only
-	// for click-throughs.
+	// ClickThrough: Whether this tag is applicable only for click-throughs.
 	ClickThrough bool `json:"clickThrough,omitempty"`
 
-	// DirectorySiteId: Directory Site ID of this dynamic tag. This is an
-	// alternate write-only field that can be used as an alternate siteId
-	// field. On retrieval only the siteId field will be populated.
+	// DirectorySiteId: Directory site ID of this dynamic tag. This is a
+	// write-only field that can be used as an alternative to the siteId
+	// field. When this resource is retrieved, only the siteId field will be
+	// populated.
 	DirectorySiteId int64 `json:"directorySiteId,omitempty,string"`
 
 	// DynamicTag: Dynamic floodlight tag.
@@ -3374,13 +3569,13 @@ type FloodlightActivityPublisherDynamicTag struct {
 	// a read-only, auto-generated field.
 	SiteIdDimensionValue *DimensionValue `json:"siteIdDimensionValue,omitempty"`
 
-	// ViewThrough: Flag to indicate whether this tag is applicable only for
-	// view-throughs.
+	// ViewThrough: Whether this tag is applicable only for view-throughs.
 	ViewThrough bool `json:"viewThrough,omitempty"`
 }
 
 type FloodlightConfiguration struct {
-	// AccountId: Account ID of this floodlight configuration.
+	// AccountId: Account ID of this floodlight configuration. This is a
+	// read-only field that can be left blank.
 	AccountId int64 `json:"accountId,omitempty,string"`
 
 	// AdvertiserId: Advertiser ID of the parent advertiser of this
@@ -3391,17 +3586,18 @@ type FloodlightConfiguration struct {
 	// advertiser. This is a read-only, auto-generated field.
 	AdvertiserIdDimensionValue *DimensionValue `json:"advertiserIdDimensionValue,omitempty"`
 
-	// AnalyticsDataSharingEnabled: Indicates that the customer agrees on
-	// sharing data for the advertiser with Google Analytics.
+	// AnalyticsDataSharingEnabled: Whether advertiser data is shared with
+	// Google Analytics.
 	AnalyticsDataSharingEnabled bool `json:"analyticsDataSharingEnabled,omitempty"`
 
-	// ExposureToConversionEnabled: Enable this report to show detailed
-	// pathway information on up to 10 of the most recent ad exposures seen
-	// by a user before converting.
+	// ExposureToConversionEnabled: Whether the exposure to conversion
+	// report is enabled. This report shows detailed pathway information on
+	// up to 10 of the most recent ad exposures seen by a user before
+	// converting.
 	ExposureToConversionEnabled bool `json:"exposureToConversionEnabled,omitempty"`
 
-	// FirstDayOfWeek: Choose whether Sunday or Monday will be counted as
-	// the first day of the week in reports.
+	// FirstDayOfWeek: Day that will be counted as the first day of the week
+	// in reports. This is a required field.
 	FirstDayOfWeek string `json:"firstDayOfWeek,omitempty"`
 
 	// Id: ID of this floodlight configuration. This is a read-only,
@@ -3416,7 +3612,7 @@ type FloodlightConfiguration struct {
 	// string "dfareporting#floodlightConfiguration".
 	Kind string `json:"kind,omitempty"`
 
-	// LookbackConfiguration: Look-back window settings for this floodlight
+	// LookbackConfiguration: Lookback window settings for this floodlight
 	// configuration.
 	LookbackConfiguration *LookbackConfiguration `json:"lookbackConfiguration,omitempty"`
 
@@ -3427,8 +3623,8 @@ type FloodlightConfiguration struct {
 	// OmnitureSettings: Settings for DCM Omniture integration.
 	OmnitureSettings *OmnitureSettings `json:"omnitureSettings,omitempty"`
 
-	// SslRequired: Indicates floodlight activities owned by this
-	// configuration must be compliant.
+	// SslRequired: Whether floodlight activities owned by this
+	// configuration are required to be SSL-compliant.
 	SslRequired bool `json:"sslRequired,omitempty"`
 
 	// StandardVariableTypes: List of standard variables enabled for this
@@ -3439,7 +3635,8 @@ type FloodlightConfiguration struct {
 	// - "NUM"
 	StandardVariableTypes []string `json:"standardVariableTypes,omitempty"`
 
-	// SubaccountId: Subaccount ID of this floodlight configuration.
+	// SubaccountId: Subaccount ID of this floodlight configuration. This is
+	// a read-only field that can be left blank.
 	SubaccountId int64 `json:"subaccountId,omitempty,string"`
 
 	// TagSettings: Configuration settings for dynamic and image floodlight
@@ -3508,60 +3705,69 @@ type FsCommand struct {
 }
 
 type GeoTargeting struct {
-	// Cities: Cities to be targeted. If targeting a city, do not target or
-	// exclude the country of the city, and do not target the metro or
-	// region of the city.
+	// Cities: Cities to be targeted. For each city only dartId is required.
+	// The other fields are populated automatically when the ad is inserted
+	// or updated. If targeting a city, do not target or exclude the country
+	// of the city, and do not target the metro or region of the city.
 	Cities []*City `json:"cities,omitempty"`
 
 	// Countries: Countries to be targeted or excluded from targeting,
-	// depending on the setting of the excludeCountries field. If targeting
-	// or excluding a country, do not target regions, cities, metros, or
-	// postal codes in the same country.
+	// depending on the setting of the excludeCountries field. For each
+	// country only dartId is required. The other fields are populated
+	// automatically when the ad is inserted or updated. If targeting or
+	// excluding a country, do not target regions, cities, metros, or postal
+	// codes in the same country.
 	Countries []*Country `json:"countries,omitempty"`
 
-	// ExcludeCountries: If true, the countries field refers to countries
-	// which will be excluded from targeting. If false, the countries field
-	// refers to countries which are targeted.
+	// ExcludeCountries: Whether or not to exclude the countries in the
+	// countries field from targeting. If false, the countries field refers
+	// to countries which will be targeted by the ad.
 	ExcludeCountries bool `json:"excludeCountries,omitempty"`
 
-	// Metros: Metros to be targeted. If targeting a metro, do not target or
-	// exclude the country of the metro.
+	// Metros: Metros to be targeted. For each metro only dmaId is required.
+	// The other fields are populated automatically when the ad is inserted
+	// or updated. If targeting a metro, do not target or exclude the
+	// country of the metro.
 	Metros []*Metro `json:"metros,omitempty"`
 
-	// PostalCodes: Postal codes to be targeted. If targeting a postal code,
-	// do not target or exclude the country of the postal code.
+	// PostalCodes: Postal codes to be targeted. For each postal code only
+	// id is required. The other fields are populated automatically when the
+	// ad is inserted or updated. If targeting a postal code, do not target
+	// or exclude the country of the postal code.
 	PostalCodes []*PostalCode `json:"postalCodes,omitempty"`
 
-	// Regions: Regions to be targeted. If targeting a region, do not target
-	// or exclude the country of the region.
+	// Regions: Regions to be targeted. For each region only dartId is
+	// required. The other fields are populated automatically when the ad is
+	// inserted or updated. If targeting a region, do not target or exclude
+	// the country of the region.
 	Regions []*Region `json:"regions,omitempty"`
 }
 
 type KeyValueTargetingExpression struct {
-	// Expression: The keyword expression being targeted by the ad.
+	// Expression: Keyword expression being targeted by the ad.
 	Expression string `json:"expression,omitempty"`
 }
 
 type LandingPage struct {
-	// Default: If true this landing page will be assigned to any ads or
-	// creatives that do not have a landing page assigned explicitly. You
-	// must have one and only one default landing page per campaign.
+	// Default: Whether or not this landing page will be assigned to any ads
+	// or creatives that do not have a landing page assigned explicitly.
+	// Only one default landing page is allowed per campaign.
 	Default bool `json:"default,omitempty"`
 
-	// Id: ID of this landing page. If left blank during campaign insert or
-	// update this would be considered a new landing page and a new ID will
-	// be auto-generated. Otherwise, this should refer to a valid landing
-	// page ID.
+	// Id: ID of this landing page. This is a read-only, auto-generated
+	// field.
 	Id int64 `json:"id,omitempty,string"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "dfareporting#landingPage".
 	Kind string `json:"kind,omitempty"`
 
-	// Name: Name of this landing page.
+	// Name: Name of this landing page. This is a required field. Must be
+	// less than 256 characters long, and must be unique among landing pages
+	// of the same campaign.
 	Name string `json:"name,omitempty"`
 
-	// Url: URL of this landing page.
+	// Url: URL of this landing page. This is a required field.
 	Url string `json:"url,omitempty"`
 }
 
@@ -3575,27 +3781,26 @@ type LandingPagesListResponse struct {
 }
 
 type LastModifiedInfo struct {
-	// Time: Timestamp of last change in milliseconds since epoch.
+	// Time: Timestamp of the last change in milliseconds since epoch.
 	Time int64 `json:"time,omitempty,string"`
 }
 
 type ListTargetingExpression struct {
-	// Expression: The expression describing which lists are being targeted
-	// by the ad.
+	// Expression: Expression describing which lists are being targeted by
+	// the ad.
 	Expression string `json:"expression,omitempty"`
 }
 
 type LookbackConfiguration struct {
-	// ClickDuration: Specify the lookback window, in days, from the last
-	// time a given user clicked on one of your ads. If you enter 0, clicks
-	// will not be considered as triggering events for floodlight tracking.
-	// If you leave this field blank, the default value for your account
-	// will be used.
+	// ClickDuration: Lookback window, in days, from the last time a given
+	// user clicked on one of your ads. If you enter 0, clicks will not be
+	// considered as triggering events for floodlight tracking. If you leave
+	// this field blank, the default value for your account will be used.
 	ClickDuration int64 `json:"clickDuration,omitempty"`
 
-	// PostImpressionActivitiesDuration: Specify the lookback window, in
-	// days, from the last time a given user viewed one of your ads. If you
-	// enter 0, impressions will not be considered as triggering events for
+	// PostImpressionActivitiesDuration: Lookback window, in days, from the
+	// last time a given user viewed one of your ads. If you enter 0,
+	// impressions will not be considered as triggering events for
 	// floodlight tracking. If you leave this field blank, the default value
 	// for your account will be used.
 	PostImpressionActivitiesDuration int64 `json:"postImpressionActivitiesDuration,omitempty"`
@@ -3622,14 +3827,15 @@ type Metro struct {
 	DartId int64 `json:"dartId,omitempty,string"`
 
 	// DmaId: DMA ID of this metro region. This is the ID used for targeting
-	// and generating reports.
+	// and generating reports, and is equivalent to metro_code.
 	DmaId int64 `json:"dmaId,omitempty,string"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "dfareporting#metro".
 	Kind string `json:"kind,omitempty"`
 
-	// MetroCode: Metro code of this metro region.
+	// MetroCode: Metro code of this metro region. This is equivalent to
+	// dma_id.
 	MetroCode string `json:"metroCode,omitempty"`
 
 	// Name: Name of this metro region.
@@ -3699,12 +3905,12 @@ type OffsetPosition struct {
 }
 
 type OmnitureSettings struct {
-	// OmnitureCostDataEnabled: Allows a user to indicate whether they will
-	// be sending placement cost data to Omniture. This property can be
-	// enable only when the "Omniture Integration" property is enabled.
+	// OmnitureCostDataEnabled: Whether placement cost data will be sent to
+	// Omniture. This property can be enabled only if
+	// omnitureIntegrationEnabled is true.
 	OmnitureCostDataEnabled bool `json:"omnitureCostDataEnabled,omitempty"`
 
-	// OmnitureIntegrationEnabled: Allows the user to integrate Omniture.
+	// OmnitureIntegrationEnabled: Whether Omniture integration is enabled.
 	// This property can be enabled only when the "Advanced Ad Serving"
 	// account setting is enabled.
 	OmnitureIntegrationEnabled bool `json:"omnitureIntegrationEnabled,omitempty"`
@@ -3737,7 +3943,7 @@ type OperatingSystemVersion struct {
 	// string "dfareporting#operatingSystemVersion".
 	Kind string `json:"kind,omitempty"`
 
-	// MajorVersion: Major version (left-most number) of this operating
+	// MajorVersion: Major version (leftmost number) of this operating
 	// system version.
 	MajorVersion string `json:"majorVersion,omitempty"`
 
@@ -3772,17 +3978,16 @@ type OperatingSystemsListResponse struct {
 
 type OptimizationActivity struct {
 	// FloodlightActivityId: Floodlight activity ID of this optimization
-	// activity.
+	// activity. This is a required field.
 	FloodlightActivityId int64 `json:"floodlightActivityId,omitempty,string"`
 
 	// FloodlightActivityIdDimensionValue: Dimension value for the ID of the
 	// floodlight activity. This is a read-only, auto-generated field.
 	FloodlightActivityIdDimensionValue *DimensionValue `json:"floodlightActivityIdDimensionValue,omitempty"`
 
-	// Weight: Weight associated with this optimization. Any number greater
-	// than one is acceptable. The weight assigned will be understood in
-	// proportion to the weights assigned to the other optimization
-	// activities.
+	// Weight: Weight associated with this optimization. Must be greater
+	// than 1. The weight assigned will be understood in proportion to the
+	// weights assigned to the other optimization activities.
 	Weight int64 `json:"weight,omitempty"`
 }
 
@@ -3823,11 +4028,11 @@ type Placement struct {
 	// advertiser. This is a read-only, auto-generated field.
 	AdvertiserIdDimensionValue *DimensionValue `json:"advertiserIdDimensionValue,omitempty"`
 
-	// Archived: The archived status for this placement.
+	// Archived: Whether this placement is archived.
 	Archived bool `json:"archived,omitempty"`
 
-	// CampaignId: Campaign ID of this placement. This field is only
-	// required on creation.
+	// CampaignId: Campaign ID of this placement. This field is a required
+	// field on insertion.
 	CampaignId int64 `json:"campaignId,omitempty,string"`
 
 	// CampaignIdDimensionValue: Dimension value for the ID of the campaign.
@@ -3839,24 +4044,24 @@ type Placement struct {
 
 	// Compatibility: Placement compatibility. WEB and WEB_INTERSTITIAL
 	// refer to rendering either on desktop or on mobile devices for regular
-	// or interstitial ads respectively. APP and APP_INTERSTITIAL are for
+	// or interstitial ads, respectively. APP and APP_INTERSTITIAL are for
 	// rendering in mobile apps.IN_STREAM_VIDEO refers to rendering in
 	// in-stream video ads developed with the VAST standard. This field is
-	// required on creation.
+	// required on insertion.
 	Compatibility string `json:"compatibility,omitempty"`
 
 	// ContentCategoryId: ID of the content category assigned to this
 	// placement.
 	ContentCategoryId int64 `json:"contentCategoryId,omitempty,string"`
 
-	// CreateInfo: Placement creation information. This is a read-only
-	// field.
+	// CreateInfo: Information about the creation of this placement. This is
+	// a read-only field.
 	CreateInfo *LastModifiedInfo `json:"createInfo,omitempty"`
 
-	// DirectorySiteId: Directory site ID of this placement. On insert you
-	// can specify this field or the siteId field to specify the site
-	// associated with this placement. This can't be changed once the
-	// placement has been created.
+	// DirectorySiteId: Directory site ID of this placement. On insert, you
+	// must set either this field or the siteId field to specify the site
+	// associated with this placement. This is a required field that is
+	// read-only after insertion.
 	DirectorySiteId int64 `json:"directorySiteId,omitempty,string"`
 
 	// DirectorySiteIdDimensionValue: Dimension value for the ID of the
@@ -3881,25 +4086,26 @@ type Placement struct {
 	// string "dfareporting#placement".
 	Kind string `json:"kind,omitempty"`
 
-	// LastModifiedInfo: Placement last modification information. This is a
-	// read-only field.
+	// LastModifiedInfo: Information about the most recent modification of
+	// this placement. This is a read-only field.
 	LastModifiedInfo *LastModifiedInfo `json:"lastModifiedInfo,omitempty"`
 
-	// LookbackConfiguration: Look-back window settings for this placement.
+	// LookbackConfiguration: Lookback window settings for this placement.
 	LookbackConfiguration *LookbackConfiguration `json:"lookbackConfiguration,omitempty"`
 
-	// Name: Name of this placement.
+	// Name: Name of this placement.This is a required field and must be
+	// less than 256 characters long.
 	Name string `json:"name,omitempty"`
 
-	// PaymentApproved: The payment approval status for this placement. This
-	// is a read-only field relevant only to publisher paid placements.
+	// PaymentApproved: Whether payment was approved for this placement.
+	// This is a read-only field relevant only to publisher-paid placements.
 	PaymentApproved bool `json:"paymentApproved,omitempty"`
 
-	// PaymentSource: Payment source for this placement. This field can only
-	// be set during placement creation, and is required.
+	// PaymentSource: Payment source for this placement. This is a required
+	// field that is read-only after insertion.
 	PaymentSource string `json:"paymentSource,omitempty"`
 
-	// PlacementGroupId: ID of this placement's group.
+	// PlacementGroupId: ID of this placement's group, if applicable.
 	PlacementGroupId int64 `json:"placementGroupId,omitempty,string"`
 
 	// PlacementGroupIdDimensionValue: Dimension value for the ID of the
@@ -3911,25 +4117,26 @@ type Placement struct {
 	PlacementStrategyId int64 `json:"placementStrategyId,omitempty,string"`
 
 	// PricingSchedule: Pricing schedule of this placement. This field is
-	// required on creation, specifically subfields startDate, endDate and
+	// required on insertion, specifically subfields startDate, endDate and
 	// pricingType.
 	PricingSchedule *PricingSchedule `json:"pricingSchedule,omitempty"`
 
-	// Primary: Primary placement of a roadblock placement group. You can't
-	// change this field from true to false. Setting this field to true will
-	// automatically modify the primary field on original primary placement
-	// and will automatically modify the parent roadblock's
-	// primaryPlacementId field.
+	// Primary: Whether this placement is the primary placement of a
+	// roadblock (placement group). You cannot change this field from true
+	// to false. Setting this field to true will automatically set the
+	// primary field on the original primary placement of the roadblock to
+	// false, and it will automatically set the roadblock's
+	// primaryPlacementId field to the ID of this placement.
 	Primary bool `json:"primary,omitempty"`
 
-	// PublisherUpdateInfo: Placement publisher last modification
-	// information. This is a read-only field.
+	// PublisherUpdateInfo: Information about the last publisher update.
+	// This is a read-only field.
 	PublisherUpdateInfo *LastModifiedInfo `json:"publisherUpdateInfo,omitempty"`
 
-	// SiteId: Site ID associated with this placement. On insert you can
-	// specify this field or the directorySiteId field to specify the site
-	// associated with this placement. This can't be changed once the
-	// placement has been created. This field is required on creation.
+	// SiteId: Site ID associated with this placement. On insert, you must
+	// set either this field or the directorySiteId field to specify the
+	// site associated with this placement. This is a required field that is
+	// read-only after insertion.
 	SiteId int64 `json:"siteId,omitempty,string"`
 
 	// SiteIdDimensionValue: Dimension value for the ID of the site. This is
@@ -3937,15 +4144,15 @@ type Placement struct {
 	SiteIdDimensionValue *DimensionValue `json:"siteIdDimensionValue,omitempty"`
 
 	// Size: Size associated with this placement. When inserting or updating
-	// a placement only the size ID field is used. This field is required on
-	// creation.
+	// a placement, only the size ID field is used. This field is required
+	// on insertion.
 	Size *Size `json:"size,omitempty"`
 
-	// SslRequired: Whether creatives assigned to this placement must be SSL
-	// compliant.
+	// SslRequired: Whether creatives assigned to this placement must be
+	// SSL-compliant.
 	SslRequired bool `json:"sslRequired,omitempty"`
 
-	// Status: Third party placement status.
+	// Status: Third-party placement status.
 	Status string `json:"status,omitempty"`
 
 	// SubaccountId: Subaccount ID of this placement. This field can be left
@@ -3953,8 +4160,7 @@ type Placement struct {
 	SubaccountId int64 `json:"subaccountId,omitempty,string"`
 
 	// TagFormats: Tag formats to generate for this placement. This field is
-	// required on creation.
-	//
+	// required on insertion.
 	// Acceptable values are:
 	// -
 	// "PLACEMENT_TAG_STANDARD"
@@ -3989,36 +4195,38 @@ type PlacementAssignment struct {
 	// placement will be included in the ad's rotation.
 	Active bool `json:"active,omitempty"`
 
-	// PlacementId: ID of the placement to be assigned.
+	// PlacementId: ID of the placement to be assigned. This is a required
+	// field.
 	PlacementId int64 `json:"placementId,omitempty,string"`
 
 	// PlacementIdDimensionValue: Dimension value for the ID of the
 	// placement. This is a read-only, auto-generated field.
 	PlacementIdDimensionValue *DimensionValue `json:"placementIdDimensionValue,omitempty"`
 
-	// SslRequired: Whether the placement to be assigned requires ssl. This
-	// is a read only field determined from the placement.
+	// SslRequired: Whether the placement to be assigned requires SSL. This
+	// is a read-only field that is auto-generated when the ad is inserted
+	// or updated.
 	SslRequired bool `json:"sslRequired,omitempty"`
 }
 
 type PlacementGroup struct {
-	// AccountId: Account ID of this placement group. This field can be left
-	// blank.
+	// AccountId: Account ID of this placement group. This is a read-only
+	// field that can be left blank.
 	AccountId int64 `json:"accountId,omitempty,string"`
 
-	// AdvertiserId: Advertiser ID of this placement group. This field can
-	// be left blank.
+	// AdvertiserId: Advertiser ID of this placement group. This is a
+	// required field on insertion.
 	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
 
 	// AdvertiserIdDimensionValue: Dimension value for the ID of the
 	// advertiser. This is a read-only, auto-generated field.
 	AdvertiserIdDimensionValue *DimensionValue `json:"advertiserIdDimensionValue,omitempty"`
 
-	// Archived: The archived status for this placement group.
+	// Archived: Whether this placement group is archived.
 	Archived bool `json:"archived,omitempty"`
 
-	// CampaignId: Campaign ID of this placement group. This field is only
-	// required on creation.
+	// CampaignId: Campaign ID of this placement group. This field is
+	// required on insertion.
 	CampaignId int64 `json:"campaignId,omitempty,string"`
 
 	// CampaignIdDimensionValue: Dimension value for the ID of the campaign.
@@ -4026,7 +4234,7 @@ type PlacementGroup struct {
 	CampaignIdDimensionValue *DimensionValue `json:"campaignIdDimensionValue,omitempty"`
 
 	// ChildPlacementIds: IDs of placements which are assigned to this
-	// placement group. This is a read-only field.
+	// placement group. This is a read-only, auto-generated field.
 	ChildPlacementIds googleapi.Int64s `json:"childPlacementIds,omitempty"`
 
 	// Comment: Comments for this placement group.
@@ -4036,14 +4244,14 @@ type PlacementGroup struct {
 	// placement group.
 	ContentCategoryId int64 `json:"contentCategoryId,omitempty,string"`
 
-	// CreateInfo: Placement group creation information. This is a read-only
-	// field.
+	// CreateInfo: Information about the creation of this placement group.
+	// This is a read-only field.
 	CreateInfo *LastModifiedInfo `json:"createInfo,omitempty"`
 
 	// DirectorySiteId: Directory site ID associated with this placement
-	// group. On insert you can specify this field or the site_id field to
-	// specify the site associated with this placement group. This can't be
-	// changed once the placement group has been created.
+	// group. On insert, you must set either this field or the site_id field
+	// to specify the site associated with this placement group. This is a
+	// required field that is read-only after insertion.
 	DirectorySiteId int64 `json:"directorySiteId,omitempty,string"`
 
 	// DirectorySiteIdDimensionValue: Dimension value for the ID of the
@@ -4065,19 +4273,21 @@ type PlacementGroup struct {
 	// string "dfareporting#placementGroup".
 	Kind string `json:"kind,omitempty"`
 
-	// LastModifiedInfo: Placement group last modification information.
+	// LastModifiedInfo: Information about the most recent modification of
+	// this placement group. This is a read-only field.
 	LastModifiedInfo *LastModifiedInfo `json:"lastModifiedInfo,omitempty"`
 
-	// Name: Name of this placement group.
+	// Name: Name of this placement group. This is a required field and must
+	// be less than 256 characters long.
 	Name string `json:"name,omitempty"`
 
 	// PlacementGroupType: Type of this placement group. A package is a
 	// simple group of placements that acts as a single pricing point for a
 	// group of tags. A roadblock is a group of placements that not only
-	// acts as a single pricing point but also assumes that all the tags in
+	// acts as a single pricing point, but also assumes that all the tags in
 	// it will be served at the same time. A roadblock requires one of its
 	// assigned placements to be marked as primary for reporting. This field
-	// is required on creation.
+	// is required on insertion.
 	PlacementGroupType string `json:"placementGroupType,omitempty"`
 
 	// PlacementStrategyId: ID of the placement strategy assigned to this
@@ -4085,12 +4295,12 @@ type PlacementGroup struct {
 	PlacementStrategyId int64 `json:"placementStrategyId,omitempty,string"`
 
 	// PricingSchedule: Pricing schedule of this placement group. This field
-	// is required on creation.
+	// is required on insertion.
 	PricingSchedule *PricingSchedule `json:"pricingSchedule,omitempty"`
 
-	// PrimaryPlacementId: ID of primary placement is used to calculate the
-	// media cost of a roadblock placement group. Modifying this field will
-	// automatically modify the primary field on all affected roadblock
+	// PrimaryPlacementId: ID of the primary placement, used to calculate
+	// the media cost of a roadblock (placement group). Modifying this field
+	// will automatically modify the primary field on all affected roadblock
 	// child placements.
 	PrimaryPlacementId int64 `json:"primaryPlacementId,omitempty,string"`
 
@@ -4098,23 +4308,21 @@ type PlacementGroup struct {
 	// primary placement. This is a read-only, auto-generated field.
 	PrimaryPlacementIdDimensionValue *DimensionValue `json:"primaryPlacementIdDimensionValue,omitempty"`
 
-	// ProgrammaticSetting: Whether group is programmatic. If programmatic,
-	// it also has other fields programmatic fields.
+	// ProgrammaticSetting: Settings for a programmatic placement.
 	ProgrammaticSetting *ProgrammaticSetting `json:"programmaticSetting,omitempty"`
 
-	// SiteId: Site ID associated with this placement group. On insert you
-	// can specify this field or the directorySiteId field to specify the
-	// site associated with this placement group. This can't be changed once
-	// the placement group has been created. This field is required on
-	// creation.
+	// SiteId: Site ID associated with this placement group. On insert, you
+	// must set either this field or the directorySiteId field to specify
+	// the site associated with this placement group. This is a required
+	// field that is read-only after insertion.
 	SiteId int64 `json:"siteId,omitempty,string"`
 
 	// SiteIdDimensionValue: Dimension value for the ID of the site. This is
 	// a read-only, auto-generated field.
 	SiteIdDimensionValue *DimensionValue `json:"siteIdDimensionValue,omitempty"`
 
-	// SubaccountId: Subaccount ID of this placement group. This field can
-	// be left blank.
+	// SubaccountId: Subaccount ID of this placement group. This is a
+	// read-only field that can be left blank.
 	SubaccountId int64 `json:"subaccountId,omitempty,string"`
 }
 
@@ -4145,7 +4353,8 @@ type PlacementStrategiesListResponse struct {
 }
 
 type PlacementStrategy struct {
-	// AccountId: Account ID of this placement strategy.
+	// AccountId: Account ID of this placement strategy.This is a read-only
+	// field that can be left blank.
 	AccountId int64 `json:"accountId,omitempty,string"`
 
 	// Id: ID of this placement strategy. This is a read-only,
@@ -4156,7 +4365,9 @@ type PlacementStrategy struct {
 	// string "dfareporting#placementStrategy".
 	Kind string `json:"kind,omitempty"`
 
-	// Name: Name of this placement strategy.
+	// Name: Name of this placement strategy. This is a required field. Must
+	// be less than 256 characters long and unique among placement
+	// strategies of the same account.
 	Name string `json:"name,omitempty"`
 }
 
@@ -4217,27 +4428,27 @@ type PopupWindowProperties struct {
 	// VPAID
 	Dimension *Size `json:"dimension,omitempty"`
 
-	// Offset: Returns upper left corner coordinates if positionType is
-	// COORDINATES.
+	// Offset: Upper-left corner coordinates of the popup window. Applicable
+	// if positionType is COORDINATES.
 	Offset *OffsetPosition `json:"offset,omitempty"`
 
 	// PositionType: Popup window position either centered or at specific
 	// coordinate.
 	PositionType string `json:"positionType,omitempty"`
 
-	// ShowAddressBar: Displays browser address bar.
+	// ShowAddressBar: Whether to display the browser address bar.
 	ShowAddressBar bool `json:"showAddressBar,omitempty"`
 
-	// ShowMenuBar: Displays browser menu bar.
+	// ShowMenuBar: Whether to display the browser menu bar.
 	ShowMenuBar bool `json:"showMenuBar,omitempty"`
 
-	// ShowScrollBar: Displays browser scroll bar.
+	// ShowScrollBar: Whether to display the browser scroll bar.
 	ShowScrollBar bool `json:"showScrollBar,omitempty"`
 
-	// ShowStatusBar: Displays browser status bar.
+	// ShowStatusBar: Whether to display the browser status bar.
 	ShowStatusBar bool `json:"showStatusBar,omitempty"`
 
-	// ShowToolBar: Displays browser tool bar.
+	// ShowToolBar: Whether to display the browser tool bar.
 	ShowToolBar bool `json:"showToolBar,omitempty"`
 
 	// Title: Title of popup window.
@@ -4274,21 +4485,20 @@ type PricingSchedule struct {
 	// CapCostOption: Placement cap cost option.
 	CapCostOption string `json:"capCostOption,omitempty"`
 
-	// DisregardOverdelivery: Setting to true will mean cap costs are
-	// ignored by ad serving.
+	// DisregardOverdelivery: Whether cap costs are ignored by ad serving.
 	DisregardOverdelivery bool `json:"disregardOverdelivery,omitempty"`
 
-	// EndDate: Placement end date. This date can not be after the campaign
-	// end date. In addition, the end date must come after the placement
-	// start date. The end date can be the same date as the start date. For
-	// example, if you set 6/25/2010 in both the start and end date, the
-	// effective placement date is just 6/25/2010. The hours, minutes and
-	// seconds of the end date should not be set as doing so will result in
-	// an error. This field is required on creation.
+	// EndDate: Placement end date. This date must be later than or be the
+	// same day as the placement start date, but not later than the campaign
+	// end date. If, for example, you set 6/25/2015 as both the start and
+	// end dates, the effective placement date is just that day only,
+	// 6/25/2015. The hours, minutes, and seconds of the end date should not
+	// be set, as doing so will result in an error. This field is required
+	// on insertion.
 	EndDate string `json:"endDate,omitempty"`
 
-	// Flighted: Turns on/off flighting for this placement. Pricing periods
-	// will be computed automatically.
+	// Flighted: Whether this placement is flighted. If true, pricing
+	// periods will be computed automatically.
 	Flighted bool `json:"flighted,omitempty"`
 
 	// FloodlightActivityId: Floodlight activity ID associated with this
@@ -4300,29 +4510,29 @@ type PricingSchedule struct {
 	PricingPeriods []*PricingSchedulePricingPeriod `json:"pricingPeriods,omitempty"`
 
 	// PricingType: Placement pricing type. This field is required on
-	// creation.
+	// insertion.
 	PricingType string `json:"pricingType,omitempty"`
 
-	// StartDate: Placement start date. This date can not be before the
-	// campaign start date. The hours, minutes and seconds of the start date
-	// should not be set as doing so will result in an error. This field is
-	// required on creation.
+	// StartDate: Placement start date. This date cannot be earlier than the
+	// campaign start date. The hours, minutes, and seconds of the start
+	// date should not be set, as doing so will result in an error. This
+	// field is required on insertion.
 	StartDate string `json:"startDate,omitempty"`
 
-	// TestingStartDate: Test start date of this placement. The hours,
-	// minutes and seconds of the start date should not be set as doing so
+	// TestingStartDate: Testing start date of this placement. The hours,
+	// minutes, and seconds of the start date should not be set, as doing so
 	// will result in an error.
 	TestingStartDate string `json:"testingStartDate,omitempty"`
 }
 
 type PricingSchedulePricingPeriod struct {
-	// EndDate: Placement period end date. This date can not be before the
-	// placement period start date. In addition, this date can not be after
-	// the placement end date. The period end date can be the same date as
-	// the period start date. For example, if you set 6/25/2010 in both the
-	// start and end date, the effective placement period date is just
-	// 6/25/2010. The hours, minutes and seconds of the end date should not
-	// be set as doing so will result in an error.
+	// EndDate: Pricing period end date. This date must be later than or be
+	// the same day as the pricing period start date, but not later than the
+	// placement end date. The period end date can be the same date as the
+	// period start date. If, for example, you set 6/25/2015 as both the
+	// start and end dates, the effective pricing period date is just that
+	// day only, 6/25/2015. The hours, minutes, and seconds of the end date
+	// should not be set, as doing so will result in an error.
 	EndDate string `json:"endDate,omitempty"`
 
 	// PricingComment: Comments for this pricing period.
@@ -4331,9 +4541,9 @@ type PricingSchedulePricingPeriod struct {
 	// RateOrCostNanos: Rate or cost of this pricing period.
 	RateOrCostNanos int64 `json:"rateOrCostNanos,omitempty,string"`
 
-	// StartDate: Placement period start date. This date can not be before
-	// the placement start date. The hours, minutes and seconds of the start
-	// date should not be set as doing so will result in an error.
+	// StartDate: Pricing period start date. This date cannot be earlier
+	// than the placement start date. The hours, minutes, and seconds of the
+	// start date should not be set, as doing so will result in an error.
 	StartDate string `json:"startDate,omitempty"`
 
 	// Units: Units of this pricing period.
@@ -4341,10 +4551,10 @@ type PricingSchedulePricingPeriod struct {
 }
 
 type ProgrammaticSetting struct {
-	// AdxDealIds: Adx Deal IDs assigned to placement
+	// AdxDealIds: Adx deal IDs assigned to the placement.
 	AdxDealIds googleapi.Int64s `json:"adxDealIds,omitempty"`
 
-	// InsertionOrderId: Insertion Order ID
+	// InsertionOrderId: Insertion order ID.
 	InsertionOrderId string `json:"insertionOrderId,omitempty"`
 
 	// InsertionOrderIdStatus: Whether insertion order ID has been placed in
@@ -4354,10 +4564,10 @@ type ProgrammaticSetting struct {
 	// MediaCostNanos: Media cost for the programmatic placement.
 	MediaCostNanos int64 `json:"mediaCostNanos,omitempty,string"`
 
-	// Programmatic: Programmatic
+	// Programmatic: Whether programmatic is enabled.
 	Programmatic bool `json:"programmatic,omitempty"`
 
-	// TraffickerEmails: Trafficker emails assigned to placement
+	// TraffickerEmails: Trafficker emails assigned to the placement.
 	TraffickerEmails []string `json:"traffickerEmails,omitempty"`
 }
 
@@ -4490,7 +4700,7 @@ type Report struct {
 	// not "TODAY".
 	Schedule *ReportSchedule `json:"schedule,omitempty"`
 
-	// SubAccountId: The subbaccount ID to which this report belongs if
+	// SubAccountId: The subaccount ID to which this report belongs if
 	// applicable.
 	SubAccountId int64 `json:"subAccountId,omitempty,string"`
 
@@ -4815,22 +5025,46 @@ type ReportList struct {
 }
 
 type ReportsConfiguration struct {
-	// ExposureToConversionEnabled: Enable premium path to conversion
-	// report.
+	// ExposureToConversionEnabled: Whether the exposure to conversion
+	// report is enabled. This report shows detailed pathway information on
+	// up to 10 of the most recent ad exposures seen by a user before
+	// converting.
 	ExposureToConversionEnabled bool `json:"exposureToConversionEnabled,omitempty"`
 
-	// LookbackConfiguration: Default look-back windows for new advertisers
+	// LookbackConfiguration: Default lookback windows for new advertisers
 	// in this account.
 	LookbackConfiguration *LookbackConfiguration `json:"lookbackConfiguration,omitempty"`
 
 	// ReportGenerationTimeZoneId: Report generation time zone ID of this
-	// account.
+	// account. This is a required field that can only be changed by a
+	// superuser.
+	// Acceptable values are:
+	//
+	// - "1" for "America/New_York"
+	// -
+	// "2" for "Europe/London"
+	// - "3" for "Europe/Paris"
+	// - "4" for
+	// "Africa/Johannesburg"
+	// - "5" for "Asia/Jerusalem"
+	// - "6" for
+	// "Asia/Shanghai"
+	// - "7" for "Asia/Hong_Kong"
+	// - "8" for "Asia/Tokyo"
+	//
+	// - "9" for "Australia/Sydney"
+	// - "10" for "Asia/Dubai"
+	// - "11" for
+	// "America/Los_Angeles"
+	// - "12" for "Pacific/Auckland"
+	// - "13" for
+	// "America/Sao_Paulo"
 	ReportGenerationTimeZoneId int64 `json:"reportGenerationTimeZoneId,omitempty,string"`
 }
 
 type RichMediaExitOverride struct {
-	// CustomExitUrl: The click-through URL to override the default exit
-	// URL. Applicable if the useCustomExitUrl field is set to true.
+	// CustomExitUrl: Click-through URL to override the default exit URL.
+	// Applicable if the useCustomExitUrl field is set to true.
 	CustomExitUrl string `json:"customExitUrl,omitempty"`
 
 	// ExitId: ID for the override to refer to a specific exit in the
@@ -4842,14 +5076,15 @@ type RichMediaExitOverride struct {
 }
 
 type Site struct {
-	// AccountId: Account ID of this site. This field can be left blank.
+	// AccountId: Account ID of this site. This is a read-only field that
+	// can be left blank.
 	AccountId int64 `json:"accountId,omitempty,string"`
 
-	// Approved: Site approval status.
+	// Approved: Whether this site is approved.
 	Approved bool `json:"approved,omitempty"`
 
-	// DirectorySiteId: Directory site associated with this site. This field
-	// can only be set on site creation.
+	// DirectorySiteId: Directory site associated with this site. This is a
+	// required field that is read-only after insertion.
 	DirectorySiteId int64 `json:"directorySiteId,omitempty,string"`
 
 	// DirectorySiteIdDimensionValue: Dimension value for the ID of the
@@ -4871,7 +5106,11 @@ type Site struct {
 	// string "dfareporting#site".
 	Kind string `json:"kind,omitempty"`
 
-	// Name: Name of this site.
+	// Name: Name of this site.This is a required field. Must be less than
+	// 128 characters long. If this site is under a subaccount, the name
+	// must be unique among sites of the same subaccount. Otherwise, this
+	// site is a top-level site, and the name must be unique among top-level
+	// sites of the same account.
 	Name string `json:"name,omitempty"`
 
 	// SiteContacts: Site contacts.
@@ -4880,8 +5119,8 @@ type Site struct {
 	// SiteSettings: Site-wide settings.
 	SiteSettings *SiteSettings `json:"siteSettings,omitempty"`
 
-	// SubaccountId: Subaccount ID of this site. This field can be left
-	// blank.
+	// SubaccountId: Subaccount ID of this site. This is a read-only field
+	// that can be left blank.
 	SubaccountId int64 `json:"subaccountId,omitempty,string"`
 }
 
@@ -4889,7 +5128,7 @@ type SiteContact struct {
 	// ContactType: Site contact type.
 	ContactType string `json:"contactType,omitempty"`
 
-	// Email: Email address of this site contact.
+	// Email: Email address of this site contact. This is a required field.
 	Email string `json:"email,omitempty"`
 
 	// FirstName: First name of this site contact.
@@ -4904,19 +5143,21 @@ type SiteContact struct {
 }
 
 type SiteSettings struct {
-	// ActiveViewOptOut: Disable active view creatives for this site.
+	// ActiveViewOptOut: Whether active view creatives are disabled for this
+	// site.
 	ActiveViewOptOut bool `json:"activeViewOptOut,omitempty"`
 
 	// CreativeSettings: Site-wide creative settings.
 	CreativeSettings *CreativeSettings `json:"creativeSettings,omitempty"`
 
-	// DisableBrandSafeAds: Disable brand safe ads for this site.
+	// DisableBrandSafeAds: Whether brand safe ads are disabled for this
+	// site.
 	DisableBrandSafeAds bool `json:"disableBrandSafeAds,omitempty"`
 
-	// DisableNewCookie: Do not set new cookies for this site.
+	// DisableNewCookie: Whether new cookies are disabled for this site.
 	DisableNewCookie bool `json:"disableNewCookie,omitempty"`
 
-	// LookbackConfiguration: Look-back window settings for this site.
+	// LookbackConfiguration: Lookback window settings for this site.
 	LookbackConfiguration *LookbackConfiguration `json:"lookbackConfiguration,omitempty"`
 
 	// TagSetting: Configuration settings for dynamic and image floodlight
@@ -4977,11 +5218,12 @@ type SortedDimension struct {
 }
 
 type Subaccount struct {
-	// AccountId: ID of the account that contains this subaccount.
+	// AccountId: ID of the account that contains this subaccount. This is a
+	// read-only field that can be left blank.
 	AccountId int64 `json:"accountId,omitempty,string"`
 
-	// AvailablePermissionIds: The available user role permissions for this
-	// subaccount.
+	// AvailablePermissionIds: IDs of the available user role permissions
+	// for this subaccount.
 	AvailablePermissionIds googleapi.Int64s `json:"availablePermissionIds,omitempty"`
 
 	// Id: ID of this subaccount. This is a read-only, auto-generated field.
@@ -4991,7 +5233,9 @@ type Subaccount struct {
 	// string "dfareporting#subaccount".
 	Kind string `json:"kind,omitempty"`
 
-	// Name: Name of this subaccount.
+	// Name: Name of this subaccount. This is a required field. Must be less
+	// than 128 characters long and be unique among subaccounts of the same
+	// account.
 	Name string `json:"name,omitempty"`
 }
 
@@ -5027,6 +5271,9 @@ type TagData struct {
 
 type TagSetting struct {
 	// AdditionalKeyValues: Additional key-values to be included in tags.
+	// Each key-value pair must be of the form key=value, and pairs must be
+	// separated by a semicolon (;). Keys and values must not contain
+	// commas. For example, id=2;color=red is a valid value for this field.
 	AdditionalKeyValues string `json:"additionalKeyValues,omitempty"`
 
 	// IncludeClickThroughUrls: Whether static landing page URLs should be
@@ -5038,85 +5285,89 @@ type TagSetting struct {
 	IncludeClickTracking bool `json:"includeClickTracking,omitempty"`
 
 	// KeywordOption: Option specifying how keywords are embedded in ad
-	// tags. This setting can be used to specify if keyword placeholders are
-	// inserted in placement tags for this site. Publishers can then add
-	// keywords to those placeholders.
+	// tags. This setting can be used to specify whether keyword
+	// placeholders are inserted in placement tags for this site. Publishers
+	// can then add keywords to those placeholders.
 	KeywordOption string `json:"keywordOption,omitempty"`
 }
 
 type TagSettings struct {
-	// DynamicTagEnabled: True if dynamic floodlight tags are enabled. False
-	// if the dynamic floodlight tags are not enabled.
+	// DynamicTagEnabled: Whether dynamic floodlight tags are enabled.
 	DynamicTagEnabled bool `json:"dynamicTagEnabled,omitempty"`
 
-	// ImageTagEnabled: True if image tags are enabled. False if image tags
-	// are not enabled.
+	// ImageTagEnabled: Whether image tags are enabled.
 	ImageTagEnabled bool `json:"imageTagEnabled,omitempty"`
 }
 
 type TargetWindow struct {
-	// CustomHtml: User entered value.
+	// CustomHtml: User-entered value.
 	CustomHtml string `json:"customHtml,omitempty"`
 
-	// TargetWindowOption: Types of browser window of which backup image of
-	// the flash creative can be displayed.
+	// TargetWindowOption: Type of browser window for which the backup image
+	// of the flash creative can be displayed.
 	TargetWindowOption string `json:"targetWindowOption,omitempty"`
 }
 
 type TechnologyTargeting struct {
-	// Browsers: Browsers that this ad targets. For write operations, either
-	// set the browserVersionId, or set the dartId along with the version
-	// numbers. If both are specified, only the browserVersionId will be
-	// used.
+	// Browsers: Browsers that this ad targets. For each browser either set
+	// browserVersionId or dartId along with the version numbers. If both
+	// are specified, only browserVersionId will be used.The other fields
+	// are populated automatically when the ad is inserted or updated.
 	Browsers []*Browser `json:"browsers,omitempty"`
 
-	// ConnectionTypes: Connection types that this ad targets. For write
-	// operations, only the id field is required.
+	// ConnectionTypes: Connection types that this ad targets. For each
+	// connection type only id is required.The other fields are populated
+	// automatically when the ad is inserted or updated.
 	ConnectionTypes []*ConnectionType `json:"connectionTypes,omitempty"`
 
-	// MobileCarriers: Mobile carriers that this ad targets. For write
-	// operations, only the id field is required. If targeting a mobile
-	// carrier, do not set any geographic targeting.
+	// MobileCarriers: Mobile carriers that this ad targets. For each mobile
+	// carrier only id is required, and the other fields are populated
+	// automatically when the ad is inserted or updated. If targeting a
+	// mobile carrier, do not set targeting for any zip codes.
 	MobileCarriers []*MobileCarrier `json:"mobileCarriers,omitempty"`
 
 	// OperatingSystemVersions: Operating system versions that this ad
-	// targets. To target all versions, use operatingSystems. For write
-	// operations, only the id field is required. If targeting an operating
-	// system version, do not set targeting for the corresponding operating
-	// system.
+	// targets. To target all versions, use operatingSystems. For each
+	// operating system version, only id is required. The other fields are
+	// populated automatically when the ad is inserted or updated. If
+	// targeting an operating system version, do not set targeting for the
+	// corresponding operating system in operatingSystems.
 	OperatingSystemVersions []*OperatingSystemVersion `json:"operatingSystemVersions,omitempty"`
 
 	// OperatingSystems: Operating systems that this ad targets. To target
-	// specific versions, use operatingSystemVersions. For write operations,
-	// only the dartId field is required. If targeting an operating system,
-	// do not set targeting for operating system versions for the same
-	// operating system.
+	// specific versions, use operatingSystemVersions. For each operating
+	// system only dartId is required. The other fields are populated
+	// automatically when the ad is inserted or updated. If targeting an
+	// operating system, do not set targeting for operating system versions
+	// for the same operating system.
 	OperatingSystems []*OperatingSystem `json:"operatingSystems,omitempty"`
 
 	// PlatformTypes: Platform types that this ad targets. For example,
-	// desktop, mobile, or tablet. For write operations, only the id field
-	// is required.
+	// desktop, mobile, or tablet. For each platform type, only id is
+	// required, and the other fields are populated automatically when the
+	// ad is inserted or updated.
 	PlatformTypes []*PlatformType `json:"platformTypes,omitempty"`
 }
 
 type ThirdPartyTrackingUrl struct {
-	// ThirdPartyUrlType: Third party URL type for in-stream video
+	// ThirdPartyUrlType: Third-party URL type for in-stream video
 	// creatives.
 	ThirdPartyUrlType string `json:"thirdPartyUrlType,omitempty"`
 
-	// Url: URL for specified third party URL type.
+	// Url: URL for the specified third-party URL type.
 	Url string `json:"url,omitempty"`
 }
 
 type UserDefinedVariableConfiguration struct {
-	// DataType: The data type for the variable.
+	// DataType: Data type for the variable. This is a required field.
 	DataType string `json:"dataType,omitempty"`
 
-	// ReportName: An optional user friendly name for the variable. This
-	// will appear in the reports.
+	// ReportName: User-friendly name for the variable which will appear in
+	// reports. This is a required field, must be less than 65 characters
+	// long, and cannot contain the following characters: """.
 	ReportName string `json:"reportName,omitempty"`
 
-	// VariableType: The variable.
+	// VariableType: Variable name in the tag. This is a required field.
 	VariableType string `json:"variableType,omitempty"`
 }
 
@@ -5162,7 +5413,8 @@ type UserProfileList struct {
 }
 
 type UserRole struct {
-	// AccountId: Account ID of this user role.
+	// AccountId: Account ID of this user role. This is a read-only field
+	// that can be left blank.
 	AccountId int64 `json:"accountId,omitempty,string"`
 
 	// DefaultUserRole: Whether this is a default user role. Default user
@@ -5178,16 +5430,22 @@ type UserRole struct {
 	// string "dfareporting#userRole".
 	Kind string `json:"kind,omitempty"`
 
-	// Name: Name of this user role.
+	// Name: Name of this user role. This is a required field. Must be less
+	// than 256 characters long. If this user role is under a subaccount,
+	// the name must be unique among sites of the same subaccount.
+	// Otherwise, this user role is a top-level user role, and the name must
+	// be unique among top-level user roles of the same account.
 	Name string `json:"name,omitempty"`
 
-	// ParentUserRoleId: Parent user role ID of this user role.
+	// ParentUserRoleId: ID of the user role that this user role is based on
+	// or copied from. This is a required field.
 	ParentUserRoleId int64 `json:"parentUserRoleId,omitempty,string"`
 
 	// Permissions: List of permissions associated with this user role.
 	Permissions []*UserRolePermission `json:"permissions,omitempty"`
 
-	// SubaccountId: Subaccount ID of this user role.
+	// SubaccountId: Subaccount ID of this user role. This is a read-only
+	// field that can be left blank.
 	SubaccountId int64 `json:"subaccountId,omitempty,string"`
 }
 
@@ -5195,8 +5453,7 @@ type UserRolePermission struct {
 	// Availability: Levels of availability for a user role permission.
 	Availability string `json:"availability,omitempty"`
 
-	// Id: ID of this user role permission. This is a read-only,
-	// auto-generated field.
+	// Id: ID of this user role permission.
 	Id int64 `json:"id,omitempty,string"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -5212,8 +5469,7 @@ type UserRolePermission struct {
 }
 
 type UserRolePermissionGroup struct {
-	// Id: ID of this user role permission. This is a
-	// read-only,auto-generated field.
+	// Id: ID of this user role permission.
 	Id int64 `json:"id,omitempty,string"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -5797,7 +6053,7 @@ func (c *AccountUserProfilesListCall) MaxResults(maxResults int64) *AccountUserP
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The value of the
+// PageToken sets the optional parameter "pageToken": Value of the
 // nextPageToken from the previous result page.
 func (c *AccountUserProfilesListCall) PageToken(pageToken string) *AccountUserProfilesListCall {
 	c.opt_["pageToken"] = pageToken
@@ -5806,19 +6062,19 @@ func (c *AccountUserProfilesListCall) PageToken(pageToken string) *AccountUserPr
 
 // SearchString sets the optional parameter "searchString": Allows
 // searching for objects by name, ID or email. Wildcards (*) are
-// allowed. For example, "user profile*2010" will return objects with
-// names like "user profile June 2010", "user profile April 2010" or
-// simply "user profile 2010". Most of the searches also add wildcards
+// allowed. For example, "user profile*2015" will return objects with
+// names like "user profile June 2015", "user profile April 2015" or
+// simply "user profile 2015". Most of the searches also add wildcards
 // implicitly at the start and the end of the search string. For
 // example, a search string of "user profile" will match objects with
-// name "my user profile", "user profile 2010" or simply "user profile".
+// name "my user profile", "user profile 2015" or simply "user profile".
 func (c *AccountUserProfilesListCall) SearchString(searchString string) *AccountUserProfilesListCall {
 	c.opt_["searchString"] = searchString
 	return c
 }
 
-// SortField sets the optional parameter "sortField": The field by which
-// to sort the list.
+// SortField sets the optional parameter "sortField": Field by which to
+// sort the list.
 func (c *AccountUserProfilesListCall) SortField(sortField string) *AccountUserProfilesListCall {
 	c.opt_["sortField"] = sortField
 	return c
@@ -5934,7 +6190,7 @@ func (c *AccountUserProfilesListCall) Do() (*AccountUserProfilesListResponse, er
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The value of the nextPageToken from the previous result page.",
+	//       "description": "Value of the nextPageToken from the previous result page.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5946,12 +6202,12 @@ func (c *AccountUserProfilesListCall) Do() (*AccountUserProfilesListResponse, er
 	//       "type": "string"
 	//     },
 	//     "searchString": {
-	//       "description": "Allows searching for objects by name, ID or email. Wildcards (*) are allowed. For example, \"user profile*2010\" will return objects with names like \"user profile June 2010\", \"user profile April 2010\" or simply \"user profile 2010\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"user profile\" will match objects with name \"my user profile\", \"user profile 2010\" or simply \"user profile\".",
+	//       "description": "Allows searching for objects by name, ID or email. Wildcards (*) are allowed. For example, \"user profile*2015\" will return objects with names like \"user profile June 2015\", \"user profile April 2015\" or simply \"user profile 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"user profile\" will match objects with name \"my user profile\", \"user profile 2015\" or simply \"user profile\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "sortField": {
-	//       "description": "The field by which to sort the list.",
+	//       "description": "Field by which to sort the list.",
 	//       "enum": [
 	//         "ID",
 	//         "NAME"
@@ -6313,7 +6569,7 @@ func (c *AccountsListCall) MaxResults(maxResults int64) *AccountsListCall {
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The value of the
+// PageToken sets the optional parameter "pageToken": Value of the
 // nextPageToken from the previous result page.
 func (c *AccountsListCall) PageToken(pageToken string) *AccountsListCall {
 	c.opt_["pageToken"] = pageToken
@@ -6322,19 +6578,19 @@ func (c *AccountsListCall) PageToken(pageToken string) *AccountsListCall {
 
 // SearchString sets the optional parameter "searchString": Allows
 // searching for objects by name or ID. Wildcards (*) are allowed. For
-// example, "account*2010" will return objects with names like "account
-// June 2010", "account April 2010" or simply "account 2010". Most of
+// example, "account*2015" will return objects with names like "account
+// June 2015", "account April 2015" or simply "account 2015". Most of
 // the searches also add wildcards implicitly at the start and the end
 // of the search string. For example, a search string of "account" will
-// match objects with name "my account", "account 2010" or simply
+// match objects with name "my account", "account 2015" or simply
 // "account".
 func (c *AccountsListCall) SearchString(searchString string) *AccountsListCall {
 	c.opt_["searchString"] = searchString
 	return c
 }
 
-// SortField sets the optional parameter "sortField": The field by which
-// to sort the list.
+// SortField sets the optional parameter "sortField": Field by which to
+// sort the list.
 func (c *AccountsListCall) SortField(sortField string) *AccountsListCall {
 	c.opt_["sortField"] = sortField
 	return c
@@ -6430,7 +6686,7 @@ func (c *AccountsListCall) Do() (*AccountsListResponse, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The value of the nextPageToken from the previous result page.",
+	//       "description": "Value of the nextPageToken from the previous result page.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6442,12 +6698,12 @@ func (c *AccountsListCall) Do() (*AccountsListResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "searchString": {
-	//       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"account*2010\" will return objects with names like \"account June 2010\", \"account April 2010\" or simply \"account 2010\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"account\" will match objects with name \"my account\", \"account 2010\" or simply \"account\".",
+	//       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"account*2015\" will return objects with names like \"account June 2015\", \"account April 2015\" or simply \"account 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"account\" will match objects with name \"my account\", \"account 2015\" or simply \"account\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "sortField": {
-	//       "description": "The field by which to sort the list.",
+	//       "description": "Field by which to sort the list.",
 	//       "enum": [
 	//         "ID",
 	//         "NAME"
@@ -6897,12 +7153,12 @@ func (c *AdsListCall) CampaignIds(campaignIds int64) *AdsListCall {
 	return c
 }
 
-// Compatibility sets the optional parameter "compatibility": Applicable
-// when type is AD_SERVING_DEFAULT_AD. Select default ads with the
-// specified compatibility. WEB and WEB_INTERSTITIAL refer to rendering
+// Compatibility sets the optional parameter "compatibility": Select
+// default ads with the specified compatibility. Applicable when type is
+// AD_SERVING_DEFAULT_AD. WEB and WEB_INTERSTITIAL refer to rendering
 // either on desktop or on mobile devices for regular or interstitial
-// ads respectively. APP and APP_INTERSTITIAL are for rendering in
-// mobile apps. IN_STREAM_VIDEO refers to rendering in in-stream video
+// ads, respectively. APP and APP_INTERSTITIAL are for rendering in
+// mobile apps. IN_STREAM_VIDEO refers to rendering an in-stream video
 // ads developed with the VAST standard.
 func (c *AdsListCall) Compatibility(compatibility string) *AdsListCall {
 	c.opt_["compatibility"] = compatibility
@@ -6925,16 +7181,17 @@ func (c *AdsListCall) CreativeOptimizationConfigurationIds(creativeOptimizationC
 }
 
 // CreativeType sets the optional parameter "creativeType": Select only
-// ads with the specified CreativeType.
+// ads with the specified creativeType.
 func (c *AdsListCall) CreativeType(creativeType string) *AdsListCall {
 	c.opt_["creativeType"] = creativeType
 	return c
 }
 
 // DynamicClickTracker sets the optional parameter
-// "dynamicClickTracker": Applicable when type is
-// AD_SERVING_CLICK_TRACKER. If true, select dynamic click trackers. If
-// false, select static click trackers. Leave unset to select both.
+// "dynamicClickTracker": Select only dynamic click trackers. Applicable
+// when type is AD_SERVING_CLICK_TRACKER. If true, select dynamic click
+// trackers. If false, select static click trackers. Leave unset to
+// select both.
 func (c *AdsListCall) DynamicClickTracker(dynamicClickTracker bool) *AdsListCall {
 	c.opt_["dynamicClickTracker"] = dynamicClickTracker
 	return c
@@ -6969,7 +7226,7 @@ func (c *AdsListCall) OverriddenEventTagId(overriddenEventTagId int64) *AdsListC
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The value of the
+// PageToken sets the optional parameter "pageToken": Value of the
 // nextPageToken from the previous result page.
 func (c *AdsListCall) PageToken(pageToken string) *AdsListCall {
 	c.opt_["pageToken"] = pageToken
@@ -6993,11 +7250,11 @@ func (c *AdsListCall) RemarketingListIds(remarketingListIds int64) *AdsListCall 
 
 // SearchString sets the optional parameter "searchString": Allows
 // searching for objects by name or ID. Wildcards (*) are allowed. For
-// example, "ad*2010" will return objects with names like "ad June
-// 2010", "ad April 2010" or simply "ad 2010". Most of the searches also
+// example, "ad*2015" will return objects with names like "ad June
+// 2015", "ad April 2015" or simply "ad 2015". Most of the searches also
 // add wildcards implicitly at the start and the end of the search
 // string. For example, a search string of "ad" will match objects with
-// name "my ad", "ad 2010" or simply "ad".
+// name "my ad", "ad 2015" or simply "ad".
 func (c *AdsListCall) SearchString(searchString string) *AdsListCall {
 	c.opt_["searchString"] = searchString
 	return c
@@ -7010,8 +7267,8 @@ func (c *AdsListCall) SizeIds(sizeIds int64) *AdsListCall {
 	return c
 }
 
-// SortField sets the optional parameter "sortField": The field by which
-// to sort the list.
+// SortField sets the optional parameter "sortField": Field by which to
+// sort the list.
 func (c *AdsListCall) SortField(sortField string) *AdsListCall {
 	c.opt_["sortField"] = sortField
 	return c
@@ -7025,14 +7282,14 @@ func (c *AdsListCall) SortOrder(sortOrder string) *AdsListCall {
 }
 
 // SslCompliant sets the optional parameter "sslCompliant": Select only
-// ads that are ssl compliant.
+// ads that are SSL-compliant.
 func (c *AdsListCall) SslCompliant(sslCompliant bool) *AdsListCall {
 	c.opt_["sslCompliant"] = sslCompliant
 	return c
 }
 
 // SslRequired sets the optional parameter "sslRequired": Select only
-// ads that require ssl.
+// ads that require SSL.
 func (c *AdsListCall) SslRequired(sslRequired bool) *AdsListCall {
 	c.opt_["sslRequired"] = sslRequired
 	return c
@@ -7191,7 +7448,7 @@ func (c *AdsListCall) Do() (*AdsListResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "compatibility": {
-	//       "description": "Applicable when type is AD_SERVING_DEFAULT_AD. Select default ads with the specified compatibility. WEB and WEB_INTERSTITIAL refer to rendering either on desktop or on mobile devices for regular or interstitial ads respectively. APP and APP_INTERSTITIAL are for rendering in mobile apps. IN_STREAM_VIDEO refers to rendering in in-stream video ads developed with the VAST standard.",
+	//       "description": "Select default ads with the specified compatibility. Applicable when type is AD_SERVING_DEFAULT_AD. WEB and WEB_INTERSTITIAL refer to rendering either on desktop or on mobile devices for regular or interstitial ads, respectively. APP and APP_INTERSTITIAL are for rendering in mobile apps. IN_STREAM_VIDEO refers to rendering an in-stream video ads developed with the VAST standard.",
 	//       "enum": [
 	//         "APP",
 	//         "APP_INTERSTITIAL",
@@ -7224,7 +7481,7 @@ func (c *AdsListCall) Do() (*AdsListResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "creativeType": {
-	//       "description": "Select only ads with the specified CreativeType.",
+	//       "description": "Select only ads with the specified creativeType.",
 	//       "enum": [
 	//         "BRAND_SAFE_DEFAULT_INSTREAM_VIDEO",
 	//         "CUSTOM_INPAGE",
@@ -7279,7 +7536,7 @@ func (c *AdsListCall) Do() (*AdsListResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "dynamicClickTracker": {
-	//       "description": "Applicable when type is AD_SERVING_CLICK_TRACKER. If true, select dynamic click trackers. If false, select static click trackers. Leave unset to select both.",
+	//       "description": "Select only dynamic click trackers. Applicable when type is AD_SERVING_CLICK_TRACKER. If true, select dynamic click trackers. If false, select static click trackers. Leave unset to select both.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -7310,7 +7567,7 @@ func (c *AdsListCall) Do() (*AdsListResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "pageToken": {
-	//       "description": "The value of the nextPageToken from the previous result page.",
+	//       "description": "Value of the nextPageToken from the previous result page.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7336,7 +7593,7 @@ func (c *AdsListCall) Do() (*AdsListResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "searchString": {
-	//       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"ad*2010\" will return objects with names like \"ad June 2010\", \"ad April 2010\" or simply \"ad 2010\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"ad\" will match objects with name \"my ad\", \"ad 2010\" or simply \"ad\".",
+	//       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"ad*2015\" will return objects with names like \"ad June 2015\", \"ad April 2015\" or simply \"ad 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"ad\" will match objects with name \"my ad\", \"ad 2015\" or simply \"ad\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7348,7 +7605,7 @@ func (c *AdsListCall) Do() (*AdsListResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "sortField": {
-	//       "description": "The field by which to sort the list.",
+	//       "description": "Field by which to sort the list.",
 	//       "enum": [
 	//         "ID",
 	//         "NAME"
@@ -7374,12 +7631,12 @@ func (c *AdsListCall) Do() (*AdsListResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "sslCompliant": {
-	//       "description": "Select only ads that are ssl compliant.",
+	//       "description": "Select only ads that are SSL-compliant.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "sslRequired": {
-	//       "description": "Select only ads that require ssl.",
+	//       "description": "Select only ads that require SSL.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -7872,8 +8129,8 @@ func (r *AdvertiserGroupsService) List(profileId int64) *AdvertiserGroupsListCal
 	return c
 }
 
-// Ids sets the optional parameter "ids": Set of IDs of specified
-// advertiser groups to retrieve.
+// Ids sets the optional parameter "ids": Select only advertiser groups
+// with these IDs.
 func (c *AdvertiserGroupsListCall) Ids(ids int64) *AdvertiserGroupsListCall {
 	c.opt_["ids"] = ids
 	return c
@@ -7886,7 +8143,7 @@ func (c *AdvertiserGroupsListCall) MaxResults(maxResults int64) *AdvertiserGroup
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The value of the
+// PageToken sets the optional parameter "pageToken": Value of the
 // nextPageToken from the previous result page.
 func (c *AdvertiserGroupsListCall) PageToken(pageToken string) *AdvertiserGroupsListCall {
 	c.opt_["pageToken"] = pageToken
@@ -7895,20 +8152,20 @@ func (c *AdvertiserGroupsListCall) PageToken(pageToken string) *AdvertiserGroups
 
 // SearchString sets the optional parameter "searchString": Allows
 // searching for objects by name or ID. Wildcards (*) are allowed. For
-// example, "advertiser*2010" will return objects with names like
-// "advertiser group June 2010", "advertiser group April 2010" or simply
-// "advertiser group 2010". Most of the searches also add wildcards
+// example, "advertiser*2015" will return objects with names like
+// "advertiser group June 2015", "advertiser group April 2015" or simply
+// "advertiser group 2015". Most of the searches also add wildcards
 // implicitly at the start and the end of the search string. For
 // example, a search string of "advertisergroup" will match objects with
-// name "my advertisergroup", "advertisergroup 2010" or simply
+// name "my advertisergroup", "advertisergroup 2015" or simply
 // "advertisergroup".
 func (c *AdvertiserGroupsListCall) SearchString(searchString string) *AdvertiserGroupsListCall {
 	c.opt_["searchString"] = searchString
 	return c
 }
 
-// SortField sets the optional parameter "sortField": The field by which
-// to sort the list.
+// SortField sets the optional parameter "sortField": Field by which to
+// sort the list.
 func (c *AdvertiserGroupsListCall) SortField(sortField string) *AdvertiserGroupsListCall {
 	c.opt_["sortField"] = sortField
 	return c
@@ -7983,7 +8240,7 @@ func (c *AdvertiserGroupsListCall) Do() (*AdvertiserGroupsListResponse, error) {
 	//   ],
 	//   "parameters": {
 	//     "ids": {
-	//       "description": "Set of IDs of specified advertiser groups to retrieve.",
+	//       "description": "Select only advertiser groups with these IDs.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "repeated": true,
@@ -7996,7 +8253,7 @@ func (c *AdvertiserGroupsListCall) Do() (*AdvertiserGroupsListResponse, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The value of the nextPageToken from the previous result page.",
+	//       "description": "Value of the nextPageToken from the previous result page.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8008,12 +8265,12 @@ func (c *AdvertiserGroupsListCall) Do() (*AdvertiserGroupsListResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "searchString": {
-	//       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"advertiser*2010\" will return objects with names like \"advertiser group June 2010\", \"advertiser group April 2010\" or simply \"advertiser group 2010\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"advertisergroup\" will match objects with name \"my advertisergroup\", \"advertisergroup 2010\" or simply \"advertisergroup\".",
+	//       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"advertiser*2015\" will return objects with names like \"advertiser group June 2015\", \"advertiser group April 2015\" or simply \"advertiser group 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"advertisergroup\" will match objects with name \"my advertisergroup\", \"advertisergroup 2015\" or simply \"advertisergroup\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "sortField": {
-	//       "description": "The field by which to sort the list.",
+	//       "description": "Field by which to sort the list.",
 	//       "enum": [
 	//         "ID",
 	//         "NAME"
@@ -8430,30 +8687,30 @@ func (r *AdvertisersService) List(profileId int64) *AdvertisersListCall {
 }
 
 // AdvertiserGroupIds sets the optional parameter "advertiserGroupIds":
-// Set of advertiser group IDs of advertisers to retrieve.
+// Select only advertisers with these advertiser group IDs.
 func (c *AdvertisersListCall) AdvertiserGroupIds(advertiserGroupIds int64) *AdvertisersListCall {
 	c.opt_["advertiserGroupIds"] = advertiserGroupIds
 	return c
 }
 
 // FloodlightConfigurationIds sets the optional parameter
-// "floodlightConfigurationIds": Set of floodlight configuration IDs of
-// advertisers to retrieve.
+// "floodlightConfigurationIds": Select only advertisers with these
+// floodlight configuration IDs.
 func (c *AdvertisersListCall) FloodlightConfigurationIds(floodlightConfigurationIds int64) *AdvertisersListCall {
 	c.opt_["floodlightConfigurationIds"] = floodlightConfigurationIds
 	return c
 }
 
-// Ids sets the optional parameter "ids": Set of IDs of specified
-// advertisers to retrieve.
+// Ids sets the optional parameter "ids": Select only advertisers with
+// these IDs.
 func (c *AdvertisersListCall) Ids(ids int64) *AdvertisersListCall {
 	c.opt_["ids"] = ids
 	return c
 }
 
 // IncludeAdvertisersWithoutGroupsOnly sets the optional parameter
-// "includeAdvertisersWithoutGroupsOnly": If true, will return only
-// advertisers which do not belong to any advertiser group.
+// "includeAdvertisersWithoutGroupsOnly": Select only advertisers which
+// do not belong to any advertiser group.
 func (c *AdvertisersListCall) IncludeAdvertisersWithoutGroupsOnly(includeAdvertisersWithoutGroupsOnly bool) *AdvertisersListCall {
 	c.opt_["includeAdvertisersWithoutGroupsOnly"] = includeAdvertisersWithoutGroupsOnly
 	return c
@@ -8466,15 +8723,14 @@ func (c *AdvertisersListCall) MaxResults(maxResults int64) *AdvertisersListCall 
 	return c
 }
 
-// OnlyParent sets the optional parameter "onlyParent": If true, will
-// return only advertisers which use another advertiser's floodlight
-// configuration.
+// OnlyParent sets the optional parameter "onlyParent": Select only
+// advertisers which use another advertiser's floodlight configuration.
 func (c *AdvertisersListCall) OnlyParent(onlyParent bool) *AdvertisersListCall {
 	c.opt_["onlyParent"] = onlyParent
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The value of the
+// PageToken sets the optional parameter "pageToken": Value of the
 // nextPageToken from the previous result page.
 func (c *AdvertisersListCall) PageToken(pageToken string) *AdvertisersListCall {
 	c.opt_["pageToken"] = pageToken
@@ -8483,19 +8739,19 @@ func (c *AdvertisersListCall) PageToken(pageToken string) *AdvertisersListCall {
 
 // SearchString sets the optional parameter "searchString": Allows
 // searching for objects by name or ID. Wildcards (*) are allowed. For
-// example, "advertiser*2010" will return objects with names like
-// "advertiser June 2010", "advertiser April 2010" or simply "advertiser
-// 2010". Most of the searches also add wildcards implicitly at the
+// example, "advertiser*2015" will return objects with names like
+// "advertiser June 2015", "advertiser April 2015" or simply "advertiser
+// 2015". Most of the searches also add wildcards implicitly at the
 // start and the end of the search string. For example, a search string
 // of "advertiser" will match objects with name "my advertiser",
-// "advertiser 2010" or simply "advertiser".
+// "advertiser 2015" or simply "advertiser".
 func (c *AdvertisersListCall) SearchString(searchString string) *AdvertisersListCall {
 	c.opt_["searchString"] = searchString
 	return c
 }
 
-// SortField sets the optional parameter "sortField": The field by which
-// to sort the list.
+// SortField sets the optional parameter "sortField": Field by which to
+// sort the list.
 func (c *AdvertisersListCall) SortField(sortField string) *AdvertisersListCall {
 	c.opt_["sortField"] = sortField
 	return c
@@ -8508,15 +8764,15 @@ func (c *AdvertisersListCall) SortOrder(sortOrder string) *AdvertisersListCall {
 	return c
 }
 
-// Status sets the optional parameter "status": Specifies the status of
-// retrieved advertisers.
+// Status sets the optional parameter "status": Select only advertisers
+// with the specified status.
 func (c *AdvertisersListCall) Status(status string) *AdvertisersListCall {
 	c.opt_["status"] = status
 	return c
 }
 
-// SubaccountId sets the optional parameter "subaccountId": Subaccount
-// ID of advertisers to retrieve.
+// SubaccountId sets the optional parameter "subaccountId": Select only
+// advertisers with these subaccount IDs.
 func (c *AdvertisersListCall) SubaccountId(subaccountId int64) *AdvertisersListCall {
 	c.opt_["subaccountId"] = subaccountId
 	return c
@@ -8602,28 +8858,28 @@ func (c *AdvertisersListCall) Do() (*AdvertisersListResponse, error) {
 	//   ],
 	//   "parameters": {
 	//     "advertiserGroupIds": {
-	//       "description": "Set of advertiser group IDs of advertisers to retrieve.",
+	//       "description": "Select only advertisers with these advertiser group IDs.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
 	//     },
 	//     "floodlightConfigurationIds": {
-	//       "description": "Set of floodlight configuration IDs of advertisers to retrieve.",
+	//       "description": "Select only advertisers with these floodlight configuration IDs.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
 	//     },
 	//     "ids": {
-	//       "description": "Set of IDs of specified advertisers to retrieve.",
+	//       "description": "Select only advertisers with these IDs.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
 	//     },
 	//     "includeAdvertisersWithoutGroupsOnly": {
-	//       "description": "If true, will return only advertisers which do not belong to any advertiser group.",
+	//       "description": "Select only advertisers which do not belong to any advertiser group.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -8634,12 +8890,12 @@ func (c *AdvertisersListCall) Do() (*AdvertisersListResponse, error) {
 	//       "type": "integer"
 	//     },
 	//     "onlyParent": {
-	//       "description": "If true, will return only advertisers which use another advertiser's floodlight configuration.",
+	//       "description": "Select only advertisers which use another advertiser's floodlight configuration.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "pageToken": {
-	//       "description": "The value of the nextPageToken from the previous result page.",
+	//       "description": "Value of the nextPageToken from the previous result page.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8651,12 +8907,12 @@ func (c *AdvertisersListCall) Do() (*AdvertisersListResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "searchString": {
-	//       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"advertiser*2010\" will return objects with names like \"advertiser June 2010\", \"advertiser April 2010\" or simply \"advertiser 2010\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"advertiser\" will match objects with name \"my advertiser\", \"advertiser 2010\" or simply \"advertiser\".",
+	//       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"advertiser*2015\" will return objects with names like \"advertiser June 2015\", \"advertiser April 2015\" or simply \"advertiser 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"advertiser\" will match objects with name \"my advertiser\", \"advertiser 2015\" or simply \"advertiser\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "sortField": {
-	//       "description": "The field by which to sort the list.",
+	//       "description": "Field by which to sort the list.",
 	//       "enum": [
 	//         "ID",
 	//         "NAME"
@@ -8682,7 +8938,7 @@ func (c *AdvertisersListCall) Do() (*AdvertisersListResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "status": {
-	//       "description": "Specifies the status of retrieved advertisers.",
+	//       "description": "Select only advertisers with the specified status.",
 	//       "enum": [
 	//         "APPROVED",
 	//         "ON_HOLD"
@@ -8695,7 +8951,7 @@ func (c *AdvertisersListCall) Do() (*AdvertisersListResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "subaccountId": {
-	//       "description": "Subaccount ID of advertisers to retrieve.",
+	//       "description": "Select only advertisers with these subaccount IDs.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
@@ -8987,9 +9243,9 @@ type CampaignCreativeAssociationsInsertCall struct {
 	opt_                        map[string]interface{}
 }
 
-// Insert: Associates a creative with this campaign. This method creates
-// a default ad with dimensions matching the creative in this campaign
-// if such a default ad does not exist already.
+// Insert: Associates a creative with the specified campaign. This
+// method creates a default ad with dimensions matching the creative in
+// the campaign if such a default ad does not exist already.
 func (r *CampaignCreativeAssociationsService) Insert(profileId int64, campaignId int64, campaigncreativeassociation *CampaignCreativeAssociation) *CampaignCreativeAssociationsInsertCall {
 	c := &CampaignCreativeAssociationsInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.profileId = profileId
@@ -9041,7 +9297,7 @@ func (c *CampaignCreativeAssociationsInsertCall) Do() (*CampaignCreativeAssociat
 	}
 	return ret, nil
 	// {
-	//   "description": "Associates a creative with this campaign. This method creates a default ad with dimensions matching the creative in this campaign if such a default ad does not exist already.",
+	//   "description": "Associates a creative with the specified campaign. This method creates a default ad with dimensions matching the creative in the campaign if such a default ad does not exist already.",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.campaignCreativeAssociations.insert",
 	//   "parameterOrder": [
@@ -9087,8 +9343,8 @@ type CampaignCreativeAssociationsListCall struct {
 	opt_       map[string]interface{}
 }
 
-// List: Retrieves the list of creative IDs associated with this
-// campaign.
+// List: Retrieves the list of creative IDs associated with the
+// specified campaign.
 func (r *CampaignCreativeAssociationsService) List(profileId int64, campaignId int64) *CampaignCreativeAssociationsListCall {
 	c := &CampaignCreativeAssociationsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.profileId = profileId
@@ -9103,7 +9359,7 @@ func (c *CampaignCreativeAssociationsListCall) MaxResults(maxResults int64) *Cam
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The value of the
+// PageToken sets the optional parameter "pageToken": Value of the
 // nextPageToken from the previous result page.
 func (c *CampaignCreativeAssociationsListCall) PageToken(pageToken string) *CampaignCreativeAssociationsListCall {
 	c.opt_["pageToken"] = pageToken
@@ -9163,7 +9419,7 @@ func (c *CampaignCreativeAssociationsListCall) Do() (*CampaignCreativeAssociatio
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves the list of creative IDs associated with this campaign.",
+	//   "description": "Retrieves the list of creative IDs associated with the specified campaign.",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.campaignCreativeAssociations.list",
 	//   "parameterOrder": [
@@ -9185,7 +9441,7 @@ func (c *CampaignCreativeAssociationsListCall) Do() (*CampaignCreativeAssociatio
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The value of the nextPageToken from the previous result page.",
+	//       "description": "Value of the nextPageToken from the previous result page.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -9384,7 +9640,7 @@ func (c *CampaignsInsertCall) Do() (*Campaign, error) {
 	//   ],
 	//   "parameters": {
 	//     "defaultLandingPageName": {
-	//       "description": "Default landing page name for this new campaign.",
+	//       "description": "Default landing page name for this new campaign. Must be less than 256 characters long.",
 	//       "location": "query",
 	//       "required": true,
 	//       "type": "string"
@@ -9492,7 +9748,7 @@ func (c *CampaignsListCall) OverriddenEventTagId(overriddenEventTagId int64) *Ca
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The value of the
+// PageToken sets the optional parameter "pageToken": Value of the
 // nextPageToken from the previous result page.
 func (c *CampaignsListCall) PageToken(pageToken string) *CampaignsListCall {
 	c.opt_["pageToken"] = pageToken
@@ -9501,19 +9757,19 @@ func (c *CampaignsListCall) PageToken(pageToken string) *CampaignsListCall {
 
 // SearchString sets the optional parameter "searchString": Allows
 // searching for campaigns by name or ID. Wildcards (*) are allowed. For
-// example, "campaign*2010" will return campaigns with names like
-// "campaign June 2010", "campaign April 2010" or simply "campaign
-// 2010". Most of the searches also add wildcards implicitly at the
+// example, "campaign*2015" will return campaigns with names like
+// "campaign June 2015", "campaign April 2015" or simply "campaign
+// 2015". Most of the searches also add wildcards implicitly at the
 // start and the end of the search string. For example, a search string
 // of "campaign" will match campaigns with name "my campaign", "campaign
-// 2010" or simply "campaign".
+// 2015" or simply "campaign".
 func (c *CampaignsListCall) SearchString(searchString string) *CampaignsListCall {
 	c.opt_["searchString"] = searchString
 	return c
 }
 
-// SortField sets the optional parameter "sortField": The field by which
-// to sort the list.
+// SortField sets the optional parameter "sortField": Field by which to
+// sort the list.
 func (c *CampaignsListCall) SortField(sortField string) *CampaignsListCall {
 	c.opt_["sortField"] = sortField
 	return c
@@ -9666,7 +9922,7 @@ func (c *CampaignsListCall) Do() (*CampaignsListResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "pageToken": {
-	//       "description": "The value of the nextPageToken from the previous result page.",
+	//       "description": "Value of the nextPageToken from the previous result page.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -9678,12 +9934,12 @@ func (c *CampaignsListCall) Do() (*CampaignsListResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "searchString": {
-	//       "description": "Allows searching for campaigns by name or ID. Wildcards (*) are allowed. For example, \"campaign*2010\" will return campaigns with names like \"campaign June 2010\", \"campaign April 2010\" or simply \"campaign 2010\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"campaign\" will match campaigns with name \"my campaign\", \"campaign 2010\" or simply \"campaign\".",
+	//       "description": "Allows searching for campaigns by name or ID. Wildcards (*) are allowed. For example, \"campaign*2015\" will return campaigns with names like \"campaign June 2015\", \"campaign April 2015\" or simply \"campaign 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"campaign\" will match campaigns with name \"my campaign\", \"campaign 2015\" or simply \"campaign\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "sortField": {
-	//       "description": "The field by which to sort the list.",
+	//       "description": "Field by which to sort the list.",
 	//       "enum": [
 	//         "ID",
 	//         "NAME"
@@ -10034,9 +10290,9 @@ func (c *ChangeLogsListCall) Ids(ids int64) *ChangeLogsListCall {
 // MaxChangeTime sets the optional parameter "maxChangeTime": Select
 // only change logs whose change time is before the specified
 // maxChangeTime.The time should be formatted as an RFC3339 date/time
-// string. For example, for 10:54 PM on July 18th, 2014, in the
+// string. For example, for 10:54 PM on July 18th, 2015, in the
 // America/New York time zone, the format is
-// "2014-07-18T22:54:00-04:00". In other words, the year, month, day,
+// "2015-07-18T22:54:00-04:00". In other words, the year, month, day,
 // the letter T, the hour (24-hour clock system), minute, second, and
 // then the time zone offset.
 func (c *ChangeLogsListCall) MaxChangeTime(maxChangeTime string) *ChangeLogsListCall {
@@ -10054,9 +10310,9 @@ func (c *ChangeLogsListCall) MaxResults(maxResults int64) *ChangeLogsListCall {
 // MinChangeTime sets the optional parameter "minChangeTime": Select
 // only change logs whose change time is before the specified
 // minChangeTime.The time should be formatted as an RFC3339 date/time
-// string. For example, for 10:54 PM on July 18th, 2014, in the
+// string. For example, for 10:54 PM on July 18th, 2015, in the
 // America/New York time zone, the format is
-// "2014-07-18T22:54:00-04:00". In other words, the year, month, day,
+// "2015-07-18T22:54:00-04:00". In other words, the year, month, day,
 // the letter T, the hour (24-hour clock system), minute, second, and
 // then the time zone offset.
 func (c *ChangeLogsListCall) MinChangeTime(minChangeTime string) *ChangeLogsListCall {
@@ -10078,7 +10334,7 @@ func (c *ChangeLogsListCall) ObjectType(objectType string) *ChangeLogsListCall {
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The value of the
+// PageToken sets the optional parameter "pageToken": Value of the
 // nextPageToken from the previous result page.
 func (c *ChangeLogsListCall) PageToken(pageToken string) *ChangeLogsListCall {
 	c.opt_["pageToken"] = pageToken
@@ -10222,7 +10478,7 @@ func (c *ChangeLogsListCall) Do() (*ChangeLogsListResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "maxChangeTime": {
-	//       "description": "Select only change logs whose change time is before the specified maxChangeTime.The time should be formatted as an RFC3339 date/time string. For example, for 10:54 PM on July 18th, 2014, in the America/New York time zone, the format is \"2014-07-18T22:54:00-04:00\". In other words, the year, month, day, the letter T, the hour (24-hour clock system), minute, second, and then the time zone offset.",
+	//       "description": "Select only change logs whose change time is before the specified maxChangeTime.The time should be formatted as an RFC3339 date/time string. For example, for 10:54 PM on July 18th, 2015, in the America/New York time zone, the format is \"2015-07-18T22:54:00-04:00\". In other words, the year, month, day, the letter T, the hour (24-hour clock system), minute, second, and then the time zone offset.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -10233,7 +10489,7 @@ func (c *ChangeLogsListCall) Do() (*ChangeLogsListResponse, error) {
 	//       "type": "integer"
 	//     },
 	//     "minChangeTime": {
-	//       "description": "Select only change logs whose change time is before the specified minChangeTime.The time should be formatted as an RFC3339 date/time string. For example, for 10:54 PM on July 18th, 2014, in the America/New York time zone, the format is \"2014-07-18T22:54:00-04:00\". In other words, the year, month, day, the letter T, the hour (24-hour clock system), minute, second, and then the time zone offset.",
+	//       "description": "Select only change logs whose change time is before the specified minChangeTime.The time should be formatted as an RFC3339 date/time string. For example, for 10:54 PM on July 18th, 2015, in the America/New York time zone, the format is \"2015-07-18T22:54:00-04:00\". In other words, the year, month, day, the letter T, the hour (24-hour clock system), minute, second, and then the time zone offset.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -10326,7 +10582,7 @@ func (c *ChangeLogsListCall) Do() (*ChangeLogsListResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "pageToken": {
-	//       "description": "The value of the nextPageToken from the previous result page.",
+	//       "description": "Value of the nextPageToken from the previous result page.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -10377,28 +10633,28 @@ func (r *CitiesService) List(profileId int64) *CitiesListCall {
 }
 
 // CountryDartIds sets the optional parameter "countryDartIds": Select
-// cities from these countries.
+// only cities from these countries.
 func (c *CitiesListCall) CountryDartIds(countryDartIds int64) *CitiesListCall {
 	c.opt_["countryDartIds"] = countryDartIds
 	return c
 }
 
-// DartIds sets the optional parameter "dartIds": Return cities with
-// these IDs.
+// DartIds sets the optional parameter "dartIds": Select only cities
+// with these DART IDs.
 func (c *CitiesListCall) DartIds(dartIds int64) *CitiesListCall {
 	c.opt_["dartIds"] = dartIds
 	return c
 }
 
-// NamePrefix sets the optional parameter "namePrefix": Select cities
-// with names starting with this prefix.
+// NamePrefix sets the optional parameter "namePrefix": Select only
+// cities with names starting with this prefix.
 func (c *CitiesListCall) NamePrefix(namePrefix string) *CitiesListCall {
 	c.opt_["namePrefix"] = namePrefix
 	return c
 }
 
 // RegionDartIds sets the optional parameter "regionDartIds": Select
-// cities from these regions.
+// only cities from these regions.
 func (c *CitiesListCall) RegionDartIds(regionDartIds int64) *CitiesListCall {
 	c.opt_["regionDartIds"] = regionDartIds
 	return c
@@ -10460,21 +10716,21 @@ func (c *CitiesListCall) Do() (*CitiesListResponse, error) {
 	//   ],
 	//   "parameters": {
 	//     "countryDartIds": {
-	//       "description": "Select cities from these countries.",
+	//       "description": "Select only cities from these countries.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
 	//     },
 	//     "dartIds": {
-	//       "description": "Return cities with these IDs.",
+	//       "description": "Select only cities with these DART IDs.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
 	//     },
 	//     "namePrefix": {
-	//       "description": "Select cities with names starting with this prefix.",
+	//       "description": "Select only cities with names starting with this prefix.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -10486,7 +10742,7 @@ func (c *CitiesListCall) Do() (*CitiesListResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "regionDartIds": {
-	//       "description": "Select cities from these regions.",
+	//       "description": "Select only cities from these regions.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "repeated": true,
@@ -10853,8 +11109,8 @@ func (r *ContentCategoriesService) List(profileId int64) *ContentCategoriesListC
 	return c
 }
 
-// Ids sets the optional parameter "ids": Set of IDs of specified
-// content categories to retrieve.
+// Ids sets the optional parameter "ids": Select only content categories
+// with these IDs.
 func (c *ContentCategoriesListCall) Ids(ids int64) *ContentCategoriesListCall {
 	c.opt_["ids"] = ids
 	return c
@@ -10867,7 +11123,7 @@ func (c *ContentCategoriesListCall) MaxResults(maxResults int64) *ContentCategor
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The value of the
+// PageToken sets the optional parameter "pageToken": Value of the
 // nextPageToken from the previous result page.
 func (c *ContentCategoriesListCall) PageToken(pageToken string) *ContentCategoriesListCall {
 	c.opt_["pageToken"] = pageToken
@@ -10876,20 +11132,20 @@ func (c *ContentCategoriesListCall) PageToken(pageToken string) *ContentCategori
 
 // SearchString sets the optional parameter "searchString": Allows
 // searching for objects by name or ID. Wildcards (*) are allowed. For
-// example, "contentcategory*2010" will return objects with names like
-// "contentcategory June 2010", "contentcategory April 2010" or simply
-// "contentcategory 2010". Most of the searches also add wildcards
+// example, "contentcategory*2015" will return objects with names like
+// "contentcategory June 2015", "contentcategory April 2015" or simply
+// "contentcategory 2015". Most of the searches also add wildcards
 // implicitly at the start and the end of the search string. For
 // example, a search string of "contentcategory" will match objects with
-// name "my contentcategory", "contentcategory 2010" or simply
+// name "my contentcategory", "contentcategory 2015" or simply
 // "contentcategory".
 func (c *ContentCategoriesListCall) SearchString(searchString string) *ContentCategoriesListCall {
 	c.opt_["searchString"] = searchString
 	return c
 }
 
-// SortField sets the optional parameter "sortField": The field by which
-// to sort the list.
+// SortField sets the optional parameter "sortField": Field by which to
+// sort the list.
 func (c *ContentCategoriesListCall) SortField(sortField string) *ContentCategoriesListCall {
 	c.opt_["sortField"] = sortField
 	return c
@@ -10964,7 +11220,7 @@ func (c *ContentCategoriesListCall) Do() (*ContentCategoriesListResponse, error)
 	//   ],
 	//   "parameters": {
 	//     "ids": {
-	//       "description": "Set of IDs of specified content categories to retrieve.",
+	//       "description": "Select only content categories with these IDs.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "repeated": true,
@@ -10977,7 +11233,7 @@ func (c *ContentCategoriesListCall) Do() (*ContentCategoriesListResponse, error)
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The value of the nextPageToken from the previous result page.",
+	//       "description": "Value of the nextPageToken from the previous result page.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -10989,12 +11245,12 @@ func (c *ContentCategoriesListCall) Do() (*ContentCategoriesListResponse, error)
 	//       "type": "string"
 	//     },
 	//     "searchString": {
-	//       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"contentcategory*2010\" will return objects with names like \"contentcategory June 2010\", \"contentcategory April 2010\" or simply \"contentcategory 2010\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"contentcategory\" will match objects with name \"my contentcategory\", \"contentcategory 2010\" or simply \"contentcategory\".",
+	//       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"contentcategory*2015\" will return objects with names like \"contentcategory June 2015\", \"contentcategory April 2015\" or simply \"contentcategory 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"contentcategory\" will match objects with name \"my contentcategory\", \"contentcategory 2015\" or simply \"contentcategory\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "sortField": {
-	//       "description": "The field by which to sort the list.",
+	//       "description": "Field by which to sort the list.",
 	//       "enum": [
 	//         "ID",
 	//         "NAME"
@@ -11516,6 +11772,7 @@ func (c *CreativeAssetsInsertCall) Do() (*CreativeAssetMetadata, error) {
 		if err != nil {
 			return nil, err
 		}
+		defer res.Body.Close()
 	}
 	var ret *CreativeAssetMetadata
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
@@ -11898,7 +12155,7 @@ func (c *CreativeFieldValuesListCall) MaxResults(maxResults int64) *CreativeFiel
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The value of the
+// PageToken sets the optional parameter "pageToken": Value of the
 // nextPageToken from the previous result page.
 func (c *CreativeFieldValuesListCall) PageToken(pageToken string) *CreativeFieldValuesListCall {
 	c.opt_["pageToken"] = pageToken
@@ -11913,8 +12170,8 @@ func (c *CreativeFieldValuesListCall) SearchString(searchString string) *Creativ
 	return c
 }
 
-// SortField sets the optional parameter "sortField": The field by which
-// to sort the list.
+// SortField sets the optional parameter "sortField": Field by which to
+// sort the list.
 func (c *CreativeFieldValuesListCall) SortField(sortField string) *CreativeFieldValuesListCall {
 	c.opt_["sortField"] = sortField
 	return c
@@ -12011,7 +12268,7 @@ func (c *CreativeFieldValuesListCall) Do() (*CreativeFieldValuesListResponse, er
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The value of the nextPageToken from the previous result page.",
+	//       "description": "Value of the nextPageToken from the previous result page.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -12028,7 +12285,7 @@ func (c *CreativeFieldValuesListCall) Do() (*CreativeFieldValuesListResponse, er
 	//       "type": "string"
 	//     },
 	//     "sortField": {
-	//       "description": "The field by which to sort the list.",
+	//       "description": "Field by which to sort the list.",
 	//       "enum": [
 	//         "ID",
 	//         "VALUE"
@@ -12568,7 +12825,7 @@ func (c *CreativeFieldsListCall) MaxResults(maxResults int64) *CreativeFieldsLis
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The value of the
+// PageToken sets the optional parameter "pageToken": Value of the
 // nextPageToken from the previous result page.
 func (c *CreativeFieldsListCall) PageToken(pageToken string) *CreativeFieldsListCall {
 	c.opt_["pageToken"] = pageToken
@@ -12577,20 +12834,20 @@ func (c *CreativeFieldsListCall) PageToken(pageToken string) *CreativeFieldsList
 
 // SearchString sets the optional parameter "searchString": Allows
 // searching for creative fields by name or ID. Wildcards (*) are
-// allowed. For example, "creativefield*2010" will return creative
-// fields with names like "creativefield June 2010", "creativefield
-// April 2010" or simply "creativefield 2010". Most of the searches also
+// allowed. For example, "creativefield*2015" will return creative
+// fields with names like "creativefield June 2015", "creativefield
+// April 2015" or simply "creativefield 2015". Most of the searches also
 // add wild-cards implicitly at the start and the end of the search
 // string. For example, a search string of "creativefield" will match
 // creative fields with the name "my creativefield", "creativefield
-// 2010" or simply "creativefield".
+// 2015" or simply "creativefield".
 func (c *CreativeFieldsListCall) SearchString(searchString string) *CreativeFieldsListCall {
 	c.opt_["searchString"] = searchString
 	return c
 }
 
-// SortField sets the optional parameter "sortField": The field by which
-// to sort the list.
+// SortField sets the optional parameter "sortField": Field by which to
+// sort the list.
 func (c *CreativeFieldsListCall) SortField(sortField string) *CreativeFieldsListCall {
 	c.opt_["sortField"] = sortField
 	return c
@@ -12688,7 +12945,7 @@ func (c *CreativeFieldsListCall) Do() (*CreativeFieldsListResponse, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The value of the nextPageToken from the previous result page.",
+	//       "description": "Value of the nextPageToken from the previous result page.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -12700,12 +12957,12 @@ func (c *CreativeFieldsListCall) Do() (*CreativeFieldsListResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "searchString": {
-	//       "description": "Allows searching for creative fields by name or ID. Wildcards (*) are allowed. For example, \"creativefield*2010\" will return creative fields with names like \"creativefield June 2010\", \"creativefield April 2010\" or simply \"creativefield 2010\". Most of the searches also add wild-cards implicitly at the start and the end of the search string. For example, a search string of \"creativefield\" will match creative fields with the name \"my creativefield\", \"creativefield 2010\" or simply \"creativefield\".",
+	//       "description": "Allows searching for creative fields by name or ID. Wildcards (*) are allowed. For example, \"creativefield*2015\" will return creative fields with names like \"creativefield June 2015\", \"creativefield April 2015\" or simply \"creativefield 2015\". Most of the searches also add wild-cards implicitly at the start and the end of the search string. For example, a search string of \"creativefield\" will match creative fields with the name \"my creativefield\", \"creativefield 2015\" or simply \"creativefield\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "sortField": {
-	//       "description": "The field by which to sort the list.",
+	//       "description": "Field by which to sort the list.",
 	//       "enum": [
 	//         "ID",
 	//         "NAME"
@@ -13149,7 +13406,7 @@ func (c *CreativeGroupsListCall) MaxResults(maxResults int64) *CreativeGroupsLis
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The value of the
+// PageToken sets the optional parameter "pageToken": Value of the
 // nextPageToken from the previous result page.
 func (c *CreativeGroupsListCall) PageToken(pageToken string) *CreativeGroupsListCall {
 	c.opt_["pageToken"] = pageToken
@@ -13158,20 +13415,20 @@ func (c *CreativeGroupsListCall) PageToken(pageToken string) *CreativeGroupsList
 
 // SearchString sets the optional parameter "searchString": Allows
 // searching for creative groups by name or ID. Wildcards (*) are
-// allowed. For example, "creativegroup*2010" will return creative
-// groups with names like "creativegroup June 2010", "creativegroup
-// April 2010" or simply "creativegroup 2010". Most of the searches also
+// allowed. For example, "creativegroup*2015" will return creative
+// groups with names like "creativegroup June 2015", "creativegroup
+// April 2015" or simply "creativegroup 2015". Most of the searches also
 // add wild-cards implicitly at the start and the end of the search
 // string. For example, a search string of "creativegroup" will match
 // creative groups with the name "my creativegroup", "creativegroup
-// 2010" or simply "creativegroup".
+// 2015" or simply "creativegroup".
 func (c *CreativeGroupsListCall) SearchString(searchString string) *CreativeGroupsListCall {
 	c.opt_["searchString"] = searchString
 	return c
 }
 
-// SortField sets the optional parameter "sortField": The field by which
-// to sort the list.
+// SortField sets the optional parameter "sortField": Field by which to
+// sort the list.
 func (c *CreativeGroupsListCall) SortField(sortField string) *CreativeGroupsListCall {
 	c.opt_["sortField"] = sortField
 	return c
@@ -13278,7 +13535,7 @@ func (c *CreativeGroupsListCall) Do() (*CreativeGroupsListResponse, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The value of the nextPageToken from the previous result page.",
+	//       "description": "Value of the nextPageToken from the previous result page.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -13290,12 +13547,12 @@ func (c *CreativeGroupsListCall) Do() (*CreativeGroupsListResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "searchString": {
-	//       "description": "Allows searching for creative groups by name or ID. Wildcards (*) are allowed. For example, \"creativegroup*2010\" will return creative groups with names like \"creativegroup June 2010\", \"creativegroup April 2010\" or simply \"creativegroup 2010\". Most of the searches also add wild-cards implicitly at the start and the end of the search string. For example, a search string of \"creativegroup\" will match creative groups with the name \"my creativegroup\", \"creativegroup 2010\" or simply \"creativegroup\".",
+	//       "description": "Allows searching for creative groups by name or ID. Wildcards (*) are allowed. For example, \"creativegroup*2015\" will return creative groups with names like \"creativegroup June 2015\", \"creativegroup April 2015\" or simply \"creativegroup 2015\". Most of the searches also add wild-cards implicitly at the start and the end of the search string. For example, a search string of \"creativegroup\" will match creative groups with the name \"my creativegroup\", \"creativegroup 2015\" or simply \"creativegroup\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "sortField": {
-	//       "description": "The field by which to sort the list.",
+	//       "description": "Field by which to sort the list.",
 	//       "enum": [
 	//         "ID",
 	//         "NAME"
@@ -13718,8 +13975,8 @@ func (c *CreativesListCall) Active(active bool) *CreativesListCall {
 	return c
 }
 
-// AdvertiserId sets the optional parameter "advertiserId": Advertiser
-// ID.
+// AdvertiserId sets the optional parameter "advertiserId": Select only
+// creatives with this advertiser ID.
 func (c *CreativesListCall) AdvertiserId(advertiserId int64) *CreativesListCall {
 	c.opt_["advertiserId"] = advertiserId
 	return c
@@ -13732,8 +13989,8 @@ func (c *CreativesListCall) Archived(archived bool) *CreativesListCall {
 	return c
 }
 
-// CampaignId sets the optional parameter "campaignId": Campaign ID of
-// creatives to retrieve.
+// CampaignId sets the optional parameter "campaignId": Select only
+// creatives with this campaign ID.
 func (c *CreativesListCall) CampaignId(campaignId int64) *CreativesListCall {
 	c.opt_["campaignId"] = campaignId
 	return c
@@ -13741,20 +13998,21 @@ func (c *CreativesListCall) CampaignId(campaignId int64) *CreativesListCall {
 
 // CompanionCreativeIds sets the optional parameter
 // "companionCreativeIds": Select only in-stream video creatives with
-// specified companion IDs.
+// these companion IDs.
 func (c *CreativesListCall) CompanionCreativeIds(companionCreativeIds int64) *CreativesListCall {
 	c.opt_["companionCreativeIds"] = companionCreativeIds
 	return c
 }
 
 // CreativeFieldIds sets the optional parameter "creativeFieldIds":
-// Select only creatives with specified creative field IDs.
+// Select only creatives with these creative field IDs.
 func (c *CreativesListCall) CreativeFieldIds(creativeFieldIds int64) *CreativesListCall {
 	c.opt_["creativeFieldIds"] = creativeFieldIds
 	return c
 }
 
-// Ids sets the optional parameter "ids": List of creative IDs.
+// Ids sets the optional parameter "ids": Select only creatives with
+// these IDs.
 func (c *CreativesListCall) Ids(ids int64) *CreativesListCall {
 	c.opt_["ids"] = ids
 	return c
@@ -13767,7 +14025,7 @@ func (c *CreativesListCall) MaxResults(maxResults int64) *CreativesListCall {
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The value of the
+// PageToken sets the optional parameter "pageToken": Value of the
 // nextPageToken from the previous result page.
 func (c *CreativesListCall) PageToken(pageToken string) *CreativesListCall {
 	c.opt_["pageToken"] = pageToken
@@ -13775,7 +14033,7 @@ func (c *CreativesListCall) PageToken(pageToken string) *CreativesListCall {
 }
 
 // RenderingIds sets the optional parameter "renderingIds": Select only
-// creatives with specified rendering IDs.
+// creatives with these rendering IDs.
 func (c *CreativesListCall) RenderingIds(renderingIds int64) *CreativesListCall {
 	c.opt_["renderingIds"] = renderingIds
 	return c
@@ -13783,26 +14041,26 @@ func (c *CreativesListCall) RenderingIds(renderingIds int64) *CreativesListCall 
 
 // SearchString sets the optional parameter "searchString": Allows
 // searching for objects by name or ID. Wildcards (*) are allowed. For
-// example, "creative*2010" will return objects with names like
-// "creative June 2010", "creative April 2010" or simply "creative
-// 2010". Most of the searches also add wildcards implicitly at the
+// example, "creative*2015" will return objects with names like
+// "creative June 2015", "creative April 2015" or simply "creative
+// 2015". Most of the searches also add wildcards implicitly at the
 // start and the end of the search string. For example, a search string
 // of "creative" will match objects with name "my creative", "creative
-// 2010" or simply "creative".
+// 2015" or simply "creative".
 func (c *CreativesListCall) SearchString(searchString string) *CreativesListCall {
 	c.opt_["searchString"] = searchString
 	return c
 }
 
 // SizeIds sets the optional parameter "sizeIds": Select only creatives
-// with specified size.
+// with these size IDs.
 func (c *CreativesListCall) SizeIds(sizeIds int64) *CreativesListCall {
 	c.opt_["sizeIds"] = sizeIds
 	return c
 }
 
-// SortField sets the optional parameter "sortField": The field by which
-// to sort the list.
+// SortField sets the optional parameter "sortField": Field by which to
+// sort the list.
 func (c *CreativesListCall) SortField(sortField string) *CreativesListCall {
 	c.opt_["sortField"] = sortField
 	return c
@@ -13816,14 +14074,14 @@ func (c *CreativesListCall) SortOrder(sortOrder string) *CreativesListCall {
 }
 
 // StudioCreativeId sets the optional parameter "studioCreativeId":
-// Studio creative ID associated with DCM creatives.
+// Select only creatives corresponding to this Studio creative ID.
 func (c *CreativesListCall) StudioCreativeId(studioCreativeId int64) *CreativesListCall {
 	c.opt_["studioCreativeId"] = studioCreativeId
 	return c
 }
 
 // Types sets the optional parameter "types": Select only creatives with
-// specified type of creative.
+// these creative types.
 func (c *CreativesListCall) Types(types string) *CreativesListCall {
 	c.opt_["types"] = types
 	return c
@@ -13926,7 +14184,7 @@ func (c *CreativesListCall) Do() (*CreativesListResponse, error) {
 	//       "type": "boolean"
 	//     },
 	//     "advertiserId": {
-	//       "description": "Advertiser ID.",
+	//       "description": "Select only creatives with this advertiser ID.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
@@ -13937,27 +14195,27 @@ func (c *CreativesListCall) Do() (*CreativesListResponse, error) {
 	//       "type": "boolean"
 	//     },
 	//     "campaignId": {
-	//       "description": "Campaign ID of creatives to retrieve.",
+	//       "description": "Select only creatives with this campaign ID.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "companionCreativeIds": {
-	//       "description": "Select only in-stream video creatives with specified companion IDs.",
+	//       "description": "Select only in-stream video creatives with these companion IDs.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
 	//     },
 	//     "creativeFieldIds": {
-	//       "description": "Select only creatives with specified creative field IDs.",
+	//       "description": "Select only creatives with these creative field IDs.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
 	//     },
 	//     "ids": {
-	//       "description": "List of creative IDs.",
+	//       "description": "Select only creatives with these IDs.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "repeated": true,
@@ -13970,7 +14228,7 @@ func (c *CreativesListCall) Do() (*CreativesListResponse, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The value of the nextPageToken from the previous result page.",
+	//       "description": "Value of the nextPageToken from the previous result page.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -13982,26 +14240,26 @@ func (c *CreativesListCall) Do() (*CreativesListResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "renderingIds": {
-	//       "description": "Select only creatives with specified rendering IDs.",
+	//       "description": "Select only creatives with these rendering IDs.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
 	//     },
 	//     "searchString": {
-	//       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"creative*2010\" will return objects with names like \"creative June 2010\", \"creative April 2010\" or simply \"creative 2010\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"creative\" will match objects with name \"my creative\", \"creative 2010\" or simply \"creative\".",
+	//       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"creative*2015\" will return objects with names like \"creative June 2015\", \"creative April 2015\" or simply \"creative 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"creative\" will match objects with name \"my creative\", \"creative 2015\" or simply \"creative\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "sizeIds": {
-	//       "description": "Select only creatives with specified size.",
+	//       "description": "Select only creatives with these size IDs.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
 	//     },
 	//     "sortField": {
-	//       "description": "The field by which to sort the list.",
+	//       "description": "Field by which to sort the list.",
 	//       "enum": [
 	//         "ID",
 	//         "NAME"
@@ -14027,13 +14285,13 @@ func (c *CreativesListCall) Do() (*CreativesListResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "studioCreativeId": {
-	//       "description": "Studio creative ID associated with DCM creatives.",
+	//       "description": "Select only creatives corresponding to this Studio creative ID.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "types": {
-	//       "description": "Select only creatives with specified type of creative.",
+	//       "description": "Select only creatives with these creative types.",
 	//       "enum": [
 	//         "BRAND_SAFE_DEFAULT_INSTREAM_VIDEO",
 	//         "CUSTOM_INPAGE",
@@ -14514,15 +14772,15 @@ func (r *DirectorySiteContactsService) List(profileId int64) *DirectorySiteConta
 }
 
 // DirectorySiteIds sets the optional parameter "directorySiteIds":
-// Retrieve contacts of directory sites with this set of IDs. This is a
-// required field.
+// Select only directory site contacts with these directory site IDs.
+// This is a required field.
 func (c *DirectorySiteContactsListCall) DirectorySiteIds(directorySiteIds int64) *DirectorySiteContactsListCall {
 	c.opt_["directorySiteIds"] = directorySiteIds
 	return c
 }
 
-// Ids sets the optional parameter "ids": Set of IDs of specified
-// directory site contacts to retrieve.
+// Ids sets the optional parameter "ids": Select only directory site
+// contacts with these IDs.
 func (c *DirectorySiteContactsListCall) Ids(ids int64) *DirectorySiteContactsListCall {
 	c.opt_["ids"] = ids
 	return c
@@ -14535,7 +14793,7 @@ func (c *DirectorySiteContactsListCall) MaxResults(maxResults int64) *DirectoryS
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The value of the
+// PageToken sets the optional parameter "pageToken": Value of the
 // nextPageToken from the previous result page.
 func (c *DirectorySiteContactsListCall) PageToken(pageToken string) *DirectorySiteContactsListCall {
 	c.opt_["pageToken"] = pageToken
@@ -14544,21 +14802,21 @@ func (c *DirectorySiteContactsListCall) PageToken(pageToken string) *DirectorySi
 
 // SearchString sets the optional parameter "searchString": Allows
 // searching for objects by name, ID or email. Wildcards (*) are
-// allowed. For example, "directory site contact*2010" will return
-// objects with names like "directory site contact June 2010",
-// "directory site contact April 2010" or simply "directory site contact
-// 2010". Most of the searches also add wildcards implicitly at the
+// allowed. For example, "directory site contact*2015" will return
+// objects with names like "directory site contact June 2015",
+// "directory site contact April 2015" or simply "directory site contact
+// 2015". Most of the searches also add wildcards implicitly at the
 // start and the end of the search string. For example, a search string
 // of "directory site contact" will match objects with name "my
-// directory site contact", "directory site contact 2010" or simply
+// directory site contact", "directory site contact 2015" or simply
 // "directory site contact".
 func (c *DirectorySiteContactsListCall) SearchString(searchString string) *DirectorySiteContactsListCall {
 	c.opt_["searchString"] = searchString
 	return c
 }
 
-// SortField sets the optional parameter "sortField": The field by which
-// to sort the list.
+// SortField sets the optional parameter "sortField": Field by which to
+// sort the list.
 func (c *DirectorySiteContactsListCall) SortField(sortField string) *DirectorySiteContactsListCall {
 	c.opt_["sortField"] = sortField
 	return c
@@ -14636,14 +14894,14 @@ func (c *DirectorySiteContactsListCall) Do() (*DirectorySiteContactsListResponse
 	//   ],
 	//   "parameters": {
 	//     "directorySiteIds": {
-	//       "description": "Retrieve contacts of directory sites with this set of IDs. This is a required field.",
+	//       "description": "Select only directory site contacts with these directory site IDs. This is a required field.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
 	//     },
 	//     "ids": {
-	//       "description": "Set of IDs of specified directory site contacts to retrieve.",
+	//       "description": "Select only directory site contacts with these IDs.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "repeated": true,
@@ -14656,7 +14914,7 @@ func (c *DirectorySiteContactsListCall) Do() (*DirectorySiteContactsListResponse
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The value of the nextPageToken from the previous result page.",
+	//       "description": "Value of the nextPageToken from the previous result page.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -14668,12 +14926,12 @@ func (c *DirectorySiteContactsListCall) Do() (*DirectorySiteContactsListResponse
 	//       "type": "string"
 	//     },
 	//     "searchString": {
-	//       "description": "Allows searching for objects by name, ID or email. Wildcards (*) are allowed. For example, \"directory site contact*2010\" will return objects with names like \"directory site contact June 2010\", \"directory site contact April 2010\" or simply \"directory site contact 2010\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"directory site contact\" will match objects with name \"my directory site contact\", \"directory site contact 2010\" or simply \"directory site contact\".",
+	//       "description": "Allows searching for objects by name, ID or email. Wildcards (*) are allowed. For example, \"directory site contact*2015\" will return objects with names like \"directory site contact June 2015\", \"directory site contact April 2015\" or simply \"directory site contact 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"directory site contact\" will match objects with name \"my directory site contact\", \"directory site contact 2015\" or simply \"directory site contact\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "sortField": {
-	//       "description": "The field by which to sort the list.",
+	//       "description": "Field by which to sort the list.",
 	//       "enum": [
 	//         "ID",
 	//         "NAME"
@@ -14814,16 +15072,16 @@ func (r *DirectorySitesService) List(profileId int64) *DirectorySitesListCall {
 }
 
 // AcceptsInStreamVideoPlacements sets the optional parameter
-// "acceptsInStreamVideoPlacements": Select only sites that accept
-// in-stream video placements. This field can be left blank.
+// "acceptsInStreamVideoPlacements": This search filter is no longer
+// supported and will have no effect on the results returned.
 func (c *DirectorySitesListCall) AcceptsInStreamVideoPlacements(acceptsInStreamVideoPlacements bool) *DirectorySitesListCall {
 	c.opt_["acceptsInStreamVideoPlacements"] = acceptsInStreamVideoPlacements
 	return c
 }
 
 // AcceptsInterstitialPlacements sets the optional parameter
-// "acceptsInterstitialPlacements": Select only sites that accept
-// interstitial placements. This field be left blank.
+// "acceptsInterstitialPlacements": This search filter is no longer
+// supported and will have no effect on the results returned.
 func (c *DirectorySitesListCall) AcceptsInterstitialPlacements(acceptsInterstitialPlacements bool) *DirectorySitesListCall {
 	c.opt_["acceptsInterstitialPlacements"] = acceptsInterstitialPlacements
 	return c
@@ -14837,30 +15095,30 @@ func (c *DirectorySitesListCall) AcceptsPublisherPaidPlacements(acceptsPublisher
 	return c
 }
 
-// Active sets the optional parameter "active": Whether to retrieve
-// active directory sites. Leave blank to retrieve both active and
-// inactive directory sites.
+// Active sets the optional parameter "active": Select only active
+// directory sites. Leave blank to retrieve both active and inactive
+// directory sites.
 func (c *DirectorySitesListCall) Active(active bool) *DirectorySitesListCall {
 	c.opt_["active"] = active
 	return c
 }
 
-// CountryId sets the optional parameter "countryId": Country ID of
-// directory sites to retrieve.
+// CountryId sets the optional parameter "countryId": Select only
+// directory sites with this country ID.
 func (c *DirectorySitesListCall) CountryId(countryId int64) *DirectorySitesListCall {
 	c.opt_["countryId"] = countryId
 	return c
 }
 
-// Dfp_network_code sets the optional parameter "dfp_network_code": DFP
-// network code of directory sites to retrieve.
+// Dfp_network_code sets the optional parameter "dfp_network_code":
+// Select only directory sites with this DFP network code.
 func (c *DirectorySitesListCall) Dfp_network_code(dfp_network_code string) *DirectorySitesListCall {
 	c.opt_["dfp_network_code"] = dfp_network_code
 	return c
 }
 
-// Ids sets the optional parameter "ids": Set of IDs of specified
-// directory sites to retrieve.
+// Ids sets the optional parameter "ids": Select only directory sites
+// with these IDs.
 func (c *DirectorySitesListCall) Ids(ids int64) *DirectorySitesListCall {
 	c.opt_["ids"] = ids
 	return c
@@ -14873,15 +15131,15 @@ func (c *DirectorySitesListCall) MaxResults(maxResults int64) *DirectorySitesLis
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The value of the
+// PageToken sets the optional parameter "pageToken": Value of the
 // nextPageToken from the previous result page.
 func (c *DirectorySitesListCall) PageToken(pageToken string) *DirectorySitesListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
 }
 
-// ParentId sets the optional parameter "parentId": Parent ID of
-// directory sites to retrieve.
+// ParentId sets the optional parameter "parentId": Select only
+// directory sites with this parent ID.
 func (c *DirectorySitesListCall) ParentId(parentId int64) *DirectorySitesListCall {
 	c.opt_["parentId"] = parentId
 	return c
@@ -14889,20 +15147,20 @@ func (c *DirectorySitesListCall) ParentId(parentId int64) *DirectorySitesListCal
 
 // SearchString sets the optional parameter "searchString": Allows
 // searching for objects by name, ID or URL. Wildcards (*) are allowed.
-// For example, "directory site*2010" will return objects with names
-// like "directory site June 2010", "directory site April 2010" or
-// simply "directory site 2010". Most of the searches also add wildcards
+// For example, "directory site*2015" will return objects with names
+// like "directory site June 2015", "directory site April 2015" or
+// simply "directory site 2015". Most of the searches also add wildcards
 // implicitly at the start and the end of the search string. For
 // example, a search string of "directory site" will match objects with
-// name "my directory site", "directory site 2010" or simply "directory
+// name "my directory site", "directory site 2015" or simply "directory
 // site".
 func (c *DirectorySitesListCall) SearchString(searchString string) *DirectorySitesListCall {
 	c.opt_["searchString"] = searchString
 	return c
 }
 
-// SortField sets the optional parameter "sortField": The field by which
-// to sort the list.
+// SortField sets the optional parameter "sortField": Field by which to
+// sort the list.
 func (c *DirectorySitesListCall) SortField(sortField string) *DirectorySitesListCall {
 	c.opt_["sortField"] = sortField
 	return c
@@ -14998,12 +15256,12 @@ func (c *DirectorySitesListCall) Do() (*DirectorySitesListResponse, error) {
 	//   ],
 	//   "parameters": {
 	//     "acceptsInStreamVideoPlacements": {
-	//       "description": "Select only sites that accept in-stream video placements. This field can be left blank.",
+	//       "description": "This search filter is no longer supported and will have no effect on the results returned.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "acceptsInterstitialPlacements": {
-	//       "description": "Select only sites that accept interstitial placements. This field be left blank.",
+	//       "description": "This search filter is no longer supported and will have no effect on the results returned.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -15013,23 +15271,23 @@ func (c *DirectorySitesListCall) Do() (*DirectorySitesListResponse, error) {
 	//       "type": "boolean"
 	//     },
 	//     "active": {
-	//       "description": "Whether to retrieve active directory sites. Leave blank to retrieve both active and inactive directory sites.",
+	//       "description": "Select only active directory sites. Leave blank to retrieve both active and inactive directory sites.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "countryId": {
-	//       "description": "Country ID of directory sites to retrieve.",
+	//       "description": "Select only directory sites with this country ID.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "dfp_network_code": {
-	//       "description": "DFP network code of directory sites to retrieve.",
+	//       "description": "Select only directory sites with this DFP network code.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "ids": {
-	//       "description": "Set of IDs of specified directory sites to retrieve.",
+	//       "description": "Select only directory sites with these IDs.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "repeated": true,
@@ -15042,12 +15300,12 @@ func (c *DirectorySitesListCall) Do() (*DirectorySitesListResponse, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The value of the nextPageToken from the previous result page.",
+	//       "description": "Value of the nextPageToken from the previous result page.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parentId": {
-	//       "description": "Parent ID of directory sites to retrieve.",
+	//       "description": "Select only directory sites with this parent ID.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
@@ -15060,12 +15318,12 @@ func (c *DirectorySitesListCall) Do() (*DirectorySitesListResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "searchString": {
-	//       "description": "Allows searching for objects by name, ID or URL. Wildcards (*) are allowed. For example, \"directory site*2010\" will return objects with names like \"directory site June 2010\", \"directory site April 2010\" or simply \"directory site 2010\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"directory site\" will match objects with name \"my directory site\", \"directory site 2010\" or simply \"directory site\".",
+	//       "description": "Allows searching for objects by name, ID or URL. Wildcards (*) are allowed. For example, \"directory site*2015\" will return objects with names like \"directory site June 2015\", \"directory site April 2015\" or simply \"directory site 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"directory site\" will match objects with name \"my directory site\", \"directory site 2015\" or simply \"directory site\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "sortField": {
-	//       "description": "The field by which to sort the list.",
+	//       "description": "Field by which to sort the list.",
 	//       "enum": [
 	//         "ID",
 	//         "NAME"
@@ -15427,8 +15685,8 @@ func (c *EventTagsListCall) EventTagTypes(eventTagTypes string) *EventTagsListCa
 	return c
 }
 
-// Ids sets the optional parameter "ids": Set of IDs of specified event
-// tags to retrieve.
+// Ids sets the optional parameter "ids": Select only event tags with
+// these IDs.
 func (c *EventTagsListCall) Ids(ids int64) *EventTagsListCall {
 	c.opt_["ids"] = ids
 	return c
@@ -15436,19 +15694,19 @@ func (c *EventTagsListCall) Ids(ids int64) *EventTagsListCall {
 
 // SearchString sets the optional parameter "searchString": Allows
 // searching for objects by name or ID. Wildcards (*) are allowed. For
-// example, "eventtag*2010" will return objects with names like
-// "eventtag June 2010", "eventtag April 2010" or simply "eventtag
-// 2010". Most of the searches also add wildcards implicitly at the
+// example, "eventtag*2015" will return objects with names like
+// "eventtag June 2015", "eventtag April 2015" or simply "eventtag
+// 2015". Most of the searches also add wildcards implicitly at the
 // start and the end of the search string. For example, a search string
 // of "eventtag" will match objects with name "my eventtag", "eventtag
-// 2010" or simply "eventtag".
+// 2015" or simply "eventtag".
 func (c *EventTagsListCall) SearchString(searchString string) *EventTagsListCall {
 	c.opt_["searchString"] = searchString
 	return c
 }
 
-// SortField sets the optional parameter "sortField": The field by which
-// to sort the list.
+// SortField sets the optional parameter "sortField": Field by which to
+// sort the list.
 func (c *EventTagsListCall) SortField(sortField string) *EventTagsListCall {
 	c.opt_["sortField"] = sortField
 	return c
@@ -15579,7 +15837,7 @@ func (c *EventTagsListCall) Do() (*EventTagsListResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "ids": {
-	//       "description": "Set of IDs of specified event tags to retrieve.",
+	//       "description": "Select only event tags with these IDs.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "repeated": true,
@@ -15593,12 +15851,12 @@ func (c *EventTagsListCall) Do() (*EventTagsListResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "searchString": {
-	//       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"eventtag*2010\" will return objects with names like \"eventtag June 2010\", \"eventtag April 2010\" or simply \"eventtag 2010\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"eventtag\" will match objects with name \"my eventtag\", \"eventtag 2010\" or simply \"eventtag\".",
+	//       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"eventtag*2015\" will return objects with names like \"eventtag June 2015\", \"eventtag April 2015\" or simply \"eventtag 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"eventtag\" will match objects with name \"my eventtag\", \"eventtag 2015\" or simply \"eventtag\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "sortField": {
-	//       "description": "The field by which to sort the list.",
+	//       "description": "Field by which to sort the list.",
 	//       "enum": [
 	//         "ID",
 	//         "NAME"
@@ -16462,8 +16720,8 @@ func (r *FloodlightActivitiesService) List(profileId int64) *FloodlightActivitie
 	return c
 }
 
-// AdvertiserId sets the optional parameter "advertiserId": Retrieve
-// Floodlight activities for the specified advertiser ID. Must specify
+// AdvertiserId sets the optional parameter "advertiserId": Select only
+// floodlight activities for the specified advertiser ID. Must specify
 // either ids, advertiserId, or floodlightConfigurationId for a
 // non-empty result.
 func (c *FloodlightActivitiesListCall) AdvertiserId(advertiserId int64) *FloodlightActivitiesListCall {
@@ -16472,49 +16730,49 @@ func (c *FloodlightActivitiesListCall) AdvertiserId(advertiserId int64) *Floodli
 }
 
 // FloodlightActivityGroupIds sets the optional parameter
-// "floodlightActivityGroupIds": Retrieve Floodlight activities with the
-// specified Floodlight activity group IDs.
+// "floodlightActivityGroupIds": Select only floodlight activities with
+// the specified floodlight activity group IDs.
 func (c *FloodlightActivitiesListCall) FloodlightActivityGroupIds(floodlightActivityGroupIds int64) *FloodlightActivitiesListCall {
 	c.opt_["floodlightActivityGroupIds"] = floodlightActivityGroupIds
 	return c
 }
 
 // FloodlightActivityGroupName sets the optional parameter
-// "floodlightActivityGroupName": Retrieve Floodlight activities with
-// the specified Floodlight activity group name.
+// "floodlightActivityGroupName": Select only floodlight activities with
+// the specified floodlight activity group name.
 func (c *FloodlightActivitiesListCall) FloodlightActivityGroupName(floodlightActivityGroupName string) *FloodlightActivitiesListCall {
 	c.opt_["floodlightActivityGroupName"] = floodlightActivityGroupName
 	return c
 }
 
 // FloodlightActivityGroupTagString sets the optional parameter
-// "floodlightActivityGroupTagString": Retrieve Floodlight activities
-// with the specified Floodlight activity group tag string.
+// "floodlightActivityGroupTagString": Select only floodlight activities
+// with the specified floodlight activity group tag string.
 func (c *FloodlightActivitiesListCall) FloodlightActivityGroupTagString(floodlightActivityGroupTagString string) *FloodlightActivitiesListCall {
 	c.opt_["floodlightActivityGroupTagString"] = floodlightActivityGroupTagString
 	return c
 }
 
 // FloodlightActivityGroupType sets the optional parameter
-// "floodlightActivityGroupType": Retrieve Floodlight activities with
-// the specified Floodlight activity group type.
+// "floodlightActivityGroupType": Select only floodlight activities with
+// the specified floodlight activity group type.
 func (c *FloodlightActivitiesListCall) FloodlightActivityGroupType(floodlightActivityGroupType string) *FloodlightActivitiesListCall {
 	c.opt_["floodlightActivityGroupType"] = floodlightActivityGroupType
 	return c
 }
 
 // FloodlightConfigurationId sets the optional parameter
-// "floodlightConfigurationId": Retrieve Floodlight activities for the
-// specified Floodlight configuration ID. Must specify either ids,
+// "floodlightConfigurationId": Select only floodlight activities for
+// the specified floodlight configuration ID. Must specify either ids,
 // advertiserId, or floodlightConfigurationId for a non-empty result.
 func (c *FloodlightActivitiesListCall) FloodlightConfigurationId(floodlightConfigurationId int64) *FloodlightActivitiesListCall {
 	c.opt_["floodlightConfigurationId"] = floodlightConfigurationId
 	return c
 }
 
-// Ids sets the optional parameter "ids": Retrieve Floodlight activities
-// with the specified IDs. Must specify either ids, advertiserId, or
-// floodlightConfigurationId for a non-empty result.
+// Ids sets the optional parameter "ids": Select only floodlight
+// activities with the specified IDs. Must specify either ids,
+// advertiserId, or floodlightConfigurationId for a non-empty result.
 func (c *FloodlightActivitiesListCall) Ids(ids int64) *FloodlightActivitiesListCall {
 	c.opt_["ids"] = ids
 	return c
@@ -16527,7 +16785,7 @@ func (c *FloodlightActivitiesListCall) MaxResults(maxResults int64) *FloodlightA
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The value of the
+// PageToken sets the optional parameter "pageToken": Value of the
 // nextPageToken from the previous result page.
 func (c *FloodlightActivitiesListCall) PageToken(pageToken string) *FloodlightActivitiesListCall {
 	c.opt_["pageToken"] = pageToken
@@ -16536,20 +16794,20 @@ func (c *FloodlightActivitiesListCall) PageToken(pageToken string) *FloodlightAc
 
 // SearchString sets the optional parameter "searchString": Allows
 // searching for objects by name or ID. Wildcards (*) are allowed. For
-// example, "floodlightactivity*2010" will return objects with names
-// like "floodlightactivity June 2010", "floodlightactivity April 2010"
-// or simply "floodlightactivity 2010". Most of the searches also add
+// example, "floodlightactivity*2015" will return objects with names
+// like "floodlightactivity June 2015", "floodlightactivity April 2015"
+// or simply "floodlightactivity 2015". Most of the searches also add
 // wildcards implicitly at the start and the end of the search string.
 // For example, a search string of "floodlightactivity" will match
 // objects with name "my floodlightactivity activity",
-// "floodlightactivity 2010" or simply "floodlightactivity".
+// "floodlightactivity 2015" or simply "floodlightactivity".
 func (c *FloodlightActivitiesListCall) SearchString(searchString string) *FloodlightActivitiesListCall {
 	c.opt_["searchString"] = searchString
 	return c
 }
 
-// SortField sets the optional parameter "sortField": The field by which
-// to sort the list.
+// SortField sets the optional parameter "sortField": Field by which to
+// sort the list.
 func (c *FloodlightActivitiesListCall) SortField(sortField string) *FloodlightActivitiesListCall {
 	c.opt_["sortField"] = sortField
 	return c
@@ -16562,8 +16820,8 @@ func (c *FloodlightActivitiesListCall) SortOrder(sortOrder string) *FloodlightAc
 	return c
 }
 
-// TagString sets the optional parameter "tagString": Retrieve
-// Floodlight activities with the specified tag string.
+// TagString sets the optional parameter "tagString": Select only
+// floodlight activities with the specified tag string.
 func (c *FloodlightActivitiesListCall) TagString(tagString string) *FloodlightActivitiesListCall {
 	c.opt_["tagString"] = tagString
 	return c
@@ -16652,30 +16910,30 @@ func (c *FloodlightActivitiesListCall) Do() (*FloodlightActivitiesListResponse, 
 	//   ],
 	//   "parameters": {
 	//     "advertiserId": {
-	//       "description": "Retrieve Floodlight activities for the specified advertiser ID. Must specify either ids, advertiserId, or floodlightConfigurationId for a non-empty result.",
+	//       "description": "Select only floodlight activities for the specified advertiser ID. Must specify either ids, advertiserId, or floodlightConfigurationId for a non-empty result.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "floodlightActivityGroupIds": {
-	//       "description": "Retrieve Floodlight activities with the specified Floodlight activity group IDs.",
+	//       "description": "Select only floodlight activities with the specified floodlight activity group IDs.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
 	//     },
 	//     "floodlightActivityGroupName": {
-	//       "description": "Retrieve Floodlight activities with the specified Floodlight activity group name.",
+	//       "description": "Select only floodlight activities with the specified floodlight activity group name.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "floodlightActivityGroupTagString": {
-	//       "description": "Retrieve Floodlight activities with the specified Floodlight activity group tag string.",
+	//       "description": "Select only floodlight activities with the specified floodlight activity group tag string.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "floodlightActivityGroupType": {
-	//       "description": "Retrieve Floodlight activities with the specified Floodlight activity group type.",
+	//       "description": "Select only floodlight activities with the specified floodlight activity group type.",
 	//       "enum": [
 	//         "COUNTER",
 	//         "SALE"
@@ -16688,13 +16946,13 @@ func (c *FloodlightActivitiesListCall) Do() (*FloodlightActivitiesListResponse, 
 	//       "type": "string"
 	//     },
 	//     "floodlightConfigurationId": {
-	//       "description": "Retrieve Floodlight activities for the specified Floodlight configuration ID. Must specify either ids, advertiserId, or floodlightConfigurationId for a non-empty result.",
+	//       "description": "Select only floodlight activities for the specified floodlight configuration ID. Must specify either ids, advertiserId, or floodlightConfigurationId for a non-empty result.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "ids": {
-	//       "description": "Retrieve Floodlight activities with the specified IDs. Must specify either ids, advertiserId, or floodlightConfigurationId for a non-empty result.",
+	//       "description": "Select only floodlight activities with the specified IDs. Must specify either ids, advertiserId, or floodlightConfigurationId for a non-empty result.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "repeated": true,
@@ -16707,7 +16965,7 @@ func (c *FloodlightActivitiesListCall) Do() (*FloodlightActivitiesListResponse, 
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The value of the nextPageToken from the previous result page.",
+	//       "description": "Value of the nextPageToken from the previous result page.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -16719,12 +16977,12 @@ func (c *FloodlightActivitiesListCall) Do() (*FloodlightActivitiesListResponse, 
 	//       "type": "string"
 	//     },
 	//     "searchString": {
-	//       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"floodlightactivity*2010\" will return objects with names like \"floodlightactivity June 2010\", \"floodlightactivity April 2010\" or simply \"floodlightactivity 2010\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"floodlightactivity\" will match objects with name \"my floodlightactivity activity\", \"floodlightactivity 2010\" or simply \"floodlightactivity\".",
+	//       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"floodlightactivity*2015\" will return objects with names like \"floodlightactivity June 2015\", \"floodlightactivity April 2015\" or simply \"floodlightactivity 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"floodlightactivity\" will match objects with name \"my floodlightactivity activity\", \"floodlightactivity 2015\" or simply \"floodlightactivity\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "sortField": {
-	//       "description": "The field by which to sort the list.",
+	//       "description": "Field by which to sort the list.",
 	//       "enum": [
 	//         "ID",
 	//         "NAME"
@@ -16750,7 +17008,7 @@ func (c *FloodlightActivitiesListCall) Do() (*FloodlightActivitiesListResponse, 
 	//       "type": "string"
 	//     },
 	//     "tagString": {
-	//       "description": "Retrieve Floodlight activities with the specified tag string.",
+	//       "description": "Select only floodlight activities with the specified tag string.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -17227,8 +17485,8 @@ func (r *FloodlightActivityGroupsService) List(profileId int64) *FloodlightActiv
 	return c
 }
 
-// AdvertiserId sets the optional parameter "advertiserId": Retrieve
-// Floodlight activity groups with the specified advertiser ID. Must
+// AdvertiserId sets the optional parameter "advertiserId": Select only
+// floodlight activity groups with the specified advertiser ID. Must
 // specify either ids, advertiserId, or floodlightConfigurationId for a
 // non-empty result.
 func (c *FloodlightActivityGroupsListCall) AdvertiserId(advertiserId int64) *FloodlightActivityGroupsListCall {
@@ -17237,17 +17495,18 @@ func (c *FloodlightActivityGroupsListCall) AdvertiserId(advertiserId int64) *Flo
 }
 
 // FloodlightConfigurationId sets the optional parameter
-// "floodlightConfigurationId": Retrieve Floodlight activity groups with
-// the specified Floodlight configuration ID. Must specify either ids,
-// advertiserId, or floodlightConfigurationId for a non-empty result.
+// "floodlightConfigurationId": Select only floodlight activity groups
+// with the specified floodlight configuration ID. Must specify either
+// ids, advertiserId, or floodlightConfigurationId for a non-empty
+// result.
 func (c *FloodlightActivityGroupsListCall) FloodlightConfigurationId(floodlightConfigurationId int64) *FloodlightActivityGroupsListCall {
 	c.opt_["floodlightConfigurationId"] = floodlightConfigurationId
 	return c
 }
 
-// Ids sets the optional parameter "ids": Retrieve Floodlight activity
-// groups with the specified IDs. Must specify either ids, advertiserId,
-// or floodlightConfigurationId for a non-empty result.
+// Ids sets the optional parameter "ids": Select only floodlight
+// activity groups with the specified IDs. Must specify either ids,
+// advertiserId, or floodlightConfigurationId for a non-empty result.
 func (c *FloodlightActivityGroupsListCall) Ids(ids int64) *FloodlightActivityGroupsListCall {
 	c.opt_["ids"] = ids
 	return c
@@ -17260,7 +17519,7 @@ func (c *FloodlightActivityGroupsListCall) MaxResults(maxResults int64) *Floodli
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The value of the
+// PageToken sets the optional parameter "pageToken": Value of the
 // nextPageToken from the previous result page.
 func (c *FloodlightActivityGroupsListCall) PageToken(pageToken string) *FloodlightActivityGroupsListCall {
 	c.opt_["pageToken"] = pageToken
@@ -17269,21 +17528,21 @@ func (c *FloodlightActivityGroupsListCall) PageToken(pageToken string) *Floodlig
 
 // SearchString sets the optional parameter "searchString": Allows
 // searching for objects by name or ID. Wildcards (*) are allowed. For
-// example, "floodlightactivitygroup*2010" will return objects with
-// names like "floodlightactivitygroup June 2010",
-// "floodlightactivitygroup April 2010" or simply
-// "floodlightactivitygroup 2010". Most of the searches also add
+// example, "floodlightactivitygroup*2015" will return objects with
+// names like "floodlightactivitygroup June 2015",
+// "floodlightactivitygroup April 2015" or simply
+// "floodlightactivitygroup 2015". Most of the searches also add
 // wildcards implicitly at the start and the end of the search string.
 // For example, a search string of "floodlightactivitygroup" will match
 // objects with name "my floodlightactivitygroup activity",
-// "floodlightactivitygroup 2010" or simply "floodlightactivitygroup".
+// "floodlightactivitygroup 2015" or simply "floodlightactivitygroup".
 func (c *FloodlightActivityGroupsListCall) SearchString(searchString string) *FloodlightActivityGroupsListCall {
 	c.opt_["searchString"] = searchString
 	return c
 }
 
-// SortField sets the optional parameter "sortField": The field by which
-// to sort the list.
+// SortField sets the optional parameter "sortField": Field by which to
+// sort the list.
 func (c *FloodlightActivityGroupsListCall) SortField(sortField string) *FloodlightActivityGroupsListCall {
 	c.opt_["sortField"] = sortField
 	return c
@@ -17296,8 +17555,8 @@ func (c *FloodlightActivityGroupsListCall) SortOrder(sortOrder string) *Floodlig
 	return c
 }
 
-// Type sets the optional parameter "type": Retrieve Floodlight activity
-// groups with the specified Floodlight activity group type.
+// Type sets the optional parameter "type": Select only floodlight
+// activity groups with the specified floodlight activity group type.
 func (c *FloodlightActivityGroupsListCall) Type(type_ string) *FloodlightActivityGroupsListCall {
 	c.opt_["type"] = type_
 	return c
@@ -17374,19 +17633,19 @@ func (c *FloodlightActivityGroupsListCall) Do() (*FloodlightActivityGroupsListRe
 	//   ],
 	//   "parameters": {
 	//     "advertiserId": {
-	//       "description": "Retrieve Floodlight activity groups with the specified advertiser ID. Must specify either ids, advertiserId, or floodlightConfigurationId for a non-empty result.",
+	//       "description": "Select only floodlight activity groups with the specified advertiser ID. Must specify either ids, advertiserId, or floodlightConfigurationId for a non-empty result.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "floodlightConfigurationId": {
-	//       "description": "Retrieve Floodlight activity groups with the specified Floodlight configuration ID. Must specify either ids, advertiserId, or floodlightConfigurationId for a non-empty result.",
+	//       "description": "Select only floodlight activity groups with the specified floodlight configuration ID. Must specify either ids, advertiserId, or floodlightConfigurationId for a non-empty result.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "ids": {
-	//       "description": "Retrieve Floodlight activity groups with the specified IDs. Must specify either ids, advertiserId, or floodlightConfigurationId for a non-empty result.",
+	//       "description": "Select only floodlight activity groups with the specified IDs. Must specify either ids, advertiserId, or floodlightConfigurationId for a non-empty result.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "repeated": true,
@@ -17399,7 +17658,7 @@ func (c *FloodlightActivityGroupsListCall) Do() (*FloodlightActivityGroupsListRe
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The value of the nextPageToken from the previous result page.",
+	//       "description": "Value of the nextPageToken from the previous result page.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -17411,12 +17670,12 @@ func (c *FloodlightActivityGroupsListCall) Do() (*FloodlightActivityGroupsListRe
 	//       "type": "string"
 	//     },
 	//     "searchString": {
-	//       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"floodlightactivitygroup*2010\" will return objects with names like \"floodlightactivitygroup June 2010\", \"floodlightactivitygroup April 2010\" or simply \"floodlightactivitygroup 2010\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"floodlightactivitygroup\" will match objects with name \"my floodlightactivitygroup activity\", \"floodlightactivitygroup 2010\" or simply \"floodlightactivitygroup\".",
+	//       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"floodlightactivitygroup*2015\" will return objects with names like \"floodlightactivitygroup June 2015\", \"floodlightactivitygroup April 2015\" or simply \"floodlightactivitygroup 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"floodlightactivitygroup\" will match objects with name \"my floodlightactivitygroup activity\", \"floodlightactivitygroup 2015\" or simply \"floodlightactivitygroup\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "sortField": {
-	//       "description": "The field by which to sort the list.",
+	//       "description": "Field by which to sort the list.",
 	//       "enum": [
 	//         "ID",
 	//         "NAME"
@@ -17442,7 +17701,7 @@ func (c *FloodlightActivityGroupsListCall) Do() (*FloodlightActivityGroupsListRe
 	//       "type": "string"
 	//     },
 	//     "type": {
-	//       "description": "Retrieve Floodlight activity groups with the specified Floodlight activity group type.",
+	//       "description": "Select only floodlight activity groups with the specified floodlight activity group type.",
 	//       "enum": [
 	//         "COUNTER",
 	//         "SALE"
@@ -18227,7 +18486,7 @@ type LandingPagesInsertCall struct {
 	opt_        map[string]interface{}
 }
 
-// Insert: Inserts a new landing page for this campaign.
+// Insert: Inserts a new landing page for the specified campaign.
 func (r *LandingPagesService) Insert(profileId int64, campaignId int64, landingpage *LandingPage) *LandingPagesInsertCall {
 	c := &LandingPagesInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.profileId = profileId
@@ -18279,7 +18538,7 @@ func (c *LandingPagesInsertCall) Do() (*LandingPage, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Inserts a new landing page for this campaign.",
+	//   "description": "Inserts a new landing page for the specified campaign.",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.landingPages.insert",
 	//   "parameterOrder": [
@@ -18325,7 +18584,7 @@ type LandingPagesListCall struct {
 	opt_       map[string]interface{}
 }
 
-// List: Retrieves the list of landing pages for this campaign.
+// List: Retrieves the list of landing pages for the specified campaign.
 func (r *LandingPagesService) List(profileId int64, campaignId int64) *LandingPagesListCall {
 	c := &LandingPagesListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.profileId = profileId
@@ -18370,7 +18629,7 @@ func (c *LandingPagesListCall) Do() (*LandingPagesListResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves the list of landing pages for this campaign.",
+	//   "description": "Retrieves the list of landing pages for the specified campaign.",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.landingPages.list",
 	//   "parameterOrder": [
@@ -19165,7 +19424,7 @@ func (c *PlacementGroupsListCall) MaxResults(maxResults int64) *PlacementGroupsL
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The value of the
+// PageToken sets the optional parameter "pageToken": Value of the
 // nextPageToken from the previous result page.
 func (c *PlacementGroupsListCall) PageToken(pageToken string) *PlacementGroupsListCall {
 	c.opt_["pageToken"] = pageToken
@@ -19201,12 +19460,12 @@ func (c *PlacementGroupsListCall) PricingTypes(pricingTypes string) *PlacementGr
 
 // SearchString sets the optional parameter "searchString": Allows
 // searching for placement groups by name or ID. Wildcards (*) are
-// allowed. For example, "placement*2010" will return placement groups
-// with names like "placement group June 2010", "placement group May
-// 2010" or simply "placements 2010". Most of the searches also add
+// allowed. For example, "placement*2015" will return placement groups
+// with names like "placement group June 2015", "placement group May
+// 2015" or simply "placements 2015". Most of the searches also add
 // wildcards implicitly at the start and the end of the search string.
 // For example, a search string of "placementgroup" will match placement
-// groups with name "my placementgroup", "placementgroup 2010" or simply
+// groups with name "my placementgroup", "placementgroup 2015" or simply
 // "placementgroup".
 func (c *PlacementGroupsListCall) SearchString(searchString string) *PlacementGroupsListCall {
 	c.opt_["searchString"] = searchString
@@ -19220,8 +19479,8 @@ func (c *PlacementGroupsListCall) SiteIds(siteIds int64) *PlacementGroupsListCal
 	return c
 }
 
-// SortField sets the optional parameter "sortField": The field by which
-// to sort the list.
+// SortField sets the optional parameter "sortField": Field by which to
+// sort the list.
 func (c *PlacementGroupsListCall) SortField(sortField string) *PlacementGroupsListCall {
 	c.opt_["sortField"] = sortField
 	return c
@@ -19369,7 +19628,7 @@ func (c *PlacementGroupsListCall) Do() (*PlacementGroupsListResponse, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The value of the nextPageToken from the previous result page.",
+	//       "description": "Value of the nextPageToken from the previous result page.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -19421,7 +19680,7 @@ func (c *PlacementGroupsListCall) Do() (*PlacementGroupsListResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "searchString": {
-	//       "description": "Allows searching for placement groups by name or ID. Wildcards (*) are allowed. For example, \"placement*2010\" will return placement groups with names like \"placement group June 2010\", \"placement group May 2010\" or simply \"placements 2010\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"placementgroup\" will match placement groups with name \"my placementgroup\", \"placementgroup 2010\" or simply \"placementgroup\".",
+	//       "description": "Allows searching for placement groups by name or ID. Wildcards (*) are allowed. For example, \"placement*2015\" will return placement groups with names like \"placement group June 2015\", \"placement group May 2015\" or simply \"placements 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"placementgroup\" will match placement groups with name \"my placementgroup\", \"placementgroup 2015\" or simply \"placementgroup\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -19433,7 +19692,7 @@ func (c *PlacementGroupsListCall) Do() (*PlacementGroupsListResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "sortField": {
-	//       "description": "The field by which to sort the list.",
+	//       "description": "Field by which to sort the list.",
 	//       "enum": [
 	//         "ID",
 	//         "NAME"
@@ -19930,8 +20189,8 @@ func (r *PlacementStrategiesService) List(profileId int64) *PlacementStrategiesL
 	return c
 }
 
-// Ids sets the optional parameter "ids": Set of IDs of specified
-// placement strategies to retrieve.
+// Ids sets the optional parameter "ids": Select only placement
+// strategies with these IDs.
 func (c *PlacementStrategiesListCall) Ids(ids int64) *PlacementStrategiesListCall {
 	c.opt_["ids"] = ids
 	return c
@@ -19944,7 +20203,7 @@ func (c *PlacementStrategiesListCall) MaxResults(maxResults int64) *PlacementStr
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The value of the
+// PageToken sets the optional parameter "pageToken": Value of the
 // nextPageToken from the previous result page.
 func (c *PlacementStrategiesListCall) PageToken(pageToken string) *PlacementStrategiesListCall {
 	c.opt_["pageToken"] = pageToken
@@ -19953,20 +20212,20 @@ func (c *PlacementStrategiesListCall) PageToken(pageToken string) *PlacementStra
 
 // SearchString sets the optional parameter "searchString": Allows
 // searching for objects by name or ID. Wildcards (*) are allowed. For
-// example, "placementstrategy*2010" will return objects with names like
-// "placementstrategy June 2010", "placementstrategy April 2010" or
-// simply "placementstrategy 2010". Most of the searches also add
+// example, "placementstrategy*2015" will return objects with names like
+// "placementstrategy June 2015", "placementstrategy April 2015" or
+// simply "placementstrategy 2015". Most of the searches also add
 // wildcards implicitly at the start and the end of the search string.
 // For example, a search string of "placementstrategy" will match
-// objects with name "my placementstrategy", "placementstrategy 2010" or
+// objects with name "my placementstrategy", "placementstrategy 2015" or
 // simply "placementstrategy".
 func (c *PlacementStrategiesListCall) SearchString(searchString string) *PlacementStrategiesListCall {
 	c.opt_["searchString"] = searchString
 	return c
 }
 
-// SortField sets the optional parameter "sortField": The field by which
-// to sort the list.
+// SortField sets the optional parameter "sortField": Field by which to
+// sort the list.
 func (c *PlacementStrategiesListCall) SortField(sortField string) *PlacementStrategiesListCall {
 	c.opt_["sortField"] = sortField
 	return c
@@ -20041,7 +20300,7 @@ func (c *PlacementStrategiesListCall) Do() (*PlacementStrategiesListResponse, er
 	//   ],
 	//   "parameters": {
 	//     "ids": {
-	//       "description": "Set of IDs of specified placement strategies to retrieve.",
+	//       "description": "Select only placement strategies with these IDs.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "repeated": true,
@@ -20054,7 +20313,7 @@ func (c *PlacementStrategiesListCall) Do() (*PlacementStrategiesListResponse, er
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The value of the nextPageToken from the previous result page.",
+	//       "description": "Value of the nextPageToken from the previous result page.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -20066,12 +20325,12 @@ func (c *PlacementStrategiesListCall) Do() (*PlacementStrategiesListResponse, er
 	//       "type": "string"
 	//     },
 	//     "searchString": {
-	//       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"placementstrategy*2010\" will return objects with names like \"placementstrategy June 2010\", \"placementstrategy April 2010\" or simply \"placementstrategy 2010\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"placementstrategy\" will match objects with name \"my placementstrategy\", \"placementstrategy 2010\" or simply \"placementstrategy\".",
+	//       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"placementstrategy*2015\" will return objects with names like \"placementstrategy June 2015\", \"placementstrategy April 2015\" or simply \"placementstrategy 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"placementstrategy\" will match objects with name \"my placementstrategy\", \"placementstrategy 2015\" or simply \"placementstrategy\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "sortField": {
-	//       "description": "The field by which to sort the list.",
+	//       "description": "Field by which to sort the list.",
 	//       "enum": [
 	//         "ID",
 	//         "NAME"
@@ -20714,7 +20973,7 @@ func (c *PlacementsListCall) MaxResults(maxResults int64) *PlacementsListCall {
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The value of the
+// PageToken sets the optional parameter "pageToken": Value of the
 // nextPageToken from the previous result page.
 func (c *PlacementsListCall) PageToken(pageToken string) *PlacementsListCall {
 	c.opt_["pageToken"] = pageToken
@@ -20745,12 +21004,12 @@ func (c *PlacementsListCall) PricingTypes(pricingTypes string) *PlacementsListCa
 
 // SearchString sets the optional parameter "searchString": Allows
 // searching for placements by name or ID. Wildcards (*) are allowed.
-// For example, "placement*2010" will return placements with names like
-// "placement June 2010", "placement May 2010" or simply "placements
-// 2010". Most of the searches also add wildcards implicitly at the
+// For example, "placement*2015" will return placements with names like
+// "placement June 2015", "placement May 2015" or simply "placements
+// 2015". Most of the searches also add wildcards implicitly at the
 // start and the end of the search string. For example, a search string
 // of "placement" will match placements with name "my placement",
-// "placement 2010" or simply "placement".
+// "placement 2015" or simply "placement".
 func (c *PlacementsListCall) SearchString(searchString string) *PlacementsListCall {
 	c.opt_["searchString"] = searchString
 	return c
@@ -20770,8 +21029,8 @@ func (c *PlacementsListCall) SizeIds(sizeIds int64) *PlacementsListCall {
 	return c
 }
 
-// SortField sets the optional parameter "sortField": The field by which
-// to sort the list.
+// SortField sets the optional parameter "sortField": Field by which to
+// sort the list.
 func (c *PlacementsListCall) SortField(sortField string) *PlacementsListCall {
 	c.opt_["sortField"] = sortField
 	return c
@@ -20955,7 +21214,7 @@ func (c *PlacementsListCall) Do() (*PlacementsListResponse, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The value of the nextPageToken from the previous result page.",
+	//       "description": "Value of the nextPageToken from the previous result page.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -21007,7 +21266,7 @@ func (c *PlacementsListCall) Do() (*PlacementsListResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "searchString": {
-	//       "description": "Allows searching for placements by name or ID. Wildcards (*) are allowed. For example, \"placement*2010\" will return placements with names like \"placement June 2010\", \"placement May 2010\" or simply \"placements 2010\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"placement\" will match placements with name \"my placement\", \"placement 2010\" or simply \"placement\".",
+	//       "description": "Allows searching for placements by name or ID. Wildcards (*) are allowed. For example, \"placement*2015\" will return placements with names like \"placement June 2015\", \"placement May 2015\" or simply \"placements 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"placement\" will match placements with name \"my placement\", \"placement 2015\" or simply \"placement\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -21026,7 +21285,7 @@ func (c *PlacementsListCall) Do() (*PlacementsListResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "sortField": {
-	//       "description": "The field by which to sort the list.",
+	//       "description": "Field by which to sort the list.",
 	//       "enum": [
 	//         "ID",
 	//         "NAME"
@@ -22775,16 +23034,16 @@ func (r *SitesService) List(profileId int64) *SitesListCall {
 }
 
 // AcceptsInStreamVideoPlacements sets the optional parameter
-// "acceptsInStreamVideoPlacements": Select only sites that accept
-// in-stream video placements.
+// "acceptsInStreamVideoPlacements": This search filter is no longer
+// supported and will have no effect on the results returned.
 func (c *SitesListCall) AcceptsInStreamVideoPlacements(acceptsInStreamVideoPlacements bool) *SitesListCall {
 	c.opt_["acceptsInStreamVideoPlacements"] = acceptsInStreamVideoPlacements
 	return c
 }
 
 // AcceptsInterstitialPlacements sets the optional parameter
-// "acceptsInterstitialPlacements": Select only sites that accept
-// interstitial placements.
+// "acceptsInterstitialPlacements": This search filter is no longer
+// supported and will have no effect on the results returned.
 func (c *SitesListCall) AcceptsInterstitialPlacements(acceptsInterstitialPlacements bool) *SitesListCall {
 	c.opt_["acceptsInterstitialPlacements"] = acceptsInterstitialPlacements
 	return c
@@ -22812,22 +23071,22 @@ func (c *SitesListCall) Approved(approved bool) *SitesListCall {
 	return c
 }
 
-// CampaignIds sets the optional parameter "campaignIds": Campaign IDs
-// of sites to retrieve.
+// CampaignIds sets the optional parameter "campaignIds": Select only
+// sites with these campaign IDs.
 func (c *SitesListCall) CampaignIds(campaignIds int64) *SitesListCall {
 	c.opt_["campaignIds"] = campaignIds
 	return c
 }
 
 // DirectorySiteIds sets the optional parameter "directorySiteIds":
-// Directory site IDs of sites to retrieve.
+// Select only sites with these directory site IDs.
 func (c *SitesListCall) DirectorySiteIds(directorySiteIds int64) *SitesListCall {
 	c.opt_["directorySiteIds"] = directorySiteIds
 	return c
 }
 
-// Ids sets the optional parameter "ids": Set of IDs of specified sites
-// to retrieve.
+// Ids sets the optional parameter "ids": Select only sites with these
+// IDs.
 func (c *SitesListCall) Ids(ids int64) *SitesListCall {
 	c.opt_["ids"] = ids
 	return c
@@ -22840,7 +23099,7 @@ func (c *SitesListCall) MaxResults(maxResults int64) *SitesListCall {
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The value of the
+// PageToken sets the optional parameter "pageToken": Value of the
 // nextPageToken from the previous result page.
 func (c *SitesListCall) PageToken(pageToken string) *SitesListCall {
 	c.opt_["pageToken"] = pageToken
@@ -22849,18 +23108,18 @@ func (c *SitesListCall) PageToken(pageToken string) *SitesListCall {
 
 // SearchString sets the optional parameter "searchString": Allows
 // searching for objects by name, ID or keyName. Wildcards (*) are
-// allowed. For example, "site*2010" will return objects with names like
-// "site June 2010", "site April 2010" or simply "site 2010". Most of
+// allowed. For example, "site*2015" will return objects with names like
+// "site June 2015", "site April 2015" or simply "site 2015". Most of
 // the searches also add wildcards implicitly at the start and the end
 // of the search string. For example, a search string of "site" will
-// match objects with name "my site", "site 2010" or simply "site".
+// match objects with name "my site", "site 2015" or simply "site".
 func (c *SitesListCall) SearchString(searchString string) *SitesListCall {
 	c.opt_["searchString"] = searchString
 	return c
 }
 
-// SortField sets the optional parameter "sortField": The field by which
-// to sort the list.
+// SortField sets the optional parameter "sortField": Field by which to
+// sort the list.
 func (c *SitesListCall) SortField(sortField string) *SitesListCall {
 	c.opt_["sortField"] = sortField
 	return c
@@ -22873,8 +23132,8 @@ func (c *SitesListCall) SortOrder(sortOrder string) *SitesListCall {
 	return c
 }
 
-// SubaccountId sets the optional parameter "subaccountId": Subaccount
-// ID of sites to retrieve.
+// SubaccountId sets the optional parameter "subaccountId": Select only
+// sites with this subaccount ID.
 func (c *SitesListCall) SubaccountId(subaccountId int64) *SitesListCall {
 	c.opt_["subaccountId"] = subaccountId
 	return c
@@ -22976,12 +23235,12 @@ func (c *SitesListCall) Do() (*SitesListResponse, error) {
 	//   ],
 	//   "parameters": {
 	//     "acceptsInStreamVideoPlacements": {
-	//       "description": "Select only sites that accept in-stream video placements.",
+	//       "description": "This search filter is no longer supported and will have no effect on the results returned.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "acceptsInterstitialPlacements": {
-	//       "description": "Select only sites that accept interstitial placements.",
+	//       "description": "This search filter is no longer supported and will have no effect on the results returned.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -23001,21 +23260,21 @@ func (c *SitesListCall) Do() (*SitesListResponse, error) {
 	//       "type": "boolean"
 	//     },
 	//     "campaignIds": {
-	//       "description": "Campaign IDs of sites to retrieve.",
+	//       "description": "Select only sites with these campaign IDs.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
 	//     },
 	//     "directorySiteIds": {
-	//       "description": "Directory site IDs of sites to retrieve.",
+	//       "description": "Select only sites with these directory site IDs.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
 	//     },
 	//     "ids": {
-	//       "description": "Set of IDs of specified sites to retrieve.",
+	//       "description": "Select only sites with these IDs.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "repeated": true,
@@ -23028,7 +23287,7 @@ func (c *SitesListCall) Do() (*SitesListResponse, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The value of the nextPageToken from the previous result page.",
+	//       "description": "Value of the nextPageToken from the previous result page.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -23040,12 +23299,12 @@ func (c *SitesListCall) Do() (*SitesListResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "searchString": {
-	//       "description": "Allows searching for objects by name, ID or keyName. Wildcards (*) are allowed. For example, \"site*2010\" will return objects with names like \"site June 2010\", \"site April 2010\" or simply \"site 2010\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"site\" will match objects with name \"my site\", \"site 2010\" or simply \"site\".",
+	//       "description": "Allows searching for objects by name, ID or keyName. Wildcards (*) are allowed. For example, \"site*2015\" will return objects with names like \"site June 2015\", \"site April 2015\" or simply \"site 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"site\" will match objects with name \"my site\", \"site 2015\" or simply \"site\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "sortField": {
-	//       "description": "The field by which to sort the list.",
+	//       "description": "Field by which to sort the list.",
 	//       "enum": [
 	//         "ID",
 	//         "NAME"
@@ -23071,7 +23330,7 @@ func (c *SitesListCall) Do() (*SitesListResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "subaccountId": {
-	//       "description": "Subaccount ID of sites to retrieve.",
+	//       "description": "Select only sites with this subaccount ID.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
@@ -23472,29 +23731,29 @@ func (r *SizesService) List(profileId int64) *SizesListCall {
 	return c
 }
 
-// Height sets the optional parameter "height": Height of sizes to
-// retrieve.
+// Height sets the optional parameter "height": Select only sizes with
+// this height.
 func (c *SizesListCall) Height(height int64) *SizesListCall {
 	c.opt_["height"] = height
 	return c
 }
 
-// IabStandard sets the optional parameter "iabStandard": Whether only
-// IAB standard sizes should be retrieved.
+// IabStandard sets the optional parameter "iabStandard": Select only
+// IAB standard sizes.
 func (c *SizesListCall) IabStandard(iabStandard bool) *SizesListCall {
 	c.opt_["iabStandard"] = iabStandard
 	return c
 }
 
-// Ids sets the optional parameter "ids": Set of IDs of specified sizes
-// to retrieve.
+// Ids sets the optional parameter "ids": Select only sizes with these
+// IDs.
 func (c *SizesListCall) Ids(ids int64) *SizesListCall {
 	c.opt_["ids"] = ids
 	return c
 }
 
-// Width sets the optional parameter "width": Width of sizes to
-// retrieve.
+// Width sets the optional parameter "width": Select only sizes with
+// this width.
 func (c *SizesListCall) Width(width int64) *SizesListCall {
 	c.opt_["width"] = width
 	return c
@@ -23556,18 +23815,18 @@ func (c *SizesListCall) Do() (*SizesListResponse, error) {
 	//   ],
 	//   "parameters": {
 	//     "height": {
-	//       "description": "Height of sizes to retrieve.",
+	//       "description": "Select only sizes with this height.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "iabStandard": {
-	//       "description": "Whether only IAB standard sizes should be retrieved.",
+	//       "description": "Select only IAB standard sizes.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "ids": {
-	//       "description": "Set of IDs of specified sizes to retrieve.",
+	//       "description": "Select only sizes with these IDs.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "repeated": true,
@@ -23581,7 +23840,7 @@ func (c *SizesListCall) Do() (*SizesListResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "width": {
-	//       "description": "Width of sizes to retrieve.",
+	//       "description": "Select only sizes with this width.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -23789,8 +24048,8 @@ func (r *SubaccountsService) List(profileId int64) *SubaccountsListCall {
 	return c
 }
 
-// Ids sets the optional parameter "ids": The set of IDs of the
-// subaccounts to retrieve.
+// Ids sets the optional parameter "ids": Select only subaccounts with
+// these IDs.
 func (c *SubaccountsListCall) Ids(ids int64) *SubaccountsListCall {
 	c.opt_["ids"] = ids
 	return c
@@ -23803,7 +24062,7 @@ func (c *SubaccountsListCall) MaxResults(maxResults int64) *SubaccountsListCall 
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The value of the
+// PageToken sets the optional parameter "pageToken": Value of the
 // nextPageToken from the previous result page.
 func (c *SubaccountsListCall) PageToken(pageToken string) *SubaccountsListCall {
 	c.opt_["pageToken"] = pageToken
@@ -23812,19 +24071,19 @@ func (c *SubaccountsListCall) PageToken(pageToken string) *SubaccountsListCall {
 
 // SearchString sets the optional parameter "searchString": Allows
 // searching for objects by name or ID. Wildcards (*) are allowed. For
-// example, "subaccount*2010" will return objects with names like
-// "subaccount June 2010", "subaccount April 2010" or simply "subaccount
-// 2010". Most of the searches also add wildcards implicitly at the
+// example, "subaccount*2015" will return objects with names like
+// "subaccount June 2015", "subaccount April 2015" or simply "subaccount
+// 2015". Most of the searches also add wildcards implicitly at the
 // start and the end of the search string. For example, a search string
 // of "subaccount" will match objects with name "my subaccount",
-// "subaccount 2010" or simply "subaccount".
+// "subaccount 2015" or simply "subaccount".
 func (c *SubaccountsListCall) SearchString(searchString string) *SubaccountsListCall {
 	c.opt_["searchString"] = searchString
 	return c
 }
 
-// SortField sets the optional parameter "sortField": The field by which
-// to sort the list.
+// SortField sets the optional parameter "sortField": Field by which to
+// sort the list.
 func (c *SubaccountsListCall) SortField(sortField string) *SubaccountsListCall {
 	c.opt_["sortField"] = sortField
 	return c
@@ -23899,7 +24158,7 @@ func (c *SubaccountsListCall) Do() (*SubaccountsListResponse, error) {
 	//   ],
 	//   "parameters": {
 	//     "ids": {
-	//       "description": "The set of IDs of the subaccounts to retrieve.",
+	//       "description": "Select only subaccounts with these IDs.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "repeated": true,
@@ -23912,7 +24171,7 @@ func (c *SubaccountsListCall) Do() (*SubaccountsListResponse, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The value of the nextPageToken from the previous result page.",
+	//       "description": "Value of the nextPageToken from the previous result page.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -23924,12 +24183,12 @@ func (c *SubaccountsListCall) Do() (*SubaccountsListResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "searchString": {
-	//       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"subaccount*2010\" will return objects with names like \"subaccount June 2010\", \"subaccount April 2010\" or simply \"subaccount 2010\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"subaccount\" will match objects with name \"my subaccount\", \"subaccount 2010\" or simply \"subaccount\".",
+	//       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"subaccount*2015\" will return objects with names like \"subaccount June 2015\", \"subaccount April 2015\" or simply \"subaccount 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"subaccount\" will match objects with name \"my subaccount\", \"subaccount 2015\" or simply \"subaccount\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "sortField": {
-	//       "description": "The field by which to sort the list.",
+	//       "description": "Field by which to sort the list.",
 	//       "enum": [
 	//         "ID",
 	//         "NAME"
@@ -24562,8 +24821,8 @@ func (r *UserRolePermissionsService) List(profileId int64) *UserRolePermissionsL
 	return c
 }
 
-// Ids sets the optional parameter "ids": Set of IDs of specified user
-// role permissions to retrieve.
+// Ids sets the optional parameter "ids": Select only user role
+// permissions with these IDs.
 func (c *UserRolePermissionsListCall) Ids(ids int64) *UserRolePermissionsListCall {
 	c.opt_["ids"] = ids
 	return c
@@ -24616,7 +24875,7 @@ func (c *UserRolePermissionsListCall) Do() (*UserRolePermissionsListResponse, er
 	//   ],
 	//   "parameters": {
 	//     "ids": {
-	//       "description": "Set of IDs of specified user role permissions to retrieve.",
+	//       "description": "Select only user role permissions with these IDs.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "repeated": true,
@@ -24914,15 +25173,15 @@ func (r *UserRolesService) List(profileId int64) *UserRolesListCall {
 }
 
 // AccountUserRoleOnly sets the optional parameter
-// "accountUserRoleOnly": If true, select only account level user roles
-// not associated with any specific subaccount.
+// "accountUserRoleOnly": Select only account level user roles not
+// associated with any specific subaccount.
 func (c *UserRolesListCall) AccountUserRoleOnly(accountUserRoleOnly bool) *UserRolesListCall {
 	c.opt_["accountUserRoleOnly"] = accountUserRoleOnly
 	return c
 }
 
-// Ids sets the optional parameter "ids": Set of IDs of specified user
-// roles to retrieve.
+// Ids sets the optional parameter "ids": Select only user roles with
+// the specified IDs.
 func (c *UserRolesListCall) Ids(ids int64) *UserRolesListCall {
 	c.opt_["ids"] = ids
 	return c
@@ -24935,7 +25194,7 @@ func (c *UserRolesListCall) MaxResults(maxResults int64) *UserRolesListCall {
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The value of the
+// PageToken sets the optional parameter "pageToken": Value of the
 // nextPageToken from the previous result page.
 func (c *UserRolesListCall) PageToken(pageToken string) *UserRolesListCall {
 	c.opt_["pageToken"] = pageToken
@@ -24944,19 +25203,19 @@ func (c *UserRolesListCall) PageToken(pageToken string) *UserRolesListCall {
 
 // SearchString sets the optional parameter "searchString": Allows
 // searching for objects by name or ID. Wildcards (*) are allowed. For
-// example, "userrole*2010" will return objects with names like
-// "userrole June 2010", "userrole April 2010" or simply "userrole
-// 2010". Most of the searches also add wildcards implicitly at the
+// example, "userrole*2015" will return objects with names like
+// "userrole June 2015", "userrole April 2015" or simply "userrole
+// 2015". Most of the searches also add wildcards implicitly at the
 // start and the end of the search string. For example, a search string
 // of "userrole" will match objects with name "my userrole", "userrole
-// 2010" or simply "userrole".
+// 2015" or simply "userrole".
 func (c *UserRolesListCall) SearchString(searchString string) *UserRolesListCall {
 	c.opt_["searchString"] = searchString
 	return c
 }
 
-// SortField sets the optional parameter "sortField": The field by which
-// to sort the list.
+// SortField sets the optional parameter "sortField": Field by which to
+// sort the list.
 func (c *UserRolesListCall) SortField(sortField string) *UserRolesListCall {
 	c.opt_["sortField"] = sortField
 	return c
@@ -25044,12 +25303,12 @@ func (c *UserRolesListCall) Do() (*UserRolesListResponse, error) {
 	//   ],
 	//   "parameters": {
 	//     "accountUserRoleOnly": {
-	//       "description": "If true, select only account level user roles not associated with any specific subaccount.",
+	//       "description": "Select only account level user roles not associated with any specific subaccount.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "ids": {
-	//       "description": "Set of IDs of specified user roles to retrieve.",
+	//       "description": "Select only user roles with the specified IDs.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "repeated": true,
@@ -25062,7 +25321,7 @@ func (c *UserRolesListCall) Do() (*UserRolesListResponse, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The value of the nextPageToken from the previous result page.",
+	//       "description": "Value of the nextPageToken from the previous result page.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -25074,12 +25333,12 @@ func (c *UserRolesListCall) Do() (*UserRolesListResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "searchString": {
-	//       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"userrole*2010\" will return objects with names like \"userrole June 2010\", \"userrole April 2010\" or simply \"userrole 2010\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"userrole\" will match objects with name \"my userrole\", \"userrole 2010\" or simply \"userrole\".",
+	//       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"userrole*2015\" will return objects with names like \"userrole June 2015\", \"userrole April 2015\" or simply \"userrole 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"userrole\" will match objects with name \"my userrole\", \"userrole 2015\" or simply \"userrole\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "sortField": {
-	//       "description": "The field by which to sort the list.",
+	//       "description": "Field by which to sort the list.",
 	//       "enum": [
 	//         "ID",
 	//         "NAME"

@@ -790,21 +790,26 @@ type ChannelLocalization struct {
 
 type ChannelSection struct {
 	// ContentDetails: The contentDetails object contains details about the
-	// ChannelSection content, such as playlists and channels.
+	// channel section content, such as a list of playlists or channels
+	// featured in the section.
 	ContentDetails *ChannelSectionContentDetails `json:"contentDetails,omitempty"`
 
 	// Etag: Etag of this resource.
 	Etag string `json:"etag,omitempty"`
 
-	// Id: The ID that YouTube uses to uniquely identify the ChannelSection.
+	// Id: The ID that YouTube uses to uniquely identify the channel
+	// section.
 	Id string `json:"id,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "youtube#channelSection".
 	Kind string `json:"kind,omitempty"`
 
-	// Snippet: The snippet object contains basic details about the
-	// ChannelSection, such as its type, style and title.
+	// Localizations: Localizations for different languages
+	Localizations map[string]ChannelSectionLocalization `json:"localizations,omitempty"`
+
+	// Snippet: The snippet object contains basic details about the channel
+	// section, such as its type, style and title.
 	Snippet *ChannelSectionSnippet `json:"snippet,omitempty"`
 }
 
@@ -837,22 +842,34 @@ type ChannelSectionListResponse struct {
 	VisitorId string `json:"visitorId,omitempty"`
 }
 
+type ChannelSectionLocalization struct {
+	// Title: The localized strings for channel section's title.
+	Title string `json:"title,omitempty"`
+}
+
 type ChannelSectionSnippet struct {
 	// ChannelId: The ID that YouTube uses to uniquely identify the channel
-	// that published the channelSection.
+	// that published the channel section.
 	ChannelId string `json:"channelId,omitempty"`
 
-	// Position: The position of the channelSection in the channel.
+	// DefaultLanguage: The language of the channel section's default title
+	// and description.
+	DefaultLanguage string `json:"defaultLanguage,omitempty"`
+
+	// Localized: Localized title, read-only.
+	Localized *ChannelSectionLocalization `json:"localized,omitempty"`
+
+	// Position: The position of the channel section in the channel.
 	Position int64 `json:"position,omitempty"`
 
-	// Style: The style of the channelSection.
+	// Style: The style of the channel section.
 	Style string `json:"style,omitempty"`
 
-	// Title: The channelSection's title for multiple_playlists and
+	// Title: The channel section's title for multiple_playlists and
 	// multiple_channels.
 	Title string `json:"title,omitempty"`
 
-	// Type: The type of the channelSection.
+	// Type: The type of the channel section.
 	Type string `json:"type,omitempty"`
 }
 
@@ -1887,6 +1904,9 @@ type Playlist struct {
 	// string "youtube#playlist".
 	Kind string `json:"kind,omitempty"`
 
+	// Localizations: Localizations for different languages
+	Localizations map[string]PlaylistLocalization `json:"localizations,omitempty"`
+
 	// Player: The player object contains information that you would use to
 	// play the playlist in an embedded player.
 	Player *PlaylistPlayer `json:"player,omitempty"`
@@ -2061,6 +2081,14 @@ type PlaylistListResponse struct {
 	VisitorId string `json:"visitorId,omitempty"`
 }
 
+type PlaylistLocalization struct {
+	// Description: The localized strings for playlist's description.
+	Description string `json:"description,omitempty"`
+
+	// Title: The localized strings for playlist's title.
+	Title string `json:"title,omitempty"`
+}
+
 type PlaylistPlayer struct {
 	// EmbedHtml: An <iframe> tag that embeds a player that will play the
 	// playlist.
@@ -2076,8 +2104,15 @@ type PlaylistSnippet struct {
 	// to.
 	ChannelTitle string `json:"channelTitle,omitempty"`
 
+	// DefaultLanguage: The language of the playlist's default title and
+	// description.
+	DefaultLanguage string `json:"defaultLanguage,omitempty"`
+
 	// Description: The playlist's description.
 	Description string `json:"description,omitempty"`
+
+	// Localized: Localized title and description, read-only.
+	Localized *PlaylistLocalization `json:"localized,omitempty"`
 
 	// PublishedAt: The date and time that the playlist was created. The
 	// value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.
@@ -2450,6 +2485,9 @@ type Video struct {
 	// present in a video resource if the video is an upcoming, live, or
 	// completed live broadcast.
 	LiveStreamingDetails *VideoLiveStreamingDetails `json:"liveStreamingDetails,omitempty"`
+
+	// Localizations: List with all localizations.
+	Localizations map[string]VideoLocalization `json:"localizations,omitempty"`
 
 	// MonetizationDetails: The monetizationDetails object encapsulates
 	// information about the monetization status of the video.
@@ -2839,6 +2877,14 @@ type VideoLiveStreamingDetails struct {
 	ScheduledStartTime string `json:"scheduledStartTime,omitempty"`
 }
 
+type VideoLocalization struct {
+	// Description: Localized version of the video's description.
+	Description string `json:"description,omitempty"`
+
+	// Title: Localized version of the video's title.
+	Title string `json:"title,omitempty"`
+}
+
 type VideoMonetizationDetails struct {
 	// Access: The value of access indicates whether the video can be
 	// monetized or not.
@@ -2961,6 +3007,9 @@ type VideoSnippet struct {
 	// to.
 	ChannelTitle string `json:"channelTitle,omitempty"`
 
+	// DefaultLanguage: The language of the videos's default snippet.
+	DefaultLanguage string `json:"defaultLanguage,omitempty"`
+
 	// Description: The video's description.
 	Description string `json:"description,omitempty"`
 
@@ -2968,6 +3017,11 @@ type VideoSnippet struct {
 	// live broadcast. Or it's "none" if the video is not an upcoming/active
 	// live broadcast.
 	LiveBroadcastContent string `json:"liveBroadcastContent,omitempty"`
+
+	// Localized: Localized snippet selected with the hl parameter. If no
+	// such localization exists, this field is populated with the default
+	// snippet. (Read-only)
+	Localized *VideoLocalization `json:"localized,omitempty"`
 
 	// PublishedAt: The date and time that the video was uploaded. The value
 	// is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.
@@ -3593,6 +3647,7 @@ func (c *ChannelBannersInsertCall) Do() (*ChannelBannerResource, error) {
 		if err != nil {
 			return nil, err
 		}
+		defer res.Body.Close()
 	}
 	var ret *ChannelBannerResource
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
@@ -9022,6 +9077,7 @@ func (c *ThumbnailsSetCall) Do() (*ThumbnailSetResponse, error) {
 		if err != nil {
 			return nil, err
 		}
+		defer res.Body.Close()
 	}
 	var ret *ThumbnailSetResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
@@ -9622,6 +9678,7 @@ func (c *VideosInsertCall) Do() (*Video, error) {
 		if err != nil {
 			return nil, err
 		}
+		defer res.Body.Close()
 	}
 	var ret *Video
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
@@ -9675,7 +9732,7 @@ func (c *VideosInsertCall) Do() (*Video, error) {
 	//       "type": "string"
 	//     },
 	//     "part": {
-	//       "description": "The part parameter serves two purposes in this operation. It identifies the properties that the write operation will set as well as the properties that the API response will include.\n\nThe part names that you can include in the parameter value are snippet, contentDetails, fileDetails, liveStreamingDetails, player, processingDetails, recordingDetails, statistics, status, suggestions, and topicDetails. However, not all of those parts contain properties that can be set when setting or updating a video's metadata. For example, the statistics object encapsulates statistics that YouTube calculates for a video and does not contain values that you can set or modify. If the parameter value specifies a part that does not contain mutable values, that part will still be included in the API response.",
+	//       "description": "The part parameter serves two purposes in this operation. It identifies the properties that the write operation will set as well as the properties that the API response will include.\n\nThe part names that you can include in the parameter value are snippet, contentDetails, fileDetails, liveStreamingDetails, localizations, player, processingDetails, recordingDetails, statistics, status, suggestions, and topicDetails. However, not all of those parts contain properties that can be set when setting or updating a video's metadata. For example, the statistics object encapsulates statistics that YouTube calculates for a video and does not contain values that you can set or modify. If the parameter value specifies a part that does not contain mutable values, that part will still be included in the API response.",
 	//       "location": "query",
 	//       "required": true,
 	//       "type": "string"
@@ -9722,6 +9779,19 @@ func (r *VideosService) List(part string) *VideosListCall {
 // identifies the chart that you want to retrieve.
 func (c *VideosListCall) Chart(chart string) *VideosListCall {
 	c.opt_["chart"] = chart
+	return c
+}
+
+// Hl sets the optional parameter "hl": The hl parameter instructs the
+// API to return a localized version of the video details. If localized
+// text is nor available for the requested language, the localizations
+// object in the API response will contain the requested information in
+// the default language instead. The parameter value is a BCP-47
+// language code. Your application can determine whether the requested
+// localization was returned by checking the value of the
+// snippet.localized.language property in the API response.
+func (c *VideosListCall) Hl(hl string) *VideosListCall {
+	c.opt_["hl"] = hl
 	return c
 }
 
@@ -9829,6 +9899,9 @@ func (c *VideosListCall) Do() (*VideoListResponse, error) {
 	if v, ok := c.opt_["chart"]; ok {
 		params.Set("chart", fmt.Sprintf("%v", v))
 	}
+	if v, ok := c.opt_["hl"]; ok {
+		params.Set("hl", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["id"]; ok {
 		params.Set("id", fmt.Sprintf("%v", v))
 	}
@@ -9893,6 +9966,11 @@ func (c *VideosListCall) Do() (*VideoListResponse, error) {
 	//       "location": "query",
 	//       "type": "string"
 	//     },
+	//     "hl": {
+	//       "description": "The hl parameter instructs the API to return a localized version of the video details. If localized text is nor available for the requested language, the localizations object in the API response will contain the requested information in the default language instead. The parameter value is a BCP-47 language code. Your application can determine whether the requested localization was returned by checking the value of the snippet.localized.language property in the API response.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "id": {
 	//       "description": "The id parameter specifies a comma-separated list of the YouTube video ID(s) for the resource(s) that are being retrieved. In a video resource, the id property specifies the video's ID.",
 	//       "location": "query",
@@ -9936,7 +10014,7 @@ func (c *VideosListCall) Do() (*VideoListResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "part": {
-	//       "description": "The part parameter specifies a comma-separated list of one or more video resource properties that the API response will include. The part names that you can include in the parameter value are id, snippet, contentDetails, fileDetails, liveStreamingDetails, player, processingDetails, recordingDetails, statistics, status, suggestions, and topicDetails.\n\nIf the parameter identifies a property that contains child properties, the child properties will be included in the response. For example, in a video resource, the snippet property contains the channelId, title, description, tags, and categoryId properties. As such, if you set part=snippet, the API response will contain all of those properties.",
+	//       "description": "The part parameter specifies a comma-separated list of one or more video resource properties that the API response will include. The part names that you can include in the parameter value are id, snippet, contentDetails, fileDetails, liveStreamingDetails, localizations, player, processingDetails, recordingDetails, statistics, status, suggestions, and topicDetails.\n\nIf the parameter identifies a property that contains child properties, the child properties will be included in the response. For example, in a video resource, the snippet property contains the channelId, title, description, tags, and categoryId properties. As such, if you set part=snippet, the API response will contain all of those properties.",
 	//       "location": "query",
 	//       "required": true,
 	//       "type": "string"
@@ -10176,7 +10254,7 @@ func (c *VideosUpdateCall) Do() (*Video, error) {
 	//       "type": "string"
 	//     },
 	//     "part": {
-	//       "description": "The part parameter serves two purposes in this operation. It identifies the properties that the write operation will set as well as the properties that the API response will include.\n\nThe part names that you can include in the parameter value are snippet, contentDetails, fileDetails, liveStreamingDetails, player, processingDetails, recordingDetails, statistics, status, suggestions, and topicDetails.\n\nNote that this method will override the existing values for all of the mutable properties that are contained in any parts that the parameter value specifies. For example, a video's privacy setting is contained in the status part. As such, if your request is updating a private video, and the request's part parameter value includes the status part, the video's privacy setting will be updated to whatever value the request body specifies. If the request body does not specify a value, the existing privacy setting will be removed and the video will revert to the default privacy setting.\n\nIn addition, not all of those parts contain properties that can be set when setting or updating a video's metadata. For example, the statistics object encapsulates statistics that YouTube calculates for a video and does not contain values that you can set or modify. If the parameter value specifies a part that does not contain mutable values, that part will still be included in the API response.",
+	//       "description": "The part parameter serves two purposes in this operation. It identifies the properties that the write operation will set as well as the properties that the API response will include.\n\nThe part names that you can include in the parameter value are snippet, contentDetails, fileDetails, liveStreamingDetails, localizations, player, processingDetails, recordingDetails, statistics, status, suggestions, and topicDetails.\n\nNote that this method will override the existing values for all of the mutable properties that are contained in any parts that the parameter value specifies. For example, a video's privacy setting is contained in the status part. As such, if your request is updating a private video, and the request's part parameter value includes the status part, the video's privacy setting will be updated to whatever value the request body specifies. If the request body does not specify a value, the existing privacy setting will be removed and the video will revert to the default privacy setting.\n\nIn addition, not all of those parts contain properties that can be set when setting or updating a video's metadata. For example, the statistics object encapsulates statistics that YouTube calculates for a video and does not contain values that you can set or modify. If the parameter value specifies a part that does not contain mutable values, that part will still be included in the API response.",
 	//       "location": "query",
 	//       "required": true,
 	//       "type": "string"
@@ -10343,6 +10421,7 @@ func (c *WatermarksSetCall) Do() error {
 		if err != nil {
 			return err
 		}
+		defer res.Body.Close()
 	}
 	return nil
 	// {

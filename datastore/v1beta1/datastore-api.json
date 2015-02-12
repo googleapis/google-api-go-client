@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"uUWyYHXmEn-ab7WLvo8qNz2S8ws/sVFlNZgIrjl3K2rtgdm6IsVyZWU\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/8xS90Igj1Zi_dhxWkhTiyEbzjmc\"",
  "discoveryVersion": "v1",
  "id": "datastore:v1beta1",
  "name": "datastore",
@@ -87,7 +87,6 @@
   "AllocateIdsRequest": {
    "id": "AllocateIdsRequest",
    "type": "object",
-   "externalTypeName": "apphosting.client.datastoreservice.proto.AllocateIdsRequest",
    "properties": {
     "keys": {
      "type": "array",
@@ -101,7 +100,6 @@
   "AllocateIdsResponse": {
    "id": "AllocateIdsResponse",
    "type": "object",
-   "externalTypeName": "apphosting.client.datastoreservice.proto.AllocateIdsResponse",
    "properties": {
     "header": {
      "$ref": "ResponseHeader"
@@ -118,7 +116,6 @@
   "BeginTransactionRequest": {
    "id": "BeginTransactionRequest",
    "type": "object",
-   "externalTypeName": "apphosting.client.datastoreservice.proto.BeginTransactionRequest",
    "properties": {
     "isolationLevel": {
      "type": "string",
@@ -129,7 +126,6 @@
   "BeginTransactionResponse": {
    "id": "BeginTransactionResponse",
    "type": "object",
-   "externalTypeName": "apphosting.client.datastoreservice.proto.BeginTransactionResponse",
    "properties": {
     "header": {
      "$ref": "ResponseHeader"
@@ -144,7 +140,6 @@
   "BlindWriteRequest": {
    "id": "BlindWriteRequest",
    "type": "object",
-   "externalTypeName": "apphosting.client.datastoreservice.proto.BlindWriteRequest",
    "properties": {
     "mutation": {
      "$ref": "Mutation",
@@ -155,7 +150,6 @@
   "BlindWriteResponse": {
    "id": "BlindWriteResponse",
    "type": "object",
-   "externalTypeName": "apphosting.client.datastoreservice.proto.BlindWriteResponse",
    "properties": {
     "header": {
      "$ref": "ResponseHeader"
@@ -169,7 +163,6 @@
   "CommitRequest": {
    "id": "CommitRequest",
    "type": "object",
-   "externalTypeName": "apphosting.client.datastoreservice.proto.CommitRequest",
    "properties": {
     "ignoreReadOnly": {
      "type": "boolean"
@@ -188,7 +181,6 @@
   "CommitResponse": {
    "id": "CommitResponse",
    "type": "object",
-   "externalTypeName": "apphosting.client.datastoreservice.proto.CommitResponse",
    "properties": {
     "header": {
      "$ref": "ResponseHeader"
@@ -203,7 +195,6 @@
    "id": "CompositeFilter",
    "type": "object",
    "description": "A filter that merges the multiple other filters using the given operation.",
-   "externalTypeName": "apphosting.client.datastoreservice.proto.CompositeFilter",
    "properties": {
     "filters": {
      "type": "array",
@@ -222,7 +213,6 @@
    "id": "Entity",
    "type": "object",
    "description": "An entity.",
-   "externalTypeName": "apphosting.client.datastoreservice.proto.Entity",
    "properties": {
     "key": {
      "$ref": "Key",
@@ -242,7 +232,6 @@
    "id": "EntityResult",
    "type": "object",
    "description": "The result of fetching an entity from the datastore.",
-   "externalTypeName": "apphosting.client.datastoreservice.proto.EntityResult",
    "properties": {
     "entity": {
      "$ref": "Entity",
@@ -254,7 +243,6 @@
    "id": "Filter",
    "type": "object",
    "description": "A holder for any type of filter. Exactly one field should be specified.",
-   "externalTypeName": "apphosting.client.datastoreservice.proto.Filter",
    "properties": {
     "compositeFilter": {
      "$ref": "CompositeFilter",
@@ -270,7 +258,6 @@
    "id": "GqlQuery",
    "type": "object",
    "description": "A GQL query.",
-   "externalTypeName": "apphosting.client.datastoreservice.proto.GqlQuery",
    "properties": {
     "allowLiteral": {
      "type": "boolean",
@@ -300,7 +287,6 @@
    "id": "GqlQueryArg",
    "type": "object",
    "description": "A binding argument for a GQL query.",
-   "externalTypeName": "apphosting.client.datastoreservice.proto.GqlQueryArg",
    "properties": {
     "cursor": {
      "type": "string",
@@ -319,7 +305,6 @@
    "id": "Key",
    "type": "object",
    "description": "A unique identifier for an entity.",
-   "externalTypeName": "apphosting.client.datastoreservice.proto.Key",
    "properties": {
     "partitionId": {
      "$ref": "PartitionId",
@@ -338,7 +323,6 @@
    "id": "KeyPathElement",
    "type": "object",
    "description": "A (kind, ID/name) pair used to construct a key path.\n\nAt most one of name or ID may be set. If either is set, the element is complete. If neither is set, the element is incomplete.",
-   "externalTypeName": "apphosting.client.datastoreservice.proto.Key.PathElement",
    "properties": {
     "id": {
      "type": "string",
@@ -359,7 +343,6 @@
    "id": "KindExpression",
    "type": "object",
    "description": "A representation of a kind.",
-   "externalTypeName": "apphosting.client.datastoreservice.proto.KindExpression",
    "properties": {
     "name": {
      "type": "string",
@@ -370,7 +353,6 @@
   "LookupRequest": {
    "id": "LookupRequest",
    "type": "object",
-   "externalTypeName": "apphosting.client.datastoreservice.proto.LookupRequest",
    "properties": {
     "keys": {
      "type": "array",
@@ -388,7 +370,6 @@
   "LookupResponse": {
    "id": "LookupResponse",
    "type": "object",
-   "externalTypeName": "apphosting.client.datastoreservice.proto.LookupResponse",
    "properties": {
     "deferred": {
      "type": "array",
@@ -420,7 +401,6 @@
    "id": "Mutation",
    "type": "object",
    "description": "A set of changes to apply.",
-   "externalTypeName": "apphosting.client.datastoreservice.proto.Mutation",
    "properties": {
     "delete": {
      "type": "array",
@@ -466,7 +446,6 @@
   "MutationResult": {
    "id": "MutationResult",
    "type": "object",
-   "externalTypeName": "apphosting.client.datastoreservice.proto.MutationResult",
    "properties": {
     "indexUpdates": {
      "type": "integer",
@@ -486,7 +465,6 @@
    "id": "PartitionId",
    "type": "object",
    "description": "An identifier for a particular subset of entities.\n\nEntities are partitioned into various subsets, each used by different datasets and different namespaces within a dataset and so forth.",
-   "externalTypeName": "apphosting.client.datastoreservice.proto.PartitionId",
    "properties": {
     "datasetId": {
      "type": "string",
@@ -502,7 +480,6 @@
    "id": "Property",
    "type": "object",
    "description": "An entity property.",
-   "externalTypeName": "apphosting.client.datastoreservice.proto.Property",
    "properties": {
     "multi": {
      "type": "boolean",
@@ -521,7 +498,6 @@
    "id": "PropertyExpression",
    "type": "object",
    "description": "A representation of a property in a projection.",
-   "externalTypeName": "apphosting.client.datastoreservice.proto.PropertyExpression",
    "properties": {
     "aggregationFunction": {
      "type": "string",
@@ -537,7 +513,6 @@
    "id": "PropertyFilter",
    "type": "object",
    "description": "A filter on a specific property.",
-   "externalTypeName": "apphosting.client.datastoreservice.proto.PropertyFilter",
    "properties": {
     "operator": {
      "type": "string",
@@ -557,7 +532,6 @@
    "id": "PropertyOrder",
    "type": "object",
    "description": "The desired order for a specific property.",
-   "externalTypeName": "apphosting.client.datastoreservice.proto.PropertyOrder",
    "properties": {
     "direction": {
      "type": "string",
@@ -573,7 +547,6 @@
    "id": "PropertyReference",
    "type": "object",
    "description": "A reference to a property relative to the kind expressions.",
-   "externalTypeName": "apphosting.client.datastoreservice.proto.PropertyReference",
    "properties": {
     "name": {
      "type": "string",
@@ -585,7 +558,6 @@
    "id": "Query",
    "type": "object",
    "description": "A query.",
-   "externalTypeName": "apphosting.client.datastoreservice.proto.Query",
    "properties": {
     "endCursor": {
      "type": "string",
@@ -645,7 +617,6 @@
    "id": "QueryResultBatch",
    "type": "object",
    "description": "A batch of results produced by a query.",
-   "externalTypeName": "apphosting.client.datastoreservice.proto.QueryResultBatch",
    "properties": {
     "endCursor": {
      "type": "string",
@@ -677,7 +648,6 @@
   "ReadOptions": {
    "id": "ReadOptions",
    "type": "object",
-   "externalTypeName": "apphosting.client.datastoreservice.proto.ReadOptions",
    "properties": {
     "readConsistency": {
      "type": "string",
@@ -693,7 +663,6 @@
   "ResponseHeader": {
    "id": "ResponseHeader",
    "type": "object",
-   "externalTypeName": "apphosting.client.datastoreservice.proto.ResponseHeader",
    "properties": {
     "kind": {
      "type": "string",
@@ -705,7 +674,6 @@
   "RollbackRequest": {
    "id": "RollbackRequest",
    "type": "object",
-   "externalTypeName": "apphosting.client.datastoreservice.proto.RollbackRequest",
    "properties": {
     "transaction": {
      "type": "string",
@@ -717,7 +685,6 @@
   "RollbackResponse": {
    "id": "RollbackResponse",
    "type": "object",
-   "externalTypeName": "apphosting.client.datastoreservice.proto.RollbackResponse",
    "properties": {
     "header": {
      "$ref": "ResponseHeader"
@@ -727,7 +694,6 @@
   "RunQueryRequest": {
    "id": "RunQueryRequest",
    "type": "object",
-   "externalTypeName": "apphosting.client.datastoreservice.proto.RunQueryRequest",
    "properties": {
     "gqlQuery": {
      "$ref": "GqlQuery",
@@ -750,7 +716,6 @@
   "RunQueryResponse": {
    "id": "RunQueryResponse",
    "type": "object",
-   "externalTypeName": "apphosting.client.datastoreservice.proto.RunQueryResponse",
    "properties": {
     "batch": {
      "$ref": "QueryResultBatch",
@@ -765,7 +730,6 @@
    "id": "Value",
    "type": "object",
    "description": "A message that can hold any of the supported value types and associated metadata.",
-   "externalTypeName": "apphosting.client.datastoreservice.proto.Value",
    "properties": {
     "blobKeyValue": {
      "type": "string",

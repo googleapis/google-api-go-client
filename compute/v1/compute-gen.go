@@ -43,6 +43,9 @@ const basePath = "https://www.googleapis.com/compute/v1/projects/"
 
 // OAuth2 scopes used by this API.
 const (
+	// View and manage your data across Google Cloud Platform services
+	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
+
 	// View and manage your Google Compute Engine resources
 	ComputeScope = "https://www.googleapis.com/auth/compute"
 
@@ -476,7 +479,7 @@ type AddressList struct {
 	// only).
 	Id string `json:"id,omitempty"`
 
-	// Items: The address resources.
+	// Items: A list of Address resources.
 	Items []*Address `json:"items,omitempty"`
 
 	// Kind: Type of resource.
@@ -684,7 +687,7 @@ type BackendServiceList struct {
 	// only).
 	Id string `json:"id,omitempty"`
 
-	// Items: The BackendService resources.
+	// Items: A list of BackendService resources.
 	Items []*BackendService `json:"items,omitempty"`
 
 	// Kind: Type of resource.
@@ -812,7 +815,7 @@ type DiskList struct {
 	// only).
 	Id string `json:"id,omitempty"`
 
-	// Items: The persistent disk resources.
+	// Items: A list of Disk resources.
 	Items []*Disk `json:"items,omitempty"`
 
 	// Kind: Type of resource.
@@ -886,7 +889,7 @@ type DiskTypeList struct {
 	// only).
 	Id string `json:"id,omitempty"`
 
-	// Items: The disk type resources.
+	// Items: A list of DiskType resources.
 	Items []*DiskType `json:"items,omitempty"`
 
 	// Kind: Type of resource.
@@ -1030,7 +1033,7 @@ type FirewallList struct {
 	// only).
 	Id string `json:"id,omitempty"`
 
-	// Items: The firewall resources.
+	// Items: A list of Firewall resources.
 	Items []*Firewall `json:"items,omitempty"`
 
 	// Kind: Type of resource.
@@ -1123,7 +1126,7 @@ type ForwardingRuleList struct {
 	// only).
 	Id string `json:"id,omitempty"`
 
-	// Items: The ForwardingRule resources.
+	// Items: A list of ForwardingRule resources.
 	Items []*ForwardingRule `json:"items,omitempty"`
 
 	// Kind: Type of resource.
@@ -1257,7 +1260,7 @@ type HttpHealthCheckList struct {
 	// only).
 	Id string `json:"id,omitempty"`
 
-	// Items: The HttpHealthCheck resources.
+	// Items: A list of HttpHealthCheck resources.
 	Items []*HttpHealthCheck `json:"items,omitempty"`
 
 	// Kind: Type of resource.
@@ -1353,7 +1356,7 @@ type ImageList struct {
 	// only).
 	Id string `json:"id,omitempty"`
 
-	// Items: The disk image resources.
+	// Items: A list of Image resources.
 	Items []*Image `json:"items,omitempty"`
 
 	// Kind: Type of resource.
@@ -1471,7 +1474,7 @@ type InstanceList struct {
 	// only).
 	Id string `json:"id,omitempty"`
 
-	// Items: A list of instance resources.
+	// Items: A list of Instance resources.
 	Items []*Instance `json:"items,omitempty"`
 
 	// Kind: Type of resource.
@@ -1577,7 +1580,7 @@ type InstanceTemplateList struct {
 	// only).
 	Id string `json:"id,omitempty"`
 
-	// Items: A list of instance template resources.
+	// Items: A list of InstanceTemplate resources.
 	Items []*InstanceTemplate `json:"items,omitempty"`
 
 	// Kind: Type of resource.
@@ -1714,7 +1717,7 @@ type MachineTypeList struct {
 	// only).
 	Id string `json:"id,omitempty"`
 
-	// Items: The machine type resources.
+	// Items: A list of MachineType resources.
 	Items []*MachineType `json:"items,omitempty"`
 
 	// Kind: Type of resource.
@@ -1848,7 +1851,7 @@ type NetworkList struct {
 	// only).
 	Id string `json:"id,omitempty"`
 
-	// Items: The network resources.
+	// Items: A list of Network resources.
 	Items []*Network `json:"items,omitempty"`
 
 	// Kind: Type of resource.
@@ -2148,7 +2151,7 @@ type RegionList struct {
 	// only).
 	Id string `json:"id,omitempty"`
 
-	// Items: The region resources.
+	// Items: A list of Region resources.
 	Items []*Region `json:"items,omitempty"`
 
 	// Kind: Type of resource.
@@ -2251,7 +2254,7 @@ type RouteList struct {
 	// only).
 	Id string `json:"id,omitempty"`
 
-	// Items: The route resources.
+	// Items: A list of Route resources.
 	Items []*Route `json:"items,omitempty"`
 
 	// Kind: Type of resource.
@@ -2356,7 +2359,7 @@ type SnapshotList struct {
 	// only).
 	Id string `json:"id,omitempty"`
 
-	// Items: The persistent snapshot resources.
+	// Items: A list of Snapshot resources.
 	Items []*Snapshot `json:"items,omitempty"`
 
 	// Kind: Type of resource.
@@ -2415,7 +2418,7 @@ type TargetHttpProxyList struct {
 	// only).
 	Id string `json:"id,omitempty"`
 
-	// Items: The TargetHttpProxy resources.
+	// Items: A list of TargetHttpProxy resources.
 	Items []*TargetHttpProxy `json:"items,omitempty"`
 
 	// Kind: Type of resource.
@@ -2490,7 +2493,7 @@ type TargetInstanceList struct {
 	// only).
 	Id string `json:"id,omitempty"`
 
-	// Items: The TargetInstance resources.
+	// Items: A list of TargetInstance resources.
 	Items []*TargetInstance `json:"items,omitempty"`
 
 	// Kind: Type of resource.
@@ -2648,7 +2651,7 @@ type TargetPoolList struct {
 	// only).
 	Id string `json:"id,omitempty"`
 
-	// Items: The TargetPool resources.
+	// Items: A list of TargetPool resources.
 	Items []*TargetPool `json:"items,omitempty"`
 
 	// Kind: Type of resource.
@@ -2774,7 +2777,7 @@ type UrlMapList struct {
 	// only).
 	Id string `json:"id,omitempty"`
 
-	// Items: The UrlMap resources.
+	// Items: A list of UrlMap resources.
 	Items []*UrlMap `json:"items,omitempty"`
 
 	// Kind: Type of resource.
@@ -2902,7 +2905,7 @@ type ZoneList struct {
 	// only).
 	Id string `json:"id,omitempty"`
 
-	// Items: The zone resources.
+	// Items: A list of Zone resources.
 	Items []*Zone `json:"items,omitempty"`
 
 	// Kind: Type of resource.
@@ -3039,6 +3042,7 @@ func (c *AddressesAggregatedListCall) Do() (*AddressAggregatedList, error) {
 	//     "$ref": "AddressAggregatedList"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
@@ -3140,6 +3144,7 @@ func (c *AddressesDeleteCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -3240,6 +3245,7 @@ func (c *AddressesGetCall) Do() (*Address, error) {
 	//     "$ref": "Address"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
@@ -3342,6 +3348,7 @@ func (c *AddressesInsertCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -3483,6 +3490,7 @@ func (c *AddressesListCall) Do() (*AddressList, error) {
 	//     "$ref": "AddressList"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
@@ -3573,6 +3581,7 @@ func (c *BackendServicesDeleteCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -3662,6 +3671,7 @@ func (c *BackendServicesGetCall) Do() (*BackendService, error) {
 	//     "$ref": "BackendService"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
@@ -3763,6 +3773,7 @@ func (c *BackendServicesGetHealthCall) Do() (*BackendServiceGroupHealth, error) 
 	//     "$ref": "BackendServiceGroupHealth"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
@@ -3854,6 +3865,7 @@ func (c *BackendServicesInsertCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -3984,6 +3996,7 @@ func (c *BackendServicesListCall) Do() (*BackendServiceList, error) {
 	//     "$ref": "BackendServiceList"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
@@ -4086,6 +4099,7 @@ func (c *BackendServicesPatchCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -4186,6 +4200,7 @@ func (c *BackendServicesUpdateCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -4316,6 +4331,7 @@ func (c *DiskTypesAggregatedListCall) Do() (*DiskTypeAggregatedList, error) {
 	//     "$ref": "DiskTypeAggregatedList"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
@@ -4417,6 +4433,7 @@ func (c *DiskTypesGetCall) Do() (*DiskType, error) {
 	//     "$ref": "DiskType"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
@@ -4559,6 +4576,7 @@ func (c *DiskTypesListCall) Do() (*DiskTypeList, error) {
 	//     "$ref": "DiskTypeList"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
@@ -4689,6 +4707,7 @@ func (c *DisksAggregatedListCall) Do() (*DiskAggregatedList, error) {
 	//     "$ref": "DiskAggregatedList"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
@@ -4800,6 +4819,7 @@ func (c *DisksCreateSnapshotCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -4900,6 +4920,7 @@ func (c *DisksDeleteCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -5000,6 +5021,7 @@ func (c *DisksGetCall) Do() (*Disk, error) {
 	//     "$ref": "Disk"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
@@ -5117,6 +5139,7 @@ func (c *DisksInsertCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -5258,6 +5281,7 @@ func (c *DisksListCall) Do() (*DiskList, error) {
 	//     "$ref": "DiskList"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
@@ -5348,6 +5372,7 @@ func (c *FirewallsDeleteCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -5437,6 +5462,7 @@ func (c *FirewallsGetCall) Do() (*Firewall, error) {
 	//     "$ref": "Firewall"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
@@ -5528,6 +5554,7 @@ func (c *FirewallsInsertCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -5658,6 +5685,7 @@ func (c *FirewallsListCall) Do() (*FirewallList, error) {
 	//     "$ref": "FirewallList"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
@@ -5760,6 +5788,7 @@ func (c *FirewallsPatchCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -5861,6 +5890,7 @@ func (c *FirewallsUpdateCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -5991,6 +6021,7 @@ func (c *ForwardingRulesAggregatedListCall) Do() (*ForwardingRuleAggregatedList,
 	//     "$ref": "ForwardingRuleAggregatedList"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
@@ -6092,6 +6123,7 @@ func (c *ForwardingRulesDeleteCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -6192,6 +6224,7 @@ func (c *ForwardingRulesGetCall) Do() (*ForwardingRule, error) {
 	//     "$ref": "ForwardingRule"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
@@ -6294,6 +6327,7 @@ func (c *ForwardingRulesInsertCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -6435,6 +6469,7 @@ func (c *ForwardingRulesListCall) Do() (*ForwardingRuleList, error) {
 	//     "$ref": "ForwardingRuleList"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
@@ -6547,6 +6582,7 @@ func (c *ForwardingRulesSetTargetCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -6636,6 +6672,7 @@ func (c *GlobalAddressesDeleteCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -6725,6 +6762,7 @@ func (c *GlobalAddressesGetCall) Do() (*Address, error) {
 	//     "$ref": "Address"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
@@ -6816,6 +6854,7 @@ func (c *GlobalAddressesInsertCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -6945,6 +6984,7 @@ func (c *GlobalAddressesListCall) Do() (*AddressList, error) {
 	//     "$ref": "AddressList"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
@@ -7035,6 +7075,7 @@ func (c *GlobalForwardingRulesDeleteCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -7124,6 +7165,7 @@ func (c *GlobalForwardingRulesGetCall) Do() (*ForwardingRule, error) {
 	//     "$ref": "ForwardingRule"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
@@ -7215,6 +7257,7 @@ func (c *GlobalForwardingRulesInsertCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -7345,6 +7388,7 @@ func (c *GlobalForwardingRulesListCall) Do() (*ForwardingRuleList, error) {
 	//     "$ref": "ForwardingRuleList"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
@@ -7446,6 +7490,7 @@ func (c *GlobalForwardingRulesSetTargetCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -7576,6 +7621,7 @@ func (c *GlobalOperationsAggregatedListCall) Do() (*OperationAggregatedList, err
 	//     "$ref": "OperationAggregatedList"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
@@ -7659,6 +7705,7 @@ func (c *GlobalOperationsDeleteCall) Do() error {
 	//   },
 	//   "path": "{project}/global/operations/{operation}",
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -7748,6 +7795,7 @@ func (c *GlobalOperationsGetCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
@@ -7879,6 +7927,7 @@ func (c *GlobalOperationsListCall) Do() (*OperationList, error) {
 	//     "$ref": "OperationList"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
@@ -7969,6 +8018,7 @@ func (c *HttpHealthChecksDeleteCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -8058,6 +8108,7 @@ func (c *HttpHealthChecksGetCall) Do() (*HttpHealthCheck, error) {
 	//     "$ref": "HttpHealthCheck"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
@@ -8149,6 +8200,7 @@ func (c *HttpHealthChecksInsertCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -8279,6 +8331,7 @@ func (c *HttpHealthChecksListCall) Do() (*HttpHealthCheckList, error) {
 	//     "$ref": "HttpHealthCheckList"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
@@ -8382,6 +8435,7 @@ func (c *HttpHealthChecksPatchCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -8483,6 +8537,7 @@ func (c *HttpHealthChecksUpdateCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -8572,6 +8627,7 @@ func (c *ImagesDeleteCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -8673,6 +8729,7 @@ func (c *ImagesDeprecateCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -8762,6 +8819,7 @@ func (c *ImagesGetCall) Do() (*Image, error) {
 	//     "$ref": "Image"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
@@ -8853,6 +8911,7 @@ func (c *ImagesInsertCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/devstorage.full_control",
 	//     "https://www.googleapis.com/auth/devstorage.read_only",
@@ -8986,6 +9045,7 @@ func (c *ImagesListCall) Do() (*ImageList, error) {
 	//     "$ref": "ImageList"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
@@ -9076,6 +9136,7 @@ func (c *InstanceTemplatesDeleteCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -9165,6 +9226,7 @@ func (c *InstanceTemplatesGetCall) Do() (*InstanceTemplate, error) {
 	//     "$ref": "InstanceTemplate"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
@@ -9256,6 +9318,7 @@ func (c *InstanceTemplatesInsertCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -9386,6 +9449,7 @@ func (c *InstanceTemplatesListCall) Do() (*InstanceTemplateList, error) {
 	//     "$ref": "InstanceTemplateList"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
@@ -9509,6 +9573,7 @@ func (c *InstancesAddAccessConfigCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -9637,6 +9702,7 @@ func (c *InstancesAggregatedListCall) Do() (*InstanceAggregatedList, error) {
 	//     "$ref": "InstanceAggregatedList"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
@@ -9749,6 +9815,7 @@ func (c *InstancesAttachDiskCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -9849,6 +9916,7 @@ func (c *InstancesDeleteCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -9970,6 +10038,7 @@ func (c *InstancesDeleteAccessConfigCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -10081,6 +10150,7 @@ func (c *InstancesDetachDiskCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -10181,6 +10251,7 @@ func (c *InstancesGetCall) Do() (*Instance, error) {
 	//     "$ref": "Instance"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
@@ -10283,6 +10354,7 @@ func (c *InstancesGetSerialPortOutputCall) Do() (*SerialPortOutput, error) {
 	//     "$ref": "SerialPortOutput"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
@@ -10385,6 +10457,7 @@ func (c *InstancesInsertCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -10526,6 +10599,7 @@ func (c *InstancesListCall) Do() (*InstanceList, error) {
 	//     "$ref": "InstanceList"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
@@ -10627,6 +10701,7 @@ func (c *InstancesResetCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -10749,6 +10824,7 @@ func (c *InstancesSetDiskAutoDeleteCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -10861,6 +10937,7 @@ func (c *InstancesSetMetadataCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -10972,6 +11049,7 @@ func (c *InstancesSetSchedulingCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -11084,6 +11162,7 @@ func (c *InstancesSetTagsCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -11184,6 +11263,7 @@ func (c *InstancesStartCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -11284,6 +11364,7 @@ func (c *InstancesStopCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -11373,6 +11454,7 @@ func (c *LicensesGetCall) Do() (*License, error) {
 	//     "$ref": "License"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
@@ -11504,6 +11586,7 @@ func (c *MachineTypesAggregatedListCall) Do() (*MachineTypeAggregatedList, error
 	//     "$ref": "MachineTypeAggregatedList"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
@@ -11605,6 +11688,7 @@ func (c *MachineTypesGetCall) Do() (*MachineType, error) {
 	//     "$ref": "MachineType"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
@@ -11747,6 +11831,7 @@ func (c *MachineTypesListCall) Do() (*MachineTypeList, error) {
 	//     "$ref": "MachineTypeList"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
@@ -11837,6 +11922,7 @@ func (c *NetworksDeleteCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -11926,6 +12012,7 @@ func (c *NetworksGetCall) Do() (*Network, error) {
 	//     "$ref": "Network"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
@@ -12017,6 +12104,7 @@ func (c *NetworksInsertCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -12147,6 +12235,7 @@ func (c *NetworksListCall) Do() (*NetworkList, error) {
 	//     "$ref": "NetworkList"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
@@ -12226,6 +12315,7 @@ func (c *ProjectsGetCall) Do() (*Project, error) {
 	//     "$ref": "Project"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
@@ -12317,6 +12407,7 @@ func (c *ProjectsSetCommonInstanceMetadataCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -12406,6 +12497,7 @@ func (c *ProjectsSetUsageExportBucketCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/devstorage.full_control",
 	//     "https://www.googleapis.com/auth/devstorage.read_only",
@@ -12502,6 +12594,7 @@ func (c *RegionOperationsDeleteCall) Do() error {
 	//   },
 	//   "path": "{project}/regions/{region}/operations/{operation}",
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -12602,6 +12695,7 @@ func (c *RegionOperationsGetCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
@@ -12744,6 +12838,7 @@ func (c *RegionOperationsListCall) Do() (*OperationList, error) {
 	//     "$ref": "OperationList"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
@@ -12834,6 +12929,7 @@ func (c *RegionsGetCall) Do() (*Region, error) {
 	//     "$ref": "Region"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
@@ -12965,6 +13061,7 @@ func (c *RegionsListCall) Do() (*RegionList, error) {
 	//     "$ref": "RegionList"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
@@ -13055,6 +13152,7 @@ func (c *RoutesDeleteCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -13144,6 +13242,7 @@ func (c *RoutesGetCall) Do() (*Route, error) {
 	//     "$ref": "Route"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
@@ -13235,6 +13334,7 @@ func (c *RoutesInsertCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -13365,6 +13465,7 @@ func (c *RoutesListCall) Do() (*RouteList, error) {
 	//     "$ref": "RouteList"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
@@ -13455,6 +13556,7 @@ func (c *SnapshotsDeleteCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -13544,6 +13646,7 @@ func (c *SnapshotsGetCall) Do() (*Snapshot, error) {
 	//     "$ref": "Snapshot"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
@@ -13675,6 +13778,7 @@ func (c *SnapshotsListCall) Do() (*SnapshotList, error) {
 	//     "$ref": "SnapshotList"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
@@ -13765,6 +13869,7 @@ func (c *TargetHttpProxiesDeleteCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -13854,6 +13959,7 @@ func (c *TargetHttpProxiesGetCall) Do() (*TargetHttpProxy, error) {
 	//     "$ref": "TargetHttpProxy"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
@@ -13945,6 +14051,7 @@ func (c *TargetHttpProxiesInsertCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -14075,6 +14182,7 @@ func (c *TargetHttpProxiesListCall) Do() (*TargetHttpProxyList, error) {
 	//     "$ref": "TargetHttpProxyList"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
@@ -14176,6 +14284,7 @@ func (c *TargetHttpProxiesSetUrlMapCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -14306,6 +14415,7 @@ func (c *TargetInstancesAggregatedListCall) Do() (*TargetInstanceAggregatedList,
 	//     "$ref": "TargetInstanceAggregatedList"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
@@ -14407,6 +14517,7 @@ func (c *TargetInstancesDeleteCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -14507,6 +14618,7 @@ func (c *TargetInstancesGetCall) Do() (*TargetInstance, error) {
 	//     "$ref": "TargetInstance"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
@@ -14609,6 +14721,7 @@ func (c *TargetInstancesInsertCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -14750,6 +14863,7 @@ func (c *TargetInstancesListCall) Do() (*TargetInstanceList, error) {
 	//     "$ref": "TargetInstanceList"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
@@ -14861,6 +14975,7 @@ func (c *TargetPoolsAddHealthCheckCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -14971,6 +15086,7 @@ func (c *TargetPoolsAddInstanceCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -15100,6 +15216,7 @@ func (c *TargetPoolsAggregatedListCall) Do() (*TargetPoolAggregatedList, error) 
 	//     "$ref": "TargetPoolAggregatedList"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
@@ -15201,6 +15318,7 @@ func (c *TargetPoolsDeleteCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -15301,6 +15419,7 @@ func (c *TargetPoolsGetCall) Do() (*TargetPool, error) {
 	//     "$ref": "TargetPool"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
@@ -15413,6 +15532,7 @@ func (c *TargetPoolsGetHealthCall) Do() (*TargetPoolInstanceHealth, error) {
 	//     "$ref": "TargetPoolInstanceHealth"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
@@ -15515,6 +15635,7 @@ func (c *TargetPoolsInsertCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -15656,6 +15777,7 @@ func (c *TargetPoolsListCall) Do() (*TargetPoolList, error) {
 	//     "$ref": "TargetPoolList"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
@@ -15767,6 +15889,7 @@ func (c *TargetPoolsRemoveHealthCheckCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -15877,6 +16000,7 @@ func (c *TargetPoolsRemoveInstanceCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -16004,6 +16128,7 @@ func (c *TargetPoolsSetBackupCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -16093,6 +16218,7 @@ func (c *UrlMapsDeleteCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -16182,6 +16308,7 @@ func (c *UrlMapsGetCall) Do() (*UrlMap, error) {
 	//     "$ref": "UrlMap"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
@@ -16273,6 +16400,7 @@ func (c *UrlMapsInsertCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -16403,6 +16531,7 @@ func (c *UrlMapsListCall) Do() (*UrlMapList, error) {
 	//     "$ref": "UrlMapList"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
@@ -16505,6 +16634,7 @@ func (c *UrlMapsPatchCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -16605,6 +16735,7 @@ func (c *UrlMapsUpdateCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -16707,6 +16838,7 @@ func (c *UrlMapsValidateCall) Do() (*UrlMapsValidateResponse, error) {
 	//     "$ref": "UrlMapsValidateResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -16800,6 +16932,7 @@ func (c *ZoneOperationsDeleteCall) Do() error {
 	//   },
 	//   "path": "{project}/zones/{zone}/operations/{operation}",
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
@@ -16900,6 +17033,7 @@ func (c *ZoneOperationsGetCall) Do() (*Operation, error) {
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
@@ -17042,6 +17176,7 @@ func (c *ZoneOperationsListCall) Do() (*OperationList, error) {
 	//     "$ref": "OperationList"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
@@ -17132,6 +17267,7 @@ func (c *ZonesGetCall) Do() (*Zone, error) {
 	//     "$ref": "Zone"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
@@ -17263,6 +17399,7 @@ func (c *ZonesListCall) Do() (*ZoneList, error) {
 	//     "$ref": "ZoneList"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]

@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/1ZGpzzKS4Zm-lRDWSuLtbVCf49E\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/Y1ZBDrceia-T1mf4BkEdciBMIwA\"",
  "discoveryVersion": "v1",
  "id": "bigquery:v2",
  "name": "bigquery",
  "version": "v2",
- "revision": "20141211",
+ "revision": "20141112",
  "title": "BigQuery API",
  "description": "A data platform for customers to create, manage, share and query data.",
  "ownerDomain": "google.com",
@@ -350,6 +350,10 @@
     "status": {
      "$ref": "JobStatus",
      "description": "[Output-only] The status of this job. Examine this value when polling an asynchronous job to see if the job is complete."
+    },
+    "user_email": {
+     "type": "string",
+     "description": "[Output-only] Email address of the user who ran the job."
     }
    }
   },
@@ -644,7 +648,7 @@
        },
        "user_email": {
         "type": "string",
-        "description": "[Full-projection-only] User who ran the job."
+        "description": "[Full-projection-only] Email address of the user who ran the job."
        }
       }
      }
@@ -890,7 +894,7 @@
     },
     "dryRun": {
      "type": "boolean",
-     "description": "[Optional] If set, don't actually run the query. A valid query will return an empty response, while an invalid query will return the same error it would if it wasn't a dry run. The default value is false."
+     "description": "[Optional] If set, don't actually run this job. A valid query will return a mostly empty response with some processing statistics, while an invalid query will return the same error it would if it wasn't a dry run."
     },
     "kind": {
      "type": "string",

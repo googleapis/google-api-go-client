@@ -606,6 +606,7 @@ func (c *UsersDraftsCreateCall) Do() (*Draft, error) {
 		if err != nil {
 			return nil, err
 		}
+		defer res.Body.Close()
 	}
 	var ret *Draft
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
@@ -1104,6 +1105,7 @@ func (c *UsersDraftsSendCall) Do() (*Message, error) {
 		if err != nil {
 			return nil, err
 		}
+		defer res.Body.Close()
 	}
 	var ret *Message
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
@@ -1291,6 +1293,7 @@ func (c *UsersDraftsUpdateCall) Do() (*Draft, error) {
 		if err != nil {
 			return nil, err
 		}
+		defer res.Body.Close()
 	}
 	var ret *Draft
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
@@ -2282,10 +2285,35 @@ func (r *UsersMessagesService) Import(userId string, message *Message) *UsersMes
 	return c
 }
 
+// Deleted sets the optional parameter "deleted": Mark the email as
+// permanently deleted (not TRASH) and only visible in Google Apps Vault
+// to a Vault administrator. Only used for Google Apps for Work
+// accounts.
+func (c *UsersMessagesImportCall) Deleted(deleted bool) *UsersMessagesImportCall {
+	c.opt_["deleted"] = deleted
+	return c
+}
+
 // InternalDateSource sets the optional parameter "internalDateSource":
 // Source for Gmail's internal date of the message.
 func (c *UsersMessagesImportCall) InternalDateSource(internalDateSource string) *UsersMessagesImportCall {
 	c.opt_["internalDateSource"] = internalDateSource
+	return c
+}
+
+// NeverMarkSpam sets the optional parameter "neverMarkSpam": Ignore the
+// Gmail spam classifer decision and never mark this email as SPAM in
+// the mailbox.
+func (c *UsersMessagesImportCall) NeverMarkSpam(neverMarkSpam bool) *UsersMessagesImportCall {
+	c.opt_["neverMarkSpam"] = neverMarkSpam
+	return c
+}
+
+// ProcessForCalendar sets the optional parameter "processForCalendar":
+// Process calendar invites in the email and add any extracted meetings
+// to the Google Calendar for this user.
+func (c *UsersMessagesImportCall) ProcessForCalendar(processForCalendar bool) *UsersMessagesImportCall {
+	c.opt_["processForCalendar"] = processForCalendar
 	return c
 }
 
@@ -2334,8 +2362,17 @@ func (c *UsersMessagesImportCall) Do() (*Message, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["deleted"]; ok {
+		params.Set("deleted", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["internalDateSource"]; ok {
 		params.Set("internalDateSource", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["neverMarkSpam"]; ok {
+		params.Set("neverMarkSpam", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["processForCalendar"]; ok {
+		params.Set("processForCalendar", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
@@ -2399,6 +2436,7 @@ func (c *UsersMessagesImportCall) Do() (*Message, error) {
 		if err != nil {
 			return nil, err
 		}
+		defer res.Body.Close()
 	}
 	var ret *Message
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
@@ -2429,6 +2467,12 @@ func (c *UsersMessagesImportCall) Do() (*Message, error) {
 	//     "userId"
 	//   ],
 	//   "parameters": {
+	//     "deleted": {
+	//       "default": "false",
+	//       "description": "Mark the email as permanently deleted (not TRASH) and only visible in Google Apps Vault to a Vault administrator. Only used for Google Apps for Work accounts.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "internalDateSource": {
 	//       "default": "dateHeader",
 	//       "description": "Source for Gmail's internal date of the message.",
@@ -2442,6 +2486,18 @@ func (c *UsersMessagesImportCall) Do() (*Message, error) {
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
+	//     },
+	//     "neverMarkSpam": {
+	//       "default": "false",
+	//       "description": "Ignore the Gmail spam classifer decision and never mark this email as SPAM in the mailbox.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "processForCalendar": {
+	//       "default": "false",
+	//       "description": "Process calendar invites in the email and add any extracted meetings to the Google Calendar for this user.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     },
 	//     "userId": {
 	//       "default": "me",
@@ -2608,6 +2664,7 @@ func (c *UsersMessagesInsertCall) Do() (*Message, error) {
 		if err != nil {
 			return nil, err
 		}
+		defer res.Body.Close()
 	}
 	var ret *Message
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
@@ -3064,6 +3121,7 @@ func (c *UsersMessagesSendCall) Do() (*Message, error) {
 		if err != nil {
 			return nil, err
 		}
+		defer res.Body.Close()
 	}
 	var ret *Message
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {

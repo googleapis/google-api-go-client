@@ -2,7 +2,7 @@
 //
 // Usage example:
 //
-//   import "google.golang.org/api/dataflow/v1beta3"
+//   import "google.golang.org/api/dataflow/v1b4"
 //   ...
 //   dataflowService, err := dataflow.New(oauthHttpClient)
 package dataflow
@@ -34,10 +34,10 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Background
 
-const apiId = "dataflow:v1beta3"
+const apiId = "dataflow:v1b4"
 const apiName = "dataflow"
-const apiVersion = "v1beta3"
-const basePath = "https://www.googleapis.com/dataflow/v1b3/projects/"
+const apiVersion = "v1b4"
+const basePath = "https://www.googleapis.com/v1b3/projects/"
 
 // OAuth2 scopes used by this API.
 const (

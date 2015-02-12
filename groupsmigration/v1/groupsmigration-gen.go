@@ -198,6 +198,7 @@ func (c *ArchiveInsertCall) Do() (*Groups, error) {
 		if err != nil {
 			return nil, err
 		}
+		defer res.Body.Close()
 	}
 	var ret *Groups
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {

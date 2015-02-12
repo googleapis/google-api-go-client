@@ -431,6 +431,10 @@ type PageList struct {
 
 	// Kind: The kind of this entity. Always blogger#pageList
 	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: Pagination token to fetch the next page, if one
+	// exists.
+	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
 type Pageviews struct {
@@ -1737,6 +1741,12 @@ func (c *CommentsListByBlogCall) StartDate(startDate string) *CommentsListByBlog
 	return c
 }
 
+// Status sets the optional parameter "status":
+func (c *CommentsListByBlogCall) Status(status string) *CommentsListByBlogCall {
+	c.opt_["status"] = status
+	return c
+}
+
 // Fields allows partial responses to be retrieved.
 // See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1763,6 +1773,9 @@ func (c *CommentsListByBlogCall) Do() (*CommentList, error) {
 	}
 	if v, ok := c.opt_["startDate"]; ok {
 		params.Set("startDate", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["status"]; ok {
+		params.Set("status", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
@@ -1827,6 +1840,23 @@ func (c *CommentsListByBlogCall) Do() (*CommentList, error) {
 	//       "description": "Earliest date of comment to fetch, a date-time with RFC 3339 formatting.",
 	//       "format": "date-time",
 	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "status": {
+	//       "enum": [
+	//         "emptied",
+	//         "live",
+	//         "pending",
+	//         "spam"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Comments that have had their content removed",
+	//         "Comments that are publicly visible",
+	//         "Comments that are awaiting administrator approval",
+	//         "Comments marked as spam by the administrator"
+	//       ],
+	//       "location": "query",
+	//       "repeated": true,
 	//       "type": "string"
 	//     }
 	//   },
@@ -2448,6 +2478,20 @@ func (c *PagesListCall) FetchBodies(fetchBodies bool) *PagesListCall {
 	return c
 }
 
+// MaxResults sets the optional parameter "maxResults": Maximum number
+// of Pages to fetch.
+func (c *PagesListCall) MaxResults(maxResults int64) *PagesListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Continuation token
+// if the request is paged.
+func (c *PagesListCall) PageToken(pageToken string) *PagesListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
 // Status sets the optional parameter "status":
 func (c *PagesListCall) Status(status string) *PagesListCall {
 	c.opt_["status"] = status
@@ -2476,6 +2520,12 @@ func (c *PagesListCall) Do() (*PageList, error) {
 	params.Set("alt", "json")
 	if v, ok := c.opt_["fetchBodies"]; ok {
 		params.Set("fetchBodies", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["status"]; ok {
 		params.Set("status", fmt.Sprintf("%v", v))
@@ -2515,7 +2565,7 @@ func (c *PagesListCall) Do() (*PageList, error) {
 	//   ],
 	//   "parameters": {
 	//     "blogId": {
-	//       "description": "ID of the blog to fetch pages from.",
+	//       "description": "ID of the blog to fetch Pages from.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2524,6 +2574,17 @@ func (c *PagesListCall) Do() (*PageList, error) {
 	//       "description": "Whether to retrieve the Page bodies.",
 	//       "location": "query",
 	//       "type": "boolean"
+	//     },
+	//     "maxResults": {
+	//       "description": "Maximum number of Pages to fetch.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Continuation token if the request is paged.",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "status": {
 	//       "enum": [

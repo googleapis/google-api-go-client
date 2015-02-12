@@ -963,7 +963,7 @@ func (c *CustomerUsageReportsGetCall) Do() (*UsageReports, error) {
 	//     "parameters": {
 	//       "description": "Represents the application name, parameter name pairs to fetch in csv as app_name1:param_name1, app_name2:param_name2.",
 	//       "location": "query",
-	//       "pattern": "(((accounts)|(cros)|(gmail)|(calendar)|(docs)|(gplus)|(sites)):.+,)*(((accounts)|(cros)|(gmail)|(calendar)|(docs)|(gplus)|(sites)):.+)",
+	//       "pattern": "(((accounts)|(cros)|(gmail)|(calendar)|(docs)|(gplus)|(sites)|(device_management)):.+,)*(((accounts)|(cros)|(gmail)|(calendar)|(docs)|(gplus)|(sites)|(device_management)):.+)",
 	//       "type": "string"
 	//     }
 	//   },
@@ -1108,7 +1108,7 @@ func (c *UserUsageReportGetCall) Do() (*UsageReports, error) {
 	//     "filters": {
 	//       "description": "Represents the set of filters including parameter operator value.",
 	//       "location": "query",
-	//       "pattern": "(((accounts)|(cros)|(gmail)|(calendar)|(docs)|(gplus)|(sites)):.+[\u003c,\u003c=,==,\u003e=,\u003e,!=].+,)*(((accounts)|(cros)|(gmail)|(calendar)|(docs)|(gplus)|(sites)):.+[\u003c,\u003c=,==,\u003e=,\u003e,!=].+)",
+	//       "pattern": "(((accounts)|(cros)|(gmail)|(calendar)|(docs)|(gplus)|(sites)|(device_management)):.+[\u003c,\u003c=,==,\u003e=,\u003e,!=].+,)*(((accounts)|(cros)|(gmail)|(calendar)|(docs)|(gplus)|(sites)|(device_management)):.+[\u003c,\u003c=,==,\u003e=,\u003e,!=].+)",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
@@ -1126,7 +1126,7 @@ func (c *UserUsageReportGetCall) Do() (*UsageReports, error) {
 	//     "parameters": {
 	//       "description": "Represents the application name, parameter name pairs to fetch in csv as app_name1:param_name1, app_name2:param_name2.",
 	//       "location": "query",
-	//       "pattern": "(((accounts)|(cros)|(gmail)|(calendar)|(docs)|(gplus)|(sites)):.+,)*(((accounts)|(cros)|(gmail)|(calendar)|(docs)|(gplus)|(sites)):.+)",
+	//       "pattern": "(((accounts)|(cros)|(gmail)|(calendar)|(docs)|(gplus)|(sites)|(device_management)):.+,)*(((accounts)|(cros)|(gmail)|(calendar)|(docs)|(gplus)|(sites)|(device_management)):.+)",
 	//       "type": "string"
 	//     },
 	//     "userKey": {

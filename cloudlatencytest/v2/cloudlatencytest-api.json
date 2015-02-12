@@ -1,11 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/DX-iOBtPdqKE0EF3z0jEneilmEM\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/qJOZypus2JZqrrIOB0BaiZ76VFY\"",
  "discoveryVersion": "v1",
  "id": "cloudlatencytest:v2",
  "name": "cloudlatencytest",
  "version": "v2",
- "revision": "20150113",
+ "revision": "20150206",
+ "title": "Google Cloud Network Performance Monitoring API",
  "description": "A Test API to report latency data.",
  "ownerDomain": "google.com",
  "ownerName": "Google",
@@ -78,7 +79,6 @@
   "AggregatedStats": {
    "id": "AggregatedStats",
    "type": "object",
-   "externalTypeName": "google.internal.cloudlatencytest.v2.AggregatedStats",
    "properties": {
     "stats": {
      "type": "array",
@@ -91,7 +91,6 @@
   "AggregatedStatsReply": {
    "id": "AggregatedStatsReply",
    "type": "object",
-   "externalTypeName": "google.internal.cloudlatencytest.v2.AggregatedStatsReply",
    "properties": {
     "testValue": {
      "type": "string"
@@ -101,7 +100,6 @@
   "DoubleValue": {
    "id": "DoubleValue",
    "type": "object",
-   "externalTypeName": "google.internal.cloudlatencytest.v2.DoubleValue",
    "properties": {
     "label": {
      "type": "string"
@@ -115,7 +113,6 @@
   "IntValue": {
    "id": "IntValue",
    "type": "object",
-   "externalTypeName": "google.internal.cloudlatencytest.v2.IntValue",
    "properties": {
     "label": {
      "type": "string"
@@ -129,7 +126,6 @@
   "Stats": {
    "id": "Stats",
    "type": "object",
-   "externalTypeName": "google.internal.cloudlatencytest.v2.Stats",
    "properties": {
     "doubleValues": {
      "type": "array",
@@ -158,7 +154,6 @@
   "StatsReply": {
    "id": "StatsReply",
    "type": "object",
-   "externalTypeName": "google.internal.cloudlatencytest.v2.StatsReply",
    "properties": {
     "testValue": {
      "type": "string"
@@ -168,7 +163,6 @@
   "StringValue": {
    "id": "StringValue",
    "type": "object",
-   "externalTypeName": "google.internal.cloudlatencytest.v2.StringValue",
    "properties": {
     "label": {
      "type": "string"

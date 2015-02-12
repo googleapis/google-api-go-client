@@ -2846,6 +2846,7 @@ func (c *MediaInsertCall) Do() (*Media, error) {
 		if err != nil {
 			return nil, err
 		}
+		defer res.Body.Close()
 	}
 	var ret *Media
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {

@@ -5723,6 +5723,7 @@ func (c *ManagementDailyUploadsUploadCall) Do() (*DailyUploadAppend, error) {
 		if err != nil {
 			return nil, err
 		}
+		defer res.Body.Close()
 	}
 	var ret *DailyUploadAppend
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
@@ -10462,6 +10463,7 @@ func (c *ManagementUploadsUploadDataCall) Do() (*Upload, error) {
 		if err != nil {
 			return nil, err
 		}
+		defer res.Body.Close()
 	}
 	var ret *Upload
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {

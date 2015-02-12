@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/dmRibRFL6-a8I83UrorOCGxt1tY\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/P0iF9O81Ih4OkuOxr8vmJcp5un4\"",
  "discoveryVersion": "v1",
  "id": "genomics:v1beta",
  "name": "genomics",
  "version": "v1beta",
- "revision": "20150106",
+ "revision": "20150208",
  "title": "Genomics API",
  "description": "Provides access to Genomics data.",
  "ownerDomain": "google.com",
@@ -1042,7 +1042,7 @@
     },
     "projectId": {
      "type": "string",
-     "description": "Required. Only return jobs which belong to this Google Developers",
+     "description": "Required. Only return jobs which belong to this Google Developers Console project.",
      "format": "int64"
     },
     "status": {

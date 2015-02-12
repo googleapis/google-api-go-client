@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/xy4W57xFkYdtUdm4rpPIU-7grtg\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/wgxxpKs5xg-vhD6sTfoylIqOSuY\"",
  "discoveryVersion": "v1",
  "id": "androidpublisher:v2",
  "name": "androidpublisher",
  "canonicalName": "Android Publisher",
  "version": "v2",
- "revision": "20141117",
+ "revision": "20150106",
  "title": "Google Play Android Developer API",
  "description": "Lets Android application developers access their Google Play accounts.",
  "ownerDomain": "google.com",
@@ -134,6 +134,26 @@
     }
    }
   },
+  "ApksAddExternallyHostedRequest": {
+   "id": "ApksAddExternallyHostedRequest",
+   "type": "object",
+   "properties": {
+    "externallyHostedApk": {
+     "$ref": "ExternallyHostedApk",
+     "description": "The definition of the externally-hosted APK and where it is located."
+    }
+   }
+  },
+  "ApksAddExternallyHostedResponse": {
+   "id": "ApksAddExternallyHostedResponse",
+   "type": "object",
+   "properties": {
+    "externallyHostedApk": {
+     "$ref": "ExternallyHostedApk",
+     "description": "The definition of the externally-hosted APK and where it is located."
+    }
+   }
+  },
   "ApksListResponse": {
    "id": "ApksListResponse",
    "type": "object",
@@ -210,6 +230,105 @@
    "properties": {
     "expansionFile": {
      "$ref": "ExpansionFile"
+    }
+   }
+  },
+  "ExternallyHostedApk": {
+   "id": "ExternallyHostedApk",
+   "type": "object",
+   "description": "Defines an APK available for this application that is hosted externally and not uploaded to Google Play. This function is only available to enterprises who are using Android for Work, and whos application is restricted to the enterprise private channel",
+   "properties": {
+    "applicationLabel": {
+     "type": "string",
+     "description": "The application label."
+    },
+    "certificateBase64s": {
+     "type": "array",
+     "description": "A certificate (or array of certificates if a certificate-chain is used) used to signed this APK, represented as a base64 encoded byte array.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "externallyHostedUrl": {
+     "type": "string",
+     "description": "The URL at which the APK is hosted. This must be an https URL."
+    },
+    "fileSha1Base64": {
+     "type": "string",
+     "description": "The SHA1 checksum of this APK, represented as a base64 encoded byte array."
+    },
+    "fileSha256Base64": {
+     "type": "string",
+     "description": "The SHA256 checksum of this APK, represented as a base64 encoded byte array."
+    },
+    "fileSize": {
+     "type": "string",
+     "description": "The file size in bytes of this APK.",
+     "format": "int64"
+    },
+    "iconBase64": {
+     "type": "string",
+     "description": "The icon image from the APK, as a base64 encoded byte array."
+    },
+    "maximumSdk": {
+     "type": "integer",
+     "description": "The maximum SDK supported by this APK (optional).",
+     "format": "int32"
+    },
+    "minimumSdk": {
+     "type": "integer",
+     "description": "The minimum SDK targeted by this APK.",
+     "format": "int32"
+    },
+    "nativeCodes": {
+     "type": "array",
+     "description": "The native code environments supported by this APK (optional).",
+     "items": {
+      "type": "string"
+     }
+    },
+    "packageName": {
+     "type": "string",
+     "description": "The package name."
+    },
+    "usesFeatures": {
+     "type": "array",
+     "description": "The features required by this APK (optional).",
+     "items": {
+      "type": "string"
+     }
+    },
+    "usesPermissions": {
+     "type": "array",
+     "description": "The permissions requested by this APK.",
+     "items": {
+      "$ref": "ExternallyHostedApkUsesPermission"
+     }
+    },
+    "versionCode": {
+     "type": "integer",
+     "description": "The version code of this APK.",
+     "format": "int32"
+    },
+    "versionName": {
+     "type": "string",
+     "description": "The version name of this APK."
+    }
+   }
+  },
+  "ExternallyHostedApkUsesPermission": {
+   "id": "ExternallyHostedApkUsesPermission",
+   "type": "object",
+   "description": "A permission used by this APK.",
+   "properties": {
+    "maxSdkVersion": {
+     "type": "integer",
+     "description": "Optionally, the maximum SDK version for which the permission is required.",
+     "format": "int32"
+    },
+    "name": {
+     "type": "string",
+     "description": "The name of the permission requested."
     }
    }
   },
@@ -1134,6 +1253,39 @@
     },
     "apks": {
      "methods": {
+      "addexternallyhosted": {
+       "id": "androidpublisher.edits.apks.addexternallyhosted",
+       "path": "{packageName}/edits/{editId}/apks/externallyHosted",
+       "httpMethod": "POST",
+       "description": "Creates a new APK without uploading the APK itself to Google Play, instead hosting the APK at a specified URL. This function is only available to enterprises using Android for Work, for applications distributed within the enterprise Private Channel.",
+       "parameters": {
+        "editId": {
+         "type": "string",
+         "description": "Unique identifier for this edit.",
+         "required": true,
+         "location": "path"
+        },
+        "packageName": {
+         "type": "string",
+         "description": "Unique identifier for the Android app that is being updated; for example, \"com.spiffygame\".",
+         "required": true,
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "packageName",
+        "editId"
+       ],
+       "request": {
+        "$ref": "ApksAddExternallyHostedRequest"
+       },
+       "response": {
+        "$ref": "ApksAddExternallyHostedResponse"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/androidpublisher"
+       ]
+      },
       "list": {
        "id": "androidpublisher.edits.apks.list",
        "path": "{packageName}/edits/{editId}/apks",
@@ -2272,7 +2424,7 @@
        "id": "androidpublisher.edits.tracks.patch",
        "path": "{packageName}/edits/{editId}/tracks/{track}",
        "httpMethod": "PATCH",
-       "description": "Updates the track configuration for the specified track type. This method supports patch semantics.",
+       "description": "Updates the track configuration for the specified track type. When halted, the rollout track cannot be updated without adding new APKs, and adding new APKs will cause it to resume. This method supports patch semantics.",
        "parameters": {
         "editId": {
          "type": "string",
@@ -2324,7 +2476,7 @@
        "id": "androidpublisher.edits.tracks.update",
        "path": "{packageName}/edits/{editId}/tracks/{track}",
        "httpMethod": "PUT",
-       "description": "Updates the track configuration for the specified track type.",
+       "description": "Updates the track configuration for the specified track type. When halted, the rollout track cannot be updated without adding new APKs, and adding new APKs will cause it to resume.",
        "parameters": {
         "editId": {
          "type": "string",

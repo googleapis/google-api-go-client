@@ -2070,6 +2070,7 @@ func (c *TimelineInsertCall) Do() (*TimelineItem, error) {
 		if err != nil {
 			return nil, err
 		}
+		defer res.Body.Close()
 	}
 	var ret *TimelineItem
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
@@ -2510,6 +2511,7 @@ func (c *TimelineUpdateCall) Do() (*TimelineItem, error) {
 		if err != nil {
 			return nil, err
 		}
+		defer res.Body.Close()
 	}
 	var ret *TimelineItem
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
@@ -2856,6 +2858,7 @@ func (c *TimelineAttachmentsInsertCall) Do() (*Attachment, error) {
 		if err != nil {
 			return nil, err
 		}
+		defer res.Body.Close()
 	}
 	var ret *Attachment
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {

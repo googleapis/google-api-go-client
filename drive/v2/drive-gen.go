@@ -3847,6 +3847,7 @@ func (c *FilesInsertCall) Do() (*File, error) {
 		if err != nil {
 			return nil, err
 		}
+		defer res.Body.Close()
 	}
 	var ret *File
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
@@ -4881,6 +4882,7 @@ func (c *FilesUpdateCall) Do() (*File, error) {
 		if err != nil {
 			return nil, err
 		}
+		defer res.Body.Close()
 	}
 	var ret *File
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
@@ -7008,6 +7010,7 @@ func (c *RealtimeUpdateCall) Do() error {
 		if err != nil {
 			return err
 		}
+		defer res.Body.Close()
 	}
 	return nil
 	// {

@@ -5210,6 +5210,7 @@ func (c *ProjectsIconsCreateCall) Do() (*Icon, error) {
 		if err != nil {
 			return nil, err
 		}
+		defer res.Body.Close()
 	}
 	var ret *Icon
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
@@ -7821,6 +7822,7 @@ func (c *RastersFilesInsertCall) Do() error {
 		if err != nil {
 			return err
 		}
+		defer res.Body.Close()
 	}
 	return nil
 	// {
@@ -9776,6 +9778,7 @@ func (c *TablesFilesInsertCall) Do() error {
 		if err != nil {
 			return err
 		}
+		defer res.Body.Close()
 	}
 	return nil
 	// {

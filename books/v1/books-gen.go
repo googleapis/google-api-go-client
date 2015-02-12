@@ -1477,6 +1477,10 @@ type VolumeVolumeInfo struct {
 	// ReadingModes: The reading modes available for this volume.
 	ReadingModes interface{} `json:"readingModes,omitempty"`
 
+	// SamplePageCount: Total number of sample pages as per publisher
+	// metadata.
+	SamplePageCount int64 `json:"samplePageCount,omitempty"`
+
 	// Subtitle: Volume subtitle. (In LITE projection.)
 	Subtitle string `json:"subtitle,omitempty"`
 
@@ -4806,10 +4810,14 @@ func (c *MylibraryBookshelvesAddVolumeCall) Do() error {
 	//     "reason": {
 	//       "description": "The reason for which the book is added to the library.",
 	//       "enum": [
+	//         "IOS_PREX",
+	//         "IOS_SEARCH",
 	//         "ONBOARDING"
 	//       ],
 	//       "enumDescriptions": [
-	//         "Volumes added from onboarding flow."
+	//         "Volumes added from the PREX flow on iOS.",
+	//         "Volumes added from the Search flow on iOS.",
+	//         "Volumes added from the Onboarding flow."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -5217,6 +5225,13 @@ func (r *MylibraryBookshelvesService) RemoveVolume(shelf string, volumeId string
 	return c
 }
 
+// Reason sets the optional parameter "reason": The reason for which the
+// book is removed from the library.
+func (c *MylibraryBookshelvesRemoveVolumeCall) Reason(reason string) *MylibraryBookshelvesRemoveVolumeCall {
+	c.opt_["reason"] = reason
+	return c
+}
+
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *MylibraryBookshelvesRemoveVolumeCall) Source(source string) *MylibraryBookshelvesRemoveVolumeCall {
@@ -5237,6 +5252,9 @@ func (c *MylibraryBookshelvesRemoveVolumeCall) Do() error {
 	params := make(url.Values)
 	params.Set("alt", "json")
 	params.Set("volumeId", fmt.Sprintf("%v", c.volumeId))
+	if v, ok := c.opt_["reason"]; ok {
+		params.Set("reason", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))
 	}
@@ -5268,6 +5286,17 @@ func (c *MylibraryBookshelvesRemoveVolumeCall) Do() error {
 	//     "volumeId"
 	//   ],
 	//   "parameters": {
+	//     "reason": {
+	//       "description": "The reason for which the book is removed from the library.",
+	//       "enum": [
+	//         "ONBOARDING"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Samples removed from the Onboarding flow."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "shelf": {
 	//       "description": "ID of bookshelf from which to remove a volume.",
 	//       "location": "path",
@@ -6983,11 +7012,13 @@ func (c *VolumesAssociatedListCall) Do() (*Volumes, error) {
 	//       "description": "Association type.",
 	//       "enum": [
 	//         "end-of-sample",
-	//         "end-of-volume"
+	//         "end-of-volume",
+	//         "related-for-play"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Recommendations for display end-of-sample.",
-	//         "Recommendations for display end-of-volume."
+	//         "Recommendations for display end-of-volume.",
+	//         "Related volumes for Play Store."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"

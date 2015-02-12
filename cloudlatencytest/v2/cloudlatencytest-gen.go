@@ -1,4 +1,4 @@
-// Package cloudlatencytest provides access to the .
+// Package cloudlatencytest provides access to the Google Cloud Network Performance Monitoring API.
 //
 // Usage example:
 //

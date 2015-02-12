@@ -1201,7 +1201,8 @@ type SearchAnnotationSetsResponse struct {
 
 type SearchAnnotationsRequest struct {
 	// AnnotationSetIds: The annotation sets to search within. The caller
-	// must have READ access to these annotation sets. Required.
+	// must have READ access to these annotation sets. Required. All queried
+	// annotation sets must have the same type.
 	AnnotationSetIds []string `json:"annotationSetIds,omitempty"`
 
 	// PageSize: Specifies number of results to return in a single page. If
@@ -1277,7 +1278,7 @@ type SearchJobsRequest struct {
 	PageToken string `json:"pageToken,omitempty"`
 
 	// ProjectNumber: Required. Only return jobs which belong to this Google
-	// Developers
+	// Developers Console project.
 	ProjectNumber int64 `json:"projectNumber,omitempty,string"`
 
 	// Status: Only return jobs which have a matching status.
@@ -1381,6 +1382,10 @@ type SearchReferenceSetsRequest struct {
 	// then all records with that main accession will be returned, whichever
 	// version. Note that different versions will have different sequences.
 	Accessions []string `json:"accessions,omitempty"`
+
+	// AssemblyId: If present, return reference sets for which a substring
+	// of their assemblyId matches this string (case insensitive).
+	AssemblyId string `json:"assemblyId,omitempty"`
 
 	// Md5checksums: If present, return references for which the md5checksum
 	// matches. See ReferenceSet.md5checksum for details.

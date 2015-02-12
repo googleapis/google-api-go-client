@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/UrgZohBY2VvsAHPm512CPTQfBLs\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/-uPFfUdnJ6wKBvr9hp_nZCg__WI\"",
  "discoveryVersion": "v1",
  "id": "content:v2",
  "name": "content",
  "canonicalName": "Shopping Content",
  "version": "v2",
- "revision": "20150115",
+ "revision": "20150204",
  "title": "Content API for Shopping",
  "description": "Manage product items, inventory, and Merchant Center accounts for Google Shopping.",
  "ownerDomain": "google.com",
@@ -246,7 +246,7 @@
     },
     "saleCountry": {
      "type": "string",
-     "description": "Sale country for which this carrier rate is valid, represented as an ISO_3166-1 Alpha-2 code.",
+     "description": "Sale country for which this carrier rate is valid, represented as an ISO 3166-1 Alpha-2 code.",
      "annotations": {
       "required": [
        "content.accountshipping.update"
@@ -306,7 +306,7 @@
    "properties": {
     "country": {
      "type": "string",
-     "description": "The country in which this location group is, represented as ISO_3166-1 Alpha-2 code.",
+     "description": "The country in which this location group is, represented as ISO 3166-1 Alpha-2 code.",
      "annotations": {
       "required": [
        "content.accountshipping.update"
@@ -378,7 +378,7 @@
    "properties": {
     "content": {
      "type": "array",
-     "description": "One-dimensional table cells define one condition along the same dimension. Bi-dimensional table cells use two dimension with respectively M and N distinct values and must contain exactly M * N cells with distinct conditions (for each possible value pairs).",
+     "description": "One-dimensional table cells define one condition along the same dimension. Bi-dimensional table cells use two dimensions with respectively M and N distinct values and must contain exactly M * N cells with distinct conditions (for each possible value pairs).",
      "items": {
       "$ref": "AccountShippingRateTableCell"
      }
@@ -394,7 +394,7 @@
     },
     "saleCountry": {
      "type": "string",
-     "description": "Sale country for which this table is valid, represented as an ISO_3166-1 Alpha-2 code.",
+     "description": "Sale country for which this table is valid, represented as an ISO 3166-1 Alpha-2 code.",
      "annotations": {
       "required": [
        "content.accountshipping.update"
@@ -409,7 +409,7 @@
    "properties": {
     "condition": {
      "$ref": "AccountShippingCondition",
-     "description": "Conditions for which the cell is valid. All cells in a table must use the same dimension or pair of dimensions among price, weight, shipping_label or delivery location. If no condition is specified, the cell acts as a catch-all and matches all the elements that are not matched by other cells in this dimension."
+     "description": "Conditions for which the cell is valid. All cells in a table must use the same dimension or pair of dimensions among price, weight, shipping label or delivery location. If no condition is specified, the cell acts as a catch-all and matches all the elements that are not matched by other cells in this dimension."
     },
     "rate": {
      "$ref": "Price",
@@ -450,7 +450,7 @@
     },
     "saleCountry": {
      "type": "string",
-     "description": "Sale country for which this service can be used, represented as an ISO_3166-1 Alpha-2 code.",
+     "description": "Sale country for which this service can be used, represented as an ISO 3166-1 Alpha-2 code.",
      "annotations": {
       "required": [
        "content.accountshipping.update"
@@ -1794,7 +1794,7 @@
     },
     "availabilityDate": {
      "type": "string",
-     "description": "The day a pre-ordered product becomes available for delivery."
+     "description": "The day a pre-ordered product becomes available for delivery, in ISO 8601 format."
     },
     "brand": {
      "type": "string",
@@ -1877,7 +1877,7 @@
     },
     "expirationDate": {
      "type": "string",
-     "description": "Date on which the item should expire, as specified upon insertion. The actual expiration date in Google Shopping is exposed in productstatuses as googleExpirationDate and might be earlier if expirationDate is too far in the future."
+     "description": "Date on which the item should expire, as specified upon insertion, in ISO 8601 format. The actual expiration date in Google Shopping is exposed in productstatuses as googleExpirationDate and might be earlier if expirationDate is too far in the future."
     },
     "gender": {
      "type": "string",
@@ -1885,7 +1885,7 @@
     },
     "googleProductCategory": {
      "type": "string",
-     "description": "Google's category of the item."
+     "description": "Google's category of the item (see Google product taxonomy)."
     },
     "gtin": {
      "type": "string",
@@ -1968,7 +1968,7 @@
     },
     "productType": {
      "type": "string",
-     "description": "Your category of the item."
+     "description": "Your category of the item (formatted as in product feeds specification)."
     },
     "salePrice": {
      "$ref": "Price",
@@ -1976,7 +1976,7 @@
     },
     "salePriceEffectiveDate": {
      "type": "string",
-     "description": "Date range during which the item is on sale."
+     "description": "Date range during which the item is on sale (see product feed specifications)."
     },
     "shipping": {
      "type": "array",
@@ -1985,13 +1985,25 @@
       "$ref": "ProductShipping"
      }
     },
+    "shippingHeight": {
+     "$ref": "ProductShippingDimension",
+     "description": "Height of the item for shipping."
+    },
     "shippingLabel": {
      "type": "string",
      "description": "The shipping label of the product, used to group product in account-level shipping rules."
     },
+    "shippingLength": {
+     "$ref": "ProductShippingDimension",
+     "description": "Length of the item for shipping."
+    },
     "shippingWeight": {
      "$ref": "ProductShippingWeight",
      "description": "Weight of the item for shipping."
+    },
+    "shippingWidth": {
+     "$ref": "ProductShippingDimension",
+     "description": "Width of the item for shipping."
     },
     "sizeSystem": {
      "type": "string",
@@ -2139,7 +2151,7 @@
     },
     "postalCode": {
      "type": "string",
-     "description": "The postal code range that the shipping rate applies to, represented by a postal code, a postal code prefix using * wildcard, a range between two postal codes or two postal code prefixes of equal length."
+     "description": "The postal code range that the shipping rate applies to, represented by a postal code, a postal code prefix followed by a * wildcard, a range between two postal codes or two postal code prefixes of equal length."
     },
     "price": {
      "$ref": "Price",
@@ -2152,6 +2164,21 @@
     "service": {
      "type": "string",
      "description": "A free-form description of the service class or delivery speed."
+    }
+   }
+  },
+  "ProductShippingDimension": {
+   "id": "ProductShippingDimension",
+   "type": "object",
+   "properties": {
+    "unit": {
+     "type": "string",
+     "description": "The unit of value.\n\nAcceptable values are:  \n- \"cm\" \n- \"in\""
+    },
+    "value": {
+     "type": "number",
+     "description": "The dimension of the product used to calculate the shipping cost of the item.",
+     "format": "double"
     }
    }
   },
@@ -2177,7 +2204,7 @@
    "properties": {
     "creationDate": {
      "type": "string",
-     "description": "Date on which the item has been created."
+     "description": "Date on which the item has been created, in ISO 8601 format."
     },
     "dataQualityIssues": {
      "type": "array",
@@ -2195,7 +2222,7 @@
     },
     "googleExpirationDate": {
      "type": "string",
-     "description": "Date on which the item expires in Google Shopping."
+     "description": "Date on which the item expires in Google Shopping, in ISO 8601 format."
     },
     "kind": {
      "type": "string",
@@ -2204,7 +2231,7 @@
     },
     "lastUpdateDate": {
      "type": "string",
-     "description": "Date on which the item has been last updated."
+     "description": "Date on which the item has been last updated, in ISO 8601 format."
     },
     "link": {
      "type": "string",

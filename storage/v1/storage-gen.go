@@ -1625,6 +1625,13 @@ func (c *BucketsListCall) PageToken(pageToken string) *BucketsListCall {
 	return c
 }
 
+// Prefix sets the optional parameter "prefix": Filter results to
+// buckets whose names begin with this prefix.
+func (c *BucketsListCall) Prefix(prefix string) *BucketsListCall {
+	c.opt_["prefix"] = prefix
+	return c
+}
+
 // Projection sets the optional parameter "projection": Set of
 // properties to return. Defaults to noAcl.
 func (c *BucketsListCall) Projection(projection string) *BucketsListCall {
@@ -1650,6 +1657,9 @@ func (c *BucketsListCall) Do() (*Buckets, error) {
 	}
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["prefix"]; ok {
+		params.Set("prefix", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["projection"]; ok {
 		params.Set("projection", fmt.Sprintf("%v", v))
@@ -1692,6 +1702,11 @@ func (c *BucketsListCall) Do() (*Buckets, error) {
 	//     },
 	//     "pageToken": {
 	//       "description": "A previously-returned page token representing part of the larger set of results to view.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "prefix": {
+	//       "description": "Filter results to buckets whose names begin with this prefix.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

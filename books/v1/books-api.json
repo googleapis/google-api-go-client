@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/WFak0mMx4MV3LiYt53aok2RzgnY\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/_8UNzCrzIAVY6np4hy3mmnmxBm8\"",
  "discoveryVersion": "v1",
  "id": "books:v1",
  "name": "books",
@@ -1762,6 +1762,11 @@
        "type": "any",
        "description": "The reading modes available for this volume."
       },
+      "samplePageCount": {
+       "type": "integer",
+       "description": "Total number of sample pages as per publisher metadata.",
+       "format": "int32"
+      },
       "subtitle": {
        "type": "string",
        "description": "Volume subtitle. (In LITE projection.)"
@@ -3022,10 +3027,14 @@
          "type": "string",
          "description": "The reason for which the book is added to the library.",
          "enum": [
+          "IOS_PREX",
+          "IOS_SEARCH",
           "ONBOARDING"
          ],
          "enumDescriptions": [
-          "Volumes added from onboarding flow."
+          "Volumes added from the PREX flow on iOS.",
+          "Volumes added from the Search flow on iOS.",
+          "Volumes added from the Onboarding flow."
          ],
          "location": "query"
         },
@@ -3173,6 +3182,17 @@
        "httpMethod": "POST",
        "description": "Removes a volume from a bookshelf.",
        "parameters": {
+        "reason": {
+         "type": "string",
+         "description": "The reason for which the book is removed from the library.",
+         "enum": [
+          "ONBOARDING"
+         ],
+         "enumDescriptions": [
+          "Samples removed from the Onboarding flow."
+         ],
+         "location": "query"
+        },
         "shelf": {
          "type": "string",
          "description": "ID of bookshelf from which to remove a volume.",
@@ -3799,11 +3819,13 @@
          "description": "Association type.",
          "enum": [
           "end-of-sample",
-          "end-of-volume"
+          "end-of-volume",
+          "related-for-play"
          ],
          "enumDescriptions": [
           "Recommendations for display end-of-sample.",
-          "Recommendations for display end-of-volume."
+          "Recommendations for display end-of-volume.",
+          "Related volumes for Play Store."
          ],
          "location": "query"
         },

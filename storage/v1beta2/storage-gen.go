@@ -4240,6 +4240,7 @@ func (c *ObjectsInsertCall) Do() (*Object, error) {
 		if err != nil {
 			return nil, err
 		}
+		defer res.Body.Close()
 	}
 	var ret *Object
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {

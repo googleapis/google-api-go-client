@@ -203,6 +203,15 @@ type QueryMetadata struct {
 	// run.
 	LatestReportRunTimeMs int64 `json:"latestReportRunTimeMs,omitempty,string"`
 
+	// Locale: Locale of the generated reports. Valid values are cs CZECH de
+	// GERMAN en ENGLISH es SPANISH fr FRENCH it ITALIAN ja JAPANESE ko
+	// KOREAN pl POLISH pt-BR BRAZILIAN_PORTUGUESE ru RUSSIAN tr TURKISH uk
+	// UKRAINIAN zh-CN CHINA_CHINESE zh-TW TAIWAN_CHINESE
+	//
+	// An locale string
+	// not in the list above will generate reports in English.
+	Locale string `json:"locale,omitempty"`
+
 	// ReportCount: Number of reports that have been generated for the
 	// query.
 	ReportCount int64 `json:"reportCount,omitempty"`
@@ -232,7 +241,7 @@ type QuerySchedule struct {
 	Frequency string `json:"frequency,omitempty"`
 
 	// NextRunMinuteOfDay: Time of day at which a new report will be
-	// generated, represented as minutes past midnight Range is 0 to 1439.
+	// generated, represented as minutes past midnight. Range is 0 to 1439.
 	// Only applies to scheduled reports.
 	NextRunMinuteOfDay int64 `json:"nextRunMinuteOfDay,omitempty"`
 

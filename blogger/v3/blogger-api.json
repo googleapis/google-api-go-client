@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"uUWyYHXmEn-ab7WLvo8qNz2S8ws/I7tzOwxkXmchrTG5SGJOMVoYTBw\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/IrFCn8z3q4ulYVZWC1SJkXJKYC0\"",
  "discoveryVersion": "v1",
  "id": "blogger:v3",
  "name": "blogger",
  "version": "v3",
- "revision": "20140827",
+ "revision": "20150208",
  "title": "Blogger API",
  "description": "API for access to the data within Blogger.",
  "ownerDomain": "google.com",
@@ -484,6 +484,10 @@
      "type": "string",
      "description": "The kind of this entity. Always blogger#pageList",
      "default": "blogger#pageList"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "Pagination token to fetch the next page, if one exists."
     }
    }
   },
@@ -1300,6 +1304,23 @@
        "description": "Earliest date of comment to fetch, a date-time with RFC 3339 formatting.",
        "format": "date-time",
        "location": "query"
+      },
+      "status": {
+       "type": "string",
+       "enum": [
+        "emptied",
+        "live",
+        "pending",
+        "spam"
+       ],
+       "enumDescriptions": [
+        "Comments that have had their content removed",
+        "Comments that are publicly visible",
+        "Comments that are awaiting administrator approval",
+        "Comments marked as spam by the administrator"
+       ],
+       "repeated": true,
+       "location": "query"
       }
      },
      "parameterOrder": [
@@ -1544,13 +1565,24 @@
      "parameters": {
       "blogId": {
        "type": "string",
-       "description": "ID of the blog to fetch pages from.",
+       "description": "ID of the blog to fetch Pages from.",
        "required": true,
        "location": "path"
       },
       "fetchBodies": {
        "type": "boolean",
        "description": "Whether to retrieve the Page bodies.",
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "Maximum number of Pages to fetch.",
+       "format": "uint32",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "Continuation token if the request is paged.",
        "location": "query"
       },
       "status": {

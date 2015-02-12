@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/j0Efh5Bxm1SLI-knMEgTvLMrAOs\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/DyNuAmsf-lESr55z5J-qhJPo0bA\"",
  "discoveryVersion": "v1",
  "id": "gmail:v1",
  "name": "gmail",
  "version": "v1",
- "revision": "20150120",
+ "revision": "20150122",
  "title": "Gmail API",
  "description": "The Gmail REST API.",
  "ownerDomain": "google.com",
@@ -1178,6 +1178,12 @@
        "httpMethod": "POST",
        "description": "Imports a message into only this user's mailbox, with standard email delivery scanning and classification similar to receiving via SMTP. Does not send a message.",
        "parameters": {
+        "deleted": {
+         "type": "boolean",
+         "description": "Mark the email as permanently deleted (not TRASH) and only visible in Google Apps Vault to a Vault administrator. Only used for Google Apps for Work accounts.",
+         "default": "false",
+         "location": "query"
+        },
         "internalDateSource": {
          "type": "string",
          "description": "Source for Gmail's internal date of the message.",
@@ -1190,6 +1196,18 @@
           "",
           ""
          ],
+         "location": "query"
+        },
+        "neverMarkSpam": {
+         "type": "boolean",
+         "description": "Ignore the Gmail spam classifer decision and never mark this email as SPAM in the mailbox.",
+         "default": "false",
+         "location": "query"
+        },
+        "processForCalendar": {
+         "type": "boolean",
+         "description": "Process calendar invites in the email and add any extracted meetings to the Google Calendar for this user.",
+         "default": "false",
          "location": "query"
         },
         "userId": {

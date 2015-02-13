@@ -40,6 +40,7 @@ var (
 	jsonFile     = flag.String("api_json_file", "", "If non-empty, the path to a local file on disk containing the API to generate. Exclusive with setting --api.")
 	output       = flag.String("output", "", "(optional) Path to source output file. If not specified, the API name and version are used to construct an output path (e.g. tasks/v1).")
 	googleAPIPkg = flag.String("googleapi_pkg", "google.golang.org/api/googleapi", "Go package path of the 'googleapi' support package.")
+	contextPkg   = flag.String("context_pkg", "golang.org/x/net/context", "Go package path of the 'context' support package.")
 )
 
 // API represents an API to generate, as well as its state while it's
@@ -421,7 +422,7 @@ func (a *API) GenerateCode() ([]byte, error) {
 		"net/url",
 		"strconv",
 		"strings",
-		"golang.org/x/net/context",
+		*contextPkg,
 	} {
 		p("\t%q\n", pkg)
 	}

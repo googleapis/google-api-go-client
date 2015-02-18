@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2b8c40b9_bd6bdfd5",
+        "filename": "examples/storage.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 5295
+      },
+      "writtenOn": "2015-02-18T21:17:57Z",
+      "side": 1,
+      "message": "Yes, I wanted to provide access to the HTTP headers. I was inclined at first to just do the simple io interface which parallels the .Media() method for uploads nicely but then in order to get any metadata like Content-Type a second request, using .Do(), would be required.",
+      "parentUuid": "6b6398c4_9737e40b",
+      "revId": "8ddfe1b3d65c00ec31209edfc691f145deb63a02",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b6398c4_172cb4b9",
         "filename": "examples/storage.go",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2015-02-18T20:12:55Z",
       "side": 1,
       "message": "this promotes two bad patterns (slurping all to memory, and ignoring errors).  Also, the err !\u003d nil check is typically the indented part, not the good case.\n\nJust do log.Fatalf like above.\n\nAnd instead of slupring all, use io.Copy(ioutil.Discard, httpResp.Body) and get the count from the io.Copy return value.",
+      "revId": "8ddfe1b3d65c00ec31209edfc691f145deb63a02",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2b8c40b9_5d857b36",
+        "filename": "examples/storage.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 5295
+      },
+      "writtenOn": "2015-02-18T21:17:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b6398c4_172cb4b9",
       "revId": "8ddfe1b3d65c00ec31209edfc691f145deb63a02",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false

@@ -3602,9 +3602,10 @@ func (c *ChannelBannersInsertCall) Do() (*ChannelBannerResource, error) {
 		params.Set("uploadType", c.protocol_)
 	}
 	urls += "?" + params.Encode()
+	var ch chan error
 	if c.protocol_ != "resumable" {
-		var cancel func()
-		cancel, _ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+		ch = make(chan error, 1)
+		cancel := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype, ch)
 		if cancel != nil {
 			defer cancel()
 		}
@@ -3630,6 +3631,11 @@ func (c *ChannelBannersInsertCall) Do() (*ChannelBannerResource, error) {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
+	if ch != nil {
+		if err := <-ch; err != nil {
+			return nil, err
+		}
+	}
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -9032,9 +9038,10 @@ func (c *ThumbnailsSetCall) Do() (*ThumbnailSetResponse, error) {
 	urls += "?" + params.Encode()
 	body = new(bytes.Buffer)
 	ctype := "application/json"
+	var ch chan error
 	if c.protocol_ != "resumable" {
-		var cancel func()
-		cancel, _ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+		ch = make(chan error, 1)
+		cancel := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype, ch)
 		if cancel != nil {
 			defer cancel()
 		}
@@ -9060,6 +9067,11 @@ func (c *ThumbnailsSetCall) Do() (*ThumbnailSetResponse, error) {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
+	if ch != nil {
+		if err := <-ch; err != nil {
+			return nil, err
+		}
+	}
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -9633,9 +9645,10 @@ func (c *VideosInsertCall) Do() (*Video, error) {
 		params.Set("uploadType", c.protocol_)
 	}
 	urls += "?" + params.Encode()
+	var ch chan error
 	if c.protocol_ != "resumable" {
-		var cancel func()
-		cancel, _ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+		ch = make(chan error, 1)
+		cancel := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype, ch)
 		if cancel != nil {
 			defer cancel()
 		}
@@ -9661,6 +9674,11 @@ func (c *VideosInsertCall) Do() (*Video, error) {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
+	if ch != nil {
+		if err := <-ch; err != nil {
+			return nil, err
+		}
+	}
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -10376,9 +10394,10 @@ func (c *WatermarksSetCall) Do() error {
 		params.Set("uploadType", c.protocol_)
 	}
 	urls += "?" + params.Encode()
+	var ch chan error
 	if c.protocol_ != "resumable" {
-		var cancel func()
-		cancel, _ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+		ch = make(chan error, 1)
+		cancel := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype, ch)
 		if cancel != nil {
 			defer cancel()
 		}
@@ -10404,6 +10423,11 @@ func (c *WatermarksSetCall) Do() error {
 		return err
 	}
 	defer googleapi.CloseBody(res)
+	if ch != nil {
+		if err := <-ch; err != nil {
+			return err
+		}
+	}
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}

@@ -5163,9 +5163,10 @@ func (c *ProjectsIconsCreateCall) Do() (*Icon, error) {
 		params.Set("uploadType", c.protocol_)
 	}
 	urls += "?" + params.Encode()
+	var ch chan error
 	if c.protocol_ != "resumable" {
-		var cancel func()
-		cancel, _ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+		ch = make(chan error, 1)
+		cancel := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype, ch)
 		if cancel != nil {
 			defer cancel()
 		}
@@ -5193,6 +5194,11 @@ func (c *ProjectsIconsCreateCall) Do() (*Icon, error) {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
+	if ch != nil {
+		if err := <-ch; err != nil {
+			return nil, err
+		}
+	}
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -7775,9 +7781,10 @@ func (c *RastersFilesInsertCall) Do() error {
 	urls += "?" + params.Encode()
 	body = new(bytes.Buffer)
 	ctype := "application/json"
+	var ch chan error
 	if c.protocol_ != "resumable" {
-		var cancel func()
-		cancel, _ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+		ch = make(chan error, 1)
+		cancel := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype, ch)
 		if cancel != nil {
 			defer cancel()
 		}
@@ -7805,6 +7812,11 @@ func (c *RastersFilesInsertCall) Do() error {
 		return err
 	}
 	defer googleapi.CloseBody(res)
+	if ch != nil {
+		if err := <-ch; err != nil {
+			return err
+		}
+	}
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
@@ -9731,9 +9743,10 @@ func (c *TablesFilesInsertCall) Do() error {
 	urls += "?" + params.Encode()
 	body = new(bytes.Buffer)
 	ctype := "application/json"
+	var ch chan error
 	if c.protocol_ != "resumable" {
-		var cancel func()
-		cancel, _ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+		ch = make(chan error, 1)
+		cancel := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype, ch)
 		if cancel != nil {
 			defer cancel()
 		}
@@ -9761,6 +9774,11 @@ func (c *TablesFilesInsertCall) Do() error {
 		return err
 	}
 	defer googleapi.CloseBody(res)
+	if ch != nil {
+		if err := <-ch; err != nil {
+			return err
+		}
+	}
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}

@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/Tndtd0xUqwZ7nEywvF_TXbq6aYo\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/b0vvdG45jLgH3YNnOc4op1dTMb0\"",
  "discoveryVersion": "v1",
  "id": "drive:v2",
  "name": "drive",
  "version": "v2",
- "revision": "20141212",
+ "revision": "20141219",
  "title": "Drive API",
  "description": "The API to interact with Drive.",
  "ownerDomain": "google.com",
@@ -70,7 +70,7 @@
   "oauth2": {
    "scopes": {
     "https://www.googleapis.com/auth/drive": {
-     "description": "View and manage the files and documents in your Google Drive"
+     "description": "View and manage the files in your Google Drive"
     },
     "https://www.googleapis.com/auth/drive.appdata": {
      "description": "View and manage its own configuration data in your Google Drive"
@@ -82,10 +82,10 @@
      "description": "View and manage Google Drive files that you have opened or created with this app"
     },
     "https://www.googleapis.com/auth/drive.metadata.readonly": {
-     "description": "View metadata for files and documents in your Google Drive"
+     "description": "View metadata for files in your Google Drive"
     },
     "https://www.googleapis.com/auth/drive.readonly": {
-     "description": "View the files and documents in your Google Drive"
+     "description": "View the files in your Google Drive"
     },
     "https://www.googleapis.com/auth/drive.scripts": {
      "description": "Modify your Google Apps Script scripts' behavior"

@@ -43,6 +43,15 @@ const basePath = "https://www.googleapis.com/youtube/analytics/v1beta1/"
 
 // OAuth2 scopes used by this API.
 const (
+	// Manage your YouTube account
+	YoutubeScope = "https://www.googleapis.com/auth/youtube"
+
+	// View your YouTube account
+	YoutubeReadonlyScope = "https://www.googleapis.com/auth/youtube.readonly"
+
+	// View and manage your assets and associated content on YouTube
+	YoutubepartnerScope = "https://www.googleapis.com/auth/youtubepartner"
+
 	// View YouTube Analytics monetary reports for your YouTube content
 	YtAnalyticsMonetaryReadonlyScope = "https://www.googleapis.com/auth/yt-analytics-monetary.readonly"
 
@@ -57,6 +66,8 @@ func New(client *http.Client) (*Service, error) {
 	s := &Service{client: client, BasePath: basePath}
 	s.BatchReportDefinitions = NewBatchReportDefinitionsService(s)
 	s.BatchReports = NewBatchReportsService(s)
+	s.GroupItems = NewGroupItemsService(s)
+	s.Groups = NewGroupsService(s)
 	s.Reports = NewReportsService(s)
 	return s, nil
 }
@@ -68,6 +79,10 @@ type Service struct {
 	BatchReportDefinitions *BatchReportDefinitionsService
 
 	BatchReports *BatchReportsService
+
+	GroupItems *GroupItemsService
+
+	Groups *GroupsService
 
 	Reports *ReportsService
 }
@@ -87,6 +102,24 @@ func NewBatchReportsService(s *Service) *BatchReportsService {
 }
 
 type BatchReportsService struct {
+	s *Service
+}
+
+func NewGroupItemsService(s *Service) *GroupItemsService {
+	rs := &GroupItemsService{s: s}
+	return rs
+}
+
+type GroupItemsService struct {
+	s *Service
+}
+
+func NewGroupsService(s *Service) *GroupsService {
+	rs := &GroupsService{s: s}
+	return rs
+}
+
+type GroupsService struct {
 	s *Service
 }
 
@@ -183,6 +216,64 @@ type BatchReportList struct {
 	// Kind: This value specifies the type of data included in the API
 	// response. For the list method, the kind property value is
 	// youtubeAnalytics#batchReportList.
+	Kind string `json:"kind,omitempty"`
+}
+
+type Group struct {
+	ContentDetails *GroupContentDetails `json:"contentDetails,omitempty"`
+
+	Etag string `json:"etag,omitempty"`
+
+	Id string `json:"id,omitempty"`
+
+	Kind string `json:"kind,omitempty"`
+
+	Snippet *GroupSnippet `json:"snippet,omitempty"`
+}
+
+type GroupContentDetails struct {
+	ItemCount uint64 `json:"itemCount,omitempty,string"`
+
+	ItemType string `json:"itemType,omitempty"`
+}
+
+type GroupSnippet struct {
+	PublishedAt string `json:"publishedAt,omitempty"`
+
+	Title string `json:"title,omitempty"`
+}
+
+type GroupItem struct {
+	Etag string `json:"etag,omitempty"`
+
+	GroupId string `json:"groupId,omitempty"`
+
+	Id string `json:"id,omitempty"`
+
+	Kind string `json:"kind,omitempty"`
+
+	Resource *GroupItemResource `json:"resource,omitempty"`
+}
+
+type GroupItemResource struct {
+	Id string `json:"id,omitempty"`
+
+	Kind string `json:"kind,omitempty"`
+}
+
+type GroupItemListResponse struct {
+	Etag string `json:"etag,omitempty"`
+
+	Items []*GroupItem `json:"items,omitempty"`
+
+	Kind string `json:"kind,omitempty"`
+}
+
+type GroupListResponse struct {
+	Etag string `json:"etag,omitempty"`
+
+	Items []*Group `json:"items,omitempty"`
+
 	Kind string `json:"kind,omitempty"`
 }
 
@@ -383,6 +474,740 @@ func (c *BatchReportsListCall) Do() (*BatchReportList, error) {
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/yt-analytics-monetary.readonly",
 	//     "https://www.googleapis.com/auth/yt-analytics.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "youtubeAnalytics.groupItems.delete":
+
+type GroupItemsDeleteCall struct {
+	s    *Service
+	id   string
+	opt_ map[string]interface{}
+}
+
+// Delete: Removes an item from a group.
+func (r *GroupItemsService) Delete(id string) *GroupItemsDeleteCall {
+	c := &GroupItemsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.id = id
+	return c
+}
+
+// OnBehalfOfContentOwner sets the optional parameter
+// "onBehalfOfContentOwner": Note: This parameter is intended
+// exclusively for YouTube content partners.
+//
+// The onBehalfOfContentOwner
+// parameter indicates that the request's authorization credentials
+// identify a YouTube CMS user who is acting on behalf of the content
+// owner specified in the parameter value. This parameter is intended
+// for YouTube content partners that own and manage many different
+// YouTube channels. It allows content owners to authenticate once and
+// get access to all their video and channel data, without having to
+// provide authentication credentials for each individual channel. The
+// CMS account that the user authenticates with must be linked to the
+// specified YouTube content owner.
+func (c *GroupItemsDeleteCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *GroupItemsDeleteCall {
+	c.opt_["onBehalfOfContentOwner"] = onBehalfOfContentOwner
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *GroupItemsDeleteCall) Fields(s ...googleapi.Field) *GroupItemsDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *GroupItemsDeleteCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	params.Set("id", fmt.Sprintf("%v", c.id))
+	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
+		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "groupItems")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Removes an item from a group.",
+	//   "httpMethod": "DELETE",
+	//   "id": "youtubeAnalytics.groupItems.delete",
+	//   "parameterOrder": [
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The id parameter specifies the YouTube group item ID for the group that is being deleted.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "onBehalfOfContentOwner": {
+	//       "description": "Note: This parameter is intended exclusively for YouTube content partners.\n\nThe onBehalfOfContentOwner parameter indicates that the request's authorization credentials identify a YouTube CMS user who is acting on behalf of the content owner specified in the parameter value. This parameter is intended for YouTube content partners that own and manage many different YouTube channels. It allows content owners to authenticate once and get access to all their video and channel data, without having to provide authentication credentials for each individual channel. The CMS account that the user authenticates with must be linked to the specified YouTube content owner.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "groupItems",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtubepartner"
+	//   ]
+	// }
+
+}
+
+// method id "youtubeAnalytics.groupItems.insert":
+
+type GroupItemsInsertCall struct {
+	s         *Service
+	groupitem *GroupItem
+	opt_      map[string]interface{}
+}
+
+// Insert: Creates a group item.
+func (r *GroupItemsService) Insert(groupitem *GroupItem) *GroupItemsInsertCall {
+	c := &GroupItemsInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.groupitem = groupitem
+	return c
+}
+
+// OnBehalfOfContentOwner sets the optional parameter
+// "onBehalfOfContentOwner": Note: This parameter is intended
+// exclusively for YouTube content partners.
+//
+// The onBehalfOfContentOwner
+// parameter indicates that the request's authorization credentials
+// identify a YouTube CMS user who is acting on behalf of the content
+// owner specified in the parameter value. This parameter is intended
+// for YouTube content partners that own and manage many different
+// YouTube channels. It allows content owners to authenticate once and
+// get access to all their video and channel data, without having to
+// provide authentication credentials for each individual channel. The
+// CMS account that the user authenticates with must be linked to the
+// specified YouTube content owner.
+func (c *GroupItemsInsertCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *GroupItemsInsertCall {
+	c.opt_["onBehalfOfContentOwner"] = onBehalfOfContentOwner
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *GroupItemsInsertCall) Fields(s ...googleapi.Field) *GroupItemsInsertCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *GroupItemsInsertCall) Do() (*GroupItem, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.groupitem)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
+		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "groupItems")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *GroupItem
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a group item.",
+	//   "httpMethod": "POST",
+	//   "id": "youtubeAnalytics.groupItems.insert",
+	//   "parameters": {
+	//     "onBehalfOfContentOwner": {
+	//       "description": "Note: This parameter is intended exclusively for YouTube content partners.\n\nThe onBehalfOfContentOwner parameter indicates that the request's authorization credentials identify a YouTube CMS user who is acting on behalf of the content owner specified in the parameter value. This parameter is intended for YouTube content partners that own and manage many different YouTube channels. It allows content owners to authenticate once and get access to all their video and channel data, without having to provide authentication credentials for each individual channel. The CMS account that the user authenticates with must be linked to the specified YouTube content owner.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "groupItems",
+	//   "request": {
+	//     "$ref": "GroupItem"
+	//   },
+	//   "response": {
+	//     "$ref": "GroupItem"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtubepartner"
+	//   ]
+	// }
+
+}
+
+// method id "youtubeAnalytics.groupItems.list":
+
+type GroupItemsListCall struct {
+	s       *Service
+	groupId string
+	opt_    map[string]interface{}
+}
+
+// List: Returns a collection of group items that match the API request
+// parameters.
+func (r *GroupItemsService) List(groupId string) *GroupItemsListCall {
+	c := &GroupItemsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.groupId = groupId
+	return c
+}
+
+// OnBehalfOfContentOwner sets the optional parameter
+// "onBehalfOfContentOwner": Note: This parameter is intended
+// exclusively for YouTube content partners.
+//
+// The onBehalfOfContentOwner
+// parameter indicates that the request's authorization credentials
+// identify a YouTube CMS user who is acting on behalf of the content
+// owner specified in the parameter value. This parameter is intended
+// for YouTube content partners that own and manage many different
+// YouTube channels. It allows content owners to authenticate once and
+// get access to all their video and channel data, without having to
+// provide authentication credentials for each individual channel. The
+// CMS account that the user authenticates with must be linked to the
+// specified YouTube content owner.
+func (c *GroupItemsListCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *GroupItemsListCall {
+	c.opt_["onBehalfOfContentOwner"] = onBehalfOfContentOwner
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *GroupItemsListCall) Fields(s ...googleapi.Field) *GroupItemsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *GroupItemsListCall) Do() (*GroupItemListResponse, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	params.Set("groupId", fmt.Sprintf("%v", c.groupId))
+	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
+		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "groupItems")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *GroupItemListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns a collection of group items that match the API request parameters.",
+	//   "httpMethod": "GET",
+	//   "id": "youtubeAnalytics.groupItems.list",
+	//   "parameterOrder": [
+	//     "groupId"
+	//   ],
+	//   "parameters": {
+	//     "groupId": {
+	//       "description": "The id parameter specifies the unique ID of the group for which you want to retrieve group items.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "onBehalfOfContentOwner": {
+	//       "description": "Note: This parameter is intended exclusively for YouTube content partners.\n\nThe onBehalfOfContentOwner parameter indicates that the request's authorization credentials identify a YouTube CMS user who is acting on behalf of the content owner specified in the parameter value. This parameter is intended for YouTube content partners that own and manage many different YouTube channels. It allows content owners to authenticate once and get access to all their video and channel data, without having to provide authentication credentials for each individual channel. The CMS account that the user authenticates with must be linked to the specified YouTube content owner.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "groupItems",
+	//   "response": {
+	//     "$ref": "GroupItemListResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.readonly",
+	//     "https://www.googleapis.com/auth/youtubepartner",
+	//     "https://www.googleapis.com/auth/yt-analytics.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "youtubeAnalytics.groups.delete":
+
+type GroupsDeleteCall struct {
+	s    *Service
+	id   string
+	opt_ map[string]interface{}
+}
+
+// Delete: Deletes a group.
+func (r *GroupsService) Delete(id string) *GroupsDeleteCall {
+	c := &GroupsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.id = id
+	return c
+}
+
+// OnBehalfOfContentOwner sets the optional parameter
+// "onBehalfOfContentOwner": Note: This parameter is intended
+// exclusively for YouTube content partners.
+//
+// The onBehalfOfContentOwner
+// parameter indicates that the request's authorization credentials
+// identify a YouTube CMS user who is acting on behalf of the content
+// owner specified in the parameter value. This parameter is intended
+// for YouTube content partners that own and manage many different
+// YouTube channels. It allows content owners to authenticate once and
+// get access to all their video and channel data, without having to
+// provide authentication credentials for each individual channel. The
+// CMS account that the user authenticates with must be linked to the
+// specified YouTube content owner.
+func (c *GroupsDeleteCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *GroupsDeleteCall {
+	c.opt_["onBehalfOfContentOwner"] = onBehalfOfContentOwner
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *GroupsDeleteCall) Fields(s ...googleapi.Field) *GroupsDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *GroupsDeleteCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	params.Set("id", fmt.Sprintf("%v", c.id))
+	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
+		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "groups")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Deletes a group.",
+	//   "httpMethod": "DELETE",
+	//   "id": "youtubeAnalytics.groups.delete",
+	//   "parameterOrder": [
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The id parameter specifies the YouTube group ID for the group that is being deleted.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "onBehalfOfContentOwner": {
+	//       "description": "Note: This parameter is intended exclusively for YouTube content partners.\n\nThe onBehalfOfContentOwner parameter indicates that the request's authorization credentials identify a YouTube CMS user who is acting on behalf of the content owner specified in the parameter value. This parameter is intended for YouTube content partners that own and manage many different YouTube channels. It allows content owners to authenticate once and get access to all their video and channel data, without having to provide authentication credentials for each individual channel. The CMS account that the user authenticates with must be linked to the specified YouTube content owner.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "groups",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtubepartner"
+	//   ]
+	// }
+
+}
+
+// method id "youtubeAnalytics.groups.insert":
+
+type GroupsInsertCall struct {
+	s     *Service
+	group *Group
+	opt_  map[string]interface{}
+}
+
+// Insert: Creates a group.
+func (r *GroupsService) Insert(group *Group) *GroupsInsertCall {
+	c := &GroupsInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.group = group
+	return c
+}
+
+// OnBehalfOfContentOwner sets the optional parameter
+// "onBehalfOfContentOwner": Note: This parameter is intended
+// exclusively for YouTube content partners.
+//
+// The onBehalfOfContentOwner
+// parameter indicates that the request's authorization credentials
+// identify a YouTube CMS user who is acting on behalf of the content
+// owner specified in the parameter value. This parameter is intended
+// for YouTube content partners that own and manage many different
+// YouTube channels. It allows content owners to authenticate once and
+// get access to all their video and channel data, without having to
+// provide authentication credentials for each individual channel. The
+// CMS account that the user authenticates with must be linked to the
+// specified YouTube content owner.
+func (c *GroupsInsertCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *GroupsInsertCall {
+	c.opt_["onBehalfOfContentOwner"] = onBehalfOfContentOwner
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *GroupsInsertCall) Fields(s ...googleapi.Field) *GroupsInsertCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *GroupsInsertCall) Do() (*Group, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.group)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
+		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "groups")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Group
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a group.",
+	//   "httpMethod": "POST",
+	//   "id": "youtubeAnalytics.groups.insert",
+	//   "parameters": {
+	//     "onBehalfOfContentOwner": {
+	//       "description": "Note: This parameter is intended exclusively for YouTube content partners.\n\nThe onBehalfOfContentOwner parameter indicates that the request's authorization credentials identify a YouTube CMS user who is acting on behalf of the content owner specified in the parameter value. This parameter is intended for YouTube content partners that own and manage many different YouTube channels. It allows content owners to authenticate once and get access to all their video and channel data, without having to provide authentication credentials for each individual channel. The CMS account that the user authenticates with must be linked to the specified YouTube content owner.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "groups",
+	//   "request": {
+	//     "$ref": "Group"
+	//   },
+	//   "response": {
+	//     "$ref": "Group"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtubepartner"
+	//   ]
+	// }
+
+}
+
+// method id "youtubeAnalytics.groups.list":
+
+type GroupsListCall struct {
+	s    *Service
+	opt_ map[string]interface{}
+}
+
+// List: Returns a collection of groups that match the API request
+// parameters. For example, you can retrieve all groups that the
+// authenticated user owns, or you can retrieve one or more groups by
+// their unique IDs.
+func (r *GroupsService) List() *GroupsListCall {
+	c := &GroupsListCall{s: r.s, opt_: make(map[string]interface{})}
+	return c
+}
+
+// Id sets the optional parameter "id": The id parameter specifies a
+// comma-separated list of the YouTube group ID(s) for the resource(s)
+// that are being retrieved. In a group resource, the id property
+// specifies the group's YouTube group ID.
+func (c *GroupsListCall) Id(id string) *GroupsListCall {
+	c.opt_["id"] = id
+	return c
+}
+
+// Mine sets the optional parameter "mine": Set this parameter's value
+// to true to instruct the API to only return groups owned by the
+// authenticated user.
+func (c *GroupsListCall) Mine(mine bool) *GroupsListCall {
+	c.opt_["mine"] = mine
+	return c
+}
+
+// OnBehalfOfContentOwner sets the optional parameter
+// "onBehalfOfContentOwner": Note: This parameter is intended
+// exclusively for YouTube content partners.
+//
+// The onBehalfOfContentOwner
+// parameter indicates that the request's authorization credentials
+// identify a YouTube CMS user who is acting on behalf of the content
+// owner specified in the parameter value. This parameter is intended
+// for YouTube content partners that own and manage many different
+// YouTube channels. It allows content owners to authenticate once and
+// get access to all their video and channel data, without having to
+// provide authentication credentials for each individual channel. The
+// CMS account that the user authenticates with must be linked to the
+// specified YouTube content owner.
+func (c *GroupsListCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *GroupsListCall {
+	c.opt_["onBehalfOfContentOwner"] = onBehalfOfContentOwner
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *GroupsListCall) Fields(s ...googleapi.Field) *GroupsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *GroupsListCall) Do() (*GroupListResponse, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["id"]; ok {
+		params.Set("id", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["mine"]; ok {
+		params.Set("mine", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
+		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "groups")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *GroupListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns a collection of groups that match the API request parameters. For example, you can retrieve all groups that the authenticated user owns, or you can retrieve one or more groups by their unique IDs.",
+	//   "httpMethod": "GET",
+	//   "id": "youtubeAnalytics.groups.list",
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The id parameter specifies a comma-separated list of the YouTube group ID(s) for the resource(s) that are being retrieved. In a group resource, the id property specifies the group's YouTube group ID.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "mine": {
+	//       "description": "Set this parameter's value to true to instruct the API to only return groups owned by the authenticated user.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "onBehalfOfContentOwner": {
+	//       "description": "Note: This parameter is intended exclusively for YouTube content partners.\n\nThe onBehalfOfContentOwner parameter indicates that the request's authorization credentials identify a YouTube CMS user who is acting on behalf of the content owner specified in the parameter value. This parameter is intended for YouTube content partners that own and manage many different YouTube channels. It allows content owners to authenticate once and get access to all their video and channel data, without having to provide authentication credentials for each individual channel. The CMS account that the user authenticates with must be linked to the specified YouTube content owner.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "groups",
+	//   "response": {
+	//     "$ref": "GroupListResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.readonly",
+	//     "https://www.googleapis.com/auth/youtubepartner",
+	//     "https://www.googleapis.com/auth/yt-analytics.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "youtubeAnalytics.groups.update":
+
+type GroupsUpdateCall struct {
+	s     *Service
+	group *Group
+	opt_  map[string]interface{}
+}
+
+// Update: Modifies a group. For example, you could change a group's
+// title.
+func (r *GroupsService) Update(group *Group) *GroupsUpdateCall {
+	c := &GroupsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.group = group
+	return c
+}
+
+// OnBehalfOfContentOwner sets the optional parameter
+// "onBehalfOfContentOwner": Note: This parameter is intended
+// exclusively for YouTube content partners.
+//
+// The onBehalfOfContentOwner
+// parameter indicates that the request's authorization credentials
+// identify a YouTube CMS user who is acting on behalf of the content
+// owner specified in the parameter value. This parameter is intended
+// for YouTube content partners that own and manage many different
+// YouTube channels. It allows content owners to authenticate once and
+// get access to all their video and channel data, without having to
+// provide authentication credentials for each individual channel. The
+// CMS account that the user authenticates with must be linked to the
+// specified YouTube content owner.
+func (c *GroupsUpdateCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *GroupsUpdateCall {
+	c.opt_["onBehalfOfContentOwner"] = onBehalfOfContentOwner
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *GroupsUpdateCall) Fields(s ...googleapi.Field) *GroupsUpdateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *GroupsUpdateCall) Do() (*Group, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.group)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
+		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "groups")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Group
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Modifies a group. For example, you could change a group's title.",
+	//   "httpMethod": "PUT",
+	//   "id": "youtubeAnalytics.groups.update",
+	//   "parameters": {
+	//     "onBehalfOfContentOwner": {
+	//       "description": "Note: This parameter is intended exclusively for YouTube content partners.\n\nThe onBehalfOfContentOwner parameter indicates that the request's authorization credentials identify a YouTube CMS user who is acting on behalf of the content owner specified in the parameter value. This parameter is intended for YouTube content partners that own and manage many different YouTube channels. It allows content owners to authenticate once and get access to all their video and channel data, without having to provide authentication credentials for each individual channel. The CMS account that the user authenticates with must be linked to the specified YouTube content owner.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "groups",
+	//   "request": {
+	//     "$ref": "Group"
+	//   },
+	//   "response": {
+	//     "$ref": "Group"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtubepartner"
 	//   ]
 	// }
 

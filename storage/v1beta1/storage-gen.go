@@ -2428,9 +2428,10 @@ func (c *ObjectsInsertCall) Do() (*Object, error) {
 		params.Set("uploadType", c.protocol_)
 	}
 	urls += "?" + params.Encode()
+	var ch chan error
 	if c.protocol_ != "resumable" {
-		var cancel func()
-		cancel, _ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+		ch = make(chan error, 1)
+		cancel := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype, ch)
 		if cancel != nil {
 			defer cancel()
 		}
@@ -2458,6 +2459,11 @@ func (c *ObjectsInsertCall) Do() (*Object, error) {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
+	if ch != nil {
+		if err := <-ch; err != nil {
+			return nil, err
+		}
+	}
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}

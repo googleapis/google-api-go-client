@@ -148,9 +148,9 @@ func (wrap MarshalStyle) JSONReader(v interface{}) (io.Reader, error) {
 	return buf, nil
 }
 
-func getMediaType(media io.Reader) (io.Reader, string) {
+func getMediaType(media io.Reader) (io.Reader, string, error) {
 	if typer, ok := media.(ContentTyper); ok {
-		return media, typer.ContentType()
+		return media, typer.ContentType(), nil
 	}
 
 	typ := "application/octet-stream"
@@ -160,7 +160,7 @@ func getMediaType(media io.Reader) (io.Reader, string) {
 	if err == nil {
 		typ = http.DetectContentType(buf)
 	}
-	return io.MultiReader(bytes.NewBuffer(buf), media), typ
+	return io.MultiReader(bytes.NewBuffer(buf), media), typ, err
 }
 
 // DetectMediaType detects and returns the content type of the provided media.
@@ -226,14 +226,20 @@ func (w countingWriter) Write(p []byte) (int, error) {
 // content type of the bodyp, usually "application/json".  It's updated
 // to the "multipart/related" content type, with random boundary.
 //
-// The return value is the content-length of the entire multpart body.
-func ConditionallyIncludeMedia(media io.Reader, bodyp *io.Reader, ctypep *string) (cancel func(), ok bool) {
+// ch is a channel that returns any errors (or nil) upon reading the media.
+func ConditionallyIncludeMedia(media io.Reader, bodyp *io.Reader, ctypep *string, ch chan error) (cancel func()) {
 	if media == nil {
+		ch <- nil // No errors to report.
 		return
 	}
 	// Get the media type, which might return a different reader instance.
 	var mediaType string
-	media, mediaType = getMediaType(media)
+	var err error
+	media, mediaType, err = getMediaType(media)
+	if err != nil {
+		ch <- err
+		return
+	}
 
 	body, bodyType := *bodyp, *ctypep
 
@@ -247,24 +253,29 @@ func ConditionallyIncludeMedia(media io.Reader, bodyp *io.Reader, ctypep *string
 
 		w, err := mpw.CreatePart(typeHeader(bodyType))
 		if err != nil {
+			ch <- fmt.Errorf("googleapi: body CreatePart failed: %v", err)
 			return
 		}
 		_, err = io.Copy(w, body)
 		if err != nil {
+			ch <- fmt.Errorf("googleapi: body Copy failed: %v", err)
 			return
 		}
 
 		w, err = mpw.CreatePart(typeHeader(mediaType))
 		if err != nil {
+			ch <- fmt.Errorf("googleapi: media CreatePart failed: %v", err)
 			return
 		}
 		_, err = io.Copy(w, media)
 		if err != nil {
+			ch <- fmt.Errorf("googleapi: media Copy failed: %v", err)
 			return
 		}
+		ch <- nil // no errors
 	}()
 	cancel = func() { pw.CloseWithError(errAborted) }
-	return cancel, true
+	return cancel
 }
 
 var errAborted = errors.New("googleapi: upload aborted")

@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/forNnhAfI3dddvWHUgiTD-7URCo\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/ctDJuvwARuvWdxppTAPJ3B-E-pc\"",
  "discoveryVersion": "v1",
  "id": "appsactivity:v1",
  "name": "appsactivity",
@@ -73,13 +73,13 @@
      "description": "View the activity history of your Google Apps"
     },
     "https://www.googleapis.com/auth/drive": {
-     "description": "View and manage the files and documents in your Google Drive"
+     "description": "View and manage the files in your Google Drive"
     },
     "https://www.googleapis.com/auth/drive.metadata.readonly": {
-     "description": "View metadata for files and documents in your Google Drive"
+     "description": "View metadata for files in your Google Drive"
     },
     "https://www.googleapis.com/auth/drive.readonly": {
-     "description": "View the files and documents in your Google Drive"
+     "description": "View the files in your Google Drive"
     }
    }
   }

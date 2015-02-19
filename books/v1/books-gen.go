@@ -6506,6 +6506,13 @@ func (c *VolumesGetCall) Source(source string) *VolumesGetCall {
 	return c
 }
 
+// User_library_consistent_read sets the optional parameter
+// "user_library_consistent_read":
+func (c *VolumesGetCall) User_library_consistent_read(user_library_consistent_read bool) *VolumesGetCall {
+	c.opt_["user_library_consistent_read"] = user_library_consistent_read
+	return c
+}
+
 // Fields allows partial responses to be retrieved.
 // See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -6529,6 +6536,9 @@ func (c *VolumesGetCall) Do() (*Volume, error) {
 	}
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["user_library_consistent_read"]; ok {
+		params.Set("user_library_consistent_read", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
@@ -6588,6 +6598,10 @@ func (c *VolumesGetCall) Do() (*Volume, error) {
 	//       "description": "String to identify the originator of this request.",
 	//       "location": "query",
 	//       "type": "string"
+	//     },
+	//     "user_library_consistent_read": {
+	//       "location": "query",
+	//       "type": "boolean"
 	//     },
 	//     "volumeId": {
 	//       "description": "ID of volume to retrieve.",

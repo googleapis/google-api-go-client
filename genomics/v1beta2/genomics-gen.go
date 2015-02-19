@@ -6263,7 +6263,10 @@ func (c *VariantsetsMergeVariantsCall) Do() error {
 	//   "path": "variantsets/{variantSetId}/mergeVariants",
 	//   "request": {
 	//     "$ref": "MergeVariantsRequest"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/genomics"
+	//   ]
 	// }
 
 }

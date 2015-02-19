@@ -43,7 +43,7 @@ const basePath = "https://www.googleapis.com/drive/v2/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage the files and documents in your Google Drive
+	// View and manage the files in your Google Drive
 	DriveScope = "https://www.googleapis.com/auth/drive"
 
 	// View and manage its own configuration data in your Google Drive
@@ -56,10 +56,10 @@ const (
 	// with this app
 	DriveFileScope = "https://www.googleapis.com/auth/drive.file"
 
-	// View metadata for files and documents in your Google Drive
+	// View metadata for files in your Google Drive
 	DriveMetadataReadonlyScope = "https://www.googleapis.com/auth/drive.metadata.readonly"
 
-	// View the files and documents in your Google Drive
+	// View the files in your Google Drive
 	DriveReadonlyScope = "https://www.googleapis.com/auth/drive.readonly"
 
 	// Modify your Google Apps Script scripts' behavior
@@ -3802,9 +3802,10 @@ func (c *FilesInsertCall) Do() (*File, error) {
 		params.Set("uploadType", c.protocol_)
 	}
 	urls += "?" + params.Encode()
+	var ch chan error
 	if c.protocol_ != "resumable" {
-		var cancel func()
-		cancel, _ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+		ch = make(chan error, 1)
+		cancel := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype, ch)
 		if cancel != nil {
 			defer cancel()
 		}
@@ -3830,6 +3831,11 @@ func (c *FilesInsertCall) Do() (*File, error) {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
+	if ch != nil {
+		if err := <-ch; err != nil {
+			return nil, err
+		}
+	}
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -4835,9 +4841,10 @@ func (c *FilesUpdateCall) Do() (*File, error) {
 		params.Set("uploadType", c.protocol_)
 	}
 	urls += "?" + params.Encode()
+	var ch chan error
 	if c.protocol_ != "resumable" {
-		var cancel func()
-		cancel, _ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+		ch = make(chan error, 1)
+		cancel := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype, ch)
 		if cancel != nil {
 			defer cancel()
 		}
@@ -4865,6 +4872,11 @@ func (c *FilesUpdateCall) Do() (*File, error) {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
+	if ch != nil {
+		if err := <-ch; err != nil {
+			return nil, err
+		}
+	}
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -6963,9 +6975,10 @@ func (c *RealtimeUpdateCall) Do() error {
 	urls += "?" + params.Encode()
 	body = new(bytes.Buffer)
 	ctype := "application/json"
+	var ch chan error
 	if c.protocol_ != "resumable" {
-		var cancel func()
-		cancel, _ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+		ch = make(chan error, 1)
+		cancel := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype, ch)
 		if cancel != nil {
 			defer cancel()
 		}
@@ -6993,6 +7006,11 @@ func (c *RealtimeUpdateCall) Do() error {
 		return err
 	}
 	defer googleapi.CloseBody(res)
+	if ch != nil {
+		if err := <-ch; err != nil {
+			return err
+		}
+	}
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}

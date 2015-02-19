@@ -559,9 +559,10 @@ func (c *UsersDraftsCreateCall) Do() (*Draft, error) {
 		params.Set("uploadType", c.protocol_)
 	}
 	urls += "?" + params.Encode()
+	var ch chan error
 	if c.protocol_ != "resumable" {
-		var cancel func()
-		cancel, _ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+		ch = make(chan error, 1)
+		cancel := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype, ch)
 		if cancel != nil {
 			defer cancel()
 		}
@@ -589,6 +590,11 @@ func (c *UsersDraftsCreateCall) Do() (*Draft, error) {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
+	if ch != nil {
+		if err := <-ch; err != nil {
+			return nil, err
+		}
+	}
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1058,9 +1064,10 @@ func (c *UsersDraftsSendCall) Do() (*Message, error) {
 		params.Set("uploadType", c.protocol_)
 	}
 	urls += "?" + params.Encode()
+	var ch chan error
 	if c.protocol_ != "resumable" {
-		var cancel func()
-		cancel, _ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+		ch = make(chan error, 1)
+		cancel := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype, ch)
 		if cancel != nil {
 			defer cancel()
 		}
@@ -1088,6 +1095,11 @@ func (c *UsersDraftsSendCall) Do() (*Message, error) {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
+	if ch != nil {
+		if err := <-ch; err != nil {
+			return nil, err
+		}
+	}
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -1245,9 +1257,10 @@ func (c *UsersDraftsUpdateCall) Do() (*Draft, error) {
 		params.Set("uploadType", c.protocol_)
 	}
 	urls += "?" + params.Encode()
+	var ch chan error
 	if c.protocol_ != "resumable" {
-		var cancel func()
-		cancel, _ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+		ch = make(chan error, 1)
+		cancel := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype, ch)
 		if cancel != nil {
 			defer cancel()
 		}
@@ -1276,6 +1289,11 @@ func (c *UsersDraftsUpdateCall) Do() (*Draft, error) {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
+	if ch != nil {
+		if err := <-ch; err != nil {
+			return nil, err
+		}
+	}
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2389,9 +2407,10 @@ func (c *UsersMessagesImportCall) Do() (*Message, error) {
 		params.Set("uploadType", c.protocol_)
 	}
 	urls += "?" + params.Encode()
+	var ch chan error
 	if c.protocol_ != "resumable" {
-		var cancel func()
-		cancel, _ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+		ch = make(chan error, 1)
+		cancel := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype, ch)
 		if cancel != nil {
 			defer cancel()
 		}
@@ -2419,6 +2438,11 @@ func (c *UsersMessagesImportCall) Do() (*Message, error) {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
+	if ch != nil {
+		if err := <-ch; err != nil {
+			return nil, err
+		}
+	}
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -2617,9 +2641,10 @@ func (c *UsersMessagesInsertCall) Do() (*Message, error) {
 		params.Set("uploadType", c.protocol_)
 	}
 	urls += "?" + params.Encode()
+	var ch chan error
 	if c.protocol_ != "resumable" {
-		var cancel func()
-		cancel, _ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+		ch = make(chan error, 1)
+		cancel := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype, ch)
 		if cancel != nil {
 			defer cancel()
 		}
@@ -2647,6 +2672,11 @@ func (c *UsersMessagesInsertCall) Do() (*Message, error) {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
+	if ch != nil {
+		if err := <-ch; err != nil {
+			return nil, err
+		}
+	}
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
@@ -3074,9 +3104,10 @@ func (c *UsersMessagesSendCall) Do() (*Message, error) {
 		params.Set("uploadType", c.protocol_)
 	}
 	urls += "?" + params.Encode()
+	var ch chan error
 	if c.protocol_ != "resumable" {
-		var cancel func()
-		cancel, _ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+		ch = make(chan error, 1)
+		cancel := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype, ch)
 		if cancel != nil {
 			defer cancel()
 		}
@@ -3104,6 +3135,11 @@ func (c *UsersMessagesSendCall) Do() (*Message, error) {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
+	if ch != nil {
+		if err := <-ch; err != nil {
+			return nil, err
+		}
+	}
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}

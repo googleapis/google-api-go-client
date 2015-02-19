@@ -3,10 +3,12 @@ package main
 import (
 	"bytes"
 	"fmt"
+	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
 	"strings"
 	"testing"
+	"testing/iotest"
 
 	"golang.org/x/net/context"
 	storage "google.golang.org/api/storage/v1"
@@ -15,6 +17,8 @@ import (
 type myHandler struct {
 	location string
 	r        *http.Request
+	body     []byte
+	err      error
 }
 
 func (h *myHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
@@ -22,6 +26,7 @@ func (h *myHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if h.location != "" {
 		w.Header().Set("Location", h.location)
 	}
+	h.body, h.err = ioutil.ReadAll(r.Body)
 	fmt.Fprintf(w, "{}")
 }
 
@@ -37,7 +42,8 @@ func TestMedia(t *testing.T) {
 	}
 	s.BasePath = server.URL
 
-	f := bytes.NewBufferString("fake media data")
+	const body = "fake media data"
+	f := bytes.NewBufferString(body)
 	o := &storage.Object{
 		Bucket:          "mybucket",
 		Name:            "filename",
@@ -91,6 +97,12 @@ func TestMedia(t *testing.T) {
 	}
 	if w := s.BasePath + "/b/mybucket/o?alt=json&uploadType=multipart"; g.RequestURI != w {
 		t.Errorf("RequestURI = %q; want %q", g.RequestURI, w)
+	}
+	if w := "\r\n\r\n" + body + "\r\n"; !strings.Contains(string(handler.body), w) {
+		t.Errorf("Body = %q, want %q", handler.body, w)
+	}
+	if handler.err != nil {
+		t.Errorf("handler err = %v, want nil", handler.err)
 	}
 }
 
@@ -156,6 +168,9 @@ func TestResumableMedia(t *testing.T) {
 	}
 	if g.MultipartForm != nil {
 		t.Errorf("MultipartForm = %#v; want nil", g.MultipartForm)
+	}
+	if handler.err != nil {
+		t.Errorf("handler err = %v, want nil", handler.err)
 	}
 }
 
@@ -224,5 +239,46 @@ func TestNoMedia(t *testing.T) {
 	}
 	if w := s.BasePath + "/b/mybucket/o?alt=json"; g.RequestURI != w {
 		t.Errorf("RequestURI = %q; want %q", g.RequestURI, w)
+	}
+	if w := `{"bucket":"mybucket","contentEncoding":"utf-8","contentLanguage":"en","contentType":"plain/text","name":"filename"}` + "\n"; string(handler.body) != w {
+		t.Errorf("Body = %q, want %q", handler.body, w)
+	}
+	if handler.err != nil {
+		t.Errorf("handler err = %v, want nil", handler.err)
+	}
+}
+
+func TestMediaErrHandling(t *testing.T) {
+	handler := &myHandler{}
+	server := httptest.NewServer(handler)
+	defer server.Close()
+
+	client := &http.Client{}
+	s, err := storage.New(client)
+	if err != nil {
+		t.Fatalf("unable to create service: %v", err)
+	}
+	s.BasePath = server.URL
+
+	const body = "fake media data"
+	f := bytes.NewBufferString(body)
+	r := iotest.TimeoutReader(iotest.OneByteReader(f)) // should fail below
+	o := &storage.Object{
+		Bucket:          "mybucket",
+		Name:            "filename",
+		ContentType:     "plain/text",
+		ContentEncoding: "utf-8",
+		ContentLanguage: "en",
+	}
+	_, err = s.Objects.Insert("mybucket", o).Media(r).Do()
+	if err == nil || !strings.Contains(err.Error(), "timeout") {
+		t.Errorf("expected timeout error, got %v", err)
+	}
+	// expect only a single byte made it through
+	if w := "\r\n\r\n" + body[0:1] + "\r\n"; !strings.Contains(string(handler.body), w) {
+		t.Errorf("Body = %q, want %q", handler.body, w)
+	}
+	if handler.err != nil {
+		t.Errorf("handler err = %v, want nil", handler.err)
 	}
 }

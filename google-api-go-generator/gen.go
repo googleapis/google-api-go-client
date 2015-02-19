@@ -1329,9 +1329,10 @@ func (meth *Method) generateCode() {
 			pn(`ctype := "application/json"`)
 			hasContentType = true
 		}
+		pn("var ch chan error")
 		pn(`if c.protocol_ != "resumable" {`)
-		pn(`  var cancel func()`)
-		pn("  cancel, _ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)")
+		pn("  ch = make(chan error, 1)")
+		pn("  cancel := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype, ch)")
 		pn("  if cancel != nil { defer cancel() }")
 		pn("}")
 	}
@@ -1371,6 +1372,13 @@ func (meth *Method) generateCode() {
 	pn("res, err := c.s.client.Do(req);")
 	pn("if err != nil { return %serr }", nilRet)
 	pn("defer googleapi.CloseBody(res)")
+	if meth.supportsMediaUpload() && httpMethod != "GET" {
+		pn("if ch != nil {")
+		pn("	if err := <-ch; err != nil {")
+		pn("		return %serr", nilRet)
+		pn("	}")
+		pn("}")
+	}
 	pn("if err := googleapi.CheckResponse(res); err != nil { return %serr }", nilRet)
 	if meth.supportsMediaUpload() {
 		pn(`if c.protocol_ == "resumable" {`)

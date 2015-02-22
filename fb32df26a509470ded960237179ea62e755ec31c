@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48025a8e_66a88e9e",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 5345
+      },
+      "writtenOn": "2015-02-22T23:27:23Z",
+      "side": 1,
+      "message": "I don\u0027t think this approach is sound.\n\nIf the reader I hand to ObjectsInsertCall.Media returns a read error, then it\u0027s\ntrue that ObjectsInsertCall.Do will now return an error, via the out of band\nchannel. But the HTTP package will *not* see an error from the body you give\nit, and so it will go ahead and execute the request. Therefore a GCS object\nwill still be created with contents that I did not intend.\n\nYou need to find some way to plumb the media reader error into the HTTP request\nbody reader. (I am making the assumption here that net/http arranges for the\nserver to know that it shouldn\u0027t go ahead with the request if req.Body.Read\nreturns an error. I don\u0027t know enough about the details of HTTP to know if that\nis the case. bradfitz would know, of course.)",
+      "revId": "fb32df26a509470ded960237179ea62e755ec31c",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

@@ -16,6 +16,24 @@
       "revId": "fb32df26a509470ded960237179ea62e755ec31c",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "65dae934_6213f858",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-02-24T21:00:05Z",
+      "side": 1,
+      "message": "I also object to this change, just in that it\u0027s now much more complex. This function signature was already crazy (interface pointer, string pointer, a returned cancel func...).  I don\u0027t think it needs more craziness.\n\nLet me go read the original bug and think about this first, though. It\u0027s possible that this is the best answer, but it makes me nervous.",
+      "parentUuid": "48025a8e_66a88e9e",
+      "revId": "fb32df26a509470ded960237179ea62e755ec31c",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
     }
   ]
 }

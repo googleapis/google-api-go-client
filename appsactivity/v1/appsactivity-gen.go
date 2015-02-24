@@ -46,13 +46,13 @@ const (
 	// View the activity history of your Google Apps
 	ActivityScope = "https://www.googleapis.com/auth/activity"
 
-	// View and manage the files and documents in your Google Drive
+	// View and manage the files in your Google Drive
 	DriveScope = "https://www.googleapis.com/auth/drive"
 
-	// View metadata for files and documents in your Google Drive
+	// View metadata for files in your Google Drive
 	DriveMetadataReadonlyScope = "https://www.googleapis.com/auth/drive.metadata.readonly"
 
-	// View the files and documents in your Google Drive
+	// View the files in your Google Drive
 	DriveReadonlyScope = "https://www.googleapis.com/auth/drive.readonly"
 )
 

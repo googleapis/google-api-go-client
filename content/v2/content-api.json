@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/-uPFfUdnJ6wKBvr9hp_nZCg__WI\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/C8XXsPv6OQ96WhF0iGLVjduwCpc\"",
  "discoveryVersion": "v1",
  "id": "content:v2",
  "name": "content",
  "canonicalName": "Shopping Content",
  "version": "v2",
- "revision": "20150204",
+ "revision": "20150218",
  "title": "Content API for Shopping",
  "description": "Manage product items, inventory, and Merchant Center accounts for Google Shopping.",
  "ownerDomain": "google.com",
@@ -1871,6 +1871,30 @@
       "$ref": "ProductDestination"
      }
     },
+    "displayAdsId": {
+     "type": "string",
+     "description": "An identifier for an item for dynamic remarketing campaigns."
+    },
+    "displayAdsLink": {
+     "type": "string",
+     "description": "URL directly to your item's landing page for dynamic remarketing campaigns."
+    },
+    "displayAdsSimilarIds": {
+     "type": "array",
+     "description": "Advertiser-specified recommendations.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "displayAdsTitle": {
+     "type": "string",
+     "description": "Title of an item for dynamic remarketing campaigns."
+    },
+    "displayAdsValue": {
+     "type": "number",
+     "description": "Offer margin for dynamic remarketing campaigns.",
+     "format": "double"
+    },
     "energyEfficiencyClass": {
      "type": "string",
      "description": "The energy efficiency class as defined in EU directive 2010/30/EU."
@@ -2266,6 +2290,10 @@
     "location": {
      "type": "string",
      "description": "The attribute name that is relevant for the issue."
+    },
+    "severity": {
+     "type": "string",
+     "description": "The severity of the data quality issue."
     },
     "timestamp": {
      "type": "string",

@@ -91,8 +91,7 @@ type ZoneOperationsService struct {
 }
 
 type InstanceUpdate struct {
-	// Error: Errors that occurred during the instance update. Setting
-	// (api.field).field_number manually is a workaround for b/16512602.
+	// Error: Errors that occurred during the instance update.
 	Error *InstanceUpdateError `json:"error,omitempty"`
 
 	// Instance: URL of the instance being updated.
@@ -261,12 +260,11 @@ type OperationWarningsData struct {
 }
 
 type RollingUpdate struct {
-	// ActionType: Action to be performed for each instance. Possible values
-	// are:
-	// - "RECREATE": Instance will be recreated. Only for managed
-	// instance groups.
-	// - "REBOOT": Soft reboot will be performed on an
-	// instance. Only for non-managed instance groups.
+	// ActionType: Specifies the action to take for each instance within the
+	// instance group. This can be RECREATE which will recreate each
+	// instance and is only available for managed instance groups. It can
+	// also be REBOOT which performs a soft reboot for each instance and is
+	// only available for regular (non-managed) instance groups.
 	ActionType string `json:"actionType,omitempty"`
 
 	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
@@ -277,26 +275,31 @@ type RollingUpdate struct {
 	// provided by the client when the resource is created.
 	Description string `json:"description,omitempty"`
 
+	// Error: [Output Only] Errors that occurred during rolling update.
+	Error *RollingUpdateError `json:"error,omitempty"`
+
 	// Id: [Output Only] Unique identifier for the resource; defined by the
 	// server.
 	Id string `json:"id,omitempty"`
 
-	// InstanceGroup: URL of an instance group being updated. Exactly one of
-	// instance_group_manager and instance_group must be set.
+	// InstanceGroup: Fully-qualified URL of an instance group being
+	// updated. Exactly one of instanceGroupManager and instanceGroup must
+	// be set.
 	InstanceGroup string `json:"instanceGroup,omitempty"`
 
-	// InstanceGroupManager: URL of an instance group manager being updated.
-	// Exactly one of instance_group_manager and instance_group must be set.
+	// InstanceGroupManager: Fully-qualified URL of an instance group
+	// manager being updated. Exactly one of instanceGroupManager and
+	// instanceGroup must be set.
 	InstanceGroupManager string `json:"instanceGroupManager,omitempty"`
 
-	// InstanceTemplate: URL of an instance template to apply.
+	// InstanceTemplate: Fully-qualified URL of an instance template to
+	// apply.
 	InstanceTemplate string `json:"instanceTemplate,omitempty"`
 
 	// Kind: [Output Only] Type of the resource.
 	Kind string `json:"kind,omitempty"`
 
-	// Policy: Parameters of the update process. Setting
-	// (api.field).field_number manually is a workaround for b/16512602.
+	// Policy: Parameters of the update process.
 	Policy *RollingUpdatePolicy `json:"policy,omitempty"`
 
 	// Progress: [Output Only] An optional progress indicator that ranges
@@ -335,10 +338,37 @@ type RollingUpdate struct {
 	User string `json:"user,omitempty"`
 }
 
+type RollingUpdateError struct {
+	// Errors: [Output Only] The array of errors encountered while
+	// processing this operation.
+	Errors []*RollingUpdateErrorErrors `json:"errors,omitempty"`
+}
+
+type RollingUpdateErrorErrors struct {
+	// Code: [Output Only] The error type identifier for this error.
+	Code string `json:"code,omitempty"`
+
+	// Location: [Output Only] Indicates the field in the request which
+	// caused the error. This property is optional.
+	Location string `json:"location,omitempty"`
+
+	// Message: [Output Only] An optional, human-readable error message.
+	Message string `json:"message,omitempty"`
+}
+
 type RollingUpdatePolicy struct {
+	// AutoPauseAfterInstances: Number of instances updated before the
+	// update gets automatically paused.
+	AutoPauseAfterInstances int64 `json:"autoPauseAfterInstances,omitempty"`
+
 	// Canary: Parameters of a canary phase. If absent, canary will NOT be
 	// performed.
 	Canary *RollingUpdatePolicyCanary `json:"canary,omitempty"`
+
+	// InstanceStartupTimeoutSec: Maximum amount of time we will wait after
+	// finishing all steps until we receive HEALTHY state for instance. If
+	// this deadline is exceeded instance update is considered as failed.
+	InstanceStartupTimeoutSec int64 `json:"instanceStartupTimeoutSec,omitempty"`
 
 	// MaxNumConcurrentInstances: Maximum number of instances that can be
 	// updated simultaneously (concurrently). An update of an instance
@@ -347,9 +377,24 @@ type RollingUpdatePolicy struct {
 	// sleepAfterInstanceRestartSec) has passed.
 	MaxNumConcurrentInstances int64 `json:"maxNumConcurrentInstances,omitempty"`
 
-	// SleepAfterInstanceRestartSec: The number of seconds to wait between
-	// when the instance has been successfully updated and restarted, to
-	// when it is marked as done.
+	// MaxNumFailedInstances: Maximum number of instance updates that can
+	// fail without failing the group update. Instance update is considered
+	// failed if any of it's update actions (e.g. Stop call on Instance
+	// resource in Rolling Reboot) failed with permanent failure, or if
+	// after finishing all update actions this instance is in UNHEALTHY
+	// state.
+	MaxNumFailedInstances int64 `json:"maxNumFailedInstances,omitempty"`
+
+	// MinInstanceUpdateTimeSec: Specifies minimum amount of time we will
+	// spend on updating single instance, measuring at the start of the
+	// first update action (e.g. Recreate call on Instance Group Manager or
+	// Stop call on Instance resource). If actual instance update takes less
+	// time we will simply sleep before proceeding with next instance.
+	MinInstanceUpdateTimeSec int64 `json:"minInstanceUpdateTimeSec,omitempty"`
+
+	// SleepAfterInstanceRestartSec: Time period after the instance has been
+	// restarted but before marking the update of this instance as done.
+	// This field is deprecated and ignored by Rolling Updater.
 	SleepAfterInstanceRestartSec int64 `json:"sleepAfterInstanceRestartSec,omitempty"`
 }
 

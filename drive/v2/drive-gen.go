@@ -43,7 +43,7 @@ const basePath = "https://www.googleapis.com/drive/v2/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage the files and documents in your Google Drive
+	// View and manage the files in your Google Drive
 	DriveScope = "https://www.googleapis.com/auth/drive"
 
 	// View and manage its own configuration data in your Google Drive
@@ -56,10 +56,10 @@ const (
 	// with this app
 	DriveFileScope = "https://www.googleapis.com/auth/drive.file"
 
-	// View metadata for files and documents in your Google Drive
+	// View metadata for files in your Google Drive
 	DriveMetadataReadonlyScope = "https://www.googleapis.com/auth/drive.metadata.readonly"
 
-	// View the files and documents in your Google Drive
+	// View the files in your Google Drive
 	DriveReadonlyScope = "https://www.googleapis.com/auth/drive.readonly"
 
 	// Modify your Google Apps Script scripts' behavior

@@ -1194,6 +1194,23 @@ type Product struct {
 	// Destinations: Specifies the intended destinations for the product.
 	Destinations []*ProductDestination `json:"destinations,omitempty"`
 
+	// DisplayAdsId: An identifier for an item for dynamic remarketing
+	// campaigns.
+	DisplayAdsId string `json:"displayAdsId,omitempty"`
+
+	// DisplayAdsLink: URL directly to your item's landing page for dynamic
+	// remarketing campaigns.
+	DisplayAdsLink string `json:"displayAdsLink,omitempty"`
+
+	// DisplayAdsSimilarIds: Advertiser-specified recommendations.
+	DisplayAdsSimilarIds []string `json:"displayAdsSimilarIds,omitempty"`
+
+	// DisplayAdsTitle: Title of an item for dynamic remarketing campaigns.
+	DisplayAdsTitle string `json:"displayAdsTitle,omitempty"`
+
+	// DisplayAdsValue: Offer margin for dynamic remarketing campaigns.
+	DisplayAdsValue float64 `json:"displayAdsValue,omitempty"`
+
 	// EnergyEfficiencyClass: The energy efficiency class as defined in EU
 	// directive 2010/30/EU.
 	EnergyEfficiencyClass string `json:"energyEfficiencyClass,omitempty"`
@@ -1479,6 +1496,9 @@ type ProductStatusDataQualityIssue struct {
 
 	// Location: The attribute name that is relevant for the issue.
 	Location string `json:"location,omitempty"`
+
+	// Severity: The severity of the data quality issue.
+	Severity string `json:"severity,omitempty"`
 
 	// Timestamp: The time stamp of the data quality issue.
 	Timestamp string `json:"timestamp,omitempty"`

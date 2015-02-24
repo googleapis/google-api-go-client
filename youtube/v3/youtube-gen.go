@@ -7977,6 +7977,19 @@ func (c *SearchListCall) RelatedToVideoId(relatedToVideoId string) *SearchListCa
 	return c
 }
 
+// RelevanceLanguage sets the optional parameter "relevanceLanguage":
+// The relevanceLanguage parameter instructs the API to return search
+// results that are most relevant to the specified language. The
+// parameter value is typically an ISO 639-1 two-letter language code.
+// However, you should use the values zh-Hans for simplified Chinese and
+// zh-Hant for traditional Chinese. Please note that results in other
+// languages will still be returned if they are highly relevant to the
+// search query term.
+func (c *SearchListCall) RelevanceLanguage(relevanceLanguage string) *SearchListCall {
+	c.opt_["relevanceLanguage"] = relevanceLanguage
+	return c
+}
+
 // SafeSearch sets the optional parameter "safeSearch": The safeSearch
 // parameter indicates whether the search results should include
 // restricted content as well as standard content.
@@ -8137,6 +8150,9 @@ func (c *SearchListCall) Do() (*SearchListResponse, error) {
 	}
 	if v, ok := c.opt_["relatedToVideoId"]; ok {
 		params.Set("relatedToVideoId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["relevanceLanguage"]; ok {
+		params.Set("relevanceLanguage", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["safeSearch"]; ok {
 		params.Set("safeSearch", fmt.Sprintf("%v", v))
@@ -8327,6 +8343,11 @@ func (c *SearchListCall) Do() (*SearchListResponse, error) {
 	//     },
 	//     "relatedToVideoId": {
 	//       "description": "The relatedToVideoId parameter retrieves a list of videos that are related to the video that the parameter value identifies. The parameter value must be set to a YouTube video ID and, if you are using this parameter, the type parameter must be set to video.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "relevanceLanguage": {
+	//       "description": "The relevanceLanguage parameter instructs the API to return search results that are most relevant to the specified language. The parameter value is typically an ISO 639-1 two-letter language code. However, you should use the values zh-Hans for simplified Chinese and zh-Hant for traditional Chinese. Please note that results in other languages will still be returned if they are highly relevant to the search query term.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

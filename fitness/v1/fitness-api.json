@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/YjudB0g0FadK_RnVkIXtDsBeafM\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/lDyElxcTuD_AINzagoHaFK_1_Y4\"",
  "discoveryVersion": "v1",
  "id": "fitness:v1",
  "name": "fitness",
  "version": "v1",
- "revision": "20141115",
+ "revision": "20150222",
  "title": "Fitness",
  "description": "Google Fit API",
  "ownerDomain": "google.com",
@@ -113,7 +113,7 @@
     },
     "packageName": {
      "type": "string",
-     "description": "Package name for this application. This is used as a unique identifier when creaed by Android applications, but cannot be specified by REST clients. REST clients will have their developer project number reflected into the Data Source data stream IDs, instead of the packageName."
+     "description": "Package name for this application. This is used as a unique identifier when created by Android applications, but cannot be specified by REST clients. REST clients will have their developer project number reflected into the Data Source data stream IDs, instead of the packageName."
     },
     "version": {
      "type": "string",
@@ -322,6 +322,9 @@
        "fitness.users.dataSources.update"
       ]
      }
+    },
+    "optional": {
+     "type": "boolean"
     }
    }
   },

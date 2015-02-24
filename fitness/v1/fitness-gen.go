@@ -135,7 +135,7 @@ type Application struct {
 	Name string `json:"name,omitempty"`
 
 	// PackageName: Package name for this application. This is used as a
-	// unique identifier when creaed by Android applications, but cannot be
+	// unique identifier when created by Android applications, but cannot be
 	// specified by REST clients. REST clients will have their developer
 	// project number reflected into the Data Source data stream IDs,
 	// instead of the packageName.
@@ -276,6 +276,8 @@ type DataTypeField struct {
 	// field names are not namespaced, and only need to be unique within the
 	// data type.
 	Name string `json:"name,omitempty"`
+
+	Optional bool `json:"optional,omitempty"`
 }
 
 type Dataset struct {

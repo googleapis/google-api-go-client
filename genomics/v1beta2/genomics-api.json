@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/nj3_AYxHy8D9l1M7W6ygroaKSl8\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/Rkk_7Yu2BNIHc2z3p4FKuem23zE\"",
  "discoveryVersion": "v1",
  "id": "genomics:v1beta2",
  "name": "genomics",
  "version": "v1beta2",
- "revision": "20150208",
+ "revision": "20150213",
  "title": "Genomics API",
  "description": "Provides access to Genomics data.",
  "ownerDomain": "google.com",
@@ -3609,7 +3609,10 @@
      ],
      "request": {
       "$ref": "MergeVariantsRequest"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/genomics"
+     ]
     },
     "patch": {
      "id": "genomics.variantsets.patch",

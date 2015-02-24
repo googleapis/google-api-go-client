@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/QKKVh-U3K8YmHckACHPpbX0hbyk\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/e9llQCBHLfl4GdN8_SFJWpjcLpU\"",
  "discoveryVersion": "v1",
  "id": "youtube:v3",
  "name": "youtube",
  "canonicalName": "YouTube",
  "version": "v3",
- "revision": "20150206",
+ "revision": "20150218",
  "title": "YouTube Data API",
  "description": "Programmatic access to YouTube features.",
  "ownerDomain": "google.com",
@@ -6986,6 +6986,11 @@
       "relatedToVideoId": {
        "type": "string",
        "description": "The relatedToVideoId parameter retrieves a list of videos that are related to the video that the parameter value identifies. The parameter value must be set to a YouTube video ID and, if you are using this parameter, the type parameter must be set to video.",
+       "location": "query"
+      },
+      "relevanceLanguage": {
+       "type": "string",
+       "description": "The relevanceLanguage parameter instructs the API to return search results that are most relevant to the specified language. The parameter value is typically an ISO 639-1 two-letter language code. However, you should use the values zh-Hans for simplified Chinese and zh-Hant for traditional Chinese. Please note that results in other languages will still be returned if they are highly relevant to the search query term.",
        "location": "query"
       },
       "safeSearch": {

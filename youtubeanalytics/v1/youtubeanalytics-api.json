@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/eGqJquL_sNm8tPEGcWYyPXL72uM\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/mgPC2o6emzAE7yocMVmScgLphrM\"",
  "discoveryVersion": "v1",
  "id": "youtubeAnalytics:v1",
  "name": "youtubeAnalytics",
  "canonicalName": "YouTube Analytics",
  "version": "v1",
- "revision": "20141124",
+ "revision": "20150213",
  "title": "YouTube Analytics API",
  "description": "Retrieve your YouTube Analytics reports.",
  "ownerDomain": "google.com",
@@ -72,6 +72,15 @@
  "auth": {
   "oauth2": {
    "scopes": {
+    "https://www.googleapis.com/auth/youtube": {
+     "description": "Manage your YouTube account"
+    },
+    "https://www.googleapis.com/auth/youtube.readonly": {
+     "description": "View your YouTube account"
+    },
+    "https://www.googleapis.com/auth/youtubepartner": {
+     "description": "View and manage your assets and associated content on YouTube"
+    },
     "https://www.googleapis.com/auth/yt-analytics-monetary.readonly": {
      "description": "View YouTube Analytics monetary reports for your YouTube content"
     },
@@ -211,6 +220,116 @@
     }
    }
   },
+  "Group": {
+   "id": "Group",
+   "type": "object",
+   "properties": {
+    "contentDetails": {
+     "type": "object",
+     "properties": {
+      "itemCount": {
+       "type": "string",
+       "format": "uint64"
+      },
+      "itemType": {
+       "type": "string"
+      }
+     }
+    },
+    "etag": {
+     "type": "string"
+    },
+    "id": {
+     "type": "string"
+    },
+    "kind": {
+     "type": "string",
+     "default": "youtube#group"
+    },
+    "snippet": {
+     "type": "object",
+     "properties": {
+      "publishedAt": {
+       "type": "string",
+       "format": "date-time"
+      },
+      "title": {
+       "type": "string"
+      }
+     }
+    }
+   }
+  },
+  "GroupItem": {
+   "id": "GroupItem",
+   "type": "object",
+   "properties": {
+    "etag": {
+     "type": "string"
+    },
+    "groupId": {
+     "type": "string"
+    },
+    "id": {
+     "type": "string"
+    },
+    "kind": {
+     "type": "string",
+     "default": "youtube#groupItem"
+    },
+    "resource": {
+     "type": "object",
+     "properties": {
+      "id": {
+       "type": "string"
+      },
+      "kind": {
+       "type": "string"
+      }
+     }
+    }
+   }
+  },
+  "GroupItemListResponse": {
+   "id": "GroupItemListResponse",
+   "type": "object",
+   "description": "A paginated list of grouList resources returned in response to a youtubeAnalytics.groupApi.list request.",
+   "properties": {
+    "etag": {
+     "type": "string"
+    },
+    "items": {
+     "type": "array",
+     "items": {
+      "$ref": "GroupItem"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "default": "youtube#groupItemListResponse"
+    }
+   }
+  },
+  "GroupListResponse": {
+   "id": "GroupListResponse",
+   "type": "object",
+   "description": "A paginated list of grouList resources returned in response to a youtubeAnalytics.groupApi.list request.",
+   "properties": {
+    "etag": {
+     "type": "string"
+    },
+    "items": {
+     "type": "array",
+     "items": {
+      "$ref": "Group"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "default": "youtube#groupListResponse"
+    }
+   }
+  },
   "ResultTable": {
    "id": "ResultTable",
    "type": "object",
@@ -315,6 +434,198 @@
      "scopes": [
       "https://www.googleapis.com/auth/yt-analytics-monetary.readonly",
       "https://www.googleapis.com/auth/yt-analytics.readonly"
+     ]
+    }
+   }
+  },
+  "groupItems": {
+   "methods": {
+    "delete": {
+     "id": "youtubeAnalytics.groupItems.delete",
+     "path": "groupItems",
+     "httpMethod": "DELETE",
+     "description": "Removes an item from a group.",
+     "parameters": {
+      "id": {
+       "type": "string",
+       "description": "The id parameter specifies the YouTube group item ID for the group that is being deleted.",
+       "required": true,
+       "location": "query"
+      },
+      "onBehalfOfContentOwner": {
+       "type": "string",
+       "description": "Note: This parameter is intended exclusively for YouTube content partners.\n\nThe onBehalfOfContentOwner parameter indicates that the request's authorization credentials identify a YouTube CMS user who is acting on behalf of the content owner specified in the parameter value. This parameter is intended for YouTube content partners that own and manage many different YouTube channels. It allows content owners to authenticate once and get access to all their video and channel data, without having to provide authentication credentials for each individual channel. The CMS account that the user authenticates with must be linked to the specified YouTube content owner.",
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "id"
+     ],
+     "scopes": [
+      "https://www.googleapis.com/auth/youtube",
+      "https://www.googleapis.com/auth/youtubepartner"
+     ]
+    },
+    "insert": {
+     "id": "youtubeAnalytics.groupItems.insert",
+     "path": "groupItems",
+     "httpMethod": "POST",
+     "description": "Creates a group item.",
+     "parameters": {
+      "onBehalfOfContentOwner": {
+       "type": "string",
+       "description": "Note: This parameter is intended exclusively for YouTube content partners.\n\nThe onBehalfOfContentOwner parameter indicates that the request's authorization credentials identify a YouTube CMS user who is acting on behalf of the content owner specified in the parameter value. This parameter is intended for YouTube content partners that own and manage many different YouTube channels. It allows content owners to authenticate once and get access to all their video and channel data, without having to provide authentication credentials for each individual channel. The CMS account that the user authenticates with must be linked to the specified YouTube content owner.",
+       "location": "query"
+      }
+     },
+     "request": {
+      "$ref": "GroupItem"
+     },
+     "response": {
+      "$ref": "GroupItem"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/youtube",
+      "https://www.googleapis.com/auth/youtubepartner"
+     ]
+    },
+    "list": {
+     "id": "youtubeAnalytics.groupItems.list",
+     "path": "groupItems",
+     "httpMethod": "GET",
+     "description": "Returns a collection of group items that match the API request parameters.",
+     "parameters": {
+      "groupId": {
+       "type": "string",
+       "description": "The id parameter specifies the unique ID of the group for which you want to retrieve group items.",
+       "required": true,
+       "location": "query"
+      },
+      "onBehalfOfContentOwner": {
+       "type": "string",
+       "description": "Note: This parameter is intended exclusively for YouTube content partners.\n\nThe onBehalfOfContentOwner parameter indicates that the request's authorization credentials identify a YouTube CMS user who is acting on behalf of the content owner specified in the parameter value. This parameter is intended for YouTube content partners that own and manage many different YouTube channels. It allows content owners to authenticate once and get access to all their video and channel data, without having to provide authentication credentials for each individual channel. The CMS account that the user authenticates with must be linked to the specified YouTube content owner.",
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "groupId"
+     ],
+     "response": {
+      "$ref": "GroupItemListResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/youtube",
+      "https://www.googleapis.com/auth/youtube.readonly",
+      "https://www.googleapis.com/auth/youtubepartner",
+      "https://www.googleapis.com/auth/yt-analytics.readonly"
+     ]
+    }
+   }
+  },
+  "groups": {
+   "methods": {
+    "delete": {
+     "id": "youtubeAnalytics.groups.delete",
+     "path": "groups",
+     "httpMethod": "DELETE",
+     "description": "Deletes a group.",
+     "parameters": {
+      "id": {
+       "type": "string",
+       "description": "The id parameter specifies the YouTube group ID for the group that is being deleted.",
+       "required": true,
+       "location": "query"
+      },
+      "onBehalfOfContentOwner": {
+       "type": "string",
+       "description": "Note: This parameter is intended exclusively for YouTube content partners.\n\nThe onBehalfOfContentOwner parameter indicates that the request's authorization credentials identify a YouTube CMS user who is acting on behalf of the content owner specified in the parameter value. This parameter is intended for YouTube content partners that own and manage many different YouTube channels. It allows content owners to authenticate once and get access to all their video and channel data, without having to provide authentication credentials for each individual channel. The CMS account that the user authenticates with must be linked to the specified YouTube content owner.",
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "id"
+     ],
+     "scopes": [
+      "https://www.googleapis.com/auth/youtube",
+      "https://www.googleapis.com/auth/youtubepartner"
+     ]
+    },
+    "insert": {
+     "id": "youtubeAnalytics.groups.insert",
+     "path": "groups",
+     "httpMethod": "POST",
+     "description": "Creates a group.",
+     "parameters": {
+      "onBehalfOfContentOwner": {
+       "type": "string",
+       "description": "Note: This parameter is intended exclusively for YouTube content partners.\n\nThe onBehalfOfContentOwner parameter indicates that the request's authorization credentials identify a YouTube CMS user who is acting on behalf of the content owner specified in the parameter value. This parameter is intended for YouTube content partners that own and manage many different YouTube channels. It allows content owners to authenticate once and get access to all their video and channel data, without having to provide authentication credentials for each individual channel. The CMS account that the user authenticates with must be linked to the specified YouTube content owner.",
+       "location": "query"
+      }
+     },
+     "request": {
+      "$ref": "Group"
+     },
+     "response": {
+      "$ref": "Group"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/youtube",
+      "https://www.googleapis.com/auth/youtubepartner"
+     ]
+    },
+    "list": {
+     "id": "youtubeAnalytics.groups.list",
+     "path": "groups",
+     "httpMethod": "GET",
+     "description": "Returns a collection of groups that match the API request parameters. For example, you can retrieve all groups that the authenticated user owns, or you can retrieve one or more groups by their unique IDs.",
+     "parameters": {
+      "id": {
+       "type": "string",
+       "description": "The id parameter specifies a comma-separated list of the YouTube group ID(s) for the resource(s) that are being retrieved. In a group resource, the id property specifies the group's YouTube group ID.",
+       "location": "query"
+      },
+      "mine": {
+       "type": "boolean",
+       "description": "Set this parameter's value to true to instruct the API to only return groups owned by the authenticated user.",
+       "location": "query"
+      },
+      "onBehalfOfContentOwner": {
+       "type": "string",
+       "description": "Note: This parameter is intended exclusively for YouTube content partners.\n\nThe onBehalfOfContentOwner parameter indicates that the request's authorization credentials identify a YouTube CMS user who is acting on behalf of the content owner specified in the parameter value. This parameter is intended for YouTube content partners that own and manage many different YouTube channels. It allows content owners to authenticate once and get access to all their video and channel data, without having to provide authentication credentials for each individual channel. The CMS account that the user authenticates with must be linked to the specified YouTube content owner.",
+       "location": "query"
+      }
+     },
+     "response": {
+      "$ref": "GroupListResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/youtube",
+      "https://www.googleapis.com/auth/youtube.readonly",
+      "https://www.googleapis.com/auth/youtubepartner",
+      "https://www.googleapis.com/auth/yt-analytics.readonly"
+     ]
+    },
+    "update": {
+     "id": "youtubeAnalytics.groups.update",
+     "path": "groups",
+     "httpMethod": "PUT",
+     "description": "Modifies a group. For example, you could change a group's title.",
+     "parameters": {
+      "onBehalfOfContentOwner": {
+       "type": "string",
+       "description": "Note: This parameter is intended exclusively for YouTube content partners.\n\nThe onBehalfOfContentOwner parameter indicates that the request's authorization credentials identify a YouTube CMS user who is acting on behalf of the content owner specified in the parameter value. This parameter is intended for YouTube content partners that own and manage many different YouTube channels. It allows content owners to authenticate once and get access to all their video and channel data, without having to provide authentication credentials for each individual channel. The CMS account that the user authenticates with must be linked to the specified YouTube content owner.",
+       "location": "query"
+      }
+     },
+     "request": {
+      "$ref": "Group"
+     },
+     "response": {
+      "$ref": "Group"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/youtube",
+      "https://www.googleapis.com/auth/youtubepartner"
      ]
     }
    }

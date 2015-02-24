@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/L373kNIz1YIUlLOAHRzzURGZYN8\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/Su_n7G4kkmkBMp7dZWlt5x2QC0g\"",
  "discoveryVersion": "v1",
  "id": "dataflow:v1beta3",
  "name": "dataflow",
  "version": "v1beta3",
- "revision": "20150109",
+ "revision": "20141207",
  "title": "Google Dataflow API",
  "description": "Google Dataflow API.",
  "ownerDomain": "google.com",
@@ -701,7 +701,16 @@
    "id": "PubsubLocation",
    "type": "object",
    "properties": {
+    "dropLateData": {
+     "type": "boolean"
+    },
+    "idLabel": {
+     "type": "string"
+    },
     "subscription": {
+     "type": "string"
+    },
+    "timestampLabel": {
      "type": "string"
     },
     "topic": {

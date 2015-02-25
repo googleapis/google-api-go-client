@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/Su_n7G4kkmkBMp7dZWlt5x2QC0g\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/p23x-gNsMm8R6x-RDoeYGjGvTE0\"",
  "discoveryVersion": "v1",
  "id": "dataflow:v1beta3",
  "name": "dataflow",
  "version": "v1beta3",
- "revision": "20141207",
+ "revision": "20150130",
  "title": "Google Dataflow API",
  "description": "Google Dataflow API.",
  "ownerDomain": "google.com",
@@ -190,6 +190,12 @@
      "type": "array",
      "items": {
       "type": "string"
+     }
+    },
+    "sdkPipelineOptions": {
+     "type": "object",
+     "additionalProperties": {
+      "type": "any"
      }
     },
     "tempStoragePrefix": {
@@ -887,6 +893,18 @@
     }
    }
   },
+  "SourceFork": {
+   "id": "SourceFork",
+   "type": "object",
+   "properties": {
+    "primary": {
+     "$ref": "SourceSplitShard"
+    },
+    "residual": {
+     "$ref": "SourceSplitShard"
+    }
+   }
+  },
   "SourceGetMetadataRequest": {
    "id": "SourceGetMetadataRequest",
    "type": "object",
@@ -1276,6 +1294,9 @@
     },
     "requestedLeaseDuration": {
      "type": "string"
+    },
+    "sourceFork": {
+     "$ref": "SourceFork"
     },
     "sourceOperationResponse": {
      "$ref": "SourceOperationResponse"

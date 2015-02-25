@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/b2NIBPwXNKKhXGBuVSRLcFt--0c\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/W-CYad3sVi3av-L2zzzQukVGZ3g\"",
  "discoveryVersion": "v1",
  "id": "cloudmonitoring:v2beta2",
  "name": "cloudmonitoring",
  "canonicalName": "Cloud Monitoring",
  "version": "v2beta2",
- "revision": "20141112",
+ "revision": "20150109",
  "title": "Cloud Monitoring API",
  "description": "API for accessing Google Cloud and API monitoring data.",
  "ownerDomain": "google.com",
@@ -15,7 +15,7 @@
   "x16": "http://www.google.com/images/icons/product/search-16.gif",
   "x32": "http://www.google.com/images/icons/product/search-32.gif"
  },
- "documentationLink": "https://developers.google.com/cloud/eap/cloud-monitoring/v2beta2/",
+ "documentationLink": "https://cloud.google.com/monitoring/v2beta2/",
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/cloudmonitoring/v2beta2/projects/",
  "basePath": "/cloudmonitoring/v2beta2/projects/",

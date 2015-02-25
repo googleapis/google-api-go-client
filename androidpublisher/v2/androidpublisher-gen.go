@@ -1740,9 +1740,9 @@ type EditsApksAddexternallyhostedCall struct {
 
 // Addexternallyhosted: Creates a new APK without uploading the APK
 // itself to Google Play, instead hosting the APK at a specified URL.
-// This function is only available to enterprises using Android for
-// Work, for applications distributed within the enterprise Private
-// Channel.
+// This function is only available to enterprises using Google Play for
+// work whose application is configured to restrict distribution to the
+// enterprise domain.
 func (r *EditsApksService) Addexternallyhosted(packageNameid string, editId string, apksaddexternallyhostedrequest *ApksAddExternallyHostedRequest) *EditsApksAddexternallyhostedCall {
 	c := &EditsApksAddexternallyhostedCall{s: r.s, opt_: make(map[string]interface{})}
 	c.packageNameid = packageNameid
@@ -1794,7 +1794,7 @@ func (c *EditsApksAddexternallyhostedCall) Do() (*ApksAddExternallyHostedRespons
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new APK without uploading the APK itself to Google Play, instead hosting the APK at a specified URL. This function is only available to enterprises using Android for Work, for applications distributed within the enterprise Private Channel.",
+	//   "description": "Creates a new APK without uploading the APK itself to Google Play, instead hosting the APK at a specified URL. This function is only available to enterprises using Google Play for work whose application is configured to restrict distribution to the enterprise domain.",
 	//   "httpMethod": "POST",
 	//   "id": "androidpublisher.edits.apks.addexternallyhosted",
 	//   "parameterOrder": [
@@ -2012,9 +2012,6 @@ func (c *EditsApksUploadCall) Do() (*Apk, error) {
 		}
 		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
 		req.Body = nil
-		if params.Get("name") == "" {
-			return nil, fmt.Errorf("resumable uploads must set the Name parameter.")
-		}
 	} else {
 		req.Header.Set("Content-Type", ctype)
 	}
@@ -2853,9 +2850,6 @@ func (c *EditsExpansionfilesUploadCall) Do() (*ExpansionFilesUploadResponse, err
 		}
 		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
 		req.Body = nil
-		if params.Get("name") == "" {
-			return nil, fmt.Errorf("resumable uploads must set the Name parameter.")
-		}
 	} else {
 		req.Header.Set("Content-Type", ctype)
 	}
@@ -3445,9 +3439,6 @@ func (c *EditsImagesUploadCall) Do() (*ImagesUploadResponse, error) {
 		}
 		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
 		req.Body = nil
-		if params.Get("name") == "" {
-			return nil, fmt.Errorf("resumable uploads must set the Name parameter.")
-		}
 	} else {
 		req.Header.Set("Content-Type", ctype)
 	}

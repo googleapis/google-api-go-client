@@ -166,6 +166,8 @@ type Environment struct {
 
 	Experiments []string `json:"experiments,omitempty"`
 
+	SdkPipelineOptions *EnvironmentSdkPipelineOptions `json:"sdkPipelineOptions,omitempty"`
+
 	TempStoragePrefix string `json:"tempStoragePrefix,omitempty"`
 
 	UserAgent *EnvironmentUserAgent `json:"userAgent,omitempty"`
@@ -173,6 +175,9 @@ type Environment struct {
 	Version *EnvironmentVersion `json:"version,omitempty"`
 
 	WorkerPools []*WorkerPool `json:"workerPools,omitempty"`
+}
+
+type EnvironmentSdkPipelineOptions struct {
 }
 
 type EnvironmentUserAgent struct {
@@ -491,6 +496,12 @@ type SourceCodec struct {
 type SourceSpec struct {
 }
 
+type SourceFork struct {
+	Primary *SourceSplitShard `json:"primary,omitempty"`
+
+	Residual *SourceSplitShard `json:"residual,omitempty"`
+}
+
 type SourceGetMetadataRequest struct {
 	Source *Source `json:"source,omitempty"`
 }
@@ -680,6 +691,8 @@ type WorkItemStatus struct {
 	ReportIndex int64 `json:"reportIndex,omitempty,string"`
 
 	RequestedLeaseDuration string `json:"requestedLeaseDuration,omitempty"`
+
+	SourceFork *SourceFork `json:"sourceFork,omitempty"`
 
 	SourceOperationResponse *SourceOperationResponse `json:"sourceOperationResponse,omitempty"`
 

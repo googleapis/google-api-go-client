@@ -37,7 +37,7 @@ var _ = context.Background
 const apiId = "cloudlatencytest:v2"
 const apiName = "cloudlatencytest"
 const apiVersion = "v2"
-const basePath = "https://www.googleapis.com/v2/statscollection/"
+const basePath = "https://cloudlatencytest-pa.googleapis.com/v2/statscollection/"
 
 // OAuth2 scopes used by this API.
 const (

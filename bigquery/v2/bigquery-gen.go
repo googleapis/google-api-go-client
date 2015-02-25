@@ -493,6 +493,15 @@ type JobConfigurationLoad struct {
 	// all records are valid.
 	MaxBadRecords int64 `json:"maxBadRecords,omitempty"`
 
+	// ProjectionFields: [Experimental] Names(case-sensitive) of properties
+	// to keep when importing data. If this is populated, only the specified
+	// properties will be imported for each entity. Currently, this is only
+	// supported for DATASTORE_BACKUP imports and only top level properties
+	// are supported. If any specified property is not found in the
+	// Datastore 'Kind' being imported, that is an error. Note: This feature
+	// is experimental and can change in the future.
+	ProjectionFields []string `json:"projectionFields,omitempty"`
+
 	// Quote: [Optional] The value that is used to quote data sections in a
 	// CSV file. BigQuery converts the string to ISO-8859-1 encoding, and
 	// then uses the first byte of the encoded string to split the data in
@@ -939,7 +948,7 @@ type Table struct {
 
 	// LastModifiedTime: [Output-only] The time when this table was last
 	// modified, in milliseconds since the epoch.
-	LastModifiedTime int64 `json:"lastModifiedTime,omitempty,string"`
+	LastModifiedTime uint64 `json:"lastModifiedTime,omitempty,string"`
 
 	// NumBytes: [Output-only] The size of the table in bytes. This property
 	// is unavailable for tables that are actively receiving streaming

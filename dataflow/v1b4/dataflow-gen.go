@@ -37,7 +37,7 @@ var _ = context.Background
 const apiId = "dataflow:v1b4"
 const apiName = "dataflow"
 const apiVersion = "v1b4"
-const basePath = "https://www.googleapis.com/"
+const basePath = "https://dataflow.googleapis.com/"
 
 func New(client *http.Client) (*Service, error) {
 	if client == nil {

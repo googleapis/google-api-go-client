@@ -165,8 +165,46 @@ type History struct {
 	// Id: The mailbox sequence ID.
 	Id uint64 `json:"id,omitempty,string"`
 
-	// Messages: The messages that changed in this history record.
+	// LabelsAdded: Labels added to messages in this history record.
+	LabelsAdded []*HistoryLabelAdded `json:"labelsAdded,omitempty"`
+
+	// LabelsRemoved: Labels removed from messages in this history record.
+	LabelsRemoved []*HistoryLabelRemoved `json:"labelsRemoved,omitempty"`
+
+	// Messages: List of messages changed in this history record. The fields
+	// for specific change types, such as messagesAdded may duplicate
+	// messages in this field. We recommend using the specific change-type
+	// fields instead of this.
 	Messages []*Message `json:"messages,omitempty"`
+
+	// MessagesAdded: Messages added to the mailbox in this history record.
+	MessagesAdded []*HistoryMessageAdded `json:"messagesAdded,omitempty"`
+
+	// MessagesDeleted: Messages deleted (not Trashed) from the mailbox in
+	// this history record.
+	MessagesDeleted []*HistoryMessageDeleted `json:"messagesDeleted,omitempty"`
+}
+
+type HistoryLabelAdded struct {
+	// LabelIds: Label IDs added to the message.
+	LabelIds []string `json:"labelIds,omitempty"`
+
+	Message *Message `json:"message,omitempty"`
+}
+
+type HistoryLabelRemoved struct {
+	// LabelIds: Label IDs removed from the message.
+	LabelIds []string `json:"labelIds,omitempty"`
+
+	Message *Message `json:"message,omitempty"`
+}
+
+type HistoryMessageAdded struct {
+	Message *Message `json:"message,omitempty"`
+}
+
+type HistoryMessageDeleted struct {
+	Message *Message `json:"message,omitempty"`
 }
 
 type Label struct {
@@ -221,7 +259,8 @@ type ListDraftsResponse struct {
 }
 
 type ListHistoryResponse struct {
-	// History: List of history records.
+	// History: List of history records. Any messages contained in the
+	// response will typically only have id and threadId fields populated.
 	History []*History `json:"history,omitempty"`
 
 	// HistoryId: The ID of the mailbox's current history record.
@@ -2293,7 +2332,7 @@ func (c *UsersMessagesImportCall) InternalDateSource(internalDateSource string) 
 }
 
 // NeverMarkSpam sets the optional parameter "neverMarkSpam": Ignore the
-// Gmail spam classifer decision and never mark this email as SPAM in
+// Gmail spam classifier decision and never mark this email as SPAM in
 // the mailbox.
 func (c *UsersMessagesImportCall) NeverMarkSpam(neverMarkSpam bool) *UsersMessagesImportCall {
 	c.opt_["neverMarkSpam"] = neverMarkSpam
@@ -2477,7 +2516,7 @@ func (c *UsersMessagesImportCall) Do() (*Message, error) {
 	//     },
 	//     "neverMarkSpam": {
 	//       "default": "false",
-	//       "description": "Ignore the Gmail spam classifer decision and never mark this email as SPAM in the mailbox.",
+	//       "description": "Ignore the Gmail spam classifier decision and never mark this email as SPAM in the mailbox.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },

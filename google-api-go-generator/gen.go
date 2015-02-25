@@ -380,6 +380,12 @@ func (a *API) GenerateCode() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
+	// Because the Discovery JSON may not have all the fields populated that the actual
+	// API JSON has (e.g. rootUrl and servicePath), the API should be repopulated from
+	// the JSON here.
+	if err := json.Unmarshal(jsonBytes, a); err != nil {
+		return nil, err
+	}
 
 	// Buffer the output in memory, for gofmt'ing later in the defer.
 	var buf bytes.Buffer

@@ -37,7 +37,7 @@ var _ = context.Background
 const apiId = "pubsub:v1beta1a"
 const apiName = "pubsub"
 const apiVersion = "v1beta1a"
-const basePath = "https://www.googleapis.com/v1beta1a/"
+const basePath = "https://pubsub.googleapis.com/v1beta1a/"
 
 // OAuth2 scopes used by this API.
 const (

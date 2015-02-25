@@ -342,7 +342,14 @@ func (a *API) jsonBytes() []byte {
 	if v := a.forceJSON; v != nil {
 		return v
 	}
-	return slurpURL(a.DiscoveryURL())
+	v := slurpURL(a.DiscoveryURL())
+	// Because the Discovery JSON may not have all the fields populated that the actual
+	// API JSON has (e.g. rootUrl and servicePath), the API should be repopulated from
+	// the JSON here.
+	if err := json.Unmarshal(v, a); err != nil {
+		log.Fatalf("error decoding JSON in %s: %v", a.DiscoveryURL, err)
+	}
+	return v
 }
 
 func (a *API) WriteGeneratedCode() error {

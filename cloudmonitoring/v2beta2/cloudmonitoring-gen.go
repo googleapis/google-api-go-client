@@ -1,6 +1,6 @@
 // Package cloudmonitoring provides access to the Cloud Monitoring API.
 //
-// See https://developers.google.com/cloud/eap/cloud-monitoring/v2beta2/
+// See https://cloud.google.com/monitoring/v2beta2/
 //
 // Usage example:
 //

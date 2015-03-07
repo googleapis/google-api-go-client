@@ -153,14 +153,26 @@ func getMediaType(media io.Reader) (io.Reader, string) {
 		return media, typer.ContentType()
 	}
 
+	pr, pw := io.Pipe()
 	typ := "application/octet-stream"
 	buf := make([]byte, 1024)
 	n, err := media.Read(buf)
-	buf = buf[:n]
-	if err == nil {
-		typ = http.DetectContentType(buf)
+	if err != nil {
+		pw.CloseWithError(fmt.Errorf("error reading media: %v", err))
+		return pr, typ
 	}
-	return io.MultiReader(bytes.NewBuffer(buf), media), typ
+	buf = buf[:n]
+	typ = http.DetectContentType(buf)
+	mr := io.MultiReader(bytes.NewBuffer(buf), media)
+	go func() {
+		_, err = io.Copy(pw, mr)
+		if err != nil {
+			pw.CloseWithError(fmt.Errorf("error reading media: %v", err))
+			return
+		}
+		pw.Close()
+	}()
+	return pr, typ
 }
 
 // DetectMediaType detects and returns the content type of the provided media.
@@ -242,26 +254,33 @@ func ConditionallyIncludeMedia(media io.Reader, bodyp *io.Reader, ctypep *string
 	*bodyp = pr
 	*ctypep = "multipart/related; boundary=" + mpw.Boundary()
 	go func() {
-		defer pw.Close()
-		defer mpw.Close()
-
 		w, err := mpw.CreatePart(typeHeader(bodyType))
 		if err != nil {
+			mpw.Close()
+			pw.CloseWithError(fmt.Errorf("googleapi: body CreatePart failed: %v", err))
 			return
 		}
 		_, err = io.Copy(w, body)
 		if err != nil {
+			mpw.Close()
+			pw.CloseWithError(fmt.Errorf("googleapi: body Copy failed: %v", err))
 			return
 		}
 
 		w, err = mpw.CreatePart(typeHeader(mediaType))
 		if err != nil {
+			mpw.Close()
+			pw.CloseWithError(fmt.Errorf("googleapi: media CreatePart failed: %v", err))
 			return
 		}
 		_, err = io.Copy(w, media)
 		if err != nil {
+			mpw.Close()
+			pw.CloseWithError(fmt.Errorf("googleapi: media Copy failed: %v", err))
 			return
 		}
+		mpw.Close()
+		pw.Close()
 	}()
 	cancel = func() { pw.CloseWithError(errAborted) }
 	return cancel, true

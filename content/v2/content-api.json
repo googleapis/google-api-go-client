@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/C8XXsPv6OQ96WhF0iGLVjduwCpc\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/Jg5IFKTqCcIBJROG8QNmsXQ1iso\"",
  "discoveryVersion": "v1",
  "id": "content:v2",
  "name": "content",
  "canonicalName": "Shopping Content",
  "version": "v2",
- "revision": "20150218",
+ "revision": "20150317",
  "title": "Content API for Shopping",
  "description": "Manage product items, inventory, and Merchant Center accounts for Google Shopping.",
  "ownerDomain": "google.com",
@@ -151,6 +151,22 @@
     "status": {
      "type": "string",
      "description": "Status of the link between this Merchant Center account and the AdWords account."
+    }
+   }
+  },
+  "AccountIdentifier": {
+   "id": "AccountIdentifier",
+   "type": "object",
+   "properties": {
+    "aggregatorId": {
+     "type": "string",
+     "description": "The aggregator ID, set for aggregators and subaccounts (in that case, it represents the aggregator of the subaccount).",
+     "format": "uint64"
+    },
+    "merchantId": {
+     "type": "string",
+     "description": "The merchant account ID, set for individual accounts and subaccounts.",
+     "format": "uint64"
     }
    }
   },
@@ -673,6 +689,24 @@
     "emailAddress": {
      "type": "string",
      "description": "User's email address."
+    }
+   }
+  },
+  "AccountsAuthInfoResponse": {
+   "id": "AccountsAuthInfoResponse",
+   "type": "object",
+   "properties": {
+    "accountIdentifiers": {
+     "type": "array",
+     "description": "The account identifiers corresponding to the authenticated user.\n- For an individual account: only the merchant ID is defined\n- For an aggregator: only the aggregator ID is defined\n- For a subaccount of an MCA: both the merchant ID and the aggregator ID are defined.",
+     "items": {
+      "$ref": "AccountIdentifier"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"content#accountsAuthInfoResponse\".",
+     "default": "content#accountsAuthInfoResponse"
     }
    }
   },
@@ -1788,6 +1822,13 @@
      "type": "string",
      "description": "Target age group of the item."
     },
+    "aspects": {
+     "type": "array",
+     "description": "Specifies the intended aspects for the product.",
+     "items": {
+      "$ref": "ProductAspect"
+     }
+    },
     "availability": {
      "type": "string",
      "description": "Availability status of the item."
@@ -2085,6 +2126,24 @@
      "items": {
       "$ref": "Error"
      }
+    }
+   }
+  },
+  "ProductAspect": {
+   "id": "ProductAspect",
+   "type": "object",
+   "properties": {
+    "aspectName": {
+     "type": "string",
+     "description": "The name of the aspect."
+    },
+    "destinationName": {
+     "type": "string",
+     "description": "The name of the destination. Leave out to apply to all destinations."
+    },
+    "intention": {
+     "type": "string",
+     "description": "Whether the aspect is required, excluded or should be validated."
     }
    }
   },
@@ -2623,6 +2682,18 @@
  "resources": {
   "accounts": {
    "methods": {
+    "authinfo": {
+     "id": "content.accounts.authinfo",
+     "path": "accounts/authinfo",
+     "httpMethod": "GET",
+     "description": "Returns information about the authenticated user.",
+     "response": {
+      "$ref": "AccountsAuthInfoResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/content"
+     ]
+    },
     "custombatch": {
      "id": "content.accounts.custombatch",
      "path": "accounts/batch",

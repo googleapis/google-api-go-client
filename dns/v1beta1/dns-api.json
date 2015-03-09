@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/_vgNPwHi8lDV9NY2AVX5qWWTYFo\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/wU8NjG2rANeT6LROBN3mCaSHZ_8\"",
  "discoveryVersion": "v1",
  "id": "dns:v1beta1",
  "name": "dns",
  "version": "v1beta1",
- "revision": "20141121",
+ "revision": "20150114",
  "title": "Google Cloud DNS API",
  "description": "The Google Cloud DNS API provides services for configuring and serving authoritative DNS records.",
  "ownerDomain": "google.com",
@@ -154,7 +154,7 @@
     },
     "description": {
      "type": "string",
-     "description": "A string to associate with this resource for the user's convenience. Has no effect on the managed zone's function."
+     "description": "A mutable string of at most 1024 characters associated with this resource for the user's convenience. Has no effect on the managed zone's function."
     },
     "dnsName": {
      "type": "string",

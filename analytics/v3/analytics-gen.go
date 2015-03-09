@@ -76,8 +76,9 @@ func New(client *http.Client) (*Service, error) {
 }
 
 type Service struct {
-	client   *http.Client
-	BasePath string // API endpoint base URL
+	client    *http.Client
+	BasePath  string // API endpoint base URL
+	UserAgent string // optional additional User-Agent fragment
 
 	Data *DataService
 
@@ -88,6 +89,12 @@ type Service struct {
 	Provisioning *ProvisioningService
 }
 
+func (s *Service) userAgent() string {
+	if s.UserAgent == "" {
+		return googleapi.UserAgent
+	}
+	return googleapi.UserAgent + " " + s.UserAgent
+}
 func NewDataService(s *Service) *DataService {
 	rs := &DataService{s: s}
 	rs.Ga = NewDataGaService(s)
@@ -141,7 +148,6 @@ func NewManagementService(s *Service) *ManagementService {
 	rs.CustomDataSources = NewManagementCustomDataSourcesService(s)
 	rs.CustomDimensions = NewManagementCustomDimensionsService(s)
 	rs.CustomMetrics = NewManagementCustomMetricsService(s)
-	rs.DailyUploads = NewManagementDailyUploadsService(s)
 	rs.Experiments = NewManagementExperimentsService(s)
 	rs.Filters = NewManagementFiltersService(s)
 	rs.Goals = NewManagementGoalsService(s)
@@ -171,8 +177,6 @@ type ManagementService struct {
 	CustomDimensions *ManagementCustomDimensionsService
 
 	CustomMetrics *ManagementCustomMetricsService
-
-	DailyUploads *ManagementDailyUploadsService
 
 	Experiments *ManagementExperimentsService
 
@@ -250,15 +254,6 @@ func NewManagementCustomMetricsService(s *Service) *ManagementCustomMetricsServi
 }
 
 type ManagementCustomMetricsService struct {
-	s *Service
-}
-
-func NewManagementDailyUploadsService(s *Service) *ManagementDailyUploadsService {
-	rs := &ManagementDailyUploadsService{s: s}
-	return rs
-}
-
-type ManagementDailyUploadsService struct {
 	s *Service
 }
 
@@ -854,116 +849,6 @@ type CustomMetrics struct {
 
 	// PreviousLink: Link to previous page for this custom metric
 	// collection.
-	PreviousLink string `json:"previousLink,omitempty"`
-
-	// StartIndex: The starting index of the resources, which is 1 by
-	// default or otherwise specified by the start-index query parameter.
-	StartIndex int64 `json:"startIndex,omitempty"`
-
-	// TotalResults: The total number of results for the query, regardless
-	// of the number of results in the response.
-	TotalResults int64 `json:"totalResults,omitempty"`
-
-	// Username: Email ID of the authenticated user
-	Username string `json:"username,omitempty"`
-}
-
-type DailyUpload struct {
-	// AccountId: Account ID to which this daily upload belongs.
-	AccountId string `json:"accountId,omitempty"`
-
-	// AppendCount: Number of appends for this date.
-	AppendCount int64 `json:"appendCount,omitempty"`
-
-	// CreatedTime: Time this daily upload was created.
-	CreatedTime string `json:"createdTime,omitempty"`
-
-	// CustomDataSourceId: Custom data source ID to which this daily upload
-	// belongs.
-	CustomDataSourceId string `json:"customDataSourceId,omitempty"`
-
-	// Date: Date associated with daily upload.
-	Date string `json:"date,omitempty"`
-
-	// Kind: Resource type for Analytics daily upload.
-	Kind string `json:"kind,omitempty"`
-
-	// ModifiedTime: Time this daily upload was last modified.
-	ModifiedTime string `json:"modifiedTime,omitempty"`
-
-	// ParentLink: Parent link for a daily upload. Points to the custom data
-	// source to which this daily upload belongs.
-	ParentLink *DailyUploadParentLink `json:"parentLink,omitempty"`
-
-	// RecentChanges: Change log for last 10 changes in chronological order.
-	RecentChanges []*DailyUploadRecentChanges `json:"recentChanges,omitempty"`
-
-	// SelfLink: Link for this daily upload.
-	SelfLink string `json:"selfLink,omitempty"`
-
-	// WebPropertyId: Web property ID of the form UA-XXXXX-YY to which this
-	// daily upload belongs.
-	WebPropertyId string `json:"webPropertyId,omitempty"`
-}
-
-type DailyUploadParentLink struct {
-	// Href: Link to the custom data source to which this daily upload
-	// belongs.
-	Href string `json:"href,omitempty"`
-
-	// Type: Value is "analytics#customDataSource".
-	Type string `json:"type,omitempty"`
-}
-
-type DailyUploadRecentChanges struct {
-	// Change: The type of change: APPEND, RESET, or DELETE.
-	Change string `json:"change,omitempty"`
-
-	// Time: The time when the change occurred.
-	Time string `json:"time,omitempty"`
-}
-
-type DailyUploadAppend struct {
-	// AccountId: Account Id to which this daily upload append belongs.
-	AccountId string `json:"accountId,omitempty"`
-
-	// AppendNumber: Append number.
-	AppendNumber int64 `json:"appendNumber,omitempty"`
-
-	// CustomDataSourceId: Custom data source Id to which this daily upload
-	// append belongs.
-	CustomDataSourceId string `json:"customDataSourceId,omitempty"`
-
-	// Date: Date associated with daily upload append.
-	Date string `json:"date,omitempty"`
-
-	// Kind: Resource type for Analytics daily upload append.
-	Kind string `json:"kind,omitempty"`
-
-	NextAppendLink string `json:"nextAppendLink,omitempty"`
-
-	// WebPropertyId: Web property Id of the form UA-XXXXX-YY to which this
-	// daily upload append belongs.
-	WebPropertyId string `json:"webPropertyId,omitempty"`
-}
-
-type DailyUploads struct {
-	// Items: A collection of daily uploads.
-	Items []*DailyUpload `json:"items,omitempty"`
-
-	// ItemsPerPage: The maximum number of resources the response can
-	// contain, regardless of the actual number of resources returned. Its
-	// value ranges from 1 to 1000 with a value of 1000 by default, or
-	// otherwise specified by the max-results query parameter.
-	ItemsPerPage int64 `json:"itemsPerPage,omitempty"`
-
-	// Kind: Collection type. Value is analytics#dailyUploads.
-	Kind string `json:"kind,omitempty"`
-
-	// NextLink: Link to next page for this daily upload collection.
-	NextLink string `json:"nextLink,omitempty"`
-
-	// PreviousLink: Link to previous page for this daily upload collection.
 	PreviousLink string `json:"previousLink,omitempty"`
 
 	// StartIndex: The starting index of the resources, which is 1 by
@@ -2962,7 +2847,7 @@ func (c *DataGaGetCall) Do() (*GaData, error) {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -3200,7 +3085,7 @@ func (c *DataMcfGetCall) Do() (*McfData, error) {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -3392,7 +3277,7 @@ func (c *DataRealtimeGetCall) Do() (*RealtimeData, error) {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -3521,7 +3406,7 @@ func (c *ManagementAccountSummariesListCall) Do() (*AccountSummaries, error) {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -3605,7 +3490,7 @@ func (c *ManagementAccountUserLinksDeleteCall) Do() error {
 		"accountId": c.accountId,
 		"linkId":    c.linkId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -3689,7 +3574,7 @@ func (c *ManagementAccountUserLinksInsertCall) Do() (*EntityUserLink, error) {
 		"accountId": c.accountId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -3789,7 +3674,7 @@ func (c *ManagementAccountUserLinksListCall) Do() (*EntityUserLinks, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId": c.accountId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -3891,7 +3776,7 @@ func (c *ManagementAccountUserLinksUpdateCall) Do() (*EntityUserLink, error) {
 		"linkId":    c.linkId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -3994,7 +3879,7 @@ func (c *ManagementAccountsListCall) Do() (*Accounts, error) {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -4100,7 +3985,7 @@ func (c *ManagementCustomDataSourcesListCall) Do() (*CustomDataSources, error) {
 		"accountId":     c.accountId,
 		"webPropertyId": c.webPropertyId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -4207,7 +4092,7 @@ func (c *ManagementCustomDimensionsGetCall) Do() (*CustomDimension, error) {
 		"webPropertyId":     c.webPropertyId,
 		"customDimensionId": c.customDimensionId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -4309,7 +4194,7 @@ func (c *ManagementCustomDimensionsInsertCall) Do() (*CustomDimension, error) {
 		"webPropertyId": c.webPropertyId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -4419,7 +4304,7 @@ func (c *ManagementCustomDimensionsListCall) Do() (*CustomDimensions, error) {
 		"accountId":     c.accountId,
 		"webPropertyId": c.webPropertyId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -4543,7 +4428,7 @@ func (c *ManagementCustomDimensionsPatchCall) Do() (*CustomDimension, error) {
 		"customDimensionId": c.customDimensionId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -4668,7 +4553,7 @@ func (c *ManagementCustomDimensionsUpdateCall) Do() (*CustomDimension, error) {
 		"customDimensionId": c.customDimensionId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -4773,7 +4658,7 @@ func (c *ManagementCustomMetricsGetCall) Do() (*CustomMetric, error) {
 		"webPropertyId":  c.webPropertyId,
 		"customMetricId": c.customMetricId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -4875,7 +4760,7 @@ func (c *ManagementCustomMetricsInsertCall) Do() (*CustomMetric, error) {
 		"webPropertyId": c.webPropertyId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -4985,7 +4870,7 @@ func (c *ManagementCustomMetricsListCall) Do() (*CustomMetrics, error) {
 		"accountId":     c.accountId,
 		"webPropertyId": c.webPropertyId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -5109,7 +4994,7 @@ func (c *ManagementCustomMetricsPatchCall) Do() (*CustomMetric, error) {
 		"customMetricId": c.customMetricId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -5234,7 +5119,7 @@ func (c *ManagementCustomMetricsUpdateCall) Do() (*CustomMetric, error) {
 		"customMetricId": c.customMetricId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -5297,533 +5182,6 @@ func (c *ManagementCustomMetricsUpdateCall) Do() (*CustomMetric, error) {
 
 }
 
-// method id "analytics.management.dailyUploads.delete":
-
-type ManagementDailyUploadsDeleteCall struct {
-	s                  *Service
-	accountId          string
-	webPropertyId      string
-	customDataSourceId string
-	date               string
-	type_              string
-	opt_               map[string]interface{}
-}
-
-// Delete: Delete uploaded data for the given date.
-func (r *ManagementDailyUploadsService) Delete(accountId string, webPropertyId string, customDataSourceId string, date string, type_ string) *ManagementDailyUploadsDeleteCall {
-	c := &ManagementDailyUploadsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
-	c.accountId = accountId
-	c.webPropertyId = webPropertyId
-	c.customDataSourceId = customDataSourceId
-	c.date = date
-	c.type_ = type_
-	return c
-}
-
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ManagementDailyUploadsDeleteCall) Fields(s ...googleapi.Field) *ManagementDailyUploadsDeleteCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
-	return c
-}
-
-func (c *ManagementDailyUploadsDeleteCall) Do() error {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	params.Set("type", fmt.Sprintf("%v", c.type_))
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/dailyUploads/{date}")
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("DELETE", urls, body)
-	googleapi.Expand(req.URL, map[string]string{
-		"accountId":          c.accountId,
-		"webPropertyId":      c.webPropertyId,
-		"customDataSourceId": c.customDataSourceId,
-		"date":               c.date,
-	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return err
-	}
-	return nil
-	// {
-	//   "description": "Delete uploaded data for the given date.",
-	//   "httpMethod": "DELETE",
-	//   "id": "analytics.management.dailyUploads.delete",
-	//   "parameterOrder": [
-	//     "accountId",
-	//     "webPropertyId",
-	//     "customDataSourceId",
-	//     "date",
-	//     "type"
-	//   ],
-	//   "parameters": {
-	//     "accountId": {
-	//       "description": "Account Id associated with daily upload delete.",
-	//       "location": "path",
-	//       "pattern": "[0-9]+",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "customDataSourceId": {
-	//       "description": "Custom data source Id associated with daily upload delete.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "date": {
-	//       "description": "Date for which data is to be deleted. Date should be formatted as YYYY-MM-DD.",
-	//       "location": "path",
-	//       "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2}",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "type": {
-	//       "description": "Type of data for this delete.",
-	//       "enum": [
-	//         "cost"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Value for specifying cost data upload."
-	//       ],
-	//       "location": "query",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "webPropertyId": {
-	//       "description": "Web property Id associated with daily upload delete.",
-	//       "location": "path",
-	//       "pattern": "UA-[0-9]+-[0-9]+",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/dailyUploads/{date}",
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics",
-	//     "https://www.googleapis.com/auth/analytics.edit"
-	//   ]
-	// }
-
-}
-
-// method id "analytics.management.dailyUploads.list":
-
-type ManagementDailyUploadsListCall struct {
-	s                  *Service
-	accountId          string
-	webPropertyId      string
-	customDataSourceId string
-	startDate          string
-	endDate            string
-	opt_               map[string]interface{}
-}
-
-// List: List daily uploads to which the user has access.
-func (r *ManagementDailyUploadsService) List(accountId string, webPropertyId string, customDataSourceId string, startDate string, endDate string) *ManagementDailyUploadsListCall {
-	c := &ManagementDailyUploadsListCall{s: r.s, opt_: make(map[string]interface{})}
-	c.accountId = accountId
-	c.webPropertyId = webPropertyId
-	c.customDataSourceId = customDataSourceId
-	c.startDate = startDate
-	c.endDate = endDate
-	return c
-}
-
-// MaxResults sets the optional parameter "max-results": The maximum
-// number of custom data sources to include in this response.
-func (c *ManagementDailyUploadsListCall) MaxResults(maxResults int64) *ManagementDailyUploadsListCall {
-	c.opt_["max-results"] = maxResults
-	return c
-}
-
-// StartIndex sets the optional parameter "start-index": A 1-based index
-// of the first daily upload to retrieve. Use this parameter as a
-// pagination mechanism along with the max-results parameter.
-func (c *ManagementDailyUploadsListCall) StartIndex(startIndex int64) *ManagementDailyUploadsListCall {
-	c.opt_["start-index"] = startIndex
-	return c
-}
-
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ManagementDailyUploadsListCall) Fields(s ...googleapi.Field) *ManagementDailyUploadsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
-	return c
-}
-
-func (c *ManagementDailyUploadsListCall) Do() (*DailyUploads, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	params.Set("end-date", fmt.Sprintf("%v", c.endDate))
-	params.Set("start-date", fmt.Sprintf("%v", c.startDate))
-	if v, ok := c.opt_["max-results"]; ok {
-		params.Set("max-results", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["start-index"]; ok {
-		params.Set("start-index", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/dailyUploads")
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	googleapi.Expand(req.URL, map[string]string{
-		"accountId":          c.accountId,
-		"webPropertyId":      c.webPropertyId,
-		"customDataSourceId": c.customDataSourceId,
-	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	var ret *DailyUploads
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "List daily uploads to which the user has access.",
-	//   "httpMethod": "GET",
-	//   "id": "analytics.management.dailyUploads.list",
-	//   "parameterOrder": [
-	//     "accountId",
-	//     "webPropertyId",
-	//     "customDataSourceId",
-	//     "start-date",
-	//     "end-date"
-	//   ],
-	//   "parameters": {
-	//     "accountId": {
-	//       "description": "Account Id for the daily uploads to retrieve.",
-	//       "location": "path",
-	//       "pattern": "\\d+",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "customDataSourceId": {
-	//       "description": "Custom data source Id for daily uploads to retrieve.",
-	//       "location": "path",
-	//       "pattern": ".{22}",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "end-date": {
-	//       "description": "End date of the form YYYY-MM-DD.",
-	//       "location": "query",
-	//       "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2}",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "max-results": {
-	//       "description": "The maximum number of custom data sources to include in this response.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "minimum": "1",
-	//       "type": "integer"
-	//     },
-	//     "start-date": {
-	//       "description": "Start date of the form YYYY-MM-DD.",
-	//       "location": "query",
-	//       "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2}",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "start-index": {
-	//       "description": "A 1-based index of the first daily upload to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "minimum": "1",
-	//       "type": "integer"
-	//     },
-	//     "webPropertyId": {
-	//       "description": "Web property Id for the daily uploads to retrieve.",
-	//       "location": "path",
-	//       "pattern": "UA-(\\d+)-(\\d+)",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/dailyUploads",
-	//   "response": {
-	//     "$ref": "DailyUploads"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics",
-	//     "https://www.googleapis.com/auth/analytics.readonly"
-	//   ]
-	// }
-
-}
-
-// method id "analytics.management.dailyUploads.upload":
-
-type ManagementDailyUploadsUploadCall struct {
-	s                  *Service
-	accountId          string
-	webPropertyId      string
-	customDataSourceId string
-	date               string
-	appendNumber       int64
-	type_              string
-	opt_               map[string]interface{}
-	media_             io.Reader
-	resumable_         googleapi.SizeReaderAt
-	mediaType_         string
-	ctx_               context.Context
-	protocol_          string
-}
-
-// Upload: Update/Overwrite data for a custom data source.
-func (r *ManagementDailyUploadsService) Upload(accountId string, webPropertyId string, customDataSourceId string, date string, appendNumber int64, type_ string) *ManagementDailyUploadsUploadCall {
-	c := &ManagementDailyUploadsUploadCall{s: r.s, opt_: make(map[string]interface{})}
-	c.accountId = accountId
-	c.webPropertyId = webPropertyId
-	c.customDataSourceId = customDataSourceId
-	c.date = date
-	c.appendNumber = appendNumber
-	c.type_ = type_
-	return c
-}
-
-// Reset sets the optional parameter "reset": Reset/Overwrite all
-// previous appends for this date and start over with this file as the
-// first upload.
-func (c *ManagementDailyUploadsUploadCall) Reset(reset bool) *ManagementDailyUploadsUploadCall {
-	c.opt_["reset"] = reset
-	return c
-}
-
-// Media specifies the media to upload in a single chunk.
-// At most one of Media and ResumableMedia may be set.
-func (c *ManagementDailyUploadsUploadCall) Media(r io.Reader) *ManagementDailyUploadsUploadCall {
-	c.media_ = r
-	c.protocol_ = "multipart"
-	return c
-}
-
-// ResumableMedia specifies the media to upload in chunks and can be cancelled with ctx.
-// At most one of Media and ResumableMedia may be set.
-// mediaType identifies the MIME media type of the upload, such as "image/png".
-// If mediaType is "", it will be auto-detected.
-func (c *ManagementDailyUploadsUploadCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *ManagementDailyUploadsUploadCall {
-	c.ctx_ = ctx
-	c.resumable_ = io.NewSectionReader(r, 0, size)
-	c.mediaType_ = mediaType
-	c.protocol_ = "resumable"
-	return c
-}
-
-// ProgressUpdater provides a callback function that will be called after every chunk.
-// It should be a low-latency function in order to not slow down the upload operation.
-// This should only be called when using ResumableMedia (as opposed to Media).
-func (c *ManagementDailyUploadsUploadCall) ProgressUpdater(pu googleapi.ProgressUpdater) *ManagementDailyUploadsUploadCall {
-	c.opt_["progressUpdater"] = pu
-	return c
-}
-
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ManagementDailyUploadsUploadCall) Fields(s ...googleapi.Field) *ManagementDailyUploadsUploadCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
-	return c
-}
-
-func (c *ManagementDailyUploadsUploadCall) Do() (*DailyUploadAppend, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	params.Set("appendNumber", fmt.Sprintf("%v", c.appendNumber))
-	params.Set("type", fmt.Sprintf("%v", c.type_))
-	if v, ok := c.opt_["reset"]; ok {
-		params.Set("reset", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/dailyUploads/{date}/uploads")
-	var progressUpdater_ googleapi.ProgressUpdater
-	if v, ok := c.opt_["progressUpdater"]; ok {
-		if pu, ok := v.(googleapi.ProgressUpdater); ok {
-			progressUpdater_ = pu
-		}
-	}
-	if c.media_ != nil || c.resumable_ != nil {
-		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
-		params.Set("uploadType", c.protocol_)
-	}
-	urls += "?" + params.Encode()
-	body = new(bytes.Buffer)
-	ctype := "application/json"
-	if c.protocol_ != "resumable" {
-		var cancel func()
-		cancel, _ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
-		if cancel != nil {
-			defer cancel()
-		}
-	}
-	req, _ := http.NewRequest("POST", urls, body)
-	googleapi.Expand(req.URL, map[string]string{
-		"accountId":          c.accountId,
-		"webPropertyId":      c.webPropertyId,
-		"customDataSourceId": c.customDataSourceId,
-		"date":               c.date,
-	})
-	if c.protocol_ == "resumable" {
-		req.ContentLength = 0
-		if c.mediaType_ == "" {
-			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
-		}
-		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
-		req.Body = nil
-	} else {
-		req.Header.Set("Content-Type", ctype)
-	}
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	if c.protocol_ == "resumable" {
-		loc := res.Header.Get("Location")
-		rx := &googleapi.ResumableUpload{
-			Client:        c.s.client,
-			URI:           loc,
-			Media:         c.resumable_,
-			MediaType:     c.mediaType_,
-			ContentLength: c.resumable_.Size(),
-			Callback:      progressUpdater_,
-		}
-		res, err = rx.Upload(c.ctx_)
-		if err != nil {
-			return nil, err
-		}
-		defer res.Body.Close()
-	}
-	var ret *DailyUploadAppend
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Update/Overwrite data for a custom data source.",
-	//   "httpMethod": "POST",
-	//   "id": "analytics.management.dailyUploads.upload",
-	//   "mediaUpload": {
-	//     "accept": [
-	//       "application/octet-stream"
-	//     ],
-	//     "maxSize": "5MB",
-	//     "protocols": {
-	//       "resumable": {
-	//         "multipart": true,
-	//         "path": "/resumable/upload/analytics/v3/management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/dailyUploads/{date}/uploads"
-	//       },
-	//       "simple": {
-	//         "multipart": true,
-	//         "path": "/upload/analytics/v3/management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/dailyUploads/{date}/uploads"
-	//       }
-	//     }
-	//   },
-	//   "parameterOrder": [
-	//     "accountId",
-	//     "webPropertyId",
-	//     "customDataSourceId",
-	//     "date",
-	//     "appendNumber",
-	//     "type"
-	//   ],
-	//   "parameters": {
-	//     "accountId": {
-	//       "description": "Account Id associated with daily upload.",
-	//       "location": "path",
-	//       "pattern": "\\d+",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "appendNumber": {
-	//       "description": "Append number for this upload indexed from 1.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "maximum": "20",
-	//       "minimum": "1",
-	//       "required": true,
-	//       "type": "integer"
-	//     },
-	//     "customDataSourceId": {
-	//       "description": "Custom data source Id to which the data being uploaded belongs.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "date": {
-	//       "description": "Date for which data is uploaded. Date should be formatted as YYYY-MM-DD.",
-	//       "location": "path",
-	//       "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2}",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "reset": {
-	//       "default": "false",
-	//       "description": "Reset/Overwrite all previous appends for this date and start over with this file as the first upload.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "type": {
-	//       "description": "Type of data for this upload.",
-	//       "enum": [
-	//         "cost"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Value for specifying cost data upload."
-	//       ],
-	//       "location": "query",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "webPropertyId": {
-	//       "description": "Web property Id associated with daily upload.",
-	//       "location": "path",
-	//       "pattern": "UA-\\d+-\\d+",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/dailyUploads/{date}/uploads",
-	//   "response": {
-	//     "$ref": "DailyUploadAppend"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics",
-	//     "https://www.googleapis.com/auth/analytics.edit"
-	//   ],
-	//   "supportsMediaUpload": true
-	// }
-
-}
-
 // method id "analytics.management.experiments.delete":
 
 type ManagementExperimentsDeleteCall struct {
@@ -5869,7 +5227,7 @@ func (c *ManagementExperimentsDeleteCall) Do() error {
 		"profileId":     c.profileId,
 		"experimentId":  c.experimentId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -5969,7 +5327,7 @@ func (c *ManagementExperimentsGetCall) Do() (*Experiment, error) {
 		"profileId":     c.profileId,
 		"experimentId":  c.experimentId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -6082,7 +5440,7 @@ func (c *ManagementExperimentsInsertCall) Do() (*Experiment, error) {
 		"profileId":     c.profileId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -6203,7 +5561,7 @@ func (c *ManagementExperimentsListCall) Do() (*Experiments, error) {
 		"webPropertyId": c.webPropertyId,
 		"profileId":     c.profileId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -6329,7 +5687,7 @@ func (c *ManagementExperimentsPatchCall) Do() (*Experiment, error) {
 		"experimentId":  c.experimentId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -6447,7 +5805,7 @@ func (c *ManagementExperimentsUpdateCall) Do() (*Experiment, error) {
 		"experimentId":  c.experimentId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -6551,7 +5909,7 @@ func (c *ManagementFiltersDeleteCall) Do() (*Filter, error) {
 		"accountId": c.accountId,
 		"filterId":  c.filterId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -6637,7 +5995,7 @@ func (c *ManagementFiltersGetCall) Do() (*Filter, error) {
 		"accountId": c.accountId,
 		"filterId":  c.filterId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -6729,7 +6087,7 @@ func (c *ManagementFiltersInsertCall) Do() (*Filter, error) {
 		"accountId": c.accountId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -6829,7 +6187,7 @@ func (c *ManagementFiltersListCall) Do() (*Filters, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId": c.accountId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -6932,7 +6290,7 @@ func (c *ManagementFiltersPatchCall) Do() (*Filter, error) {
 		"filterId":  c.filterId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -7029,7 +6387,7 @@ func (c *ManagementFiltersUpdateCall) Do() (*Filter, error) {
 		"filterId":  c.filterId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -7124,7 +6482,7 @@ func (c *ManagementGoalsGetCall) Do() (*Goal, error) {
 		"profileId":     c.profileId,
 		"goalId":        c.goalId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -7236,7 +6594,7 @@ func (c *ManagementGoalsInsertCall) Do() (*Goal, error) {
 		"profileId":     c.profileId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -7356,7 +6714,7 @@ func (c *ManagementGoalsListCall) Do() (*Goals, error) {
 		"webPropertyId": c.webPropertyId,
 		"profileId":     c.profileId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -7479,7 +6837,7 @@ func (c *ManagementGoalsPatchCall) Do() (*Goal, error) {
 		"goalId":        c.goalId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -7596,7 +6954,7 @@ func (c *ManagementGoalsUpdateCall) Do() (*Goal, error) {
 		"goalId":        c.goalId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -7705,7 +7063,7 @@ func (c *ManagementProfileFilterLinksDeleteCall) Do() error {
 		"profileId":     c.profileId,
 		"linkId":        c.linkId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -7808,7 +7166,7 @@ func (c *ManagementProfileFilterLinksGetCall) Do() (*ProfileFilterLink, error) {
 		"profileId":     c.profileId,
 		"linkId":        c.linkId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -7924,7 +7282,7 @@ func (c *ManagementProfileFilterLinksInsertCall) Do() (*ProfileFilterLink, error
 		"profileId":     c.profileId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -8047,7 +7405,7 @@ func (c *ManagementProfileFilterLinksListCall) Do() (*ProfileFilterLinks, error)
 		"webPropertyId": c.webPropertyId,
 		"profileId":     c.profileId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -8170,7 +7528,7 @@ func (c *ManagementProfileFilterLinksPatchCall) Do() (*ProfileFilterLink, error)
 		"linkId":        c.linkId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -8291,7 +7649,7 @@ func (c *ManagementProfileFilterLinksUpdateCall) Do() (*ProfileFilterLink, error
 		"linkId":        c.linkId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -8404,7 +7762,7 @@ func (c *ManagementProfileUserLinksDeleteCall) Do() error {
 		"profileId":     c.profileId,
 		"linkId":        c.linkId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -8508,7 +7866,7 @@ func (c *ManagementProfileUserLinksInsertCall) Do() (*EntityUserLink, error) {
 		"profileId":     c.profileId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -8628,7 +7986,7 @@ func (c *ManagementProfileUserLinksListCall) Do() (*EntityUserLinks, error) {
 		"webPropertyId": c.webPropertyId,
 		"profileId":     c.profileId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -8750,7 +8108,7 @@ func (c *ManagementProfileUserLinksUpdateCall) Do() (*EntityUserLink, error) {
 		"linkId":        c.linkId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -8856,7 +8214,7 @@ func (c *ManagementProfilesDeleteCall) Do() error {
 		"webPropertyId": c.webPropertyId,
 		"profileId":     c.profileId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -8945,7 +8303,7 @@ func (c *ManagementProfilesGetCall) Do() (*Profile, error) {
 		"webPropertyId": c.webPropertyId,
 		"profileId":     c.profileId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -9050,7 +8408,7 @@ func (c *ManagementProfilesInsertCall) Do() (*Profile, error) {
 		"webPropertyId": c.webPropertyId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -9160,7 +8518,7 @@ func (c *ManagementProfilesListCall) Do() (*Profiles, error) {
 		"accountId":     c.accountId,
 		"webPropertyId": c.webPropertyId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -9273,7 +8631,7 @@ func (c *ManagementProfilesPatchCall) Do() (*Profile, error) {
 		"profileId":     c.profileId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -9380,7 +8738,7 @@ func (c *ManagementProfilesUpdateCall) Do() (*Profile, error) {
 		"profileId":     c.profileId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -9490,7 +8848,7 @@ func (c *ManagementSegmentsListCall) Do() (*Segments, error) {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -9581,7 +8939,7 @@ func (c *ManagementUnsampledReportsGetCall) Do() (*UnsampledReport, error) {
 		"profileId":         c.profileId,
 		"unsampledReportId": c.unsampledReportId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -9694,7 +9052,7 @@ func (c *ManagementUnsampledReportsInsertCall) Do() (*UnsampledReport, error) {
 		"profileId":     c.profileId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -9815,7 +9173,7 @@ func (c *ManagementUnsampledReportsListCall) Do() (*UnsampledReports, error) {
 		"webPropertyId": c.webPropertyId,
 		"profileId":     c.profileId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -9934,7 +9292,7 @@ func (c *ManagementUploadsDeleteUploadDataCall) Do() error {
 		"customDataSourceId": c.customDataSourceId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -10033,7 +9391,7 @@ func (c *ManagementUploadsGetCall) Do() (*Upload, error) {
 		"customDataSourceId": c.customDataSourceId,
 		"uploadId":           c.uploadId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -10163,7 +9521,7 @@ func (c *ManagementUploadsListCall) Do() (*Uploads, error) {
 		"webPropertyId":      c.webPropertyId,
 		"customDataSourceId": c.customDataSourceId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -10231,100 +9589,6 @@ func (c *ManagementUploadsListCall) Do() (*Uploads, error) {
 	//     "https://www.googleapis.com/auth/analytics",
 	//     "https://www.googleapis.com/auth/analytics.edit",
 	//     "https://www.googleapis.com/auth/analytics.readonly"
-	//   ]
-	// }
-
-}
-
-// method id "analytics.management.uploads.migrateDataImport":
-
-type ManagementUploadsMigrateDataImportCall struct {
-	s                  *Service
-	accountId          string
-	webPropertyId      string
-	customDataSourceId string
-	opt_               map[string]interface{}
-}
-
-// MigrateDataImport: Migrate custom data source and data imports to
-// latest version.
-func (r *ManagementUploadsService) MigrateDataImport(accountId string, webPropertyId string, customDataSourceId string) *ManagementUploadsMigrateDataImportCall {
-	c := &ManagementUploadsMigrateDataImportCall{s: r.s, opt_: make(map[string]interface{})}
-	c.accountId = accountId
-	c.webPropertyId = webPropertyId
-	c.customDataSourceId = customDataSourceId
-	return c
-}
-
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ManagementUploadsMigrateDataImportCall) Fields(s ...googleapi.Field) *ManagementUploadsMigrateDataImportCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
-	return c
-}
-
-func (c *ManagementUploadsMigrateDataImportCall) Do() error {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/migrateDataImport")
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("POST", urls, body)
-	googleapi.Expand(req.URL, map[string]string{
-		"accountId":          c.accountId,
-		"webPropertyId":      c.webPropertyId,
-		"customDataSourceId": c.customDataSourceId,
-	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return err
-	}
-	return nil
-	// {
-	//   "description": "Migrate custom data source and data imports to latest version.",
-	//   "httpMethod": "POST",
-	//   "id": "analytics.management.uploads.migrateDataImport",
-	//   "parameterOrder": [
-	//     "accountId",
-	//     "webPropertyId",
-	//     "customDataSourceId"
-	//   ],
-	//   "parameters": {
-	//     "accountId": {
-	//       "description": "Account Id for migration.",
-	//       "location": "path",
-	//       "pattern": "\\d+",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "customDataSourceId": {
-	//       "description": "Custom data source Id for migration.",
-	//       "location": "path",
-	//       "pattern": ".{22}",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "webPropertyId": {
-	//       "description": "Web property Id for migration.",
-	//       "location": "path",
-	//       "pattern": "UA-(\\d+)-(\\d+)",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/migrateDataImport",
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics",
-	//     "https://www.googleapis.com/auth/analytics.edit"
 	//   ]
 	// }
 
@@ -10434,7 +9698,7 @@ func (c *ManagementUploadsUploadDataCall) Do() (*Upload, error) {
 	} else {
 		req.Header.Set("Content-Type", ctype)
 	}
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -10447,6 +9711,7 @@ func (c *ManagementUploadsUploadDataCall) Do() (*Upload, error) {
 		loc := res.Header.Get("Location")
 		rx := &googleapi.ResumableUpload{
 			Client:        c.s.client,
+			UserAgent:     c.s.userAgent(),
 			URI:           loc,
 			Media:         c.resumable_,
 			MediaType:     c.mediaType_,
@@ -10566,7 +9831,7 @@ func (c *ManagementWebPropertyAdWordsLinksDeleteCall) Do() error {
 		"webPropertyId":            c.webPropertyId,
 		"webPropertyAdWordsLinkId": c.webPropertyAdWordsLinkId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -10656,7 +9921,7 @@ func (c *ManagementWebPropertyAdWordsLinksGetCall) Do() (*EntityAdWordsLink, err
 		"webPropertyId":            c.webPropertyId,
 		"webPropertyAdWordsLinkId": c.webPropertyAdWordsLinkId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -10758,7 +10023,7 @@ func (c *ManagementWebPropertyAdWordsLinksInsertCall) Do() (*EntityAdWordsLink, 
 		"webPropertyId": c.webPropertyId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -10868,7 +10133,7 @@ func (c *ManagementWebPropertyAdWordsLinksListCall) Do() (*EntityAdWordsLinks, e
 		"accountId":     c.accountId,
 		"webPropertyId": c.webPropertyId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -10981,7 +10246,7 @@ func (c *ManagementWebPropertyAdWordsLinksPatchCall) Do() (*EntityAdWordsLink, e
 		"webPropertyAdWordsLinkId": c.webPropertyAdWordsLinkId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -11088,7 +10353,7 @@ func (c *ManagementWebPropertyAdWordsLinksUpdateCall) Do() (*EntityAdWordsLink, 
 		"webPropertyAdWordsLinkId": c.webPropertyAdWordsLinkId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -11184,7 +10449,7 @@ func (c *ManagementWebpropertiesGetCall) Do() (*Webproperty, error) {
 		"accountId":     c.accountId,
 		"webPropertyId": c.webPropertyId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -11280,7 +10545,7 @@ func (c *ManagementWebpropertiesInsertCall) Do() (*Webproperty, error) {
 		"accountId": c.accountId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -11380,7 +10645,7 @@ func (c *ManagementWebpropertiesListCall) Do() (*Webproperties, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId": c.accountId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -11483,7 +10748,7 @@ func (c *ManagementWebpropertiesPatchCall) Do() (*Webproperty, error) {
 		"webPropertyId": c.webPropertyId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -11580,7 +10845,7 @@ func (c *ManagementWebpropertiesUpdateCall) Do() (*Webproperty, error) {
 		"webPropertyId": c.webPropertyId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -11672,7 +10937,7 @@ func (c *ManagementWebpropertyUserLinksDeleteCall) Do() error {
 		"webPropertyId": c.webPropertyId,
 		"linkId":        c.linkId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -11766,7 +11031,7 @@ func (c *ManagementWebpropertyUserLinksInsertCall) Do() (*EntityUserLink, error)
 		"webPropertyId": c.webPropertyId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -11876,7 +11141,7 @@ func (c *ManagementWebpropertyUserLinksListCall) Do() (*EntityUserLinks, error) 
 		"accountId":     c.accountId,
 		"webPropertyId": c.webPropertyId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -11988,7 +11253,7 @@ func (c *ManagementWebpropertyUserLinksUpdateCall) Do() (*EntityUserLink, error)
 		"linkId":        c.linkId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -12081,7 +11346,7 @@ func (c *MetadataColumnsListCall) Do() (*Columns, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"reportType": c.reportType,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -12164,7 +11429,7 @@ func (c *ProvisioningCreateAccountTicketCall) Do() (*AccountTicket, error) {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err

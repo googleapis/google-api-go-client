@@ -61,14 +61,21 @@ func New(client *http.Client) (*Service, error) {
 }
 
 type Service struct {
-	client   *http.Client
-	BasePath string // API endpoint base URL
+	client    *http.Client
+	BasePath  string // API endpoint base URL
+	UserAgent string // optional additional User-Agent fragment
 
 	Taskqueues *TaskqueuesService
 
 	Tasks *TasksService
 }
 
+func (s *Service) userAgent() string {
+	if s.UserAgent == "" {
+		return googleapi.UserAgent
+	}
+	return googleapi.UserAgent + " " + s.UserAgent
+}
 func NewTaskqueuesService(s *Service) *TaskqueuesService {
 	rs := &TaskqueuesService{s: s}
 	return rs
@@ -227,7 +234,7 @@ func (c *TaskqueuesGetCall) Do() (*TaskQueue, error) {
 		"project":   c.project,
 		"taskqueue": c.taskqueue,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -322,7 +329,7 @@ func (c *TasksDeleteCall) Do() error {
 		"taskqueue": c.taskqueue,
 		"task":      c.task,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -412,7 +419,7 @@ func (c *TasksGetCall) Do() (*Task, error) {
 		"taskqueue": c.taskqueue,
 		"task":      c.task,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -512,7 +519,7 @@ func (c *TasksLeaseCall) Do() (*Tasks, error) {
 		"project":   c.project,
 		"taskqueue": c.taskqueue,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -615,7 +622,7 @@ func (c *TasksListCall) Do() (*Tasks2, error) {
 		"project":   c.project,
 		"taskqueue": c.taskqueue,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err

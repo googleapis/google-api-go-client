@@ -73,8 +73,9 @@ func New(client *http.Client) (*Service, error) {
 }
 
 type Service struct {
-	client   *http.Client
-	BasePath string // API endpoint base URL
+	client    *http.Client
+	BasePath  string // API endpoint base URL
+	UserAgent string // optional additional User-Agent fragment
 
 	BatchReportDefinitions *BatchReportDefinitionsService
 
@@ -87,6 +88,12 @@ type Service struct {
 	Reports *ReportsService
 }
 
+func (s *Service) userAgent() string {
+	if s.UserAgent == "" {
+		return googleapi.UserAgent
+	}
+	return googleapi.UserAgent + " " + s.UserAgent
+}
 func NewBatchReportDefinitionsService(s *Service) *BatchReportDefinitionsService {
 	rs := &BatchReportDefinitionsService{s: s}
 	return rs
@@ -352,7 +359,7 @@ func (c *BatchReportDefinitionsListCall) Do() (*BatchReportDefinitionList, error
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -431,7 +438,7 @@ func (c *BatchReportsListCall) Do() (*BatchReportList, error) {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -536,7 +543,7 @@ func (c *GroupItemsDeleteCall) Do() error {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -637,7 +644,7 @@ func (c *GroupItemsInsertCall) Do() (*GroupItem, error) {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -735,7 +742,7 @@ func (c *GroupItemsListCall) Do() (*GroupItemListResponse, error) {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -840,7 +847,7 @@ func (c *GroupsDeleteCall) Do() error {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -941,7 +948,7 @@ func (c *GroupsInsertCall) Do() (*Group, error) {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1061,7 +1068,7 @@ func (c *GroupsListCall) Do() (*GroupListResponse, error) {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1173,7 +1180,7 @@ func (c *GroupsUpdateCall) Do() (*Group, error) {
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1231,6 +1238,16 @@ func (r *ReportsService) Query(ids string, startDate string, endDate string, met
 	c.startDate = startDate
 	c.endDate = endDate
 	c.metrics = metrics
+	return c
+}
+
+// Currency sets the optional parameter "currency": The currency to
+// which financial metrics should be converted. The default is US Dollar
+// (USD). If the result contains no financial metrics, this flag will be
+// ignored. Responds with an error if the specified currency is not
+// recognized.
+func (c *ReportsQueryCall) Currency(currency string) *ReportsQueryCall {
+	c.opt_["currency"] = currency
 	return c
 }
 
@@ -1300,6 +1317,9 @@ func (c *ReportsQueryCall) Do() (*ResultTable, error) {
 	params.Set("ids", fmt.Sprintf("%v", c.ids))
 	params.Set("metrics", fmt.Sprintf("%v", c.metrics))
 	params.Set("start-date", fmt.Sprintf("%v", c.startDate))
+	if v, ok := c.opt_["currency"]; ok {
+		params.Set("currency", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["dimensions"]; ok {
 		params.Set("dimensions", fmt.Sprintf("%v", v))
 	}
@@ -1322,7 +1342,7 @@ func (c *ReportsQueryCall) Do() (*ResultTable, error) {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1347,6 +1367,12 @@ func (c *ReportsQueryCall) Do() (*ResultTable, error) {
 	//     "metrics"
 	//   ],
 	//   "parameters": {
+	//     "currency": {
+	//       "description": "The currency to which financial metrics should be converted. The default is US Dollar (USD). If the result contains no financial metrics, this flag will be ignored. Responds with an error if the specified currency is not recognized.",
+	//       "location": "query",
+	//       "pattern": "[A-Z]{3}",
+	//       "type": "string"
+	//     },
 	//     "dimensions": {
 	//       "description": "A comma-separated list of YouTube Analytics dimensions, such as views or ageGroup,gender. See the Available Reports document for a list of the reports that you can retrieve and the dimensions used for those reports. Also see the Dimensions document for definitions of those dimensions.",
 	//       "location": "query",

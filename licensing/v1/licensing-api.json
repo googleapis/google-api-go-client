@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/5nv4m0pBrnwpGqw9jwk2yynQNrg\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/chZbfEJA0-TN8tTaZIdtXJErZX4\"",
  "discoveryVersion": "v1",
  "id": "licensing:v1",
  "name": "licensing",
@@ -64,6 +64,15 @@
    "type": "string",
    "description": "IP address of the site where the request originates. Use this if you want to enforce per-user limits.",
    "location": "query"
+  }
+ },
+ "auth": {
+  "oauth2": {
+   "scopes": {
+    "https://www.googleapis.com/auth/apps.licensing": {
+     "description": "View and manage Google Apps licenses for your domain"
+    }
+   }
   }
  },
  "schemas": {
@@ -190,6 +199,9 @@
       "productId",
       "skuId",
       "userId"
+     ],
+     "scopes": [
+      "https://www.googleapis.com/auth/apps.licensing"
      ]
     },
     "get": {
@@ -224,7 +236,10 @@
      ],
      "response": {
       "$ref": "LicenseAssignment"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/apps.licensing"
+     ]
     },
     "insert": {
      "id": "licensing.licenseAssignments.insert",
@@ -254,7 +269,10 @@
      },
      "response": {
       "$ref": "LicenseAssignment"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/apps.licensing"
+     ]
     },
     "listForProduct": {
      "id": "licensing.licenseAssignments.listForProduct",
@@ -296,7 +314,10 @@
      ],
      "response": {
       "$ref": "LicenseAssignmentList"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/apps.licensing"
+     ]
     },
     "listForProductAndSku": {
      "id": "licensing.licenseAssignments.listForProductAndSku",
@@ -345,7 +366,10 @@
      ],
      "response": {
       "$ref": "LicenseAssignmentList"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/apps.licensing"
+     ]
     },
     "patch": {
      "id": "licensing.licenseAssignments.patch",
@@ -382,7 +406,10 @@
      },
      "response": {
       "$ref": "LicenseAssignment"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/apps.licensing"
+     ]
     },
     "update": {
      "id": "licensing.licenseAssignments.update",
@@ -419,7 +446,10 @@
      },
      "response": {
       "$ref": "LicenseAssignment"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/apps.licensing"
+     ]
     }
    }
   }

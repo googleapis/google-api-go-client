@@ -75,14 +75,21 @@ func New(client *http.Client) (*Service, error) {
 }
 
 type Service struct {
-	client   *http.Client
-	BasePath string // API endpoint base URL
+	client    *http.Client
+	BasePath  string // API endpoint base URL
+	UserAgent string // optional additional User-Agent fragment
 
 	Deployments *DeploymentsService
 
 	Templates *TemplatesService
 }
 
+func (s *Service) userAgent() string {
+	if s.UserAgent == "" {
+		return googleapi.UserAgent
+	}
+	return googleapi.UserAgent + " " + s.UserAgent
+}
 func NewDeploymentsService(s *Service) *DeploymentsService {
 	rs := &DeploymentsService{s: s}
 	return rs
@@ -630,7 +637,7 @@ func (c *DeploymentsDeleteCall) Do() error {
 		"region":         c.region,
 		"deploymentName": c.deploymentName,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -717,7 +724,7 @@ func (c *DeploymentsGetCall) Do() (*Deployment, error) {
 		"region":         c.region,
 		"deploymentName": c.deploymentName,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -817,7 +824,7 @@ func (c *DeploymentsInsertCall) Do() (*Deployment, error) {
 		"region":    c.region,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -931,7 +938,7 @@ func (c *DeploymentsListCall) Do() (*DeploymentsListResponse, error) {
 		"projectId": c.projectId,
 		"region":    c.region,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1031,7 +1038,7 @@ func (c *TemplatesDeleteCall) Do() error {
 		"projectId":    c.projectId,
 		"templateName": c.templateName,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -1109,7 +1116,7 @@ func (c *TemplatesGetCall) Do() (*Template, error) {
 		"projectId":    c.projectId,
 		"templateName": c.templateName,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1200,7 +1207,7 @@ func (c *TemplatesInsertCall) Do() (*Template, error) {
 		"projectId": c.projectId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1302,7 +1309,7 @@ func (c *TemplatesListCall) Do() (*TemplatesListResponse, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err

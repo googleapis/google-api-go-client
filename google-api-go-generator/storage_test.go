@@ -226,3 +226,34 @@ func TestNoMedia(t *testing.T) {
 		t.Errorf("RequestURI = %q; want %q", g.RequestURI, w)
 	}
 }
+
+func TestUserAgent(t *testing.T) {
+	handler := &myHandler{}
+	server := httptest.NewServer(handler)
+	defer server.Close()
+
+	client := &http.Client{}
+	s, err := storage.New(client)
+	if err != nil {
+		t.Fatalf("unable to create service: %v", err)
+	}
+	s.BasePath = server.URL
+	s.UserAgent = "myagent/1.0"
+
+	f := bytes.NewBufferString("fake media data")
+	o := &storage.Object{
+		Bucket:          "mybucket",
+		Name:            "filename",
+		ContentType:     "plain/text",
+		ContentEncoding: "utf-8",
+		ContentLanguage: "en",
+	}
+	_, err = s.Objects.Insert("mybucket", o).Media(f).Do()
+	if err != nil {
+		t.Fatalf("unable to insert object: %v", err)
+	}
+	g := handler.r
+	if w, k := "google-api-go-client/0.5 myagent/1.0", "User-Agent"; len(g.Header[k]) != 1 || g.Header[k][0] != w {
+		t.Errorf("header %q = %#v; want %q", k, g.Header[k], w)
+	}
+}

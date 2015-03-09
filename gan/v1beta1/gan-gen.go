@@ -56,8 +56,9 @@ func New(client *http.Client) (*Service, error) {
 }
 
 type Service struct {
-	client   *http.Client
-	BasePath string // API endpoint base URL
+	client    *http.Client
+	BasePath  string // API endpoint base URL
+	UserAgent string // optional additional User-Agent fragment
 
 	Advertisers *AdvertisersService
 
@@ -72,6 +73,12 @@ type Service struct {
 	Reports *ReportsService
 }
 
+func (s *Service) userAgent() string {
+	if s.UserAgent == "" {
+		return googleapi.UserAgent
+	}
+	return googleapi.UserAgent + " " + s.UserAgent
+}
 func NewAdvertisersService(s *Service) *AdvertisersService {
 	rs := &AdvertisersService{s: s}
 	return rs
@@ -883,7 +890,7 @@ func (c *AdvertisersGetCall) Do() (*Advertiser, error) {
 		"role":   c.role,
 		"roleId": c.roleId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1061,7 +1068,7 @@ func (c *AdvertisersListCall) Do() (*Advertisers, error) {
 		"role":   c.role,
 		"roleId": c.roleId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1227,7 +1234,7 @@ func (c *CcOffersListCall) Do() (*CcOffers, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"publisher": c.publisher,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1501,7 +1508,7 @@ func (c *EventsListCall) Do() (*Events, error) {
 		"role":   c.role,
 		"roleId": c.roleId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1715,7 +1722,7 @@ func (c *LinksGetCall) Do() (*Link, error) {
 		"roleId": c.roleId,
 		"linkId": strconv.FormatInt(c.linkId, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1822,7 +1829,7 @@ func (c *LinksInsertCall) Do() (*Link, error) {
 		"roleId": c.roleId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -2047,7 +2054,7 @@ func (c *LinksListCall) Do() (*Links, error) {
 		"role":   c.role,
 		"roleId": c.roleId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -2261,7 +2268,7 @@ func (c *PublishersGetCall) Do() (*Publisher, error) {
 		"role":   c.role,
 		"roleId": c.roleId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -2439,7 +2446,7 @@ func (c *PublishersListCall) Do() (*Publishers, error) {
 		"role":   c.role,
 		"roleId": c.roleId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -2704,7 +2711,7 @@ func (c *ReportsGetCall) Do() (*Report, error) {
 		"roleId":     c.roleId,
 		"reportType": c.reportType,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err

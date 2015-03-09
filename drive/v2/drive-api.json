@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/r3JYC00RrAy0V0PUgOxY3WtVFg8\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/ZgMjHnirW9jShGfpZfEVuQkjf2Y\"",
  "discoveryVersion": "v1",
  "id": "drive:v2",
  "name": "drive",
  "version": "v2",
- "revision": "20141112",
+ "revision": "20150108",
  "title": "Drive API",
  "description": "The API to interact with Drive.",
  "ownerDomain": "google.com",
@@ -1108,7 +1108,7 @@
       },
       "trashed": {
        "type": "boolean",
-       "description": "Whether this file has been trashed."
+       "description": "Whether this file has been trashed. This label applies to all users accessing the file; however, only owners are allowed to see and untrash files."
       },
       "viewed": {
        "type": "boolean",
@@ -1226,7 +1226,7 @@
      "properties": {
       "image": {
        "type": "string",
-       "description": "The URL-safe Base64 encoded bytes of the thumbnail image.",
+       "description": "The URL-safe Base64 encoded bytes of the thumbnail image. It should conform to RFC 4648 section 5.",
        "format": "byte"
       },
       "mimeType": {
@@ -1237,7 +1237,7 @@
     },
     "thumbnailLink": {
      "type": "string",
-     "description": "A link to the file's thumbnail."
+     "description": "A short-lived link to the file's thumbnail. Typically lasts on the order of hours."
     },
     "title": {
      "type": "string",
@@ -2415,7 +2415,7 @@
      "id": "drive.files.delete",
      "path": "files/{fileId}",
      "httpMethod": "DELETE",
-     "description": "Permanently deletes a file by ID. Skips the trash.",
+     "description": "Permanently deletes a file by ID. Skips the trash. The currently authenticated user must own the file.",
      "parameters": {
       "fileId": {
        "type": "string",
@@ -3297,7 +3297,7 @@
       },
       "transferOwnership": {
        "type": "boolean",
-       "description": "Whether changing a role to 'owner' should also downgrade the current owners to writers.",
+       "description": "Whether changing a role to 'owner' downgrades the current owners to writers. Does nothing if the specified role is not 'owner'.",
        "default": "false",
        "location": "query"
       }
@@ -3337,7 +3337,7 @@
       },
       "transferOwnership": {
        "type": "boolean",
-       "description": "Whether changing a role to 'owner' should also downgrade the current owners to writers.",
+       "description": "Whether changing a role to 'owner' downgrades the current owners to writers. Does nothing if the specified role is not 'owner'.",
        "default": "false",
        "location": "query"
       }

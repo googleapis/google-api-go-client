@@ -41,6 +41,12 @@ const apiName = "groupsmigration"
 const apiVersion = "v1"
 const basePath = "https://www.googleapis.com/groups/v1/groups/"
 
+// OAuth2 scopes used by this API.
+const (
+	// Manage messages in groups on your domain
+	AppsGroupsMigrationScope = "https://www.googleapis.com/auth/apps.groups.migration"
+)
+
 func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
@@ -51,8 +57,9 @@ func New(client *http.Client) (*Service, error) {
 }
 
 type Service struct {
-	client   *http.Client
-	BasePath string // API endpoint base URL
+	client    *http.Client
+	BasePath  string // API endpoint base URL
+	UserAgent string // Optional appended User-Agent for header of the request
 
 	Archive *ArchiveService
 }
@@ -172,7 +179,11 @@ func (c *ArchiveInsertCall) Do() (*Groups, error) {
 	} else {
 		req.Header.Set("Content-Type", ctype)
 	}
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -237,6 +248,9 @@ func (c *ArchiveInsertCall) Do() (*Groups, error) {
 	//   "response": {
 	//     "$ref": "Groups"
 	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/apps.groups.migration"
+	//   ],
 	//   "supportsMediaUpload": true
 	// }
 

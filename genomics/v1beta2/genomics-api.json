@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/Rkk_7Yu2BNIHc2z3p4FKuem23zE\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/Avr5yLDEaSyBxOoYvm8FoDAE8-g\"",
  "discoveryVersion": "v1",
  "id": "genomics:v1beta2",
  "name": "genomics",
  "version": "v1beta2",
- "revision": "20150213",
+ "revision": "20150303",
  "title": "Genomics API",
  "description": "Provides access to Genomics data.",
  "ownerDomain": "google.com",
@@ -235,6 +235,62 @@
       "",
       ""
      ]
+    }
+   }
+  },
+  "BatchAnnotationsResponse": {
+   "id": "BatchAnnotationsResponse",
+   "type": "object",
+   "properties": {
+    "entries": {
+     "type": "array",
+     "description": "The resulting per-annotation entries, ordered consistently with the original request.",
+     "items": {
+      "$ref": "BatchAnnotationsResponseEntry"
+     }
+    }
+   }
+  },
+  "BatchAnnotationsResponseEntry": {
+   "id": "BatchAnnotationsResponseEntry",
+   "type": "object",
+   "properties": {
+    "annotation": {
+     "$ref": "Annotation",
+     "description": "The annotation, if any."
+    },
+    "status": {
+     "$ref": "BatchAnnotationsResponseEntryStatus",
+     "description": "The resulting status for this annotation operation."
+    }
+   }
+  },
+  "BatchAnnotationsResponseEntryStatus": {
+   "id": "BatchAnnotationsResponseEntryStatus",
+   "type": "object",
+   "description": "",
+   "properties": {
+    "code": {
+     "type": "integer",
+     "description": "The HTTP status code for this operation.",
+     "format": "int32"
+    },
+    "message": {
+     "type": "string",
+     "description": "Error message for this status, if any."
+    }
+   }
+  },
+  "BatchCreateAnnotationsRequest": {
+   "id": "BatchCreateAnnotationsRequest",
+   "type": "object",
+   "properties": {
+    "annotations": {
+     "type": "array",
+     "description": "The annotations to be created. At most 4096 can be specified in a single request.",
+     "items": {
+      "$ref": "Annotation"
+     }
     }
    }
   },
@@ -496,7 +552,7 @@
    "properties": {
     "exportUri": {
      "type": "string",
-     "description": "A Google Cloud Storage URI where the exported BAM file will be created. The currently authenticated user must have write access to the new file location. An error will be returned if the URI already contains data."
+     "description": "A Google Cloud Storage URI for the exported BAM file. The currently authenticated user must have write access to the new file. An error will be returned if the URI already contains data."
     },
     "projectNumber": {
      "type": "string",
@@ -1428,7 +1484,7 @@
     },
     "description": {
      "type": "string",
-     "description": "Optional free text description of this reference set."
+     "description": "Free text description of this reference set."
     },
     "id": {
      "type": "string",
@@ -1709,7 +1765,7 @@
     },
     "pageSize": {
      "type": "integer",
-     "description": "Specifies number of results to return in a single page. If unspecified, it will default to 128. The maximum value is 1024.",
+     "description": "Specifies number of results to return in a single page. If unspecified, it will default to 256. The maximum value is 1024.",
      "format": "int32"
     },
     "pageToken": {
@@ -2460,6 +2516,21 @@
   },
   "annotations": {
    "methods": {
+    "batchCreate": {
+     "id": "genomics.annotations.batchCreate",
+     "path": "annotations:batchCreate",
+     "httpMethod": "POST",
+     "description": "Creates one or more new annotations atomically. All annotations must belong to the same annotation set. Caller must have WRITE permission for this annotation set. For optimal performance, batch positionally adjacent annotations together.\n\n\nIf the request has a systemic issue, such as an attempt to write to an inaccessible annotation set, the entire RPC will fail accordingly. For lesser data issues, when possible an error will be isolated to the corresponding batch entry in the response; the remaining well formed annotations will be created normally.",
+     "request": {
+      "$ref": "BatchCreateAnnotationsRequest"
+     },
+     "response": {
+      "$ref": "BatchAnnotationsResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/genomics"
+     ]
+    },
     "create": {
      "id": "genomics.annotations.create",
      "path": "annotations",
@@ -2785,12 +2856,11 @@
      "id": "genomics.datasets.list",
      "path": "datasets",
      "httpMethod": "GET",
-     "description": "Lists all datasets.",
+     "description": "Lists datasets within a project.",
      "parameters": {
       "pageSize": {
        "type": "integer",
-       "description": "The maximum number of results returned by this request.",
-       "default": "50",
+       "description": "The maximum number of results returned by this request. If unspecified, defaults to 50.",
        "format": "int32",
        "location": "query"
       },
@@ -2801,7 +2871,7 @@
       },
       "projectNumber": {
        "type": "string",
-       "description": "Only return datasets which belong to this Google Developers Console project. Only accepts project numbers. Returns all public projects if no project number is specified.",
+       "description": "The project to list datasets for.",
        "format": "int64",
        "location": "query"
       }
@@ -3170,7 +3240,6 @@
         "pageSize": {
          "type": "integer",
          "description": "The maximum number of results to return in a single page. If unspecified, defaults to 1024. The maximum value is 2048.",
-         "default": "1024",
          "format": "int32",
          "location": "query"
         },
@@ -3305,7 +3374,6 @@
         "pageSize": {
          "type": "integer",
          "description": "Specifies the maximum number of bases to return in a single page.",
-         "default": "200000",
          "format": "int32",
          "location": "query"
         },

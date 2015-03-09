@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/obZ6DzO3dJZ3dBfZd8bmlNVgqVs\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/QxG7oirHrzfDxJoQseQwOqPzaG0\"",
  "discoveryVersion": "v1",
  "id": "bigquery:v2",
  "name": "bigquery",
  "version": "v2",
- "revision": "20150209",
+ "revision": "20141112",
  "title": "BigQuery API",
  "description": "A data platform for customers to create, manage, share and query data.",
  "ownerDomain": "google.com",
@@ -1071,6 +1071,10 @@
    "id": "TableDataInsertAllRequest",
    "type": "object",
    "properties": {
+    "ignoreUnknownValues": {
+     "type": "boolean",
+     "description": "[Optional] Accept rows that contain values that do not match the schema. The unknown values are ignored. Default is false, which treats unknown values as errors."
+    },
     "kind": {
      "type": "string",
      "description": "The resource type of the response.",
@@ -1092,6 +1096,10 @@
        }
       }
      }
+    },
+    "skipInvalidRows": {
+     "type": "boolean",
+     "description": "[Optional] Insert all valid rows of a request, even if invalid rows exist. The default value is false, which causes the entire request to fail if any invalid rows exist."
     }
    }
   },

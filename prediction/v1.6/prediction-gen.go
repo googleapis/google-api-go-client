@@ -67,12 +67,20 @@ func New(client *http.Client) (*Service, error) {
 }
 
 type Service struct {
-	client   *http.Client
-	BasePath string // API endpoint base URL
+	client    *http.Client
+	BasePath  string // API endpoint base URL
+	UserAgent string // optional additional User-Agent fragment
 
 	Hostedmodels *HostedmodelsService
 
 	Trainedmodels *TrainedmodelsService
+}
+
+func (s *Service) userAgent() string {
+	if s.UserAgent == "" {
+		return googleapi.UserAgent
+	}
+	return googleapi.UserAgent + " " + s.UserAgent
 }
 
 func NewHostedmodelsService(s *Service) *HostedmodelsService {
@@ -367,7 +375,7 @@ type Output struct {
 	OutputMulti []*OutputOutputMulti `json:"outputMulti,omitempty"`
 
 	// OutputValue: The estimated regression value (Regression models only).
-	OutputValue float64 `json:"outputValue,omitempty"`
+	OutputValue string `json:"outputValue,omitempty"`
 
 	// SelfLink: A URL to re-request this resource.
 	SelfLink string `json:"selfLink,omitempty"`
@@ -437,7 +445,7 @@ func (c *HostedmodelsPredictCall) Do() (*Output, error) {
 		"hostedModelName": c.hostedModelName,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -527,7 +535,7 @@ func (c *TrainedmodelsAnalyzeCall) Do() (*Analyze, error) {
 		"project": c.project,
 		"id":      c.id,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -613,7 +621,7 @@ func (c *TrainedmodelsDeleteCall) Do() error {
 		"project": c.project,
 		"id":      c.id,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -692,7 +700,7 @@ func (c *TrainedmodelsGetCall) Do() (*Insert2, error) {
 		"project": c.project,
 		"id":      c.id,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -783,7 +791,7 @@ func (c *TrainedmodelsInsertCall) Do() (*Insert2, error) {
 		"project": c.project,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -884,7 +892,7 @@ func (c *TrainedmodelsListCall) Do() (*List, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"project": c.project,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -983,7 +991,7 @@ func (c *TrainedmodelsPredictCall) Do() (*Output, error) {
 		"id":      c.id,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1080,7 +1088,7 @@ func (c *TrainedmodelsUpdateCall) Do() (*Insert2, error) {
 		"id":      c.id,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err

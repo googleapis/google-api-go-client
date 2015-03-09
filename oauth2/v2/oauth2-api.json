@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/x7FThRC1OZmHwbkYbDOWKsWuUA8\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/iTA-R5-0GybzGChq9ZynFCm92Zw\"",
  "discoveryVersion": "v1",
  "id": "oauth2:v2",
  "name": "oauth2",
  "version": "v2",
- "revision": "20150120",
+ "revision": "20150302",
  "title": "Google OAuth2 API",
  "description": "Lets you access OAuth2 protocol related APIs.",
  "ownerDomain": "google.com",
@@ -151,7 +151,7 @@
     },
     "user_id": {
      "type": "string",
-     "description": "The Gaia obfuscated user id."
+     "description": "The obfuscated user id."
     },
     "verified_email": {
      "type": "boolean",
@@ -185,7 +185,7 @@
     },
     "id": {
      "type": "string",
-     "description": "The focus obfuscated gaia id of the user."
+     "description": "The obfuscated ID of the user."
     },
     "link": {
      "type": "string",

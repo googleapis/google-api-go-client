@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/qYnCbO50tBJQh7cxSXJ680n-meg\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/ID2nf7n7eRyIPf4mFz5QF1inEVE\"",
  "discoveryVersion": "v1",
  "id": "youtubeAnalytics:v1beta1",
  "name": "youtubeAnalytics",
  "canonicalName": "YouTube Analytics",
  "version": "v1beta1",
- "revision": "20150213",
+ "revision": "20150304",
  "title": "YouTube Analytics API",
  "description": "Retrieve your YouTube Analytics reports.",
  "ownerDomain": "google.com",
@@ -641,6 +641,12 @@
      "httpMethod": "GET",
      "description": "Retrieve your YouTube Analytics reports.",
      "parameters": {
+      "currency": {
+       "type": "string",
+       "description": "The currency to which financial metrics should be converted. The default is US Dollar (USD). If the result contains no financial metrics, this flag will be ignored. Responds with an error if the specified currency is not recognized.",
+       "pattern": "[A-Z]{3}",
+       "location": "query"
+      },
       "dimensions": {
        "type": "string",
        "description": "A comma-separated list of YouTube Analytics dimensions, such as views or ageGroup,gender. See the Available Reports document for a list of the reports that you can retrieve and the dimensions used for those reports. Also see the Dimensions document for definitions of those dimensions.",

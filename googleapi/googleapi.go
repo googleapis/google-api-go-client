@@ -48,8 +48,8 @@ const (
 	// statusResumeIncomplete is the code returned by the Google uploader when the transfer is not yet complete.
 	statusResumeIncomplete = 308
 
-	// userAgent is the header string used to identify itself to the Google uploader.
-	userAgent = "google-api-go-client/" + Version
+	// UserAgent is the header string used to identify this package.
+	UserAgent = "google-api-go-client/" + Version
 
 	// uploadPause determines the delay between failed upload attempts
 	uploadPause = 1 * time.Second
@@ -279,7 +279,8 @@ type ProgressUpdater func(current, total int64)
 type ResumableUpload struct {
 	Client *http.Client
 	// URI is the resumable resource destination provided by the server after specifying "&uploadType=resumable".
-	URI string
+	URI       string
+	UserAgent string // User-Agent for header of the request
 	// Media is the object being uploaded.
 	Media io.ReaderAt
 	// MediaType defines the media type, e.g. "image/jpeg".
@@ -312,7 +313,7 @@ func (rx *ResumableUpload) Progress() int64 {
 func (rx *ResumableUpload) transferStatus() (int64, *http.Response, error) {
 	req, _ := http.NewRequest("POST", rx.URI, nil)
 	req.ContentLength = 0
-	req.Header.Set("User-Agent", userAgent)
+	req.Header.Set("User-Agent", rx.UserAgent)
 	req.Header.Set("Content-Range", fmt.Sprintf("bytes */%v", rx.ContentLength))
 	res, err := rx.Client.Do(req)
 	if err != nil || res.StatusCode != statusResumeIncomplete {
@@ -357,7 +358,7 @@ func (rx *ResumableUpload) transferChunks(ctx context.Context) (*http.Response, 
 		req.ContentLength = reqSize
 		req.Header.Set("Content-Range", fmt.Sprintf("bytes %v-%v/%v", start, start+reqSize-1, rx.ContentLength))
 		req.Header.Set("Content-Type", rx.MediaType)
-		req.Header.Set("User-Agent", userAgent)
+		req.Header.Set("User-Agent", rx.UserAgent)
 		res, err = rx.Client.Do(req)
 		start += reqSize
 		if err == nil && (res.StatusCode == statusResumeIncomplete || res.StatusCode == http.StatusOK) {

@@ -1,6 +1,6 @@
 // Package pagespeedonline provides access to the PageSpeed Insights API.
 //
-// See https://developers.google.com/speed/docs/insights/v1/getting_started
+// See https://developers.google.com/speed/docs/insights/v2/getting-started
 //
 // Usage example:
 //
@@ -51,10 +51,18 @@ func New(client *http.Client) (*Service, error) {
 }
 
 type Service struct {
-	client   *http.Client
-	BasePath string // API endpoint base URL
+	client    *http.Client
+	BasePath  string // API endpoint base URL
+	UserAgent string // optional additional User-Agent fragment
 
 	Pagespeedapi *PagespeedapiService
+}
+
+func (s *Service) userAgent() string {
+	if s.UserAgent == "" {
+		return googleapi.UserAgent
+	}
+	return googleapi.UserAgent + " " + s.UserAgent
 }
 
 func NewPagespeedapiService(s *Service) *PagespeedapiService {
@@ -366,7 +374,7 @@ func (c *PagespeedapiRunpagespeedCall) Do() (*Result, error) {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err

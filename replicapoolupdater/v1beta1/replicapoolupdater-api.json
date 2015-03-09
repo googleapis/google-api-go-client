@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/eJNOa2VAnZWx5ALy5y9ejkM9EKI\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/IuZy-huEI4odldDxlxCkfd4i7iE\"",
  "discoveryVersion": "v1",
  "id": "replicapoolupdater:v1beta1",
  "name": "replicapoolupdater",
  "version": "v1beta1",
- "revision": "20150216",
+ "revision": "20150129",
  "title": "Google Compute Engine Instance Group Updater API",
  "description": "The Google Compute Engine Instance Group Updater API provides services for updating groups of Compute Engine Instances.",
  "ownerDomain": "google.com",
@@ -306,7 +306,7 @@
    "properties": {
     "actionType": {
      "type": "string",
-     "description": "Specifies the action to take for each instance within the instance group. This can be RECREATE which will recreate each instance and is only available for managed instance groups. It can also be REBOOT which performs a soft reboot for each instance and is only available for regular (non-managed) instance groups."
+     "description": "Specifies the action to take for each instance within the instance group. This can be RECREATE which will recreate each instance and is only available for managed instance groups. It can also be REBOOT which performs a soft reboot for each instance and is only available for regular (non-managed) instance groups and explicit lists of instances."
     },
     "creationTimestamp": {
      "type": "string",
@@ -349,15 +349,22 @@
     },
     "instanceGroup": {
      "type": "string",
-     "description": "Fully-qualified URL of an instance group being updated. Exactly one of instanceGroupManager and instanceGroup must be set."
+     "description": "Fully-qualified URL of an instance group being updated. Exactly one of instanceGroupManager, instanceGroup and instance list must be set."
     },
     "instanceGroupManager": {
      "type": "string",
-     "description": "Fully-qualified URL of an instance group manager being updated. Exactly one of instanceGroupManager and instanceGroup must be set."
+     "description": "Fully-qualified URL of an instance group manager being updated. Exactly one of instanceGroupManager, instanceGroup and instance list must be set."
     },
     "instanceTemplate": {
      "type": "string",
      "description": "Fully-qualified URL of an instance template to apply."
+    },
+    "instances": {
+     "type": "array",
+     "description": "List of fully-qualified URLs of instances to be updated. Exactly one of instanceGroupManager, instanceGroup and instance list must be set.",
+     "items": {
+      "type": "string"
+     }
     },
     "kind": {
      "type": "string",
@@ -372,17 +379,6 @@
        "type": "integer",
        "description": "Number of instances updated before the update gets automatically paused.",
        "format": "int32"
-      },
-      "canary": {
-       "type": "object",
-       "description": "Parameters of a canary phase. If absent, canary will NOT be performed.",
-       "properties": {
-        "numInstances": {
-         "type": "integer",
-         "description": "Number of instances updated as a part of canary phase. If absent, the default number of instances will be used.",
-         "format": "int32"
-        }
-       }
       },
       "instanceStartupTimeoutSec": {
        "type": "integer",

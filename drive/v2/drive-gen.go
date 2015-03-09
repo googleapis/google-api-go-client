@@ -88,8 +88,9 @@ func New(client *http.Client) (*Service, error) {
 }
 
 type Service struct {
-	client   *http.Client
-	BasePath string // API endpoint base URL
+	client    *http.Client
+	BasePath  string // API endpoint base URL
+	UserAgent string // optional additional User-Agent fragment
 
 	About *AboutService
 
@@ -116,6 +117,13 @@ type Service struct {
 	Replies *RepliesService
 
 	Revisions *RevisionsService
+}
+
+func (s *Service) userAgent() string {
+	if s.UserAgent == "" {
+		return googleapi.UserAgent
+	}
+	return googleapi.UserAgent + " " + s.UserAgent
 }
 
 func NewAboutService(s *Service) *AboutService {
@@ -934,7 +942,8 @@ type File struct {
 	// files that are not already thumbnailed by Google.
 	Thumbnail *FileThumbnail `json:"thumbnail,omitempty"`
 
-	// ThumbnailLink: A link to the file's thumbnail.
+	// ThumbnailLink: A short-lived link to the file's thumbnail. Typically
+	// lasts on the order of hours.
 	ThumbnailLink string `json:"thumbnailLink,omitempty"`
 
 	// Title: The title of this file.
@@ -1063,7 +1072,9 @@ type FileLabels struct {
 	// Starred: Whether this file is starred by the user.
 	Starred bool `json:"starred,omitempty"`
 
-	// Trashed: Whether this file has been trashed.
+	// Trashed: Whether this file has been trashed. This label applies to
+	// all users accessing the file; however, only owners are allowed to see
+	// and untrash files.
 	Trashed bool `json:"trashed,omitempty"`
 
 	// Viewed: Whether this file has been viewed by this user.
@@ -1071,7 +1082,8 @@ type FileLabels struct {
 }
 
 type FileThumbnail struct {
-	// Image: The URL-safe Base64 encoded bytes of the thumbnail image.
+	// Image: The URL-safe Base64 encoded bytes of the thumbnail image. It
+	// should conform to RFC 4648 section 5.
 	Image string `json:"image,omitempty"`
 
 	// MimeType: The MIME type of the thumbnail.
@@ -1439,7 +1451,7 @@ func (c *AboutGetCall) Do() (*About, error) {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1529,7 +1541,7 @@ func (c *AppsGetCall) Do() (*App, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"appId": c.appId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1645,7 +1657,7 @@ func (c *AppsListCall) Do() (*AppList, error) {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1729,7 +1741,7 @@ func (c *ChangesGetCall) Do() (*Change, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"changeId": c.changeId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1858,7 +1870,7 @@ func (c *ChangesListCall) Do() (*ChangeList, error) {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -2018,7 +2030,7 @@ func (c *ChangesWatchCall) Do() (*Channel, error) {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -2130,7 +2142,7 @@ func (c *ChannelsStopCall) Do() error {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -2200,7 +2212,7 @@ func (c *ChildrenDeleteCall) Do() error {
 		"folderId": c.folderId,
 		"childId":  c.childId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -2280,7 +2292,7 @@ func (c *ChildrenGetCall) Do() (*ChildReference, error) {
 		"folderId": c.folderId,
 		"childId":  c.childId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -2375,7 +2387,7 @@ func (c *ChildrenInsertCall) Do() (*ChildReference, error) {
 		"folderId": c.folderId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -2486,7 +2498,7 @@ func (c *ChildrenListCall) Do() (*ChildList, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"folderId": c.folderId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -2587,7 +2599,7 @@ func (c *CommentsDeleteCall) Do() error {
 		"fileId":    c.fileId,
 		"commentId": c.commentId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -2679,7 +2691,7 @@ func (c *CommentsGetCall) Do() (*Comment, error) {
 		"fileId":    c.fileId,
 		"commentId": c.commentId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -2778,7 +2790,7 @@ func (c *CommentsInsertCall) Do() (*Comment, error) {
 		"fileId": c.fileId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -2902,7 +2914,7 @@ func (c *CommentsListCall) Do() (*CommentList, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"fileId": c.fileId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -3017,7 +3029,7 @@ func (c *CommentsPatchCall) Do() (*Comment, error) {
 		"commentId": c.commentId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -3115,7 +3127,7 @@ func (c *CommentsUpdateCall) Do() (*Comment, error) {
 		"commentId": c.commentId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -3282,7 +3294,7 @@ func (c *FilesCopyCall) Do() (*File, error) {
 		"fileId": c.fileId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -3383,7 +3395,8 @@ type FilesDeleteCall struct {
 	opt_   map[string]interface{}
 }
 
-// Delete: Permanently deletes a file by ID. Skips the trash.
+// Delete: Permanently deletes a file by ID. Skips the trash. The
+// currently authenticated user must own the file.
 func (r *FilesService) Delete(fileId string) *FilesDeleteCall {
 	c := &FilesDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.fileId = fileId
@@ -3411,7 +3424,7 @@ func (c *FilesDeleteCall) Do() error {
 	googleapi.Expand(req.URL, map[string]string{
 		"fileId": c.fileId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -3422,7 +3435,7 @@ func (c *FilesDeleteCall) Do() error {
 	}
 	return nil
 	// {
-	//   "description": "Permanently deletes a file by ID. Skips the trash.",
+	//   "description": "Permanently deletes a file by ID. Skips the trash. The currently authenticated user must own the file.",
 	//   "httpMethod": "DELETE",
 	//   "id": "drive.files.delete",
 	//   "parameterOrder": [
@@ -3478,7 +3491,7 @@ func (c *FilesEmptyTrashCall) Do() error {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -3568,7 +3581,7 @@ func (c *FilesGetCall) Do() (*File, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"fileId": c.fileId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -3821,7 +3834,7 @@ func (c *FilesInsertCall) Do() (*File, error) {
 	} else {
 		req.Header.Set("Content-Type", ctype)
 	}
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -3834,6 +3847,7 @@ func (c *FilesInsertCall) Do() (*File, error) {
 		loc := res.Header.Get("Location")
 		rx := &googleapi.ResumableUpload{
 			Client:        c.s.client,
+			UserAgent:     c.s.userAgent(),
 			URI:           loc,
 			Media:         c.resumable_,
 			MediaType:     c.mediaType_,
@@ -4026,7 +4040,7 @@ func (c *FilesListCall) Do() (*FileList, error) {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -4275,7 +4289,7 @@ func (c *FilesPatchCall) Do() (*File, error) {
 		"fileId": c.fileId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -4425,7 +4439,7 @@ func (c *FilesTouchCall) Do() (*File, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"fileId": c.fileId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -4504,7 +4518,7 @@ func (c *FilesTrashCall) Do() (*File, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"fileId": c.fileId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -4583,7 +4597,7 @@ func (c *FilesUntrashCall) Do() (*File, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"fileId": c.fileId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -4853,7 +4867,7 @@ func (c *FilesUpdateCall) Do() (*File, error) {
 	} else {
 		req.Header.Set("Content-Type", ctype)
 	}
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -4866,6 +4880,7 @@ func (c *FilesUpdateCall) Do() (*File, error) {
 		loc := res.Header.Get("Location")
 		rx := &googleapi.ResumableUpload{
 			Client:        c.s.client,
+			UserAgent:     c.s.userAgent(),
 			URI:           loc,
 			Media:         c.resumable_,
 			MediaType:     c.mediaType_,
@@ -5076,7 +5091,7 @@ func (c *FilesWatchCall) Do() (*Channel, error) {
 		"fileId": c.fileId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -5191,7 +5206,7 @@ func (c *ParentsDeleteCall) Do() error {
 		"fileId":   c.fileId,
 		"parentId": c.parentId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -5271,7 +5286,7 @@ func (c *ParentsGetCall) Do() (*ParentReference, error) {
 		"fileId":   c.fileId,
 		"parentId": c.parentId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -5366,7 +5381,7 @@ func (c *ParentsInsertCall) Do() (*ParentReference, error) {
 		"fileId": c.fileId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -5447,7 +5462,7 @@ func (c *ParentsListCall) Do() (*ParentList, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"fileId": c.fileId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -5530,7 +5545,7 @@ func (c *PermissionsDeleteCall) Do() error {
 		"fileId":       c.fileId,
 		"permissionId": c.permissionId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -5610,7 +5625,7 @@ func (c *PermissionsGetCall) Do() (*Permission, error) {
 		"fileId":       c.fileId,
 		"permissionId": c.permissionId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -5696,7 +5711,7 @@ func (c *PermissionsGetIdForEmailCall) Do() (*PermissionId, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"email": c.email,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -5807,7 +5822,7 @@ func (c *PermissionsInsertCall) Do() (*Permission, error) {
 		"fileId": c.fileId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -5898,7 +5913,7 @@ func (c *PermissionsListCall) Do() (*PermissionList, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"fileId": c.fileId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -5961,8 +5976,8 @@ func (r *PermissionsService) Patch(fileId string, permissionId string, permissio
 }
 
 // TransferOwnership sets the optional parameter "transferOwnership":
-// Whether changing a role to 'owner' should also downgrade the current
-// owners to writers.
+// Whether changing a role to 'owner' downgrades the current owners to
+// writers. Does nothing if the specified role is not 'owner'.
 func (c *PermissionsPatchCall) TransferOwnership(transferOwnership bool) *PermissionsPatchCall {
 	c.opt_["transferOwnership"] = transferOwnership
 	return c
@@ -5999,7 +6014,7 @@ func (c *PermissionsPatchCall) Do() (*Permission, error) {
 		"permissionId": c.permissionId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -6036,7 +6051,7 @@ func (c *PermissionsPatchCall) Do() (*Permission, error) {
 	//     },
 	//     "transferOwnership": {
 	//       "default": "false",
-	//       "description": "Whether changing a role to 'owner' should also downgrade the current owners to writers.",
+	//       "description": "Whether changing a role to 'owner' downgrades the current owners to writers. Does nothing if the specified role is not 'owner'.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -6076,8 +6091,8 @@ func (r *PermissionsService) Update(fileId string, permissionId string, permissi
 }
 
 // TransferOwnership sets the optional parameter "transferOwnership":
-// Whether changing a role to 'owner' should also downgrade the current
-// owners to writers.
+// Whether changing a role to 'owner' downgrades the current owners to
+// writers. Does nothing if the specified role is not 'owner'.
 func (c *PermissionsUpdateCall) TransferOwnership(transferOwnership bool) *PermissionsUpdateCall {
 	c.opt_["transferOwnership"] = transferOwnership
 	return c
@@ -6114,7 +6129,7 @@ func (c *PermissionsUpdateCall) Do() (*Permission, error) {
 		"permissionId": c.permissionId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -6151,7 +6166,7 @@ func (c *PermissionsUpdateCall) Do() (*Permission, error) {
 	//     },
 	//     "transferOwnership": {
 	//       "default": "false",
-	//       "description": "Whether changing a role to 'owner' should also downgrade the current owners to writers.",
+	//       "description": "Whether changing a role to 'owner' downgrades the current owners to writers. Does nothing if the specified role is not 'owner'.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -6220,7 +6235,7 @@ func (c *PropertiesDeleteCall) Do() error {
 		"fileId":      c.fileId,
 		"propertyKey": c.propertyKey,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -6317,7 +6332,7 @@ func (c *PropertiesGetCall) Do() (*Property, error) {
 		"fileId":      c.fileId,
 		"propertyKey": c.propertyKey,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -6418,7 +6433,7 @@ func (c *PropertiesInsertCall) Do() (*Property, error) {
 		"fileId": c.fileId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -6499,7 +6514,7 @@ func (c *PropertiesListCall) Do() (*PropertyList, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"fileId": c.fileId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -6600,7 +6615,7 @@ func (c *PropertiesPatchCall) Do() (*Property, error) {
 		"propertyKey": c.propertyKey,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -6715,7 +6730,7 @@ func (c *PropertiesUpdateCall) Do() (*Property, error) {
 		"propertyKey": c.propertyKey,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -6822,7 +6837,7 @@ func (c *RealtimeGetCall) Do() error {
 	googleapi.Expand(req.URL, map[string]string{
 		"fileId": c.fileId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -6978,7 +6993,7 @@ func (c *RealtimeUpdateCall) Do() error {
 	} else {
 		req.Header.Set("Content-Type", ctype)
 	}
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -6991,6 +7006,7 @@ func (c *RealtimeUpdateCall) Do() error {
 		loc := res.Header.Get("Location")
 		rx := &googleapi.ResumableUpload{
 			Client:        c.s.client,
+			UserAgent:     c.s.userAgent(),
 			URI:           loc,
 			Media:         c.resumable_,
 			MediaType:     c.mediaType_,
@@ -7092,7 +7108,7 @@ func (c *RepliesDeleteCall) Do() error {
 		"commentId": c.commentId,
 		"replyId":   c.replyId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -7192,7 +7208,7 @@ func (c *RepliesGetCall) Do() (*CommentReply, error) {
 		"commentId": c.commentId,
 		"replyId":   c.replyId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -7301,7 +7317,7 @@ func (c *RepliesInsertCall) Do() (*CommentReply, error) {
 		"commentId": c.commentId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -7424,7 +7440,7 @@ func (c *RepliesListCall) Do() (*CommentReplyList, error) {
 		"fileId":    c.fileId,
 		"commentId": c.commentId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -7544,7 +7560,7 @@ func (c *RepliesPatchCall) Do() (*CommentReply, error) {
 		"replyId":   c.replyId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -7652,7 +7668,7 @@ func (c *RepliesUpdateCall) Do() (*CommentReply, error) {
 		"replyId":   c.replyId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -7749,7 +7765,7 @@ func (c *RevisionsDeleteCall) Do() error {
 		"fileId":     c.fileId,
 		"revisionId": c.revisionId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -7830,7 +7846,7 @@ func (c *RevisionsGetCall) Do() (*Revision, error) {
 		"fileId":     c.fileId,
 		"revisionId": c.revisionId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -7917,7 +7933,7 @@ func (c *RevisionsListCall) Do() (*RevisionList, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"fileId": c.fileId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -8008,7 +8024,7 @@ func (c *RevisionsPatchCall) Do() (*Revision, error) {
 		"revisionId": c.revisionId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -8107,7 +8123,7 @@ func (c *RevisionsUpdateCall) Do() (*Revision, error) {
 		"revisionId": c.revisionId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err

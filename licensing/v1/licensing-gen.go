@@ -41,6 +41,12 @@ const apiName = "licensing"
 const apiVersion = "v1"
 const basePath = "https://www.googleapis.com/apps/licensing/v1/product/"
 
+// OAuth2 scopes used by this API.
+const (
+	// View and manage Google Apps licenses for your domain
+	AppsLicensingScope = "https://www.googleapis.com/auth/apps.licensing"
+)
+
 func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
@@ -51,10 +57,18 @@ func New(client *http.Client) (*Service, error) {
 }
 
 type Service struct {
-	client   *http.Client
-	BasePath string // API endpoint base URL
+	client    *http.Client
+	BasePath  string // API endpoint base URL
+	UserAgent string // optional additional User-Agent fragment
 
 	LicenseAssignments *LicenseAssignmentsService
+}
+
+func (s *Service) userAgent() string {
+	if s.UserAgent == "" {
+		return googleapi.UserAgent
+	}
+	return googleapi.UserAgent + " " + s.UserAgent
 }
 
 func NewLicenseAssignmentsService(s *Service) *LicenseAssignmentsService {
@@ -149,7 +163,7 @@ func (c *LicenseAssignmentsDeleteCall) Do() error {
 		"skuId":     c.skuId,
 		"userId":    c.userId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -188,7 +202,10 @@ func (c *LicenseAssignmentsDeleteCall) Do() error {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{productId}/sku/{skuId}/user/{userId}"
+	//   "path": "{productId}/sku/{skuId}/user/{userId}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/apps.licensing"
+	//   ]
 	// }
 
 }
@@ -236,7 +253,7 @@ func (c *LicenseAssignmentsGetCall) Do() (*LicenseAssignment, error) {
 		"skuId":     c.skuId,
 		"userId":    c.userId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -282,7 +299,10 @@ func (c *LicenseAssignmentsGetCall) Do() (*LicenseAssignment, error) {
 	//   "path": "{productId}/sku/{skuId}/user/{userId}",
 	//   "response": {
 	//     "$ref": "LicenseAssignment"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/apps.licensing"
+	//   ]
 	// }
 
 }
@@ -334,7 +354,7 @@ func (c *LicenseAssignmentsInsertCall) Do() (*LicenseAssignment, error) {
 		"skuId":     c.skuId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -376,7 +396,10 @@ func (c *LicenseAssignmentsInsertCall) Do() (*LicenseAssignment, error) {
 	//   },
 	//   "response": {
 	//     "$ref": "LicenseAssignment"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/apps.licensing"
+	//   ]
 	// }
 
 }
@@ -442,7 +465,7 @@ func (c *LicenseAssignmentsListForProductCall) Do() (*LicenseAssignmentList, err
 	googleapi.Expand(req.URL, map[string]string{
 		"productId": c.productId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -496,7 +519,10 @@ func (c *LicenseAssignmentsListForProductCall) Do() (*LicenseAssignmentList, err
 	//   "path": "{productId}/users",
 	//   "response": {
 	//     "$ref": "LicenseAssignmentList"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/apps.licensing"
+	//   ]
 	// }
 
 }
@@ -565,7 +591,7 @@ func (c *LicenseAssignmentsListForProductAndSkuCall) Do() (*LicenseAssignmentLis
 		"productId": c.productId,
 		"skuId":     c.skuId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -626,7 +652,10 @@ func (c *LicenseAssignmentsListForProductAndSkuCall) Do() (*LicenseAssignmentLis
 	//   "path": "{productId}/sku/{skuId}/users",
 	//   "response": {
 	//     "$ref": "LicenseAssignmentList"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/apps.licensing"
+	//   ]
 	// }
 
 }
@@ -681,7 +710,7 @@ func (c *LicenseAssignmentsPatchCall) Do() (*LicenseAssignment, error) {
 		"userId":    c.userId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -730,7 +759,10 @@ func (c *LicenseAssignmentsPatchCall) Do() (*LicenseAssignment, error) {
 	//   },
 	//   "response": {
 	//     "$ref": "LicenseAssignment"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/apps.licensing"
+	//   ]
 	// }
 
 }
@@ -785,7 +817,7 @@ func (c *LicenseAssignmentsUpdateCall) Do() (*LicenseAssignment, error) {
 		"userId":    c.userId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -834,7 +866,10 @@ func (c *LicenseAssignmentsUpdateCall) Do() (*LicenseAssignment, error) {
 	//   },
 	//   "response": {
 	//     "$ref": "LicenseAssignment"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/apps.licensing"
+	//   ]
 	// }
 
 }

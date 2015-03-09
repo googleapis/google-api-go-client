@@ -67,8 +67,9 @@ func New(client *http.Client) (*Service, error) {
 }
 
 type Service struct {
-	client   *http.Client
-	BasePath string // API endpoint base URL
+	client    *http.Client
+	BasePath  string // API endpoint base URL
+	UserAgent string // Optional appended User-Agent for header of the request
 
 	BlogUserInfos *BlogUserInfosService
 
@@ -718,7 +719,11 @@ func (c *BlogUserInfosGetCall) Do() (*BlogUserInfo, error) {
 		"userId": c.userId,
 		"blogId": c.blogId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -828,7 +833,11 @@ func (c *BlogsGetCall) Do() (*Blog, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"blogId": c.blogId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -935,7 +944,11 @@ func (c *BlogsGetByUrlCall) Do() (*Blog, error) {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1071,7 +1084,11 @@ func (c *BlogsListByUserCall) Do() (*BlogList, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"userId": c.userId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1205,7 +1222,11 @@ func (c *CommentsApproveCall) Do() (*Comment, error) {
 		"postId":    c.postId,
 		"commentId": c.commentId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1301,7 +1322,11 @@ func (c *CommentsDeleteCall) Do() error {
 		"postId":    c.postId,
 		"commentId": c.commentId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -1403,7 +1428,11 @@ func (c *CommentsGetCall) Do() (*Comment, error) {
 		"postId":    c.postId,
 		"commentId": c.commentId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1582,7 +1611,11 @@ func (c *CommentsListCall) Do() (*CommentList, error) {
 		"blogId": c.blogId,
 		"postId": c.postId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1786,7 +1819,11 @@ func (c *CommentsListByBlogCall) Do() (*CommentList, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"blogId": c.blogId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1914,7 +1951,11 @@ func (c *CommentsMarkAsSpamCall) Do() (*Comment, error) {
 		"postId":    c.postId,
 		"commentId": c.commentId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -2010,7 +2051,11 @@ func (c *CommentsRemoveContentCall) Do() (*Comment, error) {
 		"postId":    c.postId,
 		"commentId": c.commentId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -2109,7 +2154,11 @@ func (c *PageViewsGetCall) Do() (*Pageviews, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"blogId": c.blogId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -2203,7 +2252,11 @@ func (c *PagesDeleteCall) Do() error {
 		"blogId": c.blogId,
 		"pageId": c.pageId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -2291,7 +2344,11 @@ func (c *PagesGetCall) Do() (*Page, error) {
 		"blogId": c.blogId,
 		"pageId": c.pageId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -2407,7 +2464,11 @@ func (c *PagesInsertCall) Do() (*Page, error) {
 		"blogId": c.blogId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -2542,7 +2603,11 @@ func (c *PagesListCall) Do() (*PageList, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"blogId": c.blogId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -2694,7 +2759,11 @@ func (c *PagesPatchCall) Do() (*Page, error) {
 		"pageId": c.pageId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -2793,7 +2862,11 @@ func (c *PagesPublishCall) Do() (*Page, error) {
 		"blogId": c.blogId,
 		"pageId": c.pageId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -2879,7 +2952,11 @@ func (c *PagesRevertCall) Do() (*Page, error) {
 		"blogId": c.blogId,
 		"pageId": c.pageId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -2993,7 +3070,11 @@ func (c *PagesUpdateCall) Do() (*Page, error) {
 		"pageId": c.pageId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -3107,7 +3188,11 @@ func (c *PostUserInfosGetCall) Do() (*PostUserInfo, error) {
 		"blogId": c.blogId,
 		"postId": c.postId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -3299,7 +3384,11 @@ func (c *PostUserInfosListCall) Do() (*PostUserInfosList, error) {
 		"userId": c.userId,
 		"blogId": c.blogId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -3464,7 +3553,11 @@ func (c *PostsDeleteCall) Do() error {
 		"blogId": c.blogId,
 		"postId": c.postId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -3586,7 +3679,11 @@ func (c *PostsGetCall) Do() (*Post, error) {
 		"blogId": c.blogId,
 		"postId": c.postId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -3726,7 +3823,11 @@ func (c *PostsGetByPathCall) Do() (*Post, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"blogId": c.blogId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -3870,7 +3971,11 @@ func (c *PostsInsertCall) Do() (*Post, error) {
 		"blogId": c.blogId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -4067,7 +4172,11 @@ func (c *PostsListCall) Do() (*PostList, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"blogId": c.blogId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -4290,7 +4399,11 @@ func (c *PostsPatchCall) Do() (*Post, error) {
 		"postId": c.postId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -4420,7 +4533,11 @@ func (c *PostsPublishCall) Do() (*Post, error) {
 		"blogId": c.blogId,
 		"postId": c.postId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -4512,7 +4629,11 @@ func (c *PostsRevertCall) Do() (*Post, error) {
 		"blogId": c.blogId,
 		"postId": c.postId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -4619,7 +4740,11 @@ func (c *PostsSearchCall) Do() (*PostList, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"blogId": c.blogId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -4785,7 +4910,11 @@ func (c *PostsUpdateCall) Do() (*Post, error) {
 		"postId": c.postId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -4898,7 +5027,11 @@ func (c *UsersGetCall) Do() (*User, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"userId": c.userId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err

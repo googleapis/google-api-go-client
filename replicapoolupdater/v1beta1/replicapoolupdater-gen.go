@@ -64,8 +64,9 @@ func New(client *http.Client) (*Service, error) {
 }
 
 type Service struct {
-	client   *http.Client
-	BasePath string // API endpoint base URL
+	client    *http.Client
+	BasePath  string // API endpoint base URL
+	UserAgent string // Optional appended User-Agent for header of the request
 
 	RollingUpdates *RollingUpdatesService
 
@@ -264,7 +265,8 @@ type RollingUpdate struct {
 	// instance group. This can be RECREATE which will recreate each
 	// instance and is only available for managed instance groups. It can
 	// also be REBOOT which performs a soft reboot for each instance and is
-	// only available for regular (non-managed) instance groups.
+	// only available for regular (non-managed) instance groups and explicit
+	// lists of instances.
 	ActionType string `json:"actionType,omitempty"`
 
 	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
@@ -283,18 +285,23 @@ type RollingUpdate struct {
 	Id string `json:"id,omitempty"`
 
 	// InstanceGroup: Fully-qualified URL of an instance group being
-	// updated. Exactly one of instanceGroupManager and instanceGroup must
-	// be set.
+	// updated. Exactly one of instanceGroupManager, instanceGroup and
+	// instance list must be set.
 	InstanceGroup string `json:"instanceGroup,omitempty"`
 
 	// InstanceGroupManager: Fully-qualified URL of an instance group
-	// manager being updated. Exactly one of instanceGroupManager and
-	// instanceGroup must be set.
+	// manager being updated. Exactly one of instanceGroupManager,
+	// instanceGroup and instance list must be set.
 	InstanceGroupManager string `json:"instanceGroupManager,omitempty"`
 
 	// InstanceTemplate: Fully-qualified URL of an instance template to
 	// apply.
 	InstanceTemplate string `json:"instanceTemplate,omitempty"`
+
+	// Instances: List of fully-qualified URLs of instances to be updated.
+	// Exactly one of instanceGroupManager, instanceGroup and instance list
+	// must be set.
+	Instances []string `json:"instances,omitempty"`
 
 	// Kind: [Output Only] Type of the resource.
 	Kind string `json:"kind,omitempty"`
@@ -361,10 +368,6 @@ type RollingUpdatePolicy struct {
 	// update gets automatically paused.
 	AutoPauseAfterInstances int64 `json:"autoPauseAfterInstances,omitempty"`
 
-	// Canary: Parameters of a canary phase. If absent, canary will NOT be
-	// performed.
-	Canary *RollingUpdatePolicyCanary `json:"canary,omitempty"`
-
 	// InstanceStartupTimeoutSec: Maximum amount of time we will wait after
 	// finishing all steps until we receive HEALTHY state for instance. If
 	// this deadline is exceeded instance update is considered as failed.
@@ -396,12 +399,6 @@ type RollingUpdatePolicy struct {
 	// restarted but before marking the update of this instance as done.
 	// This field is deprecated and ignored by Rolling Updater.
 	SleepAfterInstanceRestartSec int64 `json:"sleepAfterInstanceRestartSec,omitempty"`
-}
-
-type RollingUpdatePolicyCanary struct {
-	// NumInstances: Number of instances updated as a part of canary phase.
-	// If absent, the default number of instances will be used.
-	NumInstances int64 `json:"numInstances,omitempty"`
 }
 
 type RollingUpdateList struct {
@@ -462,7 +459,11 @@ func (c *RollingUpdatesCancelCall) Do() (*Operation, error) {
 		"zone":          c.zone,
 		"rollingUpdate": c.rollingUpdate,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -561,7 +562,11 @@ func (c *RollingUpdatesGetCall) Do() (*RollingUpdate, error) {
 		"zone":          c.zone,
 		"rollingUpdate": c.rollingUpdate,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -666,7 +671,11 @@ func (c *RollingUpdatesInsertCall) Do() (*Operation, error) {
 		"zone":    c.zone,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -802,7 +811,11 @@ func (c *RollingUpdatesListCall) Do() (*RollingUpdateList, error) {
 		"project": c.project,
 		"zone":    c.zone,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -952,7 +965,11 @@ func (c *RollingUpdatesListInstanceUpdatesCall) Do() (*InstanceUpdateList, error
 		"zone":          c.zone,
 		"rollingUpdate": c.rollingUpdate,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1073,7 +1090,11 @@ func (c *RollingUpdatesPauseCall) Do() (*Operation, error) {
 		"zone":          c.zone,
 		"rollingUpdate": c.rollingUpdate,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1173,7 +1194,11 @@ func (c *RollingUpdatesResumeCall) Do() (*Operation, error) {
 		"zone":          c.zone,
 		"rollingUpdate": c.rollingUpdate,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1274,7 +1299,11 @@ func (c *RollingUpdatesRollbackCall) Do() (*Operation, error) {
 		"zone":          c.zone,
 		"rollingUpdate": c.rollingUpdate,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1372,7 +1401,11 @@ func (c *ZoneOperationsGetCall) Do() (*Operation, error) {
 		"zone":      c.zone,
 		"operation": c.operation,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err

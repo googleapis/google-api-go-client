@@ -72,8 +72,9 @@ func New(client *http.Client) (*Service, error) {
 }
 
 type Service struct {
-	client   *http.Client
-	BasePath string // API endpoint base URL
+	client    *http.Client
+	BasePath  string // API endpoint base URL
+	UserAgent string // Optional appended User-Agent for header of the request
 
 	ZoneOperations *ZoneOperationsService
 
@@ -413,7 +414,11 @@ func (c *ZoneOperationsGetCall) Do() (*Operation, error) {
 		"zone":      c.zone,
 		"operation": c.operation,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -546,7 +551,11 @@ func (c *ZoneOperationsListCall) Do() (*OperationList, error) {
 		"project": c.project,
 		"zone":    c.zone,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -668,7 +677,11 @@ func (c *ZoneViewsAddResourcesCall) Do() (*Operation, error) {
 		"resourceView": c.resourceView,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -769,7 +782,11 @@ func (c *ZoneViewsDeleteCall) Do() (*Operation, error) {
 		"zone":         c.zone,
 		"resourceView": c.resourceView,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -867,7 +884,11 @@ func (c *ZoneViewsGetCall) Do() (*ResourceView, error) {
 		"zone":         c.zone,
 		"resourceView": c.resourceView,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -979,7 +1000,11 @@ func (c *ZoneViewsGetServiceCall) Do() (*ZoneViewsGetServiceResponse, error) {
 		"zone":         c.zone,
 		"resourceView": c.resourceView,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1087,7 +1112,11 @@ func (c *ZoneViewsInsertCall) Do() (*Operation, error) {
 		"zone":    c.zone,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1201,7 +1230,11 @@ func (c *ZoneViewsListCall) Do() (*ZoneViewsList, error) {
 		"project": c.project,
 		"zone":    c.zone,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1364,7 +1397,11 @@ func (c *ZoneViewsListResourcesCall) Do() (*ZoneViewsListResourcesResponse, erro
 		"zone":         c.zone,
 		"resourceView": c.resourceView,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1520,7 +1557,11 @@ func (c *ZoneViewsRemoveResourcesCall) Do() (*Operation, error) {
 		"resourceView": c.resourceView,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1630,7 +1671,11 @@ func (c *ZoneViewsSetServiceCall) Do() (*Operation, error) {
 		"resourceView": c.resourceView,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err

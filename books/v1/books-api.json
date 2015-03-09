@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/kNB4QIeM_hYb1gDtvlVUUPro4uQ\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/7vCHfrhi9Lj_cY5xxg_5Db6xPtw\"",
  "discoveryVersion": "v1",
  "id": "books:v1",
  "name": "books",
  "version": "v1",
- "revision": "20150115",
+ "revision": "20150309",
  "title": "Books API",
  "description": "Lets you search for books and manage your Google Books library.",
  "ownerDomain": "google.com",
@@ -2817,34 +2817,6 @@
         "https://www.googleapis.com/auth/books"
        ]
       },
-      "get": {
-       "id": "books.mylibrary.annotations.get",
-       "path": "mylibrary/annotations/{annotationId}",
-       "httpMethod": "GET",
-       "description": "Gets an annotation by its ID.",
-       "parameters": {
-        "annotationId": {
-         "type": "string",
-         "description": "The ID for the annotation to retrieve.",
-         "required": true,
-         "location": "path"
-        },
-        "source": {
-         "type": "string",
-         "description": "String to identify the originator of this request.",
-         "location": "query"
-        }
-       },
-       "parameterOrder": [
-        "annotationId"
-       ],
-       "response": {
-        "$ref": "Annotation"
-       },
-       "scopes": [
-        "https://www.googleapis.com/auth/books"
-       ]
-      },
       "insert": {
        "id": "books.mylibrary.annotations.insert",
        "path": "mylibrary/annotations",
@@ -2905,12 +2877,6 @@
          "format": "uint32",
          "minimum": "0",
          "maximum": "40",
-         "location": "query"
-        },
-        "pageIds": {
-         "type": "string",
-         "description": "The page ID(s) for the volume that is being queried.",
-         "repeated": true,
          "location": "query"
         },
         "pageToken": {

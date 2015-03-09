@@ -66,8 +66,9 @@ func New(client *http.Client) (*Service, error) {
 }
 
 type Service struct {
-	client   *http.Client
-	BasePath string // API endpoint base URL
+	client    *http.Client
+	BasePath  string // API endpoint base URL
+	UserAgent string // Optional appended User-Agent for header of the request
 
 	BucketAccessControls *BucketAccessControlsService
 
@@ -435,7 +436,11 @@ func (c *BucketAccessControlsDeleteCall) Do() error {
 		"bucket": c.bucket,
 		"entity": c.entity,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -515,7 +520,11 @@ func (c *BucketAccessControlsGetCall) Do() (*BucketAccessControl, error) {
 		"bucket": c.bucket,
 		"entity": c.entity,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -606,7 +615,11 @@ func (c *BucketAccessControlsInsertCall) Do() (*BucketAccessControl, error) {
 		"bucket": c.bucket,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -685,7 +698,11 @@ func (c *BucketAccessControlsListCall) Do() (*BucketAccessControls, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"bucket": c.bucket,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -773,7 +790,11 @@ func (c *BucketAccessControlsPatchCall) Do() (*BucketAccessControl, error) {
 		"entity": c.entity,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -870,7 +891,11 @@ func (c *BucketAccessControlsUpdateCall) Do() (*BucketAccessControl, error) {
 		"entity": c.entity,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -956,7 +981,11 @@ func (c *BucketsDeleteCall) Do() error {
 	googleapi.Expand(req.URL, map[string]string{
 		"bucket": c.bucket,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -1036,7 +1065,11 @@ func (c *BucketsGetCall) Do() (*Bucket, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"bucket": c.bucket,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1143,7 +1176,11 @@ func (c *BucketsInsertCall) Do() (*Bucket, error) {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1257,7 +1294,11 @@ func (c *BucketsListCall) Do() (*Buckets, error) {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1379,7 +1420,11 @@ func (c *BucketsPatchCall) Do() (*Bucket, error) {
 		"bucket": c.bucket,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1490,7 +1535,11 @@ func (c *BucketsUpdateCall) Do() (*Bucket, error) {
 		"bucket": c.bucket,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1590,7 +1639,11 @@ func (c *ObjectAccessControlsDeleteCall) Do() error {
 		"object": c.object,
 		"entity": c.entity,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -1680,7 +1733,11 @@ func (c *ObjectAccessControlsGetCall) Do() (*ObjectAccessControl, error) {
 		"object": c.object,
 		"entity": c.entity,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1781,7 +1838,11 @@ func (c *ObjectAccessControlsInsertCall) Do() (*ObjectAccessControl, error) {
 		"object": c.object,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1870,7 +1931,11 @@ func (c *ObjectAccessControlsListCall) Do() (*ObjectAccessControls, error) {
 		"bucket": c.bucket,
 		"object": c.object,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1968,7 +2033,11 @@ func (c *ObjectAccessControlsPatchCall) Do() (*ObjectAccessControl, error) {
 		"entity": c.entity,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -2075,7 +2144,11 @@ func (c *ObjectAccessControlsUpdateCall) Do() (*ObjectAccessControl, error) {
 		"entity": c.entity,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -2171,7 +2244,11 @@ func (c *ObjectsDeleteCall) Do() error {
 		"bucket": c.bucket,
 		"object": c.object,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -2261,7 +2338,11 @@ func (c *ObjectsGetCall) Do() (*Object, error) {
 		"bucket": c.bucket,
 		"object": c.object,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -2449,7 +2530,11 @@ func (c *ObjectsInsertCall) Do() (*Object, error) {
 	} else {
 		req.Header.Set("Content-Type", ctype)
 	}
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -2462,6 +2547,7 @@ func (c *ObjectsInsertCall) Do() (*Object, error) {
 		loc := res.Header.Get("Location")
 		rx := &googleapi.ResumableUpload{
 			Client:        c.s.client,
+			UserAgent:     userAgent,
 			URI:           loc,
 			Media:         c.resumable_,
 			MediaType:     c.mediaType_,
@@ -2636,7 +2722,11 @@ func (c *ObjectsListCall) Do() (*Objects, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"bucket": c.bucket,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -2772,7 +2862,11 @@ func (c *ObjectsPatchCall) Do() (*Object, error) {
 		"object": c.object,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -2893,7 +2987,11 @@ func (c *ObjectsUpdateCall) Do() (*Object, error) {
 		"object": c.object,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err

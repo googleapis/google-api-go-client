@@ -60,8 +60,9 @@ func New(client *http.Client) (*Service, error) {
 }
 
 type Service struct {
-	client   *http.Client
-	BasePath string // API endpoint base URL
+	client    *http.Client
+	BasePath  string // API endpoint base URL
+	UserAgent string // Optional appended User-Agent for header of the request
 
 	MetricDescriptors *MetricDescriptorsService
 
@@ -396,7 +397,11 @@ func (c *MetricDescriptorsCreateCall) Do() (*MetricDescriptor, error) {
 		"project": c.project,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -478,7 +483,11 @@ func (c *MetricDescriptorsDeleteCall) Do() (*DeleteMetricDescriptorResponse, err
 		"project": c.project,
 		"metric":  c.metric,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -604,7 +613,11 @@ func (c *MetricDescriptorsListCall) Do() (*ListMetricDescriptorsResponse, error)
 	googleapi.Expand(req.URL, map[string]string{
 		"project": c.project,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -820,7 +833,11 @@ func (c *TimeseriesListCall) Do() (*ListTimeseriesResponse, error) {
 		"project": c.project,
 		"metric":  c.metric,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -983,7 +1000,11 @@ func (c *TimeseriesWriteCall) Do() (*WriteTimeseriesResponse, error) {
 		"project": c.project,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1181,7 +1202,11 @@ func (c *TimeseriesDescriptorsListCall) Do() (*ListTimeseriesDescriptorsResponse
 		"project": c.project,
 		"metric":  c.metric,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err

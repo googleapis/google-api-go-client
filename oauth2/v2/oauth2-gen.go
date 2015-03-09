@@ -66,8 +66,9 @@ func New(client *http.Client) (*Service, error) {
 }
 
 type Service struct {
-	client   *http.Client
-	BasePath string // API endpoint base URL
+	client    *http.Client
+	BasePath  string // API endpoint base URL
+	UserAgent string // Optional appended User-Agent for header of the request
 
 	Userinfo *UserinfoService
 }
@@ -147,7 +148,7 @@ type Tokeninfo struct {
 	// Scope: The space separated list of scopes granted to this token.
 	Scope string `json:"scope,omitempty"`
 
-	// User_id: The Gaia obfuscated user id.
+	// User_id: The obfuscated user id.
 	User_id string `json:"user_id,omitempty"`
 
 	// Verified_email: Boolean flag which is true if the email address is
@@ -172,7 +173,7 @@ type Userinfoplus struct {
 	// user.
 	Hd string `json:"hd,omitempty"`
 
-	// Id: The focus obfuscated gaia id of the user.
+	// Id: The obfuscated ID of the user.
 	Id string `json:"id,omitempty"`
 
 	// Link: URL of the profile page.
@@ -225,7 +226,11 @@ func (c *GetCertForOpenIdConnectCall) Do() (*Jwk, error) {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -300,7 +305,11 @@ func (c *TokeninfoCall) Do() (*Tokeninfo, error) {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -367,7 +376,11 @@ func (c *UserinfoGetCall) Do() (*Userinfoplus, error) {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -430,7 +443,11 @@ func (c *UserinfoV2MeGetCall) Do() (*Userinfoplus, error) {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err

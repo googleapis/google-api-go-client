@@ -24,9 +24,6 @@ import (
 	"unicode"
 )
 
-// goGenVersion is the version of the Go code generator
-const goGenVersion = "0.5"
-
 var (
 	apiToGenerate = flag.String("api", "*", "The API ID to generate, like 'tasks:v1'. A value of '*' means all.")
 	useCache      = flag.Bool("cache", true, "Use cache of discovered Google API discovery documents.")
@@ -468,6 +465,7 @@ func (a *API) GenerateCode() ([]byte, error) {
 	p("\ntype Service struct {\n")
 	p("\tclient *http.Client\n")
 	p("\tBasePath string // API endpoint base URL\n")
+	pn("\tUserAgent string // Optional appended User-Agent for header of the request")
 
 	for _, res := range reslist {
 		p("\n\t%s\t*%s\n", res.GoField(), res.GoType())
@@ -1370,7 +1368,11 @@ func (meth *Method) generateCode() {
 	} else if hasContentType {
 		pn(`req.Header.Set("Content-Type", ctype)`)
 	}
-	pn(`req.Header.Set("User-Agent", "google-api-go-client/` + goGenVersion + `")`)
+	pn("userAgent := googleapi.UserAgent")
+	pn(`if c.s.UserAgent != "" {`)
+	pn(`	userAgent = fmt.Sprintf("%%v %%v", userAgent, c.s.UserAgent)`)
+	pn("}")
+	pn(`req.Header.Set("User-Agent", userAgent)`)
 	pn("res, err := c.s.client.Do(req);")
 	pn("if err != nil { return %serr }", nilRet)
 	pn("defer googleapi.CloseBody(res)")
@@ -1380,6 +1382,7 @@ func (meth *Method) generateCode() {
 		pn(` loc := res.Header.Get("Location")`)
 		pn(" rx := &googleapi.ResumableUpload{")
 		pn("  Client:        c.s.client,")
+		pn("  UserAgent:     userAgent,")
 		pn("  URI:           loc,")
 		pn("  Media:         c.resumable_,")
 		pn("  MediaType:     c.mediaType_,")

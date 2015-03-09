@@ -108,8 +108,9 @@ func New(client *http.Client) (*Service, error) {
 }
 
 type Service struct {
-	client   *http.Client
-	BasePath string // API endpoint base URL
+	client    *http.Client
+	BasePath  string // API endpoint base URL
+	UserAgent string // Optional appended User-Agent for header of the request
 
 	AccountActiveAdSummaries *AccountActiveAdSummariesService
 
@@ -1733,7 +1734,7 @@ type ContentCategoriesListResponse struct {
 }
 
 type ContentCategory struct {
-	// AccountId: Account ID of this content category.This is a read-only
+	// AccountId: Account ID of this content category. This is a read-only
 	// field that can be left blank.
 	AccountId int64 `json:"accountId,omitempty,string"`
 
@@ -1949,7 +1950,7 @@ type Creative struct {
 	// and HTML5_BANNER, and all RICH_MEDIA.
 	HtmlCode string `json:"htmlCode,omitempty"`
 
-	// HtmlCodeLocked: Whether HTML code is DCM generated or manually
+	// HtmlCodeLocked: Whether HTML code is DCM-generated or manually
 	// entered. Set to true to ignore changes to htmlCode. Applicable to the
 	// following creative types: FLASH_INPAGE and HTML5_BANNER.
 	HtmlCodeLocked bool `json:"htmlCodeLocked,omitempty"`
@@ -2193,7 +2194,7 @@ type CreativeAsset struct {
 	// asset. Applicable to the following creative types: all RICH_MEDIA.
 	HideSelectionBoxes bool `json:"hideSelectionBoxes,omitempty"`
 
-	// HorizontallyLocked: Wheter the asset is horizontally locked. This is
+	// HorizontallyLocked: Whether the asset is horizontally locked. This is
 	// a read-only field. Applicable to the following creative types: all
 	// RICH_MEDIA.
 	HorizontallyLocked bool `json:"horizontallyLocked,omitempty"`
@@ -2514,7 +2515,7 @@ type CreativeCustomEvent struct {
 	// modified after insertion.
 	Id int64 `json:"id,omitempty,string"`
 
-	// PopupWindowProperties: Properties for rich media pop-up windows. This
+	// PopupWindowProperties: Properties for rich media popup windows. This
 	// field is used only for exit events.
 	PopupWindowProperties *PopupWindowProperties `json:"popupWindowProperties,omitempty"`
 
@@ -3324,8 +3325,8 @@ type FloodlightActivitiesListResponse struct {
 }
 
 type FloodlightActivity struct {
-	// AccountId: Account ID of this floodlight activity.This is a read-only
-	// field that can be left blank.
+	// AccountId: Account ID of this floodlight activity. This is a
+	// read-only field that can be left blank.
 	AccountId int64 `json:"accountId,omitempty,string"`
 
 	// AdvertiserId: Advertiser ID of this floodlight activity. If this
@@ -3387,7 +3388,7 @@ type FloodlightActivity struct {
 	Id int64 `json:"id,omitempty,string"`
 
 	// IdDimensionValue: Dimension value for the ID of this floodlight
-	// activity.This is a read-only, auto-generated field.
+	// activity. This is a read-only, auto-generated field.
 	IdDimensionValue *DimensionValue `json:"idDimensionValue,omitempty"`
 
 	// ImageTagEnabled: Whether the image tag is enabled for this activity.
@@ -3418,7 +3419,7 @@ type FloodlightActivity struct {
 	// SslRequired: Whether this floodlight activity must be SSL-compliant.
 	SslRequired bool `json:"sslRequired,omitempty"`
 
-	// SubaccountId: Subaccount ID of this floodlight activity.This is a
+	// SubaccountId: Subaccount ID of this floodlight activity. This is a
 	// read-only field that can be left blank.
 	SubaccountId int64 `json:"subaccountId,omitempty,string"`
 
@@ -3478,7 +3479,7 @@ type FloodlightActivityDynamicTag struct {
 }
 
 type FloodlightActivityGroup struct {
-	// AccountId: Account ID of this floodlight activity group.This is a
+	// AccountId: Account ID of this floodlight activity group. This is a
 	// read-only field that can be left blank.
 	AccountId int64 `json:"accountId,omitempty,string"`
 
@@ -3531,7 +3532,7 @@ type FloodlightActivityGroup struct {
 	// configuration. This field is read-only after insertion.
 	TagString string `json:"tagString,omitempty"`
 
-	// Type: The type of floodlight activity group. This is a required field
+	// Type: Type of the floodlight activity group. This is a required field
 	// that is read-only after insertion.
 	Type string `json:"type,omitempty"`
 }
@@ -3590,7 +3591,7 @@ type FloodlightConfiguration struct {
 	// Google Analytics.
 	AnalyticsDataSharingEnabled bool `json:"analyticsDataSharingEnabled,omitempty"`
 
-	// ExposureToConversionEnabled: Whether the exposure to conversion
+	// ExposureToConversionEnabled: Whether the exposure-to-conversion
 	// report is enabled. This report shows detailed pathway information on
 	// up to 10 of the most recent ad exposures seen by a user before
 	// converting.
@@ -5363,8 +5364,8 @@ type UserDefinedVariableConfiguration struct {
 	DataType string `json:"dataType,omitempty"`
 
 	// ReportName: User-friendly name for the variable which will appear in
-	// reports. This is a required field, must be less than 65 characters
-	// long, and cannot contain the following characters: """.
+	// reports. This is a required field, must be less than 64 characters
+	// long, and cannot contain the following characters: ""<>".
 	ReportName string `json:"reportName,omitempty"`
 
 	// VariableType: Variable name in the tag. This is a required field.
@@ -5550,7 +5551,11 @@ func (c *AccountActiveAdSummariesGetCall) Do() (*AccountActiveAdSummary, error) 
 		"profileId":        strconv.FormatInt(c.profileId, 10),
 		"summaryAccountId": strconv.FormatInt(c.summaryAccountId, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -5638,7 +5643,11 @@ func (c *AccountPermissionGroupsGetCall) Do() (*AccountPermissionGroup, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 		"id":        strconv.FormatInt(c.id, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -5723,7 +5732,11 @@ func (c *AccountPermissionGroupsListCall) Do() (*AccountPermissionGroupsListResp
 	googleapi.Expand(req.URL, map[string]string{
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -5803,7 +5816,11 @@ func (c *AccountPermissionsGetCall) Do() (*AccountPermission, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 		"id":        strconv.FormatInt(c.id, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -5888,7 +5905,11 @@ func (c *AccountPermissionsListCall) Do() (*AccountPermissionsListResponse, erro
 	googleapi.Expand(req.URL, map[string]string{
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -5968,7 +5989,11 @@ func (c *AccountUserProfilesGetCall) Do() (*AccountUserProfile, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 		"id":        strconv.FormatInt(c.id, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -6149,7 +6174,11 @@ func (c *AccountUserProfilesListCall) Do() (*AccountUserProfilesListResponse, er
 	googleapi.Expand(req.URL, map[string]string{
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -6304,7 +6333,11 @@ func (c *AccountUserProfilesPatchCall) Do() (*AccountUserProfile, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -6400,7 +6433,11 @@ func (c *AccountUserProfilesUpdateCall) Do() (*AccountUserProfile, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -6483,7 +6520,11 @@ func (c *AccountsGetCall) Do() (*Account, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 		"id":        strconv.FormatInt(c.id, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -6645,7 +6686,11 @@ func (c *AccountsListCall) Do() (*AccountsListResponse, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -6788,7 +6833,11 @@ func (c *AccountsPatchCall) Do() (*Account, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -6884,7 +6933,11 @@ func (c *AccountsUpdateCall) Do() (*Account, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -6967,7 +7020,11 @@ func (c *AdsGetCall) Do() (*Ad, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 		"id":        strconv.FormatInt(c.id, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -7060,7 +7117,11 @@ func (c *AdsInsertCall) Do() (*Ad, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -7395,7 +7456,11 @@ func (c *AdsListCall) Do() (*AdsListResponse, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -7717,7 +7782,11 @@ func (c *AdsPatchCall) Do() (*Ad, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -7813,7 +7882,11 @@ func (c *AdsUpdateCall) Do() (*Ad, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -7896,7 +7969,11 @@ func (c *AdvertiserGroupsDeleteCall) Do() error {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 		"id":        strconv.FormatInt(c.id, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -7977,7 +8054,11 @@ func (c *AdvertiserGroupsGetCall) Do() (*AdvertiserGroup, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 		"id":        strconv.FormatInt(c.id, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -8070,7 +8151,11 @@ func (c *AdvertiserGroupsInsertCall) Do() (*AdvertiserGroup, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -8217,7 +8302,11 @@ func (c *AdvertiserGroupsListCall) Do() (*AdvertiserGroupsListResponse, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -8355,7 +8444,11 @@ func (c *AdvertiserGroupsPatchCall) Do() (*AdvertiserGroup, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -8451,7 +8544,11 @@ func (c *AdvertiserGroupsUpdateCall) Do() (*AdvertiserGroup, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -8534,7 +8631,11 @@ func (c *AdvertisersGetCall) Do() (*Advertiser, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 		"id":        strconv.FormatInt(c.id, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -8627,7 +8728,11 @@ func (c *AdvertisersInsertCall) Do() (*Advertiser, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -8835,7 +8940,11 @@ func (c *AdvertisersListCall) Do() (*AdvertisersListResponse, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -9016,7 +9125,11 @@ func (c *AdvertisersPatchCall) Do() (*Advertiser, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -9112,7 +9225,11 @@ func (c *AdvertisersUpdateCall) Do() (*Advertiser, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -9192,7 +9309,11 @@ func (c *BrowsersListCall) Do() (*BrowsersListResponse, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -9282,7 +9403,11 @@ func (c *CampaignCreativeAssociationsInsertCall) Do() (*CampaignCreativeAssociat
 		"campaignId": strconv.FormatInt(c.campaignId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -9404,7 +9529,11 @@ func (c *CampaignCreativeAssociationsListCall) Do() (*CampaignCreativeAssociatio
 		"profileId":  strconv.FormatInt(c.profileId, 10),
 		"campaignId": strconv.FormatInt(c.campaignId, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -9516,7 +9645,11 @@ func (c *CampaignsGetCall) Do() (*Campaign, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 		"id":        strconv.FormatInt(c.id, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -9615,7 +9748,11 @@ func (c *CampaignsInsertCall) Do() (*Campaign, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -9849,7 +9986,11 @@ func (c *CampaignsListCall) Do() (*CampaignsListResponse, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -10030,7 +10171,11 @@ func (c *CampaignsPatchCall) Do() (*Campaign, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -10126,7 +10271,11 @@ func (c *CampaignsUpdateCall) Do() (*Campaign, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -10209,7 +10358,11 @@ func (c *ChangeLogsGetCall) Do() (*ChangeLog, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 		"id":        strconv.FormatInt(c.id, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -10407,7 +10560,11 @@ func (c *ChangeLogsListCall) Do() (*ChangeLogsListResponse, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -10693,7 +10850,11 @@ func (c *CitiesListCall) Do() (*CitiesListResponse, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -10796,7 +10957,11 @@ func (c *ConnectionTypesListCall) Do() (*ConnectionTypesListResponse, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -10876,7 +11041,11 @@ func (c *ContentCategoriesDeleteCall) Do() error {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 		"id":        strconv.FormatInt(c.id, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -10957,7 +11126,11 @@ func (c *ContentCategoriesGetCall) Do() (*ContentCategory, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 		"id":        strconv.FormatInt(c.id, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -11050,7 +11223,11 @@ func (c *ContentCategoriesInsertCall) Do() (*ContentCategory, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -11197,7 +11374,11 @@ func (c *ContentCategoriesListCall) Do() (*ContentCategoriesListResponse, error)
 	googleapi.Expand(req.URL, map[string]string{
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -11335,7 +11516,11 @@ func (c *ContentCategoriesPatchCall) Do() (*ContentCategory, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -11431,7 +11616,11 @@ func (c *ContentCategoriesUpdateCall) Do() (*ContentCategory, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -11514,7 +11703,11 @@ func (c *CountriesGetCall) Do() (*Country, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 		"dartId":    strconv.FormatInt(c.dartId, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -11599,7 +11792,11 @@ func (c *CountriesListCall) Do() (*CountriesListResponse, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -11746,7 +11943,11 @@ func (c *CreativeAssetsInsertCall) Do() (*CreativeAssetMetadata, error) {
 	} else {
 		req.Header.Set("Content-Type", ctype)
 	}
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -11759,6 +11960,7 @@ func (c *CreativeAssetsInsertCall) Do() (*CreativeAssetMetadata, error) {
 		loc := res.Header.Get("Location")
 		rx := &googleapi.ResumableUpload{
 			Client:        c.s.client,
+			UserAgent:     userAgent,
 			URI:           loc,
 			Media:         c.resumable_,
 			MediaType:     c.mediaType_,
@@ -11873,7 +12075,11 @@ func (c *CreativeFieldValuesDeleteCall) Do() error {
 		"creativeFieldId": strconv.FormatInt(c.creativeFieldId, 10),
 		"id":              strconv.FormatInt(c.id, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -11965,7 +12171,11 @@ func (c *CreativeFieldValuesGetCall) Do() (*CreativeFieldValue, error) {
 		"creativeFieldId": strconv.FormatInt(c.creativeFieldId, 10),
 		"id":              strconv.FormatInt(c.id, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -12069,7 +12279,11 @@ func (c *CreativeFieldValuesInsertCall) Do() (*CreativeFieldValue, error) {
 		"creativeFieldId": strconv.FormatInt(c.creativeFieldId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -12221,7 +12435,11 @@ func (c *CreativeFieldValuesListCall) Do() (*CreativeFieldValuesListResponse, er
 		"profileId":       strconv.FormatInt(c.profileId, 10),
 		"creativeFieldId": strconv.FormatInt(c.creativeFieldId, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -12370,7 +12588,11 @@ func (c *CreativeFieldValuesPatchCall) Do() (*CreativeFieldValue, error) {
 		"creativeFieldId": strconv.FormatInt(c.creativeFieldId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -12477,7 +12699,11 @@ func (c *CreativeFieldValuesUpdateCall) Do() (*CreativeFieldValue, error) {
 		"creativeFieldId": strconv.FormatInt(c.creativeFieldId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -12568,7 +12794,11 @@ func (c *CreativeFieldsDeleteCall) Do() error {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 		"id":        strconv.FormatInt(c.id, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -12649,7 +12879,11 @@ func (c *CreativeFieldsGetCall) Do() (*CreativeField, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 		"id":        strconv.FormatInt(c.id, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -12742,7 +12976,11 @@ func (c *CreativeFieldsInsertCall) Do() (*CreativeField, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -12899,7 +13137,11 @@ func (c *CreativeFieldsListCall) Do() (*CreativeFieldsListResponse, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -13044,7 +13286,11 @@ func (c *CreativeFieldsPatchCall) Do() (*CreativeField, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -13140,7 +13386,11 @@ func (c *CreativeFieldsUpdateCall) Do() (*CreativeField, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -13223,7 +13473,11 @@ func (c *CreativeGroupsGetCall) Do() (*CreativeGroup, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 		"id":        strconv.FormatInt(c.id, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -13316,7 +13570,11 @@ func (c *CreativeGroupsInsertCall) Do() (*CreativeGroup, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -13483,7 +13741,11 @@ func (c *CreativeGroupsListCall) Do() (*CreativeGroupsListResponse, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -13634,7 +13896,11 @@ func (c *CreativeGroupsPatchCall) Do() (*CreativeGroup, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -13730,7 +13996,11 @@ func (c *CreativeGroupsUpdateCall) Do() (*CreativeGroup, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -13813,7 +14083,11 @@ func (c *CreativesGetCall) Do() (*Creative, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 		"id":        strconv.FormatInt(c.id, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -13906,7 +14180,11 @@ func (c *CreativesInsertCall) Do() (*Creative, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -14153,7 +14431,11 @@ func (c *CreativesListCall) Do() (*CreativesListResponse, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -14403,7 +14685,11 @@ func (c *CreativesPatchCall) Do() (*Creative, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -14499,7 +14785,11 @@ func (c *CreativesUpdateCall) Do() (*Creative, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -14608,7 +14898,11 @@ func (c *DimensionValuesQueryCall) Do() (*DimensionValueList, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -14704,7 +14998,11 @@ func (c *DirectorySiteContactsGetCall) Do() (*DirectorySiteContact, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 		"id":        strconv.FormatInt(c.id, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -14868,7 +15166,11 @@ func (c *DirectorySiteContactsListCall) Do() (*DirectorySiteContactsListResponse
 	googleapi.Expand(req.URL, map[string]string{
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -15004,7 +15306,11 @@ func (c *DirectorySitesGetCall) Do() (*DirectorySite, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 		"id":        strconv.FormatInt(c.id, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -15230,7 +15536,11 @@ func (c *DirectorySitesListCall) Do() (*DirectorySitesListResponse, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -15396,7 +15706,11 @@ func (c *EventTagsDeleteCall) Do() error {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 		"id":        strconv.FormatInt(c.id, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -15477,7 +15791,11 @@ func (c *EventTagsGetCall) Do() (*EventTag, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 		"id":        strconv.FormatInt(c.id, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -15570,7 +15888,11 @@ func (c *EventTagsInsertCall) Do() (*EventTag, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -15767,7 +16089,11 @@ func (c *EventTagsListCall) Do() (*EventTagsListResponse, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -15938,7 +16264,11 @@ func (c *EventTagsPatchCall) Do() (*EventTag, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -16034,7 +16364,11 @@ func (c *EventTagsUpdateCall) Do() (*EventTag, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -16117,7 +16451,11 @@ func (c *FilesGetCall) Do() (*File, error) {
 		"reportId": strconv.FormatInt(c.reportId, 10),
 		"fileId":   strconv.FormatInt(c.fileId, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -16253,7 +16591,11 @@ func (c *FilesListCall) Do() (*FileList, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -16390,7 +16732,11 @@ func (c *FloodlightActivitiesDeleteCall) Do() error {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 		"id":        strconv.FormatInt(c.id, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -16479,7 +16825,11 @@ func (c *FloodlightActivitiesGeneratetagCall) Do() (*FloodlightActivitiesGenerat
 	googleapi.Expand(req.URL, map[string]string{
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -16565,7 +16915,11 @@ func (c *FloodlightActivitiesGetCall) Do() (*FloodlightActivity, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 		"id":        strconv.FormatInt(c.id, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -16658,7 +17012,11 @@ func (c *FloodlightActivitiesInsertCall) Do() (*FloodlightActivity, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -16884,7 +17242,11 @@ func (c *FloodlightActivitiesListCall) Do() (*FloodlightActivitiesListResponse, 
 	googleapi.Expand(req.URL, map[string]string{
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -17069,7 +17431,11 @@ func (c *FloodlightActivitiesPatchCall) Do() (*FloodlightActivity, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -17165,7 +17531,11 @@ func (c *FloodlightActivitiesUpdateCall) Do() (*FloodlightActivity, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -17248,7 +17618,11 @@ func (c *FloodlightActivityGroupsDeleteCall) Do() error {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 		"id":        strconv.FormatInt(c.id, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -17329,7 +17703,11 @@ func (c *FloodlightActivityGroupsGetCall) Do() (*FloodlightActivityGroup, error)
 		"profileId": strconv.FormatInt(c.profileId, 10),
 		"id":        strconv.FormatInt(c.id, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -17422,7 +17800,11 @@ func (c *FloodlightActivityGroupsInsertCall) Do() (*FloodlightActivityGroup, err
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -17607,7 +17989,11 @@ func (c *FloodlightActivityGroupsListCall) Do() (*FloodlightActivityGroupsListRe
 	googleapi.Expand(req.URL, map[string]string{
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -17770,7 +18156,11 @@ func (c *FloodlightActivityGroupsPatchCall) Do() (*FloodlightActivityGroup, erro
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -17866,7 +18256,11 @@ func (c *FloodlightActivityGroupsUpdateCall) Do() (*FloodlightActivityGroup, err
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -17949,7 +18343,11 @@ func (c *FloodlightConfigurationsGetCall) Do() (*FloodlightConfiguration, error)
 		"profileId": strconv.FormatInt(c.profileId, 10),
 		"id":        strconv.FormatInt(c.id, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -18046,7 +18444,11 @@ func (c *FloodlightConfigurationsListCall) Do() (*FloodlightConfigurationsListRe
 	googleapi.Expand(req.URL, map[string]string{
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -18142,7 +18544,11 @@ func (c *FloodlightConfigurationsPatchCall) Do() (*FloodlightConfiguration, erro
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -18238,7 +18644,11 @@ func (c *FloodlightConfigurationsUpdateCall) Do() (*FloodlightConfiguration, err
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -18324,7 +18734,11 @@ func (c *LandingPagesDeleteCall) Do() error {
 		"campaignId": strconv.FormatInt(c.campaignId, 10),
 		"id":         strconv.FormatInt(c.id, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -18416,7 +18830,11 @@ func (c *LandingPagesGetCall) Do() (*LandingPage, error) {
 		"campaignId": strconv.FormatInt(c.campaignId, 10),
 		"id":         strconv.FormatInt(c.id, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -18520,7 +18938,11 @@ func (c *LandingPagesInsertCall) Do() (*LandingPage, error) {
 		"campaignId": strconv.FormatInt(c.campaignId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -18611,7 +19033,11 @@ func (c *LandingPagesListCall) Do() (*LandingPagesListResponse, error) {
 		"profileId":  strconv.FormatInt(c.profileId, 10),
 		"campaignId": strconv.FormatInt(c.campaignId, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -18711,7 +19137,11 @@ func (c *LandingPagesPatchCall) Do() (*LandingPage, error) {
 		"campaignId": strconv.FormatInt(c.campaignId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -18818,7 +19248,11 @@ func (c *LandingPagesUpdateCall) Do() (*LandingPage, error) {
 		"campaignId": strconv.FormatInt(c.campaignId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -18906,7 +19340,11 @@ func (c *MetrosListCall) Do() (*MetrosListResponse, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -18983,7 +19421,11 @@ func (c *MobileCarriersListCall) Do() (*MobileCarriersListResponse, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -19060,7 +19502,11 @@ func (c *OperatingSystemVersionsListCall) Do() (*OperatingSystemVersionsListResp
 	googleapi.Expand(req.URL, map[string]string{
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -19137,7 +19583,11 @@ func (c *OperatingSystemsListCall) Do() (*OperatingSystemsListResponse, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -19217,7 +19667,11 @@ func (c *PlacementGroupsGetCall) Do() (*PlacementGroup, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 		"id":        strconv.FormatInt(c.id, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -19310,7 +19764,11 @@ func (c *PlacementGroupsInsertCall) Do() (*PlacementGroup, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -19556,7 +20014,11 @@ func (c *PlacementGroupsListCall) Do() (*PlacementGroupsListResponse, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -19774,7 +20236,11 @@ func (c *PlacementGroupsPatchCall) Do() (*PlacementGroup, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -19870,7 +20336,11 @@ func (c *PlacementGroupsUpdateCall) Do() (*PlacementGroup, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -19953,7 +20423,11 @@ func (c *PlacementStrategiesDeleteCall) Do() error {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 		"id":        strconv.FormatInt(c.id, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -20034,7 +20508,11 @@ func (c *PlacementStrategiesGetCall) Do() (*PlacementStrategy, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 		"id":        strconv.FormatInt(c.id, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -20127,7 +20605,11 @@ func (c *PlacementStrategiesInsertCall) Do() (*PlacementStrategy, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -20274,7 +20756,11 @@ func (c *PlacementStrategiesListCall) Do() (*PlacementStrategiesListResponse, er
 	googleapi.Expand(req.URL, map[string]string{
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -20412,7 +20898,11 @@ func (c *PlacementStrategiesPatchCall) Do() (*PlacementStrategy, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -20508,7 +20998,11 @@ func (c *PlacementStrategiesUpdateCall) Do() (*PlacementStrategy, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -20618,7 +21112,11 @@ func (c *PlacementsGeneratetagsCall) Do() (*PlacementsGenerateTagsResponse, erro
 	googleapi.Expand(req.URL, map[string]string{
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -20747,7 +21245,11 @@ func (c *PlacementsGetCall) Do() (*Placement, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 		"id":        strconv.FormatInt(c.id, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -20840,7 +21342,11 @@ func (c *PlacementsInsertCall) Do() (*Placement, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -21115,7 +21621,11 @@ func (c *PlacementsListCall) Do() (*PlacementsListResponse, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -21367,7 +21877,11 @@ func (c *PlacementsPatchCall) Do() (*Placement, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -21463,7 +21977,11 @@ func (c *PlacementsUpdateCall) Do() (*Placement, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -21543,7 +22061,11 @@ func (c *PlatformTypesListCall) Do() (*PlatformTypesListResponse, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -21620,7 +22142,11 @@ func (c *PostalCodesListCall) Do() (*PostalCodesListResponse, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -21697,7 +22223,11 @@ func (c *RegionsListCall) Do() (*RegionsListResponse, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -21777,7 +22307,11 @@ func (c *ReportsDeleteCall) Do() error {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 		"reportId":  strconv.FormatInt(c.reportId, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -21858,7 +22392,11 @@ func (c *ReportsGetCall) Do() (*Report, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 		"reportId":  strconv.FormatInt(c.reportId, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -21951,7 +22489,11 @@ func (c *ReportsInsertCall) Do() (*Report, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -22081,7 +22623,11 @@ func (c *ReportsListCall) Do() (*ReportList, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -22226,7 +22772,11 @@ func (c *ReportsPatchCall) Do() (*Report, error) {
 		"reportId":  strconv.FormatInt(c.reportId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -22327,7 +22877,11 @@ func (c *ReportsRunCall) Do() (*File, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 		"reportId":  strconv.FormatInt(c.reportId, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -22428,7 +22982,11 @@ func (c *ReportsUpdateCall) Do() (*Report, error) {
 		"reportId":  strconv.FormatInt(c.reportId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -22526,7 +23084,11 @@ func (c *ReportsCompatibleFieldsQueryCall) Do() (*CompatibleFields, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -22612,7 +23174,11 @@ func (c *ReportsFilesGetCall) Do() (*File, error) {
 		"reportId":  strconv.FormatInt(c.reportId, 10),
 		"fileId":    strconv.FormatInt(c.fileId, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -22749,7 +23315,11 @@ func (c *ReportsFilesListCall) Do() (*FileList, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 		"reportId":  strconv.FormatInt(c.reportId, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -22878,7 +23448,11 @@ func (c *SitesGetCall) Do() (*Site, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 		"id":        strconv.FormatInt(c.id, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -22971,7 +23545,11 @@ func (c *SitesInsertCall) Do() (*Site, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -23209,7 +23787,11 @@ func (c *SitesListCall) Do() (*SitesListResponse, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -23397,7 +23979,11 @@ func (c *SitesPatchCall) Do() (*Site, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -23493,7 +24079,11 @@ func (c *SitesUpdateCall) Do() (*Site, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -23576,7 +24166,11 @@ func (c *SizesGetCall) Do() (*Size, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 		"id":        strconv.FormatInt(c.id, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -23669,7 +24263,11 @@ func (c *SizesInsertCall) Do() (*Size, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -23789,7 +24387,11 @@ func (c *SizesListCall) Do() (*SizesListResponse, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -23893,7 +24495,11 @@ func (c *SubaccountsGetCall) Do() (*Subaccount, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 		"id":        strconv.FormatInt(c.id, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -23986,7 +24592,11 @@ func (c *SubaccountsInsertCall) Do() (*Subaccount, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -24132,7 +24742,11 @@ func (c *SubaccountsListCall) Do() (*SubaccountsListResponse, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -24270,7 +24884,11 @@ func (c *SubaccountsPatchCall) Do() (*Subaccount, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -24366,7 +24984,11 @@ func (c *SubaccountsUpdateCall) Do() (*Subaccount, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -24446,7 +25068,11 @@ func (c *UserProfilesGetCall) Do() (*UserProfile, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -24520,7 +25146,11 @@ func (c *UserProfilesListCall) Do() (*UserProfileList, error) {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -24589,7 +25219,11 @@ func (c *UserRolePermissionGroupsGetCall) Do() (*UserRolePermissionGroup, error)
 		"profileId": strconv.FormatInt(c.profileId, 10),
 		"id":        strconv.FormatInt(c.id, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -24674,7 +25308,11 @@ func (c *UserRolePermissionGroupsListCall) Do() (*UserRolePermissionGroupsListRe
 	googleapi.Expand(req.URL, map[string]string{
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -24754,7 +25392,11 @@ func (c *UserRolePermissionsGetCall) Do() (*UserRolePermission, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 		"id":        strconv.FormatInt(c.id, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -24849,7 +25491,11 @@ func (c *UserRolePermissionsListCall) Do() (*UserRolePermissionsListResponse, er
 	googleapi.Expand(req.URL, map[string]string{
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -24936,7 +25582,11 @@ func (c *UserRolesDeleteCall) Do() error {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 		"id":        strconv.FormatInt(c.id, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -25017,7 +25667,11 @@ func (c *UserRolesGetCall) Do() (*UserRole, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 		"id":        strconv.FormatInt(c.id, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -25110,7 +25764,11 @@ func (c *UserRolesInsertCall) Do() (*UserRole, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -25277,7 +25935,11 @@ func (c *UserRolesListCall) Do() (*UserRolesListResponse, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -25426,7 +26088,11 @@ func (c *UserRolesPatchCall) Do() (*UserRole, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -25522,7 +26188,11 @@ func (c *UserRolesUpdateCall) Do() (*UserRole, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if c.s.UserAgent != "" {
+		userAgent = fmt.Sprintf("%v %v", userAgent, c.s.UserAgent)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err

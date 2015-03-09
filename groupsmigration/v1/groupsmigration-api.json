@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"FrPV2U6xXFUq8eRv_PO3IoAURkc/uMvgRqCygYBIh2d3lXb4f8cUWOw\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/8sBrpk7dyPsmoiW1fArUb0ZoCGY\"",
  "discoveryVersion": "v1",
  "id": "groupsmigration:v1",
  "name": "groupsmigration",
@@ -67,6 +67,15 @@
    "location": "query"
   }
  },
+ "auth": {
+  "oauth2": {
+   "scopes": {
+    "https://www.googleapis.com/auth/apps.groups.migration": {
+     "description": "Manage messages in groups on your domain"
+    }
+   }
+  }
+ },
  "schemas": {
   "Groups": {
    "id": "Groups",
@@ -107,6 +116,9 @@
      "response": {
       "$ref": "Groups"
      },
+     "scopes": [
+      "https://www.googleapis.com/auth/apps.groups.migration"
+     ],
      "supportsMediaUpload": true,
      "mediaUpload": {
       "accept": [

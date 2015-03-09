@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/18wO3vJeoOcaxNlyUy0n8CNe-Lk\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/-Wf_jNw3Fg6ZZI2nhs026L5nO_I\"",
  "discoveryVersion": "v1",
  "id": "dfareporting:v2.0",
  "name": "dfareporting",
  "version": "v2.0",
- "revision": "20150108",
+ "revision": "20150223",
  "title": "DCM/DFA Reporting And Trafficking API",
  "description": "Manage your DoubleClick Campaign Manager ad campaigns and reports.",
  "ownerDomain": "google.com",
@@ -1528,7 +1528,7 @@
    "properties": {
     "accountId": {
      "type": "string",
-     "description": "Account ID of this content category.This is a read-only field that can be left blank.",
+     "description": "Account ID of this content category. This is a read-only field that can be left blank.",
      "format": "int64"
     },
     "description": {
@@ -1911,7 +1911,7 @@
     },
     "htmlCodeLocked": {
      "type": "boolean",
-     "description": "Whether HTML code is DCM generated or manually entered. Set to true to ignore changes to htmlCode. Applicable to the following creative types: FLASH_INPAGE and HTML5_BANNER."
+     "description": "Whether HTML code is DCM-generated or manually entered. Set to true to ignore changes to htmlCode. Applicable to the following creative types: FLASH_INPAGE and HTML5_BANNER."
     },
     "id": {
      "type": "string",
@@ -2388,7 +2388,7 @@
     },
     "horizontallyLocked": {
      "type": "boolean",
-     "description": "Wheter the asset is horizontally locked. This is a read-only field. Applicable to the following creative types: all RICH_MEDIA."
+     "description": "Whether the asset is horizontally locked. This is a read-only field. Applicable to the following creative types: all RICH_MEDIA."
     },
     "id": {
      "type": "string",
@@ -2919,7 +2919,7 @@
     },
     "popupWindowProperties": {
      "$ref": "PopupWindowProperties",
-     "description": "Properties for rich media pop-up windows. This field is used only for exit events."
+     "description": "Properties for rich media popup windows. This field is used only for exit events."
     },
     "targetType": {
      "type": "string",
@@ -4270,7 +4270,7 @@
    "properties": {
     "accountId": {
      "type": "string",
-     "description": "Account ID of this floodlight activity.This is a read-only field that can be left blank.",
+     "description": "Account ID of this floodlight activity. This is a read-only field that can be left blank.",
      "format": "int64"
     },
     "advertiserId": {
@@ -4374,7 +4374,7 @@
     },
     "idDimensionValue": {
      "$ref": "DimensionValue",
-     "description": "Dimension value for the ID of this floodlight activity.This is a read-only, auto-generated field."
+     "description": "Dimension value for the ID of this floodlight activity. This is a read-only, auto-generated field."
     },
     "imageTagEnabled": {
      "type": "boolean",
@@ -4414,7 +4414,7 @@
     },
     "subaccountId": {
      "type": "string",
-     "description": "Subaccount ID of this floodlight activity.This is a read-only field that can be left blank.",
+     "description": "Subaccount ID of this floodlight activity. This is a read-only field that can be left blank.",
      "format": "int64"
     },
     "tagFormat": {
@@ -4513,7 +4513,7 @@
    "properties": {
     "accountId": {
      "type": "string",
-     "description": "Account ID of this floodlight activity group.This is a read-only field that can be left blank.",
+     "description": "Account ID of this floodlight activity group. This is a read-only field that can be left blank.",
      "format": "int64"
     },
     "advertiserId": {
@@ -4563,7 +4563,7 @@
     },
     "type": {
      "type": "string",
-     "description": "The type of floodlight activity group. This is a required field that is read-only after insertion.",
+     "description": "Type of the floodlight activity group. This is a required field that is read-only after insertion.",
      "enum": [
       "COUNTER",
       "SALE"
@@ -4656,7 +4656,7 @@
     },
     "exposureToConversionEnabled": {
      "type": "boolean",
-     "description": "Whether the exposure to conversion report is enabled. This report shows detailed pathway information on up to 10 of the most recent ad exposures seen by a user before converting."
+     "description": "Whether the exposure-to-conversion report is enabled. This report shows detailed pathway information on up to 10 of the most recent ad exposures seen by a user before converting."
     },
     "firstDayOfWeek": {
      "type": "string",
@@ -7489,7 +7489,7 @@
     },
     "reportName": {
      "type": "string",
-     "description": "User-friendly name for the variable which will appear in reports. This is a required field, must be less than 65 characters long, and cannot contain the following characters: \"\"\"."
+     "description": "User-friendly name for the variable which will appear in reports. This is a required field, must be less than 64 characters long, and cannot contain the following characters: \"\"\u003c\u003e\"."
     },
     "variableType": {
      "type": "string",

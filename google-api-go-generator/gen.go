@@ -24,9 +24,6 @@ import (
 	"unicode"
 )
 
-// goGenVersion is the version of the Go code generator
-const goGenVersion = "0.5"
-
 var (
 	apiToGenerate = flag.String("api", "*", "The API ID to generate, like 'tasks:v1'. A value of '*' means all.")
 	useCache      = flag.Bool("cache", true, "Use cache of discovered Google API discovery documents.")
@@ -1274,6 +1271,11 @@ func (meth *Method) generateCode() {
 	pn(`c.opt_["fields"] = googleapi.CombineFields(s)`)
 	pn("return c")
 	pn("}")
+	pn("\n// UserAgent allows a custom string to be appended to the User-Agent header of the request.")
+	pn("func (c *%s) UserAgent(s string) *%s {", callName, callName)
+	pn(`c.opt_["userAgent"] = s`)
+	pn("return c")
+	pn("}")
 
 	pn("\nfunc (c *%s) Do() (%serror) {", callName, retTypeComma)
 
@@ -1370,7 +1372,11 @@ func (meth *Method) generateCode() {
 	} else if hasContentType {
 		pn(`req.Header.Set("Content-Type", ctype)`)
 	}
-	pn(`req.Header.Set("User-Agent", "google-api-go-client/` + goGenVersion + `")`)
+	pn("userAgent := googleapi.UserAgent")
+	pn(`if v, ok := c.opt_["userAgent"]; ok {`)
+	pn(` userAgent = fmt.Sprintf("%%v %%v", userAgent, v)`)
+	pn("}")
+	pn(`req.Header.Set("User-Agent", userAgent)`)
 	pn("res, err := c.s.client.Do(req);")
 	pn("if err != nil { return %serr }", nilRet)
 	pn("defer googleapi.CloseBody(res)")

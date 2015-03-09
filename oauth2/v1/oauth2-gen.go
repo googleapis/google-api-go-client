@@ -181,7 +181,7 @@ type Userinfoplus struct {
 	// user.
 	Hd string `json:"hd,omitempty"`
 
-	// Id: The focus obfuscated gaia id of the user.
+	// Id: The obfuscated ID of the user.
 	Id string `json:"id,omitempty"`
 
 	// Link: URL of the profile page.
@@ -223,6 +223,12 @@ func (c *GetCertForOpenIdConnectCall) Fields(s ...googleapi.Field) *GetCertForOp
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *GetCertForOpenIdConnectCall) UserAgent(s string) *GetCertForOpenIdConnectCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *GetCertForOpenIdConnectCall) Do() (map[string]string, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -234,7 +240,11 @@ func (c *GetCertForOpenIdConnectCall) Do() (map[string]string, error) {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -280,6 +290,12 @@ func (c *GetCertForOpenIdConnectRawCall) Fields(s ...googleapi.Field) *GetCertFo
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *GetCertForOpenIdConnectRawCall) UserAgent(s string) *GetCertForOpenIdConnectRawCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *GetCertForOpenIdConnectRawCall) Do() (*Raw, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -291,7 +307,11 @@ func (c *GetCertForOpenIdConnectRawCall) Do() (*Raw, error) {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -339,6 +359,12 @@ func (c *GetRobotMetadataRawCall) Fields(s ...googleapi.Field) *GetRobotMetadata
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *GetRobotMetadataRawCall) UserAgent(s string) *GetRobotMetadataRawCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *GetRobotMetadataRawCall) Do() (*Raw, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -352,7 +378,11 @@ func (c *GetRobotMetadataRawCall) Do() (*Raw, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"robotEmail": c.robotEmail,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -411,6 +441,12 @@ func (c *GetRobotMetadataX509Call) Fields(s ...googleapi.Field) *GetRobotMetadat
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *GetRobotMetadataX509Call) UserAgent(s string) *GetRobotMetadataX509Call {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *GetRobotMetadataX509Call) Do() (map[string]string, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -424,7 +460,11 @@ func (c *GetRobotMetadataX509Call) Do() (map[string]string, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"robotEmail": c.robotEmail,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -494,6 +534,12 @@ func (c *TokeninfoCall) Fields(s ...googleapi.Field) *TokeninfoCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *TokeninfoCall) UserAgent(s string) *TokeninfoCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *TokeninfoCall) Do() (*Tokeninfo, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -511,7 +557,11 @@ func (c *TokeninfoCall) Do() (*Tokeninfo, error) {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -570,6 +620,12 @@ func (c *UserinfoGetCall) Fields(s ...googleapi.Field) *UserinfoGetCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *UserinfoGetCall) UserAgent(s string) *UserinfoGetCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *UserinfoGetCall) Do() (*Userinfoplus, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -581,7 +637,11 @@ func (c *UserinfoGetCall) Do() (*Userinfoplus, error) {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -634,6 +694,12 @@ func (c *UserinfoV2MeGetCall) Fields(s ...googleapi.Field) *UserinfoV2MeGetCall 
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *UserinfoV2MeGetCall) UserAgent(s string) *UserinfoV2MeGetCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *UserinfoV2MeGetCall) Do() (*Userinfoplus, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -645,7 +711,11 @@ func (c *UserinfoV2MeGetCall) Do() (*Userinfoplus, error) {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err

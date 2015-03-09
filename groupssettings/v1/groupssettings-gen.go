@@ -203,6 +203,12 @@ func (c *GroupsGetCall) Fields(s ...googleapi.Field) *GroupsGetCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *GroupsGetCall) UserAgent(s string) *GroupsGetCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *GroupsGetCall) Do() (*Groups, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -216,7 +222,11 @@ func (c *GroupsGetCall) Do() (*Groups, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"groupUniqueId": c.groupUniqueId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -282,6 +292,12 @@ func (c *GroupsPatchCall) Fields(s ...googleapi.Field) *GroupsPatchCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *GroupsPatchCall) UserAgent(s string) *GroupsPatchCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *GroupsPatchCall) Do() (*Groups, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.groups)
@@ -301,7 +317,11 @@ func (c *GroupsPatchCall) Do() (*Groups, error) {
 		"groupUniqueId": c.groupUniqueId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -369,6 +389,12 @@ func (c *GroupsUpdateCall) Fields(s ...googleapi.Field) *GroupsUpdateCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *GroupsUpdateCall) UserAgent(s string) *GroupsUpdateCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *GroupsUpdateCall) Do() (*Groups, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.groups)
@@ -388,7 +414,11 @@ func (c *GroupsUpdateCall) Do() (*Groups, error) {
 		"groupUniqueId": c.groupUniqueId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err

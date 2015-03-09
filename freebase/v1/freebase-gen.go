@@ -185,6 +185,12 @@ func (c *ReconcileCall) Fields(s ...googleapi.Field) *ReconcileCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *ReconcileCall) UserAgent(s string) *ReconcileCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *ReconcileCall) Do() (*ReconcileGet, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -214,7 +220,11 @@ func (c *ReconcileCall) Do() (*ReconcileGet, error) {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -463,6 +473,12 @@ func (c *SearchCall) Fields(s ...googleapi.Field) *SearchCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *SearchCall) UserAgent(s string) *SearchCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *SearchCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -543,7 +559,11 @@ func (c *SearchCall) Do() error {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err

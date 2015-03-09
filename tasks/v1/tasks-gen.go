@@ -235,6 +235,12 @@ func (c *TasklistsDeleteCall) Fields(s ...googleapi.Field) *TasklistsDeleteCall 
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *TasklistsDeleteCall) UserAgent(s string) *TasklistsDeleteCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *TasklistsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -248,7 +254,11 @@ func (c *TasklistsDeleteCall) Do() error {
 	googleapi.Expand(req.URL, map[string]string{
 		"tasklist": c.tasklistid,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -304,6 +314,12 @@ func (c *TasklistsGetCall) Fields(s ...googleapi.Field) *TasklistsGetCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *TasklistsGetCall) UserAgent(s string) *TasklistsGetCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *TasklistsGetCall) Do() (*TaskList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -317,7 +333,11 @@ func (c *TasklistsGetCall) Do() (*TaskList, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"tasklist": c.tasklistid,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -382,6 +402,12 @@ func (c *TasklistsInsertCall) Fields(s ...googleapi.Field) *TasklistsInsertCall 
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *TasklistsInsertCall) UserAgent(s string) *TasklistsInsertCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *TasklistsInsertCall) Do() (*TaskList, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.tasklist)
@@ -399,7 +425,11 @@ func (c *TasklistsInsertCall) Do() (*TaskList, error) {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -466,6 +496,12 @@ func (c *TasklistsListCall) Fields(s ...googleapi.Field) *TasklistsListCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *TasklistsListCall) UserAgent(s string) *TasklistsListCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *TasklistsListCall) Do() (*TaskLists, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -483,7 +519,11 @@ func (c *TasklistsListCall) Do() (*TaskLists, error) {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -552,6 +592,12 @@ func (c *TasklistsPatchCall) Fields(s ...googleapi.Field) *TasklistsPatchCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *TasklistsPatchCall) UserAgent(s string) *TasklistsPatchCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *TasklistsPatchCall) Do() (*TaskList, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.tasklist)
@@ -571,7 +617,11 @@ func (c *TasklistsPatchCall) Do() (*TaskList, error) {
 		"tasklist": c.tasklistid,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -639,6 +689,12 @@ func (c *TasklistsUpdateCall) Fields(s ...googleapi.Field) *TasklistsUpdateCall 
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *TasklistsUpdateCall) UserAgent(s string) *TasklistsUpdateCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *TasklistsUpdateCall) Do() (*TaskList, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.tasklist)
@@ -658,7 +714,11 @@ func (c *TasklistsUpdateCall) Do() (*TaskList, error) {
 		"tasklist": c.tasklistid,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -726,6 +786,12 @@ func (c *TasksClearCall) Fields(s ...googleapi.Field) *TasksClearCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *TasksClearCall) UserAgent(s string) *TasksClearCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *TasksClearCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -739,7 +805,11 @@ func (c *TasksClearCall) Do() error {
 	googleapi.Expand(req.URL, map[string]string{
 		"tasklist": c.tasklistid,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -797,6 +867,12 @@ func (c *TasksDeleteCall) Fields(s ...googleapi.Field) *TasksDeleteCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *TasksDeleteCall) UserAgent(s string) *TasksDeleteCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *TasksDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -811,7 +887,11 @@ func (c *TasksDeleteCall) Do() error {
 		"tasklist": c.tasklistid,
 		"task":     c.taskid,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -876,6 +956,12 @@ func (c *TasksGetCall) Fields(s ...googleapi.Field) *TasksGetCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *TasksGetCall) UserAgent(s string) *TasksGetCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *TasksGetCall) Do() (*Task, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -890,7 +976,11 @@ func (c *TasksGetCall) Do() (*Task, error) {
 		"tasklist": c.tasklistid,
 		"task":     c.taskid,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -978,6 +1068,12 @@ func (c *TasksInsertCall) Fields(s ...googleapi.Field) *TasksInsertCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *TasksInsertCall) UserAgent(s string) *TasksInsertCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *TasksInsertCall) Do() (*Task, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.task)
@@ -1003,7 +1099,11 @@ func (c *TasksInsertCall) Do() (*Task, error) {
 		"tasklist": c.tasklistid,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1157,6 +1257,12 @@ func (c *TasksListCall) Fields(s ...googleapi.Field) *TasksListCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *TasksListCall) UserAgent(s string) *TasksListCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *TasksListCall) Do() (*Tasks, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1200,7 +1306,11 @@ func (c *TasksListCall) Do() (*Tasks, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"tasklist": c.tasklistid,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1335,6 +1445,12 @@ func (c *TasksMoveCall) Fields(s ...googleapi.Field) *TasksMoveCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *TasksMoveCall) UserAgent(s string) *TasksMoveCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *TasksMoveCall) Do() (*Task, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1355,7 +1471,11 @@ func (c *TasksMoveCall) Do() (*Task, error) {
 		"tasklist": c.tasklistid,
 		"task":     c.taskid,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1440,6 +1560,12 @@ func (c *TasksPatchCall) Fields(s ...googleapi.Field) *TasksPatchCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *TasksPatchCall) UserAgent(s string) *TasksPatchCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *TasksPatchCall) Do() (*Task, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.task)
@@ -1460,7 +1586,11 @@ func (c *TasksPatchCall) Do() (*Task, error) {
 		"task":     c.taskid,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1537,6 +1667,12 @@ func (c *TasksUpdateCall) Fields(s ...googleapi.Field) *TasksUpdateCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *TasksUpdateCall) UserAgent(s string) *TasksUpdateCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *TasksUpdateCall) Do() (*Task, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.task)
@@ -1557,7 +1693,11 @@ func (c *TasksUpdateCall) Do() (*Task, error) {
 		"task":     c.taskid,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err

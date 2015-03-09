@@ -260,6 +260,12 @@ func (c *SitemapsDeleteCall) Fields(s ...googleapi.Field) *SitemapsDeleteCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *SitemapsDeleteCall) UserAgent(s string) *SitemapsDeleteCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *SitemapsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -274,7 +280,11 @@ func (c *SitemapsDeleteCall) Do() error {
 		"siteUrl":  c.siteUrl,
 		"feedpath": c.feedpath,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -339,6 +349,12 @@ func (c *SitemapsGetCall) Fields(s ...googleapi.Field) *SitemapsGetCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *SitemapsGetCall) UserAgent(s string) *SitemapsGetCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *SitemapsGetCall) Do() (*WmxSitemap, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -353,7 +369,11 @@ func (c *SitemapsGetCall) Do() (*WmxSitemap, error) {
 		"siteUrl":  c.siteUrl,
 		"feedpath": c.feedpath,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -431,6 +451,12 @@ func (c *SitemapsListCall) Fields(s ...googleapi.Field) *SitemapsListCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *SitemapsListCall) UserAgent(s string) *SitemapsListCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *SitemapsListCall) Do() (*SitemapsListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -447,7 +473,11 @@ func (c *SitemapsListCall) Do() (*SitemapsListResponse, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"siteUrl": c.siteUrl,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -518,6 +548,12 @@ func (c *SitemapsSubmitCall) Fields(s ...googleapi.Field) *SitemapsSubmitCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *SitemapsSubmitCall) UserAgent(s string) *SitemapsSubmitCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *SitemapsSubmitCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -532,7 +568,11 @@ func (c *SitemapsSubmitCall) Do() error {
 		"siteUrl":  c.siteUrl,
 		"feedpath": c.feedpath,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -595,6 +635,12 @@ func (c *SitesAddCall) Fields(s ...googleapi.Field) *SitesAddCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *SitesAddCall) UserAgent(s string) *SitesAddCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *SitesAddCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -608,7 +654,11 @@ func (c *SitesAddCall) Do() error {
 	googleapi.Expand(req.URL, map[string]string{
 		"siteUrl": c.siteUrl,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -665,6 +715,12 @@ func (c *SitesDeleteCall) Fields(s ...googleapi.Field) *SitesDeleteCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *SitesDeleteCall) UserAgent(s string) *SitesDeleteCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *SitesDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -678,7 +734,11 @@ func (c *SitesDeleteCall) Do() error {
 	googleapi.Expand(req.URL, map[string]string{
 		"siteUrl": c.siteUrl,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -734,6 +794,12 @@ func (c *SitesGetCall) Fields(s ...googleapi.Field) *SitesGetCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *SitesGetCall) UserAgent(s string) *SitesGetCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *SitesGetCall) Do() (*WmxSite, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -747,7 +813,11 @@ func (c *SitesGetCall) Do() (*WmxSite, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"siteUrl": c.siteUrl,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -809,6 +879,12 @@ func (c *SitesListCall) Fields(s ...googleapi.Field) *SitesListCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *SitesListCall) UserAgent(s string) *SitesListCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *SitesListCall) Do() (*SitesListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -820,7 +896,11 @@ func (c *SitesListCall) Do() (*SitesListResponse, error) {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -897,6 +977,12 @@ func (c *UrlcrawlerrorscountsQueryCall) Fields(s ...googleapi.Field) *Urlcrawler
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *UrlcrawlerrorscountsQueryCall) UserAgent(s string) *UrlcrawlerrorscountsQueryCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *UrlcrawlerrorscountsQueryCall) Do() (*UrlCrawlErrorsCountsQueryResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -919,7 +1005,11 @@ func (c *UrlcrawlerrorscountsQueryCall) Do() (*UrlCrawlErrorsCountsQueryResponse
 	googleapi.Expand(req.URL, map[string]string{
 		"siteUrl": c.siteUrl,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1035,6 +1125,12 @@ func (c *UrlcrawlerrorssamplesGetCall) Fields(s ...googleapi.Field) *Urlcrawlerr
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *UrlcrawlerrorssamplesGetCall) UserAgent(s string) *UrlcrawlerrorssamplesGetCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *UrlcrawlerrorssamplesGetCall) Do() (*UrlCrawlErrorsSample, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1051,7 +1147,11 @@ func (c *UrlcrawlerrorssamplesGetCall) Do() (*UrlCrawlErrorsSample, error) {
 		"siteUrl": c.siteUrl,
 		"url":     c.url,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1171,6 +1271,12 @@ func (c *UrlcrawlerrorssamplesListCall) Fields(s ...googleapi.Field) *Urlcrawler
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *UrlcrawlerrorssamplesListCall) UserAgent(s string) *UrlcrawlerrorssamplesListCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *UrlcrawlerrorssamplesListCall) Do() (*UrlCrawlErrorsSamplesListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1186,7 +1292,11 @@ func (c *UrlcrawlerrorssamplesListCall) Do() (*UrlCrawlErrorsSamplesListResponse
 	googleapi.Expand(req.URL, map[string]string{
 		"siteUrl": c.siteUrl,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1301,6 +1411,12 @@ func (c *UrlcrawlerrorssamplesMarkAsFixedCall) Fields(s ...googleapi.Field) *Url
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *UrlcrawlerrorssamplesMarkAsFixedCall) UserAgent(s string) *UrlcrawlerrorssamplesMarkAsFixedCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *UrlcrawlerrorssamplesMarkAsFixedCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1317,7 +1433,11 @@ func (c *UrlcrawlerrorssamplesMarkAsFixedCall) Do() error {
 		"siteUrl": c.siteUrl,
 		"url":     c.url,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err

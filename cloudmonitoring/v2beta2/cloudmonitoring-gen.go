@@ -377,6 +377,12 @@ func (c *MetricDescriptorsCreateCall) Fields(s ...googleapi.Field) *MetricDescri
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *MetricDescriptorsCreateCall) UserAgent(s string) *MetricDescriptorsCreateCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *MetricDescriptorsCreateCall) Do() (*MetricDescriptor, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.metricdescriptor)
@@ -396,7 +402,11 @@ func (c *MetricDescriptorsCreateCall) Do() (*MetricDescriptor, error) {
 		"project": c.project,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -464,6 +474,12 @@ func (c *MetricDescriptorsDeleteCall) Fields(s ...googleapi.Field) *MetricDescri
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *MetricDescriptorsDeleteCall) UserAgent(s string) *MetricDescriptorsDeleteCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *MetricDescriptorsDeleteCall) Do() (*DeleteMetricDescriptorResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -478,7 +494,11 @@ func (c *MetricDescriptorsDeleteCall) Do() (*DeleteMetricDescriptorResponse, err
 		"project": c.project,
 		"metric":  c.metric,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -582,6 +602,12 @@ func (c *MetricDescriptorsListCall) Fields(s ...googleapi.Field) *MetricDescript
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *MetricDescriptorsListCall) UserAgent(s string) *MetricDescriptorsListCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *MetricDescriptorsListCall) Do() (*ListMetricDescriptorsResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -604,7 +630,11 @@ func (c *MetricDescriptorsListCall) Do() (*ListMetricDescriptorsResponse, error)
 	googleapi.Expand(req.URL, map[string]string{
 		"project": c.project,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -784,6 +814,12 @@ func (c *TimeseriesListCall) Fields(s ...googleapi.Field) *TimeseriesListCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *TimeseriesListCall) UserAgent(s string) *TimeseriesListCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *TimeseriesListCall) Do() (*ListTimeseriesResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -820,7 +856,11 @@ func (c *TimeseriesListCall) Do() (*ListTimeseriesResponse, error) {
 		"project": c.project,
 		"metric":  c.metric,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -964,6 +1004,12 @@ func (c *TimeseriesWriteCall) Fields(s ...googleapi.Field) *TimeseriesWriteCall 
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *TimeseriesWriteCall) UserAgent(s string) *TimeseriesWriteCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *TimeseriesWriteCall) Do() (*WriteTimeseriesResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.writetimeseriesrequest)
@@ -983,7 +1029,11 @@ func (c *TimeseriesWriteCall) Do() (*WriteTimeseriesResponse, error) {
 		"project": c.project,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1145,6 +1195,12 @@ func (c *TimeseriesDescriptorsListCall) Fields(s ...googleapi.Field) *Timeseries
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *TimeseriesDescriptorsListCall) UserAgent(s string) *TimeseriesDescriptorsListCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *TimeseriesDescriptorsListCall) Do() (*ListTimeseriesDescriptorsResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1181,7 +1237,11 @@ func (c *TimeseriesDescriptorsListCall) Do() (*ListTimeseriesDescriptorsResponse
 		"project": c.project,
 		"metric":  c.metric,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err

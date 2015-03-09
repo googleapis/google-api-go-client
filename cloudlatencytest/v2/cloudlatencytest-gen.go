@@ -133,6 +133,12 @@ func (c *StatscollectionUpdateaggregatedstatsCall) Fields(s ...googleapi.Field) 
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *StatscollectionUpdateaggregatedstatsCall) UserAgent(s string) *StatscollectionUpdateaggregatedstatsCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *StatscollectionUpdateaggregatedstatsCall) Do() (*AggregatedStatsReply, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.aggregatedstats)
@@ -150,7 +156,11 @@ func (c *StatscollectionUpdateaggregatedstatsCall) Do() (*AggregatedStatsReply, 
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -205,6 +215,12 @@ func (c *StatscollectionUpdatestatsCall) Fields(s ...googleapi.Field) *Statscoll
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *StatscollectionUpdatestatsCall) UserAgent(s string) *StatscollectionUpdatestatsCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *StatscollectionUpdatestatsCall) Do() (*StatsReply, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.stats)
@@ -222,7 +238,11 @@ func (c *StatscollectionUpdatestatsCall) Do() (*StatsReply, error) {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err

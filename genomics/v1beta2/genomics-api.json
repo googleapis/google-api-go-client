@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/Rkk_7Yu2BNIHc2z3p4FKuem23zE\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/u26s_jWNrbgfkWmw0hnf6J9csiI\"",
  "discoveryVersion": "v1",
  "id": "genomics:v1beta2",
  "name": "genomics",
  "version": "v1beta2",
- "revision": "20150213",
+ "revision": "20150302",
  "title": "Genomics API",
  "description": "Provides access to Genomics data.",
  "ownerDomain": "google.com",
@@ -235,6 +235,62 @@
       "",
       ""
      ]
+    }
+   }
+  },
+  "BatchAnnotationsResponse": {
+   "id": "BatchAnnotationsResponse",
+   "type": "object",
+   "properties": {
+    "entries": {
+     "type": "array",
+     "description": "The resulting per-annotation entries, ordered consistently with the original request.",
+     "items": {
+      "$ref": "BatchAnnotationsResponseEntry"
+     }
+    }
+   }
+  },
+  "BatchAnnotationsResponseEntry": {
+   "id": "BatchAnnotationsResponseEntry",
+   "type": "object",
+   "properties": {
+    "annotation": {
+     "$ref": "Annotation",
+     "description": "The annotation, if any."
+    },
+    "status": {
+     "$ref": "BatchAnnotationsResponseEntryStatus",
+     "description": "The resulting status for this annotation operation."
+    }
+   }
+  },
+  "BatchAnnotationsResponseEntryStatus": {
+   "id": "BatchAnnotationsResponseEntryStatus",
+   "type": "object",
+   "description": "",
+   "properties": {
+    "code": {
+     "type": "integer",
+     "description": "The HTTP status code for this operation.",
+     "format": "int32"
+    },
+    "message": {
+     "type": "string",
+     "description": "Error message for this status, if any."
+    }
+   }
+  },
+  "BatchCreateAnnotationsRequest": {
+   "id": "BatchCreateAnnotationsRequest",
+   "type": "object",
+   "properties": {
+    "annotations": {
+     "type": "array",
+     "description": "The annotations to be created. At most 4096 can be specified in a single request.",
+     "items": {
+      "$ref": "Annotation"
+     }
     }
    }
   },
@@ -1428,7 +1484,7 @@
     },
     "description": {
      "type": "string",
-     "description": "Optional free text description of this reference set."
+     "description": "free text description of this reference set."
     },
     "id": {
      "type": "string",
@@ -2460,6 +2516,21 @@
   },
   "annotations": {
    "methods": {
+    "batchCreate": {
+     "id": "genomics.annotations.batchCreate",
+     "path": "annotations:batchCreate",
+     "httpMethod": "POST",
+     "description": "Creates one or more new annotations atomically. All annotations must belong to the same annotation set. Caller must have WRITE permission for this annotation set. For optimal performance, batch positionally adjacent annotations together.\n\n\nIf the request has a systemic issue, such as an attempt to write to an inaccessible annotation set, the entire RPC will fail accordingly. For lesser data issues, when possible an error will be isolated to the corresponding batch entry in the response; the remaining well formed annotations will be created normally.",
+     "request": {
+      "$ref": "BatchCreateAnnotationsRequest"
+     },
+     "response": {
+      "$ref": "BatchAnnotationsResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/genomics"
+     ]
+    },
     "create": {
      "id": "genomics.annotations.create",
      "path": "annotations",
@@ -3305,7 +3376,6 @@
         "pageSize": {
          "type": "integer",
          "description": "Specifies the maximum number of bases to return in a single page.",
-         "default": "200000",
          "format": "int32",
          "location": "query"
         },

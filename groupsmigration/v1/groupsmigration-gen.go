@@ -130,6 +130,12 @@ func (c *ArchiveInsertCall) Fields(s ...googleapi.Field) *ArchiveInsertCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *ArchiveInsertCall) UserAgent(s string) *ArchiveInsertCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *ArchiveInsertCall) Do() (*Groups, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -172,7 +178,11 @@ func (c *ArchiveInsertCall) Do() (*Groups, error) {
 	} else {
 		req.Header.Set("Content-Type", ctype)
 	}
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err

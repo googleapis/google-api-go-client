@@ -472,6 +472,12 @@ func (c *ApisGetRestCall) Fields(s ...googleapi.Field) *ApisGetRestCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *ApisGetRestCall) UserAgent(s string) *ApisGetRestCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *ApisGetRestCall) Do() (*RestDescription, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -486,7 +492,11 @@ func (c *ApisGetRestCall) Do() (*RestDescription, error) {
 		"api":     c.api,
 		"version": c.version,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -565,6 +575,12 @@ func (c *ApisListCall) Fields(s ...googleapi.Field) *ApisListCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *ApisListCall) UserAgent(s string) *ApisListCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *ApisListCall) Do() (*DirectoryList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -582,7 +598,11 @@ func (c *ApisListCall) Do() (*DirectoryList, error) {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err

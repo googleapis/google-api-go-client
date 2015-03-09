@@ -255,6 +255,12 @@ func (c *PagespeedapiRunpagespeedCall) Fields(s ...googleapi.Field) *Pagespeedap
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *PagespeedapiRunpagespeedCall) UserAgent(s string) *PagespeedapiRunpagespeedCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *PagespeedapiRunpagespeedCall) Do() (*Result, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -282,7 +288,11 @@ func (c *PagespeedapiRunpagespeedCall) Do() (*Result, error) {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err

@@ -131,6 +131,12 @@ func (c *WebfontsListCall) Fields(s ...googleapi.Field) *WebfontsListCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *WebfontsListCall) UserAgent(s string) *WebfontsListCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *WebfontsListCall) Do() (*WebfontList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -145,7 +151,11 @@ func (c *WebfontsListCall) Do() (*WebfontList, error) {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err

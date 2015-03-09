@@ -163,6 +163,12 @@ func (c *DetectionsListCall) Fields(s ...googleapi.Field) *DetectionsListCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *DetectionsListCall) UserAgent(s string) *DetectionsListCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *DetectionsListCall) Do() (*DetectionsListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -177,7 +183,11 @@ func (c *DetectionsListCall) Do() (*DetectionsListResponse, error) {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -243,6 +253,12 @@ func (c *LanguagesListCall) Fields(s ...googleapi.Field) *LanguagesListCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *LanguagesListCall) UserAgent(s string) *LanguagesListCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *LanguagesListCall) Do() (*LanguagesListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -257,7 +273,11 @@ func (c *LanguagesListCall) Do() (*LanguagesListResponse, error) {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -335,6 +355,12 @@ func (c *TranslationsListCall) Fields(s ...googleapi.Field) *TranslationsListCal
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *TranslationsListCall) UserAgent(s string) *TranslationsListCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *TranslationsListCall) Do() (*TranslationsListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -359,7 +385,11 @@ func (c *TranslationsListCall) Do() (*TranslationsListResponse, error) {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err

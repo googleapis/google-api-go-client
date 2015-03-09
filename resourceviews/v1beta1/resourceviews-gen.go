@@ -230,6 +230,12 @@ func (c *RegionViewsAddresourcesCall) Fields(s ...googleapi.Field) *RegionViewsA
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *RegionViewsAddresourcesCall) UserAgent(s string) *RegionViewsAddresourcesCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *RegionViewsAddresourcesCall) Do() error {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.regionviewsaddresourcesrequest)
@@ -251,7 +257,11 @@ func (c *RegionViewsAddresourcesCall) Do() error {
 		"resourceViewName": c.resourceViewName,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -330,6 +340,12 @@ func (c *RegionViewsDeleteCall) Fields(s ...googleapi.Field) *RegionViewsDeleteC
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *RegionViewsDeleteCall) UserAgent(s string) *RegionViewsDeleteCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *RegionViewsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -345,7 +361,11 @@ func (c *RegionViewsDeleteCall) Do() error {
 		"region":           c.region,
 		"resourceViewName": c.resourceViewName,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -421,6 +441,12 @@ func (c *RegionViewsGetCall) Fields(s ...googleapi.Field) *RegionViewsGetCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *RegionViewsGetCall) UserAgent(s string) *RegionViewsGetCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *RegionViewsGetCall) Do() (*ResourceView, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -436,7 +462,11 @@ func (c *RegionViewsGetCall) Do() (*ResourceView, error) {
 		"region":           c.region,
 		"resourceViewName": c.resourceViewName,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -521,6 +551,12 @@ func (c *RegionViewsInsertCall) Fields(s ...googleapi.Field) *RegionViewsInsertC
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *RegionViewsInsertCall) UserAgent(s string) *RegionViewsInsertCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *RegionViewsInsertCall) Do() (*RegionViewsInsertResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.resourceview)
@@ -541,7 +577,11 @@ func (c *RegionViewsInsertCall) Do() (*RegionViewsInsertResponse, error) {
 		"region":      c.region,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -635,6 +675,12 @@ func (c *RegionViewsListCall) Fields(s ...googleapi.Field) *RegionViewsListCall 
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *RegionViewsListCall) UserAgent(s string) *RegionViewsListCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *RegionViewsListCall) Do() (*RegionViewsListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -655,7 +701,11 @@ func (c *RegionViewsListCall) Do() (*RegionViewsListResponse, error) {
 		"projectName": c.projectName,
 		"region":      c.region,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -764,6 +814,12 @@ func (c *RegionViewsListresourcesCall) Fields(s ...googleapi.Field) *RegionViews
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *RegionViewsListresourcesCall) UserAgent(s string) *RegionViewsListresourcesCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *RegionViewsListresourcesCall) Do() (*RegionViewsListResourcesResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -785,7 +841,11 @@ func (c *RegionViewsListresourcesCall) Do() (*RegionViewsListResourcesResponse, 
 		"region":           c.region,
 		"resourceViewName": c.resourceViewName,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -886,6 +946,12 @@ func (c *RegionViewsRemoveresourcesCall) Fields(s ...googleapi.Field) *RegionVie
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *RegionViewsRemoveresourcesCall) UserAgent(s string) *RegionViewsRemoveresourcesCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *RegionViewsRemoveresourcesCall) Do() error {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.regionviewsremoveresourcesrequest)
@@ -907,7 +973,11 @@ func (c *RegionViewsRemoveresourcesCall) Do() error {
 		"resourceViewName": c.resourceViewName,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -988,6 +1058,12 @@ func (c *ZoneViewsAddresourcesCall) Fields(s ...googleapi.Field) *ZoneViewsAddre
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *ZoneViewsAddresourcesCall) UserAgent(s string) *ZoneViewsAddresourcesCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *ZoneViewsAddresourcesCall) Do() error {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.zoneviewsaddresourcesrequest)
@@ -1009,7 +1085,11 @@ func (c *ZoneViewsAddresourcesCall) Do() error {
 		"resourceViewName": c.resourceViewName,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -1088,6 +1168,12 @@ func (c *ZoneViewsDeleteCall) Fields(s ...googleapi.Field) *ZoneViewsDeleteCall 
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *ZoneViewsDeleteCall) UserAgent(s string) *ZoneViewsDeleteCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *ZoneViewsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1103,7 +1189,11 @@ func (c *ZoneViewsDeleteCall) Do() error {
 		"zone":             c.zone,
 		"resourceViewName": c.resourceViewName,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -1179,6 +1269,12 @@ func (c *ZoneViewsGetCall) Fields(s ...googleapi.Field) *ZoneViewsGetCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *ZoneViewsGetCall) UserAgent(s string) *ZoneViewsGetCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *ZoneViewsGetCall) Do() (*ResourceView, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1194,7 +1290,11 @@ func (c *ZoneViewsGetCall) Do() (*ResourceView, error) {
 		"zone":             c.zone,
 		"resourceViewName": c.resourceViewName,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1279,6 +1379,12 @@ func (c *ZoneViewsInsertCall) Fields(s ...googleapi.Field) *ZoneViewsInsertCall 
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *ZoneViewsInsertCall) UserAgent(s string) *ZoneViewsInsertCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *ZoneViewsInsertCall) Do() (*ZoneViewsInsertResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.resourceview)
@@ -1299,7 +1405,11 @@ func (c *ZoneViewsInsertCall) Do() (*ZoneViewsInsertResponse, error) {
 		"zone":        c.zone,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1393,6 +1503,12 @@ func (c *ZoneViewsListCall) Fields(s ...googleapi.Field) *ZoneViewsListCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *ZoneViewsListCall) UserAgent(s string) *ZoneViewsListCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *ZoneViewsListCall) Do() (*ZoneViewsListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1413,7 +1529,11 @@ func (c *ZoneViewsListCall) Do() (*ZoneViewsListResponse, error) {
 		"projectName": c.projectName,
 		"zone":        c.zone,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1522,6 +1642,12 @@ func (c *ZoneViewsListresourcesCall) Fields(s ...googleapi.Field) *ZoneViewsList
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *ZoneViewsListresourcesCall) UserAgent(s string) *ZoneViewsListresourcesCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *ZoneViewsListresourcesCall) Do() (*ZoneViewsListResourcesResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1543,7 +1669,11 @@ func (c *ZoneViewsListresourcesCall) Do() (*ZoneViewsListResourcesResponse, erro
 		"zone":             c.zone,
 		"resourceViewName": c.resourceViewName,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1644,6 +1774,12 @@ func (c *ZoneViewsRemoveresourcesCall) Fields(s ...googleapi.Field) *ZoneViewsRe
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *ZoneViewsRemoveresourcesCall) UserAgent(s string) *ZoneViewsRemoveresourcesCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *ZoneViewsRemoveresourcesCall) Do() error {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.zoneviewsremoveresourcesrequest)
@@ -1665,7 +1801,11 @@ func (c *ZoneViewsRemoveresourcesCall) Do() error {
 		"resourceViewName": c.resourceViewName,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err

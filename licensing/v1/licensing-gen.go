@@ -41,6 +41,12 @@ const apiName = "licensing"
 const apiVersion = "v1"
 const basePath = "https://www.googleapis.com/apps/licensing/v1/product/"
 
+// OAuth2 scopes used by this API.
+const (
+	// View and manage Google Apps licenses for your domain
+	AppsLicensingScope = "https://www.googleapis.com/auth/apps.licensing"
+)
+
 func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
@@ -134,6 +140,12 @@ func (c *LicenseAssignmentsDeleteCall) Fields(s ...googleapi.Field) *LicenseAssi
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *LicenseAssignmentsDeleteCall) UserAgent(s string) *LicenseAssignmentsDeleteCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *LicenseAssignmentsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -149,7 +161,11 @@ func (c *LicenseAssignmentsDeleteCall) Do() error {
 		"skuId":     c.skuId,
 		"userId":    c.userId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -188,7 +204,10 @@ func (c *LicenseAssignmentsDeleteCall) Do() error {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{productId}/sku/{skuId}/user/{userId}"
+	//   "path": "{productId}/sku/{skuId}/user/{userId}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/apps.licensing"
+	//   ]
 	// }
 
 }
@@ -221,6 +240,12 @@ func (c *LicenseAssignmentsGetCall) Fields(s ...googleapi.Field) *LicenseAssignm
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *LicenseAssignmentsGetCall) UserAgent(s string) *LicenseAssignmentsGetCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *LicenseAssignmentsGetCall) Do() (*LicenseAssignment, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -236,7 +261,11 @@ func (c *LicenseAssignmentsGetCall) Do() (*LicenseAssignment, error) {
 		"skuId":     c.skuId,
 		"userId":    c.userId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -282,7 +311,10 @@ func (c *LicenseAssignmentsGetCall) Do() (*LicenseAssignment, error) {
 	//   "path": "{productId}/sku/{skuId}/user/{userId}",
 	//   "response": {
 	//     "$ref": "LicenseAssignment"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/apps.licensing"
+	//   ]
 	// }
 
 }
@@ -314,6 +346,12 @@ func (c *LicenseAssignmentsInsertCall) Fields(s ...googleapi.Field) *LicenseAssi
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *LicenseAssignmentsInsertCall) UserAgent(s string) *LicenseAssignmentsInsertCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *LicenseAssignmentsInsertCall) Do() (*LicenseAssignment, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.licenseassignmentinsert)
@@ -334,7 +372,11 @@ func (c *LicenseAssignmentsInsertCall) Do() (*LicenseAssignment, error) {
 		"skuId":     c.skuId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -376,7 +418,10 @@ func (c *LicenseAssignmentsInsertCall) Do() (*LicenseAssignment, error) {
 	//   },
 	//   "response": {
 	//     "$ref": "LicenseAssignment"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/apps.licensing"
+	//   ]
 	// }
 
 }
@@ -422,6 +467,12 @@ func (c *LicenseAssignmentsListForProductCall) Fields(s ...googleapi.Field) *Lic
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *LicenseAssignmentsListForProductCall) UserAgent(s string) *LicenseAssignmentsListForProductCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *LicenseAssignmentsListForProductCall) Do() (*LicenseAssignmentList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -442,7 +493,11 @@ func (c *LicenseAssignmentsListForProductCall) Do() (*LicenseAssignmentList, err
 	googleapi.Expand(req.URL, map[string]string{
 		"productId": c.productId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -496,7 +551,10 @@ func (c *LicenseAssignmentsListForProductCall) Do() (*LicenseAssignmentList, err
 	//   "path": "{productId}/users",
 	//   "response": {
 	//     "$ref": "LicenseAssignmentList"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/apps.licensing"
+	//   ]
 	// }
 
 }
@@ -544,6 +602,12 @@ func (c *LicenseAssignmentsListForProductAndSkuCall) Fields(s ...googleapi.Field
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *LicenseAssignmentsListForProductAndSkuCall) UserAgent(s string) *LicenseAssignmentsListForProductAndSkuCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *LicenseAssignmentsListForProductAndSkuCall) Do() (*LicenseAssignmentList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -565,7 +629,11 @@ func (c *LicenseAssignmentsListForProductAndSkuCall) Do() (*LicenseAssignmentLis
 		"productId": c.productId,
 		"skuId":     c.skuId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -626,7 +694,10 @@ func (c *LicenseAssignmentsListForProductAndSkuCall) Do() (*LicenseAssignmentLis
 	//   "path": "{productId}/sku/{skuId}/users",
 	//   "response": {
 	//     "$ref": "LicenseAssignmentList"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/apps.licensing"
+	//   ]
 	// }
 
 }
@@ -660,6 +731,12 @@ func (c *LicenseAssignmentsPatchCall) Fields(s ...googleapi.Field) *LicenseAssig
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *LicenseAssignmentsPatchCall) UserAgent(s string) *LicenseAssignmentsPatchCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *LicenseAssignmentsPatchCall) Do() (*LicenseAssignment, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.licenseassignment)
@@ -681,7 +758,11 @@ func (c *LicenseAssignmentsPatchCall) Do() (*LicenseAssignment, error) {
 		"userId":    c.userId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -730,7 +811,10 @@ func (c *LicenseAssignmentsPatchCall) Do() (*LicenseAssignment, error) {
 	//   },
 	//   "response": {
 	//     "$ref": "LicenseAssignment"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/apps.licensing"
+	//   ]
 	// }
 
 }
@@ -764,6 +848,12 @@ func (c *LicenseAssignmentsUpdateCall) Fields(s ...googleapi.Field) *LicenseAssi
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *LicenseAssignmentsUpdateCall) UserAgent(s string) *LicenseAssignmentsUpdateCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *LicenseAssignmentsUpdateCall) Do() (*LicenseAssignment, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.licenseassignment)
@@ -785,7 +875,11 @@ func (c *LicenseAssignmentsUpdateCall) Do() (*LicenseAssignment, error) {
 		"userId":    c.userId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -834,7 +928,10 @@ func (c *LicenseAssignmentsUpdateCall) Do() (*LicenseAssignment, error) {
 	//   },
 	//   "response": {
 	//     "$ref": "LicenseAssignment"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/apps.licensing"
+	//   ]
 	// }
 
 }

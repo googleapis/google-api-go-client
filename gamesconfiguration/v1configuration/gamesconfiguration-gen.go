@@ -348,6 +348,12 @@ func (c *AchievementConfigurationsDeleteCall) Fields(s ...googleapi.Field) *Achi
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *AchievementConfigurationsDeleteCall) UserAgent(s string) *AchievementConfigurationsDeleteCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *AchievementConfigurationsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -361,7 +367,11 @@ func (c *AchievementConfigurationsDeleteCall) Do() error {
 	googleapi.Expand(req.URL, map[string]string{
 		"achievementId": c.achievementId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -418,6 +428,12 @@ func (c *AchievementConfigurationsGetCall) Fields(s ...googleapi.Field) *Achieve
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *AchievementConfigurationsGetCall) UserAgent(s string) *AchievementConfigurationsGetCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *AchievementConfigurationsGetCall) Do() (*AchievementConfiguration, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -431,7 +447,11 @@ func (c *AchievementConfigurationsGetCall) Do() (*AchievementConfiguration, erro
 	googleapi.Expand(req.URL, map[string]string{
 		"achievementId": c.achievementId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -496,6 +516,12 @@ func (c *AchievementConfigurationsInsertCall) Fields(s ...googleapi.Field) *Achi
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *AchievementConfigurationsInsertCall) UserAgent(s string) *AchievementConfigurationsInsertCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *AchievementConfigurationsInsertCall) Do() (*AchievementConfiguration, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.achievementconfiguration)
@@ -515,7 +541,11 @@ func (c *AchievementConfigurationsInsertCall) Do() (*AchievementConfiguration, e
 		"applicationId": c.applicationId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -598,6 +628,12 @@ func (c *AchievementConfigurationsListCall) Fields(s ...googleapi.Field) *Achiev
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *AchievementConfigurationsListCall) UserAgent(s string) *AchievementConfigurationsListCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *AchievementConfigurationsListCall) Do() (*AchievementConfigurationListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -617,7 +653,11 @@ func (c *AchievementConfigurationsListCall) Do() (*AchievementConfigurationListR
 	googleapi.Expand(req.URL, map[string]string{
 		"applicationId": c.applicationId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -696,6 +736,12 @@ func (c *AchievementConfigurationsPatchCall) Fields(s ...googleapi.Field) *Achie
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *AchievementConfigurationsPatchCall) UserAgent(s string) *AchievementConfigurationsPatchCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *AchievementConfigurationsPatchCall) Do() (*AchievementConfiguration, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.achievementconfiguration)
@@ -715,7 +761,11 @@ func (c *AchievementConfigurationsPatchCall) Do() (*AchievementConfiguration, er
 		"achievementId": c.achievementId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -784,6 +834,12 @@ func (c *AchievementConfigurationsUpdateCall) Fields(s ...googleapi.Field) *Achi
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *AchievementConfigurationsUpdateCall) UserAgent(s string) *AchievementConfigurationsUpdateCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *AchievementConfigurationsUpdateCall) Do() (*AchievementConfiguration, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.achievementconfiguration)
@@ -803,7 +859,11 @@ func (c *AchievementConfigurationsUpdateCall) Do() (*AchievementConfiguration, e
 		"achievementId": c.achievementId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -905,6 +965,12 @@ func (c *ImageConfigurationsUploadCall) Fields(s ...googleapi.Field) *ImageConfi
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *ImageConfigurationsUploadCall) UserAgent(s string) *ImageConfigurationsUploadCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *ImageConfigurationsUploadCall) Do() (*ImageConfiguration, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -948,7 +1014,11 @@ func (c *ImageConfigurationsUploadCall) Do() (*ImageConfiguration, error) {
 	} else {
 		req.Header.Set("Content-Type", ctype)
 	}
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1059,6 +1129,12 @@ func (c *LeaderboardConfigurationsDeleteCall) Fields(s ...googleapi.Field) *Lead
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *LeaderboardConfigurationsDeleteCall) UserAgent(s string) *LeaderboardConfigurationsDeleteCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *LeaderboardConfigurationsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1072,7 +1148,11 @@ func (c *LeaderboardConfigurationsDeleteCall) Do() error {
 	googleapi.Expand(req.URL, map[string]string{
 		"leaderboardId": c.leaderboardId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -1129,6 +1209,12 @@ func (c *LeaderboardConfigurationsGetCall) Fields(s ...googleapi.Field) *Leaderb
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *LeaderboardConfigurationsGetCall) UserAgent(s string) *LeaderboardConfigurationsGetCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *LeaderboardConfigurationsGetCall) Do() (*LeaderboardConfiguration, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1142,7 +1228,11 @@ func (c *LeaderboardConfigurationsGetCall) Do() (*LeaderboardConfiguration, erro
 	googleapi.Expand(req.URL, map[string]string{
 		"leaderboardId": c.leaderboardId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1207,6 +1297,12 @@ func (c *LeaderboardConfigurationsInsertCall) Fields(s ...googleapi.Field) *Lead
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *LeaderboardConfigurationsInsertCall) UserAgent(s string) *LeaderboardConfigurationsInsertCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *LeaderboardConfigurationsInsertCall) Do() (*LeaderboardConfiguration, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.leaderboardconfiguration)
@@ -1226,7 +1322,11 @@ func (c *LeaderboardConfigurationsInsertCall) Do() (*LeaderboardConfiguration, e
 		"applicationId": c.applicationId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1309,6 +1409,12 @@ func (c *LeaderboardConfigurationsListCall) Fields(s ...googleapi.Field) *Leader
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *LeaderboardConfigurationsListCall) UserAgent(s string) *LeaderboardConfigurationsListCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *LeaderboardConfigurationsListCall) Do() (*LeaderboardConfigurationListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1328,7 +1434,11 @@ func (c *LeaderboardConfigurationsListCall) Do() (*LeaderboardConfigurationListR
 	googleapi.Expand(req.URL, map[string]string{
 		"applicationId": c.applicationId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1407,6 +1517,12 @@ func (c *LeaderboardConfigurationsPatchCall) Fields(s ...googleapi.Field) *Leade
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *LeaderboardConfigurationsPatchCall) UserAgent(s string) *LeaderboardConfigurationsPatchCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *LeaderboardConfigurationsPatchCall) Do() (*LeaderboardConfiguration, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.leaderboardconfiguration)
@@ -1426,7 +1542,11 @@ func (c *LeaderboardConfigurationsPatchCall) Do() (*LeaderboardConfiguration, er
 		"leaderboardId": c.leaderboardId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1495,6 +1615,12 @@ func (c *LeaderboardConfigurationsUpdateCall) Fields(s ...googleapi.Field) *Lead
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *LeaderboardConfigurationsUpdateCall) UserAgent(s string) *LeaderboardConfigurationsUpdateCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *LeaderboardConfigurationsUpdateCall) Do() (*LeaderboardConfiguration, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.leaderboardconfiguration)
@@ -1514,7 +1640,11 @@ func (c *LeaderboardConfigurationsUpdateCall) Do() (*LeaderboardConfiguration, e
 		"leaderboardId": c.leaderboardId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err

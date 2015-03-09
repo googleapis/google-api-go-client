@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/WbG3AXMWFf0w_iF5R9bFvZ0uaXw\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/CD_JATuFPQRdM26rx9cmB29_Hcc\"",
  "discoveryVersion": "v1",
  "id": "compute:v1",
  "name": "compute",
  "version": "v1",
- "revision": "20150104",
+ "revision": "20150226",
  "title": "Compute Engine API",
  "description": "API for the Google Compute Engine service.",
  "ownerDomain": "google.com",
@@ -98,7 +98,7 @@
    "properties": {
     "kind": {
      "type": "string",
-     "description": "Type of the resource.",
+     "description": "[Output Only] Type of the resource. Always compute#accessConfig for access configs.",
      "default": "compute#accessConfig"
     },
     "name": {
@@ -107,11 +107,11 @@
     },
     "natIP": {
      "type": "string",
-     "description": "An external IP address associated with this instance. Specify an unused static IP address available to the project. If not specified, the external IP will be drawn from a shared ephemeral pool."
+     "description": "An external IP address associated with this instance. Specify an unused static external IP address available to the project or leave this field undefined to use an IP from a shared ephemeral IP address pool. If you specify a static external IP address, it must live in the same region as the zone of the instance."
     },
     "type": {
      "type": "string",
-     "description": "Type of configuration. Must be set to \"ONE_TO_ONE_NAT\". This configures port-for-port NAT to the internet.",
+     "description": "The type of configuration. The default and only option is ONE_TO_ONE_NAT.",
      "default": "ONE_TO_ONE_NAT",
      "enum": [
       "ONE_TO_ONE_NAT"
@@ -129,11 +129,11 @@
    "properties": {
     "address": {
      "type": "string",
-     "description": "The IP address represented by this resource."
+     "description": "The static external IP address represented by this resource."
     },
     "creationTimestamp": {
      "type": "string",
-     "description": "Creation timestamp in RFC3339 text format (output only)."
+     "description": "[Output Only] Creation timestamp in RFC3339 text format."
     },
     "description": {
      "type": "string",
@@ -141,17 +141,17 @@
     },
     "id": {
      "type": "string",
-     "description": "Unique identifier for the resource; defined by the server (output only).",
+     "description": "[Output Only] Unique identifier for the resource; defined by the server.",
      "format": "uint64"
     },
     "kind": {
      "type": "string",
-     "description": "Type of the resource.",
+     "description": "[Output Only] Type of the resource. Always compute#address for addresses.",
      "default": "compute#address"
     },
     "name": {
      "type": "string",
-     "description": "Name of the resource; provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035.",
+     "description": "Name of the resource; provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.",
      "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
      "annotations": {
       "required": [
@@ -161,15 +161,15 @@
     },
     "region": {
      "type": "string",
-     "description": "URL of the region where the regional address resides (output only). This field is not applicable to global addresses."
+     "description": "[Output Only] URL of the region where the regional address resides. This field is not applicable to global addresses."
     },
     "selfLink": {
      "type": "string",
-     "description": "Server defined URL for the resource (output only)."
+     "description": "[Output Only] Server defined URL for the resource."
     },
     "status": {
      "type": "string",
-     "description": "The status of the address (output only).",
+     "description": "[Output Only] The status of the address, which can be either IN_USE or RESERVED. An address that is RESERVED is currently reserved and available to use. An IN_USE address is currently being used by another resource and is not available.",
      "enum": [
       "IN_USE",
       "RESERVED"
@@ -181,7 +181,7 @@
     },
     "users": {
      "type": "array",
-     "description": "The resources that are using this address resource.",
+     "description": "[Output Only] The URLs of the resources that are using this address.",
      "items": {
       "type": "string"
      }
@@ -194,28 +194,28 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "Unique identifier for the resource; defined by the server (output only)."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "object",
-     "description": "A map of scoped address lists.",
+     "description": "[Output Only] A map of scoped address lists.",
      "additionalProperties": {
       "$ref": "AddressesScopedList",
-      "description": "Name of the scope containing this set of addresses."
+      "description": "[Output Only] Name of the scope containing this set of addresses."
      }
     },
     "kind": {
      "type": "string",
-     "description": "Type of resource.",
+     "description": "[Output Only] Type of resource. Always compute#addressAggregatedList for aggregated lists of addresses.",
      "default": "compute#addressAggregatedList"
     },
     "nextPageToken": {
      "type": "string",
-     "description": "A token used to continue a truncated list request (output only)."
+     "description": "[Output Only] A token used to continue a truncated list request."
     },
     "selfLink": {
      "type": "string",
-     "description": "Server defined URL for this resource (output only)."
+     "description": "[Output Only] Server defined URL for this resource."
     }
    }
   },
@@ -226,27 +226,27 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "Unique identifier for the resource; defined by the server (output only)."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "array",
-     "description": "A list of Address resources.",
+     "description": "[Output Only] A list of Address resources.",
      "items": {
       "$ref": "Address"
      }
     },
     "kind": {
      "type": "string",
-     "description": "Type of resource.",
+     "description": "[Output Only] Type of resource. Always compute#addressList for lists of addresses.",
      "default": "compute#addressList"
     },
     "nextPageToken": {
      "type": "string",
-     "description": "A token used to continue a truncated list request (output only)."
+     "description": "[Output Only] A token used to continue a truncated list request."
     },
     "selfLink": {
      "type": "string",
-     "description": "Server defined URL for the resource (output only)."
+     "description": "[Output Only] Server defined URL for the resource."
     }
    }
   },
@@ -256,18 +256,18 @@
    "properties": {
     "addresses": {
      "type": "array",
-     "description": "List of addresses contained in this scope.",
+     "description": "[Output Only] List of addresses contained in this scope.",
      "items": {
       "$ref": "Address"
      }
     },
     "warning": {
      "type": "object",
-     "description": "Informational warning which replaces the list of addresses when the list is empty.",
+     "description": "[Output Only] Informational warning which replaces the list of addresses when the list is empty.",
      "properties": {
       "code": {
        "type": "string",
-       "description": "The warning type identifier for this warning.",
+       "description": "[Output Only] The warning type identifier for this warning.",
        "enum": [
         "DEPRECATED_RESOURCE_USED",
         "DISK_SIZE_LARGER_THAN_IMAGE_SIZE",
@@ -280,9 +280,11 @@
         "NO_RESULTS_ON_PAGE",
         "REQUIRED_TOS_AGREEMENT",
         "RESOURCE_NOT_DELETED",
+        "SINGLE_INSTANCE_PROPERTY_TEMPLATE",
         "UNREACHABLE"
        ],
        "enumDescriptions": [
+        "",
         "",
         "",
         "",
@@ -299,24 +301,24 @@
       },
       "data": {
        "type": "array",
-       "description": "Metadata for this warning in 'key: value' format.",
+       "description": "[Output Only] Metadata for this warning in key: value format.",
        "items": {
         "type": "object",
         "properties": {
          "key": {
           "type": "string",
-          "description": "A key for the warning data."
+          "description": "[Output Only] A key for the warning data."
          },
          "value": {
           "type": "string",
-          "description": "A warning data value corresponding to the key."
+          "description": "[Output Only] A warning data value corresponding to the key."
          }
         }
        }
       },
       "message": {
        "type": "string",
-       "description": "Optional human-readable details for this warning."
+       "description": "[Output Only] Optional human-readable details for this warning."
       }
      }
     }
@@ -329,24 +331,24 @@
    "properties": {
     "autoDelete": {
      "type": "boolean",
-     "description": "Whether the disk will be auto-deleted when the instance is deleted (but not when the disk is detached from the instance)."
+     "description": "Specifies whether the disk will be auto-deleted when the instance is deleted (but not when the disk is detached from the instance)."
     },
     "boot": {
      "type": "boolean",
-     "description": "Indicates that this is a boot disk. VM will use the first partition of the disk for its root filesystem."
+     "description": "Indicates that this is a boot disk. The virtual machine will use the first partition of the disk for its root filesystem."
     },
     "deviceName": {
      "type": "string",
-     "description": "Persistent disk only; must be unique within the instance when specified. This represents a unique device name that is reflected into the /dev/ tree of a Linux operating system running within the instance. If not specified, a default will be chosen by the system."
+     "description": "Specifies a unique device name of your choice that is reflected into the /dev/ tree of a Linux operating system running within the instance. This name can be used to reference the device for mounting, resizing, and so on, from within the instance.\n\nIf not specified, the server chooses a default device name to apply to this disk, in the form persistent-disks-x, where x is a number assigned by Google Compute Engine. This field is only applicable for persistent disks."
     },
     "index": {
      "type": "integer",
-     "description": "A zero-based index to assign to this disk, where 0 is reserved for the boot disk. If not specified, the server will choose an appropriate value (output only).",
+     "description": "Assigns a zero-based index to this disk, where 0 is reserved for the boot disk. For example, if you have many disks attached to an instance, each disk would have a unique index number. If not specified, the server will choose an appropriate value.",
      "format": "int32"
     },
     "initializeParams": {
      "$ref": "AttachedDiskInitializeParams",
-     "description": "Initialization parameters."
+     "description": "[Input Only] Specifies the parameters for a new disk that will be created alongside the new instance. Use initialization parameters to create boot disks or local SSDs attached to the new instance.\n\nThis property is mutually exclusive with the source property; you can only define one or the other, but not both."
     },
     "interface": {
      "type": "string",
@@ -361,19 +363,19 @@
     },
     "kind": {
      "type": "string",
-     "description": "Type of the resource.",
+     "description": "[Output Only] Type of the resource. Always compute#attachedDisk for attached disks.",
      "default": "compute#attachedDisk"
     },
     "licenses": {
      "type": "array",
-     "description": "Public visible licenses.",
+     "description": "[Output Only] Any valid publicly visible licenses.",
      "items": {
       "type": "string"
      }
     },
     "mode": {
      "type": "string",
-     "description": "The mode in which to attach this disk, either \"READ_WRITE\" or \"READ_ONLY\".",
+     "description": "The mode in which to attach this disk, either READ_WRITE or READ_ONLY. If not specified, the default is to attach the disk in READ_WRITE mode.",
      "enum": [
       "READ_ONLY",
       "READ_WRITE"
@@ -385,11 +387,11 @@
     },
     "source": {
      "type": "string",
-     "description": "Persistent disk only; the URL of the persistent disk resource."
+     "description": "Specifies a valid partial or full URL to an existing Persistent Disk resource. This field is only applicable for persistent disks."
     },
     "type": {
      "type": "string",
-     "description": "Type of the disk, either \"SCRATCH\" or \"PERSISTENT\". Note that persistent disks must be created before you can specify them here.",
+     "description": "Specifies the type of the disk, either SCRATCH or PERSISTENT. If not specified, the default is PERSISTENT.",
      "enum": [
       "PERSISTENT",
       "SCRATCH"
@@ -409,24 +411,24 @@
   "AttachedDiskInitializeParams": {
    "id": "AttachedDiskInitializeParams",
    "type": "object",
-   "description": "Initialization parameters for the new disk (input-only). Can only be specified on the boot disk or local SSDs. Mutually exclusive with 'source'.",
+   "description": "[Input Only] Specifies the parameters for a new disk that will be created alongside the new instance. Use initialization parameters to create boot disks or local SSDs attached to the new instance.\n\nThis property is mutually exclusive with the source property; you can only define one or the other, but not both.",
    "properties": {
     "diskName": {
      "type": "string",
-     "description": "Name of the disk (when not provided defaults to the name of the instance)."
+     "description": "Specifies the disk name. If not specified, the default is to use the name of the instance."
     },
     "diskSizeGb": {
      "type": "string",
-     "description": "Size of the disk in base-2 GB.",
+     "description": "Specifies the size of the disk in base-2 GB.",
      "format": "int64"
     },
     "diskType": {
      "type": "string",
-     "description": "URL of the disk type resource describing which disk type to use to create the disk; provided by the client when the disk is created."
+     "description": "Specifies the disk type to use to create the instance. If not specified, the default is pd-standard, specified using the full URL. For example:\n\nhttps://www.googleapis.com/compute/v1/projects/project/zones/zone/diskTypes/pd-standard \n\nOther values include pd-ssd and local-ssd. If you define this field, you can provide either the full or partial URL. For example, the following are valid values:  \n- https://www.googleapis.com/compute/v1/projects/project/zones/zone/diskTypes/diskType \n- projects/project/zones/zone/diskTypes/diskType \n- zones/zone/diskTypes/diskType"
     },
     "sourceImage": {
      "type": "string",
-     "description": "The source image used to create this disk."
+     "description": "A source image used to create the disk. You can provide a private (custom) image, and Compute Engine will use the corresponding image from your project. For example:\n\nglobal/images/my-private-image \n\nOr you can provide an image from a publicly-available project. For example, to use a Debian image from the debian-cloud project, make sure to include the project in the URL:\n\nprojects/debian-cloud/global/images/debian-7-wheezy-vYYYYMMDD \n\nwhere vYYYYMMDD is the image version. The fully-qualified URL will also work in both cases."
     }
    }
   },
@@ -620,11 +622,11 @@
     },
     "replacement": {
      "type": "string",
-     "description": "A URL of the suggested replacement for the deprecated resource. The deprecated resource and its replacement must be resources of the same kind."
+     "description": "The URL of the suggested replacement for a deprecated resource. The suggested replacement resource must be the same kind of resource as the deprecated resource."
     },
     "state": {
      "type": "string",
-     "description": "The deprecation state. Can be \"DEPRECATED\", \"OBSOLETE\", or \"DELETED\". Operations which create a new resource using a \"DEPRECATED\" resource will return successfully, but with a warning indicating the deprecated resource and recommending its replacement. New uses of \"OBSOLETE\" or \"DELETED\" resources will result in an error.",
+     "description": "The deprecation state of this resource. This can be DEPRECATED, OBSOLETE, or DELETED. Operations which create a new resource using a DEPRECATED resource will return successfully, but with a warning indicating the deprecated resource and recommending its replacement. Operations which use OBSOLETE or DELETED resources will be rejected and result in an error.",
      "enum": [
       "DELETED",
       "DEPRECATED",
@@ -795,6 +797,20 @@
     }
    }
   },
+  "DiskMoveRequest": {
+   "id": "DiskMoveRequest",
+   "type": "object",
+   "properties": {
+    "destinationZone": {
+     "type": "string",
+     "description": "The URL of the zone to which the disk will be moved."
+    },
+    "targetDisk": {
+     "type": "string",
+     "description": "The URL of the target disk to be moved."
+    }
+   }
+  },
   "DiskType": {
    "id": "DiskType",
    "type": "object",
@@ -802,47 +818,47 @@
    "properties": {
     "creationTimestamp": {
      "type": "string",
-     "description": "Creation timestamp in RFC3339 text format (output only)."
+     "description": "[Output Only] Creation timestamp in RFC3339 text format."
     },
     "defaultDiskSizeGb": {
      "type": "string",
-     "description": "Server defined default disk size in gb (output only).",
+     "description": "[Output Only] Server defined default disk size in GB.",
      "format": "int64"
     },
     "deprecated": {
      "$ref": "DeprecationStatus",
-     "description": "The deprecation status associated with this disk type."
+     "description": "[Output Only] The deprecation status associated with this disk type."
     },
     "description": {
      "type": "string",
-     "description": "An optional textual description of the resource."
+     "description": "[Output Only] An optional textual description of the resource."
     },
     "id": {
      "type": "string",
-     "description": "Unique identifier for the resource; defined by the server (output only).",
+     "description": "[Output Only] Unique identifier for the resource; defined by the server.",
      "format": "uint64"
     },
     "kind": {
      "type": "string",
-     "description": "Type of the resource.",
+     "description": "[Output Only] Type of the resource. Always compute#diskType for disk types.",
      "default": "compute#diskType"
     },
     "name": {
      "type": "string",
-     "description": "Name of the resource.",
+     "description": "[Output Only] Name of the resource.",
      "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?"
     },
     "selfLink": {
      "type": "string",
-     "description": "Server defined URL for the resource (output only)."
+     "description": "[Output Only] Server defined URL for the resource."
     },
     "validDiskSize": {
      "type": "string",
-     "description": "An optional textual descroption of the valid disk size, e.g., \"10GB-10TB\"."
+     "description": "[Output Only] An optional textual description of the valid disk size, such as \"10GB-10TB\"."
     },
     "zone": {
      "type": "string",
-     "description": "Url of the zone where the disk type resides (output only)."
+     "description": "[Output Only] URL of the zone where the disk type resides."
     }
    }
   },
@@ -852,28 +868,28 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "Unique identifier for the resource; defined by the server (output only)."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "object",
-     "description": "A map of scoped disk type lists.",
+     "description": "[Output Only] A map of scoped disk type lists.",
      "additionalProperties": {
       "$ref": "DiskTypesScopedList",
-      "description": "Name of the scope containing this set of disk types."
+      "description": "[Output Only] Name of the scope containing this set of disk types."
      }
     },
     "kind": {
      "type": "string",
-     "description": "Type of resource.",
+     "description": "[Output Only] Type of resource. Always compute#diskTypeAggregatedList.",
      "default": "compute#diskTypeAggregatedList"
     },
     "nextPageToken": {
      "type": "string",
-     "description": "A token used to continue a truncated list request (output only)."
+     "description": "[Output Only] A token used to continue a truncated list request."
     },
     "selfLink": {
      "type": "string",
-     "description": "Server defined URL for this resource (output only)."
+     "description": "[Output Only] Server defined URL for this resource."
     }
    }
   },
@@ -884,27 +900,27 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "Unique identifier for the resource; defined by the server (output only)."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "array",
-     "description": "A list of DiskType resources.",
+     "description": "[Output Only] A list of Disk Type resources.",
      "items": {
       "$ref": "DiskType"
      }
     },
     "kind": {
      "type": "string",
-     "description": "Type of resource.",
+     "description": "[Output Only] Type of resource. Always compute#diskTypeList for disk types.",
      "default": "compute#diskTypeList"
     },
     "nextPageToken": {
      "type": "string",
-     "description": "A token used to continue a truncated list request (output only)."
+     "description": "[Output Only] A token used to continue a truncated list request."
     },
     "selfLink": {
      "type": "string",
-     "description": "Server defined URL for this resource (output only)."
+     "description": "[Output Only] Server defined URL for this resource."
     }
    }
   },
@@ -914,18 +930,18 @@
    "properties": {
     "diskTypes": {
      "type": "array",
-     "description": "List of disk types contained in this scope.",
+     "description": "[Output Only] List of disk types contained in this scope.",
      "items": {
       "$ref": "DiskType"
      }
     },
     "warning": {
      "type": "object",
-     "description": "Informational warning which replaces the list of disk types when the list is empty.",
+     "description": "[Output Only] Informational warning which replaces the list of disk types when the list is empty.",
      "properties": {
       "code": {
        "type": "string",
-       "description": "The warning type identifier for this warning.",
+       "description": "[Output Only] The warning type identifier for this warning.",
        "enum": [
         "DEPRECATED_RESOURCE_USED",
         "DISK_SIZE_LARGER_THAN_IMAGE_SIZE",
@@ -938,9 +954,11 @@
         "NO_RESULTS_ON_PAGE",
         "REQUIRED_TOS_AGREEMENT",
         "RESOURCE_NOT_DELETED",
+        "SINGLE_INSTANCE_PROPERTY_TEMPLATE",
         "UNREACHABLE"
        ],
        "enumDescriptions": [
+        "",
         "",
         "",
         "",
@@ -957,24 +975,24 @@
       },
       "data": {
        "type": "array",
-       "description": "Metadata for this warning in 'key: value' format.",
+       "description": "[Output Only] Metadata for this warning in key: value format.",
        "items": {
         "type": "object",
         "properties": {
          "key": {
           "type": "string",
-          "description": "A key for the warning data."
+          "description": "[Output Only] A key for the warning data."
          },
          "value": {
           "type": "string",
-          "description": "A warning data value corresponding to the key."
+          "description": "[Output Only] A warning data value corresponding to the key."
          }
         }
        }
       },
       "message": {
        "type": "string",
-       "description": "Optional human-readable details for this warning."
+       "description": "[Output Only] Optional human-readable details for this warning."
       }
      }
     }
@@ -997,7 +1015,7 @@
      "properties": {
       "code": {
        "type": "string",
-       "description": "The warning type identifier for this warning.",
+       "description": "[Output Only] The warning type identifier for this warning.",
        "enum": [
         "DEPRECATED_RESOURCE_USED",
         "DISK_SIZE_LARGER_THAN_IMAGE_SIZE",
@@ -1010,9 +1028,11 @@
         "NO_RESULTS_ON_PAGE",
         "REQUIRED_TOS_AGREEMENT",
         "RESOURCE_NOT_DELETED",
+        "SINGLE_INSTANCE_PROPERTY_TEMPLATE",
         "UNREACHABLE"
        ],
        "enumDescriptions": [
+        "",
         "",
         "",
         "",
@@ -1029,24 +1049,24 @@
       },
       "data": {
        "type": "array",
-       "description": "Metadata for this warning in 'key: value' format.",
+       "description": "[Output Only] Metadata for this warning in key: value format.",
        "items": {
         "type": "object",
         "properties": {
          "key": {
           "type": "string",
-          "description": "A key for the warning data."
+          "description": "[Output Only] A key for the warning data."
          },
          "value": {
           "type": "string",
-          "description": "A warning data value corresponding to the key."
+          "description": "[Output Only] A warning data value corresponding to the key."
          }
         }
        }
       },
       "message": {
        "type": "string",
-       "description": "Optional human-readable details for this warning."
+       "description": "[Output Only] Optional human-readable details for this warning."
       }
      }
     }
@@ -1315,7 +1335,7 @@
      "properties": {
       "code": {
        "type": "string",
-       "description": "The warning type identifier for this warning.",
+       "description": "[Output Only] The warning type identifier for this warning.",
        "enum": [
         "DEPRECATED_RESOURCE_USED",
         "DISK_SIZE_LARGER_THAN_IMAGE_SIZE",
@@ -1328,9 +1348,11 @@
         "NO_RESULTS_ON_PAGE",
         "REQUIRED_TOS_AGREEMENT",
         "RESOURCE_NOT_DELETED",
+        "SINGLE_INSTANCE_PROPERTY_TEMPLATE",
         "UNREACHABLE"
        ],
        "enumDescriptions": [
+        "",
         "",
         "",
         "",
@@ -1347,24 +1369,24 @@
       },
       "data": {
        "type": "array",
-       "description": "Metadata for this warning in 'key: value' format.",
+       "description": "[Output Only] Metadata for this warning in key: value format.",
        "items": {
         "type": "object",
         "properties": {
          "key": {
           "type": "string",
-          "description": "A key for the warning data."
+          "description": "[Output Only] A key for the warning data."
          },
          "value": {
           "type": "string",
-          "description": "A warning data value corresponding to the key."
+          "description": "[Output Only] A warning data value corresponding to the key."
          }
         }
        }
       },
       "message": {
        "type": "string",
-       "description": "Optional human-readable details for this warning."
+       "description": "[Output Only] Optional human-readable details for this warning."
       }
      }
     }
@@ -1686,15 +1708,15 @@
   "Instance": {
    "id": "Instance",
    "type": "object",
-   "description": "An instance resource.",
+   "description": "An Instance resource.",
    "properties": {
     "canIpForward": {
      "type": "boolean",
-     "description": "Allows this instance to send packets with source IP addresses other than its own and receive packets with destination IP addresses other than its own. If this instance will be used as an IP gateway or it will be set as the next-hop in a Route resource, say true. If unsure, leave this set to false."
+     "description": "Allows this instance to send and receive packets with non-matching destination or source IPs. This is required if you plan to use this instance to forward routes. For more information, see Enabling IP Forwarding."
     },
     "creationTimestamp": {
      "type": "string",
-     "description": "Creation timestamp in RFC3339 text format (output only)."
+     "description": "[Output Only] Creation timestamp in RFC3339 text format."
     },
     "description": {
      "type": "string",
@@ -1709,17 +1731,17 @@
     },
     "id": {
      "type": "string",
-     "description": "Unique identifier for the resource; defined by the server (output only).",
+     "description": "[Output Only] Unique identifier for the resource; defined by the server.",
      "format": "uint64"
     },
     "kind": {
      "type": "string",
-     "description": "Type of the resource.",
+     "description": "[Output Only] Type of the resource. Always compute#instance for instances.",
      "default": "compute#instance"
     },
     "machineType": {
      "type": "string",
-     "description": "URL of the machine type resource describing which machine type to use to host the instance; provided by the client when the instance is created.",
+     "description": "Full or partial URL of the machine type resource to use for this instance. This is provided by the client when the instance is created. For example, the following is a valid partial url:\n\nzones/zone/machineTypes/machine-type",
      "annotations": {
       "required": [
        "compute.instances.insert"
@@ -1728,21 +1750,15 @@
     },
     "metadata": {
      "$ref": "Metadata",
-     "description": "Metadata key/value pairs assigned to this instance. Consists of custom metadata or predefined keys; see Instance documentation for more information."
+     "description": "The metadata key/value pairs assigned to this instance. This includes custom metadata and predefined keys."
     },
     "name": {
      "type": "string",
-     "description": "Name of the resource; provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035.",
-     "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
-     "annotations": {
-      "required": [
-       "compute.instances.insert"
-      ]
-     }
+     "description": "Name of the resource; provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash."
     },
     "networkInterfaces": {
      "type": "array",
-     "description": "Array of configurations for this interface. This specifies how this interface is configured to interact with other network services, such as connecting to the internet. Currently, ONE_TO_ONE_NAT is the only access config supported. If there are no accessConfigs specified, then this instance will have no external internet access.",
+     "description": "An array of configurations for this interface. This specifies how this interface is configured to interact with other network services, such as connecting to the internet.",
      "items": {
       "$ref": "NetworkInterface"
      }
@@ -1753,18 +1769,18 @@
     },
     "selfLink": {
      "type": "string",
-     "description": "Server defined URL for this resource (output only)."
+     "description": "[Output Only] Server defined URL for this resource."
     },
     "serviceAccounts": {
      "type": "array",
-     "description": "A list of service accounts each with specified scopes, for which access tokens are to be made available to the instance through metadata queries.",
+     "description": "A list of service accounts, with their specified scopes, authorized for this instance. Service accounts generate access tokens that can be accessed through the metadata server and used to authenticate applications on the instance. See Authenticating from Google Compute Engine for more information.",
      "items": {
       "$ref": "ServiceAccount"
      }
     },
     "status": {
      "type": "string",
-     "description": "Instance status. One of the following values: \"PROVISIONING\", \"STAGING\", \"RUNNING\", \"STOPPING\", \"STOPPED\", \"TERMINATED\" (output only).",
+     "description": "[Output Only] The status of the instance. One of the following values: PROVISIONING, STAGING, RUNNING, STOPPING, STOPPED, TERMINATED.",
      "enum": [
       "PROVISIONING",
       "RUNNING",
@@ -1784,15 +1800,15 @@
     },
     "statusMessage": {
      "type": "string",
-     "description": "An optional, human-readable explanation of the status (output only)."
+     "description": "[Output Only] An optional, human-readable explanation of the status."
     },
     "tags": {
      "$ref": "Tags",
-     "description": "A list of tags to be applied to this instance. Used to identify valid sources or targets for network firewalls. Provided by the client on instance creation. The tags can be later modified by the setTags method. Each tag within the list must comply with RFC1035."
+     "description": "A list of tags to appy to this instance. Tags are used to identify valid sources or targets for network firewalls and are specified by the client during instance creation. The tags can be later modified by the setTags method. Each tag within the list must comply with RFC1035."
     },
     "zone": {
      "type": "string",
-     "description": "URL of the zone where the instance resides (output only)."
+     "description": "[Output Only] URL of the zone where the instance resides."
     }
    }
   },
@@ -1802,11 +1818,11 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "Unique identifier for the resource; defined by the server (output only)."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "object",
-     "description": "A map of scoped instance lists.",
+     "description": "[Output Only] A map of scoped instance lists.",
      "additionalProperties": {
       "$ref": "InstancesScopedList",
       "description": "Name of the scope containing this set of instances."
@@ -1814,16 +1830,16 @@
     },
     "kind": {
      "type": "string",
-     "description": "Type of resource.",
+     "description": "[Output Only] Type of resource. Always compute#instanceAggregatedList for aggregated lists of Instance resources.",
      "default": "compute#instanceAggregatedList"
     },
     "nextPageToken": {
      "type": "string",
-     "description": "A token used to continue a truncated list request (output only)."
+     "description": "[Output Only] A token used to continue a truncated list request."
     },
     "selfLink": {
      "type": "string",
-     "description": "Server defined URL for this resource (output only)."
+     "description": "[Output Only] Server defined URL for this resource."
     }
    }
   },
@@ -1834,27 +1850,41 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "Unique identifier for the resource; defined by the server (output only)."
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
     },
     "items": {
      "type": "array",
-     "description": "A list of Instance resources.",
+     "description": "[Output Only] A list of Instance resources.",
      "items": {
       "$ref": "Instance"
      }
     },
     "kind": {
      "type": "string",
-     "description": "Type of resource.",
+     "description": "[Output Only] Type of resource. Always compute#instanceList for lists of Instance resources.",
      "default": "compute#instanceList"
     },
     "nextPageToken": {
      "type": "string",
-     "description": "A token used to continue a truncated list request (output only)."
+     "description": "[Output Only] A token used to continue a truncated list request."
     },
     "selfLink": {
      "type": "string",
-     "description": "Server defined URL for this resource (output only)."
+     "description": "[Output Only] Server defined URL for this resource."
+    }
+   }
+  },
+  "InstanceMoveRequest": {
+   "id": "InstanceMoveRequest",
+   "type": "object",
+   "properties": {
+    "destinationZone": {
+     "type": "string",
+     "description": "The URL of the zone to move the instance to."
+    },
+    "targetInstance": {
+     "type": "string",
+     "description": "The URL of the target instance to move."
     }
    }
   },
@@ -2004,18 +2034,18 @@
    "properties": {
     "instances": {
      "type": "array",
-     "description": "List of instances contained in this scope.",
+     "description": "[Output Only] List of instances contained in this scope.",
      "items": {
       "$ref": "Instance"
      }
     },
     "warning": {
      "type": "object",
-     "description": "Informational warning which replaces the list of instances when the list is empty.",
+     "description": "[Output Only] Informational warning which replaces the list of instances when the list is empty.",
      "properties": {
       "code": {
        "type": "string",
-       "description": "The warning type identifier for this warning.",
+       "description": "[Output Only] The warning type identifier for this warning.",
        "enum": [
         "DEPRECATED_RESOURCE_USED",
         "DISK_SIZE_LARGER_THAN_IMAGE_SIZE",
@@ -2028,9 +2058,11 @@
         "NO_RESULTS_ON_PAGE",
         "REQUIRED_TOS_AGREEMENT",
         "RESOURCE_NOT_DELETED",
+        "SINGLE_INSTANCE_PROPERTY_TEMPLATE",
         "UNREACHABLE"
        ],
        "enumDescriptions": [
+        "",
         "",
         "",
         "",
@@ -2047,24 +2079,24 @@
       },
       "data": {
        "type": "array",
-       "description": "Metadata for this warning in 'key: value' format.",
+       "description": "[Output Only] Metadata for this warning in key: value format.",
        "items": {
         "type": "object",
         "properties": {
          "key": {
           "type": "string",
-          "description": "A key for the warning data."
+          "description": "[Output Only] A key for the warning data."
          },
          "value": {
           "type": "string",
-          "description": "A warning data value corresponding to the key."
+          "description": "[Output Only] A warning data value corresponding to the key."
          }
         }
        }
       },
       "message": {
        "type": "string",
-       "description": "Optional human-readable details for this warning."
+       "description": "[Output Only] Optional human-readable details for this warning."
       }
      }
     }
@@ -2081,12 +2113,12 @@
     },
     "kind": {
      "type": "string",
-     "description": "Type of resource.",
+     "description": "[Output Only] Type of resource. Always compute#license for licenses.",
      "default": "compute#license"
     },
     "name": {
      "type": "string",
-     "description": "Name of the resource; provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035.",
+     "description": "Name of the resource. The name must be 1-63 characters long, and comply with RCF1035.",
      "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
      "annotations": {
       "required": [
@@ -2096,7 +2128,7 @@
     },
     "selfLink": {
      "type": "string",
-     "description": "Server defined URL for the resource (output only)."
+     "description": "[Output Only] Server defined URL for the resource."
     }
    }
   },
@@ -2260,7 +2292,7 @@
      "properties": {
       "code": {
        "type": "string",
-       "description": "The warning type identifier for this warning.",
+       "description": "[Output Only] The warning type identifier for this warning.",
        "enum": [
         "DEPRECATED_RESOURCE_USED",
         "DISK_SIZE_LARGER_THAN_IMAGE_SIZE",
@@ -2273,9 +2305,11 @@
         "NO_RESULTS_ON_PAGE",
         "REQUIRED_TOS_AGREEMENT",
         "RESOURCE_NOT_DELETED",
+        "SINGLE_INSTANCE_PROPERTY_TEMPLATE",
         "UNREACHABLE"
        ],
        "enumDescriptions": [
+        "",
         "",
         "",
         "",
@@ -2292,24 +2326,24 @@
       },
       "data": {
        "type": "array",
-       "description": "Metadata for this warning in 'key: value' format.",
+       "description": "[Output Only] Metadata for this warning in key: value format.",
        "items": {
         "type": "object",
         "properties": {
          "key": {
           "type": "string",
-          "description": "A key for the warning data."
+          "description": "[Output Only] A key for the warning data."
          },
          "value": {
           "type": "string",
-          "description": "A warning data value corresponding to the key."
+          "description": "[Output Only] A warning data value corresponding to the key."
          }
         }
        }
       },
       "message": {
        "type": "string",
-       "description": "Optional human-readable details for this warning."
+       "description": "[Output Only] Optional human-readable details for this warning."
       }
      }
     }
@@ -2322,7 +2356,7 @@
    "properties": {
     "fingerprint": {
      "type": "string",
-     "description": "Fingerprint of this resource. A hash of the metadata's contents. This field is used for optimistic locking. An up-to-date metadata fingerprint must be provided in order to modify metadata.",
+     "description": "Specifies a fingerprint for this request, which is essentially a hash of the metadata's contents and used for optimistic locking. The fingerprint is initially generated by Compute Engine and changes after every request to modify or update metadata. You must always provide an up-to-date fingerprint hash in order to update or change metadata.",
      "format": "byte"
     },
     "items": {
@@ -2357,7 +2391,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "Type of the resource.",
+     "description": "[Output Only] Type of the resource. Always compute#metadata for metadata.",
      "default": "compute#metadata"
     }
    }
@@ -2423,18 +2457,18 @@
    "properties": {
     "accessConfigs": {
      "type": "array",
-     "description": "Array of configurations for this interface. This specifies how this interface is configured to interact with other network services, such as connecting to the internet. Currently, ONE_TO_ONE_NAT is the only access config supported. If there are no accessConfigs specified, then this instance will have no external internet access.",
+     "description": "An array of configurations for this interface. Currently, \u003ccodeONE_TO_ONE_NAT is the only access config supported. If there are no accessConfigs specified, then this instance will have no external internet access.",
      "items": {
       "$ref": "AccessConfig"
      }
     },
     "name": {
      "type": "string",
-     "description": "Name of the network interface, determined by the server; for network devices, these are e.g. eth0, eth1, etc. (output only)."
+     "description": "[Output Only] The name of the network interface, generated by the server. For network devices, these are eth0, eth1, etc."
     },
     "network": {
      "type": "string",
-     "description": "URL of the network resource attached to this interface.",
+     "description": "URL of the network resource for this instance. This is required for creating an instance but optional when creating a firewall rule. If not specified when creating a firewall rule, the default network is used:\n\nglobal/networks/default \n\nIf you specify this property, you can specify the network as a full or partial URL. For example, the following are all valid URLs:  \n- https://www.googleapis.com/compute/v1/projects/project/global/networks/network \n- projects/project/global/networks/network \n- global/networks/default",
      "annotations": {
       "required": [
        "compute.instances.insert"
@@ -2443,7 +2477,7 @@
     },
     "networkIP": {
      "type": "string",
-     "description": "An optional IPV4 internal network address assigned to the instance for this network interface (output only)."
+     "description": "[Output Only] An optional IPV4 internal network address assigned to the instance for this network interface."
     }
    }
   },
@@ -2484,18 +2518,20 @@
    "description": "An operation resource, used to manage asynchronous API requests.",
    "properties": {
     "clientOperationId": {
-     "type": "string"
+     "type": "string",
+     "description": "[Output Only] An optional identifier specified by the client when the mutation was initiated. Must be unique for all operation resources in the project"
     },
     "creationTimestamp": {
      "type": "string",
-     "description": "[Output Only] Creation timestamp in RFC3339 text format (output only)."
+     "description": "[Output Only] Creation timestamp in RFC3339 text format."
     },
     "endTime": {
-     "type": "string"
+     "type": "string",
+     "description": "[Output Only] The time that this operation was completed. This is in RFC3339 text format."
     },
     "error": {
      "type": "object",
-     "description": "[Output Only] If errors occurred during processing of this operation, this field will be populated.",
+     "description": "[Output Only] If errors are generated during processing of the operation, this field will be populated.",
      "properties": {
       "errors": {
        "type": "array",
@@ -2521,10 +2557,12 @@
      }
     },
     "httpErrorMessage": {
-     "type": "string"
+     "type": "string",
+     "description": "[Output Only] If the operation fails, this field contains the HTTP error message that was returned, such as NOT FOUND."
     },
     "httpErrorStatusCode": {
      "type": "integer",
+     "description": "[Output Only] If the operation fails, this field contains the HTTP error message that was returned, such as 404.",
      "format": "int32"
     },
     "id": {
@@ -2534,27 +2572,29 @@
     },
     "insertTime": {
      "type": "string",
-     "description": "[Output Only] The time that this operation was requested. This is in RFC 3339 format."
+     "description": "[Output Only] The time that this operation was requested. This is in RFC3339 text format."
     },
     "kind": {
      "type": "string",
-     "description": "[Output Only] Type of the resource. Always kind#operation for Operation resources.",
+     "description": "[Output Only] Type of the resource. Always compute#Operation for Operation resources.",
      "default": "compute#operation"
     },
     "name": {
      "type": "string",
-     "description": "[Output Only] Name of the resource (output only)."
+     "description": "[Output Only] Name of the resource."
     },
     "operationType": {
-     "type": "string"
+     "type": "string",
+     "description": "[Output Only] Type of the operation, such as insert, update, and delete."
     },
     "progress": {
      "type": "integer",
+     "description": "[Output Only] An optional progress indicator that ranges from 0 to 100. There is no requirement that this be linear or support any granularity of operations. This should not be used to guess at when the operation will be complete. This number should be monotonically increasing as the operation progresses.",
      "format": "int32"
     },
     "region": {
      "type": "string",
-     "description": "[Output Only] URL of the region where the operation resides (output only)."
+     "description": "[Output Only] URL of the region where the operation resides. Only applicable for regional resources."
     },
     "selfLink": {
      "type": "string",
@@ -2562,11 +2602,11 @@
     },
     "startTime": {
      "type": "string",
-     "description": "[Output Only] The time that this operation was started by the server. This is in RFC 3339 format."
+     "description": "[Output Only] The time that this operation was started by the server. This is in RFC3339 text format."
     },
     "status": {
      "type": "string",
-     "description": "[Output Only] Status of the operation. Can be one of the following: \"PENDING\", \"RUNNING\", or \"DONE\".",
+     "description": "[Output Only] Status of the operation. Can be one of the following: PENDING, RUNNING, or DONE.",
      "enum": [
       "DONE",
       "PENDING",
@@ -2584,24 +2624,26 @@
     },
     "targetId": {
      "type": "string",
-     "description": "[Output Only] Unique target id which identifies a particular incarnation of the target.",
+     "description": "[Output Only] Unique target ID which identifies a particular incarnation of the target.",
      "format": "uint64"
     },
     "targetLink": {
      "type": "string",
-     "description": "[Output Only] URL of the resource the operation is mutating (output only)."
+     "description": "[Output Only] URL of the resource the operation is mutating."
     },
     "user": {
-     "type": "string"
+     "type": "string",
+     "description": "[Output Only] User who requested the operation, for example: user@example.com."
     },
     "warnings": {
      "type": "array",
+     "description": "[Output Only] If warning messages are generated during processing of the operation, this field will be populated.",
      "items": {
       "type": "object",
       "properties": {
        "code": {
         "type": "string",
-        "description": "The warning type identifier for this warning.",
+        "description": "[Output Only] The warning type identifier for this warning.",
         "enum": [
          "DEPRECATED_RESOURCE_USED",
          "DISK_SIZE_LARGER_THAN_IMAGE_SIZE",
@@ -2614,9 +2656,11 @@
          "NO_RESULTS_ON_PAGE",
          "REQUIRED_TOS_AGREEMENT",
          "RESOURCE_NOT_DELETED",
+         "SINGLE_INSTANCE_PROPERTY_TEMPLATE",
          "UNREACHABLE"
         ],
         "enumDescriptions": [
+         "",
          "",
          "",
          "",
@@ -2633,31 +2677,31 @@
        },
        "data": {
         "type": "array",
-        "description": "Metadata for this warning in 'key: value' format.",
+        "description": "[Output Only] Metadata for this warning in key: value format.",
         "items": {
          "type": "object",
          "properties": {
           "key": {
            "type": "string",
-           "description": "A key for the warning data."
+           "description": "[Output Only] A key for the warning data."
           },
           "value": {
            "type": "string",
-           "description": "A warning data value corresponding to the key."
+           "description": "[Output Only] A warning data value corresponding to the key."
           }
          }
         }
        },
        "message": {
         "type": "string",
-        "description": "Optional human-readable details for this warning."
+        "description": "[Output Only] Optional human-readable details for this warning."
        }
       }
      }
     },
     "zone": {
      "type": "string",
-     "description": "[Output Only] URL of the zone where the operation resides (output only)."
+     "description": "[Output Only] URL of the zone where the operation resides."
     }
    }
   },
@@ -2679,7 +2723,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "Type of resource.",
+     "description": "[Output Only] Type of resource. Always compute#operationAggregatedList for aggregated lists of operations.",
      "default": "compute#operationAggregatedList"
     },
     "nextPageToken": {
@@ -2710,7 +2754,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "Type of resource. Always compute#operations for Operations resource.",
+     "description": "[Output Only] Type of resource. Always compute#operations for Operations resource.",
      "default": "compute#operationList"
     },
     "nextPageToken": {
@@ -2740,7 +2784,7 @@
      "properties": {
       "code": {
        "type": "string",
-       "description": "The warning type identifier for this warning.",
+       "description": "[Output Only] The warning type identifier for this warning.",
        "enum": [
         "DEPRECATED_RESOURCE_USED",
         "DISK_SIZE_LARGER_THAN_IMAGE_SIZE",
@@ -2753,9 +2797,11 @@
         "NO_RESULTS_ON_PAGE",
         "REQUIRED_TOS_AGREEMENT",
         "RESOURCE_NOT_DELETED",
+        "SINGLE_INSTANCE_PROPERTY_TEMPLATE",
         "UNREACHABLE"
        ],
        "enumDescriptions": [
+        "",
         "",
         "",
         "",
@@ -2772,24 +2818,24 @@
       },
       "data": {
        "type": "array",
-       "description": "Metadata for this warning in 'key: value' format.",
+       "description": "[Output Only] Metadata for this warning in key: value format.",
        "items": {
         "type": "object",
         "properties": {
          "key": {
           "type": "string",
-          "description": "A key for the warning data."
+          "description": "[Output Only] A key for the warning data."
          },
          "value": {
           "type": "string",
-          "description": "A warning data value corresponding to the key."
+          "description": "[Output Only] A warning data value corresponding to the key."
          }
         }
        }
       },
       "message": {
        "type": "string",
-       "description": "Optional human-readable details for this warning."
+       "description": "[Output Only] Optional human-readable details for this warning."
       }
      }
     }
@@ -2841,15 +2887,15 @@
   "Project": {
    "id": "Project",
    "type": "object",
-   "description": "A project resource. Projects can be created only in the APIs Console. Unless marked otherwise, values can only be modified in the console.",
+   "description": "A Project resource. Projects can only be created in the Google Developers Console. Unless marked otherwise, values can only be modified in the console.",
    "properties": {
     "commonInstanceMetadata": {
      "$ref": "Metadata",
-     "description": "Metadata key/value pairs available to all instances contained in this project."
+     "description": "Metadata key/value pairs available to all instances contained in this project. See Custom metadata for more information."
     },
     "creationTimestamp": {
      "type": "string",
-     "description": "Creation timestamp in RFC3339 text format (output only)."
+     "description": "[Output Only] Creation timestamp in RFC3339 text format."
     },
     "description": {
      "type": "string",
@@ -2857,12 +2903,12 @@
     },
     "id": {
      "type": "string",
-     "description": "Unique identifier for the resource; defined by the server (output only).",
+     "description": "[Output Only] Unique identifier for the resource; defined by the server.",
      "format": "uint64"
     },
     "kind": {
      "type": "string",
-     "description": "Type of the resource.",
+     "description": "[Output Only] Type of the resource. Always compute#project for projects.",
      "default": "compute#project"
     },
     "name": {
@@ -2871,14 +2917,14 @@
     },
     "quotas": {
      "type": "array",
-     "description": "Quotas assigned to this project.",
+     "description": "[Output Only] Quotas assigned to this project.",
      "items": {
       "$ref": "Quota"
      }
     },
     "selfLink": {
      "type": "string",
-     "description": "Server defined URL for the resource (output only)."
+     "description": "[Output Only] Server defined URL for the resource."
     },
     "usageExportLocation": {
      "$ref": "UsageExportLocation",
@@ -2893,12 +2939,12 @@
    "properties": {
     "limit": {
      "type": "number",
-     "description": "Quota limit for this metric.",
+     "description": "[Output Only] Quota limit for this metric.",
      "format": "double"
     },
     "metric": {
      "type": "string",
-     "description": "Name of the quota metric.",
+     "description": "[Output Only] Name of the quota metric.",
      "enum": [
       "BACKEND_SERVICES",
       "CPUS",
@@ -2910,7 +2956,6 @@
       "HEALTH_CHECKS",
       "IMAGES",
       "IMAGES_TOTAL_GB",
-      "INSTANCES",
       "IN_USE_ADDRESSES",
       "KERNELS",
       "KERNELS_TOTAL_GB",
@@ -2950,13 +2995,12 @@
       "",
       "",
       "",
-      "",
       ""
      ]
     },
     "usage": {
      "type": "number",
-     "description": "Current usage of this metric.",
+     "description": "[Output Only] Current usage of this metric.",
      "format": "double"
     }
    }
@@ -3166,7 +3210,7 @@
       "properties": {
        "code": {
         "type": "string",
-        "description": "The warning type identifier for this warning.",
+        "description": "[Output Only] The warning type identifier for this warning.",
         "enum": [
          "DEPRECATED_RESOURCE_USED",
          "DISK_SIZE_LARGER_THAN_IMAGE_SIZE",
@@ -3179,9 +3223,11 @@
          "NO_RESULTS_ON_PAGE",
          "REQUIRED_TOS_AGREEMENT",
          "RESOURCE_NOT_DELETED",
+         "SINGLE_INSTANCE_PROPERTY_TEMPLATE",
          "UNREACHABLE"
         ],
         "enumDescriptions": [
+         "",
          "",
          "",
          "",
@@ -3198,24 +3244,24 @@
        },
        "data": {
         "type": "array",
-        "description": "Metadata for this warning in 'key: value' format.",
+        "description": "[Output Only] Metadata for this warning in key: value format.",
         "items": {
          "type": "object",
          "properties": {
           "key": {
            "type": "string",
-           "description": "A key for the warning data."
+           "description": "[Output Only] A key for the warning data."
           },
           "value": {
            "type": "string",
-           "description": "A warning data value corresponding to the key."
+           "description": "[Output Only] A warning data value corresponding to the key."
           }
          }
         }
        },
        "message": {
         "type": "string",
-        "description": "Optional human-readable details for this warning."
+        "description": "[Output Only] Optional human-readable details for this warning."
        }
       }
      }
@@ -3256,15 +3302,15 @@
   "Scheduling": {
    "id": "Scheduling",
    "type": "object",
-   "description": "Scheduling options for an Instance.",
+   "description": "Sets the scheduling options for an Instance.",
    "properties": {
     "automaticRestart": {
      "type": "boolean",
-     "description": "Whether the Instance should be automatically restarted whenever it is terminated by Compute Engine (not terminated by user)."
+     "description": "Specifies whether the instance should be automatically restarted if it is terminated by Compute Engine (not terminated by a user)."
     },
     "onHostMaintenance": {
      "type": "string",
-     "description": "How the instance should behave when the host machine undergoes maintenance that may temporarily impact instance performance.",
+     "description": "Defines the maintenance behavior for this instance. The default behavior is MIGRATE. For more information, see Setting maintenance behavior.",
      "enum": [
       "MIGRATE",
       "TERMINATE"
@@ -3279,20 +3325,20 @@
   "SerialPortOutput": {
    "id": "SerialPortOutput",
    "type": "object",
-   "description": "An instance serial console output.",
+   "description": "An instance's serial console output.",
    "properties": {
     "contents": {
      "type": "string",
-     "description": "The contents of the console output."
+     "description": "[Output Only] The contents of the console output."
     },
     "kind": {
      "type": "string",
-     "description": "Type of the resource.",
+     "description": "[Output Only] Type of the resource. Always compute#serialPortOutput for serial port output.",
      "default": "compute#serialPortOutput"
     },
     "selfLink": {
      "type": "string",
-     "description": "Server defined URL for the resource (output only)."
+     "description": "[Output Only] Server defined URL for the resource."
     }
    }
   },
@@ -3441,7 +3487,7 @@
    "properties": {
     "fingerprint": {
      "type": "string",
-     "description": "Fingerprint of this resource. A hash of the tags stored in this object. This field is used optimistic locking. An up-to-date tags fingerprint must be provided in order to modify tags.",
+     "description": "Specifies a fingerprint for this request, which is essentially a hash of the metadata's contents and used for optimistic locking. The fingerprint is initially generated by Compute Engine and changes after every request to modify or update metadata. You must always provide an up-to-date fingerprint hash in order to update or change metadata.\n\nTo see the latest fingerprint, make get() request to the instance.",
      "format": "byte"
     },
     "items": {
@@ -3653,7 +3699,7 @@
      "properties": {
       "code": {
        "type": "string",
-       "description": "The warning type identifier for this warning.",
+       "description": "[Output Only] The warning type identifier for this warning.",
        "enum": [
         "DEPRECATED_RESOURCE_USED",
         "DISK_SIZE_LARGER_THAN_IMAGE_SIZE",
@@ -3666,9 +3712,11 @@
         "NO_RESULTS_ON_PAGE",
         "REQUIRED_TOS_AGREEMENT",
         "RESOURCE_NOT_DELETED",
+        "SINGLE_INSTANCE_PROPERTY_TEMPLATE",
         "UNREACHABLE"
        ],
        "enumDescriptions": [
+        "",
         "",
         "",
         "",
@@ -3685,24 +3733,24 @@
       },
       "data": {
        "type": "array",
-       "description": "Metadata for this warning in 'key: value' format.",
+       "description": "[Output Only] Metadata for this warning in key: value format.",
        "items": {
         "type": "object",
         "properties": {
          "key": {
           "type": "string",
-          "description": "A key for the warning data."
+          "description": "[Output Only] A key for the warning data."
          },
          "value": {
           "type": "string",
-          "description": "A warning data value corresponding to the key."
+          "description": "[Output Only] A warning data value corresponding to the key."
          }
         }
        }
       },
       "message": {
        "type": "string",
-       "description": "Optional human-readable details for this warning."
+       "description": "[Output Only] Optional human-readable details for this warning."
       }
      }
     }
@@ -3931,7 +3979,7 @@
      "properties": {
       "code": {
        "type": "string",
-       "description": "The warning type identifier for this warning.",
+       "description": "[Output Only] The warning type identifier for this warning.",
        "enum": [
         "DEPRECATED_RESOURCE_USED",
         "DISK_SIZE_LARGER_THAN_IMAGE_SIZE",
@@ -3944,9 +3992,11 @@
         "NO_RESULTS_ON_PAGE",
         "REQUIRED_TOS_AGREEMENT",
         "RESOURCE_NOT_DELETED",
+        "SINGLE_INSTANCE_PROPERTY_TEMPLATE",
         "UNREACHABLE"
        ],
        "enumDescriptions": [
+        "",
         "",
         "",
         "",
@@ -3963,24 +4013,24 @@
       },
       "data": {
        "type": "array",
-       "description": "Metadata for this warning in 'key: value' format.",
+       "description": "[Output Only] Metadata for this warning in key: value format.",
        "items": {
         "type": "object",
         "properties": {
          "key": {
           "type": "string",
-          "description": "A key for the warning data."
+          "description": "[Output Only] A key for the warning data."
          },
          "value": {
           "type": "string",
-          "description": "A warning data value corresponding to the key."
+          "description": "[Output Only] A warning data value corresponding to the key."
          }
         }
        }
       },
       "message": {
        "type": "string",
-       "description": "Optional human-readable details for this warning."
+       "description": "[Output Only] Optional human-readable details for this warning."
       }
      }
     }
@@ -4193,11 +4243,11 @@
    "properties": {
     "bucketName": {
      "type": "string",
-     "description": "The name of an existing bucket in Cloud Storage where the usage report object is stored. The Google Service Account is granted write access to this bucket. This is simply the bucket name, with no \"gs://\" or \"https://storage.googleapis.com/\" in front of it."
+     "description": "The name of an existing bucket in Cloud Storage where the usage report object is stored. The Google Service Account is granted write access to this bucket. This is just the bucket name, with no gs:// or https://storage.googleapis.com/ in front of it."
     },
     "reportNamePrefix": {
      "type": "string",
-     "description": "An optional prefix for the name of the usage report object stored in bucket_name. If not supplied, defaults to \"usage_\". The report is stored as a CSV file named _gce_.csv. where  is the day of the usage according to Pacific Time. The prefix should conform to Cloud Storage object naming conventions."
+     "description": "An optional prefix for the name of the usage report object stored in bucketName. If not supplied, defaults to usage. The report is stored as a CSV file named report_name_prefix_gce_YYYYMMDD.csv where YYYYMMDD is the day of the usage according to Pacific Time. If you supply a prefix, it should conform to Cloud Storage object naming conventions."
     }
    }
   },
@@ -4341,7 +4391,7 @@
       },
       "project": {
        "type": "string",
-       "description": "Name of the project scoping this request.",
+       "description": "Project ID for this request.",
        "required": true,
        "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
@@ -4374,14 +4424,14 @@
       },
       "project": {
        "type": "string",
-       "description": "Name of the project scoping this request.",
+       "description": "Project ID for this request.",
        "required": true,
        "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
       },
       "region": {
        "type": "string",
-       "description": "Name of the region scoping this request.",
+       "description": "The name of the region for this request.",
        "required": true,
        "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
        "location": "path"
@@ -4415,14 +4465,14 @@
       },
       "project": {
        "type": "string",
-       "description": "Name of the project scoping this request.",
+       "description": "Project ID for this request.",
        "required": true,
        "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
       },
       "region": {
        "type": "string",
-       "description": "Name of the region scoping this request.",
+       "description": "The name of the region for this request.",
        "required": true,
        "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
        "location": "path"
@@ -4450,14 +4500,14 @@
      "parameters": {
       "project": {
        "type": "string",
-       "description": "Name of the project scoping this request.",
+       "description": "Project ID for this request.",
        "required": true,
        "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
       },
       "region": {
        "type": "string",
-       "description": "Name of the region scoping this request.",
+       "description": "The name of the region for this request.",
        "required": true,
        "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
        "location": "path"
@@ -4505,14 +4555,14 @@
       },
       "project": {
        "type": "string",
-       "description": "Name of the project scoping this request.",
+       "description": "Project ID for this request.",
        "required": true,
        "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
       },
       "region": {
        "type": "string",
-       "description": "Name of the region scoping this request.",
+       "description": "The name of the region for this request.",
        "required": true,
        "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
        "location": "path"
@@ -4814,7 +4864,7 @@
       },
       "project": {
        "type": "string",
-       "description": "Name of the project scoping this request.",
+       "description": "Project ID for this request.",
        "required": true,
        "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
@@ -4847,14 +4897,14 @@
       },
       "project": {
        "type": "string",
-       "description": "Name of the project scoping this request.",
+       "description": "Project ID for this request.",
        "required": true,
        "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
       },
       "zone": {
        "type": "string",
-       "description": "Name of the zone scoping this request.",
+       "description": "The name of the zone for this request.",
        "required": true,
        "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
        "location": "path"
@@ -4901,14 +4951,14 @@
       },
       "project": {
        "type": "string",
-       "description": "Name of the project scoping this request.",
+       "description": "Project ID for this request.",
        "required": true,
        "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
       },
       "zone": {
        "type": "string",
-       "description": "Name of the zone scoping this request.",
+       "description": "The name of the zone for this request.",
        "required": true,
        "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
        "location": "path"
@@ -5696,7 +5746,7 @@
       },
       "project": {
        "type": "string",
-       "description": "Name of the project scoping this request.",
+       "description": "Project ID for this request.",
        "required": true,
        "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
@@ -5729,7 +5779,7 @@
       },
       "project": {
        "type": "string",
-       "description": "Name of the project scoping this request.",
+       "description": "Project ID for this request.",
        "required": true,
        "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
@@ -5756,7 +5806,7 @@
      "parameters": {
       "project": {
        "type": "string",
-       "description": "Name of the project scoping this request.",
+       "description": "Project ID for this request.",
        "required": true,
        "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
@@ -5803,7 +5853,7 @@
       },
       "project": {
        "type": "string",
-       "description": "Name of the project scoping this request.",
+       "description": "Project ID for this request.",
        "required": true,
        "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
@@ -6032,7 +6082,7 @@
       },
       "project": {
        "type": "string",
-       "description": "Name of the project scoping this request.",
+       "description": "Project ID for this request.",
        "required": true,
        "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
@@ -6065,7 +6115,7 @@
       },
       "project": {
        "type": "string",
-       "description": "Name of the project scoping this request.",
+       "description": "Project ID for this request.",
        "required": true,
        "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
@@ -6095,7 +6145,7 @@
       },
       "project": {
        "type": "string",
-       "description": "Name of the project scoping this request.",
+       "description": "Project ID for this request.",
        "required": true,
        "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
@@ -6141,7 +6191,7 @@
       },
       "project": {
        "type": "string",
-       "description": "Name of the project scoping this request.",
+       "description": "Project ID for this request.",
        "required": true,
        "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
@@ -6714,27 +6764,27 @@
      "parameters": {
       "instance": {
        "type": "string",
-       "description": "Instance name.",
+       "description": "The instance name for this request.",
        "required": true,
        "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
        "location": "path"
       },
       "networkInterface": {
        "type": "string",
-       "description": "Network interface name.",
+       "description": "The name of the network interface to add to this instance.",
        "required": true,
        "location": "query"
       },
       "project": {
        "type": "string",
-       "description": "Project name.",
+       "description": "Project ID for this request.",
        "required": true,
        "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
       },
       "zone": {
        "type": "string",
-       "description": "Name of the zone scoping this request.",
+       "description": "The name of the zone for this request.",
        "required": true,
        "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
        "location": "path"
@@ -6783,7 +6833,7 @@
       },
       "project": {
        "type": "string",
-       "description": "Name of the project scoping this request.",
+       "description": "Project ID for this request.",
        "required": true,
        "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
@@ -6805,7 +6855,7 @@
      "id": "compute.instances.attachDisk",
      "path": "{project}/zones/{zone}/instances/{instance}/attachDisk",
      "httpMethod": "POST",
-     "description": "Attaches a disk resource to an instance.",
+     "description": "Attaches a Disk resource to an instance.",
      "parameters": {
       "instance": {
        "type": "string",
@@ -6816,14 +6866,14 @@
       },
       "project": {
        "type": "string",
-       "description": "Project name.",
+       "description": "Project ID for this request.",
        "required": true,
        "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
       },
       "zone": {
        "type": "string",
-       "description": "Name of the zone scoping this request.",
+       "description": "The name of the zone for this request.",
        "required": true,
        "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
        "location": "path"
@@ -6849,7 +6899,7 @@
      "id": "compute.instances.delete",
      "path": "{project}/zones/{zone}/instances/{instance}",
      "httpMethod": "DELETE",
-     "description": "Deletes the specified instance resource.",
+     "description": "Deletes the specified Instance resource. For more information, see Shutting down an instance.",
      "parameters": {
       "instance": {
        "type": "string",
@@ -6860,14 +6910,14 @@
       },
       "project": {
        "type": "string",
-       "description": "Name of the project scoping this request.",
+       "description": "Project ID for this request.",
        "required": true,
        "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
       },
       "zone": {
        "type": "string",
-       "description": "Name of the zone scoping this request.",
+       "description": "The name of the zone for this request.",
        "required": true,
        "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
        "location": "path"
@@ -6894,33 +6944,33 @@
      "parameters": {
       "accessConfig": {
        "type": "string",
-       "description": "Access config name.",
+       "description": "The name of the access config to delete.",
        "required": true,
        "location": "query"
       },
       "instance": {
        "type": "string",
-       "description": "Instance name.",
+       "description": "The instance name for this request.",
        "required": true,
        "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
        "location": "path"
       },
       "networkInterface": {
        "type": "string",
-       "description": "Network interface name.",
+       "description": "The name of the network interface.",
        "required": true,
        "location": "query"
       },
       "project": {
        "type": "string",
-       "description": "Project name.",
+       "description": "Project ID for this request.",
        "required": true,
        "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
       },
       "zone": {
        "type": "string",
-       "description": "Name of the zone scoping this request.",
+       "description": "The name of the zone for this request.",
        "required": true,
        "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
        "location": "path"
@@ -6963,14 +7013,14 @@
       },
       "project": {
        "type": "string",
-       "description": "Project name.",
+       "description": "Project ID for this request.",
        "required": true,
        "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
       },
       "zone": {
        "type": "string",
-       "description": "Name of the zone scoping this request.",
+       "description": "The name of the zone for this request.",
        "required": true,
        "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
        "location": "path"
@@ -7005,14 +7055,14 @@
       },
       "project": {
        "type": "string",
-       "description": "Name of the project scoping this request.",
+       "description": "Project ID for this request.",
        "required": true,
        "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
       },
       "zone": {
        "type": "string",
-       "description": "Name of the zone scoping this request.",
+       "description": "The name of the The name of the zone for this request..",
        "required": true,
        "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
        "location": "path"
@@ -7047,14 +7097,14 @@
       },
       "project": {
        "type": "string",
-       "description": "Name of the project scoping this request.",
+       "description": "Project ID for this request.",
        "required": true,
        "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
       },
       "zone": {
        "type": "string",
-       "description": "Name of the zone scoping this request.",
+       "description": "The name of the zone for this request.",
        "required": true,
        "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
        "location": "path"
@@ -7082,14 +7132,14 @@
      "parameters": {
       "project": {
        "type": "string",
-       "description": "Name of the project scoping this request.",
+       "description": "Project ID for this request.",
        "required": true,
        "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
       },
       "zone": {
        "type": "string",
-       "description": "Name of the zone scoping this request.",
+       "description": "The name of the zone for this request.",
        "required": true,
        "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
        "location": "path"
@@ -7137,14 +7187,14 @@
       },
       "project": {
        "type": "string",
-       "description": "Name of the project scoping this request.",
+       "description": "Project ID for this request.",
        "required": true,
        "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
       },
       "zone": {
        "type": "string",
-       "description": "Name of the zone scoping this request.",
+       "description": "The name of the zone for this request.",
        "required": true,
        "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
        "location": "path"
@@ -7178,14 +7228,14 @@
       },
       "project": {
        "type": "string",
-       "description": "Name of the project scoping this request.",
+       "description": "Project ID for this request.",
        "required": true,
        "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
       },
       "zone": {
        "type": "string",
-       "description": "Name of the zone scoping this request.",
+       "description": "The name of the zone for this request.",
        "required": true,
        "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
        "location": "path"
@@ -7208,7 +7258,7 @@
      "id": "compute.instances.setDiskAutoDelete",
      "path": "{project}/zones/{zone}/instances/{instance}/setDiskAutoDelete",
      "httpMethod": "POST",
-     "description": "Sets the auto-delete flag for a disk attached to an instance",
+     "description": "Sets the auto-delete flag for a disk attached to an instance.",
      "parameters": {
       "autoDelete": {
        "type": "boolean",
@@ -7218,28 +7268,28 @@
       },
       "deviceName": {
        "type": "string",
-       "description": "Disk device name to modify.",
+       "description": "The device name of the disk to modify.",
        "required": true,
        "pattern": "\\w[\\w.-]{0,254}",
        "location": "query"
       },
       "instance": {
        "type": "string",
-       "description": "Instance name.",
+       "description": "The instance name.",
        "required": true,
        "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
        "location": "path"
       },
       "project": {
        "type": "string",
-       "description": "Project name.",
+       "description": "Project ID for this request.",
        "required": true,
        "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
       },
       "zone": {
        "type": "string",
-       "description": "Name of the zone scoping this request.",
+       "description": "The name of the zone for this request.",
        "required": true,
        "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
        "location": "path"
@@ -7275,14 +7325,14 @@
       },
       "project": {
        "type": "string",
-       "description": "Name of the project scoping this request.",
+       "description": "Project ID for this request.",
        "required": true,
        "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
       },
       "zone": {
        "type": "string",
-       "description": "Name of the zone scoping this request.",
+       "description": "The name of the zone for this request.",
        "required": true,
        "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
        "location": "path"
@@ -7319,14 +7369,14 @@
       },
       "project": {
        "type": "string",
-       "description": "Project name.",
+       "description": "Project ID for this request.",
        "required": true,
        "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
       },
       "zone": {
        "type": "string",
-       "description": "Name of the zone scoping this request.",
+       "description": "The name of the zone for this request.",
        "required": true,
        "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
        "location": "path"
@@ -7363,14 +7413,14 @@
       },
       "project": {
        "type": "string",
-       "description": "Name of the project scoping this request.",
+       "description": "Project ID for this request.",
        "required": true,
        "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
       },
       "zone": {
        "type": "string",
-       "description": "Name of the zone scoping this request.",
+       "description": "The name of the zone for this request.",
        "required": true,
        "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
        "location": "path"
@@ -7396,7 +7446,7 @@
      "id": "compute.instances.start",
      "path": "{project}/zones/{zone}/instances/{instance}/start",
      "httpMethod": "POST",
-     "description": "Starts an instance",
+     "description": "This method starts an instance that was stopped using the using the instances().stop method. For more information, see Restart an instance.",
      "parameters": {
       "instance": {
        "type": "string",
@@ -7407,14 +7457,14 @@
       },
       "project": {
        "type": "string",
-       "description": "Name of the project scoping this request.",
+       "description": "Project ID for this request.",
        "required": true,
        "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
       },
       "zone": {
        "type": "string",
-       "description": "Name of the zone scoping this request.",
+       "description": "The name of the zone for this request.",
        "required": true,
        "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
        "location": "path"
@@ -7437,7 +7487,7 @@
      "id": "compute.instances.stop",
      "path": "{project}/zones/{zone}/instances/{instance}/stop",
      "httpMethod": "POST",
-     "description": "Stops an instance",
+     "description": "This method stops a running instance, shutting it down cleanly, and allows you to restart the instance at a later time. Stopped instances do not incur per-minute, virtual machine usage charges while they are stopped, but any resources that the virtual machine is using, such as persistent disks and static IP addresses,will continue to be charged until they are deleted. For more information, see Stopping an instance.",
      "parameters": {
       "instance": {
        "type": "string",
@@ -7448,14 +7498,14 @@
       },
       "project": {
        "type": "string",
-       "description": "Name of the project scoping this request.",
+       "description": "Project ID for this request.",
        "required": true,
        "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
       },
       "zone": {
        "type": "string",
-       "description": "Name of the zone scoping this request.",
+       "description": "The name of the zone for this request.",
        "required": true,
        "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
        "location": "path"
@@ -7493,7 +7543,7 @@
       },
       "project": {
        "type": "string",
-       "description": "Name of the project scoping this request.",
+       "description": "Project ID for this request.",
        "required": true,
        "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
@@ -7812,7 +7862,7 @@
      "parameters": {
       "project": {
        "type": "string",
-       "description": "Name of the project resource to retrieve.",
+       "description": "Project ID for this request.",
        "required": true,
        "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
@@ -7830,6 +7880,62 @@
       "https://www.googleapis.com/auth/compute.readonly"
      ]
     },
+    "moveDisk": {
+     "id": "compute.projects.moveDisk",
+     "path": "{project}/moveDisk",
+     "httpMethod": "POST",
+     "description": "Moves a persistent disk from one zone to another.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project"
+     ],
+     "request": {
+      "$ref": "DiskMoveRequest"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "moveInstance": {
+     "id": "compute.projects.moveInstance",
+     "path": "{project}/moveInstance",
+     "httpMethod": "POST",
+     "description": "Moves an instance and its attached persistent disks from one zone to another.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project"
+     ],
+     "request": {
+      "$ref": "InstanceMoveRequest"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
     "setCommonInstanceMetadata": {
      "id": "compute.projects.setCommonInstanceMetadata",
      "path": "{project}/setCommonInstanceMetadata",
@@ -7838,7 +7944,7 @@
      "parameters": {
       "project": {
        "type": "string",
-       "description": "Name of the project scoping this request.",
+       "description": "Project ID for this request.",
        "required": true,
        "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
@@ -7862,11 +7968,11 @@
      "id": "compute.projects.setUsageExportBucket",
      "path": "{project}/setUsageExportBucket",
      "httpMethod": "POST",
-     "description": "Sets usage export location",
+     "description": "Enables the usage export feature and sets the usage export bucket where reports are stored. If you provide an empty request body using this method, the usage export feature will be disabled.",
      "parameters": {
       "project": {
        "type": "string",
-       "description": "Name of the project scoping this request.",
+       "description": "Project ID for this request.",
        "required": true,
        "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
@@ -7908,7 +8014,7 @@
       },
       "project": {
        "type": "string",
-       "description": "Name of the project scoping this request.",
+       "description": "Project ID for this request.",
        "required": true,
        "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
@@ -7946,7 +8052,7 @@
       },
       "project": {
        "type": "string",
-       "description": "Name of the project scoping this request.",
+       "description": "Project ID for this request.",
        "required": true,
        "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
@@ -8000,7 +8106,7 @@
       },
       "project": {
        "type": "string",
-       "description": "Name of the project scoping this request.",
+       "description": "Project ID for this request.",
        "required": true,
        "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
@@ -9528,7 +9634,7 @@
       },
       "project": {
        "type": "string",
-       "description": "Name of the project scoping this request.",
+       "description": "Project ID for this request.",
        "required": true,
        "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
@@ -9566,7 +9672,7 @@
       },
       "project": {
        "type": "string",
-       "description": "Name of the project scoping this request.",
+       "description": "Project ID for this request.",
        "required": true,
        "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
@@ -9620,7 +9726,7 @@
       },
       "project": {
        "type": "string",
-       "description": "Name of the project scoping this request.",
+       "description": "Project ID for this request.",
        "required": true,
        "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"

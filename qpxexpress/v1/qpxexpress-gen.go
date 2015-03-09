@@ -657,6 +657,12 @@ func (c *TripsSearchCall) Fields(s ...googleapi.Field) *TripsSearchCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *TripsSearchCall) UserAgent(s string) *TripsSearchCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *TripsSearchCall) Do() (*TripsSearchResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.tripssearchrequest)
@@ -674,7 +680,11 @@ func (c *TripsSearchCall) Do() (*TripsSearchResponse, error) {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err

@@ -155,6 +155,12 @@ func (c *StatesClearCall) Fields(s ...googleapi.Field) *StatesClearCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *StatesClearCall) UserAgent(s string) *StatesClearCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *StatesClearCall) Do() (*WriteResult, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -171,7 +177,11 @@ func (c *StatesClearCall) Do() (*WriteResult, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"stateKey": strconv.FormatInt(c.stateKey, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -247,6 +257,12 @@ func (c *StatesDeleteCall) Fields(s ...googleapi.Field) *StatesDeleteCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *StatesDeleteCall) UserAgent(s string) *StatesDeleteCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *StatesDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -260,7 +276,11 @@ func (c *StatesDeleteCall) Do() error {
 	googleapi.Expand(req.URL, map[string]string{
 		"stateKey": strconv.FormatInt(c.stateKey, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -320,6 +340,12 @@ func (c *StatesGetCall) Fields(s ...googleapi.Field) *StatesGetCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *StatesGetCall) UserAgent(s string) *StatesGetCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *StatesGetCall) Do() (*GetResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -333,7 +359,11 @@ func (c *StatesGetCall) Do() (*GetResponse, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"stateKey": strconv.FormatInt(c.stateKey, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -404,6 +434,12 @@ func (c *StatesListCall) Fields(s ...googleapi.Field) *StatesListCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *StatesListCall) UserAgent(s string) *StatesListCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *StatesListCall) Do() (*ListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -418,7 +454,11 @@ func (c *StatesListCall) Do() (*ListResponse, error) {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -494,6 +534,12 @@ func (c *StatesUpdateCall) Fields(s ...googleapi.Field) *StatesUpdateCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *StatesUpdateCall) UserAgent(s string) *StatesUpdateCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *StatesUpdateCall) Do() (*WriteResult, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.updaterequest)
@@ -516,7 +562,11 @@ func (c *StatesUpdateCall) Do() (*WriteResult, error) {
 		"stateKey": strconv.FormatInt(c.stateKey, 10),
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err

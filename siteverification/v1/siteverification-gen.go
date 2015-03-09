@@ -162,6 +162,12 @@ func (c *WebResourceDeleteCall) Fields(s ...googleapi.Field) *WebResourceDeleteC
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *WebResourceDeleteCall) UserAgent(s string) *WebResourceDeleteCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *WebResourceDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -175,7 +181,11 @@ func (c *WebResourceDeleteCall) Do() error {
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -231,6 +241,12 @@ func (c *WebResourceGetCall) Fields(s ...googleapi.Field) *WebResourceGetCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *WebResourceGetCall) UserAgent(s string) *WebResourceGetCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *WebResourceGetCall) Do() (*SiteVerificationWebResourceResource, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -244,7 +260,11 @@ func (c *WebResourceGetCall) Do() (*SiteVerificationWebResourceResource, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -308,6 +328,12 @@ func (c *WebResourceGetTokenCall) Fields(s ...googleapi.Field) *WebResourceGetTo
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *WebResourceGetTokenCall) UserAgent(s string) *WebResourceGetTokenCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *WebResourceGetTokenCall) Do() (*SiteVerificationWebResourceGettokenResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.siteverificationwebresourcegettokenrequest)
@@ -325,7 +351,11 @@ func (c *WebResourceGetTokenCall) Do() (*SiteVerificationWebResourceGettokenResp
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -383,6 +413,12 @@ func (c *WebResourceInsertCall) Fields(s ...googleapi.Field) *WebResourceInsertC
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *WebResourceInsertCall) UserAgent(s string) *WebResourceInsertCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *WebResourceInsertCall) Do() (*SiteVerificationWebResourceResource, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.siteverificationwebresourceresource)
@@ -401,7 +437,11 @@ func (c *WebResourceInsertCall) Do() (*SiteVerificationWebResourceResource, erro
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -466,6 +506,12 @@ func (c *WebResourceListCall) Fields(s ...googleapi.Field) *WebResourceListCall 
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *WebResourceListCall) UserAgent(s string) *WebResourceListCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *WebResourceListCall) Do() (*SiteVerificationWebResourceListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -477,7 +523,11 @@ func (c *WebResourceListCall) Do() (*SiteVerificationWebResourceListResponse, er
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -532,6 +582,12 @@ func (c *WebResourcePatchCall) Fields(s ...googleapi.Field) *WebResourcePatchCal
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *WebResourcePatchCall) UserAgent(s string) *WebResourcePatchCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *WebResourcePatchCall) Do() (*SiteVerificationWebResourceResource, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.siteverificationwebresourceresource)
@@ -551,7 +607,11 @@ func (c *WebResourcePatchCall) Do() (*SiteVerificationWebResourceResource, error
 		"id": c.id,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -619,6 +679,12 @@ func (c *WebResourceUpdateCall) Fields(s ...googleapi.Field) *WebResourceUpdateC
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *WebResourceUpdateCall) UserAgent(s string) *WebResourceUpdateCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *WebResourceUpdateCall) Do() (*SiteVerificationWebResourceResource, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.siteverificationwebresourceresource)
@@ -638,7 +704,11 @@ func (c *WebResourceUpdateCall) Do() (*SiteVerificationWebResourceResource, erro
 		"id": c.id,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err

@@ -236,6 +236,12 @@ func (c *ActivitiesListCall) Fields(s ...googleapi.Field) *ActivitiesListCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *ActivitiesListCall) UserAgent(s string) *ActivitiesListCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *ActivitiesListCall) Do() (*Activities, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -277,7 +283,11 @@ func (c *ActivitiesListCall) Do() (*Activities, error) {
 		"customerId":    c.customerId,
 		"applicationId": strconv.FormatInt(c.applicationId, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err

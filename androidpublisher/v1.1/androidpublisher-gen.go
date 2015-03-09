@@ -155,6 +155,12 @@ func (c *InapppurchasesGetCall) Fields(s ...googleapi.Field) *InapppurchasesGetC
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *InapppurchasesGetCall) UserAgent(s string) *InapppurchasesGetCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *InapppurchasesGetCall) Do() (*InappPurchase, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -170,7 +176,11 @@ func (c *InapppurchasesGetCall) Do() (*InappPurchase, error) {
 		"productId":   c.productId,
 		"token":       c.token,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -252,6 +262,12 @@ func (c *PurchasesCancelCall) Fields(s ...googleapi.Field) *PurchasesCancelCall 
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *PurchasesCancelCall) UserAgent(s string) *PurchasesCancelCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *PurchasesCancelCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -267,7 +283,11 @@ func (c *PurchasesCancelCall) Do() error {
 		"subscriptionId": c.subscriptionId,
 		"token":          c.token,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -342,6 +362,12 @@ func (c *PurchasesGetCall) Fields(s ...googleapi.Field) *PurchasesGetCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *PurchasesGetCall) UserAgent(s string) *PurchasesGetCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *PurchasesGetCall) Do() (*SubscriptionPurchase, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -357,7 +383,11 @@ func (c *PurchasesGetCall) Do() (*SubscriptionPurchase, error) {
 		"subscriptionId": c.subscriptionId,
 		"token":          c.token,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err

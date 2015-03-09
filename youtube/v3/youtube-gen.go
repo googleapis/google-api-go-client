@@ -46,6 +46,9 @@ const (
 	// Manage your YouTube account
 	YoutubeScope = "https://www.googleapis.com/auth/youtube"
 
+	// Manage your YouTube account
+	YoutubeForceSslScope = "https://www.googleapis.com/auth/youtube.force-ssl"
+
 	// View your YouTube account
 	YoutubeReadonlyScope = "https://www.googleapis.com/auth/youtube.readonly"
 
@@ -3202,6 +3205,12 @@ func (c *ActivitiesInsertCall) Fields(s ...googleapi.Field) *ActivitiesInsertCal
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *ActivitiesInsertCall) UserAgent(s string) *ActivitiesInsertCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *ActivitiesInsertCall) Do() (*Activity, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.activity)
@@ -3220,7 +3229,11 @@ func (c *ActivitiesInsertCall) Do() (*Activity, error) {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -3257,7 +3270,8 @@ func (c *ActivitiesInsertCall) Do() (*Activity, error) {
 	//     "$ref": "Activity"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/youtube"
+	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.force-ssl"
 	//   ]
 	// }
 
@@ -3365,6 +3379,12 @@ func (c *ActivitiesListCall) Fields(s ...googleapi.Field) *ActivitiesListCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *ActivitiesListCall) UserAgent(s string) *ActivitiesListCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *ActivitiesListCall) Do() (*ActivityListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3401,7 +3421,11 @@ func (c *ActivitiesListCall) Do() (*ActivityListResponse, error) {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -3482,6 +3506,7 @@ func (c *ActivitiesListCall) Do() (*ActivityListResponse, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.force-ssl",
 	//     "https://www.googleapis.com/auth/youtube.readonly"
 	//   ]
 	// }
@@ -3575,6 +3600,12 @@ func (c *ChannelBannersInsertCall) Fields(s ...googleapi.Field) *ChannelBannersI
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *ChannelBannersInsertCall) UserAgent(s string) *ChannelBannersInsertCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *ChannelBannersInsertCall) Do() (*ChannelBannerResource, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channelbannerresource)
@@ -3621,7 +3652,11 @@ func (c *ChannelBannersInsertCall) Do() (*ChannelBannerResource, error) {
 	} else {
 		req.Header.Set("Content-Type", ctype)
 	}
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -3689,6 +3724,7 @@ func (c *ChannelBannersInsertCall) Do() (*ChannelBannerResource, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.force-ssl",
 	//     "https://www.googleapis.com/auth/youtube.upload"
 	//   ],
 	//   "supportsMediaUpload": true
@@ -3738,6 +3774,12 @@ func (c *ChannelSectionsDeleteCall) Fields(s ...googleapi.Field) *ChannelSection
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *ChannelSectionsDeleteCall) UserAgent(s string) *ChannelSectionsDeleteCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *ChannelSectionsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3753,7 +3795,11 @@ func (c *ChannelSectionsDeleteCall) Do() error {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -3786,6 +3832,7 @@ func (c *ChannelSectionsDeleteCall) Do() error {
 	//   "path": "channelSections",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.force-ssl",
 	//     "https://www.googleapis.com/auth/youtubepartner"
 	//   ]
 	// }
@@ -3864,6 +3911,12 @@ func (c *ChannelSectionsInsertCall) Fields(s ...googleapi.Field) *ChannelSection
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *ChannelSectionsInsertCall) UserAgent(s string) *ChannelSectionsInsertCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *ChannelSectionsInsertCall) Do() (*ChannelSection, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channelsection)
@@ -3888,7 +3941,11 @@ func (c *ChannelSectionsInsertCall) Do() (*ChannelSection, error) {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -3936,6 +3993,7 @@ func (c *ChannelSectionsInsertCall) Do() (*ChannelSection, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.force-ssl",
 	//     "https://www.googleapis.com/auth/youtubepartner"
 	//   ]
 	// }
@@ -4010,6 +4068,12 @@ func (c *ChannelSectionsListCall) Fields(s ...googleapi.Field) *ChannelSectionsL
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *ChannelSectionsListCall) UserAgent(s string) *ChannelSectionsListCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *ChannelSectionsListCall) Do() (*ChannelSectionListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4034,7 +4098,11 @@ func (c *ChannelSectionsListCall) Do() (*ChannelSectionListResponse, error) {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -4089,6 +4157,7 @@ func (c *ChannelSectionsListCall) Do() (*ChannelSectionListResponse, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.force-ssl",
 	//     "https://www.googleapis.com/auth/youtube.readonly",
 	//     "https://www.googleapis.com/auth/youtubepartner"
 	//   ]
@@ -4140,6 +4209,12 @@ func (c *ChannelSectionsUpdateCall) Fields(s ...googleapi.Field) *ChannelSection
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *ChannelSectionsUpdateCall) UserAgent(s string) *ChannelSectionsUpdateCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *ChannelSectionsUpdateCall) Do() (*ChannelSection, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channelsection)
@@ -4161,7 +4236,11 @@ func (c *ChannelSectionsUpdateCall) Do() (*ChannelSection, error) {
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -4204,6 +4283,7 @@ func (c *ChannelSectionsUpdateCall) Do() (*ChannelSection, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.force-ssl",
 	//     "https://www.googleapis.com/auth/youtubepartner"
 	//   ]
 	// }
@@ -4318,6 +4398,12 @@ func (c *ChannelsListCall) Fields(s ...googleapi.Field) *ChannelsListCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *ChannelsListCall) UserAgent(s string) *ChannelsListCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *ChannelsListCall) Do() (*ChannelListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4357,7 +4443,11 @@ func (c *ChannelsListCall) Do() (*ChannelListResponse, error) {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -4441,6 +4531,7 @@ func (c *ChannelsListCall) Do() (*ChannelListResponse, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.force-ssl",
 	//     "https://www.googleapis.com/auth/youtube.readonly",
 	//     "https://www.googleapis.com/auth/youtubepartner",
 	//     "https://www.googleapis.com/auth/youtubepartner-channel-audit"
@@ -4489,6 +4580,12 @@ func (c *ChannelsUpdateCall) Fields(s ...googleapi.Field) *ChannelsUpdateCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *ChannelsUpdateCall) UserAgent(s string) *ChannelsUpdateCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *ChannelsUpdateCall) Do() (*Channel, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channel)
@@ -4510,7 +4607,11 @@ func (c *ChannelsUpdateCall) Do() (*Channel, error) {
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -4553,6 +4654,7 @@ func (c *ChannelsUpdateCall) Do() (*Channel, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.force-ssl",
 	//     "https://www.googleapis.com/auth/youtubepartner"
 	//   ]
 	// }
@@ -4608,6 +4710,12 @@ func (c *GuideCategoriesListCall) Fields(s ...googleapi.Field) *GuideCategoriesL
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *GuideCategoriesListCall) UserAgent(s string) *GuideCategoriesListCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *GuideCategoriesListCall) Do() (*GuideCategoryListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4629,7 +4737,11 @@ func (c *GuideCategoriesListCall) Do() (*GuideCategoryListResponse, error) {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -4680,6 +4792,7 @@ func (c *GuideCategoriesListCall) Do() (*GuideCategoryListResponse, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.force-ssl",
 	//     "https://www.googleapis.com/auth/youtube.readonly",
 	//     "https://www.googleapis.com/auth/youtubepartner"
 	//   ]
@@ -4717,6 +4830,12 @@ func (c *I18nLanguagesListCall) Fields(s ...googleapi.Field) *I18nLanguagesListC
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *I18nLanguagesListCall) UserAgent(s string) *I18nLanguagesListCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *I18nLanguagesListCall) Do() (*I18nLanguageListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4732,7 +4851,11 @@ func (c *I18nLanguagesListCall) Do() (*I18nLanguageListResponse, error) {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -4773,6 +4896,7 @@ func (c *I18nLanguagesListCall) Do() (*I18nLanguageListResponse, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.force-ssl",
 	//     "https://www.googleapis.com/auth/youtube.readonly",
 	//     "https://www.googleapis.com/auth/youtubepartner"
 	//   ]
@@ -4810,6 +4934,12 @@ func (c *I18nRegionsListCall) Fields(s ...googleapi.Field) *I18nRegionsListCall 
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *I18nRegionsListCall) UserAgent(s string) *I18nRegionsListCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *I18nRegionsListCall) Do() (*I18nRegionListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4825,7 +4955,11 @@ func (c *I18nRegionsListCall) Do() (*I18nRegionListResponse, error) {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -4866,6 +5000,7 @@ func (c *I18nRegionsListCall) Do() (*I18nRegionListResponse, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.force-ssl",
 	//     "https://www.googleapis.com/auth/youtube.readonly",
 	//     "https://www.googleapis.com/auth/youtubepartner"
 	//   ]
@@ -4956,6 +5091,12 @@ func (c *LiveBroadcastsBindCall) Fields(s ...googleapi.Field) *LiveBroadcastsBin
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *LiveBroadcastsBindCall) UserAgent(s string) *LiveBroadcastsBindCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *LiveBroadcastsBindCall) Do() (*LiveBroadcast, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4978,7 +5119,11 @@ func (c *LiveBroadcastsBindCall) Do() (*LiveBroadcast, error) {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -5034,7 +5179,8 @@ func (c *LiveBroadcastsBindCall) Do() (*LiveBroadcast, error) {
 	//     "$ref": "LiveBroadcast"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/youtube"
+	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.force-ssl"
 	//   ]
 	// }
 
@@ -5151,6 +5297,12 @@ func (c *LiveBroadcastsControlCall) Fields(s ...googleapi.Field) *LiveBroadcasts
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *LiveBroadcastsControlCall) UserAgent(s string) *LiveBroadcastsControlCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *LiveBroadcastsControlCall) Do() (*LiveBroadcast, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5179,7 +5331,11 @@ func (c *LiveBroadcastsControlCall) Do() (*LiveBroadcast, error) {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -5247,7 +5403,8 @@ func (c *LiveBroadcastsControlCall) Do() (*LiveBroadcast, error) {
 	//     "$ref": "LiveBroadcast"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/youtube"
+	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.force-ssl"
 	//   ]
 	// }
 
@@ -5323,6 +5480,12 @@ func (c *LiveBroadcastsDeleteCall) Fields(s ...googleapi.Field) *LiveBroadcastsD
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *LiveBroadcastsDeleteCall) UserAgent(s string) *LiveBroadcastsDeleteCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *LiveBroadcastsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5341,7 +5504,11 @@ func (c *LiveBroadcastsDeleteCall) Do() error {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -5378,7 +5545,8 @@ func (c *LiveBroadcastsDeleteCall) Do() error {
 	//   },
 	//   "path": "liveBroadcasts",
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/youtube"
+	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.force-ssl"
 	//   ]
 	// }
 
@@ -5456,6 +5624,12 @@ func (c *LiveBroadcastsInsertCall) Fields(s ...googleapi.Field) *LiveBroadcastsI
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *LiveBroadcastsInsertCall) UserAgent(s string) *LiveBroadcastsInsertCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *LiveBroadcastsInsertCall) Do() (*LiveBroadcast, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.livebroadcast)
@@ -5480,7 +5654,11 @@ func (c *LiveBroadcastsInsertCall) Do() (*LiveBroadcast, error) {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -5527,7 +5705,8 @@ func (c *LiveBroadcastsInsertCall) Do() (*LiveBroadcast, error) {
 	//     "$ref": "LiveBroadcast"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/youtube"
+	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.force-ssl"
 	//   ]
 	// }
 
@@ -5647,6 +5826,12 @@ func (c *LiveBroadcastsListCall) Fields(s ...googleapi.Field) *LiveBroadcastsLis
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *LiveBroadcastsListCall) UserAgent(s string) *LiveBroadcastsListCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *LiveBroadcastsListCall) Do() (*LiveBroadcastListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5680,7 +5865,11 @@ func (c *LiveBroadcastsListCall) Do() (*LiveBroadcastListResponse, error) {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -5766,6 +5955,7 @@ func (c *LiveBroadcastsListCall) Do() (*LiveBroadcastListResponse, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.force-ssl",
 	//     "https://www.googleapis.com/auth/youtube.readonly"
 	//   ]
 	// }
@@ -5852,6 +6042,12 @@ func (c *LiveBroadcastsTransitionCall) Fields(s ...googleapi.Field) *LiveBroadca
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *LiveBroadcastsTransitionCall) UserAgent(s string) *LiveBroadcastsTransitionCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *LiveBroadcastsTransitionCall) Do() (*LiveBroadcast, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5872,7 +6068,11 @@ func (c *LiveBroadcastsTransitionCall) Do() (*LiveBroadcast, error) {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -5940,7 +6140,8 @@ func (c *LiveBroadcastsTransitionCall) Do() (*LiveBroadcast, error) {
 	//     "$ref": "LiveBroadcast"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/youtube"
+	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.force-ssl"
 	//   ]
 	// }
 
@@ -6020,6 +6221,12 @@ func (c *LiveBroadcastsUpdateCall) Fields(s ...googleapi.Field) *LiveBroadcastsU
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *LiveBroadcastsUpdateCall) UserAgent(s string) *LiveBroadcastsUpdateCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *LiveBroadcastsUpdateCall) Do() (*LiveBroadcast, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.livebroadcast)
@@ -6044,7 +6251,11 @@ func (c *LiveBroadcastsUpdateCall) Do() (*LiveBroadcast, error) {
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -6091,7 +6302,8 @@ func (c *LiveBroadcastsUpdateCall) Do() (*LiveBroadcast, error) {
 	//     "$ref": "LiveBroadcast"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/youtube"
+	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.force-ssl"
 	//   ]
 	// }
 
@@ -6167,6 +6379,12 @@ func (c *LiveStreamsDeleteCall) Fields(s ...googleapi.Field) *LiveStreamsDeleteC
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *LiveStreamsDeleteCall) UserAgent(s string) *LiveStreamsDeleteCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *LiveStreamsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -6185,7 +6403,11 @@ func (c *LiveStreamsDeleteCall) Do() error {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -6222,7 +6444,8 @@ func (c *LiveStreamsDeleteCall) Do() error {
 	//   },
 	//   "path": "liveStreams",
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/youtube"
+	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.force-ssl"
 	//   ]
 	// }
 
@@ -6302,6 +6525,12 @@ func (c *LiveStreamsInsertCall) Fields(s ...googleapi.Field) *LiveStreamsInsertC
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *LiveStreamsInsertCall) UserAgent(s string) *LiveStreamsInsertCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *LiveStreamsInsertCall) Do() (*LiveStream, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.livestream)
@@ -6326,7 +6555,11 @@ func (c *LiveStreamsInsertCall) Do() (*LiveStream, error) {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -6373,7 +6606,8 @@ func (c *LiveStreamsInsertCall) Do() (*LiveStream, error) {
 	//     "$ref": "LiveStream"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/youtube"
+	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.force-ssl"
 	//   ]
 	// }
 
@@ -6486,6 +6720,12 @@ func (c *LiveStreamsListCall) Fields(s ...googleapi.Field) *LiveStreamsListCall 
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *LiveStreamsListCall) UserAgent(s string) *LiveStreamsListCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *LiveStreamsListCall) Do() (*LiveStreamListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -6516,7 +6756,11 @@ func (c *LiveStreamsListCall) Do() (*LiveStreamListResponse, error) {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -6585,6 +6829,7 @@ func (c *LiveStreamsListCall) Do() (*LiveStreamListResponse, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.force-ssl",
 	//     "https://www.googleapis.com/auth/youtube.readonly"
 	//   ]
 	// }
@@ -6665,6 +6910,12 @@ func (c *LiveStreamsUpdateCall) Fields(s ...googleapi.Field) *LiveStreamsUpdateC
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *LiveStreamsUpdateCall) UserAgent(s string) *LiveStreamsUpdateCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *LiveStreamsUpdateCall) Do() (*LiveStream, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.livestream)
@@ -6689,7 +6940,11 @@ func (c *LiveStreamsUpdateCall) Do() (*LiveStream, error) {
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -6736,7 +6991,8 @@ func (c *LiveStreamsUpdateCall) Do() (*LiveStream, error) {
 	//     "$ref": "LiveStream"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/youtube"
+	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.force-ssl"
 	//   ]
 	// }
 
@@ -6765,6 +7021,12 @@ func (c *PlaylistItemsDeleteCall) Fields(s ...googleapi.Field) *PlaylistItemsDel
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *PlaylistItemsDeleteCall) UserAgent(s string) *PlaylistItemsDeleteCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *PlaylistItemsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -6777,7 +7039,11 @@ func (c *PlaylistItemsDeleteCall) Do() error {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -6805,6 +7071,7 @@ func (c *PlaylistItemsDeleteCall) Do() error {
 	//   "path": "playlistItems",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.force-ssl",
 	//     "https://www.googleapis.com/auth/youtubepartner"
 	//   ]
 	// }
@@ -6855,6 +7122,12 @@ func (c *PlaylistItemsInsertCall) Fields(s ...googleapi.Field) *PlaylistItemsIns
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *PlaylistItemsInsertCall) UserAgent(s string) *PlaylistItemsInsertCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *PlaylistItemsInsertCall) Do() (*PlaylistItem, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.playlistitem)
@@ -6876,7 +7149,11 @@ func (c *PlaylistItemsInsertCall) Do() (*PlaylistItem, error) {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -6919,6 +7196,7 @@ func (c *PlaylistItemsInsertCall) Do() (*PlaylistItem, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.force-ssl",
 	//     "https://www.googleapis.com/auth/youtubepartner"
 	//   ]
 	// }
@@ -7012,6 +7290,12 @@ func (c *PlaylistItemsListCall) Fields(s ...googleapi.Field) *PlaylistItemsListC
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *PlaylistItemsListCall) UserAgent(s string) *PlaylistItemsListCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *PlaylistItemsListCall) Do() (*PlaylistItemListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -7042,7 +7326,11 @@ func (c *PlaylistItemsListCall) Do() (*PlaylistItemListResponse, error) {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -7111,6 +7399,7 @@ func (c *PlaylistItemsListCall) Do() (*PlaylistItemListResponse, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.force-ssl",
 	//     "https://www.googleapis.com/auth/youtube.readonly",
 	//     "https://www.googleapis.com/auth/youtubepartner"
 	//   ],
@@ -7145,6 +7434,12 @@ func (c *PlaylistItemsUpdateCall) Fields(s ...googleapi.Field) *PlaylistItemsUpd
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *PlaylistItemsUpdateCall) UserAgent(s string) *PlaylistItemsUpdateCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *PlaylistItemsUpdateCall) Do() (*PlaylistItem, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.playlistitem)
@@ -7163,7 +7458,11 @@ func (c *PlaylistItemsUpdateCall) Do() (*PlaylistItem, error) {
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -7201,6 +7500,7 @@ func (c *PlaylistItemsUpdateCall) Do() (*PlaylistItem, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.force-ssl",
 	//     "https://www.googleapis.com/auth/youtubepartner"
 	//   ]
 	// }
@@ -7249,6 +7549,12 @@ func (c *PlaylistsDeleteCall) Fields(s ...googleapi.Field) *PlaylistsDeleteCall 
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *PlaylistsDeleteCall) UserAgent(s string) *PlaylistsDeleteCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *PlaylistsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -7264,7 +7570,11 @@ func (c *PlaylistsDeleteCall) Do() error {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -7297,6 +7607,7 @@ func (c *PlaylistsDeleteCall) Do() error {
 	//   "path": "playlists",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.force-ssl",
 	//     "https://www.googleapis.com/auth/youtubepartner"
 	//   ]
 	// }
@@ -7375,6 +7686,12 @@ func (c *PlaylistsInsertCall) Fields(s ...googleapi.Field) *PlaylistsInsertCall 
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *PlaylistsInsertCall) UserAgent(s string) *PlaylistsInsertCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *PlaylistsInsertCall) Do() (*Playlist, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.playlist)
@@ -7399,7 +7716,11 @@ func (c *PlaylistsInsertCall) Do() (*Playlist, error) {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -7447,6 +7768,7 @@ func (c *PlaylistsInsertCall) Do() (*Playlist, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.force-ssl",
 	//     "https://www.googleapis.com/auth/youtubepartner"
 	//   ]
 	// }
@@ -7568,6 +7890,12 @@ func (c *PlaylistsListCall) Fields(s ...googleapi.Field) *PlaylistsListCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *PlaylistsListCall) UserAgent(s string) *PlaylistsListCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *PlaylistsListCall) Do() (*PlaylistListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -7601,7 +7929,11 @@ func (c *PlaylistsListCall) Do() (*PlaylistListResponse, error) {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -7675,6 +8007,7 @@ func (c *PlaylistsListCall) Do() (*PlaylistListResponse, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.force-ssl",
 	//     "https://www.googleapis.com/auth/youtube.readonly",
 	//     "https://www.googleapis.com/auth/youtubepartner"
 	//   ]
@@ -7727,6 +8060,12 @@ func (c *PlaylistsUpdateCall) Fields(s ...googleapi.Field) *PlaylistsUpdateCall 
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *PlaylistsUpdateCall) UserAgent(s string) *PlaylistsUpdateCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *PlaylistsUpdateCall) Do() (*Playlist, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.playlist)
@@ -7748,7 +8087,11 @@ func (c *PlaylistsUpdateCall) Do() (*Playlist, error) {
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -7791,6 +8134,7 @@ func (c *PlaylistsUpdateCall) Do() (*Playlist, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.force-ssl",
 	//     "https://www.googleapis.com/auth/youtubepartner"
 	//   ]
 	// }
@@ -8095,6 +8439,12 @@ func (c *SearchListCall) Fields(s ...googleapi.Field) *SearchListCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *SearchListCall) UserAgent(s string) *SearchListCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *SearchListCall) Do() (*SearchListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -8194,7 +8544,11 @@ func (c *SearchListCall) Do() (*SearchListResponse, error) {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -8504,6 +8858,7 @@ func (c *SearchListCall) Do() (*SearchListResponse, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.force-ssl",
 	//     "https://www.googleapis.com/auth/youtube.readonly",
 	//     "https://www.googleapis.com/auth/youtubepartner"
 	//   ]
@@ -8534,6 +8889,12 @@ func (c *SubscriptionsDeleteCall) Fields(s ...googleapi.Field) *SubscriptionsDel
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *SubscriptionsDeleteCall) UserAgent(s string) *SubscriptionsDeleteCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *SubscriptionsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -8546,7 +8907,11 @@ func (c *SubscriptionsDeleteCall) Do() error {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -8574,6 +8939,7 @@ func (c *SubscriptionsDeleteCall) Do() error {
 	//   "path": "subscriptions",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.force-ssl",
 	//     "https://www.googleapis.com/auth/youtubepartner"
 	//   ]
 	// }
@@ -8605,6 +8971,12 @@ func (c *SubscriptionsInsertCall) Fields(s ...googleapi.Field) *SubscriptionsIns
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *SubscriptionsInsertCall) UserAgent(s string) *SubscriptionsInsertCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *SubscriptionsInsertCall) Do() (*Subscription, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.subscription)
@@ -8623,7 +8995,11 @@ func (c *SubscriptionsInsertCall) Do() (*Subscription, error) {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -8661,6 +9037,7 @@ func (c *SubscriptionsInsertCall) Do() (*Subscription, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.force-ssl",
 	//     "https://www.googleapis.com/auth/youtubepartner"
 	//   ]
 	// }
@@ -8804,6 +9181,12 @@ func (c *SubscriptionsListCall) Fields(s ...googleapi.Field) *SubscriptionsListC
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *SubscriptionsListCall) UserAgent(s string) *SubscriptionsListCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *SubscriptionsListCall) Do() (*SubscriptionListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -8846,7 +9229,11 @@ func (c *SubscriptionsListCall) Do() (*SubscriptionListResponse, error) {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -8946,6 +9333,7 @@ func (c *SubscriptionsListCall) Do() (*SubscriptionListResponse, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.force-ssl",
 	//     "https://www.googleapis.com/auth/youtube.readonly",
 	//     "https://www.googleapis.com/auth/youtubepartner"
 	//   ]
@@ -9025,6 +9413,12 @@ func (c *ThumbnailsSetCall) Fields(s ...googleapi.Field) *ThumbnailsSetCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *ThumbnailsSetCall) UserAgent(s string) *ThumbnailsSetCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *ThumbnailsSetCall) Do() (*ThumbnailSetResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -9069,7 +9463,11 @@ func (c *ThumbnailsSetCall) Do() (*ThumbnailSetResponse, error) {
 	} else {
 		req.Header.Set("Content-Type", ctype)
 	}
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -9143,6 +9541,7 @@ func (c *ThumbnailsSetCall) Do() (*ThumbnailSetResponse, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.force-ssl",
 	//     "https://www.googleapis.com/auth/youtube.upload",
 	//     "https://www.googleapis.com/auth/youtubepartner"
 	//   ],
@@ -9199,6 +9598,12 @@ func (c *VideoCategoriesListCall) Fields(s ...googleapi.Field) *VideoCategoriesL
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *VideoCategoriesListCall) UserAgent(s string) *VideoCategoriesListCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *VideoCategoriesListCall) Do() (*VideoCategoryListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -9220,7 +9625,11 @@ func (c *VideoCategoriesListCall) Do() (*VideoCategoryListResponse, error) {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -9271,6 +9680,7 @@ func (c *VideoCategoriesListCall) Do() (*VideoCategoryListResponse, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.force-ssl",
 	//     "https://www.googleapis.com/auth/youtube.readonly",
 	//     "https://www.googleapis.com/auth/youtubepartner"
 	//   ]
@@ -9320,6 +9730,12 @@ func (c *VideosDeleteCall) Fields(s ...googleapi.Field) *VideosDeleteCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *VideosDeleteCall) UserAgent(s string) *VideosDeleteCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *VideosDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -9335,7 +9751,11 @@ func (c *VideosDeleteCall) Do() error {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -9368,6 +9788,7 @@ func (c *VideosDeleteCall) Do() error {
 	//   "path": "videos",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.force-ssl",
 	//     "https://www.googleapis.com/auth/youtubepartner"
 	//   ]
 	// }
@@ -9417,6 +9838,12 @@ func (c *VideosGetRatingCall) Fields(s ...googleapi.Field) *VideosGetRatingCall 
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *VideosGetRatingCall) UserAgent(s string) *VideosGetRatingCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *VideosGetRatingCall) Do() (*VideoGetRatingResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -9432,7 +9859,11 @@ func (c *VideosGetRatingCall) Do() (*VideoGetRatingResponse, error) {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -9472,6 +9903,7 @@ func (c *VideosGetRatingCall) Do() (*VideoGetRatingResponse, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.force-ssl",
 	//     "https://www.googleapis.com/auth/youtubepartner"
 	//   ]
 	// }
@@ -9608,6 +10040,12 @@ func (c *VideosInsertCall) Fields(s ...googleapi.Field) *VideosInsertCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *VideosInsertCall) UserAgent(s string) *VideosInsertCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *VideosInsertCall) Do() (*Video, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.video)
@@ -9667,7 +10105,11 @@ func (c *VideosInsertCall) Do() (*Video, error) {
 	} else {
 		req.Header.Set("Content-Type", ctype)
 	}
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -9764,6 +10206,7 @@ func (c *VideosInsertCall) Do() (*Video, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.force-ssl",
 	//     "https://www.googleapis.com/auth/youtube.upload",
 	//     "https://www.googleapis.com/auth/youtubepartner"
 	//   ],
@@ -9903,6 +10346,12 @@ func (c *VideosListCall) Fields(s ...googleapi.Field) *VideosListCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *VideosListCall) UserAgent(s string) *VideosListCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *VideosListCall) Do() (*VideoListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -9945,7 +10394,11 @@ func (c *VideosListCall) Do() (*VideoListResponse, error) {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -10049,6 +10502,7 @@ func (c *VideosListCall) Do() (*VideoListResponse, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.force-ssl",
 	//     "https://www.googleapis.com/auth/youtube.readonly",
 	//     "https://www.googleapis.com/auth/youtubepartner"
 	//   ]
@@ -10101,6 +10555,12 @@ func (c *VideosRateCall) Fields(s ...googleapi.Field) *VideosRateCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *VideosRateCall) UserAgent(s string) *VideosRateCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *VideosRateCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -10117,7 +10577,11 @@ func (c *VideosRateCall) Do() error {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -10167,6 +10631,7 @@ func (c *VideosRateCall) Do() error {
 	//   "path": "videos/rate",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.force-ssl",
 	//     "https://www.googleapis.com/auth/youtubepartner"
 	//   ]
 	// }
@@ -10217,6 +10682,12 @@ func (c *VideosUpdateCall) Fields(s ...googleapi.Field) *VideosUpdateCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *VideosUpdateCall) UserAgent(s string) *VideosUpdateCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *VideosUpdateCall) Do() (*Video, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.video)
@@ -10238,7 +10709,11 @@ func (c *VideosUpdateCall) Do() (*Video, error) {
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -10281,6 +10756,7 @@ func (c *VideosUpdateCall) Do() (*Video, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.force-ssl",
 	//     "https://www.googleapis.com/auth/youtubepartner"
 	//   ]
 	// }
@@ -10360,6 +10836,12 @@ func (c *WatermarksSetCall) Fields(s ...googleapi.Field) *WatermarksSetCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *WatermarksSetCall) UserAgent(s string) *WatermarksSetCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *WatermarksSetCall) Do() error {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.invideobranding)
@@ -10407,7 +10889,11 @@ func (c *WatermarksSetCall) Do() error {
 	} else {
 		req.Header.Set("Content-Type", ctype)
 	}
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -10477,6 +10963,7 @@ func (c *WatermarksSetCall) Do() error {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.force-ssl",
 	//     "https://www.googleapis.com/auth/youtube.upload",
 	//     "https://www.googleapis.com/auth/youtubepartner"
 	//   ],
@@ -10523,6 +11010,12 @@ func (c *WatermarksUnsetCall) Fields(s ...googleapi.Field) *WatermarksUnsetCall 
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *WatermarksUnsetCall) UserAgent(s string) *WatermarksUnsetCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *WatermarksUnsetCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -10538,7 +11031,11 @@ func (c *WatermarksUnsetCall) Do() error {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -10571,6 +11068,7 @@ func (c *WatermarksUnsetCall) Do() error {
 	//   "path": "watermarks/unset",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.force-ssl",
 	//     "https://www.googleapis.com/auth/youtubepartner"
 	//   ]
 	// }

@@ -1340,6 +1340,12 @@ func (c *AspsDeleteCall) Fields(s ...googleapi.Field) *AspsDeleteCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *AspsDeleteCall) UserAgent(s string) *AspsDeleteCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *AspsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1354,7 +1360,11 @@ func (c *AspsDeleteCall) Do() error {
 		"userKey": c.userKey,
 		"codeId":  strconv.FormatInt(c.codeId, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -1420,6 +1430,12 @@ func (c *AspsGetCall) Fields(s ...googleapi.Field) *AspsGetCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *AspsGetCall) UserAgent(s string) *AspsGetCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *AspsGetCall) Do() (*Asp, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1434,7 +1450,11 @@ func (c *AspsGetCall) Do() (*Asp, error) {
 		"userKey": c.userKey,
 		"codeId":  strconv.FormatInt(c.codeId, 10),
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1505,6 +1525,12 @@ func (c *AspsListCall) Fields(s ...googleapi.Field) *AspsListCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *AspsListCall) UserAgent(s string) *AspsListCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *AspsListCall) Do() (*Asps, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1518,7 +1544,11 @@ func (c *AspsListCall) Do() (*Asps, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"userKey": c.userKey,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1581,6 +1611,12 @@ func (c *ChannelsStopCall) Fields(s ...googleapi.Field) *ChannelsStopCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *ChannelsStopCall) UserAgent(s string) *ChannelsStopCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *ChannelsStopCall) Do() error {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channel)
@@ -1598,7 +1634,11 @@ func (c *ChannelsStopCall) Do() error {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -1659,6 +1699,12 @@ func (c *ChromeosdevicesGetCall) Fields(s ...googleapi.Field) *ChromeosdevicesGe
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *ChromeosdevicesGetCall) UserAgent(s string) *ChromeosdevicesGetCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *ChromeosdevicesGetCall) Do() (*ChromeOsDevice, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1676,7 +1722,11 @@ func (c *ChromeosdevicesGetCall) Do() (*ChromeOsDevice, error) {
 		"customerId": c.customerId,
 		"deviceId":   c.deviceId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1805,6 +1855,12 @@ func (c *ChromeosdevicesListCall) Fields(s ...googleapi.Field) *ChromeosdevicesL
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *ChromeosdevicesListCall) UserAgent(s string) *ChromeosdevicesListCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *ChromeosdevicesListCall) Do() (*ChromeOsDevices, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1836,7 +1892,11 @@ func (c *ChromeosdevicesListCall) Do() (*ChromeOsDevices, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"customerId": c.customerId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1977,6 +2037,12 @@ func (c *ChromeosdevicesPatchCall) Fields(s ...googleapi.Field) *Chromeosdevices
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *ChromeosdevicesPatchCall) UserAgent(s string) *ChromeosdevicesPatchCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *ChromeosdevicesPatchCall) Do() (*ChromeOsDevice, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.chromeosdevice)
@@ -2000,7 +2066,11 @@ func (c *ChromeosdevicesPatchCall) Do() (*ChromeOsDevice, error) {
 		"deviceId":   c.deviceId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -2097,6 +2167,12 @@ func (c *ChromeosdevicesUpdateCall) Fields(s ...googleapi.Field) *Chromeosdevice
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *ChromeosdevicesUpdateCall) UserAgent(s string) *ChromeosdevicesUpdateCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *ChromeosdevicesUpdateCall) Do() (*ChromeOsDevice, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.chromeosdevice)
@@ -2120,7 +2196,11 @@ func (c *ChromeosdevicesUpdateCall) Do() (*ChromeOsDevice, error) {
 		"deviceId":   c.deviceId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -2206,6 +2286,12 @@ func (c *GroupsDeleteCall) Fields(s ...googleapi.Field) *GroupsDeleteCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *GroupsDeleteCall) UserAgent(s string) *GroupsDeleteCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *GroupsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2219,7 +2305,11 @@ func (c *GroupsDeleteCall) Do() error {
 	googleapi.Expand(req.URL, map[string]string{
 		"groupKey": c.groupKey,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -2275,6 +2365,12 @@ func (c *GroupsGetCall) Fields(s ...googleapi.Field) *GroupsGetCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *GroupsGetCall) UserAgent(s string) *GroupsGetCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *GroupsGetCall) Do() (*Group, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2288,7 +2384,11 @@ func (c *GroupsGetCall) Do() (*Group, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"groupKey": c.groupKey,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -2352,6 +2452,12 @@ func (c *GroupsInsertCall) Fields(s ...googleapi.Field) *GroupsInsertCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *GroupsInsertCall) UserAgent(s string) *GroupsInsertCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *GroupsInsertCall) Do() (*Group, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.group)
@@ -2369,7 +2475,11 @@ func (c *GroupsInsertCall) Do() (*Group, error) {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -2460,6 +2570,12 @@ func (c *GroupsListCall) Fields(s ...googleapi.Field) *GroupsListCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *GroupsListCall) UserAgent(s string) *GroupsListCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *GroupsListCall) Do() (*Groups, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2486,7 +2602,11 @@ func (c *GroupsListCall) Do() (*Groups, error) {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -2570,6 +2690,12 @@ func (c *GroupsPatchCall) Fields(s ...googleapi.Field) *GroupsPatchCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *GroupsPatchCall) UserAgent(s string) *GroupsPatchCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *GroupsPatchCall) Do() (*Group, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.group)
@@ -2589,7 +2715,11 @@ func (c *GroupsPatchCall) Do() (*Group, error) {
 		"groupKey": c.groupKey,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -2657,6 +2787,12 @@ func (c *GroupsUpdateCall) Fields(s ...googleapi.Field) *GroupsUpdateCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *GroupsUpdateCall) UserAgent(s string) *GroupsUpdateCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *GroupsUpdateCall) Do() (*Group, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.group)
@@ -2676,7 +2812,11 @@ func (c *GroupsUpdateCall) Do() (*Group, error) {
 		"groupKey": c.groupKey,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -2744,6 +2884,12 @@ func (c *GroupsAliasesDeleteCall) Fields(s ...googleapi.Field) *GroupsAliasesDel
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *GroupsAliasesDeleteCall) UserAgent(s string) *GroupsAliasesDeleteCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *GroupsAliasesDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2758,7 +2904,11 @@ func (c *GroupsAliasesDeleteCall) Do() error {
 		"groupKey": c.groupKey,
 		"alias":    c.alias,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -2823,6 +2973,12 @@ func (c *GroupsAliasesInsertCall) Fields(s ...googleapi.Field) *GroupsAliasesIns
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *GroupsAliasesInsertCall) UserAgent(s string) *GroupsAliasesInsertCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *GroupsAliasesInsertCall) Do() (*Alias, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.alias)
@@ -2842,7 +2998,11 @@ func (c *GroupsAliasesInsertCall) Do() (*Alias, error) {
 		"groupKey": c.groupKey,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -2908,6 +3068,12 @@ func (c *GroupsAliasesListCall) Fields(s ...googleapi.Field) *GroupsAliasesListC
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *GroupsAliasesListCall) UserAgent(s string) *GroupsAliasesListCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *GroupsAliasesListCall) Do() (*Aliases, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2921,7 +3087,11 @@ func (c *GroupsAliasesListCall) Do() (*Aliases, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"groupKey": c.groupKey,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -2988,6 +3158,12 @@ func (c *MembersDeleteCall) Fields(s ...googleapi.Field) *MembersDeleteCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *MembersDeleteCall) UserAgent(s string) *MembersDeleteCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *MembersDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3002,7 +3178,11 @@ func (c *MembersDeleteCall) Do() error {
 		"groupKey":  c.groupKey,
 		"memberKey": c.memberKey,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -3068,6 +3248,12 @@ func (c *MembersGetCall) Fields(s ...googleapi.Field) *MembersGetCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *MembersGetCall) UserAgent(s string) *MembersGetCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *MembersGetCall) Do() (*Member, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3082,7 +3268,11 @@ func (c *MembersGetCall) Do() (*Member, error) {
 		"groupKey":  c.groupKey,
 		"memberKey": c.memberKey,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -3157,6 +3347,12 @@ func (c *MembersInsertCall) Fields(s ...googleapi.Field) *MembersInsertCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *MembersInsertCall) UserAgent(s string) *MembersInsertCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *MembersInsertCall) Do() (*Member, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.member)
@@ -3176,7 +3372,11 @@ func (c *MembersInsertCall) Do() (*Member, error) {
 		"groupKey": c.groupKey,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -3264,6 +3464,12 @@ func (c *MembersListCall) Fields(s ...googleapi.Field) *MembersListCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *MembersListCall) UserAgent(s string) *MembersListCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *MembersListCall) Do() (*Members, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3286,7 +3492,11 @@ func (c *MembersListCall) Do() (*Members, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"groupKey": c.groupKey,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -3374,6 +3584,12 @@ func (c *MembersPatchCall) Fields(s ...googleapi.Field) *MembersPatchCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *MembersPatchCall) UserAgent(s string) *MembersPatchCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *MembersPatchCall) Do() (*Member, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.member)
@@ -3394,7 +3610,11 @@ func (c *MembersPatchCall) Do() (*Member, error) {
 		"memberKey": c.memberKey,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -3472,6 +3692,12 @@ func (c *MembersUpdateCall) Fields(s ...googleapi.Field) *MembersUpdateCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *MembersUpdateCall) UserAgent(s string) *MembersUpdateCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *MembersUpdateCall) Do() (*Member, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.member)
@@ -3492,7 +3718,11 @@ func (c *MembersUpdateCall) Do() (*Member, error) {
 		"memberKey": c.memberKey,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -3570,6 +3800,12 @@ func (c *MobiledevicesActionCall) Fields(s ...googleapi.Field) *MobiledevicesAct
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *MobiledevicesActionCall) UserAgent(s string) *MobiledevicesActionCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *MobiledevicesActionCall) Do() error {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.mobiledeviceaction)
@@ -3590,7 +3826,11 @@ func (c *MobiledevicesActionCall) Do() error {
 		"resourceId": c.resourceId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -3659,6 +3899,12 @@ func (c *MobiledevicesDeleteCall) Fields(s ...googleapi.Field) *MobiledevicesDel
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *MobiledevicesDeleteCall) UserAgent(s string) *MobiledevicesDeleteCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *MobiledevicesDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3673,7 +3919,11 @@ func (c *MobiledevicesDeleteCall) Do() error {
 		"customerId": c.customerId,
 		"resourceId": c.resourceId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -3745,6 +3995,12 @@ func (c *MobiledevicesGetCall) Fields(s ...googleapi.Field) *MobiledevicesGetCal
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *MobiledevicesGetCall) UserAgent(s string) *MobiledevicesGetCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *MobiledevicesGetCall) Do() (*MobileDevice, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3762,7 +4018,11 @@ func (c *MobiledevicesGetCall) Do() (*MobileDevice, error) {
 		"customerId": c.customerId,
 		"resourceId": c.resourceId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -3891,6 +4151,12 @@ func (c *MobiledevicesListCall) Fields(s ...googleapi.Field) *MobiledevicesListC
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *MobiledevicesListCall) UserAgent(s string) *MobiledevicesListCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *MobiledevicesListCall) Do() (*MobileDevices, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3922,7 +4188,11 @@ func (c *MobiledevicesListCall) Do() (*MobileDevices, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"customerId": c.customerId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -4057,6 +4327,12 @@ func (c *NotificationsDeleteCall) Fields(s ...googleapi.Field) *NotificationsDel
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *NotificationsDeleteCall) UserAgent(s string) *NotificationsDeleteCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *NotificationsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4071,7 +4347,11 @@ func (c *NotificationsDeleteCall) Do() error {
 		"customer":       c.customer,
 		"notificationId": c.notificationId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -4136,6 +4416,12 @@ func (c *NotificationsGetCall) Fields(s ...googleapi.Field) *NotificationsGetCal
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *NotificationsGetCall) UserAgent(s string) *NotificationsGetCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *NotificationsGetCall) Do() (*Notification, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4150,7 +4436,11 @@ func (c *NotificationsGetCall) Do() (*Notification, error) {
 		"customer":       c.customer,
 		"notificationId": c.notificationId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -4242,6 +4532,12 @@ func (c *NotificationsListCall) Fields(s ...googleapi.Field) *NotificationsListC
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *NotificationsListCall) UserAgent(s string) *NotificationsListCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *NotificationsListCall) Do() (*Notifications, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4264,7 +4560,11 @@ func (c *NotificationsListCall) Do() (*Notifications, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"customer": c.customer,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -4347,6 +4647,12 @@ func (c *NotificationsPatchCall) Fields(s ...googleapi.Field) *NotificationsPatc
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *NotificationsPatchCall) UserAgent(s string) *NotificationsPatchCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *NotificationsPatchCall) Do() (*Notification, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.notification)
@@ -4367,7 +4673,11 @@ func (c *NotificationsPatchCall) Do() (*Notification, error) {
 		"notificationId": c.notificationId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -4444,6 +4754,12 @@ func (c *NotificationsUpdateCall) Fields(s ...googleapi.Field) *NotificationsUpd
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *NotificationsUpdateCall) UserAgent(s string) *NotificationsUpdateCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *NotificationsUpdateCall) Do() (*Notification, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.notification)
@@ -4464,7 +4780,11 @@ func (c *NotificationsUpdateCall) Do() (*Notification, error) {
 		"notificationId": c.notificationId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -4539,6 +4859,12 @@ func (c *OrgunitsDeleteCall) Fields(s ...googleapi.Field) *OrgunitsDeleteCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *OrgunitsDeleteCall) UserAgent(s string) *OrgunitsDeleteCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *OrgunitsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4553,7 +4879,11 @@ func (c *OrgunitsDeleteCall) Do() error {
 		"customerId":  c.customerId,
 		"orgUnitPath": c.orgUnitPath[0],
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -4619,6 +4949,12 @@ func (c *OrgunitsGetCall) Fields(s ...googleapi.Field) *OrgunitsGetCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *OrgunitsGetCall) UserAgent(s string) *OrgunitsGetCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *OrgunitsGetCall) Do() (*OrgUnit, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4633,7 +4969,11 @@ func (c *OrgunitsGetCall) Do() (*OrgUnit, error) {
 		"customerId":  c.customerId,
 		"orgUnitPath": c.orgUnitPath[0],
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -4707,6 +5047,12 @@ func (c *OrgunitsInsertCall) Fields(s ...googleapi.Field) *OrgunitsInsertCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *OrgunitsInsertCall) UserAgent(s string) *OrgunitsInsertCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *OrgunitsInsertCall) Do() (*OrgUnit, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.orgunit)
@@ -4726,7 +5072,11 @@ func (c *OrgunitsInsertCall) Do() (*OrgUnit, error) {
 		"customerId": c.customerId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -4806,6 +5156,12 @@ func (c *OrgunitsListCall) Fields(s ...googleapi.Field) *OrgunitsListCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *OrgunitsListCall) UserAgent(s string) *OrgunitsListCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *OrgunitsListCall) Do() (*OrgUnits, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4825,7 +5181,11 @@ func (c *OrgunitsListCall) Do() (*OrgUnits, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"customerId": c.customerId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -4913,6 +5273,12 @@ func (c *OrgunitsPatchCall) Fields(s ...googleapi.Field) *OrgunitsPatchCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *OrgunitsPatchCall) UserAgent(s string) *OrgunitsPatchCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *OrgunitsPatchCall) Do() (*OrgUnit, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.orgunit)
@@ -4933,7 +5299,11 @@ func (c *OrgunitsPatchCall) Do() (*OrgUnit, error) {
 		"orgUnitPath": c.orgUnitPath[0],
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -5011,6 +5381,12 @@ func (c *OrgunitsUpdateCall) Fields(s ...googleapi.Field) *OrgunitsUpdateCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *OrgunitsUpdateCall) UserAgent(s string) *OrgunitsUpdateCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *OrgunitsUpdateCall) Do() (*OrgUnit, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.orgunit)
@@ -5031,7 +5407,11 @@ func (c *OrgunitsUpdateCall) Do() (*OrgUnit, error) {
 		"orgUnitPath": c.orgUnitPath[0],
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -5107,6 +5487,12 @@ func (c *SchemasDeleteCall) Fields(s ...googleapi.Field) *SchemasDeleteCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *SchemasDeleteCall) UserAgent(s string) *SchemasDeleteCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *SchemasDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5121,7 +5507,11 @@ func (c *SchemasDeleteCall) Do() error {
 		"customerId": c.customerId,
 		"schemaKey":  c.schemaKey,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -5186,6 +5576,12 @@ func (c *SchemasGetCall) Fields(s ...googleapi.Field) *SchemasGetCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *SchemasGetCall) UserAgent(s string) *SchemasGetCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *SchemasGetCall) Do() (*Schema, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5200,7 +5596,11 @@ func (c *SchemasGetCall) Do() (*Schema, error) {
 		"customerId": c.customerId,
 		"schemaKey":  c.schemaKey,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -5273,6 +5673,12 @@ func (c *SchemasInsertCall) Fields(s ...googleapi.Field) *SchemasInsertCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *SchemasInsertCall) UserAgent(s string) *SchemasInsertCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *SchemasInsertCall) Do() (*Schema, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.schema)
@@ -5292,7 +5698,11 @@ func (c *SchemasInsertCall) Do() (*Schema, error) {
 		"customerId": c.customerId,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -5358,6 +5768,12 @@ func (c *SchemasListCall) Fields(s ...googleapi.Field) *SchemasListCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *SchemasListCall) UserAgent(s string) *SchemasListCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *SchemasListCall) Do() (*Schemas, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5371,7 +5787,11 @@ func (c *SchemasListCall) Do() (*Schemas, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"customerId": c.customerId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -5439,6 +5859,12 @@ func (c *SchemasPatchCall) Fields(s ...googleapi.Field) *SchemasPatchCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *SchemasPatchCall) UserAgent(s string) *SchemasPatchCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *SchemasPatchCall) Do() (*Schema, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.schema)
@@ -5459,7 +5885,11 @@ func (c *SchemasPatchCall) Do() (*Schema, error) {
 		"schemaKey":  c.schemaKey,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -5536,6 +5966,12 @@ func (c *SchemasUpdateCall) Fields(s ...googleapi.Field) *SchemasUpdateCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *SchemasUpdateCall) UserAgent(s string) *SchemasUpdateCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *SchemasUpdateCall) Do() (*Schema, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.schema)
@@ -5556,7 +5992,11 @@ func (c *SchemasUpdateCall) Do() (*Schema, error) {
 		"schemaKey":  c.schemaKey,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -5631,6 +6071,12 @@ func (c *TokensDeleteCall) Fields(s ...googleapi.Field) *TokensDeleteCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *TokensDeleteCall) UserAgent(s string) *TokensDeleteCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *TokensDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5645,7 +6091,11 @@ func (c *TokensDeleteCall) Do() error {
 		"userKey":  c.userKey,
 		"clientId": c.clientId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -5710,6 +6160,12 @@ func (c *TokensGetCall) Fields(s ...googleapi.Field) *TokensGetCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *TokensGetCall) UserAgent(s string) *TokensGetCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *TokensGetCall) Do() (*Token, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5724,7 +6180,11 @@ func (c *TokensGetCall) Do() (*Token, error) {
 		"userKey":  c.userKey,
 		"clientId": c.clientId,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -5795,6 +6255,12 @@ func (c *TokensListCall) Fields(s ...googleapi.Field) *TokensListCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *TokensListCall) UserAgent(s string) *TokensListCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *TokensListCall) Do() (*Tokens, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5808,7 +6274,11 @@ func (c *TokensListCall) Do() (*Tokens, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"userKey": c.userKey,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -5871,6 +6341,12 @@ func (c *UsersDeleteCall) Fields(s ...googleapi.Field) *UsersDeleteCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *UsersDeleteCall) UserAgent(s string) *UsersDeleteCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *UsersDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5884,7 +6360,11 @@ func (c *UsersDeleteCall) Do() error {
 	googleapi.Expand(req.URL, map[string]string{
 		"userKey": c.userKey,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -5962,6 +6442,12 @@ func (c *UsersGetCall) Fields(s ...googleapi.Field) *UsersGetCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *UsersGetCall) UserAgent(s string) *UsersGetCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *UsersGetCall) Do() (*User, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5984,7 +6470,11 @@ func (c *UsersGetCall) Do() (*User, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"userKey": c.userKey,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -6083,6 +6573,12 @@ func (c *UsersInsertCall) Fields(s ...googleapi.Field) *UsersInsertCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *UsersInsertCall) UserAgent(s string) *UsersInsertCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *UsersInsertCall) Do() (*User, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.user)
@@ -6100,7 +6596,11 @@ func (c *UsersInsertCall) Do() (*User, error) {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -6243,6 +6743,12 @@ func (c *UsersListCall) Fields(s ...googleapi.Field) *UsersListCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *UsersListCall) UserAgent(s string) *UsersListCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *UsersListCall) Do() (*Users, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -6290,7 +6796,11 @@ func (c *UsersListCall) Do() (*Users, error) {
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -6463,6 +6973,12 @@ func (c *UsersMakeAdminCall) Fields(s ...googleapi.Field) *UsersMakeAdminCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *UsersMakeAdminCall) UserAgent(s string) *UsersMakeAdminCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *UsersMakeAdminCall) Do() error {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.usermakeadmin)
@@ -6482,7 +6998,11 @@ func (c *UsersMakeAdminCall) Do() error {
 		"userKey": c.userKey,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -6543,6 +7063,12 @@ func (c *UsersPatchCall) Fields(s ...googleapi.Field) *UsersPatchCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *UsersPatchCall) UserAgent(s string) *UsersPatchCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *UsersPatchCall) Do() (*User, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.user)
@@ -6562,7 +7088,11 @@ func (c *UsersPatchCall) Do() (*User, error) {
 		"userKey": c.userKey,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -6630,6 +7160,12 @@ func (c *UsersUndeleteCall) Fields(s ...googleapi.Field) *UsersUndeleteCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *UsersUndeleteCall) UserAgent(s string) *UsersUndeleteCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *UsersUndeleteCall) Do() error {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.userundelete)
@@ -6649,7 +7185,11 @@ func (c *UsersUndeleteCall) Do() error {
 		"userKey": c.userKey,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -6710,6 +7250,12 @@ func (c *UsersUpdateCall) Fields(s ...googleapi.Field) *UsersUpdateCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *UsersUpdateCall) UserAgent(s string) *UsersUpdateCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *UsersUpdateCall) Do() (*User, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.user)
@@ -6729,7 +7275,11 @@ func (c *UsersUpdateCall) Do() (*User, error) {
 		"userKey": c.userKey,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -6884,6 +7434,12 @@ func (c *UsersWatchCall) Fields(s ...googleapi.Field) *UsersWatchCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *UsersWatchCall) UserAgent(s string) *UsersWatchCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *UsersWatchCall) Do() (*Channel, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channel)
@@ -6937,7 +7493,11 @@ func (c *UsersWatchCall) Do() (*Channel, error) {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -7114,6 +7674,12 @@ func (c *UsersAliasesDeleteCall) Fields(s ...googleapi.Field) *UsersAliasesDelet
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *UsersAliasesDeleteCall) UserAgent(s string) *UsersAliasesDeleteCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *UsersAliasesDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -7128,7 +7694,11 @@ func (c *UsersAliasesDeleteCall) Do() error {
 		"userKey": c.userKey,
 		"alias":   c.alias,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -7194,6 +7764,12 @@ func (c *UsersAliasesInsertCall) Fields(s ...googleapi.Field) *UsersAliasesInser
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *UsersAliasesInsertCall) UserAgent(s string) *UsersAliasesInsertCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *UsersAliasesInsertCall) Do() (*Alias, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.alias)
@@ -7213,7 +7789,11 @@ func (c *UsersAliasesInsertCall) Do() (*Alias, error) {
 		"userKey": c.userKey,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -7287,6 +7867,12 @@ func (c *UsersAliasesListCall) Fields(s ...googleapi.Field) *UsersAliasesListCal
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *UsersAliasesListCall) UserAgent(s string) *UsersAliasesListCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *UsersAliasesListCall) Do() (*Aliases, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -7303,7 +7889,11 @@ func (c *UsersAliasesListCall) Do() (*Aliases, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"userKey": c.userKey,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -7392,6 +7982,12 @@ func (c *UsersAliasesWatchCall) Fields(s ...googleapi.Field) *UsersAliasesWatchC
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *UsersAliasesWatchCall) UserAgent(s string) *UsersAliasesWatchCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *UsersAliasesWatchCall) Do() (*Channel, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channel)
@@ -7414,7 +8010,11 @@ func (c *UsersAliasesWatchCall) Do() (*Channel, error) {
 		"userKey": c.userKey,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -7498,6 +8098,12 @@ func (c *UsersPhotosDeleteCall) Fields(s ...googleapi.Field) *UsersPhotosDeleteC
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *UsersPhotosDeleteCall) UserAgent(s string) *UsersPhotosDeleteCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *UsersPhotosDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -7511,7 +8117,11 @@ func (c *UsersPhotosDeleteCall) Do() error {
 	googleapi.Expand(req.URL, map[string]string{
 		"userKey": c.userKey,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -7567,6 +8177,12 @@ func (c *UsersPhotosGetCall) Fields(s ...googleapi.Field) *UsersPhotosGetCall {
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *UsersPhotosGetCall) UserAgent(s string) *UsersPhotosGetCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *UsersPhotosGetCall) Do() (*UserPhoto, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -7580,7 +8196,11 @@ func (c *UsersPhotosGetCall) Do() (*UserPhoto, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"userKey": c.userKey,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -7647,6 +8267,12 @@ func (c *UsersPhotosPatchCall) Fields(s ...googleapi.Field) *UsersPhotosPatchCal
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *UsersPhotosPatchCall) UserAgent(s string) *UsersPhotosPatchCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *UsersPhotosPatchCall) Do() (*UserPhoto, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.userphoto)
@@ -7666,7 +8292,11 @@ func (c *UsersPhotosPatchCall) Do() (*UserPhoto, error) {
 		"userKey": c.userKey,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -7734,6 +8364,12 @@ func (c *UsersPhotosUpdateCall) Fields(s ...googleapi.Field) *UsersPhotosUpdateC
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *UsersPhotosUpdateCall) UserAgent(s string) *UsersPhotosUpdateCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *UsersPhotosUpdateCall) Do() (*UserPhoto, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.userphoto)
@@ -7753,7 +8389,11 @@ func (c *UsersPhotosUpdateCall) Do() (*UserPhoto, error) {
 		"userKey": c.userKey,
 	})
 	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -7819,6 +8459,12 @@ func (c *VerificationCodesGenerateCall) Fields(s ...googleapi.Field) *Verificati
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *VerificationCodesGenerateCall) UserAgent(s string) *VerificationCodesGenerateCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *VerificationCodesGenerateCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -7832,7 +8478,11 @@ func (c *VerificationCodesGenerateCall) Do() error {
 	googleapi.Expand(req.URL, map[string]string{
 		"userKey": c.userKey,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -7889,6 +8539,12 @@ func (c *VerificationCodesInvalidateCall) Fields(s ...googleapi.Field) *Verifica
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *VerificationCodesInvalidateCall) UserAgent(s string) *VerificationCodesInvalidateCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *VerificationCodesInvalidateCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -7902,7 +8558,11 @@ func (c *VerificationCodesInvalidateCall) Do() error {
 	googleapi.Expand(req.URL, map[string]string{
 		"userKey": c.userKey,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -7959,6 +8619,12 @@ func (c *VerificationCodesListCall) Fields(s ...googleapi.Field) *VerificationCo
 	return c
 }
 
+// UserAgent allows a custom string to be appended to the User-Agent header of the request.
+func (c *VerificationCodesListCall) UserAgent(s string) *VerificationCodesListCall {
+	c.opt_["userAgent"] = s
+	return c
+}
+
 func (c *VerificationCodesListCall) Do() (*VerificationCodes, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -7972,7 +8638,11 @@ func (c *VerificationCodesListCall) Do() (*VerificationCodes, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"userKey": c.userKey,
 	})
-	req.Header.Set("User-Agent", "google-api-go-client/0.5")
+	userAgent := googleapi.UserAgent
+	if v, ok := c.opt_["userAgent"]; ok {
+		userAgent = fmt.Sprintf("%v %v", userAgent, v)
+	}
+	req.Header.Set("User-Agent", userAgent)
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err

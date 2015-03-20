@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "66259842_bc556057",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 1275,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-03-20T19:09:50Z",
+      "side": 1,
+      "message": "Excellent.  Thanks, Brad!  I\u0027ll do that.",
+      "parentUuid": "66259842_dc8cdc89",
+      "revId": "4fe161a11814b6471bcc350222f2ceda6e23292e",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "617ae234_8bde0d53",
         "filename": "google-api-go-generator/gen.go",
         "patchSetId": 1

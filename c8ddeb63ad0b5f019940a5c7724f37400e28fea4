@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66259842_3207394a",
+        "filename": "adexchangebuyer/v1.2/adexchangebuyer-gen.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-03-20T20:20:58Z",
+      "side": 1,
+      "message": "whups... need a blank line here... hold off a sec while I do the next change set.",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 75,
+        "endChar": 1
+      },
+      "revId": "c8ddeb63ad0b5f019940a5c7724f37400e28fea4",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

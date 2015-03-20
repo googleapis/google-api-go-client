@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66259842_bf4f9214",
+        "filename": "adexchangebuyer/v1.2/adexchangebuyer-gen.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-03-20T19:58:53Z",
+      "side": 1,
+      "message": "Maybe just:\n\n   // optional additional User-Agent fragment",
+      "revId": "9b87cb7be9973b3965c7096eb5442da30d16bebb",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "66259842_df54ceaa",
+        "filename": "adexchangebuyer/v1.2/adexchangebuyer-gen.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-03-20T19:58:53Z",
+      "side": 1,
+      "message": "fmt.Sprintf is overkill for x+\" \"+y",
+      "revId": "9b87cb7be9973b3965c7096eb5442da30d16bebb",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "66259842_bfc6b2e6",
+        "filename": "adexchangebuyer/v1.2/adexchangebuyer-gen.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-03-20T19:58:53Z",
+      "side": 1,
+      "message": "But rather than these 4 lines for each call, can this just be a method?\n\nSo this is:\n\n   req.Header.Set(\"User-Agent\", c.s.userAgent())\n\n    func (s *Service) userAgent() string {\n         if s.UserAgent \u003d\u003d \"\" { return googleapi.UserAgent }\n         return googleapi.UserAgent + \" \" + s.UserAgent\n    }\n\n?",
+      "revId": "9b87cb7be9973b3965c7096eb5442da30d16bebb",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "66259842_3fbb8255",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-03-20T19:58:53Z",
+      "side": 1,
+      "message": "change \"itself to the Google uploader\" to \"this package\".",
+      "revId": "9b87cb7be9973b3965c7096eb5442da30d16bebb",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "66259842_bf9d52e8",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-03-20T19:58:53Z",
+      "side": 1,
+      "message": "These could use the same appending treatment. Maybe ResumableUpload needs a Service or UserAgent string field?",
+      "revId": "9b87cb7be9973b3965c7096eb5442da30d16bebb",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

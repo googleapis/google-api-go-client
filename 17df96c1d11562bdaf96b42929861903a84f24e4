@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3c55625_4e6433cf",
+        "filename": "google-api-go-generator/storage_test.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-03-27T10:39:47Z",
+      "side": 1,
+      "message": "strings.NewReader",
+      "revId": "17df96c1d11562bdaf96b42929861903a84f24e4",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c3c55625_6e69efa3",
+        "filename": "google-api-go-generator/storage_test.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-03-27T10:39:47Z",
+      "side": 1,
+      "message": "want substring %q",
+      "revId": "17df96c1d11562bdaf96b42929861903a84f24e4",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c3c55625_2e73e797",
+        "filename": "google-api-go-generator/storage_test.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-03-27T10:39:47Z",
+      "side": 1,
+      "message": "strings.NewReader",
+      "revId": "17df96c1d11562bdaf96b42929861903a84f24e4",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c3c55625_ce57c3e4",
+        "filename": "google-api-go-generator/storage_test.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-03-27T10:39:47Z",
+      "side": 1,
+      "message": "Where below?\n\nAlso, I want a comment saying why this is using iotest TimeoutReader and OneByteReader. It\u0027s at least not obvious.\n\nOh, TImeoutReader isn\u0027t that magic. I thought it returned a net.Error with Timeout() \u003d\u003d true, but it\u0027s just an error string.  This is just an error substring test. that\u0027s fine.  But still add a comment.  I didn\u0027t trace why you want a OneByteReader.  I guess you want a lot of reads for some reason.",
+      "revId": "17df96c1d11562bdaf96b42929861903a84f24e4",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c3c55625_4e7f5365",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-03-27T10:39:47Z",
+      "side": 1,
+      "message": "not your fault, but this line is wrong.  io.Reader doesn\u0027t guarantee who much Read will return.  It might return 0 or 1 bytes, just because it feels like it.\n\nI\u0027d change this to:\n\n   buf, err :\u003d ioutil.ReadAll(io.LimitReader(media, 512))\n   if err !\u003d nil {\n        ...\n   }\n\n(512 instead of 1024, per http DetectContentType comment)",
+      "revId": "17df96c1d11562bdaf96b42929861903a84f24e4",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c3c55625_0e794b7d",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-03-27T10:39:47Z",
+      "side": 1,
+      "message": "and then can delete this line",
+      "revId": "17df96c1d11562bdaf96b42929861903a84f24e4",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c3c55625_8eb3fbca",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-03-27T10:39:47Z",
+      "side": 1,
+      "message": "bytes.NewReader, not NewBuffer",
+      "revId": "17df96c1d11562bdaf96b42929861903a84f24e4",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c3c55625_ae8917f4",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-03-27T10:39:47Z",
+      "side": 1,
+      "message": "you never do anything different with this mpw.Close.  You could keep it as a defer, as it was before.",
+      "revId": "17df96c1d11562bdaf96b42929861903a84f24e4",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

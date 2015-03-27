@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63a3ca80_7269c6a3",
+        "filename": "examples/storage.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-03-27T19:28:09Z",
+      "side": 1,
+      "message": "How about `res` or `resp`?",
+      "range": {
+        "startLine": 38,
+        "startChar": 1,
+        "endLine": 38,
+        "endChar": 9
+      },
+      "revId": "cfb9a887bb7fd3fe8b496ec58a3cb9cacb1a2e7e",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "63a3ca80_32734e98",
+        "filename": "examples/storage.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-03-27T19:28:09Z",
+      "side": 1,
+      "message": "How about `n`?",
+      "range": {
+        "startLine": 44,
+        "startChar": 1,
+        "endLine": 44,
+        "endChar": 11
+      },
+      "revId": "cfb9a887bb7fd3fe8b496ec58a3cb9cacb1a2e7e",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

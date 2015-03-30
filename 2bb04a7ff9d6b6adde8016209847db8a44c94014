@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3c55625_d498b4f5",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 1380,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-03-30T09:50:55Z",
+      "side": 1,
+      "message": "can you add a comment here that Download is guaranteed to be a 2xx response and that the caller must call close the response body, as normal?\n\nWrite in normal godoc complete sentence style:\n\n    // Download $verb .... blah blah.   (end with a period)",
+      "revId": "2bb04a7ff9d6b6adde8016209847db8a44c94014",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c3c55625_149f1ce0",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-03-30T09:50:55Z",
+      "side": 1,
+      "message": "slurp, _ :\u003d ioutil.ReadAll(io.LimitReader(res.Body, 1\u003c\u003c20))\n   res.Body.Close()",
+      "revId": "2bb04a7ff9d6b6adde8016209847db8a44c94014",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3f1d6a3_4ee8d3a6",
+        "filename": "adexchangeseller/v1.1/adexchangeseller-gen.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 1989,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-03-31T07:24:04Z",
+      "side": 1,
+      "message": "typo: standard.  also, drop the parens after Do.\n\nI\u0027d write something like:\n\n// Download fetches the API endpoint\u0027s \"media\" value, instead of the normal\n// API response value. If the returned error is nil, the Response is guaranteed to // have a 2xx status code. Callers must close the Response.Body as usual.",
+      "revId": "e5eda6b790e5869d7b71ca6ebf8574eec7a7db42",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

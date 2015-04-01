@@ -10,7 +10,7 @@ http://groups.google.com/group/golang-nuts/browse_thread/thread/6c7281450be9a21e
 
 Getting started documentation:
 
-   http://code.google.com/p/google-api-go-client/wiki/GettingStarted
+   https://github.com/google/google-api-go-client/blob/master/GettingStarted.md
 
 In summary:
 

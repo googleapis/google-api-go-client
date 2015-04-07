@@ -9,6 +9,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"math"
 	"math/rand"
 	"net/http"
@@ -89,8 +90,7 @@ func bqMain(client *http.Client, argv []string) {
 
 	service, err := storage.New(client)
 	if err != nil {
-		fmt.Fprintln(os.Stderr, err)
-		return
+		log.Fatalf("Unable to create Storage service: %v", err)
 	}
 
 	// Get the list of objects in the bucket matching the specified prefix.
@@ -166,7 +166,7 @@ func newBQDataset(client *http.Client, dsProj string, dsId string) (*bqDataset,
 
 	service, err := bigquery.New(client)
 	if err != nil {
-		return nil, err
+		log.Fatalf("Unable to create BigQuery service: %v", err)
 	}
 
 	return &bqDataset{

@@ -24,7 +24,11 @@ func computeMain(client *http.Client, argv []string) {
 		return
 	}
 
-	service, _ := compute.New(client)
+	service, err := compute.New(client)
+	if err != nil {
+		log.Fatalf("Unable to create Compute service: %v", err)
+	}
+
 	projectId := argv[0]
 	instanceName := argv[1]
 

@@ -21,7 +21,11 @@ func urlShortenerMain(client *http.Client, argv []string) {
 		return
 	}
 
-	svc, _ := urlshortener.New(client)
+	svc, err := urlshortener.New(client)
+	if err != nil {
+		log.Fatalf("Unable to create UrlShortener service: %v", err)
+	}
+
 	urlstr := argv[0]
 
 	// short -> long

@@ -19,7 +19,11 @@ func storageMain(client *http.Client, argv []string) {
 		return
 	}
 
-	service, _ := storage.New(client)
+	service, err := storage.New(client)
+	if err != nil {
+		log.Fatalf("Unable to create Storage service: %v", err)
+	}
+
 	filename := argv[0]
 	bucket := argv[1]
 

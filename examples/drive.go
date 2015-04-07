@@ -19,7 +19,11 @@ func driveMain(client *http.Client, argv []string) {
 		return
 	}
 
-	service, _ := drive.New(client)
+	service, err := drive.New(client)
+	if err != nil {
+		log.Fatalf("Unable to create Drive service: %v", err)
+	}
+
 	filename := argv[0]
 
 	goFile, err := os.Open(filename)

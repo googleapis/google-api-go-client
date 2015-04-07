@@ -12,7 +12,11 @@ func init() {
 }
 
 func tasksMain(client *http.Client, argv []string) {
-	taskapi, _ := tasks.New(client)
+	taskapi, err := tasks.New(client)
+	if err != nil {
+		log.Fatalf("Unable to create Tasks service: %v", err)
+	}
+
 	task, err := taskapi.Tasks.Insert("@default", &tasks.Task{
 		Title: "finish this API code generator thing",
 		Notes: "ummmm",

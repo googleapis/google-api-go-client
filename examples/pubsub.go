@@ -305,7 +305,11 @@ func pullMessages(service *pubsub.Service, argv []string) {
 // "pull_messages" subcommand.
 func pubsubMain(client *http.Client, argv []string) {
 	checkArgs(argv, 2)
-	service, _ := pubsub.New(client)
+	service, err := pubsub.New(client)
+	if err != nil {
+		log.Fatalf("Unable to create PubSub service: %v", err)
+	}
+
 	m := map[string]func(service *pubsub.Service, argv []string){
 		"list_topics":         listTopics,
 		"list_subscriptions":  listSubscriptions,

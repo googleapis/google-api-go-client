@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3f39619_5e03d53c",
+        "filename": "logging/v1beta3/logging-api.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-04-08T06:20:09Z",
+      "side": 1,
+      "message": "yay!",
+      "revId": "bf76a77a67ee9d95fc0d79da87bafe96056e5a0f",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

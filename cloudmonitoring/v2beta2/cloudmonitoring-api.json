@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/W-CYad3sVi3av-L2zzzQukVGZ3g\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/0w-YIuPYwzHxSYesfhwgY81j7Ic\"",
  "discoveryVersion": "v1",
  "id": "cloudmonitoring:v2beta2",
  "name": "cloudmonitoring",
  "canonicalName": "Cloud Monitoring",
  "version": "v2beta2",
- "revision": "20150109",
+ "revision": "20150305",
  "title": "Cloud Monitoring API",
  "description": "API for accessing Google Cloud and API monitoring data.",
  "ownerDomain": "google.com",
@@ -612,7 +612,7 @@
      "parameters": {
       "aggregator": {
        "type": "string",
-       "description": "The aggregation function that will reduce the data points in each window to a single point. This parameter is only valid for non-cumulative metric types.",
+       "description": "The aggregation function that will reduce the data points in each window to a single point. This parameter is only valid for non-cumulative metrics with a value type of INT64 or DOUBLE.",
        "enum": [
         "max",
         "mean",
@@ -737,7 +737,7 @@
      "parameters": {
       "aggregator": {
        "type": "string",
-       "description": "The aggregation function that will reduce the data points in each window to a single point. This parameter is only valid for non-cumulative metric types.",
+       "description": "The aggregation function that will reduce the data points in each window to a single point. This parameter is only valid for non-cumulative metrics with a value type of INT64 or DOUBLE.",
        "enum": [
         "max",
         "mean",

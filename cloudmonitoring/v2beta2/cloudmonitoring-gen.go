@@ -701,7 +701,8 @@ func (r *TimeseriesService) List(project string, metric string, youngest string,
 
 // Aggregator sets the optional parameter "aggregator": The aggregation
 // function that will reduce the data points in each window to a single
-// point. This parameter is only valid for non-cumulative metric types.
+// point. This parameter is only valid for non-cumulative metrics with a
+// value type of INT64 or DOUBLE.
 func (c *TimeseriesListCall) Aggregator(aggregator string) *TimeseriesListCall {
 	c.opt_["aggregator"] = aggregator
 	return c
@@ -853,7 +854,7 @@ func (c *TimeseriesListCall) Do() (*ListTimeseriesResponse, error) {
 	//   ],
 	//   "parameters": {
 	//     "aggregator": {
-	//       "description": "The aggregation function that will reduce the data points in each window to a single point. This parameter is only valid for non-cumulative metric types.",
+	//       "description": "The aggregation function that will reduce the data points in each window to a single point. This parameter is only valid for non-cumulative metrics with a value type of INT64 or DOUBLE.",
 	//       "enum": [
 	//         "max",
 	//         "mean",
@@ -1061,7 +1062,8 @@ func (r *TimeseriesDescriptorsService) List(project string, metric string, young
 
 // Aggregator sets the optional parameter "aggregator": The aggregation
 // function that will reduce the data points in each window to a single
-// point. This parameter is only valid for non-cumulative metric types.
+// point. This parameter is only valid for non-cumulative metrics with a
+// value type of INT64 or DOUBLE.
 func (c *TimeseriesDescriptorsListCall) Aggregator(aggregator string) *TimeseriesDescriptorsListCall {
 	c.opt_["aggregator"] = aggregator
 	return c
@@ -1214,7 +1216,7 @@ func (c *TimeseriesDescriptorsListCall) Do() (*ListTimeseriesDescriptorsResponse
 	//   ],
 	//   "parameters": {
 	//     "aggregator": {
-	//       "description": "The aggregation function that will reduce the data points in each window to a single point. This parameter is only valid for non-cumulative metric types.",
+	//       "description": "The aggregation function that will reduce the data points in each window to a single point. This parameter is only valid for non-cumulative metrics with a value type of INT64 or DOUBLE.",
 	//       "enum": [
 	//         "max",
 	//         "mean",

@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/lyqQOHJaq-GnjxN_zYrPyfHYUGs\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/m3L9QaogF7YfclMw_cAMw6VI3oY\"",
  "discoveryVersion": "v1",
  "id": "adexchangebuyer:v1.2",
  "name": "adexchangebuyer",
  "canonicalName": "Ad Exchange Buyer",
  "version": "v1.2",
- "revision": "20141123",
+ "revision": "20150323",
  "title": "Ad Exchange Buyer API",
  "description": "Accesses your bidding-account information, submits creatives for validation, finds available direct deals, and retrieves performance reports.",
  "ownerDomain": "google.com",
@@ -264,6 +264,35 @@
        "reason": {
         "type": "string",
         "description": "The categorized reason for disapproval."
+       }
+      }
+     }
+    },
+    "filteringReasons": {
+     "type": "object",
+     "description": "The filtering reasons for the creative. If this feature is not enabled, please ask your technical account manager. Read-only. This field should not be set in requests.",
+     "properties": {
+      "date": {
+       "type": "string",
+       "description": "The date in ISO 8601 format for the data. The data is collected from 00:00:00 to 23:59:59 in PST."
+      },
+      "reasons": {
+       "type": "array",
+       "description": "The filtering reasons.",
+       "items": {
+        "type": "object",
+        "properties": {
+         "filteringCount": {
+          "type": "string",
+          "description": "The number of times the creative was filtered for the status. The count is aggregated across all publishers on the exchange.",
+          "format": "int64"
+         },
+         "filteringStatus": {
+          "type": "integer",
+          "description": "The filtering status code. Please refer to the creative-status-codes.txt file for different statuses.",
+          "format": "int32"
+         }
+        }
        }
       }
      }

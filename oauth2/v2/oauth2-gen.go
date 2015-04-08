@@ -155,6 +155,9 @@ type Tokeninfo struct {
 	// Scope: The space separated list of scopes granted to this token.
 	Scope string `json:"scope,omitempty"`
 
+	// Token_handle: The token handle associated with this token.
+	Token_handle string `json:"token_handle,omitempty"`
+
 	// User_id: The obfuscated user id.
 	User_id string `json:"user_id,omitempty"`
 
@@ -283,6 +286,12 @@ func (c *TokeninfoCall) Id_token(id_token string) *TokeninfoCall {
 	return c
 }
 
+// Token_handle sets the optional parameter "token_handle":
+func (c *TokeninfoCall) Token_handle(token_handle string) *TokeninfoCall {
+	c.opt_["token_handle"] = token_handle
+	return c
+}
+
 // Fields allows partial responses to be retrieved.
 // See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -300,6 +309,9 @@ func (c *TokeninfoCall) Do() (*Tokeninfo, error) {
 	}
 	if v, ok := c.opt_["id_token"]; ok {
 		params.Set("id_token", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["token_handle"]; ok {
+		params.Set("token_handle", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
@@ -331,6 +343,10 @@ func (c *TokeninfoCall) Do() (*Tokeninfo, error) {
 	//       "type": "string"
 	//     },
 	//     "id_token": {
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "token_handle": {
 	//       "location": "query",
 	//       "type": "string"
 	//     }

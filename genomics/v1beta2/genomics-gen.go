@@ -71,6 +71,7 @@ func New(client *http.Client) (*Service, error) {
 	s.Reads = NewReadsService(s)
 	s.References = NewReferencesService(s)
 	s.Referencesets = NewReferencesetsService(s)
+	s.StreamingVariantStore = NewStreamingVariantStoreService(s)
 	s.Variants = NewVariantsService(s)
 	s.Variantsets = NewVariantsetsService(s)
 	return s, nil
@@ -100,6 +101,8 @@ type Service struct {
 	References *ReferencesService
 
 	Referencesets *ReferencesetsService
+
+	StreamingVariantStore *StreamingVariantStoreService
 
 	Variants *VariantsService
 
@@ -236,6 +239,15 @@ func NewReferencesetsService(s *Service) *ReferencesetsService {
 }
 
 type ReferencesetsService struct {
+	s *Service
+}
+
+func NewStreamingVariantStoreService(s *Service) *StreamingVariantStoreService {
+	rs := &StreamingVariantStoreService{s: s}
+	return rs
+}
+
+type StreamingVariantStoreService struct {
 	s *Service
 }
 
@@ -1559,6 +1571,28 @@ type SearchVariantsResponse struct {
 
 	// Variants: The list of matching Variants.
 	Variants []*Variant `json:"variants,omitempty"`
+}
+
+type StreamVariantsRequest struct {
+	// CallSetIds: Only return variant calls which belong to call sets with
+	// these ids. Leaving this blank returns all variant calls.
+	CallSetIds []string `json:"callSetIds,omitempty"`
+
+	// End: The end of the window (0-based, exclusive) for which overlapping
+	// variants should be returned.
+	End int64 `json:"end,omitempty,string"`
+
+	// ReferenceName: Required. Only return variants in this reference
+	// sequence.
+	ReferenceName string `json:"referenceName,omitempty"`
+
+	// Start: The beginning of the window (0-based, inclusive) for which
+	// overlapping variants should be returned.
+	Start int64 `json:"start,omitempty,string"`
+
+	// VariantSetIds: Exactly one variant set ID must be provided. Only
+	// variants from this variant set will be returned.
+	VariantSetIds []string `json:"variantSetIds,omitempty"`
 }
 
 type Transcript struct {
@@ -5574,6 +5608,76 @@ func (c *ReferencesetsSearchCall) Do() (*SearchReferenceSetsResponse, error) {
 	//     "https://www.googleapis.com/auth/genomics",
 	//     "https://www.googleapis.com/auth/genomics.readonly"
 	//   ]
+	// }
+
+}
+
+// method id "genomics.streamingVariantStore.streamvariants":
+
+type StreamingVariantStoreStreamvariantsCall struct {
+	s                     *Service
+	streamvariantsrequest *StreamVariantsRequest
+	opt_                  map[string]interface{}
+}
+
+// Streamvariants: Returns a stream of all the variants matching the
+// search request, ordered by reference name, position, and ID.
+func (r *StreamingVariantStoreService) Streamvariants(streamvariantsrequest *StreamVariantsRequest) *StreamingVariantStoreStreamvariantsCall {
+	c := &StreamingVariantStoreStreamvariantsCall{s: r.s, opt_: make(map[string]interface{})}
+	c.streamvariantsrequest = streamvariantsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *StreamingVariantStoreStreamvariantsCall) Fields(s ...googleapi.Field) *StreamingVariantStoreStreamvariantsCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *StreamingVariantStoreStreamvariantsCall) Do() (*Variant, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.streamvariantsrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "streamingVariantStore/streamvariants")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Variant
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns a stream of all the variants matching the search request, ordered by reference name, position, and ID.",
+	//   "httpMethod": "POST",
+	//   "id": "genomics.streamingVariantStore.streamvariants",
+	//   "path": "streamingVariantStore/streamvariants",
+	//   "request": {
+	//     "$ref": "StreamVariantsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Variant"
+	//   }
 	// }
 
 }

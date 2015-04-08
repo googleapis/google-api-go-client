@@ -270,7 +270,10 @@ func (c *UrlGetCall) Do() (*Url, error) {
 	//   "path": "url",
 	//   "response": {
 	//     "$ref": "Url"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/urlshortener"
+	//   ]
 	// }
 
 }

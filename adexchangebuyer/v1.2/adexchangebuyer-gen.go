@@ -194,6 +194,11 @@ type Creative struct {
 	// requests.
 	DisapprovalReasons []*CreativeDisapprovalReasons `json:"disapprovalReasons,omitempty"`
 
+	// FilteringReasons: The filtering reasons for the creative. If this
+	// feature is not enabled, please ask your technical account manager.
+	// Read-only. This field should not be set in requests.
+	FilteringReasons *CreativeFilteringReasons `json:"filteringReasons,omitempty"`
+
 	// Height: Ad height.
 	Height int64 `json:"height,omitempty"`
 
@@ -242,6 +247,26 @@ type CreativeDisapprovalReasons struct {
 
 	// Reason: The categorized reason for disapproval.
 	Reason string `json:"reason,omitempty"`
+}
+
+type CreativeFilteringReasons struct {
+	// Date: The date in ISO 8601 format for the data. The data is collected
+	// from 00:00:00 to 23:59:59 in PST.
+	Date string `json:"date,omitempty"`
+
+	// Reasons: The filtering reasons.
+	Reasons []*CreativeFilteringReasonsReasons `json:"reasons,omitempty"`
+}
+
+type CreativeFilteringReasonsReasons struct {
+	// FilteringCount: The number of times the creative was filtered for the
+	// status. The count is aggregated across all publishers on the
+	// exchange.
+	FilteringCount int64 `json:"filteringCount,omitempty,string"`
+
+	// FilteringStatus: The filtering status code. Please refer to the
+	// creative-status-codes.txt file for different statuses.
+	FilteringStatus int64 `json:"filteringStatus,omitempty"`
 }
 
 type CreativesList struct {

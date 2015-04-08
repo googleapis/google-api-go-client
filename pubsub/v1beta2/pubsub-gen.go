@@ -1015,11 +1015,11 @@ type ProjectsTopicsDeleteCall struct {
 	opt_  map[string]interface{}
 }
 
-// Delete: Deletes the topic with the given name. All subscriptions to
-// this topic are detached from the topic. Returns NOT_FOUND if the
-// topic does not exist. After a topic is deleted, a new topic may be
-// created with the same name; this is an entirely new topic with none
-// of the old configuration or subscriptions.
+// Delete: Deletes the topic with the given name. Returns NOT_FOUND if
+// the topic does not exist. After a topic is deleted, a new topic may
+// be created with the same name; this is an entirely new topic with
+// none of the old configuration or subscriptions. Existing
+// subscriptions to this topic are not deleted.
 func (r *ProjectsTopicsService) Delete(topic string) *ProjectsTopicsDeleteCall {
 	c := &ProjectsTopicsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.topic = topic
@@ -1062,7 +1062,7 @@ func (c *ProjectsTopicsDeleteCall) Do() (*Empty, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes the topic with the given name. All subscriptions to this topic are detached from the topic. Returns NOT_FOUND if the topic does not exist. After a topic is deleted, a new topic may be created with the same name; this is an entirely new topic with none of the old configuration or subscriptions.",
+	//   "description": "Deletes the topic with the given name. Returns NOT_FOUND if the topic does not exist. After a topic is deleted, a new topic may be created with the same name; this is an entirely new topic with none of the old configuration or subscriptions. Existing subscriptions to this topic are not deleted.",
 	//   "httpMethod": "DELETE",
 	//   "id": "pubsub.projects.topics.delete",
 	//   "parameterOrder": [

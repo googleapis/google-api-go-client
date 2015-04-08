@@ -159,12 +159,24 @@ type DataDiskAssignment struct {
 	VmInstance string `json:"vmInstance,omitempty"`
 }
 
+type DerivedSource struct {
+	DerivationMode string `json:"derivationMode,omitempty"`
+
+	Source *Source `json:"source,omitempty"`
+}
+
 type Disk struct {
 	DiskType string `json:"diskType,omitempty"`
 
 	MountPoint string `json:"mountPoint,omitempty"`
 
 	SizeGb int64 `json:"sizeGb,omitempty"`
+}
+
+type DynamicSourceSplit struct {
+	Primary *DerivedSource `json:"primary,omitempty"`
+
+	Residual *DerivedSource `json:"residual,omitempty"`
 }
 
 type Environment struct {
@@ -263,6 +275,14 @@ type JobMetrics struct {
 	Metrics []*MetricUpdate `json:"metrics,omitempty"`
 }
 
+type KeyRangeDataDiskAssignment struct {
+	DataDisk string `json:"dataDisk,omitempty"`
+
+	End string `json:"end,omitempty"`
+
+	Start string `json:"start,omitempty"`
+}
+
 type KeyRangeLocation struct {
 	DataDisk string `json:"dataDisk,omitempty"`
 
@@ -339,6 +359,10 @@ type MetricUpdate struct {
 	UpdateTime string `json:"updateTime,omitempty"`
 }
 
+type MountedDataDisk struct {
+	DataDisk string `json:"dataDisk,omitempty"`
+}
+
 type MultiOutputInfo struct {
 	Tag string `json:"tag,omitempty"`
 }
@@ -386,9 +410,14 @@ type PartialGroupByKeyInstruction struct {
 	Input *InstructionInput `json:"input,omitempty"`
 
 	InputElementCodec *PartialGroupByKeyInstructionInputElementCodec `json:"inputElementCodec,omitempty"`
+
+	ValueCombiningFn *PartialGroupByKeyInstructionValueCombiningFn `json:"valueCombiningFn,omitempty"`
 }
 
 type PartialGroupByKeyInstructionInputElementCodec struct {
+}
+
+type PartialGroupByKeyInstructionValueCombiningFn struct {
 }
 
 type Position struct {
@@ -413,6 +442,8 @@ type PubsubLocation struct {
 	TimestampLabel string `json:"timestampLabel,omitempty"`
 
 	Topic string `json:"topic,omitempty"`
+
+	TrackingSubscription string `json:"trackingSubscription,omitempty"`
 }
 
 type ReadInstruction struct {
@@ -507,7 +538,11 @@ type SourceSpec struct {
 type SourceFork struct {
 	Primary *SourceSplitShard `json:"primary,omitempty"`
 
+	PrimarySource *DerivedSource `json:"primarySource,omitempty"`
+
 	Residual *SourceSplitShard `json:"residual,omitempty"`
+
+	ResidualSource *DerivedSource `json:"residualSource,omitempty"`
 }
 
 type SourceGetMetadataRequest struct {
@@ -539,6 +574,8 @@ type SourceOperationResponse struct {
 }
 
 type SourceSplitOptions struct {
+	DesiredBundleSizeBytes int64 `json:"desiredBundleSizeBytes,omitempty,string"`
+
 	DesiredShardSizeBytes int64 `json:"desiredShardSizeBytes,omitempty,string"`
 }
 
@@ -549,6 +586,8 @@ type SourceSplitRequest struct {
 }
 
 type SourceSplitResponse struct {
+	Bundles []*DerivedSource `json:"bundles,omitempty"`
+
 	Outcome string `json:"outcome,omitempty"`
 
 	Shards []*SourceSplitShard `json:"shards,omitempty"`
@@ -585,7 +624,23 @@ type StepProperties struct {
 type StreamLocation struct {
 	PubsubLocation *PubsubLocation `json:"pubsubLocation,omitempty"`
 
+	SideInputLocation *StreamingSideInputLocation `json:"sideInputLocation,omitempty"`
+
 	StreamingStageLocation *StreamingStageLocation `json:"streamingStageLocation,omitempty"`
+}
+
+type StreamingComputationRanges struct {
+	ComputationId string `json:"computationId,omitempty"`
+
+	RangeAssignments []*KeyRangeDataDiskAssignment `json:"rangeAssignments,omitempty"`
+}
+
+type StreamingComputationTask struct {
+	ComputationRanges []*StreamingComputationRanges `json:"computationRanges,omitempty"`
+
+	DataDisks []*MountedDataDisk `json:"dataDisks,omitempty"`
+
+	TaskType string `json:"taskType,omitempty"`
 }
 
 type StreamingSetupTask struct {
@@ -594,6 +649,10 @@ type StreamingSetupTask struct {
 	StreamingComputationTopology *TopologyConfig `json:"streamingComputationTopology,omitempty"`
 
 	WorkerHarnessPort int64 `json:"workerHarnessPort,omitempty"`
+}
+
+type StreamingSideInputLocation struct {
+	Tag string `json:"tag,omitempty"`
 }
 
 type StreamingStageLocation struct {
@@ -651,6 +710,8 @@ type WorkItem struct {
 
 	Id int64 `json:"id,omitempty,string"`
 
+	InitialReportIndex int64 `json:"initialReportIndex,omitempty,string"`
+
 	JobId string `json:"jobId,omitempty"`
 
 	LeaseExpireTime string `json:"leaseExpireTime,omitempty"`
@@ -669,6 +730,8 @@ type WorkItem struct {
 
 	SourceOperationTask *SourceOperationRequest `json:"sourceOperationTask,omitempty"`
 
+	StreamingComputationTask *StreamingComputationTask `json:"streamingComputationTask,omitempty"`
+
 	StreamingSetupTask *StreamingSetupTask `json:"streamingSetupTask,omitempty"`
 }
 
@@ -676,6 +739,8 @@ type WorkItemServiceState struct {
 	HarnessData *WorkItemServiceStateHarnessData `json:"harnessData,omitempty"`
 
 	LeaseExpireTime string `json:"leaseExpireTime,omitempty"`
+
+	NextReportIndex int64 `json:"nextReportIndex,omitempty,string"`
 
 	ReportStatusInterval string `json:"reportStatusInterval,omitempty"`
 
@@ -689,6 +754,8 @@ type WorkItemServiceStateHarnessData struct {
 
 type WorkItemStatus struct {
 	Completed bool `json:"completed,omitempty"`
+
+	DynamicSourceSplit *DynamicSourceSplit `json:"dynamicSourceSplit,omitempty"`
 
 	Errors []*Status `json:"errors,omitempty"`
 
@@ -732,11 +799,16 @@ type WorkerPool struct {
 
 	Packages []*Package `json:"packages,omitempty"`
 
+	PoolArgs *WorkerPoolPoolArgs `json:"poolArgs,omitempty"`
+
 	TaskrunnerSettings *TaskRunnerSettings `json:"taskrunnerSettings,omitempty"`
 
 	TeardownPolicy string `json:"teardownPolicy,omitempty"`
 
 	Zone string `json:"zone,omitempty"`
+}
+
+type WorkerPoolPoolArgs struct {
 }
 
 type WorkerSettings struct {

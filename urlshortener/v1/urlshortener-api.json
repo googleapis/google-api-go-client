@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/0cbm1ejxCEt_jSRBcXxhj-fnxEs\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/hGOTAH4tOR9ybjNLhWvisea-41E\"",
  "discoveryVersion": "v1",
  "id": "urlshortener:v1",
  "name": "urlshortener",
  "version": "v1",
- "revision": "20141210",
+ "revision": "20150319",
  "title": "URL Shortener API",
  "description": "Lets you create, inspect, and manage goo.gl short URLs",
  "ownerDomain": "google.com",
@@ -261,7 +261,10 @@
      ],
      "response": {
       "$ref": "Url"
-     }
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/urlshortener"
+     ]
     },
     "insert": {
      "id": "urlshortener.url.insert",

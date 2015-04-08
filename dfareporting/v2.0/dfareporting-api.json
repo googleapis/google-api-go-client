@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/-Wf_jNw3Fg6ZZI2nhs026L5nO_I\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/14gemQgeOwkk8XbVog9HBJLI5Js\"",
  "discoveryVersion": "v1",
  "id": "dfareporting:v2.0",
  "name": "dfareporting",
  "version": "v2.0",
- "revision": "20150223",
+ "revision": "20150326",
  "title": "DCM/DFA Reporting And Trafficking API",
  "description": "Manage your DoubleClick Campaign Manager ad campaigns and reports.",
  "ownerDomain": "google.com",
@@ -325,7 +325,7 @@
    "properties": {
     "accountPermissionGroups": {
      "type": "array",
-     "description": "Account permission group collection",
+     "description": "Account permission group collection.",
      "items": {
       "$ref": "AccountPermissionGroup"
      }
@@ -344,7 +344,7 @@
    "properties": {
     "accountPermissions": {
      "type": "array",
-     "description": "Account permission collection",
+     "description": "Account permission collection.",
      "items": {
       "$ref": "AccountPermission"
      }
@@ -459,7 +459,7 @@
    "properties": {
     "accountUserProfiles": {
      "type": "array",
-     "description": "Account user profile collection",
+     "description": "Account user profile collection.",
      "items": {
       "$ref": "AccountUserProfile"
      }
@@ -482,7 +482,7 @@
    "properties": {
     "accounts": {
      "type": "array",
-     "description": "Account collection",
+     "description": "Account collection.",
      "items": {
       "$ref": "Account"
      }
@@ -730,7 +730,7 @@
    "properties": {
     "ads": {
      "type": "array",
-     "description": "Ad collection",
+     "description": "Ad collection.",
      "items": {
       "$ref": "Ad"
      }
@@ -853,7 +853,7 @@
    "properties": {
     "advertiserGroups": {
      "type": "array",
-     "description": "Advertiser group collection",
+     "description": "Advertiser group collection.",
      "items": {
       "$ref": "AdvertiserGroup"
      }
@@ -876,7 +876,7 @@
    "properties": {
     "advertisers": {
      "type": "array",
-     "description": "Advertiser collection",
+     "description": "Advertiser collection.",
      "items": {
       "$ref": "Advertiser"
      }
@@ -977,7 +977,7 @@
    "properties": {
     "browsers": {
      "type": "array",
-     "description": "Browser collection",
+     "description": "Browser collection.",
      "items": {
       "$ref": "Browser"
      }
@@ -1179,7 +1179,7 @@
    "properties": {
     "campaigns": {
      "type": "array",
-     "description": "Campaign collection",
+     "description": "Campaign collection.",
      "items": {
       "$ref": "Campaign"
      }
@@ -1273,7 +1273,7 @@
    "properties": {
     "changeLogs": {
      "type": "array",
-     "description": "Change log collection",
+     "description": "Change log collection.",
      "items": {
       "$ref": "ChangeLog"
      }
@@ -1296,7 +1296,7 @@
    "properties": {
     "cities": {
      "type": "array",
-     "description": "City collection",
+     "description": "City collection.",
      "items": {
       "$ref": "City"
      }
@@ -1461,7 +1461,7 @@
   "ConnectionType": {
    "id": "ConnectionType",
    "type": "object",
-   "description": "Contains information about a connection type that can be targeted by ads.",
+   "description": "Contains information about an internet connection type that can be targeted by ads. Clients can use the connection type to target mobile vs. broadband users.",
    "properties": {
     "id": {
      "type": "string",
@@ -1486,7 +1486,7 @@
    "properties": {
     "connectionTypes": {
      "type": "array",
-     "description": "Connection Type Collection.",
+     "description": "Collection of connection types such as broadband and mobile.",
      "items": {
       "$ref": "ConnectionType"
      }
@@ -1505,7 +1505,7 @@
    "properties": {
     "contentCategories": {
      "type": "array",
-     "description": "Content category collection",
+     "description": "Content category collection.",
      "items": {
       "$ref": "ContentCategory"
      }
@@ -1558,7 +1558,7 @@
    "properties": {
     "countries": {
      "type": "array",
-     "description": "Country collection",
+     "description": "Country collection.",
      "items": {
       "$ref": "Country"
      }
@@ -3030,7 +3030,7 @@
    "properties": {
     "creativeFieldValues": {
      "type": "array",
-     "description": "Creative field value collection",
+     "description": "Creative field value collection.",
      "items": {
       "$ref": "CreativeFieldValue"
      }
@@ -3053,7 +3053,7 @@
    "properties": {
     "creativeFields": {
      "type": "array",
-     "description": "Creative field collection",
+     "description": "Creative field collection.",
      "items": {
       "$ref": "CreativeField"
      }
@@ -3145,7 +3145,7 @@
    "properties": {
     "creativeGroups": {
      "type": "array",
-     "description": "Creative group collection",
+     "description": "Creative group collection.",
      "items": {
       "$ref": "CreativeGroup"
      }
@@ -3269,7 +3269,7 @@
    "properties": {
     "creatives": {
      "type": "array",
-     "description": "Creative collection",
+     "description": "Creative collection.",
      "items": {
       "$ref": "Creative"
      }
@@ -3547,7 +3547,7 @@
     },
     "publisherPortalOnly": {
      "type": "boolean",
-     "description": "Whether this directory site is available only via Publisher Portal."
+     "description": "Whether this directory site is available only via DoubleClick Publisher Portal."
     }
    }
   },
@@ -3938,7 +3938,7 @@
     },
     "verificationTagOptOut": {
      "type": "boolean",
-     "description": "Whether this directory site has disabled generation of Verification tags."
+     "description": "Whether this directory site has disabled generation of Verification ins tags."
     },
     "videoActiveViewOptOut": {
      "type": "boolean",
@@ -3953,7 +3953,7 @@
    "properties": {
     "directorySites": {
      "type": "array",
-     "description": "Directory site collection",
+     "description": "Directory site collection.",
      "items": {
       "$ref": "DirectorySite"
      }
@@ -4104,7 +4104,7 @@
    "properties": {
     "eventTags": {
      "type": "array",
-     "description": "Event tag collection",
+     "description": "Event tag collection.",
      "items": {
       "$ref": "EventTag"
      }
@@ -4247,7 +4247,7 @@
    "properties": {
     "floodlightActivities": {
      "type": "array",
-     "description": "Floodlight activity collection",
+     "description": "Floodlight activity collection.",
      "items": {
       "$ref": "FloodlightActivity"
      }
@@ -4441,6 +4441,7 @@
       "enum": [
        "U1",
        "U10",
+       "U100",
        "U11",
        "U12",
        "U13",
@@ -4452,15 +4453,174 @@
        "U19",
        "U2",
        "U20",
+       "U21",
+       "U22",
+       "U23",
+       "U24",
+       "U25",
+       "U26",
+       "U27",
+       "U28",
+       "U29",
        "U3",
+       "U30",
+       "U31",
+       "U32",
+       "U33",
+       "U34",
+       "U35",
+       "U36",
+       "U37",
+       "U38",
+       "U39",
        "U4",
+       "U40",
+       "U41",
+       "U42",
+       "U43",
+       "U44",
+       "U45",
+       "U46",
+       "U47",
+       "U48",
+       "U49",
        "U5",
+       "U50",
+       "U51",
+       "U52",
+       "U53",
+       "U54",
+       "U55",
+       "U56",
+       "U57",
+       "U58",
+       "U59",
        "U6",
+       "U60",
+       "U61",
+       "U62",
+       "U63",
+       "U64",
+       "U65",
+       "U66",
+       "U67",
+       "U68",
+       "U69",
        "U7",
+       "U70",
+       "U71",
+       "U72",
+       "U73",
+       "U74",
+       "U75",
+       "U76",
+       "U77",
+       "U78",
+       "U79",
        "U8",
-       "U9"
+       "U80",
+       "U81",
+       "U82",
+       "U83",
+       "U84",
+       "U85",
+       "U86",
+       "U87",
+       "U88",
+       "U89",
+       "U9",
+       "U90",
+       "U91",
+       "U92",
+       "U93",
+       "U94",
+       "U95",
+       "U96",
+       "U97",
+       "U98",
+       "U99"
       ],
       "enumDescriptions": [
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
        "",
        "",
        "",
@@ -4582,7 +4742,7 @@
    "properties": {
     "floodlightActivityGroups": {
      "type": "array",
-     "description": "Floodlight activity group collection",
+     "description": "Floodlight activity group collection.",
      "items": {
       "$ref": "FloodlightActivityGroup"
      }
@@ -4754,7 +4914,7 @@
    "properties": {
     "floodlightConfigurations": {
      "type": "array",
-     "description": "Floodlight configuration collection",
+     "description": "Floodlight configuration collection.",
      "items": {
       "$ref": "FloodlightConfiguration"
      }
@@ -4933,7 +5093,7 @@
     },
     "name": {
      "type": "string",
-     "description": "Name of this landing page. This is a required field. Must be less than 256 characters long, and must be unique among landing pages of the same campaign."
+     "description": "Name of this landing page. This is a required field. It must be less than 256 characters long, and must be unique among landing pages of the same campaign."
     },
     "url": {
      "type": "string",
@@ -5067,7 +5227,7 @@
     },
     "metros": {
      "type": "array",
-     "description": "Metro collection",
+     "description": "Metro collection.",
      "items": {
       "$ref": "Metro"
      }
@@ -5116,7 +5276,7 @@
     },
     "mobileCarriers": {
      "type": "array",
-     "description": "Mobile carrier collection",
+     "description": "Mobile carrier collection.",
      "items": {
       "$ref": "MobileCarrier"
      }
@@ -5239,7 +5399,7 @@
     },
     "minorVersion": {
      "type": "string",
-     "description": "Minor version (number after first dot on the left) of this operating system version."
+     "description": "Minor version (number after the first dot) of this operating system version."
     },
     "name": {
      "type": "string",
@@ -5263,7 +5423,7 @@
     },
     "operatingSystemVersions": {
      "type": "array",
-     "description": "Operating system version collection",
+     "description": "Operating system version collection.",
      "items": {
       "$ref": "OperatingSystemVersion"
      }
@@ -5282,7 +5442,7 @@
     },
     "operatingSystems": {
      "type": "array",
-     "description": "Operating system collection",
+     "description": "Operating system collection.",
      "items": {
       "$ref": "OperatingSystem"
      }
@@ -5761,7 +5921,7 @@
     },
     "placementGroups": {
      "type": "array",
-     "description": "Placement group collection",
+     "description": "Placement group collection.",
      "items": {
       "$ref": "PlacementGroup"
      }
@@ -5784,7 +5944,7 @@
     },
     "placementStrategies": {
      "type": "array",
-     "description": "Placement strategy collection",
+     "description": "Placement strategy collection.",
      "items": {
       "$ref": "PlacementStrategy"
      }
@@ -5813,7 +5973,7 @@
     },
     "name": {
      "type": "string",
-     "description": "Name of this placement strategy. This is a required field. Must be less than 256 characters long and unique among placement strategies of the same account."
+     "description": "Name of this placement strategy. This is a required field. It must be less than 256 characters long and unique among placement strategies of the same account."
     }
    }
   },
@@ -5871,7 +6031,7 @@
     },
     "placements": {
      "type": "array",
-     "description": "Placement collection",
+     "description": "Placement collection.",
      "items": {
       "$ref": "Placement"
      }
@@ -5911,7 +6071,7 @@
     },
     "platformTypes": {
      "type": "array",
-     "description": "Platform type collection",
+     "description": "Platform type collection.",
      "items": {
       "$ref": "PlatformType"
      }
@@ -6006,7 +6166,7 @@
     },
     "postalCodes": {
      "type": "array",
-     "description": "Postal code collection",
+     "description": "Postal code collection.",
      "items": {
       "$ref": "PostalCode"
      }
@@ -6038,7 +6198,7 @@
     },
     "endDate": {
      "type": "string",
-     "description": "Placement end date. This date must be later than or be the same day as the placement start date, but not later than the campaign end date. If, for example, you set 6/25/2015 as both the start and end dates, the effective placement date is just that day only, 6/25/2015. The hours, minutes, and seconds of the end date should not be set, as doing so will result in an error. This field is required on insertion.",
+     "description": "Placement end date. This date must be later than, or the same day as, the placement start date, but not later than the campaign end date. If, for example, you set 6/25/2015 as both the start and end dates, the effective placement date is just that day only, 6/25/2015. The hours, minutes, and seconds of the end date should not be set, as doing so will result in an error. This field is required on insertion.",
      "format": "date"
     },
     "flighted": {
@@ -6077,7 +6237,7 @@
     },
     "startDate": {
      "type": "string",
-     "description": "Placement start date. This date cannot be earlier than the campaign start date. The hours, minutes, and seconds of the start date should not be set, as doing so will result in an error. This field is required on insertion.",
+     "description": "Placement start date. This date must be later than, or the same day as, the campaign start date. The hours, minutes, and seconds of the start date should not be set, as doing so will result in an error. This field is required on insertion.",
      "format": "date"
     },
     "testingStartDate": {
@@ -6094,7 +6254,7 @@
    "properties": {
     "endDate": {
      "type": "string",
-     "description": "Pricing period end date. This date must be later than or be the same day as the pricing period start date, but not later than the placement end date. The period end date can be the same date as the period start date. If, for example, you set 6/25/2015 as both the start and end dates, the effective pricing period date is just that day only, 6/25/2015. The hours, minutes, and seconds of the end date should not be set, as doing so will result in an error.",
+     "description": "Pricing period end date. This date must be later than, or the same day as, the pricing period start date, but not later than the placement end date. The period end date can be the same date as the period start date. If, for example, you set 6/25/2015 as both the start and end dates, the effective pricing period date is just that day only, 6/25/2015. The hours, minutes, and seconds of the end date should not be set, as doing so will result in an error.",
      "format": "date"
     },
     "pricingComment": {
@@ -6108,7 +6268,7 @@
     },
     "startDate": {
      "type": "string",
-     "description": "Pricing period start date. This date cannot be earlier than the placement start date. The hours, minutes, and seconds of the start date should not be set, as doing so will result in an error.",
+     "description": "Pricing period start date. This date must be later than, or the same day as, the placement start date. The hours, minutes, and seconds of the start date should not be set, as doing so will result in an error.",
      "format": "date"
     },
     "units": {
@@ -6290,7 +6450,7 @@
     },
     "regions": {
      "type": "array",
-     "description": "Region Collection.",
+     "description": "Region collection.",
      "items": {
       "$ref": "Region"
      }
@@ -7144,7 +7304,7 @@
     },
     "sizes": {
      "type": "array",
-     "description": "Size collection",
+     "description": "Size collection.",
      "items": {
       "$ref": "Size"
      }
@@ -7229,7 +7389,7 @@
     },
     "subaccounts": {
      "type": "array",
-     "description": "Subaccount collection",
+     "description": "Subaccount collection.",
      "items": {
       "$ref": "Subaccount"
      }
@@ -7497,6 +7657,7 @@
      "enum": [
       "U1",
       "U10",
+      "U100",
       "U11",
       "U12",
       "U13",
@@ -7508,15 +7669,174 @@
       "U19",
       "U2",
       "U20",
+      "U21",
+      "U22",
+      "U23",
+      "U24",
+      "U25",
+      "U26",
+      "U27",
+      "U28",
+      "U29",
       "U3",
+      "U30",
+      "U31",
+      "U32",
+      "U33",
+      "U34",
+      "U35",
+      "U36",
+      "U37",
+      "U38",
+      "U39",
       "U4",
+      "U40",
+      "U41",
+      "U42",
+      "U43",
+      "U44",
+      "U45",
+      "U46",
+      "U47",
+      "U48",
+      "U49",
       "U5",
+      "U50",
+      "U51",
+      "U52",
+      "U53",
+      "U54",
+      "U55",
+      "U56",
+      "U57",
+      "U58",
+      "U59",
       "U6",
+      "U60",
+      "U61",
+      "U62",
+      "U63",
+      "U64",
+      "U65",
+      "U66",
+      "U67",
+      "U68",
+      "U69",
       "U7",
+      "U70",
+      "U71",
+      "U72",
+      "U73",
+      "U74",
+      "U75",
+      "U76",
+      "U77",
+      "U78",
+      "U79",
       "U8",
-      "U9"
+      "U80",
+      "U81",
+      "U82",
+      "U83",
+      "U84",
+      "U85",
+      "U86",
+      "U87",
+      "U88",
+      "U89",
+      "U9",
+      "U90",
+      "U91",
+      "U92",
+      "U93",
+      "U94",
+      "U95",
+      "U96",
+      "U97",
+      "U98",
+      "U99"
      ],
      "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
       "",
       "",
       "",
@@ -7731,7 +8051,7 @@
     },
     "userRolePermissionGroups": {
      "type": "array",
-     "description": "User role permission group collection",
+     "description": "User role permission group collection.",
      "items": {
       "$ref": "UserRolePermissionGroup"
      }
@@ -7750,7 +8070,7 @@
     },
     "userRolePermissions": {
      "type": "array",
-     "description": "User role permission collection",
+     "description": "User role permission collection.",
      "items": {
       "$ref": "UserRolePermission"
      }
@@ -7773,7 +8093,7 @@
     },
     "userRoles": {
      "type": "array",
-     "description": "User role collection",
+     "description": "User role collection.",
      "items": {
       "$ref": "UserRole"
      }
@@ -8010,7 +8330,7 @@
       },
       "searchString": {
        "type": "string",
-       "description": "Allows searching for objects by name, ID or email. Wildcards (*) are allowed. For example, \"user profile*2015\" will return objects with names like \"user profile June 2015\", \"user profile April 2015\" or simply \"user profile 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"user profile\" will match objects with name \"my user profile\", \"user profile 2015\" or simply \"user profile\".",
+       "description": "Allows searching for objects by name, ID or email. Wildcards (*) are allowed. For example, \"user profile*2015\" will return objects with names like \"user profile June 2015\", \"user profile April 2015\", or simply \"user profile 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"user profile\" will match objects with name \"my user profile\", \"user profile 2015\", or simply \"user profile\".",
        "location": "query"
       },
       "sortField": {
@@ -8198,7 +8518,7 @@
       },
       "searchString": {
        "type": "string",
-       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"account*2015\" will return objects with names like \"account June 2015\", \"account April 2015\" or simply \"account 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"account\" will match objects with name \"my account\", \"account 2015\" or simply \"account\".",
+       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"account*2015\" will return objects with names like \"account June 2015\", \"account April 2015\", or simply \"account 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"account\" will match objects with name \"my account\", \"account 2015\", or simply \"account\".",
        "location": "query"
       },
       "sortField": {
@@ -8546,7 +8866,7 @@
       },
       "searchString": {
        "type": "string",
-       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"ad*2015\" will return objects with names like \"ad June 2015\", \"ad April 2015\" or simply \"ad 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"ad\" will match objects with name \"my ad\", \"ad 2015\" or simply \"ad\".",
+       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"ad*2015\" will return objects with names like \"ad June 2015\", \"ad April 2015\", or simply \"ad 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"ad\" will match objects with name \"my ad\", \"ad 2015\", or simply \"ad\".",
        "location": "query"
       },
       "sizeIds": {
@@ -8808,7 +9128,7 @@
       },
       "searchString": {
        "type": "string",
-       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"advertiser*2015\" will return objects with names like \"advertiser group June 2015\", \"advertiser group April 2015\" or simply \"advertiser group 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"advertisergroup\" will match objects with name \"my advertisergroup\", \"advertisergroup 2015\" or simply \"advertisergroup\".",
+       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"advertiser*2015\" will return objects with names like \"advertiser group June 2015\", \"advertiser group April 2015\", or simply \"advertiser group 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"advertisergroup\" will match objects with name \"my advertisergroup\", \"advertisergroup 2015\", or simply \"advertisergroup\".",
        "location": "query"
       },
       "sortField": {
@@ -9030,7 +9350,7 @@
       },
       "searchString": {
        "type": "string",
-       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"advertiser*2015\" will return objects with names like \"advertiser June 2015\", \"advertiser April 2015\" or simply \"advertiser 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"advertiser\" will match objects with name \"my advertiser\", \"advertiser 2015\" or simply \"advertiser\".",
+       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"advertiser*2015\" will return objects with names like \"advertiser June 2015\", \"advertiser April 2015\", or simply \"advertiser 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"advertiser\" will match objects with name \"my advertiser\", \"advertiser 2015\", or simply \"advertiser\".",
        "location": "query"
       },
       "sortField": {
@@ -9421,7 +9741,7 @@
       },
       "searchString": {
        "type": "string",
-       "description": "Allows searching for campaigns by name or ID. Wildcards (*) are allowed. For example, \"campaign*2015\" will return campaigns with names like \"campaign June 2015\", \"campaign April 2015\" or simply \"campaign 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"campaign\" will match campaigns with name \"my campaign\", \"campaign 2015\" or simply \"campaign\".",
+       "description": "Allows searching for campaigns by name or ID. Wildcards (*) are allowed. For example, \"campaign*2015\" will return campaigns with names like \"campaign June 2015\", \"campaign April 2015\", or simply \"campaign 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"campaign\" will match campaigns with name \"my campaign\", \"campaign 2015\", or simply \"campaign\".",
        "location": "query"
       },
       "sortField": {
@@ -9965,7 +10285,7 @@
       },
       "searchString": {
        "type": "string",
-       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"contentcategory*2015\" will return objects with names like \"contentcategory June 2015\", \"contentcategory April 2015\" or simply \"contentcategory 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"contentcategory\" will match objects with name \"my contentcategory\", \"contentcategory 2015\" or simply \"contentcategory\".",
+       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"contentcategory*2015\" will return objects with names like \"contentcategory June 2015\", \"contentcategory April 2015\", or simply \"contentcategory 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"contentcategory\" will match objects with name \"my contentcategory\", \"contentcategory 2015\", or simply \"contentcategory\".",
        "location": "query"
       },
       "sortField": {
@@ -10590,7 +10910,7 @@
       },
       "searchString": {
        "type": "string",
-       "description": "Allows searching for creative fields by name or ID. Wildcards (*) are allowed. For example, \"creativefield*2015\" will return creative fields with names like \"creativefield June 2015\", \"creativefield April 2015\" or simply \"creativefield 2015\". Most of the searches also add wild-cards implicitly at the start and the end of the search string. For example, a search string of \"creativefield\" will match creative fields with the name \"my creativefield\", \"creativefield 2015\" or simply \"creativefield\".",
+       "description": "Allows searching for creative fields by name or ID. Wildcards (*) are allowed. For example, \"creativefield*2015\" will return creative fields with names like \"creativefield June 2015\", \"creativefield April 2015\", or simply \"creativefield 2015\". Most of the searches also add wild-cards implicitly at the start and the end of the search string. For example, a search string of \"creativefield\" will match creative fields with the name \"my creativefield\", \"creativefield 2015\", or simply \"creativefield\".",
        "location": "query"
       },
       "sortField": {
@@ -10801,7 +11121,7 @@
       },
       "searchString": {
        "type": "string",
-       "description": "Allows searching for creative groups by name or ID. Wildcards (*) are allowed. For example, \"creativegroup*2015\" will return creative groups with names like \"creativegroup June 2015\", \"creativegroup April 2015\" or simply \"creativegroup 2015\". Most of the searches also add wild-cards implicitly at the start and the end of the search string. For example, a search string of \"creativegroup\" will match creative groups with the name \"my creativegroup\", \"creativegroup 2015\" or simply \"creativegroup\".",
+       "description": "Allows searching for creative groups by name or ID. Wildcards (*) are allowed. For example, \"creativegroup*2015\" will return creative groups with names like \"creativegroup June 2015\", \"creativegroup April 2015\", or simply \"creativegroup 2015\". Most of the searches also add wild-cards implicitly at the start and the end of the search string. For example, a search string of \"creativegroup\" will match creative groups with the name \"my creativegroup\", \"creativegroup 2015\", or simply \"creativegroup\".",
        "location": "query"
       },
       "sortField": {
@@ -11042,7 +11362,7 @@
       },
       "searchString": {
        "type": "string",
-       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"creative*2015\" will return objects with names like \"creative June 2015\", \"creative April 2015\" or simply \"creative 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"creative\" will match objects with name \"my creative\", \"creative 2015\" or simply \"creative\".",
+       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"creative*2015\" will return objects with names like \"creative June 2015\", \"creative April 2015\", or simply \"creative 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"creative\" will match objects with name \"my creative\", \"creative 2015\", or simply \"creative\".",
        "location": "query"
       },
       "sizeIds": {
@@ -11333,7 +11653,7 @@
       },
       "searchString": {
        "type": "string",
-       "description": "Allows searching for objects by name, ID or email. Wildcards (*) are allowed. For example, \"directory site contact*2015\" will return objects with names like \"directory site contact June 2015\", \"directory site contact April 2015\" or simply \"directory site contact 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"directory site contact\" will match objects with name \"my directory site contact\", \"directory site contact 2015\" or simply \"directory site contact\".",
+       "description": "Allows searching for objects by name, ID or email. Wildcards (*) are allowed. For example, \"directory site contact*2015\" will return objects with names like \"directory site contact June 2015\", \"directory site contact April 2015\", or simply \"directory site contact 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"directory site contact\" will match objects with name \"my directory site contact\", \"directory site contact 2015\", or simply \"directory site contact\".",
        "location": "query"
       },
       "sortField": {
@@ -11479,7 +11799,7 @@
       },
       "searchString": {
        "type": "string",
-       "description": "Allows searching for objects by name, ID or URL. Wildcards (*) are allowed. For example, \"directory site*2015\" will return objects with names like \"directory site June 2015\", \"directory site April 2015\" or simply \"directory site 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"directory site\" will match objects with name \"my directory site\", \"directory site 2015\" or simply \"directory site\".",
+       "description": "Allows searching for objects by name, ID or URL. Wildcards (*) are allowed. For example, \"directory site*2015\" will return objects with names like \"directory site June 2015\", \"directory site April 2015\", or simply \"directory site 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"directory site\" will match objects with name \"my directory site\", \"directory site 2015\" or simply, \"directory site\".",
        "location": "query"
       },
       "sortField": {
@@ -11677,7 +11997,7 @@
       },
       "searchString": {
        "type": "string",
-       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"eventtag*2015\" will return objects with names like \"eventtag June 2015\", \"eventtag April 2015\" or simply \"eventtag 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"eventtag\" will match objects with name \"my eventtag\", \"eventtag 2015\" or simply \"eventtag\".",
+       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"eventtag*2015\" will return objects with names like \"eventtag June 2015\", \"eventtag April 2015\", or simply \"eventtag 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"eventtag\" will match objects with name \"my eventtag\", \"eventtag 2015\", or simply \"eventtag\".",
        "location": "query"
       },
       "sortField": {
@@ -12094,7 +12414,7 @@
       },
       "searchString": {
        "type": "string",
-       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"floodlightactivity*2015\" will return objects with names like \"floodlightactivity June 2015\", \"floodlightactivity April 2015\" or simply \"floodlightactivity 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"floodlightactivity\" will match objects with name \"my floodlightactivity activity\", \"floodlightactivity 2015\" or simply \"floodlightactivity\".",
+       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"floodlightactivity*2015\" will return objects with names like \"floodlightactivity June 2015\", \"floodlightactivity April 2015\", or simply \"floodlightactivity 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"floodlightactivity\" will match objects with name \"my floodlightactivity activity\", \"floodlightactivity 2015\", or simply \"floodlightactivity\".",
        "location": "query"
       },
       "sortField": {
@@ -12301,19 +12621,19 @@
      "parameters": {
       "advertiserId": {
        "type": "string",
-       "description": "Select only floodlight activity groups with the specified advertiser ID. Must specify either ids, advertiserId, or floodlightConfigurationId for a non-empty result.",
+       "description": "Select only floodlight activity groups with the specified advertiser ID. Must specify either advertiserId or floodlightConfigurationId for a non-empty result.",
        "format": "int64",
        "location": "query"
       },
       "floodlightConfigurationId": {
        "type": "string",
-       "description": "Select only floodlight activity groups with the specified floodlight configuration ID. Must specify either ids, advertiserId, or floodlightConfigurationId for a non-empty result.",
+       "description": "Select only floodlight activity groups with the specified floodlight configuration ID. Must specify either advertiserId, or floodlightConfigurationId for a non-empty result.",
        "format": "int64",
        "location": "query"
       },
       "ids": {
        "type": "string",
-       "description": "Select only floodlight activity groups with the specified IDs. Must specify either ids, advertiserId, or floodlightConfigurationId for a non-empty result.",
+       "description": "Select only floodlight activity groups with the specified IDs. Must specify either advertiserId or floodlightConfigurationId for a non-empty result.",
        "format": "int64",
        "repeated": true,
        "location": "query"
@@ -12338,7 +12658,7 @@
       },
       "searchString": {
        "type": "string",
-       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"floodlightactivitygroup*2015\" will return objects with names like \"floodlightactivitygroup June 2015\", \"floodlightactivitygroup April 2015\" or simply \"floodlightactivitygroup 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"floodlightactivitygroup\" will match objects with name \"my floodlightactivitygroup activity\", \"floodlightactivitygroup 2015\" or simply \"floodlightactivitygroup\".",
+       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"floodlightactivitygroup*2015\" will return objects with names like \"floodlightactivitygroup June 2015\", \"floodlightactivitygroup April 2015\", or simply \"floodlightactivitygroup 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"floodlightactivitygroup\" will match objects with name \"my floodlightactivitygroup activity\", \"floodlightactivitygroup 2015\", or simply \"floodlightactivitygroup\".",
        "location": "query"
       },
       "sortField": {
@@ -13089,7 +13409,7 @@
       },
       "searchString": {
        "type": "string",
-       "description": "Allows searching for placement groups by name or ID. Wildcards (*) are allowed. For example, \"placement*2015\" will return placement groups with names like \"placement group June 2015\", \"placement group May 2015\" or simply \"placements 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"placementgroup\" will match placement groups with name \"my placementgroup\", \"placementgroup 2015\" or simply \"placementgroup\".",
+       "description": "Allows searching for placement groups by name or ID. Wildcards (*) are allowed. For example, \"placement*2015\" will return placement groups with names like \"placement group June 2015\", \"placement group May 2015\", or simply \"placements 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"placementgroup\" will match placement groups with name \"my placementgroup\", \"placementgroup 2015\", or simply \"placementgroup\".",
        "location": "query"
       },
       "siteIds": {
@@ -13323,7 +13643,7 @@
       },
       "searchString": {
        "type": "string",
-       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"placementstrategy*2015\" will return objects with names like \"placementstrategy June 2015\", \"placementstrategy April 2015\" or simply \"placementstrategy 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"placementstrategy\" will match objects with name \"my placementstrategy\", \"placementstrategy 2015\" or simply \"placementstrategy\".",
+       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"placementstrategy*2015\" will return objects with names like \"placementstrategy June 2015\", \"placementstrategy April 2015\", or simply \"placementstrategy 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"placementstrategy\" will match objects with name \"my placementstrategy\", \"placementstrategy 2015\", or simply \"placementstrategy\".",
        "location": "query"
       },
       "sortField": {
@@ -13694,7 +14014,7 @@
       },
       "searchString": {
        "type": "string",
-       "description": "Allows searching for placements by name or ID. Wildcards (*) are allowed. For example, \"placement*2015\" will return placements with names like \"placement June 2015\", \"placement May 2015\" or simply \"placements 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"placement\" will match placements with name \"my placement\", \"placement 2015\" or simply \"placement\".",
+       "description": "Allows searching for placements by name or ID. Wildcards (*) are allowed. For example, \"placement*2015\" will return placements with names like \"placement June 2015\", \"placement May 2015\", or simply \"placements 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"placement\" will match placements with name \"my placement\", \"placement 2015\", or simply \"placement\".",
        "location": "query"
       },
       "siteIds": {
@@ -14460,7 +14780,7 @@
       },
       "searchString": {
        "type": "string",
-       "description": "Allows searching for objects by name, ID or keyName. Wildcards (*) are allowed. For example, \"site*2015\" will return objects with names like \"site June 2015\", \"site April 2015\" or simply \"site 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"site\" will match objects with name \"my site\", \"site 2015\" or simply \"site\".",
+       "description": "Allows searching for objects by name, ID or keyName. Wildcards (*) are allowed. For example, \"site*2015\" will return objects with names like \"site June 2015\", \"site April 2015\", or simply \"site 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"site\" will match objects with name \"my site\", \"site 2015\", or simply \"site\".",
        "location": "query"
       },
       "sortField": {
@@ -14780,7 +15100,7 @@
       },
       "searchString": {
        "type": "string",
-       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"subaccount*2015\" will return objects with names like \"subaccount June 2015\", \"subaccount April 2015\" or simply \"subaccount 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"subaccount\" will match objects with name \"my subaccount\", \"subaccount 2015\" or simply \"subaccount\".",
+       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"subaccount*2015\" will return objects with names like \"subaccount June 2015\", \"subaccount April 2015\", or simply \"subaccount 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"subaccount\" will match objects with name \"my subaccount\", \"subaccount 2015\", or simply \"subaccount\".",
        "location": "query"
       },
       "sortField": {
@@ -15181,7 +15501,7 @@
       },
       "searchString": {
        "type": "string",
-       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"userrole*2015\" will return objects with names like \"userrole June 2015\", \"userrole April 2015\" or simply \"userrole 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"userrole\" will match objects with name \"my userrole\", \"userrole 2015\" or simply \"userrole\".",
+       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"userrole*2015\" will return objects with names like \"userrole June 2015\", \"userrole April 2015\", or simply \"userrole 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"userrole\" will match objects with name \"my userrole\", \"userrole 2015\", or simply \"userrole\".",
        "location": "query"
       },
       "sortField": {

@@ -597,8 +597,8 @@ type InstanceGroupManagersDeleteInstancesCall struct {
 }
 
 // DeleteInstances: Deletes the specified instances. The instances are
-// removed from the instance group and any target pools of which they
-// are a member, then deleted. The targetSize of the instance group
+// deleted, then removed from the instance group and any target pools of
+// which they were a member. The targetSize of the instance group
 // manager is reduced by the number of instances deleted.
 func (r *InstanceGroupManagersService) DeleteInstances(project string, zone string, instanceGroupManager string, instancegroupmanagersdeleteinstancesrequest *InstanceGroupManagersDeleteInstancesRequest) *InstanceGroupManagersDeleteInstancesCall {
 	c := &InstanceGroupManagersDeleteInstancesCall{s: r.s, opt_: make(map[string]interface{})}
@@ -653,7 +653,7 @@ func (c *InstanceGroupManagersDeleteInstancesCall) Do() (*Operation, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes the specified instances. The instances are removed from the instance group and any target pools of which they are a member, then deleted. The targetSize of the instance group manager is reduced by the number of instances deleted.",
+	//   "description": "Deletes the specified instances. The instances are deleted, then removed from the instance group and any target pools of which they were a member. The targetSize of the instance group manager is reduced by the number of instances deleted.",
 	//   "httpMethod": "POST",
 	//   "id": "replicapool.instanceGroupManagers.deleteInstances",
 	//   "parameterOrder": [

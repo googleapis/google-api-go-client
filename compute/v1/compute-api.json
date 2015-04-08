@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/O_5j_7aKimaeibrW3NmYraO3Ajs\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/X7hvmvZAuE2GX5lBTJUD_xWfVrI\"",
  "discoveryVersion": "v1",
  "id": "compute:v1",
  "name": "compute",
  "version": "v1",
- "revision": "20150302",
+ "revision": "20150326",
  "title": "Compute Engine API",
  "description": "API for the Google Compute Engine service.",
  "ownerDomain": "google.com",
@@ -1714,6 +1714,10 @@
      "type": "boolean",
      "description": "Allows this instance to send and receive packets with non-matching destination or source IPs. This is required if you plan to use this instance to forward routes. For more information, see Enabling IP Forwarding."
     },
+    "cpuPlatform": {
+     "type": "string",
+     "description": "[Output Only] The CPU platform used by this instance."
+    },
     "creationTimestamp": {
      "type": "string",
      "description": "[Output Only] Creation timestamp in RFC3339 text format."
@@ -2953,6 +2957,7 @@
       "FORWARDING_RULES",
       "HEALTH_CHECKS",
       "IMAGES",
+      "INSTANCES",
       "IN_USE_ADDRESSES",
       "LOCAL_SSD_TOTAL_GB",
       "NETWORKS",
@@ -2966,6 +2971,7 @@
       "URL_MAPS"
      ],
      "enumDescriptions": [
+      "",
       "",
       "",
       "",
@@ -3163,6 +3169,10 @@
     "nextHopNetwork": {
      "type": "string",
      "description": "The URL of the local network if it should handle matching packets."
+    },
+    "nextHopVpnTunnel": {
+     "type": "string",
+     "description": "The URL to a VpnTunnel that should handle matching packets."
     },
     "priority": {
      "type": "integer",
@@ -4033,6 +4043,223 @@
     }
    }
   },
+  "TargetVpnGateway": {
+   "id": "TargetVpnGateway",
+   "type": "object",
+   "properties": {
+    "creationTimestamp": {
+     "type": "string",
+     "description": "[Output Only] Creation timestamp in RFC3339 text format."
+    },
+    "description": {
+     "type": "string",
+     "description": "An optional textual description of the resource. Provided by the client when the resource is created."
+    },
+    "forwardingRules": {
+     "type": "array",
+     "description": "[Output Only] A list of URLs to the ForwardingRule resources. ForwardingRules are created using compute.forwardingRules.insert and associated to a VPN gateway.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "id": {
+     "type": "string",
+     "description": "[Output Only] Unique identifier for the resource. Defined by the server.",
+     "format": "uint64"
+    },
+    "kind": {
+     "type": "string",
+     "description": "[Output Only] Type of resource. Always compute#targetVpnGateway for target VPN gateways.",
+     "default": "compute#targetVpnGateway"
+    },
+    "name": {
+     "type": "string",
+     "description": "Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long and comply with RFC1035.",
+     "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+     "annotations": {
+      "required": [
+       "compute.targetVpnGateways.insert"
+      ]
+     }
+    },
+    "network": {
+     "type": "string",
+     "description": "URL of the network to which this VPN gateway is attached. Provided by the client when the VPN gateway is created.",
+     "annotations": {
+      "required": [
+       "compute.targetVpnGateways.insert"
+      ]
+     }
+    },
+    "region": {
+     "type": "string",
+     "description": "[Output Only] URL of the region where the target VPN gateway resides."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "[Output Only] Server-defined URL for the resource."
+    },
+    "status": {
+     "type": "string",
+     "description": "[Output Only] The status of the VPN gateway.",
+     "enum": [
+      "CREATING",
+      "DELETING",
+      "FAILED",
+      "READY"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "tunnels": {
+     "type": "array",
+     "description": "[Output Only] A list of URLs to VpnTunnel resources. VpnTunnels are created using compute.vpntunnels.insert and associated to a VPN gateway.",
+     "items": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  "TargetVpnGatewayAggregatedList": {
+   "id": "TargetVpnGatewayAggregatedList",
+   "type": "object",
+   "properties": {
+    "id": {
+     "type": "string",
+     "description": "[Output Only] Unique identifier for the resource. Defined by the server."
+    },
+    "items": {
+     "type": "object",
+     "description": "A map of scoped target vpn gateway lists.",
+     "additionalProperties": {
+      "$ref": "TargetVpnGatewaysScopedList",
+      "description": "[Output Only] Name of the scope containing this set of target vpn gateways."
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "[Output Only] Type of resource. Always compute#targetVpnGateway for target VPN gateways.",
+     "default": "compute#targetVpnGatewayAggregatedList"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "[Output Only] A token used to continue a truncated list request."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "[Output Only] Server-defined URL for the resource."
+    }
+   }
+  },
+  "TargetVpnGatewayList": {
+   "id": "TargetVpnGatewayList",
+   "type": "object",
+   "description": "Contains a list of TargetVpnGateway resources.",
+   "properties": {
+    "id": {
+     "type": "string",
+     "description": "[Output Only] Unique identifier for the resource. Defined by the server."
+    },
+    "items": {
+     "type": "array",
+     "description": "[Output Only] A list of TargetVpnGateway resources.",
+     "items": {
+      "$ref": "TargetVpnGateway"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "[Output Only] Type of resource. Always compute#targetVpnGateway for target VPN gateways.",
+     "default": "compute#targetVpnGatewayList"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "[Output Only] A token used to continue a truncated list request."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "[Output Only] Server-defined URL for the resource."
+    }
+   }
+  },
+  "TargetVpnGatewaysScopedList": {
+   "id": "TargetVpnGatewaysScopedList",
+   "type": "object",
+   "properties": {
+    "targetVpnGateways": {
+     "type": "array",
+     "description": "[Output Only] List of target vpn gateways contained in this scope.",
+     "items": {
+      "$ref": "TargetVpnGateway"
+     }
+    },
+    "warning": {
+     "type": "object",
+     "description": "[Output Only] Informational warning which replaces the list of addresses when the list is empty.",
+     "properties": {
+      "code": {
+       "type": "string",
+       "description": "[Output Only] The warning type identifier for this warning.",
+       "enum": [
+        "DEPRECATED_RESOURCE_USED",
+        "DISK_SIZE_LARGER_THAN_IMAGE_SIZE",
+        "INJECTED_KERNELS_DEPRECATED",
+        "NEXT_HOP_ADDRESS_NOT_ASSIGNED",
+        "NEXT_HOP_CANNOT_IP_FORWARD",
+        "NEXT_HOP_INSTANCE_NOT_FOUND",
+        "NEXT_HOP_INSTANCE_NOT_ON_NETWORK",
+        "NEXT_HOP_NOT_RUNNING",
+        "NO_RESULTS_ON_PAGE",
+        "REQUIRED_TOS_AGREEMENT",
+        "RESOURCE_NOT_DELETED",
+        "SINGLE_INSTANCE_PROPERTY_TEMPLATE",
+        "UNREACHABLE"
+       ],
+       "enumDescriptions": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+       ]
+      },
+      "data": {
+       "type": "array",
+       "description": "[Output Only] Metadata for this warning in key: value format.",
+       "items": {
+        "type": "object",
+        "properties": {
+         "key": {
+          "type": "string",
+          "description": "[Output Only] A key for the warning data."
+         },
+         "value": {
+          "type": "string",
+          "description": "[Output Only] A warning data value corresponding to the key."
+         }
+        }
+       }
+      },
+      "message": {
+       "type": "string",
+       "description": "[Output Only] Optional human-readable details for this warning."
+      }
+     }
+    }
+   }
+  },
   "TestFailure": {
    "id": "TestFailure",
    "type": "object",
@@ -4236,6 +4463,247 @@
     "reportNamePrefix": {
      "type": "string",
      "description": "An optional prefix for the name of the usage report object stored in bucketName. If not supplied, defaults to usage. The report is stored as a CSV file named report_name_prefix_gce_YYYYMMDD.csv where YYYYMMDD is the day of the usage according to Pacific Time. If you supply a prefix, it should conform to Cloud Storage object naming conventions."
+    }
+   }
+  },
+  "VpnTunnel": {
+   "id": "VpnTunnel",
+   "type": "object",
+   "properties": {
+    "creationTimestamp": {
+     "type": "string",
+     "description": "[Output Only] Creation timestamp in RFC3339 text format."
+    },
+    "description": {
+     "type": "string",
+     "description": "An optional textual description of the resource. Provided by the client when the resource is created."
+    },
+    "detailedStatus": {
+     "type": "string",
+     "description": "[Output Only] Detailed status message for the VPN tunnel."
+    },
+    "id": {
+     "type": "string",
+     "description": "[Output Only] Unique identifier for the resource. Defined by the server.",
+     "format": "uint64"
+    },
+    "ikeNetworks": {
+     "type": "array",
+     "description": "IKE networks to use when establishing the VPN tunnel with peer VPN gateway. The value should be a CIDR formatted string, for example: 192.168.0.0/16. The ranges should be disjoint.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "ikeVersion": {
+     "type": "integer",
+     "description": "IKE protocol version to use when establishing the VPN tunnel with peer VPN gateway. Acceptable IKE versions are 1 or 2. Default version is 2.",
+     "format": "int32"
+    },
+    "kind": {
+     "type": "string",
+     "description": "[Output Only] Type of resource. Always compute#vpnTunnel for VPN tunnels.",
+     "default": "compute#vpnTunnel"
+    },
+    "name": {
+     "type": "string",
+     "description": "Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long and comply with RFC1035.",
+     "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+     "annotations": {
+      "required": [
+       "compute.vpnTunnels.insert"
+      ]
+     }
+    },
+    "peerIp": {
+     "type": "string",
+     "description": "IP address of the peer VPN gateway."
+    },
+    "region": {
+     "type": "string",
+     "description": "[Output Only] URL of the region where the VPN tunnel resides."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "[Output Only] Server defined URL for the resource."
+    },
+    "sharedSecret": {
+     "type": "string",
+     "description": "Shared secret used to set the secure session between the GCE VPN gateway and the peer VPN gateway."
+    },
+    "sharedSecretHash": {
+     "type": "string",
+     "description": "Hash of the shared secret."
+    },
+    "status": {
+     "type": "string",
+     "description": "[Output Only] The status of the VPN tunnel.",
+     "enum": [
+      "AUTHORIZATION_ERROR",
+      "DEPROVISIONING",
+      "ESTABLISHED",
+      "FAILED",
+      "FIRST_HANDSHAKE",
+      "NEGOTIATION_FAILURE",
+      "NETWORK_ERROR",
+      "PROVISIONING",
+      "WAITING_FOR_FULL_CONFIG"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "targetVpnGateway": {
+     "type": "string",
+     "description": "URL of the VPN gateway to which this VPN tunnel is associated. Provided by the client when the VPN tunnel is created.",
+     "annotations": {
+      "required": [
+       "compute.vpnTunnels.insert"
+      ]
+     }
+    }
+   }
+  },
+  "VpnTunnelAggregatedList": {
+   "id": "VpnTunnelAggregatedList",
+   "type": "object",
+   "properties": {
+    "id": {
+     "type": "string",
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
+    },
+    "items": {
+     "type": "object",
+     "description": "[Output Only] A map of scoped vpn tunnel lists.",
+     "additionalProperties": {
+      "$ref": "VpnTunnelsScopedList",
+      "description": "Name of the scope containing this set of vpn tunnels."
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "[Output Only] Type of resource. Always compute#vpnTunnel for VPN tunnels.",
+     "default": "compute#vpnTunnelAggregatedList"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "[Output Only] A token used to continue a truncated list request."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "[Output Only] Server defined URL for this resource."
+    }
+   }
+  },
+  "VpnTunnelList": {
+   "id": "VpnTunnelList",
+   "type": "object",
+   "description": "Contains a list of VpnTunnel resources.",
+   "properties": {
+    "id": {
+     "type": "string",
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
+    },
+    "items": {
+     "type": "array",
+     "description": "[Output Only] A list of VpnTunnel resources.",
+     "items": {
+      "$ref": "VpnTunnel"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "[Output Only] Type of resource. Always compute#vpnTunnel for VPN tunnels.",
+     "default": "compute#vpnTunnelList"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "[Output Only] A token used to continue a truncated list request."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "[Output Only] Server-defined URL for the resource."
+    }
+   }
+  },
+  "VpnTunnelsScopedList": {
+   "id": "VpnTunnelsScopedList",
+   "type": "object",
+   "properties": {
+    "vpnTunnels": {
+     "type": "array",
+     "description": "List of vpn tunnels contained in this scope.",
+     "items": {
+      "$ref": "VpnTunnel"
+     }
+    },
+    "warning": {
+     "type": "object",
+     "description": "Informational warning which replaces the list of addresses when the list is empty.",
+     "properties": {
+      "code": {
+       "type": "string",
+       "description": "[Output Only] The warning type identifier for this warning.",
+       "enum": [
+        "DEPRECATED_RESOURCE_USED",
+        "DISK_SIZE_LARGER_THAN_IMAGE_SIZE",
+        "INJECTED_KERNELS_DEPRECATED",
+        "NEXT_HOP_ADDRESS_NOT_ASSIGNED",
+        "NEXT_HOP_CANNOT_IP_FORWARD",
+        "NEXT_HOP_INSTANCE_NOT_FOUND",
+        "NEXT_HOP_INSTANCE_NOT_ON_NETWORK",
+        "NEXT_HOP_NOT_RUNNING",
+        "NO_RESULTS_ON_PAGE",
+        "REQUIRED_TOS_AGREEMENT",
+        "RESOURCE_NOT_DELETED",
+        "SINGLE_INSTANCE_PROPERTY_TEMPLATE",
+        "UNREACHABLE"
+       ],
+       "enumDescriptions": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+       ]
+      },
+      "data": {
+       "type": "array",
+       "description": "[Output Only] Metadata for this warning in key: value format.",
+       "items": {
+        "type": "object",
+        "properties": {
+         "key": {
+          "type": "string",
+          "description": "[Output Only] A key for the warning data."
+         },
+         "value": {
+          "type": "string",
+          "description": "[Output Only] A warning data value corresponding to the key."
+         }
+        }
+       }
+      },
+      "message": {
+       "type": "string",
+       "description": "[Output Only] Optional human-readable details for this warning."
+      }
+     }
     }
    }
   },
@@ -9354,6 +9822,227 @@
     }
    }
   },
+  "targetVpnGateways": {
+   "methods": {
+    "aggregatedList": {
+     "id": "compute.targetVpnGateways.aggregatedList",
+     "path": "{project}/aggregated/targetVpnGateways",
+     "httpMethod": "GET",
+     "description": "Retrieves the list of target VPN gateways grouped by scope.",
+     "parameters": {
+      "filter": {
+       "type": "string",
+       "description": "Optional. Filter expression for filtering listed resources.",
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "default": "500",
+       "format": "uint32",
+       "minimum": "0",
+       "maximum": "500",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+       "location": "query"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project"
+     ],
+     "response": {
+      "$ref": "TargetVpnGatewayAggregatedList"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "delete": {
+     "id": "compute.targetVpnGateways.delete",
+     "path": "{project}/regions/{region}/targetVpnGateways/{targetVpnGateway}",
+     "httpMethod": "DELETE",
+     "description": "Deletes the specified TargetVpnGateway resource.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "The name of the region for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "targetVpnGateway": {
+       "type": "string",
+       "description": "Name of the TargetVpnGateway resource to delete.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region",
+      "targetVpnGateway"
+     ],
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "get": {
+     "id": "compute.targetVpnGateways.get",
+     "path": "{project}/regions/{region}/targetVpnGateways/{targetVpnGateway}",
+     "httpMethod": "GET",
+     "description": "Returns the specified TargetVpnGateway resource.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "The name of the region for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "targetVpnGateway": {
+       "type": "string",
+       "description": "Name of the TargetVpnGateway resource to return.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region",
+      "targetVpnGateway"
+     ],
+     "response": {
+      "$ref": "TargetVpnGateway"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "insert": {
+     "id": "compute.targetVpnGateways.insert",
+     "path": "{project}/regions/{region}/targetVpnGateways",
+     "httpMethod": "POST",
+     "description": "Creates a TargetVpnGateway resource in the specified project and region using the data included in the request.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "The name of the region for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region"
+     ],
+     "request": {
+      "$ref": "TargetVpnGateway"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "list": {
+     "id": "compute.targetVpnGateways.list",
+     "path": "{project}/regions/{region}/targetVpnGateways",
+     "httpMethod": "GET",
+     "description": "Retrieves the list of TargetVpnGateway resources available to the specified project and region.",
+     "parameters": {
+      "filter": {
+       "type": "string",
+       "description": "Optional. Filter expression for filtering listed resources.",
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "default": "500",
+       "format": "uint32",
+       "minimum": "0",
+       "maximum": "500",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+       "location": "query"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "The name of the region for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region"
+     ],
+     "response": {
+      "$ref": "TargetVpnGatewayList"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    }
+   }
+  },
   "urlMaps": {
    "methods": {
     "delete": {
@@ -9602,6 +10291,227 @@
      "scopes": [
       "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
+     ]
+    }
+   }
+  },
+  "vpnTunnels": {
+   "methods": {
+    "aggregatedList": {
+     "id": "compute.vpnTunnels.aggregatedList",
+     "path": "{project}/aggregated/vpnTunnels",
+     "httpMethod": "GET",
+     "description": "Retrieves the list of VPN tunnels grouped by scope.",
+     "parameters": {
+      "filter": {
+       "type": "string",
+       "description": "Optional. Filter expression for filtering listed resources.",
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "default": "500",
+       "format": "uint32",
+       "minimum": "0",
+       "maximum": "500",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+       "location": "query"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project"
+     ],
+     "response": {
+      "$ref": "VpnTunnelAggregatedList"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "delete": {
+     "id": "compute.vpnTunnels.delete",
+     "path": "{project}/regions/{region}/vpnTunnels/{vpnTunnel}",
+     "httpMethod": "DELETE",
+     "description": "Deletes the specified VpnTunnel resource.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "The name of the region for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "vpnTunnel": {
+       "type": "string",
+       "description": "Name of the VpnTunnel resource to delete.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region",
+      "vpnTunnel"
+     ],
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "get": {
+     "id": "compute.vpnTunnels.get",
+     "path": "{project}/regions/{region}/vpnTunnels/{vpnTunnel}",
+     "httpMethod": "GET",
+     "description": "Returns the specified VpnTunnel resource.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "The name of the region for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "vpnTunnel": {
+       "type": "string",
+       "description": "Name of the VpnTunnel resource to return.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region",
+      "vpnTunnel"
+     ],
+     "response": {
+      "$ref": "VpnTunnel"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "insert": {
+     "id": "compute.vpnTunnels.insert",
+     "path": "{project}/regions/{region}/vpnTunnels",
+     "httpMethod": "POST",
+     "description": "Creates a VpnTunnel resource in the specified project and region using the data included in the request.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "The name of the region for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region"
+     ],
+     "request": {
+      "$ref": "VpnTunnel"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "list": {
+     "id": "compute.vpnTunnels.list",
+     "path": "{project}/regions/{region}/vpnTunnels",
+     "httpMethod": "GET",
+     "description": "Retrieves the list of VpnTunnel resources contained in the specified project and region.",
+     "parameters": {
+      "filter": {
+       "type": "string",
+       "description": "Optional. Filter expression for filtering listed resources.",
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "default": "500",
+       "format": "uint32",
+       "minimum": "0",
+       "maximum": "500",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+       "location": "query"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "The name of the region for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region"
+     ],
+     "response": {
+      "$ref": "VpnTunnelList"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
      ]
     }
    }

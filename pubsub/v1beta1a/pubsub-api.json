@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/DzLQ-VL8eehvuaCXtFxXGiH0oVI\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/GLBm_Zx9lfMexTYRyeS3dLRfGVc\"",
  "discoveryVersion": "v1",
  "id": "pubsub:v1beta1a",
  "name": "pubsub",
  "version": "v1beta1a",
- "revision": "20150213",
+ "revision": "20150326",
  "title": "Google Cloud Pub/Sub API",
  "description": "Provides reliable, many-to-many, asynchronous messaging between applications.",
  "ownerDomain": "google.com",
@@ -535,7 +535,7 @@
      "id": "pubsub.topics.delete",
      "path": "topics/{+topic}",
      "httpMethod": "DELETE",
-     "description": "Deletes the topic with the given name. All subscriptions to this topic are also deleted. Returns NOT_FOUND if the topic does not exist. After a topic is deleted, a new topic may be created with the same name.",
+     "description": "Deletes the topic with the given name. Returns NOT_FOUND if the topic does not exist. After a topic is deleted, a new topic may be created with the same name.",
      "parameters": {
       "topic": {
        "type": "string",

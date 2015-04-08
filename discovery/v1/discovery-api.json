@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"kEk3sFj6Ef5_yR1-H3bAO6qw9mI/UNFMI_ENJ3hAFRWSi4GLSerTeFg\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/rJ-Wlqqs_yJDjtCFAIylPtmqXPY\"",
  "discoveryVersion": "v1",
  "id": "discovery:v1",
  "name": "discovery",
@@ -590,6 +590,10 @@
     "supportsSubscription": {
      "type": "boolean",
      "description": "Whether this method supports subscriptions."
+    },
+    "useMediaDownloadService": {
+     "type": "boolean",
+     "description": "Indicates that downloads from this method should use the download service URL (i.e. \"/download\"). Only applies if the method supports media download."
     }
    }
   },

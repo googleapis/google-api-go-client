@@ -429,7 +429,7 @@ type App struct {
 
 	// OpenUrlTemplate: The template url for opening files with this app.
 	// The template will contain {ids} and/or {exportIds} to be replaced by
-	// the actual file ids.
+	// the actual file ids. See  Open Files  for the full documentation.
 	OpenUrlTemplate string `json:"openUrlTemplate,omitempty"`
 
 	// PrimaryFileExtensions: The list of primary file extensions.
@@ -3530,9 +3530,19 @@ func (r *FilesService) Get(fileId string) *FilesGetCall {
 
 // AcknowledgeAbuse sets the optional parameter "acknowledgeAbuse":
 // Whether the user is acknowledging the risk of downloading known
-// malware or other abusive files.
+// malware or other abusive files. Ignored unless alt=media is
+// specified.
 func (c *FilesGetCall) AcknowledgeAbuse(acknowledgeAbuse bool) *FilesGetCall {
 	c.opt_["acknowledgeAbuse"] = acknowledgeAbuse
+	return c
+}
+
+// Alt sets the optional parameter "alt": Specifies the type of resource
+// representation to return. The default is 'json' to return file
+// metadata. Specifying 'media' will cause the file content to be
+// returned.
+func (c *FilesGetCall) Alt(alt string) *FilesGetCall {
+	c.opt_["alt"] = alt
 	return c
 }
 
@@ -3540,6 +3550,14 @@ func (c *FilesGetCall) AcknowledgeAbuse(acknowledgeAbuse bool) *FilesGetCall {
 // is deprecated and has no function.
 func (c *FilesGetCall) Projection(projection string) *FilesGetCall {
 	c.opt_["projection"] = projection
+	return c
+}
+
+// RevisionId sets the optional parameter "revisionId": Specifies the
+// Revision ID that should be downloaded. Ignored unless alt=media is
+// specified.
+func (c *FilesGetCall) RevisionId(revisionId string) *FilesGetCall {
+	c.opt_["revisionId"] = revisionId
 	return c
 }
 
@@ -3566,8 +3584,14 @@ func (c *FilesGetCall) Do() (*File, error) {
 	if v, ok := c.opt_["acknowledgeAbuse"]; ok {
 		params.Set("acknowledgeAbuse", fmt.Sprintf("%v", v))
 	}
+	if v, ok := c.opt_["alt"]; ok {
+		params.Set("alt", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["projection"]; ok {
 		params.Set("projection", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["revisionId"]; ok {
+		params.Set("revisionId", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["updateViewedDate"]; ok {
 		params.Set("updateViewedDate", fmt.Sprintf("%v", v))
@@ -3605,9 +3629,14 @@ func (c *FilesGetCall) Do() (*File, error) {
 	//   "parameters": {
 	//     "acknowledgeAbuse": {
 	//       "default": "false",
-	//       "description": "Whether the user is acknowledging the risk of downloading known malware or other abusive files.",
+	//       "description": "Whether the user is acknowledging the risk of downloading known malware or other abusive files. Ignored unless alt=media is specified.",
 	//       "location": "query",
 	//       "type": "boolean"
+	//     },
+	//     "alt": {
+	//       "description": "Specifies the type of resource representation to return. The default is 'json' to return file metadata. Specifying 'media' will cause the file content to be returned.",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "fileId": {
 	//       "description": "The ID for the file in question.",
@@ -3625,6 +3654,11 @@ func (c *FilesGetCall) Do() (*File, error) {
 	//         "Deprecated",
 	//         "Deprecated"
 	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "revisionId": {
+	//       "description": "Specifies the Revision ID that should be downloaded. Ignored unless alt=media is specified.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5034,9 +5068,19 @@ func (r *FilesService) Watch(fileId string, channel *Channel) *FilesWatchCall {
 
 // AcknowledgeAbuse sets the optional parameter "acknowledgeAbuse":
 // Whether the user is acknowledging the risk of downloading known
-// malware or other abusive files.
+// malware or other abusive files. Ignored unless alt=media is
+// specified.
 func (c *FilesWatchCall) AcknowledgeAbuse(acknowledgeAbuse bool) *FilesWatchCall {
 	c.opt_["acknowledgeAbuse"] = acknowledgeAbuse
+	return c
+}
+
+// Alt sets the optional parameter "alt": Specifies the type of resource
+// representation to return. The default is 'json' to return file
+// metadata. Specifying 'media' will cause the file content to be
+// returned.
+func (c *FilesWatchCall) Alt(alt string) *FilesWatchCall {
+	c.opt_["alt"] = alt
 	return c
 }
 
@@ -5044,6 +5088,14 @@ func (c *FilesWatchCall) AcknowledgeAbuse(acknowledgeAbuse bool) *FilesWatchCall
 // is deprecated and has no function.
 func (c *FilesWatchCall) Projection(projection string) *FilesWatchCall {
 	c.opt_["projection"] = projection
+	return c
+}
+
+// RevisionId sets the optional parameter "revisionId": Specifies the
+// Revision ID that should be downloaded. Ignored unless alt=media is
+// specified.
+func (c *FilesWatchCall) RevisionId(revisionId string) *FilesWatchCall {
+	c.opt_["revisionId"] = revisionId
 	return c
 }
 
@@ -5075,8 +5127,14 @@ func (c *FilesWatchCall) Do() (*Channel, error) {
 	if v, ok := c.opt_["acknowledgeAbuse"]; ok {
 		params.Set("acknowledgeAbuse", fmt.Sprintf("%v", v))
 	}
+	if v, ok := c.opt_["alt"]; ok {
+		params.Set("alt", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["projection"]; ok {
 		params.Set("projection", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["revisionId"]; ok {
+		params.Set("revisionId", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["updateViewedDate"]; ok {
 		params.Set("updateViewedDate", fmt.Sprintf("%v", v))
@@ -5115,9 +5173,14 @@ func (c *FilesWatchCall) Do() (*Channel, error) {
 	//   "parameters": {
 	//     "acknowledgeAbuse": {
 	//       "default": "false",
-	//       "description": "Whether the user is acknowledging the risk of downloading known malware or other abusive files.",
+	//       "description": "Whether the user is acknowledging the risk of downloading known malware or other abusive files. Ignored unless alt=media is specified.",
 	//       "location": "query",
 	//       "type": "boolean"
+	//     },
+	//     "alt": {
+	//       "description": "Specifies the type of resource representation to return. The default is 'json' to return file metadata. Specifying 'media' will cause the file content to be returned.",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "fileId": {
 	//       "description": "The ID for the file in question.",
@@ -5135,6 +5198,11 @@ func (c *FilesWatchCall) Do() (*Channel, error) {
 	//         "Deprecated",
 	//         "Deprecated"
 	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "revisionId": {
+	//       "description": "Specifies the Revision ID that should be downloaded. Ignored unless alt=media is specified.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

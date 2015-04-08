@@ -319,7 +319,8 @@ type Property struct {
 	// BlobKeyValue: A blob key value.
 	BlobKeyValue string `json:"blobKeyValue,omitempty"`
 
-	// BlobValue: A blob value. May be a maximum of 1,000,000 bytes.
+	// BlobValue: A blob value. May be a maximum of 1,000,000 bytes. When
+	// indexed is true, may have at most 500 bytes.
 	BlobValue string `json:"blobValue,omitempty"`
 
 	// BooleanValue: A boolean value.
@@ -352,14 +353,16 @@ type Property struct {
 	// KeyValue: A key value.
 	KeyValue *Key `json:"keyValue,omitempty"`
 
-	// ListValue: A list value. Cannot contain another list value. Cannot
-	// also have a meaning and indexing set.
+	// ListValue: A list value. Cannot contain another list value. A Value
+	// instance that sets field list_value must not set field meaning or
+	// field indexed.
 	ListValue []*Value `json:"listValue,omitempty"`
 
 	// Meaning: The meaning field is reserved and should not be used.
 	Meaning int64 `json:"meaning,omitempty"`
 
-	// StringValue: A UTF-8 encoded string value.
+	// StringValue: A UTF-8 encoded string value. When indexed is true, may
+	// have at most 500 characters.
 	StringValue string `json:"stringValue,omitempty"`
 }
 
@@ -521,7 +524,8 @@ type Value struct {
 	// BlobKeyValue: A blob key value.
 	BlobKeyValue string `json:"blobKeyValue,omitempty"`
 
-	// BlobValue: A blob value. May be a maximum of 1,000,000 bytes.
+	// BlobValue: A blob value. May be a maximum of 1,000,000 bytes. When
+	// indexed is true, may have at most 500 bytes.
 	BlobValue string `json:"blobValue,omitempty"`
 
 	// BooleanValue: A boolean value.
@@ -554,14 +558,16 @@ type Value struct {
 	// KeyValue: A key value.
 	KeyValue *Key `json:"keyValue,omitempty"`
 
-	// ListValue: A list value. Cannot contain another list value. Cannot
-	// also have a meaning and indexing set.
+	// ListValue: A list value. Cannot contain another list value. A Value
+	// instance that sets field list_value must not set field meaning or
+	// field indexed.
 	ListValue []*Value `json:"listValue,omitempty"`
 
 	// Meaning: The meaning field is reserved and should not be used.
 	Meaning int64 `json:"meaning,omitempty"`
 
-	// StringValue: A UTF-8 encoded string value.
+	// StringValue: A UTF-8 encoded string value. When indexed is true, may
+	// have at most 500 characters.
 	StringValue string `json:"stringValue,omitempty"`
 }
 

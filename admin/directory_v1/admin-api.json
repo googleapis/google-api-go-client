@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/kiEe27ASVaXFaTazonTUuT5jr1o\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/FINMPppbAsSW7hhRV2k9bEsVkrk\"",
  "discoveryVersion": "v1",
  "id": "admin:directory_v1",
  "name": "admin",
  "canonicalName": "directory",
  "version": "directory_v1",
- "revision": "20150123",
+ "revision": "20150309",
  "title": "Admin Directory API",
  "description": "The Admin SDK Directory API lets you view and manage enterprise resources such as users and groups, administrative notifications, security features, and more.",
  "ownerDomain": "google.com",
@@ -906,18 +906,21 @@
       ]
      }
     },
+    "orgUnitId": {
+     "type": "string",
+     "description": "Id of OrgUnit"
+    },
     "orgUnitPath": {
      "type": "string",
      "description": "Path of OrgUnit"
     },
+    "parentOrgUnitId": {
+     "type": "string",
+     "description": "Id of parent OrgUnit"
+    },
     "parentOrgUnitPath": {
      "type": "string",
-     "description": "Path of parent OrgUnit",
-     "annotations": {
-      "required": [
-       "directory.orgunits.insert"
-      ]
-     }
+     "description": "Path of parent OrgUnit"
     }
    }
   },
@@ -2923,7 +2926,7 @@
       },
       "orgUnitPath": {
        "type": "string",
-       "description": "Full path of the organization unit",
+       "description": "Full path of the organization unit or its Id",
        "required": true,
        "repeated": true,
        "location": "path"
@@ -2951,7 +2954,7 @@
       },
       "orgUnitPath": {
        "type": "string",
-       "description": "Full path of the organization unit",
+       "description": "Full path of the organization unit or its Id",
        "required": true,
        "repeated": true,
        "location": "path"
@@ -3009,7 +3012,7 @@
       },
       "orgUnitPath": {
        "type": "string",
-       "description": "the URL-encoded organization unit",
+       "description": "the URL-encoded organization unit's path or its Id",
        "default": "",
        "location": "query"
       },
@@ -3052,7 +3055,7 @@
       },
       "orgUnitPath": {
        "type": "string",
-       "description": "Full path of the organization unit",
+       "description": "Full path of the organization unit or its Id",
        "required": true,
        "repeated": true,
        "location": "path"
@@ -3086,7 +3089,7 @@
       },
       "orgUnitPath": {
        "type": "string",
-       "description": "Full path of the organization unit",
+       "description": "Full path of the organization unit or its Id",
        "required": true,
        "repeated": true,
        "location": "path"

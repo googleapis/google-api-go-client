@@ -145,14 +145,6 @@ func main() {
 }
 
 func (a *API) want() bool {
-	if strings.Contains(a.ID, "buzz") {
-		// R.I.P.
-		return false
-	}
-	if strings.Contains(a.ID, "fusiontables") {
-		// TODO(bradfitz): broken codegen.
-		return false
-	}
 	return *apiToGenerate == "*" || *apiToGenerate == a.ID
 }
 

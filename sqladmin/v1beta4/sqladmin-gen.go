@@ -310,24 +310,13 @@ type DatabaseFlags struct {
 	// Name: The name of the flag. These flags are passed at instance
 	// startup, so include both MySQL server options and MySQL system
 	// variables. Flags should be specified with underscores, not hyphens.
-	// Refer to the official MySQL documentation on server options and
-	// system variables for descriptions of what these flags do. Acceptable
-	// values are:  character_set_server utf8 or utf8mb4 event_scheduler on
-	// or off (Note: The event scheduler will only work reliably if the
-	// instance activationPolicy is set to ALWAYS) general_log on or off
-	// group_concat_max_len 4..17179869184 innodb_flush_log_at_trx_commit
-	// 0..2 innodb_lock_wait_timeout 1..1073741824
-	// log_bin_trust_function_creators on or off log_output Can be either
-	// TABLE or NONE, FILE is not supported log_queries_not_using_indexes on
-	// or off long_query_time 0..30000000 lower_case_table_names 0..2
-	// max_allowed_packet 16384..1073741824 read_only on or off
-	// skip_show_database on or off slow_query_log on or off. If set to on,
-	// you must also set the log_output flag to TABLE to receive logs.
-	// wait_timeout 1..31536000
+	// For more information, see Configuring MySQL Flags in the Google Cloud
+	// SQL documentation, as well as the official MySQL documentation for
+	// server options and system variables.
 	Name string `json:"name,omitempty"`
 
-	// Value: The value of the flag. Booleans should be set using 1 for
-	// true, and 0 for false. This field must be omitted if the flag doesn't
+	// Value: The value of the flag. Booleans should be set to on for true
+	// and off for false. This field must be omitted if the flag doesn't
 	// take a value.
 	Value string `json:"value,omitempty"`
 }
@@ -348,6 +337,8 @@ type DatabaseInstance struct {
 	// following.
 	// CLOUD_SQL_INSTANCE: A Cloud SQL instance that is not
 	// replicating from a master.
+	// ON_PREMISES_INSTANCE: An instance running
+	// on the customer's premises.
 	// READ_REPLICA_INSTANCE: A Cloud SQL
 	// instance configured as a read-replica.
 	InstanceType string `json:"instanceType,omitempty"`
@@ -372,6 +363,10 @@ type DatabaseInstance struct {
 	// project ID.
 	Name string `json:"name,omitempty"`
 
+	// OnPremisesConfiguration: Configuration specific to on-premises
+	// instances.
+	OnPremisesConfiguration *OnPremisesConfiguration `json:"onPremisesConfiguration,omitempty"`
+
 	// Project: The project ID of the project containing the Cloud SQL
 	// instance. The Google apps domain is prefixed if applicable.
 	Project string `json:"project,omitempty"`
@@ -380,6 +375,10 @@ type DatabaseInstance struct {
 	// europe-west1. Defaults to us-central. The region can not be changed
 	// after instance creation.
 	Region string `json:"region,omitempty"`
+
+	// ReplicaConfiguration: Configuration specific to read-replicas
+	// replicating from on-premises masters.
+	ReplicaConfiguration *ReplicaConfiguration `json:"replicaConfiguration,omitempty"`
 
 	// ReplicaNames: The replicas of the instance.
 	ReplicaNames []string `json:"replicaNames,omitempty"`
@@ -603,14 +602,67 @@ type LocationPreference struct {
 	Zone string `json:"zone,omitempty"`
 }
 
+type MySqlReplicaConfiguration struct {
+	// CaCertificate: PEM representation of the trusted CA's x509
+	// certificate.
+	CaCertificate string `json:"caCertificate,omitempty"`
+
+	// ClientCertificate: PEM representation of the slave's x509
+	// certificate.
+	ClientCertificate string `json:"clientCertificate,omitempty"`
+
+	// ClientKey: PEM representation of the slave's private key. The
+	// corresponsing public key is encoded in the client's certificate.
+	ClientKey string `json:"clientKey,omitempty"`
+
+	// ConnectRetryInterval: Seconds to wait between connect retries.
+	// MySQL's default is 60 seconds.
+	ConnectRetryInterval int64 `json:"connectRetryInterval,omitempty"`
+
+	// DumpFilePath: Path to a SQL dump file in Google Cloud Storage from
+	// which the slave instance is to be created. The URI is in the form
+	// gs://bucketName/fileName. Compressed gzip files (.gz) are also
+	// supported. Dumps should have the binlog co-ordinates from which
+	// replication should begin. This can be accomplished by setting
+	// --master-data to 1 when using mysqldump.
+	DumpFilePath string `json:"dumpFilePath,omitempty"`
+
+	// Kind: This is always sql#mysqlReplicaConfiguration.
+	Kind string `json:"kind,omitempty"`
+
+	// MasterHeartbeatPeriod: Interval in milliseconds between replication
+	// heartbeats.
+	MasterHeartbeatPeriod int64 `json:"masterHeartbeatPeriod,omitempty,string"`
+
+	// Password: The password for the replication connection.
+	Password string `json:"password,omitempty"`
+
+	// SslCipher: A list of permissible ciphers to use for SSL encryption.
+	SslCipher string `json:"sslCipher,omitempty"`
+
+	// Username: The username for the replication connection.
+	Username string `json:"username,omitempty"`
+
+	// VerifyServerCertificate: Whether or not to check the master's Common
+	// Name value in the certificate that it sends during the SSL handshake.
+	VerifyServerCertificate bool `json:"verifyServerCertificate,omitempty"`
+}
+
+type OnPremisesConfiguration struct {
+	// HostPort: The host and port of the on-premises instance in host:port
+	// format
+	HostPort string `json:"hostPort,omitempty"`
+
+	// Kind: This is always sql#onPremisesConfiguration.
+	Kind string `json:"kind,omitempty"`
+}
+
 type Operation struct {
 	// EndTime: The time this operation finished in UTC timezone in RFC 3339
 	// format, for example 2012-11-15T16:19:00.094Z.
 	EndTime string `json:"endTime,omitempty"`
 
-	// Error: If errors occurred during processing of this operation, this
-	// field will be populated.
-	Error *OperationError1 `json:"error,omitempty"`
+	Error *OperationErrors `json:"error,omitempty"`
 
 	// ExportContext: The context for export operation, if applicable.
 	ExportContext *ExportContext `json:"exportContext,omitempty"`
@@ -622,7 +674,7 @@ type Operation struct {
 	// RFC 3339 format, for example 2012-11-15T16:19:00.094Z.
 	InsertTime string `json:"insertTime,omitempty"`
 
-	// Kind: This is always sql#instanceOperation.
+	// Kind: This is always sql#operation.
 	Kind string `json:"kind,omitempty"`
 
 	// Name: An identifier that uniquely identifies the operation. You can
@@ -630,9 +682,10 @@ type Operation struct {
 	// information about the operation.
 	Name string `json:"name,omitempty"`
 
-	// OperationType: TODO(b/18431310): update this list to reflect current
-	// values. The type of the operation. Valid values are CREATE, DELETE,
-	// UPDATE, RESTART, IMPORT, EXPORT, BACKUP_VOLUME, RESTORE_VOLUME.
+	// OperationType: The type of the operation. Valid values are CREATE,
+	// DELETE, UPDATE, RESTART, IMPORT, EXPORT, BACKUP_VOLUME,
+	// RESTORE_VOLUME, CREATE_USER, DELETE_USER, CREATE_DATABASE,
+	// DELETE_DATABASE .
 	OperationType string `json:"operationType,omitempty"`
 
 	// SelfLink: The URI of this resource.
@@ -660,12 +713,6 @@ type Operation struct {
 	User string `json:"user,omitempty"`
 }
 
-type OperationError1 struct {
-	// Errors: The list of errors encountered while processing this
-	// operation.
-	Errors []*OperationError `json:"errors,omitempty"`
-}
-
 type OperationError struct {
 	// Code: Identifies the specific error that occurred.
 	Code string `json:"code,omitempty"`
@@ -675,6 +722,15 @@ type OperationError struct {
 
 	// Message: Additional information about the error encountered.
 	Message string `json:"message,omitempty"`
+}
+
+type OperationErrors struct {
+	// Errors: The list of errors encountered while processing this
+	// operation.
+	Errors []*OperationError `json:"errors,omitempty"`
+
+	// Kind: This is always sql#operationErrors.
+	Kind string `json:"kind,omitempty"`
 }
 
 type OperationsListResponse struct {
@@ -688,6 +744,20 @@ type OperationsListResponse struct {
 	// result sets. Provide this value in a subsequent request to return the
 	// next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+}
+
+type ReplicaConfiguration struct {
+	// Kind: This is always sql#replicaConfiguration.
+	Kind string `json:"kind,omitempty"`
+
+	// MysqlReplicaConfiguration: MySQL specific configuration when
+	// replicating from a MySQL on-premises master. Replication
+	// configuration information such as the username, password,
+	// certificates, and keys are not stored in the instance metadata. The
+	// configuration information is used only to set up the replication
+	// connection and is stored by MySQL in a file named master.info in the
+	// data directory.
+	MysqlReplicaConfiguration *MySqlReplicaConfiguration `json:"mysqlReplicaConfiguration,omitempty"`
 }
 
 type RestoreBackupContext struct {
@@ -716,6 +786,11 @@ type Settings struct {
 
 	// BackupConfiguration: The daily backup configuration for the instance.
 	BackupConfiguration *BackupConfiguration `json:"backupConfiguration,omitempty"`
+
+	// CrashSafeReplicationEnabled: Configuration specific to read replica
+	// instances. Indicates whether database flags for crash-safe
+	// replication are enabled.
+	CrashSafeReplicationEnabled bool `json:"crashSafeReplicationEnabled,omitempty"`
 
 	// DatabaseFlags: The database flags passed to the instance at startup.
 	DatabaseFlags []*DatabaseFlags `json:"databaseFlags,omitempty"`
@@ -856,9 +931,9 @@ type User struct {
 	Etag string `json:"etag,omitempty"`
 
 	// Host: The host name from which the user can connect. For insert
-	// operations, host is set to '%'. For update operations, host is
-	// specified as part of the request URL. The host name is not mutable
-	// with this API.
+	// operations, host defaults to an empty string. For update operations,
+	// host is specified as part of the request URL. The host name is not
+	// mutable with this API.
 	Host string `json:"host,omitempty"`
 
 	// Instance: The name of the Cloud SQL instance. This does not include

@@ -1,4 +1,4 @@
-// Package androidpublisher provides access to the Google Play Android Developer API.
+// Package androidpublisher provides access to the Google Play Developer API.
 //
 // See https://developers.google.com/android-publisher
 //
@@ -1749,7 +1749,7 @@ type EditsApksAddexternallyhostedCall struct {
 // Addexternallyhosted: Creates a new APK without uploading the APK
 // itself to Google Play, instead hosting the APK at a specified URL.
 // This function is only available to enterprises using Google Play for
-// work whose application is configured to restrict distribution to the
+// Work whose application is configured to restrict distribution to the
 // enterprise domain.
 func (r *EditsApksService) Addexternallyhosted(packageNameid string, editId string, apksaddexternallyhostedrequest *ApksAddExternallyHostedRequest) *EditsApksAddexternallyhostedCall {
 	c := &EditsApksAddexternallyhostedCall{s: r.s, opt_: make(map[string]interface{})}
@@ -1802,7 +1802,7 @@ func (c *EditsApksAddexternallyhostedCall) Do() (*ApksAddExternallyHostedRespons
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new APK without uploading the APK itself to Google Play, instead hosting the APK at a specified URL. This function is only available to enterprises using Google Play for work whose application is configured to restrict distribution to the enterprise domain.",
+	//   "description": "Creates a new APK without uploading the APK itself to Google Play, instead hosting the APK at a specified URL. This function is only available to enterprises using Google Play for Work whose application is configured to restrict distribution to the enterprise domain.",
 	//   "httpMethod": "POST",
 	//   "id": "androidpublisher.edits.apks.addexternallyhosted",
 	//   "parameterOrder": [

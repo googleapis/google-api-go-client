@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/flAQ_osq7Vj8ZKDYJi6-tpiBvoo\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/JTCpJ6erGSGSQjeOlJBcixKgvo8\"",
  "discoveryVersion": "v1",
  "id": "datastore:v1beta2",
  "name": "datastore",
  "version": "v1beta2",
- "revision": "20140916",
+ "revision": "20150402",
  "title": "Google Cloud Datastore API",
  "description": "API for accessing Google Cloud Datastore.",
  "ownerDomain": "google.com",
@@ -490,7 +490,7 @@
     },
     "blobValue": {
      "type": "string",
-     "description": "A blob value. May be a maximum of 1,000,000 bytes.",
+     "description": "A blob value. May be a maximum of 1,000,000 bytes. When indexed is true, may have at most 500 bytes.",
      "format": "byte"
     },
     "booleanValue": {
@@ -526,7 +526,7 @@
     },
     "listValue": {
      "type": "array",
-     "description": "A list value. Cannot contain another list value. Cannot also have a meaning and indexing set.",
+     "description": "A list value. Cannot contain another list value. A Value instance that sets field list_value must not set field meaning or field indexed.",
      "items": {
       "$ref": "Value"
      }
@@ -538,7 +538,7 @@
     },
     "stringValue": {
      "type": "string",
-     "description": "A UTF-8 encoded string value."
+     "description": "A UTF-8 encoded string value. When indexed is true, may have at most 500 characters."
     }
    }
   },
@@ -845,7 +845,7 @@
     },
     "blobValue": {
      "type": "string",
-     "description": "A blob value. May be a maximum of 1,000,000 bytes.",
+     "description": "A blob value. May be a maximum of 1,000,000 bytes. When indexed is true, may have at most 500 bytes.",
      "format": "byte"
     },
     "booleanValue": {
@@ -881,7 +881,7 @@
     },
     "listValue": {
      "type": "array",
-     "description": "A list value. Cannot contain another list value. Cannot also have a meaning and indexing set.",
+     "description": "A list value. Cannot contain another list value. A Value instance that sets field list_value must not set field meaning or field indexed.",
      "items": {
       "$ref": "Value"
      }
@@ -893,7 +893,7 @@
     },
     "stringValue": {
      "type": "string",
-     "description": "A UTF-8 encoded string value."
+     "description": "A UTF-8 encoded string value. When indexed is true, may have at most 500 characters."
     }
    }
   }

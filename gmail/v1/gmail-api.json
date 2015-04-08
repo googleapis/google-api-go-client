@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/5025FW69eRcOdd_mm4_PTDhGzHE\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/hFGSutIVQj0PQfQgMG3Y44JNJU0\"",
  "discoveryVersion": "v1",
  "id": "gmail:v1",
  "name": "gmail",
  "version": "v1",
- "revision": "20150313",
+ "revision": "20150303",
  "title": "Gmail API",
  "description": "The Gmail REST API.",
  "ownerDomain": "google.com",
@@ -74,6 +74,12 @@
     },
     "https://www.googleapis.com/auth/gmail.compose": {
      "description": "Manage drafts and send emails"
+    },
+    "https://www.googleapis.com/auth/gmail.insert": {
+     "description": "Insert mail into your mailbox"
+    },
+    "https://www.googleapis.com/auth/gmail.labels": {
+     "description": "Manage mailbox labels"
     },
     "https://www.googleapis.com/auth/gmail.modify": {
      "description": "View and modify but not delete your email"
@@ -1000,6 +1006,7 @@
        },
        "scopes": [
         "https://mail.google.com/",
+        "https://www.googleapis.com/auth/gmail.labels",
         "https://www.googleapis.com/auth/gmail.modify"
        ]
       },
@@ -1029,6 +1036,7 @@
        ],
        "scopes": [
         "https://mail.google.com/",
+        "https://www.googleapis.com/auth/gmail.labels",
         "https://www.googleapis.com/auth/gmail.modify"
        ]
       },
@@ -1061,6 +1069,7 @@
        },
        "scopes": [
         "https://mail.google.com/",
+        "https://www.googleapis.com/auth/gmail.labels",
         "https://www.googleapis.com/auth/gmail.modify",
         "https://www.googleapis.com/auth/gmail.readonly"
        ]
@@ -1087,6 +1096,7 @@
        },
        "scopes": [
         "https://mail.google.com/",
+        "https://www.googleapis.com/auth/gmail.labels",
         "https://www.googleapis.com/auth/gmail.modify",
         "https://www.googleapis.com/auth/gmail.readonly"
        ]
@@ -1123,6 +1133,7 @@
        },
        "scopes": [
         "https://mail.google.com/",
+        "https://www.googleapis.com/auth/gmail.labels",
         "https://www.googleapis.com/auth/gmail.modify"
        ]
       },
@@ -1158,6 +1169,7 @@
        },
        "scopes": [
         "https://mail.google.com/",
+        "https://www.googleapis.com/auth/gmail.labels",
         "https://www.googleapis.com/auth/gmail.modify"
        ]
       }
@@ -1307,6 +1319,7 @@
        },
        "scopes": [
         "https://mail.google.com/",
+        "https://www.googleapis.com/auth/gmail.insert",
         "https://www.googleapis.com/auth/gmail.modify"
        ],
        "supportsMediaUpload": true,
@@ -1372,6 +1385,7 @@
        },
        "scopes": [
         "https://mail.google.com/",
+        "https://www.googleapis.com/auth/gmail.insert",
         "https://www.googleapis.com/auth/gmail.modify"
        ],
        "supportsMediaUpload": true,

@@ -49,6 +49,12 @@ const (
 	// Manage drafts and send emails
 	GmailComposeScope = "https://www.googleapis.com/auth/gmail.compose"
 
+	// Insert mail into your mailbox
+	GmailInsertScope = "https://www.googleapis.com/auth/gmail.insert"
+
+	// Manage mailbox labels
+	GmailLabelsScope = "https://www.googleapis.com/auth/gmail.labels"
+
 	// View and modify but not delete your email
 	GmailModifyScope = "https://www.googleapis.com/auth/gmail.modify"
 
@@ -1633,6 +1639,7 @@ func (c *UsersLabelsCreateCall) Do() (*Label, error) {
 	//   },
 	//   "scopes": [
 	//     "https://mail.google.com/",
+	//     "https://www.googleapis.com/auth/gmail.labels",
 	//     "https://www.googleapis.com/auth/gmail.modify"
 	//   ]
 	// }
@@ -1715,6 +1722,7 @@ func (c *UsersLabelsDeleteCall) Do() error {
 	//   "path": "{userId}/labels/{id}",
 	//   "scopes": [
 	//     "https://mail.google.com/",
+	//     "https://www.googleapis.com/auth/gmail.labels",
 	//     "https://www.googleapis.com/auth/gmail.modify"
 	//   ]
 	// }
@@ -1803,6 +1811,7 @@ func (c *UsersLabelsGetCall) Do() (*Label, error) {
 	//   },
 	//   "scopes": [
 	//     "https://mail.google.com/",
+	//     "https://www.googleapis.com/auth/gmail.labels",
 	//     "https://www.googleapis.com/auth/gmail.modify",
 	//     "https://www.googleapis.com/auth/gmail.readonly"
 	//   ]
@@ -1882,6 +1891,7 @@ func (c *UsersLabelsListCall) Do() (*ListLabelsResponse, error) {
 	//   },
 	//   "scopes": [
 	//     "https://mail.google.com/",
+	//     "https://www.googleapis.com/auth/gmail.labels",
 	//     "https://www.googleapis.com/auth/gmail.modify",
 	//     "https://www.googleapis.com/auth/gmail.readonly"
 	//   ]
@@ -1983,6 +1993,7 @@ func (c *UsersLabelsPatchCall) Do() (*Label, error) {
 	//   },
 	//   "scopes": [
 	//     "https://mail.google.com/",
+	//     "https://www.googleapis.com/auth/gmail.labels",
 	//     "https://www.googleapis.com/auth/gmail.modify"
 	//   ]
 	// }
@@ -2082,6 +2093,7 @@ func (c *UsersLabelsUpdateCall) Do() (*Label, error) {
 	//   },
 	//   "scopes": [
 	//     "https://mail.google.com/",
+	//     "https://www.googleapis.com/auth/gmail.labels",
 	//     "https://www.googleapis.com/auth/gmail.modify"
 	//   ]
 	// }
@@ -2555,6 +2567,7 @@ func (c *UsersMessagesImportCall) Do() (*Message, error) {
 	//   },
 	//   "scopes": [
 	//     "https://mail.google.com/",
+	//     "https://www.googleapis.com/auth/gmail.insert",
 	//     "https://www.googleapis.com/auth/gmail.modify"
 	//   ],
 	//   "supportsMediaUpload": true
@@ -2781,6 +2794,7 @@ func (c *UsersMessagesInsertCall) Do() (*Message, error) {
 	//   },
 	//   "scopes": [
 	//     "https://mail.google.com/",
+	//     "https://www.googleapis.com/auth/gmail.insert",
 	//     "https://www.googleapis.com/auth/gmail.modify"
 	//   ],
 	//   "supportsMediaUpload": true

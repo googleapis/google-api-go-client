@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/u10WbWL3P9lxZaZ0H6MJ8QBvqKA\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/zxM6l4gLCm-vFIvi5lr-kFXGmmI\"",
  "discoveryVersion": "v1",
  "id": "genomics:v1beta2",
  "name": "genomics",
  "version": "v1beta2",
- "revision": "20150317",
+ "revision": "20150326",
  "title": "Genomics API",
  "description": "Provides access to Genomics data.",
  "ownerDomain": "google.com",
@@ -2068,6 +2068,41 @@
     }
    }
   },
+  "StreamVariantsRequest": {
+   "id": "StreamVariantsRequest",
+   "type": "object",
+   "description": "The stream variants request.",
+   "properties": {
+    "callSetIds": {
+     "type": "array",
+     "description": "Only return variant calls which belong to call sets with these ids. Leaving this blank returns all variant calls.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "end": {
+     "type": "string",
+     "description": "The end of the window (0-based, exclusive) for which overlapping variants should be returned.",
+     "format": "int64"
+    },
+    "referenceName": {
+     "type": "string",
+     "description": "Required. Only return variants in this reference sequence."
+    },
+    "start": {
+     "type": "string",
+     "description": "The beginning of the window (0-based, inclusive) for which overlapping variants should be returned.",
+     "format": "int64"
+    },
+    "variantSetIds": {
+     "type": "array",
+     "description": "Exactly one variant set ID must be provided. Only variants from this variant set will be returned.",
+     "items": {
+      "type": "string"
+     }
+    }
+   }
+  },
   "Transcript": {
    "id": "Transcript",
    "type": "object",
@@ -3451,6 +3486,22 @@
       "https://www.googleapis.com/auth/genomics",
       "https://www.googleapis.com/auth/genomics.readonly"
      ]
+    }
+   }
+  },
+  "streamingVariantStore": {
+   "methods": {
+    "streamvariants": {
+     "id": "genomics.streamingVariantStore.streamvariants",
+     "path": "streamingVariantStore/streamvariants",
+     "httpMethod": "POST",
+     "description": "Returns a stream of all the variants matching the search request, ordered by reference name, position, and ID.",
+     "request": {
+      "$ref": "StreamVariantsRequest"
+     },
+     "response": {
+      "$ref": "Variant"
+     }
     }
    }
   },

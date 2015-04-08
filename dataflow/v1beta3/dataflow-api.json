@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/p23x-gNsMm8R6x-RDoeYGjGvTE0\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/KNSekumf7PpoDBHVIPOg6YU25sY\"",
  "discoveryVersion": "v1",
  "id": "dataflow:v1beta3",
  "name": "dataflow",
  "version": "v1beta3",
- "revision": "20150130",
+ "revision": "20150401",
  "title": "Google Dataflow API",
  "description": "Google Dataflow API.",
  "ownerDomain": "google.com",
@@ -160,6 +160,30 @@
     }
    }
   },
+  "DerivedSource": {
+   "id": "DerivedSource",
+   "type": "object",
+   "properties": {
+    "derivationMode": {
+     "type": "string",
+     "enum": [
+      "SOURCE_DERIVATION_MODE_CHILD_OF_CURRENT",
+      "SOURCE_DERIVATION_MODE_INDEPENDENT",
+      "SOURCE_DERIVATION_MODE_SIBLING_OF_CURRENT",
+      "SOURCE_DERIVATION_MODE_UNKNOWN"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "source": {
+     "$ref": "Source"
+    }
+   }
+  },
   "Disk": {
    "id": "Disk",
    "type": "object",
@@ -173,6 +197,18 @@
     "sizeGb": {
      "type": "integer",
      "format": "int32"
+    }
+   }
+  },
+  "DynamicSourceSplit": {
+   "id": "DynamicSourceSplit",
+   "type": "object",
+   "properties": {
+    "primary": {
+     "$ref": "DerivedSource"
+    },
+    "residual": {
+     "$ref": "DerivedSource"
     }
    }
   },
@@ -421,6 +457,21 @@
     }
    }
   },
+  "KeyRangeDataDiskAssignment": {
+   "id": "KeyRangeDataDiskAssignment",
+   "type": "object",
+   "properties": {
+    "dataDisk": {
+     "type": "string"
+    },
+    "end": {
+     "type": "string"
+    },
+    "start": {
+     "type": "string"
+    }
+   }
+  },
   "KeyRangeLocation": {
    "id": "KeyRangeLocation",
    "type": "object",
@@ -580,6 +631,15 @@
     }
    }
   },
+  "MountedDataDisk": {
+   "id": "MountedDataDisk",
+   "type": "object",
+   "properties": {
+    "dataDisk": {
+     "type": "string"
+    }
+   }
+  },
   "MultiOutputInfo": {
    "id": "MultiOutputInfo",
    "type": "object",
@@ -677,6 +737,12 @@
      "additionalProperties": {
       "type": "any"
      }
+    },
+    "valueCombiningFn": {
+     "type": "object",
+     "additionalProperties": {
+      "type": "any"
+     }
     }
    }
   },
@@ -720,6 +786,9 @@
      "type": "string"
     },
     "topic": {
+     "type": "string"
+    },
+    "trackingSubscription": {
      "type": "string"
     }
    }
@@ -900,8 +969,14 @@
     "primary": {
      "$ref": "SourceSplitShard"
     },
+    "primarySource": {
+     "$ref": "DerivedSource"
+    },
     "residual": {
      "$ref": "SourceSplitShard"
+    },
+    "residualSource": {
+     "$ref": "DerivedSource"
     }
    }
   },
@@ -967,6 +1042,10 @@
    "id": "SourceSplitOptions",
    "type": "object",
    "properties": {
+    "desiredBundleSizeBytes": {
+     "type": "string",
+     "format": "int64"
+    },
     "desiredShardSizeBytes": {
      "type": "string",
      "format": "int64"
@@ -989,6 +1068,12 @@
    "id": "SourceSplitResponse",
    "type": "object",
    "properties": {
+    "bundles": {
+     "type": "array",
+     "items": {
+      "$ref": "DerivedSource"
+     }
+    },
     "outcome": {
      "type": "string",
      "enum": [
@@ -1081,8 +1166,57 @@
     "pubsubLocation": {
      "$ref": "PubsubLocation"
     },
+    "sideInputLocation": {
+     "$ref": "StreamingSideInputLocation"
+    },
     "streamingStageLocation": {
      "$ref": "StreamingStageLocation"
+    }
+   }
+  },
+  "StreamingComputationRanges": {
+   "id": "StreamingComputationRanges",
+   "type": "object",
+   "properties": {
+    "computationId": {
+     "type": "string"
+    },
+    "rangeAssignments": {
+     "type": "array",
+     "items": {
+      "$ref": "KeyRangeDataDiskAssignment"
+     }
+    }
+   }
+  },
+  "StreamingComputationTask": {
+   "id": "StreamingComputationTask",
+   "type": "object",
+   "properties": {
+    "computationRanges": {
+     "type": "array",
+     "items": {
+      "$ref": "StreamingComputationRanges"
+     }
+    },
+    "dataDisks": {
+     "type": "array",
+     "items": {
+      "$ref": "MountedDataDisk"
+     }
+    },
+    "taskType": {
+     "type": "string",
+     "enum": [
+      "STREAMING_COMPUTATION_TASK_START",
+      "STREAMING_COMPUTATION_TASK_STOP",
+      "STREAMING_COMPUTATION_TASK_UNKNOWN"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      ""
+     ]
     }
    }
   },
@@ -1100,6 +1234,15 @@
     "workerHarnessPort": {
      "type": "integer",
      "format": "int32"
+    }
+   }
+  },
+  "StreamingSideInputLocation": {
+   "id": "StreamingSideInputLocation",
+   "type": "object",
+   "properties": {
+    "tag": {
+     "type": "string"
     }
    }
   },
@@ -1207,6 +1350,10 @@
      "type": "string",
      "format": "int64"
     },
+    "initialReportIndex": {
+     "type": "string",
+     "format": "int64"
+    },
     "jobId": {
      "type": "string"
     },
@@ -1237,6 +1384,9 @@
     "sourceOperationTask": {
      "$ref": "SourceOperationRequest"
     },
+    "streamingComputationTask": {
+     "$ref": "StreamingComputationTask"
+    },
     "streamingSetupTask": {
      "$ref": "StreamingSetupTask"
     }
@@ -1255,6 +1405,10 @@
     "leaseExpireTime": {
      "type": "string"
     },
+    "nextReportIndex": {
+     "type": "string",
+     "format": "int64"
+    },
     "reportStatusInterval": {
      "type": "string"
     },
@@ -1272,6 +1426,9 @@
    "properties": {
     "completed": {
      "type": "boolean"
+    },
+    "dynamicSourceSplit": {
+     "$ref": "DynamicSourceSplit"
     },
     "errors": {
      "type": "array",
@@ -1367,6 +1524,12 @@
      "type": "array",
      "items": {
       "$ref": "Package"
+     }
+    },
+    "poolArgs": {
+     "type": "object",
+     "additionalProperties": {
+      "type": "any"
      }
     },
     "taskrunnerSettings": {

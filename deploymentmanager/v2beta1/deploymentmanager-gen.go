@@ -137,51 +137,51 @@ type TypesService struct {
 }
 
 type Deployment struct {
-	// Description: An optional user-provided description of the deployment.
+	// Description: ! An optional user-provided description of the
+	// deployment.
 	Description string `json:"description,omitempty"`
 
 	// Id: [Output Only] Unique identifier for the resource; defined by the
 	// server.
 	Id uint64 `json:"id,omitempty,string"`
 
-	// Manifest: [Output Only] URL of the manifest representing the full
-	// configuration of this deployment.
+	// Manifest: ! [Output Only] URL of the manifest representing the full
+	// configuration ! of this deployment.
 	Manifest string `json:"manifest,omitempty"`
 
-	// Name: The name of the deployment, which must be unique within the
+	// Name: ! The name of the deployment, which must be unique within the
 	// project.
 	Name string `json:"name,omitempty"`
 
-	// TargetConfig: [Input Only] The YAML configuration to use in
-	// processing this deployment.
-	//
-	// When you create a deployment, the server
-	// creates a new manifest with the given YAML configuration and sets the
-	// `manifest` property to the URL of the manifest resource.
+	// TargetConfig: ! [Input Only] The YAML configuration to use in
+	// processing this deployment. ! ! When you create a deployment, the
+	// server creates a new manifest with the ! given YAML configuration and
+	// sets the `manifest` property to the URL of ! the manifest resource.
 	TargetConfig string `json:"targetConfig,omitempty"`
 }
 
 type DeploymentsListResponse struct {
-	// Deployments: The deployments contained in this response.
+	// Deployments: ! The deployments contained in this response.
 	Deployments []*Deployment `json:"deployments,omitempty"`
 
-	// NextPageToken: A token used to continue a truncated list request.
+	// NextPageToken: ! A token used to continue a truncated list request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
 type Manifest struct {
-	// Config: The YAML configuration for this manifest.
+	// Config: v2beta1: YAML with config - described above v2beta2: YAML +
+	// templates. ! The YAML configuration for this manifest.
 	Config string `json:"config,omitempty"`
 
-	// EvaluatedConfig: [Output Only] The fully-expanded configuration file,
-	// including any templates and references.
+	// EvaluatedConfig: ! [Output Only] The fully-expanded configuration
+	// file, including any ! templates and references.
 	EvaluatedConfig string `json:"evaluatedConfig,omitempty"`
 
 	// Id: [Output Only] Unique identifier for the resource; defined by the
 	// server.
 	Id uint64 `json:"id,omitempty,string"`
 
-	// Name: [Output Only] The name of the manifest.
+	// Name: ! [Output Only] The name of the manifest.
 	Name string `json:"name,omitempty"`
 
 	// SelfLink: [Output Only] Self link for the manifest.
@@ -189,135 +189,135 @@ type Manifest struct {
 }
 
 type ManifestsListResponse struct {
-	// Manifests: Manifests contained in this list response.
+	// Manifests: ! Manifests contained in this list response.
 	Manifests []*Manifest `json:"manifests,omitempty"`
 
-	// NextPageToken: A token used to continue a truncated list request.
+	// NextPageToken: ! A token used to continue a truncated list request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
 type Operation struct {
-	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
+	// CreationTimestamp: ! [Output Only] Creation timestamp in RFC3339 text
 	// format.
 	CreationTimestamp string `json:"creationTimestamp,omitempty"`
 
-	// EndTime: [Output Only] The time that this operation was completed.
-	// This is in RFC3339 format.
+	// EndTime: ! [Output Only] The time that this operation was completed.
+	// This is in ! RFC3339 format.
 	EndTime string `json:"endTime,omitempty"`
 
-	// Error: [Output Only] If errors occurred during processing of this
-	// operation, this field will be populated.
+	// Error: ! [Output Only] If errors occurred during processing of this
+	// operation, ! this field will be populated.
 	Error *OperationError `json:"error,omitempty"`
 
-	// HttpErrorMessage: [Output Only] If operation fails, the HTTP error
-	// message returned, e.g. NOT FOUND.
+	// HttpErrorMessage: ! [Output Only] If operation fails, the HTTP error
+	// message returned, ! e.g. NOT FOUND.
 	HttpErrorMessage string `json:"httpErrorMessage,omitempty"`
 
-	// HttpErrorStatusCode: [Output Only] If operation fails, the HTTP error
-	// status code returned, e.g. 404.
+	// HttpErrorStatusCode: ! [Output Only] If operation fails, the HTTP
+	// error status code returned, ! e.g. 404.
 	HttpErrorStatusCode int64 `json:"httpErrorStatusCode,omitempty"`
 
-	// Id: [Output Only] Unique identifier for the resource; defined by the
-	// server.
+	// Id: ! [Output Only] Unique identifier for the resource; defined by
+	// the server.
 	Id uint64 `json:"id,omitempty,string"`
 
-	// InsertTime: [Output Only] The time that this operation was requested.
-	// This is in RFC 3339 format.
+	// InsertTime: ! [Output Only] The time that this operation was
+	// requested. ! This is in RFC 3339 format.
 	InsertTime string `json:"insertTime,omitempty"`
 
-	// Name: [Output Only] Name of the operation.
+	// Name: ! [Output Only] Name of the operation.
 	Name string `json:"name,omitempty"`
 
-	// OperationType: [Output Only] Type of the operation. Examples include
-	// "insert", or "delete"
+	// OperationType: ! [Output Only] Type of the operation. Examples
+	// include "insert", or ! "delete"
 	OperationType string `json:"operationType,omitempty"`
 
-	// Progress: [Output Only] An optional progress indicator that ranges
-	// from 0 to 100. There is no requirement that this be linear or support
-	// any granularity of operations. This should not be used to guess at
-	// when the operation will be complete. This number should be
-	// monotonically increasing as the operation progresses.
+	// Progress: ! [Output Only] An optional progress indicator that ranges
+	// from 0 to 100. ! There is no requirement that this be linear or
+	// support any granularity ! of operations. This should not be used to
+	// guess at when the operation will ! be complete. This number should be
+	// monotonically increasing as the ! operation progresses.
 	Progress int64 `json:"progress,omitempty"`
 
 	// SelfLink: [Output Only] Self link for the manifest.
 	SelfLink string `json:"selfLink,omitempty"`
 
-	// StartTime: [Output Only] The time that this operation was started by
-	// the server. This is in RFC 3339 format.
+	// StartTime: ! [Output Only] The time that this operation was started
+	// by the server. ! This is in RFC 3339 format.
 	StartTime string `json:"startTime,omitempty"`
 
-	// Status: [Output Only] Status of the operation. Can be one of the
-	// following: "PENDING", "RUNNING", or "DONE".
+	// Status: ! [Output Only] Status of the operation. Can be one of the
+	// following: ! "PENDING", "RUNNING", or "DONE".
 	Status string `json:"status,omitempty"`
 
-	// StatusMessage: [Output Only] An optional textual description of the
-	// current status of the operation.
+	// StatusMessage: ! [Output Only] An optional textual description of the
+	// current status of ! the operation.
 	StatusMessage string `json:"statusMessage,omitempty"`
 
-	// TargetId: [Output Only] Unique target id which identifies a
-	// particular incarnation of the target.
+	// TargetId: ! [Output Only] Unique target id which identifies a
+	// particular ! incarnation of the target.
 	TargetId uint64 `json:"targetId,omitempty,string"`
 
-	// TargetLink: [Output Only] URL of the resource the operation is
+	// TargetLink: ! [Output Only] URL of the resource the operation is
 	// mutating.
 	TargetLink string `json:"targetLink,omitempty"`
 
-	// User: [Output Only] User who requested the operation, for example
+	// User: ! [Output Only] User who requested the operation, for example !
 	// "user@example.com"
 	User string `json:"user,omitempty"`
 
-	// Warnings: [Output Only] If warning messages generated during
-	// processing of this operation, this field will be populated.
+	// Warnings: ! [Output Only] If warning messages generated during
+	// processing of this ! operation, this field will be populated.
 	Warnings []*OperationWarnings `json:"warnings,omitempty"`
 }
 
 type OperationError struct {
-	// Errors: The array of errors encountered while processing this
+	// Errors: ! The array of errors encountered while processing this
 	// operation.
 	Errors []*OperationErrorErrors `json:"errors,omitempty"`
 }
 
 type OperationErrorErrors struct {
-	// Code: The error type identifier for this error.
+	// Code: ! The error type identifier for this error.
 	Code string `json:"code,omitempty"`
 
-	// Location: Indicates the field in the request which caused the error.
-	// This property is optional.
+	// Location: ! Indicates the field in the request which caused the
+	// error. ! This property is optional.
 	Location string `json:"location,omitempty"`
 
-	// Message: An optional, human-readable error message.
+	// Message: ! An optional, human-readable error message.
 	Message string `json:"message,omitempty"`
 }
 
 type OperationWarnings struct {
-	// Code: The warning type identifier for this warning.
+	// Code: ! The warning type identifier for this warning.
 	Code interface{} `json:"code,omitempty"`
 
-	// Data: Metadata for this warning in 'key: value' format.
+	// Data: ! Metadata for this warning in 'key: value' format.
 	Data []*OperationWarningsData `json:"data,omitempty"`
 
-	// Message: Optional human-readable details for this warning.
+	// Message: ! Optional human-readable details for this warning.
 	Message string `json:"message,omitempty"`
 }
 
 type OperationWarningsData struct {
-	// Key: A key for the warning data.
+	// Key: ! A key for the warning data.
 	Key string `json:"key,omitempty"`
 
-	// Value: A warning data value corresponding to the key.
+	// Value: ! A warning data value corresponding to the key.
 	Value string `json:"value,omitempty"`
 }
 
 type OperationsListResponse struct {
-	// NextPageToken: A token used to continue a truncated list request.
+	// NextPageToken: ! A token used to continue a truncated list request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// Operations: Operations contained in this list response.
+	// Operations: ! Operations contained in this list response.
 	Operations []*Operation `json:"operations,omitempty"`
 }
 
 type Resource struct {
-	// Errors: [Output Only] A list of any errors that occurred during
+	// Errors: ! [Output Only] A list of any errors that occurred during
 	// deployment.
 	Errors []string `json:"errors,omitempty"`
 
@@ -325,43 +325,43 @@ type Resource struct {
 	// server.
 	Id uint64 `json:"id,omitempty,string"`
 
-	// Intent: [Output Only] The intended state of the resource.
+	// Intent: ! [Output Only] The intended state of the resource.
 	Intent string `json:"intent,omitempty"`
 
-	// Manifest: [Output Only] URL of the manifest representing the current
-	// configuration of this resource.
+	// Manifest: ! [Output Only] URL of the manifest representing the
+	// current configuration ! of this resource.
 	Manifest string `json:"manifest,omitempty"`
 
-	// Name: [Output Only] The name of the resource as it appears in the
+	// Name: ! [Output Only] The name of the resource as it appears in the
 	// YAML config.
 	Name string `json:"name,omitempty"`
 
-	// State: [Output Only] The state of the resource.
+	// State: ! [Output Only] The state of the resource.
 	State string `json:"state,omitempty"`
 
-	// Type: [Output Only] The type of the resource, for example
+	// Type: ! [Output Only] The type of the resource, for example !
 	// ?compute.v1.instance?, or ?replicaPools.v1beta2.instanceGroupManager?
 	Type string `json:"type,omitempty"`
 
-	// Url: [Output Only] The URL of the actual resource.
+	// Url: ! [Output Only] The URL of the actual resource.
 	Url string `json:"url,omitempty"`
 }
 
 type ResourcesListResponse struct {
-	// NextPageToken: A token used to continue a truncated list request.
+	// NextPageToken: ! A token used to continue a truncated list request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// Resources: Resources contained in this list response.
+	// Resources: ! Resources contained in this list response.
 	Resources []*Resource `json:"resources,omitempty"`
 }
 
 type Type struct {
-	// Name: Name of the type.
+	// Name: ! Name of the type.
 	Name string `json:"name,omitempty"`
 }
 
 type TypesListResponse struct {
-	// Types: Types supported by Deployment Manager
+	// Types: ! Types supported by Deployment Manager
 	Types []*Type `json:"types,omitempty"`
 }
 
@@ -374,7 +374,7 @@ type DeploymentsDeleteCall struct {
 	opt_       map[string]interface{}
 }
 
-// Delete: Deletes a deployment and all of the resources in the
+// Delete: ! Deletes a deployment and all of the resources in the
 // deployment.
 func (r *DeploymentsService) Delete(project string, deployment string) *DeploymentsDeleteCall {
 	c := &DeploymentsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
@@ -420,7 +420,7 @@ func (c *DeploymentsDeleteCall) Do() (*Operation, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a deployment and all of the resources in the deployment.",
+	//   "description": "! Deletes a deployment and all of the resources in the deployment.",
 	//   "httpMethod": "DELETE",
 	//   "id": "deploymentmanager.deployments.delete",
 	//   "parameterOrder": [
@@ -429,14 +429,14 @@ func (c *DeploymentsDeleteCall) Do() (*Operation, error) {
 	//   ],
 	//   "parameters": {
 	//     "deployment": {
-	//       "description": "The name of the deployment for this request.",
+	//       "description": "! The name of the deployment for this request.",
 	//       "location": "path",
 	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "project": {
-	//       "description": "The project ID for this request.",
+	//       "description": "! The project ID for this request.",
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
@@ -464,7 +464,7 @@ type DeploymentsGetCall struct {
 	opt_       map[string]interface{}
 }
 
-// Get: Gets information about a specific deployment.
+// Get: ! Gets information about a specific deployment.
 func (r *DeploymentsService) Get(project string, deployment string) *DeploymentsGetCall {
 	c := &DeploymentsGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -509,7 +509,7 @@ func (c *DeploymentsGetCall) Do() (*Deployment, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets information about a specific deployment.",
+	//   "description": "! Gets information about a specific deployment.",
 	//   "httpMethod": "GET",
 	//   "id": "deploymentmanager.deployments.get",
 	//   "parameterOrder": [
@@ -518,14 +518,14 @@ func (c *DeploymentsGetCall) Do() (*Deployment, error) {
 	//   ],
 	//   "parameters": {
 	//     "deployment": {
-	//       "description": "The name of the deployment for this request.",
+	//       "description": "! The name of the deployment for this request.",
 	//       "location": "path",
 	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "project": {
-	//       "description": "The project ID for this request.",
+	//       "description": "! The project ID for this request.",
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
@@ -554,8 +554,8 @@ type DeploymentsInsertCall struct {
 	opt_       map[string]interface{}
 }
 
-// Insert: Creates a deployment and all of the resources described by
-// the deployment manifest.
+// Insert: ! Creates a deployment and all of the resources described by
+// the ! deployment manifest.
 func (r *DeploymentsService) Insert(project string, deployment *Deployment) *DeploymentsInsertCall {
 	c := &DeploymentsInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -605,7 +605,7 @@ func (c *DeploymentsInsertCall) Do() (*Operation, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a deployment and all of the resources described by the deployment manifest.",
+	//   "description": "! Creates a deployment and all of the resources described by the ! deployment manifest.",
 	//   "httpMethod": "POST",
 	//   "id": "deploymentmanager.deployments.insert",
 	//   "parameterOrder": [
@@ -613,7 +613,7 @@ func (c *DeploymentsInsertCall) Do() (*Operation, error) {
 	//   ],
 	//   "parameters": {
 	//     "project": {
-	//       "description": "The project ID for this request.",
+	//       "description": "! The project ID for this request.",
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
@@ -643,24 +643,24 @@ type DeploymentsListCall struct {
 	opt_    map[string]interface{}
 }
 
-// List: Lists all deployments for a given project.
+// List: ! Lists all deployments for a given project.
 func (r *DeploymentsService) List(project string) *DeploymentsListCall {
 	c := &DeploymentsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
 	return c
 }
 
-// MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Acceptable values are 0 to 100, inclusive.
-// (Default: 50)
+// MaxResults sets the optional parameter "maxResults": ! Maximum count
+// of results to be returned. ! Acceptable values are 0 to 100,
+// inclusive. (Default: 50)
 func (c *DeploymentsListCall) MaxResults(maxResults int64) *DeploymentsListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Specifies a
-// nextPageToken returned by a previous list request. This token can be
-// used to request the next page of results from a previous list
+// PageToken sets the optional parameter "pageToken": ! Specifies a
+// nextPageToken returned by a previous list request. This ! token can
+// be used to request the next page of results from a previous ! list
 // request.
 func (c *DeploymentsListCall) PageToken(pageToken string) *DeploymentsListCall {
 	c.opt_["pageToken"] = pageToken
@@ -709,7 +709,7 @@ func (c *DeploymentsListCall) Do() (*DeploymentsListResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists all deployments for a given project.",
+	//   "description": "! Lists all deployments for a given project.",
 	//   "httpMethod": "GET",
 	//   "id": "deploymentmanager.deployments.list",
 	//   "parameterOrder": [
@@ -718,7 +718,7 @@ func (c *DeploymentsListCall) Do() (*DeploymentsListResponse, error) {
 	//   "parameters": {
 	//     "maxResults": {
 	//       "default": "50",
-	//       "description": "Maximum count of results to be returned. Acceptable values are 0 to 100, inclusive. (Default: 50)",
+	//       "description": "! Maximum count of results to be returned. ! Acceptable values are 0 to 100, inclusive. (Default: 50)",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "maximum": "100",
@@ -726,12 +726,12 @@ func (c *DeploymentsListCall) Do() (*DeploymentsListResponse, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Specifies a nextPageToken returned by a previous list request. This token can be used to request the next page of results from a previous list request.",
+	//       "description": "! Specifies a nextPageToken returned by a previous list request. This ! token can be used to request the next page of results from a previous ! list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "project": {
-	//       "description": "The project ID for this request.",
+	//       "description": "! The project ID for this request.",
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
@@ -761,7 +761,7 @@ type ManifestsGetCall struct {
 	opt_       map[string]interface{}
 }
 
-// Get: Gets information about a specific manifest.
+// Get: ! Gets information about a specific manifest.
 func (r *ManifestsService) Get(project string, deployment string, manifest string) *ManifestsGetCall {
 	c := &ManifestsGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -808,7 +808,7 @@ func (c *ManifestsGetCall) Do() (*Manifest, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets information about a specific manifest.",
+	//   "description": "! Gets information about a specific manifest.",
 	//   "httpMethod": "GET",
 	//   "id": "deploymentmanager.manifests.get",
 	//   "parameterOrder": [
@@ -818,21 +818,21 @@ func (c *ManifestsGetCall) Do() (*Manifest, error) {
 	//   ],
 	//   "parameters": {
 	//     "deployment": {
-	//       "description": "The name of the deployment for this request.",
+	//       "description": "! The name of the deployment for this request.",
 	//       "location": "path",
 	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "manifest": {
-	//       "description": "The name of the manifest for this request.",
+	//       "description": "! The name of the manifest for this request.",
 	//       "location": "path",
 	//       "pattern": "[-a-z0-9]{1,61}",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "project": {
-	//       "description": "The project ID for this request.",
+	//       "description": "! The project ID for this request.",
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
@@ -861,7 +861,7 @@ type ManifestsListCall struct {
 	opt_       map[string]interface{}
 }
 
-// List: Lists all manifests for a given deployment.
+// List: ! Lists all manifests for a given deployment.
 func (r *ManifestsService) List(project string, deployment string) *ManifestsListCall {
 	c := &ManifestsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -869,17 +869,17 @@ func (r *ManifestsService) List(project string, deployment string) *ManifestsLis
 	return c
 }
 
-// MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Acceptable values are 0 to 100, inclusive.
-// (Default: 50)
+// MaxResults sets the optional parameter "maxResults": ! Maximum count
+// of results to be returned. ! Acceptable values are 0 to 100,
+// inclusive. (Default: 50)
 func (c *ManifestsListCall) MaxResults(maxResults int64) *ManifestsListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Specifies a
-// nextPageToken returned by a previous list request. This token can be
-// used to request the next page of results from a previous list
+// PageToken sets the optional parameter "pageToken": ! Specifies a
+// nextPageToken returned by a previous list request. This ! token can
+// be used to request the next page of results from a previous ! list
 // request.
 func (c *ManifestsListCall) PageToken(pageToken string) *ManifestsListCall {
 	c.opt_["pageToken"] = pageToken
@@ -929,7 +929,7 @@ func (c *ManifestsListCall) Do() (*ManifestsListResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists all manifests for a given deployment.",
+	//   "description": "! Lists all manifests for a given deployment.",
 	//   "httpMethod": "GET",
 	//   "id": "deploymentmanager.manifests.list",
 	//   "parameterOrder": [
@@ -938,7 +938,7 @@ func (c *ManifestsListCall) Do() (*ManifestsListResponse, error) {
 	//   ],
 	//   "parameters": {
 	//     "deployment": {
-	//       "description": "The name of the deployment for this request.",
+	//       "description": "! The name of the deployment for this request.",
 	//       "location": "path",
 	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
@@ -946,7 +946,7 @@ func (c *ManifestsListCall) Do() (*ManifestsListResponse, error) {
 	//     },
 	//     "maxResults": {
 	//       "default": "50",
-	//       "description": "Maximum count of results to be returned. Acceptable values are 0 to 100, inclusive. (Default: 50)",
+	//       "description": "! Maximum count of results to be returned. ! Acceptable values are 0 to 100, inclusive. (Default: 50)",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "maximum": "100",
@@ -954,12 +954,12 @@ func (c *ManifestsListCall) Do() (*ManifestsListResponse, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Specifies a nextPageToken returned by a previous list request. This token can be used to request the next page of results from a previous list request.",
+	//       "description": "! Specifies a nextPageToken returned by a previous list request. This ! token can be used to request the next page of results from a previous ! list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "project": {
-	//       "description": "The project ID for this request.",
+	//       "description": "! The project ID for this request.",
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
@@ -988,7 +988,7 @@ type OperationsGetCall struct {
 	opt_      map[string]interface{}
 }
 
-// Get: Gets information about a specific Operation.
+// Get: ! Gets information about a specific Operation.
 func (r *OperationsService) Get(project string, operation string) *OperationsGetCall {
 	c := &OperationsGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -1033,7 +1033,7 @@ func (c *OperationsGetCall) Do() (*Operation, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets information about a specific Operation.",
+	//   "description": "! Gets information about a specific Operation.",
 	//   "httpMethod": "GET",
 	//   "id": "deploymentmanager.operations.get",
 	//   "parameterOrder": [
@@ -1042,13 +1042,13 @@ func (c *OperationsGetCall) Do() (*Operation, error) {
 	//   ],
 	//   "parameters": {
 	//     "operation": {
-	//       "description": "The name of the operation for this request.",
+	//       "description": "! The name of the operation for this request.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "project": {
-	//       "description": "The project ID for this request.",
+	//       "description": "! The project ID for this request.",
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
@@ -1076,24 +1076,24 @@ type OperationsListCall struct {
 	opt_    map[string]interface{}
 }
 
-// List: Lists all Operations for a project.
+// List: ! Lists all Operations for a project.
 func (r *OperationsService) List(project string) *OperationsListCall {
 	c := &OperationsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
 	return c
 }
 
-// MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Acceptable values are 0 to 100, inclusive.
-// (Default: 50)
+// MaxResults sets the optional parameter "maxResults": ! Maximum count
+// of results to be returned. ! Acceptable values are 0 to 100,
+// inclusive. (Default: 50)
 func (c *OperationsListCall) MaxResults(maxResults int64) *OperationsListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Specifies a
-// nextPageToken returned by a previous list request. This token can be
-// used to request the next page of results from a previous list
+// PageToken sets the optional parameter "pageToken": ! Specifies a
+// nextPageToken returned by a previous list request. This ! token can
+// be used to request the next page of results from a previous ! list
 // request.
 func (c *OperationsListCall) PageToken(pageToken string) *OperationsListCall {
 	c.opt_["pageToken"] = pageToken
@@ -1142,7 +1142,7 @@ func (c *OperationsListCall) Do() (*OperationsListResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists all Operations for a project.",
+	//   "description": "! Lists all Operations for a project.",
 	//   "httpMethod": "GET",
 	//   "id": "deploymentmanager.operations.list",
 	//   "parameterOrder": [
@@ -1151,7 +1151,7 @@ func (c *OperationsListCall) Do() (*OperationsListResponse, error) {
 	//   "parameters": {
 	//     "maxResults": {
 	//       "default": "50",
-	//       "description": "Maximum count of results to be returned. Acceptable values are 0 to 100, inclusive. (Default: 50)",
+	//       "description": "! Maximum count of results to be returned. ! Acceptable values are 0 to 100, inclusive. (Default: 50)",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "maximum": "100",
@@ -1159,12 +1159,12 @@ func (c *OperationsListCall) Do() (*OperationsListResponse, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Specifies a nextPageToken returned by a previous list request. This token can be used to request the next page of results from a previous list request.",
+	//       "description": "! Specifies a nextPageToken returned by a previous list request. This ! token can be used to request the next page of results from a previous ! list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "project": {
-	//       "description": "The project ID for this request.",
+	//       "description": "! The project ID for this request.",
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
@@ -1194,7 +1194,7 @@ type ResourcesGetCall struct {
 	opt_       map[string]interface{}
 }
 
-// Get: Gets information about a single resource.
+// Get: ! Gets information about a single resource.
 func (r *ResourcesService) Get(project string, deployment string, resource string) *ResourcesGetCall {
 	c := &ResourcesGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -1241,7 +1241,7 @@ func (c *ResourcesGetCall) Do() (*Resource, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets information about a single resource.",
+	//   "description": "! Gets information about a single resource.",
 	//   "httpMethod": "GET",
 	//   "id": "deploymentmanager.resources.get",
 	//   "parameterOrder": [
@@ -1251,21 +1251,21 @@ func (c *ResourcesGetCall) Do() (*Resource, error) {
 	//   ],
 	//   "parameters": {
 	//     "deployment": {
-	//       "description": "The name of the deployment for this request.",
+	//       "description": "! The name of the deployment for this request.",
 	//       "location": "path",
 	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "project": {
-	//       "description": "The project ID for this request.",
+	//       "description": "! The project ID for this request.",
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "resource": {
-	//       "description": "The name of the resource for this request.",
+	//       "description": "! The name of the resource for this request.",
 	//       "location": "path",
 	//       "pattern": "[-a-z0-9]{1,61}",
 	//       "required": true,
@@ -1294,7 +1294,7 @@ type ResourcesListCall struct {
 	opt_       map[string]interface{}
 }
 
-// List: Lists all resources in a given deployment.
+// List: ! Lists all resources in a given deployment.
 func (r *ResourcesService) List(project string, deployment string) *ResourcesListCall {
 	c := &ResourcesListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -1302,17 +1302,17 @@ func (r *ResourcesService) List(project string, deployment string) *ResourcesLis
 	return c
 }
 
-// MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Acceptable values are 0 to 100, inclusive.
-// (Default: 50)
+// MaxResults sets the optional parameter "maxResults": ! Maximum count
+// of results to be returned. ! Acceptable values are 0 to 100,
+// inclusive. (Default: 50)
 func (c *ResourcesListCall) MaxResults(maxResults int64) *ResourcesListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Specifies a
-// nextPageToken returned by a previous list request. This token can be
-// used to request the next page of results from a previous list
+// PageToken sets the optional parameter "pageToken": ! Specifies a
+// nextPageToken returned by a previous list request. This ! token can
+// be used to request the next page of results from a previous ! list
 // request.
 func (c *ResourcesListCall) PageToken(pageToken string) *ResourcesListCall {
 	c.opt_["pageToken"] = pageToken
@@ -1362,7 +1362,7 @@ func (c *ResourcesListCall) Do() (*ResourcesListResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists all resources in a given deployment.",
+	//   "description": "! Lists all resources in a given deployment.",
 	//   "httpMethod": "GET",
 	//   "id": "deploymentmanager.resources.list",
 	//   "parameterOrder": [
@@ -1371,7 +1371,7 @@ func (c *ResourcesListCall) Do() (*ResourcesListResponse, error) {
 	//   ],
 	//   "parameters": {
 	//     "deployment": {
-	//       "description": "The name of the deployment for this request.",
+	//       "description": "! The name of the deployment for this request.",
 	//       "location": "path",
 	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
@@ -1379,7 +1379,7 @@ func (c *ResourcesListCall) Do() (*ResourcesListResponse, error) {
 	//     },
 	//     "maxResults": {
 	//       "default": "50",
-	//       "description": "Maximum count of results to be returned. Acceptable values are 0 to 100, inclusive. (Default: 50)",
+	//       "description": "! Maximum count of results to be returned. ! Acceptable values are 0 to 100, inclusive. (Default: 50)",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "maximum": "100",
@@ -1387,12 +1387,12 @@ func (c *ResourcesListCall) Do() (*ResourcesListResponse, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Specifies a nextPageToken returned by a previous list request. This token can be used to request the next page of results from a previous list request.",
+	//       "description": "! Specifies a nextPageToken returned by a previous list request. This ! token can be used to request the next page of results from a previous ! list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "project": {
-	//       "description": "The project ID for this request.",
+	//       "description": "! The project ID for this request.",
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
@@ -1420,24 +1420,24 @@ type TypesListCall struct {
 	opt_    map[string]interface{}
 }
 
-// List: Lists all Types for Deployment Manager.
+// List: ! Lists all Types for Deployment Manager.
 func (r *TypesService) List(project string) *TypesListCall {
 	c := &TypesListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
 	return c
 }
 
-// MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Acceptable values are 0 to 100, inclusive.
-// (Default: 50)
+// MaxResults sets the optional parameter "maxResults": ! Maximum count
+// of results to be returned. ! Acceptable values are 0 to 100,
+// inclusive. (Default: 50)
 func (c *TypesListCall) MaxResults(maxResults int64) *TypesListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Specifies a
-// nextPageToken returned by a previous list request. This token can be
-// used to request the next page of results from a previous list
+// PageToken sets the optional parameter "pageToken": ! Specifies a
+// nextPageToken returned by a previous list request. This ! token can
+// be used to request the next page of results from a previous ! list
 // request.
 func (c *TypesListCall) PageToken(pageToken string) *TypesListCall {
 	c.opt_["pageToken"] = pageToken
@@ -1486,7 +1486,7 @@ func (c *TypesListCall) Do() (*TypesListResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists all Types for Deployment Manager.",
+	//   "description": "! Lists all Types for Deployment Manager.",
 	//   "httpMethod": "GET",
 	//   "id": "deploymentmanager.types.list",
 	//   "parameterOrder": [
@@ -1495,7 +1495,7 @@ func (c *TypesListCall) Do() (*TypesListResponse, error) {
 	//   "parameters": {
 	//     "maxResults": {
 	//       "default": "50",
-	//       "description": "Maximum count of results to be returned. Acceptable values are 0 to 100, inclusive. (Default: 50)",
+	//       "description": "! Maximum count of results to be returned. ! Acceptable values are 0 to 100, inclusive. (Default: 50)",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "maximum": "100",
@@ -1503,12 +1503,12 @@ func (c *TypesListCall) Do() (*TypesListResponse, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Specifies a nextPageToken returned by a previous list request. This token can be used to request the next page of results from a previous list request.",
+	//       "description": "! Specifies a nextPageToken returned by a previous list request. This ! token can be used to request the next page of results from a previous ! list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "project": {
-	//       "description": "The project ID for this request.",
+	//       "description": "! The project ID for this request.",
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,

@@ -143,6 +143,49 @@ type TablesService struct {
 	s *Service
 }
 
+type CsvOptions struct {
+	// AllowJaggedRows: [Optional] Indicates if BigQuery should accept rows
+	// that are missing trailing optional columns. If true, BigQuery treats
+	// missing trailing columns as null values. If false, records with
+	// missing trailing columns are treated as bad records, and if there are
+	// too many bad records, an invalid error is returned in the job result.
+	// The default value is false.
+	AllowJaggedRows bool `json:"allowJaggedRows,omitempty"`
+
+	// AllowQuotedNewlines: [Optional] Indicates if BigQuery should allow
+	// quoted data sections that contain newline characters in a CSV file.
+	// The default value is false.
+	AllowQuotedNewlines bool `json:"allowQuotedNewlines,omitempty"`
+
+	// Encoding: [Optional] The character encoding of the data. The
+	// supported values are UTF-8 or ISO-8859-1. The default value is UTF-8.
+	// BigQuery decodes the data after the raw, binary data has been split
+	// using the values of the quote and fieldDelimiter properties.
+	Encoding string `json:"encoding,omitempty"`
+
+	// FieldDelimiter: [Optional] The separator for fields in a CSV file.
+	// BigQuery converts the string to ISO-8859-1 encoding, and then uses
+	// the first byte of the encoded string to split the data in its raw,
+	// binary state. BigQuery also supports the escape sequence "\t" to
+	// specify a tab separator. The default value is a comma (',').
+	FieldDelimiter string `json:"fieldDelimiter,omitempty"`
+
+	// Quote: [Optional] The value that is used to quote data sections in a
+	// CSV file. BigQuery converts the string to ISO-8859-1 encoding, and
+	// then uses the first byte of the encoded string to split the data in
+	// its raw, binary state. The default value is a double-quote ('"'). If
+	// your data does not contain quoted sections, set the property value to
+	// an empty string. If your data contains quoted newline characters, you
+	// must also set the allowQuotedNewlines property to true.
+	Quote string `json:"quote,omitempty"`
+
+	// SkipLeadingRows: [Optional] The number of rows at the top of a CSV
+	// file that BigQuery will skip when reading the data. The default value
+	// is 0. This property is useful if you have header rows in the file
+	// that should be skipped.
+	SkipLeadingRows int64 `json:"skipLeadingRows,omitempty"`
+}
+
 type Dataset struct {
 	// Access: [Optional] An array of objects that define dataset access for
 	// one or more entities. You can set this property when inserting or
@@ -161,6 +204,19 @@ type Dataset struct {
 
 	// DatasetReference: [Required] A reference that identifies the dataset.
 	DatasetReference *DatasetReference `json:"datasetReference,omitempty"`
+
+	// DefaultTableExpirationMs: [Experimental] The default lifetime of all
+	// tables in the dataset, in milliseconds. The minimum value is 3600000
+	// milliseconds (one hour). Once this property is set, all newly-created
+	// tables in the dataset will have an expirationTime property set to the
+	// creation time plus the value in this property, and changing the value
+	// will only affect new tables, not existing ones. When the
+	// expirationTime for a given table is reached, that table will be
+	// deleted automatically. If a table's expirationTime is modified or
+	// removed before the table expires, or if you provide an explicit
+	// expirationTime when creating a table, that value takes precedence
+	// over the default expiration time indicated by this property.
+	DefaultTableExpirationMs int64 `json:"defaultTableExpirationMs,omitempty,string"`
 
 	// Description: [Optional] A user-friendly description of the dataset.
 	Description string `json:"description,omitempty"`
@@ -283,6 +339,45 @@ type ErrorProto struct {
 
 	// Reason: A short error code that summarizes the error.
 	Reason string `json:"reason,omitempty"`
+}
+
+type ExternalDataConfiguration struct {
+	// Compression: [Optional] The compression type of the data source.
+	// Possible values include GZIP and NONE. The default value is NONE.
+	Compression string `json:"compression,omitempty"`
+
+	// CsvOptions: Additional properties to set if sourceFormat is set to
+	// CSV.
+	CsvOptions *CsvOptions `json:"csvOptions,omitempty"`
+
+	// IgnoreUnknownValues: [Optional] Indicates if BigQuery should allow
+	// extra values that are not represented in the table schema. If true,
+	// the extra values are ignored. If false, records with extra columns
+	// are treated as bad records, and if there are too many bad records, an
+	// invalid error is returned in the job result. The default value is
+	// false. The sourceFormat property determines what BigQuery treats as
+	// an extra value: CSV: Trailing columns
+	IgnoreUnknownValues bool `json:"ignoreUnknownValues,omitempty"`
+
+	// MaxBadRecords: [Optional] The maximum number of bad records that
+	// BigQuery can ignore when reading data. If the number of bad records
+	// exceeds this value, an invalid error is returned in the job result.
+	// The default value is 0, which requires that all records are valid.
+	MaxBadRecords int64 `json:"maxBadRecords,omitempty"`
+
+	// Schema: [Required] The schema for the data.
+	Schema *TableSchema `json:"schema,omitempty"`
+
+	// SourceFormat: [Optional] The data format. External data sources must
+	// be in CSV format. The default value is CSV.
+	SourceFormat string `json:"sourceFormat,omitempty"`
+
+	// SourceUris: [Required] The fully-qualified URIs that point to your
+	// data in Google Cloud Storage. Each URI can contain one '*' wildcard
+	// character and it must come after the 'bucket' name. CSV limits
+	// related to load jobs apply to external data sources, plus an
+	// additional limit of 10 GB maximum size across all URIs.
+	SourceUris []string `json:"sourceUris,omitempty"`
 }
 
 type GetQueryResultsResponse struct {
@@ -451,8 +546,10 @@ type JobConfigurationLink struct {
 
 type JobConfigurationLoad struct {
 	// AllowJaggedRows: [Optional] Accept rows that are missing trailing
-	// optional columns. The missing values are treated as nulls. Default is
-	// false which treats short rows as errors. Only applicable to CSV,
+	// optional columns. The missing values are treated as nulls. If false,
+	// records with missing trailing columns are treated as bad records, and
+	// if there are too many bad records, an invalid error is returned in
+	// the job result. The default value is false. Only applicable to CSV,
 	// ignored for other formats.
 	AllowJaggedRows bool `json:"allowJaggedRows,omitempty"`
 
@@ -487,18 +584,21 @@ type JobConfigurationLoad struct {
 	// specify a tab separator. The default value is a comma (',').
 	FieldDelimiter string `json:"fieldDelimiter,omitempty"`
 
-	// IgnoreUnknownValues: [Optional] Accept rows that contain values that
-	// do not match the schema. The unknown values are ignored. Default is
-	// false which treats unknown values as errors. For CSV this ignores
-	// extra values at the end of a line. For JSON this ignores named values
-	// that do not match any column name.
+	// IgnoreUnknownValues: [Optional] Indicates if BigQuery should allow
+	// extra values that are not represented in the table schema. If true,
+	// the extra values are ignored. If false, records with extra columns
+	// are treated as bad records, and if there are too many bad records, an
+	// invalid error is returned in the job result. The default value is
+	// false. The sourceFormat property determines what BigQuery treats as
+	// an extra value: CSV: Trailing columns JSON: Named values that don't
+	// match any column names
 	IgnoreUnknownValues bool `json:"ignoreUnknownValues,omitempty"`
 
 	// MaxBadRecords: [Optional] The maximum number of bad records that
 	// BigQuery can ignore when running the job. If the number of bad
-	// records exceeds this value, an 'invalid' error is returned in the job
-	// result and the job fails. The default value is 0, which requires that
-	// all records are valid.
+	// records exceeds this value, an invalid error is returned in the job
+	// result. The default value is 0, which requires that all records are
+	// valid.
 	MaxBadRecords int64 `json:"maxBadRecords,omitempty"`
 
 	// ProjectionFields: [Experimental] Names(case-sensitive) of properties
@@ -546,8 +646,8 @@ type JobConfigurationLoad struct {
 	SourceFormat string `json:"sourceFormat,omitempty"`
 
 	// SourceUris: [Required] The fully-qualified URIs that point to your
-	// data in Google Cloud Storage. Wildcard names are only supported when
-	// they appear at the end of the URI.
+	// data in Google Cloud Storage. Each URI can contain one '*' wildcard
+	// character and it must come after the 'bucket' name.
 	SourceUris []string `json:"sourceUris,omitempty"`
 
 	// WriteDisposition: [Optional] Specifies the action that occurs if the
@@ -602,6 +702,12 @@ type JobConfigurationQuery struct {
 
 	// Query: [Required] BigQuery SQL query to execute.
 	Query string `json:"query,omitempty"`
+
+	// TableDefinitions: [Experimental] If querying an external data source
+	// outside of BigQuery, describes the data format, location and other
+	// properties of the data source. By defining these properties, the data
+	// source can then be queried as if it were a standard BigQuery table.
+	TableDefinitions map[string]ExternalDataConfiguration `json:"tableDefinitions,omitempty"`
 
 	// UseQueryCache: [Optional] Whether to look for the result in the query
 	// cache. The query cache is a best-effort cache that will be flushed

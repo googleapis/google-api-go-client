@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/iTA-R5-0GybzGChq9ZynFCm92Zw\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/I-Kz7nVLqL3C3aFzaPv8bMiNptU\"",
  "discoveryVersion": "v1",
  "id": "oauth2:v2",
  "name": "oauth2",
  "version": "v2",
- "revision": "20150302",
+ "revision": "20150319",
  "title": "Google OAuth2 API",
  "description": "Lets you access OAuth2 protocol related APIs.",
  "ownerDomain": "google.com",
@@ -149,6 +149,10 @@
      "type": "string",
      "description": "The space separated list of scopes granted to this token."
     },
+    "token_handle": {
+     "type": "string",
+     "description": "The token handle associated with this token."
+    },
     "user_id": {
      "type": "string",
      "description": "The obfuscated user id."
@@ -230,6 +234,10 @@
      "location": "query"
     },
     "id_token": {
+     "type": "string",
+     "location": "query"
+    },
+    "token_handle": {
      "type": "string",
      "location": "query"
     }

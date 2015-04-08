@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/8xS90Igj1Zi_dhxWkhTiyEbzjmc\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/fIJ3DBpWQxusVwOa-ZxrsUl27A4\"",
  "discoveryVersion": "v1",
  "id": "datastore:v1beta1",
  "name": "datastore",
  "version": "v1beta1",
- "revision": "20140916",
+ "revision": "20150402",
  "title": "Google Cloud Datastore API",
  "description": "API for accessing Google Cloud Datastore.",
  "ownerDomain": "google.com",
@@ -737,7 +737,7 @@
     },
     "blobValue": {
      "type": "string",
-     "description": "A blob value. May be a maximum of 1,000,000 bytes.",
+     "description": "A blob value. May be a maximum of 1,000,000 bytes. When indexed is true, may have at most 500 bytes.",
      "format": "byte"
     },
     "booleanValue": {
@@ -778,7 +778,7 @@
     },
     "stringValue": {
      "type": "string",
-     "description": "A UTF-8 encoded string value."
+     "description": "A UTF-8 encoded string value. When indexed is true, may have at most 500 characters."
     }
    }
   }

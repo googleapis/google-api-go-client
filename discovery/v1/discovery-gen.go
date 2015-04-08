@@ -393,6 +393,11 @@ type RestMethod struct {
 
 	// SupportsSubscription: Whether this method supports subscriptions.
 	SupportsSubscription bool `json:"supportsSubscription,omitempty"`
+
+	// UseMediaDownloadService: Indicates that downloads from this method
+	// should use the download service URL (i.e. "/download"). Only applies
+	// if the method supports media download.
+	UseMediaDownloadService bool `json:"useMediaDownloadService,omitempty"`
 }
 
 type RestMethodMediaUpload struct {

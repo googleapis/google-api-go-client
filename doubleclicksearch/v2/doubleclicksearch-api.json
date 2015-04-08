@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/cxvPCR_xcZiPo49FRoYXODxx8IM\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/Y1wjJXqKq4tUGkkWO6BLXXmKWiI\"",
  "discoveryVersion": "v1",
  "id": "doubleclicksearch:v2",
  "name": "doubleclicksearch",
  "version": "v2",
- "revision": "20141222",
+ "revision": "20150303",
  "title": "DoubleClick Search API",
  "description": "Report and modify your advertising data in DoubleClick Search (for example, campaigns, ad groups, keywords, and conversions).",
  "ownerDomain": "google.com",
@@ -158,7 +158,7 @@
     },
     "attributionModel": {
      "type": "string",
-     "description": "Attribution model name."
+     "description": "Attribution model name. This field is ignored."
     },
     "campaignId": {
      "type": "string",
@@ -195,7 +195,7 @@
     },
     "countMillis": {
      "type": "string",
-     "description": "Conversion count in millis.",
+     "description": "The number of conversions, formatted in millis (conversions multiplied by 1000). This field is ignored.",
      "format": "int64"
     },
     "criterionId": {
@@ -987,7 +987,7 @@
      "id": "doubleclicksearch.reports.getFile",
      "path": "reports/{reportId}/files/{reportFragment}",
      "httpMethod": "GET",
-     "description": "Downloads a report file.",
+     "description": "Downloads a report file encoded in UTF-8.",
      "parameters": {
       "reportFragment": {
        "type": "integer",

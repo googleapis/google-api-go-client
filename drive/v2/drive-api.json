@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/ZgMjHnirW9jShGfpZfEVuQkjf2Y\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/yUsYaOTyEAvpk-uZ9U5lffkz2VU\"",
  "discoveryVersion": "v1",
  "id": "drive:v2",
  "name": "drive",
  "version": "v2",
- "revision": "20150108",
+ "revision": "20150326",
  "title": "Drive API",
  "description": "The API to interact with Drive.",
  "ownerDomain": "google.com",
@@ -380,7 +380,7 @@
     },
     "openUrlTemplate": {
      "type": "string",
-     "description": "The template url for opening files with this app. The template will contain {ids} and/or {exportIds} to be replaced by the actual file ids."
+     "description": "The template url for opening files with this app. The template will contain {ids} and/or {exportIds} to be replaced by the actual file ids. See  Open Files  for the full documentation."
     },
     "primaryFileExtensions": {
      "type": "array",
@@ -1505,7 +1505,7 @@
   "Property": {
    "id": "Property",
    "type": "object",
-   "description": "A key-value pair that is either public or private to an application.",
+   "description": "A key-value pair attached to a file that is either public or private to an application.\nThe following limits apply to file properties:  \n- Maximum of 100 properties total per file\n- Maximum of 30 private properties per app\n- Maximum of 30 public properties\n- Maximum of 124 bytes size limit on (key + value) string in UTF-8 encoding for a single property.",
    "properties": {
     "etag": {
      "type": "string",
@@ -2450,8 +2450,13 @@
      "parameters": {
       "acknowledgeAbuse": {
        "type": "boolean",
-       "description": "Whether the user is acknowledging the risk of downloading known malware or other abusive files.",
+       "description": "Whether the user is acknowledging the risk of downloading known malware or other abusive files. Ignored unless alt=media is specified.",
        "default": "false",
+       "location": "query"
+      },
+      "alt": {
+       "type": "string",
+       "description": "Specifies the type of resource representation to return. The default is 'json' to return file metadata. Specifying 'media' will cause the file content to be returned.",
        "location": "query"
       },
       "fileId": {
@@ -2471,6 +2476,11 @@
         "Deprecated",
         "Deprecated"
        ],
+       "location": "query"
+      },
+      "revisionId": {
+       "type": "string",
+       "description": "Specifies the Revision ID that should be downloaded. Ignored unless alt=media is specified.",
        "location": "query"
       },
       "updateViewedDate": {
@@ -2948,8 +2958,13 @@
      "parameters": {
       "acknowledgeAbuse": {
        "type": "boolean",
-       "description": "Whether the user is acknowledging the risk of downloading known malware or other abusive files.",
+       "description": "Whether the user is acknowledging the risk of downloading known malware or other abusive files. Ignored unless alt=media is specified.",
        "default": "false",
+       "location": "query"
+      },
+      "alt": {
+       "type": "string",
+       "description": "Specifies the type of resource representation to return. The default is 'json' to return file metadata. Specifying 'media' will cause the file content to be returned.",
        "location": "query"
       },
       "fileId": {
@@ -2969,6 +2984,11 @@
         "Deprecated",
         "Deprecated"
        ],
+       "location": "query"
+      },
+      "revisionId": {
+       "type": "string",
+       "description": "Specifies the Revision ID that should be downloaded. Ignored unless alt=media is specified.",
        "location": "query"
       },
       "updateViewedDate": {

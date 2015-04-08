@@ -869,7 +869,7 @@ type AccountPermissionGroup struct {
 }
 
 type AccountPermissionGroupsListResponse struct {
-	// AccountPermissionGroups: Account permission group collection
+	// AccountPermissionGroups: Account permission group collection.
 	AccountPermissionGroups []*AccountPermissionGroup `json:"accountPermissionGroups,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -878,7 +878,7 @@ type AccountPermissionGroupsListResponse struct {
 }
 
 type AccountPermissionsListResponse struct {
-	// AccountPermissions: Account permission collection
+	// AccountPermissions: Account permission collection.
 	AccountPermissions []*AccountPermission `json:"accountPermissions,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -975,7 +975,7 @@ type AccountUserProfile struct {
 }
 
 type AccountUserProfilesListResponse struct {
-	// AccountUserProfiles: Account user profile collection
+	// AccountUserProfiles: Account user profile collection.
 	AccountUserProfiles []*AccountUserProfile `json:"accountUserProfiles,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -988,7 +988,7 @@ type AccountUserProfilesListResponse struct {
 }
 
 type AccountsListResponse struct {
-	// Accounts: Account collection
+	// Accounts: Account collection.
 	Accounts []*Account `json:"accounts,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -1173,7 +1173,7 @@ type Ad struct {
 }
 
 type AdsListResponse struct {
-	// Ads: Ad collection
+	// Ads: Ad collection.
 	Ads []*Ad `json:"ads,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -1270,7 +1270,7 @@ type AdvertiserGroup struct {
 }
 
 type AdvertiserGroupsListResponse struct {
-	// AdvertiserGroups: Advertiser group collection
+	// AdvertiserGroups: Advertiser group collection.
 	AdvertiserGroups []*AdvertiserGroup `json:"advertiserGroups,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -1283,7 +1283,7 @@ type AdvertiserGroupsListResponse struct {
 }
 
 type AdvertisersListResponse struct {
-	// Advertisers: Advertiser collection
+	// Advertisers: Advertiser collection.
 	Advertisers []*Advertiser `json:"advertisers,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -1364,7 +1364,7 @@ type Browser struct {
 }
 
 type BrowsersListResponse struct {
-	// Browsers: Browser collection
+	// Browsers: Browser collection.
 	Browsers []*Browser `json:"browsers,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -1513,7 +1513,7 @@ type CampaignCreativeAssociationsListResponse struct {
 }
 
 type CampaignsListResponse struct {
-	// Campaigns: Campaign collection
+	// Campaigns: Campaign collection.
 	Campaigns []*Campaign `json:"campaigns,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -1575,7 +1575,7 @@ type ChangeLog struct {
 }
 
 type ChangeLogsListResponse struct {
-	// ChangeLogs: Change log collection
+	// ChangeLogs: Change log collection.
 	ChangeLogs []*ChangeLog `json:"changeLogs,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -1588,7 +1588,7 @@ type ChangeLogsListResponse struct {
 }
 
 type CitiesListResponse struct {
-	// Cities: City collection
+	// Cities: City collection.
 	Cities []*City `json:"cities,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -1719,7 +1719,8 @@ type ConnectionType struct {
 }
 
 type ConnectionTypesListResponse struct {
-	// ConnectionTypes: Connection Type Collection.
+	// ConnectionTypes: Collection of connection types such as broadband and
+	// mobile.
 	ConnectionTypes []*ConnectionType `json:"connectionTypes,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -1728,7 +1729,7 @@ type ConnectionTypesListResponse struct {
 }
 
 type ContentCategoriesListResponse struct {
-	// ContentCategories: Content category collection
+	// ContentCategories: Content category collection.
 	ContentCategories []*ContentCategory `json:"contentCategories,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -1763,7 +1764,7 @@ type ContentCategory struct {
 }
 
 type CountriesListResponse struct {
-	// Countries: Country collection
+	// Countries: Country collection.
 	Countries []*Country `json:"countries,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -2588,7 +2589,7 @@ type CreativeFieldValue struct {
 }
 
 type CreativeFieldValuesListResponse struct {
-	// CreativeFieldValues: Creative field value collection
+	// CreativeFieldValues: Creative field value collection.
 	CreativeFieldValues []*CreativeFieldValue `json:"creativeFieldValues,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -2601,7 +2602,7 @@ type CreativeFieldValuesListResponse struct {
 }
 
 type CreativeFieldsListResponse struct {
-	// CreativeFields: Creative field collection
+	// CreativeFields: Creative field collection.
 	CreativeFields []*CreativeField `json:"creativeFields,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -2663,7 +2664,7 @@ type CreativeGroupAssignment struct {
 }
 
 type CreativeGroupsListResponse struct {
-	// CreativeGroups: Creative group collection
+	// CreativeGroups: Creative group collection.
 	CreativeGroups []*CreativeGroup `json:"creativeGroups,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -2724,7 +2725,7 @@ type CreativeSettings struct {
 }
 
 type CreativesListResponse struct {
-	// Creatives: Creative collection
+	// Creatives: Creative collection.
 	Creatives []*Creative `json:"creatives,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -2864,7 +2865,7 @@ type DfpSettings struct {
 	PubPaidPlacementAccepted bool `json:"pubPaidPlacementAccepted,omitempty"`
 
 	// PublisherPortalOnly: Whether this directory site is available only
-	// via Publisher Portal.
+	// via DoubleClick Publisher Portal.
 	PublisherPortalOnly bool `json:"publisherPortalOnly,omitempty"`
 }
 
@@ -3134,7 +3135,7 @@ type DirectorySiteSettings struct {
 	NielsenOcrOptOut bool `json:"nielsenOcrOptOut,omitempty"`
 
 	// VerificationTagOptOut: Whether this directory site has disabled
-	// generation of Verification tags.
+	// generation of Verification ins tags.
 	VerificationTagOptOut bool `json:"verificationTagOptOut,omitempty"`
 
 	// VideoActiveViewOptOut: Whether this directory site has disabled
@@ -3143,7 +3144,7 @@ type DirectorySiteSettings struct {
 }
 
 type DirectorySitesListResponse struct {
-	// DirectorySites: Directory site collection
+	// DirectorySites: Directory site collection.
 	DirectorySites []*DirectorySite `json:"directorySites,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -3239,7 +3240,7 @@ type EventTagOverride struct {
 }
 
 type EventTagsListResponse struct {
-	// EventTags: Event tag collection
+	// EventTags: Event tag collection.
 	EventTags []*EventTag `json:"eventTags,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -3319,7 +3320,7 @@ type FloodlightActivitiesGenerateTagResponse struct {
 }
 
 type FloodlightActivitiesListResponse struct {
-	// FloodlightActivities: Floodlight activity collection
+	// FloodlightActivities: Floodlight activity collection.
 	FloodlightActivities []*FloodlightActivity `json:"floodlightActivities,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -3545,7 +3546,7 @@ type FloodlightActivityGroup struct {
 }
 
 type FloodlightActivityGroupsListResponse struct {
-	// FloodlightActivityGroups: Floodlight activity group collection
+	// FloodlightActivityGroups: Floodlight activity group collection.
 	FloodlightActivityGroups []*FloodlightActivityGroup `json:"floodlightActivityGroups,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -3657,7 +3658,7 @@ type FloodlightConfiguration struct {
 }
 
 type FloodlightConfigurationsListResponse struct {
-	// FloodlightConfigurations: Floodlight configuration collection
+	// FloodlightConfigurations: Floodlight configuration collection.
 	FloodlightConfigurations []*FloodlightConfiguration `json:"floodlightConfigurations,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -3770,7 +3771,7 @@ type LandingPage struct {
 	// string "dfareporting#landingPage".
 	Kind string `json:"kind,omitempty"`
 
-	// Name: Name of this landing page. This is a required field. Must be
+	// Name: Name of this landing page. This is a required field. It must be
 	// less than 256 characters long, and must be unique among landing pages
 	// of the same campaign.
 	Name string `json:"name,omitempty"`
@@ -3855,7 +3856,7 @@ type MetrosListResponse struct {
 	// string "dfareporting#metrosListResponse".
 	Kind string `json:"kind,omitempty"`
 
-	// Metros: Metro collection
+	// Metros: Metro collection.
 	Metros []*Metro `json:"metros,omitempty"`
 }
 
@@ -3884,7 +3885,7 @@ type MobileCarriersListResponse struct {
 	// string "dfareporting#mobileCarriersListResponse".
 	Kind string `json:"kind,omitempty"`
 
-	// MobileCarriers: Mobile carrier collection
+	// MobileCarriers: Mobile carrier collection.
 	MobileCarriers []*MobileCarrier `json:"mobileCarriers,omitempty"`
 }
 
@@ -3955,8 +3956,8 @@ type OperatingSystemVersion struct {
 	// system version.
 	MajorVersion string `json:"majorVersion,omitempty"`
 
-	// MinorVersion: Minor version (number after first dot on the left) of
-	// this operating system version.
+	// MinorVersion: Minor version (number after the first dot) of this
+	// operating system version.
 	MinorVersion string `json:"minorVersion,omitempty"`
 
 	// Name: Name of this operating system version.
@@ -3971,7 +3972,7 @@ type OperatingSystemVersionsListResponse struct {
 	// string "dfareporting#operatingSystemVersionsListResponse".
 	Kind string `json:"kind,omitempty"`
 
-	// OperatingSystemVersions: Operating system version collection
+	// OperatingSystemVersions: Operating system version collection.
 	OperatingSystemVersions []*OperatingSystemVersion `json:"operatingSystemVersions,omitempty"`
 }
 
@@ -3980,7 +3981,7 @@ type OperatingSystemsListResponse struct {
 	// string "dfareporting#operatingSystemsListResponse".
 	Kind string `json:"kind,omitempty"`
 
-	// OperatingSystems: Operating system collection
+	// OperatingSystems: Operating system collection.
 	OperatingSystems []*OperatingSystem `json:"operatingSystems,omitempty"`
 }
 
@@ -4343,7 +4344,7 @@ type PlacementGroupsListResponse struct {
 	// operation.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// PlacementGroups: Placement group collection
+	// PlacementGroups: Placement group collection.
 	PlacementGroups []*PlacementGroup `json:"placementGroups,omitempty"`
 }
 
@@ -4356,7 +4357,7 @@ type PlacementStrategiesListResponse struct {
 	// operation.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// PlacementStrategies: Placement strategy collection
+	// PlacementStrategies: Placement strategy collection.
 	PlacementStrategies []*PlacementStrategy `json:"placementStrategies,omitempty"`
 }
 
@@ -4373,8 +4374,8 @@ type PlacementStrategy struct {
 	// string "dfareporting#placementStrategy".
 	Kind string `json:"kind,omitempty"`
 
-	// Name: Name of this placement strategy. This is a required field. Must
-	// be less than 256 characters long and unique among placement
+	// Name: Name of this placement strategy. This is a required field. It
+	// must be less than 256 characters long and unique among placement
 	// strategies of the same account.
 	Name string `json:"name,omitempty"`
 }
@@ -4405,7 +4406,7 @@ type PlacementsListResponse struct {
 	// operation.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// Placements: Placement collection
+	// Placements: Placement collection.
 	Placements []*Placement `json:"placements,omitempty"`
 }
 
@@ -4426,7 +4427,7 @@ type PlatformTypesListResponse struct {
 	// string "dfareporting#platformTypesListResponse".
 	Kind string `json:"kind,omitempty"`
 
-	// PlatformTypes: Platform type collection
+	// PlatformTypes: Platform type collection.
 	PlatformTypes []*PlatformType `json:"platformTypes,omitempty"`
 }
 
@@ -4485,7 +4486,7 @@ type PostalCodesListResponse struct {
 	// string "dfareporting#postalCodesListResponse".
 	Kind string `json:"kind,omitempty"`
 
-	// PostalCodes: Postal code collection
+	// PostalCodes: Postal code collection.
 	PostalCodes []*PostalCode `json:"postalCodes,omitempty"`
 }
 
@@ -4496,13 +4497,13 @@ type PricingSchedule struct {
 	// DisregardOverdelivery: Whether cap costs are ignored by ad serving.
 	DisregardOverdelivery bool `json:"disregardOverdelivery,omitempty"`
 
-	// EndDate: Placement end date. This date must be later than or be the
-	// same day as the placement start date, but not later than the campaign
-	// end date. If, for example, you set 6/25/2015 as both the start and
-	// end dates, the effective placement date is just that day only,
-	// 6/25/2015. The hours, minutes, and seconds of the end date should not
-	// be set, as doing so will result in an error. This field is required
-	// on insertion.
+	// EndDate: Placement end date. This date must be later than, or the
+	// same day as, the placement start date, but not later than the
+	// campaign end date. If, for example, you set 6/25/2015 as both the
+	// start and end dates, the effective placement date is just that day
+	// only, 6/25/2015. The hours, minutes, and seconds of the end date
+	// should not be set, as doing so will result in an error. This field is
+	// required on insertion.
 	EndDate string `json:"endDate,omitempty"`
 
 	// Flighted: Whether this placement is flighted. If true, pricing
@@ -4521,10 +4522,10 @@ type PricingSchedule struct {
 	// insertion.
 	PricingType string `json:"pricingType,omitempty"`
 
-	// StartDate: Placement start date. This date cannot be earlier than the
-	// campaign start date. The hours, minutes, and seconds of the start
-	// date should not be set, as doing so will result in an error. This
-	// field is required on insertion.
+	// StartDate: Placement start date. This date must be later than, or the
+	// same day as, the campaign start date. The hours, minutes, and seconds
+	// of the start date should not be set, as doing so will result in an
+	// error. This field is required on insertion.
 	StartDate string `json:"startDate,omitempty"`
 
 	// TestingStartDate: Testing start date of this placement. The hours,
@@ -4534,10 +4535,10 @@ type PricingSchedule struct {
 }
 
 type PricingSchedulePricingPeriod struct {
-	// EndDate: Pricing period end date. This date must be later than or be
-	// the same day as the pricing period start date, but not later than the
-	// placement end date. The period end date can be the same date as the
-	// period start date. If, for example, you set 6/25/2015 as both the
+	// EndDate: Pricing period end date. This date must be later than, or
+	// the same day as, the pricing period start date, but not later than
+	// the placement end date. The period end date can be the same date as
+	// the period start date. If, for example, you set 6/25/2015 as both the
 	// start and end dates, the effective pricing period date is just that
 	// day only, 6/25/2015. The hours, minutes, and seconds of the end date
 	// should not be set, as doing so will result in an error.
@@ -4549,9 +4550,10 @@ type PricingSchedulePricingPeriod struct {
 	// RateOrCostNanos: Rate or cost of this pricing period.
 	RateOrCostNanos int64 `json:"rateOrCostNanos,omitempty,string"`
 
-	// StartDate: Pricing period start date. This date cannot be earlier
-	// than the placement start date. The hours, minutes, and seconds of the
-	// start date should not be set, as doing so will result in an error.
+	// StartDate: Pricing period start date. This date must be later than,
+	// or the same day as, the placement start date. The hours, minutes, and
+	// seconds of the start date should not be set, as doing so will result
+	// in an error.
 	StartDate string `json:"startDate,omitempty"`
 
 	// Units: Units of this pricing period.
@@ -4645,7 +4647,7 @@ type RegionsListResponse struct {
 	// string "dfareporting#regionsListResponse".
 	Kind string `json:"kind,omitempty"`
 
-	// Regions: Region Collection.
+	// Regions: Region collection.
 	Regions []*Region `json:"regions,omitempty"`
 }
 
@@ -5209,7 +5211,7 @@ type SizesListResponse struct {
 	// string "dfareporting#sizesListResponse".
 	Kind string `json:"kind,omitempty"`
 
-	// Sizes: Size collection
+	// Sizes: Size collection.
 	Sizes []*Size `json:"sizes,omitempty"`
 }
 
@@ -5256,7 +5258,7 @@ type SubaccountsListResponse struct {
 	// operation.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// Subaccounts: Subaccount collection
+	// Subaccounts: Subaccount collection.
 	Subaccounts []*Subaccount `json:"subaccounts,omitempty"`
 }
 
@@ -5493,7 +5495,7 @@ type UserRolePermissionGroupsListResponse struct {
 	// string "dfareporting#userRolePermissionGroupsListResponse".
 	Kind string `json:"kind,omitempty"`
 
-	// UserRolePermissionGroups: User role permission group collection
+	// UserRolePermissionGroups: User role permission group collection.
 	UserRolePermissionGroups []*UserRolePermissionGroup `json:"userRolePermissionGroups,omitempty"`
 }
 
@@ -5502,7 +5504,7 @@ type UserRolePermissionsListResponse struct {
 	// string "dfareporting#userRolePermissionsListResponse".
 	Kind string `json:"kind,omitempty"`
 
-	// UserRolePermissions: User role permission collection
+	// UserRolePermissions: User role permission collection.
 	UserRolePermissions []*UserRolePermission `json:"userRolePermissions,omitempty"`
 }
 
@@ -5515,7 +5517,7 @@ type UserRolesListResponse struct {
 	// operation.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// UserRoles: User role collection
+	// UserRoles: User role collection.
 	UserRoles []*UserRole `json:"userRoles,omitempty"`
 }
 
@@ -6071,11 +6073,12 @@ func (c *AccountUserProfilesListCall) PageToken(pageToken string) *AccountUserPr
 // SearchString sets the optional parameter "searchString": Allows
 // searching for objects by name, ID or email. Wildcards (*) are
 // allowed. For example, "user profile*2015" will return objects with
-// names like "user profile June 2015", "user profile April 2015" or
+// names like "user profile June 2015", "user profile April 2015", or
 // simply "user profile 2015". Most of the searches also add wildcards
 // implicitly at the start and the end of the search string. For
 // example, a search string of "user profile" will match objects with
-// name "my user profile", "user profile 2015" or simply "user profile".
+// name "my user profile", "user profile 2015", or simply "user
+// profile".
 func (c *AccountUserProfilesListCall) SearchString(searchString string) *AccountUserProfilesListCall {
 	c.opt_["searchString"] = searchString
 	return c
@@ -6210,7 +6213,7 @@ func (c *AccountUserProfilesListCall) Do() (*AccountUserProfilesListResponse, er
 	//       "type": "string"
 	//     },
 	//     "searchString": {
-	//       "description": "Allows searching for objects by name, ID or email. Wildcards (*) are allowed. For example, \"user profile*2015\" will return objects with names like \"user profile June 2015\", \"user profile April 2015\" or simply \"user profile 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"user profile\" will match objects with name \"my user profile\", \"user profile 2015\" or simply \"user profile\".",
+	//       "description": "Allows searching for objects by name, ID or email. Wildcards (*) are allowed. For example, \"user profile*2015\" will return objects with names like \"user profile June 2015\", \"user profile April 2015\", or simply \"user profile 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"user profile\" will match objects with name \"my user profile\", \"user profile 2015\", or simply \"user profile\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6587,10 +6590,10 @@ func (c *AccountsListCall) PageToken(pageToken string) *AccountsListCall {
 // SearchString sets the optional parameter "searchString": Allows
 // searching for objects by name or ID. Wildcards (*) are allowed. For
 // example, "account*2015" will return objects with names like "account
-// June 2015", "account April 2015" or simply "account 2015". Most of
+// June 2015", "account April 2015", or simply "account 2015". Most of
 // the searches also add wildcards implicitly at the start and the end
 // of the search string. For example, a search string of "account" will
-// match objects with name "my account", "account 2015" or simply
+// match objects with name "my account", "account 2015", or simply
 // "account".
 func (c *AccountsListCall) SearchString(searchString string) *AccountsListCall {
 	c.opt_["searchString"] = searchString
@@ -6706,7 +6709,7 @@ func (c *AccountsListCall) Do() (*AccountsListResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "searchString": {
-	//       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"account*2015\" will return objects with names like \"account June 2015\", \"account April 2015\" or simply \"account 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"account\" will match objects with name \"my account\", \"account 2015\" or simply \"account\".",
+	//       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"account*2015\" will return objects with names like \"account June 2015\", \"account April 2015\", or simply \"account 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"account\" will match objects with name \"my account\", \"account 2015\", or simply \"account\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7259,10 +7262,10 @@ func (c *AdsListCall) RemarketingListIds(remarketingListIds int64) *AdsListCall 
 // SearchString sets the optional parameter "searchString": Allows
 // searching for objects by name or ID. Wildcards (*) are allowed. For
 // example, "ad*2015" will return objects with names like "ad June
-// 2015", "ad April 2015" or simply "ad 2015". Most of the searches also
-// add wildcards implicitly at the start and the end of the search
+// 2015", "ad April 2015", or simply "ad 2015". Most of the searches
+// also add wildcards implicitly at the start and the end of the search
 // string. For example, a search string of "ad" will match objects with
-// name "my ad", "ad 2015" or simply "ad".
+// name "my ad", "ad 2015", or simply "ad".
 func (c *AdsListCall) SearchString(searchString string) *AdsListCall {
 	c.opt_["searchString"] = searchString
 	return c
@@ -7601,7 +7604,7 @@ func (c *AdsListCall) Do() (*AdsListResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "searchString": {
-	//       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"ad*2015\" will return objects with names like \"ad June 2015\", \"ad April 2015\" or simply \"ad 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"ad\" will match objects with name \"my ad\", \"ad 2015\" or simply \"ad\".",
+	//       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"ad*2015\" will return objects with names like \"ad June 2015\", \"ad April 2015\", or simply \"ad 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"ad\" will match objects with name \"my ad\", \"ad 2015\", or simply \"ad\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8161,11 +8164,11 @@ func (c *AdvertiserGroupsListCall) PageToken(pageToken string) *AdvertiserGroups
 // SearchString sets the optional parameter "searchString": Allows
 // searching for objects by name or ID. Wildcards (*) are allowed. For
 // example, "advertiser*2015" will return objects with names like
-// "advertiser group June 2015", "advertiser group April 2015" or simply
-// "advertiser group 2015". Most of the searches also add wildcards
-// implicitly at the start and the end of the search string. For
-// example, a search string of "advertisergroup" will match objects with
-// name "my advertisergroup", "advertisergroup 2015" or simply
+// "advertiser group June 2015", "advertiser group April 2015", or
+// simply "advertiser group 2015". Most of the searches also add
+// wildcards implicitly at the start and the end of the search string.
+// For example, a search string of "advertisergroup" will match objects
+// with name "my advertisergroup", "advertisergroup 2015", or simply
 // "advertisergroup".
 func (c *AdvertiserGroupsListCall) SearchString(searchString string) *AdvertiserGroupsListCall {
 	c.opt_["searchString"] = searchString
@@ -8273,7 +8276,7 @@ func (c *AdvertiserGroupsListCall) Do() (*AdvertiserGroupsListResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "searchString": {
-	//       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"advertiser*2015\" will return objects with names like \"advertiser group June 2015\", \"advertiser group April 2015\" or simply \"advertiser group 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"advertisergroup\" will match objects with name \"my advertisergroup\", \"advertisergroup 2015\" or simply \"advertisergroup\".",
+	//       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"advertiser*2015\" will return objects with names like \"advertiser group June 2015\", \"advertiser group April 2015\", or simply \"advertiser group 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"advertisergroup\" will match objects with name \"my advertisergroup\", \"advertisergroup 2015\", or simply \"advertisergroup\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8748,11 +8751,11 @@ func (c *AdvertisersListCall) PageToken(pageToken string) *AdvertisersListCall {
 // SearchString sets the optional parameter "searchString": Allows
 // searching for objects by name or ID. Wildcards (*) are allowed. For
 // example, "advertiser*2015" will return objects with names like
-// "advertiser June 2015", "advertiser April 2015" or simply "advertiser
-// 2015". Most of the searches also add wildcards implicitly at the
-// start and the end of the search string. For example, a search string
-// of "advertiser" will match objects with name "my advertiser",
-// "advertiser 2015" or simply "advertiser".
+// "advertiser June 2015", "advertiser April 2015", or simply
+// "advertiser 2015". Most of the searches also add wildcards implicitly
+// at the start and the end of the search string. For example, a search
+// string of "advertiser" will match objects with name "my advertiser",
+// "advertiser 2015", or simply "advertiser".
 func (c *AdvertisersListCall) SearchString(searchString string) *AdvertisersListCall {
 	c.opt_["searchString"] = searchString
 	return c
@@ -8915,7 +8918,7 @@ func (c *AdvertisersListCall) Do() (*AdvertisersListResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "searchString": {
-	//       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"advertiser*2015\" will return objects with names like \"advertiser June 2015\", \"advertiser April 2015\" or simply \"advertiser 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"advertiser\" will match objects with name \"my advertiser\", \"advertiser 2015\" or simply \"advertiser\".",
+	//       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"advertiser*2015\" will return objects with names like \"advertiser June 2015\", \"advertiser April 2015\", or simply \"advertiser 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"advertiser\" will match objects with name \"my advertiser\", \"advertiser 2015\", or simply \"advertiser\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -9766,11 +9769,11 @@ func (c *CampaignsListCall) PageToken(pageToken string) *CampaignsListCall {
 // SearchString sets the optional parameter "searchString": Allows
 // searching for campaigns by name or ID. Wildcards (*) are allowed. For
 // example, "campaign*2015" will return campaigns with names like
-// "campaign June 2015", "campaign April 2015" or simply "campaign
+// "campaign June 2015", "campaign April 2015", or simply "campaign
 // 2015". Most of the searches also add wildcards implicitly at the
 // start and the end of the search string. For example, a search string
 // of "campaign" will match campaigns with name "my campaign", "campaign
-// 2015" or simply "campaign".
+// 2015", or simply "campaign".
 func (c *CampaignsListCall) SearchString(searchString string) *CampaignsListCall {
 	c.opt_["searchString"] = searchString
 	return c
@@ -9942,7 +9945,7 @@ func (c *CampaignsListCall) Do() (*CampaignsListResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "searchString": {
-	//       "description": "Allows searching for campaigns by name or ID. Wildcards (*) are allowed. For example, \"campaign*2015\" will return campaigns with names like \"campaign June 2015\", \"campaign April 2015\" or simply \"campaign 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"campaign\" will match campaigns with name \"my campaign\", \"campaign 2015\" or simply \"campaign\".",
+	//       "description": "Allows searching for campaigns by name or ID. Wildcards (*) are allowed. For example, \"campaign*2015\" will return campaigns with names like \"campaign June 2015\", \"campaign April 2015\", or simply \"campaign 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"campaign\" will match campaigns with name \"my campaign\", \"campaign 2015\", or simply \"campaign\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -11141,11 +11144,11 @@ func (c *ContentCategoriesListCall) PageToken(pageToken string) *ContentCategori
 // SearchString sets the optional parameter "searchString": Allows
 // searching for objects by name or ID. Wildcards (*) are allowed. For
 // example, "contentcategory*2015" will return objects with names like
-// "contentcategory June 2015", "contentcategory April 2015" or simply
+// "contentcategory June 2015", "contentcategory April 2015", or simply
 // "contentcategory 2015". Most of the searches also add wildcards
 // implicitly at the start and the end of the search string. For
 // example, a search string of "contentcategory" will match objects with
-// name "my contentcategory", "contentcategory 2015" or simply
+// name "my contentcategory", "contentcategory 2015", or simply
 // "contentcategory".
 func (c *ContentCategoriesListCall) SearchString(searchString string) *ContentCategoriesListCall {
 	c.opt_["searchString"] = searchString
@@ -11253,7 +11256,7 @@ func (c *ContentCategoriesListCall) Do() (*ContentCategoriesListResponse, error)
 	//       "type": "string"
 	//     },
 	//     "searchString": {
-	//       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"contentcategory*2015\" will return objects with names like \"contentcategory June 2015\", \"contentcategory April 2015\" or simply \"contentcategory 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"contentcategory\" will match objects with name \"my contentcategory\", \"contentcategory 2015\" or simply \"contentcategory\".",
+	//       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"contentcategory*2015\" will return objects with names like \"contentcategory June 2015\", \"contentcategory April 2015\", or simply \"contentcategory 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"contentcategory\" will match objects with name \"my contentcategory\", \"contentcategory 2015\", or simply \"contentcategory\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -12842,11 +12845,11 @@ func (c *CreativeFieldsListCall) PageToken(pageToken string) *CreativeFieldsList
 // searching for creative fields by name or ID. Wildcards (*) are
 // allowed. For example, "creativefield*2015" will return creative
 // fields with names like "creativefield June 2015", "creativefield
-// April 2015" or simply "creativefield 2015". Most of the searches also
-// add wild-cards implicitly at the start and the end of the search
+// April 2015", or simply "creativefield 2015". Most of the searches
+// also add wild-cards implicitly at the start and the end of the search
 // string. For example, a search string of "creativefield" will match
 // creative fields with the name "my creativefield", "creativefield
-// 2015" or simply "creativefield".
+// 2015", or simply "creativefield".
 func (c *CreativeFieldsListCall) SearchString(searchString string) *CreativeFieldsListCall {
 	c.opt_["searchString"] = searchString
 	return c
@@ -12963,7 +12966,7 @@ func (c *CreativeFieldsListCall) Do() (*CreativeFieldsListResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "searchString": {
-	//       "description": "Allows searching for creative fields by name or ID. Wildcards (*) are allowed. For example, \"creativefield*2015\" will return creative fields with names like \"creativefield June 2015\", \"creativefield April 2015\" or simply \"creativefield 2015\". Most of the searches also add wild-cards implicitly at the start and the end of the search string. For example, a search string of \"creativefield\" will match creative fields with the name \"my creativefield\", \"creativefield 2015\" or simply \"creativefield\".",
+	//       "description": "Allows searching for creative fields by name or ID. Wildcards (*) are allowed. For example, \"creativefield*2015\" will return creative fields with names like \"creativefield June 2015\", \"creativefield April 2015\", or simply \"creativefield 2015\". Most of the searches also add wild-cards implicitly at the start and the end of the search string. For example, a search string of \"creativefield\" will match creative fields with the name \"my creativefield\", \"creativefield 2015\", or simply \"creativefield\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -13423,11 +13426,11 @@ func (c *CreativeGroupsListCall) PageToken(pageToken string) *CreativeGroupsList
 // searching for creative groups by name or ID. Wildcards (*) are
 // allowed. For example, "creativegroup*2015" will return creative
 // groups with names like "creativegroup June 2015", "creativegroup
-// April 2015" or simply "creativegroup 2015". Most of the searches also
-// add wild-cards implicitly at the start and the end of the search
+// April 2015", or simply "creativegroup 2015". Most of the searches
+// also add wild-cards implicitly at the start and the end of the search
 // string. For example, a search string of "creativegroup" will match
 // creative groups with the name "my creativegroup", "creativegroup
-// 2015" or simply "creativegroup".
+// 2015", or simply "creativegroup".
 func (c *CreativeGroupsListCall) SearchString(searchString string) *CreativeGroupsListCall {
 	c.opt_["searchString"] = searchString
 	return c
@@ -13553,7 +13556,7 @@ func (c *CreativeGroupsListCall) Do() (*CreativeGroupsListResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "searchString": {
-	//       "description": "Allows searching for creative groups by name or ID. Wildcards (*) are allowed. For example, \"creativegroup*2015\" will return creative groups with names like \"creativegroup June 2015\", \"creativegroup April 2015\" or simply \"creativegroup 2015\". Most of the searches also add wild-cards implicitly at the start and the end of the search string. For example, a search string of \"creativegroup\" will match creative groups with the name \"my creativegroup\", \"creativegroup 2015\" or simply \"creativegroup\".",
+	//       "description": "Allows searching for creative groups by name or ID. Wildcards (*) are allowed. For example, \"creativegroup*2015\" will return creative groups with names like \"creativegroup June 2015\", \"creativegroup April 2015\", or simply \"creativegroup 2015\". Most of the searches also add wild-cards implicitly at the start and the end of the search string. For example, a search string of \"creativegroup\" will match creative groups with the name \"my creativegroup\", \"creativegroup 2015\", or simply \"creativegroup\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -14048,11 +14051,11 @@ func (c *CreativesListCall) RenderingIds(renderingIds int64) *CreativesListCall 
 // SearchString sets the optional parameter "searchString": Allows
 // searching for objects by name or ID. Wildcards (*) are allowed. For
 // example, "creative*2015" will return objects with names like
-// "creative June 2015", "creative April 2015" or simply "creative
+// "creative June 2015", "creative April 2015", or simply "creative
 // 2015". Most of the searches also add wildcards implicitly at the
 // start and the end of the search string. For example, a search string
 // of "creative" will match objects with name "my creative", "creative
-// 2015" or simply "creative".
+// 2015", or simply "creative".
 func (c *CreativesListCall) SearchString(searchString string) *CreativesListCall {
 	c.opt_["searchString"] = searchString
 	return c
@@ -14253,7 +14256,7 @@ func (c *CreativesListCall) Do() (*CreativesListResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "searchString": {
-	//       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"creative*2015\" will return objects with names like \"creative June 2015\", \"creative April 2015\" or simply \"creative 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"creative\" will match objects with name \"my creative\", \"creative 2015\" or simply \"creative\".",
+	//       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"creative*2015\" will return objects with names like \"creative June 2015\", \"creative April 2015\", or simply \"creative 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"creative\" will match objects with name \"my creative\", \"creative 2015\", or simply \"creative\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -14810,11 +14813,11 @@ func (c *DirectorySiteContactsListCall) PageToken(pageToken string) *DirectorySi
 // searching for objects by name, ID or email. Wildcards (*) are
 // allowed. For example, "directory site contact*2015" will return
 // objects with names like "directory site contact June 2015",
-// "directory site contact April 2015" or simply "directory site contact
-// 2015". Most of the searches also add wildcards implicitly at the
-// start and the end of the search string. For example, a search string
-// of "directory site contact" will match objects with name "my
-// directory site contact", "directory site contact 2015" or simply
+// "directory site contact April 2015", or simply "directory site
+// contact 2015". Most of the searches also add wildcards implicitly at
+// the start and the end of the search string. For example, a search
+// string of "directory site contact" will match objects with name "my
+// directory site contact", "directory site contact 2015", or simply
 // "directory site contact".
 func (c *DirectorySiteContactsListCall) SearchString(searchString string) *DirectorySiteContactsListCall {
 	c.opt_["searchString"] = searchString
@@ -14932,7 +14935,7 @@ func (c *DirectorySiteContactsListCall) Do() (*DirectorySiteContactsListResponse
 	//       "type": "string"
 	//     },
 	//     "searchString": {
-	//       "description": "Allows searching for objects by name, ID or email. Wildcards (*) are allowed. For example, \"directory site contact*2015\" will return objects with names like \"directory site contact June 2015\", \"directory site contact April 2015\" or simply \"directory site contact 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"directory site contact\" will match objects with name \"my directory site contact\", \"directory site contact 2015\" or simply \"directory site contact\".",
+	//       "description": "Allows searching for objects by name, ID or email. Wildcards (*) are allowed. For example, \"directory site contact*2015\" will return objects with names like \"directory site contact June 2015\", \"directory site contact April 2015\", or simply \"directory site contact 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"directory site contact\" will match objects with name \"my directory site contact\", \"directory site contact 2015\", or simply \"directory site contact\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -15154,11 +15157,11 @@ func (c *DirectorySitesListCall) ParentId(parentId int64) *DirectorySitesListCal
 // SearchString sets the optional parameter "searchString": Allows
 // searching for objects by name, ID or URL. Wildcards (*) are allowed.
 // For example, "directory site*2015" will return objects with names
-// like "directory site June 2015", "directory site April 2015" or
+// like "directory site June 2015", "directory site April 2015", or
 // simply "directory site 2015". Most of the searches also add wildcards
 // implicitly at the start and the end of the search string. For
 // example, a search string of "directory site" will match objects with
-// name "my directory site", "directory site 2015" or simply "directory
+// name "my directory site", "directory site 2015" or simply, "directory
 // site".
 func (c *DirectorySitesListCall) SearchString(searchString string) *DirectorySitesListCall {
 	c.opt_["searchString"] = searchString
@@ -15324,7 +15327,7 @@ func (c *DirectorySitesListCall) Do() (*DirectorySitesListResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "searchString": {
-	//       "description": "Allows searching for objects by name, ID or URL. Wildcards (*) are allowed. For example, \"directory site*2015\" will return objects with names like \"directory site June 2015\", \"directory site April 2015\" or simply \"directory site 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"directory site\" will match objects with name \"my directory site\", \"directory site 2015\" or simply \"directory site\".",
+	//       "description": "Allows searching for objects by name, ID or URL. Wildcards (*) are allowed. For example, \"directory site*2015\" will return objects with names like \"directory site June 2015\", \"directory site April 2015\", or simply \"directory site 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"directory site\" will match objects with name \"my directory site\", \"directory site 2015\" or simply, \"directory site\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -15701,11 +15704,11 @@ func (c *EventTagsListCall) Ids(ids int64) *EventTagsListCall {
 // SearchString sets the optional parameter "searchString": Allows
 // searching for objects by name or ID. Wildcards (*) are allowed. For
 // example, "eventtag*2015" will return objects with names like
-// "eventtag June 2015", "eventtag April 2015" or simply "eventtag
+// "eventtag June 2015", "eventtag April 2015", or simply "eventtag
 // 2015". Most of the searches also add wildcards implicitly at the
 // start and the end of the search string. For example, a search string
 // of "eventtag" will match objects with name "my eventtag", "eventtag
-// 2015" or simply "eventtag".
+// 2015", or simply "eventtag".
 func (c *EventTagsListCall) SearchString(searchString string) *EventTagsListCall {
 	c.opt_["searchString"] = searchString
 	return c
@@ -15857,7 +15860,7 @@ func (c *EventTagsListCall) Do() (*EventTagsListResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "searchString": {
-	//       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"eventtag*2015\" will return objects with names like \"eventtag June 2015\", \"eventtag April 2015\" or simply \"eventtag 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"eventtag\" will match objects with name \"my eventtag\", \"eventtag 2015\" or simply \"eventtag\".",
+	//       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"eventtag*2015\" will return objects with names like \"eventtag June 2015\", \"eventtag April 2015\", or simply \"eventtag 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"eventtag\" will match objects with name \"my eventtag\", \"eventtag 2015\", or simply \"eventtag\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -16801,12 +16804,12 @@ func (c *FloodlightActivitiesListCall) PageToken(pageToken string) *FloodlightAc
 // SearchString sets the optional parameter "searchString": Allows
 // searching for objects by name or ID. Wildcards (*) are allowed. For
 // example, "floodlightactivity*2015" will return objects with names
-// like "floodlightactivity June 2015", "floodlightactivity April 2015"
+// like "floodlightactivity June 2015", "floodlightactivity April 2015",
 // or simply "floodlightactivity 2015". Most of the searches also add
 // wildcards implicitly at the start and the end of the search string.
 // For example, a search string of "floodlightactivity" will match
 // objects with name "my floodlightactivity activity",
-// "floodlightactivity 2015" or simply "floodlightactivity".
+// "floodlightactivity 2015", or simply "floodlightactivity".
 func (c *FloodlightActivitiesListCall) SearchString(searchString string) *FloodlightActivitiesListCall {
 	c.opt_["searchString"] = searchString
 	return c
@@ -16983,7 +16986,7 @@ func (c *FloodlightActivitiesListCall) Do() (*FloodlightActivitiesListResponse, 
 	//       "type": "string"
 	//     },
 	//     "searchString": {
-	//       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"floodlightactivity*2015\" will return objects with names like \"floodlightactivity June 2015\", \"floodlightactivity April 2015\" or simply \"floodlightactivity 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"floodlightactivity\" will match objects with name \"my floodlightactivity activity\", \"floodlightactivity 2015\" or simply \"floodlightactivity\".",
+	//       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"floodlightactivity*2015\" will return objects with names like \"floodlightactivity June 2015\", \"floodlightactivity April 2015\", or simply \"floodlightactivity 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"floodlightactivity\" will match objects with name \"my floodlightactivity activity\", \"floodlightactivity 2015\", or simply \"floodlightactivity\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -17493,7 +17496,7 @@ func (r *FloodlightActivityGroupsService) List(profileId int64) *FloodlightActiv
 
 // AdvertiserId sets the optional parameter "advertiserId": Select only
 // floodlight activity groups with the specified advertiser ID. Must
-// specify either ids, advertiserId, or floodlightConfigurationId for a
+// specify either advertiserId or floodlightConfigurationId for a
 // non-empty result.
 func (c *FloodlightActivityGroupsListCall) AdvertiserId(advertiserId int64) *FloodlightActivityGroupsListCall {
 	c.opt_["advertiserId"] = advertiserId
@@ -17503,16 +17506,15 @@ func (c *FloodlightActivityGroupsListCall) AdvertiserId(advertiserId int64) *Flo
 // FloodlightConfigurationId sets the optional parameter
 // "floodlightConfigurationId": Select only floodlight activity groups
 // with the specified floodlight configuration ID. Must specify either
-// ids, advertiserId, or floodlightConfigurationId for a non-empty
-// result.
+// advertiserId, or floodlightConfigurationId for a non-empty result.
 func (c *FloodlightActivityGroupsListCall) FloodlightConfigurationId(floodlightConfigurationId int64) *FloodlightActivityGroupsListCall {
 	c.opt_["floodlightConfigurationId"] = floodlightConfigurationId
 	return c
 }
 
 // Ids sets the optional parameter "ids": Select only floodlight
-// activity groups with the specified IDs. Must specify either ids,
-// advertiserId, or floodlightConfigurationId for a non-empty result.
+// activity groups with the specified IDs. Must specify either
+// advertiserId or floodlightConfigurationId for a non-empty result.
 func (c *FloodlightActivityGroupsListCall) Ids(ids int64) *FloodlightActivityGroupsListCall {
 	c.opt_["ids"] = ids
 	return c
@@ -17536,12 +17538,12 @@ func (c *FloodlightActivityGroupsListCall) PageToken(pageToken string) *Floodlig
 // searching for objects by name or ID. Wildcards (*) are allowed. For
 // example, "floodlightactivitygroup*2015" will return objects with
 // names like "floodlightactivitygroup June 2015",
-// "floodlightactivitygroup April 2015" or simply
+// "floodlightactivitygroup April 2015", or simply
 // "floodlightactivitygroup 2015". Most of the searches also add
 // wildcards implicitly at the start and the end of the search string.
 // For example, a search string of "floodlightactivitygroup" will match
 // objects with name "my floodlightactivitygroup activity",
-// "floodlightactivitygroup 2015" or simply "floodlightactivitygroup".
+// "floodlightactivitygroup 2015", or simply "floodlightactivitygroup".
 func (c *FloodlightActivityGroupsListCall) SearchString(searchString string) *FloodlightActivityGroupsListCall {
 	c.opt_["searchString"] = searchString
 	return c
@@ -17639,19 +17641,19 @@ func (c *FloodlightActivityGroupsListCall) Do() (*FloodlightActivityGroupsListRe
 	//   ],
 	//   "parameters": {
 	//     "advertiserId": {
-	//       "description": "Select only floodlight activity groups with the specified advertiser ID. Must specify either ids, advertiserId, or floodlightConfigurationId for a non-empty result.",
+	//       "description": "Select only floodlight activity groups with the specified advertiser ID. Must specify either advertiserId or floodlightConfigurationId for a non-empty result.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "floodlightConfigurationId": {
-	//       "description": "Select only floodlight activity groups with the specified floodlight configuration ID. Must specify either ids, advertiserId, or floodlightConfigurationId for a non-empty result.",
+	//       "description": "Select only floodlight activity groups with the specified floodlight configuration ID. Must specify either advertiserId, or floodlightConfigurationId for a non-empty result.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "ids": {
-	//       "description": "Select only floodlight activity groups with the specified IDs. Must specify either ids, advertiserId, or floodlightConfigurationId for a non-empty result.",
+	//       "description": "Select only floodlight activity groups with the specified IDs. Must specify either advertiserId or floodlightConfigurationId for a non-empty result.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "repeated": true,
@@ -17676,7 +17678,7 @@ func (c *FloodlightActivityGroupsListCall) Do() (*FloodlightActivityGroupsListRe
 	//       "type": "string"
 	//     },
 	//     "searchString": {
-	//       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"floodlightactivitygroup*2015\" will return objects with names like \"floodlightactivitygroup June 2015\", \"floodlightactivitygroup April 2015\" or simply \"floodlightactivitygroup 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"floodlightactivitygroup\" will match objects with name \"my floodlightactivitygroup activity\", \"floodlightactivitygroup 2015\" or simply \"floodlightactivitygroup\".",
+	//       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"floodlightactivitygroup*2015\" will return objects with names like \"floodlightactivitygroup June 2015\", \"floodlightactivitygroup April 2015\", or simply \"floodlightactivitygroup 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"floodlightactivitygroup\" will match objects with name \"my floodlightactivitygroup activity\", \"floodlightactivitygroup 2015\", or simply \"floodlightactivitygroup\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -19468,11 +19470,11 @@ func (c *PlacementGroupsListCall) PricingTypes(pricingTypes string) *PlacementGr
 // searching for placement groups by name or ID. Wildcards (*) are
 // allowed. For example, "placement*2015" will return placement groups
 // with names like "placement group June 2015", "placement group May
-// 2015" or simply "placements 2015". Most of the searches also add
+// 2015", or simply "placements 2015". Most of the searches also add
 // wildcards implicitly at the start and the end of the search string.
 // For example, a search string of "placementgroup" will match placement
-// groups with name "my placementgroup", "placementgroup 2015" or simply
-// "placementgroup".
+// groups with name "my placementgroup", "placementgroup 2015", or
+// simply "placementgroup".
 func (c *PlacementGroupsListCall) SearchString(searchString string) *PlacementGroupsListCall {
 	c.opt_["searchString"] = searchString
 	return c
@@ -19686,7 +19688,7 @@ func (c *PlacementGroupsListCall) Do() (*PlacementGroupsListResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "searchString": {
-	//       "description": "Allows searching for placement groups by name or ID. Wildcards (*) are allowed. For example, \"placement*2015\" will return placement groups with names like \"placement group June 2015\", \"placement group May 2015\" or simply \"placements 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"placementgroup\" will match placement groups with name \"my placementgroup\", \"placementgroup 2015\" or simply \"placementgroup\".",
+	//       "description": "Allows searching for placement groups by name or ID. Wildcards (*) are allowed. For example, \"placement*2015\" will return placement groups with names like \"placement group June 2015\", \"placement group May 2015\", or simply \"placements 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"placementgroup\" will match placement groups with name \"my placementgroup\", \"placementgroup 2015\", or simply \"placementgroup\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -20219,12 +20221,12 @@ func (c *PlacementStrategiesListCall) PageToken(pageToken string) *PlacementStra
 // SearchString sets the optional parameter "searchString": Allows
 // searching for objects by name or ID. Wildcards (*) are allowed. For
 // example, "placementstrategy*2015" will return objects with names like
-// "placementstrategy June 2015", "placementstrategy April 2015" or
+// "placementstrategy June 2015", "placementstrategy April 2015", or
 // simply "placementstrategy 2015". Most of the searches also add
 // wildcards implicitly at the start and the end of the search string.
 // For example, a search string of "placementstrategy" will match
-// objects with name "my placementstrategy", "placementstrategy 2015" or
-// simply "placementstrategy".
+// objects with name "my placementstrategy", "placementstrategy 2015",
+// or simply "placementstrategy".
 func (c *PlacementStrategiesListCall) SearchString(searchString string) *PlacementStrategiesListCall {
 	c.opt_["searchString"] = searchString
 	return c
@@ -20331,7 +20333,7 @@ func (c *PlacementStrategiesListCall) Do() (*PlacementStrategiesListResponse, er
 	//       "type": "string"
 	//     },
 	//     "searchString": {
-	//       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"placementstrategy*2015\" will return objects with names like \"placementstrategy June 2015\", \"placementstrategy April 2015\" or simply \"placementstrategy 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"placementstrategy\" will match objects with name \"my placementstrategy\", \"placementstrategy 2015\" or simply \"placementstrategy\".",
+	//       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"placementstrategy*2015\" will return objects with names like \"placementstrategy June 2015\", \"placementstrategy April 2015\", or simply \"placementstrategy 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"placementstrategy\" will match objects with name \"my placementstrategy\", \"placementstrategy 2015\", or simply \"placementstrategy\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -21011,11 +21013,11 @@ func (c *PlacementsListCall) PricingTypes(pricingTypes string) *PlacementsListCa
 // SearchString sets the optional parameter "searchString": Allows
 // searching for placements by name or ID. Wildcards (*) are allowed.
 // For example, "placement*2015" will return placements with names like
-// "placement June 2015", "placement May 2015" or simply "placements
+// "placement June 2015", "placement May 2015", or simply "placements
 // 2015". Most of the searches also add wildcards implicitly at the
 // start and the end of the search string. For example, a search string
 // of "placement" will match placements with name "my placement",
-// "placement 2015" or simply "placement".
+// "placement 2015", or simply "placement".
 func (c *PlacementsListCall) SearchString(searchString string) *PlacementsListCall {
 	c.opt_["searchString"] = searchString
 	return c
@@ -21272,7 +21274,7 @@ func (c *PlacementsListCall) Do() (*PlacementsListResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "searchString": {
-	//       "description": "Allows searching for placements by name or ID. Wildcards (*) are allowed. For example, \"placement*2015\" will return placements with names like \"placement June 2015\", \"placement May 2015\" or simply \"placements 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"placement\" will match placements with name \"my placement\", \"placement 2015\" or simply \"placement\".",
+	//       "description": "Allows searching for placements by name or ID. Wildcards (*) are allowed. For example, \"placement*2015\" will return placements with names like \"placement June 2015\", \"placement May 2015\", or simply \"placements 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"placement\" will match placements with name \"my placement\", \"placement 2015\", or simply \"placement\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -23115,10 +23117,10 @@ func (c *SitesListCall) PageToken(pageToken string) *SitesListCall {
 // SearchString sets the optional parameter "searchString": Allows
 // searching for objects by name, ID or keyName. Wildcards (*) are
 // allowed. For example, "site*2015" will return objects with names like
-// "site June 2015", "site April 2015" or simply "site 2015". Most of
+// "site June 2015", "site April 2015", or simply "site 2015". Most of
 // the searches also add wildcards implicitly at the start and the end
 // of the search string. For example, a search string of "site" will
-// match objects with name "my site", "site 2015" or simply "site".
+// match objects with name "my site", "site 2015", or simply "site".
 func (c *SitesListCall) SearchString(searchString string) *SitesListCall {
 	c.opt_["searchString"] = searchString
 	return c
@@ -23305,7 +23307,7 @@ func (c *SitesListCall) Do() (*SitesListResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "searchString": {
-	//       "description": "Allows searching for objects by name, ID or keyName. Wildcards (*) are allowed. For example, \"site*2015\" will return objects with names like \"site June 2015\", \"site April 2015\" or simply \"site 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"site\" will match objects with name \"my site\", \"site 2015\" or simply \"site\".",
+	//       "description": "Allows searching for objects by name, ID or keyName. Wildcards (*) are allowed. For example, \"site*2015\" will return objects with names like \"site June 2015\", \"site April 2015\", or simply \"site 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"site\" will match objects with name \"my site\", \"site 2015\", or simply \"site\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -24078,11 +24080,11 @@ func (c *SubaccountsListCall) PageToken(pageToken string) *SubaccountsListCall {
 // SearchString sets the optional parameter "searchString": Allows
 // searching for objects by name or ID. Wildcards (*) are allowed. For
 // example, "subaccount*2015" will return objects with names like
-// "subaccount June 2015", "subaccount April 2015" or simply "subaccount
-// 2015". Most of the searches also add wildcards implicitly at the
-// start and the end of the search string. For example, a search string
-// of "subaccount" will match objects with name "my subaccount",
-// "subaccount 2015" or simply "subaccount".
+// "subaccount June 2015", "subaccount April 2015", or simply
+// "subaccount 2015". Most of the searches also add wildcards implicitly
+// at the start and the end of the search string. For example, a search
+// string of "subaccount" will match objects with name "my subaccount",
+// "subaccount 2015", or simply "subaccount".
 func (c *SubaccountsListCall) SearchString(searchString string) *SubaccountsListCall {
 	c.opt_["searchString"] = searchString
 	return c
@@ -24189,7 +24191,7 @@ func (c *SubaccountsListCall) Do() (*SubaccountsListResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "searchString": {
-	//       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"subaccount*2015\" will return objects with names like \"subaccount June 2015\", \"subaccount April 2015\" or simply \"subaccount 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"subaccount\" will match objects with name \"my subaccount\", \"subaccount 2015\" or simply \"subaccount\".",
+	//       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"subaccount*2015\" will return objects with names like \"subaccount June 2015\", \"subaccount April 2015\", or simply \"subaccount 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"subaccount\" will match objects with name \"my subaccount\", \"subaccount 2015\", or simply \"subaccount\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -25210,11 +25212,11 @@ func (c *UserRolesListCall) PageToken(pageToken string) *UserRolesListCall {
 // SearchString sets the optional parameter "searchString": Allows
 // searching for objects by name or ID. Wildcards (*) are allowed. For
 // example, "userrole*2015" will return objects with names like
-// "userrole June 2015", "userrole April 2015" or simply "userrole
+// "userrole June 2015", "userrole April 2015", or simply "userrole
 // 2015". Most of the searches also add wildcards implicitly at the
 // start and the end of the search string. For example, a search string
 // of "userrole" will match objects with name "my userrole", "userrole
-// 2015" or simply "userrole".
+// 2015", or simply "userrole".
 func (c *UserRolesListCall) SearchString(searchString string) *UserRolesListCall {
 	c.opt_["searchString"] = searchString
 	return c
@@ -25339,7 +25341,7 @@ func (c *UserRolesListCall) Do() (*UserRolesListResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "searchString": {
-	//       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"userrole*2015\" will return objects with names like \"userrole June 2015\", \"userrole April 2015\" or simply \"userrole 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"userrole\" will match objects with name \"my userrole\", \"userrole 2015\" or simply \"userrole\".",
+	//       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"userrole*2015\" will return objects with names like \"userrole June 2015\", \"userrole April 2015\", or simply \"userrole 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"userrole\" will match objects with name \"my userrole\", \"userrole 2015\", or simply \"userrole\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

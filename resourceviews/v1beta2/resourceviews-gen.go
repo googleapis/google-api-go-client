@@ -1,4 +1,4 @@
-// Package resourceviews provides access to the Resource Views API.
+// Package resourceviews provides access to the Google Compute Engine Instance Groups API.
 //
 // See https://developers.google.com/compute/
 //

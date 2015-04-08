@@ -141,7 +141,7 @@ type Conversion struct {
 	// AgencyId: DS agency ID.
 	AgencyId int64 `json:"agencyId,omitempty,string"`
 
-	// AttributionModel: Attribution model name.
+	// AttributionModel: Attribution model name. This field is ignored.
 	AttributionModel string `json:"attributionModel,omitempty"`
 
 	// CampaignId: DS campaign ID.
@@ -162,7 +162,8 @@ type Conversion struct {
 	// epoch millis UTC.
 	ConversionTimestamp uint64 `json:"conversionTimestamp,omitempty,string"`
 
-	// CountMillis: Conversion count in millis.
+	// CountMillis: The number of conversions, formatted in millis
+	// (conversions multiplied by 1000). This field is ignored.
 	CountMillis int64 `json:"countMillis,omitempty,string"`
 
 	// CriterionId: DS criterion (keyword) ID.
@@ -1264,7 +1265,7 @@ type ReportsGetFileCall struct {
 	opt_           map[string]interface{}
 }
 
-// GetFile: Downloads a report file.
+// GetFile: Downloads a report file encoded in UTF-8.
 func (r *ReportsService) GetFile(reportId string, reportFragment int64) *ReportsGetFileCall {
 	c := &ReportsGetFileCall{s: r.s, opt_: make(map[string]interface{})}
 	c.reportId = reportId
@@ -1305,7 +1306,7 @@ func (c *ReportsGetFileCall) Do() error {
 	}
 	return nil
 	// {
-	//   "description": "Downloads a report file.",
+	//   "description": "Downloads a report file encoded in UTF-8.",
 	//   "httpMethod": "GET",
 	//   "id": "doubleclicksearch.reports.getFile",
 	//   "parameterOrder": [

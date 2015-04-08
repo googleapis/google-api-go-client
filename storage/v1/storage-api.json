@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/_1g57dSUpbId-W-VlfiwZJYq_Tc\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/3q_iADjFHt1rgbaFlWGflHM37mg\"",
  "discoveryVersion": "v1",
  "id": "storage:v1",
  "name": "storage",
  "version": "v1",
- "revision": "20141112",
+ "revision": "20150326",
  "title": "Cloud Storage API",
  "description": "Lets you store and retrieve potentially-large, immutable data objects.",
  "ownerDomain": "google.com",
@@ -267,7 +267,7 @@
     },
     "storageClass": {
      "type": "string",
-     "description": "The bucket's storage class. This defines how objects in the bucket are stored and determines the SLA and the cost of storage. Typical values are STANDARD and DURABLE_REDUCED_AVAILABILITY. Defaults to STANDARD. See the developer's guide for the authoritative list."
+     "description": "The bucket's storage class. This defines how objects in the bucket are stored and determines the SLA and the cost of storage. Values include STANDARD, NEARLINE and DURABLE_REDUCED_AVAILABILITY. Defaults to STANDARD. For more information, see storage classes."
     },
     "timeCreated": {
      "type": "string",
@@ -1872,6 +1872,21 @@
        ],
        "location": "query"
       },
+      "encryptionAlgorithm": {
+       "type": "string",
+       "description": "Specifies the encryption algorithm that was used to encrypt the object, if any. Only 'AES256' is supported currently. Algorithm, key, and key hash must be supplied together.",
+       "location": "query"
+      },
+      "encryptionKey": {
+       "type": "string",
+       "description": "Provides a base64-encoded 256-bit key that was used to encrypt the object, if any. Algorithm, key, and key hash must be supplied together.",
+       "location": "query"
+      },
+      "encryptionKeyHash": {
+       "type": "string",
+       "description": "Provides the digest of the key for error-checking transmission. A digest is in the format of '='. Algorithm, key, and key hash must be supplied together.",
+       "location": "query"
+      },
       "ifGenerationMatch": {
        "type": "string",
        "description": "Makes the operation conditional on whether the object's current generation matches the given value.",
@@ -1939,6 +1954,21 @@
         "Object owner gets OWNER access, and project team members get access according to their roles.",
         "Object owner gets OWNER access, and allUsers get READER access."
        ],
+       "location": "query"
+      },
+      "encryptionAlgorithm": {
+       "type": "string",
+       "description": "Specifies the encryption algorithm that was used to encrypt the object, if any. Only 'AES256' is supported currently. Algorithm, key, and key hash must be supplied together.",
+       "location": "query"
+      },
+      "encryptionKey": {
+       "type": "string",
+       "description": "Provides a base64-encoded 256-bit key that was used to encrypt the object, if any. Algorithm, key, and key hash must be supplied together.",
+       "location": "query"
+      },
+      "encryptionKeyHash": {
+       "type": "string",
+       "description": "Provides the digest of the key for error-checking transmission. A digest is in the format of '='. Algorithm, key, and key hash must be supplied together.",
        "location": "query"
       },
       "ifGenerationMatch": {
@@ -2111,6 +2141,21 @@
        "required": true,
        "location": "path"
       },
+      "encryptionAlgorithm": {
+       "type": "string",
+       "description": "Specifies the encryption algorithm that would be used to decrypt the object. Only 'AES256' is supported currently. Algorithm, key, and key hash must be supplied together.",
+       "location": "query"
+      },
+      "encryptionKey": {
+       "type": "string",
+       "description": "Provides a base64-encoded 256-bit key to decrypt the object. Algorithm, key, and key hash must be supplied together.",
+       "location": "query"
+      },
+      "encryptionKeyHash": {
+       "type": "string",
+       "description": "Provides the digest of the key for error-checking transmission. A digest is in the format of '='. Algorithm, key, and key hash must be supplied together.",
+       "location": "query"
+      },
       "generation": {
        "type": "string",
        "description": "If present, selects a specific revision of this object (as opposed to the latest version, the default).",
@@ -2191,6 +2236,21 @@
       "contentEncoding": {
        "type": "string",
        "description": "If set, sets the contentEncoding property of the final object to this value. Setting this parameter is equivalent to setting the contentEncoding metadata property. This can be useful when uploading an object with uploadType=media to indicate the encoding of the content being uploaded.",
+       "location": "query"
+      },
+      "encryptionAlgorithm": {
+       "type": "string",
+       "description": "Specifies the encryption algorithm that would be used to encrypt the object. Only 'AES256' is supported currently. Algorithm, key, and key hash must be supplied together.",
+       "location": "query"
+      },
+      "encryptionKey": {
+       "type": "string",
+       "description": "Provides a base64-encoded 256-bit key to encrypt the object. Algorithm, key, and key hash must be supplied together.",
+       "location": "query"
+      },
+      "encryptionKeyHash": {
+       "type": "string",
+       "description": "Provides the digest of the key for error-checking transmission. A digest is in the format of '='. Algorithm, key, and key hash must be supplied together.",
        "location": "query"
       },
       "ifGenerationMatch": {
@@ -2368,6 +2428,21 @@
        "required": true,
        "location": "path"
       },
+      "encryptionAlgorithm": {
+       "type": "string",
+       "description": "For downloading encrypted objects, specifies the encryption algorithm that would be used to decrypt the object. Only 'AES256' is supported currently. Algorithm, key, and key hash must be supplied together.",
+       "location": "query"
+      },
+      "encryptionKey": {
+       "type": "string",
+       "description": "For downloading encrypted objects, provides a base64-encoded 256-bit key to decrypt the object. Algorithm, key, and key hash must be supplied together.",
+       "location": "query"
+      },
+      "encryptionKeyHash": {
+       "type": "string",
+       "description": "For downloading encrypted objects, provides the digest of the key for error-checking transmission. A digest is in the format of '='. Algorithm, key, and key hash must be supplied together.",
+       "location": "query"
+      },
       "generation": {
        "type": "string",
        "description": "If present, selects a specific revision of this object (as opposed to the latest version, the default).",
@@ -2466,6 +2541,21 @@
        "description": "Name of the bucket in which the object resides.",
        "required": true,
        "location": "path"
+      },
+      "encryptionAlgorithm": {
+       "type": "string",
+       "description": "For downloading encrypted objects, specifies the encryption algorithm that would be used to decrypt the object. Only 'AES256' is supported currently. Algorithm, key, and key hash must be supplied together.",
+       "location": "query"
+      },
+      "encryptionKey": {
+       "type": "string",
+       "description": "For downloading encrypted objects, provides a base64-encoded 256-bit key to decrypt the object. Algorithm, key, and key hash must be supplied together.",
+       "location": "query"
+      },
+      "encryptionKeyHash": {
+       "type": "string",
+       "description": "For downloading encrypted objects, provides the digest of the key for error-checking transmission. A digest is in the format of '='. Algorithm, key, and key hash must be supplied together.",
+       "location": "query"
       },
       "generation": {
        "type": "string",

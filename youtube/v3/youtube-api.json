@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/HVk1_aaqWFJChNS_pb8qXf9T_6g\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/KXsApYF7ntO41AJammD4suORnPk\"",
  "discoveryVersion": "v1",
  "id": "youtube:v3",
  "name": "youtube",
  "canonicalName": "YouTube",
  "version": "v3",
- "revision": "20150309",
+ "revision": "20150327",
  "title": "YouTube Data API",
  "description": "Programmatic access to YouTube features.",
  "ownerDomain": "google.com",
@@ -528,6 +528,182 @@
       "",
       ""
      ]
+    }
+   }
+  },
+  "Caption": {
+   "id": "Caption",
+   "type": "object",
+   "description": "A caption resource represents a YouTube caption track. A caption track is associated with exactly one YouTube video.",
+   "properties": {
+    "etag": {
+     "type": "string",
+     "description": "Etag of this resource."
+    },
+    "id": {
+     "type": "string",
+     "description": "The ID that YouTube uses to uniquely identify the caption track.",
+     "annotations": {
+      "required": [
+       "youtube.captions.update"
+      ]
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"youtube#caption\".",
+     "default": "youtube#caption"
+    },
+    "snippet": {
+     "$ref": "CaptionSnippet",
+     "description": "The snippet object contains basic details about the caption."
+    }
+   }
+  },
+  "CaptionListResponse": {
+   "id": "CaptionListResponse",
+   "type": "object",
+   "properties": {
+    "etag": {
+     "type": "string",
+     "description": "Etag of this resource."
+    },
+    "eventId": {
+     "type": "string",
+     "description": "Serialized EventId of the request which produced this response."
+    },
+    "items": {
+     "type": "array",
+     "description": "A list of captions that match the request criteria.",
+     "items": {
+      "$ref": "Caption"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"youtube#captionListResponse\".",
+     "default": "youtube#captionListResponse"
+    },
+    "visitorId": {
+     "type": "string",
+     "description": "The visitorId identifies the visitor."
+    }
+   }
+  },
+  "CaptionSnippet": {
+   "id": "CaptionSnippet",
+   "type": "object",
+   "description": "Basic details about a caption track, such as its language and name.",
+   "properties": {
+    "audioTrackType": {
+     "type": "string",
+     "description": "The type of audio track associated with the caption track.",
+     "enum": [
+      "commentary",
+      "descriptive",
+      "primary",
+      "unknown"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "failureReason": {
+     "type": "string",
+     "description": "The reason that YouTube failed to process the caption track. This property is only present if the state property's value is failed.",
+     "enum": [
+      "processingFailed",
+      "unknownFormat",
+      "unsupportedFormat"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      ""
+     ]
+    },
+    "isAutoSynced": {
+     "type": "boolean",
+     "description": "Indicates whether YouTube synchronized the caption track to the audio track in the video. The value will be true if a sync was explicitly requested when the caption track was uploaded. For example, when calling the captions.insert or captions.update methods, you can set the sync parameter to true to instruct YouTube to sync the uploaded track to the video. If the value is false, YouTube uses the time codes in the uploaded caption track to determine when to display captions."
+    },
+    "isCC": {
+     "type": "boolean",
+     "description": "Indicates whether the track contains closed captions for the deaf and hard of hearing. The default value is false."
+    },
+    "isDraft": {
+     "type": "boolean",
+     "description": "Indicates whether the caption track is a draft. If the value is true, then the track is not publicly visible. The default value is false."
+    },
+    "isEasyReader": {
+     "type": "boolean",
+     "description": "Indicates whether caption track is formatted for \"easy reader,\" meaning it is at a third-grade level for language learners. The default value is false."
+    },
+    "isLarge": {
+     "type": "boolean",
+     "description": "Indicates whether the caption track uses large text for the vision-impaired. The default value is false."
+    },
+    "language": {
+     "type": "string",
+     "description": "The language of the caption track. The property value is a BCP-47 language tag.",
+     "annotations": {
+      "required": [
+       "youtube.captions.insert"
+      ]
+     }
+    },
+    "lastUpdated": {
+     "type": "string",
+     "description": "The date and time when the caption track was last updated. The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.",
+     "format": "date-time"
+    },
+    "name": {
+     "type": "string",
+     "description": "The name of the caption track. The name is intended to be visible to the user as an option during playback.",
+     "annotations": {
+      "required": [
+       "youtube.captions.insert"
+      ]
+     }
+    },
+    "status": {
+     "type": "string",
+     "description": "The caption track's status.",
+     "enum": [
+      "failed",
+      "serving",
+      "syncing"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      ""
+     ]
+    },
+    "trackKind": {
+     "type": "string",
+     "description": "The caption track's type.",
+     "enum": [
+      "ASR",
+      "forced",
+      "standard"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      ""
+     ]
+    },
+    "videoId": {
+     "type": "string",
+     "description": "The ID that YouTube uses to uniquely identify the video associated with the caption track.",
+     "annotations": {
+      "required": [
+       "youtube.captions.insert"
+      ]
+     }
     }
    }
   },
@@ -5631,6 +5807,265 @@
     }
    }
   },
+  "captions": {
+   "methods": {
+    "delete": {
+     "id": "youtube.captions.delete",
+     "path": "captions",
+     "httpMethod": "DELETE",
+     "description": "Deletes a specified caption track.",
+     "parameters": {
+      "debugProjectIdOverride": {
+       "type": "string",
+       "description": "The debugProjectIdOverride parameter should be used for mimicking a request for a certain project ID",
+       "format": "int64",
+       "location": "query"
+      },
+      "id": {
+       "type": "string",
+       "description": "The id parameter identifies the caption track that is being deleted. The value is a caption track ID as identified by the id property in a caption resource.",
+       "required": true,
+       "location": "query"
+      },
+      "onBehalfOf": {
+       "type": "string",
+       "description": "ID of the Google+ Page for the channel that the request is be on behalf of",
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "id"
+     ],
+     "scopes": [
+      "https://www.googleapis.com/auth/youtube.force-ssl"
+     ]
+    },
+    "download": {
+     "id": "youtube.captions.download",
+     "path": "captions/{id}",
+     "httpMethod": "GET",
+     "description": "Downloads a caption track. The caption track is returned in its original format unless the request specifies a value for the tfmt parameter and in its original language unless the request specifies a value for the tlang parameter.",
+     "parameters": {
+      "debugProjectIdOverride": {
+       "type": "string",
+       "description": "The debugProjectIdOverride parameter should be used for mimicking a request for a certain project ID",
+       "format": "int64",
+       "location": "query"
+      },
+      "id": {
+       "type": "string",
+       "description": "The id parameter identifies the caption track that is being retrieved. The value is a caption track ID as identified by the id property in a caption resource.",
+       "required": true,
+       "location": "path"
+      },
+      "onBehalfOf": {
+       "type": "string",
+       "description": "ID of the Google+ Page for the channel that the request is be on behalf of",
+       "location": "query"
+      },
+      "tfmt": {
+       "type": "string",
+       "description": "The tfmt parameter specifies that the caption track should be returned in a specific format. If the parameter is not included in the request, the track is returned in its original format.",
+       "enum": [
+        "sbv",
+        "scc",
+        "srt",
+        "ttml",
+        "vtt"
+       ],
+       "enumDescriptions": [
+        "SubViewer subtitle.",
+        "Scenarist Closed Caption format.",
+        "SubRip subtitle.",
+        "Timed Text Markup Language caption.",
+        "Web Video Text Tracks caption."
+       ],
+       "location": "query"
+      },
+      "tlang": {
+       "type": "string",
+       "description": "The tlang parameter specifies that the API response should return a translation of the specified caption track. The parameter value is an ISO 639-1 two-letter language code that identifies the desired caption language. The translation is generated by using machine translation, such as Google Translate.",
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "id"
+     ],
+     "scopes": [
+      "https://www.googleapis.com/auth/youtube.force-ssl"
+     ],
+     "supportsMediaDownload": true
+    },
+    "insert": {
+     "id": "youtube.captions.insert",
+     "path": "captions",
+     "httpMethod": "POST",
+     "description": "Uploads a caption track.",
+     "parameters": {
+      "debugProjectIdOverride": {
+       "type": "string",
+       "description": "The debugProjectIdOverride parameter should be used for mimicking a request for a certain project ID.",
+       "format": "int64",
+       "location": "query"
+      },
+      "onBehalfOf": {
+       "type": "string",
+       "description": "ID of the Google+ Page for the channel that the request is be on behalf of",
+       "location": "query"
+      },
+      "part": {
+       "type": "string",
+       "description": "The part parameter specifies the caption resource parts that the API response will include. Set the parameter value to snippet.",
+       "required": true,
+       "location": "query"
+      },
+      "sync": {
+       "type": "boolean",
+       "description": "The sync parameter indicates whether YouTube should automatically synchronize the caption file with the audio track of the video. If you set the value to true, YouTube will disregard any time codes that are in the uploaded caption file and generate new time codes for the captions.\n\nYou should set the sync parameter to true if you are uploading a transcript, which has no time codes, or if you suspect the time codes in your file are incorrect and want YouTube to try to fix them.",
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "part"
+     ],
+     "request": {
+      "$ref": "Caption"
+     },
+     "response": {
+      "$ref": "Caption"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/youtube.force-ssl"
+     ],
+     "supportsMediaUpload": true,
+     "mediaUpload": {
+      "accept": [
+       "*/*",
+       "application/octet-stream",
+       "text/xml"
+      ],
+      "maxSize": "100MB",
+      "protocols": {
+       "simple": {
+        "multipart": true,
+        "path": "/upload/youtube/v3/captions"
+       },
+       "resumable": {
+        "multipart": true,
+        "path": "/resumable/upload/youtube/v3/captions"
+       }
+      }
+     }
+    },
+    "list": {
+     "id": "youtube.captions.list",
+     "path": "captions",
+     "httpMethod": "GET",
+     "description": "Returns a list of caption tracks that are associated with a specified video. Note that the API response does not contain the actual captions and that the captions.download method provides the ability to retrieve a caption track.",
+     "parameters": {
+      "debugProjectIdOverride": {
+       "type": "string",
+       "description": "The debugProjectIdOverride parameter should be used for mimicking a request for a certain project ID.",
+       "format": "int64",
+       "location": "query"
+      },
+      "id": {
+       "type": "string",
+       "description": "The id parameter specifies a comma-separated list of IDs that identify the caption resources that should be retrieved. Each ID must identify a caption track associated with the specified video.",
+       "location": "query"
+      },
+      "onBehalfOf": {
+       "type": "string",
+       "description": "ID of the Google+ Page for the channel that the request is on behalf of.",
+       "location": "query"
+      },
+      "part": {
+       "type": "string",
+       "description": "The part parameter specifies the caption resource parts that the API response will include.",
+       "required": true,
+       "location": "query"
+      },
+      "videoId": {
+       "type": "string",
+       "description": "The videoId parameter specifies the YouTube video ID of the video for which the API should return caption tracks.",
+       "required": true,
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "part",
+      "videoId"
+     ],
+     "response": {
+      "$ref": "CaptionListResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/youtube.force-ssl"
+     ]
+    },
+    "update": {
+     "id": "youtube.captions.update",
+     "path": "captions",
+     "httpMethod": "PUT",
+     "description": "Updates a caption track. When updating a caption track, you can change the track's draft status, upload a new caption file for the track, or both.",
+     "parameters": {
+      "debugProjectIdOverride": {
+       "type": "string",
+       "description": "The debugProjectIdOverride parameter should be used for mimicking a request for a certain project ID.",
+       "format": "int64",
+       "location": "query"
+      },
+      "onBehalfOf": {
+       "type": "string",
+       "description": "ID of the Google+ Page for the channel that the request is be on behalf of",
+       "location": "query"
+      },
+      "part": {
+       "type": "string",
+       "description": "The part parameter serves two purposes in this operation. It identifies the properties that the write operation will set as well as the properties that the API response will include. Set the property value to snippet if you are updating the track's draft status. Otherwise, set the property value to id.",
+       "required": true,
+       "location": "query"
+      },
+      "sync": {
+       "type": "boolean",
+       "description": "Note: The API server only processes the parameter value if the request contains an updated caption file.\n\nThe sync parameter indicates whether YouTube should automatically synchronize the caption file with the audio track of the video. If you set the value to true, YouTube will automatically synchronize the caption track with the audio track.",
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "part"
+     ],
+     "request": {
+      "$ref": "Caption"
+     },
+     "response": {
+      "$ref": "Caption"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/youtube.force-ssl"
+     ],
+     "supportsMediaUpload": true,
+     "mediaUpload": {
+      "accept": [
+       "*/*",
+       "application/octet-stream",
+       "text/xml"
+      ],
+      "maxSize": "100MB",
+      "protocols": {
+       "simple": {
+        "multipart": true,
+        "path": "/upload/youtube/v3/captions"
+       },
+       "resumable": {
+        "multipart": true,
+        "path": "/resumable/upload/youtube/v3/captions"
+       }
+      }
+     }
+    }
+   }
+  },
   "channelBanners": {
    "methods": {
     "insert": {
@@ -5756,6 +6191,11 @@
        "description": "The channelId parameter specifies a YouTube channel ID. The API will only return that channel's channelSections.",
        "location": "query"
       },
+      "hl": {
+       "type": "string",
+       "description": "The hl parameter indicates that the snippet.localized property values in the returned channelSection resources should be in the specified language if localized values for that language are available. For example, if the API request specifies hl=de, the snippet.localized properties in the API response will contain German titles if German titles are available. Channel owners can provide localized channel section titles using either the channelSections.insert or channelSections.update method.",
+       "location": "query"
+      },
       "id": {
        "type": "string",
        "description": "The id parameter specifies a comma-separated list of the YouTube channelSection ID(s) for the resource(s) that are being retrieved. In a channelSection resource, the id property specifies the YouTube channelSection ID.",
@@ -5842,6 +6282,11 @@
       "forUsername": {
        "type": "string",
        "description": "The forUsername parameter specifies a YouTube username, thereby requesting the channel associated with that username.",
+       "location": "query"
+      },
+      "hl": {
+       "type": "string",
+       "description": "The hl parameter should be used for filter out the properties that are not in the given language. Used for the brandingSettings part.",
        "location": "query"
       },
       "id": {
@@ -6798,6 +7243,11 @@
        "description": "This value indicates that the API should only return the specified channel's playlists.",
        "location": "query"
       },
+      "hl": {
+       "type": "string",
+       "description": "The hl parameter should be used for filter out the properties that are not in the given language. Used for the snippet part.",
+       "location": "query"
+      },
       "id": {
        "type": "string",
        "description": "The id parameter specifies a comma-separated list of the YouTube playlist ID(s) for the resource(s) that are being retrieved. In a playlist resource, the id property specifies the playlist's YouTube playlist ID.",
@@ -6931,6 +7381,11 @@
       "forContentOwner": {
        "type": "boolean",
        "description": "Note: This parameter is intended exclusively for YouTube content partners.\n\nThe forContentOwner parameter restricts the search to only retrieve resources owned by the content owner specified by the onBehalfOfContentOwner parameter. The user must be authenticated using a CMS account linked to the specified content owner and onBehalfOfContentOwner must be provided.",
+       "location": "query"
+      },
+      "forDeveloper": {
+       "type": "boolean",
+       "description": "The forDeveloper parameter restricts the search to only retrieve videos uploaded via the developer's application or website. The API server uses the request's authorization credentials to identify the developer. Therefore, a developer can restrict results to videos uploaded through the developer's own app or website but not to videos uploaded through other apps or sites.",
        "location": "query"
       },
       "forMine": {

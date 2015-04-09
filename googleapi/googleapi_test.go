@@ -426,6 +426,8 @@ var statusTests = []*testTransport{
 	&testTransport{statusCode: 308, want: 0},
 	&testTransport{statusCode: 308, rangeVal: "0-0", want: 1},
 	&testTransport{statusCode: 308, rangeVal: "0-42", want: 43},
+	&testTransport{statusCode: 308, rangeVal: "bytes=0-0", want: 1},
+	&testTransport{statusCode: 308, rangeVal: "bytes=0-42", want: 43},
 }
 
 func TestTransferStatus(t *testing.T) {

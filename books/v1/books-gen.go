@@ -1459,6 +1459,8 @@ type VolumeVolumeInfo struct {
 	// highest weight.
 	MainCategory string `json:"mainCategory,omitempty"`
 
+	MaturityRating string `json:"maturityRating,omitempty"`
+
 	// PageCount: Total number of pages as per publisher metadata.
 	PageCount int64 `json:"pageCount,omitempty"`
 
@@ -3951,8 +3953,9 @@ type MyconfigUpdateUserSettingsCall struct {
 	opt_         map[string]interface{}
 }
 
-// UpdateUserSettings: Sets the settings for the user. Unspecified
-// sub-objects will retain the existing value.
+// UpdateUserSettings: Sets the settings for the user. If a sub-object
+// is specified, it will overwrite the existing sub-object stored in the
+// server. Unspecified sub-objects will retain the existing value.
 func (r *MyconfigService) UpdateUserSettings(usersettings *Usersettings) *MyconfigUpdateUserSettingsCall {
 	c := &MyconfigUpdateUserSettingsCall{s: r.s, opt_: make(map[string]interface{})}
 	c.usersettings = usersettings
@@ -3999,7 +4002,7 @@ func (c *MyconfigUpdateUserSettingsCall) Do() (*Usersettings, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the settings for the user. Unspecified sub-objects will retain the existing value.",
+	//   "description": "Sets the settings for the user. If a sub-object is specified, it will overwrite the existing sub-object stored in the server. Unspecified sub-objects will retain the existing value.",
 	//   "httpMethod": "POST",
 	//   "id": "books.myconfig.updateUserSettings",
 	//   "path": "myconfig/updateUserSettings",

@@ -868,6 +868,9 @@ type DatafeedStatus struct {
 	// string "content#datafeedStatus".
 	Kind string `json:"kind,omitempty"`
 
+	// LastUploadDate: The last date at which the feed was uploaded.
+	LastUploadDate string `json:"lastUploadDate,omitempty"`
+
 	// ProcessingStatus: The processing status of the feed.
 	ProcessingStatus string `json:"processingStatus,omitempty"`
 

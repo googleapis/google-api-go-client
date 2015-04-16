@@ -4,7 +4,7 @@
 //
 // Usage example:
 //
-//   import "google.golang.org/api/dns/v1beta1"
+//   import "google.golang.org/api/dns/v1"
 //   ...
 //   dnsService, err := dns.New(oauthHttpClient)
 package dns
@@ -36,10 +36,10 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Background
 
-const apiId = "dns:v1beta1"
+const apiId = "dns:v1"
 const apiName = "dns"
-const apiVersion = "v1beta1"
-const basePath = "https://www.googleapis.com/dns/v1beta1/projects/"
+const apiVersion = "v1"
+const basePath = "https://www.googleapis.com/dns/v1/projects/"
 
 // OAuth2 scopes used by this API.
 const (

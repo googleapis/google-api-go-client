@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/KXsApYF7ntO41AJammD4suORnPk\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/Gmiuw1CxRdCARwJufqITEQBJ4wU\"",
  "discoveryVersion": "v1",
  "id": "youtube:v3",
  "name": "youtube",
  "canonicalName": "YouTube",
  "version": "v3",
- "revision": "20150327",
+ "revision": "20150330",
  "title": "YouTube Data API",
  "description": "Programmatic access to YouTube features.",
  "ownerDomain": "google.com",
@@ -974,6 +974,15 @@
     }
    }
   },
+  "ChannelId": {
+   "id": "ChannelId",
+   "type": "object",
+   "properties": {
+    "value": {
+     "type": "string"
+    }
+   }
+  },
   "ChannelListResponse": {
    "id": "ChannelListResponse",
    "type": "object",
@@ -1390,6 +1399,282 @@
      "items": {
       "type": "string"
      }
+    }
+   }
+  },
+  "Comment": {
+   "id": "Comment",
+   "type": "object",
+   "description": "A comment represents a single YouTube comment.",
+   "properties": {
+    "etag": {
+     "type": "string",
+     "description": "Etag of this resource."
+    },
+    "id": {
+     "type": "string",
+     "description": "The ID that YouTube uses to uniquely identify the comment."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"youtube#comment\".",
+     "default": "youtube#comment"
+    },
+    "snippet": {
+     "$ref": "CommentSnippet",
+     "description": "The snippet object contains basic details about the comment."
+    }
+   }
+  },
+  "CommentListResponse": {
+   "id": "CommentListResponse",
+   "type": "object",
+   "properties": {
+    "etag": {
+     "type": "string",
+     "description": "Etag of this resource."
+    },
+    "eventId": {
+     "type": "string",
+     "description": "Serialized EventId of the request which produced this response."
+    },
+    "items": {
+     "type": "array",
+     "description": "A list of comments that match the request criteria.",
+     "items": {
+      "$ref": "Comment"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"youtube#commentListResponse\".",
+     "default": "youtube#commentListResponse"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "The token that can be used as the value of the pageToken parameter to retrieve the next page in the result set."
+    },
+    "pageInfo": {
+     "$ref": "PageInfo"
+    },
+    "tokenPagination": {
+     "$ref": "TokenPagination"
+    },
+    "visitorId": {
+     "type": "string",
+     "description": "The visitorId identifies the visitor."
+    }
+   }
+  },
+  "CommentSnippet": {
+   "id": "CommentSnippet",
+   "type": "object",
+   "description": "Basic details about a comment, such as its author and text.",
+   "properties": {
+    "authorChannelId": {
+     "$ref": "ChannelId",
+     "description": "The id of the author's YouTube channel, if any."
+    },
+    "authorChannelUrl": {
+     "type": "string",
+     "description": "Link to the author's YouTube channel, if any."
+    },
+    "authorDisplayName": {
+     "type": "string",
+     "description": "The name of the user who posted the comment."
+    },
+    "authorGoogleplusProfileUrl": {
+     "type": "string",
+     "description": "Link to the author's Google+ profile, if any."
+    },
+    "authorProfileImageUrl": {
+     "type": "string",
+     "description": "The URL for the avatar of the user who posted the comment."
+    },
+    "canRate": {
+     "type": "boolean",
+     "description": "Whether the current viewer can rate this comment."
+    },
+    "channelId": {
+     "type": "string",
+     "description": "The id of the corresponding YouTube channel. In case of a channel comment this is the channel the comment refers to. In case of a video comment it's the video's channel."
+    },
+    "likeCount": {
+     "type": "integer",
+     "description": "The total number of likes this comment has received.",
+     "format": "uint32"
+    },
+    "moderationStatus": {
+     "type": "string",
+     "description": "The comment's moderation status. Will not be set if the comments were requested through the id filter.",
+     "enum": [
+      "heldForReview",
+      "likelySpam",
+      "published",
+      "rejected"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "parentId": {
+     "type": "string",
+     "description": "The unique id of the parent comment, only set for replies."
+    },
+    "publishedAt": {
+     "type": "string",
+     "description": "The date and time when the comment was orignally published. The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.",
+     "format": "date-time"
+    },
+    "textDisplay": {
+     "type": "string",
+     "description": "The comment's text. The format is either plain text or HTML dependent on what has been requested. Even the plain text representation may differ from the text originally posted in that it may replace video links with video titles etc."
+    },
+    "textOriginal": {
+     "type": "string",
+     "description": "The comment's original raw text as initially posted or last updated. The original text will only be returned if it is accessible to the viewer, which is only guaranteed if the viewer is the comment's author."
+    },
+    "updatedAt": {
+     "type": "string",
+     "description": "The date and time when was last updated . The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.",
+     "format": "date-time"
+    },
+    "videoId": {
+     "type": "string",
+     "description": "The ID of the video the comment refers to, if any."
+    },
+    "viewerRating": {
+     "type": "string",
+     "description": "The rating the viewer has given to this comment. For the time being this will never return RATE_TYPE_DISLIKE and instead return RATE_TYPE_NONE. This may change in the future.",
+     "enum": [
+      "dislike",
+      "like",
+      "none",
+      "unspecified"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      ""
+     ]
+    }
+   }
+  },
+  "CommentThread": {
+   "id": "CommentThread",
+   "type": "object",
+   "description": "A comment thread represents information that applies to a top level comment and all its replies. It can also include the top level comment itself and some of the replies.",
+   "properties": {
+    "etag": {
+     "type": "string",
+     "description": "Etag of this resource."
+    },
+    "id": {
+     "type": "string",
+     "description": "The ID that YouTube uses to uniquely identify the comment thread."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"youtube#commentThread\".",
+     "default": "youtube#commentThread"
+    },
+    "replies": {
+     "$ref": "CommentThreadReplies",
+     "description": "The replies object contains a limited number of replies (if any) to the top level comment found in the snippet."
+    },
+    "snippet": {
+     "$ref": "CommentThreadSnippet",
+     "description": "The snippet object contains basic details about the comment thread and also the top level comment."
+    }
+   }
+  },
+  "CommentThreadListResponse": {
+   "id": "CommentThreadListResponse",
+   "type": "object",
+   "properties": {
+    "etag": {
+     "type": "string",
+     "description": "Etag of this resource."
+    },
+    "eventId": {
+     "type": "string",
+     "description": "Serialized EventId of the request which produced this response."
+    },
+    "items": {
+     "type": "array",
+     "description": "A list of comment threads that match the request criteria.",
+     "items": {
+      "$ref": "CommentThread"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"youtube#commentThreadListResponse\".",
+     "default": "youtube#commentThreadListResponse"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "The token that can be used as the value of the pageToken parameter to retrieve the next page in the result set."
+    },
+    "pageInfo": {
+     "$ref": "PageInfo"
+    },
+    "tokenPagination": {
+     "$ref": "TokenPagination"
+    },
+    "visitorId": {
+     "type": "string",
+     "description": "The visitorId identifies the visitor."
+    }
+   }
+  },
+  "CommentThreadReplies": {
+   "id": "CommentThreadReplies",
+   "type": "object",
+   "description": "Comments written in (direct or indirect) reply to the top level comment.",
+   "properties": {
+    "comments": {
+     "type": "array",
+     "description": "A limited number of replies. Unless the number of replies returned equals total_reply_count in the snippet the returned replies are only a subset of the total number of replies.",
+     "items": {
+      "$ref": "Comment"
+     }
+    }
+   }
+  },
+  "CommentThreadSnippet": {
+   "id": "CommentThreadSnippet",
+   "type": "object",
+   "description": "Basic details about a comment thread.",
+   "properties": {
+    "canReply": {
+     "type": "boolean",
+     "description": "Whether the current viewer of the thread can reply to it. This is viewer specific - other viewers may see a different value for this field."
+    },
+    "channelId": {
+     "type": "string",
+     "description": "The YouTube channel the comments in the thread refer to or the channel with the video the comments refer to. If video_id isn't set the comments refer to the channel itself."
+    },
+    "isPublic": {
+     "type": "boolean",
+     "description": "Whether the thread (and therefore all its comments) is visible to all YouTube users."
+    },
+    "topLevelComment": {
+     "$ref": "Comment",
+     "description": "The top level comment of this thread."
+    },
+    "totalReplyCount": {
+     "type": "integer",
+     "description": "The total number of replies (not including the top level comment).",
+     "format": "uint32"
+    },
+    "videoId": {
+     "type": "string",
+     "description": "The ID of the video the comments refer to, if any. No video_id implies a channel discussion comment."
     }
    }
   },
@@ -5981,7 +6266,7 @@
       },
       "part": {
        "type": "string",
-       "description": "The part parameter specifies the caption resource parts that the API response will include.",
+       "description": "The part parameter specifies a comma-separated list of one or more caption resource parts that the API response will include. The part names that you can include in the parameter value are id and snippet.",
        "required": true,
        "location": "query"
       },
@@ -6380,6 +6665,360 @@
       "https://www.googleapis.com/auth/youtube",
       "https://www.googleapis.com/auth/youtube.force-ssl",
       "https://www.googleapis.com/auth/youtubepartner"
+     ]
+    }
+   }
+  },
+  "commentThreads": {
+   "methods": {
+    "insert": {
+     "id": "youtube.commentThreads.insert",
+     "path": "commentThreads",
+     "httpMethod": "POST",
+     "description": "Creates a new comment thread and top level comment.",
+     "parameters": {
+      "part": {
+       "type": "string",
+       "description": "The part parameter serves two purposes in this operation. It identifies the properties that the write operation will set as well as the properties that the API response will include.\n\nThe part names that you can include in the parameter value are id and snippet. However only snippet contains properties that can be set.",
+       "required": true,
+       "location": "query"
+      },
+      "shareOnGooglePlus": {
+       "type": "boolean",
+       "description": "The shareOnGooglePlus determines whether this thread should also be posted on Google+.",
+       "default": "false",
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "part"
+     ],
+     "request": {
+      "$ref": "CommentThread"
+     },
+     "response": {
+      "$ref": "CommentThread"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/youtube.force-ssl"
+     ]
+    },
+    "list": {
+     "id": "youtube.commentThreads.list",
+     "path": "commentThreads",
+     "httpMethod": "GET",
+     "description": "Returns a list of comment threads that match the API request parameters.",
+     "parameters": {
+      "allThreadsRelatedToChannelId": {
+       "type": "string",
+       "description": "The allThreadsRelatedToChannelId parameter instructs the API to return the comment threads of all videos of the channel and the channel comments as well.",
+       "location": "query"
+      },
+      "channelId": {
+       "type": "string",
+       "description": "The channelId parameter instructs the API to return the comment threads for all the channel comments (not including comments left on videos).",
+       "location": "query"
+      },
+      "id": {
+       "type": "string",
+       "description": "The id parameter specifies a comma-separated list of comment thread IDs for the resources that should be retrieved.",
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "The maxResults parameter specifies the maximum number of items that should be returned in the result set.\n\nNote: This parameter is not supported for use in conjunction with the id parameter.",
+       "default": "20",
+       "format": "uint32",
+       "minimum": "1",
+       "maximum": "100",
+       "location": "query"
+      },
+      "moderationStatus": {
+       "type": "string",
+       "description": "Set this parameter to limit the returned comment threads to a particular moderation state.\n\nNote: This parameter is not supported for use in conjunction with the id parameter.",
+       "default": "published",
+       "enum": [
+        "heldForReview",
+        "likelySpam",
+        "published"
+       ],
+       "enumDescriptions": [
+        "Returns only comment threads awaiting review by a moderator.",
+        "Returns only comment threads classified as likely being spam.",
+        "Returns only published comment threads."
+       ],
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "The pageToken parameter identifies a specific page in the result set that should be returned. In an API response, the nextPageToken property identifies the next page of the result that can be retrieved.\n\nNote: This parameter is not supported for use in conjunction with the id parameter.",
+       "location": "query"
+      },
+      "part": {
+       "type": "string",
+       "description": "The part parameter specifies the commentThread resource parts that the API response will include. Supported values are id, snippet and replies.",
+       "required": true,
+       "location": "query"
+      },
+      "searchTerms": {
+       "type": "string",
+       "description": "The searchTerms parameter instructs the API to limit the returned comments to those which contain the specified search terms.\n\nNote: This parameter is not supported for use in conjunction with the id parameter.",
+       "location": "query"
+      },
+      "textFormat": {
+       "type": "string",
+       "description": "Set this parameter's value to html or plainText to instruct the API to return the comments left by users in html formatted or in plain text.",
+       "default": "FORMAT_HTML",
+       "enum": [
+        "html",
+        "plainText"
+       ],
+       "enumDescriptions": [
+        "Returns the comments in HTML format.",
+        "Returns the comments in plain text format."
+       ],
+       "location": "query"
+      },
+      "videoId": {
+       "type": "string",
+       "description": "The videoId parameter instructs the API to return the comment threads for the video specified by the video id.",
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "part"
+     ],
+     "response": {
+      "$ref": "CommentThreadListResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/youtube.force-ssl"
+     ]
+    },
+    "update": {
+     "id": "youtube.commentThreads.update",
+     "path": "commentThreads",
+     "httpMethod": "PUT",
+     "description": "Modifies an existing comment.",
+     "parameters": {
+      "part": {
+       "type": "string",
+       "description": "The part parameter serves two purposes in this operation. It identifies the properties that the write operation will set as well as the properties that the API response will include.\n\nThe part names that you can include in the parameter value are id, snippet and replies. However only snippet contains properties that can be updated.",
+       "required": true,
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "part"
+     ],
+     "request": {
+      "$ref": "CommentThread"
+     },
+     "response": {
+      "$ref": "CommentThread"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/youtube.force-ssl"
+     ]
+    }
+   }
+  },
+  "comments": {
+   "methods": {
+    "delete": {
+     "id": "youtube.comments.delete",
+     "path": "comments",
+     "httpMethod": "DELETE",
+     "description": "Deletes a comment.",
+     "parameters": {
+      "id": {
+       "type": "string",
+       "description": "The id parameter specifies the comment ID for the resource that should be deleted.",
+       "required": true,
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "id"
+     ],
+     "scopes": [
+      "https://www.googleapis.com/auth/youtube.force-ssl"
+     ]
+    },
+    "insert": {
+     "id": "youtube.comments.insert",
+     "path": "comments",
+     "httpMethod": "POST",
+     "description": "Creates a new comment.\n\nNote: to create a top level comment it is also necessary to create a comment thread. Both are accomplished through the commentThreads resource.",
+     "parameters": {
+      "part": {
+       "type": "string",
+       "description": "The part parameter serves two purposes in this operation. It identifies the properties that the write operation will set as well as the properties that the API response will include.\n\nThe part names that you can include in the parameter value are id and snippet. However only snippet contains properties that can be set.",
+       "required": true,
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "part"
+     ],
+     "request": {
+      "$ref": "Comment"
+     },
+     "response": {
+      "$ref": "Comment"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/youtube.force-ssl"
+     ]
+    },
+    "list": {
+     "id": "youtube.comments.list",
+     "path": "comments",
+     "httpMethod": "GET",
+     "description": "Returns a list of comments that match the API request parameters.",
+     "parameters": {
+      "id": {
+       "type": "string",
+       "description": "The id parameter specifies a comma-separated list of comment IDs for the resources that should be retrieved.",
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "The maxResults parameter specifies the maximum number of items that should be returned in the result set.\n\nNote: This parameter is not supported for use in conjunction with the id parameter.",
+       "default": "20",
+       "format": "uint32",
+       "minimum": "1",
+       "maximum": "100",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "The pageToken parameter identifies a specific page in the result set that should be returned. In an API response, the nextPageToken property identifies the next page of the result that can be retrieved.\n\nNote: This parameter is not supported for use in conjunction with the id parameter.",
+       "location": "query"
+      },
+      "parentId": {
+       "type": "string",
+       "description": "The parentId parameter specifies the ID of the comment for which replies should be retrieved.\n\nNote: Currently YouTube features only one level of replies (ie replies to top level comments). However replies to replies may be supported in the future.",
+       "location": "query"
+      },
+      "part": {
+       "type": "string",
+       "description": "The part parameter specifies the comment resource parts that the API response will include. Supported values are id and snippet.",
+       "required": true,
+       "location": "query"
+      },
+      "textFormat": {
+       "type": "string",
+       "description": "Set this parameter's value to html or plainText to instruct the API to return the comments left by users formatted as HTML or as plain text.",
+       "default": "FORMAT_HTML",
+       "enum": [
+        "html",
+        "plainText"
+       ],
+       "enumDescriptions": [
+        "Returns the comments in HTML format.",
+        "Returns the comments in plain text format."
+       ],
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "part"
+     ],
+     "response": {
+      "$ref": "CommentListResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/youtube.force-ssl"
+     ]
+    },
+    "markAsSpam": {
+     "id": "youtube.comments.markAsSpam",
+     "path": "comments/markAsSpam",
+     "httpMethod": "POST",
+     "description": "Expresses the caller's opinion that a comment is spam.",
+     "parameters": {
+      "id": {
+       "type": "string",
+       "description": "The id parameter specifies a comma-separated list of IDs of comments which should get flagged as spam.",
+       "required": true,
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "id"
+     ],
+     "scopes": [
+      "https://www.googleapis.com/auth/youtube.force-ssl"
+     ]
+    },
+    "setModerationStatus": {
+     "id": "youtube.comments.setModerationStatus",
+     "path": "comments/setModerationStatus",
+     "httpMethod": "POST",
+     "description": "Sets the moderation status of one or more comments.",
+     "parameters": {
+      "banAuthor": {
+       "type": "boolean",
+       "description": "The banAuthor paramter, if set to true, adds the author of the comment to the ban list. This means all future comments of the author will autmomatically be rejected.\n\nNote: This parameter is only valid in combination with moderationStatus 'rejected'.",
+       "default": "false",
+       "location": "query"
+      },
+      "id": {
+       "type": "string",
+       "description": "The id parameter specifies a comma-separated list of IDs of comments whose moderation status should be updated.",
+       "required": true,
+       "location": "query"
+      },
+      "moderationStatus": {
+       "type": "string",
+       "description": "Determines the new moderation status of the specified comments.",
+       "required": true,
+       "enum": [
+        "heldForReview",
+        "published",
+        "rejected"
+       ],
+       "enumDescriptions": [
+        "Marks a comment as awaiting review by a moderator.",
+        "Clears a comment for public display.",
+        "Rejects a comment as not fit for display.\n\nNote: currently there is no way to list or otherwise discover a rejected comment. However it is possible to change its moderation status as long as its ID is still known.\n\nNote: Currently, if you reject a comment you effectively also hide all its replies as there is no longer any way to discover them. This may change in the future."
+       ],
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "id",
+      "moderationStatus"
+     ],
+     "scopes": [
+      "https://www.googleapis.com/auth/youtube.force-ssl"
+     ]
+    },
+    "update": {
+     "id": "youtube.comments.update",
+     "path": "comments",
+     "httpMethod": "PUT",
+     "description": "Modifies an existing comment.",
+     "parameters": {
+      "part": {
+       "type": "string",
+       "description": "The part parameter serves two purposes in this operation. It identifies the properties that the write operation will set as well as the properties that the API response will include.\n\nThe part names that you can include in the parameter value are id and snippet. However only snippet contains properties that can be updated.",
+       "required": true,
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "part"
+     ],
+     "request": {
+      "$ref": "Comment"
+     },
+     "response": {
+      "$ref": "Comment"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/youtube.force-ssl"
      ]
     }
    }

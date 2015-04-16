@@ -1,10 +1,10 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/oh0OKkMoXiShh-fNWjMyGYxRkos\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/CZ8yv2Lu-gQSA--NRFSPzzXCW7A\"",
  "discoveryVersion": "v1",
- "id": "dns:v1beta1",
+ "id": "dns:v1",
  "name": "dns",
- "version": "v1beta1",
+ "version": "v1",
  "revision": "20150218",
  "title": "Google Cloud DNS API",
  "description": "The Google Cloud DNS API provides services for configuring and serving authoritative DNS records.",
@@ -16,10 +16,10 @@
  },
  "documentationLink": "https://developers.google.com/cloud-dns",
  "protocol": "rest",
- "baseUrl": "https://www.googleapis.com/dns/v1beta1/projects/",
- "basePath": "/dns/v1beta1/projects/",
+ "baseUrl": "https://www.googleapis.com/dns/v1/projects/",
+ "basePath": "/dns/v1/projects/",
  "rootUrl": "https://www.googleapis.com/",
- "servicePath": "dns/v1beta1/projects/",
+ "servicePath": "dns/v1/projects/",
  "batchPath": "batch",
  "parameters": {
   "alt": {
@@ -116,7 +116,15 @@
     },
     "status": {
      "type": "string",
-     "description": "Status of the operation (output only)."
+     "description": "Status of the operation (output only).",
+     "enum": [
+      "done",
+      "pending"
+     ],
+     "enumDescriptions": [
+      "",
+      ""
+     ]
     }
    }
   },

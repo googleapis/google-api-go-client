@@ -302,9 +302,8 @@ type Creative struct {
 	// requests.
 	DisapprovalReasons []*CreativeDisapprovalReasons `json:"disapprovalReasons,omitempty"`
 
-	// FilteringReasons: The filtering reasons for the creative. If this
-	// feature is not enabled, please ask your technical account manager.
-	// Read-only. This field should not be set in requests.
+	// FilteringReasons: The filtering reasons for the creative. Read-only.
+	// This field should not be set in requests.
 	FilteringReasons *CreativeFilteringReasons `json:"filteringReasons,omitempty"`
 
 	// Height: Ad height.

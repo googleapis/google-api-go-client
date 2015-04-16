@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/pN4g0JBnUUfVdUX2qQiF-rIjqpY\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/JGynskXPDYAm7HfLDYPma5VcVjE\"",
  "discoveryVersion": "v1",
  "id": "androidpublisher:v1",
  "name": "androidpublisher",
@@ -71,7 +71,7 @@
   "oauth2": {
    "scopes": {
     "https://www.googleapis.com/auth/androidpublisher": {
-     "description": "View and manage your Google Play Android Developer account"
+     "description": "View and manage your Google Play Developer account"
     }
    }
   }

@@ -111,6 +111,7 @@ func NewProjectsZonesService(s *Service) *ProjectsZonesService {
 	rs := &ProjectsZonesService{s: s}
 	rs.Clusters = NewProjectsZonesClustersService(s)
 	rs.Operations = NewProjectsZonesOperationsService(s)
+	rs.Tokens = NewProjectsZonesTokensService(s)
 	return rs
 }
 
@@ -120,6 +121,8 @@ type ProjectsZonesService struct {
 	Clusters *ProjectsZonesClustersService
 
 	Operations *ProjectsZonesOperationsService
+
+	Tokens *ProjectsZonesTokensService
 }
 
 func NewProjectsZonesClustersService(s *Service) *ProjectsZonesClustersService {
@@ -137,6 +140,15 @@ func NewProjectsZonesOperationsService(s *Service) *ProjectsZonesOperationsServi
 }
 
 type ProjectsZonesOperationsService struct {
+	s *Service
+}
+
+func NewProjectsZonesTokensService(s *Service) *ProjectsZonesTokensService {
+	rs := &ProjectsZonesTokensService{s: s}
+	return rs
+}
+
+type ProjectsZonesTokensService struct {
 	s *Service
 }
 
@@ -331,6 +343,15 @@ type ServiceAccount struct {
 	// Scopes: The list of scopes to be made available for this service
 	// account.
 	Scopes []string `json:"scopes,omitempty"`
+}
+
+type Token struct {
+	// AccessToken: The OAuth2 access token
+	AccessToken string `json:"accessToken,omitempty"`
+
+	// ExpiryTimeSeconds: The expiration time of the token in seconds since
+	// the unix epoch.
+	ExpiryTimeSeconds int64 `json:"expiryTimeSeconds,omitempty,string"`
 }
 
 // method id "container.projects.clusters.list":
@@ -1056,6 +1077,114 @@ func (c *ProjectsZonesOperationsListCall) Do() (*ListOperationsResponse, error) 
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
+	// }
+
+}
+
+// method id "container.projects.zones.tokens.get":
+
+type ProjectsZonesTokensGetCall struct {
+	s               *Service
+	masterProjectId string
+	zoneId          string
+	projectNumber   int64
+	clusterName     string
+	opt_            map[string]interface{}
+}
+
+// Get: Gets a compute-rw scoped OAuth2 access token for
+// .
+// Authentication is performed to ensure that the caller is a member of
+// and that the request is coming from the expected master VM for the
+// specified cluster. See go/gke-cross-project-auth for more details.
+func (r *ProjectsZonesTokensService) Get(masterProjectId string, zoneId string, projectNumber int64, clusterName string) *ProjectsZonesTokensGetCall {
+	c := &ProjectsZonesTokensGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.masterProjectId = masterProjectId
+	c.zoneId = zoneId
+	c.projectNumber = projectNumber
+	c.clusterName = clusterName
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsZonesTokensGetCall) Fields(s ...googleapi.Field) *ProjectsZonesTokensGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *ProjectsZonesTokensGetCall) Do() (*Token, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{masterProjectId}/zones/{zoneId}/tokens/{projectNumber}/{clusterName}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"masterProjectId": c.masterProjectId,
+		"zoneId":          c.zoneId,
+		"projectNumber":   strconv.FormatInt(c.projectNumber, 10),
+		"clusterName":     c.clusterName,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Token
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a compute-rw scoped OAuth2 access token for\n. Authentication is performed to ensure that the caller is a member of  and that the request is coming from the expected master VM for the specified cluster. See go/gke-cross-project-auth for more details.",
+	//   "httpMethod": "GET",
+	//   "id": "container.projects.zones.tokens.get",
+	//   "parameterOrder": [
+	//     "masterProjectId",
+	//     "zoneId",
+	//     "projectNumber",
+	//     "clusterName"
+	//   ],
+	//   "parameters": {
+	//     "clusterName": {
+	//       "description": "The name of the specified cluster.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "masterProjectId": {
+	//       "description": "The hosted master project from which this request is coming.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "projectNumber": {
+	//       "description": "The project number for which the access token is being requested.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "zoneId": {
+	//       "description": "The zone of the specified cluster.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{masterProjectId}/zones/{zoneId}/tokens/{projectNumber}/{clusterName}",
+	//   "response": {
+	//     "$ref": "Token"
+	//   }
 	// }
 
 }

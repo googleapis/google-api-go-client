@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/A-uTeP-eqK6ANjBJOJiUSQV5WY8\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/3wSmOD9x-5Pot1DynjyGTFXruIU\"",
  "discoveryVersion": "v1",
  "id": "container:v1beta1",
  "name": "container",
  "version": "v1beta1",
- "revision": "20150318",
+ "revision": "20150401",
  "title": "Google Container Engine API",
  "description": "The Google Container Engine API is used for building and managing container based applications, powered by the open source Kubernetes technology.",
  "ownerDomain": "google.com",
@@ -335,6 +335,21 @@
      }
     }
    }
+  },
+  "Token": {
+   "id": "Token",
+   "type": "object",
+   "properties": {
+    "accessToken": {
+     "type": "string",
+     "description": "The OAuth2 access token"
+    },
+    "expiryTimeSeconds": {
+     "type": "string",
+     "description": "The expiration time of the token in seconds since the unix epoch.",
+     "format": "int64"
+    }
+   }
   }
  },
  "resources": {
@@ -605,6 +620,52 @@
          "scopes": [
           "https://www.googleapis.com/auth/cloud-platform"
          ]
+        }
+       }
+      },
+      "tokens": {
+       "methods": {
+        "get": {
+         "id": "container.projects.zones.tokens.get",
+         "path": "{masterProjectId}/zones/{zoneId}/tokens/{projectNumber}/{clusterName}",
+         "httpMethod": "GET",
+         "description": "Gets a compute-rw scoped OAuth2 access token for\n. Authentication is performed to ensure that the caller is a member of  and that the request is coming from the expected master VM for the specified cluster. See go/gke-cross-project-auth for more details.",
+         "parameters": {
+          "clusterName": {
+           "type": "string",
+           "description": "The name of the specified cluster.",
+           "required": true,
+           "location": "path"
+          },
+          "masterProjectId": {
+           "type": "string",
+           "description": "The hosted master project from which this request is coming.",
+           "required": true,
+           "location": "path"
+          },
+          "projectNumber": {
+           "type": "string",
+           "description": "The project number for which the access token is being requested.",
+           "required": true,
+           "format": "int64",
+           "location": "path"
+          },
+          "zoneId": {
+           "type": "string",
+           "description": "The zone of the specified cluster.",
+           "required": true,
+           "location": "path"
+          }
+         },
+         "parameterOrder": [
+          "masterProjectId",
+          "zoneId",
+          "projectNumber",
+          "clusterName"
+         ],
+         "response": {
+          "$ref": "Token"
+         }
         }
        }
       }

@@ -660,6 +660,21 @@ type Objects struct {
 	Prefixes []string `json:"prefixes,omitempty"`
 }
 
+type RewriteResponse struct {
+	Done bool `json:"done,omitempty"`
+
+	// Kind: The kind of item this is.
+	Kind string `json:"kind,omitempty"`
+
+	ObjectSize uint64 `json:"objectSize,omitempty,string"`
+
+	Resource *Object `json:"resource,omitempty"`
+
+	RewriteToken string `json:"rewriteToken,omitempty"`
+
+	TotalBytesRewritten uint64 `json:"totalBytesRewritten,omitempty,string"`
+}
+
 // method id "storage.bucketAccessControls.delete":
 
 type BucketAccessControlsDeleteCall struct {
@@ -3514,32 +3529,6 @@ func (c *ObjectsComposeCall) DestinationPredefinedAcl(destinationPredefinedAcl s
 	return c
 }
 
-// EncryptionAlgorithm sets the optional parameter
-// "encryptionAlgorithm": Specifies the encryption algorithm that was
-// used to encrypt the object, if any. Only 'AES256' is supported
-// currently. Algorithm, key, and key hash must be supplied together.
-func (c *ObjectsComposeCall) EncryptionAlgorithm(encryptionAlgorithm string) *ObjectsComposeCall {
-	c.opt_["encryptionAlgorithm"] = encryptionAlgorithm
-	return c
-}
-
-// EncryptionKey sets the optional parameter "encryptionKey": Provides a
-// base64-encoded 256-bit key that was used to encrypt the object, if
-// any. Algorithm, key, and key hash must be supplied together.
-func (c *ObjectsComposeCall) EncryptionKey(encryptionKey string) *ObjectsComposeCall {
-	c.opt_["encryptionKey"] = encryptionKey
-	return c
-}
-
-// EncryptionKeyHash sets the optional parameter "encryptionKeyHash":
-// Provides the digest of the key for error-checking transmission. A
-// digest is in the format of '='. Algorithm, key, and key hash must be
-// supplied together.
-func (c *ObjectsComposeCall) EncryptionKeyHash(encryptionKeyHash string) *ObjectsComposeCall {
-	c.opt_["encryptionKeyHash"] = encryptionKeyHash
-	return c
-}
-
 // IfGenerationMatch sets the optional parameter "ifGenerationMatch":
 // Makes the operation conditional on whether the object's current
 // generation matches the given value.
@@ -3575,15 +3564,6 @@ func (c *ObjectsComposeCall) Do() (*Object, error) {
 	params.Set("alt", "json")
 	if v, ok := c.opt_["destinationPredefinedAcl"]; ok {
 		params.Set("destinationPredefinedAcl", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["encryptionAlgorithm"]; ok {
-		params.Set("encryptionAlgorithm", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["encryptionKey"]; ok {
-		params.Set("encryptionKey", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["encryptionKeyHash"]; ok {
-		params.Set("encryptionKeyHash", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["ifGenerationMatch"]; ok {
 		params.Set("ifGenerationMatch", fmt.Sprintf("%v", v))
@@ -3658,21 +3638,6 @@ func (c *ObjectsComposeCall) Do() (*Object, error) {
 	//       "location": "query",
 	//       "type": "string"
 	//     },
-	//     "encryptionAlgorithm": {
-	//       "description": "Specifies the encryption algorithm that was used to encrypt the object, if any. Only 'AES256' is supported currently. Algorithm, key, and key hash must be supplied together.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "encryptionKey": {
-	//       "description": "Provides a base64-encoded 256-bit key that was used to encrypt the object, if any. Algorithm, key, and key hash must be supplied together.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "encryptionKeyHash": {
-	//       "description": "Provides the digest of the key for error-checking transmission. A digest is in the format of '='. Algorithm, key, and key hash must be supplied together.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "ifGenerationMatch": {
 	//       "description": "Makes the operation conditional on whether the object's current generation matches the given value.",
 	//       "format": "int64",
@@ -3732,32 +3697,6 @@ func (r *ObjectsService) Copy(sourceBucket string, sourceObject string, destinat
 // to the destination object.
 func (c *ObjectsCopyCall) DestinationPredefinedAcl(destinationPredefinedAcl string) *ObjectsCopyCall {
 	c.opt_["destinationPredefinedAcl"] = destinationPredefinedAcl
-	return c
-}
-
-// EncryptionAlgorithm sets the optional parameter
-// "encryptionAlgorithm": Specifies the encryption algorithm that was
-// used to encrypt the object, if any. Only 'AES256' is supported
-// currently. Algorithm, key, and key hash must be supplied together.
-func (c *ObjectsCopyCall) EncryptionAlgorithm(encryptionAlgorithm string) *ObjectsCopyCall {
-	c.opt_["encryptionAlgorithm"] = encryptionAlgorithm
-	return c
-}
-
-// EncryptionKey sets the optional parameter "encryptionKey": Provides a
-// base64-encoded 256-bit key that was used to encrypt the object, if
-// any. Algorithm, key, and key hash must be supplied together.
-func (c *ObjectsCopyCall) EncryptionKey(encryptionKey string) *ObjectsCopyCall {
-	c.opt_["encryptionKey"] = encryptionKey
-	return c
-}
-
-// EncryptionKeyHash sets the optional parameter "encryptionKeyHash":
-// Provides the digest of the key for error-checking transmission. A
-// digest is in the format of '='. Algorithm, key, and key hash must be
-// supplied together.
-func (c *ObjectsCopyCall) EncryptionKeyHash(encryptionKeyHash string) *ObjectsCopyCall {
-	c.opt_["encryptionKeyHash"] = encryptionKeyHash
 	return c
 }
 
@@ -3867,15 +3806,6 @@ func (c *ObjectsCopyCall) Do() (*Object, error) {
 	if v, ok := c.opt_["destinationPredefinedAcl"]; ok {
 		params.Set("destinationPredefinedAcl", fmt.Sprintf("%v", v))
 	}
-	if v, ok := c.opt_["encryptionAlgorithm"]; ok {
-		params.Set("encryptionAlgorithm", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["encryptionKey"]; ok {
-		params.Set("encryptionKey", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["encryptionKeyHash"]; ok {
-		params.Set("encryptionKeyHash", fmt.Sprintf("%v", v))
-	}
 	if v, ok := c.opt_["ifGenerationMatch"]; ok {
 		params.Set("ifGenerationMatch", fmt.Sprintf("%v", v))
 	}
@@ -3974,21 +3904,6 @@ func (c *ObjectsCopyCall) Do() (*Object, error) {
 	//         "Object owner gets OWNER access, and project team members get access according to their roles.",
 	//         "Object owner gets OWNER access, and allUsers get READER access."
 	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "encryptionAlgorithm": {
-	//       "description": "Specifies the encryption algorithm that was used to encrypt the object, if any. Only 'AES256' is supported currently. Algorithm, key, and key hash must be supplied together.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "encryptionKey": {
-	//       "description": "Provides a base64-encoded 256-bit key that was used to encrypt the object, if any. Algorithm, key, and key hash must be supplied together.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "encryptionKeyHash": {
-	//       "description": "Provides the digest of the key for error-checking transmission. A digest is in the format of '='. Algorithm, key, and key hash must be supplied together.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4275,32 +4190,6 @@ func (r *ObjectsService) Get(bucket string, object string) *ObjectsGetCall {
 	return c
 }
 
-// EncryptionAlgorithm sets the optional parameter
-// "encryptionAlgorithm": Specifies the encryption algorithm that would
-// be used to decrypt the object. Only 'AES256' is supported currently.
-// Algorithm, key, and key hash must be supplied together.
-func (c *ObjectsGetCall) EncryptionAlgorithm(encryptionAlgorithm string) *ObjectsGetCall {
-	c.opt_["encryptionAlgorithm"] = encryptionAlgorithm
-	return c
-}
-
-// EncryptionKey sets the optional parameter "encryptionKey": Provides a
-// base64-encoded 256-bit key to decrypt the object. Algorithm, key, and
-// key hash must be supplied together.
-func (c *ObjectsGetCall) EncryptionKey(encryptionKey string) *ObjectsGetCall {
-	c.opt_["encryptionKey"] = encryptionKey
-	return c
-}
-
-// EncryptionKeyHash sets the optional parameter "encryptionKeyHash":
-// Provides the digest of the key for error-checking transmission. A
-// digest is in the format of '='. Algorithm, key, and key hash must be
-// supplied together.
-func (c *ObjectsGetCall) EncryptionKeyHash(encryptionKeyHash string) *ObjectsGetCall {
-	c.opt_["encryptionKeyHash"] = encryptionKeyHash
-	return c
-}
-
 // Generation sets the optional parameter "generation": If present,
 // selects a specific revision of this object (as opposed to the latest
 // version, the default).
@@ -4361,15 +4250,6 @@ func (c *ObjectsGetCall) Do() (*Object, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
-	if v, ok := c.opt_["encryptionAlgorithm"]; ok {
-		params.Set("encryptionAlgorithm", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["encryptionKey"]; ok {
-		params.Set("encryptionKey", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["encryptionKeyHash"]; ok {
-		params.Set("encryptionKeyHash", fmt.Sprintf("%v", v))
-	}
 	if v, ok := c.opt_["generation"]; ok {
 		params.Set("generation", fmt.Sprintf("%v", v))
 	}
@@ -4425,21 +4305,6 @@ func (c *ObjectsGetCall) Do() (*Object, error) {
 	//       "description": "Name of the bucket in which the object resides.",
 	//       "location": "path",
 	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "encryptionAlgorithm": {
-	//       "description": "Specifies the encryption algorithm that would be used to decrypt the object. Only 'AES256' is supported currently. Algorithm, key, and key hash must be supplied together.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "encryptionKey": {
-	//       "description": "Provides a base64-encoded 256-bit key to decrypt the object. Algorithm, key, and key hash must be supplied together.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "encryptionKeyHash": {
-	//       "description": "Provides the digest of the key for error-checking transmission. A digest is in the format of '='. Algorithm, key, and key hash must be supplied together.",
-	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "generation": {
@@ -4537,32 +4402,6 @@ func (r *ObjectsService) Insert(bucket string, object *Object) *ObjectsInsertCal
 // content being uploaded.
 func (c *ObjectsInsertCall) ContentEncoding(contentEncoding string) *ObjectsInsertCall {
 	c.opt_["contentEncoding"] = contentEncoding
-	return c
-}
-
-// EncryptionAlgorithm sets the optional parameter
-// "encryptionAlgorithm": Specifies the encryption algorithm that would
-// be used to encrypt the object. Only 'AES256' is supported currently.
-// Algorithm, key, and key hash must be supplied together.
-func (c *ObjectsInsertCall) EncryptionAlgorithm(encryptionAlgorithm string) *ObjectsInsertCall {
-	c.opt_["encryptionAlgorithm"] = encryptionAlgorithm
-	return c
-}
-
-// EncryptionKey sets the optional parameter "encryptionKey": Provides a
-// base64-encoded 256-bit key to encrypt the object. Algorithm, key, and
-// key hash must be supplied together.
-func (c *ObjectsInsertCall) EncryptionKey(encryptionKey string) *ObjectsInsertCall {
-	c.opt_["encryptionKey"] = encryptionKey
-	return c
-}
-
-// EncryptionKeyHash sets the optional parameter "encryptionKeyHash":
-// Provides the digest of the key for error-checking transmission. A
-// digest is in the format of '='. Algorithm, key, and key hash must be
-// supplied together.
-func (c *ObjectsInsertCall) EncryptionKeyHash(encryptionKeyHash string) *ObjectsInsertCall {
-	c.opt_["encryptionKeyHash"] = encryptionKeyHash
 	return c
 }
 
@@ -4669,15 +4508,6 @@ func (c *ObjectsInsertCall) Do() (*Object, error) {
 	params.Set("alt", "json")
 	if v, ok := c.opt_["contentEncoding"]; ok {
 		params.Set("contentEncoding", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["encryptionAlgorithm"]; ok {
-		params.Set("encryptionAlgorithm", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["encryptionKey"]; ok {
-		params.Set("encryptionKey", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["encryptionKeyHash"]; ok {
-		params.Set("encryptionKeyHash", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["ifGenerationMatch"]; ok {
 		params.Set("ifGenerationMatch", fmt.Sprintf("%v", v))
@@ -4798,21 +4628,6 @@ func (c *ObjectsInsertCall) Do() (*Object, error) {
 	//     },
 	//     "contentEncoding": {
 	//       "description": "If set, sets the contentEncoding property of the final object to this value. Setting this parameter is equivalent to setting the contentEncoding metadata property. This can be useful when uploading an object with uploadType=media to indicate the encoding of the content being uploaded.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "encryptionAlgorithm": {
-	//       "description": "Specifies the encryption algorithm that would be used to encrypt the object. Only 'AES256' is supported currently. Algorithm, key, and key hash must be supplied together.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "encryptionKey": {
-	//       "description": "Provides a base64-encoded 256-bit key to encrypt the object. Algorithm, key, and key hash must be supplied together.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "encryptionKeyHash": {
-	//       "description": "Provides the digest of the key for error-checking transmission. A digest is in the format of '='. Algorithm, key, and key hash must be supplied together.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5104,34 +4919,6 @@ func (r *ObjectsService) Patch(bucket string, object string, object2 *Object) *O
 	return c
 }
 
-// EncryptionAlgorithm sets the optional parameter
-// "encryptionAlgorithm": For downloading encrypted objects, specifies
-// the encryption algorithm that would be used to decrypt the object.
-// Only 'AES256' is supported currently. Algorithm, key, and key hash
-// must be supplied together.
-func (c *ObjectsPatchCall) EncryptionAlgorithm(encryptionAlgorithm string) *ObjectsPatchCall {
-	c.opt_["encryptionAlgorithm"] = encryptionAlgorithm
-	return c
-}
-
-// EncryptionKey sets the optional parameter "encryptionKey": For
-// downloading encrypted objects, provides a base64-encoded 256-bit key
-// to decrypt the object. Algorithm, key, and key hash must be supplied
-// together.
-func (c *ObjectsPatchCall) EncryptionKey(encryptionKey string) *ObjectsPatchCall {
-	c.opt_["encryptionKey"] = encryptionKey
-	return c
-}
-
-// EncryptionKeyHash sets the optional parameter "encryptionKeyHash":
-// For downloading encrypted objects, provides the digest of the key for
-// error-checking transmission. A digest is in the format of '='.
-// Algorithm, key, and key hash must be supplied together.
-func (c *ObjectsPatchCall) EncryptionKeyHash(encryptionKeyHash string) *ObjectsPatchCall {
-	c.opt_["encryptionKeyHash"] = encryptionKeyHash
-	return c
-}
-
 // Generation sets the optional parameter "generation": If present,
 // selects a specific revision of this object (as opposed to the latest
 // version, the default).
@@ -5204,15 +4991,6 @@ func (c *ObjectsPatchCall) Do() (*Object, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	if v, ok := c.opt_["encryptionAlgorithm"]; ok {
-		params.Set("encryptionAlgorithm", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["encryptionKey"]; ok {
-		params.Set("encryptionKey", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["encryptionKeyHash"]; ok {
-		params.Set("encryptionKeyHash", fmt.Sprintf("%v", v))
-	}
 	if v, ok := c.opt_["generation"]; ok {
 		params.Set("generation", fmt.Sprintf("%v", v))
 	}
@@ -5272,21 +5050,6 @@ func (c *ObjectsPatchCall) Do() (*Object, error) {
 	//       "description": "Name of the bucket in which the object resides.",
 	//       "location": "path",
 	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "encryptionAlgorithm": {
-	//       "description": "For downloading encrypted objects, specifies the encryption algorithm that would be used to decrypt the object. Only 'AES256' is supported currently. Algorithm, key, and key hash must be supplied together.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "encryptionKey": {
-	//       "description": "For downloading encrypted objects, provides a base64-encoded 256-bit key to decrypt the object. Algorithm, key, and key hash must be supplied together.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "encryptionKeyHash": {
-	//       "description": "For downloading encrypted objects, provides the digest of the key for error-checking transmission. A digest is in the format of '='. Algorithm, key, and key hash must be supplied together.",
-	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "generation": {
@@ -5376,6 +5139,383 @@ func (c *ObjectsPatchCall) Do() (*Object, error) {
 
 }
 
+// method id "storage.objects.rewrite":
+
+type ObjectsRewriteCall struct {
+	s                 *Service
+	sourceBucket      string
+	sourceObject      string
+	destinationBucket string
+	destinationObject string
+	object            *Object
+	opt_              map[string]interface{}
+}
+
+// Rewrite: Rewrites a source object to a destination object. Optionally
+// overrides metadata.
+func (r *ObjectsService) Rewrite(sourceBucket string, sourceObject string, destinationBucket string, destinationObject string, object *Object) *ObjectsRewriteCall {
+	c := &ObjectsRewriteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.sourceBucket = sourceBucket
+	c.sourceObject = sourceObject
+	c.destinationBucket = destinationBucket
+	c.destinationObject = destinationObject
+	c.object = object
+	return c
+}
+
+// DestinationPredefinedAcl sets the optional parameter
+// "destinationPredefinedAcl": Apply a predefined set of access controls
+// to the destination object.
+func (c *ObjectsRewriteCall) DestinationPredefinedAcl(destinationPredefinedAcl string) *ObjectsRewriteCall {
+	c.opt_["destinationPredefinedAcl"] = destinationPredefinedAcl
+	return c
+}
+
+// IfGenerationMatch sets the optional parameter "ifGenerationMatch":
+// Makes the operation conditional on whether the destination object's
+// current generation matches the given value.
+func (c *ObjectsRewriteCall) IfGenerationMatch(ifGenerationMatch int64) *ObjectsRewriteCall {
+	c.opt_["ifGenerationMatch"] = ifGenerationMatch
+	return c
+}
+
+// IfGenerationNotMatch sets the optional parameter
+// "ifGenerationNotMatch": Makes the operation conditional on whether
+// the destination object's current generation does not match the given
+// value.
+func (c *ObjectsRewriteCall) IfGenerationNotMatch(ifGenerationNotMatch int64) *ObjectsRewriteCall {
+	c.opt_["ifGenerationNotMatch"] = ifGenerationNotMatch
+	return c
+}
+
+// IfMetagenerationMatch sets the optional parameter
+// "ifMetagenerationMatch": Makes the operation conditional on whether
+// the destination object's current metageneration matches the given
+// value.
+func (c *ObjectsRewriteCall) IfMetagenerationMatch(ifMetagenerationMatch int64) *ObjectsRewriteCall {
+	c.opt_["ifMetagenerationMatch"] = ifMetagenerationMatch
+	return c
+}
+
+// IfMetagenerationNotMatch sets the optional parameter
+// "ifMetagenerationNotMatch": Makes the operation conditional on
+// whether the destination object's current metageneration does not
+// match the given value.
+func (c *ObjectsRewriteCall) IfMetagenerationNotMatch(ifMetagenerationNotMatch int64) *ObjectsRewriteCall {
+	c.opt_["ifMetagenerationNotMatch"] = ifMetagenerationNotMatch
+	return c
+}
+
+// IfSourceGenerationMatch sets the optional parameter
+// "ifSourceGenerationMatch": Makes the operation conditional on whether
+// the source object's generation matches the given value.
+func (c *ObjectsRewriteCall) IfSourceGenerationMatch(ifSourceGenerationMatch int64) *ObjectsRewriteCall {
+	c.opt_["ifSourceGenerationMatch"] = ifSourceGenerationMatch
+	return c
+}
+
+// IfSourceGenerationNotMatch sets the optional parameter
+// "ifSourceGenerationNotMatch": Makes the operation conditional on
+// whether the source object's generation does not match the given
+// value.
+func (c *ObjectsRewriteCall) IfSourceGenerationNotMatch(ifSourceGenerationNotMatch int64) *ObjectsRewriteCall {
+	c.opt_["ifSourceGenerationNotMatch"] = ifSourceGenerationNotMatch
+	return c
+}
+
+// IfSourceMetagenerationMatch sets the optional parameter
+// "ifSourceMetagenerationMatch": Makes the operation conditional on
+// whether the source object's current metageneration matches the given
+// value.
+func (c *ObjectsRewriteCall) IfSourceMetagenerationMatch(ifSourceMetagenerationMatch int64) *ObjectsRewriteCall {
+	c.opt_["ifSourceMetagenerationMatch"] = ifSourceMetagenerationMatch
+	return c
+}
+
+// IfSourceMetagenerationNotMatch sets the optional parameter
+// "ifSourceMetagenerationNotMatch": Makes the operation conditional on
+// whether the source object's current metageneration does not match the
+// given value.
+func (c *ObjectsRewriteCall) IfSourceMetagenerationNotMatch(ifSourceMetagenerationNotMatch int64) *ObjectsRewriteCall {
+	c.opt_["ifSourceMetagenerationNotMatch"] = ifSourceMetagenerationNotMatch
+	return c
+}
+
+// MaxBytesRewrittenPerCall sets the optional parameter
+// "maxBytesRewrittenPerCall": The maximum number of bytes that will be
+// rewritten per Rewrite request. Most callers shouldn't need to specify
+// this parameter - it is primarily in place to support testing. If
+// specified the value must be an integral multiple of 1 MiB (1048576).
+// Also, this only applies to requests where the source and destination
+// span locations and/or storage classes. Finally, this value must not
+// change across Rewrite calls else you'll get an error that the rewrite
+// token is invalid.
+func (c *ObjectsRewriteCall) MaxBytesRewrittenPerCall(maxBytesRewrittenPerCall int64) *ObjectsRewriteCall {
+	c.opt_["maxBytesRewrittenPerCall"] = maxBytesRewrittenPerCall
+	return c
+}
+
+// Projection sets the optional parameter "projection": Set of
+// properties to return. Defaults to noAcl, unless the object resource
+// specifies the acl property, when it defaults to full.
+func (c *ObjectsRewriteCall) Projection(projection string) *ObjectsRewriteCall {
+	c.opt_["projection"] = projection
+	return c
+}
+
+// RewriteToken sets the optional parameter "rewriteToken": Include this
+// field (from the previous Rewrite response) on each Rewrite request
+// after the first one, until the Rewrite response 'done' flag is true.
+// Calls that provide a rewriteToken can omit all other request fields,
+// but if included those fields must match the values provided in the
+// first rewrite request.
+func (c *ObjectsRewriteCall) RewriteToken(rewriteToken string) *ObjectsRewriteCall {
+	c.opt_["rewriteToken"] = rewriteToken
+	return c
+}
+
+// SourceGeneration sets the optional parameter "sourceGeneration": If
+// present, selects a specific revision of the source object (as opposed
+// to the latest version, the default).
+func (c *ObjectsRewriteCall) SourceGeneration(sourceGeneration int64) *ObjectsRewriteCall {
+	c.opt_["sourceGeneration"] = sourceGeneration
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ObjectsRewriteCall) Fields(s ...googleapi.Field) *ObjectsRewriteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *ObjectsRewriteCall) Do() (*RewriteResponse, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.object)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["destinationPredefinedAcl"]; ok {
+		params.Set("destinationPredefinedAcl", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["ifGenerationMatch"]; ok {
+		params.Set("ifGenerationMatch", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["ifGenerationNotMatch"]; ok {
+		params.Set("ifGenerationNotMatch", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["ifMetagenerationMatch"]; ok {
+		params.Set("ifMetagenerationMatch", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["ifMetagenerationNotMatch"]; ok {
+		params.Set("ifMetagenerationNotMatch", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["ifSourceGenerationMatch"]; ok {
+		params.Set("ifSourceGenerationMatch", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["ifSourceGenerationNotMatch"]; ok {
+		params.Set("ifSourceGenerationNotMatch", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["ifSourceMetagenerationMatch"]; ok {
+		params.Set("ifSourceMetagenerationMatch", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["ifSourceMetagenerationNotMatch"]; ok {
+		params.Set("ifSourceMetagenerationNotMatch", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxBytesRewrittenPerCall"]; ok {
+		params.Set("maxBytesRewrittenPerCall", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["projection"]; ok {
+		params.Set("projection", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["rewriteToken"]; ok {
+		params.Set("rewriteToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["sourceGeneration"]; ok {
+		params.Set("sourceGeneration", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "b/{sourceBucket}/o/{sourceObject}/rewriteTo/b/{destinationBucket}/o/{destinationObject}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"sourceBucket":      c.sourceBucket,
+		"sourceObject":      c.sourceObject,
+		"destinationBucket": c.destinationBucket,
+		"destinationObject": c.destinationObject,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *RewriteResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Rewrites a source object to a destination object. Optionally overrides metadata.",
+	//   "httpMethod": "POST",
+	//   "id": "storage.objects.rewrite",
+	//   "parameterOrder": [
+	//     "sourceBucket",
+	//     "sourceObject",
+	//     "destinationBucket",
+	//     "destinationObject"
+	//   ],
+	//   "parameters": {
+	//     "destinationBucket": {
+	//       "description": "Name of the bucket in which to store the new object. Overrides the provided object metadata's bucket value, if any.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "destinationObject": {
+	//       "description": "Name of the new object. Required when the object metadata is not otherwise provided. Overrides the object metadata's name value, if any.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "destinationPredefinedAcl": {
+	//       "description": "Apply a predefined set of access controls to the destination object.",
+	//       "enum": [
+	//         "authenticatedRead",
+	//         "bucketOwnerFullControl",
+	//         "bucketOwnerRead",
+	//         "private",
+	//         "projectPrivate",
+	//         "publicRead"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Object owner gets OWNER access, and allAuthenticatedUsers get READER access.",
+	//         "Object owner gets OWNER access, and project team owners get OWNER access.",
+	//         "Object owner gets OWNER access, and project team owners get READER access.",
+	//         "Object owner gets OWNER access.",
+	//         "Object owner gets OWNER access, and project team members get access according to their roles.",
+	//         "Object owner gets OWNER access, and allUsers get READER access."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "ifGenerationMatch": {
+	//       "description": "Makes the operation conditional on whether the destination object's current generation matches the given value.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "ifGenerationNotMatch": {
+	//       "description": "Makes the operation conditional on whether the destination object's current generation does not match the given value.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "ifMetagenerationMatch": {
+	//       "description": "Makes the operation conditional on whether the destination object's current metageneration matches the given value.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "ifMetagenerationNotMatch": {
+	//       "description": "Makes the operation conditional on whether the destination object's current metageneration does not match the given value.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "ifSourceGenerationMatch": {
+	//       "description": "Makes the operation conditional on whether the source object's generation matches the given value.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "ifSourceGenerationNotMatch": {
+	//       "description": "Makes the operation conditional on whether the source object's generation does not match the given value.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "ifSourceMetagenerationMatch": {
+	//       "description": "Makes the operation conditional on whether the source object's current metageneration matches the given value.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "ifSourceMetagenerationNotMatch": {
+	//       "description": "Makes the operation conditional on whether the source object's current metageneration does not match the given value.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxBytesRewrittenPerCall": {
+	//       "description": "The maximum number of bytes that will be rewritten per Rewrite request. Most callers shouldn't need to specify this parameter - it is primarily in place to support testing. If specified the value must be an integral multiple of 1 MiB (1048576). Also, this only applies to requests where the source and destination span locations and/or storage classes. Finally, this value must not change across Rewrite calls else you'll get an error that the rewrite token is invalid.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "projection": {
+	//       "description": "Set of properties to return. Defaults to noAcl, unless the object resource specifies the acl property, when it defaults to full.",
+	//       "enum": [
+	//         "full",
+	//         "noAcl"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Include all properties.",
+	//         "Omit the acl property."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "rewriteToken": {
+	//       "description": "Include this field (from the previous Rewrite response) on each Rewrite request after the first one, until the Rewrite response 'done' flag is true. Calls that provide a rewriteToken can omit all other request fields, but if included those fields must match the values provided in the first rewrite request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "sourceBucket": {
+	//       "description": "Name of the bucket in which to find the source object.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "sourceGeneration": {
+	//       "description": "If present, selects a specific revision of the source object (as opposed to the latest version, the default).",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "sourceObject": {
+	//       "description": "Name of the source object.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "b/{sourceBucket}/o/{sourceObject}/rewriteTo/b/{destinationBucket}/o/{destinationObject}",
+	//   "request": {
+	//     "$ref": "Object"
+	//   },
+	//   "response": {
+	//     "$ref": "RewriteResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/devstorage.full_control",
+	//     "https://www.googleapis.com/auth/devstorage.read_write"
+	//   ]
+	// }
+
+}
+
 // method id "storage.objects.update":
 
 type ObjectsUpdateCall struct {
@@ -5392,34 +5532,6 @@ func (r *ObjectsService) Update(bucket string, object string, object2 *Object) *
 	c.bucket = bucket
 	c.object = object
 	c.object2 = object2
-	return c
-}
-
-// EncryptionAlgorithm sets the optional parameter
-// "encryptionAlgorithm": For downloading encrypted objects, specifies
-// the encryption algorithm that would be used to decrypt the object.
-// Only 'AES256' is supported currently. Algorithm, key, and key hash
-// must be supplied together.
-func (c *ObjectsUpdateCall) EncryptionAlgorithm(encryptionAlgorithm string) *ObjectsUpdateCall {
-	c.opt_["encryptionAlgorithm"] = encryptionAlgorithm
-	return c
-}
-
-// EncryptionKey sets the optional parameter "encryptionKey": For
-// downloading encrypted objects, provides a base64-encoded 256-bit key
-// to decrypt the object. Algorithm, key, and key hash must be supplied
-// together.
-func (c *ObjectsUpdateCall) EncryptionKey(encryptionKey string) *ObjectsUpdateCall {
-	c.opt_["encryptionKey"] = encryptionKey
-	return c
-}
-
-// EncryptionKeyHash sets the optional parameter "encryptionKeyHash":
-// For downloading encrypted objects, provides the digest of the key for
-// error-checking transmission. A digest is in the format of '='.
-// Algorithm, key, and key hash must be supplied together.
-func (c *ObjectsUpdateCall) EncryptionKeyHash(encryptionKeyHash string) *ObjectsUpdateCall {
-	c.opt_["encryptionKeyHash"] = encryptionKeyHash
 	return c
 }
 
@@ -5495,15 +5607,6 @@ func (c *ObjectsUpdateCall) Do() (*Object, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
-	if v, ok := c.opt_["encryptionAlgorithm"]; ok {
-		params.Set("encryptionAlgorithm", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["encryptionKey"]; ok {
-		params.Set("encryptionKey", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["encryptionKeyHash"]; ok {
-		params.Set("encryptionKeyHash", fmt.Sprintf("%v", v))
-	}
 	if v, ok := c.opt_["generation"]; ok {
 		params.Set("generation", fmt.Sprintf("%v", v))
 	}
@@ -5563,21 +5666,6 @@ func (c *ObjectsUpdateCall) Do() (*Object, error) {
 	//       "description": "Name of the bucket in which the object resides.",
 	//       "location": "path",
 	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "encryptionAlgorithm": {
-	//       "description": "For downloading encrypted objects, specifies the encryption algorithm that would be used to decrypt the object. Only 'AES256' is supported currently. Algorithm, key, and key hash must be supplied together.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "encryptionKey": {
-	//       "description": "For downloading encrypted objects, provides a base64-encoded 256-bit key to decrypt the object. Algorithm, key, and key hash must be supplied together.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "encryptionKeyHash": {
-	//       "description": "For downloading encrypted objects, provides the digest of the key for error-checking transmission. A digest is in the format of '='. Algorithm, key, and key hash must be supplied together.",
-	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "generation": {

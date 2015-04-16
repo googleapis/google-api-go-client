@@ -414,6 +414,10 @@ type ChromeOsDevice struct {
 	// ActiveTimeRanges: List of active time ranges (Read-only)
 	ActiveTimeRanges []*ChromeOsDeviceActiveTimeRanges `json:"activeTimeRanges,omitempty"`
 
+	// AnnotatedAssetId: AssetId specified during enrollment or through
+	// later annotation
+	AnnotatedAssetId string `json:"annotatedAssetId,omitempty"`
+
 	// AnnotatedLocation: Address or location of the device as noted by the
 	// administrator
 	AnnotatedLocation string `json:"annotatedLocation,omitempty"`

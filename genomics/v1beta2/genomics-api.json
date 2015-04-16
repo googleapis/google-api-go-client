@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/zxM6l4gLCm-vFIvi5lr-kFXGmmI\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/MP3AOvHzcgmoA52DIJFOChYk_wo\"",
  "discoveryVersion": "v1",
  "id": "genomics:v1beta2",
  "name": "genomics",
  "version": "v1beta2",
- "revision": "20150326",
+ "revision": "20150410",
  "title": "Genomics API",
  "description": "Provides access to Genomics data.",
  "ownerDomain": "google.com",
@@ -1196,7 +1196,7 @@
     },
     "alignment": {
      "$ref": "LinearAlignment",
-     "description": "The linear alignment for this alignment record. This field will be null if the read is unmapped."
+     "description": "The linear alignment for this alignment record. This field will be unset if the read is unmapped."
     },
     "duplicateFragment": {
      "type": "boolean",
@@ -1232,7 +1232,7 @@
     },
     "nextMatePosition": {
      "$ref": "Position",
-     "description": "The mapping of the primary alignment of the (readNumber+1)%numberReads read in the fragment. It replaces mate position and mate strand in SAM."
+     "description": "The position of the primary alignment of the (readNumber+1)%numberReads read in the fragment. It replaces mate position and mate strand in SAM. This field will be unset if that read is unmapped or if the fragment only has a single read."
     },
     "numberReads": {
      "type": "integer",
@@ -1639,7 +1639,7 @@
     },
     "pageSize": {
      "type": "integer",
-     "description": "The maximum number of call sets to return.",
+     "description": "The maximum number of call sets to return. If unspecified, defaults to 1000.",
      "format": "int32"
     },
     "pageToken": {
@@ -2011,17 +2011,17 @@
     },
     "end": {
      "type": "string",
-     "description": "Required. The end of the window (0-based, exclusive) for which overlapping variants should be returned.",
+     "description": "The end of the window, 0-based exclusive. If unspecified or 0, defaults to the length of the reference.",
      "format": "int64"
     },
     "maxCalls": {
      "type": "integer",
-     "description": "The maximum number of calls to return. However, at least one variant will always be returned, even if it has more calls than this limit.",
+     "description": "The maximum number of calls to return. However, at least one variant will always be returned, even if it has more calls than this limit. If unspecified, defaults to 5000.",
      "format": "int32"
     },
     "pageSize": {
      "type": "integer",
-     "description": "The maximum number of variants to return.",
+     "description": "The maximum number of variants to return. If unspecified, defaults to 5000.",
      "format": "int32"
     },
     "pageToken": {
@@ -2034,7 +2034,7 @@
     },
     "start": {
      "type": "string",
-     "description": "Required. The beginning of the window (0-based, inclusive) for which overlapping variants should be returned.",
+     "description": "The beginning of the window (0-based, inclusive) for which overlapping variants should be returned. If unspecified, defaults to 0.",
      "format": "int64"
     },
     "variantName": {
@@ -2068,37 +2068,41 @@
     }
    }
   },
-  "StreamVariantsRequest": {
-   "id": "StreamVariantsRequest",
+  "StreamReadsRequest": {
+   "id": "StreamReadsRequest",
    "type": "object",
-   "description": "The stream variants request.",
    "properties": {
-    "callSetIds": {
+    "end": {
+     "type": "string",
+     "description": "The end position of the range on the reference, 0-based exclusive. If specified, referenceName must also be specified.",
+     "format": "int64"
+    },
+    "readGroupSetIds": {
      "type": "array",
-     "description": "Only return variant calls which belong to call sets with these ids. Leaving this blank returns all variant calls.",
+     "description": "The ID of the read groups set within which to search for reads. Exactly one ID must be provided.",
      "items": {
       "type": "string"
      }
     },
-    "end": {
-     "type": "string",
-     "description": "The end of the window (0-based, exclusive) for which overlapping variants should be returned.",
-     "format": "int64"
-    },
     "referenceName": {
      "type": "string",
-     "description": "Required. Only return variants in this reference sequence."
+     "description": "The reference sequence name, for example chr1, 1, or chrX. If set to *, only unmapped reads are returned."
     },
     "start": {
      "type": "string",
-     "description": "The beginning of the window (0-based, inclusive) for which overlapping variants should be returned.",
+     "description": "The start position of the range on the reference, 0-based inclusive. If specified, referenceName must also be specified.",
      "format": "int64"
-    },
-    "variantSetIds": {
+    }
+   }
+  },
+  "StreamReadsResponse": {
+   "id": "StreamReadsResponse",
+   "type": "object",
+   "properties": {
+    "alignments": {
      "type": "array",
-     "description": "Exactly one variant set ID must be provided. Only variants from this variant set will be returned.",
      "items": {
-      "type": "string"
+      "$ref": "Read"
      }
     }
    }
@@ -3489,18 +3493,18 @@
     }
    }
   },
-  "streamingVariantStore": {
+  "streamingReadstore": {
    "methods": {
-    "streamvariants": {
-     "id": "genomics.streamingVariantStore.streamvariants",
-     "path": "streamingVariantStore/streamvariants",
+    "streamreads": {
+     "id": "genomics.streamingReadstore.streamreads",
+     "path": "streamingReadstore/streamreads",
      "httpMethod": "POST",
-     "description": "Returns a stream of all the variants matching the search request, ordered by reference name, position, and ID.",
+     "description": "Gets a stream of reads for one or more read group sets. Reads search operates over a genomic coordinate space of reference sequence & position defined over the reference sequences to which the requested read group sets are aligned.\n\nIf a target positional range is specified, all reads whose alignment to the reference genome overlap the range are returned.\n\nAll reads returned are ordered by genomic coordinate (reference sequence & position). Reads with equivalent genomic coordinates are returned in a deterministic order.",
      "request": {
-      "$ref": "StreamVariantsRequest"
+      "$ref": "StreamReadsRequest"
      },
      "response": {
-      "$ref": "Variant"
+      "$ref": "StreamReadsResponse"
      }
     }
    }

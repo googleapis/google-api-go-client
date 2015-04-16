@@ -4,7 +4,7 @@
 //
 // Usage example:
 //
-//   import "google.golang.org/api/compute/v1"
+//   import "google.golang.org/api/compute/beta"
 //   ...
 //   computeService, err := compute.New(oauthHttpClient)
 package compute
@@ -36,10 +36,10 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Background
 
-const apiId = "compute:v1"
+const apiId = "compute:beta"
 const apiName = "compute"
-const apiVersion = "v1"
-const basePath = "https://www.googleapis.com/compute/v1/projects/"
+const apiVersion = "beta"
+const basePath = "https://www.googleapis.com/compute/beta/projects/"
 
 // OAuth2 scopes used by this API.
 const (
@@ -77,6 +77,7 @@ func New(client *http.Client) (*Service, error) {
 	s.GlobalForwardingRules = NewGlobalForwardingRulesService(s)
 	s.GlobalOperations = NewGlobalOperationsService(s)
 	s.HttpHealthChecks = NewHttpHealthChecksService(s)
+	s.HttpsHealthChecks = NewHttpsHealthChecksService(s)
 	s.Images = NewImagesService(s)
 	s.InstanceTemplates = NewInstanceTemplatesService(s)
 	s.Instances = NewInstancesService(s)
@@ -88,7 +89,9 @@ func New(client *http.Client) (*Service, error) {
 	s.Regions = NewRegionsService(s)
 	s.Routes = NewRoutesService(s)
 	s.Snapshots = NewSnapshotsService(s)
+	s.SslCertificates = NewSslCertificatesService(s)
 	s.TargetHttpProxies = NewTargetHttpProxiesService(s)
+	s.TargetHttpsProxies = NewTargetHttpsProxiesService(s)
 	s.TargetInstances = NewTargetInstancesService(s)
 	s.TargetPools = NewTargetPoolsService(s)
 	s.TargetVpnGateways = NewTargetVpnGatewaysService(s)
@@ -124,6 +127,8 @@ type Service struct {
 
 	HttpHealthChecks *HttpHealthChecksService
 
+	HttpsHealthChecks *HttpsHealthChecksService
+
 	Images *ImagesService
 
 	InstanceTemplates *InstanceTemplatesService
@@ -146,7 +151,11 @@ type Service struct {
 
 	Snapshots *SnapshotsService
 
+	SslCertificates *SslCertificatesService
+
 	TargetHttpProxies *TargetHttpProxiesService
+
+	TargetHttpsProxies *TargetHttpsProxiesService
 
 	TargetInstances *TargetInstancesService
 
@@ -260,6 +269,15 @@ type HttpHealthChecksService struct {
 	s *Service
 }
 
+func NewHttpsHealthChecksService(s *Service) *HttpsHealthChecksService {
+	rs := &HttpsHealthChecksService{s: s}
+	return rs
+}
+
+type HttpsHealthChecksService struct {
+	s *Service
+}
+
 func NewImagesService(s *Service) *ImagesService {
 	rs := &ImagesService{s: s}
 	return rs
@@ -359,12 +377,30 @@ type SnapshotsService struct {
 	s *Service
 }
 
+func NewSslCertificatesService(s *Service) *SslCertificatesService {
+	rs := &SslCertificatesService{s: s}
+	return rs
+}
+
+type SslCertificatesService struct {
+	s *Service
+}
+
 func NewTargetHttpProxiesService(s *Service) *TargetHttpProxiesService {
 	rs := &TargetHttpProxiesService{s: s}
 	return rs
 }
 
 type TargetHttpProxiesService struct {
+	s *Service
+}
+
+func NewTargetHttpsProxiesService(s *Service) *TargetHttpsProxiesService {
+	rs := &TargetHttpsProxiesService{s: s}
+	return rs
+}
+
+type TargetHttpsProxiesService struct {
 	s *Service
 }
 
@@ -589,6 +625,13 @@ type AttachedDisk struct {
 	// disks.
 	DeviceName string `json:"deviceName,omitempty"`
 
+	// DiskMasterKey: [Obsolete] Master key of the disk; required only if
+	// the disk already exists and is master key protected. If the disk is
+	// being created and a master key is provided, the newly created disk
+	// will be protected with this master key. Format: Random 256-bit key
+	// material encoded in base64.
+	DiskMasterKey string `json:"diskMasterKey,omitempty"`
+
 	// Index: Assigns a zero-based index to this disk, where 0 is reserved
 	// for the boot disk. For example, if you have many disks attached to an
 	// instance, each disk would have a unique index number. If not
@@ -636,6 +679,9 @@ type AttachedDiskInitializeParams struct {
 	// DiskSizeGb: Specifies the size of the disk in base-2 GB.
 	DiskSizeGb int64 `json:"diskSizeGb,omitempty,string"`
 
+	// DiskStorageType: Storage type of the disk.
+	DiskStorageType string `json:"diskStorageType,omitempty"`
+
 	// DiskType: Specifies the disk type to use to create the instance. If
 	// not specified, the default is pd-standard, specified using the full
 	// URL. For
@@ -674,6 +720,11 @@ type AttachedDiskInitializeParams struct {
 	// where vYYYYMMDD is the image version. The fully-qualified URL will
 	// also work in both cases.
 	SourceImage string `json:"sourceImage,omitempty"`
+
+	// SourceImageMasterKey: [Obsolete] Master key of the source image;
+	// required only if the source image is master key protected. Format:
+	// Random 256-bit key material encoded in Base 64.
+	SourceImageMasterKey string `json:"sourceImageMasterKey,omitempty"`
 }
 
 type Backend struct {
@@ -830,6 +881,16 @@ type Disk struct {
 	// provided by the client when the resource is created.
 	Description string `json:"description,omitempty"`
 
+	// DiskMasterKey: [Obsolete] Specifies the master key to protect the
+	// disk. When attempting to use a disk that is protected by a master
+	// key, you must provide the correct key, otherwise, the request will
+	// fail. Master keys do not protect access to metadata about the
+	// resource.
+	//
+	// If you are setting a master key, the required key format
+	// is a random 256-bit string encoded in base64.
+	DiskMasterKey string `json:"diskMasterKey,omitempty"`
+
 	// Id: [Output Only] Unique identifier for the resource; defined by the
 	// server.
 	Id uint64 `json:"id,omitempty,string"`
@@ -899,6 +960,15 @@ type Disk struct {
 	// that was used.
 	SourceImageId string `json:"sourceImageId,omitempty"`
 
+	// SourceImageMasterKey: [Obsolete] Specifies the master key of the
+	// source image you are using. This key gives you access to the use the
+	// image and is required if the source image is master key
+	// protected.
+	//
+	// The required key format is a random 256-bit string
+	// encoded in base64.
+	SourceImageMasterKey string `json:"sourceImageMasterKey,omitempty"`
+
 	// SourceSnapshot: The source snapshot used to create this disk. You can
 	// provide this as a partial or full URL to the resource. For example,
 	// the following are valid values:
@@ -918,9 +988,21 @@ type Disk struct {
 	// version of the snapshot that was used.
 	SourceSnapshotId string `json:"sourceSnapshotId,omitempty"`
 
+	// SourceSnapshotMasterKey: [Obsolete] Specifies the master key of the
+	// source snapshot you are using. This gives you access to the use the
+	// snapshot and is required if the source snapshot is master key
+	// protected.
+	//
+	// The required key format is a random 256-bit string
+	// encoded in base64.
+	SourceSnapshotMasterKey string `json:"sourceSnapshotMasterKey,omitempty"`
+
 	// Status: [Output Only] The status of disk creation. Applicable
 	// statuses includes: CREATING, FAILED, READY, RESTORING.
 	Status string `json:"status,omitempty"`
+
+	// StorageType: [Deprecated] Storage type of the persistent disk.
+	StorageType string `json:"storageType,omitempty"`
 
 	// Type: URL of the disk type resource describing which disk type to use
 	// to create the disk; provided by the client when the disk is created.
@@ -968,29 +1050,6 @@ type DiskList struct {
 
 	// SelfLink: [Output Only] Server defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
-}
-
-type DiskMoveRequest struct {
-	// DestinationZone: The URL of the destination zone to move the disk to.
-	// This can be a full or partial URL. For example, the following are all
-	// valid URLs to a zone:
-	// -
-	// https://www.googleapis.com/compute/v1/projects/project/zones/zone
-	// -
-	// projects/project/zones/zone
-	// - zones/zone
-	DestinationZone string `json:"destinationZone,omitempty"`
-
-	// TargetDisk: The URL of the target disk to move. This can be a full or
-	// partial URL. For example, the following are all valid URLs to a disk:
-	//
-	// -
-	// https://www.googleapis.com/compute/v1/projects/project/zones/zone/disk
-	// s/disk
-	// - projects/project/zones/zone/disks/disk
-	// -
-	// zones/zone/disks/disk
-	TargetDisk string `json:"targetDisk,omitempty"`
 }
 
 type DiskType struct {
@@ -1472,6 +1531,80 @@ type HttpHealthCheckList struct {
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
+type HttpsHealthCheck struct {
+	// CheckIntervalSec: How often (in seconds) to send a health check. The
+	// default value is 5 seconds.
+	CheckIntervalSec int64 `json:"checkIntervalSec,omitempty"`
+
+	// CreationTimestamp: Creation timestamp in RFC3339 text format (output
+	// only).
+	CreationTimestamp string `json:"creationTimestamp,omitempty"`
+
+	// Description: An optional textual description of the resource;
+	// provided by the client when the resource is created.
+	Description string `json:"description,omitempty"`
+
+	// HealthyThreshold: A so-far unhealthy VM will be marked healthy after
+	// this many consecutive successes. The default value is 2.
+	HealthyThreshold int64 `json:"healthyThreshold,omitempty"`
+
+	// Host: The value of the host header in the HTTPS health check request.
+	// If left empty (default value), the public IP on behalf of which this
+	// health check is performed will be used.
+	Host string `json:"host,omitempty"`
+
+	// Id: Unique identifier for the resource; defined by the server (output
+	// only).
+	Id uint64 `json:"id,omitempty,string"`
+
+	// Kind: Type of the resource.
+	Kind string `json:"kind,omitempty"`
+
+	// Name: Name of the resource; provided by the client when the resource
+	// is created. The name must be 1-63 characters long, and comply with
+	// RFC1035.
+	Name string `json:"name,omitempty"`
+
+	// Port: The TCP port number for the HTTPS health check request. The
+	// default value is 443.
+	Port int64 `json:"port,omitempty"`
+
+	// RequestPath: The request path of the HTTPS health check request. The
+	// default value is "/".
+	RequestPath string `json:"requestPath,omitempty"`
+
+	// SelfLink: Server defined URL for the resource (output only).
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// TimeoutSec: How long (in seconds) to wait before claiming failure.
+	// The default value is 5 seconds. It is invalid for timeoutSec to have
+	// a greater value than checkIntervalSec.
+	TimeoutSec int64 `json:"timeoutSec,omitempty"`
+
+	// UnhealthyThreshold: A so-far healthy VM will be marked unhealthy
+	// after this many consecutive failures. The default value is 2.
+	UnhealthyThreshold int64 `json:"unhealthyThreshold,omitempty"`
+}
+
+type HttpsHealthCheckList struct {
+	// Id: Unique identifier for the resource; defined by the server (output
+	// only).
+	Id string `json:"id,omitempty"`
+
+	// Items: A list of HttpsHealthCheck resources.
+	Items []*HttpsHealthCheck `json:"items,omitempty"`
+
+	// Kind: Type of resource.
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: A token used to continue a truncated list request
+	// (output only).
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SelfLink: Server defined URL for this resource (output only).
+	SelfLink string `json:"selfLink,omitempty"`
+}
+
 type Image struct {
 	// ArchiveSizeBytes: Size of the image tar.gz archive stored in Google
 	// Cloud Storage (in bytes).
@@ -1495,6 +1628,16 @@ type Image struct {
 	// Id: [Output Only] Unique identifier for the resource; defined by the
 	// server.
 	Id uint64 `json:"id,omitempty,string"`
+
+	// ImageMasterKey: [Obsolete] Specifies the master key to protect this
+	// image. When attempting to use an image that is protected by a master
+	// key, you must provide the correct key, otherwise, the request will
+	// fail. Master keys do not protect access to metadata about the
+	// resource.
+	//
+	// If you are setting a master key, the required key format
+	// is a random 256-bit string encoded in base64.
+	ImageMasterKey string `json:"imageMasterKey,omitempty"`
 
 	// Kind: [Output Only] Type of the resource. Always compute#image for
 	// images.
@@ -1534,6 +1677,12 @@ type Image struct {
 	// This value may be used to determine whether the image was taken from
 	// the current or a previous instance of a given disk name.
 	SourceDiskId string `json:"sourceDiskId,omitempty"`
+
+	// SourceDiskMasterKey: [Obsolete] Specifies the master key of the
+	// source disk you are using. This field gives you access to the disk
+	// and is required if the source disk is master key protected. Format:
+	// Random 256-bit key material encoded in base64.
+	SourceDiskMasterKey string `json:"sourceDiskMasterKey,omitempty"`
 
 	// SourceType: The type of the image used to create this disk. The
 	// default and only value is RAW
@@ -1712,29 +1861,6 @@ type InstanceList struct {
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
-type InstanceMoveRequest struct {
-	// DestinationZone: The URL of the destination zone to move the instance
-	// to. This can be a full or partial URL. For example, the following are
-	// all valid URLs to a zone:
-	// -
-	// https://www.googleapis.com/compute/v1/projects/project/zones/zone
-	// -
-	// projects/project/zones/zone
-	// - zones/zone
-	DestinationZone string `json:"destinationZone,omitempty"`
-
-	// TargetInstance: The URL of the target instance to move. This can be a
-	// full or partial URL. For example, the following are all valid URLs to
-	// an instance:
-	// -
-	// https://www.googleapis.com/compute/v1/projects/project/zones/zone/inst
-	// ances/instance
-	// - projects/project/zones/zone/instances/instance
-	// -
-	// zones/zone/instances/instance
-	TargetInstance string `json:"targetInstance,omitempty"`
-}
-
 type InstanceProperties struct {
 	// CanIpForward: Allows instances created based on this template to send
 	// packets with source IP addresses other than their own and receive
@@ -1907,10 +2033,6 @@ type MachineType struct {
 	// server.
 	Id uint64 `json:"id,omitempty,string"`
 
-	// ImageSpaceGb: [Deprecated] This property is deprecated and will never
-	// be populated with any relevant values.
-	ImageSpaceGb int64 `json:"imageSpaceGb,omitempty"`
-
 	// Kind: Type of the resource.
 	Kind string `json:"kind,omitempty"`
 
@@ -1929,21 +2051,12 @@ type MachineType struct {
 	// Name: [Output Only] Name of the resource.
 	Name string `json:"name,omitempty"`
 
-	// ScratchDisks: [Output Only] List of extended scratch disks assigned
-	// to the instance.
-	ScratchDisks []*MachineTypeScratchDisks `json:"scratchDisks,omitempty"`
-
 	// SelfLink: [Output Only] Server defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// Zone: [Output Only] The name of the zone where the machine type
 	// resides, such as us-central1-a.
 	Zone string `json:"zone,omitempty"`
-}
-
-type MachineTypeScratchDisks struct {
-	// DiskGb: Size of the scratch disk, defined in GB.
-	DiskGb int64 `json:"diskGb,omitempty"`
 }
 
 type MachineTypeAggregatedList struct {
@@ -2643,6 +2756,13 @@ type Snapshot struct {
 	// SelfLink: Server defined URL for the resource (output only).
 	SelfLink string `json:"selfLink,omitempty"`
 
+	// SnapshotMasterKey: [Obsolete] Master key to protect the snapshot.
+	// When attempting to use a master key protected snapshot, the key must
+	// be provided otherwise the request will fail. Master keys do not
+	// protect resource metadata. Format: Random 256-bit key material
+	// encoded in base64.
+	SnapshotMasterKey string `json:"snapshotMasterKey,omitempty"`
+
 	// SourceDisk: The source disk used to create this snapshot.
 	SourceDisk string `json:"sourceDisk,omitempty"`
 
@@ -2651,6 +2771,11 @@ type Snapshot struct {
 	// was taken from the current or a previous instance of a given disk
 	// name.
 	SourceDiskId string `json:"sourceDiskId,omitempty"`
+
+	// SourceDiskMasterKey: [Obsolete] Master key of the source disk;
+	// required only if the source disk is master key protected. Format:
+	// Random 256-bit key material encoded in base64.
+	SourceDiskMasterKey string `json:"sourceDiskMasterKey,omitempty"`
 
 	// Status: The status of the persistent disk snapshot (output only).
 	Status string `json:"status,omitempty"`
@@ -2673,6 +2798,57 @@ type SnapshotList struct {
 
 	// Items: A list of Snapshot resources.
 	Items []*Snapshot `json:"items,omitempty"`
+
+	// Kind: Type of resource.
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: A token used to continue a truncated list request
+	// (output only).
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SelfLink: Server defined URL for this resource (output only).
+	SelfLink string `json:"selfLink,omitempty"`
+}
+
+type SslCertificate struct {
+	// Certificate: A certificate. PEM format.
+	Certificate string `json:"certificate,omitempty"`
+
+	// CreationTimestamp: Creation timestamp in RFC3339 text format (output
+	// only).
+	CreationTimestamp string `json:"creationTimestamp,omitempty"`
+
+	// Description: An optional textual description of the resource;
+	// provided by the client when the resource is created.
+	Description string `json:"description,omitempty"`
+
+	// Id: Unique identifier for the resource; defined by the server (output
+	// only).
+	Id uint64 `json:"id,omitempty,string"`
+
+	// Kind: Type of the resource.
+	Kind string `json:"kind,omitempty"`
+
+	// Name: Name of the resource; provided by the client when the resource
+	// is created. The name must be 1-63 characters long, and comply with
+	// RFC1035.
+	Name string `json:"name,omitempty"`
+
+	// PrivateKey: A write-only private key. PEM format. Only insert RPCs
+	// will include this field. They must be sent over Stubby P+I only.
+	PrivateKey string `json:"privateKey,omitempty"`
+
+	// SelfLink: Server defined URL for the resource (output only).
+	SelfLink string `json:"selfLink,omitempty"`
+}
+
+type SslCertificateList struct {
+	// Id: Unique identifier for the resource; defined by the server (output
+	// only).
+	Id string `json:"id,omitempty"`
+
+	// Items: A list of SslCertificate resources.
+	Items []*SslCertificate `json:"items,omitempty"`
 
 	// Kind: Type of resource.
 	Kind string `json:"kind,omitempty"`
@@ -2738,6 +2914,59 @@ type TargetHttpProxyList struct {
 
 	// Items: A list of TargetHttpProxy resources.
 	Items []*TargetHttpProxy `json:"items,omitempty"`
+
+	// Kind: Type of resource.
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: A token used to continue a truncated list request
+	// (output only).
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SelfLink: Server defined URL for this resource (output only).
+	SelfLink string `json:"selfLink,omitempty"`
+}
+
+type TargetHttpsProxy struct {
+	// CreationTimestamp: Creation timestamp in RFC3339 text format (output
+	// only).
+	CreationTimestamp string `json:"creationTimestamp,omitempty"`
+
+	// Description: An optional textual description of the resource;
+	// provided by the client when the resource is created.
+	Description string `json:"description,omitempty"`
+
+	// Id: Unique identifier for the resource; defined by the server (output
+	// only).
+	Id uint64 `json:"id,omitempty,string"`
+
+	// Kind: Type of the resource.
+	Kind string `json:"kind,omitempty"`
+
+	// Name: Name of the resource; provided by the client when the resource
+	// is created. The name must be 1-63 characters long, and comply with
+	// RFC1035.
+	Name string `json:"name,omitempty"`
+
+	// SelfLink: Server defined URL for the resource (output only).
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// SslCertificates: URLs to SslCertificate resources that are used to
+	// authenticate connections to Backends. Currently exactly one ssl
+	// certificate must be specified.
+	SslCertificates []string `json:"sslCertificates,omitempty"`
+
+	// UrlMap: URL to the UrlMap resource that defines the mapping from URL
+	// to the BackendService.
+	UrlMap string `json:"urlMap,omitempty"`
+}
+
+type TargetHttpsProxyList struct {
+	// Id: Unique identifier for the resource; defined by the server (output
+	// only).
+	Id string `json:"id,omitempty"`
+
+	// Items: A list of TargetHttpsProxy resources.
+	Items []*TargetHttpsProxy `json:"items,omitempty"`
 
 	// Kind: Type of resource.
 	Kind string `json:"kind,omitempty"`
@@ -9117,6 +9346,609 @@ func (c *HttpHealthChecksUpdateCall) Do() (*Operation, error) {
 
 }
 
+// method id "compute.httpsHealthChecks.delete":
+
+type HttpsHealthChecksDeleteCall struct {
+	s                *Service
+	project          string
+	httpsHealthCheck string
+	opt_             map[string]interface{}
+}
+
+// Delete: Deletes the specified HttpsHealthCheck resource.
+func (r *HttpsHealthChecksService) Delete(project string, httpsHealthCheck string) *HttpsHealthChecksDeleteCall {
+	c := &HttpsHealthChecksDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.httpsHealthCheck = httpsHealthCheck
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *HttpsHealthChecksDeleteCall) Fields(s ...googleapi.Field) *HttpsHealthChecksDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *HttpsHealthChecksDeleteCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/httpsHealthChecks/{httpsHealthCheck}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project":          c.project,
+		"httpsHealthCheck": c.httpsHealthCheck,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes the specified HttpsHealthCheck resource.",
+	//   "httpMethod": "DELETE",
+	//   "id": "compute.httpsHealthChecks.delete",
+	//   "parameterOrder": [
+	//     "project",
+	//     "httpsHealthCheck"
+	//   ],
+	//   "parameters": {
+	//     "httpsHealthCheck": {
+	//       "description": "Name of the HttpsHealthCheck resource to delete.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/httpsHealthChecks/{httpsHealthCheck}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.httpsHealthChecks.get":
+
+type HttpsHealthChecksGetCall struct {
+	s                *Service
+	project          string
+	httpsHealthCheck string
+	opt_             map[string]interface{}
+}
+
+// Get: Returns the specified HttpsHealthCheck resource.
+func (r *HttpsHealthChecksService) Get(project string, httpsHealthCheck string) *HttpsHealthChecksGetCall {
+	c := &HttpsHealthChecksGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.httpsHealthCheck = httpsHealthCheck
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *HttpsHealthChecksGetCall) Fields(s ...googleapi.Field) *HttpsHealthChecksGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *HttpsHealthChecksGetCall) Do() (*HttpsHealthCheck, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/httpsHealthChecks/{httpsHealthCheck}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project":          c.project,
+		"httpsHealthCheck": c.httpsHealthCheck,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *HttpsHealthCheck
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns the specified HttpsHealthCheck resource.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.httpsHealthChecks.get",
+	//   "parameterOrder": [
+	//     "project",
+	//     "httpsHealthCheck"
+	//   ],
+	//   "parameters": {
+	//     "httpsHealthCheck": {
+	//       "description": "Name of the HttpsHealthCheck resource to return.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/httpsHealthChecks/{httpsHealthCheck}",
+	//   "response": {
+	//     "$ref": "HttpsHealthCheck"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.httpsHealthChecks.insert":
+
+type HttpsHealthChecksInsertCall struct {
+	s                *Service
+	project          string
+	httpshealthcheck *HttpsHealthCheck
+	opt_             map[string]interface{}
+}
+
+// Insert: Creates a HttpsHealthCheck resource in the specified project
+// using the data included in the request.
+func (r *HttpsHealthChecksService) Insert(project string, httpshealthcheck *HttpsHealthCheck) *HttpsHealthChecksInsertCall {
+	c := &HttpsHealthChecksInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.httpshealthcheck = httpshealthcheck
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *HttpsHealthChecksInsertCall) Fields(s ...googleapi.Field) *HttpsHealthChecksInsertCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *HttpsHealthChecksInsertCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.httpshealthcheck)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/httpsHealthChecks")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a HttpsHealthCheck resource in the specified project using the data included in the request.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.httpsHealthChecks.insert",
+	//   "parameterOrder": [
+	//     "project"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/httpsHealthChecks",
+	//   "request": {
+	//     "$ref": "HttpsHealthCheck"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.httpsHealthChecks.list":
+
+type HttpsHealthChecksListCall struct {
+	s       *Service
+	project string
+	opt_    map[string]interface{}
+}
+
+// List: Retrieves the list of HttpsHealthCheck resources available to
+// the specified project.
+func (r *HttpsHealthChecksService) List(project string) *HttpsHealthChecksListCall {
+	c := &HttpsHealthChecksListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter expression for
+// filtering listed resources.
+func (c *HttpsHealthChecksListCall) Filter(filter string) *HttpsHealthChecksListCall {
+	c.opt_["filter"] = filter
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Maximum count of
+// results to be returned. Maximum value is 500 and default value is
+// 500.
+func (c *HttpsHealthChecksListCall) MaxResults(maxResults int64) *HttpsHealthChecksListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Tag returned by a
+// previous list request truncated by maxResults. Used to continue a
+// previous list request.
+func (c *HttpsHealthChecksListCall) PageToken(pageToken string) *HttpsHealthChecksListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *HttpsHealthChecksListCall) Fields(s ...googleapi.Field) *HttpsHealthChecksListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *HttpsHealthChecksListCall) Do() (*HttpsHealthCheckList, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["filter"]; ok {
+		params.Set("filter", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/httpsHealthChecks")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *HttpsHealthCheckList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the list of HttpsHealthCheck resources available to the specified project.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.httpsHealthChecks.list",
+	//   "parameterOrder": [
+	//     "project"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Filter expression for filtering listed resources.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "default": "500",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "maximum": "500",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/httpsHealthChecks",
+	//   "response": {
+	//     "$ref": "HttpsHealthCheckList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.httpsHealthChecks.patch":
+
+type HttpsHealthChecksPatchCall struct {
+	s                *Service
+	project          string
+	httpsHealthCheck string
+	httpshealthcheck *HttpsHealthCheck
+	opt_             map[string]interface{}
+}
+
+// Patch: Updates a HttpsHealthCheck resource in the specified project
+// using the data included in the request. This method supports patch
+// semantics.
+func (r *HttpsHealthChecksService) Patch(project string, httpsHealthCheck string, httpshealthcheck *HttpsHealthCheck) *HttpsHealthChecksPatchCall {
+	c := &HttpsHealthChecksPatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.httpsHealthCheck = httpsHealthCheck
+	c.httpshealthcheck = httpshealthcheck
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *HttpsHealthChecksPatchCall) Fields(s ...googleapi.Field) *HttpsHealthChecksPatchCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *HttpsHealthChecksPatchCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.httpshealthcheck)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/httpsHealthChecks/{httpsHealthCheck}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project":          c.project,
+		"httpsHealthCheck": c.httpsHealthCheck,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a HttpsHealthCheck resource in the specified project using the data included in the request. This method supports patch semantics.",
+	//   "httpMethod": "PATCH",
+	//   "id": "compute.httpsHealthChecks.patch",
+	//   "parameterOrder": [
+	//     "project",
+	//     "httpsHealthCheck"
+	//   ],
+	//   "parameters": {
+	//     "httpsHealthCheck": {
+	//       "description": "Name of the HttpsHealthCheck resource to update.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/httpsHealthChecks/{httpsHealthCheck}",
+	//   "request": {
+	//     "$ref": "HttpsHealthCheck"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.httpsHealthChecks.update":
+
+type HttpsHealthChecksUpdateCall struct {
+	s                *Service
+	project          string
+	httpsHealthCheck string
+	httpshealthcheck *HttpsHealthCheck
+	opt_             map[string]interface{}
+}
+
+// Update: Updates a HttpsHealthCheck resource in the specified project
+// using the data included in the request.
+func (r *HttpsHealthChecksService) Update(project string, httpsHealthCheck string, httpshealthcheck *HttpsHealthCheck) *HttpsHealthChecksUpdateCall {
+	c := &HttpsHealthChecksUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.httpsHealthCheck = httpsHealthCheck
+	c.httpshealthcheck = httpshealthcheck
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *HttpsHealthChecksUpdateCall) Fields(s ...googleapi.Field) *HttpsHealthChecksUpdateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *HttpsHealthChecksUpdateCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.httpshealthcheck)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/httpsHealthChecks/{httpsHealthCheck}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project":          c.project,
+		"httpsHealthCheck": c.httpsHealthCheck,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a HttpsHealthCheck resource in the specified project using the data included in the request.",
+	//   "httpMethod": "PUT",
+	//   "id": "compute.httpsHealthChecks.update",
+	//   "parameterOrder": [
+	//     "project",
+	//     "httpsHealthCheck"
+	//   ],
+	//   "parameters": {
+	//     "httpsHealthCheck": {
+	//       "description": "Name of the HttpsHealthCheck resource to update.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/httpsHealthChecks/{httpsHealthCheck}",
+	//   "request": {
+	//     "$ref": "HttpsHealthCheck"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
 // method id "compute.images.delete":
 
 type ImagesDeleteCall struct {
@@ -12926,185 +13758,6 @@ func (c *ProjectsGetCall) Do() (*Project, error) {
 
 }
 
-// method id "compute.projects.moveDisk":
-
-type ProjectsMoveDiskCall struct {
-	s               *Service
-	project         string
-	diskmoverequest *DiskMoveRequest
-	opt_            map[string]interface{}
-}
-
-// MoveDisk: Moves a persistent disk from one zone to another.
-func (r *ProjectsService) MoveDisk(project string, diskmoverequest *DiskMoveRequest) *ProjectsMoveDiskCall {
-	c := &ProjectsMoveDiskCall{s: r.s, opt_: make(map[string]interface{})}
-	c.project = project
-	c.diskmoverequest = diskmoverequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsMoveDiskCall) Fields(s ...googleapi.Field) *ProjectsMoveDiskCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
-	return c
-}
-
-func (c *ProjectsMoveDiskCall) Do() (*Operation, error) {
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.diskmoverequest)
-	if err != nil {
-		return nil, err
-	}
-	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", "json")
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/moveDisk")
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("POST", urls, body)
-	googleapi.Expand(req.URL, map[string]string{
-		"project": c.project,
-	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	var ret *Operation
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Moves a persistent disk from one zone to another.",
-	//   "httpMethod": "POST",
-	//   "id": "compute.projects.moveDisk",
-	//   "parameterOrder": [
-	//     "project"
-	//   ],
-	//   "parameters": {
-	//     "project": {
-	//       "description": "Project ID for this request.",
-	//       "location": "path",
-	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "{project}/moveDisk",
-	//   "request": {
-	//     "$ref": "DiskMoveRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/compute"
-	//   ]
-	// }
-
-}
-
-// method id "compute.projects.moveInstance":
-
-type ProjectsMoveInstanceCall struct {
-	s                   *Service
-	project             string
-	instancemoverequest *InstanceMoveRequest
-	opt_                map[string]interface{}
-}
-
-// MoveInstance: Moves an instance and its attached persistent disks
-// from one zone to another.
-func (r *ProjectsService) MoveInstance(project string, instancemoverequest *InstanceMoveRequest) *ProjectsMoveInstanceCall {
-	c := &ProjectsMoveInstanceCall{s: r.s, opt_: make(map[string]interface{})}
-	c.project = project
-	c.instancemoverequest = instancemoverequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsMoveInstanceCall) Fields(s ...googleapi.Field) *ProjectsMoveInstanceCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
-	return c
-}
-
-func (c *ProjectsMoveInstanceCall) Do() (*Operation, error) {
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.instancemoverequest)
-	if err != nil {
-		return nil, err
-	}
-	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", "json")
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/moveInstance")
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("POST", urls, body)
-	googleapi.Expand(req.URL, map[string]string{
-		"project": c.project,
-	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	var ret *Operation
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Moves an instance and its attached persistent disks from one zone to another.",
-	//   "httpMethod": "POST",
-	//   "id": "compute.projects.moveInstance",
-	//   "parameterOrder": [
-	//     "project"
-	//   ],
-	//   "parameters": {
-	//     "project": {
-	//       "description": "Project ID for this request.",
-	//       "location": "path",
-	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "{project}/moveInstance",
-	//   "request": {
-	//     "$ref": "InstanceMoveRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/compute"
-	//   ]
-	// }
-
-}
-
 // method id "compute.projects.setCommonInstanceMetadata":
 
 type ProjectsSetCommonInstanceMetadataCall struct {
@@ -13283,6 +13936,98 @@ func (c *ProjectsSetUsageExportBucketCall) Do() (*Operation, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/devstorage.full_control",
+	//     "https://www.googleapis.com/auth/devstorage.read_only",
+	//     "https://www.googleapis.com/auth/devstorage.read_write"
+	//   ]
+	// }
+
+}
+
+// method id "compute.projects.setUsageExportCloudStorageBucket":
+
+type ProjectsSetUsageExportCloudStorageBucketCall struct {
+	s                   *Service
+	project             string
+	usageexportlocation *UsageExportLocation
+	opt_                map[string]interface{}
+}
+
+// SetUsageExportCloudStorageBucket: [Deprecated] Use
+// setUsageExportBucket instead.
+func (r *ProjectsService) SetUsageExportCloudStorageBucket(project string, usageexportlocation *UsageExportLocation) *ProjectsSetUsageExportCloudStorageBucketCall {
+	c := &ProjectsSetUsageExportCloudStorageBucketCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.usageexportlocation = usageexportlocation
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsSetUsageExportCloudStorageBucketCall) Fields(s ...googleapi.Field) *ProjectsSetUsageExportCloudStorageBucketCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *ProjectsSetUsageExportCloudStorageBucketCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.usageexportlocation)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/setUsageExportCloudStorageBucket")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "[Deprecated] Use setUsageExportBucket instead.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.projects.setUsageExportCloudStorageBucket",
+	//   "parameterOrder": [
+	//     "project"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/setUsageExportCloudStorageBucket",
+	//   "request": {
+	//     "$ref": "UsageExportLocation"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/devstorage.full_control",
 	//     "https://www.googleapis.com/auth/devstorage.read_only",
@@ -14571,6 +15316,406 @@ func (c *SnapshotsListCall) Do() (*SnapshotList, error) {
 
 }
 
+// method id "compute.sslCertificates.delete":
+
+type SslCertificatesDeleteCall struct {
+	s              *Service
+	project        string
+	sslCertificate string
+	opt_           map[string]interface{}
+}
+
+// Delete: Deletes the specified SslCertificate resource.
+func (r *SslCertificatesService) Delete(project string, sslCertificate string) *SslCertificatesDeleteCall {
+	c := &SslCertificatesDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.sslCertificate = sslCertificate
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SslCertificatesDeleteCall) Fields(s ...googleapi.Field) *SslCertificatesDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *SslCertificatesDeleteCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/sslCertificates/{sslCertificate}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project":        c.project,
+		"sslCertificate": c.sslCertificate,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes the specified SslCertificate resource.",
+	//   "httpMethod": "DELETE",
+	//   "id": "compute.sslCertificates.delete",
+	//   "parameterOrder": [
+	//     "project",
+	//     "sslCertificate"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "sslCertificate": {
+	//       "description": "Name of the SslCertificate resource to delete.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/sslCertificates/{sslCertificate}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.sslCertificates.get":
+
+type SslCertificatesGetCall struct {
+	s              *Service
+	project        string
+	sslCertificate string
+	opt_           map[string]interface{}
+}
+
+// Get: Returns the specified SslCertificate resource.
+func (r *SslCertificatesService) Get(project string, sslCertificate string) *SslCertificatesGetCall {
+	c := &SslCertificatesGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.sslCertificate = sslCertificate
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SslCertificatesGetCall) Fields(s ...googleapi.Field) *SslCertificatesGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *SslCertificatesGetCall) Do() (*SslCertificate, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/sslCertificates/{sslCertificate}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project":        c.project,
+		"sslCertificate": c.sslCertificate,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *SslCertificate
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns the specified SslCertificate resource.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.sslCertificates.get",
+	//   "parameterOrder": [
+	//     "project",
+	//     "sslCertificate"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "sslCertificate": {
+	//       "description": "Name of the SslCertificate resource to return.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/sslCertificates/{sslCertificate}",
+	//   "response": {
+	//     "$ref": "SslCertificate"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.sslCertificates.insert":
+
+type SslCertificatesInsertCall struct {
+	s              *Service
+	project        string
+	sslcertificate *SslCertificate
+	opt_           map[string]interface{}
+}
+
+// Insert: Creates a SslCertificate resource in the specified project
+// using the data included in the request.
+func (r *SslCertificatesService) Insert(project string, sslcertificate *SslCertificate) *SslCertificatesInsertCall {
+	c := &SslCertificatesInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.sslcertificate = sslcertificate
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SslCertificatesInsertCall) Fields(s ...googleapi.Field) *SslCertificatesInsertCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *SslCertificatesInsertCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.sslcertificate)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/sslCertificates")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a SslCertificate resource in the specified project using the data included in the request.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.sslCertificates.insert",
+	//   "parameterOrder": [
+	//     "project"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/sslCertificates",
+	//   "request": {
+	//     "$ref": "SslCertificate"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.sslCertificates.list":
+
+type SslCertificatesListCall struct {
+	s       *Service
+	project string
+	opt_    map[string]interface{}
+}
+
+// List: Retrieves the list of SslCertificate resources available to the
+// specified project.
+func (r *SslCertificatesService) List(project string) *SslCertificatesListCall {
+	c := &SslCertificatesListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter expression for
+// filtering listed resources.
+func (c *SslCertificatesListCall) Filter(filter string) *SslCertificatesListCall {
+	c.opt_["filter"] = filter
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Maximum count of
+// results to be returned. Maximum value is 500 and default value is
+// 500.
+func (c *SslCertificatesListCall) MaxResults(maxResults int64) *SslCertificatesListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Tag returned by a
+// previous list request truncated by maxResults. Used to continue a
+// previous list request.
+func (c *SslCertificatesListCall) PageToken(pageToken string) *SslCertificatesListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SslCertificatesListCall) Fields(s ...googleapi.Field) *SslCertificatesListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *SslCertificatesListCall) Do() (*SslCertificateList, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["filter"]; ok {
+		params.Set("filter", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/sslCertificates")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *SslCertificateList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the list of SslCertificate resources available to the specified project.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.sslCertificates.list",
+	//   "parameterOrder": [
+	//     "project"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Filter expression for filtering listed resources.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "default": "500",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "maximum": "500",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/sslCertificates",
+	//   "response": {
+	//     "$ref": "SslCertificateList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
 // method id "compute.targetHttpProxies.delete":
 
 type TargetHttpProxiesDeleteCall struct {
@@ -15071,6 +16216,406 @@ func (c *TargetHttpProxiesSetUrlMapCall) Do() (*Operation, error) {
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.targetHttpsProxies.delete":
+
+type TargetHttpsProxiesDeleteCall struct {
+	s                *Service
+	project          string
+	targetHttpsProxy string
+	opt_             map[string]interface{}
+}
+
+// Delete: Deletes the specified TargetHttpsProxy resource.
+func (r *TargetHttpsProxiesService) Delete(project string, targetHttpsProxy string) *TargetHttpsProxiesDeleteCall {
+	c := &TargetHttpsProxiesDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.targetHttpsProxy = targetHttpsProxy
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TargetHttpsProxiesDeleteCall) Fields(s ...googleapi.Field) *TargetHttpsProxiesDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *TargetHttpsProxiesDeleteCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/targetHttpsProxies/{targetHttpsProxy}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project":          c.project,
+		"targetHttpsProxy": c.targetHttpsProxy,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes the specified TargetHttpsProxy resource.",
+	//   "httpMethod": "DELETE",
+	//   "id": "compute.targetHttpsProxies.delete",
+	//   "parameterOrder": [
+	//     "project",
+	//     "targetHttpsProxy"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "targetHttpsProxy": {
+	//       "description": "Name of the TargetHttpsProxy resource to delete.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/targetHttpsProxies/{targetHttpsProxy}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.targetHttpsProxies.get":
+
+type TargetHttpsProxiesGetCall struct {
+	s                *Service
+	project          string
+	targetHttpsProxy string
+	opt_             map[string]interface{}
+}
+
+// Get: Returns the specified TargetHttpsProxy resource.
+func (r *TargetHttpsProxiesService) Get(project string, targetHttpsProxy string) *TargetHttpsProxiesGetCall {
+	c := &TargetHttpsProxiesGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.targetHttpsProxy = targetHttpsProxy
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TargetHttpsProxiesGetCall) Fields(s ...googleapi.Field) *TargetHttpsProxiesGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *TargetHttpsProxiesGetCall) Do() (*TargetHttpsProxy, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/targetHttpsProxies/{targetHttpsProxy}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project":          c.project,
+		"targetHttpsProxy": c.targetHttpsProxy,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *TargetHttpsProxy
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns the specified TargetHttpsProxy resource.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.targetHttpsProxies.get",
+	//   "parameterOrder": [
+	//     "project",
+	//     "targetHttpsProxy"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "targetHttpsProxy": {
+	//       "description": "Name of the TargetHttpsProxy resource to return.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/targetHttpsProxies/{targetHttpsProxy}",
+	//   "response": {
+	//     "$ref": "TargetHttpsProxy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.targetHttpsProxies.insert":
+
+type TargetHttpsProxiesInsertCall struct {
+	s                *Service
+	project          string
+	targethttpsproxy *TargetHttpsProxy
+	opt_             map[string]interface{}
+}
+
+// Insert: Creates a TargetHttpsProxy resource in the specified project
+// using the data included in the request.
+func (r *TargetHttpsProxiesService) Insert(project string, targethttpsproxy *TargetHttpsProxy) *TargetHttpsProxiesInsertCall {
+	c := &TargetHttpsProxiesInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.targethttpsproxy = targethttpsproxy
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TargetHttpsProxiesInsertCall) Fields(s ...googleapi.Field) *TargetHttpsProxiesInsertCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *TargetHttpsProxiesInsertCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.targethttpsproxy)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/targetHttpsProxies")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a TargetHttpsProxy resource in the specified project using the data included in the request.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.targetHttpsProxies.insert",
+	//   "parameterOrder": [
+	//     "project"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/targetHttpsProxies",
+	//   "request": {
+	//     "$ref": "TargetHttpsProxy"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.targetHttpsProxies.list":
+
+type TargetHttpsProxiesListCall struct {
+	s       *Service
+	project string
+	opt_    map[string]interface{}
+}
+
+// List: Retrieves the list of TargetHttpsProxy resources available to
+// the specified project.
+func (r *TargetHttpsProxiesService) List(project string) *TargetHttpsProxiesListCall {
+	c := &TargetHttpsProxiesListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter expression for
+// filtering listed resources.
+func (c *TargetHttpsProxiesListCall) Filter(filter string) *TargetHttpsProxiesListCall {
+	c.opt_["filter"] = filter
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Maximum count of
+// results to be returned. Maximum value is 500 and default value is
+// 500.
+func (c *TargetHttpsProxiesListCall) MaxResults(maxResults int64) *TargetHttpsProxiesListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Tag returned by a
+// previous list request truncated by maxResults. Used to continue a
+// previous list request.
+func (c *TargetHttpsProxiesListCall) PageToken(pageToken string) *TargetHttpsProxiesListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TargetHttpsProxiesListCall) Fields(s ...googleapi.Field) *TargetHttpsProxiesListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *TargetHttpsProxiesListCall) Do() (*TargetHttpsProxyList, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["filter"]; ok {
+		params.Set("filter", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/targetHttpsProxies")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *TargetHttpsProxyList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the list of TargetHttpsProxy resources available to the specified project.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.targetHttpsProxies.list",
+	//   "parameterOrder": [
+	//     "project"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Filter expression for filtering listed resources.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "default": "500",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "maximum": "500",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/targetHttpsProxies",
+	//   "response": {
+	//     "$ref": "TargetHttpsProxyList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
 

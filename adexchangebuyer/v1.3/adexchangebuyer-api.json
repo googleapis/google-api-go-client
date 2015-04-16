@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/TNq58uhDuCyuU5JtNXwx-a0s4AI\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/LngzzVwqv1YJhBSD4vnWK91Oc64\"",
  "discoveryVersion": "v1",
  "id": "adexchangebuyer:v1.3",
  "name": "adexchangebuyer",
  "canonicalName": "Ad Exchange Buyer",
  "version": "v1.3",
- "revision": "20141123",
+ "revision": "20150326",
  "title": "Ad Exchange Buyer API",
  "description": "Accesses your bidding-account information, submits creatives for validation, finds available direct deals, and retrieves performance reports.",
  "ownerDomain": "google.com",
@@ -352,7 +352,7 @@
     },
     "filteringReasons": {
      "type": "object",
-     "description": "The filtering reasons for the creative. If this feature is not enabled, please ask your technical account manager. Read-only. This field should not be set in requests.",
+     "description": "The filtering reasons for the creative. Read-only. This field should not be set in requests.",
      "properties": {
       "date": {
        "type": "string",

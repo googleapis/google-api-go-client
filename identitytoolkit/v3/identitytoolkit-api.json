@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"l66ggWbucbkBw9Lpos72oziyefE/jfVz2w61e7LPgd-72fW_8rrOqOc\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/c9gT3rNuoajJVcPy4DAj8Wu9bSM\"",
  "discoveryVersion": "v1",
  "id": "identitytoolkit:v3",
  "name": "identitytoolkit",
  "canonicalName": "Identity Toolkit",
  "version": "v3",
- "revision": "20141009",
+ "revision": "20150406",
  "title": "Google Identity Toolkit API",
  "description": "Help the third party sites to implement federated login.",
  "ownerDomain": "google.com",
@@ -170,6 +170,26 @@
     }
    }
   },
+  "GetRecaptchaParamResponse": {
+   "id": "GetRecaptchaParamResponse",
+   "type": "object",
+   "description": "Response of getting recaptcha param.",
+   "properties": {
+    "kind": {
+     "type": "string",
+     "description": "The fixed string \"identitytoolkit#GetRecaptchaParamResponse\".",
+     "default": "identitytoolkit#GetRecaptchaParamResponse"
+    },
+    "recaptchaSiteKey": {
+     "type": "string",
+     "description": "Site key registered at recaptcha."
+    },
+    "recaptchaStoken": {
+     "type": "string",
+     "description": "The stoken field for the recaptcha widget, used to request captcha challenge."
+    }
+   }
+  },
   "IdentitytoolkitRelyingpartyCreateAuthUriRequest": {
    "id": "IdentitytoolkitRelyingpartyCreateAuthUriRequest",
    "type": "object",
@@ -194,6 +214,14 @@
     "identifier": {
      "type": "string",
      "description": "The email or federated ID of the user."
+    },
+    "oauthConsumerKey": {
+     "type": "string",
+     "description": "The developer's consumer key for OpenId OAuth Extension"
+    },
+    "oauthScope": {
+     "type": "string",
+     "description": "Additional oauth scopes, beyond the basid user profile, that the user would be prompted to grant"
     },
     "openidRealm": {
      "type": "string",
@@ -400,6 +428,10 @@
     "requestUri": {
      "type": "string",
      "description": "The URI to which the IDP redirects the user back. It may contain federated login result params added by the IDP."
+    },
+    "returnRefreshToken": {
+     "type": "boolean",
+     "description": "Whether to return refresh tokens."
     }
    }
   },
@@ -719,6 +751,19 @@
      "type": "string",
      "description": "The nick name of the user."
     },
+    "oauthAccessToken": {
+     "type": "string",
+     "description": "The OAuth2 access token."
+    },
+    "oauthAuthorizationCode": {
+     "type": "string",
+     "description": "The OAuth2 authorization code."
+    },
+    "oauthExpireIn": {
+     "type": "integer",
+     "description": "The lifetime in seconds of the OAuth2 access token.",
+     "format": "int32"
+    },
     "oauthRequestToken": {
      "type": "string",
      "description": "The user approved request token for the OpenID OAuth extension."
@@ -859,6 +904,15 @@
      "description": "Get token signing public key.",
      "response": {
       "$ref": "IdentitytoolkitRelyingpartyGetPublicKeysResponse"
+     }
+    },
+    "getRecaptchaParam": {
+     "id": "identitytoolkit.relyingparty.getRecaptchaParam",
+     "path": "getRecaptchaParam",
+     "httpMethod": "GET",
+     "description": "Get recaptcha secure param.",
+     "response": {
+      "$ref": "GetRecaptchaParamResponse"
      }
     },
     "resetPassword": {

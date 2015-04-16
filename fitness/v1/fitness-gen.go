@@ -360,7 +360,19 @@ type ListSessionsResponse struct {
 	Session []*Session `json:"session,omitempty"`
 }
 
+type MapValue struct {
+	// FpVal: Floating point value.
+	FpVal float64 `json:"fpVal,omitempty"`
+}
+
 type Session struct {
+	// ActiveTimeMillis: Session active time. While start_time_millis and
+	// end_time_millis define the full session time, the active time can be
+	// shorter and specified by active_time_millis. If the inactive time
+	// during the session is known, it should also be inserted via a
+	// com.google.activity.segment data point with a STILL activity value
+	ActiveTimeMillis int64 `json:"activeTimeMillis,omitempty,string"`
+
 	// ActivityType: The type of activity this session represents.
 	ActivityType int64 `json:"activityType,omitempty"`
 
@@ -390,12 +402,30 @@ type Session struct {
 }
 
 type Value struct {
+	// FloatListVal: Float list value. When this is set, other values must
+	// not be set.
+	FloatListVal []float64 `json:"floatListVal,omitempty"`
+
 	// FpVal: Floating point value. When this is set, intVal must not be
 	// set.
 	FpVal float64 `json:"fpVal,omitempty"`
 
+	// IntListVal: Integer list value. When this is set, other values must
+	// not be set.
+	IntListVal []int64 `json:"intListVal,omitempty"`
+
 	// IntVal: Integer value. When this is set, fpVal must not be set.
 	IntVal int64 `json:"intVal,omitempty"`
+
+	MapVal []*ValueMapValEntry `json:"mapVal,omitempty"`
+
+	StringVal string `json:"stringVal,omitempty"`
+}
+
+type ValueMapValEntry struct {
+	Key string `json:"key,omitempty"`
+
+	Value *MapValue `json:"value,omitempty"`
 }
 
 // method id "fitness.users.dataSources.create":
@@ -483,6 +513,95 @@ func (c *UsersDataSourcesCreateCall) Do() (*DataSource, error) {
 	//   "request": {
 	//     "$ref": "DataSource"
 	//   },
+	//   "response": {
+	//     "$ref": "DataSource"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/fitness.activity.write",
+	//     "https://www.googleapis.com/auth/fitness.body.write",
+	//     "https://www.googleapis.com/auth/fitness.location.write"
+	//   ]
+	// }
+
+}
+
+// method id "fitness.users.dataSources.delete":
+
+type UsersDataSourcesDeleteCall struct {
+	s            *Service
+	userId       string
+	dataSourceId string
+	opt_         map[string]interface{}
+}
+
+// Delete: Delete the data source if there are no datapoints associated
+// with it
+func (r *UsersDataSourcesService) Delete(userId string, dataSourceId string) *UsersDataSourcesDeleteCall {
+	c := &UsersDataSourcesDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.userId = userId
+	c.dataSourceId = dataSourceId
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UsersDataSourcesDeleteCall) Fields(s ...googleapi.Field) *UsersDataSourcesDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *UsersDataSourcesDeleteCall) Do() (*DataSource, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/dataSources/{dataSourceId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"userId":       c.userId,
+		"dataSourceId": c.dataSourceId,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *DataSource
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Delete the data source if there are no datapoints associated with it",
+	//   "httpMethod": "DELETE",
+	//   "id": "fitness.users.dataSources.delete",
+	//   "parameterOrder": [
+	//     "userId",
+	//     "dataSourceId"
+	//   ],
+	//   "parameters": {
+	//     "dataSourceId": {
+	//       "description": "The data stream ID of the data source to delete.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "userId": {
+	//       "description": "Retrieve a data source for the person identified. Use me to indicate the authenticated user. Only me is supported at this time.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{userId}/dataSources/{dataSourceId}",
 	//   "response": {
 	//     "$ref": "DataSource"
 	//   },

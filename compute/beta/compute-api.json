@@ -1,10 +1,10 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/5_F3NUaJGybCPvcgUPfyjslbvzg\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/R-vbdAQD5gkhRcc7fia4l2xgTQY\"",
  "discoveryVersion": "v1",
- "id": "compute:v1",
+ "id": "compute:beta",
  "name": "compute",
- "version": "v1",
+ "version": "beta",
  "revision": "20141112",
  "title": "Compute Engine API",
  "description": "API for the Google Compute Engine service.",
@@ -16,10 +16,10 @@
  },
  "documentationLink": "https://developers.google.com/compute/docs/reference/latest/",
  "protocol": "rest",
- "baseUrl": "https://www.googleapis.com/compute/v1/projects/",
- "basePath": "/compute/v1/projects/",
+ "baseUrl": "https://www.googleapis.com/compute/beta/projects/",
+ "basePath": "/compute/beta/projects/",
  "rootUrl": "https://www.googleapis.com/",
- "servicePath": "compute/v1/projects/",
+ "servicePath": "compute/beta/projects/",
  "batchPath": "batch",
  "parameters": {
   "alt": {
@@ -341,6 +341,10 @@
      "type": "string",
      "description": "Specifies a unique device name of your choice that is reflected into the /dev/ tree of a Linux operating system running within the instance. This name can be used to reference the device for mounting, resizing, and so on, from within the instance.\n\nIf not specified, the server chooses a default device name to apply to this disk, in the form persistent-disks-x, where x is a number assigned by Google Compute Engine. This field is only applicable for persistent disks."
     },
+    "diskMasterKey": {
+     "type": "string",
+     "description": "[Obsolete] Master key of the disk; required only if the disk already exists and is master key protected. If the disk is being created and a master key is provided, the newly created disk will be protected with this master key. Format: Random 256-bit key material encoded in base64."
+    },
     "index": {
      "type": "integer",
      "description": "Assigns a zero-based index to this disk, where 0 is reserved for the boot disk. For example, if you have many disks attached to an instance, each disk would have a unique index number. If not specified, the server will choose an appropriate value.",
@@ -422,6 +426,18 @@
      "description": "Specifies the size of the disk in base-2 GB.",
      "format": "int64"
     },
+    "diskStorageType": {
+     "type": "string",
+     "description": "Storage type of the disk.",
+     "enum": [
+      "HDD",
+      "SSD"
+     ],
+     "enumDescriptions": [
+      "",
+      ""
+     ]
+    },
     "diskType": {
      "type": "string",
      "description": "Specifies the disk type to use to create the instance. If not specified, the default is pd-standard, specified using the full URL. For example:\n\nhttps://www.googleapis.com/compute/v1/projects/project/zones/zone/diskTypes/pd-standard \n\nOther values include pd-ssd and local-ssd. If you define this field, you can provide either the full or partial URL. For example, the following are valid values:  \n- https://www.googleapis.com/compute/v1/projects/project/zones/zone/diskTypes/diskType \n- projects/project/zones/zone/diskTypes/diskType \n- zones/zone/diskTypes/diskType"
@@ -429,6 +445,10 @@
     "sourceImage": {
      "type": "string",
      "description": "A source image used to create the disk. You can provide a private (custom) image, and Compute Engine will use the corresponding image from your project. For example:\n\nglobal/images/my-private-image \n\nOr you can provide an image from a publicly-available project. For example, to use a Debian image from the debian-cloud project, make sure to include the project in the URL:\n\nprojects/debian-cloud/global/images/debian-7-wheezy-vYYYYMMDD \n\nwhere vYYYYMMDD is the image version. The fully-qualified URL will also work in both cases."
+    },
+    "sourceImageMasterKey": {
+     "type": "string",
+     "description": "[Obsolete] Master key of the source image; required only if the source image is master key protected. Format: Random 256-bit key material encoded in Base 64."
     }
    }
   },
@@ -538,9 +558,11 @@
     "protocol": {
      "type": "string",
      "enum": [
-      "HTTP"
+      "HTTP",
+      "HTTPS"
      ],
      "enumDescriptions": [
+      "",
       ""
      ]
     },
@@ -653,6 +675,10 @@
      "type": "string",
      "description": "An optional textual description of the resource; provided by the client when the resource is created."
     },
+    "diskMasterKey": {
+     "type": "string",
+     "description": "[Obsolete] Specifies the master key to protect the disk. When attempting to use a disk that is protected by a master key, you must provide the correct key, otherwise, the request will fail. Master keys do not protect access to metadata about the resource.\n\nIf you are setting a master key, the required key format is a random 256-bit string encoded in base64."
+    },
     "id": {
      "type": "string",
      "description": "[Output Only] Unique identifier for the resource; defined by the server.",
@@ -701,6 +727,10 @@
      "type": "string",
      "description": "The ID value of the image used to create this disk. This value identifies the exact image that was used to create this persistent disk. For example, if you created the persistent disk from an image that was later deleted and recreated under the same name, the source image ID would identify the exact version of the image that was used."
     },
+    "sourceImageMasterKey": {
+     "type": "string",
+     "description": "[Obsolete] Specifies the master key of the source image you are using. This key gives you access to the use the image and is required if the source image is master key protected.\n\nThe required key format is a random 256-bit string encoded in base64."
+    },
     "sourceSnapshot": {
      "type": "string",
      "description": "The source snapshot used to create this disk. You can provide this as a partial or full URL to the resource. For example, the following are valid values:  \n- https://www.googleapis.com/compute/v1/projects/project/global/snapshots/snapshot \n- projects/project/global/snapshots/snapshot \n- global/snapshots/snapshot"
@@ -708,6 +738,10 @@
     "sourceSnapshotId": {
      "type": "string",
      "description": "[Output Only] The unique ID of the snapshot used to create this disk. This value identifies the exact snapshot that was used to create this persistent disk. For example, if you created the persistent disk from a snapshot that was later deleted and recreated under the same name, the source snapshot ID would identify the exact version of the snapshot that was used."
+    },
+    "sourceSnapshotMasterKey": {
+     "type": "string",
+     "description": "[Obsolete] Specifies the master key of the source snapshot you are using. This gives you access to the use the snapshot and is required if the source snapshot is master key protected.\n\nThe required key format is a random 256-bit string encoded in base64."
     },
     "status": {
      "type": "string",
@@ -721,6 +755,18 @@
      "enumDescriptions": [
       "",
       "",
+      "",
+      ""
+     ]
+    },
+    "storageType": {
+     "type": "string",
+     "description": "[Deprecated] Storage type of the persistent disk.",
+     "enum": [
+      "HDD",
+      "SSD"
+     ],
+     "enumDescriptions": [
       "",
       ""
      ]
@@ -794,20 +840,6 @@
     "selfLink": {
      "type": "string",
      "description": "[Output Only] Server defined URL for this resource."
-    }
-   }
-  },
-  "DiskMoveRequest": {
-   "id": "DiskMoveRequest",
-   "type": "object",
-   "properties": {
-    "destinationZone": {
-     "type": "string",
-     "description": "The URL of the destination zone to move the disk to. This can be a full or partial URL. For example, the following are all valid URLs to a zone:  \n- https://www.googleapis.com/compute/v1/projects/project/zones/zone \n- projects/project/zones/zone \n- zones/zone"
-    },
-    "targetDisk": {
-     "type": "string",
-     "description": "The URL of the target disk to move. This can be a full or partial URL. For example, the following are all valid URLs to a disk:  \n- https://www.googleapis.com/compute/v1/projects/project/zones/zone/disks/disk \n- projects/project/zones/zone/disks/disk \n- zones/zone/disks/disk"
     }
    }
   },
@@ -1551,6 +1583,104 @@
     }
    }
   },
+  "HttpsHealthCheck": {
+   "id": "HttpsHealthCheck",
+   "type": "object",
+   "description": "An HttpsHealthCheck resource. This resource defines a template for how individual VMs should be checked for health, via HTTPS.",
+   "properties": {
+    "checkIntervalSec": {
+     "type": "integer",
+     "description": "How often (in seconds) to send a health check. The default value is 5 seconds.",
+     "format": "int32"
+    },
+    "creationTimestamp": {
+     "type": "string",
+     "description": "Creation timestamp in RFC3339 text format (output only)."
+    },
+    "description": {
+     "type": "string",
+     "description": "An optional textual description of the resource; provided by the client when the resource is created."
+    },
+    "healthyThreshold": {
+     "type": "integer",
+     "description": "A so-far unhealthy VM will be marked healthy after this many consecutive successes. The default value is 2.",
+     "format": "int32"
+    },
+    "host": {
+     "type": "string",
+     "description": "The value of the host header in the HTTPS health check request. If left empty (default value), the public IP on behalf of which this health check is performed will be used."
+    },
+    "id": {
+     "type": "string",
+     "description": "Unique identifier for the resource; defined by the server (output only).",
+     "format": "uint64"
+    },
+    "kind": {
+     "type": "string",
+     "description": "Type of the resource.",
+     "default": "compute#httpsHealthCheck"
+    },
+    "name": {
+     "type": "string",
+     "description": "Name of the resource; provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035.",
+     "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?"
+    },
+    "port": {
+     "type": "integer",
+     "description": "The TCP port number for the HTTPS health check request. The default value is 443.",
+     "format": "int32"
+    },
+    "requestPath": {
+     "type": "string",
+     "description": "The request path of the HTTPS health check request. The default value is \"/\"."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "Server defined URL for the resource (output only)."
+    },
+    "timeoutSec": {
+     "type": "integer",
+     "description": "How long (in seconds) to wait before claiming failure. The default value is 5 seconds. It is invalid for timeoutSec to have a greater value than checkIntervalSec.",
+     "format": "int32"
+    },
+    "unhealthyThreshold": {
+     "type": "integer",
+     "description": "A so-far healthy VM will be marked unhealthy after this many consecutive failures. The default value is 2.",
+     "format": "int32"
+    }
+   }
+  },
+  "HttpsHealthCheckList": {
+   "id": "HttpsHealthCheckList",
+   "type": "object",
+   "description": "Contains a list of HttpsHealthCheck resources.",
+   "properties": {
+    "id": {
+     "type": "string",
+     "description": "Unique identifier for the resource; defined by the server (output only)."
+    },
+    "items": {
+     "type": "array",
+     "description": "A list of HttpsHealthCheck resources.",
+     "items": {
+      "$ref": "HttpsHealthCheck"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Type of resource.",
+     "default": "compute#httpsHealthCheckList"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "A token used to continue a truncated list request (output only)."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "Server defined URL for this resource (output only)."
+    }
+   }
+  },
   "Image": {
    "id": "Image",
    "type": "object",
@@ -1582,6 +1712,10 @@
      "type": "string",
      "description": "[Output Only] Unique identifier for the resource; defined by the server.",
      "format": "uint64"
+    },
+    "imageMasterKey": {
+     "type": "string",
+     "description": "[Obsolete] Specifies the master key to protect this image. When attempting to use an image that is protected by a master key, you must provide the correct key, otherwise, the request will fail. Master keys do not protect access to metadata about the resource.\n\nIf you are setting a master key, the required key format is a random 256-bit string encoded in base64."
     },
     "kind": {
      "type": "string",
@@ -1646,6 +1780,10 @@
     "sourceDiskId": {
      "type": "string",
      "description": "The ID value of the disk used to create this image. This value may be used to determine whether the image was taken from the current or a previous instance of a given disk name."
+    },
+    "sourceDiskMasterKey": {
+     "type": "string",
+     "description": "[Obsolete] Specifies the master key of the source disk you are using. This field gives you access to the disk and is required if the source disk is master key protected. Format: Random 256-bit key material encoded in base64."
     },
     "sourceType": {
      "type": "string",
@@ -1875,20 +2013,6 @@
     "selfLink": {
      "type": "string",
      "description": "[Output Only] Server defined URL for this resource."
-    }
-   }
-  },
-  "InstanceMoveRequest": {
-   "id": "InstanceMoveRequest",
-   "type": "object",
-   "properties": {
-    "destinationZone": {
-     "type": "string",
-     "description": "The URL of the destination zone to move the instance to. This can be a full or partial URL. For example, the following are all valid URLs to a zone:  \n- https://www.googleapis.com/compute/v1/projects/project/zones/zone \n- projects/project/zones/zone \n- zones/zone"
-    },
-    "targetInstance": {
-     "type": "string",
-     "description": "The URL of the target instance to move. This can be a full or partial URL. For example, the following are all valid URLs to an instance:  \n- https://www.googleapis.com/compute/v1/projects/project/zones/zone/instances/instance \n- projects/project/zones/zone/instances/instance \n- zones/zone/instances/instance"
     }
    }
   },
@@ -2163,11 +2287,6 @@
      "description": "[Output Only] Unique identifier for the resource; defined by the server.",
      "format": "uint64"
     },
-    "imageSpaceGb": {
-     "type": "integer",
-     "description": "[Deprecated] This property is deprecated and will never be populated with any relevant values.",
-     "format": "int32"
-    },
     "kind": {
      "type": "string",
      "description": "Type of the resource.",
@@ -2192,20 +2311,6 @@
      "type": "string",
      "description": "[Output Only] Name of the resource.",
      "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?"
-    },
-    "scratchDisks": {
-     "type": "array",
-     "description": "[Output Only] List of extended scratch disks assigned to the instance.",
-     "items": {
-      "type": "object",
-      "properties": {
-       "diskGb": {
-        "type": "integer",
-        "description": "Size of the scratch disk, defined in GB.",
-        "format": "int32"
-       }
-      }
-     }
     },
     "selfLink": {
      "type": "string",
@@ -2968,9 +3073,13 @@
       "TARGET_HTTP_PROXIES",
       "TARGET_INSTANCES",
       "TARGET_POOLS",
-      "URL_MAPS"
+      "TARGET_VPN_GATEWAYS",
+      "URL_MAPS",
+      "VPN_TUNNELS"
      ],
      "enumDescriptions": [
+      "",
+      "",
       "",
       "",
       "",
@@ -3402,6 +3511,10 @@
      "type": "string",
      "description": "Server defined URL for the resource (output only)."
     },
+    "snapshotMasterKey": {
+     "type": "string",
+     "description": "[Obsolete] Master key to protect the snapshot. When attempting to use a master key protected snapshot, the key must be provided otherwise the request will fail. Master keys do not protect resource metadata. Format: Random 256-bit key material encoded in base64."
+    },
     "sourceDisk": {
      "type": "string",
      "description": "The source disk used to create this snapshot."
@@ -3409,6 +3522,10 @@
     "sourceDiskId": {
      "type": "string",
      "description": "The 'id' value of the disk used to create this snapshot. This value may be used to determine whether the snapshot was taken from the current or a previous instance of a given disk name."
+    },
+    "sourceDiskMasterKey": {
+     "type": "string",
+     "description": "[Obsolete] Master key of the source disk; required only if the source disk is master key protected. Format: Random 256-bit key material encoded in base64."
     },
     "status": {
      "type": "string",
@@ -3467,6 +3584,79 @@
      "type": "string",
      "description": "Type of resource.",
      "default": "compute#snapshotList"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "A token used to continue a truncated list request (output only)."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "Server defined URL for this resource (output only)."
+    }
+   }
+  },
+  "SslCertificate": {
+   "id": "SslCertificate",
+   "type": "object",
+   "description": "An SslCertificate resource. This resource provides a mechanism to upload an SSL key and certificate to global HTTPS loadbalancer to serve secure connections.",
+   "properties": {
+    "certificate": {
+     "type": "string",
+     "description": "A certificate. PEM format."
+    },
+    "creationTimestamp": {
+     "type": "string",
+     "description": "Creation timestamp in RFC3339 text format (output only)."
+    },
+    "description": {
+     "type": "string",
+     "description": "An optional textual description of the resource; provided by the client when the resource is created."
+    },
+    "id": {
+     "type": "string",
+     "description": "Unique identifier for the resource; defined by the server (output only).",
+     "format": "uint64"
+    },
+    "kind": {
+     "type": "string",
+     "description": "Type of the resource.",
+     "default": "compute#sslCertificate"
+    },
+    "name": {
+     "type": "string",
+     "description": "Name of the resource; provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035.",
+     "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?"
+    },
+    "privateKey": {
+     "type": "string",
+     "description": "A write-only private key. PEM format. Only insert RPCs will include this field. They must be sent over Stubby P+I only."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "Server defined URL for the resource (output only)."
+    }
+   }
+  },
+  "SslCertificateList": {
+   "id": "SslCertificateList",
+   "type": "object",
+   "description": "Contains a list of SslCertificate resources.",
+   "properties": {
+    "id": {
+     "type": "string",
+     "description": "Unique identifier for the resource; defined by the server (output only)."
+    },
+    "items": {
+     "type": "array",
+     "description": "A list of SslCertificate resources.",
+     "items": {
+      "$ref": "SslCertificate"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Type of resource.",
+     "default": "compute#sslCertificateList"
     },
     "nextPageToken": {
      "type": "string",
@@ -3555,6 +3745,82 @@
      "type": "string",
      "description": "Type of resource.",
      "default": "compute#targetHttpProxyList"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "A token used to continue a truncated list request (output only)."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "Server defined URL for this resource (output only)."
+    }
+   }
+  },
+  "TargetHttpsProxy": {
+   "id": "TargetHttpsProxy",
+   "type": "object",
+   "description": "A TargetHttpsProxy resource. This resource defines an HTTPS proxy.",
+   "properties": {
+    "creationTimestamp": {
+     "type": "string",
+     "description": "Creation timestamp in RFC3339 text format (output only)."
+    },
+    "description": {
+     "type": "string",
+     "description": "An optional textual description of the resource; provided by the client when the resource is created."
+    },
+    "id": {
+     "type": "string",
+     "description": "Unique identifier for the resource; defined by the server (output only).",
+     "format": "uint64"
+    },
+    "kind": {
+     "type": "string",
+     "description": "Type of the resource.",
+     "default": "compute#targetHttpsProxy"
+    },
+    "name": {
+     "type": "string",
+     "description": "Name of the resource; provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035.",
+     "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?"
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "Server defined URL for the resource (output only)."
+    },
+    "sslCertificates": {
+     "type": "array",
+     "description": "URLs to SslCertificate resources that are used to authenticate connections to Backends. Currently exactly one ssl certificate must be specified.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "urlMap": {
+     "type": "string",
+     "description": "URL to the UrlMap resource that defines the mapping from URL to the BackendService."
+    }
+   }
+  },
+  "TargetHttpsProxyList": {
+   "id": "TargetHttpsProxyList",
+   "type": "object",
+   "description": "Contains a list of TargetHttpsProxy resources.",
+   "properties": {
+    "id": {
+     "type": "string",
+     "description": "Unique identifier for the resource; defined by the server (output only)."
+    },
+    "items": {
+     "type": "array",
+     "description": "A list of TargetHttpsProxy resources.",
+     "items": {
+      "$ref": "TargetHttpsProxy"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Type of resource.",
+     "default": "compute#targetHttpsProxyList"
     },
     "nextPageToken": {
      "type": "string",
@@ -6884,6 +7150,222 @@
     }
    }
   },
+  "httpsHealthChecks": {
+   "methods": {
+    "delete": {
+     "id": "compute.httpsHealthChecks.delete",
+     "path": "{project}/global/httpsHealthChecks/{httpsHealthCheck}",
+     "httpMethod": "DELETE",
+     "description": "Deletes the specified HttpsHealthCheck resource.",
+     "parameters": {
+      "httpsHealthCheck": {
+       "type": "string",
+       "description": "Name of the HttpsHealthCheck resource to delete.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "httpsHealthCheck"
+     ],
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "get": {
+     "id": "compute.httpsHealthChecks.get",
+     "path": "{project}/global/httpsHealthChecks/{httpsHealthCheck}",
+     "httpMethod": "GET",
+     "description": "Returns the specified HttpsHealthCheck resource.",
+     "parameters": {
+      "httpsHealthCheck": {
+       "type": "string",
+       "description": "Name of the HttpsHealthCheck resource to return.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "httpsHealthCheck"
+     ],
+     "response": {
+      "$ref": "HttpsHealthCheck"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "insert": {
+     "id": "compute.httpsHealthChecks.insert",
+     "path": "{project}/global/httpsHealthChecks",
+     "httpMethod": "POST",
+     "description": "Creates a HttpsHealthCheck resource in the specified project using the data included in the request.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project"
+     ],
+     "request": {
+      "$ref": "HttpsHealthCheck"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "list": {
+     "id": "compute.httpsHealthChecks.list",
+     "path": "{project}/global/httpsHealthChecks",
+     "httpMethod": "GET",
+     "description": "Retrieves the list of HttpsHealthCheck resources available to the specified project.",
+     "parameters": {
+      "filter": {
+       "type": "string",
+       "description": "Optional. Filter expression for filtering listed resources.",
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "default": "500",
+       "format": "uint32",
+       "minimum": "0",
+       "maximum": "500",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+       "location": "query"
+      },
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project"
+     ],
+     "response": {
+      "$ref": "HttpsHealthCheckList"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "patch": {
+     "id": "compute.httpsHealthChecks.patch",
+     "path": "{project}/global/httpsHealthChecks/{httpsHealthCheck}",
+     "httpMethod": "PATCH",
+     "description": "Updates a HttpsHealthCheck resource in the specified project using the data included in the request. This method supports patch semantics.",
+     "parameters": {
+      "httpsHealthCheck": {
+       "type": "string",
+       "description": "Name of the HttpsHealthCheck resource to update.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "httpsHealthCheck"
+     ],
+     "request": {
+      "$ref": "HttpsHealthCheck"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "update": {
+     "id": "compute.httpsHealthChecks.update",
+     "path": "{project}/global/httpsHealthChecks/{httpsHealthCheck}",
+     "httpMethod": "PUT",
+     "description": "Updates a HttpsHealthCheck resource in the specified project using the data included in the request.",
+     "parameters": {
+      "httpsHealthCheck": {
+       "type": "string",
+       "description": "Name of the HttpsHealthCheck resource to update.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "httpsHealthCheck"
+     ],
+     "request": {
+      "$ref": "HttpsHealthCheck"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    }
+   }
+  },
   "images": {
    "methods": {
     "delete": {
@@ -8346,62 +8828,6 @@
       "https://www.googleapis.com/auth/compute.readonly"
      ]
     },
-    "moveDisk": {
-     "id": "compute.projects.moveDisk",
-     "path": "{project}/moveDisk",
-     "httpMethod": "POST",
-     "description": "Moves a persistent disk from one zone to another.",
-     "parameters": {
-      "project": {
-       "type": "string",
-       "description": "Project ID for this request.",
-       "required": true,
-       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
-       "location": "path"
-      }
-     },
-     "parameterOrder": [
-      "project"
-     ],
-     "request": {
-      "$ref": "DiskMoveRequest"
-     },
-     "response": {
-      "$ref": "Operation"
-     },
-     "scopes": [
-      "https://www.googleapis.com/auth/cloud-platform",
-      "https://www.googleapis.com/auth/compute"
-     ]
-    },
-    "moveInstance": {
-     "id": "compute.projects.moveInstance",
-     "path": "{project}/moveInstance",
-     "httpMethod": "POST",
-     "description": "Moves an instance and its attached persistent disks from one zone to another.",
-     "parameters": {
-      "project": {
-       "type": "string",
-       "description": "Project ID for this request.",
-       "required": true,
-       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
-       "location": "path"
-      }
-     },
-     "parameterOrder": [
-      "project"
-     ],
-     "request": {
-      "$ref": "InstanceMoveRequest"
-     },
-     "response": {
-      "$ref": "Operation"
-     },
-     "scopes": [
-      "https://www.googleapis.com/auth/cloud-platform",
-      "https://www.googleapis.com/auth/compute"
-     ]
-    },
     "setCommonInstanceMetadata": {
      "id": "compute.projects.setCommonInstanceMetadata",
      "path": "{project}/setCommonInstanceMetadata",
@@ -8455,6 +8881,36 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/devstorage.full_control",
+      "https://www.googleapis.com/auth/devstorage.read_only",
+      "https://www.googleapis.com/auth/devstorage.read_write"
+     ]
+    },
+    "setUsageExportCloudStorageBucket": {
+     "id": "compute.projects.setUsageExportCloudStorageBucket",
+     "path": "{project}/setUsageExportCloudStorageBucket",
+     "httpMethod": "POST",
+     "description": "[Deprecated] Use setUsageExportBucket instead.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project"
+     ],
+     "request": {
+      "$ref": "UsageExportLocation"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/devstorage.full_control",
       "https://www.googleapis.com/auth/devstorage.read_only",
@@ -8943,6 +9399,150 @@
     }
    }
   },
+  "sslCertificates": {
+   "methods": {
+    "delete": {
+     "id": "compute.sslCertificates.delete",
+     "path": "{project}/global/sslCertificates/{sslCertificate}",
+     "httpMethod": "DELETE",
+     "description": "Deletes the specified SslCertificate resource.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "sslCertificate": {
+       "type": "string",
+       "description": "Name of the SslCertificate resource to delete.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "sslCertificate"
+     ],
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "get": {
+     "id": "compute.sslCertificates.get",
+     "path": "{project}/global/sslCertificates/{sslCertificate}",
+     "httpMethod": "GET",
+     "description": "Returns the specified SslCertificate resource.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "sslCertificate": {
+       "type": "string",
+       "description": "Name of the SslCertificate resource to return.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "sslCertificate"
+     ],
+     "response": {
+      "$ref": "SslCertificate"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "insert": {
+     "id": "compute.sslCertificates.insert",
+     "path": "{project}/global/sslCertificates",
+     "httpMethod": "POST",
+     "description": "Creates a SslCertificate resource in the specified project using the data included in the request.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project"
+     ],
+     "request": {
+      "$ref": "SslCertificate"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "list": {
+     "id": "compute.sslCertificates.list",
+     "path": "{project}/global/sslCertificates",
+     "httpMethod": "GET",
+     "description": "Retrieves the list of SslCertificate resources available to the specified project.",
+     "parameters": {
+      "filter": {
+       "type": "string",
+       "description": "Optional. Filter expression for filtering listed resources.",
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "default": "500",
+       "format": "uint32",
+       "minimum": "0",
+       "maximum": "500",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+       "location": "query"
+      },
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project"
+     ],
+     "response": {
+      "$ref": "SslCertificateList"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    }
+   }
+  },
   "targetHttpProxies": {
    "methods": {
     "delete": {
@@ -9119,6 +9719,150 @@
      "scopes": [
       "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute"
+     ]
+    }
+   }
+  },
+  "targetHttpsProxies": {
+   "methods": {
+    "delete": {
+     "id": "compute.targetHttpsProxies.delete",
+     "path": "{project}/global/targetHttpsProxies/{targetHttpsProxy}",
+     "httpMethod": "DELETE",
+     "description": "Deletes the specified TargetHttpsProxy resource.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "targetHttpsProxy": {
+       "type": "string",
+       "description": "Name of the TargetHttpsProxy resource to delete.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "targetHttpsProxy"
+     ],
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "get": {
+     "id": "compute.targetHttpsProxies.get",
+     "path": "{project}/global/targetHttpsProxies/{targetHttpsProxy}",
+     "httpMethod": "GET",
+     "description": "Returns the specified TargetHttpsProxy resource.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "targetHttpsProxy": {
+       "type": "string",
+       "description": "Name of the TargetHttpsProxy resource to return.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "targetHttpsProxy"
+     ],
+     "response": {
+      "$ref": "TargetHttpsProxy"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "insert": {
+     "id": "compute.targetHttpsProxies.insert",
+     "path": "{project}/global/targetHttpsProxies",
+     "httpMethod": "POST",
+     "description": "Creates a TargetHttpsProxy resource in the specified project using the data included in the request.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project"
+     ],
+     "request": {
+      "$ref": "TargetHttpsProxy"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "list": {
+     "id": "compute.targetHttpsProxies.list",
+     "path": "{project}/global/targetHttpsProxies",
+     "httpMethod": "GET",
+     "description": "Retrieves the list of TargetHttpsProxy resources available to the specified project.",
+     "parameters": {
+      "filter": {
+       "type": "string",
+       "description": "Optional. Filter expression for filtering listed resources.",
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "default": "500",
+       "format": "uint32",
+       "minimum": "0",
+       "maximum": "500",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+       "location": "query"
+      },
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project"
+     ],
+     "response": {
+      "$ref": "TargetHttpsProxyList"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
      ]
     }
    }

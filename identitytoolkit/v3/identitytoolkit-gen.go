@@ -130,6 +130,18 @@ type GetOobConfirmationCodeResponse struct {
 	OobCode string `json:"oobCode,omitempty"`
 }
 
+type GetRecaptchaParamResponse struct {
+	// Kind: The fixed string "identitytoolkit#GetRecaptchaParamResponse".
+	Kind string `json:"kind,omitempty"`
+
+	// RecaptchaSiteKey: Site key registered at recaptcha.
+	RecaptchaSiteKey string `json:"recaptchaSiteKey,omitempty"`
+
+	// RecaptchaStoken: The stoken field for the recaptcha widget, used to
+	// request captcha challenge.
+	RecaptchaStoken string `json:"recaptchaStoken,omitempty"`
+}
+
 type IdentitytoolkitRelyingpartyCreateAuthUriRequest struct {
 	// AppId: The app ID of the mobile app, base64(CERT_SHA1):PACKAGE_NAME
 	// for Android, BUNDLE_ID for iOS.
@@ -148,6 +160,14 @@ type IdentitytoolkitRelyingpartyCreateAuthUriRequest struct {
 
 	// Identifier: The email or federated ID of the user.
 	Identifier string `json:"identifier,omitempty"`
+
+	// OauthConsumerKey: The developer's consumer key for OpenId OAuth
+	// Extension
+	OauthConsumerKey string `json:"oauthConsumerKey,omitempty"`
+
+	// OauthScope: Additional oauth scopes, beyond the basid user profile,
+	// that the user would be prompted to grant
+	OauthScope string `json:"oauthScope,omitempty"`
 
 	// OpenidRealm: Optional realm for OpenID protocol. The sub string
 	// "scheme://domain:port" of the param "continueUri" is used if this is
@@ -270,6 +290,9 @@ type IdentitytoolkitRelyingpartyVerifyAssertionRequest struct {
 	// RequestUri: The URI to which the IDP redirects the user back. It may
 	// contain federated login result params added by the IDP.
 	RequestUri string `json:"requestUri,omitempty"`
+
+	// ReturnRefreshToken: Whether to return refresh tokens.
+	ReturnRefreshToken bool `json:"returnRefreshToken,omitempty"`
 }
 
 type IdentitytoolkitRelyingpartyVerifyPasswordRequest struct {
@@ -485,6 +508,15 @@ type VerifyAssertionResponse struct {
 
 	// NickName: The nick name of the user.
 	NickName string `json:"nickName,omitempty"`
+
+	// OauthAccessToken: The OAuth2 access token.
+	OauthAccessToken string `json:"oauthAccessToken,omitempty"`
+
+	// OauthAuthorizationCode: The OAuth2 authorization code.
+	OauthAuthorizationCode string `json:"oauthAuthorizationCode,omitempty"`
+
+	// OauthExpireIn: The lifetime in seconds of the OAuth2 access token.
+	OauthExpireIn int64 `json:"oauthExpireIn,omitempty"`
 
 	// OauthRequestToken: The user approved request token for the OpenID
 	// OAuth extension.
@@ -940,6 +972,64 @@ func (c *RelyingpartyGetPublicKeysCall) Do() (map[string]string, error) {
 	//   "path": "publicKeys",
 	//   "response": {
 	//     "$ref": "IdentitytoolkitRelyingpartyGetPublicKeysResponse"
+	//   }
+	// }
+
+}
+
+// method id "identitytoolkit.relyingparty.getRecaptchaParam":
+
+type RelyingpartyGetRecaptchaParamCall struct {
+	s    *Service
+	opt_ map[string]interface{}
+}
+
+// GetRecaptchaParam: Get recaptcha secure param.
+func (r *RelyingpartyService) GetRecaptchaParam() *RelyingpartyGetRecaptchaParamCall {
+	c := &RelyingpartyGetRecaptchaParamCall{s: r.s, opt_: make(map[string]interface{})}
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RelyingpartyGetRecaptchaParamCall) Fields(s ...googleapi.Field) *RelyingpartyGetRecaptchaParamCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *RelyingpartyGetRecaptchaParamCall) Do() (*GetRecaptchaParamResponse, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "getRecaptchaParam")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *GetRecaptchaParamResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get recaptcha secure param.",
+	//   "httpMethod": "GET",
+	//   "id": "identitytoolkit.relyingparty.getRecaptchaParam",
+	//   "path": "getRecaptchaParam",
+	//   "response": {
+	//     "$ref": "GetRecaptchaParamResponse"
 	//   }
 	// }
 

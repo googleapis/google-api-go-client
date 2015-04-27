@@ -255,6 +255,14 @@ func panicf(format string, args ...interface{}) {
 	panic(fmt.Sprintf(format, args...))
 }
 
+func getVersionPath(version string) string {
+	if version == "alpha" || version == "beta" {
+		return "v0." + version
+	} else {
+		return version
+	}
+}
+
 // namePool keeps track of used names and assigns free ones based on a
 // preferred name
 type namePool struct {
@@ -282,7 +290,7 @@ func (a *API) SourceDir() string {
 			*genDir = filepath.Join(paths[0], "src", "google.golang.org", "api")
 		}
 	}
-	return filepath.Join(*genDir, a.Package(), a.Version)
+	return filepath.Join(*genDir, a.Package(), getVersionPath(a.Version))
 }
 
 func (a *API) DiscoveryURL() string {

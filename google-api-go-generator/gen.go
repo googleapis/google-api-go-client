@@ -261,6 +261,22 @@ type namePool struct {
 	m map[string]bool // lazily initialized
 }
 
+// renameVersion conditionally rewrites the provided version such
+// that the final path component of the import path doesn't look
+// like a Go identifier. This keeps the consistency that import paths
+// for the generated Go packages look like:
+//     google.golang.org/api/NAME/v<version>
+// and have package NAME.
+// See https://github.com/google/google-api-go-client/issues/78
+func renameVersion(version string) string {
+	// TODO: Add support for mapping hierarchical APIs (see bug for details).
+	if version == "alpha" || version == "beta" {
+		return "v0." + version
+	} else {
+		return version
+	}
+}
+
 func (p *namePool) Get(preferred string) string {
 	if p.m == nil {
 		p.m = make(map[string]bool)
@@ -282,7 +298,7 @@ func (a *API) SourceDir() string {
 			*genDir = filepath.Join(paths[0], "src", "google.golang.org", "api")
 		}
 	}
-	return filepath.Join(*genDir, a.Package(), a.Version)
+	return filepath.Join(*genDir, a.Package(), renameVersion(a.Version))
 }
 
 func (a *API) DiscoveryURL() string {
@@ -302,7 +318,7 @@ func (a *API) Package() string {
 }
 
 func (a *API) Target() string {
-	return fmt.Sprintf("google.golang.org/api/%s/%s", a.Package(), a.Version)
+	return fmt.Sprintf("google.golang.org/api/%s/%s", a.Package(), renameVersion(a.Version))
 }
 
 // GetName returns a free top-level function/type identifier in the package.

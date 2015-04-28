@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5034ce65_b1aeeae5",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-04-28T18:57:13Z",
+      "side": 1,
+      "message": "rename this to \"func renameVersion\".\n\nIt has nothing to do with a path. Also, precede it with a little comment explaining it. You can link to the github bug as background.",
+      "revId": "4c306eadaa25d36d451dedfed1a4450c1e3fe261",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5034ce65_d1b36e4a",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-04-28T18:57:13Z",
+      "side": 1,
+      "message": "instead of doing this wherever a.Version is used, can\u0027t we just fix it once, where a.Version is populated?",
+      "revId": "4c306eadaa25d36d451dedfed1a4450c1e3fe261",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

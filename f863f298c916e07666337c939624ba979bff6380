@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5034ce65_dc306519",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-04-28T19:27:58Z",
+      "side": 1,
+      "message": "In Go complete sentence style:\n\n// rewriteVersion conditionally rewrites the provided version such\n// that the final path component of the import path doesn\u0027t look\n// like a Go identifier. This keeps the consistency that import paths\n// for the generated Go packages look like:\n//     google.golang.org/api/NAME/v\u003cversion\u003e\n// and have package NAME.\n// See https://github.com/google/google-api-go-client/issues/78",
+      "revId": "f863f298c916e07666337c939624ba979bff6380",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

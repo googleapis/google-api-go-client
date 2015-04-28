@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0f222e5_c7361492",
+        "filename": "computeaccounts/v0.alpha/computeaccounts-gen.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-04-28T18:43:53Z",
+      "side": 1,
+      "message": "this part is still wrong.",
+      "revId": "29afcec8dad451b0b6795a38145c020993f3d2db",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f0f222e5_672d283d",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-04-28T18:43:53Z",
+      "side": 1,
+      "message": "I think you want to fix it elsewhere to make the documentation also be correct.\n\nMaybe just fix the Version field wherever that\u0027s populated.",
+      "revId": "29afcec8dad451b0b6795a38145c020993f3d2db",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

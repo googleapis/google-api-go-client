@@ -22,6 +22,30 @@
       "revId": "2166b0c06add33c41941af1a7fdc4db647d4503c",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f0f222e5_d56b5aed",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 6
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-04-28T20:05:55Z",
+      "side": 1,
+      "message": "The documentation and name no longer work. And it\u0027s not a path. And there\u0027s no \"provided version\" anymore.\n\nThis is fine, but name it correctly. It sounds like it\u0027s PackageSuffix.\n\n  // PackageSuffix returns the part of the package name following \"google.golang.org/api/\".\n\nBut the mix of forward slashes and back slashes no longer works.  This uses filepath (which is backslashes on Windows) but it\u0027s used by Target, which only wants forward slashes, so would result in bogus docs/etc when run there.\n\nPlease just revert it to how I recommended in earlier versions with that naming and docs.  Just a func.",
+      "parentUuid": "f0f222e5_0ac9c1fa",
+      "range": {
+        "startLine": 311,
+        "startChar": 14,
+        "endLine": 311,
+        "endChar": 25
+      },
+      "revId": "2166b0c06add33c41941af1a7fdc4db647d4503c",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
     }
   ]
 }

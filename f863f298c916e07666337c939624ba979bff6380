@@ -16,6 +16,24 @@
       "revId": "f863f298c916e07666337c939624ba979bff6380",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f0f222e5_ea52fdba",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 5605
+      },
+      "writtenOn": "2015-04-28T19:35:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5034ce65_dc306519",
+      "revId": "f863f298c916e07666337c939624ba979bff6380",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
     }
   ]
 }

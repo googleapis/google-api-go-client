@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f0f222e5_2a492594",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 5605
+      },
+      "writtenOn": "2015-04-28T19:17:17Z",
+      "side": 1,
+      "message": "For the admin APIs that are also linked in the bug, this has to do not only with the version name, but also with adding another layer to the package path. Do you still feel this should be renamed?",
+      "parentUuid": "5034ce65_b1aeeae5",
+      "revId": "4c306eadaa25d36d451dedfed1a4450c1e3fe261",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5034ce65_d1b36e4a",
         "filename": "google-api-go-generator/gen.go",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2015-04-28T18:57:13Z",
       "side": 1,
       "message": "instead of doing this wherever a.Version is used, can\u0027t we just fix it once, where a.Version is populated?",
+      "revId": "4c306eadaa25d36d451dedfed1a4450c1e3fe261",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f0f222e5_0a3e61dd",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 5605
+      },
+      "writtenOn": "2015-04-28T19:17:17Z",
+      "side": 1,
+      "message": "Version is a field that is parsed from JSON. Modifying in may lead to confusion in any future uses (as it will not longer be related to the actual API version).",
+      "parentUuid": "5034ce65_d1b36e4a",
       "revId": "4c306eadaa25d36d451dedfed1a4450c1e3fe261",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false

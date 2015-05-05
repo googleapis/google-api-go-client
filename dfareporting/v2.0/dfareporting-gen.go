@@ -708,45 +708,37 @@ type Account struct {
 	// Acceptable values are:
 	// - "1" for USD
 	// - "2" for GBP
-	//
 	// - "3" for ESP
 	// - "4" for SEK
 	// - "5" for CAD
 	// - "6" for JPY
-	// - "7"
-	// for DEM
+	// - "7" for DEM
 	// - "8" for AUD
 	// - "9" for FRF
 	// - "10" for ITL
 	// - "11" for DKK
-	//
 	// - "12" for NOK
 	// - "13" for FIM
 	// - "14" for ZAR
 	// - "15" for IEP
-	// -
-	// "16" for NLG
+	// - "16" for NLG
 	// - "17" for EUR
 	// - "18" for KRW
 	// - "19" for TWD
-	// - "20"
-	// for SGD
+	// - "20" for SGD
 	// - "21" for CNY
 	// - "22" for HKD
 	// - "23" for NZD
-	// - "24" for
-	// MYR
+	// - "24" for MYR
 	// - "25" for BRL
 	// - "26" for PTE
 	// - "27" for MXP
 	// - "28" for CLP
-	//
 	// - "29" for TRY
 	// - "30" for ARS
 	// - "31" for PEN
 	// - "32" for ILS
-	// -
-	// "33" for CHF
+	// - "33" for CHF
 	// - "34" for VEF
 	// - "35" for COP
 	// - "36" for GTQ
@@ -767,26 +759,21 @@ type Account struct {
 
 	// Locale: Locale of this account.
 	// Acceptable values are:
-	// - "cs"
-	// (Czech)
+	// - "cs" (Czech)
 	// - "de" (German)
 	// - "en" (English)
-	// - "en-GB" (English United
-	// Kingdom)
+	// - "en-GB" (English United Kingdom)
 	// - "es" (Spanish)
 	// - "fr" (French)
 	// - "it" (Italian)
-	// - "ja"
-	// (Japanese)
+	// - "ja" (Japanese)
 	// - "ko" (Korean)
 	// - "pl" (Polish)
-	// - "pt-BR" (Portuguese
-	// Brazil)
+	// - "pt-BR" (Portuguese Brazil)
 	// - "ru" (Russian)
 	// - "sv" (Swedish)
 	// - "tr" (Turkish)
-	// -
-	// "zh-CN" (Chinese Simplified)
+	// - "zh-CN" (Chinese Simplified)
 	// - "zh-TW" (Chinese Traditional)
 	Locale string `json:"locale,omitempty"`
 
@@ -834,8 +821,7 @@ type AccountPermission struct {
 	//
 	// Possible values are:
 	// - "ACCOUNT_PROFILE_BASIC"
-	// -
-	// "ACCOUNT_PROFILE_STANDARD"
+	// - "ACCOUNT_PROFILE_STANDARD"
 	AccountProfiles []string `json:"accountProfiles,omitempty"`
 
 	// Id: ID of this account permission.
@@ -924,24 +910,19 @@ type AccountUserProfile struct {
 	// Acceptable values are:
 	// - "cs" (Czech)
 	// - "de" (German)
-	// -
-	// "en" (English)
+	// - "en" (English)
 	// - "en-GB" (English United Kingdom)
 	// - "es" (Spanish)
-	//
 	// - "fr" (French)
 	// - "it" (Italian)
 	// - "ja" (Japanese)
-	// - "ko"
-	// (Korean)
+	// - "ko" (Korean)
 	// - "pl" (Polish)
 	// - "pt-BR" (Portuguese Brazil)
-	// - "ru"
-	// (Russian)
+	// - "ru" (Russian)
 	// - "sv" (Swedish)
 	// - "tr" (Turkish)
-	// - "zh-CN" (Chinese
-	// Simplified)
+	// - "zh-CN" (Chinese Simplified)
 	// - "zh-TW" (Chinese Traditional)
 	Locale string `json:"locale,omitempty"`
 
@@ -1214,11 +1195,11 @@ type Advertiser struct {
 	// field can be set to another advertiser's floodlight configuration ID
 	// in order to share that advertiser's floodlight configuration with
 	// this advertiser, so long as:
-	// - This advertiser's original floodlight
-	// configuration is not already associated with floodlight activities or
-	// floodlight activity groups.
-	// - This advertiser's original floodlight
-	// configuration is not already shared with another advertiser.
+	// - This advertiser's original floodlight configuration is not already
+	// associated with floodlight activities or floodlight activity groups.
+	//
+	// - This advertiser's original floodlight configuration is not already
+	// shared with another advertiser.
 	FloodlightConfigurationId int64 `json:"floodlightConfigurationId,omitempty,string"`
 
 	// FloodlightConfigurationIdDimensionValue: Dimension value for the ID
@@ -1912,8 +1893,7 @@ type Creative struct {
 	// Acceptable values are:
 	// - "APP"
 	// - "APP_INTERSTITIAL"
-	// -
-	// "IN_STREAM_VIDEO"
+	// - "IN_STREAM_VIDEO"
 	// - "WEB"
 	// - "WEB_INTERSTITIAL"
 	Compatibility []string `json:"compatibility,omitempty"`
@@ -2264,28 +2244,25 @@ type CreativeAsset struct {
 	// Role: Role of the asset in relation to creative. Applicable to all
 	// but the following creative types: all REDIRECT and TRACKING_TEXT.
 	// This is a required field.
-	// PRIMARY applies to ENHANCED_BANNER,
-	// FLASH_INPAGE, HTML5_BANNER, IMAGE, IMAGE_GALLERY, all RICH_MEDIA
-	// (which may contain multiple primary assets), and all VPAID
+	// PRIMARY applies to ENHANCED_BANNER, FLASH_INPAGE, HTML5_BANNER,
+	// IMAGE, IMAGE_GALLERY, all RICH_MEDIA (which may contain multiple
+	// primary assets), and all VPAID creatives.
+	// BACKUP_IMAGE applies to ENHANCED_BANNER, FLASH_INPAGE, HTML5_BANNER,
+	// all RICH_MEDIA, and all VPAID creatives.
+	// ADDITIONAL_IMAGE and ADDITIONAL_FLASH apply to FLASH_INPAGE
 	// creatives.
-	// BACKUP_IMAGE applies to ENHANCED_BANNER, FLASH_INPAGE,
-	// HTML5_BANNER, all RICH_MEDIA, and all VPAID
+	// OTHER refers to assets from sources other than DCM, such as Studio
+	// uploaded assets, applicable to all RICH_MEDIA and all VPAID
 	// creatives.
-	// ADDITIONAL_IMAGE and ADDITIONAL_FLASH apply to
-	// FLASH_INPAGE creatives.
-	// OTHER refers to assets from sources other
-	// than DCM, such as Studio uploaded assets, applicable to all
-	// RICH_MEDIA and all VPAID creatives.
-	// PARENT_VIDEO refers to videos
-	// uploaded by the user in DCM and is applicable to INSTREAM_VIDEO and
-	// VPAID_LINEAR creatives.
-	// TRANSCODED_VIDEO refers to videos transcoded
-	// by DCM from PARENT_VIDEO assets and is applicable to INSTREAM_VIDEO
-	// and VPAID_LINEAR creatives.
-	// ALTERNATE_VIDEO refers to the DCM
-	// representation of child asset videos from Studio, and is applicable
-	// to VPAID_LINEAR creatives. These cannot be added or removed within
-	// DCM.
+	// PARENT_VIDEO refers to videos uploaded by the user in DCM and is
+	// applicable to INSTREAM_VIDEO and VPAID_LINEAR
+	// creatives.
+	// TRANSCODED_VIDEO refers to videos transcoded by DCM from PARENT_VIDEO
+	// assets and is applicable to INSTREAM_VIDEO and VPAID_LINEAR
+	// creatives.
+	// ALTERNATE_VIDEO refers to the DCM representation of child asset
+	// videos from Studio, and is applicable to VPAID_LINEAR creatives.
+	// These cannot be added or removed within DCM.
 	// For VPAID_LINEAR creatives, PARENT_VIDEO, TRANSCODED_VIDEO and
 	// ALTERNATE_VIDEO assets that are marked active serve as backup in case
 	// the VPAID creative cannot be served. Only PARENT_VIDEO assets can be
@@ -2388,35 +2365,26 @@ type CreativeAssetMetadata struct {
 	//
 	// Possible values are:
 	// - "CLICK_TAG_NON_TOP_LEVEL"
-	// -
-	// "CLICK_TAG_MISSING"
+	// - "CLICK_TAG_MISSING"
 	// - "CLICK_TAG_MORE_THAN_ONE"
-	// -
-	// "CLICK_TAG_INVALID"
+	// - "CLICK_TAG_INVALID"
 	// - "ORPHANED_ASSET"
 	// - "PRIMARY_HTML_MISSING"
-	// -
-	// "EXTERNAL_FILE_REFERENCED"
+	// - "EXTERNAL_FILE_REFERENCED"
 	// - "MRAID_REFERENCED"
-	// -
-	// "ADMOB_REFERENCED"
+	// - "ADMOB_REFERENCED"
 	// - "FILE_TYPE_INVALID"
 	// - "ZIP_INVALID"
-	// -
-	// "LINKED_FILE_NOT_FOUND"
+	// - "LINKED_FILE_NOT_FOUND"
 	// - "MAX_FLASH_VERSION_11"
-	// -
-	// "NOT_SSL_COMPLIANT"
+	// - "NOT_SSL_COMPLIANT"
 	// - "FILE_DETAIL_EMPTY"
 	// - "ASSET_INVALID"
-	// -
-	// "GWD_PROPERTIES_INVALID"
+	// - "GWD_PROPERTIES_INVALID"
 	// - "ENABLER_UNSUPPORTED_METHOD_DCM"
-	// -
-	// "ASSET_FORMAT_UNSUPPORTED_DCM"
+	// - "ASSET_FORMAT_UNSUPPORTED_DCM"
 	// - "COMPONENT_UNSUPPORTED_DCM"
-	// -
-	// "HTML5_FEATURE_UNSUPPORTED' "
+	// - "HTML5_FEATURE_UNSUPPORTED' "
 	WarnedValidationRules []string `json:"warnedValidationRules,omitempty"`
 }
 
@@ -2458,22 +2426,17 @@ type CreativeAssignment struct {
 
 	// RichMediaExitOverrides: Rich media exit overrides for this creative
 	// assignment.
-	// Applicable when the creative type is any of the
-	// following:
+	// Applicable when the creative type is any of the following:
 	// - RICH_MEDIA_INPAGE
 	// - RICH_MEDIA_INPAGE_FLOATING
-	// -
-	// RICH_MEDIA_IM_EXPAND
+	// - RICH_MEDIA_IM_EXPAND
 	// - RICH_MEDIA_EXPANDING
-	// -
-	// RICH_MEDIA_INTERSTITIAL_FLOAT
+	// - RICH_MEDIA_INTERSTITIAL_FLOAT
 	// - RICH_MEDIA_MOBILE_IN_APP
-	// -
-	// RICH_MEDIA_MULTI_FLOATING
+	// - RICH_MEDIA_MULTI_FLOATING
 	// - RICH_MEDIA_PEEL_DOWN
 	// - ADVANCED_BANNER
-	// -
-	// VPAID_LINEAR
+	// - VPAID_LINEAR
 	// - VPAID_NON_LINEAR
 	RichMediaExitOverrides []*RichMediaExitOverride `json:"richMediaExitOverrides,omitempty"`
 
@@ -2790,14 +2753,12 @@ type DateRange struct {
 type DayPartTargeting struct {
 	// DaysOfWeek: Days of the week when the ad will serve.
 	//
-	// Acceptable
-	// values are:
+	// Acceptable values are:
 	// - "SUNDAY"
 	// - "MONDAY"
 	// - "TUESDAY"
 	// - "WEDNESDAY"
-	// -
-	// "THURSDAY"
+	// - "THURSDAY"
 	// - "FRIDAY"
 	// - "SATURDAY"
 	DaysOfWeek []string `json:"daysOfWeek,omitempty"`
@@ -2968,50 +2929,41 @@ type DirectorySite struct {
 
 	// CurrencyId: Currency ID of this directory site.
 	// Possible values are:
-	//
 	// - "1" for USD
 	// - "2" for GBP
 	// - "3" for ESP
 	// - "4" for SEK
-	// - "5"
-	// for CAD
+	// - "5" for CAD
 	// - "6" for JPY
 	// - "7" for DEM
 	// - "8" for AUD
 	// - "9" for FRF
-	//
 	// - "10" for ITL
 	// - "11" for DKK
 	// - "12" for NOK
 	// - "13" for FIM
-	// -
-	// "14" for ZAR
+	// - "14" for ZAR
 	// - "15" for IEP
 	// - "16" for NLG
 	// - "17" for EUR
-	// - "18"
-	// for KRW
+	// - "18" for KRW
 	// - "19" for TWD
 	// - "20" for SGD
 	// - "21" for CNY
-	// - "22" for
-	// HKD
+	// - "22" for HKD
 	// - "23" for NZD
 	// - "24" for MYR
 	// - "25" for BRL
 	// - "26" for PTE
-	//
 	// - "27" for MXP
 	// - "28" for CLP
 	// - "29" for TRY
 	// - "30" for ARS
-	// -
-	// "31" for PEN
+	// - "31" for PEN
 	// - "32" for ILS
 	// - "33" for CHF
 	// - "34" for VEF
-	// - "35"
-	// for COP
+	// - "35" for COP
 	// - "36" for GTQ
 	CurrencyId int64 `json:"currencyId,omitempty,string"`
 
@@ -3028,12 +2980,10 @@ type DirectorySite struct {
 
 	// InpageTagFormats: Tag types for regular placements.
 	//
-	// Acceptable
-	// values are:
+	// Acceptable values are:
 	// - "STANDARD"
 	// - "IFRAME_JAVASCRIPT_INPAGE"
-	// -
-	// "INTERNAL_REDIRECT_INPAGE"
+	// - "INTERNAL_REDIRECT_INPAGE"
 	// - "JAVASCRIPT_INPAGE"
 	InpageTagFormats []string `json:"inpageTagFormats,omitempty"`
 
@@ -3041,11 +2991,9 @@ type DirectorySite struct {
 	// placements.
 	//
 	// Acceptable values are:
-	// -
-	// "IFRAME_JAVASCRIPT_INTERSTITIAL"
+	// - "IFRAME_JAVASCRIPT_INTERSTITIAL"
 	// - "INTERNAL_REDIRECT_INTERSTITIAL"
-	// -
-	// "JAVASCRIPT_INTERSTITIAL"
+	// - "JAVASCRIPT_INTERSTITIAL"
 	InterstitialTagFormats []string `json:"interstitialTagFormats,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -3449,8 +3397,7 @@ type FloodlightActivity struct {
 	// these can have a user defined type.
 	// Acceptable values are:
 	// - "U1"
-	// -
-	// "U2"
+	// - "U2"
 	// - "U3"
 	// - "U4"
 	// - "U5"
@@ -3459,8 +3406,7 @@ type FloodlightActivity struct {
 	// - "U8"
 	// - "U9"
 	// - "U10"
-	// -
-	// "U11"
+	// - "U11"
 	// - "U12"
 	// - "U13"
 	// - "U14"
@@ -3468,8 +3414,7 @@ type FloodlightActivity struct {
 	// - "U16"
 	// - "U17"
 	// - "U18"
-	// -
-	// "U19"
+	// - "U19"
 	// - "U20"
 	UserDefinedVariableTypes []string `json:"userDefinedVariableTypes,omitempty"`
 }
@@ -4171,27 +4116,18 @@ type Placement struct {
 	// TagFormats: Tag formats to generate for this placement. This field is
 	// required on insertion.
 	// Acceptable values are:
-	// -
-	// "PLACEMENT_TAG_STANDARD"
+	// - "PLACEMENT_TAG_STANDARD"
 	// - "PLACEMENT_TAG_IFRAME_JAVASCRIPT"
-	// -
-	// "PLACEMENT_TAG_IFRAME_ILAYER"
+	// - "PLACEMENT_TAG_IFRAME_ILAYER"
 	// - "PLACEMENT_TAG_INTERNAL_REDIRECT"
-	// -
-	// "PLACEMENT_TAG_JAVASCRIPT"
-	// -
-	// "PLACEMENT_TAG_INTERSTITIAL_IFRAME_JAVASCRIPT"
-	// -
-	// "PLACEMENT_TAG_INTERSTITIAL_INTERNAL_REDIRECT"
-	// -
-	// "PLACEMENT_TAG_INTERSTITIAL_JAVASCRIPT"
-	// -
-	// "PLACEMENT_TAG_CLICK_COMMANDS"
-	// -
-	// "PLACEMENT_TAG_INSTREAM_VIDEO_PREFETCH"
+	// - "PLACEMENT_TAG_JAVASCRIPT"
+	// - "PLACEMENT_TAG_INTERSTITIAL_IFRAME_JAVASCRIPT"
+	// - "PLACEMENT_TAG_INTERSTITIAL_INTERNAL_REDIRECT"
+	// - "PLACEMENT_TAG_INTERSTITIAL_JAVASCRIPT"
+	// - "PLACEMENT_TAG_CLICK_COMMANDS"
+	// - "PLACEMENT_TAG_INSTREAM_VIDEO_PREFETCH"
 	// - "PLACEMENT_TAG_TRACKING"
-	// -
-	// "PLACEMENT_TAG_TRACKING_IFRAME"
+	// - "PLACEMENT_TAG_TRACKING_IFRAME"
 	// - "PLACEMENT_TAG_TRACKING_JAVASCRIPT"
 	TagFormats []string `json:"tagFormats,omitempty"`
 
@@ -4730,8 +4666,8 @@ type ReportCriteria struct {
 
 	// DimensionFilters: The list of filters on which dimensions are
 	// filtered.
-	// Filters for different dimensions are ANDed, filters for the
-	// same dimension are grouped together and ORed.
+	// Filters for different dimensions are ANDed, filters for the same
+	// dimension are grouped together and ORed.
 	DimensionFilters []*DimensionValue `json:"dimensionFilters,omitempty"`
 
 	// Dimensions: The list of standard dimensions the report should
@@ -4792,8 +4728,8 @@ type ReportFloodlightCriteria struct {
 
 	// DimensionFilters: The list of filters on which dimensions are
 	// filtered.
-	// Filters for different dimensions are ANDed, filters for the
-	// same dimension are grouped together and ORed.
+	// Filters for different dimensions are ANDed, filters for the same
+	// dimension are grouped together and ORed.
 	DimensionFilters []*DimensionValue `json:"dimensionFilters,omitempty"`
 
 	// Dimensions: The list of dimensions the report should include.
@@ -4931,8 +4867,8 @@ type ReportReachCriteria struct {
 
 	// DimensionFilters: The list of filters on which dimensions are
 	// filtered.
-	// Filters for different dimensions are ANDed, filters for the
-	// same dimension are grouped together and ORed.
+	// Filters for different dimensions are ANDed, filters for the same
+	// dimension are grouped together and ORed.
 	DimensionFilters []*DimensionValue `json:"dimensionFilters,omitempty"`
 
 	// Dimensions: The list of dimensions the report should include.
@@ -4966,12 +4902,10 @@ type ReportSchedule struct {
 	ExpirationDate string `json:"expirationDate,omitempty"`
 
 	// Repeats: The interval for which the report is repeated. Note:
-	// -
-	// "DAILY" also requires field "every" to be set.
-	// - "WEEKLY" also
-	// requires fields "every" and "repeatsOnWeekDays" to be set.
-	// -
-	// "MONTHLY" also requires fields "every" and "runsOnDayOfMonth" to be
+	// - "DAILY" also requires field "every" to be set.
+	// - "WEEKLY" also requires fields "every" and "repeatsOnWeekDays" to be
+	// set.
+	// - "MONTHLY" also requires fields "every" and "runsOnDayOfMonth" to be
 	// set.
 	Repeats string `json:"repeats,omitempty"`
 
@@ -4982,11 +4916,10 @@ type ReportSchedule struct {
 	// RunsOnDayOfMonth: Enum to define for "MONTHLY" scheduled reports
 	// whether reports should be repeated on the same day of the month as
 	// "startDate" or the same day of the week of the month.
-	// Example: If
-	// 'startDate' is Monday, April 2nd 2012 (2012-04-02), "DAY_OF_MONTH"
-	// would run subsequent reports on the 2nd of every Month, and
-	// "WEEK_OF_MONTH" would run subsequent reports on the first Monday of
-	// the month.
+	// Example: If 'startDate' is Monday, April 2nd 2012 (2012-04-02),
+	// "DAY_OF_MONTH" would run subsequent reports on the 2nd of every
+	// Month, and "WEEK_OF_MONTH" would run subsequent reports on the first
+	// Monday of the month.
 	RunsOnDayOfMonth string `json:"runsOnDayOfMonth,omitempty"`
 
 	// StartDate: Start date of date range for which scheduled reports
@@ -5051,24 +4984,18 @@ type ReportsConfiguration struct {
 	// Acceptable values are:
 	//
 	// - "1" for "America/New_York"
-	// -
-	// "2" for "Europe/London"
+	// - "2" for "Europe/London"
 	// - "3" for "Europe/Paris"
-	// - "4" for
-	// "Africa/Johannesburg"
+	// - "4" for "Africa/Johannesburg"
 	// - "5" for "Asia/Jerusalem"
-	// - "6" for
-	// "Asia/Shanghai"
+	// - "6" for "Asia/Shanghai"
 	// - "7" for "Asia/Hong_Kong"
 	// - "8" for "Asia/Tokyo"
-	//
 	// - "9" for "Australia/Sydney"
 	// - "10" for "Asia/Dubai"
-	// - "11" for
-	// "America/Los_Angeles"
+	// - "11" for "America/Los_Angeles"
 	// - "12" for "Pacific/Auckland"
-	// - "13" for
-	// "America/Sao_Paulo"
+	// - "13" for "America/Sao_Paulo"
 	ReportGenerationTimeZoneId int64 `json:"reportGenerationTimeZoneId,omitempty,string"`
 }
 

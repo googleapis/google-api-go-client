@@ -340,8 +340,7 @@ type AccountShippingLocationGroup struct {
 	// PostalCodes: A postal code representing a city or a set of cities.
 	//
 	// - A single postal code (e.g., 12345)
-	// - A postal code prefix followed
-	// by a star (e.g., 1234*)
+	// - A postal code prefix followed by a star (e.g., 1234*)
 	PostalCodes []string `json:"postalCodes,omitempty"`
 }
 
@@ -535,11 +534,9 @@ type AccountUser struct {
 type AccountsAuthInfoResponse struct {
 	// AccountIdentifiers: The account identifiers corresponding to the
 	// authenticated user.
-	// - For an individual account: only the merchant ID
-	// is defined
+	// - For an individual account: only the merchant ID is defined
 	// - For an aggregator: only the aggregator ID is defined
-	// -
-	// For a subaccount of an MCA: both the merchant ID and the aggregator
+	// - For a subaccount of an MCA: both the merchant ID and the aggregator
 	// ID are defined.
 	AccountIdentifiers []*AccountIdentifier `json:"accountIdentifiers,omitempty"`
 

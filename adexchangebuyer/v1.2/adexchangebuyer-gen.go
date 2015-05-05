@@ -136,8 +136,7 @@ type AccountBidderLocation struct {
 	// - ASIA
 	// - EUROPE
 	// - US_EAST
-	// -
-	// US_WEST
+	// - US_WEST
 	Region string `json:"region,omitempty"`
 
 	// Url: The URL to which the Ad Exchange will send bid requests.

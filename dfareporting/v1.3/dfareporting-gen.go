@@ -226,20 +226,16 @@ type DateRange struct {
 	// - "TODAY"
 	// - "YESTERDAY"
 	// - "WEEK_TO_DATE"
-	//
 	// - "MONTH_TO_DATE"
 	// - "QUARTER_TO_DATE"
 	// - "YEAR_TO_DATE"
-	// -
-	// "PREVIOUS_WEEK"
+	// - "PREVIOUS_WEEK"
 	// - "PREVIOUS_MONTH"
 	// - "PREVIOUS_QUARTER"
-	// -
-	// "PREVIOUS_YEAR"
+	// - "PREVIOUS_YEAR"
 	// - "LAST_7_DAYS"
 	// - "LAST_30_DAYS"
 	// - "LAST_90_DAYS"
-	//
 	// - "LAST_365_DAYS"
 	// - "LAST_24_MONTHS"
 	RelativeDateRange string `json:"relativeDateRange,omitempty"`
@@ -288,12 +284,11 @@ type DimensionValue struct {
 	// filtering. One of:
 	// - EXACT (default if not specified)
 	// - CONTAINS
-	//
 	// - BEGINS_WITH
-	// - WILDCARD_EXPRESSION (allowing '*' as a placeholder
-	// for variable length character sequences, it can be escaped with a
-	// backslash.)  Note, only paid search dimensions ('dfa:paidSearch*')
-	// allow a matchType other than EXACT.
+	// - WILDCARD_EXPRESSION (allowing '*' as a placeholder for variable
+	// length character sequences, it can be escaped with a backslash.)
+	// Note, only paid search dimensions ('dfa:paidSearch*') allow a
+	// matchType other than EXACT.
 	MatchType string `json:"matchType,omitempty"`
 
 	// Value: The value of the dimension.
@@ -371,8 +366,7 @@ type File struct {
 
 	// Status: The status of the report file, one of:
 	// - "PROCESSING"
-	// -
-	// "REPORT_AVAILABLE"
+	// - "REPORT_AVAILABLE"
 	// - "FAILED"
 	// - "CANCELLED"
 	Status string `json:"status,omitempty"`
@@ -486,8 +480,7 @@ type ReachReportCompatibleFields struct {
 
 type Recipient struct {
 	// DeliveryType: The delivery type for the recipient, one of:
-	// -
-	// "ATTACHMENT"
+	// - "ATTACHMENT"
 	// - "LINK"
 	DeliveryType string `json:"deliveryType,omitempty"`
 
@@ -530,11 +523,10 @@ type Report struct {
 
 	// Format: The output format of the report, one of:
 	// - "CSV"
-	// - "EXCEL"
-	//  If not specified, default format is "CSV". Note that the actual
-	// format in the completed report file might differ if for instance the
-	// report's size exceeds the format's capabilities. "CSV" will then be
-	// the fallback format.
+	// - "EXCEL"  If not specified, default format is "CSV". Note that the
+	// actual format in the completed report file might differ if for
+	// instance the report's size exceeds the format's capabilities. "CSV"
+	// will then be the fallback format.
 	Format string `json:"format,omitempty"`
 
 	// Id: The unique ID identifying this report resource.
@@ -572,12 +564,10 @@ type Report struct {
 	// Type: The type of the report, one of:
 	// - STANDARD
 	// - REACH
-	// -
-	// ACTIVE_GRP
+	// - ACTIVE_GRP
 	// - PATH_TO_CONVERSION
 	// - FLOODLIGHT
-	// -
-	// CROSS_DIMENSION_REACH
+	// - CROSS_DIMENSION_REACH
 	Type string `json:"type,omitempty"`
 }
 
@@ -587,11 +577,11 @@ type ReportActiveGrpCriteria struct {
 
 	// DimensionFilters: The list of filters on which dimensions are
 	// filtered.
-	// Filters for different dimensions are ANDed, filters for the
-	// same dimension are grouped together and ORed.
-	// A valid active GRP
-	// report needs to have exactly one DimensionValue for the United States
-	// in addition to any advertiser or campaign dimension values.
+	// Filters for different dimensions are ANDed, filters for the same
+	// dimension are grouped together and ORed.
+	// A valid active GRP report needs to have exactly one DimensionValue
+	// for the United States in addition to any advertiser or campaign
+	// dimension values.
 	DimensionFilters []*DimensionValue `json:"dimensionFilters,omitempty"`
 
 	// Dimensions: The list of dimensions the report should include.
@@ -613,8 +603,8 @@ type ReportCriteria struct {
 
 	// DimensionFilters: The list of filters on which dimensions are
 	// filtered.
-	// Filters for different dimensions are ANDed, filters for the
-	// same dimension are grouped together and ORed.
+	// Filters for different dimensions are ANDed, filters for the same
+	// dimension are grouped together and ORed.
 	DimensionFilters []*DimensionValue `json:"dimensionFilters,omitempty"`
 
 	// Dimensions: The list of standard dimensions the report should
@@ -634,8 +624,7 @@ type ReportCrossDimensionReachCriteria struct {
 
 	// Dimension: The dimension option, one of:
 	// - "ADVERTISER"
-	// -
-	// "CAMPAIGN"
+	// - "CAMPAIGN"
 	// - "SITE_BY_ADVERTISER"
 	// - "SITE_BY_CAMPAIGN"
 	Dimension string `json:"dimension,omitempty"`
@@ -682,8 +671,8 @@ type ReportFloodlightCriteria struct {
 
 	// DimensionFilters: The list of filters on which dimensions are
 	// filtered.
-	// Filters for different dimensions are ANDed, filters for the
-	// same dimension are grouped together and ORed.
+	// Filters for different dimensions are ANDed, filters for the same
+	// dimension are grouped together and ORed.
 	DimensionFilters []*DimensionValue `json:"dimensionFilters,omitempty"`
 
 	// Dimensions: The list of dimensions the report should include.
@@ -821,8 +810,8 @@ type ReportReachCriteria struct {
 
 	// DimensionFilters: The list of filters on which dimensions are
 	// filtered.
-	// Filters for different dimensions are ANDed, filters for the
-	// same dimension are grouped together and ORed.
+	// Filters for different dimensions are ANDed, filters for the same
+	// dimension are grouped together and ORed.
 	DimensionFilters []*DimensionValue `json:"dimensionFilters,omitempty"`
 
 	// Dimensions: The list of dimensions the report should include.
@@ -851,14 +840,12 @@ type ReportSchedule struct {
 	ExpirationDate string `json:"expirationDate,omitempty"`
 
 	// Repeats: The interval for which the report is repeated, one of:
-	// -
-	// "DAILY", also requires field "every" to be set.
-	// - "WEEKLY", also
-	// requires fields "every" and "repeatsOnWeekDays" to be set.
-	// -
-	// "TWICE_A_MONTH"
-	// - "MONTHLY", also requires fields "every" and
-	// "runsOnDayOfMonth" to be set.
+	// - "DAILY", also requires field "every" to be set.
+	// - "WEEKLY", also requires fields "every" and "repeatsOnWeekDays" to
+	// be set.
+	// - "TWICE_A_MONTH"
+	// - "MONTHLY", also requires fields "every" and "runsOnDayOfMonth" to
+	// be set.
 	// - "QUARTERLY"
 	// - "YEARLY"
 	Repeats string `json:"repeats,omitempty"`
@@ -873,10 +860,10 @@ type ReportSchedule struct {
 	// are:
 	// - DAY_OF_MONTH
 	// - WEEK_OF_MONTH
-	// Example: If 'startDate' is
-	// Monday, April 2nd 2012 (2012-04-02), "DAY_OF_MONTH" would run
-	// subsequent reports on the 2nd of every Month, and "WEEK_OF_MONTH"
-	// would run subsequent reports on the first Monday of the month.
+	// Example: If 'startDate' is Monday, April 2nd 2012 (2012-04-02),
+	// "DAY_OF_MONTH" would run subsequent reports on the 2nd of every
+	// Month, and "WEEK_OF_MONTH" would run subsequent reports on the first
+	// Monday of the month.
 	RunsOnDayOfMonth string `json:"runsOnDayOfMonth,omitempty"`
 
 	// StartDate: Start date of date range for which scheduled reports

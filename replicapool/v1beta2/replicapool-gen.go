@@ -191,8 +191,7 @@ type InstanceGroupManagersAbandonInstancesRequest struct {
 type InstanceGroupManagersDeleteInstancesRequest struct {
 	// Instances: Names of instances to delete.
 	//
-	// Example: 'instance-foo',
-	// 'instance-bar'
+	// Example: 'instance-foo', 'instance-bar'
 	Instances []string `json:"instances,omitempty"`
 }
 

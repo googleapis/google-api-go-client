@@ -335,12 +335,12 @@ type DatabaseInstance struct {
 
 	// InstanceType: The instance type. This can be one of the
 	// following.
-	// CLOUD_SQL_INSTANCE: A Cloud SQL instance that is not
-	// replicating from a master.
-	// ON_PREMISES_INSTANCE: An instance running
-	// on the customer's premises.
-	// READ_REPLICA_INSTANCE: A Cloud SQL
-	// instance configured as a read-replica.
+	// CLOUD_SQL_INSTANCE: A Cloud SQL instance that is not replicating from
+	// a master.
+	// ON_PREMISES_INSTANCE: An instance running on the customer's
+	// premises.
+	// READ_REPLICA_INSTANCE: A Cloud SQL instance configured as a
+	// read-replica.
 	InstanceType string `json:"instanceType,omitempty"`
 
 	// IpAddresses: The assigned IP addresses for the instance.
@@ -398,14 +398,12 @@ type DatabaseInstance struct {
 
 	// State: The current serving state of the Cloud SQL instance. This can
 	// be one of the following.
-	// RUNNABLE: The instance is running, or is
-	// ready to run when accessed.
-	// SUSPENDED: The instance is not available,
-	// for example due to problems with billing.
-	// PENDING_CREATE: The
-	// instance is being created.
-	// MAINTENANCE: The instance is down for
-	// maintenance.
+	// RUNNABLE: The instance is running, or is ready to run when
+	// accessed.
+	// SUSPENDED: The instance is not available, for example due to problems
+	// with billing.
+	// PENDING_CREATE: The instance is being created.
+	// MAINTENANCE: The instance is down for maintenance.
 	// UNKNOWN_STATE: The state of the instance is unknown.
 	State string `json:"state,omitempty"`
 }
@@ -431,8 +429,7 @@ type ExportContext struct {
 	Databases []string `json:"databases,omitempty"`
 
 	// FileType: The file type for the specified uri.
-	// SQL: The file contains
-	// SQL statements.
+	// SQL: The file contains SQL statements.
 	// CSV: The file contains CSV data.
 	FileType string `json:"fileType,omitempty"`
 
@@ -507,8 +504,7 @@ type ImportContext struct {
 	Database string `json:"database,omitempty"`
 
 	// FileType: The file type for the specified uri.
-	// SQL: The file contains
-	// SQL statements.
+	// SQL: The file contains SQL statements.
 	// CSV: The file contains CSV data.
 	FileType string `json:"fileType,omitempty"`
 
@@ -777,10 +773,8 @@ type Settings struct {
 	// only when the instance state is RUNNABLE. This can be one of the
 	// following.
 	// ALWAYS: The instance should always be active.
-	// NEVER: The
-	// instance should never be activated.
-	// ON_DEMAND: The instance is
-	// activated upon receiving requests.
+	// NEVER: The instance should never be activated.
+	// ON_DEMAND: The instance is activated upon receiving requests.
 	ActivationPolicy string `json:"activationPolicy,omitempty"`
 
 	// AuthorizedGaeApplications: The App Engine app IDs that can access

@@ -219,16 +219,14 @@ type AdUnit struct {
 	Name string `json:"name,omitempty"`
 
 	// Status: Status of this ad unit. Possible values are:
-	// NEW: Indicates
-	// that the ad unit was created within the last seven days and does not
-	// yet have any activity associated with it.
+	// NEW: Indicates that the ad unit was created within the last seven
+	// days and does not yet have any activity associated with it.
 	//
-	// ACTIVE: Indicates that
-	// there has been activity on this ad unit in the last seven
-	// days.
+	// ACTIVE: Indicates that there has been activity on this ad unit in the
+	// last seven days.
 	//
-	// INACTIVE: Indicates that there has been no activity on this ad
-	// unit in the last seven days.
+	// INACTIVE: Indicates that there has been no activity on this ad unit
+	// in the last seven days.
 	Status string `json:"status,omitempty"`
 }
 

@@ -582,11 +582,10 @@ type AttachedDisk struct {
 	// within the instance. This name can be used to reference the device
 	// for mounting, resizing, and so on, from within the instance.
 	//
-	// If not
-	// specified, the server chooses a default device name to apply to this
-	// disk, in the form persistent-disks-x, where x is a number assigned by
-	// Google Compute Engine. This field is only applicable for persistent
-	// disks.
+	// If not specified, the server chooses a default device name to apply
+	// to this disk, in the form persistent-disks-x, where x is a number
+	// assigned by Google Compute Engine. This field is only applicable for
+	// persistent disks.
 	DeviceName string `json:"deviceName,omitempty"`
 
 	// Index: Assigns a zero-based index to this disk, where 0 is reserved
@@ -600,8 +599,8 @@ type AttachedDisk struct {
 	// initialization parameters to create boot disks or local SSDs attached
 	// to the new instance.
 	//
-	// This property is mutually exclusive with the
-	// source property; you can only define one or the other, but not both.
+	// This property is mutually exclusive with the source property; you can
+	// only define one or the other, but not both.
 	InitializeParams *AttachedDiskInitializeParams `json:"initializeParams,omitempty"`
 
 	Interface string `json:"interface,omitempty"`
@@ -644,15 +643,14 @@ type AttachedDiskInitializeParams struct {
 	// https://www.googleapis.com/compute/v1/projects/project/zones
 	// /zone/diskTypes/pd-standard
 	//
-	// Other values include pd-ssd and
-	// local-ssd. If you define this field, you can provide either the full
-	// or partial URL. For example, the following are valid values:
+	// Other values include pd-ssd and local-ssd. If you define this field,
+	// you can provide either the full or partial URL. For example, the
+	// following are valid values:
 	// -
 	// https://www.googleapis.com/compute/v1/projects/project/zones/zone/disk
 	// Types/diskType
 	// - projects/project/zones/zone/diskTypes/diskType
-	// -
-	// zones/zone/diskTypes/diskType
+	// - zones/zone/diskTypes/diskType
 	DiskType string `json:"diskType,omitempty"`
 
 	// SourceImage: A source image used to create the disk. You can provide
@@ -662,14 +660,12 @@ type AttachedDiskInitializeParams struct {
 	//
 	// global/images/my-private-image
 	//
-	// Or you can provide an
-	// image from a publicly-available project. For example, to use a Debian
-	// image from the debian-cloud project, make sure to include the project
-	// in the
+	// Or you can provide an image from a publicly-available project. For
+	// example, to use a Debian image from the debian-cloud project, make
+	// sure to include the project in the
 	// URL:
 	//
 	// projects/debian-cloud/global/images/debian-7-wheezy-vYYYYMMDD
-	//
 	//
 	// where vYYYYMMDD is the image version. The fully-qualified URL will
 	// also work in both cases.
@@ -862,30 +858,27 @@ type Disk struct {
 	// sourceSnapshot parameter, or specify it alone to create an empty
 	// persistent disk.
 	//
-	// If you specify this field along with sourceImage or
-	// sourceSnapshot, the value of sizeGb must not be less than the size of
-	// the sourceImage or the size of the snapshot.
+	// If you specify this field along with sourceImage or sourceSnapshot,
+	// the value of sizeGb must not be less than the size of the sourceImage
+	// or the size of the snapshot.
 	SizeGb int64 `json:"sizeGb,omitempty,string"`
 
 	// SourceImage: The source image used to create this disk. If the source
 	// image is deleted from the system, this field will not be set, even if
 	// an image with the same name has been re-created.
 	//
-	// When creating a
-	// disk, you can provide a private (custom) image using the following
-	// input, and Compute Engine will use the corresponding image from your
-	// project. For example:
+	// When creating a disk, you can provide a private (custom) image using
+	// the following input, and Compute Engine will use the corresponding
+	// image from your project. For example:
 	//
 	// global/images/my-private-image
 	//
-	// Or you can
-	// provide an image from a publicly-available project. For example, to
-	// use a Debian image from the debian-cloud project, make sure to
-	// include the project in the
+	// Or you can provide an image from a publicly-available project. For
+	// example, to use a Debian image from the debian-cloud project, make
+	// sure to include the project in the
 	// URL:
 	//
 	// projects/debian-cloud/global/images/debian-7-wheezy-vYYYYMMDD
-	//
 	//
 	// where vYYYYMMDD is the image version. The fully-qualified URL will
 	// also work in both cases.
@@ -906,8 +899,7 @@ type Disk struct {
 	// https://www.googleapis.com/compute/v1/projects/project/global/snapshot
 	// s/snapshot
 	// - projects/project/global/snapshots/snapshot
-	// -
-	// global/snapshots/snapshot
+	// - global/snapshots/snapshot
 	SourceSnapshot string `json:"sourceSnapshot,omitempty"`
 
 	// SourceSnapshotId: [Output Only] The unique ID of the snapshot used to
@@ -974,10 +966,9 @@ type DiskMoveRequest struct {
 	// DestinationZone: The URL of the destination zone to move the disk to.
 	// This can be a full or partial URL. For example, the following are all
 	// valid URLs to a zone:
-	// -
-	// https://www.googleapis.com/compute/v1/projects/project/zones/zone
-	// -
-	// projects/project/zones/zone
+	// - https://www.googleapis.com/compute/v1/projects/project/zones/zone
+	//
+	// - projects/project/zones/zone
 	// - zones/zone
 	DestinationZone string `json:"destinationZone,omitempty"`
 
@@ -988,8 +979,7 @@ type DiskMoveRequest struct {
 	// https://www.googleapis.com/compute/v1/projects/project/zones/zone/disk
 	// s/disk
 	// - projects/project/zones/zone/disks/disk
-	// -
-	// zones/zone/disks/disk
+	// - zones/zone/disks/disk
 	TargetDisk string `json:"targetDisk,omitempty"`
 }
 
@@ -1166,15 +1156,14 @@ type Firewall struct {
 	// a firewall rule. If not specified when creating a firewall rule, the
 	// default network is used:
 	// global/networks/default
-	// If you choose to
-	// specify this property, you can specify the network as a full or
-	// partial URL. For example, the following are all valid URLs:
+	// If you choose to specify this property, you can specify the network
+	// as a full or partial URL. For example, the following are all valid
+	// URLs:
 	// -
 	// https://www.googleapis.com/compute/v1/projects/myproject/global/networ
 	// ks/my-network
 	// - projects/myproject/global/networks/my-network
-	// -
-	// global/networks/default
+	// - global/networks/default
 	Network string `json:"network,omitempty"`
 
 	// SelfLink: [Output Only] Server defined URL for the resource.
@@ -1184,19 +1173,18 @@ type Firewall struct {
 	// expressed in CIDR format. One or both of sourceRanges and sourceTags
 	// may be set.
 	//
-	// If both properties are set, an inbound connection is
-	// allowed if the range or the tag of the source matches the
-	// sourceRanges OR matches the sourceTags property; the connection does
-	// not need to match both properties.
+	// If both properties are set, an inbound connection is allowed if the
+	// range or the tag of the source matches the sourceRanges OR matches
+	// the sourceTags property; the connection does not need to match both
+	// properties.
 	SourceRanges []string `json:"sourceRanges,omitempty"`
 
 	// SourceTags: A list of instance tags which this rule applies to. One
 	// or both of sourceRanges and sourceTags may be set.
 	//
-	// If both
-	// properties are set, an inbound connection is allowed if the range or
-	// the tag of the source matches the sourceRanges OR matches the
-	// sourceTags property; the connection does not need to match both
+	// If both properties are set, an inbound connection is allowed if the
+	// range or the tag of the source matches the sourceRanges OR matches
+	// the sourceTags property; the connection does not need to match both
 	// properties.
 	SourceTags []string `json:"sourceTags,omitempty"`
 
@@ -1219,8 +1207,7 @@ type FirewallAllowed struct {
 	// integer or a range. If not specified, connections through any port
 	// are allowed
 	//
-	// Example inputs include: ["22"], ["80","443"], and
-	// ["12345-12349"].
+	// Example inputs include: ["22"], ["80","443"], and ["12345-12349"].
 	Ports []string `json:"ports,omitempty"`
 }
 
@@ -1526,8 +1513,7 @@ type Image struct {
 	// https://www.googleapis.com/compute/v1/projects/project/zones/zone/disk
 	// /disk
 	// - projects/project/zones/zone/disk/disk
-	// -
-	// zones/zone/disks/disk
+	// - zones/zone/disks/disk
 	SourceDisk string `json:"sourceDisk,omitempty"`
 
 	// SourceDiskId: The ID value of the disk used to create this image.
@@ -1716,10 +1702,9 @@ type InstanceMoveRequest struct {
 	// DestinationZone: The URL of the destination zone to move the instance
 	// to. This can be a full or partial URL. For example, the following are
 	// all valid URLs to a zone:
-	// -
-	// https://www.googleapis.com/compute/v1/projects/project/zones/zone
-	// -
-	// projects/project/zones/zone
+	// - https://www.googleapis.com/compute/v1/projects/project/zones/zone
+	//
+	// - projects/project/zones/zone
 	// - zones/zone
 	DestinationZone string `json:"destinationZone,omitempty"`
 
@@ -1730,8 +1715,7 @@ type InstanceMoveRequest struct {
 	// https://www.googleapis.com/compute/v1/projects/project/zones/zone/inst
 	// ances/instance
 	// - projects/project/zones/zone/instances/instance
-	// -
-	// zones/zone/instances/instance
+	// - zones/zone/instances/instance
 	TargetInstance string `json:"targetInstance,omitempty"`
 }
 
@@ -2108,15 +2092,13 @@ type NetworkInterface struct {
 	//
 	// global/networks/default
 	//
-	// If you specify
-	// this property, you can specify the network as a full or partial URL.
-	// For example, the following are all valid URLs:
+	// If you specify this property, you can specify the network as a full
+	// or partial URL. For example, the following are all valid URLs:
 	// -
 	// https://www.googleapis.com/compute/v1/projects/project/global/networks
 	// /network
 	// - projects/project/global/networks/network
-	// -
-	// global/networks/default
+	// - global/networks/default
 	Network string `json:"network,omitempty"`
 
 	// NetworkIP: [Output Only] An optional IPV4 internal network address
@@ -2693,8 +2675,7 @@ type Tags struct {
 	// always provide an up-to-date fingerprint hash in order to update or
 	// change metadata.
 	//
-	// To see the latest fingerprint, make get() request
-	// to the instance.
+	// To see the latest fingerprint, make get() request to the instance.
 	Fingerprint string `json:"fingerprint,omitempty"`
 
 	// Items: An array of tags. Each tag must be 1-63 characters long, and
@@ -2865,12 +2846,11 @@ type TargetPool struct {
 	// in the primary pool is at or below 'failoverRatio', traffic arriving
 	// at the load-balanced IP will be directed to the backup pool.
 	//
-	// In case
-	// where 'failoverRatio' and 'backupPool' are not set, or all the VMs in
-	// the backup pool are unhealthy, the traffic will be directed back to
-	// the primary pool in the "force" mode, where traffic will be spread to
-	// the healthy VMs with the best effort, or to all VMs when no VM is
-	// healthy.
+	// In case where 'failoverRatio' and 'backupPool' are not set, or all
+	// the VMs in the backup pool are unhealthy, the traffic will be
+	// directed back to the primary pool in the "force" mode, where traffic
+	// will be spread to the healthy VMs with the best effort, or to all VMs
+	// when no VM is healthy.
 	BackupPool string `json:"backupPool,omitempty"`
 
 	// CreationTimestamp: Creation timestamp in RFC3339 text format (output
@@ -2886,17 +2866,16 @@ type TargetPool struct {
 	// not as a backup pool to some other target pool). The value of the
 	// field must be in [0, 1].
 	//
-	// If set, 'backupPool' must also be set. They
-	// together define the fallback behavior of the primary target pool: if
-	// the ratio of the healthy VMs in the primary pool is at or below this
-	// number, traffic arriving at the load-balanced IP will be directed to
-	// the backup pool.
+	// If set, 'backupPool' must also be set. They together define the
+	// fallback behavior of the primary target pool: if the ratio of the
+	// healthy VMs in the primary pool is at or below this number, traffic
+	// arriving at the load-balanced IP will be directed to the backup
+	// pool.
 	//
-	// In case where 'failoverRatio' is not set or all the
-	// VMs in the backup pool are unhealthy, the traffic will be directed
-	// back to the primary pool in the "force" mode, where traffic will be
-	// spread to the healthy VMs with the best effort, or to all VMs when no
-	// VM is healthy.
+	// In case where 'failoverRatio' is not set or all the VMs in the backup
+	// pool are unhealthy, the traffic will be directed back to the primary
+	// pool in the "force" mode, where traffic will be spread to the healthy
+	// VMs with the best effort, or to all VMs when no VM is healthy.
 	FailoverRatio float64 `json:"failoverRatio,omitempty"`
 
 	// HealthChecks: A list of URLs to the HttpHealthCheck resource. A
@@ -9219,8 +9198,8 @@ type ImagesDeprecateCall struct {
 
 // Deprecate: Sets the deprecation status of an image.
 //
-// If an empty
-// request body is given, clears the deprecation status instead.
+// If an empty request body is given, clears the deprecation status
+// instead.
 // For details, see https://cloud.google.com/compute/docs/reference/latest/images/deprecate
 func (r *ImagesService) Deprecate(project string, image string, deprecationstatus *DeprecationStatus) *ImagesDeprecateCall {
 	c := &ImagesDeprecateCall{s: r.s, opt_: make(map[string]interface{})}

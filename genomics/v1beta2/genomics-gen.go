@@ -1605,12 +1605,12 @@ type Transcript struct {
 	// this range with those of the exons, if any. If there are any exons,
 	// the codingSequence must start and end within them.
 	//
-	// Note that in some
-	// cases, the reference genome will not exactly match the observed mRNA
-	// transcript e.g. due to variance in the source genome from reference.
-	// In these cases, exon.frame will not necessarily match the expected
-	// reference reading frame and coding exon reference bases cannot
-	// necessarily be concatenated to produce the original transcript mRNA.
+	// Note that in some cases, the reference genome will not exactly match
+	// the observed mRNA transcript e.g. due to variance in the source
+	// genome from reference. In these cases, exon.frame will not
+	// necessarily match the expected reference reading frame and coding
+	// exon reference bases cannot necessarily be concatenated to produce
+	// the original transcript mRNA.
 	CodingSequence *TranscriptCodingSequence `json:"codingSequence,omitempty"`
 
 	// Exons: The exons that compose this transcript. This field should be
@@ -1618,20 +1618,18 @@ type Transcript struct {
 	// example prokaryotes.
 	//
 	//
-	// Introns are regions of the transcript that are
-	// not included in the spliced RNA product. Though not explicitly
-	// modeled here, intron ranges can be deduced; all regions of this
-	// transcript that are not exons are introns.
+	// Introns are regions of the transcript that are not included in the
+	// spliced RNA product. Though not explicitly modeled here, intron
+	// ranges can be deduced; all regions of this transcript that are not
+	// exons are introns.
 	//
 	//
-	// Exonic sequences do not
-	// necessarily code for a translational product (amino acids). Only the
-	// regions of exons bounded by the codingSequence correspond to coding
-	// DNA sequence.
+	// Exonic sequences do not necessarily code for a translational product
+	// (amino acids). Only the regions of exons bounded by the
+	// codingSequence correspond to coding DNA sequence.
 	//
 	//
-	// Exons are ordered by start position and may not
-	// overlap.
+	// Exons are ordered by start position and may not overlap.
 	Exons []*TranscriptExon `json:"exons,omitempty"`
 
 	// GeneId: The annotation ID of the gene from which this transcript is
@@ -1666,10 +1664,9 @@ type TranscriptExon struct {
 	// this offset is relative to the exon.start. For reverse strand
 	// annotations, this offset is relative to the exon.end-1.
 	//
-	// Unset if
-	// this exon does not intersect the coding sequence. Upon creation of a
-	// transcript, the frame must be populated for all or none of the coding
-	// exons.
+	// Unset if this exon does not intersect the coding sequence. Upon
+	// creation of a transcript, the frame must be populated for all or none
+	// of the coding exons.
 	Frame *Int32Value `json:"frame,omitempty"`
 
 	// Start: The start position of the exon on this annotation's reference
@@ -2283,12 +2280,11 @@ type AnnotationsBatchCreateCall struct {
 // batch positionally adjacent annotations together.
 //
 //
-// If the request
-// has a systemic issue, such as an attempt to write to an inaccessible
-// annotation set, the entire RPC will fail accordingly. For lesser data
-// issues, when possible an error will be isolated to the corresponding
-// batch entry in the response; the remaining well formed annotations
-// will be created normally.
+// If the request has a systemic issue, such as an attempt to write to
+// an inaccessible annotation set, the entire RPC will fail accordingly.
+// For lesser data issues, when possible an error will be isolated to
+// the corresponding batch entry in the response; the remaining well
+// formed annotations will be created normally.
 func (r *AnnotationsService) BatchCreate(batchcreateannotationsrequest *BatchCreateAnnotationsRequest) *AnnotationsBatchCreateCall {
 	c := &AnnotationsBatchCreateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.batchcreateannotationsrequest = batchcreateannotationsrequest
@@ -3144,8 +3140,7 @@ type CallsetsSearchCall struct {
 
 // Search: Gets a list of call sets matching the criteria.
 //
-// Implements
-// GlobalAllianceApi.searchCallSets.
+// Implements GlobalAllianceApi.searchCallSets.
 func (r *CallsetsService) Search(searchcallsetsrequest *SearchCallSetsRequest) *CallsetsSearchCall {
 	c := &CallsetsSearchCall{s: r.s, opt_: make(map[string]interface{})}
 	c.searchcallsetsrequest = searchcallsetsrequest
@@ -4404,11 +4399,11 @@ type ReadgroupsetsExportCall struct {
 // Export: Exports read group sets to a BAM file in Google Cloud
 // Storage.
 //
-// Note that currently there may be some differences between
-// exported BAM files and the original BAM file at the time of import.
-// In particular, comments in the input file header will not be
-// preserved, some custom tags will be converted to strings, and
-// original reference sequence order is not necessarily preserved.
+// Note that currently there may be some differences between exported
+// BAM files and the original BAM file at the time of import. In
+// particular, comments in the input file header will not be preserved,
+// some custom tags will be converted to strings, and original reference
+// sequence order is not necessarily preserved.
 func (r *ReadgroupsetsService) Export(exportreadgroupsetsrequest *ExportReadGroupSetsRequest) *ReadgroupsetsExportCall {
 	c := &ReadgroupsetsExportCall{s: r.s, opt_: make(map[string]interface{})}
 	c.exportreadgroupsetsrequest = exportreadgroupsetsrequest
@@ -4561,10 +4556,10 @@ type ReadgroupsetsImportCall struct {
 // Import: Creates read group sets by asynchronously importing the
 // provided information.
 //
-// Note that currently comments in the input file
-// header are not imported and some custom tags will be converted to
-// strings, rather than preserving tag types. The caller must have WRITE
-// permissions to the dataset.
+// Note that currently comments in the input file header are not
+// imported and some custom tags will be converted to strings, rather
+// than preserving tag types. The caller must have WRITE permissions to
+// the dataset.
 func (r *ReadgroupsetsService) Import(importreadgroupsetsrequest *ImportReadGroupSetsRequest) *ReadgroupsetsImportCall {
 	c := &ReadgroupsetsImportCall{s: r.s, opt_: make(map[string]interface{})}
 	c.importreadgroupsetsrequest = importreadgroupsetsrequest
@@ -4893,11 +4888,11 @@ type ReadgroupsetsCoveragebucketsListCall struct {
 // summarizes coverage information across its corresponding genomic
 // range.
 //
-// Coverage is defined as the number of reads which are aligned
-// to a given base in the reference sequence. Coverage buckets are
-// available at several precomputed bucket widths, enabling retrieval of
-// various coverage 'zoom levels'. The caller must have READ permissions
-// for the target read group set.
+// Coverage is defined as the number of reads which are aligned to a
+// given base in the reference sequence. Coverage buckets are available
+// at several precomputed bucket widths, enabling retrieval of various
+// coverage 'zoom levels'. The caller must have READ permissions for the
+// target read group set.
 func (r *ReadgroupsetsCoveragebucketsService) List(readGroupSetId string) *ReadgroupsetsCoveragebucketsListCall {
 	c := &ReadgroupsetsCoveragebucketsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.readGroupSetId = readGroupSetId
@@ -5084,16 +5079,15 @@ type ReadsSearchCall struct {
 // & position defined over the reference sequences to which the
 // requested read group sets are aligned.
 //
-// If a target positional range
-// is specified, search returns all reads whose alignment to the
-// reference genome overlap the range. A query which specifies only read
-// group set IDs yields all reads in those read group sets, including
-// unmapped reads.
+// If a target positional range is specified, search returns all reads
+// whose alignment to the reference genome overlap the range. A query
+// which specifies only read group set IDs yields all reads in those
+// read group sets, including unmapped reads.
 //
-// All reads returned (including reads on subsequent
-// pages) are ordered by genomic coordinate (reference sequence &
-// position). Reads with equivalent genomic coordinates are returned in
-// a deterministic order.
+// All reads returned (including reads on subsequent pages) are ordered
+// by genomic coordinate (reference sequence & position). Reads with
+// equivalent genomic coordinates are returned in a deterministic
+// order.
 //
 // Implements GlobalAllianceApi.searchReads.
 func (r *ReadsService) Search(searchreadsrequest *SearchReadsRequest) *ReadsSearchCall {
@@ -5470,8 +5464,7 @@ type ReferencesetsGetCall struct {
 
 // Get: Gets a reference set.
 //
-// Implements
-// GlobalAllianceApi.getReferenceSet.
+// Implements GlobalAllianceApi.getReferenceSet.
 func (r *ReferencesetsService) Get(referenceSetId string) *ReferencesetsGetCall {
 	c := &ReferencesetsGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.referenceSetId = referenceSetId
@@ -5629,13 +5622,12 @@ type StreamingReadstoreStreamreadsCall struct {
 // sequence & position defined over the reference sequences to which the
 // requested read group sets are aligned.
 //
-// If a target positional range
-// is specified, all reads whose alignment to the reference genome
-// overlap the range are returned.
+// If a target positional range is specified, all reads whose alignment
+// to the reference genome overlap the range are returned.
 //
-// All reads returned are ordered by
-// genomic coordinate (reference sequence & position). Reads with
-// equivalent genomic coordinates are returned in a deterministic order.
+// All reads returned are ordered by genomic coordinate (reference
+// sequence & position). Reads with equivalent genomic coordinates are
+// returned in a deterministic order.
 func (r *StreamingReadstoreService) Streamreads(streamreadsrequest *StreamReadsRequest) *StreamingReadstoreStreamreadsCall {
 	c := &StreamingReadstoreStreamreadsCall{s: r.s, opt_: make(map[string]interface{})}
 	c.streamreadsrequest = streamreadsrequest
@@ -5924,8 +5916,7 @@ type VariantsSearchCall struct {
 
 // Search: Gets a list of variants matching the criteria.
 //
-// Implements
-// GlobalAllianceApi.searchVariants.
+// Implements GlobalAllianceApi.searchVariants.
 func (r *VariantsService) Search(searchvariantsrequest *SearchVariantsRequest) *VariantsSearchCall {
 	c := &VariantsSearchCall{s: r.s, opt_: make(map[string]interface{})}
 	c.searchvariantsrequest = searchvariantsrequest
@@ -6326,14 +6317,14 @@ type VariantsetsImportVariantsCall struct {
 // ImportVariants: Creates variant data by asynchronously importing the
 // provided information.
 //
-// The variants for import will be merged with
-// any existing data and each other according to the behavior of
-// mergeVariants. In particular, this means for merged VCF variants that
-// have conflicting INFO fields, some data will be arbitrarily
-// discarded. As a special case, for single-sample VCF files, QUAL and
-// FILTER fields will be moved to the call level; these are sometimes
-// interpreted in a call-specific context. Imported VCF headers are
-// appended to the metadata already in a variant set.
+// The variants for import will be merged with any existing data and
+// each other according to the behavior of mergeVariants. In particular,
+// this means for merged VCF variants that have conflicting INFO fields,
+// some data will be arbitrarily discarded. As a special case, for
+// single-sample VCF files, QUAL and FILTER fields will be moved to the
+// call level; these are sometimes interpreted in a call-specific
+// context. Imported VCF headers are appended to the metadata already in
+// a variant set.
 func (r *VariantsetsService) ImportVariants(variantSetId string, importvariantsrequest *ImportVariantsRequest) *VariantsetsImportVariantsCall {
 	c := &VariantsetsImportVariantsCall{s: r.s, opt_: make(map[string]interface{})}
 	c.variantSetId = variantSetId
@@ -6426,9 +6417,8 @@ type VariantsetsMergeVariantsCall struct {
 // reference sequence, start, end, reference bases, and alternative
 // bases. If no such variant exists, a new one will be created.
 //
-// When
-// variants are merged, the call information from the new variant is
-// added to the existing variant, and other fields (such as key/value
+// When variants are merged, the call information from the new variant
+// is added to the existing variant, and other fields (such as key/value
 // pairs) are discarded.
 func (r *VariantsetsService) MergeVariants(variantSetId string, mergevariantsrequest *MergeVariantsRequest) *VariantsetsMergeVariantsCall {
 	c := &VariantsetsMergeVariantsCall{s: r.s, opt_: make(map[string]interface{})}

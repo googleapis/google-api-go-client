@@ -107,10 +107,8 @@ type LeaderboardConfigurationsService struct {
 type AchievementConfiguration struct {
 	// AchievementType: The type of the achievement.
 	// Possible values are:
-	//
 	// - "STANDARD" - Achievement is either locked or unlocked.
-	// -
-	// "INCREMENTAL" - Achievement is incremental.
+	// - "INCREMENTAL" - Achievement is incremental.
 	AchievementType string `json:"achievementType,omitempty"`
 
 	// Draft: The draft data of the achievement.
@@ -120,11 +118,9 @@ type AchievementConfiguration struct {
 	Id string `json:"id,omitempty"`
 
 	// InitialState: The initial state of the achievement.
-	// Possible values
-	// are:
+	// Possible values are:
 	// - "HIDDEN" - Achievement is hidden.
-	// - "REVEALED" -
-	// Achievement is revealed.
+	// - "REVEALED" - Achievement is revealed.
 	// - "UNLOCKED" - Achievement is unlocked.
 	InitialState string `json:"initialState,omitempty"`
 
@@ -218,14 +214,12 @@ type GamesNumberFormatConfiguration struct {
 
 	// NumberFormatType: The formatting for the number.
 	// Possible values are:
-	//
 	// - "NUMERIC" - Numbers are formatted to have no digits or a fixed
 	// number of digits after the decimal point according to locale. An
 	// optional custom unit can be added.
-	// - "TIME_DURATION" - Numbers are
-	// formatted to hours, minutes and seconds.
-	// - "CURRENCY" - Numbers are
-	// formatted to currency according to locale.
+	// - "TIME_DURATION" - Numbers are formatted to hours, minutes and
+	// seconds.
+	// - "CURRENCY" - Numbers are formatted to currency according to locale.
 	NumberFormatType string `json:"numberFormatType,omitempty"`
 
 	// Suffix: An optional suffix for the NUMERIC format type. These strings
@@ -270,10 +264,8 @@ type LeaderboardConfiguration struct {
 
 	// ScoreOrder: The type of the leaderboard.
 	// Possible values are:
-	// -
-	// "LARGER_IS_BETTER" - Larger scores posted are ranked higher.
-	// -
-	// "SMALLER_IS_BETTER" - Smaller scores posted are ranked higher.
+	// - "LARGER_IS_BETTER" - Larger scores posted are ranked higher.
+	// - "SMALLER_IS_BETTER" - Smaller scores posted are ranked higher.
 	ScoreOrder string `json:"scoreOrder,omitempty"`
 
 	// Token: The token for this resource.

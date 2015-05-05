@@ -286,8 +286,7 @@ func (c *ActivitiesListCall) PageToken(pageToken string) *ActivitiesListCall {
 
 // Source sets the optional parameter "source": The Google service from
 // which to return activities. Possible values of source are:
-// -
-// drive.google.com
+// - drive.google.com
 func (c *ActivitiesListCall) Source(source string) *ActivitiesListCall {
 	c.opt_["source"] = source
 	return c

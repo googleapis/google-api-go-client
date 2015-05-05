@@ -216,8 +216,8 @@ type QueryMetadata struct {
 	// KOREAN pl POLISH pt-BR BRAZILIAN_PORTUGUESE ru RUSSIAN tr TURKISH uk
 	// UKRAINIAN zh-CN CHINA_CHINESE zh-TW TAIWAN_CHINESE
 	//
-	// An locale string
-	// not in the list above will generate reports in English.
+	// An locale string not in the list above will generate reports in
+	// English.
 	Locale string `json:"locale,omitempty"`
 
 	// ReportCount: Number of reports that have been generated for the

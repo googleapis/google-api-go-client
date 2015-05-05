@@ -275,8 +275,7 @@ type DatabaseInstance struct {
 	// following.
 	// CLOUD_SQL_INSTANCE: Regular Cloud SQL
 	// instance.
-	// READ_REPLICA_INSTANCE: Cloud SQL instance acting as a
-	// read-replica.
+	// READ_REPLICA_INSTANCE: Cloud SQL instance acting as a read-replica.
 	InstanceType string `json:"instanceType,omitempty"`
 
 	// IpAddresses: The assigned IP addresses for the instance.
@@ -319,14 +318,12 @@ type DatabaseInstance struct {
 
 	// State: The current serving state of the Cloud SQL instance. This can
 	// be one of the following.
-	// RUNNABLE: The instance is running, or is
-	// ready to run when accessed.
-	// SUSPENDED: The instance is not available,
-	// for example due to problems with billing.
-	// PENDING_CREATE: The
-	// instance is being created.
-	// MAINTENANCE: The instance is down for
-	// maintenance.
+	// RUNNABLE: The instance is running, or is ready to run when
+	// accessed.
+	// SUSPENDED: The instance is not available, for example due to problems
+	// with billing.
+	// PENDING_CREATE: The instance is being created.
+	// MAINTENANCE: The instance is down for maintenance.
 	// UNKNOWN_STATE: The state of the instance is unknown.
 	State string `json:"state,omitempty"`
 }
@@ -670,10 +667,8 @@ type Settings struct {
 	// only when the instance state is RUNNABLE. This can be one of the
 	// following.
 	// ALWAYS: The instance should always be active.
-	// NEVER: The
-	// instance should never be activated.
-	// ON_DEMAND: The instance is
-	// activated upon receiving requests.
+	// NEVER: The instance should never be activated.
+	// ON_DEMAND: The instance is activated upon receiving requests.
 	ActivationPolicy string `json:"activationPolicy,omitempty"`
 
 	// AuthorizedGaeApplications: The App Engine app IDs that can access

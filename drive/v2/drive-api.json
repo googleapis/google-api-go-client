@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/DSBHJ9twjiBLRiS2dA7Be4AsBQk\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/q7G5QdguNPp3b-d0oF62ZLMOZNU\"",
  "discoveryVersion": "v1",
  "id": "drive:v2",
  "name": "drive",
  "version": "v2",
- "revision": "20150305",
+ "revision": "20150326",
  "title": "Drive API",
  "description": "The API to interact with Drive.",
  "ownerDomain": "google.com",
@@ -2461,13 +2461,8 @@
      "parameters": {
       "acknowledgeAbuse": {
        "type": "boolean",
-       "description": "Whether the user is acknowledging the risk of downloading known malware or other abusive files. Ignored unless alt=media is specified.",
+       "description": "Whether the user is acknowledging the risk of downloading known malware or other abusive files.",
        "default": "false",
-       "location": "query"
-      },
-      "alt": {
-       "type": "string",
-       "description": "Specifies the type of resource representation to return. The default is 'json' to return file metadata. Specifying 'media' will cause the file content to be returned.",
        "location": "query"
       },
       "fileId": {
@@ -2974,13 +2969,8 @@
      "parameters": {
       "acknowledgeAbuse": {
        "type": "boolean",
-       "description": "Whether the user is acknowledging the risk of downloading known malware or other abusive files. Ignored unless alt=media is specified.",
+       "description": "Whether the user is acknowledging the risk of downloading known malware or other abusive files.",
        "default": "false",
-       "location": "query"
-      },
-      "alt": {
-       "type": "string",
-       "description": "Specifies the type of resource representation to return. The default is 'json' to return file metadata. Specifying 'media' will cause the file content to be returned.",
        "location": "query"
       },
       "fileId": {

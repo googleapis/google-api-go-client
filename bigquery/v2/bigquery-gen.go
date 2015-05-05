@@ -1,6 +1,6 @@
 // Package bigquery provides access to the BigQuery API.
 //
-// See https://developers.google.com/bigquery/docs/overview
+// See https://cloud.google.com/bigquery/
 //
 // Usage example:
 //
@@ -601,13 +601,13 @@ type JobConfigurationLoad struct {
 	// valid.
 	MaxBadRecords int64 `json:"maxBadRecords,omitempty"`
 
-	// ProjectionFields: [Experimental] Names(case-sensitive) of properties
-	// to keep when importing data. If this is populated, only the specified
-	// properties will be imported for each entity. Currently, this is only
-	// supported for DATASTORE_BACKUP imports and only top level properties
-	// are supported. If any specified property is not found in the
-	// Datastore 'Kind' being imported, that is an error. Note: This feature
-	// is experimental and can change in the future.
+	// ProjectionFields: [Experimental] If sourceFormat is set to
+	// "DATASTORE_BACKUP", indicates which entity properties to load into
+	// BigQuery from a Cloud Datastore backup. Property names are case
+	// sensitive and must be top-level properties. If no properties are
+	// specified, BigQuery loads all properties. If any named property isn't
+	// found in the Cloud Datastore backup, an invalid error is returned in
+	// the job result.
 	ProjectionFields []string `json:"projectionFields,omitempty"`
 
 	// Quote: [Optional] The value that is used to quote data sections in a
@@ -687,9 +687,9 @@ type JobConfigurationQuery struct {
 	// to store the results.
 	DestinationTable *TableReference `json:"destinationTable,omitempty"`
 
-	// FlattenResults: [Experimental] Flattens all nested and repeated
-	// fields in the query results. The default value is true.
-	// allowLargeResults must be true if this is set to false.
+	// FlattenResults: [Optional] Flattens all nested and repeated fields in
+	// the query results. The default value is true. allowLargeResults must
+	// be true if this is set to false.
 	FlattenResults bool `json:"flattenResults,omitempty"`
 
 	// PreserveNulls: [Deprecated] This property is deprecated.
@@ -1531,9 +1531,8 @@ type DatasetsListCall struct {
 	opt_      map[string]interface{}
 }
 
-// List: Lists all the datasets in the specified project to which the
-// caller has read access; however, a project owner can list (but not
-// necessarily get) all datasets in his project.
+// List: Lists all datasets in the specified project to which you have
+// been granted the READER dataset role.
 func (r *DatasetsService) List(projectId string) *DatasetsListCall {
 	c := &DatasetsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectId = projectId
@@ -1606,7 +1605,7 @@ func (c *DatasetsListCall) Do() (*DatasetList, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists all the datasets in the specified project to which the caller has read access; however, a project owner can list (but not necessarily get) all datasets in his project.",
+	//   "description": "Lists all datasets in the specified project to which you have been granted the READER dataset role.",
 	//   "httpMethod": "GET",
 	//   "id": "bigquery.datasets.list",
 	//   "parameterOrder": [
@@ -1858,7 +1857,9 @@ type JobsGetCall struct {
 	opt_      map[string]interface{}
 }
 
-// Get: Retrieves the specified job by ID.
+// Get: Returns information about a specific job. Job information is
+// available for a six month period after creation. Requires that you're
+// the person who ran the job, or have the Is Owner project role.
 func (r *JobsService) Get(projectId string, jobId string) *JobsGetCall {
 	c := &JobsGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectId = projectId
@@ -1903,7 +1904,7 @@ func (c *JobsGetCall) Do() (*Job, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves the specified job by ID.",
+	//   "description": "Returns information about a specific job. Job information is available for a six month period after creation. Requires that you're the person who ran the job, or have the Is Owner project role.",
 	//   "httpMethod": "GET",
 	//   "id": "bigquery.jobs.get",
 	//   "parameterOrder": [
@@ -2102,7 +2103,8 @@ type JobsInsertCall struct {
 	protocol_  string
 }
 
-// Insert: Starts a new asynchronous job.
+// Insert: Starts a new asynchronous job. Requires the Can View project
+// role.
 func (r *JobsService) Insert(projectId string, job *Job) *JobsInsertCall {
 	c := &JobsInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectId = projectId
@@ -2223,7 +2225,7 @@ func (c *JobsInsertCall) Do() (*Job, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Starts a new asynchronous job.",
+	//   "description": "Starts a new asynchronous job. Requires the Can View project role.",
 	//   "httpMethod": "POST",
 	//   "id": "bigquery.jobs.insert",
 	//   "mediaUpload": {
@@ -2279,10 +2281,11 @@ type JobsListCall struct {
 	opt_      map[string]interface{}
 }
 
-// List: Lists all the Jobs in the specified project that were started
-// by the user. The job list returns in reverse chronological order of
-// when the jobs were created, starting with the most recent job
-// created.
+// List: Lists all jobs that you started in the specified project. The
+// job list returns in reverse chronological order of when the jobs were
+// created, starting with the most recent job created. Requires the Can
+// View project role, or the Is Owner project role if you set the
+// allUsers property.
 func (r *JobsService) List(projectId string) *JobsListCall {
 	c := &JobsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectId = projectId
@@ -2375,7 +2378,7 @@ func (c *JobsListCall) Do() (*JobList, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists all the Jobs in the specified project that were started by the user. The job list returns in reverse chronological order of when the jobs were created, starting with the most recent job created.",
+	//   "description": "Lists all jobs that you started in the specified project. The job list returns in reverse chronological order of when the jobs were created, starting with the most recent job created. Requires the Can View project role, or the Is Owner project role if you set the allUsers property.",
 	//   "httpMethod": "GET",
 	//   "id": "bigquery.jobs.list",
 	//   "parameterOrder": [
@@ -2542,7 +2545,8 @@ type ProjectsListCall struct {
 	opt_ map[string]interface{}
 }
 
-// List: Lists the projects to which you have at least read access.
+// List: Lists all projects to which you have been granted any project
+// role.
 func (r *ProjectsService) List() *ProjectsListCall {
 	c := &ProjectsListCall{s: r.s, opt_: make(map[string]interface{})}
 	return c
@@ -2602,7 +2606,7 @@ func (c *ProjectsListCall) Do() (*ProjectList, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the projects to which you have at least read access.",
+	//   "description": "Lists all projects to which you have been granted any project role.",
 	//   "httpMethod": "GET",
 	//   "id": "bigquery.projects.list",
 	//   "parameters": {
@@ -2642,7 +2646,7 @@ type TabledataInsertAllCall struct {
 }
 
 // InsertAll: Streams data into BigQuery one record at a time without
-// needing to run a load job.
+// needing to run a load job. Requires the WRITER dataset role.
 func (r *TabledataService) InsertAll(projectId string, datasetId string, tableId string, tabledatainsertallrequest *TableDataInsertAllRequest) *TabledataInsertAllCall {
 	c := &TabledataInsertAllCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectId = projectId
@@ -2696,7 +2700,7 @@ func (c *TabledataInsertAllCall) Do() (*TableDataInsertAllResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Streams data into BigQuery one record at a time without needing to run a load job.",
+	//   "description": "Streams data into BigQuery one record at a time without needing to run a load job. Requires the WRITER dataset role.",
 	//   "httpMethod": "POST",
 	//   "id": "bigquery.tabledata.insertAll",
 	//   "parameterOrder": [
@@ -2750,7 +2754,8 @@ type TabledataListCall struct {
 	opt_      map[string]interface{}
 }
 
-// List: Retrieves table data from a specified set of rows.
+// List: Retrieves table data from a specified set of rows. Requires the
+// READER dataset role.
 func (r *TabledataService) List(projectId string, datasetId string, tableId string) *TabledataListCall {
 	c := &TabledataListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectId = projectId
@@ -2827,7 +2832,7 @@ func (c *TabledataListCall) Do() (*TableDataList, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves table data from a specified set of rows.",
+	//   "description": "Retrieves table data from a specified set of rows. Requires the READER dataset role.",
 	//   "httpMethod": "GET",
 	//   "id": "bigquery.tabledata.list",
 	//   "parameterOrder": [
@@ -3181,7 +3186,8 @@ type TablesListCall struct {
 	opt_      map[string]interface{}
 }
 
-// List: Lists all tables in the specified dataset.
+// List: Lists all tables in the specified dataset. Requires the READER
+// dataset role.
 func (r *TablesService) List(projectId string, datasetId string) *TablesListCall {
 	c := &TablesListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectId = projectId
@@ -3246,7 +3252,7 @@ func (c *TablesListCall) Do() (*TableList, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists all tables in the specified dataset.",
+	//   "description": "Lists all tables in the specified dataset. Requires the READER dataset role.",
 	//   "httpMethod": "GET",
 	//   "id": "bigquery.tables.list",
 	//   "parameterOrder": [

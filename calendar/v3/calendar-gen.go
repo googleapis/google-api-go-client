@@ -2029,7 +2029,7 @@ func (c *CalendarListListCall) MaxResults(maxResults int64) *CalendarListListCal
 }
 
 // MinAccessRole sets the optional parameter "minAccessRole": The
-// minimum access role for the user in the returned entires.  The
+// minimum access role for the user in the returned entries.  The
 // default is no restriction.
 func (c *CalendarListListCall) MinAccessRole(minAccessRole string) *CalendarListListCall {
 	c.opt_["minAccessRole"] = minAccessRole
@@ -2145,7 +2145,7 @@ func (c *CalendarListListCall) Do() (*CalendarList, error) {
 	//       "type": "integer"
 	//     },
 	//     "minAccessRole": {
-	//       "description": "The minimum access role for the user in the returned entires. Optional. The default is no restriction.",
+	//       "description": "The minimum access role for the user in the returned entries. Optional. The default is no restriction.",
 	//       "enum": [
 	//         "freeBusyReader",
 	//         "owner",
@@ -2430,7 +2430,7 @@ func (c *CalendarListWatchCall) MaxResults(maxResults int64) *CalendarListWatchC
 }
 
 // MinAccessRole sets the optional parameter "minAccessRole": The
-// minimum access role for the user in the returned entires.  The
+// minimum access role for the user in the returned entries.  The
 // default is no restriction.
 func (c *CalendarListWatchCall) MinAccessRole(minAccessRole string) *CalendarListWatchCall {
 	c.opt_["minAccessRole"] = minAccessRole
@@ -2552,7 +2552,7 @@ func (c *CalendarListWatchCall) Do() (*Channel, error) {
 	//       "type": "integer"
 	//     },
 	//     "minAccessRole": {
-	//       "description": "The minimum access role for the user in the returned entires. Optional. The default is no restriction.",
+	//       "description": "The minimum access role for the user in the returned entries. Optional. The default is no restriction.",
 	//       "enum": [
 	//         "freeBusyReader",
 	//         "owner",

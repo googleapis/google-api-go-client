@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/0w-YIuPYwzHxSYesfhwgY81j7Ic\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/ohXSSrYD9FZjeoH2DkcOPP70lbc\"",
  "discoveryVersion": "v1",
  "id": "cloudmonitoring:v2beta2",
  "name": "cloudmonitoring",
@@ -266,11 +266,11 @@
    "properties": {
     "metricType": {
      "type": "string",
-     "description": "The method of collecting data for the metric."
+     "description": "The method of collecting data for the metric. See Metric types."
     },
     "valueType": {
      "type": "string",
-     "description": "The type of data that is written to a timeseries point for this metric."
+     "description": "The data type of of individual points in the metric's time series. See Metric value types."
     }
    }
   },

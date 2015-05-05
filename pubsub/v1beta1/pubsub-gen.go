@@ -155,7 +155,11 @@ type ListTopicsResponse struct {
 }
 
 type ModifyAckDeadlineRequest struct {
-	// AckDeadlineSeconds: The new Ack deadline. Must be >= 0.
+	// AckDeadlineSeconds: The new ack deadline with respect to the time
+	// this request was sent to the Pub/Sub system. Must be >= 0. For
+	// example, if the value is 10, the new ack deadline will expire 10
+	// seconds after the ModifyAckDeadline call was made. Specifying zero
+	// may immediately make the message available for another pull request.
 	AckDeadlineSeconds int64 `json:"ackDeadlineSeconds,omitempty"`
 
 	// AckId: The acknowledgment ID.
@@ -1108,10 +1112,9 @@ type TopicsDeleteCall struct {
 	opt_  map[string]interface{}
 }
 
-// Delete: Deletes the topic with the given name. All subscriptions to
-// this topic are also deleted. Returns NOT_FOUND if the topic does not
-// exist. After a topic is deleted, a new topic may be created with the
-// same name.
+// Delete: Deletes the topic with the given name. Returns NOT_FOUND if
+// the topic does not exist. After a topic is deleted, a new topic may
+// be created with the same name.
 func (r *TopicsService) Delete(topic string) *TopicsDeleteCall {
 	c := &TopicsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.topic = topic
@@ -1150,7 +1153,7 @@ func (c *TopicsDeleteCall) Do() error {
 	}
 	return nil
 	// {
-	//   "description": "Deletes the topic with the given name. All subscriptions to this topic are also deleted. Returns NOT_FOUND if the topic does not exist. After a topic is deleted, a new topic may be created with the same name.",
+	//   "description": "Deletes the topic with the given name. Returns NOT_FOUND if the topic does not exist. After a topic is deleted, a new topic may be created with the same name.",
 	//   "httpMethod": "DELETE",
 	//   "id": "pubsub.topics.delete",
 	//   "parameterOrder": [

@@ -764,6 +764,9 @@ type RestoreBackupContext struct {
 	// BackupRunId: The ID of the backup run to restore from.
 	BackupRunId int64 `json:"backupRunId,omitempty,string"`
 
+	// InstanceId: The ID of the instance that the backup was taken from.
+	InstanceId string `json:"instanceId,omitempty"`
+
 	// Kind: This is always sql#restoreBackupContext.
 	Kind string `json:"kind,omitempty"`
 }

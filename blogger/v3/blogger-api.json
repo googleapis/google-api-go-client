@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/IrFCn8z3q4ulYVZWC1SJkXJKYC0\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/ZRgj7Ah7gwQETAdvqLpx-xGEmV8\"",
  "discoveryVersion": "v1",
  "id": "blogger:v3",
  "name": "blogger",
  "version": "v3",
- "revision": "20150208",
+ "revision": "20150422",
  "title": "Blogger API",
  "description": "API for access to the data within Blogger.",
  "ownerDomain": "google.com",
@@ -360,6 +360,10 @@
    "id": "CommentList",
    "type": "object",
    "properties": {
+    "etag": {
+     "type": "string",
+     "description": "Etag of the response."
+    },
     "items": {
      "type": "array",
      "description": "The List of Comments for a Post.",
@@ -473,6 +477,10 @@
    "id": "PageList",
    "type": "object",
    "properties": {
+    "etag": {
+     "type": "string",
+     "description": "Etag of the response."
+    },
     "items": {
      "type": "array",
      "description": "The list of Pages for a Blog.",
@@ -692,6 +700,10 @@
    "id": "PostList",
    "type": "object",
    "properties": {
+    "etag": {
+     "type": "string",
+     "description": "Etag of the response."
+    },
     "items": {
      "type": "array",
      "description": "The list of Posts for this Blog.",

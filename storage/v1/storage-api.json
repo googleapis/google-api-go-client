@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/QQDBri1CCUJYH-DcKqF8RNeZMho\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/-eHE4ygU6pB-Rytn-s2uFnfwHbs\"",
  "discoveryVersion": "v1",
  "id": "storage:v1",
  "name": "storage",
@@ -2337,7 +2337,7 @@
       },
       "maxResults": {
        "type": "integer",
-       "description": "Maximum number of items plus prefixes to return. As duplicate prefixes are omitted, fewer total results may be returned than requested.",
+       "description": "Maximum number of items plus prefixes to return. As duplicate prefixes are omitted, fewer total results may be returned than requested. The default value of this parameter is 1,000 items.",
        "format": "uint32",
        "minimum": "0",
        "location": "query"
@@ -2367,7 +2367,7 @@
       },
       "versions": {
        "type": "boolean",
-       "description": "If true, lists all versions of a file as distinct results.",
+       "description": "If true, lists all versions of an object as distinct results. The default is false. For more information, see Object Versioning.",
        "location": "query"
       }
      },
@@ -2751,7 +2751,7 @@
       },
       "maxResults": {
        "type": "integer",
-       "description": "Maximum number of items plus prefixes to return. As duplicate prefixes are omitted, fewer total results may be returned than requested.",
+       "description": "Maximum number of items plus prefixes to return. As duplicate prefixes are omitted, fewer total results may be returned than requested. The default value of this parameter is 1,000 items.",
        "format": "uint32",
        "minimum": "0",
        "location": "query"
@@ -2781,7 +2781,7 @@
       },
       "versions": {
        "type": "boolean",
-       "description": "If true, lists all versions of a file as distinct results.",
+       "description": "If true, lists all versions of an object as distinct results. The default is false. For more information, see Object Versioning.",
        "location": "query"
       }
      },

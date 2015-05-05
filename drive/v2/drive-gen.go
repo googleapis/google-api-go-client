@@ -3541,19 +3541,9 @@ func (r *FilesService) Get(fileId string) *FilesGetCall {
 
 // AcknowledgeAbuse sets the optional parameter "acknowledgeAbuse":
 // Whether the user is acknowledging the risk of downloading known
-// malware or other abusive files. Ignored unless alt=media is
-// specified.
+// malware or other abusive files.
 func (c *FilesGetCall) AcknowledgeAbuse(acknowledgeAbuse bool) *FilesGetCall {
 	c.opt_["acknowledgeAbuse"] = acknowledgeAbuse
-	return c
-}
-
-// Alt sets the optional parameter "alt": Specifies the type of resource
-// representation to return. The default is 'json' to return file
-// metadata. Specifying 'media' will cause the file content to be
-// returned.
-func (c *FilesGetCall) Alt(alt string) *FilesGetCall {
-	c.opt_["alt"] = alt
 	return c
 }
 
@@ -3594,9 +3584,6 @@ func (c *FilesGetCall) Do() (*File, error) {
 	params.Set("alt", "json")
 	if v, ok := c.opt_["acknowledgeAbuse"]; ok {
 		params.Set("acknowledgeAbuse", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["alt"]; ok {
-		params.Set("alt", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["projection"]; ok {
 		params.Set("projection", fmt.Sprintf("%v", v))
@@ -3640,14 +3627,9 @@ func (c *FilesGetCall) Do() (*File, error) {
 	//   "parameters": {
 	//     "acknowledgeAbuse": {
 	//       "default": "false",
-	//       "description": "Whether the user is acknowledging the risk of downloading known malware or other abusive files. Ignored unless alt=media is specified.",
+	//       "description": "Whether the user is acknowledging the risk of downloading known malware or other abusive files.",
 	//       "location": "query",
 	//       "type": "boolean"
-	//     },
-	//     "alt": {
-	//       "description": "Specifies the type of resource representation to return. The default is 'json' to return file metadata. Specifying 'media' will cause the file content to be returned.",
-	//       "location": "query",
-	//       "type": "string"
 	//     },
 	//     "fileId": {
 	//       "description": "The ID for the file in question.",
@@ -5084,19 +5066,9 @@ func (r *FilesService) Watch(fileId string, channel *Channel) *FilesWatchCall {
 
 // AcknowledgeAbuse sets the optional parameter "acknowledgeAbuse":
 // Whether the user is acknowledging the risk of downloading known
-// malware or other abusive files. Ignored unless alt=media is
-// specified.
+// malware or other abusive files.
 func (c *FilesWatchCall) AcknowledgeAbuse(acknowledgeAbuse bool) *FilesWatchCall {
 	c.opt_["acknowledgeAbuse"] = acknowledgeAbuse
-	return c
-}
-
-// Alt sets the optional parameter "alt": Specifies the type of resource
-// representation to return. The default is 'json' to return file
-// metadata. Specifying 'media' will cause the file content to be
-// returned.
-func (c *FilesWatchCall) Alt(alt string) *FilesWatchCall {
-	c.opt_["alt"] = alt
 	return c
 }
 
@@ -5143,9 +5115,6 @@ func (c *FilesWatchCall) Do() (*Channel, error) {
 	if v, ok := c.opt_["acknowledgeAbuse"]; ok {
 		params.Set("acknowledgeAbuse", fmt.Sprintf("%v", v))
 	}
-	if v, ok := c.opt_["alt"]; ok {
-		params.Set("alt", fmt.Sprintf("%v", v))
-	}
 	if v, ok := c.opt_["projection"]; ok {
 		params.Set("projection", fmt.Sprintf("%v", v))
 	}
@@ -5189,14 +5158,9 @@ func (c *FilesWatchCall) Do() (*Channel, error) {
 	//   "parameters": {
 	//     "acknowledgeAbuse": {
 	//       "default": "false",
-	//       "description": "Whether the user is acknowledging the risk of downloading known malware or other abusive files. Ignored unless alt=media is specified.",
+	//       "description": "Whether the user is acknowledging the risk of downloading known malware or other abusive files.",
 	//       "location": "query",
 	//       "type": "boolean"
-	//     },
-	//     "alt": {
-	//       "description": "Specifies the type of resource representation to return. The default is 'json' to return file metadata. Specifying 'media' will cause the file content to be returned.",
-	//       "location": "query",
-	//       "type": "string"
 	//     },
 	//     "fileId": {
 	//       "description": "The ID for the file in question.",

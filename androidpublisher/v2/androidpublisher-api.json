@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/2DGQXV9vEvRmzTOqKw6AgrR-Dxw\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/gtEzcfWnBY9EC00QyZ_jjrGf9Io\"",
  "discoveryVersion": "v1",
  "id": "androidpublisher:v2",
  "name": "androidpublisher",
  "canonicalName": "Android Publisher",
  "version": "v2",
- "revision": "20150323",
+ "revision": "20150316",
  "title": "Google Play Developer API",
  "description": "Lets Android application developers access their Google Play accounts.",
  "ownerDomain": "google.com",
@@ -205,6 +205,48 @@
     "id": {
      "type": "string",
      "description": "The ID of the edit that can be used in subsequent API calls."
+    }
+   }
+  },
+  "Entitlement": {
+   "id": "Entitlement",
+   "type": "object",
+   "description": "An Entitlement resource indicates a user's current entitlement to an inapp item or subscription.",
+   "properties": {
+    "kind": {
+     "type": "string",
+     "description": "This kind represents an entitlement object in the androidpublisher service.",
+     "default": "androidpublisher#entitlement"
+    },
+    "productId": {
+     "type": "string",
+     "description": "The SKU of the product."
+    },
+    "productType": {
+     "type": "string",
+     "description": "The type of the inapp product. Possible values are:  \n- In-app item: \"inapp\" \n- Subscription: \"subs\""
+    },
+    "token": {
+     "type": "string",
+     "description": "The token which can be verified using the subscriptions or products API."
+    }
+   }
+  },
+  "EntitlementsListResponse": {
+   "id": "EntitlementsListResponse",
+   "type": "object",
+   "properties": {
+    "pageInfo": {
+     "$ref": "PageInfo"
+    },
+    "resources": {
+     "type": "array",
+     "items": {
+      "$ref": "Entitlement"
+     }
+    },
+    "tokenPagination": {
+     "$ref": "TokenPagination"
     }
    }
   },
@@ -2524,6 +2566,49 @@
         "https://www.googleapis.com/auth/androidpublisher"
        ]
       }
+     }
+    }
+   }
+  },
+  "entitlements": {
+   "methods": {
+    "list": {
+     "id": "androidpublisher.entitlements.list",
+     "path": "{packageName}/entitlements",
+     "httpMethod": "GET",
+     "description": "Lists the user's current inapp item or subscription entitlements",
+     "parameters": {
+      "maxResults": {
+       "type": "integer",
+       "format": "uint32",
+       "location": "query"
+      },
+      "packageName": {
+       "type": "string",
+       "description": "The package name of the application the inapp product was sold in (for example, 'com.some.thing').",
+       "required": true,
+       "location": "path"
+      },
+      "productId": {
+       "type": "string",
+       "description": "The product id of the inapp product (for example, 'sku1'). This can be used to restrict the result set.",
+       "location": "query"
+      },
+      "startIndex": {
+       "type": "integer",
+       "format": "uint32",
+       "location": "query"
+      },
+      "token": {
+       "type": "string",
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "packageName"
+     ],
+     "response": {
+      "$ref": "EntitlementsListResponse"
      }
     }
    }

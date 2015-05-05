@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/LbBwzYbVBam1gVQEBSCOUlfciRc\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/ZlS39JHAlE8Q0nTYVAdz5dw63po\"",
  "discoveryVersion": "v1",
  "id": "pubsub:v1beta1",
  "name": "pubsub",
  "version": "v1beta1",
- "revision": "20141112",
+ "revision": "20150223",
  "title": "Google Cloud Pub/Sub API",
  "description": "Provides reliable, many-to-many, asynchronous messaging between applications.",
  "ownerDomain": "google.com",
@@ -163,7 +163,7 @@
    "properties": {
     "ackDeadlineSeconds": {
      "type": "integer",
-     "description": "The new Ack deadline. Must be \u003e= 0.",
+     "description": "The new ack deadline with respect to the time this request was sent to the Pub/Sub system. Must be \u003e= 0. For example, if the value is 10, the new ack deadline will expire 10 seconds after the ModifyAckDeadline call was made. Specifying zero may immediately make the message available for another pull request.",
      "format": "int32"
     },
     "ackId": {
@@ -585,7 +585,7 @@
      "id": "pubsub.topics.delete",
      "path": "topics/{+topic}",
      "httpMethod": "DELETE",
-     "description": "Deletes the topic with the given name. All subscriptions to this topic are also deleted. Returns NOT_FOUND if the topic does not exist. After a topic is deleted, a new topic may be created with the same name.",
+     "description": "Deletes the topic with the given name. Returns NOT_FOUND if the topic does not exist. After a topic is deleted, a new topic may be created with the same name.",
      "parameters": {
       "topic": {
        "type": "string",

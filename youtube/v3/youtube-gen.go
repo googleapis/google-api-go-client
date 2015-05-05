@@ -85,6 +85,7 @@ func New(client *http.Client) (*Service, error) {
 	s.Search = NewSearchService(s)
 	s.Subscriptions = NewSubscriptionsService(s)
 	s.Thumbnails = NewThumbnailsService(s)
+	s.VideoAbuseReportReasons = NewVideoAbuseReportReasonsService(s)
 	s.VideoCategories = NewVideoCategoriesService(s)
 	s.Videos = NewVideosService(s)
 	s.Watermarks = NewWatermarksService(s)
@@ -129,6 +130,8 @@ type Service struct {
 	Subscriptions *SubscriptionsService
 
 	Thumbnails *ThumbnailsService
+
+	VideoAbuseReportReasons *VideoAbuseReportReasonsService
 
 	VideoCategories *VideoCategoriesService
 
@@ -294,6 +297,15 @@ func NewThumbnailsService(s *Service) *ThumbnailsService {
 }
 
 type ThumbnailsService struct {
+	s *Service
+}
+
+func NewVideoAbuseReportReasonsService(s *Service) *VideoAbuseReportReasonsService {
+	rs := &VideoAbuseReportReasonsService{s: s}
+	return rs
+}
+
+type VideoAbuseReportReasonsService struct {
 	s *Service
 }
 
@@ -931,7 +943,7 @@ type ChannelLocalization struct {
 	// Description: The localized strings for channel's description.
 	Description string `json:"description,omitempty"`
 
-	// Title: The localized strings for channel's title, read-only.
+	// Title: The localized strings for channel's title.
 	Title string `json:"title,omitempty"`
 }
 
@@ -958,6 +970,10 @@ type ChannelSection struct {
 	// Snippet: The snippet object contains basic details about the channel
 	// section, such as its type, style and title.
 	Snippet *ChannelSectionSnippet `json:"snippet,omitempty"`
+
+	// Targeting: The targeting object contains basic targeting settings
+	// about the channel section.
+	Targeting *ChannelSectionTargeting `json:"targeting,omitempty"`
 }
 
 type ChannelSectionContentDetails struct {
@@ -1020,7 +1036,21 @@ type ChannelSectionSnippet struct {
 	Type string `json:"type,omitempty"`
 }
 
+type ChannelSectionTargeting struct {
+	// Countries: The country the channel section is targeting.
+	Countries []string `json:"countries,omitempty"`
+
+	// Languages: The language the channel section is targeting.
+	Languages []string `json:"languages,omitempty"`
+
+	// Regions: The region the channel section is targeting.
+	Regions []string `json:"regions,omitempty"`
+}
+
 type ChannelSettings struct {
+	// Country: The country of the channel.
+	Country string `json:"country,omitempty"`
+
 	DefaultLanguage string `json:"defaultLanguage,omitempty"`
 
 	// DefaultTab: Which content tab users should see when viewing the
@@ -1068,6 +1098,9 @@ type ChannelSettings struct {
 }
 
 type ChannelSnippet struct {
+	// Country: The country of the channel.
+	Country string `json:"country,omitempty"`
+
 	// DefaultLanguage: The language of the channel's default title and
 	// description.
 	DefaultLanguage string `json:"defaultLanguage,omitempty"`
@@ -2050,6 +2083,10 @@ type LiveBroadcastSnippet struct {
 }
 
 type LiveBroadcastStatus struct {
+	// IsDefaultBroadcast: Whether or not this broadcast is the default
+	// broadcast
+	IsDefaultBroadcast bool `json:"isDefaultBroadcast,omitempty"`
+
 	// LifeCycleStatus: The broadcast's status. The status can be updated
 	// using the API's liveBroadcasts.transition method.
 	LifeCycleStatus string `json:"lifeCycleStatus,omitempty"`
@@ -2174,6 +2211,8 @@ type LiveStreamSnippet struct {
 }
 
 type LiveStreamStatus struct {
+	IsDefaultStream bool `json:"isDefaultStream,omitempty"`
+
 	StreamStatus string `json:"streamStatus,omitempty"`
 }
 
@@ -2877,6 +2916,79 @@ type Video struct {
 	// TopicDetails: The topicDetails object encapsulates information about
 	// Freebase topics associated with the video.
 	TopicDetails *VideoTopicDetails `json:"topicDetails,omitempty"`
+}
+
+type VideoAbuseReport struct {
+	// Comments: Additional comments regarding the abuse report.
+	Comments string `json:"comments,omitempty"`
+
+	// Language: The language that the content was viewed in.
+	Language string `json:"language,omitempty"`
+
+	// ReasonId: The high-level, or primary, reason that the content is
+	// abusive. The value is an abuse report reason ID.
+	ReasonId string `json:"reasonId,omitempty"`
+
+	// SecondaryReasonId: The specific, or secondary, reason that this
+	// content is abusive (if available). The value is an abuse report
+	// reason ID that is a valid secondary reason for the primary reason.
+	SecondaryReasonId string `json:"secondaryReasonId,omitempty"`
+
+	// VideoId: The ID that YouTube uses to uniquely identify the video.
+	VideoId string `json:"videoId,omitempty"`
+}
+
+type VideoAbuseReportReason struct {
+	// Etag: Etag of this resource.
+	Etag string `json:"etag,omitempty"`
+
+	// Id: The ID of this abuse report reason.
+	Id string `json:"id,omitempty"`
+
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "youtube#videoAbuseReportReason".
+	Kind string `json:"kind,omitempty"`
+
+	// Snippet: The snippet object contains basic details about the abuse
+	// report reason.
+	Snippet *VideoAbuseReportReasonSnippet `json:"snippet,omitempty"`
+}
+
+type VideoAbuseReportReasonListResponse struct {
+	// Etag: Etag of this resource.
+	Etag string `json:"etag,omitempty"`
+
+	// EventId: Serialized EventId of the request which produced this
+	// response.
+	EventId string `json:"eventId,omitempty"`
+
+	// Items: A list of valid abuse reasons that are used with
+	// video.ReportAbuse.
+	Items []*VideoAbuseReportReason `json:"items,omitempty"`
+
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "youtube#videoAbuseReportReasonListResponse".
+	Kind string `json:"kind,omitempty"`
+
+	// VisitorId: The visitorId identifies the visitor.
+	VisitorId string `json:"visitorId,omitempty"`
+}
+
+type VideoAbuseReportReasonSnippet struct {
+	// Label: The localized label belonging to this abuse report reason.
+	Label string `json:"label,omitempty"`
+
+	// SecondaryReasons: The secondary reasons associated with this reason,
+	// if any are available. (There might be 0 or more.)
+	SecondaryReasons []*VideoAbuseReportSecondaryReason `json:"secondaryReasons,omitempty"`
+}
+
+type VideoAbuseReportSecondaryReason struct {
+	// Id: The ID of this abuse report secondary reason.
+	Id string `json:"id,omitempty"`
+
+	// Label: The localized label for this abuse report secondary reason.
+	Label string `json:"label,omitempty"`
 }
 
 type VideoAgeGating struct {
@@ -11514,6 +11626,100 @@ func (c *ThumbnailsSetCall) Do() (*ThumbnailSetResponse, error) {
 
 }
 
+// method id "youtube.videoAbuseReportReasons.list":
+
+type VideoAbuseReportReasonsListCall struct {
+	s    *Service
+	part string
+	opt_ map[string]interface{}
+}
+
+// List: Returns a list of abuse reasons that can be used for reporting
+// abusive videos.
+func (r *VideoAbuseReportReasonsService) List(part string) *VideoAbuseReportReasonsListCall {
+	c := &VideoAbuseReportReasonsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.part = part
+	return c
+}
+
+// Hl sets the optional parameter "hl": The hl parameter specifies the
+// language that should be used for text values in the API response.
+func (c *VideoAbuseReportReasonsListCall) Hl(hl string) *VideoAbuseReportReasonsListCall {
+	c.opt_["hl"] = hl
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *VideoAbuseReportReasonsListCall) Fields(s ...googleapi.Field) *VideoAbuseReportReasonsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *VideoAbuseReportReasonsListCall) Do() (*VideoAbuseReportReasonListResponse, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	params.Set("part", fmt.Sprintf("%v", c.part))
+	if v, ok := c.opt_["hl"]; ok {
+		params.Set("hl", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "videoAbuseReportReasons")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *VideoAbuseReportReasonListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns a list of abuse reasons that can be used for reporting abusive videos.",
+	//   "httpMethod": "GET",
+	//   "id": "youtube.videoAbuseReportReasons.list",
+	//   "parameterOrder": [
+	//     "part"
+	//   ],
+	//   "parameters": {
+	//     "hl": {
+	//       "default": "en_US",
+	//       "description": "The hl parameter specifies the language that should be used for text values in the API response.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "part": {
+	//       "description": "The part parameter specifies the videoCategory resource parts that the API response will include. Supported values are id and snippet.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "videoAbuseReportReasons",
+	//   "response": {
+	//     "$ref": "VideoAbuseReportReasonListResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.force-ssl",
+	//     "https://www.googleapis.com/auth/youtube.readonly"
+	//   ]
+	// }
+
+}
+
 // method id "youtube.videoCategories.list":
 
 type VideoCategoriesListCall struct {
@@ -12534,6 +12740,102 @@ func (c *VideosRateCall) Do() error {
 	//     }
 	//   },
 	//   "path": "videos/rate",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.force-ssl",
+	//     "https://www.googleapis.com/auth/youtubepartner"
+	//   ]
+	// }
+
+}
+
+// method id "youtube.videos.reportAbuse":
+
+type VideosReportAbuseCall struct {
+	s                *Service
+	videoabusereport *VideoAbuseReport
+	opt_             map[string]interface{}
+}
+
+// ReportAbuse: Report abuse for a video.
+func (r *VideosService) ReportAbuse(videoabusereport *VideoAbuseReport) *VideosReportAbuseCall {
+	c := &VideosReportAbuseCall{s: r.s, opt_: make(map[string]interface{})}
+	c.videoabusereport = videoabusereport
+	return c
+}
+
+// OnBehalfOfContentOwner sets the optional parameter
+// "onBehalfOfContentOwner": Note: This parameter is intended
+// exclusively for YouTube content partners.
+//
+// The onBehalfOfContentOwner
+// parameter indicates that the request's authorization credentials
+// identify a YouTube CMS user who is acting on behalf of the content
+// owner specified in the parameter value. This parameter is intended
+// for YouTube content partners that own and manage many different
+// YouTube channels. It allows content owners to authenticate once and
+// get access to all their video and channel data, without having to
+// provide authentication credentials for each individual channel. The
+// CMS account that the user authenticates with must be linked to the
+// specified YouTube content owner.
+func (c *VideosReportAbuseCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *VideosReportAbuseCall {
+	c.opt_["onBehalfOfContentOwner"] = onBehalfOfContentOwner
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *VideosReportAbuseCall) Fields(s ...googleapi.Field) *VideosReportAbuseCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *VideosReportAbuseCall) Do() error {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.videoabusereport)
+	if err != nil {
+		return err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
+		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "videos/reportAbuse")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Report abuse for a video.",
+	//   "httpMethod": "POST",
+	//   "id": "youtube.videos.reportAbuse",
+	//   "parameters": {
+	//     "onBehalfOfContentOwner": {
+	//       "description": "Note: This parameter is intended exclusively for YouTube content partners.\n\nThe onBehalfOfContentOwner parameter indicates that the request's authorization credentials identify a YouTube CMS user who is acting on behalf of the content owner specified in the parameter value. This parameter is intended for YouTube content partners that own and manage many different YouTube channels. It allows content owners to authenticate once and get access to all their video and channel data, without having to provide authentication credentials for each individual channel. The CMS account that the user authenticates with must be linked to the specified YouTube content owner.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "videos/reportAbuse",
+	//   "request": {
+	//     "$ref": "VideoAbuseReport"
+	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/youtube",
 	//     "https://www.googleapis.com/auth/youtube.force-ssl",

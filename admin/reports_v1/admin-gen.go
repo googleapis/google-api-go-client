@@ -500,7 +500,7 @@ func (c *ActivitiesListCall) Do() (*Activities, error) {
 	//     "applicationName": {
 	//       "description": "Application name for which the events are to be retrieved.",
 	//       "location": "path",
-	//       "pattern": "(admin)|(calendar)|(docs)|(drive)|(login)|(token)",
+	//       "pattern": "(admin)|(calendar)|(drive)|(login)|(token)",
 	//       "required": true,
 	//       "type": "string"
 	//     },
@@ -725,7 +725,7 @@ func (c *ActivitiesWatchCall) Do() (*Channel, error) {
 	//     "applicationName": {
 	//       "description": "Application name for which the events are to be retrieved.",
 	//       "location": "path",
-	//       "pattern": "(admin)|(calendar)|(docs)|(drive)|(login)|(token)",
+	//       "pattern": "(admin)|(calendar)|(drive)|(login)|(token)",
 	//       "required": true,
 	//       "type": "string"
 	//     },

@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/-cEt9kNYxHYudWFagP8a3xlVhCQ\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/RQeW5SiC9TtgAuq37iD3_HNih1g\"",
  "discoveryVersion": "v1",
  "id": "sqladmin:v1beta4",
  "name": "sqladmin",
  "canonicalName": "SQL Admin",
  "version": "v1beta4",
- "revision": "20150223",
+ "revision": "20150325",
  "title": "Cloud SQL Administration API",
  "description": "API for Cloud SQL database instance management.",
  "ownerDomain": "google.com",
@@ -953,6 +953,10 @@
        "sql.instances.restoreBackup"
       ]
      }
+    },
+    "instanceId": {
+     "type": "string",
+     "description": "The ID of the instance that the backup was taken from."
     },
     "kind": {
      "type": "string",

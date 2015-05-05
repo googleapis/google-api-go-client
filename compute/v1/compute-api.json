@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/5_F3NUaJGybCPvcgUPfyjslbvzg\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/bsPadcajJ4DUXFWerv0XV4j606M\"",
  "discoveryVersion": "v1",
  "id": "compute:v1",
  "name": "compute",
  "version": "v1",
- "revision": "20141112",
+ "revision": "20150326",
  "title": "Compute Engine API",
  "description": "API for the Google Compute Engine service.",
  "ownerDomain": "google.com",
@@ -277,6 +277,7 @@
         "NEXT_HOP_INSTANCE_NOT_FOUND",
         "NEXT_HOP_INSTANCE_NOT_ON_NETWORK",
         "NEXT_HOP_NOT_RUNNING",
+        "NOT_CRITICAL_ERROR",
         "NO_RESULTS_ON_PAGE",
         "REQUIRED_TOS_AGREEMENT",
         "RESOURCE_NOT_DELETED",
@@ -284,6 +285,7 @@
         "UNREACHABLE"
        ],
        "enumDescriptions": [
+        "",
         "",
         "",
         "",
@@ -951,6 +953,7 @@
         "NEXT_HOP_INSTANCE_NOT_FOUND",
         "NEXT_HOP_INSTANCE_NOT_ON_NETWORK",
         "NEXT_HOP_NOT_RUNNING",
+        "NOT_CRITICAL_ERROR",
         "NO_RESULTS_ON_PAGE",
         "REQUIRED_TOS_AGREEMENT",
         "RESOURCE_NOT_DELETED",
@@ -958,6 +961,7 @@
         "UNREACHABLE"
        ],
        "enumDescriptions": [
+        "",
         "",
         "",
         "",
@@ -1025,6 +1029,7 @@
         "NEXT_HOP_INSTANCE_NOT_FOUND",
         "NEXT_HOP_INSTANCE_NOT_ON_NETWORK",
         "NEXT_HOP_NOT_RUNNING",
+        "NOT_CRITICAL_ERROR",
         "NO_RESULTS_ON_PAGE",
         "REQUIRED_TOS_AGREEMENT",
         "RESOURCE_NOT_DELETED",
@@ -1032,6 +1037,7 @@
         "UNREACHABLE"
        ],
        "enumDescriptions": [
+        "",
         "",
         "",
         "",
@@ -1345,6 +1351,7 @@
         "NEXT_HOP_INSTANCE_NOT_FOUND",
         "NEXT_HOP_INSTANCE_NOT_ON_NETWORK",
         "NEXT_HOP_NOT_RUNNING",
+        "NOT_CRITICAL_ERROR",
         "NO_RESULTS_ON_PAGE",
         "REQUIRED_TOS_AGREEMENT",
         "RESOURCE_NOT_DELETED",
@@ -1352,6 +1359,7 @@
         "UNREACHABLE"
        ],
        "enumDescriptions": [
+        "",
         "",
         "",
         "",
@@ -2059,6 +2067,7 @@
         "NEXT_HOP_INSTANCE_NOT_FOUND",
         "NEXT_HOP_INSTANCE_NOT_ON_NETWORK",
         "NEXT_HOP_NOT_RUNNING",
+        "NOT_CRITICAL_ERROR",
         "NO_RESULTS_ON_PAGE",
         "REQUIRED_TOS_AGREEMENT",
         "RESOURCE_NOT_DELETED",
@@ -2066,6 +2075,7 @@
         "UNREACHABLE"
        ],
        "enumDescriptions": [
+        "",
         "",
         "",
         "",
@@ -2306,6 +2316,7 @@
         "NEXT_HOP_INSTANCE_NOT_FOUND",
         "NEXT_HOP_INSTANCE_NOT_ON_NETWORK",
         "NEXT_HOP_NOT_RUNNING",
+        "NOT_CRITICAL_ERROR",
         "NO_RESULTS_ON_PAGE",
         "REQUIRED_TOS_AGREEMENT",
         "RESOURCE_NOT_DELETED",
@@ -2313,6 +2324,7 @@
         "UNREACHABLE"
        ],
        "enumDescriptions": [
+        "",
         "",
         "",
         "",
@@ -2657,6 +2669,7 @@
          "NEXT_HOP_INSTANCE_NOT_FOUND",
          "NEXT_HOP_INSTANCE_NOT_ON_NETWORK",
          "NEXT_HOP_NOT_RUNNING",
+         "NOT_CRITICAL_ERROR",
          "NO_RESULTS_ON_PAGE",
          "REQUIRED_TOS_AGREEMENT",
          "RESOURCE_NOT_DELETED",
@@ -2664,6 +2677,7 @@
          "UNREACHABLE"
         ],
         "enumDescriptions": [
+         "",
          "",
          "",
          "",
@@ -2798,6 +2812,7 @@
         "NEXT_HOP_INSTANCE_NOT_FOUND",
         "NEXT_HOP_INSTANCE_NOT_ON_NETWORK",
         "NEXT_HOP_NOT_RUNNING",
+        "NOT_CRITICAL_ERROR",
         "NO_RESULTS_ON_PAGE",
         "REQUIRED_TOS_AGREEMENT",
         "RESOURCE_NOT_DELETED",
@@ -2805,6 +2820,7 @@
         "UNREACHABLE"
        ],
        "enumDescriptions": [
+        "",
         "",
         "",
         "",
@@ -2968,9 +2984,13 @@
       "TARGET_HTTP_PROXIES",
       "TARGET_INSTANCES",
       "TARGET_POOLS",
-      "URL_MAPS"
+      "TARGET_VPN_GATEWAYS",
+      "URL_MAPS",
+      "VPN_TUNNELS"
      ],
      "enumDescriptions": [
+      "",
+      "",
       "",
       "",
       "",
@@ -3218,6 +3238,7 @@
          "NEXT_HOP_INSTANCE_NOT_FOUND",
          "NEXT_HOP_INSTANCE_NOT_ON_NETWORK",
          "NEXT_HOP_NOT_RUNNING",
+         "NOT_CRITICAL_ERROR",
          "NO_RESULTS_ON_PAGE",
          "REQUIRED_TOS_AGREEMENT",
          "RESOURCE_NOT_DELETED",
@@ -3225,6 +3246,7 @@
          "UNREACHABLE"
         ],
         "enumDescriptions": [
+         "",
          "",
          "",
          "",
@@ -3707,6 +3729,7 @@
         "NEXT_HOP_INSTANCE_NOT_FOUND",
         "NEXT_HOP_INSTANCE_NOT_ON_NETWORK",
         "NEXT_HOP_NOT_RUNNING",
+        "NOT_CRITICAL_ERROR",
         "NO_RESULTS_ON_PAGE",
         "REQUIRED_TOS_AGREEMENT",
         "RESOURCE_NOT_DELETED",
@@ -3714,6 +3737,7 @@
         "UNREACHABLE"
        ],
        "enumDescriptions": [
+        "",
         "",
         "",
         "",
@@ -3987,6 +4011,7 @@
         "NEXT_HOP_INSTANCE_NOT_FOUND",
         "NEXT_HOP_INSTANCE_NOT_ON_NETWORK",
         "NEXT_HOP_NOT_RUNNING",
+        "NOT_CRITICAL_ERROR",
         "NO_RESULTS_ON_PAGE",
         "REQUIRED_TOS_AGREEMENT",
         "RESOURCE_NOT_DELETED",
@@ -3994,6 +4019,7 @@
         "UNREACHABLE"
        ],
        "enumDescriptions": [
+        "",
         "",
         "",
         "",
@@ -4213,6 +4239,7 @@
         "NEXT_HOP_INSTANCE_NOT_FOUND",
         "NEXT_HOP_INSTANCE_NOT_ON_NETWORK",
         "NEXT_HOP_NOT_RUNNING",
+        "NOT_CRITICAL_ERROR",
         "NO_RESULTS_ON_PAGE",
         "REQUIRED_TOS_AGREEMENT",
         "RESOURCE_NOT_DELETED",
@@ -4220,6 +4247,7 @@
         "UNREACHABLE"
        ],
        "enumDescriptions": [
+        "",
         "",
         "",
         "",
@@ -4660,6 +4688,7 @@
         "NEXT_HOP_INSTANCE_NOT_FOUND",
         "NEXT_HOP_INSTANCE_NOT_ON_NETWORK",
         "NEXT_HOP_NOT_RUNNING",
+        "NOT_CRITICAL_ERROR",
         "NO_RESULTS_ON_PAGE",
         "REQUIRED_TOS_AGREEMENT",
         "RESOURCE_NOT_DELETED",
@@ -4667,6 +4696,7 @@
         "UNREACHABLE"
        ],
        "enumDescriptions": [
+        "",
         "",
         "",
         "",

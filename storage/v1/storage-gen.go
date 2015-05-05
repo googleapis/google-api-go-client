@@ -4741,7 +4741,8 @@ func (c *ObjectsListCall) Delimiter(delimiter string) *ObjectsListCall {
 
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of items plus prefixes to return. As duplicate prefixes are omitted,
-// fewer total results may be returned than requested.
+// fewer total results may be returned than requested. The default value
+// of this parameter is 1,000 items.
 func (c *ObjectsListCall) MaxResults(maxResults int64) *ObjectsListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
@@ -4770,7 +4771,8 @@ func (c *ObjectsListCall) Projection(projection string) *ObjectsListCall {
 }
 
 // Versions sets the optional parameter "versions": If true, lists all
-// versions of a file as distinct results.
+// versions of an object as distinct results. The default is false. For
+// more information, see Object Versioning.
 func (c *ObjectsListCall) Versions(versions bool) *ObjectsListCall {
 	c.opt_["versions"] = versions
 	return c
@@ -4849,7 +4851,7 @@ func (c *ObjectsListCall) Do() (*Objects, error) {
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "description": "Maximum number of items plus prefixes to return. As duplicate prefixes are omitted, fewer total results may be returned than requested.",
+	//       "description": "Maximum number of items plus prefixes to return. As duplicate prefixes are omitted, fewer total results may be returned than requested. The default value of this parameter is 1,000 items.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -4879,7 +4881,7 @@ func (c *ObjectsListCall) Do() (*Objects, error) {
 	//       "type": "string"
 	//     },
 	//     "versions": {
-	//       "description": "If true, lists all versions of a file as distinct results.",
+	//       "description": "If true, lists all versions of an object as distinct results. The default is false. For more information, see Object Versioning.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -5786,7 +5788,8 @@ func (c *ObjectsWatchAllCall) Delimiter(delimiter string) *ObjectsWatchAllCall {
 
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of items plus prefixes to return. As duplicate prefixes are omitted,
-// fewer total results may be returned than requested.
+// fewer total results may be returned than requested. The default value
+// of this parameter is 1,000 items.
 func (c *ObjectsWatchAllCall) MaxResults(maxResults int64) *ObjectsWatchAllCall {
 	c.opt_["maxResults"] = maxResults
 	return c
@@ -5815,7 +5818,8 @@ func (c *ObjectsWatchAllCall) Projection(projection string) *ObjectsWatchAllCall
 }
 
 // Versions sets the optional parameter "versions": If true, lists all
-// versions of a file as distinct results.
+// versions of an object as distinct results. The default is false. For
+// more information, see Object Versioning.
 func (c *ObjectsWatchAllCall) Versions(versions bool) *ObjectsWatchAllCall {
 	c.opt_["versions"] = versions
 	return c
@@ -5900,7 +5904,7 @@ func (c *ObjectsWatchAllCall) Do() (*Channel, error) {
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "description": "Maximum number of items plus prefixes to return. As duplicate prefixes are omitted, fewer total results may be returned than requested.",
+	//       "description": "Maximum number of items plus prefixes to return. As duplicate prefixes are omitted, fewer total results may be returned than requested. The default value of this parameter is 1,000 items.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
@@ -5930,7 +5934,7 @@ func (c *ObjectsWatchAllCall) Do() (*Channel, error) {
 	//       "type": "string"
 	//     },
 	//     "versions": {
-	//       "description": "If true, lists all versions of a file as distinct results.",
+	//       "description": "If true, lists all versions of an object as distinct results. The default is false. For more information, see Object Versioning.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }

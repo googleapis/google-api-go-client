@@ -106,21 +106,15 @@ type InstanceUpdate struct {
 	Instance string `json:"instance,omitempty"`
 
 	// Status: Status of the instance update. Possible values are:
-	// -
-	// "PENDING": The instance update is pending execution.
-	// -
-	// "ROLLING_FORWARD": The instance update is going forward.
-	// -
-	// "ROLLING_BACK": The instance update is being rolled back.
-	// -
-	// "PAUSED": The instance update is temporarily paused (inactive).
-	// -
-	// "ROLLED_OUT": The instance update is finished, the instance is
+	// - "PENDING": The instance update is pending execution.
+	// - "ROLLING_FORWARD": The instance update is going forward.
+	// - "ROLLING_BACK": The instance update is being rolled back.
+	// - "PAUSED": The instance update is temporarily paused (inactive).
+	// - "ROLLED_OUT": The instance update is finished, the instance is
 	// running the new template.
-	// - "ROLLED_BACK": The instance update is
-	// finished, the instance has been reverted to the previous template.
-	// -
-	// "CANCELLED": The instance update is paused and no longer can be
+	// - "ROLLED_BACK": The instance update is finished, the instance has
+	// been reverted to the previous template.
+	// - "CANCELLED": The instance update is paused and no longer can be
 	// resumed, undefined in which template the instance is running.
 	Status string `json:"status,omitempty"`
 }
@@ -319,20 +313,15 @@ type RollingUpdate struct {
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// Status: [Output Only] Status of the update. Possible values are:
-	// -
-	// "ROLLING_FORWARD": The update is going forward.
-	// - "ROLLING_BACK":
-	// The update is being rolled back.
-	// - "PAUSED": The update is
-	// temporarily paused (inactive).
-	// - "ROLLED_OUT": The update is
-	// finished, all instances have been updated successfully.
-	// -
-	// "ROLLED_BACK": The update is finished, all instances have been
+	// - "ROLLING_FORWARD": The update is going forward.
+	// - "ROLLING_BACK": The update is being rolled back.
+	// - "PAUSED": The update is temporarily paused (inactive).
+	// - "ROLLED_OUT": The update is finished, all instances have been
+	// updated successfully.
+	// - "ROLLED_BACK": The update is finished, all instances have been
 	// reverted to the previous template.
-	// - "CANCELLED": The update is
-	// paused and no longer can be resumed, undefined how many instances are
-	// running in which template.
+	// - "CANCELLED": The update is paused and no longer can be resumed,
+	// undefined how many instances are running in which template.
 	Status string `json:"status,omitempty"`
 
 	// StatusMessage: [Output Only] An optional textual description of the

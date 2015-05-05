@@ -477,12 +477,9 @@ type App struct {
 
 type AppIcons struct {
 	// Category: Category of the icon. Allowed values are:
-	// - application -
-	// icon for the application
-	// - document - icon for a file associated
-	// with the app
-	// - documentShared - icon for a shared file associated
-	// with the app
+	// - application - icon for the application
+	// - document - icon for a file associated with the app
+	// - documentShared - icon for a shared file associated with the app
 	Category string `json:"category,omitempty"`
 
 	// IconUrl: URL for the icon.
@@ -683,10 +680,8 @@ type Comment struct {
 
 	// Status: The status of this comment. Status can be changed by posting
 	// a reply to a comment with the desired status.
-	// - "open" - The
-	// comment is still open.
-	// - "resolved" - The comment has been resolved
-	// by one of its replies.
+	// - "open" - The comment is still open.
+	// - "resolved" - The comment has been resolved by one of its replies.
 	Status string `json:"status,omitempty"`
 }
 
@@ -751,7 +746,6 @@ type CommentReply struct {
 	// creating a new reply this is the action to be perform to the parent
 	// comment. Possible values are:
 	// - "resolve" - To resolve a comment.
-	//
 	// - "reopen" - To reopen (un-resolve) a comment.
 	Verb string `json:"verb,omitempty"`
 }
@@ -912,9 +906,9 @@ type File struct {
 
 	// Parents: Collection of parent folders which contain this
 	// file.
-	// Setting this field will put the file in all of the provided
-	// folders. On insert, if no folders are provided, the file will be
-	// placed in the default root folder.
+	// Setting this field will put the file in all of the provided folders.
+	// On insert, if no folders are provided, the file will be placed in the
+	// default root folder.
 	Parents []*ParentReference `json:"parents,omitempty"`
 
 	// Permissions: The list of permissions for users with access to this
@@ -1193,7 +1187,6 @@ type Permission struct {
 
 	// Role: The primary role for this user. Allowed values are:
 	// - owner
-	//
 	// - reader
 	// - writer
 	Role string `json:"role,omitempty"`
@@ -1204,8 +1197,7 @@ type Permission struct {
 	// Type: The account type. Allowed values are:
 	// - user
 	// - group
-	// -
-	// domain
+	// - domain
 	// - anyone
 	Type string `json:"type,omitempty"`
 

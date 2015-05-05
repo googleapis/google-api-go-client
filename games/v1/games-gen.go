@@ -258,10 +258,8 @@ type TurnBasedMatchesService struct {
 type AchievementDefinition struct {
 	// AchievementType: The type of the achievement.
 	// Possible values are:
-	//
 	// - "STANDARD" - Achievement is either locked or unlocked.
-	// -
-	// "INCREMENTAL" - Achievement is incremental.
+	// - "INCREMENTAL" - Achievement is incremental.
 	AchievementType string `json:"achievementType,omitempty"`
 
 	// Description: The description of the achievement.
@@ -279,11 +277,9 @@ type AchievementDefinition struct {
 	Id string `json:"id,omitempty"`
 
 	// InitialState: The initial state of the achievement.
-	// Possible values
-	// are:
+	// Possible values are:
 	// - "HIDDEN" - Achievement is hidden.
-	// - "REVEALED" -
-	// Achievement is revealed.
+	// - "REVEALED" - Achievement is revealed.
 	// - "UNLOCKED" - Achievement is unlocked.
 	InitialState string `json:"initialState,omitempty"`
 
@@ -343,8 +339,7 @@ type AchievementRevealResponse struct {
 	// was attempted. This might be UNLOCKED if the achievement was already
 	// unlocked.
 	// Possible values are:
-	// - "REVEALED" - Achievement is
-	// revealed.
+	// - "REVEALED" - Achievement is revealed.
 	// - "UNLOCKED" - Achievement is unlocked.
 	CurrentState string `json:"currentState,omitempty"`
 
@@ -414,13 +409,10 @@ type AchievementUpdateRequest struct {
 
 	// UpdateType: The type of update being applied.
 	// Possible values are:
-	//
 	// - "REVEAL" - Achievement is revealed.
-	// - "UNLOCK" - Achievement is
-	// unlocked.
+	// - "UNLOCK" - Achievement is unlocked.
 	// - "INCREMENT" - Achievement is incremented.
-	// -
-	// "SET_STEPS_AT_LEAST" - Achievement progress is set to at least the
+	// - "SET_STEPS_AT_LEAST" - Achievement progress is set to at least the
 	// passed value.
 	UpdateType string `json:"updateType,omitempty"`
 }
@@ -430,11 +422,9 @@ type AchievementUpdateResponse struct {
 	AchievementId string `json:"achievementId,omitempty"`
 
 	// CurrentState: The current state of the achievement.
-	// Possible values
-	// are:
+	// Possible values are:
 	// - "HIDDEN" - Achievement is hidden.
-	// - "REVEALED" -
-	// Achievement is revealed.
+	// - "REVEALED" - Achievement is revealed.
 	// - "UNLOCKED" - Achievement is unlocked.
 	CurrentState string `json:"currentState,omitempty"`
 
@@ -508,8 +498,7 @@ type Application struct {
 	// EnabledFeatures: A list of features that have been enabled for the
 	// application.
 	// Possible values are:
-	// - "SNAPSHOTS" - Snapshots has
-	// been enabled
+	// - "SNAPSHOTS" - Snapshots has been enabled
 	EnabledFeatures []string `json:"enabledFeatures,omitempty"`
 
 	// Id: The ID of the application.
@@ -577,20 +566,18 @@ type CategoryListResponse struct {
 type EventBatchRecordFailure struct {
 	// FailureCause: The cause for the update failure.
 	// Possible values are:
-	//
 	// - "TOO_LARGE": A batch request was issued with more events than are
 	// allowed in a single batch.
-	// - "TIME_PERIOD_EXPIRED": A batch was sent
-	// with data too far in the past to record.
-	// - "TIME_PERIOD_SHORT": A
-	// batch was sent with a time range that was too short.
-	// -
-	// "TIME_PERIOD_LONG": A batch was sent with a time range that was too
+	// - "TIME_PERIOD_EXPIRED": A batch was sent with data too far in the
+	// past to record.
+	// - "TIME_PERIOD_SHORT": A batch was sent with a time range that was
+	// too short.
+	// - "TIME_PERIOD_LONG": A batch was sent with a time range that was too
 	// long.
-	// - "ALREADY_UPDATED": An attempt was made to record a batch of
-	// data which was already seen.
-	// - "RECORD_RATE_HIGH": An attempt was
-	// made to record data faster than the server will apply updates.
+	// - "ALREADY_UPDATED": An attempt was made to record a batch of data
+	// which was already seen.
+	// - "RECORD_RATE_HIGH": An attempt was made to record data faster than
+	// the server will apply updates.
 	FailureCause string `json:"failureCause,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
@@ -638,10 +625,9 @@ type EventDefinition struct {
 	// Visibility: The visibility of event being tracked in this
 	// definition.
 	// Possible values are:
-	// - "REVEALED": This event should be
-	// visible to all users.
-	// - "HIDDEN": This event should only be shown to
-	// users that have recorded this event at least once.
+	// - "REVEALED": This event should be visible to all users.
+	// - "HIDDEN": This event should only be shown to users that have
+	// recorded this event at least once.
 	Visibility string `json:"visibility,omitempty"`
 }
 
@@ -689,11 +675,10 @@ type EventRecordFailure struct {
 
 	// FailureCause: The cause for the update failure.
 	// Possible values are:
-	//
 	// - "NOT_FOUND" - An attempt was made to set an event that was not
 	// defined.
-	// - "INVALID_UPDATE_VALUE" - An attempt was made to increment
-	// an event by a non-positive value.
+	// - "INVALID_UPDATE_VALUE" - An attempt was made to increment an event
+	// by a non-positive value.
 	FailureCause string `json:"failureCause,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
@@ -808,11 +793,9 @@ type Instance struct {
 
 	// PlatformType: The platform type.
 	// Possible values are:
-	// - "ANDROID" -
-	// Instance is for Android.
+	// - "ANDROID" - Instance is for Android.
 	// - "IOS" - Instance is for iOS
-	// - "WEB_APP"
-	// - Instance is for Web App.
+	// - "WEB_APP" - Instance is for Web App.
 	PlatformType string `json:"platformType,omitempty"`
 
 	// RealtimePlay: Flag to show if this game instance supports realtime
@@ -903,11 +886,10 @@ type Leaderboard struct {
 
 	// Order: How scores are ordered.
 	// Possible values are:
-	// -
-	// "LARGER_IS_BETTER" - Larger values are better; scores are sorted in
+	// - "LARGER_IS_BETTER" - Larger values are better; scores are sorted in
 	// descending order.
-	// - "SMALLER_IS_BETTER" - Smaller values are better;
-	// scores are sorted in ascending order.
+	// - "SMALLER_IS_BETTER" - Smaller values are better; scores are sorted
+	// in ascending order.
 	Order string `json:"order,omitempty"`
 }
 
@@ -940,12 +922,9 @@ type LeaderboardEntry struct {
 
 	// TimeSpan: The time span of this high score.
 	// Possible values are:
-	// -
-	// "ALL_TIME" - The score is an all-time high score.
-	// - "WEEKLY" - The
-	// score is a weekly high score.
-	// - "DAILY" - The score is a daily high
-	// score.
+	// - "ALL_TIME" - The score is an all-time high score.
+	// - "WEEKLY" - The score is a weekly high score.
+	// - "DAILY" - The score is a daily high score.
 	TimeSpan string `json:"timeSpan,omitempty"`
 
 	// WriteTimestampMillis: The timestamp at which this score was recorded,
@@ -1074,20 +1053,15 @@ type ParticipantResult struct {
 	Placing int64 `json:"placing,omitempty"`
 
 	// Result: The result of the participant for this match.
-	// Possible values
-	// are:
+	// Possible values are:
 	// - "MATCH_RESULT_WIN" - The participant won the match.
-	// -
-	// "MATCH_RESULT_LOSS" - The participant lost the match.
-	// -
-	// "MATCH_RESULT_TIE" - The participant tied the match.
-	// -
-	// "MATCH_RESULT_NONE" - There was no winner for the match (nobody wins
-	// or loses this kind of game.)
-	// - "MATCH_RESULT_DISCONNECT" - The
-	// participant disconnected / left during the match.
-	// -
-	// "MATCH_RESULT_DISAGREED" - Different clients reported different
+	// - "MATCH_RESULT_LOSS" - The participant lost the match.
+	// - "MATCH_RESULT_TIE" - The participant tied the match.
+	// - "MATCH_RESULT_NONE" - There was no winner for the match (nobody
+	// wins or loses this kind of game.)
+	// - "MATCH_RESULT_DISCONNECT" - The participant disconnected / left
+	// during the match.
+	// - "MATCH_RESULT_DISAGREED" - Different clients reported different
 	// results for this participant.
 	Result string `json:"result,omitempty"`
 }
@@ -1196,10 +1170,8 @@ type PlayerName struct {
 type PlayerAchievement struct {
 	// AchievementState: The state of the achievement.
 	// Possible values are:
-	//
 	// - "HIDDEN" - Achievement is hidden.
-	// - "REVEALED" - Achievement is
-	// revealed.
+	// - "REVEALED" - Achievement is revealed.
 	// - "UNLOCKED" - Achievement is unlocked.
 	AchievementState string `json:"achievementState,omitempty"`
 
@@ -1322,10 +1294,8 @@ type PlayerLeaderboardScore struct {
 
 	// TimeSpan: The time span of this score.
 	// Possible values are:
-	// -
-	// "ALL_TIME" - The score is an all-time score.
-	// - "WEEKLY" - The score
-	// is a weekly score.
+	// - "ALL_TIME" - The score is an all-time score.
+	// - "WEEKLY" - The score is a weekly score.
 	// - "DAILY" - The score is a daily score.
 	TimeSpan string `json:"timeSpan,omitempty"`
 
@@ -1394,10 +1364,8 @@ type PlayerScore struct {
 
 	// TimeSpan: The time span for this player score.
 	// Possible values are:
-	//
 	// - "ALL_TIME" - The score is an all-time score.
-	// - "WEEKLY" - The
-	// score is a weekly score.
+	// - "WEEKLY" - The score is a weekly score.
 	// - "DAILY" - The score is a daily score.
 	TimeSpan string `json:"timeSpan,omitempty"`
 }
@@ -1414,11 +1382,9 @@ type PlayerScoreListResponse struct {
 type PlayerScoreResponse struct {
 	// BeatenScoreTimeSpans: The time spans where the submitted score is
 	// better than the existing score for that time span.
-	// Possible values
-	// are:
+	// Possible values are:
 	// - "ALL_TIME" - The score is an all-time score.
-	// - "WEEKLY" -
-	// The score is a weekly score.
+	// - "WEEKLY" - The score is a weekly score.
 	// - "DAILY" - The score is a daily score.
 	BeatenScoreTimeSpans []string `json:"beatenScoreTimeSpans,omitempty"`
 
@@ -1553,21 +1519,16 @@ type Quest struct {
 
 	// State: The state of the quest.
 	// Possible values are:
-	// - "UPCOMING":
-	// The quest is upcoming. The user can see the quest, but cannot accept
-	// it until it is open.
-	// - "OPEN": The quest is currently open and may
-	// be accepted at this time.
-	// - "ACCEPTED": The user is currently
-	// participating in this quest.
-	// - "COMPLETED": The user has completed
-	// the quest.
-	// - "FAILED": The quest was attempted but was not completed
-	// before the deadline expired.
-	// - "EXPIRED": The quest has expired and
-	// was not accepted.
-	// - "DELETED": The quest should be deleted from the
-	// local database.
+	// - "UPCOMING": The quest is upcoming. The user can see the quest, but
+	// cannot accept it until it is open.
+	// - "OPEN": The quest is currently open and may be accepted at this
+	// time.
+	// - "ACCEPTED": The user is currently participating in this quest.
+	// - "COMPLETED": The user has completed the quest.
+	// - "FAILED": The quest was attempted but was not completed before the
+	// deadline expired.
+	// - "EXPIRED": The quest has expired and was not accepted.
+	// - "DELETED": The quest should be deleted from the local database.
 	State string `json:"state,omitempty"`
 }
 
@@ -1593,9 +1554,8 @@ type QuestCriterion struct {
 	// CurrentContribution: The number of increments the player has made
 	// toward the completion count event increments required to complete the
 	// quest. This value will not exceed the completion contribution.
-	// There
-	// will be no currentContribution until the player has accepted the
-	// quest.
+	// There will be no currentContribution until the player has accepted
+	// the quest.
 	CurrentContribution *QuestContribution `json:"currentContribution,omitempty"`
 
 	// EventId: The ID of the event the criterion corresponds to.
@@ -1605,8 +1565,8 @@ type QuestCriterion struct {
 	// quest at the time that the quest was accepted. This value may change
 	// if event increments that took place before the start of quest are
 	// uploaded after the quest starts.
-	// There will be no
-	// initialPlayerProgress until the player has accepted the quest.
+	// There will be no initialPlayerProgress until the player has accepted
+	// the quest.
 	InitialPlayerProgress *QuestContribution `json:"initialPlayerProgress,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
@@ -1644,15 +1604,12 @@ type QuestMilestone struct {
 
 	// State: The current state of the milestone.
 	// Possible values are:
-	// -
-	// "COMPLETED_NOT_CLAIMED" - The milestone is complete, but has not yet
-	// been claimed.
-	// - "CLAIMED" - The milestone is complete and has been
-	// claimed.
-	// - "NOT_COMPLETED" - The milestone has not yet been
-	// completed.
-	// - "NOT_STARTED" - The milestone is for a quest that has
-	// not yet been accepted.
+	// - "COMPLETED_NOT_CLAIMED" - The milestone is complete, but has not
+	// yet been claimed.
+	// - "CLAIMED" - The milestone is complete and has been claimed.
+	// - "NOT_COMPLETED" - The milestone has not yet been completed.
+	// - "NOT_STARTED" - The milestone is for a quest that has not yet been
+	// accepted.
 	State string `json:"state,omitempty"`
 }
 
@@ -1666,14 +1623,12 @@ type RevisionCheckResponse struct {
 	Kind string `json:"kind,omitempty"`
 
 	// RevisionStatus: The result of the revision check.
-	// Possible values
-	// are:
+	// Possible values are:
 	// - "OK" - The revision being used is current.
-	// - "DEPRECATED" -
-	// There is currently a newer version available, but the revision being
-	// used still works.
-	// - "INVALID" - The revision being used is not
-	// supported in any released version.
+	// - "DEPRECATED" - There is currently a newer version available, but
+	// the revision being used still works.
+	// - "INVALID" - The revision being used is not supported in any
+	// released version.
 	RevisionStatus string `json:"revisionStatus,omitempty"`
 }
 
@@ -1724,20 +1679,17 @@ type Room struct {
 
 	// Status: The status of the room.
 	// Possible values are:
-	// -
-	// "ROOM_INVITING" - One or more players have been invited and not
+	// - "ROOM_INVITING" - One or more players have been invited and not
 	// responded.
-	// - "ROOM_AUTO_MATCHING" - One or more slots need to be
-	// filled by auto-matching.
-	// - "ROOM_CONNECTING" - Players have joined
-	// and are connecting to each other (either before or after
-	// auto-matching).
-	// - "ROOM_ACTIVE" - All players have joined and
-	// connected to each other.
-	// - "ROOM_DELETED" - The room should no
-	// longer be shown on the client. Returned in sync calls when a player
-	// joins a room (as a tombstone), or for rooms where all joined
-	// participants have left.
+	// - "ROOM_AUTO_MATCHING" - One or more slots need to be filled by
+	// auto-matching.
+	// - "ROOM_CONNECTING" - Players have joined and are connecting to each
+	// other (either before or after auto-matching).
+	// - "ROOM_ACTIVE" - All players have joined and connected to each
+	// other.
+	// - "ROOM_DELETED" - The room should no longer be shown on the client.
+	// Returned in sync calls when a player joins a room (as a tombstone),
+	// or for rooms where all joined participants have left.
 	Status string `json:"status,omitempty"`
 
 	// Variant: The variant / mode of the application being played; can be
@@ -1887,36 +1839,28 @@ type RoomLeaveRequest struct {
 
 	// Reason: Reason for leaving the match.
 	// Possible values are:
-	// -
-	// "PLAYER_LEFT" - The player chose to leave the room..
-	// - "GAME_LEFT" -
-	// The game chose to remove the player from the room.
-	// -
-	// "REALTIME_ABANDONED" - The player switched to another application and
-	// abandoned the room.
-	// - "REALTIME_PEER_CONNECTION_FAILURE" - The
-	// client was unable to establish a connection to other peer(s).
-	// -
-	// "REALTIME_SERVER_CONNECTION_FAILURE" - The client was unable to
+	// - "PLAYER_LEFT" - The player chose to leave the room..
+	// - "GAME_LEFT" - The game chose to remove the player from the room.
+	// - "REALTIME_ABANDONED" - The player switched to another application
+	// and abandoned the room.
+	// - "REALTIME_PEER_CONNECTION_FAILURE" - The client was unable to
+	// establish a connection to other peer(s).
+	// - "REALTIME_SERVER_CONNECTION_FAILURE" - The client was unable to
 	// communicate with the server.
-	// - "REALTIME_SERVER_ERROR" - The client
-	// received an error response when it tried to communicate with the
-	// server.
-	// - "REALTIME_TIMEOUT" - The client timed out while waiting
-	// for a room.
-	// - "REALTIME_CLIENT_DISCONNECTING" - The client
-	// disconnects without first calling Leave.
-	// - "REALTIME_SIGN_OUT" - The
-	// user signed out of G+ while in the room.
-	// - "REALTIME_GAME_CRASHED" -
-	// The game crashed.
-	// - "REALTIME_ROOM_SERVICE_CRASHED" -
-	// RoomAndroidService crashed.
-	// -
-	// "REALTIME_DIFFERENT_CLIENT_ROOM_OPERATION" - Another client is trying
-	// to enter a room.
-	// - "REALTIME_SAME_CLIENT_ROOM_OPERATION" - The same
-	// client is trying to enter a new room.
+	// - "REALTIME_SERVER_ERROR" - The client received an error response
+	// when it tried to communicate with the server.
+	// - "REALTIME_TIMEOUT" - The client timed out while waiting for a room.
+	//
+	// - "REALTIME_CLIENT_DISCONNECTING" - The client disconnects without
+	// first calling Leave.
+	// - "REALTIME_SIGN_OUT" - The user signed out of G+ while in the room.
+	//
+	// - "REALTIME_GAME_CRASHED" - The game crashed.
+	// - "REALTIME_ROOM_SERVICE_CRASHED" - RoomAndroidService crashed.
+	// - "REALTIME_DIFFERENT_CLIENT_ROOM_OPERATION" - Another client is
+	// trying to enter a room.
+	// - "REALTIME_SAME_CLIENT_ROOM_OPERATION" - The same client is trying
+	// to enter a new room.
 	Reason string `json:"reason,omitempty"`
 }
 
@@ -1952,14 +1896,12 @@ type RoomP2PStatus struct {
 
 	// Error: The error code in event of a failure.
 	// Possible values are:
-	// -
-	// "P2P_FAILED" - The client failed to establish a P2P connection with
+	// - "P2P_FAILED" - The client failed to establish a P2P connection with
 	// the peer.
-	// - "PRESENCE_FAILED" - The client failed to register to
-	// receive P2P connections.
-	// - "RELAY_SERVER_FAILED" - The client
-	// received an error when trying to use the relay server to establish a
-	// P2P connection with the peer.
+	// - "PRESENCE_FAILED" - The client failed to register to receive P2P
+	// connections.
+	// - "RELAY_SERVER_FAILED" - The client received an error when trying to
+	// use the relay server to establish a P2P connection with the peer.
 	Error string `json:"error,omitempty"`
 
 	// Error_reason: More detailed diagnostic message returned in event of a
@@ -1975,11 +1917,10 @@ type RoomP2PStatus struct {
 
 	// Status: The status of the peer in the room.
 	// Possible values are:
-	// -
-	// "CONNECTION_ESTABLISHED" - The client established a P2P connection
+	// - "CONNECTION_ESTABLISHED" - The client established a P2P connection
 	// with the peer.
-	// - "CONNECTION_FAILED" - The client failed to
-	// establish directed presence with the peer.
+	// - "CONNECTION_FAILED" - The client failed to establish directed
+	// presence with the peer.
 	Status string `json:"status,omitempty"`
 
 	// UnreliableRoundtripLatencyMillis: The amount of time in milliseconds
@@ -2030,22 +1971,17 @@ type RoomParticipant struct {
 	// LeaveReason: The reason the participant left the room; populated if
 	// the participant status is PARTICIPANT_LEFT.
 	// Possible values are:
-	// -
-	// "PLAYER_LEFT" - The player explicitly chose to leave the room.
-	// -
-	// "GAME_LEFT" - The game chose to remove the player from the room.
-	// -
-	// "ABANDONED" - The player switched to another application and
+	// - "PLAYER_LEFT" - The player explicitly chose to leave the room.
+	// - "GAME_LEFT" - The game chose to remove the player from the room.
+	// - "ABANDONED" - The player switched to another application and
 	// abandoned the room.
-	// - "PEER_CONNECTION_FAILURE" - The client was
-	// unable to establish or maintain a connection to other peer(s) in the
-	// room.
-	// - "SERVER_ERROR" - The client received an error response when
-	// it tried to communicate with the server.
-	// - "TIMEOUT" - The client
-	// timed out while waiting for players to join and connect.
-	// -
-	// "PRESENCE_FAILURE" - The client's XMPP connection ended abruptly.
+	// - "PEER_CONNECTION_FAILURE" - The client was unable to establish or
+	// maintain a connection to other peer(s) in the room.
+	// - "SERVER_ERROR" - The client received an error response when it
+	// tried to communicate with the server.
+	// - "TIMEOUT" - The client timed out while waiting for players to join
+	// and connect.
+	// - "PRESENCE_FAILURE" - The client's XMPP connection ended abruptly.
 	LeaveReason string `json:"leaveReason,omitempty"`
 
 	// Player: Information about the player. Not populated if this player
@@ -2056,16 +1992,14 @@ type RoomParticipant struct {
 	// Status: The status of the participant with respect to the
 	// room.
 	// Possible values are:
-	// - "PARTICIPANT_INVITED" - The
-	// participant has been invited to join the room, but has not yet
-	// responded.
-	// - "PARTICIPANT_JOINED" - The participant has joined the
-	// room (either after creating it or accepting an invitation.)
-	// -
-	// "PARTICIPANT_DECLINED" - The participant declined an invitation to
+	// - "PARTICIPANT_INVITED" - The participant has been invited to join
+	// the room, but has not yet responded.
+	// - "PARTICIPANT_JOINED" - The participant has joined the room (either
+	// after creating it or accepting an invitation.)
+	// - "PARTICIPANT_DECLINED" - The participant declined an invitation to
 	// join the room.
-	// - "PARTICIPANT_LEFT" - The participant joined the
-	// room and then left it.
+	// - "PARTICIPANT_LEFT" - The participant joined the room and then left
+	// it.
 	Status string `json:"status,omitempty"`
 }
 
@@ -2088,14 +2022,12 @@ type RoomStatus struct {
 
 	// Status: The status of the room.
 	// Possible values are:
-	// -
-	// "ROOM_INVITING" - One or more players have been invited and not
+	// - "ROOM_INVITING" - One or more players have been invited and not
 	// responded.
-	// - "ROOM_AUTO_MATCHING" - One or more slots need to be
-	// filled by auto-matching.
-	// - "ROOM_CONNECTING" - Players have joined
-	// are connecting to each other (either before or after auto-matching).
-	//
+	// - "ROOM_AUTO_MATCHING" - One or more slots need to be filled by
+	// auto-matching.
+	// - "ROOM_CONNECTING" - Players have joined are connecting to each
+	// other (either before or after auto-matching).
 	// - "ROOM_ACTIVE" - All players have joined and connected to each
 	// other.
 	// - "ROOM_DELETED" - All joined players have left.
@@ -2165,8 +2097,7 @@ type Snapshot struct {
 
 	// Type: The type of this snapshot.
 	// Possible values are:
-	// - "SAVE_GAME"
-	// - A snapshot representing a save game.
+	// - "SAVE_GAME" - A snapshot representing a save game.
 	Type string `json:"type,omitempty"`
 
 	// UniqueName: The unique name provided when the snapshot was created.
@@ -2288,34 +2219,27 @@ type TurnBasedMatch struct {
 
 	// Status: The status of the match.
 	// Possible values are:
-	// -
-	// "MATCH_AUTO_MATCHING" - One or more slots need to be filled by
+	// - "MATCH_AUTO_MATCHING" - One or more slots need to be filled by
 	// auto-matching; the match cannot be established until they are filled.
 	//
 	// - "MATCH_ACTIVE" - The match has started.
-	// - "MATCH_COMPLETE" - The
-	// match has finished.
+	// - "MATCH_COMPLETE" - The match has finished.
 	// - "MATCH_CANCELED" - The match was canceled.
-	// -
-	// "MATCH_EXPIRED" - The match expired due to inactivity.
-	// -
-	// "MATCH_DELETED" - The match should no longer be shown on the client.
-	// Returned only for tombstones for matches when sync is called.
+	// - "MATCH_EXPIRED" - The match expired due to inactivity.
+	// - "MATCH_DELETED" - The match should no longer be shown on the
+	// client. Returned only for tombstones for matches when sync is called.
 	Status string `json:"status,omitempty"`
 
 	// UserMatchStatus: The status of the current user in the match. Derived
 	// from the match type, match status, the user's participant status, and
 	// the pending participant for the match.
 	// Possible values are:
-	// -
-	// "USER_INVITED" - The user has been invited to join the match and has
-	// not responded yet.
-	// - "USER_AWAITING_TURN" - The user is waiting for
-	// their turn.
-	// - "USER_TURN" - The user has an action to take in the
-	// match.
-	// - "USER_MATCH_COMPLETED" - The match has ended (it is
-	// completed, canceled, or expired.)
+	// - "USER_INVITED" - The user has been invited to join the match and
+	// has not responded yet.
+	// - "USER_AWAITING_TURN" - The user is waiting for their turn.
+	// - "USER_TURN" - The user has an action to take in the match.
+	// - "USER_MATCH_COMPLETED" - The match has ended (it is completed,
+	// canceled, or expired.)
 	UserMatchStatus string `json:"userMatchStatus,omitempty"`
 
 	// Variant: The variant / mode of the application being played; can be
@@ -2428,24 +2352,21 @@ type TurnBasedMatchParticipant struct {
 	// Status: The status of the participant with respect to the
 	// match.
 	// Possible values are:
-	// - "PARTICIPANT_NOT_INVITED_YET" - The
-	// participant is slated to be invited to the match, but the invitation
-	// has not been sent; the invite will be sent when it becomes their
-	// turn.
-	// - "PARTICIPANT_INVITED" - The participant has been invited to
-	// join the match, but has not yet responded.
-	// - "PARTICIPANT_JOINED" -
-	// The participant has joined the match (either after creating it or
-	// accepting an invitation.)
-	// - "PARTICIPANT_DECLINED" - The participant
-	// declined an invitation to join the match.
-	// - "PARTICIPANT_LEFT" - The
-	// participant joined the match and then left it.
-	// -
-	// "PARTICIPANT_FINISHED" - The participant finished playing in the
+	// - "PARTICIPANT_NOT_INVITED_YET" - The participant is slated to be
+	// invited to the match, but the invitation has not been sent; the
+	// invite will be sent when it becomes their turn.
+	// - "PARTICIPANT_INVITED" - The participant has been invited to join
+	// the match, but has not yet responded.
+	// - "PARTICIPANT_JOINED" - The participant has joined the match (either
+	// after creating it or accepting an invitation.)
+	// - "PARTICIPANT_DECLINED" - The participant declined an invitation to
+	// join the match.
+	// - "PARTICIPANT_LEFT" - The participant joined the match and then left
+	// it.
+	// - "PARTICIPANT_FINISHED" - The participant finished playing in the
 	// match.
-	// - "PARTICIPANT_UNRESPONSIVE" - The participant did not take
-	// their turn in the allotted time.
+	// - "PARTICIPANT_UNRESPONSIVE" - The participant did not take their
+	// turn in the allotted time.
 	Status string `json:"status,omitempty"`
 }
 
@@ -5670,9 +5591,8 @@ type ScoresGetCall struct {
 // currently authenticated player. For a specific time span,
 // leaderboardId can be set to ALL to retrieve data for all leaderboards
 // in a given time span.
-// NOTE: You cannot ask for 'ALL' leaderboards and
-// 'ALL' timeSpans in the same request; only one parameter may be set to
-// 'ALL'.
+// NOTE: You cannot ask for 'ALL' leaderboards and 'ALL' timeSpans in
+// the same request; only one parameter may be set to 'ALL'.
 func (r *ScoresService) Get(playerId string, leaderboardId string, timeSpan string) *ScoresGetCall {
 	c := &ScoresGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.playerId = playerId

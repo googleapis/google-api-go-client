@@ -327,9 +327,9 @@ type ReportApiColumnSpec struct {
 	// dimension must already be set up in DoubleClick Search. The custom
 	// dimension name, which appears in DoubleClick Search, is case
 	// sensitive.
-	// If used in a conversion report, returns the value of the
-	// specified custom dimension for the given conversion, if set. This
-	// column does not segment the conversion report.
+	// If used in a conversion report, returns the value of the specified
+	// custom dimension for the given conversion, if set. This column does
+	// not segment the conversion report.
 	CustomDimensionName string `json:"customDimensionName,omitempty"`
 
 	// CustomMetricName: Name of a custom metric to include in the report.

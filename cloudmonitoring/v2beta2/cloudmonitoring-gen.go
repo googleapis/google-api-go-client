@@ -718,14 +718,12 @@ func (c *TimeseriesListCall) Count(count int64) *TimeseriesListCall {
 
 // Labels sets the optional parameter "labels": A collection of labels
 // for the matching time series, which are represented as:
-// -
-// key==value: key equals the value
-// - key=~value: key regex matches the
-// value
+// - key==value: key equals the value
+// - key=~value: key regex matches the value
 // - key!=value: key does not equal the value
-// - key!~value: key
-// regex does not match the value  For example, to list all of the time
-// series descriptors for the region us-central1, you could
+// - key!~value: key regex does not match the value  For example, to
+// list all of the time series descriptors for the region us-central1,
+// you could
 // specify:
 // label=cloud.googleapis.com%2Flocation=~us-central1.*
 func (c *TimeseriesListCall) Labels(labels string) *TimeseriesListCall {
@@ -756,16 +754,14 @@ func (c *TimeseriesListCall) PageToken(pageToken string) *TimeseriesListCall {
 // interval: (youngest - timespan, youngest]. The timespan and oldest
 // parameters should not be used together. Units:
 // - s: second
-// - m:
-// minute
+// - m: minute
 // - h: hour
 // - d: day
-// - w: week  Examples: 2s, 3m, 4w. Only
-// one unit is allowed, for example: 2w3d is not allowed; you should use
-// 17d instead.
+// - w: week  Examples: 2s, 3m, 4w. Only one unit is allowed, for
+// example: 2w3d is not allowed; you should use 17d instead.
 //
-// If neither oldest nor timespan is specified, the
-// default time interval will be (youngest - 4 hours, youngest].
+// If neither oldest nor timespan is specified, the default time
+// interval will be (youngest - 4 hours, youngest].
 func (c *TimeseriesListCall) Timespan(timespan string) *TimeseriesListCall {
 	c.opt_["timespan"] = timespan
 	return c
@@ -778,9 +774,8 @@ func (c *TimeseriesListCall) Timespan(timespan string) *TimeseriesListCall {
 // - m: minute
 // - h: hour
 // - d: day
-// - w: week
-// Examples: 3m, 4w. Only one unit is allowed, for example: 2w3d is not
-// allowed; you should use 17d instead.
+// - w: week  Examples: 3m, 4w. Only one unit is allowed, for example:
+// 2w3d is not allowed; you should use 17d instead.
 func (c *TimeseriesListCall) Window(window string) *TimeseriesListCall {
 	c.opt_["window"] = window
 	return c
@@ -1080,14 +1075,12 @@ func (c *TimeseriesDescriptorsListCall) Count(count int64) *TimeseriesDescriptor
 
 // Labels sets the optional parameter "labels": A collection of labels
 // for the matching time series, which are represented as:
-// -
-// key==value: key equals the value
-// - key=~value: key regex matches the
-// value
+// - key==value: key equals the value
+// - key=~value: key regex matches the value
 // - key!=value: key does not equal the value
-// - key!~value: key
-// regex does not match the value  For example, to list all of the time
-// series descriptors for the region us-central1, you could
+// - key!~value: key regex does not match the value  For example, to
+// list all of the time series descriptors for the region us-central1,
+// you could
 // specify:
 // label=cloud.googleapis.com%2Flocation=~us-central1.*
 func (c *TimeseriesDescriptorsListCall) Labels(labels string) *TimeseriesDescriptorsListCall {
@@ -1118,16 +1111,14 @@ func (c *TimeseriesDescriptorsListCall) PageToken(pageToken string) *TimeseriesD
 // interval: (youngest - timespan, youngest]. The timespan and oldest
 // parameters should not be used together. Units:
 // - s: second
-// - m:
-// minute
+// - m: minute
 // - h: hour
 // - d: day
-// - w: week  Examples: 2s, 3m, 4w. Only
-// one unit is allowed, for example: 2w3d is not allowed; you should use
-// 17d instead.
+// - w: week  Examples: 2s, 3m, 4w. Only one unit is allowed, for
+// example: 2w3d is not allowed; you should use 17d instead.
 //
-// If neither oldest nor timespan is specified, the
-// default time interval will be (youngest - 4 hours, youngest].
+// If neither oldest nor timespan is specified, the default time
+// interval will be (youngest - 4 hours, youngest].
 func (c *TimeseriesDescriptorsListCall) Timespan(timespan string) *TimeseriesDescriptorsListCall {
 	c.opt_["timespan"] = timespan
 	return c
@@ -1140,9 +1131,8 @@ func (c *TimeseriesDescriptorsListCall) Timespan(timespan string) *TimeseriesDes
 // - m: minute
 // - h: hour
 // - d: day
-// - w: week
-// Examples: 3m, 4w. Only one unit is allowed, for example: 2w3d is not
-// allowed; you should use 17d instead.
+// - w: week  Examples: 3m, 4w. Only one unit is allowed, for example:
+// 2w3d is not allowed; you should use 17d instead.
 func (c *TimeseriesDescriptorsListCall) Window(window string) *TimeseriesDescriptorsListCall {
 	c.opt_["window"] = window
 	return c

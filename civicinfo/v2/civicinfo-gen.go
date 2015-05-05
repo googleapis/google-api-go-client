@@ -365,13 +365,12 @@ type GeographicDivision struct {
 	// AlsoKnownAs: Any other valid OCD IDs that refer to the same
 	// division.
 	//
-	// Because OCD IDs are meant to be human-readable and at
-	// least somewhat predictable, there are occasionally several
-	// identifiers for a single division. These identifiers are defined to
-	// be equivalent to one another, and one is always indicated as the
-	// primary identifier. The primary identifier will be returned in ocd_id
-	// above, and any other equivalent valid identifiers will be returned in
-	// this list.
+	// Because OCD IDs are meant to be human-readable and at least somewhat
+	// predictable, there are occasionally several identifiers for a single
+	// division. These identifiers are defined to be equivalent to one
+	// another, and one is always indicated as the primary identifier. The
+	// primary identifier will be returned in ocd_id above, and any other
+	// equivalent valid identifiers will be returned in this list.
 	//
 	// For example, if this division's OCD ID is
 	// ocd-division/country:us/district:dc, this will contain

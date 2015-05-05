@@ -191,10 +191,8 @@ type AchievementResetResponse struct {
 	// CurrentState: The current state of the achievement. This is the same
 	// as the initial state of the achievement.
 	// Possible values are:
-	// -
-	// "HIDDEN"- Achievement is hidden.
-	// - "REVEALED" - Achievement is
-	// revealed.
+	// - "HIDDEN"- Achievement is hidden.
+	// - "REVEALED" - Achievement is revealed.
 	// - "UNLOCKED" - Achievement is unlocked.
 	CurrentState string `json:"currentState,omitempty"`
 
@@ -343,13 +341,10 @@ type PlayerScoreResetResponse struct {
 	Kind string `json:"kind,omitempty"`
 
 	// ResetScoreTimeSpans: The time spans of the updated score.
-	// Possible
-	// values are:
+	// Possible values are:
 	// - "ALL_TIME" - The score is an all-time score.
-	// -
-	// "WEEKLY" - The score is a weekly score.
-	// - "DAILY" - The score is a
-	// daily score.
+	// - "WEEKLY" - The score is a weekly score.
+	// - "DAILY" - The score is a daily score.
 	ResetScoreTimeSpans []string `json:"resetScoreTimeSpans,omitempty"`
 }
 

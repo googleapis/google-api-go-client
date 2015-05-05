@@ -222,8 +222,7 @@ type File struct {
 
 	// Status: The status of the report file, one of:
 	// - "PROCESSING"
-	// -
-	// "REPORT_AVAILABLE"
+	// - "REPORT_AVAILABLE"
 	// - "FAILED"
 	// - "CANCELLED"
 	Status string `json:"status,omitempty"`
@@ -364,20 +363,16 @@ type ReportCriteriaDateRange struct {
 	// - "TODAY"
 	// - "YESTERDAY"
 	// - "WEEK_TO_DATE"
-	//
 	// - "MONTH_TO_DATE"
 	// - "QUARTER_TO_DATE"
 	// - "YEAR_TO_DATE"
-	// -
-	// "PREVIOUS_WEEK"
+	// - "PREVIOUS_WEEK"
 	// - "PREVIOUS_MONTH"
 	// - "PREVIOUS_QUARTER"
-	// -
-	// "PREVIOUS_YEAR"
+	// - "PREVIOUS_YEAR"
 	// - "LAST_7_DAYS"
 	// - "LAST_30_DAYS"
 	// - "LAST_90_DAYS"
-	//
 	// - "LAST_365_DAYS"
 	// - "LAST_24_MONTHS"
 	RelativeDateRange string `json:"relativeDateRange,omitempty"`
@@ -402,14 +397,12 @@ type ReportSchedule struct {
 	ExpirationDate string `json:"expirationDate,omitempty"`
 
 	// Repeats: The interval the report is repeated for, one of:
-	// -
-	// "DAILY", also requires field "every" to be set.
-	// - "WEEKLY", also
-	// requires fields "every" and "repeatsOnWeekDays" to be set.
-	// -
-	// "TWICE_A_MONTH"
-	// - "MONTHLY", also requires fields "every" and
-	// "runsOnDayOfMonth" to be set.
+	// - "DAILY", also requires field "every" to be set.
+	// - "WEEKLY", also requires fields "every" and "repeatsOnWeekDays" to
+	// be set.
+	// - "TWICE_A_MONTH"
+	// - "MONTHLY", also requires fields "every" and "runsOnDayOfMonth" to
+	// be set.
 	// - "QUARTERLY"
 	// - "YEARLY"
 	Repeats string `json:"repeats,omitempty"`
@@ -424,10 +417,10 @@ type ReportSchedule struct {
 	// are:
 	// - DAY_OF_MONTH
 	// - WEEK_OF_MONTH
-	// Example: If 'startDate' is
-	// Monday, April 2nd 2012 (2012-04-02), "DAY_OF_MONTH" would run
-	// subsequent reports on the 2nd of every Month, and "WEEK_OF_MONTH"
-	// would run subsequent reports on the first Monday of the month.
+	// Example: If 'startDate' is Monday, April 2nd 2012 (2012-04-02),
+	// "DAY_OF_MONTH" would run subsequent reports on the 2nd of every
+	// Month, and "WEEK_OF_MONTH" would run subsequent reports on the first
+	// Monday of the month.
 	RunsOnDayOfMonth string `json:"runsOnDayOfMonth,omitempty"`
 
 	// StartDate: Start date of date range for which scheduled reports

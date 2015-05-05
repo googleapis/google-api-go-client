@@ -184,10 +184,9 @@ type Column struct {
 	Description string `json:"description,omitempty"`
 
 	// FormatPattern: Format pattern.
-	// Acceptable values are
-	// DT_DATE_MEDIUMe.g Dec 24, 2008 DT_DATE_SHORTfor example 12/24/08
-	// DT_DATE_TIME_MEDIUMfor example Dec 24, 2008 8:30:45 PM
-	// DT_DATE_TIME_SHORTfor example 12/24/08 8:30 PM
+	// Acceptable values are DT_DATE_MEDIUMe.g Dec 24, 2008 DT_DATE_SHORTfor
+	// example 12/24/08 DT_DATE_TIME_MEDIUMfor example Dec 24, 2008 8:30:45
+	// PM DT_DATE_TIME_SHORTfor example 12/24/08 8:30 PM
 	// DT_DAY_MONTH_2_DIGIT_YEARfor example 24/12/08
 	// DT_DAY_MONTH_2_DIGIT_YEAR_TIMEfor example 24/12/08 20:30
 	// DT_DAY_MONTH_2_DIGIT_YEAR_TIME_MERIDIANfor example 24/12/08 8:30 PM
@@ -213,8 +212,7 @@ type Column struct {
 	FormatPattern string `json:"formatPattern,omitempty"`
 
 	// GraphPredicate: Column graph predicate.
-	// Used to map table to graph
-	// data model (subject,predicate,object)
+	// Used to map table to graph data model (subject,predicate,object)
 	// See W3C Graph-based Data Model.
 	GraphPredicate string `json:"graphPredicate,omitempty"`
 
@@ -1167,15 +1165,13 @@ type QuerySqlCall struct {
 }
 
 // Sql: Executes a Fusion Tables SQL statement, which can be any of
-// -
-// SELECT
+// - SELECT
 // - INSERT
 // - UPDATE
 // - DELETE
 // - SHOW
 // - DESCRIBE
-// - CREATE
-// statement.
+// - CREATE statement.
 func (r *QueryService) Sql(sql string) *QuerySqlCall {
 	c := &QuerySqlCall{s: r.s, opt_: make(map[string]interface{})}
 	c.sql = sql
@@ -1285,8 +1281,7 @@ type QuerySqlGetCall struct {
 
 // SqlGet: Executes a SQL statement which can be any of
 // - SELECT
-// -
-// SHOW
+// - SHOW
 // - DESCRIBE
 func (r *QueryService) SqlGet(sql string) *QuerySqlGetCall {
 	c := &QuerySqlGetCall{s: r.s, opt_: make(map[string]interface{})}

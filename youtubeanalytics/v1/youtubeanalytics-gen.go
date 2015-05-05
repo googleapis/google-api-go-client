@@ -506,16 +506,15 @@ func (r *GroupItemsService) Delete(id string) *GroupItemsDeleteCall {
 // "onBehalfOfContentOwner": Note: This parameter is intended
 // exclusively for YouTube content partners.
 //
-// The onBehalfOfContentOwner
-// parameter indicates that the request's authorization credentials
-// identify a YouTube CMS user who is acting on behalf of the content
-// owner specified in the parameter value. This parameter is intended
-// for YouTube content partners that own and manage many different
-// YouTube channels. It allows content owners to authenticate once and
-// get access to all their video and channel data, without having to
-// provide authentication credentials for each individual channel. The
-// CMS account that the user authenticates with must be linked to the
-// specified YouTube content owner.
+// The onBehalfOfContentOwner parameter indicates that the request's
+// authorization credentials identify a YouTube CMS user who is acting
+// on behalf of the content owner specified in the parameter value. This
+// parameter is intended for YouTube content partners that own and
+// manage many different YouTube channels. It allows content owners to
+// authenticate once and get access to all their video and channel data,
+// without having to provide authentication credentials for each
+// individual channel. The CMS account that the user authenticates with
+// must be linked to the specified YouTube content owner.
 func (c *GroupItemsDeleteCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *GroupItemsDeleteCall {
 	c.opt_["onBehalfOfContentOwner"] = onBehalfOfContentOwner
 	return c
@@ -602,16 +601,15 @@ func (r *GroupItemsService) Insert(groupitem *GroupItem) *GroupItemsInsertCall {
 // "onBehalfOfContentOwner": Note: This parameter is intended
 // exclusively for YouTube content partners.
 //
-// The onBehalfOfContentOwner
-// parameter indicates that the request's authorization credentials
-// identify a YouTube CMS user who is acting on behalf of the content
-// owner specified in the parameter value. This parameter is intended
-// for YouTube content partners that own and manage many different
-// YouTube channels. It allows content owners to authenticate once and
-// get access to all their video and channel data, without having to
-// provide authentication credentials for each individual channel. The
-// CMS account that the user authenticates with must be linked to the
-// specified YouTube content owner.
+// The onBehalfOfContentOwner parameter indicates that the request's
+// authorization credentials identify a YouTube CMS user who is acting
+// on behalf of the content owner specified in the parameter value. This
+// parameter is intended for YouTube content partners that own and
+// manage many different YouTube channels. It allows content owners to
+// authenticate once and get access to all their video and channel data,
+// without having to provide authentication credentials for each
+// individual channel. The CMS account that the user authenticates with
+// must be linked to the specified YouTube content owner.
 func (c *GroupItemsInsertCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *GroupItemsInsertCall {
 	c.opt_["onBehalfOfContentOwner"] = onBehalfOfContentOwner
 	return c
@@ -705,16 +703,15 @@ func (r *GroupItemsService) List(groupId string) *GroupItemsListCall {
 // "onBehalfOfContentOwner": Note: This parameter is intended
 // exclusively for YouTube content partners.
 //
-// The onBehalfOfContentOwner
-// parameter indicates that the request's authorization credentials
-// identify a YouTube CMS user who is acting on behalf of the content
-// owner specified in the parameter value. This parameter is intended
-// for YouTube content partners that own and manage many different
-// YouTube channels. It allows content owners to authenticate once and
-// get access to all their video and channel data, without having to
-// provide authentication credentials for each individual channel. The
-// CMS account that the user authenticates with must be linked to the
-// specified YouTube content owner.
+// The onBehalfOfContentOwner parameter indicates that the request's
+// authorization credentials identify a YouTube CMS user who is acting
+// on behalf of the content owner specified in the parameter value. This
+// parameter is intended for YouTube content partners that own and
+// manage many different YouTube channels. It allows content owners to
+// authenticate once and get access to all their video and channel data,
+// without having to provide authentication credentials for each
+// individual channel. The CMS account that the user authenticates with
+// must be linked to the specified YouTube content owner.
 func (c *GroupItemsListCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *GroupItemsListCall {
 	c.opt_["onBehalfOfContentOwner"] = onBehalfOfContentOwner
 	return c
@@ -810,16 +807,15 @@ func (r *GroupsService) Delete(id string) *GroupsDeleteCall {
 // "onBehalfOfContentOwner": Note: This parameter is intended
 // exclusively for YouTube content partners.
 //
-// The onBehalfOfContentOwner
-// parameter indicates that the request's authorization credentials
-// identify a YouTube CMS user who is acting on behalf of the content
-// owner specified in the parameter value. This parameter is intended
-// for YouTube content partners that own and manage many different
-// YouTube channels. It allows content owners to authenticate once and
-// get access to all their video and channel data, without having to
-// provide authentication credentials for each individual channel. The
-// CMS account that the user authenticates with must be linked to the
-// specified YouTube content owner.
+// The onBehalfOfContentOwner parameter indicates that the request's
+// authorization credentials identify a YouTube CMS user who is acting
+// on behalf of the content owner specified in the parameter value. This
+// parameter is intended for YouTube content partners that own and
+// manage many different YouTube channels. It allows content owners to
+// authenticate once and get access to all their video and channel data,
+// without having to provide authentication credentials for each
+// individual channel. The CMS account that the user authenticates with
+// must be linked to the specified YouTube content owner.
 func (c *GroupsDeleteCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *GroupsDeleteCall {
 	c.opt_["onBehalfOfContentOwner"] = onBehalfOfContentOwner
 	return c
@@ -906,16 +902,15 @@ func (r *GroupsService) Insert(group *Group) *GroupsInsertCall {
 // "onBehalfOfContentOwner": Note: This parameter is intended
 // exclusively for YouTube content partners.
 //
-// The onBehalfOfContentOwner
-// parameter indicates that the request's authorization credentials
-// identify a YouTube CMS user who is acting on behalf of the content
-// owner specified in the parameter value. This parameter is intended
-// for YouTube content partners that own and manage many different
-// YouTube channels. It allows content owners to authenticate once and
-// get access to all their video and channel data, without having to
-// provide authentication credentials for each individual channel. The
-// CMS account that the user authenticates with must be linked to the
-// specified YouTube content owner.
+// The onBehalfOfContentOwner parameter indicates that the request's
+// authorization credentials identify a YouTube CMS user who is acting
+// on behalf of the content owner specified in the parameter value. This
+// parameter is intended for YouTube content partners that own and
+// manage many different YouTube channels. It allows content owners to
+// authenticate once and get access to all their video and channel data,
+// without having to provide authentication credentials for each
+// individual channel. The CMS account that the user authenticates with
+// must be linked to the specified YouTube content owner.
 func (c *GroupsInsertCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *GroupsInsertCall {
 	c.opt_["onBehalfOfContentOwner"] = onBehalfOfContentOwner
 	return c
@@ -1026,16 +1021,15 @@ func (c *GroupsListCall) Mine(mine bool) *GroupsListCall {
 // "onBehalfOfContentOwner": Note: This parameter is intended
 // exclusively for YouTube content partners.
 //
-// The onBehalfOfContentOwner
-// parameter indicates that the request's authorization credentials
-// identify a YouTube CMS user who is acting on behalf of the content
-// owner specified in the parameter value. This parameter is intended
-// for YouTube content partners that own and manage many different
-// YouTube channels. It allows content owners to authenticate once and
-// get access to all their video and channel data, without having to
-// provide authentication credentials for each individual channel. The
-// CMS account that the user authenticates with must be linked to the
-// specified YouTube content owner.
+// The onBehalfOfContentOwner parameter indicates that the request's
+// authorization credentials identify a YouTube CMS user who is acting
+// on behalf of the content owner specified in the parameter value. This
+// parameter is intended for YouTube content partners that own and
+// manage many different YouTube channels. It allows content owners to
+// authenticate once and get access to all their video and channel data,
+// without having to provide authentication credentials for each
+// individual channel. The CMS account that the user authenticates with
+// must be linked to the specified YouTube content owner.
 func (c *GroupsListCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *GroupsListCall {
 	c.opt_["onBehalfOfContentOwner"] = onBehalfOfContentOwner
 	return c
@@ -1138,16 +1132,15 @@ func (r *GroupsService) Update(group *Group) *GroupsUpdateCall {
 // "onBehalfOfContentOwner": Note: This parameter is intended
 // exclusively for YouTube content partners.
 //
-// The onBehalfOfContentOwner
-// parameter indicates that the request's authorization credentials
-// identify a YouTube CMS user who is acting on behalf of the content
-// owner specified in the parameter value. This parameter is intended
-// for YouTube content partners that own and manage many different
-// YouTube channels. It allows content owners to authenticate once and
-// get access to all their video and channel data, without having to
-// provide authentication credentials for each individual channel. The
-// CMS account that the user authenticates with must be linked to the
-// specified YouTube content owner.
+// The onBehalfOfContentOwner parameter indicates that the request's
+// authorization credentials identify a YouTube CMS user who is acting
+// on behalf of the content owner specified in the parameter value. This
+// parameter is intended for YouTube content partners that own and
+// manage many different YouTube channels. It allows content owners to
+// authenticate once and get access to all their video and channel data,
+// without having to provide authentication credentials for each
+// individual channel. The CMS account that the user authenticates with
+// must be linked to the specified YouTube content owner.
 func (c *GroupsUpdateCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *GroupsUpdateCall {
 	c.opt_["onBehalfOfContentOwner"] = onBehalfOfContentOwner
 	return c

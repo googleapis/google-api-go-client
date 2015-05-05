@@ -1087,14 +1087,12 @@ type Experiment struct {
 
 	// ServingFramework: The framework used to serve the experiment
 	// variations and evaluate the results. One of:
-	// - REDIRECT: Google
-	// Analytics redirects traffic to different variation pages, reports the
-	// chosen variation and evaluates the results.
-	// - API: Google Analytics
-	// chooses and reports the variation to serve and evaluates the results;
-	// the caller is responsible for serving the selected variation.
-	// -
-	// EXTERNAL: The variations will be served externally and the chosen
+	// - REDIRECT: Google Analytics redirects traffic to different variation
+	// pages, reports the chosen variation and evaluates the results.
+	// - API: Google Analytics chooses and reports the variation to serve
+	// and evaluates the results; the caller is responsible for serving the
+	// selected variation.
+	// - EXTERNAL: The variations will be served externally and the chosen
 	// variation reported to Google Analytics. The caller is responsible for
 	// serving the selected variation and evaluating the results.
 	ServingFramework string `json:"servingFramework,omitempty"`
@@ -1334,119 +1332,90 @@ type FilterExpression struct {
 
 	// Field: Field to filter. Possible values:
 	// - Content and Traffic
-	// -
-	// PAGE_REQUEST_URI,
+	// - PAGE_REQUEST_URI,
 	// - PAGE_HOSTNAME,
 	// - PAGE_TITLE,
 	// - REFERRAL,
-	// -
-	// COST_DATA_URI (Campaign target URL),
+	// - COST_DATA_URI (Campaign target URL),
 	// - HIT_TYPE,
-	// -
-	// INTERNAL_SEARCH_TERM,
+	// - INTERNAL_SEARCH_TERM,
 	// - INTERNAL_SEARCH_TYPE,
-	// -
-	// SOURCE_PROPERTY_TRACKING_ID,
+	// - SOURCE_PROPERTY_TRACKING_ID,
 	// - Campaign or AdGroup
-	// -
-	// CAMPAIGN_SOURCE,
+	// - CAMPAIGN_SOURCE,
 	// - CAMPAIGN_MEDIUM,
 	// - CAMPAIGN_NAME,
-	// -
-	// CAMPAIGN_AD_GROUP,
+	// - CAMPAIGN_AD_GROUP,
 	// - CAMPAIGN_TERM,
 	// - CAMPAIGN_CONTENT,
-	// -
-	// CAMPAIGN_CODE,
+	// - CAMPAIGN_CODE,
 	// - CAMPAIGN_REFERRAL_PATH,
 	// - E-Commerce
-	// -
-	// TRANSACTION_COUNTRY,
+	// - TRANSACTION_COUNTRY,
 	// - TRANSACTION_REGION,
 	// - TRANSACTION_CITY,
-	// -
-	// TRANSACTION_AFFILIATION (Store or order location),
+	// - TRANSACTION_AFFILIATION (Store or order location),
 	// - ITEM_NAME,
-	// -
-	// ITEM_CODE,
+	// - ITEM_CODE,
 	// - ITEM_VARIATION,
 	// - TRANSACTION_ID,
-	// -
-	// TRANSACTION_CURRENCY_CODE,
+	// - TRANSACTION_CURRENCY_CODE,
 	// - PRODUCT_ACTION_TYPE,
-	// -
-	// Audience/Users
+	// - Audience/Users
 	// - BROWSER,
 	// - BROWSER_VERSION,
 	// - BROWSER_SIZE,
-	// -
-	// PLATFORM,
+	// - PLATFORM,
 	// - PLATFORM_VERSION,
 	// - LANGUAGE,
 	// - SCREEN_RESOLUTION,
-	// -
-	// SCREEN_COLORS,
+	// - SCREEN_COLORS,
 	// - JAVA_ENABLED (Boolean Field),
 	// - FLASH_VERSION,
-	// -
-	// GEO_SPEED (Connection speed),
+	// - GEO_SPEED (Connection speed),
 	// - VISITOR_TYPE,
-	// - GEO_ORGANIZATION
-	// (ISP organization),
+	// - GEO_ORGANIZATION (ISP organization),
 	// - GEO_DOMAIN,
 	// - GEO_IP_ADDRESS,
-	// -
-	// GEO_IP_VERSION,
+	// - GEO_IP_VERSION,
 	// - Location
 	// - GEO_COUNTRY,
 	// - GEO_REGION,
-	// -
-	// GEO_CITY,
+	// - GEO_CITY,
 	// - Event
 	// - EVENT_CATEGORY,
 	// - EVENT_ACTION,
-	// -
-	// EVENT_LABEL,
+	// - EVENT_LABEL,
 	// - Other
 	// - CUSTOM_FIELD_1,
 	// - CUSTOM_FIELD_2,
-	// -
-	// USER_DEFINED_VALUE,
+	// - USER_DEFINED_VALUE,
 	// - Application
 	// - APP_ID,
 	// - APP_INSTALLER_ID,
-	//
 	// - APP_NAME,
 	// - APP_VERSION,
 	// - SCREEN,
 	// - IS_APP (Boolean Field),
-	// -
-	// IS_FATAL_EXCEPTION (Boolean Field),
+	// - IS_FATAL_EXCEPTION (Boolean Field),
 	// - EXCEPTION_DESCRIPTION,
-	// -
-	// Mobile device
-	// - IS_MOBILE (Boolean Field, Deprecated. Use
-	// DEVICE_CATEGORY=mobile),
-	// - IS_TABLET (Boolean Field, Deprecated. Use
-	// DEVICE_CATEGORY=tablet),
+	// - Mobile device
+	// - IS_MOBILE (Boolean Field, Deprecated. Use DEVICE_CATEGORY=mobile),
+	//
+	// - IS_TABLET (Boolean Field, Deprecated. Use DEVICE_CATEGORY=tablet),
+	//
 	// - DEVICE_CATEGORY,
-	// -
-	// MOBILE_HAS_QWERTY_KEYBOARD (Boolean Field),
-	// - MOBILE_HAS_NFC_SUPPORT
-	// (Boolean Field),
+	// - MOBILE_HAS_QWERTY_KEYBOARD (Boolean Field),
+	// - MOBILE_HAS_NFC_SUPPORT (Boolean Field),
 	// - MOBILE_HAS_CELLULAR_RADIO (Boolean Field),
-	// -
-	// MOBILE_HAS_WIFI_SUPPORT (Boolean Field),
+	// - MOBILE_HAS_WIFI_SUPPORT (Boolean Field),
 	// - MOBILE_BRAND_NAME,
-	// -
-	// MOBILE_MODEL_NAME,
+	// - MOBILE_MODEL_NAME,
 	// - MOBILE_MARKETING_NAME,
-	// -
-	// MOBILE_POINTING_METHOD,
+	// - MOBILE_POINTING_METHOD,
 	// - Social
 	// - SOCIAL_NETWORK,
-	// -
-	// SOCIAL_ACTION,
+	// - SOCIAL_ACTION,
 	// - SOCIAL_ACTION_TARGET,
 	Field string `json:"field,omitempty"`
 
@@ -2008,9 +1977,9 @@ type Profile struct {
 
 	// Currency: The currency type associated with this view (profile). The
 	// supported values are:
-	// ARS, AUD, BGN, BRL, CAD, CHF, CNY, CZK, DKK,
-	// EUR, GBP, HKD, HUF, IDR, INR, JPY, KRW, LTL, MXN, NOK, NZD, PHP, PLN,
-	// RUB, SEK, THB, TRY, TWD, USD, VND, ZAR
+	// ARS, AUD, BGN, BRL, CAD, CHF, CNY, CZK, DKK, EUR, GBP, HKD, HUF, IDR,
+	// INR, JPY, KRW, LTL, MXN, NOK, NZD, PHP, PLN, RUB, SEK, THB, TRY, TWD,
+	// USD, VND, ZAR
 	Currency string `json:"currency,omitempty"`
 
 	// DefaultPage: Default page for this view (profile).
@@ -2125,16 +2094,15 @@ type ProfileFilterLink struct {
 
 	// Rank: The rank of this profile filter link relative to the other
 	// filters linked to the same profile.
-	// For readonly (i.e., list and get)
-	// operations, the rank always starts at 1.
-	// For write (i.e., create,
-	// update, or delete) operations, you may specify a value between 0 and
-	// 255 inclusively, [0, 255]. In order to insert a link at the end of
-	// the list, either don't specify a rank or set a rank to a number
-	// greater than the largest rank in the list. In order to insert a link
-	// to the beginning of the list specify a rank that is less than or
-	// equal to 1. The new link will move all existing filters with the same
-	// or lower rank down the list. After the link is
+	// For readonly (i.e., list and get) operations, the rank always starts
+	// at 1.
+	// For write (i.e., create, update, or delete) operations, you may
+	// specify a value between 0 and 255 inclusively, [0, 255]. In order to
+	// insert a link at the end of the list, either don't specify a rank or
+	// set a rank to a number greater than the largest rank in the list. In
+	// order to insert a link to the beginning of the list specify a rank
+	// that is less than or equal to 1. The new link will move all existing
+	// filters with the same or lower rank down the list. After the link is
 	// inserted/updated/deleted all profile filter links will be renumbered
 	// starting at 1.
 	Rank int64 `json:"rank,omitempty"`

@@ -321,8 +321,7 @@ type Entitlement struct {
 	ProductId string `json:"productId,omitempty"`
 
 	// ProductType: The type of the inapp product. Possible values are:
-	// -
-	// In-app item: "inapp"
+	// - In-app item: "inapp"
 	// - Subscription: "subs"
 	ProductType string `json:"productType,omitempty"`
 

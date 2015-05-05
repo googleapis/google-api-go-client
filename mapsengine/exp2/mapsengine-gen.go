@@ -6595,9 +6595,8 @@ type RasterCollectionsRastersBatchDeleteCall struct {
 
 // BatchDelete: Remove rasters from an existing raster collection.
 //
-// Up
-// to 50 rasters can be included in a single batchDelete request. Each
-// batchDelete request is atomic.
+// Up to 50 rasters can be included in a single batchDelete request.
+// Each batchDelete request is atomic.
 func (r *RasterCollectionsRastersService) BatchDelete(id string, rastercollectionsrasterbatchdeleterequest *RasterCollectionsRasterBatchDeleteRequest) *RasterCollectionsRastersBatchDeleteCall {
 	c := &RasterCollectionsRastersBatchDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.id = id
@@ -6688,8 +6687,8 @@ type RasterCollectionsRastersBatchInsertCall struct {
 // must be successfully processed in order to be added to a raster
 // collection.
 //
-// Up to 50 rasters can be included in a single batchInsert
-// request. Each batchInsert request is atomic.
+// Up to 50 rasters can be included in a single batchInsert request.
+// Each batchInsert request is atomic.
 func (r *RasterCollectionsRastersService) BatchInsert(id string, rastercollectionsrastersbatchinsertrequest *RasterCollectionsRastersBatchInsertRequest) *RasterCollectionsRastersBatchInsertCall {
 	c := &RasterCollectionsRastersBatchInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.id = id
@@ -8947,12 +8946,11 @@ type TablesUploadCall struct {
 
 // Upload: Create a placeholder table asset to which table files can be
 // uploaded.
-// Once the placeholder has been created, files are uploaded
-// to the
+// Once the placeholder has been created, files are uploaded to the
 // https://www.googleapis.com/upload/mapsengine/v1/tables/table_id/files
 // endpoint.
-// See Table Upload in the Developer's Guide or Table.files:
-// insert in the reference documentation for more information.
+// See Table Upload in the Developer's Guide or Table.files: insert in
+// the reference documentation for more information.
 func (r *TablesService) Upload(table *Table) *TablesUploadCall {
 	c := &TablesUploadCall{s: r.s, opt_: make(map[string]interface{})}
 	c.table = table
@@ -9107,19 +9105,16 @@ type TablesFeaturesBatchInsertCall struct {
 
 // BatchInsert: Append features to an existing table.
 //
-// A single
-// batchInsert request can create:
+// A single batchInsert request can create:
 //
 // - Up to 50 features.
-// - A combined
-// total of 10 000 vertices.
-// Feature limits are documented in the
-// Supported data formats and limits article of the Google Maps Engine
-// help center. Note that free and paid accounts have different
-// limits.
+// - A combined total of 10 000 vertices.
+// Feature limits are documented in the Supported data formats and
+// limits article of the Google Maps Engine help center. Note that free
+// and paid accounts have different limits.
 //
-// For more information about inserting features, read Creating
-// features in the Google Maps Engine developer's guide.
+// For more information about inserting features, read Creating features
+// in the Google Maps Engine developer's guide.
 func (r *TablesFeaturesService) BatchInsert(id string, featuresbatchinsertrequest *FeaturesBatchInsertRequest) *TablesFeaturesBatchInsertCall {
 	c := &TablesFeaturesBatchInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.id = id
@@ -9201,32 +9196,26 @@ type TablesFeaturesBatchPatchCall struct {
 
 // BatchPatch: Update the supplied features.
 //
-// A single batchPatch
-// request can update:
+// A single batchPatch request can update:
 //
 // - Up to 50 features.
-// - A combined total of
-// 10 000 vertices.
-// Feature limits are documented in the Supported
-// data formats and limits article of the Google Maps Engine help
-// center. Note that free and paid accounts have different
-// limits.
+// - A combined total of 10 000 vertices.
+// Feature limits are documented in the Supported data formats and
+// limits article of the Google Maps Engine help center. Note that free
+// and paid accounts have different limits.
 //
 // Feature updates use HTTP PATCH semantics:
 //
-// - A supplied
-// value replaces an existing value (if any) in that field.
-// - Omitted
-// fields remain unchanged.
-// - Complex values in geometries and
-// properties must be replaced as atomic units. For example, providing
-// just the coordinates of a geometry is not allowed; the complete
-// geometry, including type, must be supplied.
-// - Setting a property's
-// value to null deletes that property.
-// For more information about
-// updating features, read Updating features in the Google Maps Engine
-// developer's guide.
+// - A supplied value replaces an existing value (if any) in that
+// field.
+// - Omitted fields remain unchanged.
+// - Complex values in geometries and properties must be replaced as
+// atomic units. For example, providing just the coordinates of a
+// geometry is not allowed; the complete geometry, including type, must
+// be supplied.
+// - Setting a property's value to null deletes that property.
+// For more information about updating features, read Updating features
+// in the Google Maps Engine developer's guide.
 func (r *TablesFeaturesService) BatchPatch(id string, featuresbatchpatchrequest *FeaturesBatchPatchRequest) *TablesFeaturesBatchPatchCall {
 	c := &TablesFeaturesBatchPatchCall{s: r.s, opt_: make(map[string]interface{})}
 	c.id = id
@@ -9667,9 +9656,8 @@ type TablesFilesInsertCall struct {
 
 // Insert: Upload a file to a placeholder table asset. See Table Upload
 // in the Developer's Guide for more information.
-// Supported file types
-// are listed in the Supported data formats and limits article of the
-// Google Maps Engine help center.
+// Supported file types are listed in the Supported data formats and
+// limits article of the Google Maps Engine help center.
 func (r *TablesFilesService) Insert(id string, filename string) *TablesFilesInsertCall {
 	c := &TablesFilesInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.id = id

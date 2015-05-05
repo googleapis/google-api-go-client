@@ -255,8 +255,7 @@ type Activity struct {
 	// performed. Possible values include, but are not limited to, the
 	// following values:
 	// - "post" - Publish content to the stream.
-	// -
-	// "share" - Reshare an activity.
+	// - "share" - Reshare an activity.
 	Verb string `json:"verb,omitempty"`
 }
 
@@ -311,7 +310,6 @@ type ActivityObject struct {
 	// ObjectType: The type of the object. Possible values include, but are
 	// not limited to, the following values:
 	// - "note" - Textual content.
-	//
 	// - "activity" - A Google+ activity.
 	ObjectType string `json:"objectType,omitempty"`
 
@@ -381,11 +379,9 @@ type ActivityObjectAttachments struct {
 	// ObjectType: The type of media object. Possible values include, but
 	// are not limited to, the following values:
 	// - "photo" - A photo.
-	// -
-	// "album" - A photo album.
+	// - "album" - A photo album.
 	// - "video" - A video.
-	// - "article" - An
-	// article, specified by a link.
+	// - "article" - An article, specified by a link.
 	ObjectType string `json:"objectType,omitempty"`
 
 	// PreviewThumbnails: When previewing, these are the optional thumbnails
@@ -568,10 +564,8 @@ type Audience struct {
 	// Visibility: The circle members' visibility as chosen by the owner of
 	// the circle. This only applies for items with "item.type" equals
 	// "circle". Possible values are:
-	// - "public" - Members are visible to
-	// the public.
+	// - "public" - Members are visible to the public.
 	// - "limited" - Members are visible to a limited audience.
-	//
 	// - "private" - Members are visible to the owner only.
 	Visibility string `json:"visibility,omitempty"`
 }
@@ -728,8 +722,7 @@ type CommentObject struct {
 	Content string `json:"content,omitempty"`
 
 	// ObjectType: The object type of this comment. Possible values are:
-	// -
-	// "comment" - A comment in reply to an activity.
+	// - "comment" - A comment in reply to an activity.
 	ObjectType string `json:"objectType,omitempty"`
 
 	// OriginalContent: The content (text) as provided by the author, stored
@@ -831,13 +824,10 @@ type Media struct {
 	// VideoStatus: The encoding status of this video. Possible values are:
 	//
 	// - "UPLOADING" - Not all the video bytes have been received.
-	// -
-	// "PENDING" - Video not yet processed.
-	// - "FAILED" - Video processing
-	// failed.
+	// - "PENDING" - Video not yet processed.
+	// - "FAILED" - Video processing failed.
 	// - "READY" - A single video stream is playable.
-	// - "FINAL" -
-	// All video streams are playable.
+	// - "FINAL" - All video streams are playable.
 	VideoStatus string `json:"videoStatus,omitempty"`
 
 	// Width: The width in pixels of the original image.
@@ -942,8 +932,7 @@ type Person struct {
 	// Gender: The person's gender. Possible values include, but are not
 	// limited to, the following values:
 	// - "male" - Male gender.
-	// -
-	// "female" - Female gender.
+	// - "female" - Female gender.
 	// - "other" - Other.
 	Gender string `json:"gender,omitempty"`
 
@@ -968,8 +957,7 @@ type Person struct {
 
 	// ObjectType: Type of person within Google+. Possible values include,
 	// but are not limited to, the following values:
-	// - "person" -
-	// represents an actual person.
+	// - "person" - represents an actual person.
 	// - "page" - represents a page.
 	ObjectType string `json:"objectType,omitempty"`
 
@@ -989,22 +977,15 @@ type Person struct {
 
 	// RelationshipStatus: The person's relationship status. Possible values
 	// include, but are not limited to, the following values:
-	// - "single" -
-	// Person is single.
-	// - "in_a_relationship" - Person is in a
-	// relationship.
+	// - "single" - Person is single.
+	// - "in_a_relationship" - Person is in a relationship.
 	// - "engaged" - Person is engaged.
-	// - "married" - Person
-	// is married.
+	// - "married" - Person is married.
 	// - "its_complicated" - The relationship is complicated.
-	//
 	// - "open_relationship" - Person is in an open relationship.
-	// -
-	// "widowed" - Person is widowed.
-	// - "in_domestic_partnership" - Person
-	// is in a domestic partnership.
-	// - "in_civil_union" - Person is in a
-	// civil union.
+	// - "widowed" - Person is widowed.
+	// - "in_domestic_partnership" - Person is in a domestic partnership.
+	// - "in_civil_union" - Person is in a civil union.
 	RelationshipStatus string `json:"relationshipStatus,omitempty"`
 
 	// Skills: The person's skills.
@@ -1032,8 +1013,7 @@ type PersonCover struct {
 
 	// Layout: The layout of the cover art. Possible values include, but are
 	// not limited to, the following values:
-	// - "banner" - One large image
-	// banner.
+	// - "banner" - One large image banner.
 	Layout string `json:"layout,omitempty"`
 }
 
@@ -1063,11 +1043,9 @@ type PersonCoverCoverPhoto struct {
 type PersonEmails struct {
 	// Type: The type of address. Possible values include, but are not
 	// limited to, the following values:
-	// - "account" - Google account
-	// email address.
+	// - "account" - Google account email address.
 	// - "home" - Home email address.
-	// - "work" - Work email
-	// address.
+	// - "work" - Work email address.
 	// - "other" - Other.
 	Type string `json:"type,omitempty"`
 
@@ -1138,8 +1116,7 @@ type PersonOrganizations struct {
 	// Type: The type of organization. Possible values include, but are not
 	// limited to, the following values:
 	// - "work" - Work.
-	// - "school" -
-	// School.
+	// - "school" - School.
 	Type string `json:"type,omitempty"`
 }
 
@@ -1159,12 +1136,10 @@ type PersonUrls struct {
 
 	// Type: The type of URL. Possible values include, but are not limited
 	// to, the following values:
-	// - "otherProfile" - URL for another
-	// profile.
+	// - "otherProfile" - URL for another profile.
 	// - "contributor" - URL to a site for which this person is a
 	// contributor.
-	// - "website" - URL for this Google+ Page's primary
-	// website.
+	// - "website" - URL for this Google+ Page's primary website.
 	// - "other" - Other URL.
 	Type string `json:"type,omitempty"`
 
@@ -1214,15 +1189,11 @@ type PlusDomainsAclentryResource struct {
 	// Type: The type of entry describing to whom access is granted.
 	// Possible values are:
 	// - "person" - Access to an individual.
-	// -
-	// "circle" - Access to members of a circle.
-	// - "myCircles" - Access to
-	// members of all the person's circles.
-	// - "extendedCircles" - Access to
-	// members of all the person's circles, plus all of the people in their
-	// circles.
-	// - "domain" - Access to members of the person's Google Apps
-	// domain.
+	// - "circle" - Access to members of a circle.
+	// - "myCircles" - Access to members of all the person's circles.
+	// - "extendedCircles" - Access to members of all the person's circles,
+	// plus all of the people in their circles.
+	// - "domain" - Access to members of the person's Google Apps domain.
 	// - "public" - Access to anyone on the web.
 	Type string `json:"type,omitempty"`
 }

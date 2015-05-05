@@ -220,17 +220,15 @@ type AccountAccess struct {
 type Condition struct {
 	// Parameter: A list of named parameters (key/value), depending on the
 	// condition's type. Notes:
-	// - For binary operators, include parameters
-	// named arg0 and arg1 for specifying the left and right operands,
-	// respectively.
-	// - At this time, the left operand (arg0) must be a
-	// reference to a macro.
-	// - For case-insensitive Regex matching, include
-	// a boolean parameter named ignore_case that is set to true. If not
-	// specified or set to any other value, the matching will be case
-	// sensitive.
-	// - To negate an operator, include a boolean parameter
-	// named negate boolean parameter that is set to true.
+	// - For binary operators, include parameters named arg0 and arg1 for
+	// specifying the left and right operands, respectively.
+	// - At this time, the left operand (arg0) must be a reference to a
+	// macro.
+	// - For case-insensitive Regex matching, include a boolean parameter
+	// named ignore_case that is set to true. If not specified or set to any
+	// other value, the matching will be case sensitive.
+	// - To negate an operator, include a boolean parameter named negate
+	// boolean parameter that is set to true.
 	Parameter []*Parameter `json:"parameter,omitempty"`
 
 	// Type: The type of operator for this condition.
@@ -501,17 +499,14 @@ type Parameter struct {
 	Map []*Parameter `json:"map,omitempty"`
 
 	// Type: The parameter type. Valid values are:
-	// - boolean: The value
-	// represents a boolean, represented as 'true' or 'false'
-	// - integer:
-	// The value represents a 64-bit signed integer value, in base 10
-	// -
-	// list: A list of parameters should be specified
-	// - map: A map of
-	// parameters should be specified
-	// - template: The value represents any
-	// text; this can include macro references (even macro references that
-	// might return non-string types)
+	// - boolean: The value represents a boolean, represented as 'true' or
+	// 'false'
+	// - integer: The value represents a 64-bit signed integer value, in
+	// base 10
+	// - list: A list of parameters should be specified
+	// - map: A map of parameters should be specified
+	// - template: The value represents any text; this can include macro
+	// references (even macro references that might return non-string types)
 	Type string `json:"type,omitempty"`
 
 	// Value: A parameter's value (may contain macro references such as

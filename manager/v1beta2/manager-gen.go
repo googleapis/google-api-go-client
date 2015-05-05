@@ -172,8 +172,7 @@ type DeployState struct {
 	// - DEPLOYING
 	// - DEPLOYED
 	// - DEPLOYMENT_FAILED
-	// -
-	// DELETING
+	// - DELETING
 	// - DELETED
 	// - DELETE_FAILED
 	Status string `json:"status,omitempty"`

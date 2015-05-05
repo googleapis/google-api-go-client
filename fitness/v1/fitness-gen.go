@@ -191,9 +191,8 @@ type DataPoint struct {
 	// occur in the same order that the field is listed with in the data
 	// type specified in a data source.
 	//
-	// Only one of integer and floating
-	// point fields will be populated, depending on the format enum value
-	// within data source's type field.
+	// Only one of integer and floating point fields will be populated,
+	// depending on the format enum value within data source's type field.
 	Value []*Value `json:"value,omitempty"`
 }
 
@@ -206,29 +205,27 @@ type DataSource struct {
 	// this data source. The identifier includes:
 	//
 	//
-	// - The physical device's
-	// manufacturer, model, and serial number (UID).
-	// - The application's
-	// package name or name. Package name is used when the data source was
-	// created by an Android application. The developer project number is
-	// used when the data source was created by a REST client.
-	// - The data
-	// source's type.
-	// - The data source's stream name.  Note that not all
-	// attributes of the data source are used as part of the stream
-	// identifier. In particular, the version of the hardware/the
-	// application isn't used. This allows us to preserve the same stream
-	// through version updates. This also means that two DataSource objects
-	// may represent the same data stream even if they're not equal.
+	// - The physical device's manufacturer, model, and serial number (UID).
 	//
-	// The
-	// exact format of the data stream ID created by an Android application
-	// is:
+	// - The application's package name or name. Package name is used when
+	// the data source was created by an Android application. The developer
+	// project number is used when the data source was created by a REST
+	// client.
+	// - The data source's type.
+	// - The data source's stream name.  Note that not all attributes of the
+	// data source are used as part of the stream identifier. In particular,
+	// the version of the hardware/the application isn't used. This allows
+	// us to preserve the same stream through version updates. This also
+	// means that two DataSource objects may represent the same data stream
+	// even if they're not equal.
+	//
+	// The exact format of the data stream ID created by an Android
+	// application is:
 	// type:dataType.name:application.packageName:device.manufacturer:device.
 	// model:device.uid:dataStreamName
 	//
-	// The exact format of the data stream
-	// ID created by a REST client is: type:dataType.name:developer project
+	// The exact format of the data stream ID created by a REST client is:
+	// type:dataType.name:developer project
 	// number:device.manufacturer:device.model:device.uid:dataStreamName
 	//
 	//
@@ -237,10 +234,10 @@ type DataSource struct {
 	// viable data stream ID would be: type:dataType.name:developer project
 	// number
 	//
-	// Finally, the developer project number is obfuscated when read
-	// by any REST or Android client that did not create the data source.
-	// Only the data source creator will see the developer project number in
-	// clear and normal form.
+	// Finally, the developer project number is obfuscated when read by any
+	// REST or Android client that did not create the data source. Only the
+	// data source creator will see the developer project number in clear
+	// and normal form.
 	DataStreamId string `json:"dataStreamId,omitempty"`
 
 	// DataStreamName: The stream name uniquely identifies this particular
@@ -799,8 +796,8 @@ type UsersDataSourcesPatchCall struct {
 // would require a new unique data stream ID and separate data
 // source.
 //
-// Data sources are identified by their data stream ID. This
-// method supports patch semantics.
+// Data sources are identified by their data stream ID. This method
+// supports patch semantics.
 func (r *UsersDataSourcesService) Patch(userId string, dataSourceId string, datasource *DataSource) *UsersDataSourcesPatchCall {
 	c := &UsersDataSourcesPatchCall{s: r.s, opt_: make(map[string]interface{})}
 	c.userId = userId

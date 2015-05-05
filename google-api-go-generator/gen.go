@@ -59,7 +59,7 @@ type API struct {
 	schemas   map[string]*Schema // apiName -> schema
 
 	p  func(format string, args ...interface{}) // print raw
-	pn func(format string, args ...interface{}) // print with indent and newline
+	pn func(format string, args ...interface{}) // print with newline
 }
 
 func (a *API) sortedSchemaNames() (names []string) {
@@ -392,7 +392,7 @@ func (a *API) GenerateCode() ([]byte, error) {
 		return nil, err
 	}
 
-	// Buffer the output in memory, for gofmt'ing later in the defer.
+	// Buffer the output in memory, for gofmt'ing later.
 	var buf bytes.Buffer
 	a.p = func(format string, args ...interface{}) {
 		_, err := fmt.Fprintf(&buf, format, args...)
@@ -1642,6 +1642,9 @@ func asComment(pfx, c string) string {
 		}
 		line = line[:maxLen]
 		si := strings.LastIndex(line, " ")
+		if nl := strings.Index(line, "\n"); nl != -1 && nl < si {
+			si = nl
+		}
 		if si != -1 {
 			line = line[:si]
 		}

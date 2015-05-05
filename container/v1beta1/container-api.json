@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/3wSmOD9x-5Pot1DynjyGTFXruIU\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/dYpTeptRRQe2JpT9NpqLcHD0A_0\"",
  "discoveryVersion": "v1",
  "id": "container:v1beta1",
  "name": "container",
  "version": "v1beta1",
- "revision": "20150401",
+ "revision": "20150420",
  "title": "Google Container Engine API",
  "description": "The Google Container Engine API is used for building and managing container based applications, powered by the open source Kubernetes technology.",
  "ownerDomain": "google.com",
@@ -86,7 +86,7 @@
     },
     "containerIpv4Cidr": {
      "type": "string",
-     "description": "[Output only] The IP addresses of the container pods in this cluster, in  CIDR notation (e.g. 1.2.3.4/29)."
+     "description": "The IP addresses of the container pods in this cluster, in  CIDR notation (e.g. 10.96.0.0/14). Leave blank to have one automatically chosen or specify a /14 block in 10.0.0.0/8 or 172.16.0.0/12."
     },
     "creationTimestamp": {
      "type": "string",
@@ -106,7 +106,7 @@
     },
     "masterAuth": {
      "$ref": "MasterAuth",
-     "description": "The HTTP basic authentication information for accessing the master. Because the master endpoint is open to the internet, you should create a strong password."
+     "description": "The authentication information for accessing the master."
     },
     "name": {
      "type": "string",
@@ -229,14 +229,19 @@
   "MasterAuth": {
    "id": "MasterAuth",
    "type": "object",
+   "description": "The authentication information for accessing the master. Authentication is either done using HTTP basic authentication or using a bearer token.",
    "properties": {
+    "bearerToken": {
+     "type": "string",
+     "description": "The token used to authenticate API requests to the master. The token is be included in an HTTP Authorization Header included in all requests to the master endpoint. The format of the header is: \"Authorization: Bearer \"."
+    },
     "password": {
      "type": "string",
-     "description": "The password to use when accessing the Kubernetes master endpoint."
+     "description": "The password to use for HTTP basic authentication when accessing the Kubernetes master endpoint. Because the master endpoint is open to the internet, you should create a strong password."
     },
     "user": {
      "type": "string",
-     "description": "The username to use when accessing the Kubernetes master endpoint."
+     "description": "The username to use for HTTP basic authentication when accessing the Kubernetes master endpoint."
     }
    }
   },

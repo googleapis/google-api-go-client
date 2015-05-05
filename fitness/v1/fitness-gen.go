@@ -360,11 +360,6 @@ type ListSessionsResponse struct {
 	Session []*Session `json:"session,omitempty"`
 }
 
-type MapValue struct {
-	// FpVal: Floating point value.
-	FpVal float64 `json:"fpVal,omitempty"`
-}
-
 type Session struct {
 	// ActiveTimeMillis: Session active time. While start_time_millis and
 	// end_time_millis define the full session time, the active time can be
@@ -402,30 +397,12 @@ type Session struct {
 }
 
 type Value struct {
-	// FloatListVal: Float list value. When this is set, other values must
-	// not be set.
-	FloatListVal []float64 `json:"floatListVal,omitempty"`
-
 	// FpVal: Floating point value. When this is set, intVal must not be
 	// set.
 	FpVal float64 `json:"fpVal,omitempty"`
 
-	// IntListVal: Integer list value. When this is set, other values must
-	// not be set.
-	IntListVal []int64 `json:"intListVal,omitempty"`
-
 	// IntVal: Integer value. When this is set, fpVal must not be set.
 	IntVal int64 `json:"intVal,omitempty"`
-
-	MapVal []*ValueMapValEntry `json:"mapVal,omitempty"`
-
-	StringVal string `json:"stringVal,omitempty"`
-}
-
-type ValueMapValEntry struct {
-	Key string `json:"key,omitempty"`
-
-	Value *MapValue `json:"value,omitempty"`
 }
 
 // method id "fitness.users.dataSources.create":

@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/MP3AOvHzcgmoA52DIJFOChYk_wo\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/IqSB8sibomkxDrONkpdbncL_fWM\"",
  "discoveryVersion": "v1",
  "id": "genomics:v1beta2",
  "name": "genomics",
  "version": "v1beta2",
- "revision": "20150410",
+ "revision": "20150415",
  "title": "Genomics API",
  "description": "Provides access to Genomics data.",
  "ownerDomain": "google.com",
@@ -428,12 +428,14 @@
       "CLIP_SOFT",
       "DELETE",
       "INSERT",
+      "OPERATION_UNSPECIFIED",
       "PAD",
       "SEQUENCE_MATCH",
       "SEQUENCE_MISMATCH",
       "SKIP"
      ],
      "enumDescriptions": [
+      "",
       "",
       "",
       "",

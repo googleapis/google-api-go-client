@@ -46,10 +46,10 @@ const (
 	// View and manage your data across Google Cloud Platform services
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
-	// New Service: https://www.googleapis.com/auth/computeaccounts
+	// Manage your Google Compute Accounts
 	ComputeaccountsScope = "https://www.googleapis.com/auth/computeaccounts"
 
-	// New Service: https://www.googleapis.com/auth/computeaccounts.readonly
+	// View your Google Compute Accounts
 	ComputeaccountsReadonlyScope = "https://www.googleapis.com/auth/computeaccounts.readonly"
 )
 

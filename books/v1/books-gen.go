@@ -1411,6 +1411,9 @@ type VolumeUserInfoUserUploadedVolumeInfo struct {
 }
 
 type VolumeVolumeInfo struct {
+	// AllowAnonLogging: Whether anonymous logging should be allowed.
+	AllowAnonLogging bool `json:"allowAnonLogging,omitempty"`
+
 	// Authors: The names of the authors and/or editors for this volume. (In
 	// LITE projection)
 	Authors []string `json:"authors,omitempty"`
@@ -5797,6 +5800,15 @@ func (c *OnboardingListCategoryVolumesCall) Locale(locale string) *OnboardingLis
 	return c
 }
 
+// MaxAllowedMaturityRating sets the optional parameter
+// "maxAllowedMaturityRating": The maximum allowed maturity rating of
+// returned volumes. Books with a higher maturity rating are filtered
+// out.
+func (c *OnboardingListCategoryVolumesCall) MaxAllowedMaturityRating(maxAllowedMaturityRating string) *OnboardingListCategoryVolumesCall {
+	c.opt_["maxAllowedMaturityRating"] = maxAllowedMaturityRating
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": Number of maximum
 // results per page to be included in the response.
 func (c *OnboardingListCategoryVolumesCall) PageSize(pageSize int64) *OnboardingListCategoryVolumesCall {
@@ -5828,6 +5840,9 @@ func (c *OnboardingListCategoryVolumesCall) Do() (*Volume2, error) {
 	}
 	if v, ok := c.opt_["locale"]; ok {
 		params.Set("locale", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxAllowedMaturityRating"]; ok {
+		params.Set("maxAllowedMaturityRating", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["pageSize"]; ok {
 		params.Set("pageSize", fmt.Sprintf("%v", v))
@@ -5869,6 +5884,19 @@ func (c *OnboardingListCategoryVolumesCall) Do() (*Volume2, error) {
 	//     },
 	//     "locale": {
 	//       "description": "ISO-639-1 language and ISO-3166-1 country code. Default is en-US if unset.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxAllowedMaturityRating": {
+	//       "description": "The maximum allowed maturity rating of returned volumes. Books with a higher maturity rating are filtered out.",
+	//       "enum": [
+	//         "mature",
+	//         "not-mature"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Show books which are rated mature or lower.",
+	//         "Show books which are rated not mature."
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6867,6 +6895,15 @@ func (c *VolumesAssociatedListCall) Locale(locale string) *VolumesAssociatedList
 	return c
 }
 
+// MaxAllowedMaturityRating sets the optional parameter
+// "maxAllowedMaturityRating": The maximum allowed maturity rating of
+// returned recommendations. Books with a higher maturity rating are
+// filtered out.
+func (c *VolumesAssociatedListCall) MaxAllowedMaturityRating(maxAllowedMaturityRating string) *VolumesAssociatedListCall {
+	c.opt_["maxAllowedMaturityRating"] = maxAllowedMaturityRating
+	return c
+}
+
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *VolumesAssociatedListCall) Source(source string) *VolumesAssociatedListCall {
@@ -6891,6 +6928,9 @@ func (c *VolumesAssociatedListCall) Do() (*Volumes, error) {
 	}
 	if v, ok := c.opt_["locale"]; ok {
 		params.Set("locale", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxAllowedMaturityRating"]; ok {
+		params.Set("maxAllowedMaturityRating", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))
@@ -6943,6 +6983,19 @@ func (c *VolumesAssociatedListCall) Do() (*Volumes, error) {
 	//     },
 	//     "locale": {
 	//       "description": "ISO-639-1 language and ISO-3166-1 country code. Ex: 'en_US'. Used for generating recommendations.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxAllowedMaturityRating": {
+	//       "description": "The maximum allowed maturity rating of returned recommendations. Books with a higher maturity rating are filtered out.",
+	//       "enum": [
+	//         "mature",
+	//         "not-mature"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Show books which are rated mature or lower.",
+	//         "Show books which are rated not mature."
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7180,6 +7233,15 @@ func (c *VolumesRecommendedListCall) Locale(locale string) *VolumesRecommendedLi
 	return c
 }
 
+// MaxAllowedMaturityRating sets the optional parameter
+// "maxAllowedMaturityRating": The maximum allowed maturity rating of
+// returned recommendations. Books with a higher maturity rating are
+// filtered out.
+func (c *VolumesRecommendedListCall) MaxAllowedMaturityRating(maxAllowedMaturityRating string) *VolumesRecommendedListCall {
+	c.opt_["maxAllowedMaturityRating"] = maxAllowedMaturityRating
+	return c
+}
+
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *VolumesRecommendedListCall) Source(source string) *VolumesRecommendedListCall {
@@ -7201,6 +7263,9 @@ func (c *VolumesRecommendedListCall) Do() (*Volumes, error) {
 	params.Set("alt", "json")
 	if v, ok := c.opt_["locale"]; ok {
 		params.Set("locale", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxAllowedMaturityRating"]; ok {
+		params.Set("maxAllowedMaturityRating", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))
@@ -7233,6 +7298,19 @@ func (c *VolumesRecommendedListCall) Do() (*Volumes, error) {
 	//   "parameters": {
 	//     "locale": {
 	//       "description": "ISO-639-1 language and ISO-3166-1 country code. Ex: 'en_US'. Used for generating recommendations.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxAllowedMaturityRating": {
+	//       "description": "The maximum allowed maturity rating of returned recommendations. Books with a higher maturity rating are filtered out.",
+	//       "enum": [
+	//         "mature",
+	//         "not-mature"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Show books which are rated mature or lower.",
+	//         "Show books which are rated not mature."
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },

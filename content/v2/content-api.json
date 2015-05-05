@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/FrjQZRuSnHbxEISSiZIJLK7bH2s\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/G-ZyOp5RRHFr1ENfVUNl9TTyO6w\"",
  "discoveryVersion": "v1",
  "id": "content:v2",
  "name": "content",
  "canonicalName": "Shopping Content",
  "version": "v2",
- "revision": "20150411",
+ "revision": "20150424",
  "title": "Content API for Shopping",
  "description": "Manage product items, inventory, and Merchant Center accounts for Google Shopping.",
  "ownerDomain": "google.com",
@@ -88,7 +88,7 @@
     },
     "adwordsLinks": {
      "type": "array",
-     "description": "List of linked AdWords accounts.",
+     "description": "List of linked AdWords accounts, active or pending approval. To create a new link request, add a new link with status active to the list. It will remain is state pending until approved or rejected in the AdWords interface. To delete an active link or to cancel a link request, remove it from the list.",
      "items": {
       "$ref": "AccountAdwordsLink"
      }
@@ -150,7 +150,7 @@
     },
     "status": {
      "type": "string",
-     "description": "Status of the link between this Merchant Center account and the AdWords account."
+     "description": "Status of the link between this Merchant Center account and the AdWords account. Upon retrieval, it represents the actual status of the link and can be either active if it was approved in Google AdWords or pending if it's pending approval. Upon insertion, it represents the intended status of the link. Re-uploading a link with status active when it's still pending or with status pending when it's already active will have no effect: the status will remain unchanged. Re-uploading a link with deprecated status inactive is equivalent to not submitting the link at all and will delete the link if it was active or cancel the link request if it was pending."
     }
    }
   },
@@ -2915,6 +2915,13 @@
      "path": "accountshipping/batch",
      "httpMethod": "POST",
      "description": "Retrieves and updates the shipping settings of multiple accounts in a single request.",
+     "parameters": {
+      "dryRun": {
+       "type": "boolean",
+       "description": "Flag to run the request in dry-run mode.",
+       "location": "query"
+      }
+     },
      "request": {
       "$ref": "AccountshippingCustomBatchRequest"
      },
@@ -3005,6 +3012,11 @@
        "format": "uint64",
        "location": "path"
       },
+      "dryRun": {
+       "type": "boolean",
+       "description": "Flag to run the request in dry-run mode.",
+       "location": "query"
+      },
       "merchantId": {
        "type": "string",
        "description": "The ID of the managing account.",
@@ -3039,6 +3051,11 @@
        "required": true,
        "format": "uint64",
        "location": "path"
+      },
+      "dryRun": {
+       "type": "boolean",
+       "description": "Flag to run the request in dry-run mode.",
+       "location": "query"
       },
       "merchantId": {
        "type": "string",
@@ -3156,6 +3173,13 @@
      "path": "accounttax/batch",
      "httpMethod": "POST",
      "description": "Retrieves and updates tax settings of multiple accounts in a single request.",
+     "parameters": {
+      "dryRun": {
+       "type": "boolean",
+       "description": "Flag to run the request in dry-run mode.",
+       "location": "query"
+      }
+     },
      "request": {
       "$ref": "AccounttaxCustomBatchRequest"
      },
@@ -3246,6 +3270,11 @@
        "format": "uint64",
        "location": "path"
       },
+      "dryRun": {
+       "type": "boolean",
+       "description": "Flag to run the request in dry-run mode.",
+       "location": "query"
+      },
       "merchantId": {
        "type": "string",
        "description": "The ID of the managing account.",
@@ -3280,6 +3309,11 @@
        "required": true,
        "format": "uint64",
        "location": "path"
+      },
+      "dryRun": {
+       "type": "boolean",
+       "description": "Flag to run the request in dry-run mode.",
+       "location": "query"
       },
       "merchantId": {
        "type": "string",

@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/0tpC9BbaQPK_TZmlZK5cHsIr_JY\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/uB0KPjQ-_FKwri9S67F19ijFpA4\"",
  "discoveryVersion": "v1",
  "id": "calendar:v3",
  "name": "calendar",
  "version": "v3",
- "revision": "20150303",
+ "revision": "20150408",
  "title": "Calendar API",
  "description": "Lets you manipulate events and other calendar data.",
  "ownerDomain": "google.com",
@@ -1479,7 +1479,7 @@
       },
       "minAccessRole": {
        "type": "string",
-       "description": "The minimum access role for the user in the returned entires. Optional. The default is no restriction.",
+       "description": "The minimum access role for the user in the returned entries. Optional. The default is no restriction.",
        "enum": [
         "freeBusyReader",
         "owner",
@@ -1601,7 +1601,7 @@
       },
       "minAccessRole": {
        "type": "string",
-       "description": "The minimum access role for the user in the returned entires. Optional. The default is no restriction.",
+       "description": "The minimum access role for the user in the returned entries. Optional. The default is no restriction.",
        "enum": [
         "freeBusyReader",
         "owner",

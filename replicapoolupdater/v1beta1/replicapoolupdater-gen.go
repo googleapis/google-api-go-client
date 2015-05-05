@@ -135,7 +135,7 @@ type InstanceUpdateErrorErrors struct {
 	// Code: [Output Only] The error type identifier for this error.
 	Code string `json:"code,omitempty"`
 
-	// Location: [Output Only] Indicates the field in the request which
+	// Location: [Output Only] Indicates the field in the request that
 	// caused the error. This property is optional.
 	Location string `json:"location,omitempty"`
 
@@ -161,7 +161,7 @@ type Operation struct {
 	ClientOperationId string `json:"clientOperationId,omitempty"`
 
 	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
-	// format (output only).
+	// format.
 	CreationTimestamp string `json:"creationTimestamp,omitempty"`
 
 	EndTime string `json:"endTime,omitempty"`
@@ -186,15 +186,14 @@ type Operation struct {
 	// Operation resources.
 	Kind string `json:"kind,omitempty"`
 
-	// Name: [Output Only] Name of the resource (output only).
+	// Name: [Output Only] Name of the resource.
 	Name string `json:"name,omitempty"`
 
 	OperationType string `json:"operationType,omitempty"`
 
 	Progress int64 `json:"progress,omitempty"`
 
-	// Region: [Output Only] URL of the region where the operation resides
-	// (output only).
+	// Region: [Output Only] URL of the region where the operation resides.
 	Region string `json:"region,omitempty"`
 
 	// SelfLink: [Output Only] Server defined URL for the resource.
@@ -217,15 +216,14 @@ type Operation struct {
 	TargetId uint64 `json:"targetId,omitempty,string"`
 
 	// TargetLink: [Output Only] URL of the resource the operation is
-	// mutating (output only).
+	// mutating.
 	TargetLink string `json:"targetLink,omitempty"`
 
 	User string `json:"user,omitempty"`
 
 	Warnings []*OperationWarnings `json:"warnings,omitempty"`
 
-	// Zone: [Output Only] URL of the zone where the operation resides
-	// (output only).
+	// Zone: [Output Only] URL of the zone where the operation resides.
 	Zone string `json:"zone,omitempty"`
 }
 
@@ -239,7 +237,7 @@ type OperationErrorErrors struct {
 	// Code: [Output Only] The error type identifier for this error.
 	Code string `json:"code,omitempty"`
 
-	// Location: [Output Only] Indicates the field in the request which
+	// Location: [Output Only] Indicates the field in the request that
 	// caused the error. This property is optional.
 	Location string `json:"location,omitempty"`
 
@@ -272,8 +270,7 @@ type RollingUpdate struct {
 	// instance group. This can be RECREATE which will recreate each
 	// instance and is only available for managed instance groups. It can
 	// also be REBOOT which performs a soft reboot for each instance and is
-	// only available for regular (non-managed) instance groups and explicit
-	// lists of instances.
+	// only available for regular (non-managed) instance groups.
 	ActionType string `json:"actionType,omitempty"`
 
 	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
@@ -284,7 +281,7 @@ type RollingUpdate struct {
 	// provided by the client when the resource is created.
 	Description string `json:"description,omitempty"`
 
-	// Error: [Output Only] Errors that occurred during rolling update.
+	// Error: [Output Only] Errors that occurred during the rolling update.
 	Error *RollingUpdateError `json:"error,omitempty"`
 
 	// Id: [Output Only] Unique identifier for the resource; defined by the
@@ -292,23 +289,18 @@ type RollingUpdate struct {
 	Id string `json:"id,omitempty"`
 
 	// InstanceGroup: Fully-qualified URL of an instance group being
-	// updated. Exactly one of instanceGroupManager, instanceGroup and
-	// instance list must be set.
+	// updated. Exactly one of instanceGroupManager and instanceGroup must
+	// be set.
 	InstanceGroup string `json:"instanceGroup,omitempty"`
 
 	// InstanceGroupManager: Fully-qualified URL of an instance group
-	// manager being updated. Exactly one of instanceGroupManager,
-	// instanceGroup and instance list must be set.
+	// manager being updated. Exactly one of instanceGroupManager and
+	// instanceGroup must be set.
 	InstanceGroupManager string `json:"instanceGroupManager,omitempty"`
 
 	// InstanceTemplate: Fully-qualified URL of an instance template to
 	// apply.
 	InstanceTemplate string `json:"instanceTemplate,omitempty"`
-
-	// Instances: List of fully-qualified URLs of instances to be updated.
-	// Exactly one of instanceGroupManager, instanceGroup and instance list
-	// must be set.
-	Instances []string `json:"instances,omitempty"`
 
 	// Kind: [Output Only] Type of the resource.
 	Kind string `json:"kind,omitempty"`
@@ -362,7 +354,7 @@ type RollingUpdateErrorErrors struct {
 	// Code: [Output Only] The error type identifier for this error.
 	Code string `json:"code,omitempty"`
 
-	// Location: [Output Only] Indicates the field in the request which
+	// Location: [Output Only] Indicates the field in the request that
 	// caused the error. This property is optional.
 	Location string `json:"location,omitempty"`
 
@@ -371,41 +363,36 @@ type RollingUpdateErrorErrors struct {
 }
 
 type RollingUpdatePolicy struct {
-	// AutoPauseAfterInstances: Number of instances updated before the
-	// update gets automatically paused.
+	// AutoPauseAfterInstances: Number of instances to update before the
+	// updater pauses the rolling update.
 	AutoPauseAfterInstances int64 `json:"autoPauseAfterInstances,omitempty"`
 
-	// InstanceStartupTimeoutSec: Maximum amount of time we will wait after
-	// finishing all steps until we receive HEALTHY state for instance. If
-	// this deadline is exceeded instance update is considered as failed.
+	// InstanceStartupTimeoutSec: The maximum amount of time that the
+	// updater waits for a HEALTHY state after all of the update steps are
+	// complete. If the HEALTHY state is not received before the deadline,
+	// the instance update is considered a failure.
 	InstanceStartupTimeoutSec int64 `json:"instanceStartupTimeoutSec,omitempty"`
 
-	// MaxNumConcurrentInstances: Maximum number of instances that can be
-	// updated simultaneously (concurrently). An update of an instance
-	// starts when the instance is about to be restarted and finishes after
-	// the instance has been restarted and the sleep period (defined by
-	// sleepAfterInstanceRestartSec) has passed.
+	// MaxNumConcurrentInstances: The maximum number of instances that can
+	// be updated simultaneously. An instance update is considered complete
+	// only after the instance is restarted and initialized.
 	MaxNumConcurrentInstances int64 `json:"maxNumConcurrentInstances,omitempty"`
 
-	// MaxNumFailedInstances: Maximum number of instance updates that can
-	// fail without failing the group update. Instance update is considered
-	// failed if any of it's update actions (e.g. Stop call on Instance
-	// resource in Rolling Reboot) failed with permanent failure, or if
-	// after finishing all update actions this instance is in UNHEALTHY
-	// state.
+	// MaxNumFailedInstances: The maximum number of instance updates that
+	// can fail before the group update is considered a failure. An instance
+	// update is considered failed if any of its update actions (e.g. Stop
+	// call on Instance resource in Rolling Reboot) failed with permanent
+	// failure, or if the instance is in an UNHEALTHY state after it
+	// finishes all of the update actions.
 	MaxNumFailedInstances int64 `json:"maxNumFailedInstances,omitempty"`
 
-	// MinInstanceUpdateTimeSec: Specifies minimum amount of time we will
-	// spend on updating single instance, measuring at the start of the
-	// first update action (e.g. Recreate call on Instance Group Manager or
-	// Stop call on Instance resource). If actual instance update takes less
-	// time we will simply sleep before proceeding with next instance.
+	// MinInstanceUpdateTimeSec: The minimum amount of time that the updater
+	// spends to update each instance. Update time is the time it takes to
+	// complete all update actions (e.g. Stop call on Instance resource in
+	// Rolling Reboot), reboot, and initialize. If the instance update
+	// finishes early, the updater pauses for the remainder of the time
+	// before it starts the next instance update.
 	MinInstanceUpdateTimeSec int64 `json:"minInstanceUpdateTimeSec,omitempty"`
-
-	// SleepAfterInstanceRestartSec: Time period after the instance has been
-	// restarted but before marking the update of this instance as done.
-	// This field is deprecated and ignored by Rolling Updater.
-	SleepAfterInstanceRestartSec int64 `json:"sleepAfterInstanceRestartSec,omitempty"`
 }
 
 type RollingUpdateList struct {
@@ -749,8 +736,9 @@ func (c *RollingUpdatesListCall) Filter(filter string) *RollingUpdatesListCall {
 }
 
 // InstanceGroupManager sets the optional parameter
-// "instanceGroupManager": The name of the instance group manager used
-// for filtering.
+// "instanceGroupManager": The name of the instance group manager. Use
+// this parameter to return only updates to instances that are part of a
+// specific instance group.
 func (c *RollingUpdatesListCall) InstanceGroupManager(instanceGroupManager string) *RollingUpdatesListCall {
 	c.opt_["instanceGroupManager"] = instanceGroupManager
 	return c
@@ -835,7 +823,7 @@ func (c *RollingUpdatesListCall) Do() (*RollingUpdateList, error) {
 	//       "type": "string"
 	//     },
 	//     "instanceGroupManager": {
-	//       "description": "The name of the instance group manager used for filtering.",
+	//       "description": "The name of the instance group manager. Use this parameter to return only updates to instances that are part of a specific instance group.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

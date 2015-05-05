@@ -147,6 +147,9 @@ type Conversion struct {
 	// CampaignId: DS campaign ID.
 	CampaignId int64 `json:"campaignId,omitempty,string"`
 
+	// Channel: Channel of the product: local or online.
+	Channel string `json:"channel,omitempty"`
+
 	// ClickId: DS click ID for the conversion.
 	ClickId string `json:"clickId,omitempty"`
 
@@ -186,9 +189,24 @@ type Conversion struct {
 	// EngineAccountId: DS engine account ID.
 	EngineAccountId int64 `json:"engineAccountId,omitempty,string"`
 
+	// FeedId: DS inventory feed ID.
+	FeedId int64 `json:"feedId,omitempty,string"`
+
 	// FloodlightOrderId: The advertiser-provided order id for the
 	// conversion.
 	FloodlightOrderId string `json:"floodlightOrderId,omitempty"`
+
+	// ProductCountry: ISO 3166 code of the product country.
+	ProductCountry string `json:"productCountry,omitempty"`
+
+	// ProductGroupId: DS product group ID.
+	ProductGroupId int64 `json:"productGroupId,omitempty,string"`
+
+	// ProductId: The product ID (SKU).
+	ProductId string `json:"productId,omitempty"`
+
+	// ProductLanguage: ISO 639 code of the product language.
+	ProductLanguage string `json:"productLanguage,omitempty"`
 
 	// QuantityMillis: The quantity of this conversion, in millis.
 	QuantityMillis int64 `json:"quantityMillis,omitempty,string"`
@@ -212,6 +230,10 @@ type Conversion struct {
 	// State: The state of the conversion, that is, either ACTIVE or
 	// REMOVED. Note: state DELETED is deprecated.
 	State string `json:"state,omitempty"`
+
+	// StoreId: The store id for which the product was advertised, when the
+	// channel is "local".
+	StoreId string `json:"storeId,omitempty"`
 
 	// Type: The type of the conversion, that is, either ACTION or
 	// TRANSACTION. An ACTION conversion is an action by the user that has

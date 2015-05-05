@@ -2,7 +2,7 @@
 //
 // Usage example:
 //
-//   import "google.golang.org/api/dataflow/v1beta3"
+//   import "google.golang.org/api/dataflow/v1b3"
 //   ...
 //   dataflowService, err := dataflow.New(oauthHttpClient)
 package dataflow
@@ -34,10 +34,10 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Background
 
-const apiId = "dataflow:v1beta3"
+const apiId = "dataflow:v1b3"
 const apiName = "dataflow"
-const apiVersion = "v1beta3"
-const basePath = "https://www.googleapis.com/dataflow/v1b3/projects/"
+const apiVersion = "v1b3"
+const basePath = "https://dataflow.googleapis.com/v1b3/projects/"
 
 // OAuth2 scopes used by this API.
 const (
@@ -53,7 +53,7 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client, BasePath: basePath}
-	s.V1b3 = NewV1b3Service(s)
+	s.Projects = NewProjectsService(s)
 	return s, nil
 }
 
@@ -62,7 +62,7 @@ type Service struct {
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
-	V1b3 *V1b3Service
+	Projects *ProjectsService
 }
 
 func (s *Service) userAgent() string {
@@ -72,60 +72,48 @@ func (s *Service) userAgent() string {
 	return googleapi.UserAgent + " " + s.UserAgent
 }
 
-func NewV1b3Service(s *Service) *V1b3Service {
-	rs := &V1b3Service{s: s}
-	rs.Projects = NewV1b3ProjectsService(s)
+func NewProjectsService(s *Service) *ProjectsService {
+	rs := &ProjectsService{s: s}
+	rs.Jobs = NewProjectsJobsService(s)
 	return rs
 }
 
-type V1b3Service struct {
+type ProjectsService struct {
 	s *Service
 
-	Projects *V1b3ProjectsService
+	Jobs *ProjectsJobsService
 }
 
-func NewV1b3ProjectsService(s *Service) *V1b3ProjectsService {
-	rs := &V1b3ProjectsService{s: s}
-	rs.Jobs = NewV1b3ProjectsJobsService(s)
+func NewProjectsJobsService(s *Service) *ProjectsJobsService {
+	rs := &ProjectsJobsService{s: s}
+	rs.Messages = NewProjectsJobsMessagesService(s)
+	rs.WorkItems = NewProjectsJobsWorkItemsService(s)
 	return rs
 }
 
-type V1b3ProjectsService struct {
+type ProjectsJobsService struct {
 	s *Service
 
-	Jobs *V1b3ProjectsJobsService
+	Messages *ProjectsJobsMessagesService
+
+	WorkItems *ProjectsJobsWorkItemsService
 }
 
-func NewV1b3ProjectsJobsService(s *Service) *V1b3ProjectsJobsService {
-	rs := &V1b3ProjectsJobsService{s: s}
-	rs.Messages = NewV1b3ProjectsJobsMessagesService(s)
-	rs.WorkItems = NewV1b3ProjectsJobsWorkItemsService(s)
+func NewProjectsJobsMessagesService(s *Service) *ProjectsJobsMessagesService {
+	rs := &ProjectsJobsMessagesService{s: s}
 	return rs
 }
 
-type V1b3ProjectsJobsService struct {
-	s *Service
-
-	Messages *V1b3ProjectsJobsMessagesService
-
-	WorkItems *V1b3ProjectsJobsWorkItemsService
-}
-
-func NewV1b3ProjectsJobsMessagesService(s *Service) *V1b3ProjectsJobsMessagesService {
-	rs := &V1b3ProjectsJobsMessagesService{s: s}
-	return rs
-}
-
-type V1b3ProjectsJobsMessagesService struct {
+type ProjectsJobsMessagesService struct {
 	s *Service
 }
 
-func NewV1b3ProjectsJobsWorkItemsService(s *Service) *V1b3ProjectsJobsWorkItemsService {
-	rs := &V1b3ProjectsJobsWorkItemsService{s: s}
+func NewProjectsJobsWorkItemsService(s *Service) *ProjectsJobsWorkItemsService {
+	rs := &ProjectsJobsWorkItemsService{s: s}
 	return rs
 }
 
-type V1b3ProjectsJobsWorkItemsService struct {
+type ProjectsJobsWorkItemsService struct {
 	s *Service
 }
 
@@ -833,9 +821,9 @@ type WriteInstruction struct {
 	Sink *Sink `json:"sink,omitempty"`
 }
 
-// method id "dataflow.v1b3.projects.jobs.create":
+// method id "dataflow.projects.jobs.create":
 
-type V1b3ProjectsJobsCreateCall struct {
+type ProjectsJobsCreateCall struct {
 	s         *Service
 	projectId string
 	job       *Job
@@ -843,21 +831,21 @@ type V1b3ProjectsJobsCreateCall struct {
 }
 
 // Create: Creates a dataflow job.
-func (r *V1b3ProjectsJobsService) Create(projectId string, job *Job) *V1b3ProjectsJobsCreateCall {
-	c := &V1b3ProjectsJobsCreateCall{s: r.s, opt_: make(map[string]interface{})}
+func (r *ProjectsJobsService) Create(projectId string, job *Job) *ProjectsJobsCreateCall {
+	c := &ProjectsJobsCreateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectId = projectId
 	c.job = job
 	return c
 }
 
 // ReplaceJobId sets the optional parameter "replaceJobId":
-func (c *V1b3ProjectsJobsCreateCall) ReplaceJobId(replaceJobId string) *V1b3ProjectsJobsCreateCall {
+func (c *ProjectsJobsCreateCall) ReplaceJobId(replaceJobId string) *ProjectsJobsCreateCall {
 	c.opt_["replaceJobId"] = replaceJobId
 	return c
 }
 
 // View sets the optional parameter "view":
-func (c *V1b3ProjectsJobsCreateCall) View(view string) *V1b3ProjectsJobsCreateCall {
+func (c *ProjectsJobsCreateCall) View(view string) *ProjectsJobsCreateCall {
 	c.opt_["view"] = view
 	return c
 }
@@ -865,12 +853,12 @@ func (c *V1b3ProjectsJobsCreateCall) View(view string) *V1b3ProjectsJobsCreateCa
 // Fields allows partial responses to be retrieved.
 // See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *V1b3ProjectsJobsCreateCall) Fields(s ...googleapi.Field) *V1b3ProjectsJobsCreateCall {
+func (c *ProjectsJobsCreateCall) Fields(s ...googleapi.Field) *ProjectsJobsCreateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-func (c *V1b3ProjectsJobsCreateCall) Do() (*Job, error) {
+func (c *ProjectsJobsCreateCall) Do() (*Job, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.job)
 	if err != nil {
@@ -912,7 +900,7 @@ func (c *V1b3ProjectsJobsCreateCall) Do() (*Job, error) {
 	// {
 	//   "description": "Creates a dataflow job.",
 	//   "httpMethod": "POST",
-	//   "id": "dataflow.v1b3.projects.jobs.create",
+	//   "id": "dataflow.projects.jobs.create",
 	//   "parameterOrder": [
 	//     "projectId"
 	//   ],
@@ -956,9 +944,9 @@ func (c *V1b3ProjectsJobsCreateCall) Do() (*Job, error) {
 
 }
 
-// method id "dataflow.v1b3.projects.jobs.get":
+// method id "dataflow.projects.jobs.get":
 
-type V1b3ProjectsJobsGetCall struct {
+type ProjectsJobsGetCall struct {
 	s         *Service
 	projectId string
 	jobId     string
@@ -966,15 +954,15 @@ type V1b3ProjectsJobsGetCall struct {
 }
 
 // Get: Gets the state of the specified dataflow job.
-func (r *V1b3ProjectsJobsService) Get(projectId string, jobId string) *V1b3ProjectsJobsGetCall {
-	c := &V1b3ProjectsJobsGetCall{s: r.s, opt_: make(map[string]interface{})}
+func (r *ProjectsJobsService) Get(projectId string, jobId string) *ProjectsJobsGetCall {
+	c := &ProjectsJobsGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectId = projectId
 	c.jobId = jobId
 	return c
 }
 
 // View sets the optional parameter "view":
-func (c *V1b3ProjectsJobsGetCall) View(view string) *V1b3ProjectsJobsGetCall {
+func (c *ProjectsJobsGetCall) View(view string) *ProjectsJobsGetCall {
 	c.opt_["view"] = view
 	return c
 }
@@ -982,12 +970,12 @@ func (c *V1b3ProjectsJobsGetCall) View(view string) *V1b3ProjectsJobsGetCall {
 // Fields allows partial responses to be retrieved.
 // See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *V1b3ProjectsJobsGetCall) Fields(s ...googleapi.Field) *V1b3ProjectsJobsGetCall {
+func (c *ProjectsJobsGetCall) Fields(s ...googleapi.Field) *ProjectsJobsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-func (c *V1b3ProjectsJobsGetCall) Do() (*Job, error) {
+func (c *ProjectsJobsGetCall) Do() (*Job, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1021,7 +1009,7 @@ func (c *V1b3ProjectsJobsGetCall) Do() (*Job, error) {
 	// {
 	//   "description": "Gets the state of the specified dataflow job.",
 	//   "httpMethod": "GET",
-	//   "id": "dataflow.v1b3.projects.jobs.get",
+	//   "id": "dataflow.projects.jobs.get",
 	//   "parameterOrder": [
 	//     "projectId",
 	//     "jobId"
@@ -1064,9 +1052,9 @@ func (c *V1b3ProjectsJobsGetCall) Do() (*Job, error) {
 
 }
 
-// method id "dataflow.v1b3.projects.jobs.getMetrics":
+// method id "dataflow.projects.jobs.getMetrics":
 
-type V1b3ProjectsJobsGetMetricsCall struct {
+type ProjectsJobsGetMetricsCall struct {
 	s         *Service
 	projectId string
 	jobId     string
@@ -1074,15 +1062,15 @@ type V1b3ProjectsJobsGetMetricsCall struct {
 }
 
 // GetMetrics: Request the job status.
-func (r *V1b3ProjectsJobsService) GetMetrics(projectId string, jobId string) *V1b3ProjectsJobsGetMetricsCall {
-	c := &V1b3ProjectsJobsGetMetricsCall{s: r.s, opt_: make(map[string]interface{})}
+func (r *ProjectsJobsService) GetMetrics(projectId string, jobId string) *ProjectsJobsGetMetricsCall {
+	c := &ProjectsJobsGetMetricsCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectId = projectId
 	c.jobId = jobId
 	return c
 }
 
 // StartTime sets the optional parameter "startTime":
-func (c *V1b3ProjectsJobsGetMetricsCall) StartTime(startTime string) *V1b3ProjectsJobsGetMetricsCall {
+func (c *ProjectsJobsGetMetricsCall) StartTime(startTime string) *ProjectsJobsGetMetricsCall {
 	c.opt_["startTime"] = startTime
 	return c
 }
@@ -1090,12 +1078,12 @@ func (c *V1b3ProjectsJobsGetMetricsCall) StartTime(startTime string) *V1b3Projec
 // Fields allows partial responses to be retrieved.
 // See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *V1b3ProjectsJobsGetMetricsCall) Fields(s ...googleapi.Field) *V1b3ProjectsJobsGetMetricsCall {
+func (c *ProjectsJobsGetMetricsCall) Fields(s ...googleapi.Field) *ProjectsJobsGetMetricsCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-func (c *V1b3ProjectsJobsGetMetricsCall) Do() (*JobMetrics, error) {
+func (c *ProjectsJobsGetMetricsCall) Do() (*JobMetrics, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1129,7 +1117,7 @@ func (c *V1b3ProjectsJobsGetMetricsCall) Do() (*JobMetrics, error) {
 	// {
 	//   "description": "Request the job status.",
 	//   "httpMethod": "GET",
-	//   "id": "dataflow.v1b3.projects.jobs.getMetrics",
+	//   "id": "dataflow.projects.jobs.getMetrics",
 	//   "parameterOrder": [
 	//     "projectId",
 	//     "jobId"
@@ -1162,35 +1150,35 @@ func (c *V1b3ProjectsJobsGetMetricsCall) Do() (*JobMetrics, error) {
 
 }
 
-// method id "dataflow.v1b3.projects.jobs.list":
+// method id "dataflow.projects.jobs.list":
 
-type V1b3ProjectsJobsListCall struct {
+type ProjectsJobsListCall struct {
 	s         *Service
 	projectId string
 	opt_      map[string]interface{}
 }
 
 // List: List the jobs of a project
-func (r *V1b3ProjectsJobsService) List(projectId string) *V1b3ProjectsJobsListCall {
-	c := &V1b3ProjectsJobsListCall{s: r.s, opt_: make(map[string]interface{})}
+func (r *ProjectsJobsService) List(projectId string) *ProjectsJobsListCall {
+	c := &ProjectsJobsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectId = projectId
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize":
-func (c *V1b3ProjectsJobsListCall) PageSize(pageSize int64) *V1b3ProjectsJobsListCall {
+func (c *ProjectsJobsListCall) PageSize(pageSize int64) *ProjectsJobsListCall {
 	c.opt_["pageSize"] = pageSize
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken":
-func (c *V1b3ProjectsJobsListCall) PageToken(pageToken string) *V1b3ProjectsJobsListCall {
+func (c *ProjectsJobsListCall) PageToken(pageToken string) *ProjectsJobsListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
 }
 
 // View sets the optional parameter "view":
-func (c *V1b3ProjectsJobsListCall) View(view string) *V1b3ProjectsJobsListCall {
+func (c *ProjectsJobsListCall) View(view string) *ProjectsJobsListCall {
 	c.opt_["view"] = view
 	return c
 }
@@ -1198,12 +1186,12 @@ func (c *V1b3ProjectsJobsListCall) View(view string) *V1b3ProjectsJobsListCall {
 // Fields allows partial responses to be retrieved.
 // See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *V1b3ProjectsJobsListCall) Fields(s ...googleapi.Field) *V1b3ProjectsJobsListCall {
+func (c *ProjectsJobsListCall) Fields(s ...googleapi.Field) *ProjectsJobsListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-func (c *V1b3ProjectsJobsListCall) Do() (*ListJobsResponse, error) {
+func (c *ProjectsJobsListCall) Do() (*ListJobsResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1242,7 +1230,7 @@ func (c *V1b3ProjectsJobsListCall) Do() (*ListJobsResponse, error) {
 	// {
 	//   "description": "List the jobs of a project",
 	//   "httpMethod": "GET",
-	//   "id": "dataflow.v1b3.projects.jobs.list",
+	//   "id": "dataflow.projects.jobs.list",
 	//   "parameterOrder": [
 	//     "projectId"
 	//   ],
@@ -1288,9 +1276,9 @@ func (c *V1b3ProjectsJobsListCall) Do() (*ListJobsResponse, error) {
 
 }
 
-// method id "dataflow.v1b3.projects.jobs.patch":
+// method id "dataflow.projects.jobs.patch":
 
-type V1b3ProjectsJobsPatchCall struct {
+type ProjectsJobsPatchCall struct {
 	s         *Service
 	projectId string
 	jobId     string
@@ -1300,8 +1288,8 @@ type V1b3ProjectsJobsPatchCall struct {
 
 // Patch: Updates the state of an existing dataflow job. This method
 // supports patch semantics.
-func (r *V1b3ProjectsJobsService) Patch(projectId string, jobId string, job *Job) *V1b3ProjectsJobsPatchCall {
-	c := &V1b3ProjectsJobsPatchCall{s: r.s, opt_: make(map[string]interface{})}
+func (r *ProjectsJobsService) Patch(projectId string, jobId string, job *Job) *ProjectsJobsPatchCall {
+	c := &ProjectsJobsPatchCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectId = projectId
 	c.jobId = jobId
 	c.job = job
@@ -1311,12 +1299,12 @@ func (r *V1b3ProjectsJobsService) Patch(projectId string, jobId string, job *Job
 // Fields allows partial responses to be retrieved.
 // See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *V1b3ProjectsJobsPatchCall) Fields(s ...googleapi.Field) *V1b3ProjectsJobsPatchCall {
+func (c *ProjectsJobsPatchCall) Fields(s ...googleapi.Field) *ProjectsJobsPatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-func (c *V1b3ProjectsJobsPatchCall) Do() (*Job, error) {
+func (c *ProjectsJobsPatchCall) Do() (*Job, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.job)
 	if err != nil {
@@ -1353,7 +1341,7 @@ func (c *V1b3ProjectsJobsPatchCall) Do() (*Job, error) {
 	// {
 	//   "description": "Updates the state of an existing dataflow job. This method supports patch semantics.",
 	//   "httpMethod": "PATCH",
-	//   "id": "dataflow.v1b3.projects.jobs.patch",
+	//   "id": "dataflow.projects.jobs.patch",
 	//   "parameterOrder": [
 	//     "projectId",
 	//     "jobId"
@@ -1385,9 +1373,9 @@ func (c *V1b3ProjectsJobsPatchCall) Do() (*Job, error) {
 
 }
 
-// method id "dataflow.v1b3.projects.jobs.update":
+// method id "dataflow.projects.jobs.update":
 
-type V1b3ProjectsJobsUpdateCall struct {
+type ProjectsJobsUpdateCall struct {
 	s         *Service
 	projectId string
 	jobId     string
@@ -1396,8 +1384,8 @@ type V1b3ProjectsJobsUpdateCall struct {
 }
 
 // Update: Updates the state of an existing dataflow job.
-func (r *V1b3ProjectsJobsService) Update(projectId string, jobId string, job *Job) *V1b3ProjectsJobsUpdateCall {
-	c := &V1b3ProjectsJobsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+func (r *ProjectsJobsService) Update(projectId string, jobId string, job *Job) *ProjectsJobsUpdateCall {
+	c := &ProjectsJobsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectId = projectId
 	c.jobId = jobId
 	c.job = job
@@ -1407,12 +1395,12 @@ func (r *V1b3ProjectsJobsService) Update(projectId string, jobId string, job *Jo
 // Fields allows partial responses to be retrieved.
 // See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *V1b3ProjectsJobsUpdateCall) Fields(s ...googleapi.Field) *V1b3ProjectsJobsUpdateCall {
+func (c *ProjectsJobsUpdateCall) Fields(s ...googleapi.Field) *ProjectsJobsUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-func (c *V1b3ProjectsJobsUpdateCall) Do() (*Job, error) {
+func (c *ProjectsJobsUpdateCall) Do() (*Job, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.job)
 	if err != nil {
@@ -1449,7 +1437,7 @@ func (c *V1b3ProjectsJobsUpdateCall) Do() (*Job, error) {
 	// {
 	//   "description": "Updates the state of an existing dataflow job.",
 	//   "httpMethod": "PUT",
-	//   "id": "dataflow.v1b3.projects.jobs.update",
+	//   "id": "dataflow.projects.jobs.update",
 	//   "parameterOrder": [
 	//     "projectId",
 	//     "jobId"
@@ -1481,9 +1469,9 @@ func (c *V1b3ProjectsJobsUpdateCall) Do() (*Job, error) {
 
 }
 
-// method id "dataflow.v1b3.projects.jobs.messages.list":
+// method id "dataflow.projects.jobs.messages.list":
 
-type V1b3ProjectsJobsMessagesListCall struct {
+type ProjectsJobsMessagesListCall struct {
 	s         *Service
 	projectId string
 	jobId     string
@@ -1491,39 +1479,39 @@ type V1b3ProjectsJobsMessagesListCall struct {
 }
 
 // List: Request the job status.
-func (r *V1b3ProjectsJobsMessagesService) List(projectId string, jobId string) *V1b3ProjectsJobsMessagesListCall {
-	c := &V1b3ProjectsJobsMessagesListCall{s: r.s, opt_: make(map[string]interface{})}
+func (r *ProjectsJobsMessagesService) List(projectId string, jobId string) *ProjectsJobsMessagesListCall {
+	c := &ProjectsJobsMessagesListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectId = projectId
 	c.jobId = jobId
 	return c
 }
 
 // EndTime sets the optional parameter "endTime":
-func (c *V1b3ProjectsJobsMessagesListCall) EndTime(endTime string) *V1b3ProjectsJobsMessagesListCall {
+func (c *ProjectsJobsMessagesListCall) EndTime(endTime string) *ProjectsJobsMessagesListCall {
 	c.opt_["endTime"] = endTime
 	return c
 }
 
 // MinimumImportance sets the optional parameter "minimumImportance":
-func (c *V1b3ProjectsJobsMessagesListCall) MinimumImportance(minimumImportance string) *V1b3ProjectsJobsMessagesListCall {
+func (c *ProjectsJobsMessagesListCall) MinimumImportance(minimumImportance string) *ProjectsJobsMessagesListCall {
 	c.opt_["minimumImportance"] = minimumImportance
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize":
-func (c *V1b3ProjectsJobsMessagesListCall) PageSize(pageSize int64) *V1b3ProjectsJobsMessagesListCall {
+func (c *ProjectsJobsMessagesListCall) PageSize(pageSize int64) *ProjectsJobsMessagesListCall {
 	c.opt_["pageSize"] = pageSize
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken":
-func (c *V1b3ProjectsJobsMessagesListCall) PageToken(pageToken string) *V1b3ProjectsJobsMessagesListCall {
+func (c *ProjectsJobsMessagesListCall) PageToken(pageToken string) *ProjectsJobsMessagesListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
 }
 
 // StartTime sets the optional parameter "startTime":
-func (c *V1b3ProjectsJobsMessagesListCall) StartTime(startTime string) *V1b3ProjectsJobsMessagesListCall {
+func (c *ProjectsJobsMessagesListCall) StartTime(startTime string) *ProjectsJobsMessagesListCall {
 	c.opt_["startTime"] = startTime
 	return c
 }
@@ -1531,12 +1519,12 @@ func (c *V1b3ProjectsJobsMessagesListCall) StartTime(startTime string) *V1b3Proj
 // Fields allows partial responses to be retrieved.
 // See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *V1b3ProjectsJobsMessagesListCall) Fields(s ...googleapi.Field) *V1b3ProjectsJobsMessagesListCall {
+func (c *ProjectsJobsMessagesListCall) Fields(s ...googleapi.Field) *ProjectsJobsMessagesListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-func (c *V1b3ProjectsJobsMessagesListCall) Do() (*ListJobMessagesResponse, error) {
+func (c *ProjectsJobsMessagesListCall) Do() (*ListJobMessagesResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1582,7 +1570,7 @@ func (c *V1b3ProjectsJobsMessagesListCall) Do() (*ListJobMessagesResponse, error
 	// {
 	//   "description": "Request the job status.",
 	//   "httpMethod": "GET",
-	//   "id": "dataflow.v1b3.projects.jobs.messages.list",
+	//   "id": "dataflow.projects.jobs.messages.list",
 	//   "parameterOrder": [
 	//     "projectId",
 	//     "jobId"
@@ -1646,9 +1634,9 @@ func (c *V1b3ProjectsJobsMessagesListCall) Do() (*ListJobMessagesResponse, error
 
 }
 
-// method id "dataflow.v1b3.projects.jobs.workItems.lease":
+// method id "dataflow.projects.jobs.workItems.lease":
 
-type V1b3ProjectsJobsWorkItemsLeaseCall struct {
+type ProjectsJobsWorkItemsLeaseCall struct {
 	s                    *Service
 	projectId            string
 	jobId                string
@@ -1657,8 +1645,8 @@ type V1b3ProjectsJobsWorkItemsLeaseCall struct {
 }
 
 // Lease: Leases a dataflow WorkItem to run.
-func (r *V1b3ProjectsJobsWorkItemsService) Lease(projectId string, jobId string, leaseworkitemrequest *LeaseWorkItemRequest) *V1b3ProjectsJobsWorkItemsLeaseCall {
-	c := &V1b3ProjectsJobsWorkItemsLeaseCall{s: r.s, opt_: make(map[string]interface{})}
+func (r *ProjectsJobsWorkItemsService) Lease(projectId string, jobId string, leaseworkitemrequest *LeaseWorkItemRequest) *ProjectsJobsWorkItemsLeaseCall {
+	c := &ProjectsJobsWorkItemsLeaseCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectId = projectId
 	c.jobId = jobId
 	c.leaseworkitemrequest = leaseworkitemrequest
@@ -1668,12 +1656,12 @@ func (r *V1b3ProjectsJobsWorkItemsService) Lease(projectId string, jobId string,
 // Fields allows partial responses to be retrieved.
 // See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *V1b3ProjectsJobsWorkItemsLeaseCall) Fields(s ...googleapi.Field) *V1b3ProjectsJobsWorkItemsLeaseCall {
+func (c *ProjectsJobsWorkItemsLeaseCall) Fields(s ...googleapi.Field) *ProjectsJobsWorkItemsLeaseCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-func (c *V1b3ProjectsJobsWorkItemsLeaseCall) Do() (*LeaseWorkItemResponse, error) {
+func (c *ProjectsJobsWorkItemsLeaseCall) Do() (*LeaseWorkItemResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.leaseworkitemrequest)
 	if err != nil {
@@ -1710,7 +1698,7 @@ func (c *V1b3ProjectsJobsWorkItemsLeaseCall) Do() (*LeaseWorkItemResponse, error
 	// {
 	//   "description": "Leases a dataflow WorkItem to run.",
 	//   "httpMethod": "POST",
-	//   "id": "dataflow.v1b3.projects.jobs.workItems.lease",
+	//   "id": "dataflow.projects.jobs.workItems.lease",
 	//   "parameterOrder": [
 	//     "projectId",
 	//     "jobId"
@@ -1742,9 +1730,9 @@ func (c *V1b3ProjectsJobsWorkItemsLeaseCall) Do() (*LeaseWorkItemResponse, error
 
 }
 
-// method id "dataflow.v1b3.projects.jobs.workItems.reportStatus":
+// method id "dataflow.projects.jobs.workItems.reportStatus":
 
-type V1b3ProjectsJobsWorkItemsReportStatusCall struct {
+type ProjectsJobsWorkItemsReportStatusCall struct {
 	s                           *Service
 	projectId                   string
 	jobId                       string
@@ -1754,8 +1742,8 @@ type V1b3ProjectsJobsWorkItemsReportStatusCall struct {
 
 // ReportStatus: Reports the status of dataflow WorkItems leased by a
 // worker.
-func (r *V1b3ProjectsJobsWorkItemsService) ReportStatus(projectId string, jobId string, reportworkitemstatusrequest *ReportWorkItemStatusRequest) *V1b3ProjectsJobsWorkItemsReportStatusCall {
-	c := &V1b3ProjectsJobsWorkItemsReportStatusCall{s: r.s, opt_: make(map[string]interface{})}
+func (r *ProjectsJobsWorkItemsService) ReportStatus(projectId string, jobId string, reportworkitemstatusrequest *ReportWorkItemStatusRequest) *ProjectsJobsWorkItemsReportStatusCall {
+	c := &ProjectsJobsWorkItemsReportStatusCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectId = projectId
 	c.jobId = jobId
 	c.reportworkitemstatusrequest = reportworkitemstatusrequest
@@ -1765,12 +1753,12 @@ func (r *V1b3ProjectsJobsWorkItemsService) ReportStatus(projectId string, jobId 
 // Fields allows partial responses to be retrieved.
 // See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *V1b3ProjectsJobsWorkItemsReportStatusCall) Fields(s ...googleapi.Field) *V1b3ProjectsJobsWorkItemsReportStatusCall {
+func (c *ProjectsJobsWorkItemsReportStatusCall) Fields(s ...googleapi.Field) *ProjectsJobsWorkItemsReportStatusCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-func (c *V1b3ProjectsJobsWorkItemsReportStatusCall) Do() (*ReportWorkItemStatusResponse, error) {
+func (c *ProjectsJobsWorkItemsReportStatusCall) Do() (*ReportWorkItemStatusResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.reportworkitemstatusrequest)
 	if err != nil {
@@ -1807,7 +1795,7 @@ func (c *V1b3ProjectsJobsWorkItemsReportStatusCall) Do() (*ReportWorkItemStatusR
 	// {
 	//   "description": "Reports the status of dataflow WorkItems leased by a worker.",
 	//   "httpMethod": "POST",
-	//   "id": "dataflow.v1b3.projects.jobs.workItems.reportStatus",
+	//   "id": "dataflow.projects.jobs.workItems.reportStatus",
 	//   "parameterOrder": [
 	//     "projectId",
 	//     "jobId"

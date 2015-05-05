@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/bh0n6QTlJyYnLMwddp0hBT7PJUU\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/sI4F7utziSvF-E_2gHaR9zqgiiA\"",
  "discoveryVersion": "v1",
  "id": "bigquery:v2",
  "name": "bigquery",
  "version": "v2",
- "revision": "20150317",
+ "revision": "20150303",
  "title": "BigQuery API",
  "description": "A data platform for customers to create, manage, share and query data.",
  "ownerDomain": "google.com",
@@ -14,7 +14,7 @@
   "x16": "https://www.google.com/images/icons/product/search-16.gif",
   "x32": "https://www.google.com/images/icons/product/search-32.gif"
  },
- "documentationLink": "https://developers.google.com/bigquery/docs/overview",
+ "documentationLink": "https://cloud.google.com/bigquery/",
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/bigquery/v2/",
  "basePath": "/bigquery/v2/",
@@ -562,7 +562,7 @@
     },
     "projectionFields": {
      "type": "array",
-     "description": "[Experimental] Names(case-sensitive) of properties to keep when importing data. If this is populated, only the specified properties will be imported for each entity. Currently, this is only supported for DATASTORE_BACKUP imports and only top level properties are supported. If any specified property is not found in the Datastore 'Kind' being imported, that is an error. Note: This feature is experimental and can change in the future.",
+     "description": "[Experimental] If sourceFormat is set to \"DATASTORE_BACKUP\", indicates which entity properties to load into BigQuery from a Cloud Datastore backup. Property names are case sensitive and must be top-level properties. If no properties are specified, BigQuery loads all properties. If any named property isn't found in the Cloud Datastore backup, an invalid error is returned in the job result.",
      "items": {
       "type": "string"
      }
@@ -627,7 +627,7 @@
     },
     "flattenResults": {
      "type": "boolean",
-     "description": "[Experimental] Flattens all nested and repeated fields in the query results. The default value is true. allowLargeResults must be true if this is set to false."
+     "description": "[Optional] Flattens all nested and repeated fields in the query results. The default value is true. allowLargeResults must be true if this is set to false."
     },
     "preserveNulls": {
      "type": "boolean",
@@ -1498,7 +1498,7 @@
      "id": "bigquery.datasets.list",
      "path": "projects/{projectId}/datasets",
      "httpMethod": "GET",
-     "description": "Lists all the datasets in the specified project to which the caller has read access; however, a project owner can list (but not necessarily get) all datasets in his project.",
+     "description": "Lists all datasets in the specified project to which you have been granted the READER dataset role.",
      "parameters": {
       "all": {
        "type": "boolean",
@@ -1610,7 +1610,7 @@
      "id": "bigquery.jobs.get",
      "path": "projects/{projectId}/jobs/{jobId}",
      "httpMethod": "GET",
-     "description": "Retrieves the specified job by ID.",
+     "description": "Returns information about a specific job. Job information is available for a six month period after creation. Requires that you're the person who ran the job, or have the Is Owner project role.",
      "parameters": {
       "jobId": {
        "type": "string",
@@ -1695,7 +1695,7 @@
      "id": "bigquery.jobs.insert",
      "path": "projects/{projectId}/jobs",
      "httpMethod": "POST",
-     "description": "Starts a new asynchronous job.",
+     "description": "Starts a new asynchronous job. Requires the Can View project role.",
      "parameters": {
       "projectId": {
        "type": "string",
@@ -1741,7 +1741,7 @@
      "id": "bigquery.jobs.list",
      "path": "projects/{projectId}/jobs",
      "httpMethod": "GET",
-     "description": "Lists all the Jobs in the specified project that were started by the user. The job list returns in reverse chronological order of when the jobs were created, starting with the most recent job created.",
+     "description": "Lists all jobs that you started in the specified project. The job list returns in reverse chronological order of when the jobs were created, starting with the most recent job created. Requires the Can View project role, or the Is Owner project role if you set the allUsers property.",
      "parameters": {
       "allUsers": {
        "type": "boolean",
@@ -1841,7 +1841,7 @@
      "id": "bigquery.projects.list",
      "path": "projects",
      "httpMethod": "GET",
-     "description": "Lists the projects to which you have at least read access.",
+     "description": "Lists all projects to which you have been granted any project role.",
      "parameters": {
       "maxResults": {
        "type": "integer",
@@ -1871,7 +1871,7 @@
      "id": "bigquery.tabledata.insertAll",
      "path": "projects/{projectId}/datasets/{datasetId}/tables/{tableId}/insertAll",
      "httpMethod": "POST",
-     "description": "Streams data into BigQuery one record at a time without needing to run a load job.",
+     "description": "Streams data into BigQuery one record at a time without needing to run a load job. Requires the WRITER dataset role.",
      "parameters": {
       "datasetId": {
        "type": "string",
@@ -1913,7 +1913,7 @@
      "id": "bigquery.tabledata.list",
      "path": "projects/{projectId}/datasets/{datasetId}/tables/{tableId}/data",
      "httpMethod": "GET",
-     "description": "Retrieves table data from a specified set of rows.",
+     "description": "Retrieves table data from a specified set of rows. Requires the READER dataset role.",
      "parameters": {
       "datasetId": {
        "type": "string",
@@ -2079,7 +2079,7 @@
      "id": "bigquery.tables.list",
      "path": "projects/{projectId}/datasets/{datasetId}/tables",
      "httpMethod": "GET",
-     "description": "Lists all tables in the specified dataset.",
+     "description": "Lists all tables in the specified dataset. Requires the READER dataset role.",
      "parameters": {
       "datasetId": {
        "type": "string",

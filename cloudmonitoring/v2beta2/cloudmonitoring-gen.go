@@ -217,11 +217,12 @@ type MetricDescriptorLabelDescriptor struct {
 }
 
 type MetricDescriptorTypeDescriptor struct {
-	// MetricType: The method of collecting data for the metric.
+	// MetricType: The method of collecting data for the metric. See Metric
+	// types.
 	MetricType string `json:"metricType,omitempty"`
 
-	// ValueType: The type of data that is written to a timeseries point for
-	// this metric.
+	// ValueType: The data type of of individual points in the metric's time
+	// series. See Metric value types.
 	ValueType string `json:"valueType,omitempty"`
 }
 

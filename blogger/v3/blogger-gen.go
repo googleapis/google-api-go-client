@@ -354,6 +354,9 @@ type CommentPost struct {
 }
 
 type CommentList struct {
+	// Etag: Etag of the response.
+	Etag string `json:"etag,omitempty"`
+
 	// Items: The List of Comments for a Post.
 	Items []*Comment `json:"items,omitempty"`
 
@@ -434,6 +437,9 @@ type PageBlog struct {
 }
 
 type PageList struct {
+	// Etag: Etag of the response.
+	Etag string `json:"etag,omitempty"`
+
 	// Items: The list of Pages for a Blog.
 	Items []*Page `json:"items,omitempty"`
 
@@ -579,6 +585,9 @@ type PostReplies struct {
 }
 
 type PostList struct {
+	// Etag: Etag of the response.
+	Etag string `json:"etag,omitempty"`
+
 	// Items: The list of Posts for this Blog.
 	Items []*Post `json:"items,omitempty"`
 

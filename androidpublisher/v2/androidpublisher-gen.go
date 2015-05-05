@@ -53,6 +53,7 @@ func New(client *http.Client) (*Service, error) {
 	}
 	s := &Service{client: client, BasePath: basePath}
 	s.Edits = NewEditsService(s)
+	s.Entitlements = NewEntitlementsService(s)
 	s.Inappproducts = NewInappproductsService(s)
 	s.Purchases = NewPurchasesService(s)
 	return s, nil
@@ -64,6 +65,8 @@ type Service struct {
 	UserAgent string // optional additional User-Agent fragment
 
 	Edits *EditsService
+
+	Entitlements *EntitlementsService
 
 	Inappproducts *InappproductsService
 
@@ -179,6 +182,15 @@ func NewEditsTracksService(s *Service) *EditsTracksService {
 }
 
 type EditsTracksService struct {
+	s *Service
+}
+
+func NewEntitlementsService(s *Service) *EntitlementsService {
+	rs := &EntitlementsService{s: s}
+	return rs
+}
+
+type EntitlementsService struct {
 	s *Service
 }
 
@@ -298,6 +310,33 @@ type AppEdit struct {
 
 	// Id: The ID of the edit that can be used in subsequent API calls.
 	Id string `json:"id,omitempty"`
+}
+
+type Entitlement struct {
+	// Kind: This kind represents an entitlement object in the
+	// androidpublisher service.
+	Kind string `json:"kind,omitempty"`
+
+	// ProductId: The SKU of the product.
+	ProductId string `json:"productId,omitempty"`
+
+	// ProductType: The type of the inapp product. Possible values are:
+	// -
+	// In-app item: "inapp"
+	// - Subscription: "subs"
+	ProductType string `json:"productType,omitempty"`
+
+	// Token: The token which can be verified using the subscriptions or
+	// products API.
+	Token string `json:"token,omitempty"`
+}
+
+type EntitlementsListResponse struct {
+	PageInfo *PageInfo `json:"pageInfo,omitempty"`
+
+	Resources []*Entitlement `json:"resources,omitempty"`
+
+	TokenPagination *TokenPagination `json:"tokenPagination,omitempty"`
 }
 
 type ExpansionFile struct {
@@ -4906,6 +4945,137 @@ func (c *EditsTracksUpdateCall) Do() (*Track, error) {
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/androidpublisher"
 	//   ]
+	// }
+
+}
+
+// method id "androidpublisher.entitlements.list":
+
+type EntitlementsListCall struct {
+	s           *Service
+	packageName string
+	opt_        map[string]interface{}
+}
+
+// List: Lists the user's current inapp item or subscription
+// entitlements
+func (r *EntitlementsService) List(packageName string) *EntitlementsListCall {
+	c := &EntitlementsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.packageName = packageName
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults":
+func (c *EntitlementsListCall) MaxResults(maxResults int64) *EntitlementsListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// ProductId sets the optional parameter "productId": The product id of
+// the inapp product (for example, 'sku1'). This can be used to restrict
+// the result set.
+func (c *EntitlementsListCall) ProductId(productId string) *EntitlementsListCall {
+	c.opt_["productId"] = productId
+	return c
+}
+
+// StartIndex sets the optional parameter "startIndex":
+func (c *EntitlementsListCall) StartIndex(startIndex int64) *EntitlementsListCall {
+	c.opt_["startIndex"] = startIndex
+	return c
+}
+
+// Token sets the optional parameter "token":
+func (c *EntitlementsListCall) Token(token string) *EntitlementsListCall {
+	c.opt_["token"] = token
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *EntitlementsListCall) Fields(s ...googleapi.Field) *EntitlementsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *EntitlementsListCall) Do() (*EntitlementsListResponse, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["productId"]; ok {
+		params.Set("productId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["startIndex"]; ok {
+		params.Set("startIndex", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["token"]; ok {
+		params.Set("token", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{packageName}/entitlements")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName": c.packageName,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *EntitlementsListResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the user's current inapp item or subscription entitlements",
+	//   "httpMethod": "GET",
+	//   "id": "androidpublisher.entitlements.list",
+	//   "parameterOrder": [
+	//     "packageName"
+	//   ],
+	//   "parameters": {
+	//     "maxResults": {
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "packageName": {
+	//       "description": "The package name of the application the inapp product was sold in (for example, 'com.some.thing').",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "productId": {
+	//       "description": "The product id of the inapp product (for example, 'sku1'). This can be used to restrict the result set.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "startIndex": {
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "token": {
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{packageName}/entitlements",
+	//   "response": {
+	//     "$ref": "EntitlementsListResponse"
+	//   }
 	// }
 
 }

@@ -161,8 +161,10 @@ type Cluster struct {
 	// error listing the currently supported versions.
 	ClusterApiVersion string `json:"clusterApiVersion,omitempty"`
 
-	// ContainerIpv4Cidr: [Output only] The IP addresses of the container
-	// pods in this cluster, in  CIDR notation (e.g. 1.2.3.4/29).
+	// ContainerIpv4Cidr: The IP addresses of the container pods in this
+	// cluster, in  CIDR notation (e.g. 10.96.0.0/14). Leave blank to have
+	// one automatically chosen or specify a /14 block in 10.0.0.0/8 or
+	// 172.16.0.0/12.
 	ContainerIpv4Cidr string `json:"containerIpv4Cidr,omitempty"`
 
 	// CreationTimestamp: [Output only] The time the cluster was created, in
@@ -186,9 +188,7 @@ type Cluster struct {
 	// this resource for username and password information.
 	Endpoint string `json:"endpoint,omitempty"`
 
-	// MasterAuth: The HTTP basic authentication information for accessing
-	// the master. Because the master endpoint is open to the internet, you
-	// should create a strong password.
+	// MasterAuth: The authentication information for accessing the master.
 	MasterAuth *MasterAuth `json:"masterAuth,omitempty"`
 
 	// Name: The name of this cluster. The name must be unique within this
@@ -265,12 +265,19 @@ type ListOperationsResponse struct {
 }
 
 type MasterAuth struct {
-	// Password: The password to use when accessing the Kubernetes master
-	// endpoint.
+	// BearerToken: The token used to authenticate API requests to the
+	// master. The token is be included in an HTTP Authorization Header
+	// included in all requests to the master endpoint. The format of the
+	// header is: "Authorization: Bearer ".
+	BearerToken string `json:"bearerToken,omitempty"`
+
+	// Password: The password to use for HTTP basic authentication when
+	// accessing the Kubernetes master endpoint. Because the master endpoint
+	// is open to the internet, you should create a strong password.
 	Password string `json:"password,omitempty"`
 
-	// User: The username to use when accessing the Kubernetes master
-	// endpoint.
+	// User: The username to use for HTTP basic authentication when
+	// accessing the Kubernetes master endpoint.
 	User string `json:"user,omitempty"`
 }
 

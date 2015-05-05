@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/Gmiuw1CxRdCARwJufqITEQBJ4wU\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/8K7GAQtON7Zk2nD5qcZpQnqCcOw\"",
  "discoveryVersion": "v1",
  "id": "youtube:v3",
  "name": "youtube",
  "canonicalName": "YouTube",
  "version": "v3",
- "revision": "20150330",
+ "revision": "20150412",
  "title": "YouTube Data API",
  "description": "Programmatic access to YouTube features.",
  "ownerDomain": "google.com",
@@ -1038,7 +1038,7 @@
     },
     "title": {
      "type": "string",
-     "description": "The localized strings for channel's title, read-only."
+     "description": "The localized strings for channel's title."
     }
    }
   },
@@ -1074,6 +1074,10 @@
     "snippet": {
      "$ref": "ChannelSectionSnippet",
      "description": "The snippet object contains basic details about the channel section, such as its type, style and title."
+    },
+    "targeting": {
+     "$ref": "ChannelSectionTargeting",
+     "description": "The targeting object contains basic targeting settings about the channel section."
     }
    }
   },
@@ -1223,11 +1227,43 @@
     }
    }
   },
+  "ChannelSectionTargeting": {
+   "id": "ChannelSectionTargeting",
+   "type": "object",
+   "description": "ChannelSection targeting setting.",
+   "properties": {
+    "countries": {
+     "type": "array",
+     "description": "The country the channel section is targeting.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "languages": {
+     "type": "array",
+     "description": "The language the channel section is targeting.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "regions": {
+     "type": "array",
+     "description": "The region the channel section is targeting.",
+     "items": {
+      "type": "string"
+     }
+    }
+   }
+  },
   "ChannelSettings": {
    "id": "ChannelSettings",
    "type": "object",
    "description": "Branding properties for the channel view.",
    "properties": {
+    "country": {
+     "type": "string",
+     "description": "The country of the channel."
+    },
     "defaultLanguage": {
      "type": "string"
     },
@@ -1289,6 +1325,10 @@
    "type": "object",
    "description": "Basic details about a channel, including title, description and thumbnails.",
    "properties": {
+    "country": {
+     "type": "string",
+     "description": "The country of the channel."
+    },
     "defaultLanguage": {
      "type": "string",
      "description": "The language of the channel's default title and description."
@@ -3715,6 +3755,10 @@
    "id": "LiveBroadcastStatus",
    "type": "object",
    "properties": {
+    "isDefaultBroadcast": {
+     "type": "boolean",
+     "description": "Whether or not this broadcast is the default broadcast"
+    },
     "lifeCycleStatus": {
      "type": "string",
      "description": "The broadcast's status. The status can be updated using the API's liveBroadcasts.transition method.",
@@ -3929,6 +3973,9 @@
    "type": "object",
    "description": "Brief description of the live stream status.",
    "properties": {
+    "isDefaultStream": {
+     "type": "boolean"
+    },
     "streamStatus": {
      "type": "string",
      "enum": [
@@ -4949,6 +4996,118 @@
     "topicDetails": {
      "$ref": "VideoTopicDetails",
      "description": "The topicDetails object encapsulates information about Freebase topics associated with the video."
+    }
+   }
+  },
+  "VideoAbuseReport": {
+   "id": "VideoAbuseReport",
+   "type": "object",
+   "properties": {
+    "comments": {
+     "type": "string",
+     "description": "Additional comments regarding the abuse report."
+    },
+    "language": {
+     "type": "string",
+     "description": "The language that the content was viewed in."
+    },
+    "reasonId": {
+     "type": "string",
+     "description": "The high-level, or primary, reason that the content is abusive. The value is an abuse report reason ID."
+    },
+    "secondaryReasonId": {
+     "type": "string",
+     "description": "The specific, or secondary, reason that this content is abusive (if available). The value is an abuse report reason ID that is a valid secondary reason for the primary reason."
+    },
+    "videoId": {
+     "type": "string",
+     "description": "The ID that YouTube uses to uniquely identify the video."
+    }
+   }
+  },
+  "VideoAbuseReportReason": {
+   "id": "VideoAbuseReportReason",
+   "type": "object",
+   "description": "A videoAbuseReportReason resource identifies a reason that a video could be reported as abusive. Video abuse report reasons are used with video.ReportAbuse.",
+   "properties": {
+    "etag": {
+     "type": "string",
+     "description": "Etag of this resource."
+    },
+    "id": {
+     "type": "string",
+     "description": "The ID of this abuse report reason."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"youtube#videoAbuseReportReason\".",
+     "default": "youtube#videoAbuseReportReason"
+    },
+    "snippet": {
+     "$ref": "VideoAbuseReportReasonSnippet",
+     "description": "The snippet object contains basic details about the abuse report reason."
+    }
+   }
+  },
+  "VideoAbuseReportReasonListResponse": {
+   "id": "VideoAbuseReportReasonListResponse",
+   "type": "object",
+   "properties": {
+    "etag": {
+     "type": "string",
+     "description": "Etag of this resource."
+    },
+    "eventId": {
+     "type": "string",
+     "description": "Serialized EventId of the request which produced this response."
+    },
+    "items": {
+     "type": "array",
+     "description": "A list of valid abuse reasons that are used with video.ReportAbuse.",
+     "items": {
+      "$ref": "VideoAbuseReportReason"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"youtube#videoAbuseReportReasonListResponse\".",
+     "default": "youtube#videoAbuseReportReasonListResponse"
+    },
+    "visitorId": {
+     "type": "string",
+     "description": "The visitorId identifies the visitor."
+    }
+   }
+  },
+  "VideoAbuseReportReasonSnippet": {
+   "id": "VideoAbuseReportReasonSnippet",
+   "type": "object",
+   "description": "Basic details about a video category, such as its localized title.",
+   "properties": {
+    "label": {
+     "type": "string",
+     "description": "The localized label belonging to this abuse report reason."
+    },
+    "secondaryReasons": {
+     "type": "array",
+     "description": "The secondary reasons associated with this reason, if any are available. (There might be 0 or more.)",
+     "items": {
+      "$ref": "VideoAbuseReportSecondaryReason"
+     }
+    }
+   }
+  },
+  "VideoAbuseReportSecondaryReason": {
+   "id": "VideoAbuseReportSecondaryReason",
+   "type": "object",
+   "properties": {
+    "id": {
+     "type": "string",
+     "description": "The ID of this abuse report secondary reason."
+    },
+    "label": {
+     "type": "string",
+     "description": "The localized label for this abuse report secondary reason."
     }
    }
   },
@@ -8485,6 +8644,41 @@
     }
    }
   },
+  "videoAbuseReportReasons": {
+   "methods": {
+    "list": {
+     "id": "youtube.videoAbuseReportReasons.list",
+     "path": "videoAbuseReportReasons",
+     "httpMethod": "GET",
+     "description": "Returns a list of abuse reasons that can be used for reporting abusive videos.",
+     "parameters": {
+      "hl": {
+       "type": "string",
+       "description": "The hl parameter specifies the language that should be used for text values in the API response.",
+       "default": "en_US",
+       "location": "query"
+      },
+      "part": {
+       "type": "string",
+       "description": "The part parameter specifies the videoCategory resource parts that the API response will include. Supported values are id and snippet.",
+       "required": true,
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "part"
+     ],
+     "response": {
+      "$ref": "VideoAbuseReportReasonListResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/youtube",
+      "https://www.googleapis.com/auth/youtube.force-ssl",
+      "https://www.googleapis.com/auth/youtube.readonly"
+     ]
+    }
+   }
+  },
   "videoCategories": {
    "methods": {
     "list": {
@@ -8796,6 +8990,27 @@
       "id",
       "rating"
      ],
+     "scopes": [
+      "https://www.googleapis.com/auth/youtube",
+      "https://www.googleapis.com/auth/youtube.force-ssl",
+      "https://www.googleapis.com/auth/youtubepartner"
+     ]
+    },
+    "reportAbuse": {
+     "id": "youtube.videos.reportAbuse",
+     "path": "videos/reportAbuse",
+     "httpMethod": "POST",
+     "description": "Report abuse for a video.",
+     "parameters": {
+      "onBehalfOfContentOwner": {
+       "type": "string",
+       "description": "Note: This parameter is intended exclusively for YouTube content partners.\n\nThe onBehalfOfContentOwner parameter indicates that the request's authorization credentials identify a YouTube CMS user who is acting on behalf of the content owner specified in the parameter value. This parameter is intended for YouTube content partners that own and manage many different YouTube channels. It allows content owners to authenticate once and get access to all their video and channel data, without having to provide authentication credentials for each individual channel. The CMS account that the user authenticates with must be linked to the specified YouTube content owner.",
+       "location": "query"
+      }
+     },
+     "request": {
+      "$ref": "VideoAbuseReport"
+     },
      "scopes": [
       "https://www.googleapis.com/auth/youtube",
       "https://www.googleapis.com/auth/youtube.force-ssl",

@@ -505,8 +505,7 @@ type Product struct {
 	Kind string `json:"kind,omitempty"`
 
 	// ProductId: A string of the form "app:
-	// " - e.g.
-	// "app:com.google.android.gm" represents the GMail app.
+	// " - e.g. "app:com.google.android.gm" represents the GMail app.
 	ProductId string `json:"productId,omitempty"`
 
 	// Title: The name of the product.

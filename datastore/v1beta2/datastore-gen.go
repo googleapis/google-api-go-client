@@ -153,10 +153,9 @@ type CompositeFilter struct {
 type Entity struct {
 	// Key: The entity's key.
 	//
-	// An entity must have a key, unless otherwise
-	// documented (for example, an entity in Value.entityValue may have no
-	// key). An entity's kind is its key's path's last element's kind, or
-	// null if it has no key.
+	// An entity must have a key, unless otherwise documented (for example,
+	// an entity in Value.entityValue may have no key). An entity's kind is
+	// its key's path's last element's kind, or null if it has no key.
 	Key *Key `json:"key,omitempty"`
 
 	// Properties: The entity's properties.
@@ -338,13 +337,12 @@ type Property struct {
 
 	// Indexed: If the value should be indexed.
 	//
-	// The indexed property may be
-	// set for a null value. When indexed is true, stringValue is limited to
-	// 500 characters and the blob value is limited to 500 bytes. Input
-	// values by default have indexed set to true; however, you can
-	// explicitly set indexed to true if you want. (An output value never
-	// has indexed explicitly set to true.) If a value is itself an entity,
-	// it cannot have indexed set to true.
+	// The indexed property may be set for a null value. When indexed is
+	// true, stringValue is limited to 500 characters and the blob value is
+	// limited to 500 bytes. Input values by default have indexed set to
+	// true; however, you can explicitly set indexed to true if you want.
+	// (An output value never has indexed explicitly set to true.) If a
+	// value is itself an entity, it cannot have indexed set to true.
 	Indexed bool `json:"indexed,omitempty"`
 
 	// IntegerValue: An integer value.
@@ -543,13 +541,12 @@ type Value struct {
 
 	// Indexed: If the value should be indexed.
 	//
-	// The indexed property may be
-	// set for a null value. When indexed is true, stringValue is limited to
-	// 500 characters and the blob value is limited to 500 bytes. Input
-	// values by default have indexed set to true; however, you can
-	// explicitly set indexed to true if you want. (An output value never
-	// has indexed explicitly set to true.) If a value is itself an entity,
-	// it cannot have indexed set to true.
+	// The indexed property may be set for a null value. When indexed is
+	// true, stringValue is limited to 500 characters and the blob value is
+	// limited to 500 bytes. Input values by default have indexed set to
+	// true; however, you can explicitly set indexed to true if you want.
+	// (An output value never has indexed explicitly set to true.) If a
+	// value is itself an entity, it cannot have indexed set to true.
 	Indexed bool `json:"indexed,omitempty"`
 
 	// IntegerValue: An integer value.

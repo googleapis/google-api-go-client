@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "706d52b3_5994a3bb",
+        "filename": "fusiontables/v2/fusiontables-gen.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-05-05T14:44:21Z",
+      "side": 1,
+      "message": "Can this be fixed as well?  I noticed it is in the original too... so maybe it is also in the discovery doc... I haven\u0027t looked yet.",
+      "range": {
+        "startLine": 187,
+        "startChar": 57,
+        "endLine": 187,
+        "endChar": 73
+      },
+      "revId": "e0705ec5e29d53dae9c6b085a7eea713eff62d48",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "706d52b3_9900fb89",
+        "filename": "fusiontables/v2/fusiontables-gen.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-05-05T14:44:21Z",
+      "side": 1,
+      "message": "This one too?  In fact, this whole section has the same problem.",
+      "range": {
+        "startLine": 188,
+        "startChar": 21,
+        "endLine": 188,
+        "endChar": 43
+      },
+      "revId": "e0705ec5e29d53dae9c6b085a7eea713eff62d48",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "706d52b3_79915fca",
+        "filename": "fusiontables/v2/fusiontables-gen.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-05-05T14:44:21Z",
+      "side": 1,
+      "message": "Can this PM be kept with the time on the previous line?",
+      "range": {
+        "startLine": 189,
+        "startChar": 4,
+        "endLine": 189,
+        "endChar": 6
+      },
+      "revId": "e0705ec5e29d53dae9c6b085a7eea713eff62d48",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

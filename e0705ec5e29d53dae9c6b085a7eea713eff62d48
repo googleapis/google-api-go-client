@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8d338df4_ac84a30f",
+        "filename": "fusiontables/v2/fusiontables-gen.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-05-06T01:57:04Z",
+      "side": 1,
+      "message": "Yes, this is due to bad data in the discovery doc.  It looks like this text was originally HTML (and so had some structure) but it has had the HTML tags stripped.  There\u0027s not much we can do in the generator to recover from this.",
+      "parentUuid": "706d52b3_5994a3bb",
+      "range": {
+        "startLine": 187,
+        "startChar": 57,
+        "endLine": 187,
+        "endChar": 73
+      },
+      "revId": "e0705ec5e29d53dae9c6b085a7eea713eff62d48",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "706d52b3_9900fb89",
         "filename": "fusiontables/v2/fusiontables-gen.go",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "8d338df4_8c81e7ff",
+        "filename": "fusiontables/v2/fusiontables-gen.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-05-06T01:57:04Z",
+      "side": 1,
+      "message": "As above.",
+      "parentUuid": "706d52b3_9900fb89",
+      "range": {
+        "startLine": 188,
+        "startChar": 21,
+        "endLine": 188,
+        "endChar": 43
+      },
+      "revId": "e0705ec5e29d53dae9c6b085a7eea713eff62d48",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "706d52b3_79915fca",
         "filename": "fusiontables/v2/fusiontables-gen.go",
         "patchSetId": 5
@@ -59,6 +107,30 @@
       "writtenOn": "2015-05-05T14:44:21Z",
       "side": 1,
       "message": "Can this PM be kept with the time on the previous line?",
+      "range": {
+        "startLine": 189,
+        "startChar": 4,
+        "endLine": 189,
+        "endChar": 6
+      },
+      "revId": "e0705ec5e29d53dae9c6b085a7eea713eff62d48",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8d338df4_6cf0fbaa",
+        "filename": "fusiontables/v2/fusiontables-gen.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-05-06T01:57:04Z",
+      "side": 1,
+      "message": "As above.",
+      "parentUuid": "706d52b3_79915fca",
       "range": {
         "startLine": 189,
         "startChar": 4,

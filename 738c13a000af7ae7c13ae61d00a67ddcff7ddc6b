@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d39c1d0_37c24088",
+        "filename": "google-api-go-generator/testdata/wrapnewlines.want",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-05-07T02:17:01Z",
+      "side": 1,
+      "message": "misleading. This second sentence isn\u0027t long enough to cause wrapping.",
+      "revId": "738c13a000af7ae7c13ae61d00a67ddcff7ddc6b",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

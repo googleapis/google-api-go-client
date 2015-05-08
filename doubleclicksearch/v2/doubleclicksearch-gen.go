@@ -416,7 +416,8 @@ type ReportRequest struct {
 	// RowCount: Synchronous report only. The maxinum number of rows to
 	// return; additional rows are dropped. Acceptable values are 0 to
 	// 10000, inclusive. Defaults to 10000.
-	RowCount int64 `json:"rowCount,omitempty"`
+	// Default: 10000
+	RowCount *int64 `json:"rowCount,omitempty"`
 
 	// StartRow: Synchronous report only. Zero-based index of the first row
 	// to return. Acceptable values are 0 to 50000, inclusive. Defaults to

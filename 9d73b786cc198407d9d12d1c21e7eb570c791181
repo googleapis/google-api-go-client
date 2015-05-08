@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d338df4_c01d6ee9",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 1015,
+      "author": {
+        "id": 5140
+      },
+      "writtenOn": "2015-05-08T03:47:30Z",
+      "side": 1,
+      "message": "Start with\nif p.Default() \u003d\u003d \"\" {\n  return false\n}\nIt saves a heap of work in a large number of cases, and makes the return below much easier to read.",
+      "range": {
+        "startLine": 1015,
+        "startChar": 7,
+        "endLine": 1015,
+        "endChar": 13
+      },
+      "revId": "9d73b786cc198407d9d12d1c21e7eb570c791181",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8d338df4_a01a62ed",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 1028,
+      "author": {
+        "id": 5140
+      },
+      "writtenOn": "2015-05-08T03:47:30Z",
+      "side": 1,
+      "message": "p.Default() !\u003d \"\" \u0026\u0026 p.Default() !\u003d \"0\"",
+      "range": {
+        "startLine": 1028,
+        "startChar": 2,
+        "endLine": 1028,
+        "endChar": 8
+      },
+      "revId": "9d73b786cc198407d9d12d1c21e7eb570c791181",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

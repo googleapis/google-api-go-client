@@ -593,6 +593,24 @@ func (p *Property) Description() string {
 	return jstr(p.m, "description")
 }
 
+func (p *Property) Default() string {
+	return jstr(p.m, "default")
+}
+
+func (p *Property) Pattern() *string {
+	if s, ok := p.m["pattern"].(string); ok {
+		return &s
+	}
+	return nil
+}
+
+func (p *Property) Enum() []interface{} {
+	if s, ok := p.m["enum"].([]interface{}); ok {
+		return s
+	}
+	return nil
+}
+
 type Type struct {
 	m   map[string]interface{} // JSON map containing key "type" and maybe "items", "properties"
 	api *API
@@ -975,6 +993,57 @@ func (s *Schema) writeVariant(api *API, v map[string]interface{}) {
 	}
 }
 
+// emptyPattern reports whether a property pattern matches the empty string.
+func emptyPattern(pattern *string) bool {
+	if pattern == nil {
+		return false
+	}
+	if re, err := regexp.Compile(*pattern); err == nil {
+		return re.MatchString("")
+	}
+	log.Printf("Encountered bad property pattern: %s", pattern)
+	return false
+}
+
+// emptyEnum reports whether a property enum list contains the empty string.
+func emptyEnum(enum []interface{}) bool {
+	if enum == nil {
+		return false
+	}
+	for _, val := range enum {
+		if val.(string) == "" {
+			return true
+		}
+	}
+	return false
+}
+
+// unfortunateDefault reports whether p may be set to an empty value, but has a non-empty default.
+func unfortunateDefault(p *Property) bool {
+	switch p.Type().AsGo() {
+	default:
+		return false
+
+	case "bool":
+		return p.Default() == "true"
+
+	case "string":
+		// String fields are considered to "allow" empty values if either:
+		//  (a) they are an enum, and one of the permitted enum values is the empty string, or
+		//  (b) they have a validation pattern which matches the empty string.
+		pattern := p.Pattern()
+		enum := p.Enum()
+		if pattern != nil && enum != nil {
+			log.Printf("Encountered enum property which also has a pattern: %#v", p)
+			return false // don't know how to handle this, so ignore.
+		}
+		return (emptyPattern(pattern) || emptyEnum(enum)) && p.Default() != ""
+
+	case "float64", "int64", "uint64", "int32", "uint32":
+		return !(p.Default() == "" || p.Default() == "0")
+	}
+}
+
 func (s *Schema) writeSchemaStruct(api *API) {
 	if v := jobj(s.m, "variant"); v != nil {
 		s.writeVariant(api, v)
@@ -994,7 +1063,12 @@ func (s *Schema) writeSchemaStruct(api *API) {
 		if p.Type().isIntAsString() {
 			extraOpt += ",string"
 		}
-		s.api.p("\t%s %s `json:\"%s,omitempty%s\"`\n", pname, p.Type().AsGo(), p.APIName(), extraOpt)
+		typ := p.Type().AsGo()
+		if unfortunateDefault(p) {
+			typ = "*" + typ
+			s.api.p("%s", asComment("\t", fmt.Sprintf("Default: %s", p.Default())))
+		}
+		s.api.p("\t%s %s `json:\"%s,omitempty%s\"`\n", pname, typ, p.APIName(), extraOpt)
 	}
 	s.api.p("}\n")
 }

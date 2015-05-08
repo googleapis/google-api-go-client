@@ -508,7 +508,8 @@ type FeaturesBatchInsertRequest struct {
 	// feature geometries must be given already normalized. The points in
 	// all LinearRings must be listed in counter-clockwise order, and
 	// LinearRings may not intersect.
-	NormalizeGeometries bool `json:"normalizeGeometries,omitempty"`
+	// Default: true
+	NormalizeGeometries *bool `json:"normalizeGeometries,omitempty"`
 }
 
 type FeaturesBatchPatchRequest struct {
@@ -520,7 +521,8 @@ type FeaturesBatchPatchRequest struct {
 	// feature geometries must be given already normalized. The points in
 	// all LinearRings must be listed in counter-clockwise order, and
 	// LinearRings may not intersect.
-	NormalizeGeometries bool `json:"normalizeGeometries,omitempty"`
+	// Default: true
+	NormalizeGeometries *bool `json:"normalizeGeometries,omitempty"`
 }
 
 type FeaturesListResponse struct {

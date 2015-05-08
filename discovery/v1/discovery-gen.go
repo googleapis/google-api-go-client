@@ -423,7 +423,8 @@ type RestMethodMediaUploadProtocols struct {
 
 type RestMethodMediaUploadProtocolsResumable struct {
 	// Multipart: True if this endpoint supports uploading multipart media.
-	Multipart bool `json:"multipart,omitempty"`
+	// Default: true
+	Multipart *bool `json:"multipart,omitempty"`
 
 	// Path: The URI path to be used for upload. Should be used in
 	// conjunction with the basePath property at the api-level.
@@ -432,7 +433,8 @@ type RestMethodMediaUploadProtocolsResumable struct {
 
 type RestMethodMediaUploadProtocolsSimple struct {
 	// Multipart: True if this endpoint supports upload multipart media.
-	Multipart bool `json:"multipart,omitempty"`
+	// Default: true
+	Multipart *bool `json:"multipart,omitempty"`
 
 	// Path: The URI path to be used for upload. Should be used in
 	// conjunction with the basePath property at the api-level.

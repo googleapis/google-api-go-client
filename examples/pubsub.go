@@ -12,18 +12,18 @@ import (
 	"os"
 	"strings"
 
-	pubsub "google.golang.org/api/pubsub/v1beta1"
+	pubsub "google.golang.org/api/pubsub/v1beta2"
 )
 
 const USAGE = `Available arguments are:
-    PROJ list_topics
-    PROJ create_topic TOPIC
-    PROJ delete_topic TOPIC
-    PROJ list_subscriptions
-    PROJ create_subscription SUBSCRIPTION LINKED_TOPIC
-    PROJ delete_subscription SUBSCRIPTION
-    PROJ connect_irc TOPIC SERVER CHANNEL
-    PROJ pull_messages SUBSCRIPTION
+    <project_id> list_topics
+    <project_id> create_topic <topic>
+    <project_id> delete_topic <topic>
+    <project_id> list_subscriptions
+    <project_id> create_subscription <subscription> <linked topic>
+    <project_id> delete_subscription <subscription>
+    <project_id> connect_irc <topic> <server> <channel>
+    <project_id> pull_messages <subscription>
 `
 
 type IRCBot struct {
@@ -67,13 +67,15 @@ func (bot *IRCBot) CheckConnection() {
 		if err != nil {
 			log.Fatal("Unable to read a line during checking the connection.")
 		}
-		if strings.Contains(line, "004") {
-			log.Println("The nick accepted.")
-		} else if strings.Contains(line, "433") {
-			log.Fatal("The nick is already in use.")
-		} else if strings.Contains(line, "366") {
-			log.Println("Starting to publish messages.")
-			return
+		if parts := strings.Split(line, " "); len(parts) > 1 {
+			if parts[1] == "004" {
+				log.Println("The nick accepted.")
+			} else if parts[1] == "433" {
+				log.Fatalf("The nick is already in use: %s", line)
+			} else if parts[1] == "366" {
+				log.Println("Starting to publish messages.")
+				return
+			}
 		}
 	}
 }
@@ -100,14 +102,14 @@ func pubsubUsage() {
 
 // Returns a fully qualified resource name for Cloud Pub/Sub.
 func fqrn(res, proj, name string) string {
-	return fmt.Sprintf("/%s/%s/%s", res, proj, name)
+	return fmt.Sprintf("projects/%s/%s/%s", proj, res, name)
 }
 
 func fullTopicName(proj, topic string) string {
 	return fqrn("topics", proj, topic)
 }
 
-func fullSubscriptionName(proj, topic string) string {
+func fullSubName(proj, topic string) string {
 	return fqrn("subscriptions", proj, topic)
 }
 
@@ -120,21 +122,17 @@ func checkArgs(argv []string, min int) {
 }
 
 func listTopics(service *pubsub.Service, argv []string) {
-	var nextPageToken string = ""
+	next := ""
 	for {
-		query := service.Topics.List().Query(
-			fmt.Sprintf(
-				"cloud.googleapis.com/project in (/projects/%s)",
-				argv[0])).PageToken(nextPageToken)
-		topicsList, err := query.Do()
+		topicsList, err := service.Projects.Topics.List(fmt.Sprintf("projects/%s", argv[0])).PageToken(next).Do()
 		if err != nil {
-			log.Fatal("Got an error: %v", err)
+			log.Fatalf("listTopics query.Do() failed: %v", err)
 		}
-		for _, topic := range topicsList.Topic {
+		for _, topic := range topicsList.Topics {
 			fmt.Println(topic.Name)
 		}
-		nextPageToken = topicsList.NextPageToken
-		if nextPageToken == "" {
+		next = topicsList.NextPageToken
+		if next == "" {
 			break
 		}
 	}
@@ -142,10 +140,9 @@ func listTopics(service *pubsub.Service, argv []string) {
 
 func createTopic(service *pubsub.Service, argv []string) {
 	checkArgs(argv, 3)
-	topic := &pubsub.Topic{Name: fullTopicName(argv[0], argv[2])}
-	topic, err := service.Topics.Create(topic).Do()
+	topic, err := service.Projects.Topics.Create(fullTopicName(argv[0], argv[2]), &pubsub.Topic{}).Do()
 	if err != nil {
-		log.Fatal("Got an error: %v", err)
+		log.Fatalf("createTopic Create().Do() failed: %v", err)
 	}
 	fmt.Printf("Topic %s was created.\n", topic.Name)
 }
@@ -153,30 +150,25 @@ func createTopic(service *pubsub.Service, argv []string) {
 func deleteTopic(service *pubsub.Service, argv []string) {
 	checkArgs(argv, 3)
 	topicName := fullTopicName(argv[0], argv[2])
-	err := service.Topics.Delete(topicName).Do()
-	if err != nil {
-		log.Fatal("Got an error: %v", err)
+	if _, err := service.Projects.Topics.Delete(topicName).Do(); err != nil {
+		log.Fatalf("deleteTopic Delete().Do() failed: %v", err)
 	}
 	fmt.Printf("Topic %s was deleted.\n", topicName)
 }
 
 func listSubscriptions(service *pubsub.Service, argv []string) {
-	var nextPageToken string = ""
+	next := ""
 	for {
-		query := service.Subscriptions.List().Query(
-			fmt.Sprintf(
-				"cloud.googleapis.com/project in (/projects/%s)",
-				argv[0])).PageToken(nextPageToken)
-		subscriptionsList, err := query.Do()
+		subscriptionsList, err := service.Projects.Subscriptions.List(fmt.Sprintf("projects/%s", argv[0])).PageToken(next).Do()
 		if err != nil {
-			log.Fatal("Got an error: %v", err)
+			log.Fatalf("listSubscriptions query.Do() failed: %v", err)
 		}
-		for _, subscription := range subscriptionsList.Subscription {
+		for _, subscription := range subscriptionsList.Subscriptions {
 			sub_text, _ := json.MarshalIndent(subscription, "", "  ")
 			fmt.Printf("%s\n", sub_text)
 		}
-		nextPageToken = subscriptionsList.NextPageToken
-		if nextPageToken == "" {
+		next = subscriptionsList.NextPageToken
+		if next == "" {
 			break
 		}
 	}
@@ -184,25 +176,22 @@ func listSubscriptions(service *pubsub.Service, argv []string) {
 
 func createSubscription(service *pubsub.Service, argv []string) {
 	checkArgs(argv, 4)
-	subscription := &pubsub.Subscription{
-		Name:  fullSubscriptionName(argv[0], argv[2]),
-		Topic: fullTopicName(argv[0], argv[3]),
-	}
-	subscription, err := service.Subscriptions.Create(subscription).Do()
+	name := fullSubName(argv[0], argv[2])
+	sub := &pubsub.Subscription{Topic: fullTopicName(argv[0], argv[3])}
+	subscription, err := service.Projects.Subscriptions.Create(name, sub).Do()
 	if err != nil {
-		log.Fatal("Got an error: %v", err)
+		log.Fatalf("createSubscription Create().Do() failed: %v", err)
 	}
 	fmt.Printf("Subscription %s was created.\n", subscription.Name)
 }
 
 func deleteSubscription(service *pubsub.Service, argv []string) {
 	checkArgs(argv, 3)
-	subscriptionName := fullSubscriptionName(argv[0], argv[2])
-	err := service.Subscriptions.Delete(subscriptionName).Do()
-	if err != nil {
-		log.Fatal("Got an error: %v", err)
+	name := fullSubName(argv[0], argv[2])
+	if _, err := service.Projects.Subscriptions.Delete(name).Do(); err != nil {
+		log.Fatalf("deleteSubscription Delete().Do() failed: %v", err)
 	}
-	fmt.Printf("Subscription %s was deleted.\n", subscriptionName)
+	fmt.Printf("Subscription %s was deleted.\n", name)
 }
 
 func connectIRC(service *pubsub.Service, argv []string) {
@@ -234,10 +223,11 @@ func connectIRC(service *pubsub.Service, argv []string) {
 				Data: base64.StdEncoding.EncodeToString([]byte(privMsg)),
 			}
 			publishRequest := &pubsub.PublishRequest{
-				Message: pubsubMessage,
-				Topic:   topicName,
+				Messages: []*pubsub.PubsubMessage{pubsubMessage},
 			}
-			service.Topics.Publish(publishRequest).Do()
+			if _, err := service.Projects.Topics.Publish(topicName, publishRequest).Do(); err != nil {
+				log.Fatalf("connectIRC Publish().Do() failed: %v", err)
+			}
 			log.Println("Published a message to the topic.")
 		}
 	}
@@ -245,28 +235,28 @@ func connectIRC(service *pubsub.Service, argv []string) {
 
 func pullMessages(service *pubsub.Service, argv []string) {
 	checkArgs(argv, 3)
-	subscriptionName := fullSubscriptionName(argv[0], argv[2])
+	subName := fullSubName(argv[0], argv[2])
 	pullRequest := &pubsub.PullRequest{
 		ReturnImmediately: false,
-		Subscription:      subscriptionName,
+		MaxMessages:       1,
 	}
 	for {
-		pullResponse, err := service.Subscriptions.Pull(pullRequest).Do()
+		pullResponse, err := service.Projects.Subscriptions.Pull(subName, pullRequest).Do()
 		if err != nil {
-			log.Fatal("Got an error while pull a message: %v", err)
+			log.Fatalf("pullMessages Pull().Do() failed: %v", err)
 		}
-		if pullResponse.PubsubEvent.Message != nil {
-			data, err := base64.StdEncoding.DecodeString(
-				pullResponse.PubsubEvent.Message.Data)
+		for _, receivedMessage := range pullResponse.ReceivedMessages {
+			data, err := base64.StdEncoding.DecodeString(receivedMessage.Message.Data)
 			if err != nil {
-				log.Fatal("Got an error while decoding the message: %v", err)
+				log.Fatalf("pullMessages DecodeString() failed: %v", err)
 			}
 			fmt.Printf("%s\n", data)
 			ackRequest := &pubsub.AcknowledgeRequest{
-				AckId:        []string{pullResponse.AckId},
-				Subscription: subscriptionName,
+				AckIds: []string{receivedMessage.AckId},
 			}
-			service.Subscriptions.Acknowledge(ackRequest).Do()
+			if _, err = service.Projects.Subscriptions.Acknowledge(subName, ackRequest).Do(); err != nil {
+				log.Printf("pullMessages Acknowledge().Do() failed: %v", err)
+			}
 		}
 	}
 }
@@ -283,18 +273,18 @@ func pullMessages(service *pubsub.Service, argv []string) {
 //
 // It has 8 subcommands as follows:
 //
-// PROJ list_topics
-// PROJ create_topic TOPIC
-// PROJ delete_topic TOPIC
-// PROJ list_subscriptions
-// PROJ create_subscription SUBSCRIPTION LINKED_TOPIC
-// PROJ delete_subscription SUBSCRIPTION
-// PROJ connect_irc TOPIC SERVER CHANNEL
-// PROJ pull_messages SUBSCRIPTION
+//  <project_id> list_topics
+//  <project_id> create_topic <topic>
+//  <project_id> delete_topic <topic>
+//  <project_id> list_subscriptions
+//  <project_id> create_subscription <subscription> <linked topic>
+//  <project_id> delete_subscription <subscription>
+//  <project_id> connect_irc <topic> <server> <channel>
+//  <project_id> pull_messages <subscription>
 //
 // You can use either of your alphanumerical or numerial Cloud Project
-// ID for PROJ. You can choose any names for TOPIC and SUBSCRIPTION as
-// long as they follow the naming rule described at:
+// ID for project_id. You can choose any names for topic and
+// subscription as long as they follow the naming rule described at:
 // https://developers.google.com/pubsub/overview#names
 //
 // You can list/create/delete topics/subscriptions by self-explanatory
@@ -312,9 +302,9 @@ func pubsubMain(client *http.Client, argv []string) {
 
 	m := map[string]func(service *pubsub.Service, argv []string){
 		"list_topics":         listTopics,
-		"list_subscriptions":  listSubscriptions,
 		"create_topic":        createTopic,
 		"delete_topic":        deleteTopic,
+		"list_subscriptions":  listSubscriptions,
 		"create_subscription": createSubscription,
 		"delete_subscription": deleteSubscription,
 		"connect_irc":         connectIRC,

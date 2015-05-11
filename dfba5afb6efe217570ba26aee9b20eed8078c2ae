@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d679d0f_b54c17cf",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-05-11T18:25:23Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be \"!\u003d\" ?",
+      "range": {
+        "startLine": 309,
+        "startChar": 12,
+        "endLine": 309,
+        "endChar": 14
+      },
+      "revId": "dfba5afb6efe217570ba26aee9b20eed8078c2ae",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

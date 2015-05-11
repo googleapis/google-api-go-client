@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d679d0f_2eaf5811",
+        "filename": "examples/pubsub.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-05-11T21:11:56Z",
+      "side": 1,
+      "message": "I think you will want to protect this section...\n\nif parts :\u003d strings.Split(line, \" \"); len(parts) \u003e 1 {\n  ...\n}",
+      "revId": "72186937f202cbc416af417341180a7906dd9119",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0d679d0f_0e14d4c5",
+        "filename": "examples/pubsub.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-05-11T21:11:56Z",
+      "side": 1,
+      "message": "How about:\nvar next string\nor even better:\nnext :\u003d \"\"",
+      "revId": "72186937f202cbc416af417341180a7906dd9119",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0d679d0f_4e0acca7",
+        "filename": "examples/pubsub.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-05-11T21:11:56Z",
+      "side": 1,
+      "message": "The other examples (and below) put the .Do() on the same line...\n\ntopicsList, err :\u003d service...PageToken(next).Do()",
+      "revId": "72186937f202cbc416af417341180a7906dd9119",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0d679d0f_ae2e080e",
+        "filename": "examples/pubsub.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-05-11T21:11:56Z",
+      "side": 1,
+      "message": "if _, err :\u003d service...Do(); err !\u003d nil {",
+      "revId": "72186937f202cbc416af417341180a7906dd9119",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0d679d0f_2e3af845",
+        "filename": "examples/pubsub.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-05-11T21:11:56Z",
+      "side": 1,
+      "message": "if _, err :\u003d service...Do(); err !\u003d nil {",
+      "revId": "72186937f202cbc416af417341180a7906dd9119",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0d679d0f_ee33a06e",
+        "filename": "examples/pubsub.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-05-11T21:11:56Z",
+      "side": 1,
+      "message": "if _, err :\u003d service...Do(); err !\u003d nil {",
+      "revId": "72186937f202cbc416af417341180a7906dd9119",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0d679d0f_cecfbcd9",
+        "filename": "examples/pubsub.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-05-11T21:11:56Z",
+      "side": 1,
+      "message": "if _, err :\u003d service...Do(); err !\u003d nil {",
+      "revId": "72186937f202cbc416af417341180a7906dd9119",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

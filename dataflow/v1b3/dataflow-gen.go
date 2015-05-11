@@ -174,25 +174,22 @@ type Environment struct {
 
 	Experiments []string `json:"experiments,omitempty"`
 
-	SdkPipelineOptions *EnvironmentSdkPipelineOptions `json:"sdkPipelineOptions,omitempty"`
+	SdkPipelineOptions EnvironmentSdkPipelineOptions `json:"sdkPipelineOptions,omitempty"`
 
 	TempStoragePrefix string `json:"tempStoragePrefix,omitempty"`
 
-	UserAgent *EnvironmentUserAgent `json:"userAgent,omitempty"`
+	UserAgent EnvironmentUserAgent `json:"userAgent,omitempty"`
 
-	Version *EnvironmentVersion `json:"version,omitempty"`
+	Version EnvironmentVersion `json:"version,omitempty"`
 
 	WorkerPools []*WorkerPool `json:"workerPools,omitempty"`
 }
 
-type EnvironmentSdkPipelineOptions struct {
-}
+type EnvironmentSdkPipelineOptions interface{}
 
-type EnvironmentUserAgent struct {
-}
+type EnvironmentUserAgent interface{}
 
-type EnvironmentVersion struct {
-}
+type EnvironmentVersion interface{}
 
 type FlattenInstruction struct {
 	Inputs []*InstructionInput `json:"inputs,omitempty"`
@@ -207,13 +204,12 @@ type InstructionInput struct {
 }
 
 type InstructionOutput struct {
-	Codec *InstructionOutputCodec `json:"codec,omitempty"`
+	Codec InstructionOutputCodec `json:"codec,omitempty"`
 
 	Name string `json:"name,omitempty"`
 }
 
-type InstructionOutputCodec struct {
-}
+type InstructionOutputCodec interface{}
 
 type Job struct {
 	CreateTime string `json:"createTime,omitempty"`
@@ -370,11 +366,10 @@ type ParDoInstruction struct {
 
 	SideInputs []*SideInputInfo `json:"sideInputs,omitempty"`
 
-	UserFn *ParDoInstructionUserFn `json:"userFn,omitempty"`
+	UserFn ParDoInstructionUserFn `json:"userFn,omitempty"`
 }
 
-type ParDoInstructionUserFn struct {
-}
+type ParDoInstructionUserFn interface{}
 
 type ParallelInstruction struct {
 	Flatten *FlattenInstruction `json:"flatten,omitempty"`
@@ -397,16 +392,14 @@ type ParallelInstruction struct {
 type PartialGroupByKeyInstruction struct {
 	Input *InstructionInput `json:"input,omitempty"`
 
-	InputElementCodec *PartialGroupByKeyInstructionInputElementCodec `json:"inputElementCodec,omitempty"`
+	InputElementCodec PartialGroupByKeyInstructionInputElementCodec `json:"inputElementCodec,omitempty"`
 
-	ValueCombiningFn *PartialGroupByKeyInstructionValueCombiningFn `json:"valueCombiningFn,omitempty"`
+	ValueCombiningFn PartialGroupByKeyInstructionValueCombiningFn `json:"valueCombiningFn,omitempty"`
 }
 
-type PartialGroupByKeyInstructionInputElementCodec struct {
-}
+type PartialGroupByKeyInstructionInputElementCodec interface{}
 
-type PartialGroupByKeyInstructionValueCombiningFn struct {
-}
+type PartialGroupByKeyInstructionValueCombiningFn interface{}
 
 type Position struct {
 	ByteOffset int64 `json:"byteOffset,omitempty,string"`
@@ -461,11 +454,10 @@ type SeqMapTask struct {
 
 	SystemName string `json:"systemName,omitempty"`
 
-	UserFn *SeqMapTaskUserFn `json:"userFn,omitempty"`
+	UserFn SeqMapTaskUserFn `json:"userFn,omitempty"`
 }
 
-type SeqMapTaskUserFn struct {
-}
+type SeqMapTaskUserFn interface{}
 
 type SeqMapTaskOutputInfo struct {
 	Sink *Sink `json:"sink,omitempty"`
@@ -480,48 +472,42 @@ type ShellTask struct {
 }
 
 type SideInputInfo struct {
-	Kind *SideInputInfoKind `json:"kind,omitempty"`
+	Kind SideInputInfoKind `json:"kind,omitempty"`
 
 	Sources []*Source `json:"sources,omitempty"`
 
 	Tag string `json:"tag,omitempty"`
 }
 
-type SideInputInfoKind struct {
-}
+type SideInputInfoKind interface{}
 
 type Sink struct {
-	Codec *SinkCodec `json:"codec,omitempty"`
+	Codec SinkCodec `json:"codec,omitempty"`
 
-	Spec *SinkSpec `json:"spec,omitempty"`
+	Spec SinkSpec `json:"spec,omitempty"`
 }
 
-type SinkCodec struct {
-}
+type SinkCodec interface{}
 
-type SinkSpec struct {
-}
+type SinkSpec interface{}
 
 type Source struct {
-	BaseSpecs []*SourceBaseSpecs `json:"baseSpecs,omitempty"`
+	BaseSpecs []SourceBaseSpecs `json:"baseSpecs,omitempty"`
 
-	Codec *SourceCodec `json:"codec,omitempty"`
+	Codec SourceCodec `json:"codec,omitempty"`
 
 	DoesNotNeedSplitting bool `json:"doesNotNeedSplitting,omitempty"`
 
 	Metadata *SourceMetadata `json:"metadata,omitempty"`
 
-	Spec *SourceSpec `json:"spec,omitempty"`
+	Spec SourceSpec `json:"spec,omitempty"`
 }
 
-type SourceBaseSpecs struct {
-}
+type SourceBaseSpecs interface{}
 
-type SourceCodec struct {
-}
+type SourceCodec interface{}
 
-type SourceSpec struct {
-}
+type SourceSpec interface{}
 
 type SourceFork struct {
 	Primary *SourceSplitShard `json:"primary,omitempty"`
@@ -590,24 +576,22 @@ type SourceSplitShard struct {
 type Status struct {
 	Code int64 `json:"code,omitempty"`
 
-	Details []*StatusDetails `json:"details,omitempty"`
+	Details []StatusDetails `json:"details,omitempty"`
 
 	Message string `json:"message,omitempty"`
 }
 
-type StatusDetails struct {
-}
+type StatusDetails interface{}
 
 type Step struct {
 	Kind string `json:"kind,omitempty"`
 
 	Name string `json:"name,omitempty"`
 
-	Properties *StepProperties `json:"properties,omitempty"`
+	Properties StepProperties `json:"properties,omitempty"`
 }
 
-type StepProperties struct {
-}
+type StepProperties interface{}
 
 type StreamLocation struct {
 	PubsubLocation *PubsubLocation `json:"pubsubLocation,omitempty"`
@@ -724,7 +708,7 @@ type WorkItem struct {
 }
 
 type WorkItemServiceState struct {
-	HarnessData *WorkItemServiceStateHarnessData `json:"harnessData,omitempty"`
+	HarnessData WorkItemServiceStateHarnessData `json:"harnessData,omitempty"`
 
 	LeaseExpireTime string `json:"leaseExpireTime,omitempty"`
 
@@ -737,8 +721,7 @@ type WorkItemServiceState struct {
 	SuggestedStopPosition *Position `json:"suggestedStopPosition,omitempty"`
 }
 
-type WorkItemServiceStateHarnessData struct {
-}
+type WorkItemServiceStateHarnessData interface{}
 
 type WorkItemStatus struct {
 	Completed bool `json:"completed,omitempty"`
@@ -789,7 +772,7 @@ type WorkerPool struct {
 
 	Packages []*Package `json:"packages,omitempty"`
 
-	PoolArgs *WorkerPoolPoolArgs `json:"poolArgs,omitempty"`
+	PoolArgs WorkerPoolPoolArgs `json:"poolArgs,omitempty"`
 
 	TaskrunnerSettings *TaskRunnerSettings `json:"taskrunnerSettings,omitempty"`
 
@@ -798,8 +781,7 @@ type WorkerPool struct {
 	Zone string `json:"zone,omitempty"`
 }
 
-type WorkerPoolPoolArgs struct {
-}
+type WorkerPoolPoolArgs interface{}
 
 type WorkerSettings struct {
 	BaseUrl string `json:"baseUrl,omitempty"`

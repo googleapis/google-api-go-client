@@ -145,6 +145,12 @@ func main() {
 }
 
 func (a *API) want() bool {
+	// Skip this API if we're in cached mode and the files don't exist on disk.
+	if *useCache {
+		if _, err := os.Stat(a.JSONFile()); os.IsNotExist(err) {
+			return false
+		}
+	}
 	return *apiToGenerate == "*" || *apiToGenerate == a.ID
 }
 
@@ -153,7 +159,25 @@ func getAPIs() []*API {
 		return getAPIsFromFile()
 	}
 	var all AllAPIs
-	disco := slurpURL(*apisURL)
+	var disco []byte
+	apiListFile := filepath.Join(genDirRoot(), "api-list.json")
+	if *useCache {
+		if !*publicOnly {
+			log.Fatalf("-cached=true not compatible with -publiconly=false")
+		}
+		var err error
+		disco, err = ioutil.ReadFile(apiListFile)
+		if err != nil {
+			log.Fatal(err)
+		}
+	} else {
+		disco = slurpURL(*apisURL)
+		if *publicOnly {
+			if err := writeFile(apiListFile, disco); err != nil {
+				log.Fatal(err)
+			}
+		}
+	}
 	if err := json.Unmarshal(disco, &all); err != nil {
 		log.Fatalf("error decoding JSON in %s: %v", apisURL, err)
 	}
@@ -210,24 +234,19 @@ func writeFile(file string, contents []byte) error {
 	return ioutil.WriteFile(file, contents, 0644)
 }
 
-var etagLine = regexp.MustCompile(`(?m)^\s+"etag": ".+\n`)
+var ignoreLines = regexp.MustCompile(`(?m)^\s+"(?:etag|revision)": ".+\n`)
 
 // basicallyEqual reports whether a and b are equal except for boring
 // differences like ETag updates.
 func basicallyEqual(a, b []byte) bool {
-	return etagLine.Match(a) && etagLine.Match(b) &&
-		bytes.Equal(etagLine.ReplaceAll(a, nil), etagLine.ReplaceAll(b, nil))
+	return ignoreLines.Match(a) && ignoreLines.Match(b) &&
+		bytes.Equal(ignoreLines.ReplaceAll(a, nil), ignoreLines.ReplaceAll(b, nil))
 }
 
 func slurpURL(urlStr string) []byte {
-	diskFile := filepath.Join(os.TempDir(), "google-api-cache-"+url.QueryEscape(urlStr))
 	if *useCache {
-		bs, err := ioutil.ReadFile(diskFile)
-		if err == nil && len(bs) > 0 {
-			return bs
-		}
+		log.Fatalf("Invalid use of slurpURL in cached mode for URL %s", urlStr)
 	}
-
 	req, err := http.NewRequest("GET", urlStr, nil)
 	if err != nil {
 		log.Fatal(err)
@@ -242,11 +261,6 @@ func slurpURL(urlStr string) []byte {
 	bs, err := ioutil.ReadAll(res.Body)
 	if err != nil {
 		log.Fatalf("Error reading body of URL %s: %v", urlStr, err)
-	}
-	if *useCache {
-		if err := ioutil.WriteFile(diskFile, bs, 0666); err != nil {
-			log.Printf("Warning: failed to write JSON of %s to disk file %s: %v", urlStr, diskFile, err)
-		}
 	}
 	return bs
 }
@@ -291,14 +305,19 @@ func (p *namePool) Get(preferred string) string {
 	return name
 }
 
-func (a *API) SourceDir() string {
-	if *genDir == "" {
-		paths := filepath.SplitList(os.Getenv("GOPATH"))
-		if len(paths) > 0 && paths[0] != "" {
-			*genDir = filepath.Join(paths[0], "src", "google.golang.org", "api")
-		}
+func genDirRoot() string {
+	if *genDir != "" {
+		return *genDir
 	}
-	return filepath.Join(*genDir, a.Package(), renameVersion(a.Version))
+	paths := filepath.SplitList(os.Getenv("GOPATH"))
+	if len(paths) == 0 {
+		log.Fatalf("No GOPATH SET.")
+	}
+	return filepath.Join(paths[0], "src", "google.golang.org", "api")
+}
+
+func (a *API) SourceDir() string {
+	return filepath.Join(genDirRoot(), a.Package(), renameVersion(a.Version))
 }
 
 func (a *API) DiscoveryURL() string {
@@ -347,7 +366,18 @@ func (a *API) jsonBytes() []byte {
 	if v := a.forceJSON; v != nil {
 		return v
 	}
+	if *useCache {
+		slurp, err := ioutil.ReadFile(a.JSONFile())
+		if err != nil {
+			log.Fatal(err)
+		}
+		return slurp
+	}
 	return slurpURL(a.DiscoveryURL())
+}
+
+func (a *API) JSONFile() string {
+	return filepath.Join(a.SourceDir(), a.Package()+"-api.json")
 }
 
 func (a *API) WriteGeneratedCode() error {
@@ -358,7 +388,7 @@ func (a *API) WriteGeneratedCode() error {
 	}
 
 	pkg := a.Package()
-	writeFile(filepath.Join(outdir, a.Package()+"-api.json"), a.jsonBytes())
+	writeFile(a.JSONFile(), a.jsonBytes())
 
 	genfilename := *output
 	if genfilename == "" {
@@ -659,12 +689,16 @@ func (t *Type) AsGo() string {
 	if typ, ok := t.MapType(); ok {
 		return typ
 	}
-	if t.IsStruct() {
+	isAny := t.IsAny()
+	if t.IsStruct() || isAny {
 		if apiName, ok := t.m["_apiName"].(string); ok {
 			s := t.api.schemas[apiName]
 			if s == nil {
 				panic(fmt.Sprintf("in Type.AsGo, _apiName of %q didn't point to a valid schema; json: %s",
 					apiName, prettyJSON(t.m)))
+			}
+			if isAny {
+				return s.GoName() // interface type; no pointer.
 			}
 			if v := jobj(s.m, "variant"); v != nil {
 				return s.GoName()
@@ -685,6 +719,16 @@ func (t *Type) IsStruct() bool {
 	return t.apiType() == "object"
 }
 
+func (t *Type) IsAny() bool {
+	if t.apiType() == "object" {
+		props := jobj(t.m, "additionalProperties")
+		if props != nil && jstr(props, "type") == "any" {
+			return true
+		}
+	}
+	return false
+}
+
 func (t *Type) Reference() (apiName string, ok bool) {
 	apiName = jstr(t.m, "$ref")
 	ok = apiName != ""
@@ -703,6 +747,9 @@ func (t *Type) MapType() (typ string, ok bool) {
 		return "", false
 	}
 	s := jstr(props, "type")
+	if s == "any" {
+		return "", false
+	}
 	if s == "string" {
 		return "map[string]string", true
 	}
@@ -712,6 +759,9 @@ func (t *Type) MapType() (typ string, ok bool) {
 			if s != "" {
 				return "map[string]" + s, true
 			}
+		}
+		if s == "any" {
+			return "map[string]interface{}", true
 		}
 		log.Printf("Warning: found map to type %q which is not implemented yet.", s)
 		return "", false
@@ -909,6 +959,10 @@ func (s *Schema) GoReturnType() string {
 }
 
 func (s *Schema) writeSchemaCode(api *API) {
+	if s.Type().IsAny() {
+		s.api.p("\ntype %s interface{}\n", s.GoName())
+		return
+	}
 	if s.Type().IsStruct() && !s.Type().IsMap() {
 		s.writeSchemaStruct(api)
 		return

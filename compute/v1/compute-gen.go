@@ -448,6 +448,8 @@ type AccessConfig struct {
 
 	// Type: The type of configuration. The default and only option is
 	// ONE_TO_ONE_NAT.
+	// Possible enum values:
+	//   "ONE_TO_ONE_NAT"
 	Type string `json:"type,omitempty"`
 }
 
@@ -491,6 +493,9 @@ type Address struct {
 	// IN_USE or RESERVED. An address that is RESERVED is currently reserved
 	// and available to use. An IN_USE address is currently being used by
 	// another resource and is not available.
+	// Possible enum values:
+	//   "IN_USE"
+	//   "RESERVED"
 	Status string `json:"status,omitempty"`
 
 	// Users: [Output Only] The URLs of the resources that are using this
@@ -549,6 +554,21 @@ type AddressesScopedList struct {
 
 type AddressesScopedListWarning struct {
 	// Code: [Output Only] The warning type identifier for this warning.
+	// Possible enum values:
+	//   "DEPRECATED_RESOURCE_USED"
+	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "INJECTED_KERNELS_DEPRECATED"
+	//   "NEXT_HOP_ADDRESS_NOT_ASSIGNED"
+	//   "NEXT_HOP_CANNOT_IP_FORWARD"
+	//   "NEXT_HOP_INSTANCE_NOT_FOUND"
+	//   "NEXT_HOP_INSTANCE_NOT_ON_NETWORK"
+	//   "NEXT_HOP_NOT_RUNNING"
+	//   "NOT_CRITICAL_ERROR"
+	//   "NO_RESULTS_ON_PAGE"
+	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_NOT_DELETED"
+	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
+	//   "UNREACHABLE"
 	Code string `json:"code,omitempty"`
 
 	// Data: [Output Only] Metadata for this warning in key: value format.
@@ -615,6 +635,9 @@ type AttachedDisk struct {
 	// Mode: The mode in which to attach this disk, either READ_WRITE or
 	// READ_ONLY. If not specified, the default is to attach the disk in
 	// READ_WRITE mode.
+	// Possible enum values:
+	//   "READ_ONLY"
+	//   "READ_WRITE"
 	Mode string `json:"mode,omitempty"`
 
 	// Source: Specifies a valid partial or full URL to an existing
@@ -624,6 +647,9 @@ type AttachedDisk struct {
 
 	// Type: Specifies the type of the disk, either SCRATCH or PERSISTENT.
 	// If not specified, the default is PERSISTENT.
+	// Possible enum values:
+	//   "PERSISTENT"
+	//   "SCRATCH"
 	Type string `json:"type,omitempty"`
 }
 
@@ -675,6 +701,9 @@ type AttachedDiskInitializeParams struct {
 type Backend struct {
 	// BalancingMode: The balancing mode of this backend, default is
 	// UTILIZATION.
+	// Possible enum values:
+	//   "RATE"
+	//   "UTILIZATION"
 	BalancingMode string `json:"balancingMode,omitempty"`
 
 	// CapacityScaler: The multiplier (a value between 0 and 1e6) of the max
@@ -814,6 +843,10 @@ type DeprecationStatus struct {
 	// with a warning indicating the deprecated resource and recommending
 	// its replacement. Operations which use OBSOLETE or DELETED resources
 	// will be rejected and result in an error.
+	// Possible enum values:
+	//   "DELETED"
+	//   "DEPRECATED"
+	//   "OBSOLETE"
 	State string `json:"state,omitempty"`
 }
 
@@ -912,6 +945,11 @@ type Disk struct {
 
 	// Status: [Output Only] The status of disk creation. Applicable
 	// statuses includes: CREATING, FAILED, READY, RESTORING.
+	// Possible enum values:
+	//   "CREATING"
+	//   "FAILED"
+	//   "READY"
+	//   "RESTORING"
 	Status string `json:"status,omitempty"`
 
 	// Type: URL of the disk type resource describing which disk type to use
@@ -1073,6 +1111,21 @@ type DiskTypesScopedList struct {
 
 type DiskTypesScopedListWarning struct {
 	// Code: [Output Only] The warning type identifier for this warning.
+	// Possible enum values:
+	//   "DEPRECATED_RESOURCE_USED"
+	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "INJECTED_KERNELS_DEPRECATED"
+	//   "NEXT_HOP_ADDRESS_NOT_ASSIGNED"
+	//   "NEXT_HOP_CANNOT_IP_FORWARD"
+	//   "NEXT_HOP_INSTANCE_NOT_FOUND"
+	//   "NEXT_HOP_INSTANCE_NOT_ON_NETWORK"
+	//   "NEXT_HOP_NOT_RUNNING"
+	//   "NOT_CRITICAL_ERROR"
+	//   "NO_RESULTS_ON_PAGE"
+	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_NOT_DELETED"
+	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
+	//   "UNREACHABLE"
 	Code string `json:"code,omitempty"`
 
 	// Data: [Output Only] Metadata for this warning in key: value format.
@@ -1102,6 +1155,21 @@ type DisksScopedList struct {
 
 type DisksScopedListWarning struct {
 	// Code: [Output Only] The warning type identifier for this warning.
+	// Possible enum values:
+	//   "DEPRECATED_RESOURCE_USED"
+	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "INJECTED_KERNELS_DEPRECATED"
+	//   "NEXT_HOP_ADDRESS_NOT_ASSIGNED"
+	//   "NEXT_HOP_CANNOT_IP_FORWARD"
+	//   "NEXT_HOP_INSTANCE_NOT_FOUND"
+	//   "NEXT_HOP_INSTANCE_NOT_ON_NETWORK"
+	//   "NEXT_HOP_NOT_RUNNING"
+	//   "NOT_CRITICAL_ERROR"
+	//   "NO_RESULTS_ON_PAGE"
+	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_NOT_DELETED"
+	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
+	//   "UNREACHABLE"
 	Code string `json:"code,omitempty"`
 
 	// Data: [Output Only] Metadata for this warning in key: value format.
@@ -1242,6 +1310,12 @@ type ForwardingRule struct {
 
 	// IPProtocol: The IP protocol to which this rule applies, valid options
 	// are 'TCP', 'UDP', 'ESP', 'AH' or 'SCTP'.
+	// Possible enum values:
+	//   "AH"
+	//   "ESP"
+	//   "SCTP"
+	//   "TCP"
+	//   "UDP"
 	IPProtocol string `json:"IPProtocol,omitempty"`
 
 	// CreationTimestamp: Creation timestamp in RFC3339 text format (output
@@ -1335,6 +1409,21 @@ type ForwardingRulesScopedList struct {
 
 type ForwardingRulesScopedListWarning struct {
 	// Code: [Output Only] The warning type identifier for this warning.
+	// Possible enum values:
+	//   "DEPRECATED_RESOURCE_USED"
+	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "INJECTED_KERNELS_DEPRECATED"
+	//   "NEXT_HOP_ADDRESS_NOT_ASSIGNED"
+	//   "NEXT_HOP_CANNOT_IP_FORWARD"
+	//   "NEXT_HOP_INSTANCE_NOT_FOUND"
+	//   "NEXT_HOP_INSTANCE_NOT_ON_NETWORK"
+	//   "NEXT_HOP_NOT_RUNNING"
+	//   "NOT_CRITICAL_ERROR"
+	//   "NO_RESULTS_ON_PAGE"
+	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_NOT_DELETED"
+	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
+	//   "UNREACHABLE"
 	Code string `json:"code,omitempty"`
 
 	// Data: [Output Only] Metadata for this warning in key: value format.
@@ -1359,6 +1448,9 @@ type HealthCheckReference struct {
 
 type HealthStatus struct {
 	// HealthState: Health state of the instance.
+	// Possible enum values:
+	//   "HEALTHY"
+	//   "UNHEALTHY"
 	HealthState string `json:"healthState,omitempty"`
 
 	// Instance: URL of the instance resource.
@@ -1523,12 +1615,18 @@ type Image struct {
 
 	// SourceType: The type of the image used to create this disk. The
 	// default and only value is RAW
+	// Possible enum values:
+	//   "RAW"
 	SourceType string `json:"sourceType,omitempty"`
 
 	// Status: [Output Only] The status of the image. An image can be used
 	// to create other resources, such as instances, only after the image
 	// has been successfully created and the status is set to READY.
 	// Possible values are FAILED, PENDING, or READY.
+	// Possible enum values:
+	//   "FAILED"
+	//   "PENDING"
+	//   "READY"
 	Status string `json:"status,omitempty"`
 }
 
@@ -1537,6 +1635,8 @@ type ImageRawDisk struct {
 	// device, which should be TAR. This is just a container and
 	// transmission format and not a runtime format. Provided by the client
 	// when the disk image is created.
+	// Possible enum values:
+	//   "TAR"
 	ContainerType string `json:"containerType,omitempty"`
 
 	// Sha1Checksum: An optional SHA1 checksum of the disk image before
@@ -1640,6 +1740,13 @@ type Instance struct {
 	// Status: [Output Only] The status of the instance. One of the
 	// following values: PROVISIONING, STAGING, RUNNING, STOPPING, STOPPED,
 	// TERMINATED.
+	// Possible enum values:
+	//   "PROVISIONING"
+	//   "RUNNING"
+	//   "STAGING"
+	//   "STOPPED"
+	//   "STOPPING"
+	//   "TERMINATED"
 	Status string `json:"status,omitempty"`
 
 	// StatusMessage: [Output Only] An optional, human-readable explanation
@@ -1836,6 +1943,21 @@ type InstancesScopedList struct {
 
 type InstancesScopedListWarning struct {
 	// Code: [Output Only] The warning type identifier for this warning.
+	// Possible enum values:
+	//   "DEPRECATED_RESOURCE_USED"
+	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "INJECTED_KERNELS_DEPRECATED"
+	//   "NEXT_HOP_ADDRESS_NOT_ASSIGNED"
+	//   "NEXT_HOP_CANNOT_IP_FORWARD"
+	//   "NEXT_HOP_INSTANCE_NOT_FOUND"
+	//   "NEXT_HOP_INSTANCE_NOT_ON_NETWORK"
+	//   "NEXT_HOP_NOT_RUNNING"
+	//   "NOT_CRITICAL_ERROR"
+	//   "NO_RESULTS_ON_PAGE"
+	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_NOT_DELETED"
+	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
+	//   "UNREACHABLE"
 	Code string `json:"code,omitempty"`
 
 	// Data: [Output Only] Metadata for this warning in key: value format.
@@ -1983,6 +2105,21 @@ type MachineTypesScopedList struct {
 
 type MachineTypesScopedListWarning struct {
 	// Code: [Output Only] The warning type identifier for this warning.
+	// Possible enum values:
+	//   "DEPRECATED_RESOURCE_USED"
+	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "INJECTED_KERNELS_DEPRECATED"
+	//   "NEXT_HOP_ADDRESS_NOT_ASSIGNED"
+	//   "NEXT_HOP_CANNOT_IP_FORWARD"
+	//   "NEXT_HOP_INSTANCE_NOT_FOUND"
+	//   "NEXT_HOP_INSTANCE_NOT_ON_NETWORK"
+	//   "NEXT_HOP_NOT_RUNNING"
+	//   "NOT_CRITICAL_ERROR"
+	//   "NO_RESULTS_ON_PAGE"
+	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_NOT_DELETED"
+	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
+	//   "UNREACHABLE"
 	Code string `json:"code,omitempty"`
 
 	// Data: [Output Only] Metadata for this warning in key: value format.
@@ -2191,6 +2328,10 @@ type Operation struct {
 
 	// Status: [Output Only] Status of the operation. Can be one of the
 	// following: PENDING, RUNNING, or DONE.
+	// Possible enum values:
+	//   "DONE"
+	//   "PENDING"
+	//   "RUNNING"
 	Status string `json:"status,omitempty"`
 
 	// StatusMessage: [Output Only] An optional textual description of the
@@ -2237,6 +2378,21 @@ type OperationErrorErrors struct {
 
 type OperationWarnings struct {
 	// Code: [Output Only] The warning type identifier for this warning.
+	// Possible enum values:
+	//   "DEPRECATED_RESOURCE_USED"
+	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "INJECTED_KERNELS_DEPRECATED"
+	//   "NEXT_HOP_ADDRESS_NOT_ASSIGNED"
+	//   "NEXT_HOP_CANNOT_IP_FORWARD"
+	//   "NEXT_HOP_INSTANCE_NOT_FOUND"
+	//   "NEXT_HOP_INSTANCE_NOT_ON_NETWORK"
+	//   "NEXT_HOP_NOT_RUNNING"
+	//   "NOT_CRITICAL_ERROR"
+	//   "NO_RESULTS_ON_PAGE"
+	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_NOT_DELETED"
+	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
+	//   "UNREACHABLE"
 	Code string `json:"code,omitempty"`
 
 	// Data: [Output Only] Metadata for this warning in key: value format.
@@ -2305,6 +2461,21 @@ type OperationsScopedList struct {
 
 type OperationsScopedListWarning struct {
 	// Code: [Output Only] The warning type identifier for this warning.
+	// Possible enum values:
+	//   "DEPRECATED_RESOURCE_USED"
+	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "INJECTED_KERNELS_DEPRECATED"
+	//   "NEXT_HOP_ADDRESS_NOT_ASSIGNED"
+	//   "NEXT_HOP_CANNOT_IP_FORWARD"
+	//   "NEXT_HOP_INSTANCE_NOT_FOUND"
+	//   "NEXT_HOP_INSTANCE_NOT_ON_NETWORK"
+	//   "NEXT_HOP_NOT_RUNNING"
+	//   "NOT_CRITICAL_ERROR"
+	//   "NO_RESULTS_ON_PAGE"
+	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_NOT_DELETED"
+	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
+	//   "UNREACHABLE"
 	Code string `json:"code,omitempty"`
 
 	// Data: [Output Only] Metadata for this warning in key: value format.
@@ -2390,6 +2561,28 @@ type Quota struct {
 	Limit float64 `json:"limit,omitempty"`
 
 	// Metric: [Output Only] Name of the quota metric.
+	// Possible enum values:
+	//   "BACKEND_SERVICES"
+	//   "CPUS"
+	//   "DISKS_TOTAL_GB"
+	//   "FIREWALLS"
+	//   "FORWARDING_RULES"
+	//   "HEALTH_CHECKS"
+	//   "IMAGES"
+	//   "INSTANCES"
+	//   "IN_USE_ADDRESSES"
+	//   "LOCAL_SSD_TOTAL_GB"
+	//   "NETWORKS"
+	//   "ROUTES"
+	//   "SNAPSHOTS"
+	//   "SSD_TOTAL_GB"
+	//   "STATIC_ADDRESSES"
+	//   "TARGET_HTTP_PROXIES"
+	//   "TARGET_INSTANCES"
+	//   "TARGET_POOLS"
+	//   "TARGET_VPN_GATEWAYS"
+	//   "URL_MAPS"
+	//   "VPN_TUNNELS"
 	Metric string `json:"metric,omitempty"`
 
 	// Usage: [Output Only] Current usage of this metric.
@@ -2426,6 +2619,9 @@ type Region struct {
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// Status: [Output Only] Status of the region, either UP or DOWN.
+	// Possible enum values:
+	//   "DOWN"
+	//   "UP"
 	Status string `json:"status,omitempty"`
 
 	// Zones: [Output Only] A list of zones available in this region, in the
@@ -2524,6 +2720,21 @@ type Route struct {
 
 type RouteWarnings struct {
 	// Code: [Output Only] The warning type identifier for this warning.
+	// Possible enum values:
+	//   "DEPRECATED_RESOURCE_USED"
+	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "INJECTED_KERNELS_DEPRECATED"
+	//   "NEXT_HOP_ADDRESS_NOT_ASSIGNED"
+	//   "NEXT_HOP_CANNOT_IP_FORWARD"
+	//   "NEXT_HOP_INSTANCE_NOT_FOUND"
+	//   "NEXT_HOP_INSTANCE_NOT_ON_NETWORK"
+	//   "NEXT_HOP_NOT_RUNNING"
+	//   "NOT_CRITICAL_ERROR"
+	//   "NO_RESULTS_ON_PAGE"
+	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_NOT_DELETED"
+	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
+	//   "UNREACHABLE"
 	Code string `json:"code,omitempty"`
 
 	// Data: [Output Only] Metadata for this warning in key: value format.
@@ -2570,6 +2781,9 @@ type Scheduling struct {
 	// OnHostMaintenance: Defines the maintenance behavior for this
 	// instance. The default behavior is MIGRATE. For more information, see
 	// Setting maintenance behavior.
+	// Possible enum values:
+	//   "MIGRATE"
+	//   "TERMINATE"
 	OnHostMaintenance string `json:"onHostMaintenance,omitempty"`
 }
 
@@ -2635,6 +2849,12 @@ type Snapshot struct {
 	SourceDiskId string `json:"sourceDiskId,omitempty"`
 
 	// Status: The status of the persistent disk snapshot (output only).
+	// Possible enum values:
+	//   "CREATING"
+	//   "DELETING"
+	//   "FAILED"
+	//   "READY"
+	//   "UPLOADING"
 	Status string `json:"status,omitempty"`
 
 	// StorageBytes: A size of the the storage used by the snapshot. As
@@ -2645,6 +2865,9 @@ type Snapshot struct {
 	// StorageBytesStatus: An indicator whether storageBytes is in a stable
 	// state, or it is being adjusted as a result of shared storage
 	// reallocation.
+	// Possible enum values:
+	//   "UPDATING"
+	//   "UP_TO_DATE"
 	StorageBytesStatus string `json:"storageBytesStatus,omitempty"`
 }
 
@@ -2758,6 +2981,8 @@ type TargetInstance struct {
 
 	// NatPolicy: NAT option controlling how IPs are NAT'ed to the VM.
 	// Currently only NO_NAT (default value) is supported.
+	// Possible enum values:
+	//   "NO_NAT"
 	NatPolicy string `json:"natPolicy,omitempty"`
 
 	// SelfLink: Server defined URL for the resource (output only).
@@ -2817,6 +3042,21 @@ type TargetInstancesScopedList struct {
 
 type TargetInstancesScopedListWarning struct {
 	// Code: [Output Only] The warning type identifier for this warning.
+	// Possible enum values:
+	//   "DEPRECATED_RESOURCE_USED"
+	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "INJECTED_KERNELS_DEPRECATED"
+	//   "NEXT_HOP_ADDRESS_NOT_ASSIGNED"
+	//   "NEXT_HOP_CANNOT_IP_FORWARD"
+	//   "NEXT_HOP_INSTANCE_NOT_FOUND"
+	//   "NEXT_HOP_INSTANCE_NOT_ON_NETWORK"
+	//   "NEXT_HOP_NOT_RUNNING"
+	//   "NOT_CRITICAL_ERROR"
+	//   "NO_RESULTS_ON_PAGE"
+	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_NOT_DELETED"
+	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
+	//   "UNREACHABLE"
 	Code string `json:"code,omitempty"`
 
 	// Data: [Output Only] Metadata for this warning in key: value format.
@@ -2915,6 +3155,10 @@ type TargetPool struct {
 	// 'CLIENT_IP_PROTO': Connections from the same client IP with the same
 	// IP protocol will go to the same VM in the pool while that VM remains
 	// healthy.
+	// Possible enum values:
+	//   "CLIENT_IP"
+	//   "CLIENT_IP_PROTO"
+	//   "NONE"
 	SessionAffinity string `json:"sessionAffinity,omitempty"`
 }
 
@@ -2994,6 +3238,21 @@ type TargetPoolsScopedList struct {
 
 type TargetPoolsScopedListWarning struct {
 	// Code: [Output Only] The warning type identifier for this warning.
+	// Possible enum values:
+	//   "DEPRECATED_RESOURCE_USED"
+	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "INJECTED_KERNELS_DEPRECATED"
+	//   "NEXT_HOP_ADDRESS_NOT_ASSIGNED"
+	//   "NEXT_HOP_CANNOT_IP_FORWARD"
+	//   "NEXT_HOP_INSTANCE_NOT_FOUND"
+	//   "NEXT_HOP_INSTANCE_NOT_ON_NETWORK"
+	//   "NEXT_HOP_NOT_RUNNING"
+	//   "NOT_CRITICAL_ERROR"
+	//   "NO_RESULTS_ON_PAGE"
+	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_NOT_DELETED"
+	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
+	//   "UNREACHABLE"
 	Code string `json:"code,omitempty"`
 
 	// Data: [Output Only] Metadata for this warning in key: value format.
@@ -3055,6 +3314,11 @@ type TargetVpnGateway struct {
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// Status: [Output Only] The status of the VPN gateway.
+	// Possible enum values:
+	//   "CREATING"
+	//   "DELETING"
+	//   "FAILED"
+	//   "READY"
 	Status string `json:"status,omitempty"`
 
 	// Tunnels: [Output Only] A list of URLs to VpnTunnel resources.
@@ -3115,6 +3379,21 @@ type TargetVpnGatewaysScopedList struct {
 
 type TargetVpnGatewaysScopedListWarning struct {
 	// Code: [Output Only] The warning type identifier for this warning.
+	// Possible enum values:
+	//   "DEPRECATED_RESOURCE_USED"
+	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "INJECTED_KERNELS_DEPRECATED"
+	//   "NEXT_HOP_ADDRESS_NOT_ASSIGNED"
+	//   "NEXT_HOP_CANNOT_IP_FORWARD"
+	//   "NEXT_HOP_INSTANCE_NOT_FOUND"
+	//   "NEXT_HOP_INSTANCE_NOT_ON_NETWORK"
+	//   "NEXT_HOP_NOT_RUNNING"
+	//   "NOT_CRITICAL_ERROR"
+	//   "NO_RESULTS_ON_PAGE"
+	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_NOT_DELETED"
+	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
+	//   "UNREACHABLE"
 	Code string `json:"code,omitempty"`
 
 	// Data: [Output Only] Metadata for this warning in key: value format.
@@ -3319,6 +3598,16 @@ type VpnTunnel struct {
 	SharedSecretHash string `json:"sharedSecretHash,omitempty"`
 
 	// Status: [Output Only] The status of the VPN tunnel.
+	// Possible enum values:
+	//   "AUTHORIZATION_ERROR"
+	//   "DEPROVISIONING"
+	//   "ESTABLISHED"
+	//   "FAILED"
+	//   "FIRST_HANDSHAKE"
+	//   "NEGOTIATION_FAILURE"
+	//   "NETWORK_ERROR"
+	//   "PROVISIONING"
+	//   "WAITING_FOR_FULL_CONFIG"
 	Status string `json:"status,omitempty"`
 
 	// TargetVpnGateway: URL of the VPN gateway to which this VPN tunnel is
@@ -3377,6 +3666,21 @@ type VpnTunnelsScopedList struct {
 
 type VpnTunnelsScopedListWarning struct {
 	// Code: [Output Only] The warning type identifier for this warning.
+	// Possible enum values:
+	//   "DEPRECATED_RESOURCE_USED"
+	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "INJECTED_KERNELS_DEPRECATED"
+	//   "NEXT_HOP_ADDRESS_NOT_ASSIGNED"
+	//   "NEXT_HOP_CANNOT_IP_FORWARD"
+	//   "NEXT_HOP_INSTANCE_NOT_FOUND"
+	//   "NEXT_HOP_INSTANCE_NOT_ON_NETWORK"
+	//   "NEXT_HOP_NOT_RUNNING"
+	//   "NOT_CRITICAL_ERROR"
+	//   "NO_RESULTS_ON_PAGE"
+	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_NOT_DELETED"
+	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
+	//   "UNREACHABLE"
 	Code string `json:"code,omitempty"`
 
 	// Data: [Output Only] Metadata for this warning in key: value format.
@@ -3431,6 +3735,9 @@ type Zone struct {
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// Status: [Output Only] Status of the zone, either UP or DOWN.
+	// Possible enum values:
+	//   "DOWN"
+	//   "UP"
 	Status string `json:"status,omitempty"`
 }
 

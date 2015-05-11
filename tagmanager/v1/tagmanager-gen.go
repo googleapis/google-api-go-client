@@ -232,6 +232,16 @@ type Condition struct {
 	Parameter []*Parameter `json:"parameter,omitempty"`
 
 	// Type: The type of operator for this condition.
+	// Possible enum values:
+	//   "contains"
+	//   "endsWith"
+	//   "equals"
+	//   "greater"
+	//   "greaterOrEquals"
+	//   "less"
+	//   "lessOrEquals"
+	//   "matchRegex"
+	//   "startsWith"
 	Type string `json:"type,omitempty"`
 }
 
@@ -507,6 +517,12 @@ type Parameter struct {
 	// - map: A map of parameters should be specified
 	// - template: The value represents any text; this can include macro
 	// references (even macro references that might return non-string types)
+	// Possible enum values:
+	//   "boolean"
+	//   "integer"
+	//   "list"
+	//   "map"
+	//   "template"
 	Type string `json:"type,omitempty"`
 
 	// Value: A parameter's value (may contain macro references such as
@@ -662,6 +678,20 @@ type Trigger struct {
 	TriggerId string `json:"triggerId,omitempty"`
 
 	// Type: Defines the data layer event that causes this trigger.
+	// Possible enum values:
+	//   "ajaxSubmission"
+	//   "always"
+	//   "click"
+	//   "customEvent"
+	//   "domReady"
+	//   "formSubmission"
+	//   "historyChange"
+	//   "jsError"
+	//   "linkClick"
+	//   "pageview"
+	//   "timer"
+	//   "windowLoaded"
+	//   "youTube"
 	Type string `json:"type,omitempty"`
 
 	// UniqueTriggerId: Globally unique id of the trigger that

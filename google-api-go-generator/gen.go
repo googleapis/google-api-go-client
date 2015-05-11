@@ -623,6 +623,10 @@ func (p *Property) Description() string {
 	return jstr(p.m, "description")
 }
 
+func (p *Property) Enum() []string {
+	return jstrlist(p.m, "enum")
+}
+
 type Type struct {
 	m   map[string]interface{} // JSON map containing key "type" and maybe "items", "properties"
 	api *API
@@ -1043,6 +1047,12 @@ func (s *Schema) writeSchemaStruct(api *API) {
 		pname := p.GoName()
 		if des := p.Description(); des != "" {
 			s.api.p("%s", asComment("\t", fmt.Sprintf("%s: %s", pname, des)))
+			if enum := p.Enum(); enum != nil {
+				s.api.p("%s", asComment("\t", "Possible enum values:"))
+				for _, v := range enum {
+					s.api.p("%s", asComment("\t", `  "`+v+`"`))
+				}
+			}
 		}
 		var extraOpt string
 		if p.Type().isIntAsString() {

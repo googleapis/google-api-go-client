@@ -227,10 +227,17 @@ type Label struct {
 
 	// LabelListVisibility: The visibility of the label in the label list in
 	// the Gmail web interface.
+	// Possible enum values:
+	//   "labelHide"
+	//   "labelShow"
+	//   "labelShowIfUnread"
 	LabelListVisibility string `json:"labelListVisibility,omitempty"`
 
 	// MessageListVisibility: The visibility of the label in the message
 	// list in the Gmail web interface.
+	// Possible enum values:
+	//   "hide"
+	//   "show"
 	MessageListVisibility string `json:"messageListVisibility,omitempty"`
 
 	// MessagesTotal: The total number of messages with the label.
@@ -257,6 +264,9 @@ type Label struct {
 	// apply and remove the INBOX and UNREAD labels from messages and
 	// threads, but cannot apply or remove the DRAFTS or SENT labels from
 	// messages or threads.
+	// Possible enum values:
+	//   "system"
+	//   "user"
 	Type string `json:"type,omitempty"`
 }
 

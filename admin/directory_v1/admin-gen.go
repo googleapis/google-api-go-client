@@ -1091,8 +1091,7 @@ type UserAddress struct {
 	Type string `json:"type,omitempty"`
 }
 
-type UserCustomProperties struct {
-}
+type UserCustomProperties interface{}
 
 type UserEmail struct {
 	// Address: Email id of the user.

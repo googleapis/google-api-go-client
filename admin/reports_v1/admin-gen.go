@@ -297,7 +297,7 @@ type UsageReportParameters struct {
 	IntValue int64 `json:"intValue,omitempty,string"`
 
 	// MsgValue: Nested message value of the parameter.
-	MsgValue []*UsageReportParametersMsgValue `json:"msgValue,omitempty"`
+	MsgValue []UsageReportParametersMsgValue `json:"msgValue,omitempty"`
 
 	// Name: The name of the parameter.
 	Name string `json:"name,omitempty"`
@@ -306,8 +306,7 @@ type UsageReportParameters struct {
 	StringValue string `json:"stringValue,omitempty"`
 }
 
-type UsageReportParametersMsgValue struct {
-}
+type UsageReportParametersMsgValue interface{}
 
 type UsageReports struct {
 	// Etag: ETag of the resource.

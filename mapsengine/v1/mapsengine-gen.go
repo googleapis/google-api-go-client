@@ -481,7 +481,7 @@ type Feature struct {
 	Geometry GeoJsonGeometry `json:"geometry,omitempty"`
 
 	// Properties: Key/value pairs of this Feature.
-	Properties *GeoJsonProperties `json:"properties,omitempty"`
+	Properties GeoJsonProperties `json:"properties,omitempty"`
 
 	// Type: Identifies this object as a feature.
 	Type string `json:"type,omitempty"`
@@ -689,8 +689,7 @@ type GeoJsonPolygon struct {
 	Type string `json:"type,omitempty"`
 }
 
-type GeoJsonProperties struct {
-}
+type GeoJsonProperties interface{}
 
 type Icon struct {
 	// Description: The description of this Icon, supplied by the author.

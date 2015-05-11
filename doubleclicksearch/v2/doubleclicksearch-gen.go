@@ -295,7 +295,7 @@ type Report struct {
 	RowCount int64 `json:"rowCount,omitempty"`
 
 	// Rows: Synchronous report only. Generated report rows.
-	Rows []*ReportRow `json:"rows,omitempty"`
+	Rows []ReportRow `json:"rows,omitempty"`
 
 	// StatisticsCurrencyCode: The currency code of all monetary values
 	// produced in the report, including values that are set by users (e.g.,
@@ -504,8 +504,7 @@ type ReportRequestTimeRange struct {
 	StartDate string `json:"startDate,omitempty"`
 }
 
-type ReportRow struct {
-}
+type ReportRow interface{}
 
 type SavedColumn struct {
 	// Kind: Identifies this as a SavedColumn resource. Value: the fixed

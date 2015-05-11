@@ -12,6 +12,7 @@ var updateGolden = flag.Bool("update_golden", false, "If true, causes TestAPIs t
 
 func TestAPIs(t *testing.T) {
 	names := []string{
+		"any",
 		"arrayofarray-1",
 		"arrayofmapofobjects",
 		"arrayofmapofstrings",

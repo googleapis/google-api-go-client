@@ -104,10 +104,18 @@ type DownloadLineItemsRequest struct {
 	FilterIds googleapi.Int64s `json:"filterIds,omitempty"`
 
 	// FilterType: Filter type used to filter line items to fetch.
+	//
+	// Possible values:
+	//   "ADVERTISER_ID"
+	//   "INSERTION_ORDER_ID"
+	//   "LINE_ITEM_ID"
 	FilterType string `json:"filterType,omitempty"`
 
 	// Format: Format in which the line items will be returned. Default to
 	// CSV.
+	//
+	// Possible values:
+	//   "CSV"
 	Format string `json:"format,omitempty"`
 }
 
@@ -119,6 +127,87 @@ type DownloadLineItemsResponse struct {
 
 type FilterPair struct {
 	// Type: Filter type.
+	//
+	// Possible values:
+	//   "FILTER_ACTIVE_VIEW_EXPECTED_VIEWABILITY"
+	//   "FILTER_ACTIVITY_ID"
+	//   "FILTER_ADVERTISER"
+	//   "FILTER_ADVERTISER_CURRENCY"
+	//   "FILTER_ADVERTISER_TIMEZONE"
+	//   "FILTER_AD_POSITION"
+	//   "FILTER_AGE"
+	//   "FILTER_BRANDSAFE_CHANNEL_ID"
+	//   "FILTER_BROWSER"
+	//   "FILTER_CAMPAIGN_DAILY_FREQUENCY"
+	//   "FILTER_CARRIER"
+	//   "FILTER_CHANNEL_ID"
+	//   "FILTER_CITY"
+	//   "FILTER_CONVERSION_DELAY"
+	//   "FILTER_COUNTRY"
+	//   "FILTER_CREATIVE_ID"
+	//   "FILTER_CREATIVE_SIZE"
+	//   "FILTER_CREATIVE_TYPE"
+	//   "FILTER_DATA_PROVIDER"
+	//   "FILTER_DATE"
+	//   "FILTER_DAY_OF_WEEK"
+	//   "FILTER_DMA"
+	//   "FILTER_EXCHANGE_ID"
+	//   "FILTER_FLOODLIGHT_PIXEL_ID"
+	//   "FILTER_GENDER"
+	//   "FILTER_INSERTION_ORDER"
+	//   "FILTER_INVENTORY_FORMAT"
+	//   "FILTER_INVENTORY_SOURCE"
+	//   "FILTER_INVENTORY_SOURCE_TYPE"
+	//   "FILTER_KEYWORD"
+	//   "FILTER_LINE_ITEM"
+	//   "FILTER_LINE_ITEM_DAILY_FREQUENCY"
+	//   "FILTER_LINE_ITEM_LIFETIME_FREQUENCY"
+	//   "FILTER_LINE_ITEM_TYPE"
+	//   "FILTER_MOBILE_DEVICE_MAKE"
+	//   "FILTER_MOBILE_DEVICE_MAKE_MODEL"
+	//   "FILTER_MOBILE_DEVICE_TYPE"
+	//   "FILTER_MOBILE_GEO"
+	//   "FILTER_MONTH"
+	//   "FILTER_MRAID_SUPPORT"
+	//   "FILTER_NIELSEN_AGE"
+	//   "FILTER_NIELSEN_COUNTRY_CODE"
+	//   "FILTER_NIELSEN_DEVICE_ID"
+	//   "FILTER_NIELSEN_GENDER"
+	//   "FILTER_ORDER_ID"
+	//   "FILTER_OS"
+	//   "FILTER_PAGE_CATEGORY"
+	//   "FILTER_PAGE_LAYOUT"
+	//   "FILTER_PARTNER"
+	//   "FILTER_PARTNER_CURRENCY"
+	//   "FILTER_PUBLIC_INVENTORY"
+	//   "FILTER_QUARTER"
+	//   "FILTER_REGION"
+	//   "FILTER_REGULAR_CHANNEL_ID"
+	//   "FILTER_SITE_ID"
+	//   "FILTER_SITE_LANGUAGE"
+	//   "FILTER_TARGETED_USER_LIST"
+	//   "FILTER_TIME_OF_DAY"
+	//   "FILTER_TRUEVIEW_CONVERSION_TYPE"
+	//   "FILTER_UNKNOWN"
+	//   "FILTER_USER_LIST"
+	//   "FILTER_USER_LIST_FIRST_PARTY"
+	//   "FILTER_USER_LIST_THIRD_PARTY"
+	//   "FILTER_VIDEO_AD_POSITION_IN_STREAM"
+	//   "FILTER_VIDEO_COMPANION_SIZE"
+	//   "FILTER_VIDEO_COMPANION_TYPE"
+	//   "FILTER_VIDEO_CREATIVE_DURATION"
+	//   "FILTER_VIDEO_CREATIVE_DURATION_SKIPPABLE"
+	//   "FILTER_VIDEO_DURATION_SECONDS"
+	//   "FILTER_VIDEO_FORMAT_SUPPORT"
+	//   "FILTER_VIDEO_INVENTORY_TYPE"
+	//   "FILTER_VIDEO_PLAYER_SIZE"
+	//   "FILTER_VIDEO_RATING_TIER"
+	//   "FILTER_VIDEO_SKIPPABLE_SUPPORT"
+	//   "FILTER_VIDEO_VPAID_SUPPORT"
+	//   "FILTER_WEEK"
+	//   "FILTER_YEAR"
+	//   "FILTER_YOUTUBE_VERTICAL"
+	//   "FILTER_ZIP_CODE"
 	Type string `json:"type,omitempty"`
 
 	// Value: Filter value.
@@ -157,6 +246,33 @@ type Parameters struct {
 	Metrics []string `json:"metrics,omitempty"`
 
 	// Type: Report type.
+	//
+	// Possible values:
+	//   "TYPE_ACTIVE_GRP"
+	//   "TYPE_AUDIENCE_COMPOSITION"
+	//   "TYPE_AUDIENCE_PERFORMANCE"
+	//   "TYPE_CLIENT_SAFE"
+	//   "TYPE_COMSCORE_VCE"
+	//   "TYPE_CROSS_FEE"
+	//   "TYPE_CROSS_PARTNER"
+	//   "TYPE_CROSS_PARTNER_THIRD_PARTY_DATA_PROVIDER"
+	//   "TYPE_ESTIMATED_CONVERSION"
+	//   "TYPE_FEE"
+	//   "TYPE_GENERAL"
+	//   "TYPE_INVENTORY_AVAILABILITY"
+	//   "TYPE_KEYWORD"
+	//   "TYPE_NIELSEN_AUDIENCE_PROFILE"
+	//   "TYPE_NIELSEN_DAILY_REACH_BUILD"
+	//   "TYPE_NIELSEN_SITE"
+	//   "TYPE_ORDER_ID"
+	//   "TYPE_PAGE_CATEGORY"
+	//   "TYPE_PIXEL_LOAD"
+	//   "TYPE_REACH_AND_FREQUENCY"
+	//   "TYPE_THIRD_PARTY_DATA_PROVIDER"
+	//   "TYPE_TRUEVIEW"
+	//   "TYPE_TRUEVIEW_IAR"
+	//   "TYPE_VERIFICATION"
+	//   "TYPE_YOUTUBE_VERTICAL"
 	Type string `json:"type,omitempty"`
 }
 
@@ -194,9 +310,34 @@ type Query struct {
 
 type QueryMetadata struct {
 	// DataRange: Range of report data.
+	//
+	// Possible values:
+	//   "ALL_TIME"
+	//   "CURRENT_DAY"
+	//   "CUSTOM_DATES"
+	//   "LAST_14_DAYS"
+	//   "LAST_30_DAYS"
+	//   "LAST_365_DAYS"
+	//   "LAST_7_DAYS"
+	//   "LAST_90_DAYS"
+	//   "MONTH_TO_DATE"
+	//   "PREVIOUS_DAY"
+	//   "PREVIOUS_HALF_MONTH"
+	//   "PREVIOUS_MONTH"
+	//   "PREVIOUS_QUARTER"
+	//   "PREVIOUS_WEEK"
+	//   "PREVIOUS_YEAR"
+	//   "QUARTER_TO_DATE"
+	//   "WEEK_TO_DATE"
+	//   "YEAR_TO_DATE"
 	DataRange string `json:"dataRange,omitempty"`
 
 	// Format: Format of the generated report.
+	//
+	// Possible values:
+	//   "CSV"
+	//   "EXCEL_CSV"
+	//   "XLSX"
 	Format string `json:"format,omitempty"`
 
 	// GoogleCloudStoragePathForLatestReport: The path to the location in
@@ -246,6 +387,14 @@ type QuerySchedule struct {
 	EndTimeMs int64 `json:"endTimeMs,omitempty,string"`
 
 	// Frequency: How often the query is run.
+	//
+	// Possible values:
+	//   "DAILY"
+	//   "MONTHLY"
+	//   "ONE_TIME"
+	//   "QUARTERLY"
+	//   "SEMI_MONTHLY"
+	//   "WEEKLY"
 	Frequency string `json:"frequency,omitempty"`
 
 	// NextRunMinuteOfDay: Time of day at which a new report will be
@@ -271,6 +420,26 @@ type Report struct {
 
 type ReportFailure struct {
 	// ErrorCode: Error code that shows why the report was not created.
+	//
+	// Possible values:
+	//   "AUTHENTICATION_ERROR"
+	//   "DEPRECATED_REPORTING_INVALID_QUERY"
+	//   "REPORTING_BUCKET_NOT_FOUND"
+	//   "REPORTING_CREATE_BUCKET_FAILED"
+	//   "REPORTING_DELETE_BUCKET_FAILED"
+	//   "REPORTING_FATAL_ERROR"
+	//   "REPORTING_ILLEGAL_FILENAME"
+	//   "REPORTING_IMCOMPATIBLE_METRICS"
+	//   "REPORTING_INVALID_QUERY_MISSING_PARTNER_AND_ADVERTISER_FILTERS"
+	//   "REPORTING_INVALID_QUERY_TITLE_MISSING"
+	//   "REPORTING_INVALID_QUERY_TOO_MANY_UNFILTERED_LARGE_GROUP_BYS"
+	//   "REPORTING_QUERY_NOT_FOUND"
+	//   "REPORTING_TRANSIENT_ERROR"
+	//   "REPORTING_UPDATE_BUCKET_PERMISSION_FAILED"
+	//   "REPORTING_WRITE_BUCKET_OBJECT_FAILED"
+	//   "SERVER_ERROR"
+	//   "UNAUTHORIZED_API_ACCESS"
+	//   "VALIDATION_ERROR"
 	ErrorCode string `json:"errorCode,omitempty"`
 }
 
@@ -308,9 +477,19 @@ type ReportStatus struct {
 	FinishTimeMs int64 `json:"finishTimeMs,omitempty,string"`
 
 	// Format: The file type of the report.
+	//
+	// Possible values:
+	//   "CSV"
+	//   "EXCEL_CSV"
+	//   "XLSX"
 	Format string `json:"format,omitempty"`
 
 	// State: The state of the report.
+	//
+	// Possible values:
+	//   "DONE"
+	//   "FAILED"
+	//   "RUNNING"
 	State string `json:"state,omitempty"`
 }
 
@@ -336,6 +515,26 @@ type RowStatus struct {
 
 type RunQueryRequest struct {
 	// DataRange: Report data range used to generate the report.
+	//
+	// Possible values:
+	//   "ALL_TIME"
+	//   "CURRENT_DAY"
+	//   "CUSTOM_DATES"
+	//   "LAST_14_DAYS"
+	//   "LAST_30_DAYS"
+	//   "LAST_365_DAYS"
+	//   "LAST_7_DAYS"
+	//   "LAST_90_DAYS"
+	//   "MONTH_TO_DATE"
+	//   "PREVIOUS_DAY"
+	//   "PREVIOUS_HALF_MONTH"
+	//   "PREVIOUS_MONTH"
+	//   "PREVIOUS_QUARTER"
+	//   "PREVIOUS_WEEK"
+	//   "PREVIOUS_YEAR"
+	//   "QUARTER_TO_DATE"
+	//   "WEEK_TO_DATE"
+	//   "YEAR_TO_DATE"
 	DataRange string `json:"dataRange,omitempty"`
 
 	// ReportDataEndTimeMs: The ending time for the data that is shown in
@@ -359,6 +558,9 @@ type UploadLineItemsRequest struct {
 	DryRun bool `json:"dryRun,omitempty"`
 
 	// Format: Format the line items are in. Default to CSV.
+	//
+	// Possible values:
+	//   "CSV"
 	Format string `json:"format,omitempty"`
 
 	// LineItems: Line items in CSV to upload. Refer to  Entity Write File

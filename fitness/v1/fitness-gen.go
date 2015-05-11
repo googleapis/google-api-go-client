@@ -260,6 +260,10 @@ type DataSource struct {
 
 	// Type: A constant describing the type of this data source. Indicates
 	// whether this data source produces raw or derived data.
+	//
+	// Possible values:
+	//   "derived"
+	//   "raw"
 	Type string `json:"type,omitempty"`
 }
 
@@ -275,6 +279,14 @@ type DataType struct {
 type DataTypeField struct {
 	// Format: The different supported formats for each field in a data
 	// type.
+	//
+	// Possible values:
+	//   "floatList"
+	//   "floatPoint"
+	//   "integer"
+	//   "integerList"
+	//   "map"
+	//   "string"
 	Format string `json:"format,omitempty"`
 
 	// Name: Defines the name and format of data. Unlike data type names,
@@ -324,6 +336,14 @@ type Device struct {
 	Model string `json:"model,omitempty"`
 
 	// Type: A constant representing the type of the device.
+	//
+	// Possible values:
+	//   "chestStrap"
+	//   "phone"
+	//   "scale"
+	//   "tablet"
+	//   "unknown"
+	//   "watch"
 	Type string `json:"type,omitempty"`
 
 	// Uid: The serial number or other unique ID for the hardware. This

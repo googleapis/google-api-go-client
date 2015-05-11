@@ -353,6 +353,14 @@ type AcquisitionTime struct {
 	End string `json:"end,omitempty"`
 
 	// Precision: The precision of acquisition time.
+	//
+	// Possible values:
+	//   "day"
+	//   "hour"
+	//   "minute"
+	//   "month"
+	//   "second"
+	//   "year"
 	Precision string `json:"precision,omitempty"`
 
 	// Start: The acquisition time, or start time if acquisition time is a
@@ -411,6 +419,13 @@ type Asset struct {
 
 	// Type: The type of asset. One of raster, rasterCollection, table, map,
 	// or layer.
+	//
+	// Possible values:
+	//   "layer"
+	//   "map"
+	//   "raster"
+	//   "rasterCollection"
+	//   "table"
 	Type string `json:"type,omitempty"`
 
 	// WritersCanEditPermissions: If true, WRITERs of the asset are able to
@@ -548,6 +563,12 @@ type File struct {
 	Size int64 `json:"size,omitempty,string"`
 
 	// UploadStatus: The upload status of the file.
+	//
+	// Possible values:
+	//   "canceled"
+	//   "complete"
+	//   "failed"
+	//   "inProgress"
 	UploadStatus string `json:"uploadStatus,omitempty"`
 }
 
@@ -556,6 +577,17 @@ type Filter struct {
 	Column string `json:"column,omitempty"`
 
 	// Operator: Operation used to evaluate the filter.
+	//
+	// Possible values:
+	//   "!="
+	//   "<"
+	//   "<="
+	//   "=="
+	//   ">"
+	//   ">="
+	//   "contains"
+	//   "endsWith"
+	//   "startsWith"
 	Operator string `json:"operator,omitempty"`
 
 	// Value: Value to be evaluated against attribute.
@@ -630,6 +662,9 @@ type GeoJsonGeometryCollection struct {
 	Geometries []GeoJsonGeometry `json:"geometries,omitempty"`
 
 	// Type: Identifies this object as a GeoJsonGeometryCollection.
+	//
+	// Possible values:
+	//   "GeometryCollection"
 	Type string `json:"type,omitempty"`
 }
 
@@ -638,6 +673,9 @@ type GeoJsonLineString struct {
 	Coordinates [][]float64 `json:"coordinates,omitempty"`
 
 	// Type: Identifies this object as a GeoJsonLineString.
+	//
+	// Possible values:
+	//   "LineString"
 	Type string `json:"type,omitempty"`
 }
 
@@ -647,6 +685,9 @@ type GeoJsonMultiLineString struct {
 	Coordinates [][][]float64 `json:"coordinates,omitempty"`
 
 	// Type: Identifies this object as a GeoJsonMultiLineString.
+	//
+	// Possible values:
+	//   "MultiLineString"
 	Type string `json:"type,omitempty"`
 }
 
@@ -655,6 +696,9 @@ type GeoJsonMultiPoint struct {
 	Coordinates [][]float64 `json:"coordinates,omitempty"`
 
 	// Type: Identifies this object as a GeoJsonMultiPoint.
+	//
+	// Possible values:
+	//   "MultiPoint"
 	Type string `json:"type,omitempty"`
 }
 
@@ -664,6 +708,9 @@ type GeoJsonMultiPolygon struct {
 	Coordinates [][][][]float64 `json:"coordinates,omitempty"`
 
 	// Type: Identifies this object as a GeoJsonMultiPolygon.
+	//
+	// Possible values:
+	//   "MultiPolygon"
 	Type string `json:"type,omitempty"`
 }
 
@@ -673,6 +720,9 @@ type GeoJsonPoint struct {
 	Coordinates []float64 `json:"coordinates,omitempty"`
 
 	// Type: Identifies this object as a GeoJsonPoint.
+	//
+	// Possible values:
+	//   "Point"
 	Type string `json:"type,omitempty"`
 }
 
@@ -686,6 +736,9 @@ type GeoJsonPolygon struct {
 	Coordinates [][][]float64 `json:"coordinates,omitempty"`
 
 	// Type: Identifies this object as a GeoJsonPolygon.
+	//
+	// Possible values:
+	//   "Polygon"
 	Type string `json:"type,omitempty"`
 }
 
@@ -735,9 +788,17 @@ type LabelStyle struct {
 	Column string `json:"column,omitempty"`
 
 	// FontStyle: Font style of the label, defaults to 'normal'.
+	//
+	// Possible values:
+	//   "italic"
+	//   "normal"
 	FontStyle string `json:"fontStyle,omitempty"`
 
 	// FontWeight: Font weight of the label, defaults to 'normal'.
+	//
+	// Possible values:
+	//   "bold"
+	//   "normal"
 	FontWeight string `json:"fontWeight,omitempty"`
 
 	// Opacity: Opacity of the text.
@@ -768,6 +829,10 @@ type Layer struct {
 	// DatasourceType: Deprecated: The type of the datasources used to build
 	// this Layer. Note: This has been replaced by layerType, but is still
 	// available for now to maintain backward compatibility.
+	//
+	// Possible values:
+	//   "image"
+	//   "table"
 	DatasourceType string `json:"datasourceType,omitempty"`
 
 	// Datasources: An array of datasources used to build this layer. If
@@ -814,12 +879,23 @@ type Layer struct {
 	// should be used instead of datasourceType. At least one of layerType
 	// and datasourceType and must be specified, but layerType takes
 	// precedence.
+	//
+	// Possible values:
+	//   "image"
+	//   "vector"
 	LayerType string `json:"layerType,omitempty"`
 
 	// Name: The name of this Layer, supplied by the author.
 	Name string `json:"name,omitempty"`
 
 	// ProcessingStatus: The processing status of this layer.
+	//
+	// Possible values:
+	//   "complete"
+	//   "failed"
+	//   "notReady"
+	//   "processing"
+	//   "ready"
 	ProcessingStatus string `json:"processingStatus,omitempty"`
 
 	// ProjectId: The ID of the project that this Layer is in.
@@ -838,6 +914,10 @@ type Layer struct {
 	PublishedAccessList string `json:"publishedAccessList,omitempty"`
 
 	// PublishingStatus: The publishing status of this layer.
+	//
+	// Possible values:
+	//   "notPublished"
+	//   "published"
 	PublishingStatus string `json:"publishingStatus,omitempty"`
 
 	// Style: The styling information for a vector layer. Note: Style
@@ -947,6 +1027,13 @@ type Map struct {
 
 	// ProcessingStatus: The processing status of this map. Map processing
 	// is automatically started once a map becomes ready for processing.
+	//
+	// Possible values:
+	//   "complete"
+	//   "failed"
+	//   "notReady"
+	//   "processing"
+	//   "ready"
 	ProcessingStatus string `json:"processingStatus,omitempty"`
 
 	// ProjectId: The ID of the project that this Map is in.
@@ -965,6 +1052,10 @@ type Map struct {
 	PublishedAccessList string `json:"publishedAccessList,omitempty"`
 
 	// PublishingStatus: The publishing status of this map.
+	//
+	// Possible values:
+	//   "notPublished"
+	//   "published"
 	PublishingStatus string `json:"publishingStatus,omitempty"`
 
 	// Tags: Tags of this Map.
@@ -999,6 +1090,9 @@ type MapFolder struct {
 	Name string `json:"name,omitempty"`
 
 	// Type: Identifies this object as a MapFolder.
+	//
+	// Possible values:
+	//   "folder"
 	Type string `json:"type,omitempty"`
 
 	// Visibility: The visibility setting of this MapFolder. One of
@@ -1049,6 +1143,9 @@ type MapKmlLink struct {
 	Name string `json:"name,omitempty"`
 
 	// Type: Identifies this object as a MapKmlLink.
+	//
+	// Possible values:
+	//   "kmlLink"
 	Type string `json:"type,omitempty"`
 
 	// Visibility: The visibility setting of this MapKmlLink. One of
@@ -1073,6 +1170,9 @@ type MapLayer struct {
 	Name string `json:"name,omitempty"`
 
 	// Type: Identifies this object as a MapLayer.
+	//
+	// Possible values:
+	//   "layer"
 	Type string `json:"type,omitempty"`
 
 	// Visibility: The visibility setting of this MapLayer. One of
@@ -1113,9 +1213,20 @@ type Permission struct {
 	Id string `json:"id,omitempty"`
 
 	// Role: The type of access granted to this user or group.
+	//
+	// Possible values:
+	//   "owner"
+	//   "reader"
+	//   "viewer"
+	//   "writer"
 	Role string `json:"role,omitempty"`
 
 	// Type: The account type.
+	//
+	// Possible values:
+	//   "anyone"
+	//   "group"
+	//   "user"
 	Type string `json:"type,omitempty"`
 }
 
@@ -1193,6 +1304,10 @@ type PublishedLayer struct {
 	// should be used instead of datasourceType. At least one of layerType
 	// and datasourceType and must be specified, but layerType takes
 	// precedence.
+	//
+	// Possible values:
+	//   "image"
+	//   "vector"
 	LayerType string `json:"layerType,omitempty"`
 
 	// Name: The name of this Layer, supplied by the author.
@@ -1299,12 +1414,22 @@ type Raster struct {
 	Name string `json:"name,omitempty"`
 
 	// ProcessingStatus: The processing status of this Raster.
+	//
+	// Possible values:
+	//   "complete"
+	//   "failed"
+	//   "notReady"
+	//   "processing"
+	//   "ready"
 	ProcessingStatus string `json:"processingStatus,omitempty"`
 
 	// ProjectId: The ID of the project that this Raster is in.
 	ProjectId string `json:"projectId,omitempty"`
 
 	// RasterType: The type of this Raster. Always "image" today.
+	//
+	// Possible values:
+	//   "image"
 	RasterType string `json:"rasterType,omitempty"`
 
 	// Tags: Tags of this Raster.
@@ -1377,6 +1502,13 @@ type RasterCollection struct {
 	Name string `json:"name,omitempty"`
 
 	// ProcessingStatus: The processing status of this RasterCollection.
+	//
+	// Possible values:
+	//   "complete"
+	//   "failed"
+	//   "notReady"
+	//   "processing"
+	//   "ready"
 	ProcessingStatus string `json:"processingStatus,omitempty"`
 
 	// ProjectId: The ID of the project that this RasterCollection is in.
@@ -1384,6 +1516,9 @@ type RasterCollection struct {
 
 	// RasterType: The type of rasters contained within this
 	// RasterCollection.
+	//
+	// Possible values:
+	//   "image"
 	RasterType string `json:"rasterType,omitempty"`
 
 	// Tags: Tags of this RasterCollection.
@@ -1479,6 +1614,9 @@ type ScaledShape struct {
 	Fill *Color `json:"fill,omitempty"`
 
 	// Shape: Name of the shape.
+	//
+	// Possible values:
+	//   "circle"
 	Shape string `json:"shape,omitempty"`
 }
 
@@ -1488,6 +1626,10 @@ type ScalingFunction struct {
 
 	// ScalingType: The type of scaling function to use. Defaults to SQRT.
 	// Currently only linear and square root scaling are supported.
+	//
+	// Possible values:
+	//   "linear"
+	//   "sqrt"
 	ScalingType string `json:"scalingType,omitempty"`
 
 	// SizeRange: The range of shape sizes, in pixels. For circles, the size
@@ -1573,6 +1715,13 @@ type Table struct {
 	Name string `json:"name,omitempty"`
 
 	// ProcessingStatus: The processing status of this table.
+	//
+	// Possible values:
+	//   "complete"
+	//   "failed"
+	//   "notReady"
+	//   "processing"
+	//   "ready"
 	ProcessingStatus string `json:"processingStatus,omitempty"`
 
 	// ProjectId: The ID of the project to which the table belongs.
@@ -1615,6 +1764,16 @@ type TableColumn struct {
 	Name string `json:"name,omitempty"`
 
 	// Type: The type of data stored in this column.
+	//
+	// Possible values:
+	//   "datetime"
+	//   "double"
+	//   "integer"
+	//   "lineStrings"
+	//   "mixedGeometry"
+	//   "points"
+	//   "polygons"
+	//   "string"
 	Type string `json:"type,omitempty"`
 }
 
@@ -1644,6 +1803,9 @@ type VectorStyle struct {
 
 	// Type: The type of the vector style. Currently, only displayRule is
 	// supported.
+	//
+	// Possible values:
+	//   "displayRule"
 	Type string `json:"type,omitempty"`
 }
 

@@ -128,6 +128,9 @@ type GeoJsonGeometryCollection struct {
 	Geometries []GeoJsonGeometry `json:"geometries,omitempty"`
 
 	// Type: Identifies this object as a GeoJsonGeometryCollection.
+	//
+	// Possible values:
+	//   "GeometryCollection"
 	Type string `json:"type,omitempty"`
 }
 
@@ -136,6 +139,9 @@ type GeoJsonLineString struct {
 	Coordinates [][]float64 `json:"coordinates,omitempty"`
 
 	// Type: Identifies this object as a GeoJsonLineString.
+	//
+	// Possible values:
+	//   "LineString"
 	Type string `json:"type,omitempty"`
 }
 
@@ -145,6 +151,9 @@ type GeoJsonMultiLineString struct {
 	Coordinates [][][]float64 `json:"coordinates,omitempty"`
 
 	// Type: Identifies this object as a GeoJsonMultiLineString.
+	//
+	// Possible values:
+	//   "MultiLineString"
 	Type string `json:"type,omitempty"`
 }
 
@@ -153,6 +162,9 @@ type GeoJsonMultiPoint struct {
 	Coordinates [][]float64 `json:"coordinates,omitempty"`
 
 	// Type: Identifies this object as a GeoJsonMultiPoint.
+	//
+	// Possible values:
+	//   "MultiPoint"
 	Type string `json:"type,omitempty"`
 }
 
@@ -162,6 +174,9 @@ type GeoJsonMultiPolygon struct {
 	Coordinates [][][][]float64 `json:"coordinates,omitempty"`
 
 	// Type: Identifies this object as a GeoJsonMultiPolygon.
+	//
+	// Possible values:
+	//   "MultiPolygon"
 	Type string `json:"type,omitempty"`
 }
 
@@ -171,6 +186,9 @@ type GeoJsonPoint struct {
 	Coordinates []float64 `json:"coordinates,omitempty"`
 
 	// Type: Identifies this object as a GeoJsonPoint.
+	//
+	// Possible values:
+	//   "Point"
 	Type string `json:"type,omitempty"`
 }
 
@@ -184,6 +202,9 @@ type GeoJsonPolygon struct {
 	Coordinates [][][]float64 `json:"coordinates,omitempty"`
 
 	// Type: Identifies this object as a GeoJsonPolygon.
+	//
+	// Possible values:
+	//   "Polygon"
 	Type string `json:"type,omitempty"`
 }
 
@@ -206,6 +227,9 @@ type MapFolder struct {
 	Name string `json:"name,omitempty"`
 
 	// Type: Identifies this object as a MapFolder.
+	//
+	// Possible values:
+	//   "folder"
 	Type string `json:"type,omitempty"`
 
 	// Visibility: The visibility setting of this MapFolder. One of
@@ -256,6 +280,9 @@ type MapKmlLink struct {
 	Name string `json:"name,omitempty"`
 
 	// Type: Identifies this object as a MapKmlLink.
+	//
+	// Possible values:
+	//   "kmlLink"
 	Type string `json:"type,omitempty"`
 
 	// Visibility: The visibility setting of this MapKmlLink. One of
@@ -280,6 +307,9 @@ type MapLayer struct {
 	Name string `json:"name,omitempty"`
 
 	// Type: Identifies this object as a MapLayer.
+	//
+	// Possible values:
+	//   "layer"
 	Type string `json:"type,omitempty"`
 
 	// Visibility: The visibility setting of this MapLayer. One of

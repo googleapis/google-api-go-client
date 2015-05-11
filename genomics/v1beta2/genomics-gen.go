@@ -333,6 +333,12 @@ type Annotation struct {
 
 	// Type: The data type for this annotation. Must match the containing
 	// annotation set's type.
+	//
+	// Possible values:
+	//   "GENE"
+	//   "GENERIC"
+	//   "TRANSCRIPT"
+	//   "VARIANT"
 	Type string `json:"type,omitempty"`
 
 	// Variant: A variant annotation, which describes the effect of a
@@ -364,6 +370,12 @@ type AnnotationSet struct {
 	SourceUri string `json:"sourceUri,omitempty"`
 
 	// Type: The type of annotations contained within this set.
+	//
+	// Possible values:
+	//   "GENE"
+	//   "GENERIC"
+	//   "TRANSCRIPT"
+	//   "VARIANT"
 	Type string `json:"type,omitempty"`
 }
 
@@ -593,6 +605,9 @@ type ExportVariantSetRequest struct {
 	CallSetIds []string `json:"callSetIds,omitempty"`
 
 	// Format: The format for the exported data.
+	//
+	// Possible values:
+	//   "BIGQUERY"
 	Format string `json:"format,omitempty"`
 
 	// ProjectNumber: The Google Cloud project number that owns the
@@ -645,6 +660,10 @@ type ImportReadGroupSetsRequest struct {
 
 	// PartitionStrategy: The partition strategy describes how read groups
 	// are partitioned into read group sets.
+	//
+	// Possible values:
+	//   "MERGE_ALL"
+	//   "PER_FILE_PER_SAMPLE"
 	PartitionStrategy string `json:"partitionStrategy,omitempty"`
 
 	// ReferenceSetId: The reference set to which the imported read group
@@ -666,6 +685,10 @@ type ImportReadGroupSetsResponse struct {
 
 type ImportVariantsRequest struct {
 	// Format: The format of the variant data being imported.
+	//
+	// Possible values:
+	//   "COMPLETE_GENOMICS"
+	//   "VCF"
 	Format string `json:"format,omitempty"`
 
 	// SourceUris: A list of URIs pointing at VCF files in Google Cloud
@@ -722,6 +745,15 @@ type Job struct {
 	Request *JobRequest `json:"request,omitempty"`
 
 	// Status: The status of this job.
+	//
+	// Possible values:
+	//   "CANCELED"
+	//   "FAILURE"
+	//   "NEW"
+	//   "PENDING"
+	//   "RUNNING"
+	//   "SUCCESS"
+	//   "UNKNOWN_STATUS"
 	Status string `json:"status,omitempty"`
 
 	// Warnings: Any warnings that occurred during processing.
@@ -738,6 +770,16 @@ type JobRequest struct {
 	Source []string `json:"source,omitempty"`
 
 	// Type: The original request type.
+	//
+	// Possible values:
+	//   "ALIGN_READSETS"
+	//   "CALL_READSETS"
+	//   "EXPERIMENTAL_CREATE_JOB"
+	//   "EXPORT_READSETS"
+	//   "EXPORT_VARIANTS"
+	//   "IMPORT_READSETS"
+	//   "IMPORT_VARIANTS"
+	//   "UNKNOWN_TYPE"
 	Type string `json:"type,omitempty"`
 }
 
@@ -827,6 +869,14 @@ type Metadata struct {
 
 	// Type: The type of data. Possible types include: Integer, Float, Flag,
 	// Character, and String.
+	//
+	// Possible values:
+	//   "CHARACTER"
+	//   "FLAG"
+	//   "FLOAT"
+	//   "INTEGER"
+	//   "STRING"
+	//   "UNKNOWN_TYPE"
 	Type string `json:"type,omitempty"`
 
 	// Value: The value field for simple metadata
@@ -1738,6 +1788,22 @@ type VariantAnnotation struct {
 	// variant. It is adapted from the ClinVar controlled vocabulary for
 	// clinical significance described at:
 	// http://www.ncbi.nlm.nih.gov/clinvar/docs/clinsig/
+	//
+	// Possible values:
+	//   "ASSOCIATION"
+	//   "BENIGN"
+	//   "CLINICAL_SIGNIFICANCE_UNSPECIFIED"
+	//   "CONFERS_SENSITIVITY"
+	//   "DRUG_RESPONSE"
+	//   "HISTOCOMPATIBILITY"
+	//   "LIKELY_BENIGN"
+	//   "LIKELY_PATHOGENIC"
+	//   "MULTIPLE_REPORTED"
+	//   "OTHER"
+	//   "PATHOGENIC"
+	//   "PROTECTIVE"
+	//   "RISK_FACTOR"
+	//   "UNCERTAIN"
 	ClinicalSignificance string `json:"clinicalSignificance,omitempty"`
 
 	// Conditions: The set of conditions associated with this variant. A
@@ -1745,6 +1811,17 @@ type VariantAnnotation struct {
 	Conditions []*VariantAnnotationCondition `json:"conditions,omitempty"`
 
 	// Effect: Effect of the variant on the coding sequence.
+	//
+	// Possible values:
+	//   "EFFECT_UNSPECIFIED"
+	//   "FRAMESHIFT"
+	//   "FRAME_PRESERVING_INDEL"
+	//   "NONSYNONYMOUS_SNP"
+	//   "OTHER"
+	//   "SPLICE_SITE_DISRUPTION"
+	//   "STOP_GAIN"
+	//   "STOP_LOSS"
+	//   "SYNONYMOUS_SNP"
 	Effect string `json:"effect,omitempty"`
 
 	// GeneId: Google annotation ID of the gene affected by this variant.
@@ -1756,6 +1833,16 @@ type VariantAnnotation struct {
 	TranscriptIds []string `json:"transcriptIds,omitempty"`
 
 	// Type: Type has been adapted from ClinVar's list of variant types.
+	//
+	// Possible values:
+	//   "CNV"
+	//   "DELETION"
+	//   "INSERTION"
+	//   "OTHER"
+	//   "SNP"
+	//   "STRUCTURAL"
+	//   "SUBSTITUTION"
+	//   "TYPE_UNSPECIFIED"
 	Type string `json:"type,omitempty"`
 }
 

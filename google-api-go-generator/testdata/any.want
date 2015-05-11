@@ -205,11 +205,11 @@ type ListLogsResponse struct {
 
 type Log struct {
 	// DisplayName: Name used when displaying the log to the user (for
-	// example, in a UI). Example: `"activity_log"`
+	// example, in a UI). Example: "activity_log"
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Name: REQUIRED: The log's name name. Example:
-	// `"compute.googleapis.com/activity_log"`.
+	// "compute.googleapis.com/activity_log".
 	Name string `json:"name,omitempty"`
 
 	// PayloadType: Type URL describing the expected payload type for the
@@ -266,11 +266,11 @@ type LogEntryMetadata struct {
 	ProjectId string `json:"projectId,omitempty"`
 
 	// Region: The region name of the Google Cloud Platform service that
-	// created the log entry. For example, `"us-central1"`.
+	// created the log entry. For example, "us-central1".
 	Region string `json:"region,omitempty"`
 
 	// ServiceName: The API name of the Google Cloud Platform service that
-	// created the log entry. For example, `"compute.googleapis.com"`.
+	// created the log entry. For example, "compute.googleapis.com".
 	ServiceName string `json:"serviceName,omitempty"`
 
 	// Severity: The severity of the log entry.
@@ -287,7 +287,7 @@ type LogEntryMetadata struct {
 	UserId string `json:"userId,omitempty"`
 
 	// Zone: The zone of the Google Cloud Platform service that created the
-	// log entry. For example, `"us-central1-a"`.
+	// log entry. For example, "us-central1-a".
 	Zone string `json:"zone,omitempty"`
 }
 
@@ -523,13 +523,13 @@ func (c *ProjectsLogServicesIndexesListCall) Depth(depth int64) *ProjectsLogServ
 
 // IndexPrefix sets the optional parameter "indexPrefix": Restricts the
 // indexes returned to be those with a specified prefix. The prefix has
-// the form `"/label_value/label_value/..."`, in order corresponding to
+// the form "/label_value/label_value/...", in order corresponding to
 // the [`LogService
 // indexKeys`][google.logging.v1.LogService.index_keys]. Non-empty
-// prefixes must begin with `/` . Example prefixes: + `"/myModule/"`
+// prefixes must begin with `/` . Example prefixes: + "/myModule/"
 // retrieves App Engine versions associated with `myModule`. The
-// trailing slash terminates the value. + `"/myModule"` retrieves App
-// Engine modules with names beginning with `myModule`. + `""` retrieves
+// trailing slash terminates the value. + "/myModule" retrieves App
+// Engine modules with names beginning with `myModule`. + "" retrieves
 // all indexes.
 func (c *ProjectsLogServicesIndexesListCall) IndexPrefix(indexPrefix string) *ProjectsLogServicesIndexesListCall {
 	c.opt_["indexPrefix"] = indexPrefix
@@ -1291,7 +1291,7 @@ func (c *ProjectsLogsListCall) ServiceIndexPrefix(serviceIndexPrefix string) *Pr
 // `serviceName` and `serviceIndexPrefix` empty. To list log names
 // containing entries with a particular service name (or explicitly
 // empty service name) set `serviceName` to the desired value and
-// `serviceIndexPrefix` to `"/"`.
+// `serviceIndexPrefix` to "/".
 func (c *ProjectsLogsListCall) ServiceName(serviceName string) *ProjectsLogsListCall {
 	c.opt_["serviceName"] = serviceName
 	return c

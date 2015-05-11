@@ -247,14 +247,14 @@ type SearchResult struct {
 	// the stored document, the built-in fields (`_rank`, the document rank,
 	// and `_score` if scoring is enabled), or computed from any extra
 	// `fieldExpressions` defined in the request. For example, if a request
-	// contains a `fieldExpressions` named `"TotalPrice"` and expressed as
-	// `"Price + Tax"`, the result will have a field whose name is
-	// `"TotalPrice"` and whose value is set to the computed sum of the
-	// value of field `"Price"` and the value of field `"Tax"`. If a request
-	// contains a `fieldExpressions` named `"snippet"` and expressed as
-	// `"snippet(\"good times\", content)"`, the result will have a field
-	// whose name is `"snippet"` and whose value contains a snippet of text
-	// from field `"content"` matching the query "good times".
+	// contains a `fieldExpressions` named "TotalPrice" and expressed as
+	// "Price + Tax", the result will have a field whose name is
+	// "TotalPrice" and whose value is set to the computed sum of the
+	// value of field "Price" and the value of field "Tax". If a request
+	// contains a `fieldExpressions` named "snippet" and expressed as
+	// "snippet(\"good times\", content)", the result will have a field
+	// whose name is "snippet" and whose value contains a snippet of text
+	// from field "content" matching the query "good times".
 	Fields map[string]FieldValueList `json:"fields,omitempty"`
 
 	// NextPageToken: If there are more results, retrieve them by invoking
@@ -507,10 +507,10 @@ func (c *ProjectsIndexesSearchCall) Offset(offset int64) *ProjectsIndexesSearchC
 // OrderBy sets the optional parameter "orderBy": Comma-separated list
 // of fields for sorting on the search result, including fields from
 // `Document`, the built-in fields (`_rank` and `_score`), and fields
-// defined in `fieldExpressions`. For example: `orderBy="foo,bar"`. The
+// defined in `fieldExpressions`. For example: `orderBy="foo,bar". The
 // default sorting order is ascending. To specify descending order for a
-// field, a suffix `" desc"` should be appended to the field name. For
-// example: `orderBy="foo desc,bar"`. The default value for text sort is
+// field, a suffix " desc" should be appended to the field name. For
+// example: `orderBy="foo desc,bar". The default value for text sort is
 // the empty string, and the default value for numeric sort is 0. If not
 // specified, the search results are automatically sorted by descending
 // `_rank`. Sorting by ascending `_rank` is not allowed.
@@ -548,7 +548,7 @@ func (c *ProjectsIndexesSearchCall) Query(query string) *ProjectsIndexesSearchCa
 // ReturnFields sets the optional parameter "returnFields": List of
 // fields to return in `SearchResult` objects. It can be fields from
 // `Document`, the built-in fields `_rank` and `_score`, and fields
-// defined in `fieldExpressions`. Use `"*"` to return all fields from
+// defined in `fieldExpressions`. Use "*" to return all fields from
 // `Document`.
 func (c *ProjectsIndexesSearchCall) ReturnFields(returnFields string) *ProjectsIndexesSearchCall {
 	c.opt_["returnFields"] = returnFields
@@ -559,7 +559,7 @@ func (c *ProjectsIndexesSearchCall) ReturnFields(returnFields string) *ProjectsI
 // invoke on a search result for this query. If `scorer` is not set,
 // scoring is disabled and `_score` is 0 for all documents in the search
 // result. To enable document relevancy score based on term frequency,
-// set `"scorer=generic"`.
+// set "scorer=generic".
 func (c *ProjectsIndexesSearchCall) Scorer(scorer string) *ProjectsIndexesSearchCall {
 	c.opt_["scorer"] = scorer
 	return c

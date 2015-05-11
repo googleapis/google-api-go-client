@@ -16,6 +16,23 @@
       "revId": "d02498ee357d0ab65a2235163e3342fbfda41efc",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2d338121_c4a79088",
+        "filename": "google-api-go-generator/testdata/any.want",
+        "patchSetId": 2
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-05-11T23:35:26Z",
+      "side": 1,
+      "message": "if we know the default value, can we put \" (default)\" in parens after the \"DEFAULT\" part?",
+      "revId": "d02498ee357d0ab65a2235163e3342fbfda41efc",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
     }
   ]
 }

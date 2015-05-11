@@ -678,6 +678,10 @@ type Account struct {
 
 	// AccountProfile: Profile for this account. This is a read-only field
 	// that can be left blank.
+	//
+	// Possible values:
+	//   "ACCOUNT_PROFILE_BASIC"
+	//   "ACCOUNT_PROFILE_STANDARD"
 	AccountProfile string `json:"accountProfile,omitempty"`
 
 	// Active: Whether this account is active.
@@ -685,6 +689,13 @@ type Account struct {
 
 	// ActiveAdsLimitTier: Maximum number of active ads allowed for this
 	// account.
+	//
+	// Possible values:
+	//   "ACTIVE_ADS_TIER_100K"
+	//   "ACTIVE_ADS_TIER_200K"
+	//   "ACTIVE_ADS_TIER_300K"
+	//   "ACTIVE_ADS_TIER_40K"
+	//   "ACTIVE_ADS_TIER_75K"
 	ActiveAdsLimitTier string `json:"activeAdsLimitTier,omitempty"`
 
 	// ActiveViewOptOut: Whether to serve creatives with Active View tags.
@@ -805,6 +816,13 @@ type AccountActiveAdSummary struct {
 
 	// ActiveAdsLimitTier: Maximum number of active ads allowed for the
 	// account.
+	//
+	// Possible values:
+	//   "ACTIVE_ADS_TIER_100K"
+	//   "ACTIVE_ADS_TIER_200K"
+	//   "ACTIVE_ADS_TIER_300K"
+	//   "ACTIVE_ADS_TIER_40K"
+	//   "ACTIVE_ADS_TIER_75K"
 	ActiveAdsLimitTier string `json:"activeAdsLimitTier,omitempty"`
 
 	// AvailableAds: Ads that can be activated for the account.
@@ -833,6 +851,10 @@ type AccountPermission struct {
 
 	// Level: Administrative level required to enable this account
 	// permission.
+	//
+	// Possible values:
+	//   "ADMINISTRATOR"
+	//   "USER"
 	Level string `json:"level,omitempty"`
 
 	// Name: Name of this account permission.
@@ -940,10 +962,20 @@ type AccountUserProfile struct {
 	SubaccountId int64 `json:"subaccountId,omitempty,string"`
 
 	// TraffickerType: Trafficker type of this user profile.
+	//
+	// Possible values:
+	//   "EXTERNAL_TRAFFICKER"
+	//   "INTERNAL_NON_TRAFFICKER"
+	//   "INTERNAL_TRAFFICKER"
 	TraffickerType string `json:"traffickerType,omitempty"`
 
 	// UserAccessType: User type of the user profile. This is a read-only
 	// field that can be left blank.
+	//
+	// Possible values:
+	//   "INTERNAL_ADMINISTRATOR"
+	//   "NORMAL_USER"
+	//   "SUPER_USER"
 	UserAccessType string `json:"userAccessType,omitempty"`
 
 	// UserRoleFilter: Filter that describes which user roles are visible to
@@ -1043,6 +1075,13 @@ type Ad struct {
 	// ads, respectively. APP and APP_INTERSTITIAL are for rendering in
 	// mobile apps. IN_STREAM_VIDEO refers to rendering an in-stream video
 	// ads developed with the VAST standard.
+	//
+	// Possible values:
+	//   "APP"
+	//   "APP_INTERSTITIAL"
+	//   "IN_STREAM_VIDEO"
+	//   "WEB"
+	//   "WEB_INTERSTITIAL"
 	Compatibility string `json:"compatibility,omitempty"`
 
 	// CreateInfo: Information about the creation of this ad.This is a
@@ -1150,6 +1189,12 @@ type Ad struct {
 	// Type: Type of ad. This is a required field on insertion. Note that
 	// default ads (AD_SERVING_DEFAULT_AD) cannot be created directly (see
 	// Creative resource).
+	//
+	// Possible values:
+	//   "AD_SERVING_CLICK_TRACKER"
+	//   "AD_SERVING_DEFAULT_AD"
+	//   "AD_SERVING_STANDARD_AD"
+	//   "AD_SERVING_TRACKING"
 	Type string `json:"type,omitempty"`
 }
 
@@ -1224,6 +1269,10 @@ type Advertiser struct {
 	Name string `json:"name,omitempty"`
 
 	// Status: Status of this advertiser.
+	//
+	// Possible values:
+	//   "APPROVED"
+	//   "ON_HOLD"
 	Status string `json:"status,omitempty"`
 
 	// SubaccountId: Subaccount ID of this advertiser.This is a read-only
@@ -1813,11 +1862,20 @@ type Creative struct {
 	// ArtworkType: Type of artwork used for the creative. This is a
 	// read-only field. Applicable to the following creative types: all
 	// RICH_MEDIA, and all VPAID.
+	//
+	// Possible values:
+	//   "ARTWORK_TYPE_FLASH"
+	//   "ARTWORK_TYPE_HTML5"
+	//   "ARTWORK_TYPE_MIXED"
 	ArtworkType string `json:"artworkType,omitempty"`
 
 	// AuthoringTool: Authoring tool for HTML5 banner creatives. This is a
 	// read-only field. Applicable to the following creative types:
 	// HTML5_BANNER.
+	//
+	// Possible values:
+	//   "NINJA"
+	//   "SWIFFY"
 	AuthoringTool string `json:"authoringTool,omitempty"`
 
 	// Auto_advance_images: Whether images are automatically advanced for
@@ -2066,6 +2124,31 @@ type Creative struct {
 
 	// Type: Type of this creative.This is a required field. Applicable to
 	// all creative types.
+	//
+	// Possible values:
+	//   "BRAND_SAFE_DEFAULT_INSTREAM_VIDEO"
+	//   "CUSTOM_INPAGE"
+	//   "CUSTOM_INTERSTITIAL"
+	//   "ENHANCED_BANNER"
+	//   "ENHANCED_IMAGE"
+	//   "FLASH_INPAGE"
+	//   "HTML5_BANNER"
+	//   "IMAGE"
+	//   "INSTREAM_VIDEO"
+	//   "INTERNAL_REDIRECT"
+	//   "INTERSTITIAL_INTERNAL_REDIRECT"
+	//   "REDIRECT"
+	//   "RICH_MEDIA_EXPANDING"
+	//   "RICH_MEDIA_IM_EXPAND"
+	//   "RICH_MEDIA_INPAGE"
+	//   "RICH_MEDIA_INPAGE_FLOATING"
+	//   "RICH_MEDIA_INTERSTITIAL_FLOAT"
+	//   "RICH_MEDIA_MOBILE_IN_APP"
+	//   "RICH_MEDIA_MULTI_FLOATING"
+	//   "RICH_MEDIA_PEEL_DOWN"
+	//   "TRACKING_TEXT"
+	//   "VPAID_LINEAR"
+	//   "VPAID_NON_LINEAR"
 	Type string `json:"type,omitempty"`
 
 	// Version: The version number helps you keep track of multiple versions
@@ -2102,10 +2185,21 @@ type CreativeAsset struct {
 	// Alignment: Possible alignments for an asset. This is a read-only
 	// field. Applicable to the following creative types:
 	// RICH_MEDIA_MULTI_FLOATING.
+	//
+	// Possible values:
+	//   "ALIGNMENT_BOTTOM"
+	//   "ALIGNMENT_LEFT"
+	//   "ALIGNMENT_RIGHT"
+	//   "ALIGNMENT_TOP"
 	Alignment string `json:"alignment,omitempty"`
 
 	// ArtworkType: Artwork type of rich media creative. This is a read-only
 	// field. Applicable to the following creative types: all RICH_MEDIA.
+	//
+	// Possible values:
+	//   "ARTWORK_TYPE_FLASH"
+	//   "ARTWORK_TYPE_HTML5"
+	//   "ARTWORK_TYPE_MIXED"
 	ArtworkType string `json:"artworkType,omitempty"`
 
 	// AssetIdentifier: Identifier of this asset. This is the same
@@ -2125,6 +2219,12 @@ type CreativeAsset struct {
 
 	// ChildAssetType: Rich media child asset type. This is a read-only
 	// field. Applicable to the following creative types: all VPAID.
+	//
+	// Possible values:
+	//   "CHILD_ASSET_TYPE_DATA"
+	//   "CHILD_ASSET_TYPE_FLASH"
+	//   "CHILD_ASSET_TYPE_IMAGE"
+	//   "CHILD_ASSET_TYPE_VIDEO"
 	ChildAssetType string `json:"childAssetType,omitempty"`
 
 	// CollapsedSize: Size of an asset when collapsed. This is a read-only
@@ -2148,6 +2248,17 @@ type CreativeAsset struct {
 
 	// DisplayType: Type of rich media asset. This is a read-only field.
 	// Applicable to the following creative types: all RICH_MEDIA.
+	//
+	// Possible values:
+	//   "ASSET_DISPLAY_TYPE_EXPANDING"
+	//   "ASSET_DISPLAY_TYPE_FLASH_IN_FLASH"
+	//   "ASSET_DISPLAY_TYPE_FLASH_IN_FLASH_EXPANDING"
+	//   "ASSET_DISPLAY_TYPE_FLOATING"
+	//   "ASSET_DISPLAY_TYPE_INPAGE"
+	//   "ASSET_DISPLAY_TYPE_OVERLAY"
+	//   "ASSET_DISPLAY_TYPE_PEEL_DOWN"
+	//   "ASSET_DISPLAY_TYPE_VPAID_LINEAR"
+	//   "ASSET_DISPLAY_TYPE_VPAID_NON_LINEAR"
 	DisplayType string `json:"displayType,omitempty"`
 
 	// Duration: Duration in seconds for which an asset will be displayed.
@@ -2157,6 +2268,11 @@ type CreativeAsset struct {
 
 	// DurationType: Duration type for which an asset will be displayed.
 	// Applicable to the following creative types: all RICH_MEDIA.
+	//
+	// Possible values:
+	//   "ASSET_DURATION_TYPE_AUTO"
+	//   "ASSET_DURATION_TYPE_CUSTOM"
+	//   "ASSET_DURATION_TYPE_NONE"
 	DurationType string `json:"durationType,omitempty"`
 
 	// ExpandedDimension: Detected expanded dimension for video asset. This
@@ -2215,11 +2331,21 @@ type CreativeAsset struct {
 
 	// PositionLeftUnit: Offset left unit for an asset. This is a read-only
 	// field. Applicable to the following creative types: all RICH_MEDIA.
+	//
+	// Possible values:
+	//   "OFFSET_UNIT_PERCENT"
+	//   "OFFSET_UNIT_PIXEL"
+	//   "OFFSET_UNIT_PIXEL_FROM_CENTER"
 	PositionLeftUnit string `json:"positionLeftUnit,omitempty"`
 
 	// PositionTopUnit: Offset top unit for an asset. This is a read-only
 	// field if the asset displayType is ASSET_DISPLAY_TYPE_OVERLAY.
 	// Applicable to the following creative types: all RICH_MEDIA.
+	//
+	// Possible values:
+	//   "OFFSET_UNIT_PERCENT"
+	//   "OFFSET_UNIT_PIXEL"
+	//   "OFFSET_UNIT_PIXEL_FROM_CENTER"
 	PositionTopUnit string `json:"positionTopUnit,omitempty"`
 
 	// ProgressiveServingUrl: Progressive URL for video asset. This is a
@@ -2267,6 +2393,16 @@ type CreativeAsset struct {
 	// ALTERNATE_VIDEO assets that are marked active serve as backup in case
 	// the VPAID creative cannot be served. Only PARENT_VIDEO assets can be
 	// added or removed for an INSTREAM_VIDEO or VPAID_LINEAR creative.
+	//
+	// Possible values:
+	//   "ADDITIONAL_FLASH"
+	//   "ADDITIONAL_IMAGE"
+	//   "ALTERNATE_VIDEO"
+	//   "BACKUP_IMAGE"
+	//   "OTHER"
+	//   "PARENT_VIDEO"
+	//   "PRIMARY"
+	//   "TRANSCODED_VIDEO"
 	Role string `json:"role,omitempty"`
 
 	// Size: Size associated with this creative asset. This is a required
@@ -2284,6 +2420,10 @@ type CreativeAsset struct {
 
 	// StartTimeType: Initial wait time type before making the asset
 	// visible. Applicable to the following creative types: all RICH_MEDIA.
+	//
+	// Possible values:
+	//   "ASSET_START_TIME_TYPE_CUSTOM"
+	//   "ASSET_START_TIME_TYPE_NONE"
 	StartTimeType string `json:"startTimeType,omitempty"`
 
 	// StreamingServingUrl: Streaming URL for video asset. This is a
@@ -2310,6 +2450,11 @@ type CreativeAsset struct {
 	// following creative types: FLASH_INPAGE, RICH_MEDIA_EXPANDING,
 	// RICH_MEDIA_IM_EXPAND, RICH_MEDIA_INPAGE, and
 	// RICH_MEDIA_INPAGE_FLOATING.
+	//
+	// Possible values:
+	//   "OPAQUE"
+	//   "TRANSPARENT"
+	//   "WINDOW"
 	WindowMode string `json:"windowMode,omitempty"`
 
 	// ZIndex: zIndex value of an asset. This is a read-only field.
@@ -2338,6 +2483,13 @@ type CreativeAssetId struct {
 	// Type: Type of asset to upload. This is a required field. IMAGE is
 	// solely used for IMAGE creatives. Other image assets should use
 	// HTML_IMAGE.
+	//
+	// Possible values:
+	//   "FLASH"
+	//   "HTML"
+	//   "HTML_IMAGE"
+	//   "IMAGE"
+	//   "VIDEO"
 	Type string `json:"type,omitempty"`
 }
 
@@ -2467,6 +2619,11 @@ type CreativeCustomEvent struct {
 
 	// AdvertiserCustomEventType: Type of the event. This is a read-only
 	// field.
+	//
+	// Possible values:
+	//   "ADVERTISER_EVENT_COUNTER"
+	//   "ADVERTISER_EVENT_EXIT"
+	//   "ADVERTISER_EVENT_TIMER"
 	AdvertiserCustomEventType string `json:"advertiserCustomEventType,omitempty"`
 
 	// ArtworkLabel: Artwork label column, used to link events in DCM back
@@ -2476,6 +2633,11 @@ type CreativeCustomEvent struct {
 
 	// ArtworkType: Artwork type used by the creative.This is a read-only
 	// field.
+	//
+	// Possible values:
+	//   "ARTWORK_TYPE_FLASH"
+	//   "ARTWORK_TYPE_HTML5"
+	//   "ARTWORK_TYPE_MIXED"
 	ArtworkType string `json:"artworkType,omitempty"`
 
 	// ExitUrl: Exit URL of the event. This field is used only for exit
@@ -2491,6 +2653,13 @@ type CreativeCustomEvent struct {
 	PopupWindowProperties *PopupWindowProperties `json:"popupWindowProperties,omitempty"`
 
 	// TargetType: Target type used by the event.
+	//
+	// Possible values:
+	//   "TARGET_BLANK"
+	//   "TARGET_PARENT"
+	//   "TARGET_POPUP"
+	//   "TARGET_SELF"
+	//   "TARGET_TOP"
 	TargetType string `json:"targetType,omitempty"`
 
 	// VideoReportingId: Reporting ID, used to differentiate multiple videos
@@ -2623,6 +2792,10 @@ type CreativeGroupAssignment struct {
 
 	// CreativeGroupNumber: Creative group number of the creative group
 	// assignment.
+	//
+	// Possible values:
+	//   "CREATIVE_GROUP_ONE"
+	//   "CREATIVE_GROUP_TWO"
 	CreativeGroupNumber string `json:"creativeGroupNumber,omitempty"`
 }
 
@@ -2654,6 +2827,12 @@ type CreativeOptimizationConfiguration struct {
 	OptimizationActivitys []*OptimizationActivity `json:"optimizationActivitys,omitempty"`
 
 	// OptimizationModel: Optimization model for this configuration.
+	//
+	// Possible values:
+	//   "CLICK"
+	//   "POST_CLICK"
+	//   "POST_CLICK_AND_IMPRESSION"
+	//   "POST_IMPRESSION"
 	OptimizationModel string `json:"optimizationModel,omitempty"`
 }
 
@@ -2670,10 +2849,20 @@ type CreativeRotation struct {
 
 	// Type: Type of creative rotation. Can be used to specify whether to
 	// use sequential or random rotation.
+	//
+	// Possible values:
+	//   "CREATIVE_ROTATION_TYPE_RANDOM"
+	//   "CREATIVE_ROTATION_TYPE_SEQUENTIAL"
 	Type string `json:"type,omitempty"`
 
 	// WeightCalculationStrategy: Strategy for calculating weights. Used
 	// with CREATIVE_ROTATION_TYPE_RANDOM.
+	//
+	// Possible values:
+	//   "WEIGHT_STRATEGY_CUSTOM"
+	//   "WEIGHT_STRATEGY_EQUAL"
+	//   "WEIGHT_STRATEGY_HIGHEST_CTR"
+	//   "WEIGHT_STRATEGY_OPTIMIZED"
 	WeightCalculationStrategy string `json:"weightCalculationStrategy,omitempty"`
 }
 
@@ -2743,6 +2932,23 @@ type DateRange struct {
 
 	// RelativeDateRange: The date range relative to the date of when the
 	// report is run.
+	//
+	// Possible values:
+	//   "LAST_24_MONTHS"
+	//   "LAST_30_DAYS"
+	//   "LAST_365_DAYS"
+	//   "LAST_7_DAYS"
+	//   "LAST_90_DAYS"
+	//   "MONTH_TO_DATE"
+	//   "PREVIOUS_MONTH"
+	//   "PREVIOUS_QUARTER"
+	//   "PREVIOUS_WEEK"
+	//   "PREVIOUS_YEAR"
+	//   "QUARTER_TO_DATE"
+	//   "TODAY"
+	//   "WEEK_TO_DATE"
+	//   "YEAR_TO_DATE"
+	//   "YESTERDAY"
 	RelativeDateRange string `json:"relativeDateRange,omitempty"`
 
 	// StartDate: The start date of the date range, inclusive. A string of
@@ -2807,6 +3013,24 @@ type DeliverySchedule struct {
 	// Priority: Serving priority of an ad, with respect to other ads. The
 	// lower the priority number, the greater the priority with which it is
 	// served.
+	//
+	// Possible values:
+	//   "AD_PRIORITY_01"
+	//   "AD_PRIORITY_02"
+	//   "AD_PRIORITY_03"
+	//   "AD_PRIORITY_04"
+	//   "AD_PRIORITY_05"
+	//   "AD_PRIORITY_06"
+	//   "AD_PRIORITY_07"
+	//   "AD_PRIORITY_08"
+	//   "AD_PRIORITY_09"
+	//   "AD_PRIORITY_10"
+	//   "AD_PRIORITY_11"
+	//   "AD_PRIORITY_12"
+	//   "AD_PRIORITY_13"
+	//   "AD_PRIORITY_14"
+	//   "AD_PRIORITY_15"
+	//   "AD_PRIORITY_16"
 	Priority string `json:"priority,omitempty"`
 }
 
@@ -2871,6 +3095,12 @@ type DimensionValue struct {
 	// length character sequences, and it can be escaped with a backslash.
 	// Note, only paid search dimensions ('dfa:paidSearch*') allow a
 	// matchType other than EXACT.
+	//
+	// Possible values:
+	//   "BEGINS_WITH"
+	//   "CONTAINS"
+	//   "EXACT"
+	//   "WILDCARD_EXPRESSION"
 	MatchType string `json:"matchType,omitempty"`
 
 	// Value: The value of the dimension.
@@ -3032,9 +3262,20 @@ type DirectorySiteContact struct {
 	LastName string `json:"lastName,omitempty"`
 
 	// Role: Directory site contact role.
+	//
+	// Possible values:
+	//   "ADMIN"
+	//   "EDIT"
+	//   "VIEW"
 	Role string `json:"role,omitempty"`
 
 	// Type: Directory site contact type.
+	//
+	// Possible values:
+	//   "BILLING"
+	//   "OTHER"
+	//   "SALES"
+	//   "TECHNICAL"
 	Type string `json:"type,omitempty"`
 }
 
@@ -3046,6 +3287,10 @@ type DirectorySiteContactAssignment struct {
 	// Visibility: Visibility of this directory site contact assignment.
 	// When set to PUBLIC this contact assignment is visible to all account
 	// and agency users; when set to PRIVATE it is visible only to the site.
+	//
+	// Possible values:
+	//   "PRIVATE"
+	//   "PUBLIC"
 	Visibility string `json:"visibility,omitempty"`
 }
 
@@ -3142,6 +3387,10 @@ type EventTag struct {
 
 	// SiteFilterType: Site filter type for this event tag. If no type is
 	// specified then the event tag will be applied to all sites.
+	//
+	// Possible values:
+	//   "BLACKLIST"
+	//   "WHITELIST"
 	SiteFilterType string `json:"siteFilterType,omitempty"`
 
 	// SiteIds: Filter list of site IDs associated with this event tag. The
@@ -3154,6 +3403,10 @@ type EventTag struct {
 
 	// Status: Status of this event tag. Must be ENABLED for this event tag
 	// to fire. This is a required field.
+	//
+	// Possible values:
+	//   "DISABLED"
+	//   "ENABLED"
 	Status string `json:"status,omitempty"`
 
 	// SubaccountId: Subaccount ID of this event tag. This is a read-only
@@ -3164,6 +3417,11 @@ type EventTag struct {
 	// third-party pixel, a third-party JavaScript URL, or a third-party
 	// click-through URL for either impression or click tracking. This is a
 	// required field.
+	//
+	// Possible values:
+	//   "CLICK_THROUGH_EVENT_TAG"
+	//   "IMPRESSION_IMAGE_EVENT_TAG"
+	//   "IMPRESSION_JAVASCRIPT_EVENT_TAG"
 	Type string `json:"type,omitempty"`
 
 	// Url: Payload URL for this event tag. The URL on a click-through event
@@ -3210,6 +3468,10 @@ type File struct {
 
 	// Format: The output format of the report. Only available once the file
 	// is available.
+	//
+	// Possible values:
+	//   "CSV"
+	//   "EXCEL"
 	Format string `json:"format,omitempty"`
 
 	// Id: The unique ID of this report file.
@@ -3226,6 +3488,12 @@ type File struct {
 	ReportId int64 `json:"reportId,omitempty,string"`
 
 	// Status: The status of the report file.
+	//
+	// Possible values:
+	//   "CANCELLED"
+	//   "FAILED"
+	//   "PROCESSING"
+	//   "REPORT_AVAILABLE"
 	Status string `json:"status,omitempty"`
 
 	// Urls: The URLs where the completed report file can be downloaded.
@@ -3296,10 +3564,24 @@ type FloodlightActivity struct {
 
 	// CacheBustingType: Code type used for cache busting in the generated
 	// tag.
+	//
+	// Possible values:
+	//   "ACTIVE_SERVER_PAGE"
+	//   "COLD_FUSION"
+	//   "JAVASCRIPT"
+	//   "JSP"
+	//   "PHP"
 	CacheBustingType string `json:"cacheBustingType,omitempty"`
 
 	// CountingMethod: Counting method for conversions for this floodlight
 	// activity. This is a required field.
+	//
+	// Possible values:
+	//   "ITEMS_SOLD_COUNTING"
+	//   "SESSION_COUNTING"
+	//   "STANDARD_COUNTING"
+	//   "TRANSACTIONS_COUNTING"
+	//   "UNIQUE_COUNTING"
 	CountingMethod string `json:"countingMethod,omitempty"`
 
 	// DefaultTags: Dynamic floodlight tags.
@@ -3323,6 +3605,10 @@ type FloodlightActivity struct {
 
 	// FloodlightActivityGroupType: Type of the associated floodlight
 	// activity group. This is a read-only field.
+	//
+	// Possible values:
+	//   "COUNTER"
+	//   "SALE"
 	FloodlightActivityGroupType string `json:"floodlightActivityGroupType,omitempty"`
 
 	// FloodlightConfigurationId: Floodlight configuration ID of this
@@ -3381,6 +3667,10 @@ type FloodlightActivity struct {
 
 	// TagFormat: Tag format type for the floodlight activity. If left
 	// blank, the tag format will default to HTML.
+	//
+	// Possible values:
+	//   "HTML"
+	//   "XHTML"
 	TagFormat string `json:"tagFormat,omitempty"`
 
 	// TagString: Value of the cat= paramter in the floodlight tag, which
@@ -3487,6 +3777,10 @@ type FloodlightActivityGroup struct {
 
 	// Type: Type of the floodlight activity group. This is a required field
 	// that is read-only after insertion.
+	//
+	// Possible values:
+	//   "COUNTER"
+	//   "SALE"
 	Type string `json:"type,omitempty"`
 }
 
@@ -3552,6 +3846,10 @@ type FloodlightConfiguration struct {
 
 	// FirstDayOfWeek: Day that will be counted as the first day of the week
 	// in reports. This is a required field.
+	//
+	// Possible values:
+	//   "MONDAY"
+	//   "SUNDAY"
 	FirstDayOfWeek string `json:"firstDayOfWeek,omitempty"`
 
 	// Id: ID of this floodlight configuration. This is a read-only,
@@ -3572,6 +3870,11 @@ type FloodlightConfiguration struct {
 
 	// NaturalSearchConversionAttributionOption: Types of attribution
 	// options for natural search conversions.
+	//
+	// Possible values:
+	//   "EXCLUDE_NATURAL_SEARCH_CONVERSION_ATTRIBUTION"
+	//   "INCLUDE_NATURAL_SEARCH_CONVERSION_ATTRIBUTION"
+	//   "INCLUDE_NATURAL_SEARCH_TIERED_CONVERSION_ATTRIBUTION"
 	NaturalSearchConversionAttributionOption string `json:"naturalSearchConversionAttributionOption,omitempty"`
 
 	// OmnitureSettings: Settings for DCM Omniture integration.
@@ -3645,6 +3948,10 @@ type FsCommand struct {
 	Left int64 `json:"left,omitempty"`
 
 	// PositionOption: Position in the browser where the window will open.
+	//
+	// Possible values:
+	//   "CENTERED"
+	//   "DISTANCE_FROM_TOP_LEFT_CORNER"
 	PositionOption string `json:"positionOption,omitempty"`
 
 	// Top: Distance from the top of the browser. Applicable when
@@ -3847,6 +4154,11 @@ type ObjectFilter struct {
 	// of the objects. ALL means the user has access to all objects.
 	// ASSIGNED means the user has access to the objects with IDs in the
 	// objectIds list.
+	//
+	// Possible values:
+	//   "ALL"
+	//   "ASSIGNED"
+	//   "NONE"
 	Status string `json:"status,omitempty"`
 }
 
@@ -4002,6 +4314,13 @@ type Placement struct {
 	// rendering in mobile apps.IN_STREAM_VIDEO refers to rendering in
 	// in-stream video ads developed with the VAST standard. This field is
 	// required on insertion.
+	//
+	// Possible values:
+	//   "APP"
+	//   "APP_INTERSTITIAL"
+	//   "IN_STREAM_VIDEO"
+	//   "WEB"
+	//   "WEB_INTERSTITIAL"
 	Compatibility string `json:"compatibility,omitempty"`
 
 	// ContentCategoryId: ID of the content category assigned to this
@@ -4057,6 +4376,10 @@ type Placement struct {
 
 	// PaymentSource: Payment source for this placement. This is a required
 	// field that is read-only after insertion.
+	//
+	// Possible values:
+	//   "PLACEMENT_AGENCY_PAID"
+	//   "PLACEMENT_PUBLISHER_PAID"
 	PaymentSource string `json:"paymentSource,omitempty"`
 
 	// PlacementGroupId: ID of this placement's group, if applicable.
@@ -4107,6 +4430,14 @@ type Placement struct {
 	SslRequired bool `json:"sslRequired,omitempty"`
 
 	// Status: Third-party placement status.
+	//
+	// Possible values:
+	//   "ACKNOWLEDGE_ACCEPTANCE"
+	//   "ACKNOWLEDGE_REJECTION"
+	//   "DRAFT"
+	//   "PAYMENT_ACCEPTED"
+	//   "PAYMENT_REJECTED"
+	//   "PENDING_REVIEW"
 	Status string `json:"status,omitempty"`
 
 	// SubaccountId: Subaccount ID of this placement. This field can be left
@@ -4233,6 +4564,10 @@ type PlacementGroup struct {
 	// it will be served at the same time. A roadblock requires one of its
 	// assigned placements to be marked as primary for reporting. This field
 	// is required on insertion.
+	//
+	// Possible values:
+	//   "PLACEMENT_PACKAGE"
+	//   "PLACEMENT_ROADBLOCK"
 	PlacementGroupType string `json:"placementGroupType,omitempty"`
 
 	// PlacementStrategyId: ID of the placement strategy assigned to this
@@ -4379,6 +4714,10 @@ type PopupWindowProperties struct {
 
 	// PositionType: Popup window position either centered or at specific
 	// coordinate.
+	//
+	// Possible values:
+	//   "CENTER"
+	//   "COORDINATES"
 	PositionType string `json:"positionType,omitempty"`
 
 	// ShowAddressBar: Whether to display the browser address bar.
@@ -4428,6 +4767,11 @@ type PostalCodesListResponse struct {
 
 type PricingSchedule struct {
 	// CapCostOption: Placement cap cost option.
+	//
+	// Possible values:
+	//   "CAP_COST_CUMULATIVE"
+	//   "CAP_COST_MONTHLY"
+	//   "CAP_COST_NONE"
 	CapCostOption string `json:"capCostOption,omitempty"`
 
 	// DisregardOverdelivery: Whether cap costs are ignored by ad serving.
@@ -4456,6 +4800,13 @@ type PricingSchedule struct {
 
 	// PricingType: Placement pricing type. This field is required on
 	// insertion.
+	//
+	// Possible values:
+	//   "PRICING_TYPE_CPA"
+	//   "PRICING_TYPE_CPC"
+	//   "PRICING_TYPE_CPM"
+	//   "PRICING_TYPE_FLAT_RATE_CLICKS"
+	//   "PRICING_TYPE_FLAT_RATE_IMPRESSIONS"
 	PricingType string `json:"pricingType,omitempty"`
 
 	// StartDate: Placement start date. This date must be later than, or the
@@ -4546,6 +4897,10 @@ type ReachReportCompatibleFields struct {
 
 type Recipient struct {
 	// DeliveryType: The delivery type for the recipient.
+	//
+	// Possible values:
+	//   "ATTACHMENT"
+	//   "LINK"
 	DeliveryType string `json:"deliveryType,omitempty"`
 
 	// Email: The email address of the recipient.
@@ -4616,6 +4971,10 @@ type Report struct {
 	// format is "CSV". Note that the actual format in the completed report
 	// file might differ if for instance the report's size exceeds the
 	// format's capabilities. "CSV" will then be the fallback format.
+	//
+	// Possible values:
+	//   "CSV"
+	//   "EXCEL"
 	Format string `json:"format,omitempty"`
 
 	// Id: The unique ID identifying this report resource.
@@ -4651,6 +5010,13 @@ type Report struct {
 	SubAccountId int64 `json:"subAccountId,omitempty,string"`
 
 	// Type: The type of the report.
+	//
+	// Possible values:
+	//   "CROSS_DIMENSION_REACH"
+	//   "FLOODLIGHT"
+	//   "PATH_TO_CONVERSION"
+	//   "REACH"
+	//   "STANDARD"
 	Type string `json:"type,omitempty"`
 }
 
@@ -4686,6 +5052,12 @@ type ReportCrossDimensionReachCriteria struct {
 	DateRange *DateRange `json:"dateRange,omitempty"`
 
 	// Dimension: The dimension option.
+	//
+	// Possible values:
+	//   "ADVERTISER"
+	//   "CAMPAIGN"
+	//   "SITE_BY_ADVERTISER"
+	//   "SITE_BY_CAMPAIGN"
 	Dimension string `json:"dimension,omitempty"`
 
 	// DimensionFilters: The list of filters on which dimensions are
@@ -4709,6 +5081,10 @@ type ReportDelivery struct {
 
 	// EmailOwnerDeliveryType: The type of delivery for the owner to
 	// receive, if enabled.
+	//
+	// Possible values:
+	//   "ATTACHMENT"
+	//   "LINK"
 	EmailOwnerDeliveryType string `json:"emailOwnerDeliveryType,omitempty"`
 
 	// Message: The message to be sent with each email.
@@ -4920,6 +5296,10 @@ type ReportSchedule struct {
 	// "DAY_OF_MONTH" would run subsequent reports on the 2nd of every
 	// Month, and "WEEK_OF_MONTH" would run subsequent reports on the first
 	// Monday of the month.
+	//
+	// Possible values:
+	//   "DAY_OF_MONTH"
+	//   "WEEK_OF_MONTH"
 	RunsOnDayOfMonth string `json:"runsOnDayOfMonth,omitempty"`
 
 	// StartDate: Start date of date range for which scheduled reports
@@ -5063,6 +5443,10 @@ type Site struct {
 
 type SiteContact struct {
 	// ContactType: Site contact type.
+	//
+	// Possible values:
+	//   "SALES_PERSON"
+	//   "TRAFFICKER"
 	ContactType string `json:"contactType,omitempty"`
 
 	// Email: Email address of this site contact. This is a required field.
@@ -5151,6 +5535,10 @@ type SortedDimension struct {
 	Name string `json:"name,omitempty"`
 
 	// SortOrder: An optional sort order for the dimension column.
+	//
+	// Possible values:
+	//   "ASCENDING"
+	//   "DESCENDING"
 	SortOrder string `json:"sortOrder,omitempty"`
 }
 
@@ -5200,6 +5588,21 @@ type TagData struct {
 	CreativeId int64 `json:"creativeId,omitempty,string"`
 
 	// Format: TagData tag format of this tag.
+	//
+	// Possible values:
+	//   "PLACEMENT_TAG_CLICK_COMMANDS"
+	//   "PLACEMENT_TAG_IFRAME_ILAYER"
+	//   "PLACEMENT_TAG_IFRAME_JAVASCRIPT"
+	//   "PLACEMENT_TAG_INSTREAM_VIDEO_PREFETCH"
+	//   "PLACEMENT_TAG_INTERNAL_REDIRECT"
+	//   "PLACEMENT_TAG_INTERSTITIAL_IFRAME_JAVASCRIPT"
+	//   "PLACEMENT_TAG_INTERSTITIAL_INTERNAL_REDIRECT"
+	//   "PLACEMENT_TAG_INTERSTITIAL_JAVASCRIPT"
+	//   "PLACEMENT_TAG_JAVASCRIPT"
+	//   "PLACEMENT_TAG_STANDARD"
+	//   "PLACEMENT_TAG_TRACKING"
+	//   "PLACEMENT_TAG_TRACKING_IFRAME"
+	//   "PLACEMENT_TAG_TRACKING_JAVASCRIPT"
 	Format string `json:"format,omitempty"`
 
 	// ImpressionTag: Tag string for serving an ad.
@@ -5225,6 +5628,11 @@ type TagSetting struct {
 	// tags. This setting can be used to specify whether keyword
 	// placeholders are inserted in placement tags for this site. Publishers
 	// can then add keywords to those placeholders.
+	//
+	// Possible values:
+	//   "GENERATE_SEPARATE_TAG_FOR_EACH_KEYWORD"
+	//   "IGNORE"
+	//   "PLACEHOLDER_WITH_LIST_OF_KEYWORDS"
 	KeywordOption string `json:"keywordOption,omitempty"`
 }
 
@@ -5242,6 +5650,11 @@ type TargetWindow struct {
 
 	// TargetWindowOption: Type of browser window for which the backup image
 	// of the flash creative can be displayed.
+	//
+	// Possible values:
+	//   "CURRENT_WINDOW"
+	//   "CUSTOM"
+	//   "NEW_WINDOW"
 	TargetWindowOption string `json:"targetWindowOption,omitempty"`
 }
 
@@ -5289,6 +5702,25 @@ type TechnologyTargeting struct {
 type ThirdPartyTrackingUrl struct {
 	// ThirdPartyUrlType: Third-party URL type for in-stream video
 	// creatives.
+	//
+	// Possible values:
+	//   "CLICK_TRACKING"
+	//   "IMPRESSION"
+	//   "RICH_MEDIA_BACKUP_IMPRESSION"
+	//   "RICH_MEDIA_IMPRESSION"
+	//   "RICH_MEDIA_RM_IMPRESSION"
+	//   "SURVEY"
+	//   "VIDEO_COMPLETE"
+	//   "VIDEO_CUSTOM"
+	//   "VIDEO_FIRST_QUARTILE"
+	//   "VIDEO_FULLSCREEN"
+	//   "VIDEO_MIDPOINT"
+	//   "VIDEO_MUTE"
+	//   "VIDEO_PAUSE"
+	//   "VIDEO_REWIND"
+	//   "VIDEO_START"
+	//   "VIDEO_STOP"
+	//   "VIDEO_THIRD_QUARTILE"
 	ThirdPartyUrlType string `json:"thirdPartyUrlType,omitempty"`
 
 	// Url: URL for the specified third-party URL type.
@@ -5297,6 +5729,10 @@ type ThirdPartyTrackingUrl struct {
 
 type UserDefinedVariableConfiguration struct {
 	// DataType: Data type for the variable. This is a required field.
+	//
+	// Possible values:
+	//   "NUMBER"
+	//   "STRING"
 	DataType string `json:"dataType,omitempty"`
 
 	// ReportName: User-friendly name for the variable which will appear in
@@ -5305,6 +5741,108 @@ type UserDefinedVariableConfiguration struct {
 	ReportName string `json:"reportName,omitempty"`
 
 	// VariableType: Variable name in the tag. This is a required field.
+	//
+	// Possible values:
+	//   "U1"
+	//   "U10"
+	//   "U100"
+	//   "U11"
+	//   "U12"
+	//   "U13"
+	//   "U14"
+	//   "U15"
+	//   "U16"
+	//   "U17"
+	//   "U18"
+	//   "U19"
+	//   "U2"
+	//   "U20"
+	//   "U21"
+	//   "U22"
+	//   "U23"
+	//   "U24"
+	//   "U25"
+	//   "U26"
+	//   "U27"
+	//   "U28"
+	//   "U29"
+	//   "U3"
+	//   "U30"
+	//   "U31"
+	//   "U32"
+	//   "U33"
+	//   "U34"
+	//   "U35"
+	//   "U36"
+	//   "U37"
+	//   "U38"
+	//   "U39"
+	//   "U4"
+	//   "U40"
+	//   "U41"
+	//   "U42"
+	//   "U43"
+	//   "U44"
+	//   "U45"
+	//   "U46"
+	//   "U47"
+	//   "U48"
+	//   "U49"
+	//   "U5"
+	//   "U50"
+	//   "U51"
+	//   "U52"
+	//   "U53"
+	//   "U54"
+	//   "U55"
+	//   "U56"
+	//   "U57"
+	//   "U58"
+	//   "U59"
+	//   "U6"
+	//   "U60"
+	//   "U61"
+	//   "U62"
+	//   "U63"
+	//   "U64"
+	//   "U65"
+	//   "U66"
+	//   "U67"
+	//   "U68"
+	//   "U69"
+	//   "U7"
+	//   "U70"
+	//   "U71"
+	//   "U72"
+	//   "U73"
+	//   "U74"
+	//   "U75"
+	//   "U76"
+	//   "U77"
+	//   "U78"
+	//   "U79"
+	//   "U8"
+	//   "U80"
+	//   "U81"
+	//   "U82"
+	//   "U83"
+	//   "U84"
+	//   "U85"
+	//   "U86"
+	//   "U87"
+	//   "U88"
+	//   "U89"
+	//   "U9"
+	//   "U90"
+	//   "U91"
+	//   "U92"
+	//   "U93"
+	//   "U94"
+	//   "U95"
+	//   "U96"
+	//   "U97"
+	//   "U98"
+	//   "U99"
 	VariableType string `json:"variableType,omitempty"`
 }
 
@@ -5388,6 +5926,13 @@ type UserRole struct {
 
 type UserRolePermission struct {
 	// Availability: Levels of availability for a user role permission.
+	//
+	// Possible values:
+	//   "ACCOUNT_ALWAYS"
+	//   "ACCOUNT_BY_DEFAULT"
+	//   "NOT_AVAILABLE_BY_DEFAULT"
+	//   "SUBACCOUNT_AND_ACCOUNT_ALWAYS"
+	//   "SUBACCOUNT_AND_ACCOUNT_BY_DEFAULT"
 	Availability string `json:"availability,omitempty"`
 
 	// Id: ID of this user role permission.

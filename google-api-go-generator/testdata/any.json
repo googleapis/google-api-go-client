@@ -214,6 +214,7 @@
     "severity": {
      "type": "string",
      "description": "The severity of the log entry.",
+     "default": "EMERGENCY",
      "enum": [
       "DEFAULT",
       "DEBUG",

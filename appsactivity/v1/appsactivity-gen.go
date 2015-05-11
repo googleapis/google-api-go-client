@@ -122,6 +122,19 @@ type Event struct {
 	PermissionChanges []*PermissionChange `json:"permissionChanges,omitempty"`
 
 	// PrimaryEventType: The main type of event that occurred.
+	//
+	// Possible values:
+	//   "comment"
+	//   "create"
+	//   "edit"
+	//   "emptyTrash"
+	//   "move"
+	//   "permissionChange"
+	//   "rename"
+	//   "trash"
+	//   "unknown"
+	//   "untrash"
+	//   "upload"
 	PrimaryEventType string `json:"primaryEventType,omitempty"`
 
 	// Rename: Extra information for rename type events, such as the old and
@@ -174,9 +187,21 @@ type Permission struct {
 
 	// Role: Indicates the Google Drive permissions role. The role
 	// determines a user's ability to read, write, or comment on the file.
+	//
+	// Possible values:
+	//   "commenter"
+	//   "owner"
+	//   "reader"
+	//   "writer"
 	Role string `json:"role,omitempty"`
 
 	// Type: Indicates how widely permissions are granted.
+	//
+	// Possible values:
+	//   "anyone"
+	//   "domain"
+	//   "group"
+	//   "user"
 	Type string `json:"type,omitempty"`
 
 	// User: The user's information if the type is USER.

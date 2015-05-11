@@ -274,6 +274,17 @@ type LogEntryMetadata struct {
 	ServiceName string `json:"serviceName,omitempty"`
 
 	// Severity: The severity of the log entry.
+	//
+	// Possible values:
+	//   "DEFAULT"
+	//   "DEBUG"
+	//   "INFO"
+	//   "NOTICE"
+	//   "WARNING"
+	//   "ERROR"
+	//   "CRITICAL"
+	//   "ALERT"
+	//   "EMERGENCY" (default)
 	Severity string `json:"severity,omitempty"`
 
 	// Timestamp: The time the event described by the log entry occurred.

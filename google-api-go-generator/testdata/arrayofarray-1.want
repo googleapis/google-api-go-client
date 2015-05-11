@@ -65,5 +65,8 @@ type GeoJsonMultiPolygon struct {
 	Coordinates [][][][]float64 `json:"coordinates,omitempty"`
 
 	// Type: Identifies this object as a multi-polygon.
+	//
+	// Possible values:
+	//   "MultiPolygon"
 	Type string `json:"type,omitempty"`
 }

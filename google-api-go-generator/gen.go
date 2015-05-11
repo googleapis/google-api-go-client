@@ -619,8 +619,16 @@ func (p *Property) APIName() string {
 	return p.apiName
 }
 
+func (p *Property) Default() string {
+	return jstr(p.m, "default")
+}
+
 func (p *Property) Description() string {
 	return jstr(p.m, "description")
+}
+
+func (p *Property) Enum() []string {
+	return jstrlist(p.m, "enum")
 }
 
 type Type struct {
@@ -1043,6 +1051,18 @@ func (s *Schema) writeSchemaStruct(api *API) {
 		pname := p.GoName()
 		if des := p.Description(); des != "" {
 			s.api.p("%s", asComment("\t", fmt.Sprintf("%s: %s", pname, des)))
+			if enum := p.Enum(); enum != nil {
+				s.api.p("\t//\n") // blank comment line
+				s.api.p("%s", asComment("\t", "Possible values:"))
+				defval := p.Default()
+				for _, v := range enum {
+					more := ""
+					if v == defval {
+						more = " (default)"
+					}
+					s.api.p("%s", asComment("\t", `  "`+v+`"`+more))
+				}
+			}
 		}
 		var extraOpt string
 		if p.Type().isIntAsString() {

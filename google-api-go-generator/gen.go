@@ -1685,13 +1685,14 @@ func (a *arguments) String() string {
 func asComment(pfx, c string) string {
 	var buf bytes.Buffer
 	const maxLen = 70
-	removeNewlines := func(s string) string {
-		return strings.Replace(s, "\n", "\n"+pfx+"// ", -1)
+	removeStuff := func(s string) string {
+		r := strings.NewReplacer("\n", "\n"+pfx+"// ", "`\"", `"`, "\"`", `"`)
+		return r.Replace(s)
 	}
 	for len(c) > 0 {
 		line := c
 		if len(line) < maxLen {
-			fmt.Fprintf(&buf, "%s// %s\n", pfx, removeNewlines(line))
+			fmt.Fprintf(&buf, "%s// %s\n", pfx, removeStuff(line))
 			break
 		}
 		line = line[:maxLen]
@@ -1702,7 +1703,7 @@ func asComment(pfx, c string) string {
 		if si != -1 {
 			line = line[:si]
 		}
-		fmt.Fprintf(&buf, "%s// %s\n", pfx, removeNewlines(line))
+		fmt.Fprintf(&buf, "%s// %s\n", pfx, removeStuff(line))
 		c = c[len(line):]
 		if si != -1 {
 			c = c[1:]

@@ -108,6 +108,9 @@ type BeginTransactionRequest struct {
 	// can request to be made serializable which means that another
 	// transaction cannot concurrently modify the data that is read or
 	// modified by this transaction.
+	// Possible enum values:
+	//   "SERIALIZABLE"
+	//   "SNAPSHOT"
 	IsolationLevel string `json:"isolationLevel,omitempty"`
 }
 
@@ -123,6 +126,9 @@ type CommitRequest struct {
 
 	// Mode: The type of commit to perform. Either TRANSACTIONAL or
 	// NON_TRANSACTIONAL.
+	// Possible enum values:
+	//   "NON_TRANSACTIONAL"
+	//   "TRANSACTIONAL"
 	Mode string `json:"mode,omitempty"`
 
 	// Mutation: The mutation to perform. Optional.
@@ -147,6 +153,8 @@ type CompositeFilter struct {
 
 	// Operator: The operator for combining multiple filters. Only "and" is
 	// currently supported.
+	// Possible enum values:
+	//   "AND"
 	Operator string `json:"operator,omitempty"`
 }
 
@@ -370,6 +378,8 @@ type PropertyExpression struct {
 	// property. Must then be set on all properties in the projection that
 	// are not being grouped by. Aggregation functions: first selects the
 	// first result as determined by the query's order.
+	// Possible enum values:
+	//   "FIRST"
 	AggregationFunction string `json:"aggregationFunction,omitempty"`
 
 	// Property: The property to project.
@@ -380,6 +390,13 @@ type PropertyFilter struct {
 	// Operator: The operator to filter by. One of lessThan,
 	// lessThanOrEqual, greaterThan, greaterThanOrEqual, equal, or
 	// hasAncestor.
+	// Possible enum values:
+	//   "EQUAL"
+	//   "GREATER_THAN"
+	//   "GREATER_THAN_OR_EQUAL"
+	//   "HAS_ANCESTOR"
+	//   "LESS_THAN"
+	//   "LESS_THAN_OR_EQUAL"
 	Operator string `json:"operator,omitempty"`
 
 	// Property: The property to filter by.
@@ -392,6 +409,9 @@ type PropertyFilter struct {
 type PropertyOrder struct {
 	// Direction: The direction to order by. One of ascending or descending.
 	// Optional, defaults to ascending.
+	// Possible enum values:
+	//   "ASCENDING"
+	//   "DESCENDING"
 	Direction string `json:"direction,omitempty"`
 
 	// Property: The property to order by.
@@ -449,6 +469,10 @@ type QueryResultBatch struct {
 	// EntityResultType: The result type for every entity in entityResults.
 	// full for full entities, projection for entities with only projected
 	// properties, keyOnly for entities with only a key.
+	// Possible enum values:
+	//   "FULL"
+	//   "KEY_ONLY"
+	//   "PROJECTION"
 	EntityResultType string `json:"entityResultType,omitempty"`
 
 	// EntityResults: The results for this batch.
@@ -456,6 +480,10 @@ type QueryResultBatch struct {
 
 	// MoreResults: The state of the query after the current batch. One of
 	// notFinished, moreResultsAfterLimit, noMoreResults.
+	// Possible enum values:
+	//   "MORE_RESULTS_AFTER_LIMIT"
+	//   "NOT_FINISHED"
+	//   "NO_MORE_RESULTS"
 	MoreResults string `json:"moreResults,omitempty"`
 
 	// SkippedResults: The number of results skipped because of
@@ -468,6 +496,10 @@ type ReadOptions struct {
 	// or eventual. Cannot be set when transaction is set. Lookup and
 	// ancestor queries default to strong, global queries default to
 	// eventual and cannot be set to strong. Optional. Default is default.
+	// Possible enum values:
+	//   "DEFAULT"
+	//   "EVENTUAL"
+	//   "STRONG"
 	ReadConsistency string `json:"readConsistency,omitempty"`
 
 	// Transaction: The transaction to use. Optional.

@@ -143,6 +143,9 @@ type Change struct {
 	StartTime string `json:"startTime,omitempty"`
 
 	// Status: Status of the operation (output only).
+	// Possible enum values:
+	//   "done"
+	//   "pending"
 	Status string `json:"status,omitempty"`
 }
 

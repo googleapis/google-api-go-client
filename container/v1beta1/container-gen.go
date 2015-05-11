@@ -226,6 +226,11 @@ type Cluster struct {
 	ServicesIpv4Cidr string `json:"servicesIpv4Cidr,omitempty"`
 
 	// Status: [Output only] The current status of this cluster.
+	// Possible enum values:
+	//   "error"
+	//   "provisioning"
+	//   "running"
+	//   "stopping"
 	Status string `json:"status,omitempty"`
 
 	// StatusMessage: [Output only] Additional information about the current
@@ -319,12 +324,19 @@ type Operation struct {
 	Name string `json:"name,omitempty"`
 
 	// OperationType: The operation type.
+	// Possible enum values:
+	//   "createCluster"
+	//   "deleteCluster"
 	OperationType string `json:"operationType,omitempty"`
 
 	// SelfLink: Server-defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// Status: The current status of the operation.
+	// Possible enum values:
+	//   "done"
+	//   "pending"
+	//   "running"
 	Status string `json:"status,omitempty"`
 
 	// Target: [Optional] The URL of the cluster resource that this

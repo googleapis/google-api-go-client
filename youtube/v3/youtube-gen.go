@@ -480,6 +480,9 @@ type ActivityContentDetailsPromotedItem struct {
 
 	// CtaType: The type of call-to-action, a message to the user indicating
 	// action that can be taken.
+	// Possible enum values:
+	//   "unspecified"
+	//   "visitAdvertiserSite"
 	CtaType string `json:"ctaType,omitempty"`
 
 	// CustomCtaButtonText: The custom call-to-action button text. If
@@ -510,6 +513,11 @@ type ActivityContentDetailsPromotedItem struct {
 
 type ActivityContentDetailsRecommendation struct {
 	// Reason: The reason that the resource is recommended to the user.
+	// Possible enum values:
+	//   "unspecified"
+	//   "videoFavorited"
+	//   "videoLiked"
+	//   "videoWatched"
 	Reason string `json:"reason,omitempty"`
 
 	// ResourceId: The resourceId object contains information that
@@ -536,6 +544,11 @@ type ActivityContentDetailsSocial struct {
 	ResourceId *ResourceId `json:"resourceId,omitempty"`
 
 	// Type: The name of the social network.
+	// Possible enum values:
+	//   "facebook"
+	//   "googlePlus"
+	//   "twitter"
+	//   "unspecified"
 	Type string `json:"type,omitempty"`
 }
 
@@ -619,6 +632,18 @@ type ActivitySnippet struct {
 	Title string `json:"title,omitempty"`
 
 	// Type: The type of activity that the resource describes.
+	// Possible enum values:
+	//   "bulletin"
+	//   "channelItem"
+	//   "comment"
+	//   "favorite"
+	//   "like"
+	//   "playlistItem"
+	//   "promotedItem"
+	//   "recommendation"
+	//   "social"
+	//   "subscription"
+	//   "upload"
 	Type string `json:"type,omitempty"`
 }
 
@@ -659,11 +684,20 @@ type CaptionListResponse struct {
 type CaptionSnippet struct {
 	// AudioTrackType: The type of audio track associated with the caption
 	// track.
+	// Possible enum values:
+	//   "commentary"
+	//   "descriptive"
+	//   "primary"
+	//   "unknown"
 	AudioTrackType string `json:"audioTrackType,omitempty"`
 
 	// FailureReason: The reason that YouTube failed to process the caption
 	// track. This property is only present if the state property's value is
 	// failed.
+	// Possible enum values:
+	//   "processingFailed"
+	//   "unknownFormat"
+	//   "unsupportedFormat"
 	FailureReason string `json:"failureReason,omitempty"`
 
 	// IsAutoSynced: Indicates whether YouTube synchronized the caption
@@ -708,9 +742,17 @@ type CaptionSnippet struct {
 	Name string `json:"name,omitempty"`
 
 	// Status: The caption track's status.
+	// Possible enum values:
+	//   "failed"
+	//   "serving"
+	//   "syncing"
 	Status string `json:"status,omitempty"`
 
 	// TrackKind: The caption track's type.
+	// Possible enum values:
+	//   "ASR"
+	//   "forced"
+	//   "standard"
 	TrackKind string `json:"trackKind,omitempty"`
 
 	// VideoId: The ID that YouTube uses to uniquely identify the video
@@ -730,6 +772,9 @@ type CdnSettings struct {
 
 	// IngestionType: The method or protocol used to transmit the video
 	// stream.
+	// Possible enum values:
+	//   "dash"
+	//   "rtmp"
 	IngestionType string `json:"ingestionType,omitempty"`
 }
 
@@ -884,6 +929,10 @@ type ChannelContentOwnerDetails struct {
 
 type ChannelConversionPing struct {
 	// Context: Defines the context of the ping.
+	// Possible enum values:
+	//   "cview"
+	//   "subscribe"
+	//   "unsubscribe"
 	Context string `json:"context,omitempty"`
 
 	// ConversionUrl: The url (without the schema) that the player shall
@@ -1026,6 +1075,10 @@ type ChannelSectionSnippet struct {
 	Position int64 `json:"position,omitempty"`
 
 	// Style: The style of the channel section.
+	// Possible enum values:
+	//   "channelsectionStyleUndefined"
+	//   "horizontalRow"
+	//   "verticalList"
 	Style string `json:"style,omitempty"`
 
 	// Title: The channel section's title for multiple_playlists and
@@ -1033,6 +1086,24 @@ type ChannelSectionSnippet struct {
 	Title string `json:"title,omitempty"`
 
 	// Type: The type of the channel section.
+	// Possible enum values:
+	//   "allPlaylists"
+	//   "channelsectionTypeUndefined"
+	//   "completedEvents"
+	//   "likedPlaylists"
+	//   "likes"
+	//   "liveEvents"
+	//   "multipleChannels"
+	//   "multiplePlaylists"
+	//   "popularUploads"
+	//   "postedPlaylists"
+	//   "postedVideos"
+	//   "recentActivity"
+	//   "recentPosts"
+	//   "recentUploads"
+	//   "singlePlaylist"
+	//   "subscriptions"
+	//   "upcomingEvents"
 	Type string `json:"type,omitempty"`
 }
 
@@ -1150,9 +1221,18 @@ type ChannelStatus struct {
 	IsLinked bool `json:"isLinked,omitempty"`
 
 	// LongUploadsStatus: The long uploads status of this channel. See
+	// Possible enum values:
+	//   "allowed"
+	//   "disallowed"
+	//   "eligible"
+	//   "longUploadsUnspecified"
 	LongUploadsStatus string `json:"longUploadsStatus,omitempty"`
 
 	// PrivacyStatus: Privacy status of the channel.
+	// Possible enum values:
+	//   "private"
+	//   "public"
+	//   "unlisted"
 	PrivacyStatus string `json:"privacyStatus,omitempty"`
 }
 
@@ -1236,6 +1316,11 @@ type CommentSnippet struct {
 
 	// ModerationStatus: The comment's moderation status. Will not be set if
 	// the comments were requested through the id filter.
+	// Possible enum values:
+	//   "heldForReview"
+	//   "likelySpam"
+	//   "published"
+	//   "rejected"
 	ModerationStatus string `json:"moderationStatus,omitempty"`
 
 	// ParentId: The unique id of the parent comment, only set for replies.
@@ -1268,6 +1353,11 @@ type CommentSnippet struct {
 	// ViewerRating: The rating the viewer has given to this comment. For
 	// the time being this will never return RATE_TYPE_DISLIKE and instead
 	// return RATE_TYPE_NONE. This may change in the future.
+	// Possible enum values:
+	//   "dislike"
+	//   "like"
+	//   "none"
+	//   "unspecified"
 	ViewerRating string `json:"viewerRating,omitempty"`
 }
 
@@ -1355,227 +1445,691 @@ type CommentThreadSnippet struct {
 type ContentRating struct {
 	// AcbRating: Rating system in Australia - Australian Classification
 	// Board
+	// Possible enum values:
+	//   "acbC"
+	//   "acbE"
+	//   "acbG"
+	//   "acbM"
+	//   "acbMa15plus"
+	//   "acbP"
+	//   "acbPg"
+	//   "acbR18plus"
+	//   "acbUnrated"
 	AcbRating string `json:"acbRating,omitempty"`
 
 	// AgcomRating: Rating system for Italy - Autorit� per le Garanzie
 	// nelle Comunicazioni
+	// Possible enum values:
+	//   "agcomT"
+	//   "agcomUnrated"
+	//   "agcomVm14"
+	//   "agcomVm18"
 	AgcomRating string `json:"agcomRating,omitempty"`
 
 	// AnatelRating: Rating system for Chile - Asociaci�n Nacional de
 	// Televisi�n
+	// Possible enum values:
+	//   "anatelA"
+	//   "anatelF"
+	//   "anatelI"
+	//   "anatelI10"
+	//   "anatelI12"
+	//   "anatelI7"
+	//   "anatelR"
+	//   "anatelUnrated"
 	AnatelRating string `json:"anatelRating,omitempty"`
 
 	// BbfcRating: British Board of Film Classification
+	// Possible enum values:
+	//   "bbfc12"
+	//   "bbfc12a"
+	//   "bbfc15"
+	//   "bbfc18"
+	//   "bbfcPg"
+	//   "bbfcR18"
+	//   "bbfcU"
+	//   "bbfcUnrated"
 	BbfcRating string `json:"bbfcRating,omitempty"`
 
 	// BfvcRating: Rating system for Thailand - Board of Filmand Video
 	// Censors
+	// Possible enum values:
+	//   "bfvc13"
+	//   "bfvc15"
+	//   "bfvc18"
+	//   "bfvc20"
+	//   "bfvcB"
+	//   "bfvcE"
+	//   "bfvcG"
+	//   "bfvcUnrated"
 	BfvcRating string `json:"bfvcRating,omitempty"`
 
 	// BmukkRating: Rating system for Austria - Bundesministeriums f�r
 	// Unterricht, Kunst und Kultur!
+	// Possible enum values:
+	//   "bmukk10"
+	//   "bmukk12"
+	//   "bmukk14"
+	//   "bmukk16"
+	//   "bmukk6"
+	//   "bmukk8"
+	//   "bmukkAa"
+	//   "bmukkUnrated"
 	BmukkRating string `json:"bmukkRating,omitempty"`
 
 	// CatvRating: Rating system for Canadian TV - Canadian TV
 	// Classification System
+	// Possible enum values:
+	//   "catv14plus"
+	//   "catv18plus"
+	//   "catvC"
+	//   "catvC8"
+	//   "catvG"
+	//   "catvPg"
+	//   "catvUnrated"
 	CatvRating string `json:"catvRating,omitempty"`
 
 	// CatvfrRating: Rating system for French Canadian TV - Regie du cinema
+	// Possible enum values:
+	//   "catvfr13plus"
+	//   "catvfr16plus"
+	//   "catvfr18plus"
+	//   "catvfr8plus"
+	//   "catvfrG"
+	//   "catvfrUnrated"
 	CatvfrRating string `json:"catvfrRating,omitempty"`
 
 	// CbfcRating: Rating system in India - Central Board of Film
 	// Certification
+	// Possible enum values:
+	//   "cbfcA"
+	//   "cbfcS"
+	//   "cbfcU"
+	//   "cbfcUA"
+	//   "cbfcUnrated"
 	CbfcRating string `json:"cbfcRating,omitempty"`
 
 	// CccRating: Rating system for Chile - Consejo de Calificaci�n
 	// Cinematogr�fica
+	// Possible enum values:
+	//   "ccc14"
+	//   "ccc18"
+	//   "ccc18s"
+	//   "ccc18v"
+	//   "ccc6"
+	//   "cccTe"
+	//   "cccUnrated"
 	CccRating string `json:"cccRating,omitempty"`
 
 	// CceRating: Rating system for Portugal - Comiss�o de
 	// Classifica��o de Espect�culos
+	// Possible enum values:
+	//   "cceM12"
+	//   "cceM16"
+	//   "cceM18"
+	//   "cceM4"
+	//   "cceM6"
+	//   "cceUnrated"
 	CceRating string `json:"cceRating,omitempty"`
 
 	// ChfilmRating: Rating system for Switzerland - Switzerland Rating
 	// System
+	// Possible enum values:
+	//   "chfilm0"
+	//   "chfilm12"
+	//   "chfilm16"
+	//   "chfilm18"
+	//   "chfilm6"
+	//   "chfilmUnrated"
 	ChfilmRating string `json:"chfilmRating,omitempty"`
 
 	// ChvrsRating: Canadian Home Video Rating System
+	// Possible enum values:
+	//   "chvrs14a"
+	//   "chvrs18a"
+	//   "chvrsE"
+	//   "chvrsG"
+	//   "chvrsPg"
+	//   "chvrsR"
+	//   "chvrsUnrated"
 	ChvrsRating string `json:"chvrsRating,omitempty"`
 
 	// CicfRating: Rating system for Belgium - Belgium Rating System
+	// Possible enum values:
+	//   "cicfE"
+	//   "cicfKntEna"
+	//   "cicfKtEa"
+	//   "cicfUnrated"
 	CicfRating string `json:"cicfRating,omitempty"`
 
 	// CnaRating: Rating system for Romania - CONSILIUL NATIONAL AL
 	// AUDIOVIZUALULUI - CNA
+	// Possible enum values:
+	//   "cna12"
+	//   "cna15"
+	//   "cna18"
+	//   "cna18plus"
+	//   "cnaAp"
+	//   "cnaUnrated"
 	CnaRating string `json:"cnaRating,omitempty"`
 
 	// CsaRating: Rating system for France - Conseil sup�rieur de
 	// l?audiovisuel
+	// Possible enum values:
+	//   "csa10"
+	//   "csa12"
+	//   "csa16"
+	//   "csa18"
+	//   "csaInterdiction"
+	//   "csaUnrated"
 	CsaRating string `json:"csaRating,omitempty"`
 
 	// CscfRating: Rating system for Luxembourg - Commission de surveillance
 	// de la classification des films
+	// Possible enum values:
+	//   "cscf12"
+	//   "cscf16"
+	//   "cscf18"
+	//   "cscf6"
+	//   "cscfA"
+	//   "cscfUnrated"
 	CscfRating string `json:"cscfRating,omitempty"`
 
 	// CzfilmRating: Rating system for Czech republic - Czech republic
 	// Rating System
+	// Possible enum values:
+	//   "czfilm12"
+	//   "czfilm14"
+	//   "czfilm18"
+	//   "czfilmU"
+	//   "czfilmUnrated"
 	CzfilmRating string `json:"czfilmRating,omitempty"`
 
 	// DjctqRating: Rating system in Brazil - Department of Justice, Rating,
 	// Titles and Qualification
+	// Possible enum values:
+	//   "djctq10"
+	//   "djctq12"
+	//   "djctq14"
+	//   "djctq16"
+	//   "djctq18"
+	//   "djctqL"
+	//   "djctqUnrated"
 	DjctqRating string `json:"djctqRating,omitempty"`
 
 	DjctqRatingReasons []string `json:"djctqRatingReasons,omitempty"`
 
 	// EefilmRating: Rating system for Estonia - Estonia Rating System
+	// Possible enum values:
+	//   "eefilmK12"
+	//   "eefilmK14"
+	//   "eefilmK16"
+	//   "eefilmK6"
+	//   "eefilmL"
+	//   "eefilmMs12"
+	//   "eefilmMs6"
+	//   "eefilmPere"
+	//   "eefilmUnrated"
 	EefilmRating string `json:"eefilmRating,omitempty"`
 
 	// EgfilmRating: Rating system for Egypt - Egypt Rating System
+	// Possible enum values:
+	//   "egfilm18"
+	//   "egfilmBn"
+	//   "egfilmGn"
+	//   "egfilmUnrated"
 	EgfilmRating string `json:"egfilmRating,omitempty"`
 
 	// EirinRating: Rating system in Japan - Eiga Rinri Kanri Iinkai
+	// Possible enum values:
+	//   "eirinG"
+	//   "eirinPg12"
+	//   "eirinR15plus"
+	//   "eirinR18plus"
+	//   "eirinUnrated"
 	EirinRating string `json:"eirinRating,omitempty"`
 
 	// FcbmRating: Rating system for Malaysia - Film Censorship Board of
 	// Malaysia
+	// Possible enum values:
+	//   "fcbm18"
+	//   "fcbm18pa"
+	//   "fcbm18pl"
+	//   "fcbm18sg"
+	//   "fcbm18sx"
+	//   "fcbmP13"
+	//   "fcbmU"
+	//   "fcbmUnrated"
 	FcbmRating string `json:"fcbmRating,omitempty"`
 
 	// FcoRating: Rating system for Hong kong - Office for Film, Newspaper
 	// and Article Administration
+	// Possible enum values:
+	//   "fcoI"
+	//   "fcoIia"
+	//   "fcoIib"
+	//   "fcoIii"
+	//   "fcoUnrated"
 	FcoRating string `json:"fcoRating,omitempty"`
 
 	// FmocRating: Rating system in France - French Minister of Culture
+	// Possible enum values:
+	//   "fmoc10"
+	//   "fmoc12"
+	//   "fmoc16"
+	//   "fmoc18"
+	//   "fmocE"
+	//   "fmocU"
+	//   "fmocUnrated"
 	FmocRating string `json:"fmocRating,omitempty"`
 
 	// FpbRating: Rating system for South africa - Film & Publication Board
+	// Possible enum values:
+	//   "fpb1012Pg"
+	//   "fpb13"
+	//   "fpb16"
+	//   "fpb18"
+	//   "fpb79Pg"
+	//   "fpbA"
+	//   "fpbPg"
+	//   "fpbUnrated"
+	//   "fpbX18"
+	//   "fpbXx"
 	FpbRating string `json:"fpbRating,omitempty"`
 
 	// FskRating: Rating system in Germany - Voluntary Self Regulation of
 	// the Movie Industry
+	// Possible enum values:
+	//   "fsk0"
+	//   "fsk12"
+	//   "fsk16"
+	//   "fsk18"
+	//   "fsk6"
+	//   "fskUnrated"
 	FskRating string `json:"fskRating,omitempty"`
 
 	// GrfilmRating: Rating system for Greece - Greece Rating System
+	// Possible enum values:
+	//   "grfilmE"
+	//   "grfilmK"
+	//   "grfilmK13"
+	//   "grfilmK17"
+	//   "grfilmUnrated"
 	GrfilmRating string `json:"grfilmRating,omitempty"`
 
 	// IcaaRating: Rating system in Spain - Instituto de Cinematografia y de
 	// las Artes Audiovisuales
+	// Possible enum values:
+	//   "icaa12"
+	//   "icaa13"
+	//   "icaa16"
+	//   "icaa18"
+	//   "icaa7"
+	//   "icaaApta"
+	//   "icaaUnrated"
+	//   "icaaX"
 	IcaaRating string `json:"icaaRating,omitempty"`
 
 	// IfcoRating: Rating system in Ireland - Irish Film Classification
 	// Office
+	// Possible enum values:
+	//   "ifco12"
+	//   "ifco15"
+	//   "ifco18"
+	//   "ifcoG"
+	//   "ifcoPg"
+	//   "ifcoUnrated"
 	IfcoRating string `json:"ifcoRating,omitempty"`
 
 	// IlfilmRating: Rating system for Israel - Israel Rating System
+	// Possible enum values:
+	//   "ilfilm12"
+	//   "ilfilm16"
+	//   "ilfilm18"
+	//   "ilfilmAa"
+	//   "ilfilmUnrated"
 	IlfilmRating string `json:"ilfilmRating,omitempty"`
 
 	// IncaaRating: Rating system for Argentina - Instituto Nacional de Cine
 	// y Artes Audiovisuales
+	// Possible enum values:
+	//   "incaaAtp"
+	//   "incaaC"
+	//   "incaaSam13"
+	//   "incaaSam16"
+	//   "incaaSam18"
+	//   "incaaUnrated"
 	IncaaRating string `json:"incaaRating,omitempty"`
 
 	// KfcbRating: Rating system for Kenya - Kenya Film Classification Board
+	// Possible enum values:
+	//   "kfcb16plus"
+	//   "kfcbG"
+	//   "kfcbPg"
+	//   "kfcbR"
+	//   "kfcbUnrated"
 	KfcbRating string `json:"kfcbRating,omitempty"`
 
 	// KijkwijzerRating: Rating system for Netherlands - Nederlands
 	// Instituut voor de Classificatie van Audiovisuele Media
+	// Possible enum values:
+	//   "kijkwijzer12"
+	//   "kijkwijzer16"
+	//   "kijkwijzer6"
+	//   "kijkwijzer9"
+	//   "kijkwijzerAl"
+	//   "kijkwijzerUnrated"
 	KijkwijzerRating string `json:"kijkwijzerRating,omitempty"`
 
 	// KmrbRating: Rating system in South Korea - Korea Media Rating Board
+	// Possible enum values:
+	//   "kmrb12plus"
+	//   "kmrb15plus"
+	//   "kmrbAll"
+	//   "kmrbR"
+	//   "kmrbTeenr"
+	//   "kmrbUnrated"
 	KmrbRating string `json:"kmrbRating,omitempty"`
 
 	// LsfRating: Rating system for Indonesia - Lembaga Sensor Film
+	// Possible enum values:
+	//   "lsfA"
+	//   "lsfBo"
+	//   "lsfD"
+	//   "lsfR"
+	//   "lsfSu"
+	//   "lsfUnrated"
 	LsfRating string `json:"lsfRating,omitempty"`
 
 	// MccaaRating: Rating system for Malta - Film Age-Classification Board
+	// Possible enum values:
+	//   "mccaa12"
+	//   "mccaa12a"
+	//   "mccaa14"
+	//   "mccaa15"
+	//   "mccaa16"
+	//   "mccaa18"
+	//   "mccaaPg"
+	//   "mccaaU"
+	//   "mccaaUnrated"
 	MccaaRating string `json:"mccaaRating,omitempty"`
 
 	// MccypRating: Rating system for Denmark - The Media Council for
 	// Children and Young People
+	// Possible enum values:
+	//   "mccyp11"
+	//   "mccyp15"
+	//   "mccyp7"
+	//   "mccypA"
+	//   "mccypUnrated"
 	MccypRating string `json:"mccypRating,omitempty"`
 
 	// MdaRating: Rating system for Singapore - Media Development Authority
+	// Possible enum values:
+	//   "mdaG"
+	//   "mdaM18"
+	//   "mdaNc16"
+	//   "mdaPg"
+	//   "mdaPg13"
+	//   "mdaR21"
+	//   "mdaUnrated"
 	MdaRating string `json:"mdaRating,omitempty"`
 
 	// MedietilsynetRating: Rating system for Norway - Medietilsynet
+	// Possible enum values:
+	//   "medietilsynet11"
+	//   "medietilsynet15"
+	//   "medietilsynet18"
+	//   "medietilsynet7"
+	//   "medietilsynetA"
+	//   "medietilsynetUnrated"
 	MedietilsynetRating string `json:"medietilsynetRating,omitempty"`
 
 	// MekuRating: Rating system for Finland - Finnish Centre for Media
 	// Education and Audiovisual Media
+	// Possible enum values:
+	//   "meku12"
+	//   "meku16"
+	//   "meku18"
+	//   "meku7"
+	//   "mekuS"
+	//   "mekuUnrated"
 	MekuRating string `json:"mekuRating,omitempty"`
 
 	// MibacRating: Rating system in Italy - Ministero dei Beni e delle
 	// Attivita Culturali e del Turismo
+	// Possible enum values:
+	//   "mibacT"
+	//   "mibacUnrated"
+	//   "mibacVap"
+	//   "mibacVm12"
+	//   "mibacVm14"
+	//   "mibacVm18"
 	MibacRating string `json:"mibacRating,omitempty"`
 
 	// MocRating: Rating system for Colombia - MoC
+	// Possible enum values:
+	//   "moc12"
+	//   "moc15"
+	//   "moc18"
+	//   "moc7"
+	//   "mocBanned"
+	//   "mocE"
+	//   "mocT"
+	//   "mocUnrated"
+	//   "mocX"
 	MocRating string `json:"mocRating,omitempty"`
 
 	// MoctwRating: Rating system for Taiwan - Ministry of Culture - Tawan
+	// Possible enum values:
+	//   "moctwG"
+	//   "moctwP"
+	//   "moctwPg"
+	//   "moctwR"
+	//   "moctwUnrated"
 	MoctwRating string `json:"moctwRating,omitempty"`
 
 	// MpaaRating: Motion Picture Association of America rating for the
 	// content.
+	// Possible enum values:
+	//   "mpaaG"
+	//   "mpaaNc17"
+	//   "mpaaPg"
+	//   "mpaaPg13"
+	//   "mpaaR"
+	//   "mpaaUnrated"
 	MpaaRating string `json:"mpaaRating,omitempty"`
 
 	// MtrcbRating: Rating system for Philippines - MOVIE AND TELEVISION
 	// REVIEW AND CLASSIFICATION BOARD
+	// Possible enum values:
+	//   "mtrcbG"
+	//   "mtrcbPg"
+	//   "mtrcbR13"
+	//   "mtrcbR16"
+	//   "mtrcbR18"
+	//   "mtrcbUnrated"
+	//   "mtrcbX"
 	MtrcbRating string `json:"mtrcbRating,omitempty"`
 
 	// NbcRating: Rating system for Maldives - National Bureau of
 	// Classification
+	// Possible enum values:
+	//   "nbc12plus"
+	//   "nbc15plus"
+	//   "nbc18plus"
+	//   "nbc18plusr"
+	//   "nbcG"
+	//   "nbcPg"
+	//   "nbcPu"
+	//   "nbcUnrated"
 	NbcRating string `json:"nbcRating,omitempty"`
 
 	// NbcplRating: Rating system for Poland - National Broadcasting Council
+	// Possible enum values:
+	//   "nbcpl18plus"
+	//   "nbcplI"
+	//   "nbcplIi"
+	//   "nbcplIii"
+	//   "nbcplIv"
+	//   "nbcplUnrated"
 	NbcplRating string `json:"nbcplRating,omitempty"`
 
 	// NfrcRating: Rating system for Bulgaria - National Film Centre
+	// Possible enum values:
+	//   "nfrcA"
+	//   "nfrcB"
+	//   "nfrcC"
+	//   "nfrcD"
+	//   "nfrcUnrated"
+	//   "nfrcX"
 	NfrcRating string `json:"nfrcRating,omitempty"`
 
 	// NfvcbRating: Rating system for Nigeria - National Film and Video
 	// Censors Board
+	// Possible enum values:
+	//   "nfvcb12"
+	//   "nfvcb12a"
+	//   "nfvcb15"
+	//   "nfvcb18"
+	//   "nfvcbG"
+	//   "nfvcbPg"
+	//   "nfvcbRe"
+	//   "nfvcbUnrated"
 	NfvcbRating string `json:"nfvcbRating,omitempty"`
 
 	// NkclvRating: Rating system for Latvia - National Film Center of
 	// Latvia
+	// Possible enum values:
+	//   "nkclv12plus"
+	//   "nkclv18plus"
+	//   "nkclv7plus"
+	//   "nkclvU"
+	//   "nkclvUnrated"
 	NkclvRating string `json:"nkclvRating,omitempty"`
 
 	// OflcRating: Rating system in New Zealand - Office of Film and
 	// Literature Classification
+	// Possible enum values:
+	//   "oflcG"
+	//   "oflcM"
+	//   "oflcPg"
+	//   "oflcR13"
+	//   "oflcR15"
+	//   "oflcR16"
+	//   "oflcR18"
+	//   "oflcRp13"
+	//   "oflcRp16"
+	//   "oflcUnrated"
 	OflcRating string `json:"oflcRating,omitempty"`
 
 	// PefilmRating: Rating system for Peru - Peru Rating System
+	// Possible enum values:
+	//   "pefilm14"
+	//   "pefilm18"
+	//   "pefilmPg"
+	//   "pefilmPt"
+	//   "pefilmUnrated"
 	PefilmRating string `json:"pefilmRating,omitempty"`
 
 	// RcnofRating: Rating system for Hungary - Rating Committee of the
 	// National Office of Film
+	// Possible enum values:
+	//   "rcnofI"
+	//   "rcnofIi"
+	//   "rcnofIii"
+	//   "rcnofIv"
+	//   "rcnofUnrated"
+	//   "rcnofV"
+	//   "rcnofVi"
 	RcnofRating string `json:"rcnofRating,omitempty"`
 
 	// ResorteviolenciaRating: Rating system for Venezuela - SiBCI
+	// Possible enum values:
+	//   "resorteviolenciaA"
+	//   "resorteviolenciaB"
+	//   "resorteviolenciaC"
+	//   "resorteviolenciaD"
+	//   "resorteviolenciaE"
+	//   "resorteviolenciaUnrated"
 	ResorteviolenciaRating string `json:"resorteviolenciaRating,omitempty"`
 
 	// RtcRating: Rating system in Mexico - General Directorate of Radio,
 	// Television and Cinematography
+	// Possible enum values:
+	//   "rtcA"
+	//   "rtcAa"
+	//   "rtcB"
+	//   "rtcB15"
+	//   "rtcC"
+	//   "rtcD"
+	//   "rtcUnrated"
 	RtcRating string `json:"rtcRating,omitempty"`
 
 	// RteRating: Rating system for Ireland - Raidi� Teilif�s �ireann
+	// Possible enum values:
+	//   "rteCh"
+	//   "rteGa"
+	//   "rteMa"
+	//   "rtePs"
+	//   "rteUnrated"
 	RteRating string `json:"rteRating,omitempty"`
 
 	// RussiaRating: Rating system in Russia
+	// Possible enum values:
+	//   "russia0"
+	//   "russia12"
+	//   "russia16"
+	//   "russia18"
+	//   "russia6"
+	//   "russiaUnrated"
 	RussiaRating string `json:"russiaRating,omitempty"`
 
 	// SkfilmRating: Rating system for Slovakia - Slovakia Rating System
+	// Possible enum values:
+	//   "skfilmG"
+	//   "skfilmP2"
+	//   "skfilmP5"
+	//   "skfilmP8"
+	//   "skfilmUnrated"
 	SkfilmRating string `json:"skfilmRating,omitempty"`
 
 	// SmaisRating: Rating system for Iceland - SMAIS
+	// Possible enum values:
+	//   "smais12"
+	//   "smais14"
+	//   "smais16"
+	//   "smais18"
+	//   "smais7"
+	//   "smaisL"
+	//   "smaisUnrated"
 	SmaisRating string `json:"smaisRating,omitempty"`
 
 	// SmsaRating: Rating system for Sweden - Statens medier�d (National
 	// Media Council)
+	// Possible enum values:
+	//   "smsa11"
+	//   "smsa15"
+	//   "smsa7"
+	//   "smsaA"
+	//   "smsaUnrated"
 	SmsaRating string `json:"smsaRating,omitempty"`
 
 	// TvpgRating: TV Parental Guidelines rating of the content.
+	// Possible enum values:
+	//   "pg14"
+	//   "tvpgG"
+	//   "tvpgMa"
+	//   "tvpgPg"
+	//   "tvpgUnrated"
+	//   "tvpgY"
+	//   "tvpgY7"
+	//   "tvpgY7Fv"
 	TvpgRating string `json:"tvpgRating,omitempty"`
 
 	// YtRating: Internal YouTube rating.
+	// Possible enum values:
+	//   "ytAgeRestricted"
 	YtRating string `json:"ytRating,omitempty"`
 }
 
@@ -1865,9 +2419,16 @@ type InvideoBranding struct {
 type InvideoPosition struct {
 	// CornerPosition: Describes in which corner of the video the visual
 	// widget will appear.
+	// Possible enum values:
+	//   "bottomLeft"
+	//   "bottomRight"
+	//   "topLeft"
+	//   "topRight"
 	CornerPosition string `json:"cornerPosition,omitempty"`
 
 	// Type: Defines the position type.
+	// Possible enum values:
+	//   "corner"
 	Type string `json:"type,omitempty"`
 }
 
@@ -1908,6 +2469,9 @@ type InvideoTiming struct {
 	// the offsetMs field represents an offset from the start of the video.
 	// If the value is offsetFromEnd, then the offsetMs field represents an
 	// offset from the end of the video.
+	// Possible enum values:
+	//   "offsetFromEnd"
+	//   "offsetFromStart"
 	Type string `json:"type,omitempty"`
 }
 
@@ -2089,10 +2653,26 @@ type LiveBroadcastStatus struct {
 
 	// LifeCycleStatus: The broadcast's status. The status can be updated
 	// using the API's liveBroadcasts.transition method.
+	// Possible enum values:
+	//   "abandoned"
+	//   "complete"
+	//   "completeStarting"
+	//   "created"
+	//   "live"
+	//   "liveStarting"
+	//   "ready"
+	//   "reclaimed"
+	//   "revoked"
+	//   "testStarting"
+	//   "testing"
 	LifeCycleStatus string `json:"lifeCycleStatus,omitempty"`
 
 	// LiveBroadcastPriority: Priority of the live broadcast event (internal
 	// state).
+	// Possible enum values:
+	//   "high"
+	//   "low"
+	//   "normal"
 	LiveBroadcastPriority string `json:"liveBroadcastPriority,omitempty"`
 
 	// PrivacyStatus: The broadcast's privacy status. Note that the
@@ -2100,9 +2680,17 @@ type LiveBroadcastStatus struct {
 	// settings are identical to those supported for videos. In addition,
 	// you can set this field by modifying the broadcast resource or by
 	// setting the privacyStatus field of the corresponding video resource.
+	// Possible enum values:
+	//   "private"
+	//   "public"
+	//   "unlisted"
 	PrivacyStatus string `json:"privacyStatus,omitempty"`
 
 	// RecordingStatus: The broadcast's recording status.
+	// Possible enum values:
+	//   "notRecording"
+	//   "recorded"
+	//   "recording"
 	RecordingStatus string `json:"recordingStatus,omitempty"`
 }
 
@@ -2419,6 +3007,10 @@ type PlaylistItemSnippet struct {
 
 type PlaylistItemStatus struct {
 	// PrivacyStatus: This resource's privacy status.
+	// Possible enum values:
+	//   "private"
+	//   "public"
+	//   "unlisted"
 	PrivacyStatus string `json:"privacyStatus,omitempty"`
 }
 
@@ -2505,6 +3097,10 @@ type PlaylistSnippet struct {
 
 type PlaylistStatus struct {
 	// PrivacyStatus: The playlist's privacy status.
+	// Possible enum values:
+	//   "private"
+	//   "public"
+	//   "unlisted"
 	PrivacyStatus string `json:"privacyStatus,omitempty"`
 }
 
@@ -2534,6 +3130,10 @@ type PromotedItemId struct {
 	RecentlyUploadedBy string `json:"recentlyUploadedBy,omitempty"`
 
 	// Type: Describes the type of the promoted item.
+	// Possible enum values:
+	//   "recentUpload"
+	//   "video"
+	//   "website"
 	Type string `json:"type,omitempty"`
 
 	// VideoId: If the promoted item represents a video, this field
@@ -2641,6 +3241,10 @@ type SearchResultSnippet struct {
 	// LiveBroadcastContent: It indicates if the resource (video or channel)
 	// has upcoming/active live broadcast content. Or it's "none" if there
 	// is not any upcoming/active live broadcasts.
+	// Possible enum values:
+	//   "live"
+	//   "none"
+	//   "upcoming"
 	LiveBroadcastContent string `json:"liveBroadcastContent,omitempty"`
 
 	// PublishedAt: The creation date and time of the resource that the
@@ -2686,6 +3290,9 @@ type Subscription struct {
 type SubscriptionContentDetails struct {
 	// ActivityType: The type of activity this subscription is for (only
 	// uploads, everything).
+	// Possible enum values:
+	//   "all"
+	//   "uploads"
 	ActivityType string `json:"activityType,omitempty"`
 
 	// NewItemCount: The number of new items in the subscription since its
@@ -3001,6 +3608,11 @@ type VideoAgeGating struct {
 	Restricted bool `json:"restricted,omitempty"`
 
 	// VideoGameRating: Video game rating, if any.
+	// Possible enum values:
+	//   "anyone"
+	//   "m15Plus"
+	//   "m16Plus"
+	//   "m17Plus"
 	VideoGameRating string `json:"videoGameRating,omitempty"`
 }
 
@@ -3066,6 +3678,9 @@ type VideoCategorySnippet struct {
 type VideoContentDetails struct {
 	// Caption: The value of captions indicates whether the video has
 	// captions or not.
+	// Possible enum values:
+	//   "false"
+	//   "true"
 	Caption string `json:"caption,omitempty"`
 
 	// ContentRating: Specifies the ratings that the video received under
@@ -3079,6 +3694,9 @@ type VideoContentDetails struct {
 
 	// Definition: The value of definition indicates whether the video is
 	// available in high definition or only in standard definition.
+	// Possible enum values:
+	//   "hd"
+	//   "sd"
 	Definition string `json:"definition,omitempty"`
 
 	// Dimension: The value of dimension indicates whether the video is
@@ -3123,6 +3741,11 @@ type VideoContentDetailsRegionRestriction struct {
 
 type VideoConversionPing struct {
 	// Context: Defines the context of the ping.
+	// Possible enum values:
+	//   "comment"
+	//   "dislike"
+	//   "like"
+	//   "share"
 	Context string `json:"context,omitempty"`
 
 	// ConversionUrl: The url (without the schema) that the app shall send
@@ -3179,6 +3802,14 @@ type VideoFileDetails struct {
 	// processing engine. Currently, YouTube only processes video files, but
 	// this field is present whether a video file or another type of file
 	// was uploaded.
+	// Possible enum values:
+	//   "archive"
+	//   "audio"
+	//   "document"
+	//   "image"
+	//   "other"
+	//   "project"
+	//   "video"
 	FileType string `json:"fileType,omitempty"`
 
 	// RecordingLocation: Geographic coordinates that identify the place
@@ -3226,6 +3857,12 @@ type VideoFileDetailsVideoStream struct {
 
 	// Rotation: The amount that YouTube needs to rotate the original source
 	// content to properly display the video.
+	// Possible enum values:
+	//   "clockwise"
+	//   "counterClockwise"
+	//   "none"
+	//   "other"
+	//   "upsideDown"
 	Rotation string `json:"rotation,omitempty"`
 
 	// Vendor: A value that uniquely identifies a video vendor. Typically,
@@ -3357,6 +3994,11 @@ type VideoProcessingDetails struct {
 	// ProcessingFailureReason: The reason that YouTube failed to process
 	// the video. This property will only have a value if the
 	// processingStatus property's value is failed.
+	// Possible enum values:
+	//   "other"
+	//   "streamingFailed"
+	//   "transcodeFailed"
+	//   "uploadFailed"
 	ProcessingFailureReason string `json:"processingFailureReason,omitempty"`
 
 	// ProcessingIssuesAvailability: This value indicates whether the video
@@ -3376,6 +4018,11 @@ type VideoProcessingDetails struct {
 	// ProcessingStatus: The video's processing status. This value indicates
 	// whether YouTube was able to process the video or if the video is
 	// still being processed.
+	// Possible enum values:
+	//   "failed"
+	//   "processing"
+	//   "succeeded"
+	//   "terminated"
 	ProcessingStatus string `json:"processingStatus,omitempty"`
 
 	// TagSuggestionsAvailability: This value indicates whether keyword
@@ -3458,6 +4105,10 @@ type VideoSnippet struct {
 	// LiveBroadcastContent: Indicates if the video is an upcoming/active
 	// live broadcast. Or it's "none" if the video is not an upcoming/active
 	// live broadcast.
+	// Possible enum values:
+	//   "live"
+	//   "none"
+	//   "upcoming"
 	LiveBroadcastContent string `json:"liveBroadcastContent,omitempty"`
 
 	// Localized: Localized snippet selected with the hl parameter. If no
@@ -3511,12 +4162,26 @@ type VideoStatus struct {
 	// FailureReason: This value explains why a video failed to upload. This
 	// property is only present if the uploadStatus property indicates that
 	// the upload failed.
+	// Possible enum values:
+	//   "codec"
+	//   "conversion"
+	//   "emptyFile"
+	//   "invalidFile"
+	//   "tooSmall"
+	//   "uploadAborted"
 	FailureReason string `json:"failureReason,omitempty"`
 
 	// License: The video's license.
+	// Possible enum values:
+	//   "creativeCommon"
+	//   "youtube"
 	License string `json:"license,omitempty"`
 
 	// PrivacyStatus: The video's privacy status.
+	// Possible enum values:
+	//   "private"
+	//   "public"
+	//   "unlisted"
 	PrivacyStatus string `json:"privacyStatus,omitempty"`
 
 	// PublicStatsViewable: This value indicates if the extended video
@@ -3532,9 +4197,25 @@ type VideoStatus struct {
 	// RejectionReason: This value explains why YouTube rejected an uploaded
 	// video. This property is only present if the uploadStatus property
 	// indicates that the upload was rejected.
+	// Possible enum values:
+	//   "claim"
+	//   "copyright"
+	//   "duplicate"
+	//   "inappropriate"
+	//   "length"
+	//   "termsOfUse"
+	//   "trademark"
+	//   "uploaderAccountClosed"
+	//   "uploaderAccountSuspended"
 	RejectionReason string `json:"rejectionReason,omitempty"`
 
 	// UploadStatus: The status of the uploaded video.
+	// Possible enum values:
+	//   "deleted"
+	//   "failed"
+	//   "processed"
+	//   "rejected"
+	//   "uploaded"
 	UploadStatus string `json:"uploadStatus,omitempty"`
 }
 

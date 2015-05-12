@@ -195,6 +195,12 @@ func (r *UrlService) Get(shortUrl string) *UrlGetCall {
 
 // Projection sets the optional parameter "projection": Additional
 // information to return.
+//
+// Possible values:
+//   "ANALYTICS_CLICKS" - Returns only click counts.
+//   "ANALYTICS_TOP_STRINGS" - Returns only top string counts.
+//   "FULL" - Returns the creation timestamp and all available
+// analytics.
 func (c *UrlGetCall) Projection(projection string) *UrlGetCall {
 	c.opt_["projection"] = projection
 	return c
@@ -365,6 +371,10 @@ func (r *UrlService) List() *UrlListCall {
 
 // Projection sets the optional parameter "projection": Additional
 // information to return.
+//
+// Possible values:
+//   "ANALYTICS_CLICKS" - Returns short URL click counts.
+//   "FULL" - Returns short URL click counts.
 func (c *UrlListCall) Projection(projection string) *UrlListCall {
 	c.opt_["projection"] = projection
 	return c

@@ -619,16 +619,8 @@ func (p *Property) APIName() string {
 	return p.apiName
 }
 
-func (p *Property) Default() string {
-	return jstr(p.m, "default")
-}
-
 func (p *Property) Description() string {
 	return jstr(p.m, "description")
-}
-
-func (p *Property) Enum() []string {
-	return jstrlist(p.m, "enum")
 }
 
 type Type struct {
@@ -1051,18 +1043,7 @@ func (s *Schema) writeSchemaStruct(api *API) {
 		pname := p.GoName()
 		if des := p.Description(); des != "" {
 			s.api.p("%s", asComment("\t", fmt.Sprintf("%s: %s", pname, des)))
-			if enum := p.Enum(); enum != nil {
-				s.api.p("\t//\n") // blank comment line
-				s.api.p("%s", asComment("\t", "Possible values:"))
-				defval := p.Default()
-				for _, v := range enum {
-					more := ""
-					if v == defval {
-						more = " (default)"
-					}
-					s.api.p("%s", asComment("\t", `  "`+v+`"`+more))
-				}
-			}
+			addEnumComments(s.api.p, p.m, "\t")
 		}
 		var extraOpt string
 		if p.Type().isIntAsString() {
@@ -1314,6 +1295,7 @@ func (meth *Method) generateCode() {
 		des = strings.Replace(des, "Optional.", "", 1)
 		des = strings.TrimSpace(des)
 		p("\n%s", asComment("", fmt.Sprintf("%s sets the optional parameter %q: %s", setter, opt.name, des)))
+		addEnumComments(p, opt.m, "")
 		np := new(namePool)
 		np.Get("c") // take the receiver's name
 		paramName := np.Get(validGoIdentifer(opt.name))
@@ -1889,4 +1871,23 @@ func jstrlist(m map[string]interface{}, key string) []string {
 		sl = append(sl, si.(string))
 	}
 	return sl
+}
+
+func addEnumComments(p func(format string, args ...interface{}), m map[string]interface{}, indent string) {
+	if enum := jstrlist(m, "enum"); enum != nil {
+		desc := jstrlist(m, "enumDescriptions")
+		p(indent + "//\n") // blank comment line
+		p("%s", asComment(indent, "Possible values:"))
+		defval := jstr(m, "default")
+		for i, v := range enum {
+			more := ""
+			if len(desc) > i && desc[i] != "" {
+				more = " - " + desc[i]
+			}
+			if v == defval {
+				more = more + " (default)"
+			}
+			p("%s", asComment(indent, `  "`+v+`"`+more))
+		}
+	}
 }

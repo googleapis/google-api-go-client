@@ -196,6 +196,10 @@ func (c *ActivitiesListCall) ActorIpAddress(actorIpAddress string) *ActivitiesLi
 }
 
 // Caller sets the optional parameter "caller": Type of the caller.
+//
+// Possible values:
+//   "application_owner" - Caller is an application owner.
+//   "customer" - Caller is a customer.
 func (c *ActivitiesListCall) Caller(caller string) *ActivitiesListCall {
 	c.opt_["caller"] = caller
 	return c

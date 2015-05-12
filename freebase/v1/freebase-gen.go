@@ -334,6 +334,13 @@ func (c *SearchCall) Domain(domain string) *SearchCall {
 
 // Encode sets the optional parameter "encode": The encoding of the
 // response. You can use this parameter to enable html encoding.
+//
+// Possible values:
+//   "html" - Encode certain characters in the response (such as tags
+// and ambersands) using html encoding.
+//   "off" - No encoding of the response. You should not print the
+// results directly on an web page without html-escaping the content
+// first. (default)
 func (c *SearchCall) Encode(encode string) *SearchCall {
 	c.opt_["encode"] = encode
 	return c
@@ -355,6 +362,15 @@ func (c *SearchCall) Filter(filter string) *SearchCall {
 
 // Format sets the optional parameter "format": Structural format of the
 // json response.
+//
+// Possible values:
+//   "ac" - Compact format useful for autocomplete/suggest UIs.
+//   "classic" - [DEPRECATED] Same format as was returned by
+// api.freebase.com.
+//   "entity" - Basic information about the entities. (default)
+//   "guids" - [DEPRECATED] Ordered list of a freebase guids.
+//   "ids" - Ordered list of freebase ids.
+//   "mids" - Ordered list of freebase mids.
 func (c *SearchCall) Format(format string) *SearchCall {
 	c.opt_["format"] = format
 	return c
@@ -362,6 +378,13 @@ func (c *SearchCall) Format(format string) *SearchCall {
 
 // Help sets the optional parameter "help": The keyword to request help
 // on.
+//
+// Possible values:
+//   "langs" - The language codes served by the service.
+//   "mappings" - The property/path mappings supported by the filter and
+// output request parameters.
+//   "predicates" - The predicates and path-terminating properties
+// supported by the filter and output request parameters.
 func (c *SearchCall) Help(help string) *SearchCall {
 	c.opt_["help"] = help
 	return c
@@ -424,6 +447,11 @@ func (c *SearchCall) Query(query string) *SearchCall {
 
 // Scoring sets the optional parameter "scoring": Relevance scoring
 // algorithm to use.
+//
+// Possible values:
+//   "entity" - Use freebase and popularity entity ranking. (default)
+//   "freebase" - Use freebase entity ranking.
+//   "schema" - Use schema ranking for properties and types.
 func (c *SearchCall) Scoring(scoring string) *SearchCall {
 	c.opt_["scoring"] = scoring
 	return c
@@ -431,6 +459,13 @@ func (c *SearchCall) Scoring(scoring string) *SearchCall {
 
 // Spell sets the optional parameter "spell": Request 'did you mean'
 // suggestions
+//
+// Possible values:
+//   "always" - Request spelling suggestions for any query at least
+// three characters long.
+//   "no_results" - Request spelling suggestions if no results were
+// found.
+//   "no_spelling" - Don't request spelling suggestions. (default)
 func (c *SearchCall) Spell(spell string) *SearchCall {
 	c.opt_["spell"] = spell
 	return c

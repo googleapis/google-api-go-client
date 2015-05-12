@@ -788,6 +788,11 @@ func (c *CreativesListCall) PageToken(pageToken string) *CreativesListCall {
 
 // StatusFilter sets the optional parameter "statusFilter": When
 // specified, only creatives having the given status are returned.
+//
+// Possible values:
+//   "approved" - Creatives which have been approved.
+//   "disapproved" - Creatives which have been disapproved.
+//   "not_checked" - Creatives whose status is not yet checked.
 func (c *CreativesListCall) StatusFilter(statusFilter string) *CreativesListCall {
 	c.opt_["statusFilter"] = statusFilter
 	return c

@@ -1286,6 +1286,10 @@ func (c *BucketsGetCall) IfMetagenerationNotMatch(ifMetagenerationNotMatch uint6
 
 // Projection sets the optional parameter "projection": Set of
 // properties to return. Defaults to noAcl.
+//
+// Possible values:
+//   "full" - Include all properties.
+//   "noAcl" - Omit acl and defaultObjectAcl properties.
 func (c *BucketsGetCall) Projection(projection string) *BucketsGetCall {
 	c.opt_["projection"] = projection
 	return c
@@ -1409,6 +1413,10 @@ func (r *BucketsService) Insert(projectid string, bucket *Bucket) *BucketsInsert
 // properties to return. Defaults to noAcl, unless the bucket resource
 // specifies acl or defaultObjectAcl properties, when it defaults to
 // full.
+//
+// Possible values:
+//   "full" - Include all properties.
+//   "noAcl" - Omit acl and defaultObjectAcl properties.
 func (c *BucketsInsertCall) Projection(projection string) *BucketsInsertCall {
 	c.opt_["projection"] = projection
 	return c
@@ -1532,6 +1540,10 @@ func (c *BucketsListCall) PageToken(pageToken string) *BucketsListCall {
 
 // Projection sets the optional parameter "projection": Set of
 // properties to return. Defaults to noAcl.
+//
+// Possible values:
+//   "full" - Include all properties.
+//   "noAcl" - Omit acl and defaultObjectAcl properties.
 func (c *BucketsListCall) Projection(projection string) *BucketsListCall {
 	c.opt_["projection"] = projection
 	return c
@@ -1670,6 +1682,10 @@ func (c *BucketsPatchCall) IfMetagenerationNotMatch(ifMetagenerationNotMatch uin
 
 // Projection sets the optional parameter "projection": Set of
 // properties to return. Defaults to full.
+//
+// Possible values:
+//   "full" - Include all properties.
+//   "noAcl" - Omit acl and defaultObjectAcl properties.
 func (c *BucketsPatchCall) Projection(projection string) *BucketsPatchCall {
 	c.opt_["projection"] = projection
 	return c
@@ -1817,6 +1833,10 @@ func (c *BucketsUpdateCall) IfMetagenerationNotMatch(ifMetagenerationNotMatch ui
 
 // Projection sets the optional parameter "projection": Set of
 // properties to return. Defaults to full.
+//
+// Possible values:
+//   "full" - Include all properties.
+//   "noAcl" - Omit acl and defaultObjectAcl properties.
 func (c *BucketsUpdateCall) Projection(projection string) *BucketsUpdateCall {
 	c.opt_["projection"] = projection
 	return c
@@ -3474,6 +3494,10 @@ func (c *ObjectsCopyCall) IfSourceMetagenerationNotMatch(ifSourceMetagenerationN
 // Projection sets the optional parameter "projection": Set of
 // properties to return. Defaults to noAcl, unless the object resource
 // specifies the acl property, when it defaults to full.
+//
+// Possible values:
+//   "full" - Include all properties.
+//   "noAcl" - Omit the acl property.
 func (c *ObjectsCopyCall) Projection(projection string) *ObjectsCopyCall {
 	c.opt_["projection"] = projection
 	return c
@@ -3908,6 +3932,10 @@ func (c *ObjectsGetCall) IfMetagenerationNotMatch(ifMetagenerationNotMatch uint6
 
 // Projection sets the optional parameter "projection": Set of
 // properties to return. Defaults to noAcl.
+//
+// Possible values:
+//   "full" - Include all properties.
+//   "noAcl" - Omit the acl property.
 func (c *ObjectsGetCall) Projection(projection string) *ObjectsGetCall {
 	c.opt_["projection"] = projection
 	return c
@@ -4112,6 +4140,10 @@ func (c *ObjectsInsertCall) Name(name string) *ObjectsInsertCall {
 // Projection sets the optional parameter "projection": Set of
 // properties to return. Defaults to noAcl, unless the object resource
 // specifies the acl property, when it defaults to full.
+//
+// Possible values:
+//   "full" - Include all properties.
+//   "noAcl" - Omit the acl property.
 func (c *ObjectsInsertCall) Projection(projection string) *ObjectsInsertCall {
 	c.opt_["projection"] = projection
 	return c
@@ -4387,6 +4419,10 @@ func (c *ObjectsListCall) Prefix(prefix string) *ObjectsListCall {
 
 // Projection sets the optional parameter "projection": Set of
 // properties to return. Defaults to noAcl.
+//
+// Possible values:
+//   "full" - Include all properties.
+//   "noAcl" - Omit the acl property.
 func (c *ObjectsListCall) Projection(projection string) *ObjectsListCall {
 	c.opt_["projection"] = projection
 	return c
@@ -4584,6 +4620,10 @@ func (c *ObjectsPatchCall) IfMetagenerationNotMatch(ifMetagenerationNotMatch uin
 
 // Projection sets the optional parameter "projection": Set of
 // properties to return. Defaults to full.
+//
+// Possible values:
+//   "full" - Include all properties.
+//   "noAcl" - Omit the acl property.
 func (c *ObjectsPatchCall) Projection(projection string) *ObjectsPatchCall {
 	c.opt_["projection"] = projection
 	return c
@@ -4791,6 +4831,10 @@ func (c *ObjectsUpdateCall) IfMetagenerationNotMatch(ifMetagenerationNotMatch ui
 
 // Projection sets the optional parameter "projection": Set of
 // properties to return. Defaults to full.
+//
+// Possible values:
+//   "full" - Include all properties.
+//   "noAcl" - Omit the acl property.
 func (c *ObjectsUpdateCall) Projection(projection string) *ObjectsUpdateCall {
 	c.opt_["projection"] = projection
 	return c
@@ -4990,6 +5034,10 @@ func (c *ObjectsWatchAllCall) Prefix(prefix string) *ObjectsWatchAllCall {
 
 // Projection sets the optional parameter "projection": Set of
 // properties to return. Defaults to noAcl.
+//
+// Possible values:
+//   "full" - Include all properties.
+//   "noAcl" - Omit the acl property.
 func (c *ObjectsWatchAllCall) Projection(projection string) *ObjectsWatchAllCall {
 	c.opt_["projection"] = projection
 	return c

@@ -932,6 +932,10 @@ func (c *FilesListCall) PageToken(pageToken string) *FilesListCall {
 
 // SortField sets the optional parameter "sortField": The field by which
 // to sort the list.
+//
+// Possible values:
+//   "ID" - Sort by file ID.
+//   "LAST_MODIFIED_TIME" (default) - Sort by 'lastmodifiedAt' field.
 func (c *FilesListCall) SortField(sortField string) *FilesListCall {
 	c.opt_["sortField"] = sortField
 	return c
@@ -939,6 +943,10 @@ func (c *FilesListCall) SortField(sortField string) *FilesListCall {
 
 // SortOrder sets the optional parameter "sortOrder": Order of sorted
 // results, default is 'DESCENDING'.
+//
+// Possible values:
+//   "ASCENDING" - Ascending order.
+//   "DESCENDING" (default) - Descending order.
 func (c *FilesListCall) SortOrder(sortOrder string) *FilesListCall {
 	c.opt_["sortOrder"] = sortOrder
 	return c
@@ -1347,6 +1355,11 @@ func (c *ReportsListCall) PageToken(pageToken string) *ReportsListCall {
 
 // SortField sets the optional parameter "sortField": The field by which
 // to sort the list.
+//
+// Possible values:
+//   "ID" - Sort by report ID.
+//   "LAST_MODIFIED_TIME" (default) - Sort by 'lastModifiedTime' field.
+//   "NAME" - Sort by name of reports.
 func (c *ReportsListCall) SortField(sortField string) *ReportsListCall {
 	c.opt_["sortField"] = sortField
 	return c
@@ -1354,6 +1367,10 @@ func (c *ReportsListCall) SortField(sortField string) *ReportsListCall {
 
 // SortOrder sets the optional parameter "sortOrder": Order of sorted
 // results, default is 'DESCENDING'.
+//
+// Possible values:
+//   "ASCENDING" - Ascending order.
+//   "DESCENDING" (default) - Descending order.
 func (c *ReportsListCall) SortOrder(sortOrder string) *ReportsListCall {
 	c.opt_["sortOrder"] = sortOrder
 	return c
@@ -1909,6 +1926,10 @@ func (c *ReportsFilesListCall) PageToken(pageToken string) *ReportsFilesListCall
 
 // SortField sets the optional parameter "sortField": The field by which
 // to sort the list.
+//
+// Possible values:
+//   "ID" - Sort by file ID.
+//   "LAST_MODIFIED_TIME" (default) - Sort by 'lastmodifiedAt' field.
 func (c *ReportsFilesListCall) SortField(sortField string) *ReportsFilesListCall {
 	c.opt_["sortField"] = sortField
 	return c
@@ -1916,6 +1937,10 @@ func (c *ReportsFilesListCall) SortField(sortField string) *ReportsFilesListCall
 
 // SortOrder sets the optional parameter "sortOrder": Order of sorted
 // results, default is 'DESCENDING'.
+//
+// Possible values:
+//   "ASCENDING" - Ascending order.
+//   "DESCENDING" (default) - Descending order.
 func (c *ReportsFilesListCall) SortOrder(sortOrder string) *ReportsFilesListCall {
 	c.opt_["sortOrder"] = sortOrder
 	return c

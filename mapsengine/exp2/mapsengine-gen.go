@@ -1985,6 +1985,11 @@ func (c *AssetsListCall) ProjectId(projectId string) *AssetsListCall {
 // Role sets the optional parameter "role": The role parameter indicates
 // that the response should only contain assets where the current user
 // has the specified level of access.
+//
+// Possible values:
+//   "owner" - The user can read, write and administer the asset.
+//   "reader" - The user can read the asset.
+//   "writer" - The user can read and write the asset.
 func (c *AssetsListCall) Role(role string) *AssetsListCall {
 	c.opt_["role"] = role
 	return c
@@ -2625,6 +2630,10 @@ func (r *LayersService) Get(id string) *LayersGetCall {
 // returned. When version is set to published, the published version of
 // the layer will be returned. Please use the layers.getPublished
 // endpoint instead.
+//
+// Possible values:
+//   "draft" - The draft version.
+//   "published" - The published version.
 func (c *LayersGetCall) Version(version string) *LayersGetCall {
 	c.opt_["version"] = version
 	return c
@@ -2864,6 +2873,13 @@ func (c *LayersListCall) PageToken(pageToken string) *LayersListCall {
 }
 
 // ProcessingStatus sets the optional parameter "processingStatus":
+//
+// Possible values:
+//   "complete" - The layer has completed processing.
+//   "failed" - The layer has failed processing.
+//   "notReady" - The layer is not ready for processing.
+//   "processing" - The layer is processing.
+//   "ready" - The layer is ready for processing.
 func (c *LayersListCall) ProcessingStatus(processingStatus string) *LayersListCall {
 	c.opt_["processingStatus"] = processingStatus
 	return c
@@ -2882,6 +2898,11 @@ func (c *LayersListCall) ProjectId(projectId string) *LayersListCall {
 // Role sets the optional parameter "role": The role parameter indicates
 // that the response should only contain assets where the current user
 // has the specified level of access.
+//
+// Possible values:
+//   "owner" - The user can read, write and administer the asset.
+//   "reader" - The user can read the asset.
+//   "writer" - The user can read and write the asset.
 func (c *LayersListCall) Role(role string) *LayersListCall {
 	c.opt_["role"] = role
 	return c
@@ -4069,6 +4090,10 @@ func (r *MapsService) Get(id string) *MapsGetCall {
 // returned. When version is set to published, the published version of
 // the map will be returned. Please use the maps.getPublished endpoint
 // instead.
+//
+// Possible values:
+//   "draft" - The draft version.
+//   "published" - The published version.
 func (c *MapsGetCall) Version(version string) *MapsGetCall {
 	c.opt_["version"] = version
 	return c
@@ -4308,6 +4333,12 @@ func (c *MapsListCall) PageToken(pageToken string) *MapsListCall {
 }
 
 // ProcessingStatus sets the optional parameter "processingStatus":
+//
+// Possible values:
+//   "complete" - The map has completed processing.
+//   "failed" - The map has failed processing.
+//   "notReady" - The map is not ready for processing.
+//   "processing" - The map is processing.
 func (c *MapsListCall) ProcessingStatus(processingStatus string) *MapsListCall {
 	c.opt_["processingStatus"] = processingStatus
 	return c
@@ -4326,6 +4357,11 @@ func (c *MapsListCall) ProjectId(projectId string) *MapsListCall {
 // Role sets the optional parameter "role": The role parameter indicates
 // that the response should only contain assets where the current user
 // has the specified level of access.
+//
+// Possible values:
+//   "owner" - The user can read, write and administer the asset.
+//   "reader" - The user can read the asset.
+//   "writer" - The user can read and write the asset.
 func (c *MapsListCall) Role(role string) *MapsListCall {
 	c.opt_["role"] = role
 	return c
@@ -4350,6 +4386,10 @@ func (c *MapsListCall) Tags(tags string) *MapsListCall {
 // returned. When version is set to published this parameter will filter
 // the result set to include only maps that are published. Please use
 // the maps.listPublished endpoint instead.
+//
+// Possible values:
+//   "draft" - The draft version.
+//   "published" - The published version.
 func (c *MapsListCall) Version(version string) *MapsListCall {
 	c.opt_["version"] = version
 	return c
@@ -6002,6 +6042,13 @@ func (c *RasterCollectionsListCall) PageToken(pageToken string) *RasterCollectio
 }
 
 // ProcessingStatus sets the optional parameter "processingStatus":
+//
+// Possible values:
+//   "complete" - The raster collection has completed processing.
+//   "failed" - The raster collection has failed processing.
+//   "notReady" - The raster collection is not ready for processing.
+//   "processing" - The raster collection is processing.
+//   "ready" - The raster collection is ready for processing.
 func (c *RasterCollectionsListCall) ProcessingStatus(processingStatus string) *RasterCollectionsListCall {
 	c.opt_["processingStatus"] = processingStatus
 	return c
@@ -6020,6 +6067,11 @@ func (c *RasterCollectionsListCall) ProjectId(projectId string) *RasterCollectio
 // Role sets the optional parameter "role": The role parameter indicates
 // that the response should only contain assets where the current user
 // has the specified level of access.
+//
+// Possible values:
+//   "owner" - The user can read, write and administer the asset.
+//   "reader" - The user can read the asset.
+//   "writer" - The user can read and write the asset.
 func (c *RasterCollectionsListCall) Role(role string) *RasterCollectionsListCall {
 	c.opt_["role"] = role
 	return c
@@ -7010,6 +7062,11 @@ func (c *RasterCollectionsRastersListCall) PageToken(pageToken string) *RasterCo
 // Role sets the optional parameter "role": The role parameter indicates
 // that the response should only contain assets where the current user
 // has the specified level of access.
+//
+// Possible values:
+//   "owner" - The user can read, write and administer the asset.
+//   "reader" - The user can read the asset.
+//   "writer" - The user can read and write the asset.
 func (c *RasterCollectionsRastersListCall) Role(role string) *RasterCollectionsRastersListCall {
 	c.opt_["role"] = role
 	return c
@@ -7421,6 +7478,13 @@ func (c *RastersListCall) PageToken(pageToken string) *RastersListCall {
 }
 
 // ProcessingStatus sets the optional parameter "processingStatus":
+//
+// Possible values:
+//   "complete" - The raster has completed processing.
+//   "failed" - The raster has failed processing.
+//   "notReady" - The raster is not ready for processing.
+//   "processing" - The raster is processing.
+//   "ready" - The raster is ready for processing.
 func (c *RastersListCall) ProcessingStatus(processingStatus string) *RastersListCall {
 	c.opt_["processingStatus"] = processingStatus
 	return c
@@ -7429,6 +7493,11 @@ func (c *RastersListCall) ProcessingStatus(processingStatus string) *RastersList
 // Role sets the optional parameter "role": The role parameter indicates
 // that the response should only contain assets where the current user
 // has the specified level of access.
+//
+// Possible values:
+//   "owner" - The user can read, write and administer the asset.
+//   "reader" - The user can read the asset.
+//   "writer" - The user can read and write the asset.
 func (c *RastersListCall) Role(role string) *RastersListCall {
 	c.opt_["role"] = role
 	return c
@@ -8560,6 +8629,10 @@ func (r *TablesService) Get(id string) *TablesGetCall {
 }
 
 // Version sets the optional parameter "version":
+//
+// Possible values:
+//   "draft" - The draft version.
+//   "published" - The published version.
 func (c *TablesGetCall) Version(version string) *TablesGetCall {
 	c.opt_["version"] = version
 	return c
@@ -8721,6 +8794,13 @@ func (c *TablesListCall) PageToken(pageToken string) *TablesListCall {
 }
 
 // ProcessingStatus sets the optional parameter "processingStatus":
+//
+// Possible values:
+//   "complete" - The table has completed processing.
+//   "failed" - The table has failed processing.
+//   "notReady" - The table is not ready for processing.
+//   "processing" - The table is processing.
+//   "ready" - The table is ready for processing.
 func (c *TablesListCall) ProcessingStatus(processingStatus string) *TablesListCall {
 	c.opt_["processingStatus"] = processingStatus
 	return c
@@ -8739,6 +8819,11 @@ func (c *TablesListCall) ProjectId(projectId string) *TablesListCall {
 // Role sets the optional parameter "role": The role parameter indicates
 // that the response should only contain assets where the current user
 // has the specified level of access.
+//
+// Possible values:
+//   "owner" - The user can read, write and administer the asset.
+//   "reader" - The user can read the asset.
+//   "writer" - The user can read and write the asset.
 func (c *TablesListCall) Role(role string) *TablesListCall {
 	c.opt_["role"] = role
 	return c
@@ -9474,6 +9559,10 @@ func (c *TablesFeaturesGetCall) Select(select_ string) *TablesFeaturesGetCall {
 
 // Version sets the optional parameter "version": The table version to
 // access. See Accessing Public Data for information.
+//
+// Possible values:
+//   "draft" - The draft version.
+//   "published" - The published version.
 func (c *TablesFeaturesGetCall) Version(version string) *TablesFeaturesGetCall {
 	c.opt_["version"] = version
 	return c
@@ -9645,6 +9734,10 @@ func (c *TablesFeaturesListCall) Select(select_ string) *TablesFeaturesListCall 
 
 // Version sets the optional parameter "version": The table version to
 // access. See Accessing Public Data for information.
+//
+// Possible values:
+//   "draft" - The draft version.
+//   "published" - The published version.
 func (c *TablesFeaturesListCall) Version(version string) *TablesFeaturesListCall {
 	c.opt_["version"] = version
 	return c

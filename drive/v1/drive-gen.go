@@ -215,6 +215,10 @@ func (r *FilesService) Get(id string) *FilesGetCall {
 
 // Projection sets the optional parameter "projection": This parameter
 // is deprecated and has no function.
+//
+// Possible values:
+//   "BASIC" - Deprecated
+//   "FULL" - Deprecated
 func (c *FilesGetCall) Projection(projection string) *FilesGetCall {
 	c.opt_["projection"] = projection
 	return c

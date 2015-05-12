@@ -248,6 +248,10 @@ func (c *PagespeedapiRunpagespeedCall) Screenshot(screenshot bool) *Pagespeedapi
 
 // Strategy sets the optional parameter "strategy": The analysis
 // strategy to use
+//
+// Possible values:
+//   "desktop" - Fetch and analyze the URL for desktop browsers
+//   "mobile" - Fetch and analyze the URL for mobile devices
 func (c *PagespeedapiRunpagespeedCall) Strategy(strategy string) *PagespeedapiRunpagespeedCall {
 	c.opt_["strategy"] = strategy
 	return c

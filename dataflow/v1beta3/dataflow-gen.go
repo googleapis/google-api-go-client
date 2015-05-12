@@ -839,6 +839,11 @@ func (c *V1b3ProjectsJobsCreateCall) ReplaceJobId(replaceJobId string) *V1b3Proj
 }
 
 // View sets the optional parameter "view":
+//
+// Possible values:
+//   "JOB_VIEW_ALL"
+//   "JOB_VIEW_SUMMARY"
+//   "JOB_VIEW_UNKNOWN"
 func (c *V1b3ProjectsJobsCreateCall) View(view string) *V1b3ProjectsJobsCreateCall {
 	c.opt_["view"] = view
 	return c
@@ -956,6 +961,11 @@ func (r *V1b3ProjectsJobsService) Get(projectId string, jobId string) *V1b3Proje
 }
 
 // View sets the optional parameter "view":
+//
+// Possible values:
+//   "JOB_VIEW_ALL"
+//   "JOB_VIEW_SUMMARY"
+//   "JOB_VIEW_UNKNOWN"
 func (c *V1b3ProjectsJobsGetCall) View(view string) *V1b3ProjectsJobsGetCall {
 	c.opt_["view"] = view
 	return c
@@ -1172,6 +1182,11 @@ func (c *V1b3ProjectsJobsListCall) PageToken(pageToken string) *V1b3ProjectsJobs
 }
 
 // View sets the optional parameter "view":
+//
+// Possible values:
+//   "JOB_VIEW_ALL"
+//   "JOB_VIEW_SUMMARY"
+//   "JOB_VIEW_UNKNOWN"
 func (c *V1b3ProjectsJobsListCall) View(view string) *V1b3ProjectsJobsListCall {
 	c.opt_["view"] = view
 	return c
@@ -1487,6 +1502,13 @@ func (c *V1b3ProjectsJobsMessagesListCall) EndTime(endTime string) *V1b3Projects
 }
 
 // MinimumImportance sets the optional parameter "minimumImportance":
+//
+// Possible values:
+//   "JOB_MESSAGE_DEBUG"
+//   "JOB_MESSAGE_DETAILED"
+//   "JOB_MESSAGE_ERROR"
+//   "JOB_MESSAGE_IMPORTANCE_UNKNOWN"
+//   "JOB_MESSAGE_WARNING"
 func (c *V1b3ProjectsJobsMessagesListCall) MinimumImportance(minimumImportance string) *V1b3ProjectsJobsMessagesListCall {
 	c.opt_["minimumImportance"] = minimumImportance
 	return c

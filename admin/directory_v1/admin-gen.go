@@ -1663,6 +1663,11 @@ func (r *ChromeosdevicesService) Get(customerId string, deviceId string) *Chrome
 
 // Projection sets the optional parameter "projection": Restrict
 // information returned to a set of selected fields.
+//
+// Possible values:
+//   "BASIC" - Includes only the basic metadata fields (e.g., deviceId,
+// serialNumber, status, and user)
+//   "FULL" - Includes all metadata fields
 func (c *ChromeosdevicesGetCall) Projection(projection string) *ChromeosdevicesGetCall {
 	c.opt_["projection"] = projection
 	return c
@@ -1778,6 +1783,16 @@ func (c *ChromeosdevicesListCall) MaxResults(maxResults int64) *ChromeosdevicesL
 
 // OrderBy sets the optional parameter "orderBy": Column to use for
 // sorting results
+//
+// Possible values:
+//   "annotatedLocation" - Chromebook location as annotated by the
+// administrator.
+//   "annotatedUser" - Chromebook user as annotated by administrator.
+//   "lastSync" - Chromebook last sync.
+//   "notes" - Chromebook notes as annotated by the administrator.
+//   "serialNumber" - Chromebook Serial Number.
+//   "status" - Chromebook status.
+//   "supportEndDate" - Chromebook support end date.
 func (c *ChromeosdevicesListCall) OrderBy(orderBy string) *ChromeosdevicesListCall {
 	c.opt_["orderBy"] = orderBy
 	return c
@@ -1792,6 +1807,11 @@ func (c *ChromeosdevicesListCall) PageToken(pageToken string) *ChromeosdevicesLi
 
 // Projection sets the optional parameter "projection": Restrict
 // information returned to a set of selected fields.
+//
+// Possible values:
+//   "BASIC" - Includes only the basic metadata fields (e.g., deviceId,
+// serialNumber, status, and user)
+//   "FULL" - Includes all metadata fields
 func (c *ChromeosdevicesListCall) Projection(projection string) *ChromeosdevicesListCall {
 	c.opt_["projection"] = projection
 	return c
@@ -1809,6 +1829,10 @@ func (c *ChromeosdevicesListCall) Query(query string) *ChromeosdevicesListCall {
 // SortOrder sets the optional parameter "sortOrder": Whether to return
 // results in ascending or descending order. Only of use when orderBy is
 // also used
+//
+// Possible values:
+//   "ASCENDING" - Ascending order.
+//   "DESCENDING" - Descending order.
 func (c *ChromeosdevicesListCall) SortOrder(sortOrder string) *ChromeosdevicesListCall {
 	c.opt_["sortOrder"] = sortOrder
 	return c
@@ -1981,6 +2005,11 @@ func (r *ChromeosdevicesService) Patch(customerId string, deviceId string, chrom
 
 // Projection sets the optional parameter "projection": Restrict
 // information returned to a set of selected fields.
+//
+// Possible values:
+//   "BASIC" - Includes only the basic metadata fields (e.g., deviceId,
+// serialNumber, status, and user)
+//   "FULL" - Includes all metadata fields
 func (c *ChromeosdevicesPatchCall) Projection(projection string) *ChromeosdevicesPatchCall {
 	c.opt_["projection"] = projection
 	return c
@@ -2101,6 +2130,11 @@ func (r *ChromeosdevicesService) Update(customerId string, deviceId string, chro
 
 // Projection sets the optional parameter "projection": Restrict
 // information returned to a set of selected fields.
+//
+// Possible values:
+//   "BASIC" - Includes only the basic metadata fields (e.g., deviceId,
+// serialNumber, status, and user)
+//   "FULL" - Includes all metadata fields
 func (c *ChromeosdevicesUpdateCall) Projection(projection string) *ChromeosdevicesUpdateCall {
 	c.opt_["projection"] = projection
 	return c
@@ -3749,6 +3783,11 @@ func (r *MobiledevicesService) Get(customerId string, resourceId string) *Mobile
 
 // Projection sets the optional parameter "projection": Restrict
 // information returned to a set of selected fields.
+//
+// Possible values:
+//   "BASIC" - Includes only the basic metadata fields (e.g., deviceId,
+// model, status, type, and status)
+//   "FULL" - Includes all metadata fields
 func (c *MobiledevicesGetCall) Projection(projection string) *MobiledevicesGetCall {
 	c.opt_["projection"] = projection
 	return c
@@ -3865,6 +3904,16 @@ func (c *MobiledevicesListCall) MaxResults(maxResults int64) *MobiledevicesListC
 
 // OrderBy sets the optional parameter "orderBy": Column to use for
 // sorting results
+//
+// Possible values:
+//   "deviceId" - Mobile Device serial number.
+//   "email" - Owner user email.
+//   "lastSync" - Last policy settings sync date time of the device.
+//   "model" - Mobile Device model.
+//   "name" - Owner user name.
+//   "os" - Mobile operating system.
+//   "status" - Status of the device.
+//   "type" - Type of the device.
 func (c *MobiledevicesListCall) OrderBy(orderBy string) *MobiledevicesListCall {
 	c.opt_["orderBy"] = orderBy
 	return c
@@ -3879,6 +3928,11 @@ func (c *MobiledevicesListCall) PageToken(pageToken string) *MobiledevicesListCa
 
 // Projection sets the optional parameter "projection": Restrict
 // information returned to a set of selected fields.
+//
+// Possible values:
+//   "BASIC" - Includes only the basic metadata fields (e.g., deviceId,
+// model, status, type, and status)
+//   "FULL" - Includes all metadata fields
 func (c *MobiledevicesListCall) Projection(projection string) *MobiledevicesListCall {
 	c.opt_["projection"] = projection
 	return c
@@ -3895,6 +3949,10 @@ func (c *MobiledevicesListCall) Query(query string) *MobiledevicesListCall {
 // SortOrder sets the optional parameter "sortOrder": Whether to return
 // results in ascending or descending order. Only of use when orderBy is
 // also used
+//
+// Possible values:
+//   "ASCENDING" - Ascending order.
+//   "DESCENDING" - Descending order.
 func (c *MobiledevicesListCall) SortOrder(sortOrder string) *MobiledevicesListCall {
 	c.opt_["sortOrder"] = sortOrder
 	return c
@@ -4810,6 +4868,10 @@ func (c *OrgunitsListCall) OrgUnitPath(orgUnitPath string) *OrgunitsListCall {
 
 // Type sets the optional parameter "type": Whether to return all
 // sub-organizations or just immediate children
+//
+// Possible values:
+//   "all" - All sub-organization units.
+//   "children" - Immediate children only (default).
 func (c *OrgunitsListCall) Type(type_ string) *OrgunitsListCall {
 	c.opt_["type"] = type_
 	return c
@@ -5959,6 +6021,12 @@ func (c *UsersGetCall) CustomFieldMask(customFieldMask string) *UsersGetCall {
 
 // Projection sets the optional parameter "projection": What subset of
 // fields to fetch for this user.
+//
+// Possible values:
+//   "basic" (default) - Do not include any custom fields for the user.
+//   "custom" - Include custom fields from schemas mentioned in
+// customFieldMask.
+//   "full" - Include all fields associated with this user.
 func (c *UsersGetCall) Projection(projection string) *UsersGetCall {
 	c.opt_["projection"] = projection
 	return c
@@ -5966,6 +6034,10 @@ func (c *UsersGetCall) Projection(projection string) *UsersGetCall {
 
 // ViewType sets the optional parameter "viewType": Whether to fetch the
 // ADMIN_VIEW or DOMAIN_PUBLIC view of the user.
+//
+// Possible values:
+//   "admin_view" (default) - Fetches the ADMIN_VIEW of the user.
+//   "domain_public" - Fetches the DOMAIN_PUBLIC view of the user.
 func (c *UsersGetCall) ViewType(viewType string) *UsersGetCall {
 	c.opt_["viewType"] = viewType
 	return c
@@ -6189,6 +6261,13 @@ func (c *UsersListCall) Domain(domain string) *UsersListCall {
 
 // Event sets the optional parameter "event": Event on which
 // subscription is intended (if subscribing)
+//
+// Possible values:
+//   "add" - User Created Event
+//   "delete" - User Deleted Event
+//   "makeAdmin" - User Admin Status Change Event
+//   "undelete" - User Undeleted Event
+//   "update" - User Updated Event
 func (c *UsersListCall) Event(event string) *UsersListCall {
 	c.opt_["event"] = event
 	return c
@@ -6203,6 +6282,11 @@ func (c *UsersListCall) MaxResults(maxResults int64) *UsersListCall {
 
 // OrderBy sets the optional parameter "orderBy": Column to use for
 // sorting results
+//
+// Possible values:
+//   "email" - Primary email of the user.
+//   "familyName" - User's family name.
+//   "givenName" - User's given name.
 func (c *UsersListCall) OrderBy(orderBy string) *UsersListCall {
 	c.opt_["orderBy"] = orderBy
 	return c
@@ -6217,6 +6301,12 @@ func (c *UsersListCall) PageToken(pageToken string) *UsersListCall {
 
 // Projection sets the optional parameter "projection": What subset of
 // fields to fetch for this user.
+//
+// Possible values:
+//   "basic" (default) - Do not include any custom fields for the user.
+//   "custom" - Include custom fields from schemas mentioned in
+// customFieldMask.
+//   "full" - Include all fields associated with this user.
 func (c *UsersListCall) Projection(projection string) *UsersListCall {
 	c.opt_["projection"] = projection
 	return c
@@ -6240,6 +6330,10 @@ func (c *UsersListCall) ShowDeleted(showDeleted string) *UsersListCall {
 
 // SortOrder sets the optional parameter "sortOrder": Whether to return
 // results in ascending or descending order.
+//
+// Possible values:
+//   "ASCENDING" - Ascending order.
+//   "DESCENDING" - Descending order.
 func (c *UsersListCall) SortOrder(sortOrder string) *UsersListCall {
 	c.opt_["sortOrder"] = sortOrder
 	return c
@@ -6247,6 +6341,10 @@ func (c *UsersListCall) SortOrder(sortOrder string) *UsersListCall {
 
 // ViewType sets the optional parameter "viewType": Whether to fetch the
 // ADMIN_VIEW or DOMAIN_PUBLIC view of the user.
+//
+// Possible values:
+//   "admin_view" (default) - Fetches the ADMIN_VIEW of the user.
+//   "domain_public" - Fetches the DOMAIN_PUBLIC view of the user.
 func (c *UsersListCall) ViewType(viewType string) *UsersListCall {
 	c.opt_["viewType"] = viewType
 	return c
@@ -6830,6 +6928,13 @@ func (c *UsersWatchCall) Domain(domain string) *UsersWatchCall {
 
 // Event sets the optional parameter "event": Event on which
 // subscription is intended (if subscribing)
+//
+// Possible values:
+//   "add" - User Created Event
+//   "delete" - User Deleted Event
+//   "makeAdmin" - User Admin Status Change Event
+//   "undelete" - User Undeleted Event
+//   "update" - User Updated Event
 func (c *UsersWatchCall) Event(event string) *UsersWatchCall {
 	c.opt_["event"] = event
 	return c
@@ -6844,6 +6949,11 @@ func (c *UsersWatchCall) MaxResults(maxResults int64) *UsersWatchCall {
 
 // OrderBy sets the optional parameter "orderBy": Column to use for
 // sorting results
+//
+// Possible values:
+//   "email" - Primary email of the user.
+//   "familyName" - User's family name.
+//   "givenName" - User's given name.
 func (c *UsersWatchCall) OrderBy(orderBy string) *UsersWatchCall {
 	c.opt_["orderBy"] = orderBy
 	return c
@@ -6858,6 +6968,12 @@ func (c *UsersWatchCall) PageToken(pageToken string) *UsersWatchCall {
 
 // Projection sets the optional parameter "projection": What subset of
 // fields to fetch for this user.
+//
+// Possible values:
+//   "basic" (default) - Do not include any custom fields for the user.
+//   "custom" - Include custom fields from schemas mentioned in
+// customFieldMask.
+//   "full" - Include all fields associated with this user.
 func (c *UsersWatchCall) Projection(projection string) *UsersWatchCall {
 	c.opt_["projection"] = projection
 	return c
@@ -6881,6 +6997,10 @@ func (c *UsersWatchCall) ShowDeleted(showDeleted string) *UsersWatchCall {
 
 // SortOrder sets the optional parameter "sortOrder": Whether to return
 // results in ascending or descending order.
+//
+// Possible values:
+//   "ASCENDING" - Ascending order.
+//   "DESCENDING" - Descending order.
 func (c *UsersWatchCall) SortOrder(sortOrder string) *UsersWatchCall {
 	c.opt_["sortOrder"] = sortOrder
 	return c
@@ -6888,6 +7008,10 @@ func (c *UsersWatchCall) SortOrder(sortOrder string) *UsersWatchCall {
 
 // ViewType sets the optional parameter "viewType": Whether to fetch the
 // ADMIN_VIEW or DOMAIN_PUBLIC view of the user.
+//
+// Possible values:
+//   "admin_view" (default) - Fetches the ADMIN_VIEW of the user.
+//   "domain_public" - Fetches the DOMAIN_PUBLIC view of the user.
 func (c *UsersWatchCall) ViewType(viewType string) *UsersWatchCall {
 	c.opt_["viewType"] = viewType
 	return c
@@ -7291,6 +7415,10 @@ func (r *UsersAliasesService) List(userKey string) *UsersAliasesListCall {
 
 // Event sets the optional parameter "event": Event on which
 // subscription is intended (if subscribing)
+//
+// Possible values:
+//   "add" - Alias Created Event
+//   "delete" - Alias Deleted Event
 func (c *UsersAliasesListCall) Event(event string) *UsersAliasesListCall {
 	c.opt_["event"] = event
 	return c
@@ -7396,6 +7524,10 @@ func (r *UsersAliasesService) Watch(userKey string, channel *Channel) *UsersAlia
 
 // Event sets the optional parameter "event": Event on which
 // subscription is intended (if subscribing)
+//
+// Possible values:
+//   "add" - Alias Created Event
+//   "delete" - Alias Deleted Event
 func (c *UsersAliasesWatchCall) Event(event string) *UsersAliasesWatchCall {
 	c.opt_["event"] = event
 	return c

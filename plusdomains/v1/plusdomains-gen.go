@@ -2586,6 +2586,10 @@ func (c *CommentsListCall) PageToken(pageToken string) *CommentsListCall {
 
 // SortOrder sets the optional parameter "sortOrder": The order in which
 // to sort the list of comments.
+//
+// Possible values:
+//   "ascending" (default) - Sort oldest comments first.
+//   "descending" - Sort newest comments first.
 func (c *CommentsListCall) SortOrder(sortOrder string) *CommentsListCall {
 	c.opt_["sortOrder"] = sortOrder
 	return c
@@ -2998,6 +3002,10 @@ func (c *PeopleListCall) MaxResults(maxResults int64) *PeopleListCall {
 
 // OrderBy sets the optional parameter "orderBy": The order to return
 // people in.
+//
+// Possible values:
+//   "alphabetical" - Order the people by their display name.
+//   "best" - Order people based on the relevence to the viewer.
 func (c *PeopleListCall) OrderBy(orderBy string) *PeopleListCall {
 	c.opt_["orderBy"] = orderBy
 	return c

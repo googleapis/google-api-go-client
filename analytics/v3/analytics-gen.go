@@ -2734,6 +2734,11 @@ func (c *DataGaGetCall) MaxResults(maxResults int64) *DataGaGetCall {
 
 // Output sets the optional parameter "output": The selected format for
 // the response. Default format is JSON.
+//
+// Possible values:
+//   "dataTable" - Returns the response in Google Charts Data Table
+// format. This is useful in creating visualization using Google Charts.
+//   "json" - Returns the response in standard JSON format.
 func (c *DataGaGetCall) Output(output string) *DataGaGetCall {
 	c.opt_["output"] = output
 	return c
@@ -2741,6 +2746,13 @@ func (c *DataGaGetCall) Output(output string) *DataGaGetCall {
 
 // SamplingLevel sets the optional parameter "samplingLevel": The
 // desired sampling level.
+//
+// Possible values:
+//   "DEFAULT" - Returns response with a sample size that balances speed
+// and accuracy.
+//   "FASTER" - Returns a fast response with a smaller sample size.
+//   "HIGHER_PRECISION" - Returns a more accurate response using a large
+// sample size, but this may result in the response being slower.
 func (c *DataGaGetCall) SamplingLevel(samplingLevel string) *DataGaGetCall {
 	c.opt_["samplingLevel"] = samplingLevel
 	return c
@@ -2992,6 +3004,13 @@ func (c *DataMcfGetCall) MaxResults(maxResults int64) *DataMcfGetCall {
 
 // SamplingLevel sets the optional parameter "samplingLevel": The
 // desired sampling level.
+//
+// Possible values:
+//   "DEFAULT" - Returns response with a sample size that balances speed
+// and accuracy.
+//   "FASTER" - Returns a fast response with a smaller sample size.
+//   "HIGHER_PRECISION" - Returns a more accurate response using a large
+// sample size, but this may result in the response being slower.
 func (c *DataMcfGetCall) SamplingLevel(samplingLevel string) *DataMcfGetCall {
 	c.opt_["samplingLevel"] = samplingLevel
 	return c

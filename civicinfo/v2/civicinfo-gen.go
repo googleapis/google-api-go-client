@@ -866,6 +866,17 @@ func (c *RepresentativesRepresentativeInfoByAddressCall) IncludeOffices(includeO
 // to filter by. Only offices that serve at least one of these levels
 // will be returned. Divisions that don't contain a matching office will
 // not be returned.
+//
+// Possible values:
+//   "administrativeArea1"
+//   "administrativeArea2"
+//   "country"
+//   "international"
+//   "locality"
+//   "regional"
+//   "special"
+//   "subLocality1"
+//   "subLocality2"
 func (c *RepresentativesRepresentativeInfoByAddressCall) Levels(levels string) *RepresentativesRepresentativeInfoByAddressCall {
 	c.opt_["levels"] = levels
 	return c
@@ -875,6 +886,19 @@ func (c *RepresentativesRepresentativeInfoByAddressCall) Levels(levels string) *
 // filter by. Only offices fulfilling one of these roles will be
 // returned. Divisions that don't contain a matching office will not be
 // returned.
+//
+// Possible values:
+//   "deputyHeadOfGovernment"
+//   "executiveCouncil"
+//   "governmentOfficer"
+//   "headOfGovernment"
+//   "headOfState"
+//   "highestCourtJudge"
+//   "judge"
+//   "legislatorLowerBody"
+//   "legislatorUpperBody"
+//   "schoolBoard"
+//   "specialPurposeOfficer"
 func (c *RepresentativesRepresentativeInfoByAddressCall) Roles(roles string) *RepresentativesRepresentativeInfoByAddressCall {
 	c.opt_["roles"] = roles
 	return c
@@ -1030,6 +1054,17 @@ func (r *RepresentativesService) RepresentativeInfoByDivision(ocdId string) *Rep
 // to filter by. Only offices that serve at least one of these levels
 // will be returned. Divisions that don't contain a matching office will
 // not be returned.
+//
+// Possible values:
+//   "administrativeArea1"
+//   "administrativeArea2"
+//   "country"
+//   "international"
+//   "locality"
+//   "regional"
+//   "special"
+//   "subLocality1"
+//   "subLocality2"
 func (c *RepresentativesRepresentativeInfoByDivisionCall) Levels(levels string) *RepresentativesRepresentativeInfoByDivisionCall {
 	c.opt_["levels"] = levels
 	return c
@@ -1049,6 +1084,19 @@ func (c *RepresentativesRepresentativeInfoByDivisionCall) Recursive(recursive bo
 // filter by. Only offices fulfilling one of these roles will be
 // returned. Divisions that don't contain a matching office will not be
 // returned.
+//
+// Possible values:
+//   "deputyHeadOfGovernment"
+//   "executiveCouncil"
+//   "governmentOfficer"
+//   "headOfGovernment"
+//   "headOfState"
+//   "highestCourtJudge"
+//   "judge"
+//   "legislatorLowerBody"
+//   "legislatorUpperBody"
+//   "schoolBoard"
+//   "specialPurposeOfficer"
 func (c *RepresentativesRepresentativeInfoByDivisionCall) Roles(roles string) *RepresentativesRepresentativeInfoByDivisionCall {
 	c.opt_["roles"] = roles
 	return c

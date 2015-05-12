@@ -952,6 +952,11 @@ func (c *BlogsListByUserCall) FetchUserInfo(fetchUserInfo bool) *BlogsListByUser
 }
 
 // View sets the optional parameter "view":
+//
+// Possible values:
+//   "ADMIN" - Admin level detail
+//   "AUTHOR" - Author level detail
+//   "READER" - Admin level detail
 func (c *BlogsListByUserCall) View(view string) *BlogsListByUserCall {
 	c.opt_["view"] = view
 	return c
@@ -1379,12 +1384,23 @@ func (c *CommentsListCall) StartDate(startDate string) *CommentsListCall {
 }
 
 // Statuses sets the optional parameter "statuses":
+//
+// Possible values:
+//   "emptied" - Comments that have had their content removed
+//   "live" - Comments that are publicly visible
+//   "pending" - Comments that are awaiting administrator approval
+//   "spam" - Comments marked as spam by the administrator
 func (c *CommentsListCall) Statuses(statuses string) *CommentsListCall {
 	c.opt_["statuses"] = statuses
 	return c
 }
 
 // View sets the optional parameter "view":
+//
+// Possible values:
+//   "ADMIN" - Admin level detail
+//   "AUTHOR" - Author level detail
+//   "READER" - Admin level detail
 func (c *CommentsListCall) View(view string) *CommentsListCall {
 	c.opt_["view"] = view
 	return c
@@ -1904,6 +1920,11 @@ func (r *PageViewsService) Get(blogId string) *PageViewsGetCall {
 }
 
 // Range sets the optional parameter "range":
+//
+// Possible values:
+//   "30DAYS" - Page view counts from the last thirty days.
+//   "7DAYS" - Page view counts from the last seven days.
+//   "all" - Total page view counts from all time.
 func (c *PageViewsGetCall) Range(range_ string) *PageViewsGetCall {
 	c.opt_["range"] = range_
 	return c
@@ -2085,6 +2106,11 @@ func (r *PagesService) Get(blogId string, pageId string) *PagesGetCall {
 }
 
 // View sets the optional parameter "view":
+//
+// Possible values:
+//   "ADMIN" - Admin level detail
+//   "AUTHOR" - Author level detail
+//   "READER" - Admin level detail
 func (c *PagesGetCall) View(view string) *PagesGetCall {
 	c.opt_["view"] = view
 	return c
@@ -2288,12 +2314,22 @@ func (c *PagesListCall) FetchBodies(fetchBodies bool) *PagesListCall {
 }
 
 // Statuses sets the optional parameter "statuses":
+//
+// Possible values:
+//   "draft" - Draft (unpublished) Pages
+//   "imported" - Pages that have had their content removed
+//   "live" - Pages that are publicly visible
 func (c *PagesListCall) Statuses(statuses string) *PagesListCall {
 	c.opt_["statuses"] = statuses
 	return c
 }
 
 // View sets the optional parameter "view":
+//
+// Possible values:
+//   "ADMIN" - Admin level detail
+//   "AUTHOR" - Author level detail
+//   "READER" - Admin level detail
 func (c *PagesListCall) View(view string) *PagesListCall {
 	c.opt_["view"] = view
 	return c
@@ -2758,6 +2794,10 @@ func (c *PostUserInfosListCall) MaxResults(maxResults int64) *PostUserInfosListC
 }
 
 // OrderBy sets the optional parameter "orderBy": Sort search results
+//
+// Possible values:
+//   "published" - Order by the date the post was published
+//   "updated" - Order by the date the post was last updated
 func (c *PostUserInfosListCall) OrderBy(orderBy string) *PostUserInfosListCall {
 	c.opt_["orderBy"] = orderBy
 	return c
@@ -2778,12 +2818,22 @@ func (c *PostUserInfosListCall) StartDate(startDate string) *PostUserInfosListCa
 }
 
 // Statuses sets the optional parameter "statuses":
+//
+// Possible values:
+//   "draft" - Draft posts
+//   "live" - Published posts
+//   "scheduled" - Posts that are scheduled to publish in future.
 func (c *PostUserInfosListCall) Statuses(statuses string) *PostUserInfosListCall {
 	c.opt_["statuses"] = statuses
 	return c
 }
 
 // View sets the optional parameter "view":
+//
+// Possible values:
+//   "ADMIN" - Admin level detail
+//   "AUTHOR" - Author level detail
+//   "READER" - Reader level detail
 func (c *PostUserInfosListCall) View(view string) *PostUserInfosListCall {
 	c.opt_["view"] = view
 	return c
@@ -3066,6 +3116,11 @@ func (c *PostsGetCall) MaxComments(maxComments int64) *PostsGetCall {
 }
 
 // View sets the optional parameter "view":
+//
+// Possible values:
+//   "ADMIN" - Admin level detail
+//   "AUTHOR" - Author level detail
+//   "READER" - Admin level detail
 func (c *PostsGetCall) View(view string) *PostsGetCall {
 	c.opt_["view"] = view
 	return c
@@ -3192,6 +3247,11 @@ func (c *PostsGetByPathCall) MaxComments(maxComments int64) *PostsGetByPathCall 
 }
 
 // View sets the optional parameter "view":
+//
+// Possible values:
+//   "ADMIN" - Admin level detail
+//   "AUTHOR" - Author level detail
+//   "READER" - Admin level detail
 func (c *PostsGetByPathCall) View(view string) *PostsGetByPathCall {
 	c.opt_["view"] = view
 	return c
@@ -3448,6 +3508,10 @@ func (c *PostsListCall) MaxResults(maxResults int64) *PostsListCall {
 }
 
 // OrderBy sets the optional parameter "orderBy": Sort search results
+//
+// Possible values:
+//   "published" - Order by the date the post was published
+//   "updated" - Order by the date the post was last updated
 func (c *PostsListCall) OrderBy(orderBy string) *PostsListCall {
 	c.opt_["orderBy"] = orderBy
 	return c
@@ -3468,12 +3532,22 @@ func (c *PostsListCall) StartDate(startDate string) *PostsListCall {
 }
 
 // Statuses sets the optional parameter "statuses":
+//
+// Possible values:
+//   "draft" - Draft posts
+//   "live" - Published posts
+//   "scheduled" - Posts that are scheduled to publish in future.
 func (c *PostsListCall) Statuses(statuses string) *PostsListCall {
 	c.opt_["statuses"] = statuses
 	return c
 }
 
 // View sets the optional parameter "view":
+//
+// Possible values:
+//   "ADMIN" - Admin level detail
+//   "AUTHOR" - Author level detail
+//   "READER" - Reader level detail
 func (c *PostsListCall) View(view string) *PostsListCall {
 	c.opt_["view"] = view
 	return c
@@ -3965,6 +4039,10 @@ func (c *PostsSearchCall) FetchBodies(fetchBodies bool) *PostsSearchCall {
 }
 
 // OrderBy sets the optional parameter "orderBy": Sort search results
+//
+// Possible values:
+//   "published" - Order by the date the post was published
+//   "updated" - Order by the date the post was last updated
 func (c *PostsSearchCall) OrderBy(orderBy string) *PostsSearchCall {
 	c.opt_["orderBy"] = orderBy
 	return c

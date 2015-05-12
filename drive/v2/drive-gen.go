@@ -3244,6 +3244,11 @@ func (c *FilesCopyCall) TimedTextTrackName(timedTextTrackName string) *FilesCopy
 // Visibility sets the optional parameter "visibility": The visibility
 // of the new file. This parameter is only relevant when the source is
 // not a native Google Doc and convert=false.
+//
+// Possible values:
+//   "DEFAULT" (default) - The visibility of the new file is determined
+// by the user's default visibility/sharing policies.
+//   "PRIVATE" - The new file will be visible to only the owner.
 func (c *FilesCopyCall) Visibility(visibility string) *FilesCopyCall {
 	c.opt_["visibility"] = visibility
 	return c
@@ -3541,6 +3546,10 @@ func (c *FilesGetCall) AcknowledgeAbuse(acknowledgeAbuse bool) *FilesGetCall {
 
 // Projection sets the optional parameter "projection": This parameter
 // is deprecated and has no function.
+//
+// Possible values:
+//   "BASIC" - Deprecated
+//   "FULL" - Deprecated
 func (c *FilesGetCall) Projection(projection string) *FilesGetCall {
 	c.opt_["projection"] = projection
 	return c
@@ -3746,6 +3755,11 @@ func (c *FilesInsertCall) UseContentAsIndexableText(useContentAsIndexableText bo
 
 // Visibility sets the optional parameter "visibility": The visibility
 // of the new file. This parameter is only relevant when convert=false.
+//
+// Possible values:
+//   "DEFAULT" (default) - The visibility of the new file is determined
+// by the user's default visibility/sharing policies.
+//   "PRIVATE" - The new file will be visible to only the owner.
 func (c *FilesInsertCall) Visibility(visibility string) *FilesInsertCall {
 	c.opt_["visibility"] = visibility
 	return c
@@ -3994,6 +4008,10 @@ func (r *FilesService) List() *FilesListCall {
 
 // Corpus sets the optional parameter "corpus": The body of items
 // (files/documents) to which the query applies.
+//
+// Possible values:
+//   "DEFAULT" - The items that the user has accessed.
+//   "DOMAIN" - Items shared to the user's domain.
 func (c *FilesListCall) Corpus(corpus string) *FilesListCall {
 	c.opt_["corpus"] = corpus
 	return c
@@ -4015,6 +4033,10 @@ func (c *FilesListCall) PageToken(pageToken string) *FilesListCall {
 
 // Projection sets the optional parameter "projection": This parameter
 // is deprecated and has no function.
+//
+// Possible values:
+//   "BASIC" - Deprecated
+//   "FULL" - Deprecated
 func (c *FilesListCall) Projection(projection string) *FilesListCall {
 	c.opt_["projection"] = projection
 	return c
@@ -5066,6 +5088,10 @@ func (c *FilesWatchCall) AcknowledgeAbuse(acknowledgeAbuse bool) *FilesWatchCall
 
 // Projection sets the optional parameter "projection": This parameter
 // is deprecated and has no function.
+//
+// Possible values:
+//   "BASIC" - Deprecated
+//   "FULL" - Deprecated
 func (c *FilesWatchCall) Projection(projection string) *FilesWatchCall {
 	c.opt_["projection"] = projection
 	return c

@@ -972,6 +972,13 @@ func (c *JobsPatchCall) Note(note string) *JobsPatchCall {
 }
 
 // Progress sets the optional parameter "progress": Job progress
+//
+// Possible values:
+//   "COMPLETED" - Completed
+//   "IN_PROGRESS" - In progress
+//   "NOT_ACCEPTED" - Not accepted
+//   "NOT_STARTED" - Not started
+//   "OBSOLETE" - Obsolete
 func (c *JobsPatchCall) Progress(progress string) *JobsPatchCall {
 	c.opt_["progress"] = progress
 	return c
@@ -1241,6 +1248,13 @@ func (c *JobsUpdateCall) Note(note string) *JobsUpdateCall {
 }
 
 // Progress sets the optional parameter "progress": Job progress
+//
+// Possible values:
+//   "COMPLETED" - Completed
+//   "IN_PROGRESS" - In progress
+//   "NOT_ACCEPTED" - Not accepted
+//   "NOT_STARTED" - Not started
+//   "OBSOLETE" - Obsolete
 func (c *JobsUpdateCall) Progress(progress string) *JobsUpdateCall {
 	c.opt_["progress"] = progress
 	return c

@@ -2120,6 +2120,12 @@ func (c *TimelineListCall) MaxResults(maxResults int64) *TimelineListCall {
 
 // OrderBy sets the optional parameter "orderBy": Controls the order in
 // which timeline items are returned.
+//
+// Possible values:
+//   "displayTime" - Results will be ordered by displayTime (default).
+// This is the same ordering as is used in the timeline on the device.
+//   "writeTime" - Results will be ordered by the time at which they
+// were last written to the data store.
 func (c *TimelineListCall) OrderBy(orderBy string) *TimelineListCall {
 	c.opt_["orderBy"] = orderBy
 	return c

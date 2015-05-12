@@ -178,6 +178,12 @@ type FieldValue struct {
 
 	// StringFormat: The format of a string value. By default, the string
 	// format is `DEFAULT`, where a format will be automatically detected.
+	//
+	// Possible values:
+	//   "DEFAULT"
+	//   "ATOM"
+	//   "TEXT"
+	//   "HTML"
 	StringFormat string `json:"stringFormat,omitempty"`
 
 	// StringValue: The value of a string-valued field.

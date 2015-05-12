@@ -12,7 +12,7 @@ import (
 
 func init() {
 	scopes := strings.Join([]string{
-		compute.DevstorageFull_controlScope,
+		compute.DevstorageFullControlScope,
 		compute.ComputeScope,
 	}, " ")
 	registerDemo("compute", scopes, computeMain)
@@ -70,7 +70,7 @@ func computeMain(client *http.Client, argv []string) {
 			{
 				Email: "default",
 				Scopes: []string{
-					compute.DevstorageFull_controlScope,
+					compute.DevstorageFullControlScope,
 					compute.ComputeScope,
 				},
 			},

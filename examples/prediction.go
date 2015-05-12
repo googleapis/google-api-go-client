@@ -18,9 +18,9 @@ import (
 
 func init() {
 	scopes := []string{
-		prediction.DevstorageFull_controlScope,
-		prediction.DevstorageRead_onlyScope,
-		prediction.DevstorageRead_writeScope,
+		prediction.DevstorageFullControlScope,
+		prediction.DevstorageReadOnlyScope,
+		prediction.DevstorageReadWriteScope,
 		prediction.PredictionScope,
 	}
 	registerDemo("prediction", strings.Join(scopes, " "), predictionMain)

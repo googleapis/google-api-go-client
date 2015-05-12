@@ -10,7 +10,7 @@ import (
 )
 
 func init() {
-	registerDemo("storage", storage.DevstorageRead_writeScope, storageMain)
+	registerDemo("storage", storage.DevstorageReadWriteScope, storageMain)
 }
 
 func storageMain(client *http.Client, argv []string) {

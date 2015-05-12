@@ -35,7 +35,7 @@ const (
 
 func init() {
 	scope := fmt.Sprintf("%s %s %s", bigquery.BigqueryScope,
-		storage.DevstorageRead_onlyScope,
+		storage.DevstorageReadOnlyScope,
 		"https://www.googleapis.com/auth/userinfo.profile")
 	registerDemo("bigquery", scope, bqMain)
 }

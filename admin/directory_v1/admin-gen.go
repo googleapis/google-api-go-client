@@ -1295,9 +1295,9 @@ type Users struct {
 	// NextPageToken: Token used to access next page of this result.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// Trigger_event: Event that triggered this response (only used in case
+	// TriggerEvent: Event that triggered this response (only used in case
 	// of Push Response)
-	Trigger_event string `json:"trigger_event,omitempty"`
+	TriggerEvent string `json:"trigger_event,omitempty"`
 
 	// Users: List of user objects.
 	Users []*User `json:"users,omitempty"`

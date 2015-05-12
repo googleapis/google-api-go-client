@@ -47,7 +47,7 @@ const (
 	SiteverificationScope = "https://www.googleapis.com/auth/siteverification"
 
 	// Manage your new site verifications with Google
-	SiteverificationVerify_onlyScope = "https://www.googleapis.com/auth/siteverification.verify_only"
+	SiteverificationVerifyOnlyScope = "https://www.googleapis.com/auth/siteverification.verify_only"
 )
 
 func New(client *http.Client) (*Service, error) {

@@ -156,13 +156,13 @@ type UrlCrawlErrorsCountsQueryResponse struct {
 }
 
 type UrlCrawlErrorsSample struct {
-	// First_detected: The time the error was first detected, in RFC 3339
+	// FirstDetected: The time the error was first detected, in RFC 3339
 	// format.
-	First_detected string `json:"first_detected,omitempty"`
+	FirstDetected string `json:"first_detected,omitempty"`
 
-	// Last_crawled: The time when the URL was last crawled, in RFC 3339
+	// LastCrawled: The time when the URL was last crawled, in RFC 3339
 	// format.
-	Last_crawled string `json:"last_crawled,omitempty"`
+	LastCrawled string `json:"last_crawled,omitempty"`
 
 	// PageUrl: The URL of an error, relative to the site.
 	PageUrl string `json:"pageUrl,omitempty"`

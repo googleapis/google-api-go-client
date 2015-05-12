@@ -128,9 +128,9 @@ type RawKeyvalues struct {
 }
 
 type Tokeninfo struct {
-	// Access_type: The access type granted with this token. It can be
+	// AccessType: The access type granted with this token. It can be
 	// offline or online.
-	Access_type string `json:"access_type,omitempty"`
+	AccessType string `json:"access_type,omitempty"`
 
 	// Audience: Who is the intended audience for this token. In general the
 	// same as issued_to.
@@ -140,20 +140,20 @@ type Tokeninfo struct {
 	// is present in the request.
 	Email string `json:"email,omitempty"`
 
-	// Email_verified: Boolean flag which is true if the email address is
+	// EmailVerified: Boolean flag which is true if the email address is
 	// verified. Present only if the email scope is present in the request.
-	Email_verified bool `json:"email_verified,omitempty"`
+	EmailVerified bool `json:"email_verified,omitempty"`
 
-	// Expires_in: The expiry time of the token, as number of seconds left
+	// ExpiresIn: The expiry time of the token, as number of seconds left
 	// until expiry.
-	Expires_in int64 `json:"expires_in,omitempty"`
+	ExpiresIn int64 `json:"expires_in,omitempty"`
 
-	// Issued_at: The issue time of the token, as number of seconds.
-	Issued_at int64 `json:"issued_at,omitempty"`
+	// IssuedAt: The issue time of the token, as number of seconds.
+	IssuedAt int64 `json:"issued_at,omitempty"`
 
-	// Issued_to: To whom was the token issued to. In general the same as
+	// IssuedTo: To whom was the token issued to. In general the same as
 	// audience.
-	Issued_to string `json:"issued_to,omitempty"`
+	IssuedTo string `json:"issued_to,omitempty"`
 
 	// Issuer: Who issued the token.
 	Issuer string `json:"issuer,omitempty"`
@@ -164,26 +164,26 @@ type Tokeninfo struct {
 	// Scope: The space separated list of scopes granted to this token.
 	Scope string `json:"scope,omitempty"`
 
-	// User_id: The obfuscated user id.
-	User_id string `json:"user_id,omitempty"`
+	// UserId: The obfuscated user id.
+	UserId string `json:"user_id,omitempty"`
 
-	// Verified_email: Boolean flag which is true if the email address is
+	// VerifiedEmail: Boolean flag which is true if the email address is
 	// verified. Present only if the email scope is present in the request.
-	Verified_email bool `json:"verified_email,omitempty"`
+	VerifiedEmail bool `json:"verified_email,omitempty"`
 }
 
 type Userinfoplus struct {
 	// Email: The user's email address.
 	Email string `json:"email,omitempty"`
 
-	// Family_name: The user's last name.
-	Family_name string `json:"family_name,omitempty"`
+	// FamilyName: The user's last name.
+	FamilyName string `json:"family_name,omitempty"`
 
 	// Gender: The user's gender.
 	Gender string `json:"gender,omitempty"`
 
-	// Given_name: The user's first name.
-	Given_name string `json:"given_name,omitempty"`
+	// GivenName: The user's first name.
+	GivenName string `json:"given_name,omitempty"`
 
 	// Hd: The hosted domain e.g. example.com if the user is Google apps
 	// user.
@@ -204,10 +204,10 @@ type Userinfoplus struct {
 	// Picture: URL of the user's picture image.
 	Picture string `json:"picture,omitempty"`
 
-	// Verified_email: Boolean flag which is true if the email address is
+	// VerifiedEmail: Boolean flag which is true if the email address is
 	// verified. Always verified because we only return the user's primary
 	// email address.
-	Verified_email bool `json:"verified_email,omitempty"`
+	VerifiedEmail bool `json:"verified_email,omitempty"`
 }
 
 // method id "oauth2.getCertForOpenIdConnect":
@@ -481,16 +481,16 @@ func (s *Service) Tokeninfo() *TokeninfoCall {
 	return c
 }
 
-// Access_token sets the optional parameter "access_token": The oauth2
+// AccessToken sets the optional parameter "access_token": The oauth2
 // access token
-func (c *TokeninfoCall) Access_token(access_token string) *TokeninfoCall {
-	c.opt_["access_token"] = access_token
+func (c *TokeninfoCall) AccessToken(accessToken string) *TokeninfoCall {
+	c.opt_["access_token"] = accessToken
 	return c
 }
 
-// Id_token sets the optional parameter "id_token": The ID token
-func (c *TokeninfoCall) Id_token(id_token string) *TokeninfoCall {
-	c.opt_["id_token"] = id_token
+// IdToken sets the optional parameter "id_token": The ID token
+func (c *TokeninfoCall) IdToken(idToken string) *TokeninfoCall {
+	c.opt_["id_token"] = idToken
 	return c
 }
 

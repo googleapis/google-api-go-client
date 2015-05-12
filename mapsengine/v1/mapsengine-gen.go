@@ -509,7 +509,7 @@ type FeatureInfo struct {
 }
 
 type FeaturesBatchDeleteRequest struct {
-	Gx_ids []string `json:"gx_ids,omitempty"`
+	GxIds []string `json:"gx_ids,omitempty"`
 
 	PrimaryKeys []string `json:"primaryKeys,omitempty"`
 }

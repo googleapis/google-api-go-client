@@ -479,9 +479,9 @@ type AnonymousPlayer struct {
 }
 
 type Application struct {
-	// Achievement_count: The number of achievements visible to the
-	// currently authenticated player.
-	Achievement_count int64 `json:"achievement_count,omitempty"`
+	// AchievementCount: The number of achievements visible to the currently
+	// authenticated player.
+	AchievementCount int64 `json:"achievement_count,omitempty"`
 
 	// Assets: The assets of the application.
 	Assets []*ImageAsset `json:"assets,omitempty"`
@@ -514,9 +514,9 @@ type Application struct {
 	// LastUpdatedTimestamp: The last updated timestamp of the application.
 	LastUpdatedTimestamp int64 `json:"lastUpdatedTimestamp,omitempty,string"`
 
-	// Leaderboard_count: The number of leaderboards visible to the
-	// currently authenticated player.
-	Leaderboard_count int64 `json:"leaderboard_count,omitempty"`
+	// LeaderboardCount: The number of leaderboards visible to the currently
+	// authenticated player.
+	LeaderboardCount int64 `json:"leaderboard_count,omitempty"`
 
 	// Name: The name of the application.
 	Name string `json:"name,omitempty"`
@@ -1270,8 +1270,8 @@ type PlayerLeaderboardScore struct {
 	// the fixed string games#playerLeaderboardScore.
 	Kind string `json:"kind,omitempty"`
 
-	// Leaderboard_id: The ID of the leaderboard this score is in.
-	Leaderboard_id string `json:"leaderboard_id,omitempty"`
+	// LeaderboardId: The ID of the leaderboard this score is in.
+	LeaderboardId string `json:"leaderboard_id,omitempty"`
 
 	// PublicRank: The public rank of the score in this leaderboard. This
 	// object will not be present if the user is not sharing their scores
@@ -1450,14 +1450,14 @@ type PushTokenId struct {
 }
 
 type PushTokenIdIos struct {
-	// Apns_device_token: Device token supplied by an iOS system call to
+	// ApnsDeviceToken: Device token supplied by an iOS system call to
 	// register for remote notifications. Encode this field as web-safe
 	// base64.
-	Apns_device_token string `json:"apns_device_token,omitempty"`
+	ApnsDeviceToken string `json:"apns_device_token,omitempty"`
 
-	// Apns_environment: Indicates whether this token should be used for the
+	// ApnsEnvironment: Indicates whether this token should be used for the
 	// production or sandbox APNS server.
-	Apns_environment string `json:"apns_environment,omitempty"`
+	ApnsEnvironment string `json:"apns_environment,omitempty"`
 }
 
 type Quest struct {
@@ -1904,9 +1904,9 @@ type RoomP2PStatus struct {
 	// use the relay server to establish a P2P connection with the peer.
 	Error string `json:"error,omitempty"`
 
-	// Error_reason: More detailed diagnostic message returned in event of a
+	// ErrorReason: More detailed diagnostic message returned in event of a
 	// failure.
-	Error_reason string `json:"error_reason,omitempty"`
+	ErrorReason string `json:"error_reason,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string games#roomP2PStatus.
@@ -2112,8 +2112,8 @@ type SnapshotImage struct {
 	// the fixed string games#snapshotImage.
 	Kind string `json:"kind,omitempty"`
 
-	// Mime_type: The MIME type of the image.
-	Mime_type string `json:"mime_type,omitempty"`
+	// MimeType: The MIME type of the image.
+	MimeType string `json:"mime_type,omitempty"`
 
 	// Url: The URL of the image. This URL may be invalidated at any time
 	// and should not be cached.

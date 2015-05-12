@@ -230,7 +230,7 @@ type JsonSchemaVariant struct {
 type JsonSchemaVariantMap struct {
 	Ref string `json:"$ref,omitempty"`
 
-	Type_value string `json:"type_value,omitempty"`
+	TypeValue string `json:"type_value,omitempty"`
 }
 
 type RestDescription struct {

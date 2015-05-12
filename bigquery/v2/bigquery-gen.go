@@ -53,13 +53,13 @@ const (
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
 	// Manage your data and permissions in Google Cloud Storage
-	DevstorageFull_controlScope = "https://www.googleapis.com/auth/devstorage.full_control"
+	DevstorageFullControlScope = "https://www.googleapis.com/auth/devstorage.full_control"
 
 	// View your data in Google Cloud Storage
-	DevstorageRead_onlyScope = "https://www.googleapis.com/auth/devstorage.read_only"
+	DevstorageReadOnlyScope = "https://www.googleapis.com/auth/devstorage.read_only"
 
 	// Manage your data in Google Cloud Storage
-	DevstorageRead_writeScope = "https://www.googleapis.com/auth/devstorage.read_write"
+	DevstorageReadWriteScope = "https://www.googleapis.com/auth/devstorage.read_write"
 )
 
 func New(client *http.Client) (*Service, error) {
@@ -455,8 +455,8 @@ type Job struct {
 	// polling an asynchronous job to see if the job is complete.
 	Status *JobStatus `json:"status,omitempty"`
 
-	// User_email: [Output-only] Email address of the user who ran the job.
-	User_email string `json:"user_email,omitempty"`
+	// UserEmail: [Output-only] Email address of the user who ran the job.
+	UserEmail string `json:"user_email,omitempty"`
 }
 
 type JobConfiguration struct {
@@ -807,9 +807,9 @@ type JobListJobs struct {
 	// Status: [Full-projection-only] Describes the state of the job.
 	Status *JobStatus `json:"status,omitempty"`
 
-	// User_email: [Full-projection-only] Email address of the user who ran
+	// UserEmail: [Full-projection-only] Email address of the user who ran
 	// the job.
-	User_email string `json:"user_email,omitempty"`
+	UserEmail string `json:"user_email,omitempty"`
 }
 
 type JobReference struct {

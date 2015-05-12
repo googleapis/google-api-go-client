@@ -108,10 +108,10 @@ type AdministrationRegion struct {
 	// that can be requested from the Request more link on the Quotas page.
 	Id string `json:"id,omitempty"`
 
-	// Local_jurisdiction: The city or county that provides election
+	// LocalJurisdiction: The city or county that provides election
 	// information for this voter. This object can have the same elements as
 	// state.
-	Local_jurisdiction *AdministrationRegion `json:"local_jurisdiction,omitempty"`
+	LocalJurisdiction *AdministrationRegion `json:"local_jurisdiction,omitempty"`
 
 	// Name: The name of the jurisdiction.
 	Name string `json:"name,omitempty"`
@@ -165,9 +165,9 @@ type AdministrativeBody struct {
 	// PhysicalAddress: The physical address of this administrative body.
 	PhysicalAddress *SimpleAddressType `json:"physicalAddress,omitempty"`
 
-	// Voter_services: A description of the services this administrative
-	// body may provide.
-	Voter_services []string `json:"voter_services,omitempty"`
+	// VoterServices: A description of the services this administrative body
+	// may provide.
+	VoterServices []string `json:"voter_services,omitempty"`
 
 	// VotingLocationFinderUrl: A URL provided by this administrative body
 	// for looking up where to vote.

@@ -1818,12 +1818,12 @@ func validGoIdentifer(ident string) string {
 	return id
 }
 
-// depunct removes '-', '.', '$', '/' from identifers, making the
+// depunct removes '-', '.', '$', '/', '_' from identifers, making the
 // following character uppercase
 func depunct(ident string, needCap bool) string {
 	var buf bytes.Buffer
 	for _, c := range ident {
-		if c == '-' || c == '.' || c == '$' || c == '/' {
+		if c == '-' || c == '.' || c == '$' || c == '/' || c == '_' {
 			needCap = true
 			continue
 		}

@@ -304,10 +304,10 @@ func (s *Service) Search() *SearchCall {
 	return c
 }
 
-// As_of_time sets the optional parameter "as_of_time": A mql as_of_time
+// AsOfTime sets the optional parameter "as_of_time": A mql as_of_time
 // value to use with mql_output queries.
-func (c *SearchCall) As_of_time(as_of_time string) *SearchCall {
-	c.opt_["as_of_time"] = as_of_time
+func (c *SearchCall) AsOfTime(asOfTime string) *SearchCall {
+	c.opt_["as_of_time"] = asOfTime
 	return c
 }
 
@@ -395,10 +395,10 @@ func (c *SearchCall) Mid(mid string) *SearchCall {
 	return c
 }
 
-// Mql_output sets the optional parameter "mql_output": The MQL query to
+// MqlOutput sets the optional parameter "mql_output": The MQL query to
 // run againist the results to extract more data.
-func (c *SearchCall) Mql_output(mql_output string) *SearchCall {
-	c.opt_["mql_output"] = mql_output
+func (c *SearchCall) MqlOutput(mqlOutput string) *SearchCall {
+	c.opt_["mql_output"] = mqlOutput
 	return c
 }
 

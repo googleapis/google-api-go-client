@@ -270,8 +270,8 @@ type BlogUserInfo struct {
 	// Blog: The Blog resource.
 	Blog *Blog `json:"blog,omitempty"`
 
-	// Blog_user_info: Information about a User for the Blog.
-	Blog_user_info *BlogPerUserInfo `json:"blog_user_info,omitempty"`
+	// BlogUserInfo: Information about a User for the Blog.
+	BlogUserInfo *BlogPerUserInfo `json:"blog_user_info,omitempty"`
 
 	// Kind: The kind of this entity. Always blogger#blogUserInfo
 	Kind string `json:"kind,omitempty"`
@@ -593,8 +593,8 @@ type PostUserInfo struct {
 	// Post: The Post resource.
 	Post *Post `json:"post,omitempty"`
 
-	// Post_user_info: Information about a User for the Post.
-	Post_user_info *PostPerUserInfo `json:"post_user_info,omitempty"`
+	// PostUserInfo: Information about a User for the Post.
+	PostUserInfo *PostPerUserInfo `json:"post_user_info,omitempty"`
 }
 
 type PostUserInfosList struct {

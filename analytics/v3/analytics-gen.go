@@ -795,11 +795,11 @@ type CustomMetric struct {
 	// "analytics#customMetric". It is a read-only field.
 	Kind string `json:"kind,omitempty"`
 
-	// Max_value: Max value of custom metric.
-	Max_value string `json:"max_value,omitempty"`
+	// MaxValue: Max value of custom metric.
+	MaxValue string `json:"max_value,omitempty"`
 
-	// Min_value: Min value of custom metric.
-	Min_value string `json:"min_value,omitempty"`
+	// MinValue: Min value of custom metric.
+	MinValue string `json:"min_value,omitempty"`
 
 	// Name: Name of the custom metric.
 	Name string `json:"name,omitempty"`

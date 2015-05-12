@@ -605,8 +605,8 @@ type ItemScope struct {
 	// AddressRegion: Address region.
 	AddressRegion string `json:"addressRegion,omitempty"`
 
-	// Associated_media: The encoding.
-	Associated_media []*ItemScope `json:"associated_media,omitempty"`
+	// AssociatedMedia: The encoding.
+	AssociatedMedia []*ItemScope `json:"associated_media,omitempty"`
 
 	// AttendeeCount: Number of attendees.
 	AttendeeCount int64 `json:"attendeeCount,omitempty"`

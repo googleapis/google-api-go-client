@@ -813,27 +813,27 @@ type Publishers struct {
 }
 
 type Report struct {
-	// Column_names: The column names for the report
-	Column_names []string `json:"column_names,omitempty"`
+	// ColumnNames: The column names for the report
+	ColumnNames []string `json:"column_names,omitempty"`
 
-	// End_date: The end of the date range for this report, exclusive.
-	End_date string `json:"end_date,omitempty"`
+	// EndDate: The end of the date range for this report, exclusive.
+	EndDate string `json:"end_date,omitempty"`
 
 	// Kind: The kind for a report.
 	Kind string `json:"kind,omitempty"`
 
-	// Matching_row_count: The number of matching rows before paging is
+	// MatchingRowCount: The number of matching rows before paging is
 	// applied.
-	Matching_row_count int64 `json:"matching_row_count,omitempty,string"`
+	MatchingRowCount int64 `json:"matching_row_count,omitempty,string"`
 
 	// Rows: The rows of data for the report
 	Rows [][]interface{} `json:"rows,omitempty"`
 
-	// Start_date: The start of the date range for this report, inclusive.
-	Start_date string `json:"start_date,omitempty"`
+	// StartDate: The start of the date range for this report, inclusive.
+	StartDate string `json:"start_date,omitempty"`
 
-	// Totals_rows: The totals rows for the report
-	Totals_rows [][]interface{} `json:"totals_rows,omitempty"`
+	// TotalsRows: The totals rows for the report
+	TotalsRows [][]interface{} `json:"totals_rows,omitempty"`
 
 	// Type: The report type.
 	Type string `json:"type,omitempty"`

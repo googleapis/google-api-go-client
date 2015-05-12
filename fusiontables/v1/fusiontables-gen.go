@@ -176,10 +176,10 @@ type Column struct {
 	// Description: Optional column description.
 	Description string `json:"description,omitempty"`
 
-	// Graph_predicate: Optional column predicate. Used to map table to
-	// graph data model (subject,predicate,object) See
+	// GraphPredicate: Optional column predicate. Used to map table to graph
+	// data model (subject,predicate,object) See
 	// http://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/#data-model
-	Graph_predicate string `json:"graph_predicate,omitempty"`
+	GraphPredicate string `json:"graph_predicate,omitempty"`
 
 	// Kind: Type name: a template for an individual column.
 	Kind string `json:"kind,omitempty"`

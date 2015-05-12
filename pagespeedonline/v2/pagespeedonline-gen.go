@@ -95,10 +95,10 @@ type PagespeedApiFormatStringV2Args struct {
 	// that that argument refers to the entire snapshot.
 	Rects []*PagespeedApiFormatStringV2ArgsRects `json:"rects,omitempty"`
 
-	// Secondary_rects: Secondary screen rectangles being referred to, with
+	// SecondaryRects: Secondary screen rectangles being referred to, with
 	// dimensions measured in CSS pixels. This is only ever used for
 	// SNAPSHOT_RECT arguments.
-	Secondary_rects []*PagespeedApiFormatStringV2ArgsSecondary_rects `json:"secondary_rects,omitempty"`
+	SecondaryRects []*PagespeedApiFormatStringV2ArgsSecondaryRects `json:"secondary_rects,omitempty"`
 
 	// Type: Type of argument. One of URL, STRING_LITERAL, INT_LITERAL,
 	// BYTES, DURATION, VERBATIM_STRING, PERCENTAGE, HYPERLINK, or
@@ -123,7 +123,7 @@ type PagespeedApiFormatStringV2ArgsRects struct {
 	Width int64 `json:"width,omitempty"`
 }
 
-type PagespeedApiFormatStringV2ArgsSecondary_rects struct {
+type PagespeedApiFormatStringV2ArgsSecondaryRects struct {
 	// Height: The height of the rect.
 	Height int64 `json:"height,omitempty"`
 
@@ -147,18 +147,18 @@ type PagespeedApiImageV2 struct {
 	// Key: Unique string key, if any, identifying this image.
 	Key string `json:"key,omitempty"`
 
-	// Mime_type: Mime type of image data (e.g. "image/jpeg").
-	Mime_type string `json:"mime_type,omitempty"`
+	// MimeType: Mime type of image data (e.g. "image/jpeg").
+	MimeType string `json:"mime_type,omitempty"`
 
-	// Page_rect: The region of the page that is captured by this image,
-	// with dimensions measured in CSS pixels.
-	Page_rect *PagespeedApiImageV2Page_rect `json:"page_rect,omitempty"`
+	// PageRect: The region of the page that is captured by this image, with
+	// dimensions measured in CSS pixels.
+	PageRect *PagespeedApiImageV2PageRect `json:"page_rect,omitempty"`
 
 	// Width: Width of screenshot in pixels.
 	Width int64 `json:"width,omitempty"`
 }
 
-type PagespeedApiImageV2Page_rect struct {
+type PagespeedApiImageV2PageRect struct {
 	// Height: The height of the rect.
 	Height int64 `json:"height,omitempty"`
 
@@ -303,11 +303,11 @@ func (r *PagespeedapiService) Runpagespeed(url string) *PagespeedapiRunpagespeed
 	return c
 }
 
-// Filter_third_party_resources sets the optional parameter
+// FilterThirdPartyResources sets the optional parameter
 // "filter_third_party_resources": Indicates if third party resources
 // should be filtered out before PageSpeed analysis.
-func (c *PagespeedapiRunpagespeedCall) Filter_third_party_resources(filter_third_party_resources bool) *PagespeedapiRunpagespeedCall {
-	c.opt_["filter_third_party_resources"] = filter_third_party_resources
+func (c *PagespeedapiRunpagespeedCall) FilterThirdPartyResources(filterThirdPartyResources bool) *PagespeedapiRunpagespeedCall {
+	c.opt_["filter_third_party_resources"] = filterThirdPartyResources
 	return c
 }
 

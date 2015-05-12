@@ -425,8 +425,8 @@ type Annotationdata struct {
 
 	Data interface{} `json:"data,omitempty"`
 
-	// Encoded_data: Base64 encoded data for this annotation data.
-	Encoded_data string `json:"encoded_data,omitempty"`
+	// EncodedData: Base64 encoded data for this annotation data.
+	EncodedData string `json:"encoded_data,omitempty"`
 
 	// Id: Unique id for this annotation data.
 	Id string `json:"id,omitempty"`
@@ -523,7 +523,7 @@ type BooksCloudloadingResource struct {
 }
 
 type BooksVolumesRecommendedRateResponse struct {
-	Consistency_token string `json:"consistency_token,omitempty"`
+	ConsistencyToken string `json:"consistency_token,omitempty"`
 }
 
 type Bookshelf struct {
@@ -960,9 +960,9 @@ type Metadata struct {
 }
 
 type MetadataItems struct {
-	Download_url string `json:"download_url,omitempty"`
+	DownloadUrl string `json:"download_url,omitempty"`
 
-	Encrypted_key string `json:"encrypted_key,omitempty"`
+	EncryptedKey string `json:"encrypted_key,omitempty"`
 
 	Language string `json:"language,omitempty"`
 
@@ -2009,17 +2009,17 @@ func (r *CloudloadingService) AddBook() *CloudloadingAddBookCall {
 	return c
 }
 
-// Drive_document_id sets the optional parameter "drive_document_id": A
+// DriveDocumentId sets the optional parameter "drive_document_id": A
 // drive document id. The upload_client_token must not be set.
-func (c *CloudloadingAddBookCall) Drive_document_id(drive_document_id string) *CloudloadingAddBookCall {
-	c.opt_["drive_document_id"] = drive_document_id
+func (c *CloudloadingAddBookCall) DriveDocumentId(driveDocumentId string) *CloudloadingAddBookCall {
+	c.opt_["drive_document_id"] = driveDocumentId
 	return c
 }
 
-// Mime_type sets the optional parameter "mime_type": The document MIME
+// MimeType sets the optional parameter "mime_type": The document MIME
 // type. It can be set only if the drive_document_id is set.
-func (c *CloudloadingAddBookCall) Mime_type(mime_type string) *CloudloadingAddBookCall {
-	c.opt_["mime_type"] = mime_type
+func (c *CloudloadingAddBookCall) MimeType(mimeType string) *CloudloadingAddBookCall {
+	c.opt_["mime_type"] = mimeType
 	return c
 }
 
@@ -2030,10 +2030,9 @@ func (c *CloudloadingAddBookCall) Name(name string) *CloudloadingAddBookCall {
 	return c
 }
 
-// Upload_client_token sets the optional parameter
-// "upload_client_token":
-func (c *CloudloadingAddBookCall) Upload_client_token(upload_client_token string) *CloudloadingAddBookCall {
-	c.opt_["upload_client_token"] = upload_client_token
+// UploadClientToken sets the optional parameter "upload_client_token":
+func (c *CloudloadingAddBookCall) UploadClientToken(uploadClientToken string) *CloudloadingAddBookCall {
+	c.opt_["upload_client_token"] = uploadClientToken
 	return c
 }
 
@@ -6438,10 +6437,10 @@ func (c *VolumesGetCall) Source(source string) *VolumesGetCall {
 	return c
 }
 
-// User_library_consistent_read sets the optional parameter
+// UserLibraryConsistentRead sets the optional parameter
 // "user_library_consistent_read":
-func (c *VolumesGetCall) User_library_consistent_read(user_library_consistent_read bool) *VolumesGetCall {
-	c.opt_["user_library_consistent_read"] = user_library_consistent_read
+func (c *VolumesGetCall) UserLibraryConsistentRead(userLibraryConsistentRead bool) *VolumesGetCall {
+	c.opt_["user_library_consistent_read"] = userLibraryConsistentRead
 	return c
 }
 

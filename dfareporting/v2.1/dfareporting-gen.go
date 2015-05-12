@@ -1202,10 +1202,10 @@ type Ad struct {
 	// PlacementAssignments: Placement assignments for this ad.
 	PlacementAssignments []*PlacementAssignment `json:"placementAssignments,omitempty"`
 
-	// Remarketing_list_expression: Applicable when type is
+	// RemarketingListExpression: Applicable when type is
 	// AD_SERVING_STANDARD_AD. Remarketing list targeting expression for
 	// this ad.
-	Remarketing_list_expression *ListTargetingExpression `json:"remarketing_list_expression,omitempty"`
+	RemarketingListExpression *ListTargetingExpression `json:"remarketing_list_expression,omitempty"`
 
 	// Size: Size of this ad. Applicable when type is AD_SERVING_DEFAULT_AD.
 	Size *Size `json:"size,omitempty"`
@@ -1940,10 +1940,10 @@ type Creative struct {
 	// HTML5_BANNER.
 	AuthoringTool string `json:"authoringTool,omitempty"`
 
-	// Auto_advance_images: Whether images are automatically advanced for
+	// AutoAdvanceImages: Whether images are automatically advanced for
 	// enhanced image creatives. Applicable to the following creative types:
 	// ENHANCED_IMAGE.
-	Auto_advance_images bool `json:"auto_advance_images,omitempty"`
+	AutoAdvanceImages bool `json:"auto_advance_images,omitempty"`
 
 	// BackgroundColor: The 6-character HTML color code, beginning with #,
 	// for the background of the window area where the Flash file is
@@ -2939,11 +2939,11 @@ type DeliverySchedule struct {
 }
 
 type DfpSettings struct {
-	// Dfp_network_code: DFP network code for this directory site.
-	Dfp_network_code string `json:"dfp_network_code,omitempty"`
+	// DfpNetworkCode: DFP network code for this directory site.
+	DfpNetworkCode string `json:"dfp_network_code,omitempty"`
 
-	// Dfp_network_name: DFP network name for this directory site.
-	Dfp_network_name string `json:"dfp_network_name,omitempty"`
+	// DfpNetworkName: DFP network name for this directory site.
+	DfpNetworkName string `json:"dfp_network_name,omitempty"`
 
 	// ProgrammaticPlacementAccepted: Whether this directory site accepts
 	// programmatic placements.
@@ -3204,12 +3204,12 @@ type DirectorySiteSettings struct {
 	// view creatives.
 	ActiveViewOptOut bool `json:"activeViewOptOut,omitempty"`
 
-	// Dfp_settings: Directory site DFP settings.
-	Dfp_settings *DfpSettings `json:"dfp_settings,omitempty"`
+	// DfpSettings: Directory site DFP settings.
+	DfpSettings *DfpSettings `json:"dfp_settings,omitempty"`
 
-	// Instream_video_placement_accepted: Whether this site accepts
-	// in-stream video ads.
-	Instream_video_placement_accepted bool `json:"instream_video_placement_accepted,omitempty"`
+	// InstreamVideoPlacementAccepted: Whether this site accepts in-stream
+	// video ads.
+	InstreamVideoPlacementAccepted bool `json:"instream_video_placement_accepted,omitempty"`
 
 	// InterstitialPlacementAccepted: Whether this site accepts interstitial
 	// ads.
@@ -16042,10 +16042,10 @@ func (c *DirectorySitesListCall) CountryId(countryId int64) *DirectorySitesListC
 	return c
 }
 
-// Dfp_network_code sets the optional parameter "dfp_network_code":
-// Select only directory sites with this DFP network code.
-func (c *DirectorySitesListCall) Dfp_network_code(dfp_network_code string) *DirectorySitesListCall {
-	c.opt_["dfp_network_code"] = dfp_network_code
+// DfpNetworkCode sets the optional parameter "dfp_network_code": Select
+// only directory sites with this DFP network code.
+func (c *DirectorySitesListCall) DfpNetworkCode(dfpNetworkCode string) *DirectorySitesListCall {
+	c.opt_["dfp_network_code"] = dfpNetworkCode
 	return c
 }
 

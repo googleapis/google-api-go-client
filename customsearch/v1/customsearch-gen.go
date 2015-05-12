@@ -85,7 +85,7 @@ type ContextFacetsItem struct {
 
 	Label string `json:"label,omitempty"`
 
-	Label_with_op string `json:"label_with_op,omitempty"`
+	LabelWithOp string `json:"label_with_op,omitempty"`
 }
 
 type Promotion struct {
@@ -247,7 +247,7 @@ type ResultImage struct {
 type ResultLabels struct {
 	DisplayName string `json:"displayName,omitempty"`
 
-	Label_with_op string `json:"label_with_op,omitempty"`
+	LabelWithOp string `json:"label_with_op,omitempty"`
 
 	Name string `json:"name,omitempty"`
 }

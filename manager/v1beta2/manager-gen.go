@@ -53,7 +53,7 @@ const (
 	ComputeScope = "https://www.googleapis.com/auth/compute"
 
 	// Manage your data in Google Cloud Storage
-	DevstorageRead_writeScope = "https://www.googleapis.com/auth/devstorage.read_write"
+	DevstorageReadWriteScope = "https://www.googleapis.com/auth/devstorage.read_write"
 
 	// View and manage your Google Cloud Platform management resources and
 	// deployment status information

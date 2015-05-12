@@ -178,8 +178,8 @@ type AchievementResetAllResponse struct {
 }
 
 type AchievementResetMultipleForAllRequest struct {
-	// Achievement_ids: The IDs of achievements to reset.
-	Achievement_ids []string `json:"achievement_ids,omitempty"`
+	// AchievementIds: The IDs of achievements to reset.
+	AchievementIds []string `json:"achievement_ids,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string
@@ -210,8 +210,8 @@ type AchievementResetResponse struct {
 }
 
 type EventsResetMultipleForAllRequest struct {
-	// Event_ids: The IDs of events to reset.
-	Event_ids []string `json:"event_ids,omitempty"`
+	// EventIds: The IDs of events to reset.
+	EventIds []string `json:"event_ids,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string gamesManagement#eventsResetMultipleForAllRequest.
@@ -353,8 +353,8 @@ type QuestsResetMultipleForAllRequest struct {
 	// the fixed string gamesManagement#questsResetMultipleForAllRequest.
 	Kind string `json:"kind,omitempty"`
 
-	// Quest_ids: The IDs of quests to reset.
-	Quest_ids []string `json:"quest_ids,omitempty"`
+	// QuestIds: The IDs of quests to reset.
+	QuestIds []string `json:"quest_ids,omitempty"`
 }
 
 type ScoresResetMultipleForAllRequest struct {
@@ -362,8 +362,8 @@ type ScoresResetMultipleForAllRequest struct {
 	// the fixed string gamesManagement#scoresResetMultipleForAllRequest.
 	Kind string `json:"kind,omitempty"`
 
-	// Leaderboard_ids: The IDs of leaderboards to reset.
-	Leaderboard_ids []string `json:"leaderboard_ids,omitempty"`
+	// LeaderboardIds: The IDs of leaderboards to reset.
+	LeaderboardIds []string `json:"leaderboard_ids,omitempty"`
 }
 
 // method id "gamesManagement.achievements.reset":

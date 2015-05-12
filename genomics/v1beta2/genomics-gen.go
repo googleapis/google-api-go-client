@@ -47,7 +47,7 @@ const (
 	BigqueryScope = "https://www.googleapis.com/auth/bigquery"
 
 	// Manage your data in Google Cloud Storage
-	DevstorageRead_writeScope = "https://www.googleapis.com/auth/devstorage.read_write"
+	DevstorageReadWriteScope = "https://www.googleapis.com/auth/devstorage.read_write"
 
 	// View and manage Genomics data
 	GenomicsScope = "https://www.googleapis.com/auth/genomics"

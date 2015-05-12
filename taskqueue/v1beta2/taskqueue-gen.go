@@ -118,8 +118,8 @@ type Task struct {
 	// QueueName: Name of the queue that the task is in.
 	QueueName string `json:"queueName,omitempty"`
 
-	// Retry_count: The number of leases applied to this task.
-	Retry_count int64 `json:"retry_count,omitempty"`
+	// RetryCount: The number of leases applied to this task.
+	RetryCount int64 `json:"retry_count,omitempty"`
 
 	// Tag: Tag for the task, could be used later to lease tasks grouped by
 	// a specific tag.

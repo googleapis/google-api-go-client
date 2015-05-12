@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d338121_56be9247",
+        "filename": "adexchangebuyer/v1.2/adexchangebuyer-gen.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 792,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-05-12T18:01:28Z",
+      "side": 1,
+      "message": "Do you need to rebase this against what you\u0027ve already submitted, so this line doesn\u0027t show up as new?\n\nOnly the descriptions should render as new, right?",
+      "revId": "b524fbf00e293b9c7c5038b0485277de5ca57f40",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2d338121_365aeed5",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 1888,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-05-12T18:01:28Z",
+      "side": 1,
+      "message": "I\u0027d put default in the middle:\n\n// \"THE_VALUE\" (default) - and the description\n// \"FOO\" - other desc\n// \"BAR\" - final",
+      "revId": "b524fbf00e293b9c7c5038b0485277de5ca57f40",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2d338121_b6655e92",
+        "filename": "resourceviews/v1beta2/resourceviews-gen.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 1301,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-05-12T18:01:28Z",
+      "side": 1,
+      "message": "I\u0027m con",
+      "revId": "b524fbf00e293b9c7c5038b0485277de5ca57f40",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

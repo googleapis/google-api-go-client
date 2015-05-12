@@ -877,6 +877,16 @@ func (r *UrlcrawlerrorscountsService) Query(siteUrl string) *Urlcrawlerrorscount
 // Category sets the optional parameter "category": The crawl error
 // category, for example 'serverError'. If not specified, we return
 // results for all categories.
+//
+// Possible values:
+//   "authPermissions"
+//   "manyToOneRedirect"
+//   "notFollowed"
+//   "notFound"
+//   "other"
+//   "roboted"
+//   "serverError"
+//   "soft404"
 func (c *UrlcrawlerrorscountsQueryCall) Category(category string) *UrlcrawlerrorscountsQueryCall {
 	c.opt_["category"] = category
 	return c
@@ -892,6 +902,11 @@ func (c *UrlcrawlerrorscountsQueryCall) LatestCountsOnly(latestCountsOnly bool) 
 // Platform sets the optional parameter "platform": The user agent type
 // (platform) that made the request, for example 'web'. If not
 // specified, we return results for all platforms.
+//
+// Possible values:
+//   "mobile"
+//   "smartphoneOnly"
+//   "web"
 func (c *UrlcrawlerrorscountsQueryCall) Platform(platform string) *UrlcrawlerrorscountsQueryCall {
 	c.opt_["platform"] = platform
 	return c

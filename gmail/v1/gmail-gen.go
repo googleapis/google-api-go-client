@@ -826,6 +826,12 @@ func (r *UsersDraftsService) Get(userId string, id string) *UsersDraftsGetCall {
 
 // Format sets the optional parameter "format": The format to return the
 // draft in.
+//
+// Possible values:
+//   "full" (default)
+//   "metadata"
+//   "minimal"
+//   "raw"
 func (c *UsersDraftsGetCall) Format(format string) *UsersDraftsGetCall {
 	c.opt_["format"] = format
 	return c
@@ -2211,6 +2217,12 @@ func (r *UsersMessagesService) Get(userId string, id string) *UsersMessagesGetCa
 
 // Format sets the optional parameter "format": The format to return the
 // message in.
+//
+// Possible values:
+//   "full" (default)
+//   "metadata"
+//   "minimal"
+//   "raw"
 func (c *UsersMessagesGetCall) Format(format string) *UsersMessagesGetCall {
 	c.opt_["format"] = format
 	return c
@@ -2360,6 +2372,10 @@ func (c *UsersMessagesImportCall) Deleted(deleted bool) *UsersMessagesImportCall
 
 // InternalDateSource sets the optional parameter "internalDateSource":
 // Source for Gmail's internal date of the message.
+//
+// Possible values:
+//   "dateHeader" (default)
+//   "receivedTime"
 func (c *UsersMessagesImportCall) InternalDateSource(internalDateSource string) *UsersMessagesImportCall {
 	c.opt_["internalDateSource"] = internalDateSource
 	return c
@@ -2621,6 +2637,10 @@ func (c *UsersMessagesInsertCall) Deleted(deleted bool) *UsersMessagesInsertCall
 
 // InternalDateSource sets the optional parameter "internalDateSource":
 // Source for Gmail's internal date of the message.
+//
+// Possible values:
+//   "dateHeader"
+//   "receivedTime" (default)
 func (c *UsersMessagesInsertCall) InternalDateSource(internalDateSource string) *UsersMessagesInsertCall {
 	c.opt_["internalDateSource"] = internalDateSource
 	return c
@@ -3630,6 +3650,11 @@ func (r *UsersThreadsService) Get(userId string, id string) *UsersThreadsGetCall
 
 // Format sets the optional parameter "format": The format to return the
 // messages in.
+//
+// Possible values:
+//   "full" (default)
+//   "metadata"
+//   "minimal"
 func (c *UsersThreadsGetCall) Format(format string) *UsersThreadsGetCall {
 	c.opt_["format"] = format
 	return c

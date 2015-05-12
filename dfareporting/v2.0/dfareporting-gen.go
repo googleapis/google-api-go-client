@@ -6558,6 +6558,10 @@ func (c *AccountUserProfilesListCall) SearchString(searchString string) *Account
 
 // SortField sets the optional parameter "sortField": Field by which to
 // sort the list.
+//
+// Possible values:
+//   "ID"
+//   "NAME"
 func (c *AccountUserProfilesListCall) SortField(sortField string) *AccountUserProfilesListCall {
 	c.opt_["sortField"] = sortField
 	return c
@@ -6565,6 +6569,10 @@ func (c *AccountUserProfilesListCall) SortField(sortField string) *AccountUserPr
 
 // SortOrder sets the optional parameter "sortOrder": Order of sorted
 // results, default is ASCENDING.
+//
+// Possible values:
+//   "ASCENDING"
+//   "DESCENDING"
 func (c *AccountUserProfilesListCall) SortOrder(sortOrder string) *AccountUserProfilesListCall {
 	c.opt_["sortOrder"] = sortOrder
 	return c
@@ -7074,6 +7082,10 @@ func (c *AccountsListCall) SearchString(searchString string) *AccountsListCall {
 
 // SortField sets the optional parameter "sortField": Field by which to
 // sort the list.
+//
+// Possible values:
+//   "ID"
+//   "NAME"
 func (c *AccountsListCall) SortField(sortField string) *AccountsListCall {
 	c.opt_["sortField"] = sortField
 	return c
@@ -7081,6 +7093,10 @@ func (c *AccountsListCall) SortField(sortField string) *AccountsListCall {
 
 // SortOrder sets the optional parameter "sortOrder": Order of sorted
 // results, default is ASCENDING.
+//
+// Possible values:
+//   "ASCENDING"
+//   "DESCENDING"
 func (c *AccountsListCall) SortOrder(sortOrder string) *AccountsListCall {
 	c.opt_["sortOrder"] = sortOrder
 	return c
@@ -7643,6 +7659,13 @@ func (c *AdsListCall) CampaignIds(campaignIds int64) *AdsListCall {
 // ads, respectively. APP and APP_INTERSTITIAL are for rendering in
 // mobile apps. IN_STREAM_VIDEO refers to rendering an in-stream video
 // ads developed with the VAST standard.
+//
+// Possible values:
+//   "APP"
+//   "APP_INTERSTITIAL"
+//   "IN_STREAM_VIDEO"
+//   "WEB"
+//   "WEB_INTERSTITIAL"
 func (c *AdsListCall) Compatibility(compatibility string) *AdsListCall {
 	c.opt_["compatibility"] = compatibility
 	return c
@@ -7665,6 +7688,31 @@ func (c *AdsListCall) CreativeOptimizationConfigurationIds(creativeOptimizationC
 
 // CreativeType sets the optional parameter "creativeType": Select only
 // ads with the specified creativeType.
+//
+// Possible values:
+//   "BRAND_SAFE_DEFAULT_INSTREAM_VIDEO"
+//   "CUSTOM_INPAGE"
+//   "CUSTOM_INTERSTITIAL"
+//   "ENHANCED_BANNER"
+//   "ENHANCED_IMAGE"
+//   "FLASH_INPAGE"
+//   "HTML5_BANNER"
+//   "IMAGE"
+//   "INSTREAM_VIDEO"
+//   "INTERNAL_REDIRECT"
+//   "INTERSTITIAL_INTERNAL_REDIRECT"
+//   "REDIRECT"
+//   "RICH_MEDIA_EXPANDING"
+//   "RICH_MEDIA_IM_EXPAND"
+//   "RICH_MEDIA_INPAGE"
+//   "RICH_MEDIA_INPAGE_FLOATING"
+//   "RICH_MEDIA_INTERSTITIAL_FLOAT"
+//   "RICH_MEDIA_MOBILE_IN_APP"
+//   "RICH_MEDIA_MULTI_FLOATING"
+//   "RICH_MEDIA_PEEL_DOWN"
+//   "TRACKING_TEXT"
+//   "VPAID_LINEAR"
+//   "VPAID_NON_LINEAR"
 func (c *AdsListCall) CreativeType(creativeType string) *AdsListCall {
 	c.opt_["creativeType"] = creativeType
 	return c
@@ -7752,6 +7800,10 @@ func (c *AdsListCall) SizeIds(sizeIds int64) *AdsListCall {
 
 // SortField sets the optional parameter "sortField": Field by which to
 // sort the list.
+//
+// Possible values:
+//   "ID"
+//   "NAME"
 func (c *AdsListCall) SortField(sortField string) *AdsListCall {
 	c.opt_["sortField"] = sortField
 	return c
@@ -7759,6 +7811,10 @@ func (c *AdsListCall) SortField(sortField string) *AdsListCall {
 
 // SortOrder sets the optional parameter "sortOrder": Order of sorted
 // results, default is ASCENDING.
+//
+// Possible values:
+//   "ASCENDING"
+//   "DESCENDING"
 func (c *AdsListCall) SortOrder(sortOrder string) *AdsListCall {
 	c.opt_["sortOrder"] = sortOrder
 	return c
@@ -7780,6 +7836,12 @@ func (c *AdsListCall) SslRequired(sslRequired bool) *AdsListCall {
 
 // Type sets the optional parameter "type": Select only ads with these
 // types.
+//
+// Possible values:
+//   "AD_SERVING_CLICK_TRACKER"
+//   "AD_SERVING_DEFAULT_AD"
+//   "AD_SERVING_STANDARD_AD"
+//   "AD_SERVING_TRACKING"
 func (c *AdsListCall) Type(type_ string) *AdsListCall {
 	c.opt_["type"] = type_
 	return c
@@ -8649,6 +8711,10 @@ func (c *AdvertiserGroupsListCall) SearchString(searchString string) *Advertiser
 
 // SortField sets the optional parameter "sortField": Field by which to
 // sort the list.
+//
+// Possible values:
+//   "ID"
+//   "NAME"
 func (c *AdvertiserGroupsListCall) SortField(sortField string) *AdvertiserGroupsListCall {
 	c.opt_["sortField"] = sortField
 	return c
@@ -8656,6 +8722,10 @@ func (c *AdvertiserGroupsListCall) SortField(sortField string) *AdvertiserGroups
 
 // SortOrder sets the optional parameter "sortOrder": Order of sorted
 // results, default is ASCENDING.
+//
+// Possible values:
+//   "ASCENDING"
+//   "DESCENDING"
 func (c *AdvertiserGroupsListCall) SortOrder(sortOrder string) *AdvertiserGroupsListCall {
 	c.opt_["sortOrder"] = sortOrder
 	return c
@@ -9235,6 +9305,10 @@ func (c *AdvertisersListCall) SearchString(searchString string) *AdvertisersList
 
 // SortField sets the optional parameter "sortField": Field by which to
 // sort the list.
+//
+// Possible values:
+//   "ID"
+//   "NAME"
 func (c *AdvertisersListCall) SortField(sortField string) *AdvertisersListCall {
 	c.opt_["sortField"] = sortField
 	return c
@@ -9242,6 +9316,10 @@ func (c *AdvertisersListCall) SortField(sortField string) *AdvertisersListCall {
 
 // SortOrder sets the optional parameter "sortOrder": Order of sorted
 // results, default is ASCENDING.
+//
+// Possible values:
+//   "ASCENDING"
+//   "DESCENDING"
 func (c *AdvertisersListCall) SortOrder(sortOrder string) *AdvertisersListCall {
 	c.opt_["sortOrder"] = sortOrder
 	return c
@@ -9249,6 +9327,10 @@ func (c *AdvertisersListCall) SortOrder(sortOrder string) *AdvertisersListCall {
 
 // Status sets the optional parameter "status": Select only advertisers
 // with the specified status.
+//
+// Possible values:
+//   "APPROVED"
+//   "ON_HOLD"
 func (c *AdvertisersListCall) Status(status string) *AdvertisersListCall {
 	c.opt_["status"] = status
 	return c
@@ -9851,6 +9933,10 @@ func (c *CampaignCreativeAssociationsListCall) PageToken(pageToken string) *Camp
 
 // SortOrder sets the optional parameter "sortOrder": Order of sorted
 // results, default is ASCENDING.
+//
+// Possible values:
+//   "ASCENDING"
+//   "DESCENDING"
 func (c *CampaignCreativeAssociationsListCall) SortOrder(sortOrder string) *CampaignCreativeAssociationsListCall {
 	c.opt_["sortOrder"] = sortOrder
 	return c
@@ -10253,6 +10339,10 @@ func (c *CampaignsListCall) SearchString(searchString string) *CampaignsListCall
 
 // SortField sets the optional parameter "sortField": Field by which to
 // sort the list.
+//
+// Possible values:
+//   "ID"
+//   "NAME"
 func (c *CampaignsListCall) SortField(sortField string) *CampaignsListCall {
 	c.opt_["sortField"] = sortField
 	return c
@@ -10260,6 +10350,10 @@ func (c *CampaignsListCall) SortField(sortField string) *CampaignsListCall {
 
 // SortOrder sets the optional parameter "sortOrder": Order of sorted
 // results, default is ASCENDING.
+//
+// Possible values:
+//   "ASCENDING"
+//   "DESCENDING"
 func (c *CampaignsListCall) SortOrder(sortOrder string) *CampaignsListCall {
 	c.opt_["sortOrder"] = sortOrder
 	return c
@@ -10758,6 +10852,24 @@ func (r *ChangeLogsService) List(profileId int64) *ChangeLogsListCall {
 
 // Action sets the optional parameter "action": Select only change logs
 // with the specified action.
+//
+// Possible values:
+//   "ACTION_ADD"
+//   "ACTION_ASSIGN"
+//   "ACTION_ASSOCIATE"
+//   "ACTION_CREATE"
+//   "ACTION_DELETE"
+//   "ACTION_DISABLE"
+//   "ACTION_EMAIL_TAGS"
+//   "ACTION_ENABLE"
+//   "ACTION_LINK"
+//   "ACTION_MARK_AS_DEFAULT"
+//   "ACTION_PUSH"
+//   "ACTION_REMOVE"
+//   "ACTION_SEND"
+//   "ACTION_UNASSIGN"
+//   "ACTION_UNLINK"
+//   "ACTION_UPDATE"
 func (c *ChangeLogsListCall) Action(action string) *ChangeLogsListCall {
 	c.opt_["action"] = action
 	return c
@@ -10812,6 +10924,44 @@ func (c *ChangeLogsListCall) ObjectIds(objectIds int64) *ChangeLogsListCall {
 
 // ObjectType sets the optional parameter "objectType": Select only
 // change logs with the specified object type.
+//
+// Possible values:
+//   "OBJECT_ACCOUNT"
+//   "OBJECT_ACCOUNT_BILLING_FEATURE"
+//   "OBJECT_AD"
+//   "OBJECT_ADVERTISER"
+//   "OBJECT_ADVERTISER_GROUP"
+//   "OBJECT_BILLING_ACCOUNT_GROUP"
+//   "OBJECT_BILLING_FEATURE"
+//   "OBJECT_BILLING_MINIMUM_FEE"
+//   "OBJECT_BILLING_PROFILE"
+//   "OBJECT_CAMPAIGN"
+//   "OBJECT_CONTENT_CATEGORY"
+//   "OBJECT_CREATIVE"
+//   "OBJECT_CREATIVE_ASSET"
+//   "OBJECT_CREATIVE_BUNDLE"
+//   "OBJECT_CREATIVE_FIELD"
+//   "OBJECT_CREATIVE_GROUP"
+//   "OBJECT_DFA_SITE"
+//   "OBJECT_EVENT_TAG"
+//   "OBJECT_FLOODLIGHT_ACTIVITY_GROUP"
+//   "OBJECT_FLOODLIGHT_ACTVITY"
+//   "OBJECT_FLOODLIGHT_CONFIGURATION"
+//   "OBJECT_INSTREAM_CREATIVE"
+//   "OBJECT_LANDING_PAGE"
+//   "OBJECT_MEDIA_ORDER"
+//   "OBJECT_PLACEMENT"
+//   "OBJECT_PLACEMENT_STRATEGY"
+//   "OBJECT_PROVIDED_LIST_CLIENT"
+//   "OBJECT_RATE_CARD"
+//   "OBJECT_REMARKETING_LIST"
+//   "OBJECT_RICHMEDIA_CREATIVE"
+//   "OBJECT_SD_SITE"
+//   "OBJECT_SIZE"
+//   "OBJECT_SUBACCOUNT"
+//   "OBJECT_USER_PROFILE"
+//   "OBJECT_USER_PROFILE_FILTER"
+//   "OBJECT_USER_ROLE"
 func (c *ChangeLogsListCall) ObjectType(objectType string) *ChangeLogsListCall {
 	c.opt_["objectType"] = objectType
 	return c
@@ -11629,6 +11779,10 @@ func (c *ContentCategoriesListCall) SearchString(searchString string) *ContentCa
 
 // SortField sets the optional parameter "sortField": Field by which to
 // sort the list.
+//
+// Possible values:
+//   "ID"
+//   "NAME"
 func (c *ContentCategoriesListCall) SortField(sortField string) *ContentCategoriesListCall {
 	c.opt_["sortField"] = sortField
 	return c
@@ -11636,6 +11790,10 @@ func (c *ContentCategoriesListCall) SortField(sortField string) *ContentCategori
 
 // SortOrder sets the optional parameter "sortOrder": Order of sorted
 // results, default is ASCENDING.
+//
+// Possible values:
+//   "ASCENDING"
+//   "DESCENDING"
 func (c *ContentCategoriesListCall) SortOrder(sortOrder string) *ContentCategoriesListCall {
 	c.opt_["sortOrder"] = sortOrder
 	return c
@@ -12653,6 +12811,10 @@ func (c *CreativeFieldValuesListCall) SearchString(searchString string) *Creativ
 
 // SortField sets the optional parameter "sortField": Field by which to
 // sort the list.
+//
+// Possible values:
+//   "ID"
+//   "VALUE"
 func (c *CreativeFieldValuesListCall) SortField(sortField string) *CreativeFieldValuesListCall {
 	c.opt_["sortField"] = sortField
 	return c
@@ -12660,6 +12822,10 @@ func (c *CreativeFieldValuesListCall) SortField(sortField string) *CreativeField
 
 // SortOrder sets the optional parameter "sortOrder": Order of sorted
 // results, default is ASCENDING.
+//
+// Possible values:
+//   "ASCENDING"
+//   "DESCENDING"
 func (c *CreativeFieldValuesListCall) SortOrder(sortOrder string) *CreativeFieldValuesListCall {
 	c.opt_["sortOrder"] = sortOrder
 	return c
@@ -13329,6 +13495,10 @@ func (c *CreativeFieldsListCall) SearchString(searchString string) *CreativeFiel
 
 // SortField sets the optional parameter "sortField": Field by which to
 // sort the list.
+//
+// Possible values:
+//   "ID"
+//   "NAME"
 func (c *CreativeFieldsListCall) SortField(sortField string) *CreativeFieldsListCall {
 	c.opt_["sortField"] = sortField
 	return c
@@ -13336,6 +13506,10 @@ func (c *CreativeFieldsListCall) SortField(sortField string) *CreativeFieldsList
 
 // SortOrder sets the optional parameter "sortOrder": Order of sorted
 // results, default is ASCENDING.
+//
+// Possible values:
+//   "ASCENDING"
+//   "DESCENDING"
 func (c *CreativeFieldsListCall) SortOrder(sortOrder string) *CreativeFieldsListCall {
 	c.opt_["sortOrder"] = sortOrder
 	return c
@@ -13910,6 +14084,10 @@ func (c *CreativeGroupsListCall) SearchString(searchString string) *CreativeGrou
 
 // SortField sets the optional parameter "sortField": Field by which to
 // sort the list.
+//
+// Possible values:
+//   "ID"
+//   "NAME"
 func (c *CreativeGroupsListCall) SortField(sortField string) *CreativeGroupsListCall {
 	c.opt_["sortField"] = sortField
 	return c
@@ -13917,6 +14095,10 @@ func (c *CreativeGroupsListCall) SortField(sortField string) *CreativeGroupsList
 
 // SortOrder sets the optional parameter "sortOrder": Order of sorted
 // results, default is ASCENDING.
+//
+// Possible values:
+//   "ASCENDING"
+//   "DESCENDING"
 func (c *CreativeGroupsListCall) SortOrder(sortOrder string) *CreativeGroupsListCall {
 	c.opt_["sortOrder"] = sortOrder
 	return c
@@ -14542,6 +14724,10 @@ func (c *CreativesListCall) SizeIds(sizeIds int64) *CreativesListCall {
 
 // SortField sets the optional parameter "sortField": Field by which to
 // sort the list.
+//
+// Possible values:
+//   "ID"
+//   "NAME"
 func (c *CreativesListCall) SortField(sortField string) *CreativesListCall {
 	c.opt_["sortField"] = sortField
 	return c
@@ -14549,6 +14735,10 @@ func (c *CreativesListCall) SortField(sortField string) *CreativesListCall {
 
 // SortOrder sets the optional parameter "sortOrder": Order of sorted
 // results, default is ASCENDING.
+//
+// Possible values:
+//   "ASCENDING"
+//   "DESCENDING"
 func (c *CreativesListCall) SortOrder(sortOrder string) *CreativesListCall {
 	c.opt_["sortOrder"] = sortOrder
 	return c
@@ -14563,6 +14753,31 @@ func (c *CreativesListCall) StudioCreativeId(studioCreativeId int64) *CreativesL
 
 // Types sets the optional parameter "types": Select only creatives with
 // these creative types.
+//
+// Possible values:
+//   "BRAND_SAFE_DEFAULT_INSTREAM_VIDEO"
+//   "CUSTOM_INPAGE"
+//   "CUSTOM_INTERSTITIAL"
+//   "ENHANCED_BANNER"
+//   "ENHANCED_IMAGE"
+//   "FLASH_INPAGE"
+//   "HTML5_BANNER"
+//   "IMAGE"
+//   "INSTREAM_VIDEO"
+//   "INTERNAL_REDIRECT"
+//   "INTERSTITIAL_INTERNAL_REDIRECT"
+//   "REDIRECT"
+//   "RICH_MEDIA_EXPANDING"
+//   "RICH_MEDIA_IM_EXPAND"
+//   "RICH_MEDIA_INPAGE"
+//   "RICH_MEDIA_INPAGE_FLOATING"
+//   "RICH_MEDIA_INTERSTITIAL_FLOAT"
+//   "RICH_MEDIA_MOBILE_IN_APP"
+//   "RICH_MEDIA_MULTI_FLOATING"
+//   "RICH_MEDIA_PEEL_DOWN"
+//   "TRACKING_TEXT"
+//   "VPAID_LINEAR"
+//   "VPAID_NON_LINEAR"
 func (c *CreativesListCall) Types(types string) *CreativesListCall {
 	c.opt_["types"] = types
 	return c
@@ -15298,6 +15513,10 @@ func (c *DirectorySiteContactsListCall) SearchString(searchString string) *Direc
 
 // SortField sets the optional parameter "sortField": Field by which to
 // sort the list.
+//
+// Possible values:
+//   "ID"
+//   "NAME"
 func (c *DirectorySiteContactsListCall) SortField(sortField string) *DirectorySiteContactsListCall {
 	c.opt_["sortField"] = sortField
 	return c
@@ -15305,6 +15524,10 @@ func (c *DirectorySiteContactsListCall) SortField(sortField string) *DirectorySi
 
 // SortOrder sets the optional parameter "sortOrder": Order of sorted
 // results, default is ASCENDING.
+//
+// Possible values:
+//   "ASCENDING"
+//   "DESCENDING"
 func (c *DirectorySiteContactsListCall) SortOrder(sortOrder string) *DirectorySiteContactsListCall {
 	c.opt_["sortOrder"] = sortOrder
 	return c
@@ -15642,6 +15865,10 @@ func (c *DirectorySitesListCall) SearchString(searchString string) *DirectorySit
 
 // SortField sets the optional parameter "sortField": Field by which to
 // sort the list.
+//
+// Possible values:
+//   "ID"
+//   "NAME"
 func (c *DirectorySitesListCall) SortField(sortField string) *DirectorySitesListCall {
 	c.opt_["sortField"] = sortField
 	return c
@@ -15649,6 +15876,10 @@ func (c *DirectorySitesListCall) SortField(sortField string) *DirectorySitesList
 
 // SortOrder sets the optional parameter "sortOrder": Order of sorted
 // results, default is ASCENDING.
+//
+// Possible values:
+//   "ASCENDING"
+//   "DESCENDING"
 func (c *DirectorySitesListCall) SortOrder(sortOrder string) *DirectorySitesListCall {
 	c.opt_["sortOrder"] = sortOrder
 	return c
@@ -16161,6 +16392,11 @@ func (c *EventTagsListCall) Enabled(enabled bool) *EventTagsListCall {
 // can be used to specify whether to use a third-party pixel, a
 // third-party JavaScript URL, or a third-party click-through URL for
 // either impression or click tracking.
+//
+// Possible values:
+//   "CLICK_THROUGH_EVENT_TAG"
+//   "IMPRESSION_IMAGE_EVENT_TAG"
+//   "IMPRESSION_JAVASCRIPT_EVENT_TAG"
 func (c *EventTagsListCall) EventTagTypes(eventTagTypes string) *EventTagsListCall {
 	c.opt_["eventTagTypes"] = eventTagTypes
 	return c
@@ -16188,6 +16424,10 @@ func (c *EventTagsListCall) SearchString(searchString string) *EventTagsListCall
 
 // SortField sets the optional parameter "sortField": Field by which to
 // sort the list.
+//
+// Possible values:
+//   "ID"
+//   "NAME"
 func (c *EventTagsListCall) SortField(sortField string) *EventTagsListCall {
 	c.opt_["sortField"] = sortField
 	return c
@@ -16195,6 +16435,10 @@ func (c *EventTagsListCall) SortField(sortField string) *EventTagsListCall {
 
 // SortOrder sets the optional parameter "sortOrder": Order of sorted
 // results, default is ASCENDING.
+//
+// Possible values:
+//   "ASCENDING"
+//   "DESCENDING"
 func (c *EventTagsListCall) SortOrder(sortOrder string) *EventTagsListCall {
 	c.opt_["sortOrder"] = sortOrder
 	return c
@@ -16682,6 +16926,11 @@ func (c *FilesListCall) PageToken(pageToken string) *FilesListCall {
 
 // Scope sets the optional parameter "scope": The scope that defines
 // which results are returned, default is 'MINE'.
+//
+// Possible values:
+//   "ALL" - All files in account.
+//   "MINE" (default) - My files.
+//   "SHARED_WITH_ME" - Files shared with me.
 func (c *FilesListCall) Scope(scope string) *FilesListCall {
 	c.opt_["scope"] = scope
 	return c
@@ -16689,6 +16938,10 @@ func (c *FilesListCall) Scope(scope string) *FilesListCall {
 
 // SortField sets the optional parameter "sortField": The field by which
 // to sort the list.
+//
+// Possible values:
+//   "ID" - Sort by file ID.
+//   "LAST_MODIFIED_TIME" (default) - Sort by 'lastmodifiedAt' field.
 func (c *FilesListCall) SortField(sortField string) *FilesListCall {
 	c.opt_["sortField"] = sortField
 	return c
@@ -16696,6 +16949,10 @@ func (c *FilesListCall) SortField(sortField string) *FilesListCall {
 
 // SortOrder sets the optional parameter "sortOrder": Order of sorted
 // results, default is 'DESCENDING'.
+//
+// Possible values:
+//   "ASCENDING" - Ascending order.
+//   "DESCENDING" (default) - Descending order.
 func (c *FilesListCall) SortOrder(sortOrder string) *FilesListCall {
 	c.opt_["sortOrder"] = sortOrder
 	return c
@@ -17237,6 +17494,10 @@ func (c *FloodlightActivitiesListCall) FloodlightActivityGroupTagString(floodlig
 // FloodlightActivityGroupType sets the optional parameter
 // "floodlightActivityGroupType": Select only floodlight activities with
 // the specified floodlight activity group type.
+//
+// Possible values:
+//   "COUNTER"
+//   "SALE"
 func (c *FloodlightActivitiesListCall) FloodlightActivityGroupType(floodlightActivityGroupType string) *FloodlightActivitiesListCall {
 	c.opt_["floodlightActivityGroupType"] = floodlightActivityGroupType
 	return c
@@ -17289,6 +17550,10 @@ func (c *FloodlightActivitiesListCall) SearchString(searchString string) *Floodl
 
 // SortField sets the optional parameter "sortField": Field by which to
 // sort the list.
+//
+// Possible values:
+//   "ID"
+//   "NAME"
 func (c *FloodlightActivitiesListCall) SortField(sortField string) *FloodlightActivitiesListCall {
 	c.opt_["sortField"] = sortField
 	return c
@@ -17296,6 +17561,10 @@ func (c *FloodlightActivitiesListCall) SortField(sortField string) *FloodlightAc
 
 // SortOrder sets the optional parameter "sortOrder": Order of sorted
 // results, default is ASCENDING.
+//
+// Possible values:
+//   "ASCENDING"
+//   "DESCENDING"
 func (c *FloodlightActivitiesListCall) SortOrder(sortOrder string) *FloodlightActivitiesListCall {
 	c.opt_["sortOrder"] = sortOrder
 	return c
@@ -18023,6 +18292,10 @@ func (c *FloodlightActivityGroupsListCall) SearchString(searchString string) *Fl
 
 // SortField sets the optional parameter "sortField": Field by which to
 // sort the list.
+//
+// Possible values:
+//   "ID"
+//   "NAME"
 func (c *FloodlightActivityGroupsListCall) SortField(sortField string) *FloodlightActivityGroupsListCall {
 	c.opt_["sortField"] = sortField
 	return c
@@ -18030,6 +18303,10 @@ func (c *FloodlightActivityGroupsListCall) SortField(sortField string) *Floodlig
 
 // SortOrder sets the optional parameter "sortOrder": Order of sorted
 // results, default is ASCENDING.
+//
+// Possible values:
+//   "ASCENDING"
+//   "DESCENDING"
 func (c *FloodlightActivityGroupsListCall) SortOrder(sortOrder string) *FloodlightActivityGroupsListCall {
 	c.opt_["sortOrder"] = sortOrder
 	return c
@@ -18037,6 +18314,10 @@ func (c *FloodlightActivityGroupsListCall) SortOrder(sortOrder string) *Floodlig
 
 // Type sets the optional parameter "type": Select only floodlight
 // activity groups with the specified floodlight activity group type.
+//
+// Possible values:
+//   "COUNTER"
+//   "SALE"
 func (c *FloodlightActivityGroupsListCall) Type(type_ string) *FloodlightActivityGroupsListCall {
 	c.opt_["type"] = type_
 	return c
@@ -19918,6 +20199,10 @@ func (c *PlacementGroupsListCall) PageToken(pageToken string) *PlacementGroupsLi
 // not only acts as a single pricing point but also assumes that all the
 // tags in it will be served at the same time. A roadblock requires one
 // of its assigned placements to be marked as primary for reporting.
+//
+// Possible values:
+//   "PLACEMENT_PACKAGE"
+//   "PLACEMENT_ROADBLOCK"
 func (c *PlacementGroupsListCall) PlacementGroupType(placementGroupType string) *PlacementGroupsListCall {
 	c.opt_["placementGroupType"] = placementGroupType
 	return c
@@ -19933,6 +20218,13 @@ func (c *PlacementGroupsListCall) PlacementStrategyIds(placementStrategyIds int6
 
 // PricingTypes sets the optional parameter "pricingTypes": Select only
 // placement groups with these pricing types.
+//
+// Possible values:
+//   "PRICING_TYPE_CPA"
+//   "PRICING_TYPE_CPC"
+//   "PRICING_TYPE_CPM"
+//   "PRICING_TYPE_FLAT_RATE_CLICKS"
+//   "PRICING_TYPE_FLAT_RATE_IMPRESSIONS"
 func (c *PlacementGroupsListCall) PricingTypes(pricingTypes string) *PlacementGroupsListCall {
 	c.opt_["pricingTypes"] = pricingTypes
 	return c
@@ -19961,6 +20253,10 @@ func (c *PlacementGroupsListCall) SiteIds(siteIds int64) *PlacementGroupsListCal
 
 // SortField sets the optional parameter "sortField": Field by which to
 // sort the list.
+//
+// Possible values:
+//   "ID"
+//   "NAME"
 func (c *PlacementGroupsListCall) SortField(sortField string) *PlacementGroupsListCall {
 	c.opt_["sortField"] = sortField
 	return c
@@ -19968,6 +20264,10 @@ func (c *PlacementGroupsListCall) SortField(sortField string) *PlacementGroupsLi
 
 // SortOrder sets the optional parameter "sortOrder": Order of sorted
 // results, default is ASCENDING.
+//
+// Possible values:
+//   "ASCENDING"
+//   "DESCENDING"
 func (c *PlacementGroupsListCall) SortOrder(sortOrder string) *PlacementGroupsListCall {
 	c.opt_["sortOrder"] = sortOrder
 	return c
@@ -20706,6 +21006,10 @@ func (c *PlacementStrategiesListCall) SearchString(searchString string) *Placeme
 
 // SortField sets the optional parameter "sortField": Field by which to
 // sort the list.
+//
+// Possible values:
+//   "ID"
+//   "NAME"
 func (c *PlacementStrategiesListCall) SortField(sortField string) *PlacementStrategiesListCall {
 	c.opt_["sortField"] = sortField
 	return c
@@ -20713,6 +21017,10 @@ func (c *PlacementStrategiesListCall) SortField(sortField string) *PlacementStra
 
 // SortOrder sets the optional parameter "sortOrder": Order of sorted
 // results, default is ASCENDING.
+//
+// Possible values:
+//   "ASCENDING"
+//   "DESCENDING"
 func (c *PlacementStrategiesListCall) SortOrder(sortOrder string) *PlacementStrategiesListCall {
 	c.opt_["sortOrder"] = sortOrder
 	return c
@@ -21066,6 +21374,21 @@ func (c *PlacementsGeneratetagsCall) PlacementIds(placementIds int64) *Placement
 
 // TagFormats sets the optional parameter "tagFormats": Tag formats to
 // generate for these placements.
+//
+// Possible values:
+//   "PLACEMENT_TAG_CLICK_COMMANDS"
+//   "PLACEMENT_TAG_IFRAME_ILAYER"
+//   "PLACEMENT_TAG_IFRAME_JAVASCRIPT"
+//   "PLACEMENT_TAG_INSTREAM_VIDEO_PREFETCH"
+//   "PLACEMENT_TAG_INTERNAL_REDIRECT"
+//   "PLACEMENT_TAG_INTERSTITIAL_IFRAME_JAVASCRIPT"
+//   "PLACEMENT_TAG_INTERSTITIAL_INTERNAL_REDIRECT"
+//   "PLACEMENT_TAG_INTERSTITIAL_JAVASCRIPT"
+//   "PLACEMENT_TAG_JAVASCRIPT"
+//   "PLACEMENT_TAG_STANDARD"
+//   "PLACEMENT_TAG_TRACKING"
+//   "PLACEMENT_TAG_TRACKING_IFRAME"
+//   "PLACEMENT_TAG_TRACKING_JAVASCRIPT"
 func (c *PlacementsGeneratetagsCall) TagFormats(tagFormats string) *PlacementsGeneratetagsCall {
 	c.opt_["tagFormats"] = tagFormats
 	return c
@@ -21411,6 +21734,13 @@ func (c *PlacementsListCall) CampaignIds(campaignIds int64) *PlacementsListCall 
 // APP_INTERSTITIAL are for rendering in mobile apps.IN_STREAM_VIDEO
 // refers to rendering in in-stream video ads developed with the VAST
 // standard.
+//
+// Possible values:
+//   "APP"
+//   "APP_INTERSTITIAL"
+//   "IN_STREAM_VIDEO"
+//   "WEB"
+//   "WEB_INTERSTITIAL"
 func (c *PlacementsListCall) Compatibilities(compatibilities string) *PlacementsListCall {
 	c.opt_["compatibilities"] = compatibilities
 	return c
@@ -21462,6 +21792,10 @@ func (c *PlacementsListCall) PageToken(pageToken string) *PlacementsListCall {
 
 // PaymentSource sets the optional parameter "paymentSource": Select
 // only placements with this payment source.
+//
+// Possible values:
+//   "PLACEMENT_AGENCY_PAID"
+//   "PLACEMENT_PUBLISHER_PAID"
 func (c *PlacementsListCall) PaymentSource(paymentSource string) *PlacementsListCall {
 	c.opt_["paymentSource"] = paymentSource
 	return c
@@ -21477,6 +21811,13 @@ func (c *PlacementsListCall) PlacementStrategyIds(placementStrategyIds int64) *P
 
 // PricingTypes sets the optional parameter "pricingTypes": Select only
 // placements with these pricing types.
+//
+// Possible values:
+//   "PRICING_TYPE_CPA"
+//   "PRICING_TYPE_CPC"
+//   "PRICING_TYPE_CPM"
+//   "PRICING_TYPE_FLAT_RATE_CLICKS"
+//   "PRICING_TYPE_FLAT_RATE_IMPRESSIONS"
 func (c *PlacementsListCall) PricingTypes(pricingTypes string) *PlacementsListCall {
 	c.opt_["pricingTypes"] = pricingTypes
 	return c
@@ -21511,6 +21852,10 @@ func (c *PlacementsListCall) SizeIds(sizeIds int64) *PlacementsListCall {
 
 // SortField sets the optional parameter "sortField": Field by which to
 // sort the list.
+//
+// Possible values:
+//   "ID"
+//   "NAME"
 func (c *PlacementsListCall) SortField(sortField string) *PlacementsListCall {
 	c.opt_["sortField"] = sortField
 	return c
@@ -21518,6 +21863,10 @@ func (c *PlacementsListCall) SortField(sortField string) *PlacementsListCall {
 
 // SortOrder sets the optional parameter "sortOrder": Order of sorted
 // results, default is ASCENDING.
+//
+// Possible values:
+//   "ASCENDING"
+//   "DESCENDING"
 func (c *PlacementsListCall) SortOrder(sortOrder string) *PlacementsListCall {
 	c.opt_["sortOrder"] = sortOrder
 	return c
@@ -22509,6 +22858,10 @@ func (c *ReportsListCall) PageToken(pageToken string) *ReportsListCall {
 
 // Scope sets the optional parameter "scope": The scope that defines
 // which results are returned, default is 'MINE'.
+//
+// Possible values:
+//   "ALL" - All reports in account.
+//   "MINE" (default) - My reports.
 func (c *ReportsListCall) Scope(scope string) *ReportsListCall {
 	c.opt_["scope"] = scope
 	return c
@@ -22516,6 +22869,11 @@ func (c *ReportsListCall) Scope(scope string) *ReportsListCall {
 
 // SortField sets the optional parameter "sortField": The field by which
 // to sort the list.
+//
+// Possible values:
+//   "ID" - Sort by report ID.
+//   "LAST_MODIFIED_TIME" (default) - Sort by 'lastModifiedTime' field.
+//   "NAME" - Sort by name of reports.
 func (c *ReportsListCall) SortField(sortField string) *ReportsListCall {
 	c.opt_["sortField"] = sortField
 	return c
@@ -22523,6 +22881,10 @@ func (c *ReportsListCall) SortField(sortField string) *ReportsListCall {
 
 // SortOrder sets the optional parameter "sortOrder": Order of sorted
 // results, default is 'DESCENDING'.
+//
+// Possible values:
+//   "ASCENDING" - Ascending order.
+//   "DESCENDING" (default) - Descending order.
 func (c *ReportsListCall) SortOrder(sortOrder string) *ReportsListCall {
 	c.opt_["sortOrder"] = sortOrder
 	return c
@@ -23186,6 +23548,10 @@ func (c *ReportsFilesListCall) PageToken(pageToken string) *ReportsFilesListCall
 
 // SortField sets the optional parameter "sortField": The field by which
 // to sort the list.
+//
+// Possible values:
+//   "ID" - Sort by file ID.
+//   "LAST_MODIFIED_TIME" (default) - Sort by 'lastmodifiedAt' field.
 func (c *ReportsFilesListCall) SortField(sortField string) *ReportsFilesListCall {
 	c.opt_["sortField"] = sortField
 	return c
@@ -23193,6 +23559,10 @@ func (c *ReportsFilesListCall) SortField(sortField string) *ReportsFilesListCall
 
 // SortOrder sets the optional parameter "sortOrder": Order of sorted
 // results, default is 'DESCENDING'.
+//
+// Possible values:
+//   "ASCENDING" - Ascending order.
+//   "DESCENDING" (default) - Descending order.
 func (c *ReportsFilesListCall) SortOrder(sortOrder string) *ReportsFilesListCall {
 	c.opt_["sortOrder"] = sortOrder
 	return c
@@ -23600,6 +23970,10 @@ func (c *SitesListCall) SearchString(searchString string) *SitesListCall {
 
 // SortField sets the optional parameter "sortField": Field by which to
 // sort the list.
+//
+// Possible values:
+//   "ID"
+//   "NAME"
 func (c *SitesListCall) SortField(sortField string) *SitesListCall {
 	c.opt_["sortField"] = sortField
 	return c
@@ -23607,6 +23981,10 @@ func (c *SitesListCall) SortField(sortField string) *SitesListCall {
 
 // SortOrder sets the optional parameter "sortOrder": Order of sorted
 // results, default is ASCENDING.
+//
+// Possible values:
+//   "ASCENDING"
+//   "DESCENDING"
 func (c *SitesListCall) SortOrder(sortOrder string) *SitesListCall {
 	c.opt_["sortOrder"] = sortOrder
 	return c
@@ -24564,6 +24942,10 @@ func (c *SubaccountsListCall) SearchString(searchString string) *SubaccountsList
 
 // SortField sets the optional parameter "sortField": Field by which to
 // sort the list.
+//
+// Possible values:
+//   "ID"
+//   "NAME"
 func (c *SubaccountsListCall) SortField(sortField string) *SubaccountsListCall {
 	c.opt_["sortField"] = sortField
 	return c
@@ -24571,6 +24953,10 @@ func (c *SubaccountsListCall) SortField(sortField string) *SubaccountsListCall {
 
 // SortOrder sets the optional parameter "sortOrder": Order of sorted
 // results, default is ASCENDING.
+//
+// Possible values:
+//   "ASCENDING"
+//   "DESCENDING"
 func (c *SubaccountsListCall) SortOrder(sortOrder string) *SubaccountsListCall {
 	c.opt_["sortOrder"] = sortOrder
 	return c
@@ -25696,6 +26082,10 @@ func (c *UserRolesListCall) SearchString(searchString string) *UserRolesListCall
 
 // SortField sets the optional parameter "sortField": Field by which to
 // sort the list.
+//
+// Possible values:
+//   "ID"
+//   "NAME"
 func (c *UserRolesListCall) SortField(sortField string) *UserRolesListCall {
 	c.opt_["sortField"] = sortField
 	return c
@@ -25703,6 +26093,10 @@ func (c *UserRolesListCall) SortField(sortField string) *UserRolesListCall {
 
 // SortOrder sets the optional parameter "sortOrder": Order of sorted
 // results, default is ASCENDING.
+//
+// Possible values:
+//   "ASCENDING"
+//   "DESCENDING"
 func (c *UserRolesListCall) SortOrder(sortOrder string) *UserRolesListCall {
 	c.opt_["sortOrder"] = sortOrder
 	return c

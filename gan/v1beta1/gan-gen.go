@@ -1021,6 +1021,17 @@ func (c *AdvertisersListCall) PageToken(pageToken string) *AdvertisersListCall {
 // RelationshipStatus sets the optional parameter "relationshipStatus":
 // Filters out all advertisers for which do not have the given
 // relationship status with the requesting publisher.
+//
+// Possible values:
+//   "approved" - An advertiser that has approved your application.
+//   "available" - An advertiser program that's accepting new
+// publishers.
+//   "deactivated" - Deactivated means either the advertiser has removed
+// you from their program, or it could also mean that you chose to
+// remove yourself from the advertiser's program.
+//   "declined" - An advertiser that did not approve your application.
+//   "pending" - An advertiser program that you've already applied to,
+// but they haven't yet decided to approve or decline your application.
 func (c *AdvertisersListCall) RelationshipStatus(relationshipStatus string) *AdvertisersListCall {
 	c.opt_["relationshipStatus"] = relationshipStatus
 	return c
@@ -1203,6 +1214,11 @@ func (c *CcOffersListCall) Advertiser(advertiser string) *CcOffersListCall {
 
 // Projection sets the optional parameter "projection": The set of
 // fields to return.
+//
+// Possible values:
+//   "full" - Include all offer fields. This is the default.
+//   "summary" - Include only the basic fields needed to display an
+// offer.
 func (c *CcOffersListCall) Projection(projection string) *CcOffersListCall {
 	c.opt_["projection"] = projection
 	return c
@@ -1321,6 +1337,19 @@ func (c *EventsListCall) AdvertiserId(advertiserId string) *EventsListCall {
 // charge events that are not of the given charge type. Valid values:
 // 'other', 'slotting_fee', 'monthly_minimum', 'tier_bonus', 'credit',
 // 'debit'.
+//
+// Possible values:
+//   "credit" - A credit increases the publisher's payout amount and
+// decreases the advertiser's invoice amount.
+//   "debit" - A debit reduces the publisher's payout and increases the
+// advertiser's invoice amount.
+//   "monthly_minimum" - A payment made to Google by an advertiser as a
+// minimum monthly network fee.
+//   "other" - Catch all. Default if unset
+//   "slotting_fee" - A one time payment made from an advertiser to a
+// publisher.
+//   "tier_bonus" - A payment from an advertiser to a publisher for the
+// publisher maintaining a high tier level
 func (c *EventsListCall) ChargeType(chargeType string) *EventsListCall {
 	c.opt_["chargeType"] = chargeType
 	return c
@@ -1426,6 +1455,10 @@ func (c *EventsListCall) Sku(sku string) *EventsListCall {
 // Status sets the optional parameter "status": Filters out all events
 // that do not have the given status. Valid values: 'active',
 // 'canceled'.
+//
+// Possible values:
+//   "active" - Event is currently active.
+//   "canceled" - Event is currently canceled.
 func (c *EventsListCall) Status(status string) *EventsListCall {
 	c.opt_["status"] = status
 	return c
@@ -1434,6 +1467,16 @@ func (c *EventsListCall) Status(status string) *EventsListCall {
 // Type sets the optional parameter "type": Filters out all events that
 // are not of the given type. Valid values: 'action', 'transaction',
 // 'charge'.
+//
+// Possible values:
+//   "action" - The completion of an application, sign-up, or other
+// process. For example, an action occurs if a user clicks an ad for a
+// credit card and completes an application for that card.
+//   "charge" - A charge event is typically a payment between an
+// advertiser, publisher or Google.
+//   "transaction" - A conversion event, typically an e-commerce
+// transaction. Some advertisers use a transaction to record other types
+// of events, such as magazine subscriptions.
 func (c *EventsListCall) Type(type_ string) *EventsListCall {
 	c.opt_["type"] = type_
 	return c
@@ -1918,6 +1961,10 @@ func (c *LinksListCall) AssetSize(assetSize string) *LinksListCall {
 
 // Authorship sets the optional parameter "authorship": The role of the
 // author of the link.
+//
+// Possible values:
+//   "advertiser"
+//   "publisher"
 func (c *LinksListCall) Authorship(authorship string) *LinksListCall {
 	c.opt_["authorship"] = authorship
 	return c
@@ -1939,6 +1986,10 @@ func (c *LinksListCall) CreateDateMin(createDateMin string) *LinksListCall {
 
 // LinkType sets the optional parameter "linkType": The type of the
 // link.
+//
+// Possible values:
+//   "banner"
+//   "text"
 func (c *LinksListCall) LinkType(linkType string) *LinksListCall {
 	c.opt_["linkType"] = linkType
 	return c
@@ -1960,6 +2011,13 @@ func (c *LinksListCall) PageToken(pageToken string) *LinksListCall {
 
 // PromotionType sets the optional parameter "promotionType": The
 // promotion type.
+//
+// Possible values:
+//   "coupon"
+//   "free_gift"
+//   "free_shipping"
+//   "percent_off"
+//   "price_cut"
 func (c *LinksListCall) PromotionType(promotionType string) *LinksListCall {
 	c.opt_["promotionType"] = promotionType
 	return c
@@ -1967,6 +2025,10 @@ func (c *LinksListCall) PromotionType(promotionType string) *LinksListCall {
 
 // RelationshipStatus sets the optional parameter "relationshipStatus":
 // The status of the relationship.
+//
+// Possible values:
+//   "approved"
+//   "available"
 func (c *LinksListCall) RelationshipStatus(relationshipStatus string) *LinksListCall {
 	c.opt_["relationshipStatus"] = relationshipStatus
 	return c
@@ -2399,6 +2461,17 @@ func (c *PublishersListCall) PublisherCategory(publisherCategory string) *Publis
 // RelationshipStatus sets the optional parameter "relationshipStatus":
 // Filters out all publishers for which do not have the given
 // relationship status with the requesting publisher.
+//
+// Possible values:
+//   "approved" - Publishers you've approved to your program.
+//   "available" - Publishers available for you to recruit.
+//   "deactivated" - A publisher that you terminated from your program.
+// Publishers also have the ability to remove themselves from your
+// program.
+//   "declined" - A publisher that you did not approve to your program.
+//   "pending" - Publishers that have applied to your program. We
+// recommend reviewing and deciding on pending publishers on a weekly
+// basis.
 func (c *PublishersListCall) RelationshipStatus(relationshipStatus string) *PublishersListCall {
 	c.opt_["relationshipStatus"] = relationshipStatus
 	return c
@@ -2600,6 +2673,11 @@ func (c *ReportsGetCall) EndDate(endDate string) *ReportsGetCall {
 // EventType sets the optional parameter "eventType": Filters out all
 // events that are not of the given type. Valid values: 'action',
 // 'transaction', or 'charge'.
+//
+// Possible values:
+//   "action" - Event type is action.
+//   "charge" - Event type is charge.
+//   "transaction" - Event type is transaction.
 func (c *ReportsGetCall) EventType(eventType string) *ReportsGetCall {
 	c.opt_["eventType"] = eventType
 	return c
@@ -2651,6 +2729,11 @@ func (c *ReportsGetCall) StartIndex(startIndex int64) *ReportsGetCall {
 // Status sets the optional parameter "status": Filters out all events
 // that do not have the given status. Valid values: 'active',
 // 'canceled', or 'invalid'.
+//
+// Possible values:
+//   "active" - Event is currently active.
+//   "canceled" - Event is currently canceled.
+//   "invalid" - Event is currently invalid.
 func (c *ReportsGetCall) Status(status string) *ReportsGetCall {
 	c.opt_["status"] = status
 	return c

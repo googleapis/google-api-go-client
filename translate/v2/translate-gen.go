@@ -323,6 +323,10 @@ func (c *TranslationsListCall) Cid(cid string) *TranslationsListCall {
 }
 
 // Format sets the optional parameter "format": The format of the text
+//
+// Possible values:
+//   "html" - Specifies the input is in HTML
+//   "text" - Specifies the input is in plain textual format
 func (c *TranslationsListCall) Format(format string) *TranslationsListCall {
 	c.opt_["format"] = format
 	return c

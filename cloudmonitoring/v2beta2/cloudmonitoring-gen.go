@@ -704,6 +704,12 @@ func (r *TimeseriesService) List(project string, metric string, youngest string,
 // function that will reduce the data points in each window to a single
 // point. This parameter is only valid for non-cumulative metrics with a
 // value type of INT64 or DOUBLE.
+//
+// Possible values:
+//   "max"
+//   "mean"
+//   "min"
+//   "sum"
 func (c *TimeseriesListCall) Aggregator(aggregator string) *TimeseriesListCall {
 	c.opt_["aggregator"] = aggregator
 	return c
@@ -1060,6 +1066,12 @@ func (r *TimeseriesDescriptorsService) List(project string, metric string, young
 // function that will reduce the data points in each window to a single
 // point. This parameter is only valid for non-cumulative metrics with a
 // value type of INT64 or DOUBLE.
+//
+// Possible values:
+//   "max"
+//   "mean"
+//   "min"
+//   "sum"
 func (c *TimeseriesDescriptorsListCall) Aggregator(aggregator string) *TimeseriesDescriptorsListCall {
 	c.opt_["aggregator"] = aggregator
 	return c

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d4819a1_bb6f07f8",
+        "filename": "google-api-go-generator/testdata/any.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-05-12T00:55:26Z",
+      "side": 1,
+      "message": "does default not show up anywhere else in any of the json files? This appears to be the only one. Are we doing it wrong?",
+      "revId": "f1c2b869b1553990176399463f944be93aa5c020",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

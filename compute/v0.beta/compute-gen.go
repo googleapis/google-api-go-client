@@ -4,7 +4,7 @@
 //
 // Usage example:
 //
-//   import "google.golang.org/api/compute/beta"
+//   import "google.golang.org/api/compute/v0.beta"
 //   ...
 //   computeService, err := compute.New(oauthHttpClient)
 package compute
@@ -53,13 +53,13 @@ const (
 	ComputeReadonlyScope = "https://www.googleapis.com/auth/compute.readonly"
 
 	// Manage your data and permissions in Google Cloud Storage
-	DevstorageFull_controlScope = "https://www.googleapis.com/auth/devstorage.full_control"
+	DevstorageFullControlScope = "https://www.googleapis.com/auth/devstorage.full_control"
 
 	// View your data in Google Cloud Storage
-	DevstorageRead_onlyScope = "https://www.googleapis.com/auth/devstorage.read_only"
+	DevstorageReadOnlyScope = "https://www.googleapis.com/auth/devstorage.read_only"
 
 	// Manage your data in Google Cloud Storage
-	DevstorageRead_writeScope = "https://www.googleapis.com/auth/devstorage.read_write"
+	DevstorageReadWriteScope = "https://www.googleapis.com/auth/devstorage.read_write"
 )
 
 func New(client *http.Client) (*Service, error) {
@@ -484,6 +484,9 @@ type AccessConfig struct {
 
 	// Type: The type of configuration. The default and only option is
 	// ONE_TO_ONE_NAT.
+	//
+	// Possible values:
+	//   "ONE_TO_ONE_NAT" (default)
 	Type string `json:"type,omitempty"`
 }
 
@@ -527,6 +530,10 @@ type Address struct {
 	// IN_USE or RESERVED. An address that is RESERVED is currently reserved
 	// and available to use. An IN_USE address is currently being used by
 	// another resource and is not available.
+	//
+	// Possible values:
+	//   "IN_USE"
+	//   "RESERVED"
 	Status string `json:"status,omitempty"`
 
 	// Users: [Output Only] The URLs of the resources that are using this
@@ -585,6 +592,21 @@ type AddressesScopedList struct {
 
 type AddressesScopedListWarning struct {
 	// Code: [Output Only] The warning type identifier for this warning.
+	//
+	// Possible values:
+	//   "DEPRECATED_RESOURCE_USED"
+	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "INJECTED_KERNELS_DEPRECATED"
+	//   "NEXT_HOP_ADDRESS_NOT_ASSIGNED"
+	//   "NEXT_HOP_CANNOT_IP_FORWARD"
+	//   "NEXT_HOP_INSTANCE_NOT_FOUND"
+	//   "NEXT_HOP_INSTANCE_NOT_ON_NETWORK"
+	//   "NEXT_HOP_NOT_RUNNING"
+	//   "NO_RESULTS_ON_PAGE"
+	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_NOT_DELETED"
+	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
+	//   "UNREACHABLE"
 	Code string `json:"code,omitempty"`
 
 	// Data: [Output Only] Metadata for this warning in key: value format.
@@ -618,11 +640,10 @@ type AttachedDisk struct {
 	// within the instance. This name can be used to reference the device
 	// for mounting, resizing, and so on, from within the instance.
 	//
-	// If not
-	// specified, the server chooses a default device name to apply to this
-	// disk, in the form persistent-disks-x, where x is a number assigned by
-	// Google Compute Engine. This field is only applicable for persistent
-	// disks.
+	// If not specified, the server chooses a default device name to apply
+	// to this disk, in the form persistent-disks-x, where x is a number
+	// assigned by Google Compute Engine. This field is only applicable for
+	// persistent disks.
 	DeviceName string `json:"deviceName,omitempty"`
 
 	// DiskMasterKey: [Obsolete] Master key of the disk; required only if
@@ -643,8 +664,8 @@ type AttachedDisk struct {
 	// initialization parameters to create boot disks or local SSDs attached
 	// to the new instance.
 	//
-	// This property is mutually exclusive with the
-	// source property; you can only define one or the other, but not both.
+	// This property is mutually exclusive with the source property; you can
+	// only define one or the other, but not both.
 	InitializeParams *AttachedDiskInitializeParams `json:"initializeParams,omitempty"`
 
 	Interface string `json:"interface,omitempty"`
@@ -659,6 +680,10 @@ type AttachedDisk struct {
 	// Mode: The mode in which to attach this disk, either READ_WRITE or
 	// READ_ONLY. If not specified, the default is to attach the disk in
 	// READ_WRITE mode.
+	//
+	// Possible values:
+	//   "READ_ONLY"
+	//   "READ_WRITE"
 	Mode string `json:"mode,omitempty"`
 
 	// Source: Specifies a valid partial or full URL to an existing
@@ -668,6 +693,10 @@ type AttachedDisk struct {
 
 	// Type: Specifies the type of the disk, either SCRATCH or PERSISTENT.
 	// If not specified, the default is PERSISTENT.
+	//
+	// Possible values:
+	//   "PERSISTENT"
+	//   "SCRATCH"
 	Type string `json:"type,omitempty"`
 }
 
@@ -680,6 +709,10 @@ type AttachedDiskInitializeParams struct {
 	DiskSizeGb int64 `json:"diskSizeGb,omitempty,string"`
 
 	// DiskStorageType: Storage type of the disk.
+	//
+	// Possible values:
+	//   "HDD"
+	//   "SSD"
 	DiskStorageType string `json:"diskStorageType,omitempty"`
 
 	// DiskType: Specifies the disk type to use to create the instance. If
@@ -690,15 +723,14 @@ type AttachedDiskInitializeParams struct {
 	// https://www.googleapis.com/compute/v1/projects/project/zones
 	// /zone/diskTypes/pd-standard
 	//
-	// Other values include pd-ssd and
-	// local-ssd. If you define this field, you can provide either the full
-	// or partial URL. For example, the following are valid values:
+	// Other values include pd-ssd and local-ssd. If you define this field,
+	// you can provide either the full or partial URL. For example, the
+	// following are valid values:
 	// -
 	// https://www.googleapis.com/compute/v1/projects/project/zones/zone/disk
 	// Types/diskType
 	// - projects/project/zones/zone/diskTypes/diskType
-	// -
-	// zones/zone/diskTypes/diskType
+	// - zones/zone/diskTypes/diskType
 	DiskType string `json:"diskType,omitempty"`
 
 	// SourceImage: A source image used to create the disk. You can provide
@@ -708,14 +740,12 @@ type AttachedDiskInitializeParams struct {
 	//
 	// global/images/my-private-image
 	//
-	// Or you can provide an
-	// image from a publicly-available project. For example, to use a Debian
-	// image from the debian-cloud project, make sure to include the project
-	// in the
+	// Or you can provide an image from a publicly-available project. For
+	// example, to use a Debian image from the debian-cloud project, make
+	// sure to include the project in the
 	// URL:
 	//
 	// projects/debian-cloud/global/images/debian-7-wheezy-vYYYYMMDD
-	//
 	//
 	// where vYYYYMMDD is the image version. The fully-qualified URL will
 	// also work in both cases.
@@ -730,6 +760,10 @@ type AttachedDiskInitializeParams struct {
 type Backend struct {
 	// BalancingMode: The balancing mode of this backend, default is
 	// UTILIZATION.
+	//
+	// Possible values:
+	//   "RATE"
+	//   "UTILIZATION"
 	BalancingMode string `json:"balancingMode,omitempty"`
 
 	// CapacityScaler: The multiplier (a value between 0 and 1e6) of the max
@@ -869,6 +903,11 @@ type DeprecationStatus struct {
 	// with a warning indicating the deprecated resource and recommending
 	// its replacement. Operations which use OBSOLETE or DELETED resources
 	// will be rejected and result in an error.
+	//
+	// Possible values:
+	//   "DELETED"
+	//   "DEPRECATED"
+	//   "OBSOLETE"
 	State string `json:"state,omitempty"`
 }
 
@@ -887,8 +926,8 @@ type Disk struct {
 	// fail. Master keys do not protect access to metadata about the
 	// resource.
 	//
-	// If you are setting a master key, the required key format
-	// is a random 256-bit string encoded in base64.
+	// If you are setting a master key, the required key format is a random
+	// 256-bit string encoded in base64.
 	DiskMasterKey string `json:"diskMasterKey,omitempty"`
 
 	// Id: [Output Only] Unique identifier for the resource; defined by the
@@ -923,30 +962,27 @@ type Disk struct {
 	// sourceSnapshot parameter, or specify it alone to create an empty
 	// persistent disk.
 	//
-	// If you specify this field along with sourceImage or
-	// sourceSnapshot, the value of sizeGb must not be less than the size of
-	// the sourceImage or the size of the snapshot.
+	// If you specify this field along with sourceImage or sourceSnapshot,
+	// the value of sizeGb must not be less than the size of the sourceImage
+	// or the size of the snapshot.
 	SizeGb int64 `json:"sizeGb,omitempty,string"`
 
 	// SourceImage: The source image used to create this disk. If the source
 	// image is deleted from the system, this field will not be set, even if
 	// an image with the same name has been re-created.
 	//
-	// When creating a
-	// disk, you can provide a private (custom) image using the following
-	// input, and Compute Engine will use the corresponding image from your
-	// project. For example:
+	// When creating a disk, you can provide a private (custom) image using
+	// the following input, and Compute Engine will use the corresponding
+	// image from your project. For example:
 	//
 	// global/images/my-private-image
 	//
-	// Or you can
-	// provide an image from a publicly-available project. For example, to
-	// use a Debian image from the debian-cloud project, make sure to
-	// include the project in the
+	// Or you can provide an image from a publicly-available project. For
+	// example, to use a Debian image from the debian-cloud project, make
+	// sure to include the project in the
 	// URL:
 	//
 	// projects/debian-cloud/global/images/debian-7-wheezy-vYYYYMMDD
-	//
 	//
 	// where vYYYYMMDD is the image version. The fully-qualified URL will
 	// also work in both cases.
@@ -965,8 +1001,7 @@ type Disk struct {
 	// image and is required if the source image is master key
 	// protected.
 	//
-	// The required key format is a random 256-bit string
-	// encoded in base64.
+	// The required key format is a random 256-bit string encoded in base64.
 	SourceImageMasterKey string `json:"sourceImageMasterKey,omitempty"`
 
 	// SourceSnapshot: The source snapshot used to create this disk. You can
@@ -976,8 +1011,7 @@ type Disk struct {
 	// https://www.googleapis.com/compute/v1/projects/project/global/snapshot
 	// s/snapshot
 	// - projects/project/global/snapshots/snapshot
-	// -
-	// global/snapshots/snapshot
+	// - global/snapshots/snapshot
 	SourceSnapshot string `json:"sourceSnapshot,omitempty"`
 
 	// SourceSnapshotId: [Output Only] The unique ID of the snapshot used to
@@ -993,15 +1027,24 @@ type Disk struct {
 	// snapshot and is required if the source snapshot is master key
 	// protected.
 	//
-	// The required key format is a random 256-bit string
-	// encoded in base64.
+	// The required key format is a random 256-bit string encoded in base64.
 	SourceSnapshotMasterKey string `json:"sourceSnapshotMasterKey,omitempty"`
 
 	// Status: [Output Only] The status of disk creation. Applicable
 	// statuses includes: CREATING, FAILED, READY, RESTORING.
+	//
+	// Possible values:
+	//   "CREATING"
+	//   "FAILED"
+	//   "READY"
+	//   "RESTORING"
 	Status string `json:"status,omitempty"`
 
 	// StorageType: [Deprecated] Storage type of the persistent disk.
+	//
+	// Possible values:
+	//   "HDD"
+	//   "SSD"
 	StorageType string `json:"storageType,omitempty"`
 
 	// Type: URL of the disk type resource describing which disk type to use
@@ -1142,6 +1185,21 @@ type DiskTypesScopedList struct {
 
 type DiskTypesScopedListWarning struct {
 	// Code: [Output Only] The warning type identifier for this warning.
+	//
+	// Possible values:
+	//   "DEPRECATED_RESOURCE_USED"
+	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "INJECTED_KERNELS_DEPRECATED"
+	//   "NEXT_HOP_ADDRESS_NOT_ASSIGNED"
+	//   "NEXT_HOP_CANNOT_IP_FORWARD"
+	//   "NEXT_HOP_INSTANCE_NOT_FOUND"
+	//   "NEXT_HOP_INSTANCE_NOT_ON_NETWORK"
+	//   "NEXT_HOP_NOT_RUNNING"
+	//   "NO_RESULTS_ON_PAGE"
+	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_NOT_DELETED"
+	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
+	//   "UNREACHABLE"
 	Code string `json:"code,omitempty"`
 
 	// Data: [Output Only] Metadata for this warning in key: value format.
@@ -1171,6 +1229,21 @@ type DisksScopedList struct {
 
 type DisksScopedListWarning struct {
 	// Code: [Output Only] The warning type identifier for this warning.
+	//
+	// Possible values:
+	//   "DEPRECATED_RESOURCE_USED"
+	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "INJECTED_KERNELS_DEPRECATED"
+	//   "NEXT_HOP_ADDRESS_NOT_ASSIGNED"
+	//   "NEXT_HOP_CANNOT_IP_FORWARD"
+	//   "NEXT_HOP_INSTANCE_NOT_FOUND"
+	//   "NEXT_HOP_INSTANCE_NOT_ON_NETWORK"
+	//   "NEXT_HOP_NOT_RUNNING"
+	//   "NO_RESULTS_ON_PAGE"
+	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_NOT_DELETED"
+	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
+	//   "UNREACHABLE"
 	Code string `json:"code,omitempty"`
 
 	// Data: [Output Only] Metadata for this warning in key: value format.
@@ -1225,15 +1298,14 @@ type Firewall struct {
 	// a firewall rule. If not specified when creating a firewall rule, the
 	// default network is used:
 	// global/networks/default
-	// If you choose to
-	// specify this property, you can specify the network as a full or
-	// partial URL. For example, the following are all valid URLs:
+	// If you choose to specify this property, you can specify the network
+	// as a full or partial URL. For example, the following are all valid
+	// URLs:
 	// -
 	// https://www.googleapis.com/compute/v1/projects/myproject/global/networ
 	// ks/my-network
 	// - projects/myproject/global/networks/my-network
-	// -
-	// global/networks/default
+	// - global/networks/default
 	Network string `json:"network,omitempty"`
 
 	// SelfLink: [Output Only] Server defined URL for the resource.
@@ -1243,19 +1315,18 @@ type Firewall struct {
 	// expressed in CIDR format. One or both of sourceRanges and sourceTags
 	// may be set.
 	//
-	// If both properties are set, an inbound connection is
-	// allowed if the range or the tag of the source matches the
-	// sourceRanges OR matches the sourceTags property; the connection does
-	// not need to match both properties.
+	// If both properties are set, an inbound connection is allowed if the
+	// range or the tag of the source matches the sourceRanges OR matches
+	// the sourceTags property; the connection does not need to match both
+	// properties.
 	SourceRanges []string `json:"sourceRanges,omitempty"`
 
 	// SourceTags: A list of instance tags which this rule applies to. One
 	// or both of sourceRanges and sourceTags may be set.
 	//
-	// If both
-	// properties are set, an inbound connection is allowed if the range or
-	// the tag of the source matches the sourceRanges OR matches the
-	// sourceTags property; the connection does not need to match both
+	// If both properties are set, an inbound connection is allowed if the
+	// range or the tag of the source matches the sourceRanges OR matches
+	// the sourceTags property; the connection does not need to match both
 	// properties.
 	SourceTags []string `json:"sourceTags,omitempty"`
 
@@ -1278,8 +1349,7 @@ type FirewallAllowed struct {
 	// integer or a range. If not specified, connections through any port
 	// are allowed
 	//
-	// Example inputs include: ["22"], ["80","443"], and
-	// ["12345-12349"].
+	// Example inputs include: ["22"], ["80","443"], and ["12345-12349"].
 	Ports []string `json:"ports,omitempty"`
 }
 
@@ -1314,6 +1384,13 @@ type ForwardingRule struct {
 
 	// IPProtocol: The IP protocol to which this rule applies, valid options
 	// are 'TCP', 'UDP', 'ESP', 'AH' or 'SCTP'.
+	//
+	// Possible values:
+	//   "AH"
+	//   "ESP"
+	//   "SCTP"
+	//   "TCP"
+	//   "UDP"
 	IPProtocol string `json:"IPProtocol,omitempty"`
 
 	// CreationTimestamp: Creation timestamp in RFC3339 text format (output
@@ -1407,6 +1484,21 @@ type ForwardingRulesScopedList struct {
 
 type ForwardingRulesScopedListWarning struct {
 	// Code: [Output Only] The warning type identifier for this warning.
+	//
+	// Possible values:
+	//   "DEPRECATED_RESOURCE_USED"
+	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "INJECTED_KERNELS_DEPRECATED"
+	//   "NEXT_HOP_ADDRESS_NOT_ASSIGNED"
+	//   "NEXT_HOP_CANNOT_IP_FORWARD"
+	//   "NEXT_HOP_INSTANCE_NOT_FOUND"
+	//   "NEXT_HOP_INSTANCE_NOT_ON_NETWORK"
+	//   "NEXT_HOP_NOT_RUNNING"
+	//   "NO_RESULTS_ON_PAGE"
+	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_NOT_DELETED"
+	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
+	//   "UNREACHABLE"
 	Code string `json:"code,omitempty"`
 
 	// Data: [Output Only] Metadata for this warning in key: value format.
@@ -1431,6 +1523,10 @@ type HealthCheckReference struct {
 
 type HealthStatus struct {
 	// HealthState: Health state of the instance.
+	//
+	// Possible values:
+	//   "HEALTHY"
+	//   "UNHEALTHY"
 	HealthState string `json:"healthState,omitempty"`
 
 	// Instance: URL of the instance resource.
@@ -1635,8 +1731,8 @@ type Image struct {
 	// fail. Master keys do not protect access to metadata about the
 	// resource.
 	//
-	// If you are setting a master key, the required key format
-	// is a random 256-bit string encoded in base64.
+	// If you are setting a master key, the required key format is a random
+	// 256-bit string encoded in base64.
 	ImageMasterKey string `json:"imageMasterKey,omitempty"`
 
 	// Kind: [Output Only] Type of the resource. Always compute#image for
@@ -1669,8 +1765,7 @@ type Image struct {
 	// https://www.googleapis.com/compute/v1/projects/project/zones/zone/disk
 	// /disk
 	// - projects/project/zones/zone/disk/disk
-	// -
-	// zones/zone/disks/disk
+	// - zones/zone/disks/disk
 	SourceDisk string `json:"sourceDisk,omitempty"`
 
 	// SourceDiskId: The ID value of the disk used to create this image.
@@ -1686,12 +1781,20 @@ type Image struct {
 
 	// SourceType: The type of the image used to create this disk. The
 	// default and only value is RAW
+	//
+	// Possible values:
+	//   "RAW" (default)
 	SourceType string `json:"sourceType,omitempty"`
 
 	// Status: [Output Only] The status of the image. An image can be used
 	// to create other resources, such as instances, only after the image
 	// has been successfully created and the status is set to READY.
 	// Possible values are FAILED, PENDING, or READY.
+	//
+	// Possible values:
+	//   "FAILED"
+	//   "PENDING"
+	//   "READY"
 	Status string `json:"status,omitempty"`
 }
 
@@ -1700,6 +1803,9 @@ type ImageRawDisk struct {
 	// device, which should be TAR. This is just a container and
 	// transmission format and not a runtime format. Provided by the client
 	// when the disk image is created.
+	//
+	// Possible values:
+	//   "TAR"
 	ContainerType string `json:"containerType,omitempty"`
 
 	// Sha1Checksum: An optional SHA1 checksum of the disk image before
@@ -1803,6 +1909,14 @@ type Instance struct {
 	// Status: [Output Only] The status of the instance. One of the
 	// following values: PROVISIONING, STAGING, RUNNING, STOPPING, STOPPED,
 	// TERMINATED.
+	//
+	// Possible values:
+	//   "PROVISIONING"
+	//   "RUNNING"
+	//   "STAGING"
+	//   "STOPPED"
+	//   "STOPPING"
+	//   "TERMINATED"
 	Status string `json:"status,omitempty"`
 
 	// StatusMessage: [Output Only] An optional, human-readable explanation
@@ -1978,6 +2092,21 @@ type InstancesScopedList struct {
 
 type InstancesScopedListWarning struct {
 	// Code: [Output Only] The warning type identifier for this warning.
+	//
+	// Possible values:
+	//   "DEPRECATED_RESOURCE_USED"
+	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "INJECTED_KERNELS_DEPRECATED"
+	//   "NEXT_HOP_ADDRESS_NOT_ASSIGNED"
+	//   "NEXT_HOP_CANNOT_IP_FORWARD"
+	//   "NEXT_HOP_INSTANCE_NOT_FOUND"
+	//   "NEXT_HOP_INSTANCE_NOT_ON_NETWORK"
+	//   "NEXT_HOP_NOT_RUNNING"
+	//   "NO_RESULTS_ON_PAGE"
+	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_NOT_DELETED"
+	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
+	//   "UNREACHABLE"
 	Code string `json:"code,omitempty"`
 
 	// Data: [Output Only] Metadata for this warning in key: value format.
@@ -2112,6 +2241,21 @@ type MachineTypesScopedList struct {
 
 type MachineTypesScopedListWarning struct {
 	// Code: [Output Only] The warning type identifier for this warning.
+	//
+	// Possible values:
+	//   "DEPRECATED_RESOURCE_USED"
+	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "INJECTED_KERNELS_DEPRECATED"
+	//   "NEXT_HOP_ADDRESS_NOT_ASSIGNED"
+	//   "NEXT_HOP_CANNOT_IP_FORWARD"
+	//   "NEXT_HOP_INSTANCE_NOT_FOUND"
+	//   "NEXT_HOP_INSTANCE_NOT_ON_NETWORK"
+	//   "NEXT_HOP_NOT_RUNNING"
+	//   "NO_RESULTS_ON_PAGE"
+	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_NOT_DELETED"
+	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
+	//   "UNREACHABLE"
 	Code string `json:"code,omitempty"`
 
 	// Data: [Output Only] Metadata for this warning in key: value format.
@@ -2221,15 +2365,13 @@ type NetworkInterface struct {
 	//
 	// global/networks/default
 	//
-	// If you specify
-	// this property, you can specify the network as a full or partial URL.
-	// For example, the following are all valid URLs:
+	// If you specify this property, you can specify the network as a full
+	// or partial URL. For example, the following are all valid URLs:
 	// -
 	// https://www.googleapis.com/compute/v1/projects/project/global/networks
 	// /network
 	// - projects/project/global/networks/network
-	// -
-	// global/networks/default
+	// - global/networks/default
 	Network string `json:"network,omitempty"`
 
 	// NetworkIP: [Output Only] An optional IPV4 internal network address
@@ -2322,6 +2464,11 @@ type Operation struct {
 
 	// Status: [Output Only] Status of the operation. Can be one of the
 	// following: PENDING, RUNNING, or DONE.
+	//
+	// Possible values:
+	//   "DONE"
+	//   "PENDING"
+	//   "RUNNING"
 	Status string `json:"status,omitempty"`
 
 	// StatusMessage: [Output Only] An optional textual description of the
@@ -2368,6 +2515,21 @@ type OperationErrorErrors struct {
 
 type OperationWarnings struct {
 	// Code: [Output Only] The warning type identifier for this warning.
+	//
+	// Possible values:
+	//   "DEPRECATED_RESOURCE_USED"
+	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "INJECTED_KERNELS_DEPRECATED"
+	//   "NEXT_HOP_ADDRESS_NOT_ASSIGNED"
+	//   "NEXT_HOP_CANNOT_IP_FORWARD"
+	//   "NEXT_HOP_INSTANCE_NOT_FOUND"
+	//   "NEXT_HOP_INSTANCE_NOT_ON_NETWORK"
+	//   "NEXT_HOP_NOT_RUNNING"
+	//   "NO_RESULTS_ON_PAGE"
+	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_NOT_DELETED"
+	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
+	//   "UNREACHABLE"
 	Code string `json:"code,omitempty"`
 
 	// Data: [Output Only] Metadata for this warning in key: value format.
@@ -2436,6 +2598,21 @@ type OperationsScopedList struct {
 
 type OperationsScopedListWarning struct {
 	// Code: [Output Only] The warning type identifier for this warning.
+	//
+	// Possible values:
+	//   "DEPRECATED_RESOURCE_USED"
+	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "INJECTED_KERNELS_DEPRECATED"
+	//   "NEXT_HOP_ADDRESS_NOT_ASSIGNED"
+	//   "NEXT_HOP_CANNOT_IP_FORWARD"
+	//   "NEXT_HOP_INSTANCE_NOT_FOUND"
+	//   "NEXT_HOP_INSTANCE_NOT_ON_NETWORK"
+	//   "NEXT_HOP_NOT_RUNNING"
+	//   "NO_RESULTS_ON_PAGE"
+	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_NOT_DELETED"
+	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
+	//   "UNREACHABLE"
 	Code string `json:"code,omitempty"`
 
 	// Data: [Output Only] Metadata for this warning in key: value format.
@@ -2521,6 +2698,29 @@ type Quota struct {
 	Limit float64 `json:"limit,omitempty"`
 
 	// Metric: [Output Only] Name of the quota metric.
+	//
+	// Possible values:
+	//   "BACKEND_SERVICES"
+	//   "CPUS"
+	//   "DISKS_TOTAL_GB"
+	//   "FIREWALLS"
+	//   "FORWARDING_RULES"
+	//   "HEALTH_CHECKS"
+	//   "IMAGES"
+	//   "INSTANCES"
+	//   "IN_USE_ADDRESSES"
+	//   "LOCAL_SSD_TOTAL_GB"
+	//   "NETWORKS"
+	//   "ROUTES"
+	//   "SNAPSHOTS"
+	//   "SSD_TOTAL_GB"
+	//   "STATIC_ADDRESSES"
+	//   "TARGET_HTTP_PROXIES"
+	//   "TARGET_INSTANCES"
+	//   "TARGET_POOLS"
+	//   "TARGET_VPN_GATEWAYS"
+	//   "URL_MAPS"
+	//   "VPN_TUNNELS"
 	Metric string `json:"metric,omitempty"`
 
 	// Usage: [Output Only] Current usage of this metric.
@@ -2557,6 +2757,10 @@ type Region struct {
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// Status: [Output Only] Status of the region, either UP or DOWN.
+	//
+	// Possible values:
+	//   "DOWN"
+	//   "UP"
 	Status string `json:"status,omitempty"`
 
 	// Zones: [Output Only] A list of zones available in this region, in the
@@ -2655,6 +2859,21 @@ type Route struct {
 
 type RouteWarnings struct {
 	// Code: [Output Only] The warning type identifier for this warning.
+	//
+	// Possible values:
+	//   "DEPRECATED_RESOURCE_USED"
+	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "INJECTED_KERNELS_DEPRECATED"
+	//   "NEXT_HOP_ADDRESS_NOT_ASSIGNED"
+	//   "NEXT_HOP_CANNOT_IP_FORWARD"
+	//   "NEXT_HOP_INSTANCE_NOT_FOUND"
+	//   "NEXT_HOP_INSTANCE_NOT_ON_NETWORK"
+	//   "NEXT_HOP_NOT_RUNNING"
+	//   "NO_RESULTS_ON_PAGE"
+	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_NOT_DELETED"
+	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
+	//   "UNREACHABLE"
 	Code string `json:"code,omitempty"`
 
 	// Data: [Output Only] Metadata for this warning in key: value format.
@@ -2701,6 +2920,10 @@ type Scheduling struct {
 	// OnHostMaintenance: Defines the maintenance behavior for this
 	// instance. The default behavior is MIGRATE. For more information, see
 	// Setting maintenance behavior.
+	//
+	// Possible values:
+	//   "MIGRATE"
+	//   "TERMINATE"
 	OnHostMaintenance string `json:"onHostMaintenance,omitempty"`
 }
 
@@ -2778,6 +3001,13 @@ type Snapshot struct {
 	SourceDiskMasterKey string `json:"sourceDiskMasterKey,omitempty"`
 
 	// Status: The status of the persistent disk snapshot (output only).
+	//
+	// Possible values:
+	//   "CREATING"
+	//   "DELETING"
+	//   "FAILED"
+	//   "READY"
+	//   "UPLOADING"
 	Status string `json:"status,omitempty"`
 
 	// StorageBytes: A size of the the storage used by the snapshot. As
@@ -2788,6 +3018,10 @@ type Snapshot struct {
 	// StorageBytesStatus: An indicator whether storageBytes is in a stable
 	// state, or it is being adjusted as a result of shared storage
 	// reallocation.
+	//
+	// Possible values:
+	//   "UPDATING"
+	//   "UP_TO_DATE"
 	StorageBytesStatus string `json:"storageBytesStatus,omitempty"`
 }
 
@@ -2869,8 +3103,7 @@ type Tags struct {
 	// always provide an up-to-date fingerprint hash in order to update or
 	// change metadata.
 	//
-	// To see the latest fingerprint, make get() request
-	// to the instance.
+	// To see the latest fingerprint, make get() request to the instance.
 	Fingerprint string `json:"fingerprint,omitempty"`
 
 	// Items: An array of tags. Each tag must be 1-63 characters long, and
@@ -3006,6 +3239,9 @@ type TargetInstance struct {
 
 	// NatPolicy: NAT option controlling how IPs are NAT'ed to the VM.
 	// Currently only NO_NAT (default value) is supported.
+	//
+	// Possible values:
+	//   "NO_NAT"
 	NatPolicy string `json:"natPolicy,omitempty"`
 
 	// SelfLink: Server defined URL for the resource (output only).
@@ -3065,6 +3301,21 @@ type TargetInstancesScopedList struct {
 
 type TargetInstancesScopedListWarning struct {
 	// Code: [Output Only] The warning type identifier for this warning.
+	//
+	// Possible values:
+	//   "DEPRECATED_RESOURCE_USED"
+	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "INJECTED_KERNELS_DEPRECATED"
+	//   "NEXT_HOP_ADDRESS_NOT_ASSIGNED"
+	//   "NEXT_HOP_CANNOT_IP_FORWARD"
+	//   "NEXT_HOP_INSTANCE_NOT_FOUND"
+	//   "NEXT_HOP_INSTANCE_NOT_ON_NETWORK"
+	//   "NEXT_HOP_NOT_RUNNING"
+	//   "NO_RESULTS_ON_PAGE"
+	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_NOT_DELETED"
+	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
+	//   "UNREACHABLE"
 	Code string `json:"code,omitempty"`
 
 	// Data: [Output Only] Metadata for this warning in key: value format.
@@ -3094,12 +3345,11 @@ type TargetPool struct {
 	// in the primary pool is at or below 'failoverRatio', traffic arriving
 	// at the load-balanced IP will be directed to the backup pool.
 	//
-	// In case
-	// where 'failoverRatio' and 'backupPool' are not set, or all the VMs in
-	// the backup pool are unhealthy, the traffic will be directed back to
-	// the primary pool in the "force" mode, where traffic will be spread to
-	// the healthy VMs with the best effort, or to all VMs when no VM is
-	// healthy.
+	// In case where 'failoverRatio' and 'backupPool' are not set, or all
+	// the VMs in the backup pool are unhealthy, the traffic will be
+	// directed back to the primary pool in the "force" mode, where traffic
+	// will be spread to the healthy VMs with the best effort, or to all VMs
+	// when no VM is healthy.
 	BackupPool string `json:"backupPool,omitempty"`
 
 	// CreationTimestamp: Creation timestamp in RFC3339 text format (output
@@ -3115,17 +3365,16 @@ type TargetPool struct {
 	// not as a backup pool to some other target pool). The value of the
 	// field must be in [0, 1].
 	//
-	// If set, 'backupPool' must also be set. They
-	// together define the fallback behavior of the primary target pool: if
-	// the ratio of the healthy VMs in the primary pool is at or below this
-	// number, traffic arriving at the load-balanced IP will be directed to
-	// the backup pool.
+	// If set, 'backupPool' must also be set. They together define the
+	// fallback behavior of the primary target pool: if the ratio of the
+	// healthy VMs in the primary pool is at or below this number, traffic
+	// arriving at the load-balanced IP will be directed to the backup
+	// pool.
 	//
-	// In case where 'failoverRatio' is not set or all the
-	// VMs in the backup pool are unhealthy, the traffic will be directed
-	// back to the primary pool in the "force" mode, where traffic will be
-	// spread to the healthy VMs with the best effort, or to all VMs when no
-	// VM is healthy.
+	// In case where 'failoverRatio' is not set or all the VMs in the backup
+	// pool are unhealthy, the traffic will be directed back to the primary
+	// pool in the "force" mode, where traffic will be spread to the healthy
+	// VMs with the best effort, or to all VMs when no VM is healthy.
 	FailoverRatio float64 `json:"failoverRatio,omitempty"`
 
 	// HealthChecks: A list of URLs to the HttpHealthCheck resource. A
@@ -3165,6 +3414,11 @@ type TargetPool struct {
 	// 'CLIENT_IP_PROTO': Connections from the same client IP with the same
 	// IP protocol will go to the same VM in the pool while that VM remains
 	// healthy.
+	//
+	// Possible values:
+	//   "CLIENT_IP"
+	//   "CLIENT_IP_PROTO"
+	//   "NONE"
 	SessionAffinity string `json:"sessionAffinity,omitempty"`
 }
 
@@ -3244,6 +3498,21 @@ type TargetPoolsScopedList struct {
 
 type TargetPoolsScopedListWarning struct {
 	// Code: [Output Only] The warning type identifier for this warning.
+	//
+	// Possible values:
+	//   "DEPRECATED_RESOURCE_USED"
+	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "INJECTED_KERNELS_DEPRECATED"
+	//   "NEXT_HOP_ADDRESS_NOT_ASSIGNED"
+	//   "NEXT_HOP_CANNOT_IP_FORWARD"
+	//   "NEXT_HOP_INSTANCE_NOT_FOUND"
+	//   "NEXT_HOP_INSTANCE_NOT_ON_NETWORK"
+	//   "NEXT_HOP_NOT_RUNNING"
+	//   "NO_RESULTS_ON_PAGE"
+	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_NOT_DELETED"
+	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
+	//   "UNREACHABLE"
 	Code string `json:"code,omitempty"`
 
 	// Data: [Output Only] Metadata for this warning in key: value format.
@@ -3305,6 +3574,12 @@ type TargetVpnGateway struct {
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// Status: [Output Only] The status of the VPN gateway.
+	//
+	// Possible values:
+	//   "CREATING"
+	//   "DELETING"
+	//   "FAILED"
+	//   "READY"
 	Status string `json:"status,omitempty"`
 
 	// Tunnels: [Output Only] A list of URLs to VpnTunnel resources.
@@ -3365,6 +3640,21 @@ type TargetVpnGatewaysScopedList struct {
 
 type TargetVpnGatewaysScopedListWarning struct {
 	// Code: [Output Only] The warning type identifier for this warning.
+	//
+	// Possible values:
+	//   "DEPRECATED_RESOURCE_USED"
+	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "INJECTED_KERNELS_DEPRECATED"
+	//   "NEXT_HOP_ADDRESS_NOT_ASSIGNED"
+	//   "NEXT_HOP_CANNOT_IP_FORWARD"
+	//   "NEXT_HOP_INSTANCE_NOT_FOUND"
+	//   "NEXT_HOP_INSTANCE_NOT_ON_NETWORK"
+	//   "NEXT_HOP_NOT_RUNNING"
+	//   "NO_RESULTS_ON_PAGE"
+	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_NOT_DELETED"
+	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
+	//   "UNREACHABLE"
 	Code string `json:"code,omitempty"`
 
 	// Data: [Output Only] Metadata for this warning in key: value format.
@@ -3569,6 +3859,17 @@ type VpnTunnel struct {
 	SharedSecretHash string `json:"sharedSecretHash,omitempty"`
 
 	// Status: [Output Only] The status of the VPN tunnel.
+	//
+	// Possible values:
+	//   "AUTHORIZATION_ERROR"
+	//   "DEPROVISIONING"
+	//   "ESTABLISHED"
+	//   "FAILED"
+	//   "FIRST_HANDSHAKE"
+	//   "NEGOTIATION_FAILURE"
+	//   "NETWORK_ERROR"
+	//   "PROVISIONING"
+	//   "WAITING_FOR_FULL_CONFIG"
 	Status string `json:"status,omitempty"`
 
 	// TargetVpnGateway: URL of the VPN gateway to which this VPN tunnel is
@@ -3627,6 +3928,21 @@ type VpnTunnelsScopedList struct {
 
 type VpnTunnelsScopedListWarning struct {
 	// Code: [Output Only] The warning type identifier for this warning.
+	//
+	// Possible values:
+	//   "DEPRECATED_RESOURCE_USED"
+	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "INJECTED_KERNELS_DEPRECATED"
+	//   "NEXT_HOP_ADDRESS_NOT_ASSIGNED"
+	//   "NEXT_HOP_CANNOT_IP_FORWARD"
+	//   "NEXT_HOP_INSTANCE_NOT_FOUND"
+	//   "NEXT_HOP_INSTANCE_NOT_ON_NETWORK"
+	//   "NEXT_HOP_NOT_RUNNING"
+	//   "NO_RESULTS_ON_PAGE"
+	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_NOT_DELETED"
+	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
+	//   "UNREACHABLE"
 	Code string `json:"code,omitempty"`
 
 	// Data: [Output Only] Metadata for this warning in key: value format.
@@ -3681,6 +3997,10 @@ type Zone struct {
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// Status: [Output Only] Status of the zone, either UP or DOWN.
+	//
+	// Possible values:
+	//   "DOWN"
+	//   "UP"
 	Status string `json:"status,omitempty"`
 }
 
@@ -10051,8 +10371,8 @@ type ImagesDeprecateCall struct {
 
 // Deprecate: Sets the deprecation status of an image.
 //
-// If an empty
-// request body is given, clears the deprecation status instead.
+// If an empty request body is given, clears the deprecation status
+// instead.
 // For details, see https://cloud.google.com/compute/docs/reference/latest/images/deprecate
 func (r *ImagesService) Deprecate(project string, image string, deprecationstatus *DeprecationStatus) *ImagesDeprecateCall {
 	c := &ImagesDeprecateCall{s: r.s, opt_: make(map[string]interface{})}

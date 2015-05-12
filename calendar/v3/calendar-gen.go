@@ -2005,6 +2005,13 @@ func (c *CalendarListListCall) MaxResults(maxResults int64) *CalendarListListCal
 // MinAccessRole sets the optional parameter "minAccessRole": The
 // minimum access role for the user in the returned entries.  The
 // default is no restriction.
+//
+// Possible values:
+//   "freeBusyReader" - The user can read free/busy information.
+//   "owner" - The user can read and modify events and access control
+// lists.
+//   "reader" - The user can read events that are not private.
+//   "writer" - The user can read and modify events.
 func (c *CalendarListListCall) MinAccessRole(minAccessRole string) *CalendarListListCall {
 	c.opt_["minAccessRole"] = minAccessRole
 	return c
@@ -2403,6 +2410,13 @@ func (c *CalendarListWatchCall) MaxResults(maxResults int64) *CalendarListWatchC
 // MinAccessRole sets the optional parameter "minAccessRole": The
 // minimum access role for the user in the returned entries.  The
 // default is no restriction.
+//
+// Possible values:
+//   "freeBusyReader" - The user can read free/busy information.
+//   "owner" - The user can read and modify events and access control
+// lists.
+//   "reader" - The user can read events that are not private.
+//   "writer" - The user can read and modify events.
 func (c *CalendarListWatchCall) MinAccessRole(minAccessRole string) *CalendarListWatchCall {
 	c.opt_["minAccessRole"] = minAccessRole
 	return c
@@ -3908,6 +3922,12 @@ func (c *EventsListCall) MaxResults(maxResults int64) *EventsListCall {
 // OrderBy sets the optional parameter "orderBy": The order of the
 // events returned in the result.  The default is an unspecified, stable
 // order.
+//
+// Possible values:
+//   "startTime" - Order by the start date/time (ascending). This is
+// only available when querying single events (i.e. the parameter
+// singleEvents is True)
+//   "updated" - Order by last modification time (ascending).
 func (c *EventsListCall) OrderBy(orderBy string) *EventsListCall {
 	c.opt_["orderBy"] = orderBy
 	return c
@@ -4828,6 +4848,12 @@ func (c *EventsWatchCall) MaxResults(maxResults int64) *EventsWatchCall {
 // OrderBy sets the optional parameter "orderBy": The order of the
 // events returned in the result.  The default is an unspecified, stable
 // order.
+//
+// Possible values:
+//   "startTime" - Order by the start date/time (ascending). This is
+// only available when querying single events (i.e. the parameter
+// singleEvents is True)
+//   "updated" - Order by last modification time (ascending).
 func (c *EventsWatchCall) OrderBy(orderBy string) *EventsWatchCall {
 	c.opt_["orderBy"] = orderBy
 	return c

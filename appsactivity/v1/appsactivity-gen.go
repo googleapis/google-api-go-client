@@ -289,6 +289,10 @@ func (c *ActivitiesListCall) DriveFileId(driveFileId string) *ActivitiesListCall
 // GroupingStrategy sets the optional parameter "groupingStrategy":
 // Indicates the strategy to use when grouping singleEvents items in the
 // associated combinedEvent object.
+//
+// Possible values:
+//   "driveUi" (default)
+//   "none"
 func (c *ActivitiesListCall) GroupingStrategy(groupingStrategy string) *ActivitiesListCall {
 	c.opt_["groupingStrategy"] = groupingStrategy
 	return c

@@ -225,6 +225,17 @@
       "CRITICAL",
       "ALERT",
       "EMERGENCY"
+     ],
+     "enumDescriptions": [
+      "This is the DEFAULT description",
+      "This is the DEBUG description",
+      "This is the INFO description",
+      "This is the NOTICE description",
+      "This is the WARNING description",
+      "This is the ERROR description",
+      "This is the CRITICAL description",
+      "This is the ALERT description",
+      "This is the EMERGENCY description"
      ]
     },
     "projectId": {

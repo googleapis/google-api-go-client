@@ -4855,6 +4855,13 @@ func (c *CaptionsDownloadCall) OnBehalfOf(onBehalfOf string) *CaptionsDownloadCa
 // that the caption track should be returned in a specific format. If
 // the parameter is not included in the request, the track is returned
 // in its original format.
+//
+// Possible values:
+//   "sbv" - SubViewer subtitle.
+//   "scc" - Scenarist Closed Caption format.
+//   "srt" - SubRip subtitle.
+//   "ttml" - Timed Text Markup Language caption.
+//   "vtt" - Web Video Text Tracks caption.
 func (c *CaptionsDownloadCall) Tfmt(tfmt string) *CaptionsDownloadCall {
 	c.opt_["tfmt"] = tfmt
 	return c
@@ -6850,6 +6857,13 @@ func (c *CommentThreadsListCall) MaxResults(maxResults int64) *CommentThreadsLis
 //
 // Note: This parameter is not supported for use in conjunction with the
 // id parameter.
+//
+// Possible values:
+//   "heldForReview" - Returns only comment threads awaiting review by a
+// moderator.
+//   "likelySpam" - Returns only comment threads classified as likely
+// being spam.
+//   "published" - Returns only published comment threads. (default)
 func (c *CommentThreadsListCall) ModerationStatus(moderationStatus string) *CommentThreadsListCall {
 	c.opt_["moderationStatus"] = moderationStatus
 	return c
@@ -6881,6 +6895,10 @@ func (c *CommentThreadsListCall) SearchTerms(searchTerms string) *CommentThreads
 // TextFormat sets the optional parameter "textFormat": Set this
 // parameter's value to html or plainText to instruct the API to return
 // the comments left by users in html formatted or in plain text.
+//
+// Possible values:
+//   "html" - Returns the comments in HTML format.
+//   "plainText" - Returns the comments in plain text format.
 func (c *CommentThreadsListCall) TextFormat(textFormat string) *CommentThreadsListCall {
 	c.opt_["textFormat"] = textFormat
 	return c
@@ -7356,6 +7374,10 @@ func (c *CommentsListCall) ParentId(parentId string) *CommentsListCall {
 // TextFormat sets the optional parameter "textFormat": Set this
 // parameter's value to html or plainText to instruct the API to return
 // the comments left by users formatted as HTML or as plain text.
+//
+// Possible values:
+//   "html" - Returns the comments in HTML format.
+//   "plainText" - Returns the comments in plain text format.
 func (c *CommentsListCall) TextFormat(textFormat string) *CommentsListCall {
 	c.opt_["textFormat"] = textFormat
 	return c
@@ -8725,6 +8747,12 @@ func (r *LiveBroadcastsService) List(part string) *LiveBroadcastsListCall {
 // BroadcastStatus sets the optional parameter "broadcastStatus": The
 // broadcastStatus parameter filters the API response to only include
 // broadcasts with the specified status.
+//
+// Possible values:
+//   "active" - Return current live broadcasts.
+//   "all" - Return all broadcasts.
+//   "completed" - Return broadcasts that have already ended.
+//   "upcoming" - Return broadcasts that have not yet started.
 func (c *LiveBroadcastsListCall) BroadcastStatus(broadcastStatus string) *LiveBroadcastsListCall {
 	c.opt_["broadcastStatus"] = broadcastStatus
 	return c
@@ -11000,6 +11028,10 @@ func (c *SearchListCall) ChannelId(channelId string) *SearchListCall {
 // ChannelType sets the optional parameter "channelType": The
 // channelType parameter lets you restrict a search to a particular type
 // of channel.
+//
+// Possible values:
+//   "any" - Return all channels.
+//   "show" - Only retrieve shows.
 func (c *SearchListCall) ChannelType(channelType string) *SearchListCall {
 	c.opt_["channelType"] = channelType
 	return c
@@ -11007,6 +11039,11 @@ func (c *SearchListCall) ChannelType(channelType string) *SearchListCall {
 
 // EventType sets the optional parameter "eventType": The eventType
 // parameter restricts a search to broadcast events.
+//
+// Possible values:
+//   "completed" - Only include completed broadcasts.
+//   "live" - Only include active broadcasts.
+//   "upcoming" - Only include upcoming broadcasts.
 func (c *SearchListCall) EventType(eventType string) *SearchListCall {
 	c.opt_["eventType"] = eventType
 	return c
@@ -11100,6 +11137,18 @@ func (c *SearchListCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *
 // Order sets the optional parameter "order": The order parameter
 // specifies the method that will be used to order resources in the API
 // response.
+//
+// Possible values:
+//   "date" - Resources are sorted in reverse chronological order based
+// on the date they were created.
+//   "rating" - Resources are sorted from highest to lowest rating.
+//   "relevance" - Resources are sorted based on their relevance to the
+// search query. This is the default value for this parameter.
+//   "title" - Resources are sorted alphabetically by title.
+//   "videoCount" - Channels are sorted in descending order of their
+// number of uploaded videos.
+//   "viewCount" - Resources are sorted from highest to lowest number of
+// views.
 func (c *SearchListCall) Order(order string) *SearchListCall {
 	c.opt_["order"] = order
 	return c
@@ -11174,6 +11223,17 @@ func (c *SearchListCall) RelevanceLanguage(relevanceLanguage string) *SearchList
 // SafeSearch sets the optional parameter "safeSearch": The safeSearch
 // parameter indicates whether the search results should include
 // restricted content as well as standard content.
+//
+// Possible values:
+//   "moderate" - YouTube will filter some content from search results
+// and, at the least, will filter content that is restricted in your
+// locale. Based on their content, search results could be removed from
+// search results or demoted in search results. This is the default
+// parameter value.
+//   "none" - YouTube will not filter the search result set.
+//   "strict" - YouTube will try to exclude all restricted content from
+// the search result set. Based on their content, search results could
+// be removed from search results or demoted in search results.
 func (c *SearchListCall) SafeSearch(safeSearch string) *SearchListCall {
 	c.opt_["safeSearch"] = safeSearch
 	return c
@@ -11199,6 +11259,11 @@ func (c *SearchListCall) Type(type_ string) *SearchListCall {
 // VideoCaption sets the optional parameter "videoCaption": The
 // videoCaption parameter indicates whether the API should filter video
 // search results based on whether they have captions.
+//
+// Possible values:
+//   "any" - Do not filter results based on caption availability.
+//   "closedCaption" - Only include videos that have captions.
+//   "none" - Only include videos that do not have captions.
 func (c *SearchListCall) VideoCaption(videoCaption string) *SearchListCall {
 	c.opt_["videoCaption"] = videoCaption
 	return c
@@ -11217,6 +11282,11 @@ func (c *SearchListCall) VideoCategoryId(videoCategoryId string) *SearchListCall
 // either high definition (HD) or standard definition (SD) videos. HD
 // videos are available for playback in at least 720p, though higher
 // resolutions, like 1080p, might also be available.
+//
+// Possible values:
+//   "any" - Return all videos, regardless of their resolution.
+//   "high" - Only retrieve HD videos.
+//   "standard" - Only retrieve videos in standard definition.
 func (c *SearchListCall) VideoDefinition(videoDefinition string) *SearchListCall {
 	c.opt_["videoDefinition"] = videoDefinition
 	return c
@@ -11225,6 +11295,12 @@ func (c *SearchListCall) VideoDefinition(videoDefinition string) *SearchListCall
 // VideoDimension sets the optional parameter "videoDimension": The
 // videoDimension parameter lets you restrict a search to only retrieve
 // 2D or 3D videos.
+//
+// Possible values:
+//   "2d" - Restrict search results to exclude 3D videos.
+//   "3d" - Restrict search results to only include 3D videos.
+//   "any" - Include both 3D and non-3D videos in returned results. This
+// is the default value.
 func (c *SearchListCall) VideoDimension(videoDimension string) *SearchListCall {
 	c.opt_["videoDimension"] = videoDimension
 	return c
@@ -11233,6 +11309,14 @@ func (c *SearchListCall) VideoDimension(videoDimension string) *SearchListCall {
 // VideoDuration sets the optional parameter "videoDuration": The
 // videoDuration parameter filters video search results based on their
 // duration.
+//
+// Possible values:
+//   "any" - Do not filter video search results based on their duration.
+// This is the default value.
+//   "long" - Only include videos longer than 20 minutes.
+//   "medium" - Only include videos that are between four and 20 minutes
+// long (inclusive).
+//   "short" - Only include videos that are less than four minutes long.
 func (c *SearchListCall) VideoDuration(videoDuration string) *SearchListCall {
 	c.opt_["videoDuration"] = videoDuration
 	return c
@@ -11241,6 +11325,10 @@ func (c *SearchListCall) VideoDuration(videoDuration string) *SearchListCall {
 // VideoEmbeddable sets the optional parameter "videoEmbeddable": The
 // videoEmbeddable parameter lets you to restrict a search to only
 // videos that can be embedded into a webpage.
+//
+// Possible values:
+//   "any" - Return all videos, embeddable or not.
+//   "true" - Only retrieve embeddable videos.
 func (c *SearchListCall) VideoEmbeddable(videoEmbeddable string) *SearchListCall {
 	c.opt_["videoEmbeddable"] = videoEmbeddable
 	return c
@@ -11251,6 +11339,15 @@ func (c *SearchListCall) VideoEmbeddable(videoEmbeddable string) *SearchListCall
 // with a particular license. YouTube lets video uploaders choose to
 // attach either the Creative Commons license or the standard YouTube
 // license to each of their videos.
+//
+// Possible values:
+//   "any" - Return all videos, regardless of which license they have,
+// that match the query parameters.
+//   "creativeCommon" - Only return videos that have a Creative Commons
+// license. Users can reuse videos with this license in other videos
+// that they create. Learn more.
+//   "youtube" - Only return videos that have the standard YouTube
+// license.
 func (c *SearchListCall) VideoLicense(videoLicense string) *SearchListCall {
 	c.opt_["videoLicense"] = videoLicense
 	return c
@@ -11259,6 +11356,10 @@ func (c *SearchListCall) VideoLicense(videoLicense string) *SearchListCall {
 // VideoSyndicated sets the optional parameter "videoSyndicated": The
 // videoSyndicated parameter lets you to restrict a search to only
 // videos that can be played outside youtube.com.
+//
+// Possible values:
+//   "any" - Return all videos, syndicated or not.
+//   "true" - Only retrieve syndicated videos.
 func (c *SearchListCall) VideoSyndicated(videoSyndicated string) *SearchListCall {
 	c.opt_["videoSyndicated"] = videoSyndicated
 	return c
@@ -11266,6 +11367,11 @@ func (c *SearchListCall) VideoSyndicated(videoSyndicated string) *SearchListCall
 
 // VideoType sets the optional parameter "videoType": The videoType
 // parameter lets you restrict a search to a particular type of videos.
+//
+// Possible values:
+//   "any" - Return all videos.
+//   "episode" - Only retrieve episodes of shows.
+//   "movie" - Only retrieve movies.
 func (c *SearchListCall) VideoType(videoType string) *SearchListCall {
 	c.opt_["videoType"] = videoType
 	return c
@@ -11974,6 +12080,11 @@ func (c *SubscriptionsListCall) OnBehalfOfContentOwnerChannel(onBehalfOfContentO
 // Order sets the optional parameter "order": The order parameter
 // specifies the method that will be used to sort resources in the API
 // response.
+//
+// Possible values:
+//   "alphabetical" - Sort alphabetically.
+//   "relevance" - Sort by relevance.
+//   "unread" - Sort by order of activity.
 func (c *SubscriptionsListCall) Order(order string) *SubscriptionsListCall {
 	c.opt_["order"] = order
 	return c
@@ -13079,6 +13190,10 @@ func (r *VideosService) List(part string) *VideosListCall {
 
 // Chart sets the optional parameter "chart": The chart parameter
 // identifies the chart that you want to retrieve.
+//
+// Possible values:
+//   "mostPopular" - Return the most popular videos for the specified
+// content region and video category.
 func (c *VideosListCall) Chart(chart string) *VideosListCall {
 	c.opt_["chart"] = chart
 	return c
@@ -13127,6 +13242,10 @@ func (c *VideosListCall) MaxResults(maxResults int64) *VideosListCall {
 // MyRating sets the optional parameter "myRating": Set this parameter's
 // value to like or dislike to instruct the API to only return videos
 // liked or disliked by the authenticated user.
+//
+// Possible values:
+//   "dislike" - Returns only videos disliked by the authenticated user.
+//   "like" - Returns only video liked by the authenticated user.
 func (c *VideosListCall) MyRating(myRating string) *VideosListCall {
 	c.opt_["myRating"] = myRating
 	return c

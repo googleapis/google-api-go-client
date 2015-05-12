@@ -1009,6 +1009,10 @@ func (r *BucketsService) Get(bucket string) *BucketsGetCall {
 
 // Projection sets the optional parameter "projection": Set of
 // properties to return. Defaults to no_acl.
+//
+// Possible values:
+//   "full" - Include all properties.
+//   "no_acl" - Omit acl and defaultObjectAcl properties.
 func (c *BucketsGetCall) Projection(projection string) *BucketsGetCall {
 	c.opt_["projection"] = projection
 	return c
@@ -1112,6 +1116,10 @@ func (r *BucketsService) Insert(bucket *Bucket) *BucketsInsertCall {
 // properties to return. Defaults to no_acl, unless the bucket resource
 // specifies acl or defaultObjectAcl properties, when it defaults to
 // full.
+//
+// Possible values:
+//   "full" - Include all properties.
+//   "no_acl" - Omit acl and defaultObjectAcl properties.
 func (c *BucketsInsertCall) Projection(projection string) *BucketsInsertCall {
 	c.opt_["projection"] = projection
 	return c
@@ -1225,6 +1233,10 @@ func (c *BucketsListCall) PageToken(pageToken string) *BucketsListCall {
 
 // Projection sets the optional parameter "projection": Set of
 // properties to return. Defaults to no_acl.
+//
+// Possible values:
+//   "full" - Include all properties.
+//   "no_acl" - Omit acl and defaultObjectAcl properties.
 func (c *BucketsListCall) Projection(projection string) *BucketsListCall {
 	c.opt_["projection"] = projection
 	return c
@@ -1346,6 +1358,10 @@ func (r *BucketsService) Patch(bucket string, bucket2 *Bucket) *BucketsPatchCall
 
 // Projection sets the optional parameter "projection": Set of
 // properties to return. Defaults to full.
+//
+// Possible values:
+//   "full" - Include all properties.
+//   "no_acl" - Omit acl and defaultObjectAcl properties.
 func (c *BucketsPatchCall) Projection(projection string) *BucketsPatchCall {
 	c.opt_["projection"] = projection
 	return c
@@ -1457,6 +1473,10 @@ func (r *BucketsService) Update(bucket string, bucket2 *Bucket) *BucketsUpdateCa
 
 // Projection sets the optional parameter "projection": Set of
 // properties to return. Defaults to full.
+//
+// Possible values:
+//   "full" - Include all properties.
+//   "no_acl" - Omit acl and defaultObjectAcl properties.
 func (c *BucketsUpdateCall) Projection(projection string) *BucketsUpdateCall {
 	c.opt_["projection"] = projection
 	return c
@@ -2233,6 +2253,10 @@ func (r *ObjectsService) Get(bucket string, object string) *ObjectsGetCall {
 
 // Projection sets the optional parameter "projection": Set of
 // properties to return. Defaults to no_acl.
+//
+// Possible values:
+//   "full" - Include all properties.
+//   "no_acl" - Omit the acl property.
 func (c *ObjectsGetCall) Projection(projection string) *ObjectsGetCall {
 	c.opt_["projection"] = projection
 	return c
@@ -2359,6 +2383,10 @@ func (c *ObjectsInsertCall) Name(name string) *ObjectsInsertCall {
 // Projection sets the optional parameter "projection": Set of
 // properties to return. Defaults to no_acl, unless the object resource
 // specifies the acl property, when it defaults to full.
+//
+// Possible values:
+//   "full" - Include all properties.
+//   "no_acl" - Omit the acl property.
 func (c *ObjectsInsertCall) Projection(projection string) *ObjectsInsertCall {
 	c.opt_["projection"] = projection
 	return c
@@ -2598,6 +2626,10 @@ func (c *ObjectsListCall) Prefix(prefix string) *ObjectsListCall {
 
 // Projection sets the optional parameter "projection": Set of
 // properties to return. Defaults to no_acl.
+//
+// Possible values:
+//   "full" - Include all properties.
+//   "no_acl" - Omit the acl property.
 func (c *ObjectsListCall) Projection(projection string) *ObjectsListCall {
 	c.opt_["projection"] = projection
 	return c
@@ -2739,6 +2771,10 @@ func (r *ObjectsService) Patch(bucket string, object string, object2 *Object) *O
 
 // Projection sets the optional parameter "projection": Set of
 // properties to return. Defaults to full.
+//
+// Possible values:
+//   "full" - Include all properties.
+//   "no_acl" - Omit the acl property.
 func (c *ObjectsPatchCall) Projection(projection string) *ObjectsPatchCall {
 	c.opt_["projection"] = projection
 	return c
@@ -2860,6 +2896,10 @@ func (r *ObjectsService) Update(bucket string, object string, object2 *Object) *
 
 // Projection sets the optional parameter "projection": Set of
 // properties to return. Defaults to full.
+//
+// Possible values:
+//   "full" - Include all properties.
+//   "no_acl" - Omit the acl property.
 func (c *ObjectsUpdateCall) Projection(projection string) *ObjectsUpdateCall {
 	c.opt_["projection"] = projection
 	return c

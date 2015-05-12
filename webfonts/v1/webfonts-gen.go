@@ -126,6 +126,13 @@ func (r *WebfontsService) List() *WebfontsListCall {
 }
 
 // Sort sets the optional parameter "sort": Enables sorting of the list
+//
+// Possible values:
+//   "alpha" - Sort alphabetically
+//   "date" - Sort by date added
+//   "popularity" - Sort by popularity
+//   "style" - Sort by number of styles
+//   "trending" - Sort by trending
 func (c *WebfontsListCall) Sort(sort string) *WebfontsListCall {
 	c.opt_["sort"] = sort
 	return c

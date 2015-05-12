@@ -2315,6 +2315,10 @@ func (c *JobsListCall) PageToken(pageToken string) *JobsListCall {
 
 // Projection sets the optional parameter "projection": Restrict
 // information returned to a set of selected fields
+//
+// Possible values:
+//   "full" - Includes all job data
+//   "minimal" - Does not include the job configuration
 func (c *JobsListCall) Projection(projection string) *JobsListCall {
 	c.opt_["projection"] = projection
 	return c
@@ -2322,6 +2326,11 @@ func (c *JobsListCall) Projection(projection string) *JobsListCall {
 
 // StateFilter sets the optional parameter "stateFilter": Filter for job
 // state
+//
+// Possible values:
+//   "done" - Finished jobs
+//   "pending" - Pending jobs
+//   "running" - Running jobs
 func (c *JobsListCall) StateFilter(stateFilter string) *JobsListCall {
 	c.opt_["stateFilter"] = stateFilter
 	return c

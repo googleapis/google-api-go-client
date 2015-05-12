@@ -631,6 +631,10 @@ func (p *Property) Enum() []string {
 	return jstrlist(p.m, "enum")
 }
 
+func (p *Property) EnumDescriptions() []string {
+	return jstrlist(p.m, "enumDescriptions")
+}
+
 type Type struct {
 	m   map[string]interface{} // JSON map containing key "type" and maybe "items", "properties"
 	api *API
@@ -1052,13 +1056,17 @@ func (s *Schema) writeSchemaStruct(api *API) {
 		if des := p.Description(); des != "" {
 			s.api.p("%s", asComment("\t", fmt.Sprintf("%s: %s", pname, des)))
 			if enum := p.Enum(); enum != nil {
+				desc := p.EnumDescriptions()
 				s.api.p("\t//\n") // blank comment line
 				s.api.p("%s", asComment("\t", "Possible values:"))
 				defval := p.Default()
-				for _, v := range enum {
+				for i, v := range enum {
 					more := ""
+					if len(desc) > i && desc[i] != "" {
+						more = " - " + desc[i]
+					}
 					if v == defval {
-						more = " (default)"
+						more = more + " (default)"
 					}
 					s.api.p("%s", asComment("\t", `  "`+v+`"`+more))
 				}
@@ -1314,6 +1322,22 @@ func (meth *Method) generateCode() {
 		des = strings.Replace(des, "Optional.", "", 1)
 		des = strings.TrimSpace(des)
 		p("\n%s", asComment("", fmt.Sprintf("%s sets the optional parameter %q: %s", setter, opt.name, des)))
+		if enum := opt.Enum(); enum != nil {
+			desc := opt.EnumDescriptions()
+			pn("//") // blank comment line
+			p("%s", asComment("", "Possible values:"))
+			defval := opt.Default()
+			for i, v := range enum {
+				more := ""
+				if len(desc) > i && desc[i] != "" {
+					more = " - " + desc[i]
+				}
+				if v == defval {
+					more = more + " (default)"
+				}
+				p("%s", asComment("", `  "`+v+`"`+more))
+			}
+		}
 		np := new(namePool)
 		np.Get("c") // take the receiver's name
 		paramName := np.Get(validGoIdentifer(opt.name))
@@ -1494,6 +1518,18 @@ type Param struct {
 	name          string
 	m             map[string]interface{}
 	callFieldName string // empty means to use the default
+}
+
+func (p *Param) Default() string {
+	return jstr(p.m, "default")
+}
+
+func (p *Param) Enum() []string {
+	return jstrlist(p.m, "enum")
+}
+
+func (p *Param) EnumDescriptions() []string {
+	return jstrlist(p.m, "enumDescriptions")
 }
 
 func (p *Param) IsRequired() bool {

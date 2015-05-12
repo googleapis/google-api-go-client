@@ -1297,6 +1297,11 @@ func (r *ZoneViewsService) ListResources(project string, zone string, resourceVi
 // the return value. It can be URL or URL_PORT. A JSON object will be
 // included in the response based on the format. The default format is
 // NONE, which results in no JSON in the response.
+//
+// Possible values:
+//   "NONE"
+//   "URL"
+//   "URL_PORT"
 func (c *ZoneViewsListResourcesCall) Format(format string) *ZoneViewsListResourcesCall {
 	c.opt_["format"] = format
 	return c
@@ -1304,6 +1309,10 @@ func (c *ZoneViewsListResourcesCall) Format(format string) *ZoneViewsListResourc
 
 // ListState sets the optional parameter "listState": The state of the
 // instance to list. By default, it lists all instances.
+//
+// Possible values:
+//   "ALL" (default)
+//   "RUNNING"
 func (c *ZoneViewsListResourcesCall) ListState(listState string) *ZoneViewsListResourcesCall {
 	c.opt_["listState"] = listState
 	return c

@@ -2704,6 +2704,12 @@ func (c *AchievementsListCall) PageToken(pageToken string) *AchievementsListCall
 // State sets the optional parameter "state": Tells the server to return
 // only achievements with the specified state. If this parameter isn't
 // specified, all achievements are returned.
+//
+// Possible values:
+//   "ALL" - List all achievements. This is the default.
+//   "HIDDEN" - List only hidden achievements.
+//   "REVEALED" - List only revealed achievements.
+//   "UNLOCKED" - List only unlocked achievements.
 func (c *AchievementsListCall) State(state string) *AchievementsListCall {
 	c.opt_["state"] = state
 	return c
@@ -3167,6 +3173,12 @@ func (c *ApplicationsGetCall) Language(language string) *ApplicationsGetCall {
 
 // PlatformType sets the optional parameter "platformType": Restrict
 // application details returned to the specific platform.
+//
+// Possible values:
+//   "ANDROID" - Retrieve applications that can be played on Android.
+//   "IOS" - Retrieve applications that can be played on iOS.
+//   "WEB_APP" - Retrieve applications that can be played on desktop
+// web.
 func (c *ApplicationsGetCall) PlatformType(platformType string) *ApplicationsGetCall {
 	c.opt_["platformType"] = platformType
 	return c
@@ -5604,6 +5616,12 @@ func (r *ScoresService) Get(playerId string, leaderboardId string, timeSpan stri
 // IncludeRankType sets the optional parameter "includeRankType": The
 // types of ranks to return. If the parameter is omitted, no ranks will
 // be returned.
+//
+// Possible values:
+//   "ALL" - Retrieve public and social ranks.
+//   "PUBLIC" - Retrieve public ranks, if the player is sharing their
+// gameplay activity publicly.
+//   "SOCIAL" - Retrieve the social rank.
 func (c *ScoresGetCall) IncludeRankType(includeRankType string) *ScoresGetCall {
 	c.opt_["includeRankType"] = includeRankType
 	return c

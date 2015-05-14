@@ -229,6 +229,9 @@ type IdentitytoolkitRelyingpartySetAccountInfoRequest struct {
 	// CaptchaResponse: Response to the captcha.
 	CaptchaResponse string `json:"captchaResponse,omitempty"`
 
+	// DisableUser: Whether to disable the user.
+	DisableUser bool `json:"disableUser,omitempty"`
+
 	// DisplayName: The name of the user.
 	DisplayName string `json:"displayName,omitempty"`
 
@@ -255,6 +258,9 @@ type IdentitytoolkitRelyingpartySetAccountInfoRequest struct {
 
 	// UpgradeToFederatedLogin: Mark the user to upgrade to federated login.
 	UpgradeToFederatedLogin bool `json:"upgradeToFederatedLogin,omitempty"`
+
+	// ValidSince: Timestamp in seconds for valid login token.
+	ValidSince int64 `json:"validSince,omitempty,string"`
 }
 
 type IdentitytoolkitRelyingpartyUploadAccountRequest struct {
@@ -394,6 +400,9 @@ type UploadAccountResponseError struct {
 }
 
 type UserInfo struct {
+	// Disabled: Whether the user is disabled.
+	Disabled bool `json:"disabled,omitempty"`
+
 	// DisplayName: The name of the user.
 	DisplayName string `json:"displayName,omitempty"`
 
@@ -420,6 +429,9 @@ type UserInfo struct {
 
 	// Salt: The user's password salt.
 	Salt string `json:"salt,omitempty"`
+
+	// ValidSince: Timestamp in seconds for valid login token.
+	ValidSince int64 `json:"validSince,omitempty,string"`
 
 	// Version: Version of the user's password.
 	Version int64 `json:"version,omitempty"`

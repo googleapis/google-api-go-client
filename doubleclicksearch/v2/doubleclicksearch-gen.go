@@ -183,6 +183,11 @@ type Conversion struct {
 	// CustomMetric: Custom metrics for the conversion.
 	CustomMetric []*CustomMetric `json:"customMetric,omitempty"`
 
+	// DeviceType: The type of device on which the conversion occurred.
+	// Valid values are "DESKTOP", "TABLET", "HIGH_END_MOBILE",
+	// "OTHER_DEVICE".
+	DeviceType string `json:"deviceType,omitempty"`
+
 	// DsConversionId: DS conversion ID.
 	DsConversionId int64 `json:"dsConversionId,omitempty,string"`
 

@@ -1271,11 +1271,19 @@ type FilterAdvancedDetails struct {
 	// FieldA: Field A.
 	FieldA string `json:"fieldA,omitempty"`
 
+	// FieldAIndex: The Index of the custom dimension. Required if field is
+	// a CUSTOM_DIMENSION.
+	FieldAIndex int64 `json:"fieldAIndex,omitempty"`
+
 	// FieldARequired: Indicates if field A is required to match.
 	FieldARequired bool `json:"fieldARequired,omitempty"`
 
 	// FieldB: Field B.
 	FieldB string `json:"fieldB,omitempty"`
+
+	// FieldBIndex: The Index of the custom dimension. Required if field is
+	// a CUSTOM_DIMENSION.
+	FieldBIndex int64 `json:"fieldBIndex,omitempty"`
 
 	// FieldBRequired: Indicates if field B is required to match.
 	FieldBRequired bool `json:"fieldBRequired,omitempty"`
@@ -1286,6 +1294,10 @@ type FilterAdvancedDetails struct {
 	// OutputToField: Output field.
 	OutputToField string `json:"outputToField,omitempty"`
 
+	// OutputToFieldIndex: The Index of the custom dimension. Required if
+	// field is a CUSTOM_DIMENSION.
+	OutputToFieldIndex int64 `json:"outputToFieldIndex,omitempty"`
+
 	// OverrideOutputField: Indicates if the existing value of the output
 	// field, if any, should be overridden by the output expression.
 	OverrideOutputField bool `json:"overrideOutputField,omitempty"`
@@ -1294,6 +1306,10 @@ type FilterAdvancedDetails struct {
 type FilterLowercaseDetails struct {
 	// Field: Field to use in the filter.
 	Field string `json:"field,omitempty"`
+
+	// FieldIndex: The Index of the custom dimension. Required if field is a
+	// CUSTOM_DIMENSION.
+	FieldIndex int64 `json:"fieldIndex,omitempty"`
 }
 
 type FilterParentLink struct {
@@ -1311,6 +1327,10 @@ type FilterSearchAndReplaceDetails struct {
 	// Field: Field to use in the filter.
 	Field string `json:"field,omitempty"`
 
+	// FieldIndex: The Index of the custom dimension. Required if field is a
+	// CUSTOM_DIMENSION.
+	FieldIndex int64 `json:"fieldIndex,omitempty"`
+
 	// ReplaceString: Term to replace the search term with.
 	ReplaceString string `json:"replaceString,omitempty"`
 
@@ -1321,6 +1341,10 @@ type FilterSearchAndReplaceDetails struct {
 type FilterUppercaseDetails struct {
 	// Field: Field to use in the filter.
 	Field string `json:"field,omitempty"`
+
+	// FieldIndex: The Index of the custom dimension. Required if field is a
+	// CUSTOM_DIMENSION.
+	FieldIndex int64 `json:"fieldIndex,omitempty"`
 }
 
 type FilterExpression struct {
@@ -1417,7 +1441,13 @@ type FilterExpression struct {
 	// - SOCIAL_NETWORK,
 	// - SOCIAL_ACTION,
 	// - SOCIAL_ACTION_TARGET,
+	// - Custom dimension
+	// - CUSTOM_DIMENSION (See accompanying field index),
 	Field string `json:"field,omitempty"`
+
+	// FieldIndex: The Index of the custom dimension. Set only if the field
+	// is a is CUSTOM_DIMENSION.
+	FieldIndex int64 `json:"fieldIndex,omitempty"`
 
 	// Kind: Kind value for filter expression
 	Kind string `json:"kind,omitempty"`

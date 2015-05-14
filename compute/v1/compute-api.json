@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/bsPadcajJ4DUXFWerv0XV4j606M\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/qc-9-C8-FjWYGA1f-sT1FtSZtoA\"",
  "discoveryVersion": "v1",
  "id": "compute:v1",
  "name": "compute",
  "version": "v1",
- "revision": "20150326",
+ "revision": "20150401",
  "title": "Compute Engine API",
  "description": "API for the Google Compute Engine service.",
  "ownerDomain": "google.com",
@@ -1907,22 +1907,22 @@
    "properties": {
     "canIpForward": {
      "type": "boolean",
-     "description": "Allows instances created based on this template to send packets with source IP addresses other than their own and receive packets with destination IP addresses other than their own. If these instances will be used as an IP gateway or it will be set as the next-hop in a Route resource, say true. If unsure, leave this set to false."
+     "description": "A boolean that specifies if instances created from this template can send packets with source IP addresses other than their own or receive packets with destination IP addresses other than their own. If you use these instances as an IP gateway or as the next-hop in a Route resource, specify true. Otherwise, specify false."
     },
     "description": {
      "type": "string",
-     "description": "An optional textual description for the instances created based on the instance template resource; provided by the client when the template is created."
+     "description": "An optional text description for the instances that are created from this instance template."
     },
     "disks": {
      "type": "array",
-     "description": "Array of disks associated with instance created based on this template.",
+     "description": "An array of disks that are associated with the instances that are created from this template.",
      "items": {
       "$ref": "AttachedDisk"
      }
     },
     "machineType": {
      "type": "string",
-     "description": "Name of the machine type resource describing which machine type to use to host the instances created based on this template; provided by the client when the instance template is created.",
+     "description": "The machine type to use for instances that are created from this template.",
      "annotations": {
       "required": [
        "compute.instanceTemplates.insert"
@@ -1931,29 +1931,29 @@
     },
     "metadata": {
      "$ref": "Metadata",
-     "description": "Metadata key/value pairs assigned to instances created based on this template. Consists of custom metadata or predefined keys; see Instance documentation for more information."
+     "description": "The metadata key/value pairs to assign to instances that are created from this template. These pairs can consist of custom metadata or predefined keys. See Project and instance metadata for more information."
     },
     "networkInterfaces": {
      "type": "array",
-     "description": "Array of configurations for this interface. This specifies how this interface is configured to interact with other network services, such as connecting to the internet. Currently, ONE_TO_ONE_NAT is the only access config supported. If there are no accessConfigs specified, then this instances created based based on this template will have no external internet access.",
+     "description": "An array of network access configurations for this interface. This specifies how this interface is configured to interact with other network services, such as connecting to the internet. Currently, ONE_TO_ONE_NAT is the only supported access configuration. If you do not specify any access configurations, the instances that are created from this template will have no external internet access.",
      "items": {
       "$ref": "NetworkInterface"
      }
     },
     "scheduling": {
      "$ref": "Scheduling",
-     "description": "Scheduling options for the instances created based on this template."
+     "description": "A list of scheduling options for the instances that are created from this template."
     },
     "serviceAccounts": {
      "type": "array",
-     "description": "A list of service accounts each with specified scopes, for which access tokens are to be made available to the instances created based on this template, through metadata queries.",
+     "description": "A list of service accounts with specified scopes. Access tokens for these service accounts are available to the instances that are created from this template. Use metadata queries to obtain the access tokens for these instances.",
      "items": {
       "$ref": "ServiceAccount"
      }
     },
     "tags": {
      "$ref": "Tags",
-     "description": "A list of tags to be applied to the instances created based on this template used to identify valid sources or targets for network firewalls. Provided by the client on instance creation. The tags can be later modified by the setTags method. Each tag within the list must comply with RFC1035."
+     "description": "A list of tags to apply to the instances that are created from this template. The tags identify valid sources or targets for network firewalls. The setTags method can modify this list of tags. Each tag within the list must comply with RFC1035."
     }
    }
   },
@@ -1973,25 +1973,25 @@
    "properties": {
     "creationTimestamp": {
      "type": "string",
-     "description": "Creation timestamp in RFC3339 text format (output only)."
+     "description": "[Output Only] The creation timestamp for this instance template in RFC3339 text format."
     },
     "description": {
      "type": "string",
-     "description": "An optional textual description of the instance template resource; provided by the client when the resource is created."
+     "description": "An optional text description for the instance template."
     },
     "id": {
      "type": "string",
-     "description": "Unique identifier for the resource; defined by the server (output only).",
+     "description": "[Output Only] A unique identifier for this instance template. The server defines this identifier.",
      "format": "uint64"
     },
     "kind": {
      "type": "string",
-     "description": "Type of the resource.",
+     "description": "[Output Only] The resource type, which is always compute#instanceTemplate for instance templates.",
      "default": "compute#instanceTemplate"
     },
     "name": {
      "type": "string",
-     "description": "Name of the instance template resource; provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035",
+     "description": "The name of the instance template. The name must be 1-63 characters long, and comply with RFC1035.",
      "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
      "annotations": {
       "required": [
@@ -2001,22 +2001,22 @@
     },
     "properties": {
      "$ref": "InstanceProperties",
-     "description": "The instance properties portion of this instance template resource."
+     "description": "The instance properties for the instance template resource."
     },
     "selfLink": {
      "type": "string",
-     "description": "Server defined URL for the resource (output only)."
+     "description": "[Output Only] The URL for this instance template. The server defines this URL."
     }
    }
   },
   "InstanceTemplateList": {
    "id": "InstanceTemplateList",
    "type": "object",
-   "description": "Contains a list of instance template resources.",
+   "description": "A list of instance templates.",
    "properties": {
     "id": {
      "type": "string",
-     "description": "Unique identifier for the resource; defined by the server (output only)."
+     "description": "[Output Only] A unique identifier for this instance template. The server defines this identifier."
     },
     "items": {
      "type": "array",
@@ -2027,16 +2027,16 @@
     },
     "kind": {
      "type": "string",
-     "description": "Type of resource.",
+     "description": "[Output Only] The resource type, which is always compute#instanceTemplatesListResponse for instance template lists.",
      "default": "compute#instanceTemplateList"
     },
     "nextPageToken": {
      "type": "string",
-     "description": "A token used to continue a truncated list request (output only)."
+     "description": "[Output Only] A token that is used to continue a truncated list request."
     },
     "selfLink": {
      "type": "string",
-     "description": "Server defined URL for this resource (output only)."
+     "description": "[Output Only] The URL for this instance template list. The server defines this URL."
     }
    }
   },
@@ -2535,7 +2535,7 @@
    "properties": {
     "clientOperationId": {
      "type": "string",
-     "description": "[Output Only] An optional identifier specified by the client when the mutation was initiated. Must be unique for all operation resources in the project"
+     "description": "[Output Only] An optional identifier specified by the client when the mutation was initiated. Must be unique for all operation resources in the project."
     },
     "creationTimestamp": {
      "type": "string",
@@ -2605,7 +2605,7 @@
     },
     "progress": {
      "type": "integer",
-     "description": "[Output Only] An optional progress indicator that ranges from 0 to 100. There is no requirement that this be linear or support any granularity of operations. This should not be used to guess at when the operation will be complete. This number should be monotonically increasing as the operation progresses.",
+     "description": "[Output Only] An optional progress indicator that ranges from 0 to 100. There is no requirement that this be linear or support any granularity of operations. This should not be used to guess at when the operation will be complete. This number should monotonically increase as the operation progresses.",
      "format": "int32"
     },
     "region": {
@@ -3196,7 +3196,7 @@
     },
     "priority": {
      "type": "integer",
-     "description": "Breaks ties between Routes of equal specificity. Routes with smaller values win when tied with routes with larger values.",
+     "description": "Breaks ties between Routes of equal specificity. Routes with smaller values win when tied with routes with larger values. Default value is 1000. A valid range is between 0 and 65535.",
      "format": "uint32",
      "annotations": {
       "required": [
@@ -3339,6 +3339,10 @@
       "",
       ""
      ]
+    },
+    "preemptible": {
+     "type": "boolean",
+     "description": "Whether the Instance is preemptible."
     }
    }
   },
@@ -4858,12 +4862,12 @@
      "parameters": {
       "filter": {
        "type": "string",
-       "description": "Optional. Filter expression for filtering listed resources.",
+       "description": "Filter expression for filtering listed resources.",
        "location": "query"
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "description": "Maximum count of results to be returned.",
        "default": "500",
        "format": "uint32",
        "minimum": "0",
@@ -4872,7 +4876,7 @@
       },
       "pageToken": {
        "type": "string",
-       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
        "location": "query"
       },
       "project": {
@@ -5022,12 +5026,12 @@
      "parameters": {
       "filter": {
        "type": "string",
-       "description": "Optional. Filter expression for filtering listed resources.",
+       "description": "Filter expression for filtering listed resources.",
        "location": "query"
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "description": "Maximum count of results to be returned.",
        "default": "500",
        "format": "uint32",
        "minimum": "0",
@@ -5036,7 +5040,7 @@
       },
       "pageToken": {
        "type": "string",
-       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
        "location": "query"
       },
       "project": {
@@ -5210,12 +5214,12 @@
      "parameters": {
       "filter": {
        "type": "string",
-       "description": "Optional. Filter expression for filtering listed resources.",
+       "description": "Filter expression for filtering listed resources.",
        "location": "query"
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "description": "Maximum count of results to be returned.",
        "default": "500",
        "format": "uint32",
        "minimum": "0",
@@ -5224,7 +5228,7 @@
       },
       "pageToken": {
        "type": "string",
-       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
        "location": "query"
       },
       "project": {
@@ -5331,12 +5335,12 @@
      "parameters": {
       "filter": {
        "type": "string",
-       "description": "Optional. Filter expression for filtering listed resources.",
+       "description": "Filter expression for filtering listed resources.",
        "location": "query"
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "description": "Maximum count of results to be returned.",
        "default": "500",
        "format": "uint32",
        "minimum": "0",
@@ -5345,7 +5349,7 @@
       },
       "pageToken": {
        "type": "string",
-       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
        "location": "query"
       },
       "project": {
@@ -5418,12 +5422,12 @@
      "parameters": {
       "filter": {
        "type": "string",
-       "description": "Optional. Filter expression for filtering listed resources.",
+       "description": "Filter expression for filtering listed resources.",
        "location": "query"
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "description": "Maximum count of results to be returned.",
        "default": "500",
        "format": "uint32",
        "minimum": "0",
@@ -5432,7 +5436,7 @@
       },
       "pageToken": {
        "type": "string",
-       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
        "location": "query"
       },
       "project": {
@@ -5475,12 +5479,12 @@
      "parameters": {
       "filter": {
        "type": "string",
-       "description": "Optional. Filter expression for filtering listed resources.",
+       "description": "Filter expression for filtering listed resources.",
        "location": "query"
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "description": "Maximum count of results to be returned.",
        "default": "500",
        "format": "uint32",
        "minimum": "0",
@@ -5489,7 +5493,7 @@
       },
       "pageToken": {
        "type": "string",
-       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
        "location": "query"
       },
       "project": {
@@ -5688,12 +5692,12 @@
      "parameters": {
       "filter": {
        "type": "string",
-       "description": "Optional. Filter expression for filtering listed resources.",
+       "description": "Filter expression for filtering listed resources.",
        "location": "query"
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "description": "Maximum count of results to be returned.",
        "default": "500",
        "format": "uint32",
        "minimum": "0",
@@ -5702,7 +5706,7 @@
       },
       "pageToken": {
        "type": "string",
-       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
        "location": "query"
       },
       "project": {
@@ -5840,12 +5844,12 @@
      "parameters": {
       "filter": {
        "type": "string",
-       "description": "Optional. Filter expression for filtering listed resources.",
+       "description": "Filter expression for filtering listed resources.",
        "location": "query"
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "description": "Maximum count of results to be returned.",
        "default": "500",
        "format": "uint32",
        "minimum": "0",
@@ -5854,7 +5858,7 @@
       },
       "pageToken": {
        "type": "string",
-       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
        "location": "query"
       },
       "project": {
@@ -5961,12 +5965,12 @@
      "parameters": {
       "filter": {
        "type": "string",
-       "description": "Optional. Filter expression for filtering listed resources.",
+       "description": "Filter expression for filtering listed resources.",
        "location": "query"
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "description": "Maximum count of results to be returned.",
        "default": "500",
        "format": "uint32",
        "minimum": "0",
@@ -5975,7 +5979,7 @@
       },
       "pageToken": {
        "type": "string",
-       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
        "location": "query"
       },
       "project": {
@@ -6125,12 +6129,12 @@
      "parameters": {
       "filter": {
        "type": "string",
-       "description": "Optional. Filter expression for filtering listed resources.",
+       "description": "Filter expression for filtering listed resources.",
        "location": "query"
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "description": "Maximum count of results to be returned.",
        "default": "500",
        "format": "uint32",
        "minimum": "0",
@@ -6139,7 +6143,7 @@
       },
       "pageToken": {
        "type": "string",
-       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
        "location": "query"
       },
       "project": {
@@ -6321,12 +6325,12 @@
      "parameters": {
       "filter": {
        "type": "string",
-       "description": "Optional. Filter expression for filtering listed resources.",
+       "description": "Filter expression for filtering listed resources.",
        "location": "query"
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "description": "Maximum count of results to be returned.",
        "default": "500",
        "format": "uint32",
        "minimum": "0",
@@ -6335,7 +6339,7 @@
       },
       "pageToken": {
        "type": "string",
-       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
        "location": "query"
       },
       "project": {
@@ -6465,12 +6469,12 @@
      "parameters": {
       "filter": {
        "type": "string",
-       "description": "Optional. Filter expression for filtering listed resources.",
+       "description": "Filter expression for filtering listed resources.",
        "location": "query"
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "description": "Maximum count of results to be returned.",
        "default": "500",
        "format": "uint32",
        "minimum": "0",
@@ -6479,7 +6483,7 @@
       },
       "pageToken": {
        "type": "string",
-       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
        "location": "query"
       },
       "project": {
@@ -6550,12 +6554,12 @@
      "parameters": {
       "filter": {
        "type": "string",
-       "description": "Optional. Filter expression for filtering listed resources.",
+       "description": "Filter expression for filtering listed resources.",
        "location": "query"
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "description": "Maximum count of results to be returned.",
        "default": "500",
        "format": "uint32",
        "minimum": "0",
@@ -6564,7 +6568,7 @@
       },
       "pageToken": {
        "type": "string",
-       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
        "location": "query"
       },
       "project": {
@@ -6659,12 +6663,12 @@
      "parameters": {
       "filter": {
        "type": "string",
-       "description": "Optional. Filter expression for filtering listed resources.",
+       "description": "Filter expression for filtering listed resources.",
        "location": "query"
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "description": "Maximum count of results to be returned.",
        "default": "500",
        "format": "uint32",
        "minimum": "0",
@@ -6673,7 +6677,7 @@
       },
       "pageToken": {
        "type": "string",
-       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
        "location": "query"
       },
       "project": {
@@ -6803,12 +6807,12 @@
      "parameters": {
       "filter": {
        "type": "string",
-       "description": "Optional. Filter expression for filtering listed resources.",
+       "description": "Filter expression for filtering listed resources.",
        "location": "query"
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "description": "Maximum count of results to be returned.",
        "default": "500",
        "format": "uint32",
        "minimum": "0",
@@ -6817,7 +6821,7 @@
       },
       "pageToken": {
        "type": "string",
-       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
        "location": "query"
       },
       "project": {
@@ -7058,12 +7062,12 @@
      "parameters": {
       "filter": {
        "type": "string",
-       "description": "Optional. Filter expression for filtering listed resources.",
+       "description": "Filter expression for filtering listed resources.",
        "location": "query"
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "description": "Maximum count of results to be returned.",
        "default": "500",
        "format": "uint32",
        "minimum": "0",
@@ -7072,7 +7076,7 @@
       },
       "pageToken": {
        "type": "string",
-       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
        "location": "query"
       },
       "project": {
@@ -7103,18 +7107,18 @@
      "id": "compute.instanceTemplates.delete",
      "path": "{project}/global/instanceTemplates/{instanceTemplate}",
      "httpMethod": "DELETE",
-     "description": "Deletes the specified instance template resource.",
+     "description": "Deletes the specified instance template.",
      "parameters": {
       "instanceTemplate": {
        "type": "string",
-       "description": "Name of the instance template resource to delete.",
+       "description": "The name of the instance template to delete.",
        "required": true,
        "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
        "location": "path"
       },
       "project": {
        "type": "string",
-       "description": "Name of the project scoping this request.",
+       "description": "The project ID for this request.",
        "required": true,
        "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
@@ -7140,14 +7144,14 @@
      "parameters": {
       "instanceTemplate": {
        "type": "string",
-       "description": "Name of the instance template resource to return.",
+       "description": "The name of the instance template.",
        "required": true,
        "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
        "location": "path"
       },
       "project": {
        "type": "string",
-       "description": "Name of the project scoping this request.",
+       "description": "The project ID for this request.",
        "required": true,
        "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
@@ -7170,11 +7174,11 @@
      "id": "compute.instanceTemplates.insert",
      "path": "{project}/global/instanceTemplates",
      "httpMethod": "POST",
-     "description": "Creates an instance template resource in the specified project using the data included in the request.",
+     "description": "Creates an instance template in the specified project using the data that is included in the request.",
      "parameters": {
       "project": {
        "type": "string",
-       "description": "Name of the project scoping this request.",
+       "description": "The project ID for this request.",
        "required": true,
        "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
@@ -7198,16 +7202,16 @@
      "id": "compute.instanceTemplates.list",
      "path": "{project}/global/instanceTemplates",
      "httpMethod": "GET",
-     "description": "Retrieves the list of instance template resources contained within the specified project.",
+     "description": "Retrieves a list of instance templates that are contained within the specified project and zone.",
      "parameters": {
       "filter": {
        "type": "string",
-       "description": "Optional. Filter expression for filtering listed resources.",
+       "description": "Filter expression for filtering listed resources.",
        "location": "query"
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "description": "Maximum count of results to be returned.",
        "default": "500",
        "format": "uint32",
        "minimum": "0",
@@ -7216,12 +7220,12 @@
       },
       "pageToken": {
        "type": "string",
-       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
        "location": "query"
       },
       "project": {
        "type": "string",
-       "description": "Name of the project scoping this request.",
+       "description": "The project ID for this request.",
        "required": true,
        "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
@@ -7301,12 +7305,12 @@
      "parameters": {
       "filter": {
        "type": "string",
-       "description": "Optional. Filter expression for filtering listed resources.",
+       "description": "Filter expression for filtering listed resources.",
        "location": "query"
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "description": "Maximum count of results to be returned.",
        "default": "500",
        "format": "uint32",
        "minimum": "0",
@@ -7315,7 +7319,7 @@
       },
       "pageToken": {
        "type": "string",
-       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
        "location": "query"
       },
       "project": {
@@ -7664,12 +7668,12 @@
      "parameters": {
       "filter": {
        "type": "string",
-       "description": "Optional. Filter expression for filtering listed resources.",
+       "description": "Filter expression for filtering listed resources.",
        "location": "query"
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "description": "Maximum count of results to be returned.",
        "default": "500",
        "format": "uint32",
        "minimum": "0",
@@ -7678,7 +7682,7 @@
       },
       "pageToken": {
        "type": "string",
-       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
        "location": "query"
       },
       "project": {
@@ -8070,12 +8074,12 @@
      "parameters": {
       "filter": {
        "type": "string",
-       "description": "Optional. Filter expression for filtering listed resources.",
+       "description": "Filter expression for filtering listed resources.",
        "location": "query"
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "description": "Maximum count of results to be returned.",
        "default": "500",
        "format": "uint32",
        "minimum": "0",
@@ -8084,7 +8088,7 @@
       },
       "pageToken": {
        "type": "string",
-       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
        "location": "query"
       },
       "project": {
@@ -8157,12 +8161,12 @@
      "parameters": {
       "filter": {
        "type": "string",
-       "description": "Optional. Filter expression for filtering listed resources.",
+       "description": "Filter expression for filtering listed resources.",
        "location": "query"
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "description": "Maximum count of results to be returned.",
        "default": "500",
        "format": "uint32",
        "minimum": "0",
@@ -8171,7 +8175,7 @@
       },
       "pageToken": {
        "type": "string",
-       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
        "location": "query"
       },
       "project": {
@@ -8309,12 +8313,12 @@
      "parameters": {
       "filter": {
        "type": "string",
-       "description": "Optional. Filter expression for filtering listed resources.",
+       "description": "Filter expression for filtering listed resources.",
        "location": "query"
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "description": "Maximum count of results to be returned.",
        "default": "500",
        "format": "uint32",
        "minimum": "0",
@@ -8323,7 +8327,7 @@
       },
       "pageToken": {
        "type": "string",
-       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
        "location": "query"
       },
       "project": {
@@ -8583,12 +8587,12 @@
      "parameters": {
       "filter": {
        "type": "string",
-       "description": "Optional. Filter expression for filtering listed resources.",
+       "description": "Filter expression for filtering listed resources.",
        "location": "query"
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "description": "Maximum count of results to be returned.",
        "default": "500",
        "format": "uint32",
        "minimum": "0",
@@ -8597,7 +8601,7 @@
       },
       "pageToken": {
        "type": "string",
-       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
        "location": "query"
       },
       "project": {
@@ -8674,12 +8678,12 @@
      "parameters": {
       "filter": {
        "type": "string",
-       "description": "Optional. Filter expression for filtering listed resources.",
+       "description": "Filter expression for filtering listed resources.",
        "location": "query"
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "description": "Maximum count of results to be returned.",
        "default": "500",
        "format": "uint32",
        "minimum": "0",
@@ -8688,7 +8692,7 @@
       },
       "pageToken": {
        "type": "string",
-       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
        "location": "query"
       },
       "project": {
@@ -8818,12 +8822,12 @@
      "parameters": {
       "filter": {
        "type": "string",
-       "description": "Optional. Filter expression for filtering listed resources.",
+       "description": "Filter expression for filtering listed resources.",
        "location": "query"
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "description": "Maximum count of results to be returned.",
        "default": "500",
        "format": "uint32",
        "minimum": "0",
@@ -8832,7 +8836,7 @@
       },
       "pageToken": {
        "type": "string",
-       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
        "location": "query"
       },
       "project": {
@@ -8934,12 +8938,12 @@
      "parameters": {
       "filter": {
        "type": "string",
-       "description": "Optional. Filter expression for filtering listed resources.",
+       "description": "Filter expression for filtering listed resources.",
        "location": "query"
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "description": "Maximum count of results to be returned.",
        "default": "500",
        "format": "uint32",
        "minimum": "0",
@@ -8948,7 +8952,7 @@
       },
       "pageToken": {
        "type": "string",
-       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
        "location": "query"
       },
       "project": {
@@ -9078,12 +9082,12 @@
      "parameters": {
       "filter": {
        "type": "string",
-       "description": "Optional. Filter expression for filtering listed resources.",
+       "description": "Filter expression for filtering listed resources.",
        "location": "query"
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "description": "Maximum count of results to be returned.",
        "default": "500",
        "format": "uint32",
        "minimum": "0",
@@ -9092,7 +9096,7 @@
       },
       "pageToken": {
        "type": "string",
-       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
        "location": "query"
       },
       "project": {
@@ -9163,12 +9167,12 @@
      "parameters": {
       "filter": {
        "type": "string",
-       "description": "Optional. Filter expression for filtering listed resources.",
+       "description": "Filter expression for filtering listed resources.",
        "location": "query"
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "description": "Maximum count of results to be returned.",
        "default": "500",
        "format": "uint32",
        "minimum": "0",
@@ -9177,7 +9181,7 @@
       },
       "pageToken": {
        "type": "string",
-       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
        "location": "query"
       },
       "project": {
@@ -9327,12 +9331,12 @@
      "parameters": {
       "filter": {
        "type": "string",
-       "description": "Optional. Filter expression for filtering listed resources.",
+       "description": "Filter expression for filtering listed resources.",
        "location": "query"
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "description": "Maximum count of results to be returned.",
        "default": "500",
        "format": "uint32",
        "minimum": "0",
@@ -9341,7 +9345,7 @@
       },
       "pageToken": {
        "type": "string",
-       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
        "location": "query"
       },
       "project": {
@@ -9470,12 +9474,12 @@
      "parameters": {
       "filter": {
        "type": "string",
-       "description": "Optional. Filter expression for filtering listed resources.",
+       "description": "Filter expression for filtering listed resources.",
        "location": "query"
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "description": "Maximum count of results to be returned.",
        "default": "500",
        "format": "uint32",
        "minimum": "0",
@@ -9484,7 +9488,7 @@
       },
       "pageToken": {
        "type": "string",
-       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
        "location": "query"
       },
       "project": {
@@ -9678,12 +9682,12 @@
      "parameters": {
       "filter": {
        "type": "string",
-       "description": "Optional. Filter expression for filtering listed resources.",
+       "description": "Filter expression for filtering listed resources.",
        "location": "query"
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "description": "Maximum count of results to be returned.",
        "default": "500",
        "format": "uint32",
        "minimum": "0",
@@ -9692,7 +9696,7 @@
       },
       "pageToken": {
        "type": "string",
-       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
        "location": "query"
       },
       "project": {
@@ -9871,12 +9875,12 @@
      "parameters": {
       "filter": {
        "type": "string",
-       "description": "Optional. Filter expression for filtering listed resources.",
+       "description": "Filter expression for filtering listed resources.",
        "location": "query"
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "description": "Maximum count of results to be returned.",
        "default": "500",
        "format": "uint32",
        "minimum": "0",
@@ -9885,7 +9889,7 @@
       },
       "pageToken": {
        "type": "string",
-       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
        "location": "query"
       },
       "project": {
@@ -10035,12 +10039,12 @@
      "parameters": {
       "filter": {
        "type": "string",
-       "description": "Optional. Filter expression for filtering listed resources.",
+       "description": "Filter expression for filtering listed resources.",
        "location": "query"
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "description": "Maximum count of results to be returned.",
        "default": "500",
        "format": "uint32",
        "minimum": "0",
@@ -10049,7 +10053,7 @@
       },
       "pageToken": {
        "type": "string",
-       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
        "location": "query"
       },
       "project": {
@@ -10187,12 +10191,12 @@
      "parameters": {
       "filter": {
        "type": "string",
-       "description": "Optional. Filter expression for filtering listed resources.",
+       "description": "Filter expression for filtering listed resources.",
        "location": "query"
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "description": "Maximum count of results to be returned.",
        "default": "500",
        "format": "uint32",
        "minimum": "0",
@@ -10201,7 +10205,7 @@
       },
       "pageToken": {
        "type": "string",
-       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
        "location": "query"
       },
       "project": {
@@ -10344,12 +10348,12 @@
      "parameters": {
       "filter": {
        "type": "string",
-       "description": "Optional. Filter expression for filtering listed resources.",
+       "description": "Filter expression for filtering listed resources.",
        "location": "query"
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "description": "Maximum count of results to be returned.",
        "default": "500",
        "format": "uint32",
        "minimum": "0",
@@ -10358,7 +10362,7 @@
       },
       "pageToken": {
        "type": "string",
-       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
        "location": "query"
       },
       "project": {
@@ -10508,12 +10512,12 @@
      "parameters": {
       "filter": {
        "type": "string",
-       "description": "Optional. Filter expression for filtering listed resources.",
+       "description": "Filter expression for filtering listed resources.",
        "location": "query"
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "description": "Maximum count of results to be returned.",
        "default": "500",
        "format": "uint32",
        "minimum": "0",
@@ -10522,7 +10526,7 @@
       },
       "pageToken": {
        "type": "string",
-       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
        "location": "query"
       },
       "project": {
@@ -10645,12 +10649,12 @@
      "parameters": {
       "filter": {
        "type": "string",
-       "description": "Optional. Filter expression for filtering listed resources.",
+       "description": "Filter expression for filtering listed resources.",
        "location": "query"
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "description": "Maximum count of results to be returned.",
        "default": "500",
        "format": "uint32",
        "minimum": "0",
@@ -10659,7 +10663,7 @@
       },
       "pageToken": {
        "type": "string",
-       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
        "location": "query"
       },
       "project": {
@@ -10736,12 +10740,12 @@
      "parameters": {
       "filter": {
        "type": "string",
-       "description": "Optional. Filter expression for filtering listed resources.",
+       "description": "Filter expression for filtering listed resources.",
        "location": "query"
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "description": "Maximum count of results to be returned.",
        "default": "500",
        "format": "uint32",
        "minimum": "0",
@@ -10750,7 +10754,7 @@
       },
       "pageToken": {
        "type": "string",
-       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
        "location": "query"
       },
       "project": {

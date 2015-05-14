@@ -240,6 +240,10 @@ type Dataset struct {
 	// its tables was last modified, in milliseconds since the epoch.
 	LastModifiedTime int64 `json:"lastModifiedTime,omitempty,string"`
 
+	// Location: [Experimental] The location where the data resides. If not
+	// present, the data will be stored in the US.
+	Location string `json:"location,omitempty"`
+
 	// SelfLink: [Output-only] A URL that can be used to access the resource
 	// again. You can use this URL in Get or Update requests to the
 	// resource.

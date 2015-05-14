@@ -207,7 +207,9 @@ type Userinfoplus struct {
 	// VerifiedEmail: Boolean flag which is true if the email address is
 	// verified. Always verified because we only return the user's primary
 	// email address.
-	VerifiedEmail bool `json:"verified_email,omitempty"`
+	//
+	// Default: true
+	VerifiedEmail *bool `json:"verified_email,omitempty"`
 }
 
 // method id "oauth2.getCertForOpenIdConnect":

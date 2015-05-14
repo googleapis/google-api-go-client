@@ -523,7 +523,9 @@ type Event struct {
 
 	// GuestsCanInviteOthers: Whether attendees other than the organizer can
 	// invite others to the event. Optional. The default is True.
-	GuestsCanInviteOthers bool `json:"guestsCanInviteOthers,omitempty"`
+	//
+	// Default: true
+	GuestsCanInviteOthers *bool `json:"guestsCanInviteOthers,omitempty"`
 
 	// GuestsCanModify: Whether attendees other than the organizer can
 	// modify the event. Optional. The default is False.
@@ -531,7 +533,9 @@ type Event struct {
 
 	// GuestsCanSeeOtherGuests: Whether attendees other than the organizer
 	// can see who the event's attendees are. Optional. The default is True.
-	GuestsCanSeeOtherGuests bool `json:"guestsCanSeeOtherGuests,omitempty"`
+	//
+	// Default: true
+	GuestsCanSeeOtherGuests *bool `json:"guestsCanSeeOtherGuests,omitempty"`
 
 	// HangoutLink: An absolute link to the Google+ hangout associated with
 	// this event. Read-only.

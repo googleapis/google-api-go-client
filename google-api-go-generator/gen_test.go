@@ -24,6 +24,7 @@ func TestAPIs(t *testing.T) {
 		"mapofstrings-1",
 		"quotednum",
 		"resource-named-service", // blogger/v3/blogger-api.json + s/BlogUserInfo/Service/
+		"unfortunatedefaults",
 		"variants",
 		"wrapnewlines",
 	}

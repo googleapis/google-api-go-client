@@ -2884,6 +2884,12 @@ type LiveStreamSnippet struct {
 type LiveStreamStatus struct {
 	IsDefaultStream bool `json:"isDefaultStream,omitempty"`
 
+	// Possible values:
+	//   "active"
+	//   "created"
+	//   "error"
+	//   "inactive"
+	//   "ready"
 	StreamStatus string `json:"streamStatus,omitempty"`
 }
 
@@ -4165,6 +4171,11 @@ type VideoProjectDetails struct {
 }
 
 type VideoRating struct {
+	// Possible values:
+	//   "dislike"
+	//   "like"
+	//   "none"
+	//   "unspecified"
 	Rating string `json:"rating,omitempty"`
 
 	VideoId string `json:"videoId,omitempty"`

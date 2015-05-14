@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8dc2ad55_57aeaee7",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-05-14T07:06:34Z",
+      "side": 1,
+      "message": "I want to be able to detect whether \"pattern\" has been explicitly set in the config or not.\n\nI\u0027ve switched to returning a bool here, to follow the style of a map lookup.",
+      "parentUuid": "2d39c1d0_1a2881ff",
+      "revId": "c7b9dc1333bfbe7e37fe8dc0cf9b8f3b6b1e10b6",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d39c1d0_da39d951",
         "filename": "oauth2/v1/oauth2-gen.go",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2015-05-08T15:05:06Z",
       "side": 1,
       "message": "While we\u0027re breaking API, can we do a better job mapping this name from \"foo_bar\" to \"FooBar\" instead of \"Foo_bar\"?",
+      "revId": "c7b9dc1333bfbe7e37fe8dc0cf9b8f3b6b1e10b6",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8dc2ad55_37c3f2dd",
+        "filename": "oauth2/v1/oauth2-gen.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-05-14T07:06:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d39c1d0_da39d951",
       "revId": "c7b9dc1333bfbe7e37fe8dc0cf9b8f3b6b1e10b6",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false

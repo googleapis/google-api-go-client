@@ -619,8 +619,20 @@ func (p *Property) APIName() string {
 	return p.apiName
 }
 
+func (p *Property) Default() string {
+	return jstr(p.m, "default")
+}
+
 func (p *Property) Description() string {
 	return jstr(p.m, "description")
+}
+
+func (p *Property) Enum() []string {
+	return jstrlist(p.m, "enum")
+}
+
+func (p *Property) EnumDescriptions() []string {
+	return jstrlist(p.m, "enumDescriptions")
 }
 
 type Type struct {
@@ -1041,10 +1053,11 @@ func (s *Schema) writeSchemaStruct(api *API) {
 			s.api.p("\n")
 		}
 		pname := p.GoName()
-		if des := p.Description(); des != "" {
+		des := p.Description()
+		if des != "" {
 			s.api.p("%s", asComment("\t", fmt.Sprintf("%s: %s", pname, des)))
-			addEnumComments(s.api.p, p.m, "\t")
 		}
+		addEnumComments(s.api.p, p, "\t", des != "")
 		var extraOpt string
 		if p.Type().isIntAsString() {
 			extraOpt += ",string"
@@ -1295,7 +1308,7 @@ func (meth *Method) generateCode() {
 		des = strings.Replace(des, "Optional.", "", 1)
 		des = strings.TrimSpace(des)
 		p("\n%s", asComment("", fmt.Sprintf("%s sets the optional parameter %q: %s", setter, opt.name, des)))
-		addEnumComments(p, opt.m, "")
+		addEnumComments(p, opt, "", true)
 		np := new(namePool)
 		np.Get("c") // take the receiver's name
 		paramName := np.Get(validGoIdentifer(opt.name))
@@ -1471,11 +1484,30 @@ func (meth *Method) generateCode() {
 	pn("}")
 }
 
+// A Field provides methods that describe the characteristics of a Param or Property.
+type Field interface {
+	Default() string
+	Enum() []string
+	EnumDescriptions() []string
+}
+
 type Param struct {
 	method        *Method
 	name          string
 	m             map[string]interface{}
 	callFieldName string // empty means to use the default
+}
+
+func (p *Param) Default() string {
+	return jstr(p.m, "default")
+}
+
+func (p *Param) Enum() []string {
+	return jstrlist(p.m, "enum")
+}
+
+func (p *Param) EnumDescriptions() []string {
+	return jstrlist(p.m, "enumDescriptions")
 }
 
 func (p *Param) IsRequired() bool {
@@ -1873,12 +1905,14 @@ func jstrlist(m map[string]interface{}, key string) []string {
 	return sl
 }
 
-func addEnumComments(p func(format string, args ...interface{}), m map[string]interface{}, indent string) {
-	if enum := jstrlist(m, "enum"); enum != nil {
-		desc := jstrlist(m, "enumDescriptions")
-		p(indent + "//\n") // blank comment line
+func addEnumComments(p func(format string, args ...interface{}), field Field, indent string, blankLine bool) {
+	if enum := field.Enum(); len(enum) > 0 {
+		if blankLine {
+			p(indent + "//\n")
+		}
+		desc := field.EnumDescriptions()
 		p("%s", asComment(indent, "Possible values:"))
-		defval := jstr(m, "default")
+		defval := field.Default()
 		for i, v := range enum {
 			more := ""
 			if v == defval {

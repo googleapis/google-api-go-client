@@ -319,6 +319,11 @@ func (c *ProjectsIndexesListCall) PageToken(pageToken string) *ProjectsIndexesLi
 // View sets the optional parameter "view": Specifies which parts of the
 // IndexInfo resource is returned in the response. If not specified,
 // `ID_ONLY` is used.
+//
+// Possible values:
+//   "INDEX_VIEW_UNSPECIFIED"
+//   "ID_ONLY"
+//   "FULL"
 func (c *ProjectsIndexesListCall) View(view string) *ProjectsIndexesListCall {
 	c.opt_["view"] = view
 	return c
@@ -1087,6 +1092,11 @@ func (c *ProjectsIndexesDocumentsListCall) PageToken(pageToken string) *Projects
 // View sets the optional parameter "view": Specifies which part of the
 // document resource is returned in the response. If not specified,
 // `ID_ONLY` is used.
+//
+// Possible values:
+//   "DOCUMENT_VIEW_UNSPECIFIED"
+//   "ID_ONLY"
+//   "FULL"
 func (c *ProjectsIndexesDocumentsListCall) View(view string) *ProjectsIndexesDocumentsListCall {
 	c.opt_["view"] = view
 	return c

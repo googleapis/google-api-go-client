@@ -20,6 +20,7 @@ import (
 	"path/filepath"
 	"regexp"
 	"sort"
+	"strconv"
 	"strings"
 	"unicode"
 )
@@ -627,12 +628,78 @@ func (p *Property) Description() string {
 	return jstr(p.m, "description")
 }
 
-func (p *Property) Enum() []string {
-	return jstrlist(p.m, "enum")
+func (p *Property) Enum() ([]string, bool) {
+	if enums := jstrlist(p.m, "enum"); enums != nil {
+		return enums, true
+	}
+	return nil, false
 }
 
 func (p *Property) EnumDescriptions() []string {
 	return jstrlist(p.m, "enumDescriptions")
+}
+
+func (p *Property) Pattern() (string, bool) {
+	if s, ok := p.m["pattern"].(string); ok {
+		return s, true
+	}
+	return "", false
+}
+
+// UnfortunateDefault reports whether p may be set to a zero value, but has a non-zero default.
+func (p *Property) UnfortunateDefault() bool {
+	switch p.Type().AsGo() {
+	default:
+		return false
+
+	case "bool":
+		return p.Default() == "true"
+
+	case "string":
+		if p.Default() == "" {
+			return false
+		}
+		// String fields are considered to "allow" a zero value if either:
+		//  (a) they are an enum, and one of the permitted enum values is the empty string, or
+		//  (b) they have a validation pattern which matches the empty string.
+		pattern, hasPat := p.Pattern()
+		enum, hasEnum := p.Enum()
+		if hasPat && hasEnum {
+			log.Printf("Encountered enum property which also has a pattern: %#v", p)
+			return false // don't know how to handle this, so ignore.
+		}
+		return (hasPat && emptyPattern(pattern)) ||
+			(hasEnum && emptyEnum(enum))
+
+	case "float64", "int64", "uint64", "int32", "uint32":
+		if p.Default() == "" {
+			return false
+		}
+		if f, err := strconv.ParseFloat(p.Default(), 64); err == nil {
+			return f != 0.0
+		}
+		// The default value has an unexpected form.  Whatever it is, it's non-zero.
+		return true
+	}
+}
+
+// emptyPattern reports whether a pattern matches the empty string.
+func emptyPattern(pattern string) bool {
+	if re, err := regexp.Compile(pattern); err == nil {
+		return re.MatchString("")
+	}
+	log.Printf("Encountered bad pattern: %s", pattern)
+	return false
+}
+
+// emptyEnum reports whether a property enum list contains the empty string.
+func emptyEnum(enum []string) bool {
+	for _, val := range enum {
+		if val == "" {
+			return true
+		}
+	}
+	return false
 }
 
 type Type struct {
@@ -1057,12 +1124,16 @@ func (s *Schema) writeSchemaStruct(api *API) {
 		if des != "" {
 			s.api.p("%s", asComment("\t", fmt.Sprintf("%s: %s", pname, des)))
 		}
-		addEnumComments(s.api.p, p, "\t", des != "")
+		addFieldValueComments(s.api.p, p, "\t", des != "")
 		var extraOpt string
 		if p.Type().isIntAsString() {
 			extraOpt += ",string"
 		}
-		s.api.p("\t%s %s `json:\"%s,omitempty%s\"`\n", pname, p.Type().AsGo(), p.APIName(), extraOpt)
+		typ := p.Type().AsGo()
+		if p.UnfortunateDefault() {
+			typ = "*" + typ
+		}
+		s.api.p("\t%s %s `json:\"%s,omitempty%s\"`\n", p.GoName(), typ, p.APIName(), extraOpt)
 	}
 	s.api.p("}\n")
 }
@@ -1308,7 +1379,7 @@ func (meth *Method) generateCode() {
 		des = strings.Replace(des, "Optional.", "", 1)
 		des = strings.TrimSpace(des)
 		p("\n%s", asComment("", fmt.Sprintf("%s sets the optional parameter %q: %s", setter, opt.name, des)))
-		addEnumComments(p, opt, "", true)
+		addFieldValueComments(p, opt, "", true)
 		np := new(namePool)
 		np.Get("c") // take the receiver's name
 		paramName := np.Get(validGoIdentifer(opt.name))
@@ -1487,8 +1558,9 @@ func (meth *Method) generateCode() {
 // A Field provides methods that describe the characteristics of a Param or Property.
 type Field interface {
 	Default() string
-	Enum() []string
+	Enum() ([]string, bool)
 	EnumDescriptions() []string
+	UnfortunateDefault() bool
 }
 
 type Param struct {
@@ -1502,12 +1574,20 @@ func (p *Param) Default() string {
 	return jstr(p.m, "default")
 }
 
-func (p *Param) Enum() []string {
-	return jstrlist(p.m, "enum")
+func (p *Param) Enum() ([]string, bool) {
+	if e := jstrlist(p.m, "enum"); e != nil {
+		return e, true
+	}
+	return nil, false
 }
 
 func (p *Param) EnumDescriptions() []string {
 	return jstrlist(p.m, "enumDescriptions")
+}
+
+func (p *Param) UnfortunateDefault() bool {
+	// We do not do anything special for Params with unfortunate defaults.
+	return false
 }
 
 func (p *Param) IsRequired() bool {
@@ -1905,13 +1985,12 @@ func jstrlist(m map[string]interface{}, key string) []string {
 	return sl
 }
 
-func addEnumComments(p func(format string, args ...interface{}), field Field, indent string, blankLine bool) {
-	if enum := field.Enum(); len(enum) > 0 {
-		if blankLine {
-			p(indent + "//\n")
-		}
+func addFieldValueComments(p func(format string, args ...interface{}), field Field, indent string, blankLine bool) {
+	var lines []string
+
+	if enum, ok := field.Enum(); ok {
 		desc := field.EnumDescriptions()
-		p("%s", asComment(indent, "Possible values:"))
+		lines = append(lines, asComment(indent, "Possible values:"))
 		defval := field.Default()
 		for i, v := range enum {
 			more := ""
@@ -1921,7 +2000,15 @@ func addEnumComments(p func(format string, args ...interface{}), field Field, in
 			if len(desc) > i && desc[i] != "" {
 				more = more + " - " + desc[i]
 			}
-			p("%s", asComment(indent, `  "`+v+`"`+more))
+			lines = append(lines, asComment(indent, `  "`+v+`"`+more))
 		}
+	} else if field.UnfortunateDefault() {
+		lines = append(lines, asComment("\t", fmt.Sprintf("Default: %s", field.Default())))
+	}
+	if blankLine && len(lines) > 0 {
+		p(indent + "//\n")
+	}
+	for _, l := range lines {
+		p("%s", l)
 	}
 }

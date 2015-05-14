@@ -849,7 +849,9 @@ type SchemaFieldSpec struct {
 	FieldType string `json:"fieldType,omitempty"`
 
 	// Indexed: Boolean specifying whether the field is indexed or not.
-	Indexed bool `json:"indexed,omitempty"`
+	//
+	// Default: true
+	Indexed *bool `json:"indexed,omitempty"`
 
 	// Kind: Kind of resource this is.
 	Kind string `json:"kind,omitempty"`

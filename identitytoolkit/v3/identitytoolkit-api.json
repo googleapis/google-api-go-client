@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/c9gT3rNuoajJVcPy4DAj8Wu9bSM\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/0UthvGQqQqHJHLht0Zicmoq2uPc\"",
  "discoveryVersion": "v1",
  "id": "identitytoolkit:v3",
  "name": "identitytoolkit",
  "canonicalName": "Identity Toolkit",
  "version": "v3",
- "revision": "20150406",
+ "revision": "20150508",
  "title": "Google Identity Toolkit API",
  "description": "Help the third party sites to implement federated login.",
  "ownerDomain": "google.com",
@@ -333,6 +333,10 @@
      "type": "string",
      "description": "Response to the captcha."
     },
+    "disableUser": {
+     "type": "boolean",
+     "description": "Whether to disable the user."
+    },
     "displayName": {
      "type": "string",
      "description": "The name of the user."
@@ -371,6 +375,11 @@
     "upgradeToFederatedLogin": {
      "type": "boolean",
      "description": "Mark the user to upgrade to federated login."
+    },
+    "validSince": {
+     "type": "string",
+     "description": "Timestamp in seconds for valid login token.",
+     "format": "int64"
     }
    }
   },
@@ -598,6 +607,10 @@
    "type": "object",
    "description": "Template for an individual account info.",
    "properties": {
+    "disabled": {
+     "type": "boolean",
+     "description": "Whether the user is disabled."
+    },
     "displayName": {
      "type": "string",
      "description": "The name of the user."
@@ -657,6 +670,11 @@
      "type": "string",
      "description": "The user's password salt.",
      "format": "byte"
+    },
+    "validSince": {
+     "type": "string",
+     "description": "Timestamp in seconds for valid login token.",
+     "format": "int64"
     },
     "version": {
      "type": "integer",

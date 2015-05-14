@@ -1,4 +1,4 @@
-// Package androidenterprise provides access to the Google Play MDM API.
+// Package androidenterprise provides access to the Google Play EMM API.
 //
 // Usage example:
 //
@@ -302,6 +302,14 @@ type Device struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "androidenterprise#device".
 	Kind string `json:"kind,omitempty"`
+
+	// ManagementType: The mechanism by which this device is managed by the
+	// MDM. "managedDevice" means that the MDM's app is a device owner.
+	// "managedProfile" means that the MDM's app is the profile owner (and
+	// there is a separate personal profile which is not managed).
+	// "containerApp" means that the MDM's app is managing the Android for
+	// Work container app on the device.
+	ManagementType string `json:"managementType,omitempty"`
 }
 
 type DeviceState struct {
@@ -507,6 +515,10 @@ type Product struct {
 	// ProductId: A string of the form "app:
 	// " - e.g. "app:com.google.android.gm" represents the GMail app.
 	ProductId string `json:"productId,omitempty"`
+
+	// RequiresContainerApp: Whether this app can only be installed on
+	// devices using the Android for Work container app.
+	RequiresContainerApp bool `json:"requiresContainerApp,omitempty"`
 
 	// Title: The name of the product.
 	Title string `json:"title,omitempty"`

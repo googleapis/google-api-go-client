@@ -111,7 +111,6 @@ func NewProjectsZonesService(s *Service) *ProjectsZonesService {
 	rs := &ProjectsZonesService{s: s}
 	rs.Clusters = NewProjectsZonesClustersService(s)
 	rs.Operations = NewProjectsZonesOperationsService(s)
-	rs.Tokens = NewProjectsZonesTokensService(s)
 	return rs
 }
 
@@ -121,8 +120,6 @@ type ProjectsZonesService struct {
 	Clusters *ProjectsZonesClustersService
 
 	Operations *ProjectsZonesOperationsService
-
-	Tokens *ProjectsZonesTokensService
 }
 
 func NewProjectsZonesClustersService(s *Service) *ProjectsZonesClustersService {
@@ -143,15 +140,6 @@ type ProjectsZonesOperationsService struct {
 	s *Service
 }
 
-func NewProjectsZonesTokensService(s *Service) *ProjectsZonesTokensService {
-	rs := &ProjectsZonesTokensService{s: s}
-	return rs
-}
-
-type ProjectsZonesTokensService struct {
-	s *Service
-}
-
 type Cluster struct {
 	// ClusterApiVersion: The API version of the Kubernetes master and
 	// kubelets running in this cluster. Leave blank to pick up the latest
@@ -161,7 +149,7 @@ type Cluster struct {
 	// error listing the currently supported versions.
 	ClusterApiVersion string `json:"clusterApiVersion,omitempty"`
 
-	// ContainerIpv4Cidr: The IP addresses of the container pods in this
+	// ContainerIpv4Cidr: The IP address range of the container pods in this
 	// cluster, in  CIDR notation (e.g. 10.96.0.0/14). Leave blank to have
 	// one automatically chosen or specify a /14 block in 10.0.0.0/8 or
 	// 172.16.0.0/12.
@@ -220,9 +208,10 @@ type Cluster struct {
 	// SelfLink: [Output only] Server-defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
-	// ServicesIpv4Cidr: [Output only] The IP addresses of the Kubernetes
-	// services in this cluster, in  CIDR notation (e.g. 1.2.3.4/29).
-	// Service addresses are always in the 10.0.0.0/16 range.
+	// ServicesIpv4Cidr: [Output only] The IP address range of the
+	// Kubernetes services in this cluster, in  CIDR notation (e.g.
+	// 1.2.3.4/29). Service addresses are typically put in the last /16 from
+	// the container CIDR.
 	ServicesIpv4Cidr string `json:"servicesIpv4Cidr,omitempty"`
 
 	// Status: [Output only] The current status of this cluster.
@@ -271,9 +260,9 @@ type ListOperationsResponse struct {
 
 type MasterAuth struct {
 	// BearerToken: The token used to authenticate API requests to the
-	// master. The token is be included in an HTTP Authorization Header
-	// included in all requests to the master endpoint. The format of the
-	// header is: "Authorization: Bearer ".
+	// master. The token is to be included in an HTTP Authorization Header
+	// in all requests to the master endpoint. The format of the header is:
+	// "Authorization: Bearer ".
 	BearerToken string `json:"bearerToken,omitempty"`
 
 	// Password: The password to use for HTTP basic authentication when
@@ -320,8 +309,7 @@ type Operation struct {
 	// error.
 	ErrorMessage string `json:"errorMessage,omitempty"`
 
-	// Name: The server-assigned ID for this operation. If the operation is
-	// fulfilled upfront, it may not have a resource name.
+	// Name: The server-assigned ID for the operation.
 	Name string `json:"name,omitempty"`
 
 	// OperationType: The operation type.
@@ -361,15 +349,6 @@ type ServiceAccount struct {
 	// Scopes: The list of scopes to be made available for this service
 	// account.
 	Scopes []string `json:"scopes,omitempty"`
-}
-
-type Token struct {
-	// AccessToken: The OAuth2 access token
-	AccessToken string `json:"accessToken,omitempty"`
-
-	// ExpiryTimeSeconds: The expiration time of the token in seconds since
-	// the unix epoch.
-	ExpiryTimeSeconds int64 `json:"expiryTimeSeconds,omitempty,string"`
 }
 
 // method id "container.projects.clusters.list":
@@ -545,8 +524,8 @@ type ProjectsZonesClustersCreateCall struct {
 // allow the containers on that node to communicate with all other
 // instances in the cluster.
 //
-// Finally, a route named k8s-iproute-10-xx-0-0 is created to track that
-// the cluster's 10.xx.0.0/16 CIDR has been assigned.
+// Finally, an entry is added to the project's global metadata
+// indicating which CIDR range is being used by the cluster.
 func (r *ProjectsZonesClustersService) Create(projectId string, zoneId string, createclusterrequest *CreateClusterRequest) *ProjectsZonesClustersCreateCall {
 	c := &ProjectsZonesClustersCreateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectId = projectId
@@ -598,7 +577,7 @@ func (c *ProjectsZonesClustersCreateCall) Do() (*Operation, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a cluster, consisting of the specified number and type of Google Compute Engine instances, plus a Kubernetes master instance.\n\nThe cluster is created in the project's default network.\n\nA firewall is added that allows traffic into port 443 on the master, which enables HTTPS. A firewall and a route is added for each node to allow the containers on that node to communicate with all other instances in the cluster.\n\nFinally, a route named k8s-iproute-10-xx-0-0 is created to track that the cluster's 10.xx.0.0/16 CIDR has been assigned.",
+	//   "description": "Creates a cluster, consisting of the specified number and type of Google Compute Engine instances, plus a Kubernetes master instance.\n\nThe cluster is created in the project's default network.\n\nA firewall is added that allows traffic into port 443 on the master, which enables HTTPS. A firewall and a route is added for each node to allow the containers on that node to communicate with all other instances in the cluster.\n\nFinally, an entry is added to the project's global metadata indicating which CIDR range is being used by the cluster.",
 	//   "httpMethod": "POST",
 	//   "id": "container.projects.zones.clusters.create",
 	//   "parameterOrder": [
@@ -1093,114 +1072,6 @@ func (c *ProjectsZonesOperationsListCall) Do() (*ListOperationsResponse, error) 
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
-	// }
-
-}
-
-// method id "container.projects.zones.tokens.get":
-
-type ProjectsZonesTokensGetCall struct {
-	s               *Service
-	masterProjectId string
-	zoneId          string
-	projectNumber   int64
-	clusterName     string
-	opt_            map[string]interface{}
-}
-
-// Get: Gets a compute-rw scoped OAuth2 access token for
-// . Authentication is performed to ensure that the caller is a member
-// of  and that the request is coming from the expected master VM for
-// the specified cluster. See go/gke-cross-project-auth for more
-// details.
-func (r *ProjectsZonesTokensService) Get(masterProjectId string, zoneId string, projectNumber int64, clusterName string) *ProjectsZonesTokensGetCall {
-	c := &ProjectsZonesTokensGetCall{s: r.s, opt_: make(map[string]interface{})}
-	c.masterProjectId = masterProjectId
-	c.zoneId = zoneId
-	c.projectNumber = projectNumber
-	c.clusterName = clusterName
-	return c
-}
-
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsZonesTokensGetCall) Fields(s ...googleapi.Field) *ProjectsZonesTokensGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
-	return c
-}
-
-func (c *ProjectsZonesTokensGetCall) Do() (*Token, error) {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "{masterProjectId}/zones/{zoneId}/tokens/{projectNumber}/{clusterName}")
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	googleapi.Expand(req.URL, map[string]string{
-		"masterProjectId": c.masterProjectId,
-		"zoneId":          c.zoneId,
-		"projectNumber":   strconv.FormatInt(c.projectNumber, 10),
-		"clusterName":     c.clusterName,
-	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	var ret *Token
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Gets a compute-rw scoped OAuth2 access token for\n. Authentication is performed to ensure that the caller is a member of  and that the request is coming from the expected master VM for the specified cluster. See go/gke-cross-project-auth for more details.",
-	//   "httpMethod": "GET",
-	//   "id": "container.projects.zones.tokens.get",
-	//   "parameterOrder": [
-	//     "masterProjectId",
-	//     "zoneId",
-	//     "projectNumber",
-	//     "clusterName"
-	//   ],
-	//   "parameters": {
-	//     "clusterName": {
-	//       "description": "The name of the specified cluster.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "masterProjectId": {
-	//       "description": "The hosted master project from which this request is coming.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "projectNumber": {
-	//       "description": "The project number for which the access token is being requested.",
-	//       "format": "int64",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "zoneId": {
-	//       "description": "The zone of the specified cluster.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "{masterProjectId}/zones/{zoneId}/tokens/{projectNumber}/{clusterName}",
-	//   "response": {
-	//     "$ref": "Token"
-	//   }
 	// }
 
 }

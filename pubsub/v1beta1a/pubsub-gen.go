@@ -708,12 +708,11 @@ type SubscriptionsModifyPushConfigCall struct {
 	opt_                    map[string]interface{}
 }
 
-// ModifyPushConfig: Modifies the 74code76PushConfig74/code76 for a
-// specified subscription. This method can be used to suspend the flow
-// of messages to an endpoint by clearing the
-// 74code76PushConfig74/code76 field in the request. Messages will be
-// accumulated for delivery even if no push configuration is defined or
-// while the configuration is modified.
+// ModifyPushConfig: Modifies the PushConfig for a specified
+// subscription. This method can be used to suspend the flow of messages
+// to an endpoint by clearing the PushConfig field in the request.
+// Messages will be accumulated for delivery even if no push
+// configuration is defined or while the configuration is modified.
 func (r *SubscriptionsService) ModifyPushConfig(modifypushconfigrequest *ModifyPushConfigRequest) *SubscriptionsModifyPushConfigCall {
 	c := &SubscriptionsModifyPushConfigCall{s: r.s, opt_: make(map[string]interface{})}
 	c.modifypushconfigrequest = modifypushconfigrequest
@@ -760,7 +759,7 @@ func (c *SubscriptionsModifyPushConfigCall) Do() (*Empty, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Modifies the 74code76PushConfig74/code76 for a specified subscription. This method can be used to suspend the flow of messages to an endpoint by clearing the 74code76PushConfig74/code76 field in the request. Messages will be accumulated for delivery even if no push configuration is defined or while the configuration is modified.",
+	//   "description": "Modifies the PushConfig for a specified subscription. This method can be used to suspend the flow of messages to an endpoint by clearing the PushConfig field in the request. Messages will be accumulated for delivery even if no push configuration is defined or while the configuration is modified.",
 	//   "httpMethod": "POST",
 	//   "id": "pubsub.subscriptions.modifyPushConfig",
 	//   "path": "subscriptions/modifyPushConfig",

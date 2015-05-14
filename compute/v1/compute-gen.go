@@ -1844,56 +1844,54 @@ type InstanceMoveRequest struct {
 }
 
 type InstanceProperties struct {
-	// CanIpForward: Allows instances created based on this template to send
-	// packets with source IP addresses other than their own and receive
-	// packets with destination IP addresses other than their own. If these
-	// instances will be used as an IP gateway or it will be set as the
-	// next-hop in a Route resource, say true. If unsure, leave this set to
-	// false.
+	// CanIpForward: A boolean that specifies if instances created from this
+	// template can send packets with source IP addresses other than their
+	// own or receive packets with destination IP addresses other than their
+	// own. If you use these instances as an IP gateway or as the next-hop
+	// in a Route resource, specify true. Otherwise, specify false.
 	CanIpForward bool `json:"canIpForward,omitempty"`
 
-	// Description: An optional textual description for the instances
-	// created based on the instance template resource; provided by the
-	// client when the template is created.
+	// Description: An optional text description for the instances that are
+	// created from this instance template.
 	Description string `json:"description,omitempty"`
 
-	// Disks: Array of disks associated with instance created based on this
-	// template.
+	// Disks: An array of disks that are associated with the instances that
+	// are created from this template.
 	Disks []*AttachedDisk `json:"disks,omitempty"`
 
-	// MachineType: Name of the machine type resource describing which
-	// machine type to use to host the instances created based on this
-	// template; provided by the client when the instance template is
-	// created.
+	// MachineType: The machine type to use for instances that are created
+	// from this template.
 	MachineType string `json:"machineType,omitempty"`
 
-	// Metadata: Metadata key/value pairs assigned to instances created
-	// based on this template. Consists of custom metadata or predefined
-	// keys; see Instance documentation for more information.
+	// Metadata: The metadata key/value pairs to assign to instances that
+	// are created from this template. These pairs can consist of custom
+	// metadata or predefined keys. See Project and instance metadata for
+	// more information.
 	Metadata *Metadata `json:"metadata,omitempty"`
 
-	// NetworkInterfaces: Array of configurations for this interface. This
-	// specifies how this interface is configured to interact with other
-	// network services, such as connecting to the internet. Currently,
-	// ONE_TO_ONE_NAT is the only access config supported. If there are no
-	// accessConfigs specified, then this instances created based based on
-	// this template will have no external internet access.
+	// NetworkInterfaces: An array of network access configurations for this
+	// interface. This specifies how this interface is configured to
+	// interact with other network services, such as connecting to the
+	// internet. Currently, ONE_TO_ONE_NAT is the only supported access
+	// configuration. If you do not specify any access configurations, the
+	// instances that are created from this template will have no external
+	// internet access.
 	NetworkInterfaces []*NetworkInterface `json:"networkInterfaces,omitempty"`
 
-	// Scheduling: Scheduling options for the instances created based on
-	// this template.
+	// Scheduling: A list of scheduling options for the instances that are
+	// created from this template.
 	Scheduling *Scheduling `json:"scheduling,omitempty"`
 
-	// ServiceAccounts: A list of service accounts each with specified
-	// scopes, for which access tokens are to be made available to the
-	// instances created based on this template, through metadata queries.
+	// ServiceAccounts: A list of service accounts with specified scopes.
+	// Access tokens for these service accounts are available to the
+	// instances that are created from this template. Use metadata queries
+	// to obtain the access tokens for these instances.
 	ServiceAccounts []*ServiceAccount `json:"serviceAccounts,omitempty"`
 
-	// Tags: A list of tags to be applied to the instances created based on
-	// this template used to identify valid sources or targets for network
-	// firewalls. Provided by the client on instance creation. The tags can
-	// be later modified by the setTags method. Each tag within the list
-	// must comply with RFC1035.
+	// Tags: A list of tags to apply to the instances that are created from
+	// this template. The tags identify valid sources or targets for network
+	// firewalls. The setTags method can modify this list of tags. Each tag
+	// within the list must comply with RFC1035.
 	Tags *Tags `json:"tags,omitempty"`
 }
 
@@ -1902,50 +1900,52 @@ type InstanceReference struct {
 }
 
 type InstanceTemplate struct {
-	// CreationTimestamp: Creation timestamp in RFC3339 text format (output
-	// only).
+	// CreationTimestamp: [Output Only] The creation timestamp for this
+	// instance template in RFC3339 text format.
 	CreationTimestamp string `json:"creationTimestamp,omitempty"`
 
-	// Description: An optional textual description of the instance template
-	// resource; provided by the client when the resource is created.
+	// Description: An optional text description for the instance template.
 	Description string `json:"description,omitempty"`
 
-	// Id: Unique identifier for the resource; defined by the server (output
-	// only).
+	// Id: [Output Only] A unique identifier for this instance template. The
+	// server defines this identifier.
 	Id uint64 `json:"id,omitempty,string"`
 
-	// Kind: Type of the resource.
+	// Kind: [Output Only] The resource type, which is always
+	// compute#instanceTemplate for instance templates.
 	Kind string `json:"kind,omitempty"`
 
-	// Name: Name of the instance template resource; provided by the client
-	// when the resource is created. The name must be 1-63 characters long,
-	// and comply with RFC1035
+	// Name: The name of the instance template. The name must be 1-63
+	// characters long, and comply with RFC1035.
 	Name string `json:"name,omitempty"`
 
-	// Properties: The instance properties portion of this instance template
+	// Properties: The instance properties for the instance template
 	// resource.
 	Properties *InstanceProperties `json:"properties,omitempty"`
 
-	// SelfLink: Server defined URL for the resource (output only).
+	// SelfLink: [Output Only] The URL for this instance template. The
+	// server defines this URL.
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
 type InstanceTemplateList struct {
-	// Id: Unique identifier for the resource; defined by the server (output
-	// only).
+	// Id: [Output Only] A unique identifier for this instance template. The
+	// server defines this identifier.
 	Id string `json:"id,omitempty"`
 
 	// Items: A list of InstanceTemplate resources.
 	Items []*InstanceTemplate `json:"items,omitempty"`
 
-	// Kind: Type of resource.
+	// Kind: [Output Only] The resource type, which is always
+	// compute#instanceTemplatesListResponse for instance template lists.
 	Kind string `json:"kind,omitempty"`
 
-	// NextPageToken: A token used to continue a truncated list request
-	// (output only).
+	// NextPageToken: [Output Only] A token that is used to continue a
+	// truncated list request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: Server defined URL for this resource (output only).
+	// SelfLink: [Output Only] The URL for this instance template list. The
+	// server defines this URL.
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
@@ -2285,7 +2285,7 @@ type NetworkList struct {
 type Operation struct {
 	// ClientOperationId: [Output Only] An optional identifier specified by
 	// the client when the mutation was initiated. Must be unique for all
-	// operation resources in the project
+	// operation resources in the project.
 	ClientOperationId string `json:"clientOperationId,omitempty"`
 
 	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
@@ -2330,8 +2330,8 @@ type Operation struct {
 	// Progress: [Output Only] An optional progress indicator that ranges
 	// from 0 to 100. There is no requirement that this be linear or support
 	// any granularity of operations. This should not be used to guess at
-	// when the operation will be complete. This number should be
-	// monotonically increasing as the operation progresses.
+	// when the operation will be complete. This number should monotonically
+	// increase as the operation progresses.
 	Progress int64 `json:"progress,omitempty"`
 
 	// Region: [Output Only] URL of the region where the operation resides.
@@ -2729,6 +2729,7 @@ type Route struct {
 
 	// Priority: Breaks ties between Routes of equal specificity. Routes
 	// with smaller values win when tied with routes with larger values.
+	// Default value is 1000. A valid range is between 0 and 65535.
 	Priority int64 `json:"priority,omitempty"`
 
 	// SelfLink: Server defined URL for the resource (output only).
@@ -2811,6 +2812,9 @@ type Scheduling struct {
 	//   "MIGRATE"
 	//   "TERMINATE"
 	OnHostMaintenance string `json:"onHostMaintenance,omitempty"`
+
+	// Preemptible: Whether the Instance is preemptible.
+	Preemptible bool `json:"preemptible,omitempty"`
 }
 
 type SerialPortOutput struct {
@@ -3838,16 +3842,15 @@ func (c *AddressesAggregatedListCall) Filter(filter string) *AddressesAggregated
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Maximum value is 500 and default value is
-// 500.
+// results to be returned.
 func (c *AddressesAggregatedListCall) MaxResults(maxResults int64) *AddressesAggregatedListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request truncated by maxResults. Used to continue a
-// previous list request.
+// previous list request when that list was truncated to maxResults.
+// Used to continue a previous list request.
 func (c *AddressesAggregatedListCall) PageToken(pageToken string) *AddressesAggregatedListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -3906,13 +3909,13 @@ func (c *AddressesAggregatedListCall) Do() (*AddressAggregatedList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filter expression for filtering listed resources.",
+	//       "description": "Filter expression for filtering listed resources.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+	//       "description": "Maximum count of results to be returned.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -3920,7 +3923,7 @@ func (c *AddressesAggregatedListCall) Do() (*AddressAggregatedList, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4277,16 +4280,15 @@ func (c *AddressesListCall) Filter(filter string) *AddressesListCall {
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Maximum value is 500 and default value is
-// 500.
+// results to be returned.
 func (c *AddressesListCall) MaxResults(maxResults int64) *AddressesListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request truncated by maxResults. Used to continue a
-// previous list request.
+// previous list request when that list was truncated to maxResults.
+// Used to continue a previous list request.
 func (c *AddressesListCall) PageToken(pageToken string) *AddressesListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -4347,13 +4349,13 @@ func (c *AddressesListCall) Do() (*AddressList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filter expression for filtering listed resources.",
+	//       "description": "Filter expression for filtering listed resources.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+	//       "description": "Maximum count of results to be returned.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -4361,7 +4363,7 @@ func (c *AddressesListCall) Do() (*AddressList, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4792,16 +4794,15 @@ func (c *BackendServicesListCall) Filter(filter string) *BackendServicesListCall
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Maximum value is 500 and default value is
-// 500.
+// results to be returned.
 func (c *BackendServicesListCall) MaxResults(maxResults int64) *BackendServicesListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request truncated by maxResults. Used to continue a
-// previous list request.
+// previous list request when that list was truncated to maxResults.
+// Used to continue a previous list request.
 func (c *BackendServicesListCall) PageToken(pageToken string) *BackendServicesListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -4860,13 +4861,13 @@ func (c *BackendServicesListCall) Do() (*BackendServiceList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filter expression for filtering listed resources.",
+	//       "description": "Filter expression for filtering listed resources.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+	//       "description": "Maximum count of results to be returned.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -4874,7 +4875,7 @@ func (c *BackendServicesListCall) Do() (*BackendServiceList, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5127,16 +5128,15 @@ func (c *DiskTypesAggregatedListCall) Filter(filter string) *DiskTypesAggregated
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Maximum value is 500 and default value is
-// 500.
+// results to be returned.
 func (c *DiskTypesAggregatedListCall) MaxResults(maxResults int64) *DiskTypesAggregatedListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request truncated by maxResults. Used to continue a
-// previous list request.
+// previous list request when that list was truncated to maxResults.
+// Used to continue a previous list request.
 func (c *DiskTypesAggregatedListCall) PageToken(pageToken string) *DiskTypesAggregatedListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -5195,13 +5195,13 @@ func (c *DiskTypesAggregatedListCall) Do() (*DiskTypeAggregatedList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filter expression for filtering listed resources.",
+	//       "description": "Filter expression for filtering listed resources.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+	//       "description": "Maximum count of results to be returned.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -5209,7 +5209,7 @@ func (c *DiskTypesAggregatedListCall) Do() (*DiskTypeAggregatedList, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5363,16 +5363,15 @@ func (c *DiskTypesListCall) Filter(filter string) *DiskTypesListCall {
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Maximum value is 500 and default value is
-// 500.
+// results to be returned.
 func (c *DiskTypesListCall) MaxResults(maxResults int64) *DiskTypesListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request truncated by maxResults. Used to continue a
-// previous list request.
+// previous list request when that list was truncated to maxResults.
+// Used to continue a previous list request.
 func (c *DiskTypesListCall) PageToken(pageToken string) *DiskTypesListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -5433,13 +5432,13 @@ func (c *DiskTypesListCall) Do() (*DiskTypeList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filter expression for filtering listed resources.",
+	//       "description": "Filter expression for filtering listed resources.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+	//       "description": "Maximum count of results to be returned.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -5447,7 +5446,7 @@ func (c *DiskTypesListCall) Do() (*DiskTypeList, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5503,16 +5502,15 @@ func (c *DisksAggregatedListCall) Filter(filter string) *DisksAggregatedListCall
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Maximum value is 500 and default value is
-// 500.
+// results to be returned.
 func (c *DisksAggregatedListCall) MaxResults(maxResults int64) *DisksAggregatedListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request truncated by maxResults. Used to continue a
-// previous list request.
+// previous list request when that list was truncated to maxResults.
+// Used to continue a previous list request.
 func (c *DisksAggregatedListCall) PageToken(pageToken string) *DisksAggregatedListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -5571,13 +5569,13 @@ func (c *DisksAggregatedListCall) Do() (*DiskAggregatedList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filter expression for filtering listed resources.",
+	//       "description": "Filter expression for filtering listed resources.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+	//       "description": "Maximum count of results to be returned.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -5585,7 +5583,7 @@ func (c *DisksAggregatedListCall) Do() (*DiskAggregatedList, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6069,16 +6067,15 @@ func (c *DisksListCall) Filter(filter string) *DisksListCall {
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Maximum value is 500 and default value is
-// 500.
+// results to be returned.
 func (c *DisksListCall) MaxResults(maxResults int64) *DisksListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request truncated by maxResults. Used to continue a
-// previous list request.
+// previous list request when that list was truncated to maxResults.
+// Used to continue a previous list request.
 func (c *DisksListCall) PageToken(pageToken string) *DisksListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -6139,13 +6136,13 @@ func (c *DisksListCall) Do() (*DiskList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filter expression for filtering listed resources.",
+	//       "description": "Filter expression for filtering listed resources.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+	//       "description": "Maximum count of results to be returned.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -6153,7 +6150,7 @@ func (c *DisksListCall) Do() (*DiskList, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6482,16 +6479,15 @@ func (c *FirewallsListCall) Filter(filter string) *FirewallsListCall {
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Maximum value is 500 and default value is
-// 500.
+// results to be returned.
 func (c *FirewallsListCall) MaxResults(maxResults int64) *FirewallsListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request truncated by maxResults. Used to continue a
-// previous list request.
+// previous list request when that list was truncated to maxResults.
+// Used to continue a previous list request.
 func (c *FirewallsListCall) PageToken(pageToken string) *FirewallsListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -6550,13 +6546,13 @@ func (c *FirewallsListCall) Do() (*FirewallList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filter expression for filtering listed resources.",
+	//       "description": "Filter expression for filtering listed resources.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+	//       "description": "Maximum count of results to be returned.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -6564,7 +6560,7 @@ func (c *FirewallsListCall) Do() (*FirewallList, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6818,16 +6814,15 @@ func (c *ForwardingRulesAggregatedListCall) Filter(filter string) *ForwardingRul
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Maximum value is 500 and default value is
-// 500.
+// results to be returned.
 func (c *ForwardingRulesAggregatedListCall) MaxResults(maxResults int64) *ForwardingRulesAggregatedListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request truncated by maxResults. Used to continue a
-// previous list request.
+// previous list request when that list was truncated to maxResults.
+// Used to continue a previous list request.
 func (c *ForwardingRulesAggregatedListCall) PageToken(pageToken string) *ForwardingRulesAggregatedListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -6886,13 +6881,13 @@ func (c *ForwardingRulesAggregatedListCall) Do() (*ForwardingRuleAggregatedList,
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filter expression for filtering listed resources.",
+	//       "description": "Filter expression for filtering listed resources.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+	//       "description": "Maximum count of results to be returned.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -6900,7 +6895,7 @@ func (c *ForwardingRulesAggregatedListCall) Do() (*ForwardingRuleAggregatedList,
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7257,16 +7252,15 @@ func (c *ForwardingRulesListCall) Filter(filter string) *ForwardingRulesListCall
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Maximum value is 500 and default value is
-// 500.
+// results to be returned.
 func (c *ForwardingRulesListCall) MaxResults(maxResults int64) *ForwardingRulesListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request truncated by maxResults. Used to continue a
-// previous list request.
+// previous list request when that list was truncated to maxResults.
+// Used to continue a previous list request.
 func (c *ForwardingRulesListCall) PageToken(pageToken string) *ForwardingRulesListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -7327,13 +7321,13 @@ func (c *ForwardingRulesListCall) Do() (*ForwardingRuleList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filter expression for filtering listed resources.",
+	//       "description": "Filter expression for filtering listed resources.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+	//       "description": "Maximum count of results to be returned.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -7341,7 +7335,7 @@ func (c *ForwardingRulesListCall) Do() (*ForwardingRuleList, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7781,16 +7775,15 @@ func (c *GlobalAddressesListCall) Filter(filter string) *GlobalAddressesListCall
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Maximum value is 500 and default value is
-// 500.
+// results to be returned.
 func (c *GlobalAddressesListCall) MaxResults(maxResults int64) *GlobalAddressesListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request truncated by maxResults. Used to continue a
-// previous list request.
+// previous list request when that list was truncated to maxResults.
+// Used to continue a previous list request.
 func (c *GlobalAddressesListCall) PageToken(pageToken string) *GlobalAddressesListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -7849,13 +7842,13 @@ func (c *GlobalAddressesListCall) Do() (*AddressList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filter expression for filtering listed resources.",
+	//       "description": "Filter expression for filtering listed resources.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+	//       "description": "Maximum count of results to be returned.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -7863,7 +7856,7 @@ func (c *GlobalAddressesListCall) Do() (*AddressList, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8185,16 +8178,15 @@ func (c *GlobalForwardingRulesListCall) Filter(filter string) *GlobalForwardingR
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Maximum value is 500 and default value is
-// 500.
+// results to be returned.
 func (c *GlobalForwardingRulesListCall) MaxResults(maxResults int64) *GlobalForwardingRulesListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request truncated by maxResults. Used to continue a
-// previous list request.
+// previous list request when that list was truncated to maxResults.
+// Used to continue a previous list request.
 func (c *GlobalForwardingRulesListCall) PageToken(pageToken string) *GlobalForwardingRulesListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -8253,13 +8245,13 @@ func (c *GlobalForwardingRulesListCall) Do() (*ForwardingRuleList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filter expression for filtering listed resources.",
+	//       "description": "Filter expression for filtering listed resources.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+	//       "description": "Maximum count of results to be returned.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -8267,7 +8259,7 @@ func (c *GlobalForwardingRulesListCall) Do() (*ForwardingRuleList, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8418,16 +8410,15 @@ func (c *GlobalOperationsAggregatedListCall) Filter(filter string) *GlobalOperat
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Maximum value is 500 and default value is
-// 500.
+// results to be returned.
 func (c *GlobalOperationsAggregatedListCall) MaxResults(maxResults int64) *GlobalOperationsAggregatedListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request truncated by maxResults. Used to continue a
-// previous list request.
+// previous list request when that list was truncated to maxResults.
+// Used to continue a previous list request.
 func (c *GlobalOperationsAggregatedListCall) PageToken(pageToken string) *GlobalOperationsAggregatedListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -8486,13 +8477,13 @@ func (c *GlobalOperationsAggregatedListCall) Do() (*OperationAggregatedList, err
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filter expression for filtering listed resources.",
+	//       "description": "Filter expression for filtering listed resources.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+	//       "description": "Maximum count of results to be returned.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -8500,7 +8491,7 @@ func (c *GlobalOperationsAggregatedListCall) Do() (*OperationAggregatedList, err
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8724,16 +8715,15 @@ func (c *GlobalOperationsListCall) Filter(filter string) *GlobalOperationsListCa
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Maximum value is 500 and default value is
-// 500.
+// results to be returned.
 func (c *GlobalOperationsListCall) MaxResults(maxResults int64) *GlobalOperationsListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request truncated by maxResults. Used to continue a
-// previous list request.
+// previous list request when that list was truncated to maxResults.
+// Used to continue a previous list request.
 func (c *GlobalOperationsListCall) PageToken(pageToken string) *GlobalOperationsListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -8792,13 +8782,13 @@ func (c *GlobalOperationsListCall) Do() (*OperationList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filter expression for filtering listed resources.",
+	//       "description": "Filter expression for filtering listed resources.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+	//       "description": "Maximum count of results to be returned.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -8806,7 +8796,7 @@ func (c *GlobalOperationsListCall) Do() (*OperationList, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -9128,16 +9118,15 @@ func (c *HttpHealthChecksListCall) Filter(filter string) *HttpHealthChecksListCa
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Maximum value is 500 and default value is
-// 500.
+// results to be returned.
 func (c *HttpHealthChecksListCall) MaxResults(maxResults int64) *HttpHealthChecksListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request truncated by maxResults. Used to continue a
-// previous list request.
+// previous list request when that list was truncated to maxResults.
+// Used to continue a previous list request.
 func (c *HttpHealthChecksListCall) PageToken(pageToken string) *HttpHealthChecksListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -9196,13 +9185,13 @@ func (c *HttpHealthChecksListCall) Do() (*HttpHealthCheckList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filter expression for filtering listed resources.",
+	//       "description": "Filter expression for filtering listed resources.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+	//       "description": "Maximum count of results to be returned.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -9210,7 +9199,7 @@ func (c *HttpHealthChecksListCall) Do() (*HttpHealthCheckList, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -9844,16 +9833,15 @@ func (c *ImagesListCall) Filter(filter string) *ImagesListCall {
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Maximum value is 500 and default value is
-// 500.
+// results to be returned.
 func (c *ImagesListCall) MaxResults(maxResults int64) *ImagesListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request truncated by maxResults. Used to continue a
-// previous list request.
+// previous list request when that list was truncated to maxResults.
+// Used to continue a previous list request.
 func (c *ImagesListCall) PageToken(pageToken string) *ImagesListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -9912,13 +9900,13 @@ func (c *ImagesListCall) Do() (*ImageList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filter expression for filtering listed resources.",
+	//       "description": "Filter expression for filtering listed resources.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+	//       "description": "Maximum count of results to be returned.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -9926,7 +9914,7 @@ func (c *ImagesListCall) Do() (*ImageList, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -9960,7 +9948,7 @@ type InstanceTemplatesDeleteCall struct {
 	opt_             map[string]interface{}
 }
 
-// Delete: Deletes the specified instance template resource.
+// Delete: Deletes the specified instance template.
 // For details, see https://cloud.google.com/compute/docs/reference/latest/instanceTemplates/delete
 func (r *InstanceTemplatesService) Delete(project string, instanceTemplate string) *InstanceTemplatesDeleteCall {
 	c := &InstanceTemplatesDeleteCall{s: r.s, opt_: make(map[string]interface{})}
@@ -10006,7 +9994,7 @@ func (c *InstanceTemplatesDeleteCall) Do() (*Operation, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes the specified instance template resource.",
+	//   "description": "Deletes the specified instance template.",
 	//   "httpMethod": "DELETE",
 	//   "id": "compute.instanceTemplates.delete",
 	//   "parameterOrder": [
@@ -10015,14 +10003,14 @@ func (c *InstanceTemplatesDeleteCall) Do() (*Operation, error) {
 	//   ],
 	//   "parameters": {
 	//     "instanceTemplate": {
-	//       "description": "Name of the instance template resource to delete.",
+	//       "description": "The name of the instance template to delete.",
 	//       "location": "path",
 	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "project": {
-	//       "description": "Name of the project scoping this request.",
+	//       "description": "The project ID for this request.",
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
@@ -10105,14 +10093,14 @@ func (c *InstanceTemplatesGetCall) Do() (*InstanceTemplate, error) {
 	//   ],
 	//   "parameters": {
 	//     "instanceTemplate": {
-	//       "description": "Name of the instance template resource to return.",
+	//       "description": "The name of the instance template.",
 	//       "location": "path",
 	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "project": {
-	//       "description": "Name of the project scoping this request.",
+	//       "description": "The project ID for this request.",
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
@@ -10141,8 +10129,8 @@ type InstanceTemplatesInsertCall struct {
 	opt_             map[string]interface{}
 }
 
-// Insert: Creates an instance template resource in the specified
-// project using the data included in the request.
+// Insert: Creates an instance template in the specified project using
+// the data that is included in the request.
 // For details, see https://cloud.google.com/compute/docs/reference/latest/instanceTemplates/insert
 func (r *InstanceTemplatesService) Insert(project string, instancetemplate *InstanceTemplate) *InstanceTemplatesInsertCall {
 	c := &InstanceTemplatesInsertCall{s: r.s, opt_: make(map[string]interface{})}
@@ -10193,7 +10181,7 @@ func (c *InstanceTemplatesInsertCall) Do() (*Operation, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates an instance template resource in the specified project using the data included in the request.",
+	//   "description": "Creates an instance template in the specified project using the data that is included in the request.",
 	//   "httpMethod": "POST",
 	//   "id": "compute.instanceTemplates.insert",
 	//   "parameterOrder": [
@@ -10201,7 +10189,7 @@ func (c *InstanceTemplatesInsertCall) Do() (*Operation, error) {
 	//   ],
 	//   "parameters": {
 	//     "project": {
-	//       "description": "Name of the project scoping this request.",
+	//       "description": "The project ID for this request.",
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
@@ -10231,8 +10219,8 @@ type InstanceTemplatesListCall struct {
 	opt_    map[string]interface{}
 }
 
-// List: Retrieves the list of instance template resources contained
-// within the specified project.
+// List: Retrieves a list of instance templates that are contained
+// within the specified project and zone.
 // For details, see https://cloud.google.com/compute/docs/reference/latest/instanceTemplates/list
 func (r *InstanceTemplatesService) List(project string) *InstanceTemplatesListCall {
 	c := &InstanceTemplatesListCall{s: r.s, opt_: make(map[string]interface{})}
@@ -10248,16 +10236,15 @@ func (c *InstanceTemplatesListCall) Filter(filter string) *InstanceTemplatesList
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Maximum value is 500 and default value is
-// 500.
+// results to be returned.
 func (c *InstanceTemplatesListCall) MaxResults(maxResults int64) *InstanceTemplatesListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request truncated by maxResults. Used to continue a
-// previous list request.
+// previous list request when that list was truncated to maxResults.
+// Used to continue a previous list request.
 func (c *InstanceTemplatesListCall) PageToken(pageToken string) *InstanceTemplatesListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -10308,7 +10295,7 @@ func (c *InstanceTemplatesListCall) Do() (*InstanceTemplateList, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves the list of instance template resources contained within the specified project.",
+	//   "description": "Retrieves a list of instance templates that are contained within the specified project and zone.",
 	//   "httpMethod": "GET",
 	//   "id": "compute.instanceTemplates.list",
 	//   "parameterOrder": [
@@ -10316,13 +10303,13 @@ func (c *InstanceTemplatesListCall) Do() (*InstanceTemplateList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filter expression for filtering listed resources.",
+	//       "description": "Filter expression for filtering listed resources.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+	//       "description": "Maximum count of results to be returned.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -10330,12 +10317,12 @@ func (c *InstanceTemplatesListCall) Do() (*InstanceTemplateList, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "project": {
-	//       "description": "Name of the project scoping this request.",
+	//       "description": "The project ID for this request.",
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
@@ -10502,16 +10489,15 @@ func (c *InstancesAggregatedListCall) Filter(filter string) *InstancesAggregated
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Maximum value is 500 and default value is
-// 500.
+// results to be returned.
 func (c *InstancesAggregatedListCall) MaxResults(maxResults int64) *InstancesAggregatedListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request truncated by maxResults. Used to continue a
-// previous list request.
+// previous list request when that list was truncated to maxResults.
+// Used to continue a previous list request.
 func (c *InstancesAggregatedListCall) PageToken(pageToken string) *InstancesAggregatedListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -10569,13 +10555,13 @@ func (c *InstancesAggregatedListCall) Do() (*InstanceAggregatedList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filter expression for filtering listed resources.",
+	//       "description": "Filter expression for filtering listed resources.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+	//       "description": "Maximum count of results to be returned.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -10583,7 +10569,7 @@ func (c *InstancesAggregatedListCall) Do() (*InstanceAggregatedList, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -11409,16 +11395,15 @@ func (c *InstancesListCall) Filter(filter string) *InstancesListCall {
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Maximum value is 500 and default value is
-// 500.
+// results to be returned.
 func (c *InstancesListCall) MaxResults(maxResults int64) *InstancesListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request truncated by maxResults. Used to continue a
-// previous list request.
+// previous list request when that list was truncated to maxResults.
+// Used to continue a previous list request.
 func (c *InstancesListCall) PageToken(pageToken string) *InstancesListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -11479,13 +11464,13 @@ func (c *InstancesListCall) Do() (*InstanceList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filter expression for filtering listed resources.",
+	//       "description": "Filter expression for filtering listed resources.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+	//       "description": "Maximum count of results to be returned.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -11493,7 +11478,7 @@ func (c *InstancesListCall) Do() (*InstanceList, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -12413,16 +12398,15 @@ func (c *MachineTypesAggregatedListCall) Filter(filter string) *MachineTypesAggr
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Maximum value is 500 and default value is
-// 500.
+// results to be returned.
 func (c *MachineTypesAggregatedListCall) MaxResults(maxResults int64) *MachineTypesAggregatedListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request truncated by maxResults. Used to continue a
-// previous list request.
+// previous list request when that list was truncated to maxResults.
+// Used to continue a previous list request.
 func (c *MachineTypesAggregatedListCall) PageToken(pageToken string) *MachineTypesAggregatedListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -12481,13 +12465,13 @@ func (c *MachineTypesAggregatedListCall) Do() (*MachineTypeAggregatedList, error
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filter expression for filtering listed resources.",
+	//       "description": "Filter expression for filtering listed resources.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+	//       "description": "Maximum count of results to be returned.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -12495,7 +12479,7 @@ func (c *MachineTypesAggregatedListCall) Do() (*MachineTypeAggregatedList, error
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -12649,16 +12633,15 @@ func (c *MachineTypesListCall) Filter(filter string) *MachineTypesListCall {
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Maximum value is 500 and default value is
-// 500.
+// results to be returned.
 func (c *MachineTypesListCall) MaxResults(maxResults int64) *MachineTypesListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request truncated by maxResults. Used to continue a
-// previous list request.
+// previous list request when that list was truncated to maxResults.
+// Used to continue a previous list request.
 func (c *MachineTypesListCall) PageToken(pageToken string) *MachineTypesListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -12719,13 +12702,13 @@ func (c *MachineTypesListCall) Do() (*MachineTypeList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filter expression for filtering listed resources.",
+	//       "description": "Filter expression for filtering listed resources.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+	//       "description": "Maximum count of results to be returned.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -12733,7 +12716,7 @@ func (c *MachineTypesListCall) Do() (*MachineTypeList, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -13062,16 +13045,15 @@ func (c *NetworksListCall) Filter(filter string) *NetworksListCall {
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Maximum value is 500 and default value is
-// 500.
+// results to be returned.
 func (c *NetworksListCall) MaxResults(maxResults int64) *NetworksListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request truncated by maxResults. Used to continue a
-// previous list request.
+// previous list request when that list was truncated to maxResults.
+// Used to continue a previous list request.
 func (c *NetworksListCall) PageToken(pageToken string) *NetworksListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -13130,13 +13112,13 @@ func (c *NetworksListCall) Do() (*NetworkList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filter expression for filtering listed resources.",
+	//       "description": "Filter expression for filtering listed resources.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+	//       "description": "Maximum count of results to be returned.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -13144,7 +13126,7 @@ func (c *NetworksListCall) Do() (*NetworkList, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -13838,16 +13820,15 @@ func (c *RegionOperationsListCall) Filter(filter string) *RegionOperationsListCa
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Maximum value is 500 and default value is
-// 500.
+// results to be returned.
 func (c *RegionOperationsListCall) MaxResults(maxResults int64) *RegionOperationsListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request truncated by maxResults. Used to continue a
-// previous list request.
+// previous list request when that list was truncated to maxResults.
+// Used to continue a previous list request.
 func (c *RegionOperationsListCall) PageToken(pageToken string) *RegionOperationsListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -13908,13 +13889,13 @@ func (c *RegionOperationsListCall) Do() (*OperationList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filter expression for filtering listed resources.",
+	//       "description": "Filter expression for filtering listed resources.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+	//       "description": "Maximum count of results to be returned.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -13922,7 +13903,7 @@ func (c *RegionOperationsListCall) Do() (*OperationList, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -14070,16 +14051,15 @@ func (c *RegionsListCall) Filter(filter string) *RegionsListCall {
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Maximum value is 500 and default value is
-// 500.
+// results to be returned.
 func (c *RegionsListCall) MaxResults(maxResults int64) *RegionsListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request truncated by maxResults. Used to continue a
-// previous list request.
+// previous list request when that list was truncated to maxResults.
+// Used to continue a previous list request.
 func (c *RegionsListCall) PageToken(pageToken string) *RegionsListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -14138,13 +14118,13 @@ func (c *RegionsListCall) Do() (*RegionList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filter expression for filtering listed resources.",
+	//       "description": "Filter expression for filtering listed resources.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+	//       "description": "Maximum count of results to be returned.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -14152,7 +14132,7 @@ func (c *RegionsListCall) Do() (*RegionList, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -14474,16 +14454,15 @@ func (c *RoutesListCall) Filter(filter string) *RoutesListCall {
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Maximum value is 500 and default value is
-// 500.
+// results to be returned.
 func (c *RoutesListCall) MaxResults(maxResults int64) *RoutesListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request truncated by maxResults. Used to continue a
-// previous list request.
+// previous list request when that list was truncated to maxResults.
+// Used to continue a previous list request.
 func (c *RoutesListCall) PageToken(pageToken string) *RoutesListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -14542,13 +14521,13 @@ func (c *RoutesListCall) Do() (*RouteList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filter expression for filtering listed resources.",
+	//       "description": "Filter expression for filtering listed resources.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+	//       "description": "Maximum count of results to be returned.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -14556,7 +14535,7 @@ func (c *RoutesListCall) Do() (*RouteList, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -14787,16 +14766,15 @@ func (c *SnapshotsListCall) Filter(filter string) *SnapshotsListCall {
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Maximum value is 500 and default value is
-// 500.
+// results to be returned.
 func (c *SnapshotsListCall) MaxResults(maxResults int64) *SnapshotsListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request truncated by maxResults. Used to continue a
-// previous list request.
+// previous list request when that list was truncated to maxResults.
+// Used to continue a previous list request.
 func (c *SnapshotsListCall) PageToken(pageToken string) *SnapshotsListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -14855,13 +14833,13 @@ func (c *SnapshotsListCall) Do() (*SnapshotList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filter expression for filtering listed resources.",
+	//       "description": "Filter expression for filtering listed resources.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+	//       "description": "Maximum count of results to be returned.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -14869,7 +14847,7 @@ func (c *SnapshotsListCall) Do() (*SnapshotList, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -15191,16 +15169,15 @@ func (c *TargetHttpProxiesListCall) Filter(filter string) *TargetHttpProxiesList
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Maximum value is 500 and default value is
-// 500.
+// results to be returned.
 func (c *TargetHttpProxiesListCall) MaxResults(maxResults int64) *TargetHttpProxiesListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request truncated by maxResults. Used to continue a
-// previous list request.
+// previous list request when that list was truncated to maxResults.
+// Used to continue a previous list request.
 func (c *TargetHttpProxiesListCall) PageToken(pageToken string) *TargetHttpProxiesListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -15259,13 +15236,13 @@ func (c *TargetHttpProxiesListCall) Do() (*TargetHttpProxyList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filter expression for filtering listed resources.",
+	//       "description": "Filter expression for filtering listed resources.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+	//       "description": "Maximum count of results to be returned.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -15273,7 +15250,7 @@ func (c *TargetHttpProxiesListCall) Do() (*TargetHttpProxyList, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -15424,16 +15401,15 @@ func (c *TargetInstancesAggregatedListCall) Filter(filter string) *TargetInstanc
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Maximum value is 500 and default value is
-// 500.
+// results to be returned.
 func (c *TargetInstancesAggregatedListCall) MaxResults(maxResults int64) *TargetInstancesAggregatedListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request truncated by maxResults. Used to continue a
-// previous list request.
+// previous list request when that list was truncated to maxResults.
+// Used to continue a previous list request.
 func (c *TargetInstancesAggregatedListCall) PageToken(pageToken string) *TargetInstancesAggregatedListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -15492,13 +15468,13 @@ func (c *TargetInstancesAggregatedListCall) Do() (*TargetInstanceAggregatedList,
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filter expression for filtering listed resources.",
+	//       "description": "Filter expression for filtering listed resources.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+	//       "description": "Maximum count of results to be returned.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -15506,7 +15482,7 @@ func (c *TargetInstancesAggregatedListCall) Do() (*TargetInstanceAggregatedList,
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -15863,16 +15839,15 @@ func (c *TargetInstancesListCall) Filter(filter string) *TargetInstancesListCall
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Maximum value is 500 and default value is
-// 500.
+// results to be returned.
 func (c *TargetInstancesListCall) MaxResults(maxResults int64) *TargetInstancesListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request truncated by maxResults. Used to continue a
-// previous list request.
+// previous list request when that list was truncated to maxResults.
+// Used to continue a previous list request.
 func (c *TargetInstancesListCall) PageToken(pageToken string) *TargetInstancesListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -15933,13 +15908,13 @@ func (c *TargetInstancesListCall) Do() (*TargetInstanceList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filter expression for filtering listed resources.",
+	//       "description": "Filter expression for filtering listed resources.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+	//       "description": "Maximum count of results to be returned.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -15947,7 +15922,7 @@ func (c *TargetInstancesListCall) Do() (*TargetInstanceList, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -16225,16 +16200,15 @@ func (c *TargetPoolsAggregatedListCall) Filter(filter string) *TargetPoolsAggreg
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Maximum value is 500 and default value is
-// 500.
+// results to be returned.
 func (c *TargetPoolsAggregatedListCall) MaxResults(maxResults int64) *TargetPoolsAggregatedListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request truncated by maxResults. Used to continue a
-// previous list request.
+// previous list request when that list was truncated to maxResults.
+// Used to continue a previous list request.
 func (c *TargetPoolsAggregatedListCall) PageToken(pageToken string) *TargetPoolsAggregatedListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -16293,13 +16267,13 @@ func (c *TargetPoolsAggregatedListCall) Do() (*TargetPoolAggregatedList, error) 
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filter expression for filtering listed resources.",
+	//       "description": "Filter expression for filtering listed resources.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+	//       "description": "Maximum count of results to be returned.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -16307,7 +16281,7 @@ func (c *TargetPoolsAggregatedListCall) Do() (*TargetPoolAggregatedList, error) 
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -16777,16 +16751,15 @@ func (c *TargetPoolsListCall) Filter(filter string) *TargetPoolsListCall {
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Maximum value is 500 and default value is
-// 500.
+// results to be returned.
 func (c *TargetPoolsListCall) MaxResults(maxResults int64) *TargetPoolsListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request truncated by maxResults. Used to continue a
-// previous list request.
+// previous list request when that list was truncated to maxResults.
+// Used to continue a previous list request.
 func (c *TargetPoolsListCall) PageToken(pageToken string) *TargetPoolsListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -16847,13 +16820,13 @@ func (c *TargetPoolsListCall) Do() (*TargetPoolList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filter expression for filtering listed resources.",
+	//       "description": "Filter expression for filtering listed resources.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+	//       "description": "Maximum count of results to be returned.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -16861,7 +16834,7 @@ func (c *TargetPoolsListCall) Do() (*TargetPoolList, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -17267,16 +17240,15 @@ func (c *TargetVpnGatewaysAggregatedListCall) Filter(filter string) *TargetVpnGa
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Maximum value is 500 and default value is
-// 500.
+// results to be returned.
 func (c *TargetVpnGatewaysAggregatedListCall) MaxResults(maxResults int64) *TargetVpnGatewaysAggregatedListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request truncated by maxResults. Used to continue a
-// previous list request.
+// previous list request when that list was truncated to maxResults.
+// Used to continue a previous list request.
 func (c *TargetVpnGatewaysAggregatedListCall) PageToken(pageToken string) *TargetVpnGatewaysAggregatedListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -17335,13 +17307,13 @@ func (c *TargetVpnGatewaysAggregatedListCall) Do() (*TargetVpnGatewayAggregatedL
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filter expression for filtering listed resources.",
+	//       "description": "Filter expression for filtering listed resources.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+	//       "description": "Maximum count of results to be returned.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -17349,7 +17321,7 @@ func (c *TargetVpnGatewaysAggregatedListCall) Do() (*TargetVpnGatewayAggregatedL
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -17702,16 +17674,15 @@ func (c *TargetVpnGatewaysListCall) Filter(filter string) *TargetVpnGatewaysList
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Maximum value is 500 and default value is
-// 500.
+// results to be returned.
 func (c *TargetVpnGatewaysListCall) MaxResults(maxResults int64) *TargetVpnGatewaysListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request truncated by maxResults. Used to continue a
-// previous list request.
+// previous list request when that list was truncated to maxResults.
+// Used to continue a previous list request.
 func (c *TargetVpnGatewaysListCall) PageToken(pageToken string) *TargetVpnGatewaysListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -17772,13 +17743,13 @@ func (c *TargetVpnGatewaysListCall) Do() (*TargetVpnGatewayList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filter expression for filtering listed resources.",
+	//       "description": "Filter expression for filtering listed resources.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+	//       "description": "Maximum count of results to be returned.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -17786,7 +17757,7 @@ func (c *TargetVpnGatewaysListCall) Do() (*TargetVpnGatewayList, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -18115,16 +18086,15 @@ func (c *UrlMapsListCall) Filter(filter string) *UrlMapsListCall {
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Maximum value is 500 and default value is
-// 500.
+// results to be returned.
 func (c *UrlMapsListCall) MaxResults(maxResults int64) *UrlMapsListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request truncated by maxResults. Used to continue a
-// previous list request.
+// previous list request when that list was truncated to maxResults.
+// Used to continue a previous list request.
 func (c *UrlMapsListCall) PageToken(pageToken string) *UrlMapsListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -18183,13 +18153,13 @@ func (c *UrlMapsListCall) Do() (*UrlMapList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filter expression for filtering listed resources.",
+	//       "description": "Filter expression for filtering listed resources.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+	//       "description": "Maximum count of results to be returned.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -18197,7 +18167,7 @@ func (c *UrlMapsListCall) Do() (*UrlMapList, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -18551,16 +18521,15 @@ func (c *VpnTunnelsAggregatedListCall) Filter(filter string) *VpnTunnelsAggregat
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Maximum value is 500 and default value is
-// 500.
+// results to be returned.
 func (c *VpnTunnelsAggregatedListCall) MaxResults(maxResults int64) *VpnTunnelsAggregatedListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request truncated by maxResults. Used to continue a
-// previous list request.
+// previous list request when that list was truncated to maxResults.
+// Used to continue a previous list request.
 func (c *VpnTunnelsAggregatedListCall) PageToken(pageToken string) *VpnTunnelsAggregatedListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -18619,13 +18588,13 @@ func (c *VpnTunnelsAggregatedListCall) Do() (*VpnTunnelAggregatedList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filter expression for filtering listed resources.",
+	//       "description": "Filter expression for filtering listed resources.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+	//       "description": "Maximum count of results to be returned.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -18633,7 +18602,7 @@ func (c *VpnTunnelsAggregatedListCall) Do() (*VpnTunnelAggregatedList, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -18986,16 +18955,15 @@ func (c *VpnTunnelsListCall) Filter(filter string) *VpnTunnelsListCall {
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Maximum value is 500 and default value is
-// 500.
+// results to be returned.
 func (c *VpnTunnelsListCall) MaxResults(maxResults int64) *VpnTunnelsListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request truncated by maxResults. Used to continue a
-// previous list request.
+// previous list request when that list was truncated to maxResults.
+// Used to continue a previous list request.
 func (c *VpnTunnelsListCall) PageToken(pageToken string) *VpnTunnelsListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -19056,13 +19024,13 @@ func (c *VpnTunnelsListCall) Do() (*VpnTunnelList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filter expression for filtering listed resources.",
+	//       "description": "Filter expression for filtering listed resources.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+	//       "description": "Maximum count of results to be returned.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -19070,7 +19038,7 @@ func (c *VpnTunnelsListCall) Do() (*VpnTunnelList, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -19325,16 +19293,15 @@ func (c *ZoneOperationsListCall) Filter(filter string) *ZoneOperationsListCall {
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Maximum value is 500 and default value is
-// 500.
+// results to be returned.
 func (c *ZoneOperationsListCall) MaxResults(maxResults int64) *ZoneOperationsListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request truncated by maxResults. Used to continue a
-// previous list request.
+// previous list request when that list was truncated to maxResults.
+// Used to continue a previous list request.
 func (c *ZoneOperationsListCall) PageToken(pageToken string) *ZoneOperationsListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -19395,13 +19362,13 @@ func (c *ZoneOperationsListCall) Do() (*OperationList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filter expression for filtering listed resources.",
+	//       "description": "Filter expression for filtering listed resources.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+	//       "description": "Maximum count of results to be returned.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -19409,7 +19376,7 @@ func (c *ZoneOperationsListCall) Do() (*OperationList, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -19557,16 +19524,15 @@ func (c *ZonesListCall) Filter(filter string) *ZonesListCall {
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum count of
-// results to be returned. Maximum value is 500 and default value is
-// 500.
+// results to be returned.
 func (c *ZonesListCall) MaxResults(maxResults int64) *ZonesListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request truncated by maxResults. Used to continue a
-// previous list request.
+// previous list request when that list was truncated to maxResults.
+// Used to continue a previous list request.
 func (c *ZonesListCall) PageToken(pageToken string) *ZonesListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -19625,13 +19591,13 @@ func (c *ZonesListCall) Do() (*ZoneList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filter expression for filtering listed resources.",
+	//       "description": "Filter expression for filtering listed resources.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+	//       "description": "Maximum count of results to be returned.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "500",
@@ -19639,7 +19605,7 @@ func (c *ZonesListCall) Do() (*ZoneList, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

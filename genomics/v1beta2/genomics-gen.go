@@ -46,6 +46,9 @@ const (
 	// View and manage your data in Google BigQuery
 	BigqueryScope = "https://www.googleapis.com/auth/bigquery"
 
+	// View and manage your data across Google Cloud Platform services
+	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
+
 	// Manage your data in Google Cloud Storage
 	DevstorageReadWriteScope = "https://www.googleapis.com/auth/devstorage.read_write"
 
@@ -71,7 +74,6 @@ func New(client *http.Client) (*Service, error) {
 	s.Reads = NewReadsService(s)
 	s.References = NewReferencesService(s)
 	s.Referencesets = NewReferencesetsService(s)
-	s.StreamingReadstore = NewStreamingReadstoreService(s)
 	s.Variants = NewVariantsService(s)
 	s.Variantsets = NewVariantsetsService(s)
 	return s, nil
@@ -101,8 +103,6 @@ type Service struct {
 	References *ReferencesService
 
 	Referencesets *ReferencesetsService
-
-	StreamingReadstore *StreamingReadstoreService
 
 	Variants *VariantsService
 
@@ -239,15 +239,6 @@ func NewReferencesetsService(s *Service) *ReferencesetsService {
 }
 
 type ReferencesetsService struct {
-	s *Service
-}
-
-func NewStreamingReadstoreService(s *Service) *StreamingReadstoreService {
-	rs := &StreamingReadstoreService{s: s}
-	return rs
-}
-
-type StreamingReadstoreService struct {
 	s *Service
 }
 
@@ -684,16 +675,17 @@ type ImportReadGroupSetsResponse struct {
 }
 
 type ImportVariantsRequest struct {
-	// Format: The format of the variant data being imported.
+	// Format: The format of the variant data being imported. If
+	// unspecified, defaults to to "VCF".
 	//
 	// Possible values:
 	//   "COMPLETE_GENOMICS"
 	//   "VCF"
 	Format string `json:"format,omitempty"`
 
-	// SourceUris: A list of URIs pointing at VCF files in Google Cloud
-	// Storage. See the VCF Specification for more details on the input
-	// format.
+	// SourceUris: A list of URIs referencing variant files in Google Cloud
+	// Storage. URIs can include wildcards as described here. Note that
+	// recursive wildcards ('**') are not supported.
 	SourceUris []string `json:"sourceUris,omitempty"`
 }
 
@@ -1611,8 +1603,9 @@ type SearchVariantsRequest struct {
 	// VariantName: Only return variants which have exactly this name.
 	VariantName string `json:"variantName,omitempty"`
 
-	// VariantSetIds: Exactly one variant set ID must be provided. Only
-	// variants from this variant set will be returned.
+	// VariantSetIds: At most one variant set ID must be provided. Only
+	// variants from this variant set will be returned. If omitted, a call
+	// set id must be included in the request.
 	VariantSetIds []string `json:"variantSetIds,omitempty"`
 }
 
@@ -1625,28 +1618,6 @@ type SearchVariantsResponse struct {
 
 	// Variants: The list of matching Variants.
 	Variants []*Variant `json:"variants,omitempty"`
-}
-
-type StreamReadsRequest struct {
-	// End: The end position of the range on the reference, 0-based
-	// exclusive. If specified, referenceName must also be specified.
-	End int64 `json:"end,omitempty,string"`
-
-	// ReadGroupSetIds: The ID of the read groups set within which to search
-	// for reads. Exactly one ID must be provided.
-	ReadGroupSetIds []string `json:"readGroupSetIds,omitempty"`
-
-	// ReferenceName: The reference sequence name, for example chr1, 1, or
-	// chrX. If set to *, only unmapped reads are returned.
-	ReferenceName string `json:"referenceName,omitempty"`
-
-	// Start: The start position of the range on the reference, 0-based
-	// inclusive. If specified, referenceName must also be specified.
-	Start int64 `json:"start,omitempty,string"`
-}
-
-type StreamReadsResponse struct {
-	Alignments []*Read `json:"alignments,omitempty"`
 }
 
 type Transcript struct {
@@ -1944,6 +1915,7 @@ func (c *AnnotationSetsCreateCall) Do() (*AnnotationSet, error) {
 	//     "$ref": "AnnotationSet"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/genomics"
 	//   ]
 	// }
@@ -2014,6 +1986,7 @@ func (c *AnnotationSetsDeleteCall) Do() error {
 	//   },
 	//   "path": "annotationSets/{annotationSetId}",
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/genomics"
 	//   ]
 	// }
@@ -2091,6 +2064,7 @@ func (c *AnnotationSetsGetCall) Do() (*AnnotationSet, error) {
 	//     "$ref": "AnnotationSet"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/genomics",
 	//     "https://www.googleapis.com/auth/genomics.readonly"
 	//   ]
@@ -2182,6 +2156,7 @@ func (c *AnnotationSetsPatchCall) Do() (*AnnotationSet, error) {
 	//     "$ref": "AnnotationSet"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/genomics"
 	//   ]
 	// }
@@ -2256,6 +2231,7 @@ func (c *AnnotationSetsSearchCall) Do() (*SearchAnnotationSetsResponse, error) {
 	//     "$ref": "SearchAnnotationSetsResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/genomics",
 	//     "https://www.googleapis.com/auth/genomics.readonly"
 	//   ]
@@ -2347,6 +2323,7 @@ func (c *AnnotationSetsUpdateCall) Do() (*AnnotationSet, error) {
 	//     "$ref": "AnnotationSet"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/genomics"
 	//   ]
 	// }
@@ -2429,6 +2406,7 @@ func (c *AnnotationsBatchCreateCall) Do() (*BatchAnnotationsResponse, error) {
 	//     "$ref": "BatchAnnotationsResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/genomics"
 	//   ]
 	// }
@@ -2502,6 +2480,7 @@ func (c *AnnotationsCreateCall) Do() (*Annotation, error) {
 	//     "$ref": "Annotation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/genomics"
 	//   ]
 	// }
@@ -2572,6 +2551,7 @@ func (c *AnnotationsDeleteCall) Do() error {
 	//   },
 	//   "path": "annotations/{annotationId}",
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/genomics"
 	//   ]
 	// }
@@ -2649,6 +2629,7 @@ func (c *AnnotationsGetCall) Do() (*Annotation, error) {
 	//     "$ref": "Annotation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/genomics",
 	//     "https://www.googleapis.com/auth/genomics.readonly"
 	//   ]
@@ -2740,6 +2721,7 @@ func (c *AnnotationsPatchCall) Do() (*Annotation, error) {
 	//     "$ref": "Annotation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/genomics"
 	//   ]
 	// }
@@ -2815,6 +2797,7 @@ func (c *AnnotationsSearchCall) Do() (*SearchAnnotationsResponse, error) {
 	//     "$ref": "SearchAnnotationsResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/genomics",
 	//     "https://www.googleapis.com/auth/genomics.readonly"
 	//   ]
@@ -2906,6 +2889,7 @@ func (c *AnnotationsUpdateCall) Do() (*Annotation, error) {
 	//     "$ref": "Annotation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/genomics"
 	//   ]
 	// }
@@ -2978,6 +2962,7 @@ func (c *CallsetsCreateCall) Do() (*CallSet, error) {
 	//     "$ref": "CallSet"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/genomics"
 	//   ]
 	// }
@@ -3047,6 +3032,7 @@ func (c *CallsetsDeleteCall) Do() error {
 	//   },
 	//   "path": "callsets/{callSetId}",
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/genomics"
 	//   ]
 	// }
@@ -3123,6 +3109,7 @@ func (c *CallsetsGetCall) Do() (*CallSet, error) {
 	//     "$ref": "CallSet"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/genomics",
 	//     "https://www.googleapis.com/auth/genomics.readonly"
 	//   ]
@@ -3211,6 +3198,7 @@ func (c *CallsetsPatchCall) Do() (*CallSet, error) {
 	//     "$ref": "CallSet"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/genomics"
 	//   ]
 	// }
@@ -3285,6 +3273,7 @@ func (c *CallsetsSearchCall) Do() (*SearchCallSetsResponse, error) {
 	//     "$ref": "SearchCallSetsResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/genomics",
 	//     "https://www.googleapis.com/auth/genomics.readonly"
 	//   ]
@@ -3373,6 +3362,7 @@ func (c *CallsetsUpdateCall) Do() (*CallSet, error) {
 	//     "$ref": "CallSet"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/genomics"
 	//   ]
 	// }
@@ -3445,6 +3435,7 @@ func (c *DatasetsCreateCall) Do() (*Dataset, error) {
 	//     "$ref": "Dataset"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/genomics"
 	//   ]
 	// }
@@ -3514,6 +3505,7 @@ func (c *DatasetsDeleteCall) Do() error {
 	//   },
 	//   "path": "datasets/{datasetId}",
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/genomics"
 	//   ]
 	// }
@@ -3590,6 +3582,7 @@ func (c *DatasetsGetCall) Do() (*Dataset, error) {
 	//     "$ref": "Dataset"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/genomics",
 	//     "https://www.googleapis.com/auth/genomics.readonly"
 	//   ]
@@ -3703,6 +3696,7 @@ func (c *DatasetsListCall) Do() (*ListDatasetsResponse, error) {
 	//     "$ref": "ListDatasetsResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/genomics",
 	//     "https://www.googleapis.com/auth/genomics.readonly"
 	//   ]
@@ -3791,6 +3785,7 @@ func (c *DatasetsPatchCall) Do() (*Dataset, error) {
 	//     "$ref": "Dataset"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/genomics"
 	//   ]
 	// }
@@ -3869,6 +3864,7 @@ func (c *DatasetsUndeleteCall) Do() (*Dataset, error) {
 	//     "$ref": "Dataset"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/genomics"
 	//   ]
 	// }
@@ -3956,6 +3952,7 @@ func (c *DatasetsUpdateCall) Do() (*Dataset, error) {
 	//     "$ref": "Dataset"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/genomics"
 	//   ]
 	// }
@@ -4029,6 +4026,7 @@ func (c *ExperimentalJobsCreateCall) Do() (*ExperimentalCreateJobResponse, error
 	//     "$ref": "ExperimentalCreateJobResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/devstorage.read_write",
 	//     "https://www.googleapis.com/auth/genomics"
 	//   ]
@@ -4100,6 +4098,7 @@ func (c *JobsCancelCall) Do() error {
 	//   },
 	//   "path": "jobs/{jobId}/cancel",
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/genomics"
 	//   ]
 	// }
@@ -4176,6 +4175,7 @@ func (c *JobsGetCall) Do() (*Job, error) {
 	//     "$ref": "Job"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/genomics",
 	//     "https://www.googleapis.com/auth/genomics.readonly"
 	//   ]
@@ -4249,6 +4249,7 @@ func (c *JobsSearchCall) Do() (*SearchJobsResponse, error) {
 	//     "$ref": "SearchJobsResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/genomics",
 	//     "https://www.googleapis.com/auth/genomics.readonly"
 	//   ]
@@ -4324,6 +4325,7 @@ func (c *ReadgroupsetsAlignCall) Do() (*AlignReadGroupSetsResponse, error) {
 	//     "$ref": "AlignReadGroupSetsResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/devstorage.read_write",
 	//     "https://www.googleapis.com/auth/genomics"
 	//   ]
@@ -4399,6 +4401,7 @@ func (c *ReadgroupsetsCallCall) Do() (*CallReadGroupSetsResponse, error) {
 	//     "$ref": "CallReadGroupSetsResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/devstorage.read_write",
 	//     "https://www.googleapis.com/auth/genomics"
 	//   ]
@@ -4469,6 +4472,7 @@ func (c *ReadgroupsetsDeleteCall) Do() error {
 	//   },
 	//   "path": "readgroupsets/{readGroupSetId}",
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/genomics"
 	//   ]
 	// }
@@ -4548,6 +4552,7 @@ func (c *ReadgroupsetsExportCall) Do() (*ExportReadGroupSetsResponse, error) {
 	//     "$ref": "ExportReadGroupSetsResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/devstorage.read_write",
 	//     "https://www.googleapis.com/auth/genomics"
 	//   ]
@@ -4625,6 +4630,7 @@ func (c *ReadgroupsetsGetCall) Do() (*ReadGroupSet, error) {
 	//     "$ref": "ReadGroupSet"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/genomics",
 	//     "https://www.googleapis.com/auth/genomics.readonly"
 	//   ]
@@ -4704,6 +4710,7 @@ func (c *ReadgroupsetsImportCall) Do() (*ImportReadGroupSetsResponse, error) {
 	//     "$ref": "ImportReadGroupSetsResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/devstorage.read_write",
 	//     "https://www.googleapis.com/auth/genomics"
 	//   ]
@@ -4793,6 +4800,7 @@ func (c *ReadgroupsetsPatchCall) Do() (*ReadGroupSet, error) {
 	//     "$ref": "ReadGroupSet"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/genomics"
 	//   ]
 	// }
@@ -4868,6 +4876,7 @@ func (c *ReadgroupsetsSearchCall) Do() (*SearchReadGroupSetsResponse, error) {
 	//     "$ref": "SearchReadGroupSetsResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/genomics",
 	//     "https://www.googleapis.com/auth/genomics.readonly"
 	//   ]
@@ -4956,6 +4965,7 @@ func (c *ReadgroupsetsUpdateCall) Do() (*ReadGroupSet, error) {
 	//     "$ref": "ReadGroupSet"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/genomics"
 	//   ]
 	// }
@@ -5146,6 +5156,7 @@ func (c *ReadgroupsetsCoveragebucketsListCall) Do() (*ListCoverageBucketsRespons
 	//     "$ref": "ListCoverageBucketsResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/genomics",
 	//     "https://www.googleapis.com/auth/genomics.readonly"
 	//   ]
@@ -5234,6 +5245,7 @@ func (c *ReadsSearchCall) Do() (*SearchReadsResponse, error) {
 	//     "$ref": "SearchReadsResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/genomics",
 	//     "https://www.googleapis.com/auth/genomics.readonly"
 	//   ]
@@ -5313,6 +5325,7 @@ func (c *ReferencesGetCall) Do() (*Reference, error) {
 	//     "$ref": "Reference"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/genomics",
 	//     "https://www.googleapis.com/auth/genomics.readonly"
 	//   ]
@@ -5389,6 +5402,7 @@ func (c *ReferencesSearchCall) Do() (*SearchReferencesResponse, error) {
 	//     "$ref": "SearchReferencesResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/genomics",
 	//     "https://www.googleapis.com/auth/genomics.readonly"
 	//   ]
@@ -5534,6 +5548,7 @@ func (c *ReferencesBasesListCall) Do() (*ListBasesResponse, error) {
 	//     "$ref": "ListBasesResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/genomics",
 	//     "https://www.googleapis.com/auth/genomics.readonly"
 	//   ]
@@ -5613,6 +5628,7 @@ func (c *ReferencesetsGetCall) Do() (*ReferenceSet, error) {
 	//     "$ref": "ReferenceSet"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/genomics",
 	//     "https://www.googleapis.com/auth/genomics.readonly"
 	//   ]
@@ -5689,88 +5705,10 @@ func (c *ReferencesetsSearchCall) Do() (*SearchReferenceSetsResponse, error) {
 	//     "$ref": "SearchReferenceSetsResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/genomics",
 	//     "https://www.googleapis.com/auth/genomics.readonly"
 	//   ]
-	// }
-
-}
-
-// method id "genomics.streamingReadstore.streamreads":
-
-type StreamingReadstoreStreamreadsCall struct {
-	s                  *Service
-	streamreadsrequest *StreamReadsRequest
-	opt_               map[string]interface{}
-}
-
-// Streamreads: Gets a stream of reads for one or more read group sets.
-// Reads search operates over a genomic coordinate space of reference
-// sequence & position defined over the reference sequences to which the
-// requested read group sets are aligned.
-//
-// If a target positional range is specified, all reads whose alignment
-// to the reference genome overlap the range are returned.
-//
-// All reads returned are ordered by genomic coordinate (reference
-// sequence & position). Reads with equivalent genomic coordinates are
-// returned in a deterministic order.
-func (r *StreamingReadstoreService) Streamreads(streamreadsrequest *StreamReadsRequest) *StreamingReadstoreStreamreadsCall {
-	c := &StreamingReadstoreStreamreadsCall{s: r.s, opt_: make(map[string]interface{})}
-	c.streamreadsrequest = streamreadsrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *StreamingReadstoreStreamreadsCall) Fields(s ...googleapi.Field) *StreamingReadstoreStreamreadsCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
-	return c
-}
-
-func (c *StreamingReadstoreStreamreadsCall) Do() (*StreamReadsResponse, error) {
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.streamreadsrequest)
-	if err != nil {
-		return nil, err
-	}
-	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", "json")
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "streamingReadstore/streamreads")
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("POST", urls, body)
-	googleapi.SetOpaque(req.URL)
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	var ret *StreamReadsResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Gets a stream of reads for one or more read group sets. Reads search operates over a genomic coordinate space of reference sequence \u0026 position defined over the reference sequences to which the requested read group sets are aligned.\n\nIf a target positional range is specified, all reads whose alignment to the reference genome overlap the range are returned.\n\nAll reads returned are ordered by genomic coordinate (reference sequence \u0026 position). Reads with equivalent genomic coordinates are returned in a deterministic order.",
-	//   "httpMethod": "POST",
-	//   "id": "genomics.streamingReadstore.streamreads",
-	//   "path": "streamingReadstore/streamreads",
-	//   "request": {
-	//     "$ref": "StreamReadsRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "StreamReadsResponse"
-	//   }
 	// }
 
 }
@@ -5841,6 +5779,7 @@ func (c *VariantsCreateCall) Do() (*Variant, error) {
 	//     "$ref": "Variant"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/genomics"
 	//   ]
 	// }
@@ -5910,6 +5849,7 @@ func (c *VariantsDeleteCall) Do() error {
 	//   },
 	//   "path": "variants/{variantId}",
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/genomics"
 	//   ]
 	// }
@@ -5986,6 +5926,7 @@ func (c *VariantsGetCall) Do() (*Variant, error) {
 	//     "$ref": "Variant"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/genomics",
 	//     "https://www.googleapis.com/auth/genomics.readonly"
 	//   ]
@@ -6061,6 +6002,7 @@ func (c *VariantsSearchCall) Do() (*SearchVariantsResponse, error) {
 	//     "$ref": "SearchVariantsResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/genomics",
 	//     "https://www.googleapis.com/auth/genomics.readonly"
 	//   ]
@@ -6151,6 +6093,7 @@ func (c *VariantsUpdateCall) Do() (*Variant, error) {
 	//     "$ref": "Variant"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/genomics"
 	//   ]
 	// }
@@ -6221,6 +6164,7 @@ func (c *VariantsetsDeleteCall) Do() error {
 	//   },
 	//   "path": "variantsets/{variantSetId}",
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/genomics"
 	//   ]
 	// }
@@ -6309,6 +6253,7 @@ func (c *VariantsetsExportCall) Do() (*ExportVariantSetResponse, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/bigquery",
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/genomics"
 	//   ]
 	// }
@@ -6385,6 +6330,7 @@ func (c *VariantsetsGetCall) Do() (*VariantSet, error) {
 	//     "$ref": "VariantSet"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/genomics",
 	//     "https://www.googleapis.com/auth/genomics.readonly"
 	//   ]
@@ -6483,6 +6429,7 @@ func (c *VariantsetsImportVariantsCall) Do() (*ImportVariantsResponse, error) {
 	//     "$ref": "ImportVariantsResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/devstorage.read_write",
 	//     "https://www.googleapis.com/auth/genomics"
 	//   ]
@@ -6571,6 +6518,7 @@ func (c *VariantsetsMergeVariantsCall) Do() error {
 	//     "$ref": "MergeVariantsRequest"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/genomics"
 	//   ]
 	// }
@@ -6659,6 +6607,7 @@ func (c *VariantsetsPatchCall) Do() (*VariantSet, error) {
 	//     "$ref": "VariantSet"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/genomics"
 	//   ]
 	// }
@@ -6734,6 +6683,7 @@ func (c *VariantsetsSearchCall) Do() (*SearchVariantSetsResponse, error) {
 	//     "$ref": "SearchVariantSetsResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/genomics",
 	//     "https://www.googleapis.com/auth/genomics.readonly"
 	//   ]
@@ -6823,6 +6773,7 @@ func (c *VariantsetsUpdateCall) Do() (*VariantSet, error) {
 	//     "$ref": "VariantSet"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/genomics"
 	//   ]
 	// }

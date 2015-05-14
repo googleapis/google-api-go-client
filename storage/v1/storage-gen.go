@@ -493,7 +493,7 @@ type Object struct {
 	ContentType string `json:"contentType,omitempty"`
 
 	// Crc32c: CRC32c checksum, as described in RFC 4960, Appendix B;
-	// encoded using base64.
+	// encoded using base64 in big-endian byte order.
 	Crc32c string `json:"crc32c,omitempty"`
 
 	// Etag: HTTP 1.1 Entity tag for the object.
@@ -653,17 +653,30 @@ type Objects struct {
 }
 
 type RewriteResponse struct {
+	// Done: true if the copy is finished; otherwise, false if the copy is
+	// in progress. This property is always present in the response.
 	Done bool `json:"done,omitempty"`
 
 	// Kind: The kind of item this is.
 	Kind string `json:"kind,omitempty"`
 
+	// ObjectSize: The total size of the object being copied in bytes. This
+	// property is always present in the response.
 	ObjectSize uint64 `json:"objectSize,omitempty,string"`
 
+	// Resource: A resource containing the metadata for the copied-to
+	// object. This property is present in the response only when copying
+	// completes.
 	Resource *Object `json:"resource,omitempty"`
 
+	// RewriteToken: A token to use in subsequent requests to continue
+	// copying data. This token is present in the response only when there
+	// is more data to copy.
 	RewriteToken string `json:"rewriteToken,omitempty"`
 
+	// TotalBytesRewritten: The total bytes written so far, which can be
+	// used to provide a waiting user with a progress indicator. This
+	// property is always present in the response.
 	TotalBytesRewritten uint64 `json:"totalBytesRewritten,omitempty,string"`
 }
 
@@ -3777,8 +3790,8 @@ type ObjectsCopyCall struct {
 	opt_              map[string]interface{}
 }
 
-// Copy: Copies an object to a specified location. Optionally overrides
-// metadata.
+// Copy: Copies a source object to a destination object. Optionally
+// overrides metadata.
 func (r *ObjectsService) Copy(sourceBucket string, sourceObject string, destinationBucket string, destinationObject string, object *Object) *ObjectsCopyCall {
 	c := &ObjectsCopyCall{s: r.s, opt_: make(map[string]interface{})}
 	c.sourceBucket = sourceBucket
@@ -3978,7 +3991,7 @@ func (c *ObjectsCopyCall) Do() (*Object, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Copies an object to a specified location. Optionally overrides metadata.",
+	//   "description": "Copies a source object to a destination object. Optionally overrides metadata.",
 	//   "httpMethod": "POST",
 	//   "id": "storage.objects.copy",
 	//   "parameterOrder": [
@@ -5414,13 +5427,13 @@ func (c *ObjectsRewriteCall) IfSourceMetagenerationNotMatch(ifSourceMetagenerati
 
 // MaxBytesRewrittenPerCall sets the optional parameter
 // "maxBytesRewrittenPerCall": The maximum number of bytes that will be
-// rewritten per Rewrite request. Most callers shouldn't need to specify
+// rewritten per rewrite request. Most callers shouldn't need to specify
 // this parameter - it is primarily in place to support testing. If
 // specified the value must be an integral multiple of 1 MiB (1048576).
 // Also, this only applies to requests where the source and destination
 // span locations and/or storage classes. Finally, this value must not
-// change across Rewrite calls else you'll get an error that the rewrite
-// token is invalid.
+// change across rewrite calls else you'll get an error that the
+// rewriteToken is invalid.
 func (c *ObjectsRewriteCall) MaxBytesRewrittenPerCall(maxBytesRewrittenPerCall int64) *ObjectsRewriteCall {
 	c.opt_["maxBytesRewrittenPerCall"] = maxBytesRewrittenPerCall
 	return c
@@ -5439,8 +5452,8 @@ func (c *ObjectsRewriteCall) Projection(projection string) *ObjectsRewriteCall {
 }
 
 // RewriteToken sets the optional parameter "rewriteToken": Include this
-// field (from the previous Rewrite response) on each Rewrite request
-// after the first one, until the Rewrite response 'done' flag is true.
+// field (from the previous rewrite response) on each rewrite request
+// after the first one, until the rewrite response 'done' flag is true.
 // Calls that provide a rewriteToken can omit all other request fields,
 // but if included those fields must match the values provided in the
 // first rewrite request.
@@ -5633,7 +5646,7 @@ func (c *ObjectsRewriteCall) Do() (*RewriteResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "maxBytesRewrittenPerCall": {
-	//       "description": "The maximum number of bytes that will be rewritten per Rewrite request. Most callers shouldn't need to specify this parameter - it is primarily in place to support testing. If specified the value must be an integral multiple of 1 MiB (1048576). Also, this only applies to requests where the source and destination span locations and/or storage classes. Finally, this value must not change across Rewrite calls else you'll get an error that the rewrite token is invalid.",
+	//       "description": "The maximum number of bytes that will be rewritten per rewrite request. Most callers shouldn't need to specify this parameter - it is primarily in place to support testing. If specified the value must be an integral multiple of 1 MiB (1048576). Also, this only applies to requests where the source and destination span locations and/or storage classes. Finally, this value must not change across rewrite calls else you'll get an error that the rewriteToken is invalid.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
@@ -5652,7 +5665,7 @@ func (c *ObjectsRewriteCall) Do() (*RewriteResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "rewriteToken": {
-	//       "description": "Include this field (from the previous Rewrite response) on each Rewrite request after the first one, until the Rewrite response 'done' flag is true. Calls that provide a rewriteToken can omit all other request fields, but if included those fields must match the values provided in the first rewrite request.",
+	//       "description": "Include this field (from the previous rewrite response) on each rewrite request after the first one, until the rewrite response 'done' flag is true. Calls that provide a rewriteToken can omit all other request fields, but if included those fields must match the values provided in the first rewrite request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

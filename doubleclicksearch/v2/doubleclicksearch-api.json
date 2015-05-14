@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/OTC19zeZQcTAS-XBgjPtJ3RwxpQ\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/m0eXdHWebgpev9NpY2LiBz6rOW0\"",
  "discoveryVersion": "v1",
  "id": "doubleclicksearch:v2",
  "name": "doubleclicksearch",
  "version": "v2",
- "revision": "20150312",
+ "revision": "20150305",
  "title": "DoubleClick Search API",
  "description": "Report and modify your advertising data in DoubleClick Search (for example, campaigns, ad groups, keywords, and conversions).",
  "ownerDomain": "google.com",
@@ -224,6 +224,10 @@
      "items": {
       "$ref": "CustomMetric"
      }
+    },
+    "deviceType": {
+     "type": "string",
+     "description": "The type of device on which the conversion occurred. Valid values are \"DESKTOP\", \"TABLET\", \"HIGH_END_MOBILE\", \"OTHER_DEVICE\"."
     },
     "dsConversionId": {
      "type": "string",

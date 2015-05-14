@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/GLBm_Zx9lfMexTYRyeS3dLRfGVc\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/oj9_W1dwSRT2UMhbQwPQxQr_MY0\"",
  "discoveryVersion": "v1",
  "id": "pubsub:v1beta1a",
  "name": "pubsub",
  "version": "v1beta1a",
- "revision": "20150326",
+ "revision": "20150427",
  "title": "Google Cloud Pub/Sub API",
  "description": "Provides reliable, many-to-many, asynchronous messaging between applications.",
  "ownerDomain": "google.com",
@@ -467,7 +467,7 @@
      "id": "pubsub.subscriptions.modifyPushConfig",
      "path": "subscriptions/modifyPushConfig",
      "httpMethod": "POST",
-     "description": "Modifies the 74code76PushConfig74/code76 for a specified subscription. This method can be used to suspend the flow of messages to an endpoint by clearing the 74code76PushConfig74/code76 field in the request. Messages will be accumulated for delivery even if no push configuration is defined or while the configuration is modified.",
+     "description": "Modifies the PushConfig for a specified subscription. This method can be used to suspend the flow of messages to an endpoint by clearing the PushConfig field in the request. Messages will be accumulated for delivery even if no push configuration is defined or while the configuration is modified.",
      "request": {
       "$ref": "ModifyPushConfigRequest"
      },

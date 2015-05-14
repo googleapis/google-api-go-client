@@ -481,6 +481,17 @@ type CallSet struct {
 }
 
 type CigarUnit struct {
+	// Possible values:
+	//   "ALIGNMENT_MATCH"
+	//   "CLIP_HARD"
+	//   "CLIP_SOFT"
+	//   "DELETE"
+	//   "INSERT"
+	//   "OPERATION_UNSPECIFIED"
+	//   "PAD"
+	//   "SEQUENCE_MATCH"
+	//   "SEQUENCE_MISMATCH"
+	//   "SKIP"
 	Operation string `json:"operation,omitempty"`
 
 	// OperationLength: The number of bases that the operation runs for.

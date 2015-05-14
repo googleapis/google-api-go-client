@@ -668,6 +668,9 @@ type AttachedDisk struct {
 	// only define one or the other, but not both.
 	InitializeParams *AttachedDiskInitializeParams `json:"initializeParams,omitempty"`
 
+	// Possible values:
+	//   "NVME"
+	//   "SCSI"
 	Interface string `json:"interface,omitempty"`
 
 	// Kind: [Output Only] Type of the resource. Always compute#attachedDisk
@@ -843,6 +846,9 @@ type BackendService struct {
 	// resource views referenced by this service. Required.
 	PortName string `json:"portName,omitempty"`
 
+	// Possible values:
+	//   "HTTP"
+	//   "HTTPS"
 	Protocol string `json:"protocol,omitempty"`
 
 	// SelfLink: Server defined URL for the resource (output only).

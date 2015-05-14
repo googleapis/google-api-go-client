@@ -138,6 +138,10 @@ type ApproximateProgress struct {
 }
 
 type AutoscalingSettings struct {
+	// Possible values:
+	//   "AUTOSCALING_ALGORITHM_BASIC"
+	//   "AUTOSCALING_ALGORITHM_NONE"
+	//   "AUTOSCALING_ALGORITHM_UNKNOWN"
 	Algorithm string `json:"algorithm,omitempty"`
 
 	MaxNumWorkers int64 `json:"maxNumWorkers,omitempty"`
@@ -160,6 +164,11 @@ type DataDiskAssignment struct {
 }
 
 type DerivedSource struct {
+	// Possible values:
+	//   "SOURCE_DERIVATION_MODE_CHILD_OF_CURRENT"
+	//   "SOURCE_DERIVATION_MODE_INDEPENDENT"
+	//   "SOURCE_DERIVATION_MODE_SIBLING_OF_CURRENT"
+	//   "SOURCE_DERIVATION_MODE_UNKNOWN"
 	DerivationMode string `json:"derivationMode,omitempty"`
 
 	Source *Source `json:"source,omitempty"`
@@ -226,6 +235,13 @@ type InstructionOutputCodec interface{}
 type Job struct {
 	CreateTime string `json:"createTime,omitempty"`
 
+	// Possible values:
+	//   "JOB_STATE_CANCELLED"
+	//   "JOB_STATE_DONE"
+	//   "JOB_STATE_FAILED"
+	//   "JOB_STATE_RUNNING"
+	//   "JOB_STATE_STOPPED"
+	//   "JOB_STATE_UNKNOWN"
 	CurrentState string `json:"currentState,omitempty"`
 
 	CurrentStateTime string `json:"currentStateTime,omitempty"`
@@ -240,10 +256,21 @@ type Job struct {
 
 	ProjectId string `json:"projectId,omitempty"`
 
+	// Possible values:
+	//   "JOB_STATE_CANCELLED"
+	//   "JOB_STATE_DONE"
+	//   "JOB_STATE_FAILED"
+	//   "JOB_STATE_RUNNING"
+	//   "JOB_STATE_STOPPED"
+	//   "JOB_STATE_UNKNOWN"
 	RequestedState string `json:"requestedState,omitempty"`
 
 	Steps []*Step `json:"steps,omitempty"`
 
+	// Possible values:
+	//   "JOB_TYPE_BATCH"
+	//   "JOB_TYPE_STREAMING"
+	//   "JOB_TYPE_UNKNOWN"
 	Type string `json:"type,omitempty"`
 }
 
@@ -258,6 +285,12 @@ type JobExecutionStageInfo struct {
 type JobMessage struct {
 	Id string `json:"id,omitempty"`
 
+	// Possible values:
+	//   "JOB_MESSAGE_DEBUG"
+	//   "JOB_MESSAGE_DETAILED"
+	//   "JOB_MESSAGE_ERROR"
+	//   "JOB_MESSAGE_IMPORTANCE_UNKNOWN"
+	//   "JOB_MESSAGE_WARNING"
 	MessageImportance string `json:"messageImportance,omitempty"`
 
 	MessageText string `json:"messageText,omitempty"`
@@ -574,12 +607,21 @@ type SourceSplitRequest struct {
 type SourceSplitResponse struct {
 	Bundles []*DerivedSource `json:"bundles,omitempty"`
 
+	// Possible values:
+	//   "SOURCE_SPLIT_OUTCOME_SPLITTING_HAPPENED"
+	//   "SOURCE_SPLIT_OUTCOME_UNKNOWN"
+	//   "SOURCE_SPLIT_OUTCOME_USE_CURRENT"
 	Outcome string `json:"outcome,omitempty"`
 
 	Shards []*SourceSplitShard `json:"shards,omitempty"`
 }
 
 type SourceSplitShard struct {
+	// Possible values:
+	//   "SOURCE_DERIVATION_MODE_CHILD_OF_CURRENT"
+	//   "SOURCE_DERIVATION_MODE_INDEPENDENT"
+	//   "SOURCE_DERIVATION_MODE_SIBLING_OF_CURRENT"
+	//   "SOURCE_DERIVATION_MODE_UNKNOWN"
 	DerivationMode string `json:"derivationMode,omitempty"`
 
 	Source *Source `json:"source,omitempty"`
@@ -624,6 +666,10 @@ type StreamingComputationTask struct {
 
 	DataDisks []*MountedDataDisk `json:"dataDisks,omitempty"`
 
+	// Possible values:
+	//   "STREAMING_COMPUTATION_TASK_START"
+	//   "STREAMING_COMPUTATION_TASK_STOP"
+	//   "STREAMING_COMPUTATION_TASK_UNKNOWN"
 	TaskType string `json:"taskType,omitempty"`
 }
 
@@ -764,6 +810,11 @@ type WorkerPool struct {
 
 	DataDisks []*Disk `json:"dataDisks,omitempty"`
 
+	// Possible values:
+	//   "DEFAULT_PACKAGE_SET_JAVA"
+	//   "DEFAULT_PACKAGE_SET_NONE"
+	//   "DEFAULT_PACKAGE_SET_PYTHON"
+	//   "DEFAULT_PACKAGE_SET_UNKNOWN"
 	DefaultPackageSet string `json:"defaultPackageSet,omitempty"`
 
 	DiskSizeGb int64 `json:"diskSizeGb,omitempty"`
@@ -788,6 +839,11 @@ type WorkerPool struct {
 
 	TaskrunnerSettings *TaskRunnerSettings `json:"taskrunnerSettings,omitempty"`
 
+	// Possible values:
+	//   "TEARDOWN_ALWAYS"
+	//   "TEARDOWN_NEVER"
+	//   "TEARDOWN_ON_SUCCESS"
+	//   "TEARDOWN_POLICY_UNKNOWN"
 	TeardownPolicy string `json:"teardownPolicy,omitempty"`
 
 	Zone string `json:"zone,omitempty"`

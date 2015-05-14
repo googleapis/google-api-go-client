@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6dbd79c9_56ccf269",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-05-14T05:51:59Z",
+      "side": 1,
+      "message": "non-zero default",
+      "revId": "d455919660b2fc59d42d46ee8aae4a39ec59abe6",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6dbd79c9_76d1eefe",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-05-14T05:51:59Z",
+      "side": 1,
+      "message": "what about \"0.0\"? is that a thing?",
+      "revId": "d455919660b2fc59d42d46ee8aae4a39ec59abe6",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6dbd79c9_96b5aac1",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-05-14T05:51:59Z",
+      "side": 1,
+      "message": "unnecessary. range over nil is valid.",
+      "revId": "d455919660b2fc59d42d46ee8aae4a39ec59abe6",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

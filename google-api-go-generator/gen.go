@@ -146,6 +146,13 @@ func main() {
 }
 
 func (a *API) want() bool {
+	if *jsonFile != "" {
+		// Return true early, before calling a.JSONFile()
+		// which will require a GOPATH be set.  This is for
+		// integration with Google's build system genrules
+		// where there is no GOPATH.
+		return true
+	}
 	// Skip this API if we're in cached mode and the files don't exist on disk.
 	if *useCache {
 		if _, err := os.Stat(a.JSONFile()); os.IsNotExist(err) {
@@ -312,7 +319,7 @@ func genDirRoot() string {
 	}
 	paths := filepath.SplitList(os.Getenv("GOPATH"))
 	if len(paths) == 0 {
-		log.Fatalf("No GOPATH SET.")
+		log.Fatalf("No GOPATH set.")
 	}
 	return filepath.Join(paths[0], "src", "google.golang.org", "api")
 }
@@ -382,17 +389,17 @@ func (a *API) JSONFile() string {
 }
 
 func (a *API) WriteGeneratedCode() error {
-	outdir := a.SourceDir()
-	err := os.MkdirAll(outdir, 0755)
-	if err != nil {
-		return fmt.Errorf("failed to Mkdir %s: %v", outdir, err)
-	}
-
-	pkg := a.Package()
-	writeFile(a.JSONFile(), a.jsonBytes())
-
 	genfilename := *output
 	if genfilename == "" {
+		if err := writeFile(a.JSONFile(), a.jsonBytes()); err != nil {
+			return err
+		}
+		outdir := a.SourceDir()
+		err := os.MkdirAll(outdir, 0755)
+		if err != nil {
+			return fmt.Errorf("failed to Mkdir %s: %v", outdir, err)
+		}
+		pkg := a.Package()
 		genfilename = filepath.Join(outdir, pkg+"-gen.go")
 	}
 

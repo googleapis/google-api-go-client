@@ -652,9 +652,6 @@ func (p *Property) UnfortunateDefault() bool {
 	default:
 		return false
 
-	case "bool":
-		return p.Default() == "true"
-
 	case "string":
 		if p.Default() == "" {
 			return false
@@ -1831,7 +1828,8 @@ func simpleTypeConvert(apiType, format string) (gotype string, ok bool) {
 	// From http://tools.ietf.org/html/draft-zyp-json-schema-03#section-5.1
 	switch apiType {
 	case "boolean":
-		gotype = "bool"
+		// Represent all bool values as pointers, otherwise we can never set false
+		gotype = "*bool"
 	case "string":
 		gotype = "string"
 		switch format {

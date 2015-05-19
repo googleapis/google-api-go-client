@@ -111,7 +111,7 @@ type Event struct {
 
 	// FromUserDeletion: Whether this event is caused by a user being
 	// deleted.
-	FromUserDeletion bool `json:"fromUserDeletion,omitempty"`
+	FromUserDeletion *bool `json:"fromUserDeletion,omitempty"`
 
 	// Move: Extra information for move type events, such as changes in an
 	// object's parents.
@@ -170,7 +170,7 @@ type Parent struct {
 	Id string `json:"id,omitempty"`
 
 	// IsRoot: Whether this is the root folder.
-	IsRoot bool `json:"isRoot,omitempty"`
+	IsRoot *bool `json:"isRoot,omitempty"`
 
 	// Title: The parent's title.
 	Title string `json:"title,omitempty"`
@@ -208,7 +208,7 @@ type Permission struct {
 	User *User `json:"user,omitempty"`
 
 	// WithLink: Whether the permission requires a link to the file.
-	WithLink bool `json:"withLink,omitempty"`
+	WithLink *bool `json:"withLink,omitempty"`
 }
 
 type PermissionChange struct {

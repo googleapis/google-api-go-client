@@ -206,10 +206,10 @@ type WmxSitemap struct {
 	Errors int64 `json:"errors,omitempty,string"`
 
 	// IsPending: If true, the sitemap has not been processed.
-	IsPending bool `json:"isPending,omitempty"`
+	IsPending *bool `json:"isPending,omitempty"`
 
 	// IsSitemapsIndex: If true, the sitemap is a collection of sitemaps.
-	IsSitemapsIndex bool `json:"isSitemapsIndex,omitempty"`
+	IsSitemapsIndex *bool `json:"isSitemapsIndex,omitempty"`
 
 	// LastDownloaded: Date & time in which this sitemap was last
 	// downloaded. Date format is in RFC 3339 format (yyyy-mm-dd).

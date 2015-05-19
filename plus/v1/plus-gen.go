@@ -941,7 +941,7 @@ type Person struct {
 	Image *PersonImage `json:"image,omitempty"`
 
 	// IsPlusUser: Whether this user has signed up for Google+.
-	IsPlusUser bool `json:"isPlusUser,omitempty"`
+	IsPlusUser *bool `json:"isPlusUser,omitempty"`
 
 	// Kind: Identifies this resource as a person. Value: "plus#person".
 	Kind string `json:"kind,omitempty"`
@@ -1002,7 +1002,7 @@ type Person struct {
 	Urls []*PersonUrls `json:"urls,omitempty"`
 
 	// Verified: Whether the person or Google+ Page has been verified.
-	Verified bool `json:"verified,omitempty"`
+	Verified *bool `json:"verified,omitempty"`
 }
 
 type PersonAgeRange struct {
@@ -1070,7 +1070,7 @@ type PersonEmails struct {
 
 type PersonImage struct {
 	// IsDefault: Whether the person's profile photo is the default one
-	IsDefault bool `json:"isDefault,omitempty"`
+	IsDefault *bool `json:"isDefault,omitempty"`
 
 	// Url: The URL of the person's profile photo. To resize the image and
 	// crop it to a square, append the query string ?sz=x, where x is the
@@ -1120,7 +1120,7 @@ type PersonOrganizations struct {
 
 	// Primary: If "true", indicates this organization is the person's
 	// primary one, which is typically interpreted as the current one.
-	Primary bool `json:"primary,omitempty"`
+	Primary *bool `json:"primary,omitempty"`
 
 	// StartDate: The date that the person joined this organization.
 	StartDate string `json:"startDate,omitempty"`
@@ -1138,7 +1138,7 @@ type PersonOrganizations struct {
 type PersonPlacesLived struct {
 	// Primary: If "true", this place of residence is this person's primary
 	// residence.
-	Primary bool `json:"primary,omitempty"`
+	Primary *bool `json:"primary,omitempty"`
 
 	// Value: A place where this person has lived. For example: "Seattle,
 	// WA", "Near Toronto".

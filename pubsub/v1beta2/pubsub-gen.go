@@ -171,7 +171,7 @@ type PubsubMessage struct {
 type PullRequest struct {
 	MaxMessages int64 `json:"maxMessages,omitempty"`
 
-	ReturnImmediately bool `json:"returnImmediately,omitempty"`
+	ReturnImmediately *bool `json:"returnImmediately,omitempty"`
 }
 
 type PullResponse struct {

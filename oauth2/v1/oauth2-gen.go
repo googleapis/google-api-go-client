@@ -142,7 +142,7 @@ type Tokeninfo struct {
 
 	// EmailVerified: Boolean flag which is true if the email address is
 	// verified. Present only if the email scope is present in the request.
-	EmailVerified bool `json:"email_verified,omitempty"`
+	EmailVerified *bool `json:"email_verified,omitempty"`
 
 	// ExpiresIn: The expiry time of the token, as number of seconds left
 	// until expiry.
@@ -169,7 +169,7 @@ type Tokeninfo struct {
 
 	// VerifiedEmail: Boolean flag which is true if the email address is
 	// verified. Present only if the email scope is present in the request.
-	VerifiedEmail bool `json:"verified_email,omitempty"`
+	VerifiedEmail *bool `json:"verified_email,omitempty"`
 }
 
 type Userinfoplus struct {

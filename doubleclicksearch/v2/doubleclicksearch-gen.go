@@ -285,7 +285,7 @@ type Report struct {
 	// IsReportReady: Asynchronous report only. True if and only if the
 	// report has completed successfully and the report files are ready to
 	// be downloaded.
-	IsReportReady bool `json:"isReportReady,omitempty"`
+	IsReportReady *bool `json:"isReportReady,omitempty"`
 
 	// Kind: Identifies this as a Report resource. Value: the fixed string
 	// doubleclicksearch#report.
@@ -350,7 +350,7 @@ type ReportApiColumnSpec struct {
 
 	// GroupByColumn: Synchronous report only. Set to true to group by this
 	// column. Defaults to false.
-	GroupByColumn bool `json:"groupByColumn,omitempty"`
+	GroupByColumn *bool `json:"groupByColumn,omitempty"`
 
 	// HeaderText: Text used to identify this column in the report output;
 	// defaults to columnName or savedColumnName when not specified. This
@@ -391,11 +391,11 @@ type ReportRequest struct {
 	// IncludeDeletedEntities: Determines if removed entities should be
 	// included in the report. Defaults to false. Deprecated, please use
 	// includeRemovedEntities instead.
-	IncludeDeletedEntities bool `json:"includeDeletedEntities,omitempty"`
+	IncludeDeletedEntities *bool `json:"includeDeletedEntities,omitempty"`
 
 	// IncludeRemovedEntities: Determines if removed entities should be
 	// included in the report. Defaults to false.
-	IncludeRemovedEntities bool `json:"includeRemovedEntities,omitempty"`
+	IncludeRemovedEntities *bool `json:"includeRemovedEntities,omitempty"`
 
 	// MaxRowsPerFile: Asynchronous report only. The maximum number of rows
 	// per report file. A large report is split into many files based on
@@ -444,7 +444,7 @@ type ReportRequest struct {
 	// VerifySingleTimeZone: If true, the report would only be created if
 	// all the requested stat data are sourced from a single timezone.
 	// Defaults to false.
-	VerifySingleTimeZone bool `json:"verifySingleTimeZone,omitempty"`
+	VerifySingleTimeZone *bool `json:"verifySingleTimeZone,omitempty"`
 }
 
 type ReportRequestFilters struct {

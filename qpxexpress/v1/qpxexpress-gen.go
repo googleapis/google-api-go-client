@@ -202,7 +202,7 @@ type FareInfo struct {
 
 	// Private: Whether this is a private fare, for example one offered only
 	// to select customers rather than the general public.
-	Private bool `json:"private,omitempty"`
+	Private *bool `json:"private,omitempty"`
 }
 
 type FlightInfo struct {
@@ -247,7 +247,7 @@ type LegInfo struct {
 
 	// ChangePlane: Whether you have to change planes following this leg.
 	// Only applies to the next leg.
-	ChangePlane bool `json:"changePlane,omitempty"`
+	ChangePlane *bool `json:"changePlane,omitempty"`
 
 	// ConnectionDuration: Duration of a connection following this leg, in
 	// minutes.
@@ -304,7 +304,7 @@ type LegInfo struct {
 	// Secure: Whether passenger information must be furnished to the United
 	// States Transportation Security Administration (TSA) prior to
 	// departure.
-	Secure bool `json:"secure,omitempty"`
+	Secure *bool `json:"secure,omitempty"`
 }
 
 type PassengerCounts struct {
@@ -366,7 +366,7 @@ type PricingInfo struct {
 	Ptc string `json:"ptc,omitempty"`
 
 	// Refundable: Whether the fares on this pricing are refundable.
-	Refundable bool `json:"refundable,omitempty"`
+	Refundable *bool `json:"refundable,omitempty"`
 
 	// SaleFareTotal: The total fare in the sale or equivalent currency.
 	SaleFareTotal string `json:"saleFareTotal,omitempty"`
@@ -433,7 +433,7 @@ type SegmentInfo struct {
 
 	// SubjectToGovernmentApproval: Whether the operation of this segment
 	// remains subject to government approval.
-	SubjectToGovernmentApproval bool `json:"subjectToGovernmentApproval,omitempty"`
+	SubjectToGovernmentApproval *bool `json:"subjectToGovernmentApproval,omitempty"`
 }
 
 type SegmentPricing struct {
@@ -591,7 +591,7 @@ type TripOptionsRequest struct {
 	Passengers *PassengerCounts `json:"passengers,omitempty"`
 
 	// Refundable: Return only solutions with refundable fares.
-	Refundable bool `json:"refundable,omitempty"`
+	Refundable *bool `json:"refundable,omitempty"`
 
 	// SaleCountry: IATA country code representing the point of sale. This
 	// determines the "equivalent amount paid" currency for the ticket.

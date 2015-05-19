@@ -236,7 +236,7 @@ type AppRestrictionsSchemaRestrictionRestrictionValue struct {
 
 	// ValueBool: The boolean value - this will only be present if type is
 	// bool.
-	ValueBool bool `json:"valueBool,omitempty"`
+	ValueBool *bool `json:"valueBool,omitempty"`
 
 	// ValueInteger: The integer value - this will only be present if type
 	// is integer.
@@ -518,7 +518,7 @@ type Product struct {
 
 	// RequiresContainerApp: Whether this app can only be installed on
 	// devices using the Android for Work container app.
-	RequiresContainerApp bool `json:"requiresContainerApp,omitempty"`
+	RequiresContainerApp *bool `json:"requiresContainerApp,omitempty"`
 
 	// Title: The name of the product.
 	Title string `json:"title,omitempty"`

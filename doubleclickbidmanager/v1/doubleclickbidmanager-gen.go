@@ -240,7 +240,7 @@ type Parameters struct {
 	GroupBys []string `json:"groupBys,omitempty"`
 
 	// IncludeInviteData: Whether to include data from Invite Media.
-	IncludeInviteData bool `json:"includeInviteData,omitempty"`
+	IncludeInviteData *bool `json:"includeInviteData,omitempty"`
 
 	// Metrics: Metrics to include as columns in your report.
 	Metrics []string `json:"metrics,omitempty"`
@@ -366,11 +366,11 @@ type QueryMetadata struct {
 	ReportCount int64 `json:"reportCount,omitempty"`
 
 	// Running: Whether the latest report is currently running.
-	Running bool `json:"running,omitempty"`
+	Running *bool `json:"running,omitempty"`
 
 	// SendNotification: Whether to send an email notification when a report
 	// is ready. Default to false.
-	SendNotification bool `json:"sendNotification,omitempty"`
+	SendNotification *bool `json:"sendNotification,omitempty"`
 
 	// ShareEmailAddress: List of email addresses which are sent email
 	// notifications when the report is finished. Separate from
@@ -495,7 +495,7 @@ type ReportStatus struct {
 
 type RowStatus struct {
 	// Changed: Whether the stored entity is changed as a result of upload.
-	Changed bool `json:"changed,omitempty"`
+	Changed *bool `json:"changed,omitempty"`
 
 	// EntityId: Entity Id.
 	EntityId int64 `json:"entityId,omitempty,string"`
@@ -507,7 +507,7 @@ type RowStatus struct {
 	Errors []string `json:"errors,omitempty"`
 
 	// Persisted: Whether the entity is persisted.
-	Persisted bool `json:"persisted,omitempty"`
+	Persisted *bool `json:"persisted,omitempty"`
 
 	// RowNumber: Row number.
 	RowNumber int64 `json:"rowNumber,omitempty"`
@@ -555,7 +555,7 @@ type RunQueryRequest struct {
 type UploadLineItemsRequest struct {
 	// DryRun: Set to true to get upload status without actually persisting
 	// the line items.
-	DryRun bool `json:"dryRun,omitempty"`
+	DryRun *bool `json:"dryRun,omitempty"`
 
 	// Format: Format the line items are in. Default to CSV.
 	//

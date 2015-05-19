@@ -149,7 +149,7 @@ type DiskAttachment struct {
 
 type EnvVariable struct {
 	// Hidden: Deprecated, do not use.
-	Hidden bool `json:"hidden,omitempty"`
+	Hidden *bool `json:"hidden,omitempty"`
 
 	// Name: The name of the environment variable.
 	Name string `json:"name,omitempty"`
@@ -250,10 +250,10 @@ type NewDisk struct {
 
 	// AutoDelete: If true, then this disk will be deleted when the instance
 	// is deleted. The default value is true.
-	AutoDelete bool `json:"autoDelete,omitempty"`
+	AutoDelete *bool `json:"autoDelete,omitempty"`
 
 	// Boot: If true, indicates that this is the root persistent disk.
-	Boot bool `json:"boot,omitempty"`
+	Boot *bool `json:"boot,omitempty"`
 
 	// InitializeParams: Create the new disk using these parameters. The
 	// name of the disk will be <instance_name>-<four_random_charactersgt;.
@@ -283,7 +283,7 @@ type NewDiskInitializeParams struct {
 type Pool struct {
 	// AutoRestart: Whether replicas in this pool should be restarted if
 	// they experience a failure. The default value is true.
-	AutoRestart bool `json:"autoRestart,omitempty"`
+	AutoRestart *bool `json:"autoRestart,omitempty"`
 
 	// BaseInstanceName: The base instance name to use for the replicas in
 	// this pool. This must match the regex [a-z]([-a-z0-9]*[a-z0-9])?. If
@@ -399,7 +399,7 @@ type ReplicasDeleteRequest struct {
 	// will be deleted but the virtual machine instance will remain. By
 	// default, this is set to false and the instance will be deleted along
 	// with the replica.
-	AbandonInstance bool `json:"abandonInstance,omitempty"`
+	AbandonInstance *bool `json:"abandonInstance,omitempty"`
 }
 
 type ReplicasListResponse struct {
@@ -457,7 +457,7 @@ type VmParams struct {
 	// CanIpForward: Enables IP Forwarding, which allows this instance to
 	// receive packets destined for a different IP address, and send packets
 	// with a different source IP. See IP Forwarding for more information.
-	CanIpForward bool `json:"canIpForward,omitempty"`
+	CanIpForward *bool `json:"canIpForward,omitempty"`
 
 	// Description: An optional textual description of the instance.
 	Description string `json:"description,omitempty"`

@@ -132,7 +132,7 @@ type BlindWriteResponse struct {
 }
 
 type CommitRequest struct {
-	IgnoreReadOnly bool `json:"ignoreReadOnly,omitempty"`
+	IgnoreReadOnly *bool `json:"ignoreReadOnly,omitempty"`
 
 	// Mutation: The mutation to perform. Optional.
 	Mutation *Mutation `json:"mutation,omitempty"`
@@ -187,7 +187,7 @@ type Filter struct {
 type GqlQuery struct {
 	// AllowLiteral: When false, the query string must not contain a
 	// literal.
-	AllowLiteral bool `json:"allowLiteral,omitempty"`
+	AllowLiteral *bool `json:"allowLiteral,omitempty"`
 
 	// NameArgs: A named argument must set field GqlQueryArg.name. No two
 	// named arguments may have the same name. For each non-reserved named
@@ -286,7 +286,7 @@ type Mutation struct {
 	Delete []*Key `json:"delete,omitempty"`
 
 	// Force: Ignore a user specified read-only period. Optional.
-	Force bool `json:"force,omitempty"`
+	Force *bool `json:"force,omitempty"`
 
 	// Insert: Entities to insert. Each inserted entity's key must have a
 	// complete path and must not be reserved/read-only.
@@ -327,7 +327,7 @@ type Property struct {
 	// Multi: If this property contains a list of values. Input values may
 	// explicitly set multi to false, but otherwise false is always
 	// represented by omitting multi.
-	Multi bool `json:"multi,omitempty"`
+	Multi *bool `json:"multi,omitempty"`
 
 	// Values: The value(s) of the property. When multi is false there is
 	// always exactly one value. When multi is true there are always one or
@@ -501,7 +501,7 @@ type Value struct {
 	BlobValue string `json:"blobValue,omitempty"`
 
 	// BooleanValue: A boolean value.
-	BooleanValue bool `json:"booleanValue,omitempty"`
+	BooleanValue *bool `json:"booleanValue,omitempty"`
 
 	// DateTimeValue: A timestamp value.
 	DateTimeValue string `json:"dateTimeValue,omitempty"`
@@ -521,7 +521,7 @@ type Value struct {
 	// true; however, you can explicitly set indexed to true if you want.
 	// (An output value never has indexed explicitly set to true.) If a
 	// value is itself an entity, it cannot have indexed set to true.
-	Indexed bool `json:"indexed,omitempty"`
+	Indexed *bool `json:"indexed,omitempty"`
 
 	// IntegerValue: An integer value.
 	IntegerValue int64 `json:"integerValue,omitempty,string"`

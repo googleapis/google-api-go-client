@@ -109,7 +109,7 @@ type DetectionsResourceItem struct {
 
 	// IsReliable: A boolean to indicate is the language detection result
 	// reliable.
-	IsReliable bool `json:"isReliable,omitempty"`
+	IsReliable *bool `json:"isReliable,omitempty"`
 
 	// Language: The language we detect
 	Language string `json:"language,omitempty"`

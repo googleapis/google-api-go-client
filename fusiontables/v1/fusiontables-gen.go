@@ -435,7 +435,7 @@ type Table struct {
 	Description string `json:"description,omitempty"`
 
 	// IsExportable: Variable for whether table is exportable.
-	IsExportable bool `json:"isExportable,omitempty"`
+	IsExportable *bool `json:"isExportable,omitempty"`
 
 	// Kind: Type name: a template for an individual table.
 	Kind string `json:"kind,omitempty"`
@@ -472,7 +472,7 @@ type Task struct {
 
 	// Started: false while the table is busy with some other task. true if
 	// this background task is currently running.
-	Started bool `json:"started,omitempty"`
+	Started *bool `json:"started,omitempty"`
 
 	// TaskId: Identifier for the task.
 	TaskId int64 `json:"taskId,omitempty,string"`

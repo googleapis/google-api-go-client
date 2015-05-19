@@ -339,7 +339,7 @@ type WatermarksService struct {
 type AccessPolicy struct {
 	// Allowed: The value of allowed indicates whether the access to the
 	// policy is allowed or denied by default.
-	Allowed bool `json:"allowed,omitempty"`
+	Allowed *bool `json:"allowed,omitempty"`
 
 	// Exception: A list of region codes that identify countries where the
 	// default policy do not apply.
@@ -714,25 +714,25 @@ type CaptionSnippet struct {
 	// to sync the uploaded track to the video. If the value is false,
 	// YouTube uses the time codes in the uploaded caption track to
 	// determine when to display captions.
-	IsAutoSynced bool `json:"isAutoSynced,omitempty"`
+	IsAutoSynced *bool `json:"isAutoSynced,omitempty"`
 
 	// IsCC: Indicates whether the track contains closed captions for the
 	// deaf and hard of hearing. The default value is false.
-	IsCC bool `json:"isCC,omitempty"`
+	IsCC *bool `json:"isCC,omitempty"`
 
 	// IsDraft: Indicates whether the caption track is a draft. If the value
 	// is true, then the track is not publicly visible. The default value is
 	// false.
-	IsDraft bool `json:"isDraft,omitempty"`
+	IsDraft *bool `json:"isDraft,omitempty"`
 
 	// IsEasyReader: Indicates whether caption track is formatted for "easy
 	// reader," meaning it is at a third-grade level for language learners.
 	// The default value is false.
-	IsEasyReader bool `json:"isEasyReader,omitempty"`
+	IsEasyReader *bool `json:"isEasyReader,omitempty"`
 
 	// IsLarge: Indicates whether the caption track uses large text for the
 	// vision-impaired. The default value is false.
-	IsLarge bool `json:"isLarge,omitempty"`
+	IsLarge *bool `json:"isLarge,omitempty"`
 
 	// Language: The language of the caption track. The property value is a
 	// BCP-47 language tag.
@@ -846,15 +846,15 @@ type Channel struct {
 type ChannelAuditDetails struct {
 	// CommunityGuidelinesGoodStanding: Whether or not the channel respects
 	// the community guidelines.
-	CommunityGuidelinesGoodStanding bool `json:"communityGuidelinesGoodStanding,omitempty"`
+	CommunityGuidelinesGoodStanding *bool `json:"communityGuidelinesGoodStanding,omitempty"`
 
 	// ContentIdClaimsGoodStanding: Whether or not the channel has any
 	// unresolved claims.
-	ContentIdClaimsGoodStanding bool `json:"contentIdClaimsGoodStanding,omitempty"`
+	ContentIdClaimsGoodStanding *bool `json:"contentIdClaimsGoodStanding,omitempty"`
 
 	// CopyrightStrikesGoodStanding: Whether or not the channel has any
 	// copyright strikes.
-	CopyrightStrikesGoodStanding bool `json:"copyrightStrikesGoodStanding,omitempty"`
+	CopyrightStrikesGoodStanding *bool `json:"copyrightStrikesGoodStanding,omitempty"`
 
 	// OverallGoodStanding: Describes the general state of the channel. This
 	// field will always show if there are any issues whatsoever with the
@@ -862,7 +862,7 @@ type ChannelAuditDetails struct {
 	// and operation over the community guidelines good standing, the
 	// copyright strikes good standing and the content ID claims good
 	// standing, but this may change in the future.
-	OverallGoodStanding bool `json:"overallGoodStanding,omitempty"`
+	OverallGoodStanding *bool `json:"overallGoodStanding,omitempty"`
 }
 
 type ChannelBannerResource struct {
@@ -1155,7 +1155,7 @@ type ChannelSettings struct {
 
 	// ModerateComments: Whether user-submitted comments left on the channel
 	// page need to be approved by the channel owner to be publicly visible.
-	ModerateComments bool `json:"moderateComments,omitempty"`
+	ModerateComments *bool `json:"moderateComments,omitempty"`
 
 	// ProfileColor: A prominent color that can be rendered on this channel
 	// page.
@@ -1163,10 +1163,10 @@ type ChannelSettings struct {
 
 	// ShowBrowseView: Whether the tab to browse the videos should be
 	// displayed.
-	ShowBrowseView bool `json:"showBrowseView,omitempty"`
+	ShowBrowseView *bool `json:"showBrowseView,omitempty"`
 
 	// ShowRelatedChannels: Whether related channels should be proposed.
-	ShowRelatedChannels bool `json:"showRelatedChannels,omitempty"`
+	ShowRelatedChannels *bool `json:"showRelatedChannels,omitempty"`
 
 	// Title: Specifies the channel title.
 	Title string `json:"title,omitempty"`
@@ -1214,7 +1214,7 @@ type ChannelStatistics struct {
 
 	// HiddenSubscriberCount: Whether or not the number of subscribers is
 	// shown for this user.
-	HiddenSubscriberCount bool `json:"hiddenSubscriberCount,omitempty"`
+	HiddenSubscriberCount *bool `json:"hiddenSubscriberCount,omitempty"`
 
 	// SubscriberCount: The number of subscribers that the channel has.
 	SubscriberCount uint64 `json:"subscriberCount,omitempty,string"`
@@ -1230,7 +1230,7 @@ type ChannelStatus struct {
 	// IsLinked: If true, then the user is linked to either a YouTube
 	// username or G+ account. Otherwise, the user doesn't have a public
 	// YouTube identity.
-	IsLinked bool `json:"isLinked,omitempty"`
+	IsLinked *bool `json:"isLinked,omitempty"`
 
 	// LongUploadsStatus: The long uploads status of this channel. See
 	//
@@ -1318,7 +1318,7 @@ type CommentSnippet struct {
 	AuthorProfileImageUrl string `json:"authorProfileImageUrl,omitempty"`
 
 	// CanRate: Whether the current viewer can rate this comment.
-	CanRate bool `json:"canRate,omitempty"`
+	CanRate *bool `json:"canRate,omitempty"`
 
 	// ChannelId: The id of the corresponding YouTube channel. In case of a
 	// channel comment this is the channel the comment refers to. In case of
@@ -1435,7 +1435,7 @@ type CommentThreadSnippet struct {
 	// CanReply: Whether the current viewer of the thread can reply to it.
 	// This is viewer specific - other viewers may see a different value for
 	// this field.
-	CanReply bool `json:"canReply,omitempty"`
+	CanReply *bool `json:"canReply,omitempty"`
 
 	// ChannelId: The YouTube channel the comments in the thread refer to or
 	// the channel with the video the comments refer to. If video_id isn't
@@ -1444,7 +1444,7 @@ type CommentThreadSnippet struct {
 
 	// IsPublic: Whether the thread (and therefore all its comments) is
 	// visible to all YouTube users.
-	IsPublic bool `json:"isPublic,omitempty"`
+	IsPublic *bool `json:"isPublic,omitempty"`
 
 	// TopLevelComment: The top level comment of this thread.
 	TopLevelComment *Comment `json:"topLevelComment,omitempty"`
@@ -2531,7 +2531,7 @@ type InvideoPromotion struct {
 	// point in the video when they are more likely to be clicked and less
 	// likely to disrupt the viewing experience. This feature also picks up
 	// a single promotion to show on each video.
-	UseSmartTiming bool `json:"useSmartTiming,omitempty"`
+	UseSmartTiming *bool `json:"useSmartTiming,omitempty"`
 }
 
 type InvideoTiming struct {
@@ -2595,11 +2595,11 @@ type LiveBroadcastContentDetails struct {
 	// EnableClosedCaptions: This setting indicates whether closed
 	// captioning is enabled for this broadcast. The ingestion URL of the
 	// closed captions is returned through the liveStreams API.
-	EnableClosedCaptions bool `json:"enableClosedCaptions,omitempty"`
+	EnableClosedCaptions *bool `json:"enableClosedCaptions,omitempty"`
 
 	// EnableContentEncryption: This setting indicates whether YouTube
 	// should enable content encryption for the broadcast.
-	EnableContentEncryption bool `json:"enableContentEncryption,omitempty"`
+	EnableContentEncryption *bool `json:"enableContentEncryption,omitempty"`
 
 	// EnableDvr: This setting determines whether viewers can access DVR
 	// controls while watching the video. DVR controls enable the viewer to
@@ -2612,13 +2612,13 @@ type LiveBroadcastContentDetails struct {
 	// Important: You must set the value to true and also set the
 	// enableArchive property's value to true if you want to make playback
 	// available immediately after the broadcast ends.
-	EnableDvr bool `json:"enableDvr,omitempty"`
+	EnableDvr *bool `json:"enableDvr,omitempty"`
 
 	// EnableEmbed: This setting indicates whether the broadcast video can
 	// be played in an embedded player. If you choose to archive the video
 	// (using the enableArchive property), this setting will also apply to
 	// the archived video.
-	EnableEmbed bool `json:"enableEmbed,omitempty"`
+	EnableEmbed *bool `json:"enableEmbed,omitempty"`
 
 	// MonitorStream: The monitorStream object contains information about
 	// the monitor stream, which the broadcaster can use to review the event
@@ -2636,7 +2636,7 @@ type LiveBroadcastContentDetails struct {
 	// also set the enableDvr property to true, there may be a delay of
 	// around one day before the archived video will be available for
 	// playback.
-	RecordFromStart bool `json:"recordFromStart,omitempty"`
+	RecordFromStart *bool `json:"recordFromStart,omitempty"`
 
 	// StartWithSlate: This setting indicates whether the broadcast should
 	// automatically begin with an in-stream slate when you update the
@@ -2644,7 +2644,7 @@ type LiveBroadcastContentDetails struct {
 	// to send a liveCuepoints.insert request that sets the cuepoint's
 	// eventState to end to remove the in-stream slate and make your
 	// broadcast stream visible to viewers.
-	StartWithSlate bool `json:"startWithSlate,omitempty"`
+	StartWithSlate *bool `json:"startWithSlate,omitempty"`
 }
 
 type LiveBroadcastListResponse struct {
@@ -2731,7 +2731,7 @@ type LiveBroadcastSnippet struct {
 type LiveBroadcastStatus struct {
 	// IsDefaultBroadcast: Whether or not this broadcast is the default
 	// broadcast
-	IsDefaultBroadcast bool `json:"isDefaultBroadcast,omitempty"`
+	IsDefaultBroadcast *bool `json:"isDefaultBroadcast,omitempty"`
 
 	// LifeCycleStatus: The broadcast's status. The status can be updated
 	// using the API's liveBroadcasts.transition method.
@@ -2829,7 +2829,7 @@ type LiveStreamContentDetails struct {
 	// you call the method and set the mine parameter to true. The only way
 	// to use that method to retrieve the resource for a non-reusable stream
 	// is to use the id parameter to identify the stream.
-	IsReusable bool `json:"isReusable,omitempty"`
+	IsReusable *bool `json:"isReusable,omitempty"`
 }
 
 type LiveStreamListResponse struct {
@@ -2882,7 +2882,7 @@ type LiveStreamSnippet struct {
 }
 
 type LiveStreamStatus struct {
-	IsDefaultStream bool `json:"isDefaultStream,omitempty"`
+	IsDefaultStream *bool `json:"isDefaultStream,omitempty"`
 
 	// Possible values:
 	//   "active"
@@ -2930,7 +2930,7 @@ type MonitorStreamInfo struct {
 	//
 	// Note: This property cannot be updated once the broadcast is in the
 	// testing or live state.
-	EnableMonitorStream bool `json:"enableMonitorStream,omitempty"`
+	EnableMonitorStream *bool `json:"enableMonitorStream,omitempty"`
 }
 
 type PageInfo struct {
@@ -3209,7 +3209,7 @@ type PromotedItem struct {
 	// PromotedByContentOwner: If true, the content owner's name will be
 	// used when displaying the promotion. This field can only be set when
 	// the update is made on behalf of the content owner.
-	PromotedByContentOwner bool `json:"promotedByContentOwner,omitempty"`
+	PromotedByContentOwner *bool `json:"promotedByContentOwner,omitempty"`
 
 	// Timing: The temporal position within the video where the promoted
 	// item will be displayed. If present, it overrides the default timing.
@@ -3696,13 +3696,13 @@ type VideoAgeGating struct {
 	// AlcoholContent: Indicates whether or not the video has alcoholic
 	// beverage content. Only users of legal purchasing age in a particular
 	// country, as identified by ICAP, can view the content.
-	AlcoholContent bool `json:"alcoholContent,omitempty"`
+	AlcoholContent *bool `json:"alcoholContent,omitempty"`
 
 	// Restricted: Age-restricted trailers. For redband trailers and
 	// adult-rated video-games. Only users aged 18+ can view the content.
 	// The the field is true the content is restricted to viewers aged 18+.
 	// Otherwise The field won't be present.
-	Restricted bool `json:"restricted,omitempty"`
+	Restricted *bool `json:"restricted,omitempty"`
 
 	// VideoGameRating: Video game rating, if any.
 	//
@@ -3764,7 +3764,7 @@ type VideoCategoryListResponse struct {
 }
 
 type VideoCategorySnippet struct {
-	Assignable bool `json:"assignable,omitempty"`
+	Assignable *bool `json:"assignable,omitempty"`
 
 	// ChannelId: The YouTube channel that created the video category.
 	ChannelId string `json:"channelId,omitempty"`
@@ -3814,7 +3814,7 @@ type VideoContentDetails struct {
 
 	// LicensedContent: The value of is_license_content indicates whether
 	// the video is licensed content.
-	LicensedContent bool `json:"licensedContent,omitempty"`
+	LicensedContent *bool `json:"licensedContent,omitempty"`
 
 	// RegionRestriction: The regionRestriction object contains information
 	// about the countries where a video is (or is not) viewable. The object
@@ -4268,7 +4268,7 @@ type VideoStatistics struct {
 type VideoStatus struct {
 	// Embeddable: This value indicates if the video can be embedded on
 	// another website.
-	Embeddable bool `json:"embeddable,omitempty"`
+	Embeddable *bool `json:"embeddable,omitempty"`
 
 	// FailureReason: This value explains why a video failed to upload. This
 	// property is only present if the uploadStatus property indicates that
@@ -4301,7 +4301,7 @@ type VideoStatus struct {
 	// PublicStatsViewable: This value indicates if the extended video
 	// statistics on the watch page can be viewed by everyone. Note that the
 	// view count, likes, etc will still be visible if this is disabled.
-	PublicStatsViewable bool `json:"publicStatsViewable,omitempty"`
+	PublicStatsViewable *bool `json:"publicStatsViewable,omitempty"`
 
 	// PublishAt: The date and time when the video is scheduled to publish.
 	// It can be set only if the privacy status of the video is private. The

@@ -163,7 +163,7 @@ type Tokeninfo struct {
 
 	// VerifiedEmail: Boolean flag which is true if the email address is
 	// verified. Present only if the email scope is present in the request.
-	VerifiedEmail bool `json:"verified_email,omitempty"`
+	VerifiedEmail *bool `json:"verified_email,omitempty"`
 }
 
 type Userinfoplus struct {

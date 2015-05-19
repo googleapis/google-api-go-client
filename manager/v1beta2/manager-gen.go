@@ -223,7 +223,7 @@ type DiskAttachment struct {
 
 type EnvVariable struct {
 	// Hidden: Whether this variable is hidden or visible.
-	Hidden bool `json:"hidden,omitempty"`
+	Hidden *bool `json:"hidden,omitempty"`
 
 	// Value: Value of the environment variable.
 	Value string `json:"value,omitempty"`
@@ -433,10 +433,10 @@ type NewDisk struct {
 
 	// AutoDelete: If true, then this disk will be deleted when the instance
 	// is deleted.
-	AutoDelete bool `json:"autoDelete,omitempty"`
+	AutoDelete *bool `json:"autoDelete,omitempty"`
 
 	// Boot: If true, indicates that this is the root persistent disk.
-	Boot bool `json:"boot,omitempty"`
+	Boot *bool `json:"boot,omitempty"`
 
 	// InitializeParams: Create the new disk using these parameters. The
 	// name of the disk will be <instance_name>-<five_random_charactersgt;.
@@ -505,14 +505,14 @@ type ReplicaPoolParams struct {
 type ReplicaPoolParamsV1Beta1 struct {
 	// AutoRestart: Whether these replicas should be restarted if they
 	// experience a failure. The default value is true.
-	AutoRestart bool `json:"autoRestart,omitempty"`
+	AutoRestart *bool `json:"autoRestart,omitempty"`
 
 	// BaseInstanceName: The base name for instances within this
 	// ReplicaPool.
 	BaseInstanceName string `json:"baseInstanceName,omitempty"`
 
 	// CanIpForward: Enables IP Forwarding
-	CanIpForward bool `json:"canIpForward,omitempty"`
+	CanIpForward *bool `json:"canIpForward,omitempty"`
 
 	// Description: An optional textual description of the resource.
 	Description string `json:"description,omitempty"`

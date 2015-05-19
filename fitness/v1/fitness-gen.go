@@ -294,7 +294,7 @@ type DataTypeField struct {
 	// data type.
 	Name string `json:"name,omitempty"`
 
-	Optional bool `json:"optional,omitempty"`
+	Optional *bool `json:"optional,omitempty"`
 }
 
 type Dataset struct {

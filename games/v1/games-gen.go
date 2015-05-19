@@ -285,11 +285,11 @@ type AchievementDefinition struct {
 
 	// IsRevealedIconUrlDefault: Indicates whether the revealed icon image
 	// being returned is a default image, or is provided by the game.
-	IsRevealedIconUrlDefault bool `json:"isRevealedIconUrlDefault,omitempty"`
+	IsRevealedIconUrlDefault *bool `json:"isRevealedIconUrlDefault,omitempty"`
 
 	// IsUnlockedIconUrlDefault: Indicates whether the unlocked icon image
 	// being returned is a default image, or is game-provided.
-	IsUnlockedIconUrlDefault bool `json:"isUnlockedIconUrlDefault,omitempty"`
+	IsUnlockedIconUrlDefault *bool `json:"isUnlockedIconUrlDefault,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string games#achievementDefinition.
@@ -331,7 +331,7 @@ type AchievementIncrementResponse struct {
 
 	// NewlyUnlocked: Whether the the current steps for the achievement has
 	// reached the number of steps required to unlock.
-	NewlyUnlocked bool `json:"newlyUnlocked,omitempty"`
+	NewlyUnlocked *bool `json:"newlyUnlocked,omitempty"`
 }
 
 type AchievementRevealResponse struct {
@@ -359,7 +359,7 @@ type AchievementSetStepsAtLeastResponse struct {
 
 	// NewlyUnlocked: Whether the the current steps for the achievement has
 	// reached the number of steps required to unlock.
-	NewlyUnlocked bool `json:"newlyUnlocked,omitempty"`
+	NewlyUnlocked *bool `json:"newlyUnlocked,omitempty"`
 }
 
 type AchievementUnlockResponse struct {
@@ -370,7 +370,7 @@ type AchievementUnlockResponse struct {
 	// NewlyUnlocked: Whether this achievement was newly unlocked (that is,
 	// whether the unlock request for the achievement was the first for the
 	// player).
-	NewlyUnlocked bool `json:"newlyUnlocked,omitempty"`
+	NewlyUnlocked *bool `json:"newlyUnlocked,omitempty"`
 }
 
 type AchievementUpdateMultipleRequest struct {
@@ -439,11 +439,11 @@ type AchievementUpdateResponse struct {
 	// NewlyUnlocked: Whether this achievement was newly unlocked (that is,
 	// whether the unlock request for the achievement was the first for the
 	// player).
-	NewlyUnlocked bool `json:"newlyUnlocked,omitempty"`
+	NewlyUnlocked *bool `json:"newlyUnlocked,omitempty"`
 
 	// UpdateOccurred: Whether the requested updates actually affected the
 	// achievement.
-	UpdateOccurred bool `json:"updateOccurred,omitempty"`
+	UpdateOccurred *bool `json:"updateOccurred,omitempty"`
 }
 
 type AggregateStats struct {
@@ -616,7 +616,7 @@ type EventDefinition struct {
 
 	// IsDefaultImageUrl: Indicates whether the icon image being returned is
 	// a default image, or is game-provided.
-	IsDefaultImageUrl bool `json:"isDefaultImageUrl,omitempty"`
+	IsDefaultImageUrl *bool `json:"isDefaultImageUrl,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string games#eventDefinition.
@@ -800,11 +800,11 @@ type Instance struct {
 
 	// RealtimePlay: Flag to show if this game instance supports realtime
 	// play.
-	RealtimePlay bool `json:"realtimePlay,omitempty"`
+	RealtimePlay *bool `json:"realtimePlay,omitempty"`
 
 	// TurnBasedPlay: Flag to show if this game instance supports turn based
 	// play.
-	TurnBasedPlay bool `json:"turnBasedPlay,omitempty"`
+	TurnBasedPlay *bool `json:"turnBasedPlay,omitempty"`
 
 	// WebInstance: Platform dependent details for Web.
 	WebInstance *InstanceWebDetails `json:"webInstance,omitempty"`
@@ -813,7 +813,7 @@ type Instance struct {
 type InstanceAndroidDetails struct {
 	// EnablePiracyCheck: Flag indicating whether the anti-piracy check is
 	// enabled.
-	EnablePiracyCheck bool `json:"enablePiracyCheck,omitempty"`
+	EnablePiracyCheck *bool `json:"enablePiracyCheck,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string games#instanceAndroidDetails.
@@ -824,7 +824,7 @@ type InstanceAndroidDetails struct {
 
 	// Preferred: Indicates that this instance is the default for new
 	// installations.
-	Preferred bool `json:"preferred,omitempty"`
+	Preferred *bool `json:"preferred,omitempty"`
 }
 
 type InstanceIosDetails struct {
@@ -840,17 +840,17 @@ type InstanceIosDetails struct {
 
 	// PreferredForIpad: Indicates that this instance is the default for new
 	// installations on iPad devices.
-	PreferredForIpad bool `json:"preferredForIpad,omitempty"`
+	PreferredForIpad *bool `json:"preferredForIpad,omitempty"`
 
 	// PreferredForIphone: Indicates that this instance is the default for
 	// new installations on iPhone devices.
-	PreferredForIphone bool `json:"preferredForIphone,omitempty"`
+	PreferredForIphone *bool `json:"preferredForIphone,omitempty"`
 
 	// SupportIpad: Flag to indicate if this instance supports iPad.
-	SupportIpad bool `json:"supportIpad,omitempty"`
+	SupportIpad *bool `json:"supportIpad,omitempty"`
 
 	// SupportIphone: Flag to indicate if this instance supports iPhone.
-	SupportIphone bool `json:"supportIphone,omitempty"`
+	SupportIphone *bool `json:"supportIphone,omitempty"`
 }
 
 type InstanceWebDetails struct {
@@ -863,7 +863,7 @@ type InstanceWebDetails struct {
 
 	// Preferred: Indicates that this instance is the default for new
 	// installations.
-	Preferred bool `json:"preferred,omitempty"`
+	Preferred *bool `json:"preferred,omitempty"`
 }
 
 type Leaderboard struct {
@@ -875,7 +875,7 @@ type Leaderboard struct {
 
 	// IsIconUrlDefault: Indicates whether the icon image being returned is
 	// a default image, or is game-provided.
-	IsIconUrlDefault bool `json:"isIconUrlDefault,omitempty"`
+	IsIconUrlDefault *bool `json:"isIconUrlDefault,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string games#leaderboard.
@@ -1114,7 +1114,7 @@ type PeerSessionDiagnostics struct {
 type Played struct {
 	// AutoMatched: True if the player was auto-matched with the currently
 	// authenticated user.
-	AutoMatched bool `json:"autoMatched,omitempty"`
+	AutoMatched *bool `json:"autoMatched,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string games#played.
@@ -1487,11 +1487,11 @@ type Quest struct {
 
 	// IsDefaultBannerUrl: Indicates whether the banner image being returned
 	// is a default image, or is game-provided.
-	IsDefaultBannerUrl bool `json:"isDefaultBannerUrl,omitempty"`
+	IsDefaultBannerUrl *bool `json:"isDefaultBannerUrl,omitempty"`
 
 	// IsDefaultIconUrl: Indicates whether the icon image being returned is
 	// a default image, or is game-provided.
-	IsDefaultIconUrl bool `json:"isDefaultIconUrl,omitempty"`
+	IsDefaultIconUrl *bool `json:"isDefaultIconUrl,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string games#quest.
@@ -1826,7 +1826,7 @@ type RoomLeaveDiagnostics struct {
 	PeerSession []*PeerSessionDiagnostics `json:"peerSession,omitempty"`
 
 	// SocketsUsed: Whether or not sockets were used.
-	SocketsUsed bool `json:"socketsUsed,omitempty"`
+	SocketsUsed *bool `json:"socketsUsed,omitempty"`
 }
 
 type RoomLeaveRequest struct {
@@ -1941,7 +1941,7 @@ type RoomP2PStatuses struct {
 type RoomParticipant struct {
 	// AutoMatched: True if this participant was auto-matched with the
 	// requesting player.
-	AutoMatched bool `json:"autoMatched,omitempty"`
+	AutoMatched *bool `json:"autoMatched,omitempty"`
 
 	// AutoMatchedPlayer: Information about a player that has been
 	// anonymously auto-matched against the requesting player. (Either
@@ -1957,7 +1957,7 @@ type RoomParticipant struct {
 
 	// Connected: True if this participant is in the fully connected set of
 	// peers in the room.
-	Connected bool `json:"connected,omitempty"`
+	Connected *bool `json:"connected,omitempty"`
 
 	// Id: An identifier for the participant in the scope of the room.
 	// Cannot be used to identify a player across rooms or in other
@@ -2283,7 +2283,7 @@ type TurnBasedMatchData struct {
 	// DataAvailable: True if this match has data available but it wasn't
 	// returned in a list response; fetching the match individually will
 	// retrieve this data.
-	DataAvailable bool `json:"dataAvailable,omitempty"`
+	DataAvailable *bool `json:"dataAvailable,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string games#turnBasedMatchData.
@@ -2328,7 +2328,7 @@ type TurnBasedMatchModification struct {
 type TurnBasedMatchParticipant struct {
 	// AutoMatched: True if this participant was auto-matched with the
 	// requesting player.
-	AutoMatched bool `json:"autoMatched,omitempty"`
+	AutoMatched *bool `json:"autoMatched,omitempty"`
 
 	// AutoMatchedPlayer: Information about a player that has been
 	// anonymously auto-matched against the requesting player. (Either
@@ -2410,7 +2410,7 @@ type TurnBasedMatchSync struct {
 	// MoreAvailable: True if there were more matches available to fetch at
 	// the time the response was generated (which were not returned due to
 	// page size limits.)
-	MoreAvailable bool `json:"moreAvailable,omitempty"`
+	MoreAvailable *bool `json:"moreAvailable,omitempty"`
 
 	// NextPageToken: The pagination token for the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`

@@ -430,7 +430,7 @@ type Asset struct {
 
 	// WritersCanEditPermissions: If true, WRITERs of the asset are able to
 	// edit the asset permissions.
-	WritersCanEditPermissions bool `json:"writersCanEditPermissions,omitempty"`
+	WritersCanEditPermissions *bool `json:"writersCanEditPermissions,omitempty"`
 }
 
 type AssetsListResponse struct {
@@ -932,7 +932,7 @@ type Layer struct {
 
 	// WritersCanEditPermissions: If true, WRITERs of the asset are able to
 	// edit the asset permissions.
-	WritersCanEditPermissions bool `json:"writersCanEditPermissions,omitempty"`
+	WritersCanEditPermissions *bool `json:"writersCanEditPermissions,omitempty"`
 }
 
 type LayersListResponse struct {
@@ -1069,7 +1069,7 @@ type Map struct {
 
 	// WritersCanEditPermissions: If true, WRITERs of the asset are able to
 	// edit the asset permissions.
-	WritersCanEditPermissions bool `json:"writersCanEditPermissions,omitempty"`
+	WritersCanEditPermissions *bool `json:"writersCanEditPermissions,omitempty"`
 }
 
 type MapFolder struct {
@@ -1082,7 +1082,7 @@ type MapFolder struct {
 
 	// Expandable: The expandability setting of this MapFolder. If true, the
 	// folder can be expanded.
-	Expandable bool `json:"expandable,omitempty"`
+	Expandable *bool `json:"expandable,omitempty"`
 
 	// Key: A user defined alias for this MapFolder, specific to this Map.
 	Key string `json:"key,omitempty"`
@@ -1206,7 +1206,7 @@ type Permission struct {
 	// Discoverable: Indicates whether a public asset is listed and can be
 	// found via a web search (value true), or is visible only to people who
 	// have a link to the asset (value false).
-	Discoverable bool `json:"discoverable,omitempty"`
+	Discoverable *bool `json:"discoverable,omitempty"`
 
 	// Id: The unique identifier of the permission. This could be the email
 	// address of the user or group this permission refers to, or the string
@@ -1438,7 +1438,7 @@ type Raster struct {
 
 	// WritersCanEditPermissions: If true, WRITERs of the asset are able to
 	// edit the asset permissions.
-	WritersCanEditPermissions bool `json:"writersCanEditPermissions,omitempty"`
+	WritersCanEditPermissions *bool `json:"writersCanEditPermissions,omitempty"`
 }
 
 type RasterCollection struct {
@@ -1497,7 +1497,7 @@ type RasterCollection struct {
 	LastModifierEmail string `json:"lastModifierEmail,omitempty"`
 
 	// Mosaic: True if this RasterCollection is a mosaic.
-	Mosaic bool `json:"mosaic,omitempty"`
+	Mosaic *bool `json:"mosaic,omitempty"`
 
 	// Name: The name of this RasterCollection, supplied by the author.
 	Name string `json:"name,omitempty"`
@@ -1527,7 +1527,7 @@ type RasterCollection struct {
 
 	// WritersCanEditPermissions: If true, WRITERs of the asset are able to
 	// edit the asset permissions.
-	WritersCanEditPermissions bool `json:"writersCanEditPermissions,omitempty"`
+	WritersCanEditPermissions *bool `json:"writersCanEditPermissions,omitempty"`
 }
 
 type RasterCollectionsListResponse struct {
@@ -1757,7 +1757,7 @@ type Table struct {
 
 	// WritersCanEditPermissions: If true, WRITERs of the asset are able to
 	// edit the asset permissions.
-	WritersCanEditPermissions bool `json:"writersCanEditPermissions,omitempty"`
+	WritersCanEditPermissions *bool `json:"writersCanEditPermissions,omitempty"`
 }
 
 type TableColumn struct {

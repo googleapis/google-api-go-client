@@ -163,13 +163,13 @@ type FileIndexableText struct {
 
 type FileLabels struct {
 	// Hidden: Whether this file is hidden from the user
-	Hidden bool `json:"hidden,omitempty"`
+	Hidden *bool `json:"hidden,omitempty"`
 
 	// Starred: Whether this file is starred by the user.
-	Starred bool `json:"starred,omitempty"`
+	Starred *bool `json:"starred,omitempty"`
 
 	// Trashed: Whether this file has been trashed.
-	Trashed bool `json:"trashed,omitempty"`
+	Trashed *bool `json:"trashed,omitempty"`
 }
 
 type FileParentsCollection struct {

@@ -312,7 +312,7 @@ type CalendarListEntry struct {
 
 	// Deleted: Whether this calendar list entry has been deleted from the
 	// calendar list. Read-only. Optional. The default is False.
-	Deleted bool `json:"deleted,omitempty"`
+	Deleted *bool `json:"deleted,omitempty"`
 
 	// Description: Description of the calendar. Optional. Read-only.
 	Description string `json:"description,omitempty"`
@@ -327,7 +327,7 @@ type CalendarListEntry struct {
 
 	// Hidden: Whether the calendar has been hidden from the list. Optional.
 	// The default is False.
-	Hidden bool `json:"hidden,omitempty"`
+	Hidden *bool `json:"hidden,omitempty"`
 
 	// Id: Identifier of the calendar.
 	Id string `json:"id,omitempty"`
@@ -345,11 +345,11 @@ type CalendarListEntry struct {
 
 	// Primary: Whether the calendar is the primary calendar of the
 	// authenticated user. Read-only. Optional. The default is False.
-	Primary bool `json:"primary,omitempty"`
+	Primary *bool `json:"primary,omitempty"`
 
 	// Selected: Whether the calendar content shows up in the calendar UI.
 	// Optional. The default is False.
-	Selected bool `json:"selected,omitempty"`
+	Selected *bool `json:"selected,omitempty"`
 
 	// Summary: Title of the calendar. Read-only.
 	Summary string `json:"summary,omitempty"`
@@ -409,7 +409,7 @@ type Channel struct {
 
 	// Payload: A Boolean value to indicate whether payload is wanted.
 	// Optional.
-	Payload bool `json:"payload,omitempty"`
+	Payload *bool `json:"payload,omitempty"`
 
 	// ResourceId: An opaque ID that identifies the resource being watched
 	// on this channel. Stable across different API versions.
@@ -476,7 +476,7 @@ type Error struct {
 type Event struct {
 	// AnyoneCanAddSelf: Whether anyone can invite themselves to the event.
 	// Optional. The default is False.
-	AnyoneCanAddSelf bool `json:"anyoneCanAddSelf,omitempty"`
+	AnyoneCanAddSelf *bool `json:"anyoneCanAddSelf,omitempty"`
 
 	// Attendees: The attendees of the event.
 	Attendees []*EventAttendee `json:"attendees,omitempty"`
@@ -486,7 +486,7 @@ type Event struct {
 	// a restriction specified by the maxAttendee query parameter. When
 	// updating an event, this can be used to only update the participant's
 	// response. Optional. The default is False.
-	AttendeesOmitted bool `json:"attendeesOmitted,omitempty"`
+	AttendeesOmitted *bool `json:"attendeesOmitted,omitempty"`
 
 	// ColorId: The color of the event. This is an ID referring to an entry
 	// in the event section of the colors definition (see the  colors
@@ -510,7 +510,7 @@ type Event struct {
 	// EndTimeUnspecified: Whether the end time is actually unspecified. An
 	// end time is still provided for compatibility reasons, even if this
 	// attribute is set to True. The default is False.
-	EndTimeUnspecified bool `json:"endTimeUnspecified,omitempty"`
+	EndTimeUnspecified *bool `json:"endTimeUnspecified,omitempty"`
 
 	// Etag: ETag of the resource.
 	Etag string `json:"etag,omitempty"`
@@ -529,7 +529,7 @@ type Event struct {
 
 	// GuestsCanModify: Whether attendees other than the organizer can
 	// modify the event. Optional. The default is False.
-	GuestsCanModify bool `json:"guestsCanModify,omitempty"`
+	GuestsCanModify *bool `json:"guestsCanModify,omitempty"`
 
 	// GuestsCanSeeOtherGuests: Whether attendees other than the organizer
 	// can see who the event's attendees are. Optional. The default is True.
@@ -572,7 +572,7 @@ type Event struct {
 	// Locked: Whether this is a locked event copy where no changes can be
 	// made to the main event fields "summary", "description", "location",
 	// "start", "end" or "recurrence". The default is False. Read-Only.
-	Locked bool `json:"locked,omitempty"`
+	Locked *bool `json:"locked,omitempty"`
 
 	// Organizer: The organizer of the event. If the organizer is also an
 	// attendee, this is indicated with a separate entry in attendees with
@@ -588,7 +588,7 @@ type Event struct {
 	// PrivateCopy: Whether this is a private event copy where changes are
 	// not shared with other copies on other calendars. Optional. Immutable.
 	// The default is False.
-	PrivateCopy bool `json:"privateCopy,omitempty"`
+	PrivateCopy *bool `json:"privateCopy,omitempty"`
 
 	// Recurrence: List of RRULE, EXRULE, RDATE and EXDATE lines for a
 	// recurring event. This field is omitted for single events or instances
@@ -662,7 +662,7 @@ type EventCreator struct {
 
 	// Self: Whether the creator corresponds to the calendar on which this
 	// copy of the event appears. Read-only. The default is False.
-	Self bool `json:"self,omitempty"`
+	Self *bool `json:"self,omitempty"`
 }
 
 type EventExtendedProperties struct {
@@ -717,7 +717,7 @@ type EventOrganizer struct {
 
 	// Self: Whether the organizer corresponds to the calendar on which this
 	// copy of the event appears. Read-only. The default is False.
-	Self bool `json:"self,omitempty"`
+	Self *bool `json:"self,omitempty"`
 }
 
 type EventReminders struct {
@@ -728,7 +728,7 @@ type EventReminders struct {
 
 	// UseDefault: Whether the default reminders of the calendar apply to
 	// the event.
-	UseDefault bool `json:"useDefault,omitempty"`
+	UseDefault *bool `json:"useDefault,omitempty"`
 }
 
 type EventSource struct {
@@ -764,15 +764,15 @@ type EventAttendee struct {
 
 	// Optional: Whether this is an optional attendee. Optional. The default
 	// is False.
-	Optional bool `json:"optional,omitempty"`
+	Optional *bool `json:"optional,omitempty"`
 
 	// Organizer: Whether the attendee is the organizer of the event.
 	// Read-only. The default is False.
-	Organizer bool `json:"organizer,omitempty"`
+	Organizer *bool `json:"organizer,omitempty"`
 
 	// Resource: Whether the attendee is a resource. Read-only. The default
 	// is False.
-	Resource bool `json:"resource,omitempty"`
+	Resource *bool `json:"resource,omitempty"`
 
 	// ResponseStatus: The attendee's response status. Possible values are:
 	//
@@ -786,7 +786,7 @@ type EventAttendee struct {
 
 	// Self: Whether this entry represents the calendar on which this copy
 	// of the event appears. Read-only. The default is False.
-	Self bool `json:"self,omitempty"`
+	Self *bool `json:"self,omitempty"`
 }
 
 type EventDateTime struct {

@@ -185,10 +185,10 @@ type AclEntry struct {
 type BackupConfiguration struct {
 	// BinaryLogEnabled: Whether binary log is enabled. If backup
 	// configuration is disabled, binary log must be disabled as well.
-	BinaryLogEnabled bool `json:"binaryLogEnabled,omitempty"`
+	BinaryLogEnabled *bool `json:"binaryLogEnabled,omitempty"`
 
 	// Enabled: Whether this configuration is enabled.
-	Enabled bool `json:"enabled,omitempty"`
+	Enabled *bool `json:"enabled,omitempty"`
 
 	// Kind: This is always sql#backupConfiguration.
 	Kind string `json:"kind,omitempty"`
@@ -568,11 +568,11 @@ type IpConfiguration struct {
 
 	// Ipv4Enabled: Whether the instance should be assigned an IP address or
 	// not.
-	Ipv4Enabled bool `json:"ipv4Enabled,omitempty"`
+	Ipv4Enabled *bool `json:"ipv4Enabled,omitempty"`
 
 	// RequireSsl: Whether the mysqld should default to 'REQUIRE X509' for
 	// users connecting over IP.
-	RequireSsl bool `json:"requireSsl,omitempty"`
+	RequireSsl *bool `json:"requireSsl,omitempty"`
 }
 
 type IpMapping struct {
@@ -641,7 +641,7 @@ type MySqlReplicaConfiguration struct {
 
 	// VerifyServerCertificate: Whether or not to check the master's Common
 	// Name value in the certificate that it sends during the SSL handshake.
-	VerifyServerCertificate bool `json:"verifyServerCertificate,omitempty"`
+	VerifyServerCertificate *bool `json:"verifyServerCertificate,omitempty"`
 }
 
 type OnPremisesConfiguration struct {
@@ -787,14 +787,14 @@ type Settings struct {
 	// CrashSafeReplicationEnabled: Configuration specific to read replica
 	// instances. Indicates whether database flags for crash-safe
 	// replication are enabled.
-	CrashSafeReplicationEnabled bool `json:"crashSafeReplicationEnabled,omitempty"`
+	CrashSafeReplicationEnabled *bool `json:"crashSafeReplicationEnabled,omitempty"`
 
 	// DatabaseFlags: The database flags passed to the instance at startup.
 	DatabaseFlags []*DatabaseFlags `json:"databaseFlags,omitempty"`
 
 	// DatabaseReplicationEnabled: Configuration specific to read replica
 	// instances. Indicates whether replication is enabled or not.
-	DatabaseReplicationEnabled bool `json:"databaseReplicationEnabled,omitempty"`
+	DatabaseReplicationEnabled *bool `json:"databaseReplicationEnabled,omitempty"`
 
 	// IpConfiguration: The settings for IP Management. This allows to
 	// enable or disable the instance IP and manage which external networks

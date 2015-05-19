@@ -369,7 +369,7 @@ type MetricStructuredName struct {
 }
 
 type MetricUpdate struct {
-	Cumulative bool `json:"cumulative,omitempty"`
+	Cumulative *bool `json:"cumulative,omitempty"`
 
 	Internal interface{} `json:"internal,omitempty"`
 
@@ -449,7 +449,7 @@ type PartialGroupByKeyInstructionValueCombiningFn interface{}
 type Position struct {
 	ByteOffset int64 `json:"byteOffset,omitempty,string"`
 
-	End bool `json:"end,omitempty"`
+	End *bool `json:"end,omitempty"`
 
 	Key string `json:"key,omitempty"`
 
@@ -459,7 +459,7 @@ type Position struct {
 }
 
 type PubsubLocation struct {
-	DropLateData bool `json:"dropLateData,omitempty"`
+	DropLateData *bool `json:"dropLateData,omitempty"`
 
 	IdLabel string `json:"idLabel,omitempty"`
 
@@ -541,7 +541,7 @@ type Source struct {
 
 	Codec SourceCodec `json:"codec,omitempty"`
 
-	DoesNotNeedSplitting bool `json:"doesNotNeedSplitting,omitempty"`
+	DoesNotNeedSplitting *bool `json:"doesNotNeedSplitting,omitempty"`
 
 	Metadata *SourceMetadata `json:"metadata,omitempty"`
 
@@ -575,9 +575,9 @@ type SourceGetMetadataResponse struct {
 type SourceMetadata struct {
 	EstimatedSizeBytes int64 `json:"estimatedSizeBytes,omitempty,string"`
 
-	Infinite bool `json:"infinite,omitempty"`
+	Infinite *bool `json:"infinite,omitempty"`
 
-	ProducesSortedKeys bool `json:"producesSortedKeys,omitempty"`
+	ProducesSortedKeys *bool `json:"producesSortedKeys,omitempty"`
 }
 
 type SourceOperationRequest struct {
@@ -690,7 +690,7 @@ type StreamingStageLocation struct {
 }
 
 type TaskRunnerSettings struct {
-	Alsologtostderr bool `json:"alsologtostderr,omitempty"`
+	Alsologtostderr *bool `json:"alsologtostderr,omitempty"`
 
 	BaseTaskDir string `json:"baseTaskDir,omitempty"`
 
@@ -698,7 +698,7 @@ type TaskRunnerSettings struct {
 
 	CommandlinesFileName string `json:"commandlinesFileName,omitempty"`
 
-	ContinueOnException bool `json:"continueOnException,omitempty"`
+	ContinueOnException *bool `json:"continueOnException,omitempty"`
 
 	DataflowApiVersion string `json:"dataflowApiVersion,omitempty"`
 
@@ -708,7 +708,7 @@ type TaskRunnerSettings struct {
 
 	LogDir string `json:"logDir,omitempty"`
 
-	LogToSerialconsole bool `json:"logToSerialconsole,omitempty"`
+	LogToSerialconsole *bool `json:"logToSerialconsole,omitempty"`
 
 	LogUploadLocation string `json:"logUploadLocation,omitempty"`
 
@@ -782,7 +782,7 @@ type WorkItemServiceState struct {
 type WorkItemServiceStateHarnessData interface{}
 
 type WorkItemStatus struct {
-	Completed bool `json:"completed,omitempty"`
+	Completed *bool `json:"completed,omitempty"`
 
 	DynamicSourceSplit *DynamicSourceSplit `json:"dynamicSourceSplit,omitempty"`
 
@@ -854,7 +854,7 @@ type WorkerPoolPoolArgs interface{}
 type WorkerSettings struct {
 	BaseUrl string `json:"baseUrl,omitempty"`
 
-	ReportingEnabled bool `json:"reportingEnabled,omitempty"`
+	ReportingEnabled *bool `json:"reportingEnabled,omitempty"`
 
 	ServicePath string `json:"servicePath,omitempty"`
 

@@ -232,7 +232,7 @@ type Column struct {
 
 	// ValidateData: If true, data entered via the web application is
 	// validated.
-	ValidateData bool `json:"validateData,omitempty"`
+	ValidateData *bool `json:"validateData,omitempty"`
 }
 
 type ColumnBaseColumn struct {
@@ -487,7 +487,7 @@ type Table struct {
 	Description string `json:"description,omitempty"`
 
 	// IsExportable: Variable for whether table is exportable.
-	IsExportable bool `json:"isExportable,omitempty"`
+	IsExportable *bool `json:"isExportable,omitempty"`
 
 	// Kind: The kind of item this is. For a table, this is always
 	// fusiontables#table.
@@ -532,7 +532,7 @@ type Task struct {
 
 	// Started: false while the table is busy with some other task. true if
 	// this background task is currently running.
-	Started bool `json:"started,omitempty"`
+	Started *bool `json:"started,omitempty"`
 
 	// TaskId: Identifier for the task.
 	TaskId int64 `json:"taskId,omitempty,string"`

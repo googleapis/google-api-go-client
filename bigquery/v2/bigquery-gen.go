@@ -150,12 +150,12 @@ type CsvOptions struct {
 	// missing trailing columns are treated as bad records, and if there are
 	// too many bad records, an invalid error is returned in the job result.
 	// The default value is false.
-	AllowJaggedRows bool `json:"allowJaggedRows,omitempty"`
+	AllowJaggedRows *bool `json:"allowJaggedRows,omitempty"`
 
 	// AllowQuotedNewlines: [Optional] Indicates if BigQuery should allow
 	// quoted data sections that contain newline characters in a CSV file.
 	// The default value is false.
-	AllowQuotedNewlines bool `json:"allowQuotedNewlines,omitempty"`
+	AllowQuotedNewlines *bool `json:"allowQuotedNewlines,omitempty"`
 
 	// Encoding: [Optional] The character encoding of the data. The
 	// supported values are UTF-8 or ISO-8859-1. The default value is UTF-8.
@@ -361,7 +361,7 @@ type ExternalDataConfiguration struct {
 	// invalid error is returned in the job result. The default value is
 	// false. The sourceFormat property determines what BigQuery treats as
 	// an extra value: CSV: Trailing columns
-	IgnoreUnknownValues bool `json:"ignoreUnknownValues,omitempty"`
+	IgnoreUnknownValues *bool `json:"ignoreUnknownValues,omitempty"`
 
 	// MaxBadRecords: [Optional] The maximum number of bad records that
 	// BigQuery can ignore when reading data. If the number of bad records
@@ -386,7 +386,7 @@ type ExternalDataConfiguration struct {
 
 type GetQueryResultsResponse struct {
 	// CacheHit: Whether the query result was fetched from the query cache.
-	CacheHit bool `json:"cacheHit,omitempty"`
+	CacheHit *bool `json:"cacheHit,omitempty"`
 
 	// Etag: A hash of this response.
 	Etag string `json:"etag,omitempty"`
@@ -394,7 +394,7 @@ type GetQueryResultsResponse struct {
 	// JobComplete: Whether the query has completed or not. If rows or
 	// totalRows are present, this will always be true. If this is false,
 	// totalRows will not be available.
-	JobComplete bool `json:"jobComplete,omitempty"`
+	JobComplete *bool `json:"jobComplete,omitempty"`
 
 	// JobReference: Reference to the BigQuery Job that was created to run
 	// the query. This field will be present even if the original request
@@ -471,7 +471,7 @@ type JobConfiguration struct {
 	// will return a mostly empty response with some processing statistics,
 	// while an invalid query will return the same error it would if it
 	// wasn't a dry run. Behavior of non-query jobs is undefined.
-	DryRun bool `json:"dryRun,omitempty"`
+	DryRun *bool `json:"dryRun,omitempty"`
 
 	// Extract: [Pick one] Configures an extract job.
 	Extract *JobConfigurationExtract `json:"extract,omitempty"`
@@ -513,7 +513,7 @@ type JobConfigurationExtract struct {
 
 	// PrintHeader: [Optional] Whether to print out a header row in the
 	// results. Default is true.
-	PrintHeader bool `json:"printHeader,omitempty"`
+	PrintHeader *bool `json:"printHeader,omitempty"`
 
 	// SourceTable: [Required] A reference to the table being exported.
 	SourceTable *TableReference `json:"sourceTable,omitempty"`
@@ -555,12 +555,12 @@ type JobConfigurationLoad struct {
 	// if there are too many bad records, an invalid error is returned in
 	// the job result. The default value is false. Only applicable to CSV,
 	// ignored for other formats.
-	AllowJaggedRows bool `json:"allowJaggedRows,omitempty"`
+	AllowJaggedRows *bool `json:"allowJaggedRows,omitempty"`
 
 	// AllowQuotedNewlines: Indicates if BigQuery should allow quoted data
 	// sections that contain newline characters in a CSV file. The default
 	// value is false.
-	AllowQuotedNewlines bool `json:"allowQuotedNewlines,omitempty"`
+	AllowQuotedNewlines *bool `json:"allowQuotedNewlines,omitempty"`
 
 	// CreateDisposition: [Optional] Specifies whether the job is allowed to
 	// create new tables. The following values are supported:
@@ -596,7 +596,7 @@ type JobConfigurationLoad struct {
 	// false. The sourceFormat property determines what BigQuery treats as
 	// an extra value: CSV: Trailing columns JSON: Named values that don't
 	// match any column names
-	IgnoreUnknownValues bool `json:"ignoreUnknownValues,omitempty"`
+	IgnoreUnknownValues *bool `json:"ignoreUnknownValues,omitempty"`
 
 	// MaxBadRecords: [Optional] The maximum number of bad records that
 	// BigQuery can ignore when running the job. If the number of bad
@@ -671,7 +671,7 @@ type JobConfigurationQuery struct {
 	// AllowLargeResults: If true, allows the query to produce arbitrarily
 	// large result tables at a slight cost in performance. Requires
 	// destinationTable to be set.
-	AllowLargeResults bool `json:"allowLargeResults,omitempty"`
+	AllowLargeResults *bool `json:"allowLargeResults,omitempty"`
 
 	// CreateDisposition: [Optional] Specifies whether the job is allowed to
 	// create new tables. The following values are supported:
@@ -694,10 +694,10 @@ type JobConfigurationQuery struct {
 	// FlattenResults: [Optional] Flattens all nested and repeated fields in
 	// the query results. The default value is true. allowLargeResults must
 	// be true if this is set to false.
-	FlattenResults bool `json:"flattenResults,omitempty"`
+	FlattenResults *bool `json:"flattenResults,omitempty"`
 
 	// PreserveNulls: [Deprecated] This property is deprecated.
-	PreserveNulls bool `json:"preserveNulls,omitempty"`
+	PreserveNulls *bool `json:"preserveNulls,omitempty"`
 
 	// Priority: [Optional] Specifies a priority for the query. Possible
 	// values include INTERACTIVE and BATCH. The default value is
@@ -718,7 +718,7 @@ type JobConfigurationQuery struct {
 	// whenever tables in the query are modified. Moreover, the query cache
 	// is only available when a query does not have a destination table
 	// specified.
-	UseQueryCache bool `json:"useQueryCache,omitempty"`
+	UseQueryCache *bool `json:"useQueryCache,omitempty"`
 
 	// WriteDisposition: [Optional] Specifies the action that occurs if the
 	// destination table already exists. The following values are supported:
@@ -858,7 +858,7 @@ type JobStatistics struct {
 type JobStatistics2 struct {
 	// CacheHit: [Output-only] Whether the query result was fetched from the
 	// query cache.
-	CacheHit bool `json:"cacheHit,omitempty"`
+	CacheHit *bool `json:"cacheHit,omitempty"`
 
 	// TotalBytesProcessed: [Output-only] Total bytes processed for this
 	// job.
@@ -959,7 +959,7 @@ type QueryRequest struct {
 	// will return a mostly empty response with some processing statistics,
 	// while an invalid query will return the same error it would if it
 	// wasn't a dry run.
-	DryRun bool `json:"dryRun,omitempty"`
+	DryRun *bool `json:"dryRun,omitempty"`
 
 	// Kind: The resource type of the request.
 	Kind string `json:"kind,omitempty"`
@@ -973,7 +973,7 @@ type QueryRequest struct {
 	MaxResults int64 `json:"maxResults,omitempty"`
 
 	// PreserveNulls: [Deprecated] This property is deprecated.
-	PreserveNulls bool `json:"preserveNulls,omitempty"`
+	PreserveNulls *bool `json:"preserveNulls,omitempty"`
 
 	// Query: [Required] A query string, following the BigQuery query
 	// syntax, of the query to execute. Example: "SELECT count(f1) FROM
@@ -992,17 +992,17 @@ type QueryRequest struct {
 	// UseQueryCache: [Optional] Whether to look for the result in the query
 	// cache. The query cache is a best-effort cache that will be flushed
 	// whenever tables in the query are modified. The default value is true.
-	UseQueryCache bool `json:"useQueryCache,omitempty"`
+	UseQueryCache *bool `json:"useQueryCache,omitempty"`
 }
 
 type QueryResponse struct {
 	// CacheHit: Whether the query result was fetched from the query cache.
-	CacheHit bool `json:"cacheHit,omitempty"`
+	CacheHit *bool `json:"cacheHit,omitempty"`
 
 	// JobComplete: Whether the query has completed or not. If rows or
 	// totalRows are present, this will always be true. If this is false,
 	// totalRows will not be available.
-	JobComplete bool `json:"jobComplete,omitempty"`
+	JobComplete *bool `json:"jobComplete,omitempty"`
 
 	// JobReference: Reference to the Job that was created to run the query.
 	// This field will be present even if the original request timed out, in
@@ -1105,7 +1105,7 @@ type TableDataInsertAllRequest struct {
 	// IgnoreUnknownValues: [Optional] Accept rows that contain values that
 	// do not match the schema. The unknown values are ignored. Default is
 	// false, which treats unknown values as errors.
-	IgnoreUnknownValues bool `json:"ignoreUnknownValues,omitempty"`
+	IgnoreUnknownValues *bool `json:"ignoreUnknownValues,omitempty"`
 
 	// Kind: The resource type of the response.
 	Kind string `json:"kind,omitempty"`
@@ -1116,7 +1116,7 @@ type TableDataInsertAllRequest struct {
 	// SkipInvalidRows: [Optional] Insert all valid rows of a request, even
 	// if invalid rows exist. The default value is false, which causes the
 	// entire request to fail if any invalid rows exist.
-	SkipInvalidRows bool `json:"skipInvalidRows,omitempty"`
+	SkipInvalidRows *bool `json:"skipInvalidRows,omitempty"`
 }
 
 type TableDataInsertAllRequestRows struct {

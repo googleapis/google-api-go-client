@@ -137,7 +137,7 @@ type ReportsService struct {
 type Advertiser struct {
 	// AllowPublisherCreatedLinks: True if the advertiser allows publisher
 	// created links, otherwise false.
-	AllowPublisherCreatedLinks bool `json:"allowPublisherCreatedLinks,omitempty"`
+	AllowPublisherCreatedLinks *bool `json:"allowPublisherCreatedLinks,omitempty"`
 
 	// Category: Category that this advertiser belongs to. A valid list of
 	// categories can be found here:
@@ -204,7 +204,7 @@ type Advertiser struct {
 
 	// ProductFeedsEnabled: Allows advertisers to submit product listings to
 	// Google Product Search.
-	ProductFeedsEnabled bool `json:"productFeedsEnabled,omitempty"`
+	ProductFeedsEnabled *bool `json:"productFeedsEnabled,omitempty"`
 
 	// RedirectDomains: List of redirect URLs for this advertiser
 	RedirectDomains []string `json:"redirectDomains,omitempty"`
@@ -323,7 +323,7 @@ type CcOffer struct {
 
 	// ExistingCustomerOnly: Whether this card is only available to existing
 	// customers of the issuer.
-	ExistingCustomerOnly bool `json:"existingCustomerOnly,omitempty"`
+	ExistingCustomerOnly *bool `json:"existingCustomerOnly,omitempty"`
 
 	// ExtendedWarranty: If you get coverage when you use the card for the
 	// given activity, this field describes it.
@@ -414,7 +414,7 @@ type CcOffer struct {
 
 	// OffersImmediateCashReward: Whether a cash reward program lets you get
 	// cash back sooner than end of year or other longish period.
-	OffersImmediateCashReward bool `json:"offersImmediateCashReward,omitempty"`
+	OffersImmediateCashReward *bool `json:"offersImmediateCashReward,omitempty"`
 
 	// OverLimitFee: Fee for exceeding the card's charge limit.
 	OverLimitFee string `json:"overLimitFee,omitempty"`
@@ -447,11 +447,11 @@ type CcOffer struct {
 	Rewards []*CcOfferRewards `json:"rewards,omitempty"`
 
 	// RewardsExpire: Whether accumulated rewards ever expire.
-	RewardsExpire bool `json:"rewardsExpire,omitempty"`
+	RewardsExpire *bool `json:"rewardsExpire,omitempty"`
 
 	// RewardsHaveBlackoutDates: For airline miles rewards, tells whether
 	// blackout dates apply to the miles.
-	RewardsHaveBlackoutDates bool `json:"rewardsHaveBlackoutDates,omitempty"`
+	RewardsHaveBlackoutDates *bool `json:"rewardsHaveBlackoutDates,omitempty"`
 
 	// StatementCopyFee: Fee for requesting a copy of your statement.
 	StatementCopyFee string `json:"statementCopyFee,omitempty"`
@@ -687,7 +687,7 @@ type Link struct {
 	ImpressionTrackingUrl string `json:"impressionTrackingUrl,omitempty"`
 
 	// IsActive: Flag for if this link is active.
-	IsActive bool `json:"isActive,omitempty"`
+	IsActive *bool `json:"isActive,omitempty"`
 
 	// Kind: The kind for one entity.
 	Kind string `json:"kind,omitempty"`
@@ -710,10 +710,10 @@ type Link struct {
 
 type LinkSpecialOffers struct {
 	// FreeGift: Whether there is a free gift
-	FreeGift bool `json:"freeGift,omitempty"`
+	FreeGift *bool `json:"freeGift,omitempty"`
 
 	// FreeShipping: Whether there is free shipping
-	FreeShipping bool `json:"freeShipping,omitempty"`
+	FreeShipping *bool `json:"freeShipping,omitempty"`
 
 	// FreeShippingMin: Minimum purchase amount for free shipping promotion
 	FreeShippingMin *Money `json:"freeShippingMin,omitempty"`

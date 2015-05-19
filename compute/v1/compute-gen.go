@@ -594,11 +594,11 @@ type AttachedDisk struct {
 	// AutoDelete: Specifies whether the disk will be auto-deleted when the
 	// instance is deleted (but not when the disk is detached from the
 	// instance).
-	AutoDelete bool `json:"autoDelete,omitempty"`
+	AutoDelete *bool `json:"autoDelete,omitempty"`
 
 	// Boot: Indicates that this is a boot disk. The virtual machine will
 	// use the first partition of the disk for its root filesystem.
-	Boot bool `json:"boot,omitempty"`
+	Boot *bool `json:"boot,omitempty"`
 
 	// DeviceName: Specifies a unique device name of your choice that is
 	// reflected into the /dev/ tree of a Linux operating system running
@@ -1694,7 +1694,7 @@ type Instance struct {
 	// non-matching destination or source IPs. This is required if you plan
 	// to use this instance to forward routes. For more information, see
 	// Enabling IP Forwarding.
-	CanIpForward bool `json:"canIpForward,omitempty"`
+	CanIpForward *bool `json:"canIpForward,omitempty"`
 
 	// CpuPlatform: [Output Only] The CPU platform used by this instance.
 	CpuPlatform string `json:"cpuPlatform,omitempty"`
@@ -1854,7 +1854,7 @@ type InstanceProperties struct {
 	// own or receive packets with destination IP addresses other than their
 	// own. If you use these instances as an IP gateway or as the next-hop
 	// in a Route resource, specify true. Otherwise, specify false.
-	CanIpForward bool `json:"canIpForward,omitempty"`
+	CanIpForward *bool `json:"canIpForward,omitempty"`
 
 	// Description: An optional text description for the instances that are
 	// created from this instance template.
@@ -2002,7 +2002,7 @@ type InstancesScopedListWarningData struct {
 type License struct {
 	// ChargesUseFee: If true, the customer will be charged license fee for
 	// running software that contains this license on an instance.
-	ChargesUseFee bool `json:"chargesUseFee,omitempty"`
+	ChargesUseFee *bool `json:"chargesUseFee,omitempty"`
 
 	// Kind: [Output Only] Type of resource. Always compute#license for
 	// licenses.
@@ -2807,7 +2807,7 @@ type Scheduling struct {
 	// AutomaticRestart: Specifies whether the instance should be
 	// automatically restarted if it is terminated by Compute Engine (not
 	// terminated by a user).
-	AutomaticRestart bool `json:"automaticRestart,omitempty"`
+	AutomaticRestart *bool `json:"automaticRestart,omitempty"`
 
 	// OnHostMaintenance: Defines the maintenance behavior for this
 	// instance. The default behavior is MIGRATE. For more information, see
@@ -2819,7 +2819,7 @@ type Scheduling struct {
 	OnHostMaintenance string `json:"onHostMaintenance,omitempty"`
 
 	// Preemptible: Whether the Instance is preemptible.
-	Preemptible bool `json:"preemptible,omitempty"`
+	Preemptible *bool `json:"preemptible,omitempty"`
 }
 
 type SerialPortOutput struct {
@@ -3553,14 +3553,14 @@ type UrlMapValidationResult struct {
 
 	// LoadSucceeded: Whether the given UrlMap can be successfully loaded.
 	// If false, 'loadErrors' indicates the reasons.
-	LoadSucceeded bool `json:"loadSucceeded,omitempty"`
+	LoadSucceeded *bool `json:"loadSucceeded,omitempty"`
 
 	TestFailures []*TestFailure `json:"testFailures,omitempty"`
 
 	// TestPassed: If successfully loaded, this field indicates whether the
 	// test passed. If false, 'testFailures's indicate the reason of
 	// failure.
-	TestPassed bool `json:"testPassed,omitempty"`
+	TestPassed *bool `json:"testPassed,omitempty"`
 }
 
 type UrlMapsValidateRequest struct {

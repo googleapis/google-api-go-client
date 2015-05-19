@@ -183,7 +183,7 @@ type ActivityEvents struct {
 
 type ActivityEventsParameters struct {
 	// BoolValue: Boolean value of the parameter.
-	BoolValue bool `json:"boolValue,omitempty"`
+	BoolValue *bool `json:"boolValue,omitempty"`
 
 	// IntValue: Integral value of the parameter.
 	IntValue int64 `json:"intValue,omitempty,string"`
@@ -238,7 +238,7 @@ type Channel struct {
 
 	// Payload: A Boolean value to indicate whether payload is wanted.
 	// Optional.
-	Payload bool `json:"payload,omitempty"`
+	Payload *bool `json:"payload,omitempty"`
 
 	// ResourceId: An opaque ID that identifies the resource being watched
 	// on this channel. Stable across different API versions.
@@ -288,7 +288,7 @@ type UsageReportEntity struct {
 
 type UsageReportParameters struct {
 	// BoolValue: Boolean value of the parameter.
-	BoolValue bool `json:"boolValue,omitempty"`
+	BoolValue *bool `json:"boolValue,omitempty"`
 
 	// DatetimeValue: RFC 3339 formatted value of the parameter.
 	DatetimeValue string `json:"datetimeValue,omitempty"`

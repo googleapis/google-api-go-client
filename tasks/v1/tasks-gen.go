@@ -102,7 +102,7 @@ type Task struct {
 
 	// Deleted: Flag indicating whether the task has been deleted. The
 	// default if False.
-	Deleted bool `json:"deleted,omitempty"`
+	Deleted *bool `json:"deleted,omitempty"`
 
 	// Due: Due date of the task (as a RFC 3339 timestamp). Optional.
 	Due string `json:"due,omitempty"`
@@ -113,7 +113,7 @@ type Task struct {
 	// Hidden: Flag indicating whether the task is hidden. This is the case
 	// if the task had been marked completed when the task list was last
 	// cleared. The default is False. This field is read-only.
-	Hidden bool `json:"hidden,omitempty"`
+	Hidden *bool `json:"hidden,omitempty"`
 
 	// Id: Task identifier.
 	Id string `json:"id,omitempty"`

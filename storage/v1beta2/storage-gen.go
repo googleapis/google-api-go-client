@@ -266,7 +266,7 @@ type BucketLifecycleRuleCondition struct {
 	// IsLive: Relevant only for versioned objects. If the value is true,
 	// this condition matches live objects; if the value is false, it
 	// matches archived objects.
-	IsLive bool `json:"isLive,omitempty"`
+	IsLive *bool `json:"isLive,omitempty"`
 
 	// NumNewerVersions: Relevant only for versioned objects. If the value
 	// is N, this condition is satisfied when there are at least N versions
@@ -294,7 +294,7 @@ type BucketOwner struct {
 type BucketVersioning struct {
 	// Enabled: While set to true, versioning is fully enabled for this
 	// bucket.
-	Enabled bool `json:"enabled,omitempty"`
+	Enabled *bool `json:"enabled,omitempty"`
 }
 
 type BucketWebsite struct {
@@ -399,7 +399,7 @@ type Channel struct {
 
 	// Payload: A Boolean value to indicate whether payload is wanted.
 	// Optional.
-	Payload bool `json:"payload,omitempty"`
+	Payload *bool `json:"payload,omitempty"`
 
 	// ResourceId: An opaque ID that identifies the resource being watched
 	// on this channel. Stable across different API versions.

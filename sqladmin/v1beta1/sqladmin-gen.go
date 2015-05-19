@@ -121,7 +121,7 @@ type TiersService struct {
 
 type BackupConfiguration struct {
 	// Enabled: Whether this configuration is enabled.
-	Enabled bool `json:"enabled,omitempty"`
+	Enabled *bool `json:"enabled,omitempty"`
 
 	// Id: Identifier for this configuration. This gets generated
 	// automatically when a backup configuration is created.

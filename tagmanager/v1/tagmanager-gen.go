@@ -208,7 +208,7 @@ type Account struct {
 
 	// ShareData: Whether the account shares data anonymously with Google
 	// and others.
-	ShareData bool `json:"shareData,omitempty"`
+	ShareData *bool `json:"shareData,omitempty"`
 }
 
 type AccountAccess struct {
@@ -316,7 +316,7 @@ type ContainerVersion struct {
 
 	// Deleted: A value of true indicates this container version has been
 	// deleted.
-	Deleted bool `json:"deleted,omitempty"`
+	Deleted *bool `json:"deleted,omitempty"`
 
 	// Fingerprint: The fingerprint of the GTM Container Version as computed
 	// at storage time. This value is recomputed whenever the container
@@ -361,7 +361,7 @@ type ContainerVersionHeader struct {
 
 	// Deleted: A value of true indicates this container version has been
 	// deleted.
-	Deleted bool `json:"deleted,omitempty"`
+	Deleted *bool `json:"deleted,omitempty"`
 
 	// Name: Container version display name.
 	Name string `json:"name,omitempty"`
@@ -391,12 +391,12 @@ type CreateContainerVersionRequestVersionOptions struct {
 
 	// QuickPreview: The creation of this version may be for quick preview
 	// and shouldn't be saved.
-	QuickPreview bool `json:"quickPreview,omitempty"`
+	QuickPreview *bool `json:"quickPreview,omitempty"`
 }
 
 type CreateContainerVersionResponse struct {
 	// CompilerError: Compiler errors or not.
-	CompilerError bool `json:"compilerError,omitempty"`
+	CompilerError *bool `json:"compilerError,omitempty"`
 
 	// ContainerVersion: The container version created.
 	ContainerVersion *ContainerVersion `json:"containerVersion,omitempty"`
@@ -534,7 +534,7 @@ type Parameter struct {
 
 type PublishContainerVersionResponse struct {
 	// CompilerError: Compiler errors or not.
-	CompilerError bool `json:"compilerError,omitempty"`
+	CompilerError *bool `json:"compilerError,omitempty"`
 
 	// ContainerVersion: The container version created.
 	ContainerVersion *ContainerVersion `json:"containerVersion,omitempty"`
@@ -596,7 +596,7 @@ type Tag struct {
 
 	// LiveOnly: If set to true, this tag will only fire in the live
 	// environment (e.g. not in preview or debug mode).
-	LiveOnly bool `json:"liveOnly,omitempty"`
+	LiveOnly *bool `json:"liveOnly,omitempty"`
 
 	// Name: Tag display name.
 	Name string `json:"name,omitempty"`

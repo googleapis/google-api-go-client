@@ -228,7 +228,7 @@ type MetricDescriptorTypeDescriptor struct {
 
 type Point struct {
 	// BoolValue: The value of this data point. Either "true" or "false".
-	BoolValue bool `json:"boolValue,omitempty"`
+	BoolValue *bool `json:"boolValue,omitempty"`
 
 	// DistributionValue: The value of this data point as a distribution. A
 	// distribution value can contain a list of buckets and/or an

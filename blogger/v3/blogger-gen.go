@@ -256,7 +256,7 @@ type BlogPerUserInfo struct {
 	BlogId string `json:"blogId,omitempty"`
 
 	// HasAdminAccess: True if the user has Admin level access to the blog.
-	HasAdminAccess bool `json:"hasAdminAccess,omitempty"`
+	HasAdminAccess *bool `json:"hasAdminAccess,omitempty"`
 
 	// Kind: The kind of this entity. Always blogger#blogPerUserInfo
 	Kind string `json:"kind,omitempty"`
@@ -604,7 +604,7 @@ type PostPerUserInfo struct {
 	BlogId string `json:"blogId,omitempty"`
 
 	// HasEditAccess: True if the user has Author level access to the post.
-	HasEditAccess bool `json:"hasEditAccess,omitempty"`
+	HasEditAccess *bool `json:"hasEditAccess,omitempty"`
 
 	// Kind: The kind of this entity. Always blogger#postPerUserInfo
 	Kind string `json:"kind,omitempty"`

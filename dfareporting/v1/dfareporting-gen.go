@@ -385,7 +385,7 @@ type ReportCriteriaDateRange struct {
 type ReportSchedule struct {
 	// Active: Whether the schedule is active or not. Must be set to either
 	// true or false.
-	Active bool `json:"active,omitempty"`
+	Active *bool `json:"active,omitempty"`
 
 	// Every: Defines every how many days, weeks or months the report should
 	// be run. Needs to be set when "repeats" is either "DAILY", "WEEKLY" or

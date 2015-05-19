@@ -146,10 +146,10 @@ type TiersService struct {
 type BackupConfiguration struct {
 	// BinaryLogEnabled: Whether binary log is enabled. If backup
 	// configuration is disabled, binary log must be disabled as well.
-	BinaryLogEnabled bool `json:"binaryLogEnabled,omitempty"`
+	BinaryLogEnabled *bool `json:"binaryLogEnabled,omitempty"`
 
 	// Enabled: Whether this configuration is enabled.
-	Enabled bool `json:"enabled,omitempty"`
+	Enabled *bool `json:"enabled,omitempty"`
 
 	// Id: Identifier for this configuration. This gets generated
 	// automatically when a backup configuration is created.
@@ -599,14 +599,14 @@ type IpConfiguration struct {
 
 	// Enabled: Whether the instance should be assigned an IP address or
 	// not.
-	Enabled bool `json:"enabled,omitempty"`
+	Enabled *bool `json:"enabled,omitempty"`
 
 	// Kind: This is always sql#ipConfiguration.
 	Kind string `json:"kind,omitempty"`
 
 	// RequireSsl: Whether the mysqld should default to 'REQUIRE X509' for
 	// users connecting over IP.
-	RequireSsl bool `json:"requireSsl,omitempty"`
+	RequireSsl *bool `json:"requireSsl,omitempty"`
 }
 
 type IpMapping struct {
@@ -683,7 +683,7 @@ type Settings struct {
 
 	// DatabaseReplicationEnabled: Configuration specific to read replica
 	// instance. Indicates whether replication is enabled or not.
-	DatabaseReplicationEnabled bool `json:"databaseReplicationEnabled,omitempty"`
+	DatabaseReplicationEnabled *bool `json:"databaseReplicationEnabled,omitempty"`
 
 	// IpConfiguration: The settings for IP Management. This allows to
 	// enable or disable the instance IP and manage which external networks

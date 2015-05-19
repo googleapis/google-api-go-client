@@ -685,7 +685,7 @@ type Account struct {
 	AccountProfile string `json:"accountProfile,omitempty"`
 
 	// Active: Whether this account is active.
-	Active bool `json:"active,omitempty"`
+	Active *bool `json:"active,omitempty"`
 
 	// ActiveAdsLimitTier: Maximum number of active ads allowed for this
 	// account.
@@ -701,7 +701,7 @@ type Account struct {
 	// ActiveViewOptOut: Whether to serve creatives with Active View tags.
 	// If disabled, viewability data will not be available for any
 	// impressions.
-	ActiveViewOptOut bool `json:"activeViewOptOut,omitempty"`
+	ActiveViewOptOut *bool `json:"activeViewOptOut,omitempty"`
 
 	// AvailablePermissionIds: User role permissions available to the user
 	// roles of this account.
@@ -709,7 +709,7 @@ type Account struct {
 
 	// ComscoreVceEnabled: Whether campaigns created in this account will be
 	// enabled for comScore vCE by default.
-	ComscoreVceEnabled bool `json:"comscoreVceEnabled,omitempty"`
+	ComscoreVceEnabled *bool `json:"comscoreVceEnabled,omitempty"`
 
 	// CountryId: ID of the country associated with this account.
 	CountryId int64 `json:"countryId,omitempty,string"`
@@ -797,7 +797,7 @@ type Account struct {
 
 	// NielsenOcrEnabled: Whether campaigns created in this account will be
 	// enabled for Nielsen OCR reach ratings by default.
-	NielsenOcrEnabled bool `json:"nielsenOcrEnabled,omitempty"`
+	NielsenOcrEnabled *bool `json:"nielsenOcrEnabled,omitempty"`
 
 	// ReportsConfiguration: Reporting configuration of this account.
 	ReportsConfiguration *ReportsConfiguration `json:"reportsConfiguration,omitempty"`
@@ -901,7 +901,7 @@ type AccountUserProfile struct {
 
 	// Active: Whether this user profile is active. This defaults to false,
 	// and must be set true on insert for the user profile to be usable.
-	Active bool `json:"active,omitempty"`
+	Active *bool `json:"active,omitempty"`
 
 	// AdvertiserFilter: Filter that describes which advertisers are visible
 	// to the user profile.
@@ -1032,7 +1032,7 @@ type Ad struct {
 	AccountId int64 `json:"accountId,omitempty,string"`
 
 	// Active: Whether this ad is active.
-	Active bool `json:"active,omitempty"`
+	Active *bool `json:"active,omitempty"`
 
 	// AdvertiserId: Advertiser ID of this ad. This is a required field on
 	// insertion.
@@ -1043,7 +1043,7 @@ type Ad struct {
 	AdvertiserIdDimensionValue *DimensionValue `json:"advertiserIdDimensionValue,omitempty"`
 
 	// Archived: Whether this ad is archived.
-	Archived bool `json:"archived,omitempty"`
+	Archived *bool `json:"archived,omitempty"`
 
 	// AudienceSegmentId: Audience segment ID that is being targeted for
 	// this ad. Applicable when type is AD_SERVING_STANDARD_AD.
@@ -1118,7 +1118,7 @@ type Ad struct {
 	// DynamicClickTracker: Whether this ad is a dynamic click tracker.
 	// Applicable when type is AD_SERVING_CLICK_TRACKER. This is a required
 	// field on insert, and is read-only after insert.
-	DynamicClickTracker bool `json:"dynamicClickTracker,omitempty"`
+	DynamicClickTracker *bool `json:"dynamicClickTracker,omitempty"`
 
 	// EndTime: Date and time that this ad should stop serving. Must be
 	// later than the start time. This is a required field on insertion.
@@ -1167,11 +1167,11 @@ type Ad struct {
 
 	// SslCompliant: Whether this ad is ssl compliant. This is a read-only
 	// field that is auto-generated when the ad is inserted or updated.
-	SslCompliant bool `json:"sslCompliant,omitempty"`
+	SslCompliant *bool `json:"sslCompliant,omitempty"`
 
 	// SslRequired: Whether this ad requires ssl. This is a read-only field
 	// that is auto-generated when the ad is inserted or updated.
-	SslRequired bool `json:"sslRequired,omitempty"`
+	SslRequired *bool `json:"sslRequired,omitempty"`
 
 	// StartTime: Date and time that this ad should start serving. If
 	// creating an ad, this field must be a time in the future. This is a
@@ -1423,7 +1423,7 @@ type Campaign struct {
 	AdvertiserIdDimensionValue *DimensionValue `json:"advertiserIdDimensionValue,omitempty"`
 
 	// Archived: Whether this campaign has been archived.
-	Archived bool `json:"archived,omitempty"`
+	Archived *bool `json:"archived,omitempty"`
 
 	// AudienceSegmentGroups: Audience segment groups assigned to this
 	// campaign. Cannot have more than 300 segment groups.
@@ -1443,7 +1443,7 @@ type Campaign struct {
 
 	// ComscoreVceEnabled: Whether comScore vCE reports are enabled for this
 	// campaign.
-	ComscoreVceEnabled bool `json:"comscoreVceEnabled,omitempty"`
+	ComscoreVceEnabled *bool `json:"comscoreVceEnabled,omitempty"`
 
 	// CreateInfo: Information about the creation of this campaign. This is
 	// a read-only field.
@@ -1502,7 +1502,7 @@ type Campaign struct {
 
 	// NielsenOcrEnabled: Whether Nielsen reports are enabled for this
 	// campaign.
-	NielsenOcrEnabled bool `json:"nielsenOcrEnabled,omitempty"`
+	NielsenOcrEnabled *bool `json:"nielsenOcrEnabled,omitempty"`
 
 	// StartDate: Date on which the campaign starts running. The start date
 	// can be any date. The hours, minutes, and seconds of the start date
@@ -1682,7 +1682,7 @@ type ClickThroughUrl struct {
 
 	// DefaultLandingPage: Whether the campaign default landing page is
 	// used.
-	DefaultLandingPage bool `json:"defaultLandingPage,omitempty"`
+	DefaultLandingPage *bool `json:"defaultLandingPage,omitempty"`
 
 	// LandingPageId: ID of the landing page for the click-through URL.
 	// Applicable if the defaultLandingPage field is set to false.
@@ -1696,7 +1696,7 @@ type ClickThroughUrlSuffixProperties struct {
 
 	// OverrideInheritedSuffix: Whether this entity should override the
 	// inherited click-through URL suffix with its own defined value.
-	OverrideInheritedSuffix bool `json:"overrideInheritedSuffix,omitempty"`
+	OverrideInheritedSuffix *bool `json:"overrideInheritedSuffix,omitempty"`
 }
 
 type CompanionClickThroughOverride struct {
@@ -1819,7 +1819,7 @@ type Country struct {
 
 	// SslEnabled: Whether ad serving supports secure servers in this
 	// country.
-	SslEnabled bool `json:"sslEnabled,omitempty"`
+	SslEnabled *bool `json:"sslEnabled,omitempty"`
 }
 
 type Creative struct {
@@ -1830,7 +1830,7 @@ type Creative struct {
 
 	// Active: Whether the creative is active. Applicable to all creative
 	// types.
-	Active bool `json:"active,omitempty"`
+	Active *bool `json:"active,omitempty"`
 
 	// AdParameters: Ad parameters user for VPAID creative. This is a
 	// read-only field. Applicable to the following creative types: all
@@ -1853,11 +1853,11 @@ type Creative struct {
 	// creative. This is a read-only and deprecated field which will
 	// automatically be set to true on update. Applicable to the following
 	// creative types: FLASH_INPAGE.
-	AllowScriptAccess bool `json:"allowScriptAccess,omitempty"`
+	AllowScriptAccess *bool `json:"allowScriptAccess,omitempty"`
 
 	// Archived: Whether the creative is archived. Applicable to all
 	// creative types.
-	Archived bool `json:"archived,omitempty"`
+	Archived *bool `json:"archived,omitempty"`
 
 	// ArtworkType: Type of artwork used for the creative. This is a
 	// read-only field. Applicable to the following creative types: all
@@ -1881,7 +1881,7 @@ type Creative struct {
 	// AutoAdvanceImages: Whether images are automatically advanced for
 	// enhanced image creatives. Applicable to the following creative types:
 	// ENHANCED_IMAGE.
-	AutoAdvanceImages bool `json:"auto_advance_images,omitempty"`
+	AutoAdvanceImages *bool `json:"auto_advance_images,omitempty"`
 
 	// BackgroundColor: The 6-character HTML color code, beginning with #,
 	// for the background of the window area where the Flash file is
@@ -1999,7 +1999,7 @@ type Creative struct {
 	// HtmlCodeLocked: Whether HTML code is DCM-generated or manually
 	// entered. Set to true to ignore changes to htmlCode. Applicable to the
 	// following creative types: FLASH_INPAGE and HTML5_BANNER.
-	HtmlCodeLocked bool `json:"htmlCodeLocked,omitempty"`
+	HtmlCodeLocked *bool `json:"htmlCodeLocked,omitempty"`
 
 	// Id: ID of this creative. This is a read-only, auto-generated field.
 	// Applicable to all creative types.
@@ -2070,11 +2070,11 @@ type Creative struct {
 
 	// Skippable: Whether the user can choose to skip the creative.
 	// Applicable to the following creative types: INSTREAM_VIDEO.
-	Skippable bool `json:"skippable,omitempty"`
+	Skippable *bool `json:"skippable,omitempty"`
 
 	// SslCompliant: Whether the creative is SSL-compliant. This is a
 	// read-only field. Applicable to all creative types.
-	SslCompliant bool `json:"sslCompliant,omitempty"`
+	SslCompliant *bool `json:"sslCompliant,omitempty"`
 
 	// StudioAdvertiserId: Studio advertiser ID associated with rich media
 	// and VPAID creatives. This is a read-only field. Applicable to the
@@ -2175,12 +2175,12 @@ type CreativeAsset struct {
 	// ActionScript3: Whether ActionScript3 is enabled for the flash asset.
 	// This is a read-only field. Applicable to the following creative
 	// types: FLASH_INPAGE and ENHANCED_BANNER.
-	ActionScript3 bool `json:"actionScript3,omitempty"`
+	ActionScript3 *bool `json:"actionScript3,omitempty"`
 
 	// Active: Whether the video asset is active. This is a read-only field
 	// for VPAID_NON_LINEAR assets. Applicable to the following creative
 	// types: INSTREAM_VIDEO and all VPAID.
-	Active bool `json:"active,omitempty"`
+	Active *bool `json:"active,omitempty"`
 
 	// Alignment: Possible alignments for an asset. This is a read-only
 	// field. Applicable to the following creative types:
@@ -2292,16 +2292,16 @@ type CreativeAsset struct {
 
 	// HideFlashObjects: Whether to hide Flash objects flag for an asset.
 	// Applicable to the following creative types: all RICH_MEDIA.
-	HideFlashObjects bool `json:"hideFlashObjects,omitempty"`
+	HideFlashObjects *bool `json:"hideFlashObjects,omitempty"`
 
 	// HideSelectionBoxes: Whether to hide selection boxes flag for an
 	// asset. Applicable to the following creative types: all RICH_MEDIA.
-	HideSelectionBoxes bool `json:"hideSelectionBoxes,omitempty"`
+	HideSelectionBoxes *bool `json:"hideSelectionBoxes,omitempty"`
 
 	// HorizontallyLocked: Whether the asset is horizontally locked. This is
 	// a read-only field. Applicable to the following creative types: all
 	// RICH_MEDIA.
-	HorizontallyLocked bool `json:"horizontallyLocked,omitempty"`
+	HorizontallyLocked *bool `json:"horizontallyLocked,omitempty"`
 
 	// Id: Numeric ID of this creative asset. This is a required field and
 	// should not be modified. Applicable to all but the following creative
@@ -2323,7 +2323,7 @@ type CreativeAsset struct {
 	// OriginalBackup: Whether the backup asset is original or changed by
 	// the user in DCM. Applicable to the following creative types: all
 	// RICH_MEDIA.
-	OriginalBackup bool `json:"originalBackup,omitempty"`
+	OriginalBackup *bool `json:"originalBackup,omitempty"`
 
 	// Position: Offset position for an asset. Applicable to the following
 	// creative types: all RICH_MEDIA.
@@ -2358,7 +2358,7 @@ type CreativeAsset struct {
 	// applicable when the asset offsets are 0, the collapsedSize.width
 	// matches size.width, and the collapsedSize.height is less than
 	// size.height.
-	Pushdown bool `json:"pushdown,omitempty"`
+	Pushdown *bool `json:"pushdown,omitempty"`
 
 	// PushdownDuration: Pushdown duration in seconds for an asset. Must be
 	// between 0 and 9.99. Applicable to the following creative types: all
@@ -2416,7 +2416,7 @@ type CreativeAsset struct {
 	// SslCompliant: Whether the asset is SSL-compliant. This is a read-only
 	// field. Applicable to all but the following creative types: all
 	// REDIRECT and TRACKING_TEXT.
-	SslCompliant bool `json:"sslCompliant,omitempty"`
+	SslCompliant *bool `json:"sslCompliant,omitempty"`
 
 	// StartTimeType: Initial wait time type before making the asset
 	// visible. Applicable to the following creative types: all RICH_MEDIA.
@@ -2434,12 +2434,12 @@ type CreativeAsset struct {
 	// Transparency: Whether the asset is transparent. Applicable to the
 	// following creative types: all RICH_MEDIA. Additionally, only
 	// applicable to HTML5 assets.
-	Transparency bool `json:"transparency,omitempty"`
+	Transparency *bool `json:"transparency,omitempty"`
 
 	// VerticallyLocked: Whether the asset is vertically locked. This is a
 	// read-only field. Applicable to the following creative types: all
 	// RICH_MEDIA.
-	VerticallyLocked bool `json:"verticallyLocked,omitempty"`
+	VerticallyLocked *bool `json:"verticallyLocked,omitempty"`
 
 	// VideoDuration: Detected video duration for video asset. This is a
 	// read-only field. Applicable to the following creative types:
@@ -2543,14 +2543,14 @@ type CreativeAssetMetadata struct {
 type CreativeAssignment struct {
 	// Active: Whether this creative assignment is active. When true, the
 	// creative will be included in the ad's rotation.
-	Active bool `json:"active,omitempty"`
+	Active *bool `json:"active,omitempty"`
 
 	// ApplyEventTags: Whether applicable event tags should fire when this
 	// creative assignment is rendered. If this value is unset when the ad
 	// is inserted or updated, it will default to true for all creative
 	// types EXCEPT for INTERNAL_REDIRECT, INTERSTITIAL_INTERNAL_REDIRECT,
 	// and INSTREAM_VIDEO.
-	ApplyEventTags bool `json:"applyEventTags,omitempty"`
+	ApplyEventTags *bool `json:"applyEventTags,omitempty"`
 
 	// ClickThroughUrl: Click-through URL of the creative assignment.
 	ClickThroughUrl *ClickThroughUrl `json:"clickThroughUrl,omitempty"`
@@ -2599,7 +2599,7 @@ type CreativeAssignment struct {
 	// SslCompliant: Whether the creative to be assigned is SSL-compliant.
 	// This is a read-only field that is auto-generated when the ad is
 	// inserted or updated.
-	SslCompliant bool `json:"sslCompliant,omitempty"`
+	SslCompliant *bool `json:"sslCompliant,omitempty"`
 
 	// StartTime: Date and time that the assigned creative should start
 	// serving.
@@ -2612,7 +2612,7 @@ type CreativeAssignment struct {
 
 type CreativeCustomEvent struct {
 	// Active: Whether the event is active.
-	Active bool `json:"active,omitempty"`
+	Active *bool `json:"active,omitempty"`
 
 	// AdvertiserCustomEventName: User-entered name for the event.
 	AdvertiserCustomEventName string `json:"advertiserCustomEventName,omitempty"`
@@ -2980,7 +2980,7 @@ type DayPartTargeting struct {
 
 	// UserLocalTime: Whether or not to use the user's local time. If false,
 	// the America/New York time zone applies.
-	UserLocalTime bool `json:"userLocalTime,omitempty"`
+	UserLocalTime *bool `json:"userLocalTime,omitempty"`
 }
 
 type DefaultClickThroughEventTagProperties struct {
@@ -2990,7 +2990,7 @@ type DefaultClickThroughEventTagProperties struct {
 
 	// OverrideInheritedEventTag: Whether this entity should override the
 	// inherited default click-through event tag with its own defined value.
-	OverrideInheritedEventTag bool `json:"overrideInheritedEventTag,omitempty"`
+	OverrideInheritedEventTag *bool `json:"overrideInheritedEventTag,omitempty"`
 }
 
 type DeliverySchedule struct {
@@ -3001,7 +3001,7 @@ type DeliverySchedule struct {
 	// HardCutoff: Whether or not hard cutoff is enabled. If true, the ad
 	// will not serve after the end date and time. Otherwise the ad will
 	// continue to be served until it has reached its delivery goals.
-	HardCutoff bool `json:"hardCutoff,omitempty"`
+	HardCutoff *bool `json:"hardCutoff,omitempty"`
 
 	// ImpressionRatio: Impression ratio for this ad. This ratio determines
 	// how often each ad is served relative to the others. For example, if
@@ -3043,15 +3043,15 @@ type DfpSettings struct {
 
 	// ProgrammaticPlacementAccepted: Whether this directory site accepts
 	// programmatic placements.
-	ProgrammaticPlacementAccepted bool `json:"programmaticPlacementAccepted,omitempty"`
+	ProgrammaticPlacementAccepted *bool `json:"programmaticPlacementAccepted,omitempty"`
 
 	// PubPaidPlacementAccepted: Whether this directory site accepts
 	// publisher-paid tags.
-	PubPaidPlacementAccepted bool `json:"pubPaidPlacementAccepted,omitempty"`
+	PubPaidPlacementAccepted *bool `json:"pubPaidPlacementAccepted,omitempty"`
 
 	// PublisherPortalOnly: Whether this directory site is available only
 	// via DoubleClick Publisher Portal.
-	PublisherPortalOnly bool `json:"publisherPortalOnly,omitempty"`
+	PublisherPortalOnly *bool `json:"publisherPortalOnly,omitempty"`
 }
 
 type Dimension struct {
@@ -3149,7 +3149,7 @@ type DimensionValueRequest struct {
 
 type DirectorySite struct {
 	// Active: Whether this directory site is active.
-	Active bool `json:"active,omitempty"`
+	Active *bool `json:"active,omitempty"`
 
 	// ContactAssignments: Directory site contacts.
 	ContactAssignments []*DirectorySiteContactAssignment `json:"contactAssignments,omitempty"`
@@ -3310,30 +3310,30 @@ type DirectorySiteContactsListResponse struct {
 type DirectorySiteSettings struct {
 	// ActiveViewOptOut: Whether this directory site has disabled active
 	// view creatives.
-	ActiveViewOptOut bool `json:"activeViewOptOut,omitempty"`
+	ActiveViewOptOut *bool `json:"activeViewOptOut,omitempty"`
 
 	// DfpSettings: Directory site DFP settings.
 	DfpSettings *DfpSettings `json:"dfp_settings,omitempty"`
 
 	// InstreamVideoPlacementAccepted: Whether this site accepts in-stream
 	// video ads.
-	InstreamVideoPlacementAccepted bool `json:"instream_video_placement_accepted,omitempty"`
+	InstreamVideoPlacementAccepted *bool `json:"instream_video_placement_accepted,omitempty"`
 
 	// InterstitialPlacementAccepted: Whether this site accepts interstitial
 	// ads.
-	InterstitialPlacementAccepted bool `json:"interstitialPlacementAccepted,omitempty"`
+	InterstitialPlacementAccepted *bool `json:"interstitialPlacementAccepted,omitempty"`
 
 	// NielsenOcrOptOut: Whether this directory site has disabled Nielsen
 	// OCR reach ratings.
-	NielsenOcrOptOut bool `json:"nielsenOcrOptOut,omitempty"`
+	NielsenOcrOptOut *bool `json:"nielsenOcrOptOut,omitempty"`
 
 	// VerificationTagOptOut: Whether this directory site has disabled
 	// generation of Verification ins tags.
-	VerificationTagOptOut bool `json:"verificationTagOptOut,omitempty"`
+	VerificationTagOptOut *bool `json:"verificationTagOptOut,omitempty"`
 
 	// VideoActiveViewOptOut: Whether this directory site has disabled
 	// active view for in-stream video creatives.
-	VideoActiveViewOptOut bool `json:"videoActiveViewOptOut,omitempty"`
+	VideoActiveViewOptOut *bool `json:"videoActiveViewOptOut,omitempty"`
 }
 
 type DirectorySitesListResponse struct {
@@ -3372,7 +3372,7 @@ type EventTag struct {
 
 	// EnabledByDefault: Whether this event tag should be automatically
 	// enabled for all of the advertiser's campaigns and ads.
-	EnabledByDefault bool `json:"enabledByDefault,omitempty"`
+	EnabledByDefault *bool `json:"enabledByDefault,omitempty"`
 
 	// Id: ID of this event tag. This is a read-only, auto-generated field.
 	Id int64 `json:"id,omitempty,string"`
@@ -3399,7 +3399,7 @@ type EventTag struct {
 	SiteIds googleapi.Int64s `json:"siteIds,omitempty"`
 
 	// SslCompliant: Whether this tag is SSL-compliant or not.
-	SslCompliant bool `json:"sslCompliant,omitempty"`
+	SslCompliant *bool `json:"sslCompliant,omitempty"`
 
 	// Status: Status of this event tag. Must be ENABLED for this event tag
 	// to fire. This is a required field.
@@ -3438,7 +3438,7 @@ type EventTag struct {
 
 type EventTagOverride struct {
 	// Enabled: Whether this override is enabled.
-	Enabled bool `json:"enabled,omitempty"`
+	Enabled *bool `json:"enabled,omitempty"`
 
 	// Id: ID of this event tag override. This is a read-only,
 	// auto-generated field.
@@ -3623,7 +3623,7 @@ type FloodlightActivity struct {
 	FloodlightConfigurationIdDimensionValue *DimensionValue `json:"floodlightConfigurationIdDimensionValue,omitempty"`
 
 	// Hidden: Whether this activity is archived.
-	Hidden bool `json:"hidden,omitempty"`
+	Hidden *bool `json:"hidden,omitempty"`
 
 	// Id: ID of this floodlight activity. This is a read-only,
 	// auto-generated field.
@@ -3634,7 +3634,7 @@ type FloodlightActivity struct {
 	IdDimensionValue *DimensionValue `json:"idDimensionValue,omitempty"`
 
 	// ImageTagEnabled: Whether the image tag is enabled for this activity.
-	ImageTagEnabled bool `json:"imageTagEnabled,omitempty"`
+	ImageTagEnabled *bool `json:"imageTagEnabled,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "dfareporting#floodlightActivity".
@@ -3651,15 +3651,15 @@ type FloodlightActivity struct {
 	PublisherTags []*FloodlightActivityPublisherDynamicTag `json:"publisherTags,omitempty"`
 
 	// Secure: Whether this tag should use SSL.
-	Secure bool `json:"secure,omitempty"`
+	Secure *bool `json:"secure,omitempty"`
 
 	// SslCompliant: Whether the floodlight activity is SSL-compliant. This
 	// is a read-only field, its value detected by the system from the
 	// floodlight tags.
-	SslCompliant bool `json:"sslCompliant,omitempty"`
+	SslCompliant *bool `json:"sslCompliant,omitempty"`
 
 	// SslRequired: Whether this floodlight activity must be SSL-compliant.
-	SslRequired bool `json:"sslRequired,omitempty"`
+	SslRequired *bool `json:"sslRequired,omitempty"`
 
 	// SubaccountId: Subaccount ID of this floodlight activity. This is a
 	// read-only field that can be left blank.
@@ -3799,7 +3799,7 @@ type FloodlightActivityGroupsListResponse struct {
 
 type FloodlightActivityPublisherDynamicTag struct {
 	// ClickThrough: Whether this tag is applicable only for click-throughs.
-	ClickThrough bool `json:"clickThrough,omitempty"`
+	ClickThrough *bool `json:"clickThrough,omitempty"`
 
 	// DirectorySiteId: Directory site ID of this dynamic tag. This is a
 	// write-only field that can be used as an alternative to the siteId
@@ -3818,7 +3818,7 @@ type FloodlightActivityPublisherDynamicTag struct {
 	SiteIdDimensionValue *DimensionValue `json:"siteIdDimensionValue,omitempty"`
 
 	// ViewThrough: Whether this tag is applicable only for view-throughs.
-	ViewThrough bool `json:"viewThrough,omitempty"`
+	ViewThrough *bool `json:"viewThrough,omitempty"`
 }
 
 type FloodlightConfiguration struct {
@@ -3836,13 +3836,13 @@ type FloodlightConfiguration struct {
 
 	// AnalyticsDataSharingEnabled: Whether advertiser data is shared with
 	// Google Analytics.
-	AnalyticsDataSharingEnabled bool `json:"analyticsDataSharingEnabled,omitempty"`
+	AnalyticsDataSharingEnabled *bool `json:"analyticsDataSharingEnabled,omitempty"`
 
 	// ExposureToConversionEnabled: Whether the exposure-to-conversion
 	// report is enabled. This report shows detailed pathway information on
 	// up to 10 of the most recent ad exposures seen by a user before
 	// converting.
-	ExposureToConversionEnabled bool `json:"exposureToConversionEnabled,omitempty"`
+	ExposureToConversionEnabled *bool `json:"exposureToConversionEnabled,omitempty"`
 
 	// FirstDayOfWeek: Day that will be counted as the first day of the week
 	// in reports. This is a required field.
@@ -3882,7 +3882,7 @@ type FloodlightConfiguration struct {
 
 	// SslRequired: Whether floodlight activities owned by this
 	// configuration are required to be SSL-compliant.
-	SslRequired bool `json:"sslRequired,omitempty"`
+	SslRequired *bool `json:"sslRequired,omitempty"`
 
 	// StandardVariableTypes: List of standard variables enabled for this
 	// configuration.
@@ -3983,7 +3983,7 @@ type GeoTargeting struct {
 	// ExcludeCountries: Whether or not to exclude the countries in the
 	// countries field from targeting. If false, the countries field refers
 	// to countries which will be targeted by the ad.
-	ExcludeCountries bool `json:"excludeCountries,omitempty"`
+	ExcludeCountries *bool `json:"excludeCountries,omitempty"`
 
 	// Metros: Metros to be targeted. For each metro only dmaId is required.
 	// The other fields are populated automatically when the ad is inserted
@@ -4013,7 +4013,7 @@ type LandingPage struct {
 	// Default: Whether or not this landing page will be assigned to any ads
 	// or creatives that do not have a landing page assigned explicitly.
 	// Only one default landing page is allowed per campaign.
-	Default bool `json:"default,omitempty"`
+	Default *bool `json:"default,omitempty"`
 
 	// Id: ID of this landing page. This is a read-only, auto-generated
 	// field.
@@ -4174,12 +4174,12 @@ type OmnitureSettings struct {
 	// OmnitureCostDataEnabled: Whether placement cost data will be sent to
 	// Omniture. This property can be enabled only if
 	// omnitureIntegrationEnabled is true.
-	OmnitureCostDataEnabled bool `json:"omnitureCostDataEnabled,omitempty"`
+	OmnitureCostDataEnabled *bool `json:"omnitureCostDataEnabled,omitempty"`
 
 	// OmnitureIntegrationEnabled: Whether Omniture integration is enabled.
 	// This property can be enabled only when the "Advanced Ad Serving"
 	// account setting is enabled.
-	OmnitureIntegrationEnabled bool `json:"omnitureIntegrationEnabled,omitempty"`
+	OmnitureIntegrationEnabled *bool `json:"omnitureIntegrationEnabled,omitempty"`
 }
 
 type OperatingSystem struct {
@@ -4188,14 +4188,14 @@ type OperatingSystem struct {
 	DartId int64 `json:"dartId,omitempty,string"`
 
 	// Desktop: Whether this operating system is for desktop.
-	Desktop bool `json:"desktop,omitempty"`
+	Desktop *bool `json:"desktop,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "dfareporting#operatingSystem".
 	Kind string `json:"kind,omitempty"`
 
 	// Mobile: Whether this operating system is for mobile.
-	Mobile bool `json:"mobile,omitempty"`
+	Mobile *bool `json:"mobile,omitempty"`
 
 	// Name: Name of this operating system.
 	Name string `json:"name,omitempty"`
@@ -4295,7 +4295,7 @@ type Placement struct {
 	AdvertiserIdDimensionValue *DimensionValue `json:"advertiserIdDimensionValue,omitempty"`
 
 	// Archived: Whether this placement is archived.
-	Archived bool `json:"archived,omitempty"`
+	Archived *bool `json:"archived,omitempty"`
 
 	// CampaignId: Campaign ID of this placement. This field is a required
 	// field on insertion.
@@ -4372,7 +4372,7 @@ type Placement struct {
 
 	// PaymentApproved: Whether payment was approved for this placement.
 	// This is a read-only field relevant only to publisher-paid placements.
-	PaymentApproved bool `json:"paymentApproved,omitempty"`
+	PaymentApproved *bool `json:"paymentApproved,omitempty"`
 
 	// PaymentSource: Payment source for this placement. This is a required
 	// field that is read-only after insertion.
@@ -4404,7 +4404,7 @@ type Placement struct {
 	// primary field on the original primary placement of the roadblock to
 	// false, and it will automatically set the roadblock's
 	// primaryPlacementId field to the ID of this placement.
-	Primary bool `json:"primary,omitempty"`
+	Primary *bool `json:"primary,omitempty"`
 
 	// PublisherUpdateInfo: Information about the last publisher update.
 	// This is a read-only field.
@@ -4427,7 +4427,7 @@ type Placement struct {
 
 	// SslRequired: Whether creatives assigned to this placement must be
 	// SSL-compliant.
-	SslRequired bool `json:"sslRequired,omitempty"`
+	SslRequired *bool `json:"sslRequired,omitempty"`
 
 	// Status: Third-party placement status.
 	//
@@ -4469,7 +4469,7 @@ type Placement struct {
 type PlacementAssignment struct {
 	// Active: Whether this placement assignment is active. When true, the
 	// placement will be included in the ad's rotation.
-	Active bool `json:"active,omitempty"`
+	Active *bool `json:"active,omitempty"`
 
 	// PlacementId: ID of the placement to be assigned. This is a required
 	// field.
@@ -4482,7 +4482,7 @@ type PlacementAssignment struct {
 	// SslRequired: Whether the placement to be assigned requires SSL. This
 	// is a read-only field that is auto-generated when the ad is inserted
 	// or updated.
-	SslRequired bool `json:"sslRequired,omitempty"`
+	SslRequired *bool `json:"sslRequired,omitempty"`
 }
 
 type PlacementGroup struct {
@@ -4499,7 +4499,7 @@ type PlacementGroup struct {
 	AdvertiserIdDimensionValue *DimensionValue `json:"advertiserIdDimensionValue,omitempty"`
 
 	// Archived: Whether this placement group is archived.
-	Archived bool `json:"archived,omitempty"`
+	Archived *bool `json:"archived,omitempty"`
 
 	// CampaignId: Campaign ID of this placement group. This field is
 	// required on insertion.
@@ -4721,19 +4721,19 @@ type PopupWindowProperties struct {
 	PositionType string `json:"positionType,omitempty"`
 
 	// ShowAddressBar: Whether to display the browser address bar.
-	ShowAddressBar bool `json:"showAddressBar,omitempty"`
+	ShowAddressBar *bool `json:"showAddressBar,omitempty"`
 
 	// ShowMenuBar: Whether to display the browser menu bar.
-	ShowMenuBar bool `json:"showMenuBar,omitempty"`
+	ShowMenuBar *bool `json:"showMenuBar,omitempty"`
 
 	// ShowScrollBar: Whether to display the browser scroll bar.
-	ShowScrollBar bool `json:"showScrollBar,omitempty"`
+	ShowScrollBar *bool `json:"showScrollBar,omitempty"`
 
 	// ShowStatusBar: Whether to display the browser status bar.
-	ShowStatusBar bool `json:"showStatusBar,omitempty"`
+	ShowStatusBar *bool `json:"showStatusBar,omitempty"`
 
 	// ShowToolBar: Whether to display the browser tool bar.
-	ShowToolBar bool `json:"showToolBar,omitempty"`
+	ShowToolBar *bool `json:"showToolBar,omitempty"`
 
 	// Title: Title of popup window.
 	Title string `json:"title,omitempty"`
@@ -4775,7 +4775,7 @@ type PricingSchedule struct {
 	CapCostOption string `json:"capCostOption,omitempty"`
 
 	// DisregardOverdelivery: Whether cap costs are ignored by ad serving.
-	DisregardOverdelivery bool `json:"disregardOverdelivery,omitempty"`
+	DisregardOverdelivery *bool `json:"disregardOverdelivery,omitempty"`
 
 	// EndDate: Placement end date. This date must be later than, or the
 	// same day as, the placement start date, but not later than the
@@ -4788,7 +4788,7 @@ type PricingSchedule struct {
 
 	// Flighted: Whether this placement is flighted. If true, pricing
 	// periods will be computed automatically.
-	Flighted bool `json:"flighted,omitempty"`
+	Flighted *bool `json:"flighted,omitempty"`
 
 	// FloodlightActivityId: Floodlight activity ID associated with this
 	// placement. This field should be set when placement pricing type is
@@ -4856,13 +4856,13 @@ type ProgrammaticSetting struct {
 
 	// InsertionOrderIdStatus: Whether insertion order ID has been placed in
 	// DFP. This is a read-only field.
-	InsertionOrderIdStatus bool `json:"insertionOrderIdStatus,omitempty"`
+	InsertionOrderIdStatus *bool `json:"insertionOrderIdStatus,omitempty"`
 
 	// MediaCostNanos: Media cost for the programmatic placement.
 	MediaCostNanos int64 `json:"mediaCostNanos,omitempty,string"`
 
 	// Programmatic: Whether programmatic is enabled.
-	Programmatic bool `json:"programmatic,omitempty"`
+	Programmatic *bool `json:"programmatic,omitempty"`
 
 	// TraffickerEmails: Trafficker emails assigned to the placement.
 	TraffickerEmails []string `json:"traffickerEmails,omitempty"`
@@ -5072,12 +5072,12 @@ type ReportCrossDimensionReachCriteria struct {
 	OverlapMetricNames []string `json:"overlapMetricNames,omitempty"`
 
 	// Pivoted: Whether the report is pivoted or not. Defaults to true.
-	Pivoted bool `json:"pivoted,omitempty"`
+	Pivoted *bool `json:"pivoted,omitempty"`
 }
 
 type ReportDelivery struct {
 	// EmailOwner: Whether the report should be emailed to the report owner.
-	EmailOwner bool `json:"emailOwner,omitempty"`
+	EmailOwner *bool `json:"emailOwner,omitempty"`
 
 	// EmailOwnerDeliveryType: The type of delivery for the owner to
 	// receive, if enabled.
@@ -5127,20 +5127,20 @@ type ReportFloodlightCriteria struct {
 type ReportFloodlightCriteriaReportProperties struct {
 	// IncludeAttributedIPConversions: Include conversions that have no
 	// cookie, but do have an exposure path.
-	IncludeAttributedIPConversions bool `json:"includeAttributedIPConversions,omitempty"`
+	IncludeAttributedIPConversions *bool `json:"includeAttributedIPConversions,omitempty"`
 
 	// IncludeUnattributedCookieConversions: Include conversions of users
 	// with a DoubleClick cookie but without an exposure. That means the
 	// user did not click or see an ad from the advertiser within the
 	// Floodlight group, or that the interaction happened outside the
 	// lookback window.
-	IncludeUnattributedCookieConversions bool `json:"includeUnattributedCookieConversions,omitempty"`
+	IncludeUnattributedCookieConversions *bool `json:"includeUnattributedCookieConversions,omitempty"`
 
 	// IncludeUnattributedIPConversions: Include conversions that have no
 	// associated cookies and no exposures. It’s therefore impossible to
 	// know how the user was exposed to your ads during the lookback window
 	// prior to a conversion.
-	IncludeUnattributedIPConversions bool `json:"includeUnattributedIPConversions,omitempty"`
+	IncludeUnattributedIPConversions *bool `json:"includeUnattributedIPConversions,omitempty"`
 }
 
 type ReportPathToConversionCriteria struct {
@@ -5193,20 +5193,20 @@ type ReportPathToConversionCriteriaReportProperties struct {
 	ImpressionsLookbackWindow int64 `json:"impressionsLookbackWindow,omitempty"`
 
 	// IncludeAttributedIPConversions: Deprecated: has no effect.
-	IncludeAttributedIPConversions bool `json:"includeAttributedIPConversions,omitempty"`
+	IncludeAttributedIPConversions *bool `json:"includeAttributedIPConversions,omitempty"`
 
 	// IncludeUnattributedCookieConversions: Include conversions of users
 	// with a DoubleClick cookie but without an exposure. That means the
 	// user did not click or see an ad from the advertiser within the
 	// Floodlight group, or that the interaction happened outside the
 	// lookback window.
-	IncludeUnattributedCookieConversions bool `json:"includeUnattributedCookieConversions,omitempty"`
+	IncludeUnattributedCookieConversions *bool `json:"includeUnattributedCookieConversions,omitempty"`
 
 	// IncludeUnattributedIPConversions: Include conversions that have no
 	// associated cookies and no exposures. It’s therefore impossible to
 	// know how the user was exposed to your ads during the lookback window
 	// prior to a conversion.
-	IncludeUnattributedIPConversions bool `json:"includeUnattributedIPConversions,omitempty"`
+	IncludeUnattributedIPConversions *bool `json:"includeUnattributedIPConversions,omitempty"`
 
 	// MaximumClickInteractions: The maximum number of click interactions to
 	// include in the report. Advertisers currently paying for E2C reports
@@ -5228,7 +5228,7 @@ type ReportPathToConversionCriteriaReportProperties struct {
 	MaximumInteractionGap int64 `json:"maximumInteractionGap,omitempty"`
 
 	// PivotOnInteractionPath: Enable pivoting on interaction path.
-	PivotOnInteractionPath bool `json:"pivotOnInteractionPath,omitempty"`
+	PivotOnInteractionPath *bool `json:"pivotOnInteractionPath,omitempty"`
 }
 
 type ReportReachCriteria struct {
@@ -5253,7 +5253,7 @@ type ReportReachCriteria struct {
 	// EnableAllDimensionCombinations: Whether to enable all reach dimension
 	// combinations in the report. Defaults to false. If enabled, the date
 	// range of the report should be within the last three months.
-	EnableAllDimensionCombinations bool `json:"enableAllDimensionCombinations,omitempty"`
+	EnableAllDimensionCombinations *bool `json:"enableAllDimensionCombinations,omitempty"`
 
 	// MetricNames: The list of names of metrics the report should include.
 	MetricNames []string `json:"metricNames,omitempty"`
@@ -5266,7 +5266,7 @@ type ReportReachCriteria struct {
 type ReportSchedule struct {
 	// Active: Whether the schedule is active or not. Must be set to either
 	// true or false.
-	Active bool `json:"active,omitempty"`
+	Active *bool `json:"active,omitempty"`
 
 	// Every: Defines every how many days, weeks or months the report should
 	// be run. Needs to be set when "repeats" is either "DAILY", "WEEKLY" or
@@ -5352,7 +5352,7 @@ type ReportsConfiguration struct {
 	// report is enabled. This report shows detailed pathway information on
 	// up to 10 of the most recent ad exposures seen by a user before
 	// converting.
-	ExposureToConversionEnabled bool `json:"exposureToConversionEnabled,omitempty"`
+	ExposureToConversionEnabled *bool `json:"exposureToConversionEnabled,omitempty"`
 
 	// LookbackConfiguration: Default lookback windows for new advertisers
 	// in this account.
@@ -5389,7 +5389,7 @@ type RichMediaExitOverride struct {
 	ExitId int64 `json:"exitId,omitempty,string"`
 
 	// UseCustomExitUrl: Whether to use the custom exit URL.
-	UseCustomExitUrl bool `json:"useCustomExitUrl,omitempty"`
+	UseCustomExitUrl *bool `json:"useCustomExitUrl,omitempty"`
 }
 
 type Site struct {
@@ -5398,7 +5398,7 @@ type Site struct {
 	AccountId int64 `json:"accountId,omitempty,string"`
 
 	// Approved: Whether this site is approved.
-	Approved bool `json:"approved,omitempty"`
+	Approved *bool `json:"approved,omitempty"`
 
 	// DirectorySiteId: Directory site associated with this site. This is a
 	// required field that is read-only after insertion.
@@ -5466,17 +5466,17 @@ type SiteContact struct {
 type SiteSettings struct {
 	// ActiveViewOptOut: Whether active view creatives are disabled for this
 	// site.
-	ActiveViewOptOut bool `json:"activeViewOptOut,omitempty"`
+	ActiveViewOptOut *bool `json:"activeViewOptOut,omitempty"`
 
 	// CreativeSettings: Site-wide creative settings.
 	CreativeSettings *CreativeSettings `json:"creativeSettings,omitempty"`
 
 	// DisableBrandSafeAds: Whether brand safe ads are disabled for this
 	// site.
-	DisableBrandSafeAds bool `json:"disableBrandSafeAds,omitempty"`
+	DisableBrandSafeAds *bool `json:"disableBrandSafeAds,omitempty"`
 
 	// DisableNewCookie: Whether new cookies are disabled for this site.
-	DisableNewCookie bool `json:"disableNewCookie,omitempty"`
+	DisableNewCookie *bool `json:"disableNewCookie,omitempty"`
 
 	// LookbackConfiguration: Lookback window settings for this site.
 	LookbackConfiguration *LookbackConfiguration `json:"lookbackConfiguration,omitempty"`
@@ -5504,7 +5504,7 @@ type Size struct {
 	Height int64 `json:"height,omitempty"`
 
 	// Iab: IAB standard size. This is a read-only, auto-generated field.
-	Iab bool `json:"iab,omitempty"`
+	Iab *bool `json:"iab,omitempty"`
 
 	// Id: ID of this size. This is a read-only, auto-generated field.
 	Id int64 `json:"id,omitempty,string"`
@@ -5618,11 +5618,11 @@ type TagSetting struct {
 
 	// IncludeClickThroughUrls: Whether static landing page URLs should be
 	// included in the tags. This setting applies only to placements.
-	IncludeClickThroughUrls bool `json:"includeClickThroughUrls,omitempty"`
+	IncludeClickThroughUrls *bool `json:"includeClickThroughUrls,omitempty"`
 
 	// IncludeClickTracking: Whether click-tracking string should be
 	// included in the tags.
-	IncludeClickTracking bool `json:"includeClickTracking,omitempty"`
+	IncludeClickTracking *bool `json:"includeClickTracking,omitempty"`
 
 	// KeywordOption: Option specifying how keywords are embedded in ad
 	// tags. This setting can be used to specify whether keyword
@@ -5638,10 +5638,10 @@ type TagSetting struct {
 
 type TagSettings struct {
 	// DynamicTagEnabled: Whether dynamic floodlight tags are enabled.
-	DynamicTagEnabled bool `json:"dynamicTagEnabled,omitempty"`
+	DynamicTagEnabled *bool `json:"dynamicTagEnabled,omitempty"`
 
 	// ImageTagEnabled: Whether image tags are enabled.
-	ImageTagEnabled bool `json:"imageTagEnabled,omitempty"`
+	ImageTagEnabled *bool `json:"imageTagEnabled,omitempty"`
 }
 
 type TargetWindow struct {
@@ -5896,7 +5896,7 @@ type UserRole struct {
 	// roles are created by the system for the account/subaccount and cannot
 	// be modified or deleted. Each default user role comes with a basic set
 	// of preassigned permissions.
-	DefaultUserRole bool `json:"defaultUserRole,omitempty"`
+	DefaultUserRole *bool `json:"defaultUserRole,omitempty"`
 
 	// Id: ID of this user role. This is a read-only, auto-generated field.
 	Id int64 `json:"id,omitempty,string"`

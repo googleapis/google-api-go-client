@@ -553,7 +553,7 @@ type Accounts struct {
 type AdWordsAccount struct {
 	// AutoTaggingEnabled: True if auto-tagging is enabled on the AdWords
 	// account. Read-only after the insert operation.
-	AutoTaggingEnabled bool `json:"autoTaggingEnabled,omitempty"`
+	AutoTaggingEnabled *bool `json:"autoTaggingEnabled,omitempty"`
 
 	// CustomerId: Customer ID. This field is required when creating an
 	// AdWords link.
@@ -700,7 +700,7 @@ type CustomDimension struct {
 	AccountId string `json:"accountId,omitempty"`
 
 	// Active: Boolean indicating whether the custom dimension is active.
-	Active bool `json:"active,omitempty"`
+	Active *bool `json:"active,omitempty"`
 
 	// Created: Time the custom dimension was created.
 	Created string `json:"created,omitempty"`
@@ -780,7 +780,7 @@ type CustomMetric struct {
 	AccountId string `json:"accountId,omitempty"`
 
 	// Active: Boolean indicating whether the custom metric is active.
-	Active bool `json:"active,omitempty"`
+	Active *bool `json:"active,omitempty"`
 
 	// Created: Time the custom metric was created.
 	Created string `json:"created,omitempty"`
@@ -1008,7 +1008,7 @@ type Experiment struct {
 
 	// EditableInGaUi: If true, the end user will be able to edit the
 	// experiment via the Google Analytics user interface.
-	EditableInGaUi bool `json:"editableInGaUi,omitempty"`
+	EditableInGaUi *bool `json:"editableInGaUi,omitempty"`
 
 	// EndTime: The ending time of the experiment (the time the status
 	// changed from RUNNING to ENDED). This field is present only if the
@@ -1021,7 +1021,7 @@ type Experiment struct {
 	// dynamically based on variation performance. Optional -- defaults to
 	// False. This field may not be changed for an experiment whose status
 	// is ENDED.
-	EqualWeighting bool `json:"equalWeighting,omitempty"`
+	EqualWeighting *bool `json:"equalWeighting,omitempty"`
 
 	// Id: Experiment ID. Required for patch and update. Disallowed for
 	// create.
@@ -1080,7 +1080,7 @@ type Experiment struct {
 	// RewriteVariationUrlsAsOriginal: Boolean specifying whether variations
 	// URLS are rewritten to match those of the original. This field may not
 	// be changed for an experiments whose status is ENDED.
-	RewriteVariationUrlsAsOriginal bool `json:"rewriteVariationUrlsAsOriginal,omitempty"`
+	RewriteVariationUrlsAsOriginal *bool `json:"rewriteVariationUrlsAsOriginal,omitempty"`
 
 	// SelfLink: Link for this experiment. This field is read-only.
 	SelfLink string `json:"selfLink,omitempty"`
@@ -1139,7 +1139,7 @@ type Experiment struct {
 
 	// WinnerFound: Boolean specifying whether a winner has been found for
 	// this experiment. This field is read-only.
-	WinnerFound bool `json:"winnerFound,omitempty"`
+	WinnerFound *bool `json:"winnerFound,omitempty"`
 }
 
 type ExperimentParentLink struct {
@@ -1173,7 +1173,7 @@ type ExperimentVariations struct {
 	// Won: True if the experiment has ended and this variation performed
 	// (statistically) significantly better than the original. This field is
 	// read-only.
-	Won bool `json:"won,omitempty"`
+	Won *bool `json:"won,omitempty"`
 }
 
 type Experiments struct {
@@ -1260,7 +1260,7 @@ type Filter struct {
 type FilterAdvancedDetails struct {
 	// CaseSensitive: Indicates if the filter expressions are case
 	// sensitive.
-	CaseSensitive bool `json:"caseSensitive,omitempty"`
+	CaseSensitive *bool `json:"caseSensitive,omitempty"`
 
 	// ExtractA: Expression to extract from field A.
 	ExtractA string `json:"extractA,omitempty"`
@@ -1276,7 +1276,7 @@ type FilterAdvancedDetails struct {
 	FieldAIndex int64 `json:"fieldAIndex,omitempty"`
 
 	// FieldARequired: Indicates if field A is required to match.
-	FieldARequired bool `json:"fieldARequired,omitempty"`
+	FieldARequired *bool `json:"fieldARequired,omitempty"`
 
 	// FieldB: Field B.
 	FieldB string `json:"fieldB,omitempty"`
@@ -1286,7 +1286,7 @@ type FilterAdvancedDetails struct {
 	FieldBIndex int64 `json:"fieldBIndex,omitempty"`
 
 	// FieldBRequired: Indicates if field B is required to match.
-	FieldBRequired bool `json:"fieldBRequired,omitempty"`
+	FieldBRequired *bool `json:"fieldBRequired,omitempty"`
 
 	// OutputConstructor: Expression used to construct the output value.
 	OutputConstructor string `json:"outputConstructor,omitempty"`
@@ -1300,7 +1300,7 @@ type FilterAdvancedDetails struct {
 
 	// OverrideOutputField: Indicates if the existing value of the output
 	// field, if any, should be overridden by the output expression.
-	OverrideOutputField bool `json:"overrideOutputField,omitempty"`
+	OverrideOutputField *bool `json:"overrideOutputField,omitempty"`
 }
 
 type FilterLowercaseDetails struct {
@@ -1322,7 +1322,7 @@ type FilterParentLink struct {
 
 type FilterSearchAndReplaceDetails struct {
 	// CaseSensitive: Determines if the filter is case sensitive.
-	CaseSensitive bool `json:"caseSensitive,omitempty"`
+	CaseSensitive *bool `json:"caseSensitive,omitempty"`
 
 	// Field: Field to use in the filter.
 	Field string `json:"field,omitempty"`
@@ -1349,7 +1349,7 @@ type FilterUppercaseDetails struct {
 
 type FilterExpression struct {
 	// CaseSensitive: Determines if the filter is case sensitive.
-	CaseSensitive bool `json:"caseSensitive,omitempty"`
+	CaseSensitive *bool `json:"caseSensitive,omitempty"`
 
 	// ExpressionValue: Filter expression value
 	ExpressionValue string `json:"expressionValue,omitempty"`
@@ -1517,7 +1517,7 @@ type GaData struct {
 	ColumnHeaders []*GaDataColumnHeaders `json:"columnHeaders,omitempty"`
 
 	// ContainsSampledData: Determines if Analytics data contains samples.
-	ContainsSampledData bool `json:"containsSampledData,omitempty"`
+	ContainsSampledData *bool `json:"containsSampledData,omitempty"`
 
 	DataTable *GaDataDataTable `json:"dataTable,omitempty"`
 
@@ -1669,7 +1669,7 @@ type Goal struct {
 	AccountId string `json:"accountId,omitempty"`
 
 	// Active: Determines whether this goal is active.
-	Active bool `json:"active,omitempty"`
+	Active *bool `json:"active,omitempty"`
 
 	// Created: Time this goal was created.
 	Created string `json:"created,omitempty"`
@@ -1733,7 +1733,7 @@ type GoalEventDetails struct {
 
 	// UseEventValue: Determines if the event value should be used as the
 	// value for this goal.
-	UseEventValue bool `json:"useEventValue,omitempty"`
+	UseEventValue *bool `json:"useEventValue,omitempty"`
 }
 
 type GoalEventDetailsEventConditions struct {
@@ -1767,11 +1767,11 @@ type GoalParentLink struct {
 type GoalUrlDestinationDetails struct {
 	// CaseSensitive: Determines if the goal URL must exactly match the
 	// capitalization of visited URLs.
-	CaseSensitive bool `json:"caseSensitive,omitempty"`
+	CaseSensitive *bool `json:"caseSensitive,omitempty"`
 
 	// FirstStepRequired: Determines if the first step in this goal is
 	// required.
-	FirstStepRequired bool `json:"firstStepRequired,omitempty"`
+	FirstStepRequired *bool `json:"firstStepRequired,omitempty"`
 
 	// MatchType: Match type for the goal URL. Possible values are HEAD,
 	// EXACT, or REGEX.
@@ -1852,7 +1852,7 @@ type McfData struct {
 
 	// ContainsSampledData: Determines if the Analytics data contains
 	// sampled data.
-	ContainsSampledData bool `json:"containsSampledData,omitempty"`
+	ContainsSampledData *bool `json:"containsSampledData,omitempty"`
 
 	// Id: Unique ID for this data response.
 	Id string `json:"id,omitempty"`
@@ -2017,12 +2017,12 @@ type Profile struct {
 
 	// ECommerceTracking: Indicates whether ecommerce tracking is enabled
 	// for this view (profile).
-	ECommerceTracking bool `json:"eCommerceTracking,omitempty"`
+	ECommerceTracking *bool `json:"eCommerceTracking,omitempty"`
 
 	// EnhancedECommerceTracking: Indicates whether enhanced ecommerce
 	// tracking is enabled for this view (profile). This property can only
 	// be enabled if ecommerce tracking is enabled.
-	EnhancedECommerceTracking bool `json:"enhancedECommerceTracking,omitempty"`
+	EnhancedECommerceTracking *bool `json:"enhancedECommerceTracking,omitempty"`
 
 	// ExcludeQueryParameters: The query parameters that are excluded from
 	// this view (profile).
@@ -2061,11 +2061,11 @@ type Profile struct {
 
 	// StripSiteSearchCategoryParameters: Whether or not Analytics will
 	// strip search category parameters from the URLs in your reports.
-	StripSiteSearchCategoryParameters bool `json:"stripSiteSearchCategoryParameters,omitempty"`
+	StripSiteSearchCategoryParameters *bool `json:"stripSiteSearchCategoryParameters,omitempty"`
 
 	// StripSiteSearchQueryParameters: Whether or not Analytics will strip
 	// search query parameters from the URLs in your reports.
-	StripSiteSearchQueryParameters bool `json:"stripSiteSearchQueryParameters,omitempty"`
+	StripSiteSearchQueryParameters *bool `json:"stripSiteSearchQueryParameters,omitempty"`
 
 	// Timezone: Time zone for which this view (profile) has been
 	// configured. Time zones are identified by strings from the TZ

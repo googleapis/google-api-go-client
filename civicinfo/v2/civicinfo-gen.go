@@ -544,7 +544,7 @@ type Source struct {
 	Name string `json:"name,omitempty"`
 
 	// Official: Whether this data comes from an official government source.
-	Official bool `json:"official,omitempty"`
+	Official *bool `json:"official,omitempty"`
 }
 
 type VoterInfoResponse struct {

@@ -651,7 +651,7 @@ type SubscriptionDeferralInfo struct {
 type SubscriptionPurchase struct {
 	// AutoRenewing: Whether the subscription will automatically be renewed
 	// when it reaches its current expiry time.
-	AutoRenewing bool `json:"autoRenewing,omitempty"`
+	AutoRenewing *bool `json:"autoRenewing,omitempty"`
 
 	// ExpiryTimeMillis: Time at which the subscription will expire, in
 	// milliseconds since Epoch.

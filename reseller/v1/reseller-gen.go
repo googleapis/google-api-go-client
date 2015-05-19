@@ -245,7 +245,7 @@ type SubscriptionPlan struct {
 	CommitmentInterval *SubscriptionPlanCommitmentInterval `json:"commitmentInterval,omitempty"`
 
 	// IsCommitmentPlan: Whether the plan is a commitment plan or not.
-	IsCommitmentPlan bool `json:"isCommitmentPlan,omitempty"`
+	IsCommitmentPlan *bool `json:"isCommitmentPlan,omitempty"`
 
 	// PlanName: The plan name of this subscription's plan.
 	PlanName string `json:"planName,omitempty"`
@@ -271,7 +271,7 @@ type SubscriptionTransferInfo struct {
 
 type SubscriptionTrialSettings struct {
 	// IsInTrial: Whether the subscription is in trial.
-	IsInTrial bool `json:"isInTrial,omitempty"`
+	IsInTrial *bool `json:"isInTrial,omitempty"`
 
 	// TrialEndTime: End time of the trial in milliseconds since Unix epoch.
 	TrialEndTime int64 `json:"trialEndTime,omitempty,string"`

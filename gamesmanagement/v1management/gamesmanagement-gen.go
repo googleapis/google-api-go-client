@@ -206,7 +206,7 @@ type AchievementResetResponse struct {
 
 	// UpdateOccurred: Flag to indicate if the requested update actually
 	// occurred.
-	UpdateOccurred bool `json:"updateOccurred,omitempty"`
+	UpdateOccurred *bool `json:"updateOccurred,omitempty"`
 }
 
 type EventsResetMultipleForAllRequest struct {
@@ -221,7 +221,7 @@ type EventsResetMultipleForAllRequest struct {
 type GamesPlayedResource struct {
 	// AutoMatched: True if the player was auto-matched with the currently
 	// authenticated user.
-	AutoMatched bool `json:"autoMatched,omitempty"`
+	AutoMatched *bool `json:"autoMatched,omitempty"`
 
 	// TimeMillis: The last time the player played the game in milliseconds
 	// since the epoch in UTC.

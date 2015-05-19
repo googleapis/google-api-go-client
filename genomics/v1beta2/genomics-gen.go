@@ -521,7 +521,7 @@ type Dataset struct {
 	// IsPublic: Flag indicating whether or not a dataset is publicly
 	// viewable. If a dataset is not public, it inherits viewing permissions
 	// from its project.
-	IsPublic bool `json:"isPublic,omitempty"`
+	IsPublic *bool `json:"isPublic,omitempty"`
 
 	// Name: The dataset name.
 	Name string `json:"name,omitempty"`
@@ -534,11 +534,11 @@ type Dataset struct {
 type ExperimentalCreateJobRequest struct {
 	// Align: Specifies whether or not to run the alignment pipeline. Either
 	// align or callVariants must be set.
-	Align bool `json:"align,omitempty"`
+	Align *bool `json:"align,omitempty"`
 
 	// CallVariants: Specifies whether or not to run the variant calling
 	// pipeline. Either align or callVariants must be set.
-	CallVariants bool `json:"callVariants,omitempty"`
+	CallVariants *bool `json:"callVariants,omitempty"`
 
 	// GcsOutputPath: Specifies where to copy the results of certain
 	// pipelines. This should be in the form of gs://bucket/path.
@@ -921,7 +921,7 @@ type Position struct {
 
 	// ReverseStrand: Whether this position is on the reverse strand, as
 	// opposed to the forward strand.
-	ReverseStrand bool `json:"reverseStrand,omitempty"`
+	ReverseStrand *bool `json:"reverseStrand,omitempty"`
 }
 
 type QueryRange struct {
@@ -976,7 +976,7 @@ type RangePosition struct {
 	// opposed to the forward strand. Note that regardless of this field,
 	// the start/end position of the range always refer to the forward
 	// strand.
-	ReverseStrand bool `json:"reverseStrand,omitempty"`
+	ReverseStrand *bool `json:"reverseStrand,omitempty"`
 
 	// Start: The start position of the range on the reference, 0-based
 	// inclusive.
@@ -1008,10 +1008,10 @@ type Read struct {
 
 	// DuplicateFragment: The fragment is a PCR or optical duplicate (SAM
 	// flag 0x400)
-	DuplicateFragment bool `json:"duplicateFragment,omitempty"`
+	DuplicateFragment *bool `json:"duplicateFragment,omitempty"`
 
 	// FailedVendorQualityChecks: SAM flag 0x200
-	FailedVendorQualityChecks bool `json:"failedVendorQualityChecks,omitempty"`
+	FailedVendorQualityChecks *bool `json:"failedVendorQualityChecks,omitempty"`
 
 	// FragmentLength: The observed length of the fragment, equivalent to
 	// TLEN in SAM.
@@ -1041,7 +1041,7 @@ type Read struct {
 	// ProperPlacement: The orientation and the distance between reads from
 	// the fragment are consistent with the sequencing protocol (SAM flag
 	// 0x2)
-	ProperPlacement bool `json:"properPlacement,omitempty"`
+	ProperPlacement *bool `json:"properPlacement,omitempty"`
 
 	// ReadGroupId: The ID of the read group this read belongs to. (Every
 	// read must belong to exactly one read group.)
@@ -1061,7 +1061,7 @@ type Read struct {
 	// alignments if a read can map ambiguously to multiple coordinates in
 	// the genome. By convention, each read has one and only one alignment
 	// where both secondaryAlignment and supplementaryAlignment are false.
-	SecondaryAlignment bool `json:"secondaryAlignment,omitempty"`
+	SecondaryAlignment *bool `json:"secondaryAlignment,omitempty"`
 
 	// SupplementaryAlignment: Whether this alignment is supplementary.
 	// Equivalent to SAM flag 0x800. Supplementary alignments are used in
@@ -1074,7 +1074,7 @@ type Read struct {
 	// alignment in a chimeric alignment, the read will be hard clipped. The
 	// alignedSequence and alignedQuality fields in the alignment record
 	// will only represent the bases for its respective linear alignment.
-	SupplementaryAlignment bool `json:"supplementaryAlignment,omitempty"`
+	SupplementaryAlignment *bool `json:"supplementaryAlignment,omitempty"`
 }
 
 type ReadGroup struct {

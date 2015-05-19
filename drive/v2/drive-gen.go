@@ -272,7 +272,7 @@ type About struct {
 
 	// IsCurrentAppInstalled: A boolean indicating whether the authenticated
 	// app is installed by the authenticated user.
-	IsCurrentAppInstalled bool `json:"isCurrentAppInstalled,omitempty"`
+	IsCurrentAppInstalled *bool `json:"isCurrentAppInstalled,omitempty"`
 
 	// Kind: This is always drive#about.
 	Kind string `json:"kind,omitempty"`
@@ -394,7 +394,7 @@ type AboutQuotaBytesByService struct {
 type App struct {
 	// Authorized: Whether the app is authorized to access data on the
 	// user's Drive.
-	Authorized bool `json:"authorized,omitempty"`
+	Authorized *bool `json:"authorized,omitempty"`
 
 	// CreateInFolderTemplate: The template url to create a new file with
 	// this app in a given folder. The template will contain {folderId} to
@@ -406,7 +406,7 @@ type App struct {
 
 	// HasDriveWideScope: Whether the app has drive-wide scope. An app with
 	// drive-wide scope can access all files in the user's drive.
-	HasDriveWideScope bool `json:"hasDriveWideScope,omitempty"`
+	HasDriveWideScope *bool `json:"hasDriveWideScope,omitempty"`
 
 	// Icons: The various icons for the app.
 	Icons []*AppIcons `json:"icons,omitempty"`
@@ -415,7 +415,7 @@ type App struct {
 	Id string `json:"id,omitempty"`
 
 	// Installed: Whether the app is installed.
-	Installed bool `json:"installed,omitempty"`
+	Installed *bool `json:"installed,omitempty"`
 
 	// Kind: This is always drive#app.
 	Kind string `json:"kind,omitempty"`
@@ -457,22 +457,22 @@ type App struct {
 	ShortDescription string `json:"shortDescription,omitempty"`
 
 	// SupportsCreate: Whether this app supports creating new objects.
-	SupportsCreate bool `json:"supportsCreate,omitempty"`
+	SupportsCreate *bool `json:"supportsCreate,omitempty"`
 
 	// SupportsImport: Whether this app supports importing Google Docs.
-	SupportsImport bool `json:"supportsImport,omitempty"`
+	SupportsImport *bool `json:"supportsImport,omitempty"`
 
 	// SupportsMultiOpen: Whether this app supports opening more than one
 	// file.
-	SupportsMultiOpen bool `json:"supportsMultiOpen,omitempty"`
+	SupportsMultiOpen *bool `json:"supportsMultiOpen,omitempty"`
 
 	// SupportsOfflineCreate: Whether this app supports creating new files
 	// when offline.
-	SupportsOfflineCreate bool `json:"supportsOfflineCreate,omitempty"`
+	SupportsOfflineCreate *bool `json:"supportsOfflineCreate,omitempty"`
 
 	// UseByDefault: Whether the app is selected as the default handler for
 	// the types it supports.
-	UseByDefault bool `json:"useByDefault,omitempty"`
+	UseByDefault *bool `json:"useByDefault,omitempty"`
 }
 
 type AppIcons struct {
@@ -510,7 +510,7 @@ type AppList struct {
 
 type Change struct {
 	// Deleted: Whether the file has been deleted.
-	Deleted bool `json:"deleted,omitempty"`
+	Deleted *bool `json:"deleted,omitempty"`
 
 	// File: The updated state of the file. Present if the file has not been
 	// deleted.
@@ -577,7 +577,7 @@ type Channel struct {
 
 	// Payload: A Boolean value to indicate whether payload is wanted.
 	// Optional.
-	Payload bool `json:"payload,omitempty"`
+	Payload *bool `json:"payload,omitempty"`
 
 	// ResourceId: An opaque ID that identifies the resource being watched
 	// on this channel. Stable across different API versions.
@@ -654,7 +654,7 @@ type Comment struct {
 	// Deleted: Whether this comment has been deleted. If a comment has been
 	// deleted the content will be cleared and this will only represent a
 	// comment that once existed.
-	Deleted bool `json:"deleted,omitempty"`
+	Deleted *bool `json:"deleted,omitempty"`
 
 	// FileId: The file which this comment is addressing.
 	FileId string `json:"fileId,omitempty"`
@@ -728,7 +728,7 @@ type CommentReply struct {
 	// Deleted: Whether this reply has been deleted. If a reply has been
 	// deleted the content will be cleared and this will only represent a
 	// reply that once existed.
-	Deleted bool `json:"deleted,omitempty"`
+	Deleted *bool `json:"deleted,omitempty"`
 
 	// HtmlContent: HTML formatted content for this reply.
 	HtmlContent string `json:"htmlContent,omitempty"`
@@ -773,10 +773,10 @@ type File struct {
 	AlternateLink string `json:"alternateLink,omitempty"`
 
 	// AppDataContents: Whether this file is in the Application Data folder.
-	AppDataContents bool `json:"appDataContents,omitempty"`
+	AppDataContents *bool `json:"appDataContents,omitempty"`
 
 	// Copyable: Whether the file can be copied by the current user.
-	Copyable bool `json:"copyable,omitempty"`
+	Copyable *bool `json:"copyable,omitempty"`
 
 	// CreatedDate: Create time for this file (formatted RFC 3339
 	// timestamp).
@@ -795,7 +795,7 @@ type File struct {
 	DownloadUrl string `json:"downloadUrl,omitempty"`
 
 	// Editable: Whether the file can be edited by the current user.
-	Editable bool `json:"editable,omitempty"`
+	Editable *bool `json:"editable,omitempty"`
 
 	// EmbedLink: A link for embedding the file.
 	EmbedLink string `json:"embedLink,omitempty"`
@@ -806,7 +806,7 @@ type File struct {
 	// ExplicitlyTrashed: Whether this file has been explicitly trashed, as
 	// opposed to recursively trashed. This will only be populated if the
 	// file is trashed.
-	ExplicitlyTrashed bool `json:"explicitlyTrashed,omitempty"`
+	ExplicitlyTrashed *bool `json:"explicitlyTrashed,omitempty"`
 
 	// ExportLinks: Links for exporting Google Docs to specific formats.
 	ExportLinks map[string]string `json:"exportLinks,omitempty"`
@@ -925,7 +925,7 @@ type File struct {
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// Shared: Whether the file has been shared.
-	Shared bool `json:"shared,omitempty"`
+	Shared *bool `json:"shared,omitempty"`
 
 	// SharedWithMeDate: Time at which this file was shared with the user
 	// (formatted RFC 3339 timestamp).
@@ -972,7 +972,7 @@ type File struct {
 
 	// WritersCanShare: Whether writers can share the document with other
 	// users.
-	WritersCanShare bool `json:"writersCanShare,omitempty"`
+	WritersCanShare *bool `json:"writersCanShare,omitempty"`
 }
 
 type FileImageMediaMetadata struct {
@@ -1001,7 +1001,7 @@ type FileImageMediaMetadata struct {
 	ExposureTime float64 `json:"exposureTime,omitempty"`
 
 	// FlashUsed: Whether a flash was used to create the photo.
-	FlashUsed bool `json:"flashUsed,omitempty"`
+	FlashUsed *bool `json:"flashUsed,omitempty"`
 
 	// FocalLength: The focal length used to create the photo, in
 	// millimeters.
@@ -1061,21 +1061,21 @@ type FileIndexableText struct {
 
 type FileLabels struct {
 	// Hidden: Deprecated.
-	Hidden bool `json:"hidden,omitempty"`
+	Hidden *bool `json:"hidden,omitempty"`
 
 	// Restricted: Whether viewers are prevented from downloading this file.
-	Restricted bool `json:"restricted,omitempty"`
+	Restricted *bool `json:"restricted,omitempty"`
 
 	// Starred: Whether this file is starred by the user.
-	Starred bool `json:"starred,omitempty"`
+	Starred *bool `json:"starred,omitempty"`
 
 	// Trashed: Whether this file has been trashed. This label applies to
 	// all users accessing the file; however, only owners are allowed to see
 	// and untrash files.
-	Trashed bool `json:"trashed,omitempty"`
+	Trashed *bool `json:"trashed,omitempty"`
 
 	// Viewed: Whether this file has been viewed by this user.
-	Viewed bool `json:"viewed,omitempty"`
+	Viewed *bool `json:"viewed,omitempty"`
 }
 
 type FileThumbnail struct {
@@ -1137,7 +1137,7 @@ type ParentReference struct {
 	Id string `json:"id,omitempty"`
 
 	// IsRoot: Whether or not the parent is the root folder.
-	IsRoot bool `json:"isRoot,omitempty"`
+	IsRoot *bool `json:"isRoot,omitempty"`
 
 	// Kind: This is always drive#parentReference.
 	Kind string `json:"kind,omitempty"`
@@ -1208,7 +1208,7 @@ type Permission struct {
 	Value string `json:"value,omitempty"`
 
 	// WithLink: Whether the link is required for this permission.
-	WithLink bool `json:"withLink,omitempty"`
+	WithLink *bool `json:"withLink,omitempty"`
 }
 
 type PermissionId struct {
@@ -1315,16 +1315,16 @@ type Revision struct {
 	// content stored in Drive which are not Google Docs. Revisions can also
 	// be pinned when they are created through the
 	// drive.files.insert/update/copy by using the pinned query parameter.
-	Pinned bool `json:"pinned,omitempty"`
+	Pinned *bool `json:"pinned,omitempty"`
 
 	// PublishAuto: Whether subsequent revisions will be automatically
 	// republished. This is only populated and can only be modified for
 	// Google Docs.
-	PublishAuto bool `json:"publishAuto,omitempty"`
+	PublishAuto *bool `json:"publishAuto,omitempty"`
 
 	// Published: Whether this revision is published. This is only populated
 	// and can only be modified for Google Docs.
-	Published bool `json:"published,omitempty"`
+	Published *bool `json:"published,omitempty"`
 
 	// PublishedLink: A link to the published revision.
 	PublishedLink string `json:"publishedLink,omitempty"`
@@ -1332,7 +1332,7 @@ type Revision struct {
 	// PublishedOutsideDomain: Whether this revision is published outside
 	// the domain. This is only populated and can only be modified for
 	// Google Docs.
-	PublishedOutsideDomain bool `json:"publishedOutsideDomain,omitempty"`
+	PublishedOutsideDomain *bool `json:"publishedOutsideDomain,omitempty"`
 
 	// SelfLink: A link back to this revision.
 	SelfLink string `json:"selfLink,omitempty"`
@@ -1361,7 +1361,7 @@ type User struct {
 
 	// IsAuthenticatedUser: Whether this user is the same as the
 	// authenticated user for whom the request was made.
-	IsAuthenticatedUser bool `json:"isAuthenticatedUser,omitempty"`
+	IsAuthenticatedUser *bool `json:"isAuthenticatedUser,omitempty"`
 
 	// Kind: This is always drive#user.
 	Kind string `json:"kind,omitempty"`

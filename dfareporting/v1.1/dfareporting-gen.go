@@ -483,12 +483,12 @@ type ReportCrossDimensionReachCriteria struct {
 	OverlapMetricNames []string `json:"overlapMetricNames,omitempty"`
 
 	// Pivoted: Whether the report is pivoted or not. Defaults to true.
-	Pivoted bool `json:"pivoted,omitempty"`
+	Pivoted *bool `json:"pivoted,omitempty"`
 }
 
 type ReportDelivery struct {
 	// EmailOwner: Whether the report should be emailed to the report owner.
-	EmailOwner bool `json:"emailOwner,omitempty"`
+	EmailOwner *bool `json:"emailOwner,omitempty"`
 
 	// EmailOwnerDeliveryType: The type of delivery for the owner to
 	// receive, if enabled. One of:
@@ -532,20 +532,20 @@ type ReportFloodlightCriteria struct {
 type ReportFloodlightCriteriaReportProperties struct {
 	// IncludeAttributedIPConversions: Include conversions that have no
 	// cookie, but do have an exposure path.
-	IncludeAttributedIPConversions bool `json:"includeAttributedIPConversions,omitempty"`
+	IncludeAttributedIPConversions *bool `json:"includeAttributedIPConversions,omitempty"`
 
 	// IncludeUnattributedCookieConversions: Include conversions of users
 	// with a DoubleClick cookie but without an exposure. That means the
 	// user did not click or see an ad from the advertiser within the
 	// Floodlight group, or that the interaction happened outside the
 	// lookback window.
-	IncludeUnattributedCookieConversions bool `json:"includeUnattributedCookieConversions,omitempty"`
+	IncludeUnattributedCookieConversions *bool `json:"includeUnattributedCookieConversions,omitempty"`
 
 	// IncludeUnattributedIPConversions: Include conversions that have no
 	// associated cookies and no exposures. It’s therefore impossible to
 	// know how the user was exposed to your ads during the lookback window
 	// prior to a conversion.
-	IncludeUnattributedIPConversions bool `json:"includeUnattributedIPConversions,omitempty"`
+	IncludeUnattributedIPConversions *bool `json:"includeUnattributedIPConversions,omitempty"`
 }
 
 type ReportPathToConversionCriteria struct {
@@ -595,20 +595,20 @@ type ReportPathToConversionCriteriaReportProperties struct {
 
 	// IncludeAttributedIPConversions: Include conversions that have no
 	// cookie, but do have an exposure path.
-	IncludeAttributedIPConversions bool `json:"includeAttributedIPConversions,omitempty"`
+	IncludeAttributedIPConversions *bool `json:"includeAttributedIPConversions,omitempty"`
 
 	// IncludeUnattributedCookieConversions: Include conversions of users
 	// with a DoubleClick cookie but without an exposure. That means the
 	// user did not click or see an ad from the advertiser within the
 	// Floodlight group, or that the interaction happened outside the
 	// lookback window.
-	IncludeUnattributedCookieConversions bool `json:"includeUnattributedCookieConversions,omitempty"`
+	IncludeUnattributedCookieConversions *bool `json:"includeUnattributedCookieConversions,omitempty"`
 
 	// IncludeUnattributedIPConversions: Include conversions that have no
 	// associated cookies and no exposures. It’s therefore impossible to
 	// know how the user was exposed to your ads during the lookback window
 	// prior to a conversion.
-	IncludeUnattributedIPConversions bool `json:"includeUnattributedIPConversions,omitempty"`
+	IncludeUnattributedIPConversions *bool `json:"includeUnattributedIPConversions,omitempty"`
 
 	// MaximumClickInteractions: The maximum number of click interactions to
 	// include in the report. Advertisers currently paying for E2C reports
@@ -630,7 +630,7 @@ type ReportPathToConversionCriteriaReportProperties struct {
 	MaximumInteractionGap int64 `json:"maximumInteractionGap,omitempty"`
 
 	// PivotOnInteractionPath: Enable pivoting on interaction path.
-	PivotOnInteractionPath bool `json:"pivotOnInteractionPath,omitempty"`
+	PivotOnInteractionPath *bool `json:"pivotOnInteractionPath,omitempty"`
 }
 
 type ReportReachCriteria struct {
@@ -663,7 +663,7 @@ type ReportReachCriteria struct {
 type ReportSchedule struct {
 	// Active: Whether the schedule is active or not. Must be set to either
 	// true or false.
-	Active bool `json:"active,omitempty"`
+	Active *bool `json:"active,omitempty"`
 
 	// Every: Defines every how many days, weeks or months the report should
 	// be run. Needs to be set when "repeats" is either "DAILY", "WEEKLY" or

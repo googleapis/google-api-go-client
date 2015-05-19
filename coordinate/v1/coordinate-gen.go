@@ -156,7 +156,7 @@ type CustomField struct {
 
 type CustomFieldDef struct {
 	// Enabled: Whether the field is enabled.
-	Enabled bool `json:"enabled,omitempty"`
+	Enabled *bool `json:"enabled,omitempty"`
 
 	// Enumitems: List of enum items for this custom field. Populated only
 	// if the field type is enum. Enum fields appear as 'lists' in the
@@ -173,7 +173,7 @@ type CustomFieldDef struct {
 	Name string `json:"name,omitempty"`
 
 	// RequiredForCheckout: Whether the field is required for checkout.
-	RequiredForCheckout bool `json:"requiredForCheckout,omitempty"`
+	RequiredForCheckout *bool `json:"requiredForCheckout,omitempty"`
 
 	// Type: Custom field type.
 	Type string `json:"type,omitempty"`
@@ -200,7 +200,7 @@ type EnumItemDef struct {
 	// Active: Whether the enum item is active. Jobs may contain inactive
 	// enum values; however, setting an enum to an inactive value when
 	// creating or updating a job will result in a 500 error.
-	Active bool `json:"active,omitempty"`
+	Active *bool `json:"active,omitempty"`
 
 	// Kind: Identifies this object as an enum item definition.
 	Kind string `json:"kind,omitempty"`
@@ -326,7 +326,7 @@ type LocationRecord struct {
 type Schedule struct {
 	// AllDay: Whether the job is scheduled for the whole day. Time of day
 	// in start/end times is ignored if this is true.
-	AllDay bool `json:"allDay,omitempty"`
+	AllDay *bool `json:"allDay,omitempty"`
 
 	// Duration: Job duration in milliseconds.
 	Duration uint64 `json:"duration,omitempty,string"`

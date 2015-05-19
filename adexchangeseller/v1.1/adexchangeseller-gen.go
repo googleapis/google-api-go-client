@@ -253,7 +253,7 @@ type Account struct {
 
 type AdClient struct {
 	// ArcOptIn: Whether this ad client is opted in to ARC.
-	ArcOptIn bool `json:"arcOptIn,omitempty"`
+	ArcOptIn *bool `json:"arcOptIn,omitempty"`
 
 	// Id: Unique identifier of this ad client.
 	Id string `json:"id,omitempty"`
@@ -267,7 +267,7 @@ type AdClient struct {
 	ProductCode string `json:"productCode,omitempty"`
 
 	// SupportsReporting: Whether this ad client supports being reported on.
-	SupportsReporting bool `json:"supportsReporting,omitempty"`
+	SupportsReporting *bool `json:"supportsReporting,omitempty"`
 }
 
 type AdClients struct {

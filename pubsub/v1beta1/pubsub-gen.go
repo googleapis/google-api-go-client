@@ -205,7 +205,7 @@ type PubsubEvent struct {
 	// that pull subscribers will always receive NOT_FOUND in response in
 	// their pull request on the subscription, rather than seeing this
 	// boolean.)
-	Deleted bool `json:"deleted,omitempty"`
+	Deleted *bool `json:"deleted,omitempty"`
 
 	// Message: A received message.
 	Message *PubsubMessage `json:"message,omitempty"`
@@ -214,7 +214,7 @@ type PubsubEvent struct {
 	Subscription string `json:"subscription,omitempty"`
 
 	// Truncated: Indicates that this subscription has been truncated.
-	Truncated bool `json:"truncated,omitempty"`
+	Truncated *bool `json:"truncated,omitempty"`
 }
 
 type PubsubMessage struct {
@@ -245,7 +245,7 @@ type PullBatchRequest struct {
 	// one message is available rather than returning no messages. The
 	// client may cancel the request if it does not wish to wait any longer
 	// for the response.
-	ReturnImmediately bool `json:"returnImmediately,omitempty"`
+	ReturnImmediately *bool `json:"returnImmediately,omitempty"`
 
 	// Subscription: The subscription from which messages should be pulled.
 	Subscription string `json:"subscription,omitempty"`
@@ -267,7 +267,7 @@ type PullRequest struct {
 	// one message is available rather than returning FAILED_PRECONDITION.
 	// The client may cancel the request if it does not wish to wait any
 	// longer for the response.
-	ReturnImmediately bool `json:"returnImmediately,omitempty"`
+	ReturnImmediately *bool `json:"returnImmediately,omitempty"`
 
 	// Subscription: The subscription from which a message should be pulled.
 	Subscription string `json:"subscription,omitempty"`

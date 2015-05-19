@@ -427,7 +427,7 @@ type DirectDeal struct {
 
 	// PublisherBlocksOverriden: If true, the publisher has opted to have
 	// their blocks ignored when a creative is bid with for this deal.
-	PublisherBlocksOverriden bool `json:"publisherBlocksOverriden,omitempty"`
+	PublisherBlocksOverriden *bool `json:"publisherBlocksOverriden,omitempty"`
 
 	// SellerNetwork: The name of the publisher offering this direct deal.
 	SellerNetwork string `json:"sellerNetwork,omitempty"`
@@ -567,7 +567,7 @@ type PretargetingConfig struct {
 	GeoCriteriaIds googleapi.Int64s `json:"geoCriteriaIds,omitempty"`
 
 	// IsActive: Whether this config is active. Required for all requests.
-	IsActive bool `json:"isActive,omitempty"`
+	IsActive *bool `json:"isActive,omitempty"`
 
 	// Kind: The kind of the resource, i.e.
 	// "adexchangebuyer#pretargetingConfig".

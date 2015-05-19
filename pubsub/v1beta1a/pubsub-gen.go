@@ -153,13 +153,13 @@ type PublishRequest struct {
 }
 
 type PubsubEvent struct {
-	Deleted bool `json:"deleted,omitempty"`
+	Deleted *bool `json:"deleted,omitempty"`
 
 	Message *PubsubMessage `json:"message,omitempty"`
 
 	Subscription string `json:"subscription,omitempty"`
 
-	Truncated bool `json:"truncated,omitempty"`
+	Truncated *bool `json:"truncated,omitempty"`
 }
 
 type PubsubMessage struct {
@@ -173,7 +173,7 @@ type PubsubMessage struct {
 type PullBatchRequest struct {
 	MaxEvents int64 `json:"maxEvents,omitempty"`
 
-	ReturnImmediately bool `json:"returnImmediately,omitempty"`
+	ReturnImmediately *bool `json:"returnImmediately,omitempty"`
 
 	Subscription string `json:"subscription,omitempty"`
 }
@@ -183,7 +183,7 @@ type PullBatchResponse struct {
 }
 
 type PullRequest struct {
-	ReturnImmediately bool `json:"returnImmediately,omitempty"`
+	ReturnImmediately *bool `json:"returnImmediately,omitempty"`
 
 	Subscription string `json:"subscription,omitempty"`
 }

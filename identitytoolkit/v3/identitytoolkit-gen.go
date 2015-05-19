@@ -79,11 +79,11 @@ type CreateAuthUriResponse struct {
 	AuthUri string `json:"authUri,omitempty"`
 
 	// CaptchaRequired: True if captcha is required.
-	CaptchaRequired bool `json:"captchaRequired,omitempty"`
+	CaptchaRequired *bool `json:"captchaRequired,omitempty"`
 
 	// ForExistingProvider: True if the authUri is for user's existing
 	// provider.
-	ForExistingProvider bool `json:"forExistingProvider,omitempty"`
+	ForExistingProvider *bool `json:"forExistingProvider,omitempty"`
 
 	// Kind: The fixed string identitytoolkit#CreateAuthUriResponse".
 	Kind string `json:"kind,omitempty"`
@@ -93,7 +93,7 @@ type CreateAuthUriResponse struct {
 
 	// Registered: Whether the user is registered if the identifier is an
 	// email.
-	Registered bool `json:"registered,omitempty"`
+	Registered *bool `json:"registered,omitempty"`
 }
 
 type DeleteAccountResponse struct {
@@ -230,7 +230,7 @@ type IdentitytoolkitRelyingpartySetAccountInfoRequest struct {
 	CaptchaResponse string `json:"captchaResponse,omitempty"`
 
 	// DisableUser: Whether to disable the user.
-	DisableUser bool `json:"disableUser,omitempty"`
+	DisableUser *bool `json:"disableUser,omitempty"`
 
 	// DisplayName: The name of the user.
 	DisplayName string `json:"displayName,omitempty"`
@@ -239,7 +239,7 @@ type IdentitytoolkitRelyingpartySetAccountInfoRequest struct {
 	Email string `json:"email,omitempty"`
 
 	// EmailVerified: Mark the email as verified or not.
-	EmailVerified bool `json:"emailVerified,omitempty"`
+	EmailVerified *bool `json:"emailVerified,omitempty"`
 
 	// IdToken: The GITKit token of the authenticated user.
 	IdToken string `json:"idToken,omitempty"`
@@ -257,7 +257,7 @@ type IdentitytoolkitRelyingpartySetAccountInfoRequest struct {
 	Provider []string `json:"provider,omitempty"`
 
 	// UpgradeToFederatedLogin: Mark the user to upgrade to federated login.
-	UpgradeToFederatedLogin bool `json:"upgradeToFederatedLogin,omitempty"`
+	UpgradeToFederatedLogin *bool `json:"upgradeToFederatedLogin,omitempty"`
 
 	// ValidSince: Timestamp in seconds for valid login token.
 	ValidSince int64 `json:"validSince,omitempty,string"`
@@ -298,7 +298,7 @@ type IdentitytoolkitRelyingpartyVerifyAssertionRequest struct {
 	RequestUri string `json:"requestUri,omitempty"`
 
 	// ReturnRefreshToken: Whether to return refresh tokens.
-	ReturnRefreshToken bool `json:"returnRefreshToken,omitempty"`
+	ReturnRefreshToken *bool `json:"returnRefreshToken,omitempty"`
 }
 
 type IdentitytoolkitRelyingpartyVerifyPasswordRequest struct {
@@ -401,7 +401,7 @@ type UploadAccountResponseError struct {
 
 type UserInfo struct {
 	// Disabled: Whether the user is disabled.
-	Disabled bool `json:"disabled,omitempty"`
+	Disabled *bool `json:"disabled,omitempty"`
 
 	// DisplayName: The name of the user.
 	DisplayName string `json:"displayName,omitempty"`
@@ -410,7 +410,7 @@ type UserInfo struct {
 	Email string `json:"email,omitempty"`
 
 	// EmailVerified: Whether the email has been verified.
-	EmailVerified bool `json:"emailVerified,omitempty"`
+	EmailVerified *bool `json:"emailVerified,omitempty"`
 
 	// LocalId: The local ID of the user.
 	LocalId string `json:"localId,omitempty"`
@@ -478,11 +478,11 @@ type VerifyAssertionResponse struct {
 	Email string `json:"email,omitempty"`
 
 	// EmailRecycled: It's true if the email is recycled.
-	EmailRecycled bool `json:"emailRecycled,omitempty"`
+	EmailRecycled *bool `json:"emailRecycled,omitempty"`
 
 	// EmailVerified: The value is true if the IDP is also the email
 	// provider. It means the user owns the email.
-	EmailVerified bool `json:"emailVerified,omitempty"`
+	EmailVerified *bool `json:"emailVerified,omitempty"`
 
 	// FederatedId: The unique ID identifies the IdP account.
 	FederatedId string `json:"federatedId,omitempty"`
@@ -516,7 +516,7 @@ type VerifyAssertionResponse struct {
 
 	// NeedConfirmation: Whether the assertion is from a non-trusted IDP and
 	// need account linking confirmation.
-	NeedConfirmation bool `json:"needConfirmation,omitempty"`
+	NeedConfirmation *bool `json:"needConfirmation,omitempty"`
 
 	// NickName: The nick name of the user.
 	NickName string `json:"nickName,omitempty"`
@@ -582,7 +582,7 @@ type VerifyPasswordResponse struct {
 	PhotoUrl string `json:"photoUrl,omitempty"`
 
 	// Registered: Whether the email is registered.
-	Registered bool `json:"registered,omitempty"`
+	Registered *bool `json:"registered,omitempty"`
 }
 
 // method id "identitytoolkit.relyingparty.createAuthUri":

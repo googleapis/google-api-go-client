@@ -178,7 +178,7 @@ type ProductstatusesService struct {
 
 type Account struct {
 	// AdultContent: Indicates whether the merchant sells adult content.
-	AdultContent bool `json:"adultContent,omitempty"`
+	AdultContent *bool `json:"adultContent,omitempty"`
 
 	// AdwordsLinks: List of linked AdWords accounts, active or pending
 	// approval. To create a new link request, add a new link with status
@@ -381,7 +381,7 @@ type AccountShippingRateTableCell struct {
 
 type AccountShippingShippingService struct {
 	// Active: Whether the shipping service is available.
-	Active bool `json:"active,omitempty"`
+	Active *bool `json:"active,omitempty"`
 
 	// CalculationMethod: Calculation method for the "simple" case that
 	// needs no rules.
@@ -404,7 +404,7 @@ type AccountShippingShippingServiceCalculationMethod struct {
 	CarrierRate string `json:"carrierRate,omitempty"`
 
 	// Excluded: Delivery is excluded. Valid only within cost rules tree.
-	Excluded bool `json:"excluded,omitempty"`
+	Excluded *bool `json:"excluded,omitempty"`
 
 	// FlatRate: Fixed price shipping, represented as a floating point
 	// number associated with a currency.
@@ -516,16 +516,16 @@ type AccountTaxTaxRule struct {
 	RatePercent string `json:"ratePercent,omitempty"`
 
 	// ShippingTaxed: If true, shipping charges are also taxed.
-	ShippingTaxed bool `json:"shippingTaxed,omitempty"`
+	ShippingTaxed *bool `json:"shippingTaxed,omitempty"`
 
 	// UseGlobalRate: Whether the tax rate is taken from a global tax table
 	// or specified explicitly.
-	UseGlobalRate bool `json:"useGlobalRate,omitempty"`
+	UseGlobalRate *bool `json:"useGlobalRate,omitempty"`
 }
 
 type AccountUser struct {
 	// Admin: Whether user is an admin.
-	Admin bool `json:"admin,omitempty"`
+	Admin *bool `json:"admin,omitempty"`
 
 	// EmailAddress: User's email address.
 	EmailAddress string `json:"emailAddress,omitempty"`
@@ -1165,7 +1165,7 @@ type Product struct {
 	AdditionalImageLinks []string `json:"additionalImageLinks,omitempty"`
 
 	// Adult: Set to true if the item is targeted towards adults.
-	Adult bool `json:"adult,omitempty"`
+	Adult *bool `json:"adult,omitempty"`
 
 	// AdwordsGrouping: Used to group items in an arbitrary way. Only for
 	// CPA%, discouraged otherwise.
@@ -1287,7 +1287,7 @@ type Product struct {
 	// identifiers appropriate to its category, such as GTIN, MPN, and
 	// brand. Required according to the Unique Product Identifier Rules for
 	// all target countries except for Canada.
-	IdentifierExists bool `json:"identifierExists,omitempty"`
+	IdentifierExists *bool `json:"identifierExists,omitempty"`
 
 	// ImageLink: URL of an image of the item.
 	ImageLink string `json:"imageLink,omitempty"`
@@ -1299,7 +1299,7 @@ type Product struct {
 	// IsBundle: Whether the item is a merchant-defined bundle. A bundle is
 	// a custom grouping of different products sold by a merchant for a
 	// single price.
-	IsBundle bool `json:"isBundle,omitempty"`
+	IsBundle *bool `json:"isBundle,omitempty"`
 
 	// ItemGroupId: Shared identifier for all variants of the same product.
 	ItemGroupId string `json:"itemGroupId,omitempty"`
@@ -1332,7 +1332,7 @@ type Product struct {
 	OfferId string `json:"offerId,omitempty"`
 
 	// OnlineOnly: Whether an item is available for purchase only online.
-	OnlineOnly bool `json:"onlineOnly,omitempty"`
+	OnlineOnly *bool `json:"onlineOnly,omitempty"`
 
 	// Pattern: The item's pattern (e.g. polka dots).
 	Pattern string `json:"pattern,omitempty"`
@@ -1607,7 +1607,7 @@ type ProductTax struct {
 	Region string `json:"region,omitempty"`
 
 	// TaxShip: Set to true if tax is charged on shipping.
-	TaxShip bool `json:"taxShip,omitempty"`
+	TaxShip *bool `json:"taxShip,omitempty"`
 }
 
 type ProductUnitPricingBaseMeasure struct {

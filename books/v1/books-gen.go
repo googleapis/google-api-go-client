@@ -333,7 +333,7 @@ type Annotation struct {
 	Data string `json:"data,omitempty"`
 
 	// Deleted: Indicates that this annotation is deleted.
-	Deleted bool `json:"deleted,omitempty"`
+	Deleted *bool `json:"deleted,omitempty"`
 
 	// HighlightStyle: The highlight style for this annotation.
 	HighlightStyle string `json:"highlightStyle,omitempty"`
@@ -588,7 +588,7 @@ type CategoryItems struct {
 type ConcurrentAccessRestriction struct {
 	// DeviceAllowed: Whether access is granted for this (user, device,
 	// volume).
-	DeviceAllowed bool `json:"deviceAllowed,omitempty"`
+	DeviceAllowed *bool `json:"deviceAllowed,omitempty"`
 
 	// Kind: Resource type.
 	Kind string `json:"kind,omitempty"`
@@ -609,7 +609,7 @@ type ConcurrentAccessRestriction struct {
 
 	// Restricted: Whether this volume has any concurrent access
 	// restrictions.
-	Restricted bool `json:"restricted,omitempty"`
+	Restricted *bool `json:"restricted,omitempty"`
 
 	// Signature: Response signature.
 	Signature string `json:"signature,omitempty"`
@@ -757,7 +757,7 @@ type DictlayerdataDictWordsSource struct {
 type DownloadAccessRestriction struct {
 	// DeviceAllowed: If restricted, whether access is granted for this
 	// (user, device, volume).
-	DeviceAllowed bool `json:"deviceAllowed,omitempty"`
+	DeviceAllowed *bool `json:"deviceAllowed,omitempty"`
 
 	// DownloadsAcquired: If restricted, the number of content download
 	// licenses already acquired (including the requesting client, if
@@ -766,7 +766,7 @@ type DownloadAccessRestriction struct {
 
 	// JustAcquired: If deviceAllowed, whether access was just acquired with
 	// this request.
-	JustAcquired bool `json:"justAcquired,omitempty"`
+	JustAcquired *bool `json:"justAcquired,omitempty"`
 
 	// Kind: Resource type.
 	Kind string `json:"kind,omitempty"`
@@ -788,7 +788,7 @@ type DownloadAccessRestriction struct {
 	ReasonCode string `json:"reasonCode,omitempty"`
 
 	// Restricted: Whether this volume has any download access restrictions.
-	Restricted bool `json:"restricted,omitempty"`
+	Restricted *bool `json:"restricted,omitempty"`
 
 	// Signature: Response signature.
 	Signature string `json:"signature,omitempty"`
@@ -1102,7 +1102,7 @@ type Usersettings struct {
 type UsersettingsNotesExport struct {
 	FolderName string `json:"folderName,omitempty"`
 
-	IsEnabled bool `json:"isEnabled,omitempty"`
+	IsEnabled *bool `json:"isEnabled,omitempty"`
 }
 
 type Volume struct {
@@ -1170,7 +1170,7 @@ type VolumeAccessInfo struct {
 
 	// Embeddable: Whether this volume can be embedded in a viewport using
 	// the Embedded Viewer API.
-	Embeddable bool `json:"embeddable,omitempty"`
+	Embeddable *bool `json:"embeddable,omitempty"`
 
 	// Epub: Information about epub content. (In LITE projection.)
 	Epub *VolumeAccessInfoEpub `json:"epub,omitempty"`
@@ -1179,18 +1179,18 @@ type VolumeAccessInfo struct {
 	// the client explicitly request offline download license rather than
 	// have it done automatically when loading the content, if the client
 	// supports it.
-	ExplicitOfflineLicenseManagement bool `json:"explicitOfflineLicenseManagement,omitempty"`
+	ExplicitOfflineLicenseManagement *bool `json:"explicitOfflineLicenseManagement,omitempty"`
 
 	// Pdf: Information about pdf content. (In LITE projection.)
 	Pdf *VolumeAccessInfoPdf `json:"pdf,omitempty"`
 
 	// PublicDomain: Whether or not this book is public domain in the
 	// country listed above.
-	PublicDomain bool `json:"publicDomain,omitempty"`
+	PublicDomain *bool `json:"publicDomain,omitempty"`
 
 	// QuoteSharingAllowed: Whether quote sharing is allowed for this
 	// volume.
-	QuoteSharingAllowed bool `json:"quoteSharingAllowed,omitempty"`
+	QuoteSharingAllowed *bool `json:"quoteSharingAllowed,omitempty"`
 
 	// TextToSpeechPermission: Whether text-to-speech is permitted for this
 	// volume. Values can be ALLOWED, ALLOWED_FOR_ACCESSIBILITY, or
@@ -1224,7 +1224,7 @@ type VolumeAccessInfoEpub struct {
 
 	// IsAvailable: Is a flowing text epub available either as public domain
 	// or for purchase. (In LITE projection.)
-	IsAvailable bool `json:"isAvailable,omitempty"`
+	IsAvailable *bool `json:"isAvailable,omitempty"`
 }
 
 type VolumeAccessInfoPdf struct {
@@ -1237,7 +1237,7 @@ type VolumeAccessInfoPdf struct {
 
 	// IsAvailable: Is a scanned image pdf available either as public domain
 	// or for purchase. (In LITE projection.)
-	IsAvailable bool `json:"isAvailable,omitempty"`
+	IsAvailable *bool `json:"isAvailable,omitempty"`
 }
 
 type VolumeLayerInfo struct {
@@ -1273,7 +1273,7 @@ type VolumeSaleInfo struct {
 
 	// IsEbook: Whether or not this volume is an eBook (can be added to the
 	// My eBooks shelf).
-	IsEbook bool `json:"isEbook,omitempty"`
+	IsEbook *bool `json:"isEbook,omitempty"`
 
 	// ListPrice: Suggested retail price. (In LITE projection.)
 	ListPrice *VolumeSaleInfoListPrice `json:"listPrice,omitempty"`
@@ -1356,18 +1356,18 @@ type VolumeUserInfo struct {
 	Copy *VolumeUserInfoCopy `json:"copy,omitempty"`
 
 	// IsInMyBooks: Whether or not this volume is currently in "my books."
-	IsInMyBooks bool `json:"isInMyBooks,omitempty"`
+	IsInMyBooks *bool `json:"isInMyBooks,omitempty"`
 
 	// IsPreordered: Whether or not this volume was pre-ordered by the
 	// authenticated user making the request. (In LITE projection.)
-	IsPreordered bool `json:"isPreordered,omitempty"`
+	IsPreordered *bool `json:"isPreordered,omitempty"`
 
 	// IsPurchased: Whether or not this volume was purchased by the
 	// authenticated user making the request. (In LITE projection.)
-	IsPurchased bool `json:"isPurchased,omitempty"`
+	IsPurchased *bool `json:"isPurchased,omitempty"`
 
 	// IsUploaded: Whether or not this volume was user uploaded.
-	IsUploaded bool `json:"isUploaded,omitempty"`
+	IsUploaded *bool `json:"isUploaded,omitempty"`
 
 	// ReadingPosition: The user's current reading position in the volume,
 	// if one is available. (In LITE projection.)
@@ -1412,7 +1412,7 @@ type VolumeUserInfoUserUploadedVolumeInfo struct {
 
 type VolumeVolumeInfo struct {
 	// AllowAnonLogging: Whether anonymous logging should be allowed.
-	AllowAnonLogging bool `json:"allowAnonLogging,omitempty"`
+	AllowAnonLogging *bool `json:"allowAnonLogging,omitempty"`
 
 	// Authors: The names of the authors and/or editors for this volume. (In
 	// LITE projection)
@@ -1574,7 +1574,7 @@ type Volumeannotation struct {
 	Data string `json:"data,omitempty"`
 
 	// Deleted: Indicates that this annotation is deleted.
-	Deleted bool `json:"deleted,omitempty"`
+	Deleted *bool `json:"deleted,omitempty"`
 
 	// Id: Unique id of this volume annotation.
 	Id string `json:"id,omitempty"`

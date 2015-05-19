@@ -82,25 +82,25 @@ type MailService struct {
 
 type MailItem struct {
 	// IsDeleted: Boolean indicating if the mail is deleted (used in Vault)
-	IsDeleted bool `json:"isDeleted,omitempty"`
+	IsDeleted *bool `json:"isDeleted,omitempty"`
 
 	// IsDraft: Boolean indicating if the mail is draft
-	IsDraft bool `json:"isDraft,omitempty"`
+	IsDraft *bool `json:"isDraft,omitempty"`
 
 	// IsInbox: Boolean indicating if the mail is in inbox
-	IsInbox bool `json:"isInbox,omitempty"`
+	IsInbox *bool `json:"isInbox,omitempty"`
 
 	// IsSent: Boolean indicating if the mail is in 'sent mails'
-	IsSent bool `json:"isSent,omitempty"`
+	IsSent *bool `json:"isSent,omitempty"`
 
 	// IsStarred: Boolean indicating if the mail is starred
-	IsStarred bool `json:"isStarred,omitempty"`
+	IsStarred *bool `json:"isStarred,omitempty"`
 
 	// IsTrash: Boolean indicating if the mail is in trash
-	IsTrash bool `json:"isTrash,omitempty"`
+	IsTrash *bool `json:"isTrash,omitempty"`
 
 	// IsUnread: Boolean indicating if the mail is unread
-	IsUnread bool `json:"isUnread,omitempty"`
+	IsUnread *bool `json:"isUnread,omitempty"`
 
 	// Kind: Kind of resource this is.
 	Kind string `json:"kind,omitempty"`

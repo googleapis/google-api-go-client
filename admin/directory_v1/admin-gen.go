@@ -393,7 +393,7 @@ type Channel struct {
 
 	// Payload: A Boolean value to indicate whether payload is wanted.
 	// Optional.
-	Payload bool `json:"payload,omitempty"`
+	Payload *bool `json:"payload,omitempty"`
 
 	// ResourceId: An opaque ID that identifies the resource being watched
 	// on this channel. Stable across different API versions.
@@ -494,7 +494,7 @@ type ChromeOsDevice struct {
 
 	// WillAutoRenew: Will Chromebook auto renew after support end date
 	// (Read-only)
-	WillAutoRenew bool `json:"willAutoRenew,omitempty"`
+	WillAutoRenew *bool `json:"willAutoRenew,omitempty"`
 }
 
 type ChromeOsDeviceActiveTimeRanges struct {
@@ -530,7 +530,7 @@ type ChromeOsDevices struct {
 
 type Group struct {
 	// AdminCreated: Is the group created by admin (Read-only) *
-	AdminCreated bool `json:"adminCreated,omitempty"`
+	AdminCreated *bool `json:"adminCreated,omitempty"`
 
 	// Aliases: List of aliases (Read-only)
 	Aliases []string `json:"aliases,omitempty"`
@@ -660,7 +660,7 @@ type MobileDevice struct {
 
 	// ManagedAccountIsOnOwnerProfile: Boolean indicating if this account is
 	// on owner/primary profile or not (Read-only)
-	ManagedAccountIsOnOwnerProfile bool `json:"managedAccountIsOnOwnerProfile,omitempty"`
+	ManagedAccountIsOnOwnerProfile *bool `json:"managedAccountIsOnOwnerProfile,omitempty"`
 
 	// Meid: Mobile Device MEID number (Read-only)
 	Meid string `json:"meid,omitempty"`
@@ -746,7 +746,7 @@ type Notification struct {
 
 	// IsUnread: Boolean indicating whether the notification is unread or
 	// not.
-	IsUnread bool `json:"isUnread,omitempty"`
+	IsUnread *bool `json:"isUnread,omitempty"`
 
 	// Kind: The type of the resource.
 	Kind string `json:"kind,omitempty"`
@@ -780,7 +780,7 @@ type Notifications struct {
 
 type OrgUnit struct {
 	// BlockInheritance: Should block inheritance
-	BlockInheritance bool `json:"blockInheritance,omitempty"`
+	BlockInheritance *bool `json:"blockInheritance,omitempty"`
 
 	// Description: Description of OrgUnit
 	Description string `json:"description,omitempty"`
@@ -858,7 +858,7 @@ type SchemaFieldSpec struct {
 
 	// MultiValued: Boolean specifying whether this is a multi-valued field
 	// or not.
-	MultiValued bool `json:"multiValued,omitempty"`
+	MultiValued *bool `json:"multiValued,omitempty"`
 
 	// NumericIndexingSpec: Indexing spec for a numeric field. By default,
 	// only exact match queries will be supported for numeric fields.
@@ -897,7 +897,7 @@ type Schemas struct {
 type Token struct {
 	// Anonymous: Whether the application is registered with Google. The
 	// value is true if the application has an anonymous Client ID.
-	Anonymous bool `json:"anonymous,omitempty"`
+	Anonymous *bool `json:"anonymous,omitempty"`
 
 	// ClientId: The Client ID of the application the token is issued to.
 	ClientId string `json:"clientId,omitempty"`
@@ -916,7 +916,7 @@ type Token struct {
 	// NativeApp: Whether the token is issued to an installed application.
 	// The value is true if the application is installed to a desktop or
 	// mobile device.
-	NativeApp bool `json:"nativeApp,omitempty"`
+	NativeApp *bool `json:"nativeApp,omitempty"`
 
 	// Scopes: A list of authorization scopes the application is granted.
 	Scopes []string `json:"scopes,omitempty"`
@@ -941,14 +941,14 @@ type User struct {
 	Addresses interface{} `json:"addresses,omitempty"`
 
 	// AgreedToTerms: Indicates if user has agreed to terms (Read-only)
-	AgreedToTerms bool `json:"agreedToTerms,omitempty"`
+	AgreedToTerms *bool `json:"agreedToTerms,omitempty"`
 
 	// Aliases: List of aliases (Read-only)
 	Aliases []string `json:"aliases,omitempty"`
 
 	// ChangePasswordAtNextLogin: Boolean indicating if the user should
 	// change password in next login
-	ChangePasswordAtNextLogin bool `json:"changePasswordAtNextLogin,omitempty"`
+	ChangePasswordAtNextLogin *bool `json:"changePasswordAtNextLogin,omitempty"`
 
 	// CreationTime: User's Google account creation time. (Read-only)
 	CreationTime string `json:"creationTime,omitempty"`
@@ -979,20 +979,20 @@ type User struct {
 
 	// IncludeInGlobalAddressList: Boolean indicating if user is included in
 	// Global Address List
-	IncludeInGlobalAddressList bool `json:"includeInGlobalAddressList,omitempty"`
+	IncludeInGlobalAddressList *bool `json:"includeInGlobalAddressList,omitempty"`
 
 	// IpWhitelisted: Boolean indicating if ip is whitelisted
-	IpWhitelisted bool `json:"ipWhitelisted,omitempty"`
+	IpWhitelisted *bool `json:"ipWhitelisted,omitempty"`
 
 	// IsAdmin: Boolean indicating if the user is admin (Read-only)
-	IsAdmin bool `json:"isAdmin,omitempty"`
+	IsAdmin *bool `json:"isAdmin,omitempty"`
 
 	// IsDelegatedAdmin: Boolean indicating if the user is delegated admin
 	// (Read-only)
-	IsDelegatedAdmin bool `json:"isDelegatedAdmin,omitempty"`
+	IsDelegatedAdmin *bool `json:"isDelegatedAdmin,omitempty"`
 
 	// IsMailboxSetup: Is mailbox setup (Read-only)
-	IsMailboxSetup bool `json:"isMailboxSetup,omitempty"`
+	IsMailboxSetup *bool `json:"isMailboxSetup,omitempty"`
 
 	// Kind: Kind of resource this is.
 	Kind string `json:"kind,omitempty"`
@@ -1024,7 +1024,7 @@ type User struct {
 	Relations interface{} `json:"relations,omitempty"`
 
 	// Suspended: Indicates if user is suspended
-	Suspended bool `json:"suspended,omitempty"`
+	Suspended *bool `json:"suspended,omitempty"`
 
 	// SuspensionReason: Suspension reason if user is suspended (Read-only)
 	SuspensionReason string `json:"suspensionReason,omitempty"`
@@ -1072,7 +1072,7 @@ type UserAddress struct {
 
 	// Primary: If this is user's primary address. Only one entry could be
 	// marked as primary.
-	Primary bool `json:"primary,omitempty"`
+	Primary *bool `json:"primary,omitempty"`
 
 	// Region: Region.
 	Region string `json:"region,omitempty"`
@@ -1080,7 +1080,7 @@ type UserAddress struct {
 	// SourceIsStructured: User supplied address was structured. Structured
 	// addresses are NOT supported at this time. You might be able to write
 	// structured addresses, but any values will eventually be clobbered.
-	SourceIsStructured bool `json:"sourceIsStructured,omitempty"`
+	SourceIsStructured *bool `json:"sourceIsStructured,omitempty"`
 
 	// StreetAddress: Street.
 	StreetAddress string `json:"streetAddress,omitempty"`
@@ -1104,7 +1104,7 @@ type UserEmail struct {
 
 	// Primary: If this is user's primary email. Only one entry could be
 	// marked as primary.
-	Primary bool `json:"primary,omitempty"`
+	Primary *bool `json:"primary,omitempty"`
 
 	// Type: Each entry can have a type which indicates standard types of
 	// that entry. For example email could be of home, work etc. In addition
@@ -1137,7 +1137,7 @@ type UserIm struct {
 
 	// Primary: If this is user's primary im. Only one entry could be marked
 	// as primary.
-	Primary bool `json:"primary,omitempty"`
+	Primary *bool `json:"primary,omitempty"`
 
 	// Protocol: Protocol used in the instant messenger. It should be one of
 	// the values from ImProtocolTypes map. Similar to type, it can take a
@@ -1154,7 +1154,7 @@ type UserIm struct {
 
 type UserMakeAdmin struct {
 	// Status: Boolean indicating new admin status of the user
-	Status bool `json:"status,omitempty"`
+	Status *bool `json:"status,omitempty"`
 }
 
 type UserName struct {
@@ -1192,7 +1192,7 @@ type UserOrganization struct {
 	Name string `json:"name,omitempty"`
 
 	// Primary: If it user's primary organization.
-	Primary bool `json:"primary,omitempty"`
+	Primary *bool `json:"primary,omitempty"`
 
 	// Symbol: Symbol of the organization.
 	Symbol string `json:"symbol,omitempty"`
@@ -1213,7 +1213,7 @@ type UserPhone struct {
 	CustomType string `json:"customType,omitempty"`
 
 	// Primary: If this is user's primary phone or not.
-	Primary bool `json:"primary,omitempty"`
+	Primary *bool `json:"primary,omitempty"`
 
 	// Type: Each entry can have a type which indicates standard types of
 	// that entry. For example phone could be of home_fax, work, mobile etc.
@@ -1274,7 +1274,7 @@ type UserWebsite struct {
 	CustomType string `json:"customType,omitempty"`
 
 	// Primary: If this is user's primary website or not.
-	Primary bool `json:"primary,omitempty"`
+	Primary *bool `json:"primary,omitempty"`
 
 	// Type: Each entry can have a type which indicates standard types of
 	// that entry. For example website could be of home, work, blog etc. In

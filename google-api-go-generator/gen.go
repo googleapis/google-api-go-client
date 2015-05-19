@@ -1137,7 +1137,8 @@ func (s *Schema) writeSchemaStruct(api *API) {
 			extraOpt += ",string"
 		}
 		typ := p.Type().AsGo()
-		if p.UnfortunateDefault() {
+		// Make all bool types pointers so we can send false through API
+		if p.UnfortunateDefault() || typ == "bool" {
 			typ = "*" + typ
 		}
 		s.api.p("\t%s %s `json:\"%s,omitempty%s\"`\n", p.GoName(), typ, p.APIName(), extraOpt)

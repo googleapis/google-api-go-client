@@ -194,7 +194,7 @@ type DeviceValidity struct {
 
 	// IsValid: The validity status: true if the device is valid for
 	// operation, false otherwise. It will always be present.
-	IsValid bool `json:"isValid,omitempty"`
+	IsValid *bool `json:"isValid,omitempty"`
 
 	// Reason: If the device identifier is not valid, the database may
 	// include a reason. The reason may be in any language. The length of
@@ -457,7 +457,7 @@ type PawsGetSpectrumBatchResponse struct {
 	// parameter. If this parameter is present and its value is true, the
 	// device must send a spectrum use notify message to the database;
 	// otherwise, the device should not send the notification.
-	NeedsSpectrumReport bool `json:"needsSpectrumReport,omitempty"`
+	NeedsSpectrumReport *bool `json:"needsSpectrumReport,omitempty"`
 
 	// RulesetInfo: The database should return ruleset information, which
 	// identifies the applicable regulatory authority and ruleset for the
@@ -597,7 +597,7 @@ type PawsGetSpectrumResponse struct {
 	// parameter is present and its value is true, the device must send a
 	// spectrum use notify message to the database; otherwise, the device
 	// must not send the notification.
-	NeedsSpectrumReport bool `json:"needsSpectrumReport,omitempty"`
+	NeedsSpectrumReport *bool `json:"needsSpectrumReport,omitempty"`
 
 	// RulesetInfo: The database should return ruleset information, which
 	// identifies the applicable regulatory authority and ruleset for the

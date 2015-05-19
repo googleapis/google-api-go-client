@@ -166,7 +166,7 @@ type Cluster struct {
 	// available via the Google Cloud Logging service. This includes both
 	// logs from your applications running in the cluster as well as logs
 	// from the Kubernetes components themselves.
-	EnableCloudLogging bool `json:"enableCloudLogging,omitempty"`
+	EnableCloudLogging *bool `json:"enableCloudLogging,omitempty"`
 
 	// Endpoint: [Output only] The IP address of this cluster's Kubernetes
 	// master. The endpoint can be accessed from the internet at

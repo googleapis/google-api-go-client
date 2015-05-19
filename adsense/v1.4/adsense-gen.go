@@ -394,7 +394,7 @@ type Account struct {
 	Name string `json:"name,omitempty"`
 
 	// Premium: Whether this account is premium.
-	Premium bool `json:"premium,omitempty"`
+	Premium *bool `json:"premium,omitempty"`
 
 	// SubAccounts: Sub accounts of the this account.
 	SubAccounts []*Account `json:"subAccounts,omitempty"`
@@ -421,7 +421,7 @@ type Accounts struct {
 
 type AdClient struct {
 	// ArcOptIn: Whether this ad client is opted in to ARC.
-	ArcOptIn bool `json:"arcOptIn,omitempty"`
+	ArcOptIn *bool `json:"arcOptIn,omitempty"`
 
 	// ArcReviewMode: ARC review mode this ad client is in. Empty if the
 	// client is not opted in to ARC. Possible values: POST_REVIEW,
@@ -439,7 +439,7 @@ type AdClient struct {
 	ProductCode string `json:"productCode,omitempty"`
 
 	// SupportsReporting: Whether this ad client supports being reported on.
-	SupportsReporting bool `json:"supportsReporting,omitempty"`
+	SupportsReporting *bool `json:"supportsReporting,omitempty"`
 }
 
 type AdClients struct {
@@ -683,7 +683,7 @@ type Alert struct {
 	Id string `json:"id,omitempty"`
 
 	// IsDismissible: Whether this alert can be dismissed.
-	IsDismissible bool `json:"isDismissible,omitempty"`
+	IsDismissible *bool `json:"isDismissible,omitempty"`
 
 	// Kind: Kind of resource this is, in this case adsense#alert.
 	Kind string `json:"kind,omitempty"`

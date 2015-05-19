@@ -178,7 +178,7 @@ type Attachment struct {
 	// IsProcessingContent: Indicates that the contentUrl is not available
 	// because the attachment content is still being processed. If the
 	// caller wishes to retrieve the content, it should try again later.
-	IsProcessingContent bool `json:"isProcessingContent,omitempty"`
+	IsProcessingContent *bool `json:"isProcessingContent,omitempty"`
 }
 
 type AttachmentsListResponse struct {
@@ -372,7 +372,7 @@ type MenuItem struct {
 
 	// RemoveWhenSelected: If set to true on a CUSTOM menu item, that item
 	// will be removed from the menu after it is selected.
-	RemoveWhenSelected bool `json:"removeWhenSelected,omitempty"`
+	RemoveWhenSelected *bool `json:"removeWhenSelected,omitempty"`
 
 	// Values: For CUSTOM items, a list of values controlling the appearance
 	// of the menu item in each of its states. A value for the DEFAULT state
@@ -586,18 +586,18 @@ type TimelineItem struct {
 	// that are shown are:
 	// - Items that have the bundleId in question AND isBundleCover set to
 	// false
-	IsBundleCover bool `json:"isBundleCover,omitempty"`
+	IsBundleCover *bool `json:"isBundleCover,omitempty"`
 
 	// IsDeleted: When true, indicates this item is deleted, and only the ID
 	// property is set.
-	IsDeleted bool `json:"isDeleted,omitempty"`
+	IsDeleted *bool `json:"isDeleted,omitempty"`
 
 	// IsPinned: When true, indicates this item is pinned, which means it's
 	// grouped alongside "active" items like navigation and hangouts, on the
 	// opposite side of the home screen from historical (non-pinned)
 	// timeline items. You can allow the user to toggle the value of this
 	// property with the TOGGLE_PINNED built-in menu item.
-	IsPinned bool `json:"isPinned,omitempty"`
+	IsPinned *bool `json:"isPinned,omitempty"`
 
 	// Kind: The type of resource. This is always mirror#timelineItem.
 	Kind string `json:"kind,omitempty"`

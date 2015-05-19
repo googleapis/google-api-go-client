@@ -64,12 +64,12 @@ type Thing struct {
 	// BoolEmptyDefaultA:
 	// Nonempty default: no
 	// Unfortunate default: no
-	BoolEmptyDefaultA bool `json:"bool_empty_default_a,omitempty"`
+	BoolEmptyDefaultA *bool `json:"bool_empty_default_a,omitempty"`
 
 	// BoolEmptyDefaultB:
 	// Nonempty default: no
 	// Unfortunate default: no
-	BoolEmptyDefaultB bool `json:"bool_empty_default_b,omitempty"`
+	BoolEmptyDefaultB *bool `json:"bool_empty_default_b,omitempty"`
 
 	// BoolNonemptyDefault:
 	// Nonempty default: yes

@@ -652,6 +652,9 @@ func (p *Property) UnfortunateDefault() bool {
 	default:
 		return false
 
+	case "bool":
+		return p.Default() == "true"
+
 	case "string":
 		if p.Default() == "" {
 			return false
@@ -1127,7 +1130,8 @@ func (s *Schema) writeSchemaStruct(api *API) {
 			extraOpt += ",string"
 		}
 		typ := p.Type().AsGo()
-		if p.UnfortunateDefault() {
+		// Make all bool types pointers so we can send false through API
+		if p.UnfortunateDefault() || typ == "bool" {
 			typ = "*" + typ
 		}
 		s.api.p("\t%s %s `json:\"%s,omitempty%s\"`\n", p.GoName(), typ, p.APIName(), extraOpt)
@@ -1828,8 +1832,7 @@ func simpleTypeConvert(apiType, format string) (gotype string, ok bool) {
 	// From http://tools.ietf.org/html/draft-zyp-json-schema-03#section-5.1
 	switch apiType {
 	case "boolean":
-		// Represent all bool values as pointers, otherwise we can never set false
-		gotype = "*bool"
+		gotype = "bool"
 	case "string":
 		gotype = "string"
 		switch format {

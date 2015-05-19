@@ -218,7 +218,7 @@ type MapFolder struct {
 
 	// Expandable: The expandability setting of this MapFolder. If true, the
 	// folder can be expanded.
-	Expandable bool `json:"expandable,omitempty"`
+	Expandable *bool `json:"expandable,omitempty"`
 
 	// Key: A user defined alias for this MapFolder, specific to this Map.
 	Key string `json:"key,omitempty"`

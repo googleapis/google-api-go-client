@@ -191,11 +191,11 @@ and
 If you wish to checkpoint your work, or are ready to send the code out for review, run
 
 ```
-$ git change _<branch>_
+$ git change <branch>
 ```
 
 from any directory in your google-api-go-client repository to commit the changes so far.
-The name _<branch>_ is an arbitrary one you choose to identify the
+The name `<branch>` is an arbitrary one you choose to identify the
 local branch containing your changes.
 
 (In Git terms, `git change <branch>`
@@ -340,7 +340,7 @@ The reviewer approves the change by giving it a positive score
 
 You can see a list of your pending changes by running
 `git pending`, and switch between change branches with
-`git change _<branch>_`.
+`git change <branch>`.
 
 ### Synchronize your client
 

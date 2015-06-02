@@ -541,10 +541,10 @@ func (c *UsersGetProfileCall) Fields(s ...googleapi.Field) *UsersGetProfileCall 
 	return c
 }
 
-func (c *UsersGetProfileCall) Do() (*Profile, error) {
+func (c *UsersGetProfileCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -555,7 +555,11 @@ func (c *UsersGetProfileCall) Do() (*Profile, error) {
 		"userId": c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *UsersGetProfileCall) Do() (*Profile, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -621,10 +625,10 @@ func (c *UsersStopCall) Fields(s ...googleapi.Field) *UsersStopCall {
 	return c
 }
 
-func (c *UsersStopCall) Do() error {
+func (c *UsersStopCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -635,7 +639,11 @@ func (c *UsersStopCall) Do() error {
 		"userId": c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *UsersStopCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -696,7 +704,7 @@ func (c *UsersWatchCall) Fields(s ...googleapi.Field) *UsersWatchCall {
 	return c
 }
 
-func (c *UsersWatchCall) Do() (*WatchResponse, error) {
+func (c *UsersWatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.watchrequest)
 	if err != nil {
@@ -704,7 +712,7 @@ func (c *UsersWatchCall) Do() (*WatchResponse, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -716,7 +724,11 @@ func (c *UsersWatchCall) Do() (*WatchResponse, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *UsersWatchCall) Do() (*WatchResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -764,15 +776,15 @@ func (c *UsersWatchCall) Do() (*WatchResponse, error) {
 // method id "gmail.users.drafts.create":
 
 type UsersDraftsCreateCall struct {
-	s          *Service
-	userId     string
-	draft      *Draft
-	opt_       map[string]interface{}
-	media_     io.Reader
-	resumable_ googleapi.SizeReaderAt
-	mediaType_ string
-	ctx_       context.Context
-	protocol_  string
+	s           *Service
+	userId      string
+	draft       *Draft
+	opt_        map[string]interface{}
+	media_      io.Reader
+	ctx_        context.Context
+	protocol_   string
+	uploadOpts_ []googleapi.UploadOption
+	resumable_  *googleapi.ResumableUpload
 }
 
 // Create: Creates a new draft with the DRAFT label.
@@ -793,21 +805,11 @@ func (c *UsersDraftsCreateCall) Media(r io.Reader) *UsersDraftsCreateCall {
 
 // ResumableMedia specifies the media to upload in chunks and can be cancelled with ctx.
 // At most one of Media and ResumableMedia may be set.
-// mediaType identifies the MIME media type of the upload, such as "image/png".
-// If mediaType is "", it will be auto-detected.
-func (c *UsersDraftsCreateCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *UsersDraftsCreateCall {
+func (c *UsersDraftsCreateCall) ResumableMedia(ctx context.Context, r io.Reader, opt ...googleapi.UploadOption) *UsersDraftsCreateCall {
 	c.ctx_ = ctx
-	c.resumable_ = io.NewSectionReader(r, 0, size)
-	c.mediaType_ = mediaType
+	c.media_ = r
 	c.protocol_ = "resumable"
-	return c
-}
-
-// ProgressUpdater provides a callback function that will be called after every chunk.
-// It should be a low-latency function in order to not slow down the upload operation.
-// This should only be called when using ResumableMedia (as opposed to Media).
-func (c *UsersDraftsCreateCall) ProgressUpdater(pu googleapi.ProgressUpdater) *UsersDraftsCreateCall {
-	c.opt_["progressUpdater"] = pu
+	c.uploadOpts_ = opt
 	return c
 }
 
@@ -819,7 +821,7 @@ func (c *UsersDraftsCreateCall) Fields(s ...googleapi.Field) *UsersDraftsCreateC
 	return c
 }
 
-func (c *UsersDraftsCreateCall) Do() (*Draft, error) {
+func (c *UsersDraftsCreateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.draft)
 	if err != nil {
@@ -827,18 +829,12 @@ func (c *UsersDraftsCreateCall) Do() (*Draft, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/drafts")
-	var progressUpdater_ googleapi.ProgressUpdater
-	if v, ok := c.opt_["progressUpdater"]; ok {
-		if pu, ok := v.(googleapi.ProgressUpdater); ok {
-			progressUpdater_ = pu
-		}
-	}
-	if c.media_ != nil || c.resumable_ != nil {
+	if c.media_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
 		params.Set("uploadType", c.protocol_)
 	}
@@ -855,16 +851,22 @@ func (c *UsersDraftsCreateCall) Do() (*Draft, error) {
 		"userId": c.userId,
 	})
 	if c.protocol_ == "resumable" {
-		if c.mediaType_ == "" {
-			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
+		c.resumable_ = &googleapi.ResumableUpload{
+			Client:    c.s.client,
+			UserAgent: c.s.userAgent(),
 		}
-		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
+		mediaType := c.resumable_.Configure(c.media_, c.uploadOpts_...)
+		req.Header.Set("X-Upload-Content-Type", mediaType)
 		req.Header.Set("Content-Type", "application/json; charset=utf-8")
 	} else {
 		req.Header.Set("Content-Type", ctype)
 	}
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *UsersDraftsCreateCall) Do() (*Draft, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -873,17 +875,8 @@ func (c *UsersDraftsCreateCall) Do() (*Draft, error) {
 		return nil, err
 	}
 	if c.protocol_ == "resumable" {
-		loc := res.Header.Get("Location")
-		rx := &googleapi.ResumableUpload{
-			Client:        c.s.client,
-			UserAgent:     c.s.userAgent(),
-			URI:           loc,
-			Media:         c.resumable_,
-			MediaType:     c.mediaType_,
-			ContentLength: c.resumable_.Size(),
-			Callback:      progressUpdater_,
-		}
-		res, err = rx.Upload(c.ctx_)
+		c.resumable_.URI = res.Header.Get("Location")
+		res, err = c.resumable_.Upload(c.ctx_)
 		if err != nil {
 			return nil, err
 		}
@@ -969,10 +962,10 @@ func (c *UsersDraftsDeleteCall) Fields(s ...googleapi.Field) *UsersDraftsDeleteC
 	return c
 }
 
-func (c *UsersDraftsDeleteCall) Do() error {
+func (c *UsersDraftsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -984,7 +977,11 @@ func (c *UsersDraftsDeleteCall) Do() error {
 		"id":     c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *UsersDraftsDeleteCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -1064,10 +1061,10 @@ func (c *UsersDraftsGetCall) Fields(s ...googleapi.Field) *UsersDraftsGetCall {
 	return c
 }
 
-func (c *UsersDraftsGetCall) Do() (*Draft, error) {
+func (c *UsersDraftsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["format"]; ok {
 		params.Set("format", fmt.Sprintf("%v", v))
 	}
@@ -1082,7 +1079,11 @@ func (c *UsersDraftsGetCall) Do() (*Draft, error) {
 		"id":     c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *UsersDraftsGetCall) Do() (*Draft, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1187,10 +1188,10 @@ func (c *UsersDraftsListCall) Fields(s ...googleapi.Field) *UsersDraftsListCall 
 	return c
 }
 
-func (c *UsersDraftsListCall) Do() (*ListDraftsResponse, error) {
+func (c *UsersDraftsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
@@ -1207,7 +1208,11 @@ func (c *UsersDraftsListCall) Do() (*ListDraftsResponse, error) {
 		"userId": c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *UsersDraftsListCall) Do() (*ListDraftsResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1265,15 +1270,15 @@ func (c *UsersDraftsListCall) Do() (*ListDraftsResponse, error) {
 // method id "gmail.users.drafts.send":
 
 type UsersDraftsSendCall struct {
-	s          *Service
-	userId     string
-	draft      *Draft
-	opt_       map[string]interface{}
-	media_     io.Reader
-	resumable_ googleapi.SizeReaderAt
-	mediaType_ string
-	ctx_       context.Context
-	protocol_  string
+	s           *Service
+	userId      string
+	draft       *Draft
+	opt_        map[string]interface{}
+	media_      io.Reader
+	ctx_        context.Context
+	protocol_   string
+	uploadOpts_ []googleapi.UploadOption
+	resumable_  *googleapi.ResumableUpload
 }
 
 // Send: Sends the specified, existing draft to the recipients in the
@@ -1295,21 +1300,11 @@ func (c *UsersDraftsSendCall) Media(r io.Reader) *UsersDraftsSendCall {
 
 // ResumableMedia specifies the media to upload in chunks and can be cancelled with ctx.
 // At most one of Media and ResumableMedia may be set.
-// mediaType identifies the MIME media type of the upload, such as "image/png".
-// If mediaType is "", it will be auto-detected.
-func (c *UsersDraftsSendCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *UsersDraftsSendCall {
+func (c *UsersDraftsSendCall) ResumableMedia(ctx context.Context, r io.Reader, opt ...googleapi.UploadOption) *UsersDraftsSendCall {
 	c.ctx_ = ctx
-	c.resumable_ = io.NewSectionReader(r, 0, size)
-	c.mediaType_ = mediaType
+	c.media_ = r
 	c.protocol_ = "resumable"
-	return c
-}
-
-// ProgressUpdater provides a callback function that will be called after every chunk.
-// It should be a low-latency function in order to not slow down the upload operation.
-// This should only be called when using ResumableMedia (as opposed to Media).
-func (c *UsersDraftsSendCall) ProgressUpdater(pu googleapi.ProgressUpdater) *UsersDraftsSendCall {
-	c.opt_["progressUpdater"] = pu
+	c.uploadOpts_ = opt
 	return c
 }
 
@@ -1321,7 +1316,7 @@ func (c *UsersDraftsSendCall) Fields(s ...googleapi.Field) *UsersDraftsSendCall 
 	return c
 }
 
-func (c *UsersDraftsSendCall) Do() (*Message, error) {
+func (c *UsersDraftsSendCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.draft)
 	if err != nil {
@@ -1329,18 +1324,12 @@ func (c *UsersDraftsSendCall) Do() (*Message, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/drafts/send")
-	var progressUpdater_ googleapi.ProgressUpdater
-	if v, ok := c.opt_["progressUpdater"]; ok {
-		if pu, ok := v.(googleapi.ProgressUpdater); ok {
-			progressUpdater_ = pu
-		}
-	}
-	if c.media_ != nil || c.resumable_ != nil {
+	if c.media_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
 		params.Set("uploadType", c.protocol_)
 	}
@@ -1357,16 +1346,22 @@ func (c *UsersDraftsSendCall) Do() (*Message, error) {
 		"userId": c.userId,
 	})
 	if c.protocol_ == "resumable" {
-		if c.mediaType_ == "" {
-			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
+		c.resumable_ = &googleapi.ResumableUpload{
+			Client:    c.s.client,
+			UserAgent: c.s.userAgent(),
 		}
-		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
+		mediaType := c.resumable_.Configure(c.media_, c.uploadOpts_...)
+		req.Header.Set("X-Upload-Content-Type", mediaType)
 		req.Header.Set("Content-Type", "application/json; charset=utf-8")
 	} else {
 		req.Header.Set("Content-Type", ctype)
 	}
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *UsersDraftsSendCall) Do() (*Message, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1375,17 +1370,8 @@ func (c *UsersDraftsSendCall) Do() (*Message, error) {
 		return nil, err
 	}
 	if c.protocol_ == "resumable" {
-		loc := res.Header.Get("Location")
-		rx := &googleapi.ResumableUpload{
-			Client:        c.s.client,
-			UserAgent:     c.s.userAgent(),
-			URI:           loc,
-			Media:         c.resumable_,
-			MediaType:     c.mediaType_,
-			ContentLength: c.resumable_.Size(),
-			Callback:      progressUpdater_,
-		}
-		res, err = rx.Upload(c.ctx_)
+		c.resumable_.URI = res.Header.Get("Location")
+		res, err = c.resumable_.Upload(c.ctx_)
 		if err != nil {
 			return nil, err
 		}
@@ -1448,16 +1434,16 @@ func (c *UsersDraftsSendCall) Do() (*Message, error) {
 // method id "gmail.users.drafts.update":
 
 type UsersDraftsUpdateCall struct {
-	s          *Service
-	userId     string
-	id         string
-	draft      *Draft
-	opt_       map[string]interface{}
-	media_     io.Reader
-	resumable_ googleapi.SizeReaderAt
-	mediaType_ string
-	ctx_       context.Context
-	protocol_  string
+	s           *Service
+	userId      string
+	id          string
+	draft       *Draft
+	opt_        map[string]interface{}
+	media_      io.Reader
+	ctx_        context.Context
+	protocol_   string
+	uploadOpts_ []googleapi.UploadOption
+	resumable_  *googleapi.ResumableUpload
 }
 
 // Update: Replaces a draft's content.
@@ -1479,21 +1465,11 @@ func (c *UsersDraftsUpdateCall) Media(r io.Reader) *UsersDraftsUpdateCall {
 
 // ResumableMedia specifies the media to upload in chunks and can be cancelled with ctx.
 // At most one of Media and ResumableMedia may be set.
-// mediaType identifies the MIME media type of the upload, such as "image/png".
-// If mediaType is "", it will be auto-detected.
-func (c *UsersDraftsUpdateCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *UsersDraftsUpdateCall {
+func (c *UsersDraftsUpdateCall) ResumableMedia(ctx context.Context, r io.Reader, opt ...googleapi.UploadOption) *UsersDraftsUpdateCall {
 	c.ctx_ = ctx
-	c.resumable_ = io.NewSectionReader(r, 0, size)
-	c.mediaType_ = mediaType
+	c.media_ = r
 	c.protocol_ = "resumable"
-	return c
-}
-
-// ProgressUpdater provides a callback function that will be called after every chunk.
-// It should be a low-latency function in order to not slow down the upload operation.
-// This should only be called when using ResumableMedia (as opposed to Media).
-func (c *UsersDraftsUpdateCall) ProgressUpdater(pu googleapi.ProgressUpdater) *UsersDraftsUpdateCall {
-	c.opt_["progressUpdater"] = pu
+	c.uploadOpts_ = opt
 	return c
 }
 
@@ -1505,7 +1481,7 @@ func (c *UsersDraftsUpdateCall) Fields(s ...googleapi.Field) *UsersDraftsUpdateC
 	return c
 }
 
-func (c *UsersDraftsUpdateCall) Do() (*Draft, error) {
+func (c *UsersDraftsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.draft)
 	if err != nil {
@@ -1513,18 +1489,12 @@ func (c *UsersDraftsUpdateCall) Do() (*Draft, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/drafts/{id}")
-	var progressUpdater_ googleapi.ProgressUpdater
-	if v, ok := c.opt_["progressUpdater"]; ok {
-		if pu, ok := v.(googleapi.ProgressUpdater); ok {
-			progressUpdater_ = pu
-		}
-	}
-	if c.media_ != nil || c.resumable_ != nil {
+	if c.media_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
 		params.Set("uploadType", c.protocol_)
 	}
@@ -1542,16 +1512,22 @@ func (c *UsersDraftsUpdateCall) Do() (*Draft, error) {
 		"id":     c.id,
 	})
 	if c.protocol_ == "resumable" {
-		if c.mediaType_ == "" {
-			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
+		c.resumable_ = &googleapi.ResumableUpload{
+			Client:    c.s.client,
+			UserAgent: c.s.userAgent(),
 		}
-		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
+		mediaType := c.resumable_.Configure(c.media_, c.uploadOpts_...)
+		req.Header.Set("X-Upload-Content-Type", mediaType)
 		req.Header.Set("Content-Type", "application/json; charset=utf-8")
 	} else {
 		req.Header.Set("Content-Type", ctype)
 	}
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *UsersDraftsUpdateCall) Do() (*Draft, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1560,17 +1536,8 @@ func (c *UsersDraftsUpdateCall) Do() (*Draft, error) {
 		return nil, err
 	}
 	if c.protocol_ == "resumable" {
-		loc := res.Header.Get("Location")
-		rx := &googleapi.ResumableUpload{
-			Client:        c.s.client,
-			UserAgent:     c.s.userAgent(),
-			URI:           loc,
-			Media:         c.resumable_,
-			MediaType:     c.mediaType_,
-			ContentLength: c.resumable_.Size(),
-			Callback:      progressUpdater_,
-		}
-		res, err = rx.Upload(c.ctx_)
+		c.resumable_.URI = res.Header.Get("Location")
+		res, err = c.resumable_.Upload(c.ctx_)
 		if err != nil {
 			return nil, err
 		}
@@ -1699,10 +1666,10 @@ func (c *UsersHistoryListCall) Fields(s ...googleapi.Field) *UsersHistoryListCal
 	return c
 }
 
-func (c *UsersHistoryListCall) Do() (*ListHistoryResponse, error) {
+func (c *UsersHistoryListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["labelId"]; ok {
 		params.Set("labelId", fmt.Sprintf("%v", v))
 	}
@@ -1725,7 +1692,11 @@ func (c *UsersHistoryListCall) Do() (*ListHistoryResponse, error) {
 		"userId": c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *UsersHistoryListCall) Do() (*ListHistoryResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1815,7 +1786,7 @@ func (c *UsersLabelsCreateCall) Fields(s ...googleapi.Field) *UsersLabelsCreateC
 	return c
 }
 
-func (c *UsersLabelsCreateCall) Do() (*Label, error) {
+func (c *UsersLabelsCreateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.label)
 	if err != nil {
@@ -1823,7 +1794,7 @@ func (c *UsersLabelsCreateCall) Do() (*Label, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1835,7 +1806,11 @@ func (c *UsersLabelsCreateCall) Do() (*Label, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *UsersLabelsCreateCall) Do() (*Label, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1906,10 +1881,10 @@ func (c *UsersLabelsDeleteCall) Fields(s ...googleapi.Field) *UsersLabelsDeleteC
 	return c
 }
 
-func (c *UsersLabelsDeleteCall) Do() error {
+func (c *UsersLabelsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1921,7 +1896,11 @@ func (c *UsersLabelsDeleteCall) Do() error {
 		"id":     c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *UsersLabelsDeleteCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -1988,10 +1967,10 @@ func (c *UsersLabelsGetCall) Fields(s ...googleapi.Field) *UsersLabelsGetCall {
 	return c
 }
 
-func (c *UsersLabelsGetCall) Do() (*Label, error) {
+func (c *UsersLabelsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -2003,7 +1982,11 @@ func (c *UsersLabelsGetCall) Do() (*Label, error) {
 		"id":     c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *UsersLabelsGetCall) Do() (*Label, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2076,10 +2059,10 @@ func (c *UsersLabelsListCall) Fields(s ...googleapi.Field) *UsersLabelsListCall 
 	return c
 }
 
-func (c *UsersLabelsListCall) Do() (*ListLabelsResponse, error) {
+func (c *UsersLabelsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -2090,7 +2073,11 @@ func (c *UsersLabelsListCall) Do() (*ListLabelsResponse, error) {
 		"userId": c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *UsersLabelsListCall) Do() (*ListLabelsResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2161,7 +2148,7 @@ func (c *UsersLabelsPatchCall) Fields(s ...googleapi.Field) *UsersLabelsPatchCal
 	return c
 }
 
-func (c *UsersLabelsPatchCall) Do() (*Label, error) {
+func (c *UsersLabelsPatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.label)
 	if err != nil {
@@ -2169,7 +2156,7 @@ func (c *UsersLabelsPatchCall) Do() (*Label, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -2182,7 +2169,11 @@ func (c *UsersLabelsPatchCall) Do() (*Label, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *UsersLabelsPatchCall) Do() (*Label, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2261,7 +2252,7 @@ func (c *UsersLabelsUpdateCall) Fields(s ...googleapi.Field) *UsersLabelsUpdateC
 	return c
 }
 
-func (c *UsersLabelsUpdateCall) Do() (*Label, error) {
+func (c *UsersLabelsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.label)
 	if err != nil {
@@ -2269,7 +2260,7 @@ func (c *UsersLabelsUpdateCall) Do() (*Label, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -2282,7 +2273,11 @@ func (c *UsersLabelsUpdateCall) Do() (*Label, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *UsersLabelsUpdateCall) Do() (*Label, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2360,10 +2355,10 @@ func (c *UsersMessagesDeleteCall) Fields(s ...googleapi.Field) *UsersMessagesDel
 	return c
 }
 
-func (c *UsersMessagesDeleteCall) Do() error {
+func (c *UsersMessagesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -2375,7 +2370,11 @@ func (c *UsersMessagesDeleteCall) Do() error {
 		"id":     c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *UsersMessagesDeleteCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -2460,10 +2459,10 @@ func (c *UsersMessagesGetCall) Fields(s ...googleapi.Field) *UsersMessagesGetCal
 	return c
 }
 
-func (c *UsersMessagesGetCall) Do() (*Message, error) {
+func (c *UsersMessagesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["format"]; ok {
 		params.Set("format", fmt.Sprintf("%v", v))
 	}
@@ -2481,7 +2480,11 @@ func (c *UsersMessagesGetCall) Do() (*Message, error) {
 		"id":     c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *UsersMessagesGetCall) Do() (*Message, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2557,15 +2560,15 @@ func (c *UsersMessagesGetCall) Do() (*Message, error) {
 // method id "gmail.users.messages.import":
 
 type UsersMessagesImportCall struct {
-	s          *Service
-	userId     string
-	message    *Message
-	opt_       map[string]interface{}
-	media_     io.Reader
-	resumable_ googleapi.SizeReaderAt
-	mediaType_ string
-	ctx_       context.Context
-	protocol_  string
+	s           *Service
+	userId      string
+	message     *Message
+	opt_        map[string]interface{}
+	media_      io.Reader
+	ctx_        context.Context
+	protocol_   string
+	uploadOpts_ []googleapi.UploadOption
+	resumable_  *googleapi.ResumableUpload
 }
 
 // Import: Imports a message into only this user's mailbox, with
@@ -2624,21 +2627,11 @@ func (c *UsersMessagesImportCall) Media(r io.Reader) *UsersMessagesImportCall {
 
 // ResumableMedia specifies the media to upload in chunks and can be cancelled with ctx.
 // At most one of Media and ResumableMedia may be set.
-// mediaType identifies the MIME media type of the upload, such as "image/png".
-// If mediaType is "", it will be auto-detected.
-func (c *UsersMessagesImportCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *UsersMessagesImportCall {
+func (c *UsersMessagesImportCall) ResumableMedia(ctx context.Context, r io.Reader, opt ...googleapi.UploadOption) *UsersMessagesImportCall {
 	c.ctx_ = ctx
-	c.resumable_ = io.NewSectionReader(r, 0, size)
-	c.mediaType_ = mediaType
+	c.media_ = r
 	c.protocol_ = "resumable"
-	return c
-}
-
-// ProgressUpdater provides a callback function that will be called after every chunk.
-// It should be a low-latency function in order to not slow down the upload operation.
-// This should only be called when using ResumableMedia (as opposed to Media).
-func (c *UsersMessagesImportCall) ProgressUpdater(pu googleapi.ProgressUpdater) *UsersMessagesImportCall {
-	c.opt_["progressUpdater"] = pu
+	c.uploadOpts_ = opt
 	return c
 }
 
@@ -2650,7 +2643,7 @@ func (c *UsersMessagesImportCall) Fields(s ...googleapi.Field) *UsersMessagesImp
 	return c
 }
 
-func (c *UsersMessagesImportCall) Do() (*Message, error) {
+func (c *UsersMessagesImportCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.message)
 	if err != nil {
@@ -2658,7 +2651,7 @@ func (c *UsersMessagesImportCall) Do() (*Message, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["deleted"]; ok {
 		params.Set("deleted", fmt.Sprintf("%v", v))
 	}
@@ -2675,13 +2668,7 @@ func (c *UsersMessagesImportCall) Do() (*Message, error) {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/messages/import")
-	var progressUpdater_ googleapi.ProgressUpdater
-	if v, ok := c.opt_["progressUpdater"]; ok {
-		if pu, ok := v.(googleapi.ProgressUpdater); ok {
-			progressUpdater_ = pu
-		}
-	}
-	if c.media_ != nil || c.resumable_ != nil {
+	if c.media_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
 		params.Set("uploadType", c.protocol_)
 	}
@@ -2698,16 +2685,22 @@ func (c *UsersMessagesImportCall) Do() (*Message, error) {
 		"userId": c.userId,
 	})
 	if c.protocol_ == "resumable" {
-		if c.mediaType_ == "" {
-			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
+		c.resumable_ = &googleapi.ResumableUpload{
+			Client:    c.s.client,
+			UserAgent: c.s.userAgent(),
 		}
-		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
+		mediaType := c.resumable_.Configure(c.media_, c.uploadOpts_...)
+		req.Header.Set("X-Upload-Content-Type", mediaType)
 		req.Header.Set("Content-Type", "application/json; charset=utf-8")
 	} else {
 		req.Header.Set("Content-Type", ctype)
 	}
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *UsersMessagesImportCall) Do() (*Message, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2716,17 +2709,8 @@ func (c *UsersMessagesImportCall) Do() (*Message, error) {
 		return nil, err
 	}
 	if c.protocol_ == "resumable" {
-		loc := res.Header.Get("Location")
-		rx := &googleapi.ResumableUpload{
-			Client:        c.s.client,
-			UserAgent:     c.s.userAgent(),
-			URI:           loc,
-			Media:         c.resumable_,
-			MediaType:     c.mediaType_,
-			ContentLength: c.resumable_.Size(),
-			Callback:      progressUpdater_,
-		}
-		res, err = rx.Upload(c.ctx_)
+		c.resumable_.URI = res.Header.Get("Location")
+		res, err = c.resumable_.Upload(c.ctx_)
 		if err != nil {
 			return nil, err
 		}
@@ -2821,15 +2805,15 @@ func (c *UsersMessagesImportCall) Do() (*Message, error) {
 // method id "gmail.users.messages.insert":
 
 type UsersMessagesInsertCall struct {
-	s          *Service
-	userId     string
-	message    *Message
-	opt_       map[string]interface{}
-	media_     io.Reader
-	resumable_ googleapi.SizeReaderAt
-	mediaType_ string
-	ctx_       context.Context
-	protocol_  string
+	s           *Service
+	userId      string
+	message     *Message
+	opt_        map[string]interface{}
+	media_      io.Reader
+	ctx_        context.Context
+	protocol_   string
+	uploadOpts_ []googleapi.UploadOption
+	resumable_  *googleapi.ResumableUpload
 }
 
 // Insert: Directly inserts a message into only this user's mailbox
@@ -2872,21 +2856,11 @@ func (c *UsersMessagesInsertCall) Media(r io.Reader) *UsersMessagesInsertCall {
 
 // ResumableMedia specifies the media to upload in chunks and can be cancelled with ctx.
 // At most one of Media and ResumableMedia may be set.
-// mediaType identifies the MIME media type of the upload, such as "image/png".
-// If mediaType is "", it will be auto-detected.
-func (c *UsersMessagesInsertCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *UsersMessagesInsertCall {
+func (c *UsersMessagesInsertCall) ResumableMedia(ctx context.Context, r io.Reader, opt ...googleapi.UploadOption) *UsersMessagesInsertCall {
 	c.ctx_ = ctx
-	c.resumable_ = io.NewSectionReader(r, 0, size)
-	c.mediaType_ = mediaType
+	c.media_ = r
 	c.protocol_ = "resumable"
-	return c
-}
-
-// ProgressUpdater provides a callback function that will be called after every chunk.
-// It should be a low-latency function in order to not slow down the upload operation.
-// This should only be called when using ResumableMedia (as opposed to Media).
-func (c *UsersMessagesInsertCall) ProgressUpdater(pu googleapi.ProgressUpdater) *UsersMessagesInsertCall {
-	c.opt_["progressUpdater"] = pu
+	c.uploadOpts_ = opt
 	return c
 }
 
@@ -2898,7 +2872,7 @@ func (c *UsersMessagesInsertCall) Fields(s ...googleapi.Field) *UsersMessagesIns
 	return c
 }
 
-func (c *UsersMessagesInsertCall) Do() (*Message, error) {
+func (c *UsersMessagesInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.message)
 	if err != nil {
@@ -2906,7 +2880,7 @@ func (c *UsersMessagesInsertCall) Do() (*Message, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["deleted"]; ok {
 		params.Set("deleted", fmt.Sprintf("%v", v))
 	}
@@ -2917,13 +2891,7 @@ func (c *UsersMessagesInsertCall) Do() (*Message, error) {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/messages")
-	var progressUpdater_ googleapi.ProgressUpdater
-	if v, ok := c.opt_["progressUpdater"]; ok {
-		if pu, ok := v.(googleapi.ProgressUpdater); ok {
-			progressUpdater_ = pu
-		}
-	}
-	if c.media_ != nil || c.resumable_ != nil {
+	if c.media_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
 		params.Set("uploadType", c.protocol_)
 	}
@@ -2940,16 +2908,22 @@ func (c *UsersMessagesInsertCall) Do() (*Message, error) {
 		"userId": c.userId,
 	})
 	if c.protocol_ == "resumable" {
-		if c.mediaType_ == "" {
-			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
+		c.resumable_ = &googleapi.ResumableUpload{
+			Client:    c.s.client,
+			UserAgent: c.s.userAgent(),
 		}
-		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
+		mediaType := c.resumable_.Configure(c.media_, c.uploadOpts_...)
+		req.Header.Set("X-Upload-Content-Type", mediaType)
 		req.Header.Set("Content-Type", "application/json; charset=utf-8")
 	} else {
 		req.Header.Set("Content-Type", ctype)
 	}
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *UsersMessagesInsertCall) Do() (*Message, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2958,17 +2932,8 @@ func (c *UsersMessagesInsertCall) Do() (*Message, error) {
 		return nil, err
 	}
 	if c.protocol_ == "resumable" {
-		loc := res.Header.Get("Location")
-		rx := &googleapi.ResumableUpload{
-			Client:        c.s.client,
-			UserAgent:     c.s.userAgent(),
-			URI:           loc,
-			Media:         c.resumable_,
-			MediaType:     c.mediaType_,
-			ContentLength: c.resumable_.Size(),
-			Callback:      progressUpdater_,
-		}
-		res, err = rx.Upload(c.ctx_)
+		c.resumable_.URI = res.Header.Get("Location")
+		res, err = c.resumable_.Upload(c.ctx_)
 		if err != nil {
 			return nil, err
 		}
@@ -3107,10 +3072,10 @@ func (c *UsersMessagesListCall) Fields(s ...googleapi.Field) *UsersMessagesListC
 	return c
 }
 
-func (c *UsersMessagesListCall) Do() (*ListMessagesResponse, error) {
+func (c *UsersMessagesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["includeSpamTrash"]; ok {
 		params.Set("includeSpamTrash", fmt.Sprintf("%v", v))
 	}
@@ -3136,7 +3101,11 @@ func (c *UsersMessagesListCall) Do() (*ListMessagesResponse, error) {
 		"userId": c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *UsersMessagesListCall) Do() (*ListMessagesResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3234,7 +3203,7 @@ func (c *UsersMessagesModifyCall) Fields(s ...googleapi.Field) *UsersMessagesMod
 	return c
 }
 
-func (c *UsersMessagesModifyCall) Do() (*Message, error) {
+func (c *UsersMessagesModifyCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.modifymessagerequest)
 	if err != nil {
@@ -3242,7 +3211,7 @@ func (c *UsersMessagesModifyCall) Do() (*Message, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -3255,7 +3224,11 @@ func (c *UsersMessagesModifyCall) Do() (*Message, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *UsersMessagesModifyCall) Do() (*Message, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3309,15 +3282,15 @@ func (c *UsersMessagesModifyCall) Do() (*Message, error) {
 // method id "gmail.users.messages.send":
 
 type UsersMessagesSendCall struct {
-	s          *Service
-	userId     string
-	message    *Message
-	opt_       map[string]interface{}
-	media_     io.Reader
-	resumable_ googleapi.SizeReaderAt
-	mediaType_ string
-	ctx_       context.Context
-	protocol_  string
+	s           *Service
+	userId      string
+	message     *Message
+	opt_        map[string]interface{}
+	media_      io.Reader
+	ctx_        context.Context
+	protocol_   string
+	uploadOpts_ []googleapi.UploadOption
+	resumable_  *googleapi.ResumableUpload
 }
 
 // Send: Sends the specified message to the recipients in the To, Cc,
@@ -3339,21 +3312,11 @@ func (c *UsersMessagesSendCall) Media(r io.Reader) *UsersMessagesSendCall {
 
 // ResumableMedia specifies the media to upload in chunks and can be cancelled with ctx.
 // At most one of Media and ResumableMedia may be set.
-// mediaType identifies the MIME media type of the upload, such as "image/png".
-// If mediaType is "", it will be auto-detected.
-func (c *UsersMessagesSendCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *UsersMessagesSendCall {
+func (c *UsersMessagesSendCall) ResumableMedia(ctx context.Context, r io.Reader, opt ...googleapi.UploadOption) *UsersMessagesSendCall {
 	c.ctx_ = ctx
-	c.resumable_ = io.NewSectionReader(r, 0, size)
-	c.mediaType_ = mediaType
+	c.media_ = r
 	c.protocol_ = "resumable"
-	return c
-}
-
-// ProgressUpdater provides a callback function that will be called after every chunk.
-// It should be a low-latency function in order to not slow down the upload operation.
-// This should only be called when using ResumableMedia (as opposed to Media).
-func (c *UsersMessagesSendCall) ProgressUpdater(pu googleapi.ProgressUpdater) *UsersMessagesSendCall {
-	c.opt_["progressUpdater"] = pu
+	c.uploadOpts_ = opt
 	return c
 }
 
@@ -3365,7 +3328,7 @@ func (c *UsersMessagesSendCall) Fields(s ...googleapi.Field) *UsersMessagesSendC
 	return c
 }
 
-func (c *UsersMessagesSendCall) Do() (*Message, error) {
+func (c *UsersMessagesSendCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.message)
 	if err != nil {
@@ -3373,18 +3336,12 @@ func (c *UsersMessagesSendCall) Do() (*Message, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/messages/send")
-	var progressUpdater_ googleapi.ProgressUpdater
-	if v, ok := c.opt_["progressUpdater"]; ok {
-		if pu, ok := v.(googleapi.ProgressUpdater); ok {
-			progressUpdater_ = pu
-		}
-	}
-	if c.media_ != nil || c.resumable_ != nil {
+	if c.media_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
 		params.Set("uploadType", c.protocol_)
 	}
@@ -3401,16 +3358,22 @@ func (c *UsersMessagesSendCall) Do() (*Message, error) {
 		"userId": c.userId,
 	})
 	if c.protocol_ == "resumable" {
-		if c.mediaType_ == "" {
-			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
+		c.resumable_ = &googleapi.ResumableUpload{
+			Client:    c.s.client,
+			UserAgent: c.s.userAgent(),
 		}
-		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
+		mediaType := c.resumable_.Configure(c.media_, c.uploadOpts_...)
+		req.Header.Set("X-Upload-Content-Type", mediaType)
 		req.Header.Set("Content-Type", "application/json; charset=utf-8")
 	} else {
 		req.Header.Set("Content-Type", ctype)
 	}
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *UsersMessagesSendCall) Do() (*Message, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3419,17 +3382,8 @@ func (c *UsersMessagesSendCall) Do() (*Message, error) {
 		return nil, err
 	}
 	if c.protocol_ == "resumable" {
-		loc := res.Header.Get("Location")
-		rx := &googleapi.ResumableUpload{
-			Client:        c.s.client,
-			UserAgent:     c.s.userAgent(),
-			URI:           loc,
-			Media:         c.resumable_,
-			MediaType:     c.mediaType_,
-			ContentLength: c.resumable_.Size(),
-			Callback:      progressUpdater_,
-		}
-		res, err = rx.Upload(c.ctx_)
+		c.resumable_.URI = res.Header.Get("Location")
+		res, err = c.resumable_.Upload(c.ctx_)
 		if err != nil {
 			return nil, err
 		}
@@ -3514,10 +3468,10 @@ func (c *UsersMessagesTrashCall) Fields(s ...googleapi.Field) *UsersMessagesTras
 	return c
 }
 
-func (c *UsersMessagesTrashCall) Do() (*Message, error) {
+func (c *UsersMessagesTrashCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -3529,7 +3483,11 @@ func (c *UsersMessagesTrashCall) Do() (*Message, error) {
 		"id":     c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *UsersMessagesTrashCall) Do() (*Message, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3602,10 +3560,10 @@ func (c *UsersMessagesUntrashCall) Fields(s ...googleapi.Field) *UsersMessagesUn
 	return c
 }
 
-func (c *UsersMessagesUntrashCall) Do() (*Message, error) {
+func (c *UsersMessagesUntrashCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -3617,7 +3575,11 @@ func (c *UsersMessagesUntrashCall) Do() (*Message, error) {
 		"id":     c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *UsersMessagesUntrashCall) Do() (*Message, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3692,10 +3654,10 @@ func (c *UsersMessagesAttachmentsGetCall) Fields(s ...googleapi.Field) *UsersMes
 	return c
 }
 
-func (c *UsersMessagesAttachmentsGetCall) Do() (*MessagePartBody, error) {
+func (c *UsersMessagesAttachmentsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -3708,7 +3670,11 @@ func (c *UsersMessagesAttachmentsGetCall) Do() (*MessagePartBody, error) {
 		"id":        c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *UsersMessagesAttachmentsGetCall) Do() (*MessagePartBody, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3790,10 +3756,10 @@ func (c *UsersThreadsDeleteCall) Fields(s ...googleapi.Field) *UsersThreadsDelet
 	return c
 }
 
-func (c *UsersThreadsDeleteCall) Do() error {
+func (c *UsersThreadsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -3805,7 +3771,11 @@ func (c *UsersThreadsDeleteCall) Do() error {
 		"id":     c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *UsersThreadsDeleteCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -3889,10 +3859,10 @@ func (c *UsersThreadsGetCall) Fields(s ...googleapi.Field) *UsersThreadsGetCall 
 	return c
 }
 
-func (c *UsersThreadsGetCall) Do() (*Thread, error) {
+func (c *UsersThreadsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["format"]; ok {
 		params.Set("format", fmt.Sprintf("%v", v))
 	}
@@ -3910,7 +3880,11 @@ func (c *UsersThreadsGetCall) Do() (*Thread, error) {
 		"id":     c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *UsersThreadsGetCall) Do() (*Thread, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -4040,10 +4014,10 @@ func (c *UsersThreadsListCall) Fields(s ...googleapi.Field) *UsersThreadsListCal
 	return c
 }
 
-func (c *UsersThreadsListCall) Do() (*ListThreadsResponse, error) {
+func (c *UsersThreadsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["includeSpamTrash"]; ok {
 		params.Set("includeSpamTrash", fmt.Sprintf("%v", v))
 	}
@@ -4069,7 +4043,11 @@ func (c *UsersThreadsListCall) Do() (*ListThreadsResponse, error) {
 		"userId": c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *UsersThreadsListCall) Do() (*ListThreadsResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -4168,7 +4146,7 @@ func (c *UsersThreadsModifyCall) Fields(s ...googleapi.Field) *UsersThreadsModif
 	return c
 }
 
-func (c *UsersThreadsModifyCall) Do() (*Thread, error) {
+func (c *UsersThreadsModifyCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.modifythreadrequest)
 	if err != nil {
@@ -4176,7 +4154,7 @@ func (c *UsersThreadsModifyCall) Do() (*Thread, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -4189,7 +4167,11 @@ func (c *UsersThreadsModifyCall) Do() (*Thread, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *UsersThreadsModifyCall) Do() (*Thread, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -4265,10 +4247,10 @@ func (c *UsersThreadsTrashCall) Fields(s ...googleapi.Field) *UsersThreadsTrashC
 	return c
 }
 
-func (c *UsersThreadsTrashCall) Do() (*Thread, error) {
+func (c *UsersThreadsTrashCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -4280,7 +4262,11 @@ func (c *UsersThreadsTrashCall) Do() (*Thread, error) {
 		"id":     c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *UsersThreadsTrashCall) Do() (*Thread, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -4353,10 +4339,10 @@ func (c *UsersThreadsUntrashCall) Fields(s ...googleapi.Field) *UsersThreadsUntr
 	return c
 }
 
-func (c *UsersThreadsUntrashCall) Do() (*Thread, error) {
+func (c *UsersThreadsUntrashCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -4368,7 +4354,11 @@ func (c *UsersThreadsUntrashCall) Do() (*Thread, error) {
 		"id":     c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *UsersThreadsUntrashCall) Do() (*Thread, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}

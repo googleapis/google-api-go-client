@@ -141,7 +141,7 @@ func (c *StatscollectionUpdateaggregatedstatsCall) Fields(s ...googleapi.Field) 
 	return c
 }
 
-func (c *StatscollectionUpdateaggregatedstatsCall) Do() (*AggregatedStatsReply, error) {
+func (c *StatscollectionUpdateaggregatedstatsCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.aggregatedstats)
 	if err != nil {
@@ -149,7 +149,7 @@ func (c *StatscollectionUpdateaggregatedstatsCall) Do() (*AggregatedStatsReply, 
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -159,7 +159,11 @@ func (c *StatscollectionUpdateaggregatedstatsCall) Do() (*AggregatedStatsReply, 
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *StatscollectionUpdateaggregatedstatsCall) Do() (*AggregatedStatsReply, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -213,7 +217,7 @@ func (c *StatscollectionUpdatestatsCall) Fields(s ...googleapi.Field) *Statscoll
 	return c
 }
 
-func (c *StatscollectionUpdatestatsCall) Do() (*StatsReply, error) {
+func (c *StatscollectionUpdatestatsCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.stats)
 	if err != nil {
@@ -221,7 +225,7 @@ func (c *StatscollectionUpdatestatsCall) Do() (*StatsReply, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -231,7 +235,11 @@ func (c *StatscollectionUpdatestatsCall) Do() (*StatsReply, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *StatscollectionUpdatestatsCall) Do() (*StatsReply, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}

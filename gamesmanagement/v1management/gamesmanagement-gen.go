@@ -419,10 +419,10 @@ func (c *AchievementsResetCall) Fields(s ...googleapi.Field) *AchievementsResetC
 	return c
 }
 
-func (c *AchievementsResetCall) Do() (*AchievementResetResponse, error) {
+func (c *AchievementsResetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -433,7 +433,11 @@ func (c *AchievementsResetCall) Do() (*AchievementResetResponse, error) {
 		"achievementId": c.achievementId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AchievementsResetCall) Do() (*AchievementResetResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -496,10 +500,10 @@ func (c *AchievementsResetAllCall) Fields(s ...googleapi.Field) *AchievementsRes
 	return c
 }
 
-func (c *AchievementsResetAllCall) Do() (*AchievementResetAllResponse, error) {
+func (c *AchievementsResetAllCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -508,7 +512,11 @@ func (c *AchievementsResetAllCall) Do() (*AchievementResetAllResponse, error) {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AchievementsResetAllCall) Do() (*AchievementResetAllResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -560,10 +568,10 @@ func (c *AchievementsResetAllForAllPlayersCall) Fields(s ...googleapi.Field) *Ac
 	return c
 }
 
-func (c *AchievementsResetAllForAllPlayersCall) Do() error {
+func (c *AchievementsResetAllForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -572,7 +580,11 @@ func (c *AchievementsResetAllForAllPlayersCall) Do() error {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AchievementsResetAllForAllPlayersCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -619,10 +631,10 @@ func (c *AchievementsResetForAllPlayersCall) Fields(s ...googleapi.Field) *Achie
 	return c
 }
 
-func (c *AchievementsResetForAllPlayersCall) Do() error {
+func (c *AchievementsResetForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -633,7 +645,11 @@ func (c *AchievementsResetForAllPlayersCall) Do() error {
 		"achievementId": c.achievementId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AchievementsResetForAllPlayersCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -691,15 +707,15 @@ func (c *AchievementsResetMultipleForAllPlayersCall) Fields(s ...googleapi.Field
 	return c
 }
 
-func (c *AchievementsResetMultipleForAllPlayersCall) Do() error {
+func (c *AchievementsResetMultipleForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.achievementresetmultipleforallrequest)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -709,7 +725,11 @@ func (c *AchievementsResetMultipleForAllPlayersCall) Do() error {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AchievementsResetMultipleForAllPlayersCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -775,10 +795,10 @@ func (c *ApplicationsListHiddenCall) Fields(s ...googleapi.Field) *ApplicationsL
 	return c
 }
 
-func (c *ApplicationsListHiddenCall) Do() (*HiddenPlayerList, error) {
+func (c *ApplicationsListHiddenCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
@@ -795,7 +815,11 @@ func (c *ApplicationsListHiddenCall) Do() (*HiddenPlayerList, error) {
 		"applicationId": c.applicationId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ApplicationsListHiddenCall) Do() (*HiddenPlayerList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -874,10 +898,10 @@ func (c *EventsResetCall) Fields(s ...googleapi.Field) *EventsResetCall {
 	return c
 }
 
-func (c *EventsResetCall) Do() error {
+func (c *EventsResetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -888,7 +912,11 @@ func (c *EventsResetCall) Do() error {
 		"eventId": c.eventId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *EventsResetCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -945,10 +973,10 @@ func (c *EventsResetAllCall) Fields(s ...googleapi.Field) *EventsResetAllCall {
 	return c
 }
 
-func (c *EventsResetAllCall) Do() error {
+func (c *EventsResetAllCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -957,7 +985,11 @@ func (c *EventsResetAllCall) Do() error {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *EventsResetAllCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -1002,10 +1034,10 @@ func (c *EventsResetAllForAllPlayersCall) Fields(s ...googleapi.Field) *EventsRe
 	return c
 }
 
-func (c *EventsResetAllForAllPlayersCall) Do() error {
+func (c *EventsResetAllForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1014,7 +1046,11 @@ func (c *EventsResetAllForAllPlayersCall) Do() error {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *EventsResetAllForAllPlayersCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -1062,10 +1098,10 @@ func (c *EventsResetForAllPlayersCall) Fields(s ...googleapi.Field) *EventsReset
 	return c
 }
 
-func (c *EventsResetForAllPlayersCall) Do() error {
+func (c *EventsResetForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1076,7 +1112,11 @@ func (c *EventsResetForAllPlayersCall) Do() error {
 		"eventId": c.eventId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *EventsResetForAllPlayersCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -1135,15 +1175,15 @@ func (c *EventsResetMultipleForAllPlayersCall) Fields(s ...googleapi.Field) *Eve
 	return c
 }
 
-func (c *EventsResetMultipleForAllPlayersCall) Do() error {
+func (c *EventsResetMultipleForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.eventsresetmultipleforallrequest)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1153,7 +1193,11 @@ func (c *EventsResetMultipleForAllPlayersCall) Do() error {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *EventsResetMultipleForAllPlayersCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -1205,10 +1249,10 @@ func (c *PlayersHideCall) Fields(s ...googleapi.Field) *PlayersHideCall {
 	return c
 }
 
-func (c *PlayersHideCall) Do() error {
+func (c *PlayersHideCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1220,7 +1264,11 @@ func (c *PlayersHideCall) Do() error {
 		"playerId":      c.playerId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *PlayersHideCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -1287,10 +1335,10 @@ func (c *PlayersUnhideCall) Fields(s ...googleapi.Field) *PlayersUnhideCall {
 	return c
 }
 
-func (c *PlayersUnhideCall) Do() error {
+func (c *PlayersUnhideCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1302,7 +1350,11 @@ func (c *PlayersUnhideCall) Do() error {
 		"playerId":      c.playerId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *PlayersUnhideCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -1367,10 +1419,10 @@ func (c *QuestsResetCall) Fields(s ...googleapi.Field) *QuestsResetCall {
 	return c
 }
 
-func (c *QuestsResetCall) Do() error {
+func (c *QuestsResetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1381,7 +1433,11 @@ func (c *QuestsResetCall) Do() error {
 		"questId": c.questId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *QuestsResetCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -1437,10 +1493,10 @@ func (c *QuestsResetAllCall) Fields(s ...googleapi.Field) *QuestsResetAllCall {
 	return c
 }
 
-func (c *QuestsResetAllCall) Do() error {
+func (c *QuestsResetAllCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1449,7 +1505,11 @@ func (c *QuestsResetAllCall) Do() error {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *QuestsResetAllCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -1493,10 +1553,10 @@ func (c *QuestsResetAllForAllPlayersCall) Fields(s ...googleapi.Field) *QuestsRe
 	return c
 }
 
-func (c *QuestsResetAllForAllPlayersCall) Do() error {
+func (c *QuestsResetAllForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1505,7 +1565,11 @@ func (c *QuestsResetAllForAllPlayersCall) Do() error {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *QuestsResetAllForAllPlayersCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -1552,10 +1616,10 @@ func (c *QuestsResetForAllPlayersCall) Fields(s ...googleapi.Field) *QuestsReset
 	return c
 }
 
-func (c *QuestsResetForAllPlayersCall) Do() error {
+func (c *QuestsResetForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1566,7 +1630,11 @@ func (c *QuestsResetForAllPlayersCall) Do() error {
 		"questId": c.questId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *QuestsResetForAllPlayersCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -1624,15 +1692,15 @@ func (c *QuestsResetMultipleForAllPlayersCall) Fields(s ...googleapi.Field) *Que
 	return c
 }
 
-func (c *QuestsResetMultipleForAllPlayersCall) Do() error {
+func (c *QuestsResetMultipleForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.questsresetmultipleforallrequest)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1642,7 +1710,11 @@ func (c *QuestsResetMultipleForAllPlayersCall) Do() error {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *QuestsResetMultipleForAllPlayersCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -1690,10 +1762,10 @@ func (c *RoomsResetCall) Fields(s ...googleapi.Field) *RoomsResetCall {
 	return c
 }
 
-func (c *RoomsResetCall) Do() error {
+func (c *RoomsResetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1702,7 +1774,11 @@ func (c *RoomsResetCall) Do() error {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *RoomsResetCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -1747,10 +1823,10 @@ func (c *RoomsResetForAllPlayersCall) Fields(s ...googleapi.Field) *RoomsResetFo
 	return c
 }
 
-func (c *RoomsResetForAllPlayersCall) Do() error {
+func (c *RoomsResetForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1759,7 +1835,11 @@ func (c *RoomsResetForAllPlayersCall) Do() error {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *RoomsResetForAllPlayersCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -1806,10 +1886,10 @@ func (c *ScoresResetCall) Fields(s ...googleapi.Field) *ScoresResetCall {
 	return c
 }
 
-func (c *ScoresResetCall) Do() (*PlayerScoreResetResponse, error) {
+func (c *ScoresResetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1820,7 +1900,11 @@ func (c *ScoresResetCall) Do() (*PlayerScoreResetResponse, error) {
 		"leaderboardId": c.leaderboardId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ScoresResetCall) Do() (*PlayerScoreResetResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1883,10 +1967,10 @@ func (c *ScoresResetAllCall) Fields(s ...googleapi.Field) *ScoresResetAllCall {
 	return c
 }
 
-func (c *ScoresResetAllCall) Do() (*PlayerScoreResetAllResponse, error) {
+func (c *ScoresResetAllCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1895,7 +1979,11 @@ func (c *ScoresResetAllCall) Do() (*PlayerScoreResetAllResponse, error) {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ScoresResetAllCall) Do() (*PlayerScoreResetAllResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1947,10 +2035,10 @@ func (c *ScoresResetAllForAllPlayersCall) Fields(s ...googleapi.Field) *ScoresRe
 	return c
 }
 
-func (c *ScoresResetAllForAllPlayersCall) Do() error {
+func (c *ScoresResetAllForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1959,7 +2047,11 @@ func (c *ScoresResetAllForAllPlayersCall) Do() error {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ScoresResetAllForAllPlayersCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -2006,10 +2098,10 @@ func (c *ScoresResetForAllPlayersCall) Fields(s ...googleapi.Field) *ScoresReset
 	return c
 }
 
-func (c *ScoresResetForAllPlayersCall) Do() error {
+func (c *ScoresResetForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -2020,7 +2112,11 @@ func (c *ScoresResetForAllPlayersCall) Do() error {
 		"leaderboardId": c.leaderboardId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ScoresResetForAllPlayersCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -2079,15 +2175,15 @@ func (c *ScoresResetMultipleForAllPlayersCall) Fields(s ...googleapi.Field) *Sco
 	return c
 }
 
-func (c *ScoresResetMultipleForAllPlayersCall) Do() error {
+func (c *ScoresResetMultipleForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.scoresresetmultipleforallrequest)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -2097,7 +2193,11 @@ func (c *ScoresResetMultipleForAllPlayersCall) Do() error {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ScoresResetMultipleForAllPlayersCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -2144,10 +2244,10 @@ func (c *TurnBasedMatchesResetCall) Fields(s ...googleapi.Field) *TurnBasedMatch
 	return c
 }
 
-func (c *TurnBasedMatchesResetCall) Do() error {
+func (c *TurnBasedMatchesResetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -2156,7 +2256,11 @@ func (c *TurnBasedMatchesResetCall) Do() error {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TurnBasedMatchesResetCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -2202,10 +2306,10 @@ func (c *TurnBasedMatchesResetForAllPlayersCall) Fields(s ...googleapi.Field) *T
 	return c
 }
 
-func (c *TurnBasedMatchesResetForAllPlayersCall) Do() error {
+func (c *TurnBasedMatchesResetForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -2214,7 +2318,11 @@ func (c *TurnBasedMatchesResetForAllPlayersCall) Do() error {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TurnBasedMatchesResetForAllPlayersCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}

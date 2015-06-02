@@ -181,7 +181,7 @@ func (c *ProjectsCreateCall) Fields(s ...googleapi.Field) *ProjectsCreateCall {
 	return c
 }
 
-func (c *ProjectsCreateCall) Do() (*Project, error) {
+func (c *ProjectsCreateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.project)
 	if err != nil {
@@ -189,7 +189,7 @@ func (c *ProjectsCreateCall) Do() (*Project, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -199,7 +199,11 @@ func (c *ProjectsCreateCall) Do() (*Project, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ProjectsCreateCall) Do() (*Project, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -277,10 +281,10 @@ func (c *ProjectsDeleteCall) Fields(s ...googleapi.Field) *ProjectsDeleteCall {
 	return c
 }
 
-func (c *ProjectsDeleteCall) Do() (*Empty, error) {
+func (c *ProjectsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -291,7 +295,11 @@ func (c *ProjectsDeleteCall) Do() (*Empty, error) {
 		"projectId": c.projectId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ProjectsDeleteCall) Do() (*Empty, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -355,10 +363,10 @@ func (c *ProjectsGetCall) Fields(s ...googleapi.Field) *ProjectsGetCall {
 	return c
 }
 
-func (c *ProjectsGetCall) Do() (*Project, error) {
+func (c *ProjectsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -369,7 +377,11 @@ func (c *ProjectsGetCall) Do() (*Project, error) {
 		"projectId": c.projectId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ProjectsGetCall) Do() (*Project, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -466,10 +478,10 @@ func (c *ProjectsListCall) Fields(s ...googleapi.Field) *ProjectsListCall {
 	return c
 }
 
-func (c *ProjectsListCall) Do() (*ListProjectsResponse, error) {
+func (c *ProjectsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["filter"]; ok {
 		params.Set("filter", fmt.Sprintf("%v", v))
 	}
@@ -487,7 +499,11 @@ func (c *ProjectsListCall) Do() (*ListProjectsResponse, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ProjectsListCall) Do() (*ListProjectsResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -564,10 +580,10 @@ func (c *ProjectsUndeleteCall) Fields(s ...googleapi.Field) *ProjectsUndeleteCal
 	return c
 }
 
-func (c *ProjectsUndeleteCall) Do() (*Empty, error) {
+func (c *ProjectsUndeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -578,7 +594,11 @@ func (c *ProjectsUndeleteCall) Do() (*Empty, error) {
 		"projectId": c.projectId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ProjectsUndeleteCall) Do() (*Empty, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -644,7 +664,7 @@ func (c *ProjectsUpdateCall) Fields(s ...googleapi.Field) *ProjectsUpdateCall {
 	return c
 }
 
-func (c *ProjectsUpdateCall) Do() (*Project, error) {
+func (c *ProjectsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.project)
 	if err != nil {
@@ -652,7 +672,7 @@ func (c *ProjectsUpdateCall) Do() (*Project, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -664,7 +684,11 @@ func (c *ProjectsUpdateCall) Do() (*Project, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ProjectsUpdateCall) Do() (*Project, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}

@@ -5,9 +5,11 @@
 package googleapi
 
 import (
+	"bufio"
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"net/http"
 	"net/url"
@@ -372,7 +374,7 @@ func (unexpectedReader) Read([]byte) (int, error) {
 	return 0, fmt.Errorf("unexpected read in test.")
 }
 
-var contentRangeRE = regexp.MustCompile(`^bytes (\d+)\-(\d+)/(\d+)$`)
+var contentRangeRE = regexp.MustCompile(`^bytes (\d+)\-(\d+)/(\*|\d+)$`)
 
 func (t *testTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 	t.req = req
@@ -389,9 +391,11 @@ func (t *testTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 		if err != nil {
 			return nil, fmt.Errorf("unable to parse content range: %v", rng)
 		}
-		totalSize, err := strconv.ParseInt(m[3], 10, 64)
-		if err != nil {
-			return nil, fmt.Errorf("unable to parse content range: %v", rng)
+		var totalSize int64 = -1 // unknown total size
+		if m[3] != "*" {
+			if totalSize, err = strconv.ParseInt(m[3], 10, 64); err != nil {
+				return nil, fmt.Errorf("unable to parse content range: %v", rng)
+			}
 		}
 		partialSize := end - start + 1
 		t.buf, err = ioutil.ReadAll(req.Body)
@@ -467,9 +471,11 @@ func (t *interruptedTransport) RoundTrip(req *http.Request) (*http.Response, err
 		if err != nil {
 			return nil, fmt.Errorf("unable to parse content range: %v", rng)
 		}
-		totalSize, err := strconv.ParseInt(m[3], 10, 64)
-		if err != nil {
-			return nil, fmt.Errorf("unable to parse content range: %v", rng)
+		var totalSize int64 = -1 // unknown content size
+		if m[3] != "*" {
+			if totalSize, err = strconv.ParseInt(m[3], 10, 64); err != nil {
+				return nil, fmt.Errorf("unable to parse content range: %v", rng)
+			}
 		}
 		partialSize := end - start + 1
 		buf, err := ioutil.ReadAll(req.Body)
@@ -524,17 +530,16 @@ func TestInterruptedTransferChunks(t *testing.T) {
 		statusCode: 308,
 		buf:        make([]byte, 0, st.Size()),
 	}
-	oldChunkSize := chunkSize
-	defer func() { chunkSize = oldChunkSize }()
-	chunkSize = 100 // override to process small chunks for test.
+	oldChunkSize := ChunkSize
+	defer func() { ChunkSize = oldChunkSize }()
+	ChunkSize = 100 // override to process small chunks for test.
 
 	sleep = func(time.Duration) {} // override time.Sleep
 	rx := &ResumableUpload{
-		Client:        &http.Client{Transport: tr},
-		Media:         f,
-		MediaType:     "text/plain",
-		ContentLength: st.Size(),
-		Callback:      tr.ProgressUpdate,
+		Client:    &http.Client{Transport: tr},
+		media:     &sizedChunker{f, st.Size(), 100},
+		mediaType: "text/plain",
+		Callback:  tr.ProgressUpdate,
 	}
 	res, err := rx.Upload(context.Background())
 	if err != nil || res == nil || res.StatusCode != http.StatusOK {
@@ -548,10 +553,10 @@ func TestInterruptedTransferChunks(t *testing.T) {
 		t.Errorf("transfered file corrupted:\ngot %s\nwant %s", tr.buf, slurp)
 	}
 	w := ""
-	for i := chunkSize; i <= st.Size(); i += chunkSize {
+	for i := ChunkSize; i <= st.Size(); i += ChunkSize {
 		w += fmt.Sprintf("%v, %v\n", i, st.Size())
 	}
-	if st.Size()%chunkSize != 0 {
+	if st.Size()%ChunkSize != 0 {
 		w += fmt.Sprintf("%v, %v\n", st.Size(), st.Size())
 	}
 	if tr.progressBuf != w {
@@ -573,17 +578,16 @@ func TestCancelUpload(t *testing.T) {
 		statusCode: 308,
 		buf:        make([]byte, 0, st.Size()),
 	}
-	oldChunkSize := chunkSize
-	defer func() { chunkSize = oldChunkSize }()
-	chunkSize = 100 // override to process small chunks for test.
+	oldChunkSize := ChunkSize
+	defer func() { ChunkSize = oldChunkSize }()
+	ChunkSize = 100 // override to process small chunks for test.
 
 	sleep = func(time.Duration) {} // override time.Sleep
 	rx := &ResumableUpload{
-		Client:        &http.Client{Transport: tr},
-		Media:         f,
-		MediaType:     "text/plain",
-		ContentLength: st.Size(),
-		Callback:      tr.ProgressUpdate,
+		Client:    &http.Client{Transport: tr},
+		media:     &sizedChunker{f, st.Size(), ChunkSize},
+		mediaType: "text/plain",
+		Callback:  tr.ProgressUpdate,
 	}
 	ctx, cancelFunc := context.WithCancel(context.Background())
 	cancelFunc() // stop the upload that hasn't started yet
@@ -595,4 +599,80 @@ func TestCancelUpload(t *testing.T) {
 			t.Errorf("transferChunks not successful, got statusCode=%v, err=%v, want StatusRequestTimeout", res.StatusCode, err)
 		}
 	}
+}
+
+func TestConfigureResumableMedia(t *testing.T) {
+
+	const (
+		data     = "Fake resumable media data"
+		dataSize = int64(len(data))
+		txt      = "text/plain; charset=utf-8"
+		minChunk = 256 << 10 // GCS requirement: chunks are multiples of 256K
+	)
+
+	// h is a helper func to verify that all fields match expectations
+	h := func(contentLength int64, mediaType string, chunkSize int64, isBuffered bool, r io.Reader, opt ...UploadOption) {
+		rx := ResumableUpload{}
+		rx.Configure(r, opt...)
+		if _, ok := rx.media.(*bufferedChunker); ok != isBuffered {
+			t.Errorf("bufferedChunker = %v, want %v", ok, isBuffered)
+		}
+		if w, v := mediaType, rx.mediaType; w != v {
+			t.Errorf("MediaType = %v, want %v", v, w)
+		}
+		if w, v := chunkSize, rx.media.getChunkSize(); w != v {
+			t.Errorf("ChunkSize = %v, want %v", v, w)
+		}
+		if w, v := contentLength, rx.media.Size(); w != v {
+			t.Errorf("ContentLength = %v, want %v", v, w)
+		}
+	}
+
+	rdr := func() io.Reader { return strings.NewReader(data) }
+
+	t.Log("ReaderAt, no params")
+	// note: ChunkSize is googleapi default ChunkSize
+	h(0, txt, ChunkSize, true, rdr())
+
+	t.Log("ReaderAt, chunkSize specified")
+	h(0, txt, ChunkSize+minChunk, true, rdr(), SetChunkSize(ChunkSize+1))
+
+	t.Log("ReaderAt, Size and MediaType specified")
+	h(dataSize, "foo/bar", 0, false, rdr(), SetContentSize(dataSize), SetMediaType("foo/bar"))
+
+	t.Log("Simple reader, Size specified")
+	h(dataSize, txt, ChunkSize, true, bufio.NewReader(rdr()), SetContentSize(dataSize))
+
+	// set up a temporary file and write data into it
+	tfile, err := ioutil.TempFile("", "test")
+	if err != nil {
+		t.Fatalf("Failed to create temporary file")
+	}
+	defer func() {
+		tfile.Close()
+		os.Remove(tfile.Name())
+	}()
+	if _, err := io.Copy(tfile, rdr()); err != nil {
+		t.Fatalf("Failed to write to temporary file")
+	}
+
+	// frdr is a helper function to rewind and return file-based reader
+	frdr := func() io.Reader {
+		if _, err := tfile.Seek(0, 0); err != nil {
+			t.Fatalf("Could not seek to start of temp file")
+		}
+		return tfile
+	}
+
+	t.Log("File reader, no params")
+	h(dataSize, txt, 0, false, frdr())
+
+	t.Log("File reader, media type specified")
+	h(dataSize, "foo/bar", 0, false, frdr(), SetMediaType("foo/bar"))
+
+	t.Log("File reader, size specified")
+	h(dataSize-1, txt, 0, false, frdr(), SetContentSize(dataSize-1))
+
+	t.Log("File reader, chunking forced")
+	h(dataSize, txt, minChunk, false, frdr(), SetChunkSize(1))
 }

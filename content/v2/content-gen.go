@@ -1860,10 +1860,10 @@ func (c *AccountsAuthinfoCall) Fields(s ...googleapi.Field) *AccountsAuthinfoCal
 	return c
 }
 
-func (c *AccountsAuthinfoCall) Do() (*AccountsAuthInfoResponse, error) {
+func (c *AccountsAuthinfoCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1872,7 +1872,11 @@ func (c *AccountsAuthinfoCall) Do() (*AccountsAuthInfoResponse, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsAuthinfoCall) Do() (*AccountsAuthInfoResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1931,7 +1935,7 @@ func (c *AccountsCustombatchCall) Fields(s ...googleapi.Field) *AccountsCustomba
 	return c
 }
 
-func (c *AccountsCustombatchCall) Do() (*AccountsCustomBatchResponse, error) {
+func (c *AccountsCustombatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.accountscustombatchrequest)
 	if err != nil {
@@ -1939,7 +1943,7 @@ func (c *AccountsCustombatchCall) Do() (*AccountsCustomBatchResponse, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["dryRun"]; ok {
 		params.Set("dryRun", fmt.Sprintf("%v", v))
 	}
@@ -1952,7 +1956,11 @@ func (c *AccountsCustombatchCall) Do() (*AccountsCustomBatchResponse, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsCustombatchCall) Do() (*AccountsCustomBatchResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2022,10 +2030,10 @@ func (c *AccountsDeleteCall) Fields(s ...googleapi.Field) *AccountsDeleteCall {
 	return c
 }
 
-func (c *AccountsDeleteCall) Do() error {
+func (c *AccountsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["dryRun"]; ok {
 		params.Set("dryRun", fmt.Sprintf("%v", v))
 	}
@@ -2040,7 +2048,11 @@ func (c *AccountsDeleteCall) Do() error {
 		"accountId":  strconv.FormatUint(c.accountId, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsDeleteCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -2111,10 +2123,10 @@ func (c *AccountsGetCall) Fields(s ...googleapi.Field) *AccountsGetCall {
 	return c
 }
 
-func (c *AccountsGetCall) Do() (*Account, error) {
+func (c *AccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -2126,7 +2138,11 @@ func (c *AccountsGetCall) Do() (*Account, error) {
 		"accountId":  strconv.FormatUint(c.accountId, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsGetCall) Do() (*Account, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2206,7 +2222,7 @@ func (c *AccountsInsertCall) Fields(s ...googleapi.Field) *AccountsInsertCall {
 	return c
 }
 
-func (c *AccountsInsertCall) Do() (*Account, error) {
+func (c *AccountsInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.account)
 	if err != nil {
@@ -2214,7 +2230,7 @@ func (c *AccountsInsertCall) Do() (*Account, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["dryRun"]; ok {
 		params.Set("dryRun", fmt.Sprintf("%v", v))
 	}
@@ -2229,7 +2245,11 @@ func (c *AccountsInsertCall) Do() (*Account, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsInsertCall) Do() (*Account, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2314,10 +2334,10 @@ func (c *AccountsListCall) Fields(s ...googleapi.Field) *AccountsListCall {
 	return c
 }
 
-func (c *AccountsListCall) Do() (*AccountsListResponse, error) {
+func (c *AccountsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
@@ -2334,7 +2354,11 @@ func (c *AccountsListCall) Do() (*AccountsListResponse, error) {
 		"merchantId": strconv.FormatUint(c.merchantId, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsListCall) Do() (*AccountsListResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2420,7 +2444,7 @@ func (c *AccountsPatchCall) Fields(s ...googleapi.Field) *AccountsPatchCall {
 	return c
 }
 
-func (c *AccountsPatchCall) Do() (*Account, error) {
+func (c *AccountsPatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.account)
 	if err != nil {
@@ -2428,7 +2452,7 @@ func (c *AccountsPatchCall) Do() (*Account, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["dryRun"]; ok {
 		params.Set("dryRun", fmt.Sprintf("%v", v))
 	}
@@ -2444,7 +2468,11 @@ func (c *AccountsPatchCall) Do() (*Account, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsPatchCall) Do() (*Account, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2534,7 +2562,7 @@ func (c *AccountsUpdateCall) Fields(s ...googleapi.Field) *AccountsUpdateCall {
 	return c
 }
 
-func (c *AccountsUpdateCall) Do() (*Account, error) {
+func (c *AccountsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.account)
 	if err != nil {
@@ -2542,7 +2570,7 @@ func (c *AccountsUpdateCall) Do() (*Account, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["dryRun"]; ok {
 		params.Set("dryRun", fmt.Sprintf("%v", v))
 	}
@@ -2558,7 +2586,11 @@ func (c *AccountsUpdateCall) Do() (*Account, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsUpdateCall) Do() (*Account, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2645,7 +2677,7 @@ func (c *AccountshippingCustombatchCall) Fields(s ...googleapi.Field) *Accountsh
 	return c
 }
 
-func (c *AccountshippingCustombatchCall) Do() (*AccountshippingCustomBatchResponse, error) {
+func (c *AccountshippingCustombatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.accountshippingcustombatchrequest)
 	if err != nil {
@@ -2653,7 +2685,7 @@ func (c *AccountshippingCustombatchCall) Do() (*AccountshippingCustomBatchRespon
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["dryRun"]; ok {
 		params.Set("dryRun", fmt.Sprintf("%v", v))
 	}
@@ -2666,7 +2698,11 @@ func (c *AccountshippingCustombatchCall) Do() (*AccountshippingCustomBatchRespon
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountshippingCustombatchCall) Do() (*AccountshippingCustomBatchResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2729,10 +2765,10 @@ func (c *AccountshippingGetCall) Fields(s ...googleapi.Field) *AccountshippingGe
 	return c
 }
 
-func (c *AccountshippingGetCall) Do() (*AccountShipping, error) {
+func (c *AccountshippingGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -2744,7 +2780,11 @@ func (c *AccountshippingGetCall) Do() (*AccountShipping, error) {
 		"accountId":  strconv.FormatUint(c.accountId, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountshippingGetCall) Do() (*AccountShipping, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2831,10 +2871,10 @@ func (c *AccountshippingListCall) Fields(s ...googleapi.Field) *AccountshippingL
 	return c
 }
 
-func (c *AccountshippingListCall) Do() (*AccountshippingListResponse, error) {
+func (c *AccountshippingListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
@@ -2851,7 +2891,11 @@ func (c *AccountshippingListCall) Do() (*AccountshippingListResponse, error) {
 		"merchantId": strconv.FormatUint(c.merchantId, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountshippingListCall) Do() (*AccountshippingListResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2937,7 +2981,7 @@ func (c *AccountshippingPatchCall) Fields(s ...googleapi.Field) *Accountshipping
 	return c
 }
 
-func (c *AccountshippingPatchCall) Do() (*AccountShipping, error) {
+func (c *AccountshippingPatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.accountshipping)
 	if err != nil {
@@ -2945,7 +2989,7 @@ func (c *AccountshippingPatchCall) Do() (*AccountShipping, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["dryRun"]; ok {
 		params.Set("dryRun", fmt.Sprintf("%v", v))
 	}
@@ -2961,7 +3005,11 @@ func (c *AccountshippingPatchCall) Do() (*AccountShipping, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountshippingPatchCall) Do() (*AccountShipping, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3051,7 +3099,7 @@ func (c *AccountshippingUpdateCall) Fields(s ...googleapi.Field) *Accountshippin
 	return c
 }
 
-func (c *AccountshippingUpdateCall) Do() (*AccountShipping, error) {
+func (c *AccountshippingUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.accountshipping)
 	if err != nil {
@@ -3059,7 +3107,7 @@ func (c *AccountshippingUpdateCall) Do() (*AccountShipping, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["dryRun"]; ok {
 		params.Set("dryRun", fmt.Sprintf("%v", v))
 	}
@@ -3075,7 +3123,11 @@ func (c *AccountshippingUpdateCall) Do() (*AccountShipping, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountshippingUpdateCall) Do() (*AccountShipping, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3154,7 +3206,7 @@ func (c *AccountstatusesCustombatchCall) Fields(s ...googleapi.Field) *Accountst
 	return c
 }
 
-func (c *AccountstatusesCustombatchCall) Do() (*AccountstatusesCustomBatchResponse, error) {
+func (c *AccountstatusesCustombatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.accountstatusescustombatchrequest)
 	if err != nil {
@@ -3162,7 +3214,7 @@ func (c *AccountstatusesCustombatchCall) Do() (*AccountstatusesCustomBatchRespon
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -3172,7 +3224,11 @@ func (c *AccountstatusesCustombatchCall) Do() (*AccountstatusesCustomBatchRespon
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountstatusesCustombatchCall) Do() (*AccountstatusesCustomBatchResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3227,10 +3283,10 @@ func (c *AccountstatusesGetCall) Fields(s ...googleapi.Field) *AccountstatusesGe
 	return c
 }
 
-func (c *AccountstatusesGetCall) Do() (*AccountStatus, error) {
+func (c *AccountstatusesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -3242,7 +3298,11 @@ func (c *AccountstatusesGetCall) Do() (*AccountStatus, error) {
 		"accountId":  strconv.FormatUint(c.accountId, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountstatusesGetCall) Do() (*AccountStatus, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3329,10 +3389,10 @@ func (c *AccountstatusesListCall) Fields(s ...googleapi.Field) *AccountstatusesL
 	return c
 }
 
-func (c *AccountstatusesListCall) Do() (*AccountstatusesListResponse, error) {
+func (c *AccountstatusesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
@@ -3349,7 +3409,11 @@ func (c *AccountstatusesListCall) Do() (*AccountstatusesListResponse, error) {
 		"merchantId": strconv.FormatUint(c.merchantId, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountstatusesListCall) Do() (*AccountstatusesListResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3431,7 +3495,7 @@ func (c *AccounttaxCustombatchCall) Fields(s ...googleapi.Field) *AccounttaxCust
 	return c
 }
 
-func (c *AccounttaxCustombatchCall) Do() (*AccounttaxCustomBatchResponse, error) {
+func (c *AccounttaxCustombatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.accounttaxcustombatchrequest)
 	if err != nil {
@@ -3439,7 +3503,7 @@ func (c *AccounttaxCustombatchCall) Do() (*AccounttaxCustomBatchResponse, error)
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["dryRun"]; ok {
 		params.Set("dryRun", fmt.Sprintf("%v", v))
 	}
@@ -3452,7 +3516,11 @@ func (c *AccounttaxCustombatchCall) Do() (*AccounttaxCustomBatchResponse, error)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccounttaxCustombatchCall) Do() (*AccounttaxCustomBatchResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3515,10 +3583,10 @@ func (c *AccounttaxGetCall) Fields(s ...googleapi.Field) *AccounttaxGetCall {
 	return c
 }
 
-func (c *AccounttaxGetCall) Do() (*AccountTax, error) {
+func (c *AccounttaxGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -3530,7 +3598,11 @@ func (c *AccounttaxGetCall) Do() (*AccountTax, error) {
 		"accountId":  strconv.FormatUint(c.accountId, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccounttaxGetCall) Do() (*AccountTax, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3616,10 +3688,10 @@ func (c *AccounttaxListCall) Fields(s ...googleapi.Field) *AccounttaxListCall {
 	return c
 }
 
-func (c *AccounttaxListCall) Do() (*AccounttaxListResponse, error) {
+func (c *AccounttaxListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
@@ -3636,7 +3708,11 @@ func (c *AccounttaxListCall) Do() (*AccounttaxListResponse, error) {
 		"merchantId": strconv.FormatUint(c.merchantId, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccounttaxListCall) Do() (*AccounttaxListResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3722,7 +3798,7 @@ func (c *AccounttaxPatchCall) Fields(s ...googleapi.Field) *AccounttaxPatchCall 
 	return c
 }
 
-func (c *AccounttaxPatchCall) Do() (*AccountTax, error) {
+func (c *AccounttaxPatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.accounttax)
 	if err != nil {
@@ -3730,7 +3806,7 @@ func (c *AccounttaxPatchCall) Do() (*AccountTax, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["dryRun"]; ok {
 		params.Set("dryRun", fmt.Sprintf("%v", v))
 	}
@@ -3746,7 +3822,11 @@ func (c *AccounttaxPatchCall) Do() (*AccountTax, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccounttaxPatchCall) Do() (*AccountTax, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3836,7 +3916,7 @@ func (c *AccounttaxUpdateCall) Fields(s ...googleapi.Field) *AccounttaxUpdateCal
 	return c
 }
 
-func (c *AccounttaxUpdateCall) Do() (*AccountTax, error) {
+func (c *AccounttaxUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.accounttax)
 	if err != nil {
@@ -3844,7 +3924,7 @@ func (c *AccounttaxUpdateCall) Do() (*AccountTax, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["dryRun"]; ok {
 		params.Set("dryRun", fmt.Sprintf("%v", v))
 	}
@@ -3860,7 +3940,11 @@ func (c *AccounttaxUpdateCall) Do() (*AccountTax, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccounttaxUpdateCall) Do() (*AccountTax, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3946,7 +4030,7 @@ func (c *DatafeedsCustombatchCall) Fields(s ...googleapi.Field) *DatafeedsCustom
 	return c
 }
 
-func (c *DatafeedsCustombatchCall) Do() (*DatafeedsCustomBatchResponse, error) {
+func (c *DatafeedsCustombatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.datafeedscustombatchrequest)
 	if err != nil {
@@ -3954,7 +4038,7 @@ func (c *DatafeedsCustombatchCall) Do() (*DatafeedsCustomBatchResponse, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["dryRun"]; ok {
 		params.Set("dryRun", fmt.Sprintf("%v", v))
 	}
@@ -3967,7 +4051,11 @@ func (c *DatafeedsCustombatchCall) Do() (*DatafeedsCustomBatchResponse, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *DatafeedsCustombatchCall) Do() (*DatafeedsCustomBatchResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -4036,10 +4124,10 @@ func (c *DatafeedsDeleteCall) Fields(s ...googleapi.Field) *DatafeedsDeleteCall 
 	return c
 }
 
-func (c *DatafeedsDeleteCall) Do() error {
+func (c *DatafeedsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["dryRun"]; ok {
 		params.Set("dryRun", fmt.Sprintf("%v", v))
 	}
@@ -4054,7 +4142,11 @@ func (c *DatafeedsDeleteCall) Do() error {
 		"datafeedId": strconv.FormatUint(c.datafeedId, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *DatafeedsDeleteCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -4123,10 +4215,10 @@ func (c *DatafeedsGetCall) Fields(s ...googleapi.Field) *DatafeedsGetCall {
 	return c
 }
 
-func (c *DatafeedsGetCall) Do() (*Datafeed, error) {
+func (c *DatafeedsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -4138,7 +4230,11 @@ func (c *DatafeedsGetCall) Do() (*Datafeed, error) {
 		"datafeedId": strconv.FormatUint(c.datafeedId, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *DatafeedsGetCall) Do() (*Datafeed, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -4216,7 +4312,7 @@ func (c *DatafeedsInsertCall) Fields(s ...googleapi.Field) *DatafeedsInsertCall 
 	return c
 }
 
-func (c *DatafeedsInsertCall) Do() (*Datafeed, error) {
+func (c *DatafeedsInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.datafeed)
 	if err != nil {
@@ -4224,7 +4320,7 @@ func (c *DatafeedsInsertCall) Do() (*Datafeed, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["dryRun"]; ok {
 		params.Set("dryRun", fmt.Sprintf("%v", v))
 	}
@@ -4239,7 +4335,11 @@ func (c *DatafeedsInsertCall) Do() (*Datafeed, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *DatafeedsInsertCall) Do() (*Datafeed, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -4323,10 +4423,10 @@ func (c *DatafeedsListCall) Fields(s ...googleapi.Field) *DatafeedsListCall {
 	return c
 }
 
-func (c *DatafeedsListCall) Do() (*DatafeedsListResponse, error) {
+func (c *DatafeedsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
@@ -4343,7 +4443,11 @@ func (c *DatafeedsListCall) Do() (*DatafeedsListResponse, error) {
 		"merchantId": strconv.FormatUint(c.merchantId, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *DatafeedsListCall) Do() (*DatafeedsListResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -4429,7 +4533,7 @@ func (c *DatafeedsPatchCall) Fields(s ...googleapi.Field) *DatafeedsPatchCall {
 	return c
 }
 
-func (c *DatafeedsPatchCall) Do() (*Datafeed, error) {
+func (c *DatafeedsPatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.datafeed)
 	if err != nil {
@@ -4437,7 +4541,7 @@ func (c *DatafeedsPatchCall) Do() (*Datafeed, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["dryRun"]; ok {
 		params.Set("dryRun", fmt.Sprintf("%v", v))
 	}
@@ -4453,7 +4557,11 @@ func (c *DatafeedsPatchCall) Do() (*Datafeed, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *DatafeedsPatchCall) Do() (*Datafeed, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -4541,7 +4649,7 @@ func (c *DatafeedsUpdateCall) Fields(s ...googleapi.Field) *DatafeedsUpdateCall 
 	return c
 }
 
-func (c *DatafeedsUpdateCall) Do() (*Datafeed, error) {
+func (c *DatafeedsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.datafeed)
 	if err != nil {
@@ -4549,7 +4657,7 @@ func (c *DatafeedsUpdateCall) Do() (*Datafeed, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["dryRun"]; ok {
 		params.Set("dryRun", fmt.Sprintf("%v", v))
 	}
@@ -4565,7 +4673,11 @@ func (c *DatafeedsUpdateCall) Do() (*Datafeed, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *DatafeedsUpdateCall) Do() (*Datafeed, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -4642,7 +4754,7 @@ func (c *DatafeedstatusesCustombatchCall) Fields(s ...googleapi.Field) *Datafeed
 	return c
 }
 
-func (c *DatafeedstatusesCustombatchCall) Do() (*DatafeedstatusesCustomBatchResponse, error) {
+func (c *DatafeedstatusesCustombatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.datafeedstatusescustombatchrequest)
 	if err != nil {
@@ -4650,7 +4762,7 @@ func (c *DatafeedstatusesCustombatchCall) Do() (*DatafeedstatusesCustomBatchResp
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -4660,7 +4772,11 @@ func (c *DatafeedstatusesCustombatchCall) Do() (*DatafeedstatusesCustomBatchResp
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *DatafeedstatusesCustombatchCall) Do() (*DatafeedstatusesCustomBatchResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -4716,10 +4832,10 @@ func (c *DatafeedstatusesGetCall) Fields(s ...googleapi.Field) *Datafeedstatuses
 	return c
 }
 
-func (c *DatafeedstatusesGetCall) Do() (*DatafeedStatus, error) {
+func (c *DatafeedstatusesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -4731,7 +4847,11 @@ func (c *DatafeedstatusesGetCall) Do() (*DatafeedStatus, error) {
 		"datafeedId": strconv.FormatUint(c.datafeedId, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *DatafeedstatusesGetCall) Do() (*DatafeedStatus, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -4815,10 +4935,10 @@ func (c *DatafeedstatusesListCall) Fields(s ...googleapi.Field) *Datafeedstatuse
 	return c
 }
 
-func (c *DatafeedstatusesListCall) Do() (*DatafeedstatusesListResponse, error) {
+func (c *DatafeedstatusesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
@@ -4835,7 +4955,11 @@ func (c *DatafeedstatusesListCall) Do() (*DatafeedstatusesListResponse, error) {
 		"merchantId": strconv.FormatUint(c.merchantId, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *DatafeedstatusesListCall) Do() (*DatafeedstatusesListResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -4917,7 +5041,7 @@ func (c *InventoryCustombatchCall) Fields(s ...googleapi.Field) *InventoryCustom
 	return c
 }
 
-func (c *InventoryCustombatchCall) Do() (*InventoryCustomBatchResponse, error) {
+func (c *InventoryCustombatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.inventorycustombatchrequest)
 	if err != nil {
@@ -4925,7 +5049,7 @@ func (c *InventoryCustombatchCall) Do() (*InventoryCustomBatchResponse, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["dryRun"]; ok {
 		params.Set("dryRun", fmt.Sprintf("%v", v))
 	}
@@ -4938,7 +5062,11 @@ func (c *InventoryCustombatchCall) Do() (*InventoryCustomBatchResponse, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *InventoryCustombatchCall) Do() (*InventoryCustomBatchResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -5013,7 +5141,7 @@ func (c *InventorySetCall) Fields(s ...googleapi.Field) *InventorySetCall {
 	return c
 }
 
-func (c *InventorySetCall) Do() (*InventorySetResponse, error) {
+func (c *InventorySetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.inventorysetrequest)
 	if err != nil {
@@ -5021,7 +5149,7 @@ func (c *InventorySetCall) Do() (*InventorySetResponse, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["dryRun"]; ok {
 		params.Set("dryRun", fmt.Sprintf("%v", v))
 	}
@@ -5038,7 +5166,11 @@ func (c *InventorySetCall) Do() (*InventorySetResponse, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *InventorySetCall) Do() (*InventorySetResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -5131,7 +5263,7 @@ func (c *ProductsCustombatchCall) Fields(s ...googleapi.Field) *ProductsCustomba
 	return c
 }
 
-func (c *ProductsCustombatchCall) Do() (*ProductsCustomBatchResponse, error) {
+func (c *ProductsCustombatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.productscustombatchrequest)
 	if err != nil {
@@ -5139,7 +5271,7 @@ func (c *ProductsCustombatchCall) Do() (*ProductsCustomBatchResponse, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["dryRun"]; ok {
 		params.Set("dryRun", fmt.Sprintf("%v", v))
 	}
@@ -5152,7 +5284,11 @@ func (c *ProductsCustombatchCall) Do() (*ProductsCustomBatchResponse, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ProductsCustombatchCall) Do() (*ProductsCustomBatchResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -5222,10 +5358,10 @@ func (c *ProductsDeleteCall) Fields(s ...googleapi.Field) *ProductsDeleteCall {
 	return c
 }
 
-func (c *ProductsDeleteCall) Do() error {
+func (c *ProductsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["dryRun"]; ok {
 		params.Set("dryRun", fmt.Sprintf("%v", v))
 	}
@@ -5240,7 +5376,11 @@ func (c *ProductsDeleteCall) Do() error {
 		"productId":  c.productId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ProductsDeleteCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -5310,10 +5450,10 @@ func (c *ProductsGetCall) Fields(s ...googleapi.Field) *ProductsGetCall {
 	return c
 }
 
-func (c *ProductsGetCall) Do() (*Product, error) {
+func (c *ProductsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -5325,7 +5465,11 @@ func (c *ProductsGetCall) Do() (*Product, error) {
 		"productId":  c.productId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ProductsGetCall) Do() (*Product, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -5404,7 +5548,7 @@ func (c *ProductsInsertCall) Fields(s ...googleapi.Field) *ProductsInsertCall {
 	return c
 }
 
-func (c *ProductsInsertCall) Do() (*Product, error) {
+func (c *ProductsInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.product)
 	if err != nil {
@@ -5412,7 +5556,7 @@ func (c *ProductsInsertCall) Do() (*Product, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["dryRun"]; ok {
 		params.Set("dryRun", fmt.Sprintf("%v", v))
 	}
@@ -5427,7 +5571,11 @@ func (c *ProductsInsertCall) Do() (*Product, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ProductsInsertCall) Do() (*Product, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -5512,10 +5660,10 @@ func (c *ProductsListCall) Fields(s ...googleapi.Field) *ProductsListCall {
 	return c
 }
 
-func (c *ProductsListCall) Do() (*ProductsListResponse, error) {
+func (c *ProductsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
@@ -5532,7 +5680,11 @@ func (c *ProductsListCall) Do() (*ProductsListResponse, error) {
 		"merchantId": strconv.FormatUint(c.merchantId, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ProductsListCall) Do() (*ProductsListResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -5607,7 +5759,7 @@ func (c *ProductstatusesCustombatchCall) Fields(s ...googleapi.Field) *Productst
 	return c
 }
 
-func (c *ProductstatusesCustombatchCall) Do() (*ProductstatusesCustomBatchResponse, error) {
+func (c *ProductstatusesCustombatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.productstatusescustombatchrequest)
 	if err != nil {
@@ -5615,7 +5767,7 @@ func (c *ProductstatusesCustombatchCall) Do() (*ProductstatusesCustomBatchRespon
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -5625,7 +5777,11 @@ func (c *ProductstatusesCustombatchCall) Do() (*ProductstatusesCustomBatchRespon
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ProductstatusesCustombatchCall) Do() (*ProductstatusesCustomBatchResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -5681,10 +5837,10 @@ func (c *ProductstatusesGetCall) Fields(s ...googleapi.Field) *ProductstatusesGe
 	return c
 }
 
-func (c *ProductstatusesGetCall) Do() (*ProductStatus, error) {
+func (c *ProductstatusesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -5696,7 +5852,11 @@ func (c *ProductstatusesGetCall) Do() (*ProductStatus, error) {
 		"productId":  c.productId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ProductstatusesGetCall) Do() (*ProductStatus, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -5782,10 +5942,10 @@ func (c *ProductstatusesListCall) Fields(s ...googleapi.Field) *ProductstatusesL
 	return c
 }
 
-func (c *ProductstatusesListCall) Do() (*ProductstatusesListResponse, error) {
+func (c *ProductstatusesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
@@ -5802,7 +5962,11 @@ func (c *ProductstatusesListCall) Do() (*ProductstatusesListResponse, error) {
 		"merchantId": strconv.FormatUint(c.merchantId, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ProductstatusesListCall) Do() (*ProductstatusesListResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}

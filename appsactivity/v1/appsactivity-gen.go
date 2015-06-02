@@ -376,10 +376,10 @@ func (c *ActivitiesListCall) Fields(s ...googleapi.Field) *ActivitiesListCall {
 	return c
 }
 
-func (c *ActivitiesListCall) Do() (*ListActivitiesResponse, error) {
+func (c *ActivitiesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["drive.ancestorId"]; ok {
 		params.Set("drive.ancestorId", fmt.Sprintf("%v", v))
 	}
@@ -409,7 +409,11 @@ func (c *ActivitiesListCall) Do() (*ListActivitiesResponse, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ActivitiesListCall) Do() (*ListActivitiesResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}

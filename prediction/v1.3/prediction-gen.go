@@ -259,7 +259,7 @@ func (c *HostedmodelsPredictCall) Fields(s ...googleapi.Field) *HostedmodelsPred
 	return c
 }
 
-func (c *HostedmodelsPredictCall) Do() (*Output, error) {
+func (c *HostedmodelsPredictCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.input)
 	if err != nil {
@@ -267,7 +267,7 @@ func (c *HostedmodelsPredictCall) Do() (*Output, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -279,7 +279,11 @@ func (c *HostedmodelsPredictCall) Do() (*Output, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *HostedmodelsPredictCall) Do() (*Output, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -344,10 +348,10 @@ func (c *TrainingDeleteCall) Fields(s ...googleapi.Field) *TrainingDeleteCall {
 	return c
 }
 
-func (c *TrainingDeleteCall) Do() error {
+func (c *TrainingDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -358,7 +362,11 @@ func (c *TrainingDeleteCall) Do() error {
 		"data": c.data,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TrainingDeleteCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -413,10 +421,10 @@ func (c *TrainingGetCall) Fields(s ...googleapi.Field) *TrainingGetCall {
 	return c
 }
 
-func (c *TrainingGetCall) Do() (*Training, error) {
+func (c *TrainingGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -427,7 +435,11 @@ func (c *TrainingGetCall) Do() (*Training, error) {
 		"data": c.data,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TrainingGetCall) Do() (*Training, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -489,7 +501,7 @@ func (c *TrainingInsertCall) Fields(s ...googleapi.Field) *TrainingInsertCall {
 	return c
 }
 
-func (c *TrainingInsertCall) Do() (*Training, error) {
+func (c *TrainingInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.training)
 	if err != nil {
@@ -497,7 +509,7 @@ func (c *TrainingInsertCall) Do() (*Training, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -507,7 +519,11 @@ func (c *TrainingInsertCall) Do() (*Training, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TrainingInsertCall) Do() (*Training, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -566,7 +582,7 @@ func (c *TrainingPredictCall) Fields(s ...googleapi.Field) *TrainingPredictCall 
 	return c
 }
 
-func (c *TrainingPredictCall) Do() (*Output, error) {
+func (c *TrainingPredictCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.input)
 	if err != nil {
@@ -574,7 +590,7 @@ func (c *TrainingPredictCall) Do() (*Output, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -586,7 +602,11 @@ func (c *TrainingPredictCall) Do() (*Output, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TrainingPredictCall) Do() (*Output, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -653,7 +673,7 @@ func (c *TrainingUpdateCall) Fields(s ...googleapi.Field) *TrainingUpdateCall {
 	return c
 }
 
-func (c *TrainingUpdateCall) Do() (*Training, error) {
+func (c *TrainingUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.update)
 	if err != nil {
@@ -661,7 +681,7 @@ func (c *TrainingUpdateCall) Do() (*Training, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -673,7 +693,11 @@ func (c *TrainingUpdateCall) Do() (*Training, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TrainingUpdateCall) Do() (*Training, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}

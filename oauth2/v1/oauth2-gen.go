@@ -251,10 +251,10 @@ func (c *GetCertForOpenIdConnectCall) Fields(s ...googleapi.Field) *GetCertForOp
 	return c
 }
 
-func (c *GetCertForOpenIdConnectCall) Do() (map[string]string, error) {
+func (c *GetCertForOpenIdConnectCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -263,7 +263,11 @@ func (c *GetCertForOpenIdConnectCall) Do() (map[string]string, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *GetCertForOpenIdConnectCall) Do() (map[string]string, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -308,10 +312,10 @@ func (c *GetCertForOpenIdConnectRawCall) Fields(s ...googleapi.Field) *GetCertFo
 	return c
 }
 
-func (c *GetCertForOpenIdConnectRawCall) Do() (*Raw, error) {
+func (c *GetCertForOpenIdConnectRawCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -320,7 +324,11 @@ func (c *GetCertForOpenIdConnectRawCall) Do() (*Raw, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *GetCertForOpenIdConnectRawCall) Do() (*Raw, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -367,10 +375,10 @@ func (c *GetRobotJwkCall) Fields(s ...googleapi.Field) *GetRobotJwkCall {
 	return c
 }
 
-func (c *GetRobotJwkCall) Do() (*Jwk, error) {
+func (c *GetRobotJwkCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -381,7 +389,11 @@ func (c *GetRobotJwkCall) Do() (*Jwk, error) {
 		"robotEmail": c.robotEmail,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *GetRobotJwkCall) Do() (*Jwk, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -439,10 +451,10 @@ func (c *GetRobotMetadataRawCall) Fields(s ...googleapi.Field) *GetRobotMetadata
 	return c
 }
 
-func (c *GetRobotMetadataRawCall) Do() (*Raw, error) {
+func (c *GetRobotMetadataRawCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -453,7 +465,11 @@ func (c *GetRobotMetadataRawCall) Do() (*Raw, error) {
 		"robotEmail": c.robotEmail,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *GetRobotMetadataRawCall) Do() (*Raw, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -511,10 +527,10 @@ func (c *GetRobotMetadataX509Call) Fields(s ...googleapi.Field) *GetRobotMetadat
 	return c
 }
 
-func (c *GetRobotMetadataX509Call) Do() (map[string]string, error) {
+func (c *GetRobotMetadataX509Call) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -525,7 +541,11 @@ func (c *GetRobotMetadataX509Call) Do() (map[string]string, error) {
 		"robotEmail": c.robotEmail,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *GetRobotMetadataX509Call) Do() (map[string]string, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -594,10 +614,10 @@ func (c *TokeninfoCall) Fields(s ...googleapi.Field) *TokeninfoCall {
 	return c
 }
 
-func (c *TokeninfoCall) Do() (*Tokeninfo, error) {
+func (c *TokeninfoCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["access_token"]; ok {
 		params.Set("access_token", fmt.Sprintf("%v", v))
 	}
@@ -612,7 +632,11 @@ func (c *TokeninfoCall) Do() (*Tokeninfo, error) {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TokeninfoCall) Do() (*Tokeninfo, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -670,10 +694,10 @@ func (c *UserinfoGetCall) Fields(s ...googleapi.Field) *UserinfoGetCall {
 	return c
 }
 
-func (c *UserinfoGetCall) Do() (*Userinfoplus, error) {
+func (c *UserinfoGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -682,7 +706,11 @@ func (c *UserinfoGetCall) Do() (*Userinfoplus, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *UserinfoGetCall) Do() (*Userinfoplus, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -734,10 +762,10 @@ func (c *UserinfoV2MeGetCall) Fields(s ...googleapi.Field) *UserinfoV2MeGetCall 
 	return c
 }
 
-func (c *UserinfoV2MeGetCall) Do() (*Userinfoplus, error) {
+func (c *UserinfoV2MeGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -746,7 +774,11 @@ func (c *UserinfoV2MeGetCall) Do() (*Userinfoplus, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *UserinfoV2MeGetCall) Do() (*Userinfoplus, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}

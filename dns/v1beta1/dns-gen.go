@@ -352,7 +352,7 @@ func (c *ChangesCreateCall) Fields(s ...googleapi.Field) *ChangesCreateCall {
 	return c
 }
 
-func (c *ChangesCreateCall) Do() (*Change, error) {
+func (c *ChangesCreateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.change)
 	if err != nil {
@@ -360,7 +360,7 @@ func (c *ChangesCreateCall) Do() (*Change, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -373,7 +373,11 @@ func (c *ChangesCreateCall) Do() (*Change, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ChangesCreateCall) Do() (*Change, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -450,10 +454,10 @@ func (c *ChangesGetCall) Fields(s ...googleapi.Field) *ChangesGetCall {
 	return c
 }
 
-func (c *ChangesGetCall) Do() (*Change, error) {
+func (c *ChangesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -466,7 +470,11 @@ func (c *ChangesGetCall) Do() (*Change, error) {
 		"changeId":    c.changeId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ChangesGetCall) Do() (*Change, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -579,10 +587,10 @@ func (c *ChangesListCall) Fields(s ...googleapi.Field) *ChangesListCall {
 	return c
 }
 
-func (c *ChangesListCall) Do() (*ChangesListResponse, error) {
+func (c *ChangesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
@@ -606,7 +614,11 @@ func (c *ChangesListCall) Do() (*ChangesListResponse, error) {
 		"managedZone": c.managedZone,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ChangesListCall) Do() (*ChangesListResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -707,7 +719,7 @@ func (c *ManagedZonesCreateCall) Fields(s ...googleapi.Field) *ManagedZonesCreat
 	return c
 }
 
-func (c *ManagedZonesCreateCall) Do() (*ManagedZone, error) {
+func (c *ManagedZonesCreateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.managedzone)
 	if err != nil {
@@ -715,7 +727,7 @@ func (c *ManagedZonesCreateCall) Do() (*ManagedZone, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -727,7 +739,11 @@ func (c *ManagedZonesCreateCall) Do() (*ManagedZone, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ManagedZonesCreateCall) Do() (*ManagedZone, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -795,10 +811,10 @@ func (c *ManagedZonesDeleteCall) Fields(s ...googleapi.Field) *ManagedZonesDelet
 	return c
 }
 
-func (c *ManagedZonesDeleteCall) Do() error {
+func (c *ManagedZonesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -810,7 +826,11 @@ func (c *ManagedZonesDeleteCall) Do() error {
 		"managedZone": c.managedZone,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ManagedZonesDeleteCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -875,10 +895,10 @@ func (c *ManagedZonesGetCall) Fields(s ...googleapi.Field) *ManagedZonesGetCall 
 	return c
 }
 
-func (c *ManagedZonesGetCall) Do() (*ManagedZone, error) {
+func (c *ManagedZonesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -890,7 +910,11 @@ func (c *ManagedZonesGetCall) Do() (*ManagedZone, error) {
 		"managedZone": c.managedZone,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ManagedZonesGetCall) Do() (*ManagedZone, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -985,10 +1009,10 @@ func (c *ManagedZonesListCall) Fields(s ...googleapi.Field) *ManagedZonesListCal
 	return c
 }
 
-func (c *ManagedZonesListCall) Do() (*ManagedZonesListResponse, error) {
+func (c *ManagedZonesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["dnsName"]; ok {
 		params.Set("dnsName", fmt.Sprintf("%v", v))
 	}
@@ -1008,7 +1032,11 @@ func (c *ManagedZonesListCall) Do() (*ManagedZonesListResponse, error) {
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ManagedZonesListCall) Do() (*ManagedZonesListResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1088,10 +1116,10 @@ func (c *ProjectsGetCall) Fields(s ...googleapi.Field) *ProjectsGetCall {
 	return c
 }
 
-func (c *ProjectsGetCall) Do() (*Project, error) {
+func (c *ProjectsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1102,7 +1130,11 @@ func (c *ProjectsGetCall) Do() (*Project, error) {
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ProjectsGetCall) Do() (*Project, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1200,10 +1232,10 @@ func (c *ResourceRecordSetsListCall) Fields(s ...googleapi.Field) *ResourceRecor
 	return c
 }
 
-func (c *ResourceRecordSetsListCall) Do() (*ResourceRecordSetsListResponse, error) {
+func (c *ResourceRecordSetsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
@@ -1227,7 +1259,11 @@ func (c *ResourceRecordSetsListCall) Do() (*ResourceRecordSetsListResponse, erro
 		"managedZone": c.managedZone,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ResourceRecordSetsListCall) Do() (*ResourceRecordSetsListResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}

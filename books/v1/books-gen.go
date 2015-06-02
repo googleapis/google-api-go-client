@@ -1736,10 +1736,10 @@ func (c *BookshelvesGetCall) Fields(s ...googleapi.Field) *BookshelvesGetCall {
 	return c
 }
 
-func (c *BookshelvesGetCall) Do() (*Bookshelf, error) {
+func (c *BookshelvesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))
 	}
@@ -1754,7 +1754,11 @@ func (c *BookshelvesGetCall) Do() (*Bookshelf, error) {
 		"shelf":  c.shelf,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *BookshelvesGetCall) Do() (*Bookshelf, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1835,10 +1839,10 @@ func (c *BookshelvesListCall) Fields(s ...googleapi.Field) *BookshelvesListCall 
 	return c
 }
 
-func (c *BookshelvesListCall) Do() (*Bookshelves, error) {
+func (c *BookshelvesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))
 	}
@@ -1852,7 +1856,11 @@ func (c *BookshelvesListCall) Do() (*Bookshelves, error) {
 		"userId": c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *BookshelvesListCall) Do() (*Bookshelves, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1950,10 +1958,10 @@ func (c *BookshelvesVolumesListCall) Fields(s ...googleapi.Field) *BookshelvesVo
 	return c
 }
 
-func (c *BookshelvesVolumesListCall) Do() (*Volumes, error) {
+func (c *BookshelvesVolumesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
@@ -1977,7 +1985,11 @@ func (c *BookshelvesVolumesListCall) Do() (*Volumes, error) {
 		"shelf":  c.shelf,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *BookshelvesVolumesListCall) Do() (*Volumes, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2095,10 +2107,10 @@ func (c *CloudloadingAddBookCall) Fields(s ...googleapi.Field) *CloudloadingAddB
 	return c
 }
 
-func (c *CloudloadingAddBookCall) Do() (*BooksCloudloadingResource, error) {
+func (c *CloudloadingAddBookCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["drive_document_id"]; ok {
 		params.Set("drive_document_id", fmt.Sprintf("%v", v))
 	}
@@ -2119,7 +2131,11 @@ func (c *CloudloadingAddBookCall) Do() (*BooksCloudloadingResource, error) {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *CloudloadingAddBookCall) Do() (*BooksCloudloadingResource, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2191,10 +2207,10 @@ func (c *CloudloadingDeleteBookCall) Fields(s ...googleapi.Field) *CloudloadingD
 	return c
 }
 
-func (c *CloudloadingDeleteBookCall) Do() error {
+func (c *CloudloadingDeleteBookCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	params.Set("volumeId", fmt.Sprintf("%v", c.volumeId))
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
@@ -2204,7 +2220,11 @@ func (c *CloudloadingDeleteBookCall) Do() error {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *CloudloadingDeleteBookCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -2259,7 +2279,7 @@ func (c *CloudloadingUpdateBookCall) Fields(s ...googleapi.Field) *CloudloadingU
 	return c
 }
 
-func (c *CloudloadingUpdateBookCall) Do() (*BooksCloudloadingResource, error) {
+func (c *CloudloadingUpdateBookCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.bookscloudloadingresource)
 	if err != nil {
@@ -2267,7 +2287,7 @@ func (c *CloudloadingUpdateBookCall) Do() (*BooksCloudloadingResource, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -2277,7 +2297,11 @@ func (c *CloudloadingUpdateBookCall) Do() (*BooksCloudloadingResource, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *CloudloadingUpdateBookCall) Do() (*BooksCloudloadingResource, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2332,10 +2356,10 @@ func (c *DictionaryListOfflineMetadataCall) Fields(s ...googleapi.Field) *Dictio
 	return c
 }
 
-func (c *DictionaryListOfflineMetadataCall) Do() (*Metadata, error) {
+func (c *DictionaryListOfflineMetadataCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	params.Set("cpksver", fmt.Sprintf("%v", c.cpksver))
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
@@ -2345,7 +2369,11 @@ func (c *DictionaryListOfflineMetadataCall) Do() (*Metadata, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *DictionaryListOfflineMetadataCall) Do() (*Metadata, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2423,10 +2451,10 @@ func (c *LayersGetCall) Fields(s ...googleapi.Field) *LayersGetCall {
 	return c
 }
 
-func (c *LayersGetCall) Do() (*Layersummary, error) {
+func (c *LayersGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["contentVersion"]; ok {
 		params.Set("contentVersion", fmt.Sprintf("%v", v))
 	}
@@ -2444,7 +2472,11 @@ func (c *LayersGetCall) Do() (*Layersummary, error) {
 		"summaryId": c.summaryId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *LayersGetCall) Do() (*Layersummary, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2551,10 +2583,10 @@ func (c *LayersListCall) Fields(s ...googleapi.Field) *LayersListCall {
 	return c
 }
 
-func (c *LayersListCall) Do() (*Layersummaries, error) {
+func (c *LayersListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["contentVersion"]; ok {
 		params.Set("contentVersion", fmt.Sprintf("%v", v))
 	}
@@ -2577,7 +2609,11 @@ func (c *LayersListCall) Do() (*Layersummaries, error) {
 		"volumeId": c.volumeId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *LayersListCall) Do() (*Layersummaries, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2712,10 +2748,10 @@ func (c *LayersAnnotationDataGetCall) Fields(s ...googleapi.Field) *LayersAnnota
 	return c
 }
 
-func (c *LayersAnnotationDataGetCall) Do() (*Annotationdata, error) {
+func (c *LayersAnnotationDataGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	params.Set("contentVersion", fmt.Sprintf("%v", c.contentVersion))
 	if v, ok := c.opt_["allowWebDefinitions"]; ok {
 		params.Set("allowWebDefinitions", fmt.Sprintf("%v", v))
@@ -2747,7 +2783,11 @@ func (c *LayersAnnotationDataGetCall) Do() (*Annotationdata, error) {
 		"annotationDataId": c.annotationDataId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *LayersAnnotationDataGetCall) Do() (*Annotationdata, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2942,10 +2982,10 @@ func (c *LayersAnnotationDataListCall) Fields(s ...googleapi.Field) *LayersAnnot
 	return c
 }
 
-func (c *LayersAnnotationDataListCall) Do() (*Annotationsdata, error) {
+func (c *LayersAnnotationDataListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	params.Set("contentVersion", fmt.Sprintf("%v", c.contentVersion))
 	if v, ok := c.opt_["annotationDataId"]; ok {
 		params.Set("annotationDataId", fmt.Sprintf("%v", v))
@@ -2988,7 +3028,11 @@ func (c *LayersAnnotationDataListCall) Do() (*Annotationsdata, error) {
 		"layerId":  c.layerId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *LayersAnnotationDataListCall) Do() (*Annotationsdata, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3141,10 +3185,10 @@ func (c *LayersVolumeAnnotationsGetCall) Fields(s ...googleapi.Field) *LayersVol
 	return c
 }
 
-func (c *LayersVolumeAnnotationsGetCall) Do() (*Volumeannotation, error) {
+func (c *LayersVolumeAnnotationsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["locale"]; ok {
 		params.Set("locale", fmt.Sprintf("%v", v))
 	}
@@ -3163,7 +3207,11 @@ func (c *LayersVolumeAnnotationsGetCall) Do() (*Volumeannotation, error) {
 		"annotationId": c.annotationId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *LayersVolumeAnnotationsGetCall) Do() (*Volumeannotation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3342,10 +3390,10 @@ func (c *LayersVolumeAnnotationsListCall) Fields(s ...googleapi.Field) *LayersVo
 	return c
 }
 
-func (c *LayersVolumeAnnotationsListCall) Do() (*Volumeannotations, error) {
+func (c *LayersVolumeAnnotationsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	params.Set("contentVersion", fmt.Sprintf("%v", c.contentVersion))
 	if v, ok := c.opt_["endOffset"]; ok {
 		params.Set("endOffset", fmt.Sprintf("%v", v))
@@ -3394,7 +3442,11 @@ func (c *LayersVolumeAnnotationsListCall) Do() (*Volumeannotations, error) {
 		"layerId":  c.layerId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *LayersVolumeAnnotationsListCall) Do() (*Volumeannotations, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3531,10 +3583,10 @@ func (c *MyconfigGetUserSettingsCall) Fields(s ...googleapi.Field) *MyconfigGetU
 	return c
 }
 
-func (c *MyconfigGetUserSettingsCall) Do() (*Usersettings, error) {
+func (c *MyconfigGetUserSettingsCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -3543,7 +3595,11 @@ func (c *MyconfigGetUserSettingsCall) Do() (*Usersettings, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *MyconfigGetUserSettingsCall) Do() (*Usersettings, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3610,10 +3666,10 @@ func (c *MyconfigReleaseDownloadAccessCall) Fields(s ...googleapi.Field) *Myconf
 	return c
 }
 
-func (c *MyconfigReleaseDownloadAccessCall) Do() (*DownloadAccesses, error) {
+func (c *MyconfigReleaseDownloadAccessCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	params.Set("cpksver", fmt.Sprintf("%v", c.cpksver))
 	for _, v := range c.volumeIds {
 		params.Add("volumeIds", fmt.Sprintf("%v", v))
@@ -3632,7 +3688,11 @@ func (c *MyconfigReleaseDownloadAccessCall) Do() (*DownloadAccesses, error) {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *MyconfigReleaseDownloadAccessCall) Do() (*DownloadAccesses, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3737,10 +3797,10 @@ func (c *MyconfigRequestAccessCall) Fields(s ...googleapi.Field) *MyconfigReques
 	return c
 }
 
-func (c *MyconfigRequestAccessCall) Do() (*RequestAccess, error) {
+func (c *MyconfigRequestAccessCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	params.Set("cpksver", fmt.Sprintf("%v", c.cpksver))
 	params.Set("nonce", fmt.Sprintf("%v", c.nonce))
 	params.Set("source", fmt.Sprintf("%v", c.source))
@@ -3759,7 +3819,11 @@ func (c *MyconfigRequestAccessCall) Do() (*RequestAccess, error) {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *MyconfigRequestAccessCall) Do() (*RequestAccess, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3898,10 +3962,10 @@ func (c *MyconfigSyncVolumeLicensesCall) Fields(s ...googleapi.Field) *MyconfigS
 	return c
 }
 
-func (c *MyconfigSyncVolumeLicensesCall) Do() (*Volumes, error) {
+func (c *MyconfigSyncVolumeLicensesCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	params.Set("cpksver", fmt.Sprintf("%v", c.cpksver))
 	params.Set("nonce", fmt.Sprintf("%v", c.nonce))
 	params.Set("source", fmt.Sprintf("%v", c.source))
@@ -3925,7 +3989,11 @@ func (c *MyconfigSyncVolumeLicensesCall) Do() (*Volumes, error) {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *MyconfigSyncVolumeLicensesCall) Do() (*Volumes, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -4031,7 +4099,7 @@ func (c *MyconfigUpdateUserSettingsCall) Fields(s ...googleapi.Field) *MyconfigU
 	return c
 }
 
-func (c *MyconfigUpdateUserSettingsCall) Do() (*Usersettings, error) {
+func (c *MyconfigUpdateUserSettingsCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.usersettings)
 	if err != nil {
@@ -4039,7 +4107,7 @@ func (c *MyconfigUpdateUserSettingsCall) Do() (*Usersettings, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -4049,7 +4117,11 @@ func (c *MyconfigUpdateUserSettingsCall) Do() (*Usersettings, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *MyconfigUpdateUserSettingsCall) Do() (*Usersettings, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -4110,10 +4182,10 @@ func (c *MylibraryAnnotationsDeleteCall) Fields(s ...googleapi.Field) *Mylibrary
 	return c
 }
 
-func (c *MylibraryAnnotationsDeleteCall) Do() error {
+func (c *MylibraryAnnotationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))
 	}
@@ -4127,7 +4199,11 @@ func (c *MylibraryAnnotationsDeleteCall) Do() error {
 		"annotationId": c.annotationId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *MylibraryAnnotationsDeleteCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -4209,7 +4285,7 @@ func (c *MylibraryAnnotationsInsertCall) Fields(s ...googleapi.Field) *Mylibrary
 	return c
 }
 
-func (c *MylibraryAnnotationsInsertCall) Do() (*Annotation, error) {
+func (c *MylibraryAnnotationsInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.annotation)
 	if err != nil {
@@ -4217,7 +4293,7 @@ func (c *MylibraryAnnotationsInsertCall) Do() (*Annotation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["country"]; ok {
 		params.Set("country", fmt.Sprintf("%v", v))
 	}
@@ -4236,7 +4312,11 @@ func (c *MylibraryAnnotationsInsertCall) Do() (*Annotation, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *MylibraryAnnotationsInsertCall) Do() (*Annotation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -4378,10 +4458,10 @@ func (c *MylibraryAnnotationsListCall) Fields(s ...googleapi.Field) *MylibraryAn
 	return c
 }
 
-func (c *MylibraryAnnotationsListCall) Do() (*Annotations, error) {
+func (c *MylibraryAnnotationsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["contentVersion"]; ok {
 		params.Set("contentVersion", fmt.Sprintf("%v", v))
 	}
@@ -4420,7 +4500,11 @@ func (c *MylibraryAnnotationsListCall) Do() (*Annotations, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *MylibraryAnnotationsListCall) Do() (*Annotations, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -4529,10 +4613,10 @@ func (c *MylibraryAnnotationsSummaryCall) Fields(s ...googleapi.Field) *Mylibrar
 	return c
 }
 
-func (c *MylibraryAnnotationsSummaryCall) Do() (*AnnotationsSummary, error) {
+func (c *MylibraryAnnotationsSummaryCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	params.Set("volumeId", fmt.Sprintf("%v", c.volumeId))
 	for _, v := range c.layerIds {
 		params.Add("layerIds", fmt.Sprintf("%v", v))
@@ -4545,7 +4629,11 @@ func (c *MylibraryAnnotationsSummaryCall) Do() (*AnnotationsSummary, error) {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *MylibraryAnnotationsSummaryCall) Do() (*AnnotationsSummary, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -4624,7 +4712,7 @@ func (c *MylibraryAnnotationsUpdateCall) Fields(s ...googleapi.Field) *Mylibrary
 	return c
 }
 
-func (c *MylibraryAnnotationsUpdateCall) Do() (*Annotation, error) {
+func (c *MylibraryAnnotationsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.annotation)
 	if err != nil {
@@ -4632,7 +4720,7 @@ func (c *MylibraryAnnotationsUpdateCall) Do() (*Annotation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))
 	}
@@ -4647,7 +4735,11 @@ func (c *MylibraryAnnotationsUpdateCall) Do() (*Annotation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *MylibraryAnnotationsUpdateCall) Do() (*Annotation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -4738,10 +4830,10 @@ func (c *MylibraryBookshelvesAddVolumeCall) Fields(s ...googleapi.Field) *Mylibr
 	return c
 }
 
-func (c *MylibraryBookshelvesAddVolumeCall) Do() error {
+func (c *MylibraryBookshelvesAddVolumeCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	params.Set("volumeId", fmt.Sprintf("%v", c.volumeId))
 	if v, ok := c.opt_["reason"]; ok {
 		params.Set("reason", fmt.Sprintf("%v", v))
@@ -4759,7 +4851,11 @@ func (c *MylibraryBookshelvesAddVolumeCall) Do() error {
 		"shelf": c.shelf,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *MylibraryBookshelvesAddVolumeCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -4848,10 +4944,10 @@ func (c *MylibraryBookshelvesClearVolumesCall) Fields(s ...googleapi.Field) *Myl
 	return c
 }
 
-func (c *MylibraryBookshelvesClearVolumesCall) Do() error {
+func (c *MylibraryBookshelvesClearVolumesCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))
 	}
@@ -4865,7 +4961,11 @@ func (c *MylibraryBookshelvesClearVolumesCall) Do() error {
 		"shelf": c.shelf,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *MylibraryBookshelvesClearVolumesCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -4933,10 +5033,10 @@ func (c *MylibraryBookshelvesGetCall) Fields(s ...googleapi.Field) *MylibraryBoo
 	return c
 }
 
-func (c *MylibraryBookshelvesGetCall) Do() (*Bookshelf, error) {
+func (c *MylibraryBookshelvesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))
 	}
@@ -4950,7 +5050,11 @@ func (c *MylibraryBookshelvesGetCall) Do() (*Bookshelf, error) {
 		"shelf": c.shelf,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *MylibraryBookshelvesGetCall) Do() (*Bookshelf, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -5023,10 +5127,10 @@ func (c *MylibraryBookshelvesListCall) Fields(s ...googleapi.Field) *MylibraryBo
 	return c
 }
 
-func (c *MylibraryBookshelvesListCall) Do() (*Bookshelves, error) {
+func (c *MylibraryBookshelvesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))
 	}
@@ -5038,7 +5142,11 @@ func (c *MylibraryBookshelvesListCall) Do() (*Bookshelves, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *MylibraryBookshelvesListCall) Do() (*Bookshelves, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -5107,10 +5215,10 @@ func (c *MylibraryBookshelvesMoveVolumeCall) Fields(s ...googleapi.Field) *Mylib
 	return c
 }
 
-func (c *MylibraryBookshelvesMoveVolumeCall) Do() error {
+func (c *MylibraryBookshelvesMoveVolumeCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	params.Set("volumeId", fmt.Sprintf("%v", c.volumeId))
 	params.Set("volumePosition", fmt.Sprintf("%v", c.volumePosition))
 	if v, ok := c.opt_["source"]; ok {
@@ -5126,7 +5234,11 @@ func (c *MylibraryBookshelvesMoveVolumeCall) Do() error {
 		"shelf": c.shelf,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *MylibraryBookshelvesMoveVolumeCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -5220,10 +5332,10 @@ func (c *MylibraryBookshelvesRemoveVolumeCall) Fields(s ...googleapi.Field) *Myl
 	return c
 }
 
-func (c *MylibraryBookshelvesRemoveVolumeCall) Do() error {
+func (c *MylibraryBookshelvesRemoveVolumeCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	params.Set("volumeId", fmt.Sprintf("%v", c.volumeId))
 	if v, ok := c.opt_["reason"]; ok {
 		params.Set("reason", fmt.Sprintf("%v", v))
@@ -5241,7 +5353,11 @@ func (c *MylibraryBookshelvesRemoveVolumeCall) Do() error {
 		"shelf": c.shelf,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *MylibraryBookshelvesRemoveVolumeCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -5372,10 +5488,10 @@ func (c *MylibraryBookshelvesVolumesListCall) Fields(s ...googleapi.Field) *Myli
 	return c
 }
 
-func (c *MylibraryBookshelvesVolumesListCall) Do() (*Volumes, error) {
+func (c *MylibraryBookshelvesVolumesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["country"]; ok {
 		params.Set("country", fmt.Sprintf("%v", v))
 	}
@@ -5407,7 +5523,11 @@ func (c *MylibraryBookshelvesVolumesListCall) Do() (*Volumes, error) {
 		"shelf": c.shelf,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *MylibraryBookshelvesVolumesListCall) Do() (*Volumes, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -5530,10 +5650,10 @@ func (c *MylibraryReadingpositionsGetCall) Fields(s ...googleapi.Field) *Mylibra
 	return c
 }
 
-func (c *MylibraryReadingpositionsGetCall) Do() (*ReadingPosition, error) {
+func (c *MylibraryReadingpositionsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["contentVersion"]; ok {
 		params.Set("contentVersion", fmt.Sprintf("%v", v))
 	}
@@ -5550,7 +5670,11 @@ func (c *MylibraryReadingpositionsGetCall) Do() (*ReadingPosition, error) {
 		"volumeId": c.volumeId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *MylibraryReadingpositionsGetCall) Do() (*ReadingPosition, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -5662,10 +5786,10 @@ func (c *MylibraryReadingpositionsSetPositionCall) Fields(s ...googleapi.Field) 
 	return c
 }
 
-func (c *MylibraryReadingpositionsSetPositionCall) Do() error {
+func (c *MylibraryReadingpositionsSetPositionCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	params.Set("position", fmt.Sprintf("%v", c.position))
 	params.Set("timestamp", fmt.Sprintf("%v", c.timestamp))
 	if v, ok := c.opt_["action"]; ok {
@@ -5690,7 +5814,11 @@ func (c *MylibraryReadingpositionsSetPositionCall) Do() error {
 		"volumeId": c.volumeId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *MylibraryReadingpositionsSetPositionCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -5800,10 +5928,10 @@ func (c *OnboardingListCategoriesCall) Fields(s ...googleapi.Field) *OnboardingL
 	return c
 }
 
-func (c *OnboardingListCategoriesCall) Do() (*Category, error) {
+func (c *OnboardingListCategoriesCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["locale"]; ok {
 		params.Set("locale", fmt.Sprintf("%v", v))
 	}
@@ -5815,7 +5943,11 @@ func (c *OnboardingListCategoriesCall) Do() (*Category, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *OnboardingListCategoriesCall) Do() (*Category, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -5913,10 +6045,10 @@ func (c *OnboardingListCategoryVolumesCall) Fields(s ...googleapi.Field) *Onboar
 	return c
 }
 
-func (c *OnboardingListCategoryVolumesCall) Do() (*Volume2, error) {
+func (c *OnboardingListCategoryVolumesCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["categoryId"]; ok {
 		params.Set("categoryId", fmt.Sprintf("%v", v))
 	}
@@ -5940,7 +6072,11 @@ func (c *OnboardingListCategoryVolumesCall) Do() (*Volume2, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *OnboardingListCategoryVolumesCall) Do() (*Volume2, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -6076,10 +6212,10 @@ func (c *PromoofferAcceptCall) Fields(s ...googleapi.Field) *PromoofferAcceptCal
 	return c
 }
 
-func (c *PromoofferAcceptCall) Do() error {
+func (c *PromoofferAcceptCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["androidId"]; ok {
 		params.Set("androidId", fmt.Sprintf("%v", v))
 	}
@@ -6112,7 +6248,11 @@ func (c *PromoofferAcceptCall) Do() error {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *PromoofferAcceptCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -6238,10 +6378,10 @@ func (c *PromoofferDismissCall) Fields(s ...googleapi.Field) *PromoofferDismissC
 	return c
 }
 
-func (c *PromoofferDismissCall) Do() error {
+func (c *PromoofferDismissCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["androidId"]; ok {
 		params.Set("androidId", fmt.Sprintf("%v", v))
 	}
@@ -6271,7 +6411,11 @@ func (c *PromoofferDismissCall) Do() error {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *PromoofferDismissCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -6387,10 +6531,10 @@ func (c *PromoofferGetCall) Fields(s ...googleapi.Field) *PromoofferGetCall {
 	return c
 }
 
-func (c *PromoofferGetCall) Do() (*Offers, error) {
+func (c *PromoofferGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["androidId"]; ok {
 		params.Set("androidId", fmt.Sprintf("%v", v))
 	}
@@ -6417,7 +6561,11 @@ func (c *PromoofferGetCall) Do() (*Offers, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *PromoofferGetCall) Do() (*Offers, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -6539,10 +6687,10 @@ func (c *VolumesGetCall) Fields(s ...googleapi.Field) *VolumesGetCall {
 	return c
 }
 
-func (c *VolumesGetCall) Do() (*Volume, error) {
+func (c *VolumesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["country"]; ok {
 		params.Set("country", fmt.Sprintf("%v", v))
 	}
@@ -6568,7 +6716,11 @@ func (c *VolumesGetCall) Do() (*Volume, error) {
 		"volumeId": c.volumeId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *VolumesGetCall) Do() (*Volume, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -6771,10 +6923,10 @@ func (c *VolumesListCall) Fields(s ...googleapi.Field) *VolumesListCall {
 	return c
 }
 
-func (c *VolumesListCall) Do() (*Volumes, error) {
+func (c *VolumesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	params.Set("q", fmt.Sprintf("%v", c.q))
 	if v, ok := c.opt_["download"]; ok {
 		params.Set("download", fmt.Sprintf("%v", v))
@@ -6820,7 +6972,11 @@ func (c *VolumesListCall) Do() (*Volumes, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *VolumesListCall) Do() (*Volumes, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -7041,10 +7197,10 @@ func (c *VolumesAssociatedListCall) Fields(s ...googleapi.Field) *VolumesAssocia
 	return c
 }
 
-func (c *VolumesAssociatedListCall) Do() (*Volumes, error) {
+func (c *VolumesAssociatedListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["association"]; ok {
 		params.Set("association", fmt.Sprintf("%v", v))
 	}
@@ -7067,7 +7223,11 @@ func (c *VolumesAssociatedListCall) Do() (*Volumes, error) {
 		"volumeId": c.volumeId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *VolumesAssociatedListCall) Do() (*Volumes, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -7223,10 +7383,10 @@ func (c *VolumesMybooksListCall) Fields(s ...googleapi.Field) *VolumesMybooksLis
 	return c
 }
 
-func (c *VolumesMybooksListCall) Do() (*Volumes, error) {
+func (c *VolumesMybooksListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["acquireMethod"]; ok {
 		params.Set("acquireMethod", fmt.Sprintf("%v", v))
 	}
@@ -7253,7 +7413,11 @@ func (c *VolumesMybooksListCall) Do() (*Volumes, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *VolumesMybooksListCall) Do() (*Volumes, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -7397,10 +7561,10 @@ func (c *VolumesRecommendedListCall) Fields(s ...googleapi.Field) *VolumesRecomm
 	return c
 }
 
-func (c *VolumesRecommendedListCall) Do() (*Volumes, error) {
+func (c *VolumesRecommendedListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["locale"]; ok {
 		params.Set("locale", fmt.Sprintf("%v", v))
 	}
@@ -7418,7 +7582,11 @@ func (c *VolumesRecommendedListCall) Do() (*Volumes, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *VolumesRecommendedListCall) Do() (*Volumes, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -7511,10 +7679,10 @@ func (c *VolumesRecommendedRateCall) Fields(s ...googleapi.Field) *VolumesRecomm
 	return c
 }
 
-func (c *VolumesRecommendedRateCall) Do() (*BooksVolumesRecommendedRateResponse, error) {
+func (c *VolumesRecommendedRateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	params.Set("rating", fmt.Sprintf("%v", c.rating))
 	params.Set("volumeId", fmt.Sprintf("%v", c.volumeId))
 	if v, ok := c.opt_["locale"]; ok {
@@ -7531,7 +7699,11 @@ func (c *VolumesRecommendedRateCall) Do() (*BooksVolumesRecommendedRateResponse,
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *VolumesRecommendedRateCall) Do() (*BooksVolumesRecommendedRateResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -7665,10 +7837,10 @@ func (c *VolumesUseruploadedListCall) Fields(s ...googleapi.Field) *VolumesUseru
 	return c
 }
 
-func (c *VolumesUseruploadedListCall) Do() (*Volumes, error) {
+func (c *VolumesUseruploadedListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["locale"]; ok {
 		params.Set("locale", fmt.Sprintf("%v", v))
 	}
@@ -7695,7 +7867,11 @@ func (c *VolumesUseruploadedListCall) Do() (*Volumes, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *VolumesUseruploadedListCall) Do() (*Volumes, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}

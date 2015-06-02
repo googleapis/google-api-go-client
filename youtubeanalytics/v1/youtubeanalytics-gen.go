@@ -369,10 +369,10 @@ func (c *BatchReportDefinitionsListCall) Fields(s ...googleapi.Field) *BatchRepo
 	return c
 }
 
-func (c *BatchReportDefinitionsListCall) Do() (*BatchReportDefinitionList, error) {
+func (c *BatchReportDefinitionsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", c.onBehalfOfContentOwner))
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
@@ -382,7 +382,11 @@ func (c *BatchReportDefinitionsListCall) Do() (*BatchReportDefinitionList, error
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *BatchReportDefinitionsListCall) Do() (*BatchReportDefinitionList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -447,10 +451,10 @@ func (c *BatchReportsListCall) Fields(s ...googleapi.Field) *BatchReportsListCal
 	return c
 }
 
-func (c *BatchReportsListCall) Do() (*BatchReportList, error) {
+func (c *BatchReportsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	params.Set("batchReportDefinitionId", fmt.Sprintf("%v", c.batchReportDefinitionId))
 	params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", c.onBehalfOfContentOwner))
 	if v, ok := c.opt_["fields"]; ok {
@@ -461,7 +465,11 @@ func (c *BatchReportsListCall) Do() (*BatchReportList, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *BatchReportsListCall) Do() (*BatchReportList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -549,10 +557,10 @@ func (c *GroupItemsDeleteCall) Fields(s ...googleapi.Field) *GroupItemsDeleteCal
 	return c
 }
 
-func (c *GroupItemsDeleteCall) Do() error {
+func (c *GroupItemsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	params.Set("id", fmt.Sprintf("%v", c.id))
 	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
 		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
@@ -565,7 +573,11 @@ func (c *GroupItemsDeleteCall) Do() error {
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *GroupItemsDeleteCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -644,7 +656,7 @@ func (c *GroupItemsInsertCall) Fields(s ...googleapi.Field) *GroupItemsInsertCal
 	return c
 }
 
-func (c *GroupItemsInsertCall) Do() (*GroupItem, error) {
+func (c *GroupItemsInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.groupitem)
 	if err != nil {
@@ -652,7 +664,7 @@ func (c *GroupItemsInsertCall) Do() (*GroupItem, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
 		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
 	}
@@ -665,7 +677,11 @@ func (c *GroupItemsInsertCall) Do() (*GroupItem, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *GroupItemsInsertCall) Do() (*GroupItem, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -746,10 +762,10 @@ func (c *GroupItemsListCall) Fields(s ...googleapi.Field) *GroupItemsListCall {
 	return c
 }
 
-func (c *GroupItemsListCall) Do() (*GroupItemListResponse, error) {
+func (c *GroupItemsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	params.Set("groupId", fmt.Sprintf("%v", c.groupId))
 	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
 		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
@@ -762,7 +778,11 @@ func (c *GroupItemsListCall) Do() (*GroupItemListResponse, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *GroupItemsListCall) Do() (*GroupItemListResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -850,10 +870,10 @@ func (c *GroupsDeleteCall) Fields(s ...googleapi.Field) *GroupsDeleteCall {
 	return c
 }
 
-func (c *GroupsDeleteCall) Do() error {
+func (c *GroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	params.Set("id", fmt.Sprintf("%v", c.id))
 	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
 		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
@@ -866,7 +886,11 @@ func (c *GroupsDeleteCall) Do() error {
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *GroupsDeleteCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -945,7 +969,7 @@ func (c *GroupsInsertCall) Fields(s ...googleapi.Field) *GroupsInsertCall {
 	return c
 }
 
-func (c *GroupsInsertCall) Do() (*Group, error) {
+func (c *GroupsInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.group)
 	if err != nil {
@@ -953,7 +977,7 @@ func (c *GroupsInsertCall) Do() (*Group, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
 		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
 	}
@@ -966,7 +990,11 @@ func (c *GroupsInsertCall) Do() (*Group, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *GroupsInsertCall) Do() (*Group, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1064,10 +1092,10 @@ func (c *GroupsListCall) Fields(s ...googleapi.Field) *GroupsListCall {
 	return c
 }
 
-func (c *GroupsListCall) Do() (*GroupListResponse, error) {
+func (c *GroupsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["id"]; ok {
 		params.Set("id", fmt.Sprintf("%v", v))
 	}
@@ -1085,7 +1113,11 @@ func (c *GroupsListCall) Do() (*GroupListResponse, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *GroupsListCall) Do() (*GroupListResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1175,7 +1207,7 @@ func (c *GroupsUpdateCall) Fields(s ...googleapi.Field) *GroupsUpdateCall {
 	return c
 }
 
-func (c *GroupsUpdateCall) Do() (*Group, error) {
+func (c *GroupsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.group)
 	if err != nil {
@@ -1183,7 +1215,7 @@ func (c *GroupsUpdateCall) Do() (*Group, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
 		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
 	}
@@ -1196,7 +1228,11 @@ func (c *GroupsUpdateCall) Do() (*Group, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *GroupsUpdateCall) Do() (*Group, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1324,10 +1360,10 @@ func (c *ReportsQueryCall) Fields(s ...googleapi.Field) *ReportsQueryCall {
 	return c
 }
 
-func (c *ReportsQueryCall) Do() (*ResultTable, error) {
+func (c *ReportsQueryCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	params.Set("end-date", fmt.Sprintf("%v", c.endDate))
 	params.Set("ids", fmt.Sprintf("%v", c.ids))
 	params.Set("metrics", fmt.Sprintf("%v", c.metrics))
@@ -1358,7 +1394,11 @@ func (c *ReportsQueryCall) Do() (*ResultTable, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ReportsQueryCall) Do() (*ResultTable, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}

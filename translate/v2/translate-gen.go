@@ -171,10 +171,10 @@ func (c *DetectionsListCall) Fields(s ...googleapi.Field) *DetectionsListCall {
 	return c
 }
 
-func (c *DetectionsListCall) Do() (*DetectionsListResponse, error) {
+func (c *DetectionsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	for _, v := range c.q {
 		params.Add("q", fmt.Sprintf("%v", v))
 	}
@@ -186,7 +186,11 @@ func (c *DetectionsListCall) Do() (*DetectionsListResponse, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *DetectionsListCall) Do() (*DetectionsListResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -251,10 +255,10 @@ func (c *LanguagesListCall) Fields(s ...googleapi.Field) *LanguagesListCall {
 	return c
 }
 
-func (c *LanguagesListCall) Do() (*LanguagesListResponse, error) {
+func (c *LanguagesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["target"]; ok {
 		params.Set("target", fmt.Sprintf("%v", v))
 	}
@@ -266,7 +270,11 @@ func (c *LanguagesListCall) Do() (*LanguagesListResponse, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *LanguagesListCall) Do() (*LanguagesListResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -347,10 +355,10 @@ func (c *TranslationsListCall) Fields(s ...googleapi.Field) *TranslationsListCal
 	return c
 }
 
-func (c *TranslationsListCall) Do() (*TranslationsListResponse, error) {
+func (c *TranslationsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	params.Set("target", fmt.Sprintf("%v", c.target))
 	for _, v := range c.q {
 		params.Add("q", fmt.Sprintf("%v", v))
@@ -372,7 +380,11 @@ func (c *TranslationsListCall) Do() (*TranslationsListResponse, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TranslationsListCall) Do() (*TranslationsListResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}

@@ -1,4 +1,5 @@
 // Copyright 2011 Google Inc. All rights reserved.
+// Copyright (C) 2015 Motorola Mobility LLC All Rights Reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -17,6 +18,7 @@ import (
 	"net/http"
 	"net/textproto"
 	"net/url"
+	"os"
 	"regexp"
 	"strconv"
 	"strings"
@@ -35,11 +37,30 @@ type ContentTyper interface {
 	ContentType() string
 }
 
-// A SizeReaderAt is a ReaderAt with a Size method.
-// An io.SectionReader implements SizeReaderAt.
-type SizeReaderAt interface {
-	io.ReaderAt
-	Size() int64
+// Reader is the type accepted by ResumableMedia uploads.
+// It can be any io.Reader, or as a special case for extra configuration
+// it may be a *UploadParameters.
+type Reader interface {
+	io.Reader
+}
+type UploadParameters struct {
+	// Reader is the source to read from.
+	// It is the only required field.
+	io.Reader
+	// Size optionally lists the Reader size in bytes.
+	// It may be set to 0 if unknown.
+	Size int64
+	// ChunkSize optionally specifies the size of upload chunk.
+	// If zero, chunk size will be auto-selected, or chunking may be skipped altogether
+	// if not required (when content size is known up-front and reader supports
+	// io.ReaderAt interface). ChunkSize that is not a multiple of 256KiB (256<<10 bytes) will be
+	// automatically upgraded to the next smallest multiple of 256KiB, in accordance with
+	// the Google Cloud Storage specifications.
+	// Note the memory impact of setting chunk size: one full chunk will be buffered in memory.
+	ChunkSize int64
+	// MediaType optionally specifies content MIME type, such as "image/png".
+	// If empty, it is auto-detected using http.DetectContentType.
+	MediaType string
 }
 
 const (
@@ -304,6 +325,8 @@ type ResumableUpload struct {
 	MediaType string
 	// ContentLength is the full size of the object being uploaded.
 	ContentLength int64
+	// ChunkSize is the chunk size to be using during upload. Zero or negative value means use default.
+	ChunkSize int64
 
 	mu       sync.Mutex // guards progress
 	progress int64      // number of bytes uploaded so far
@@ -316,10 +339,87 @@ type ResumableUpload struct {
 var (
 	// rangeRE matches the transfer status response from the server. $1 is the last byte index uploaded.
 	rangeRE = regexp.MustCompile(`^bytes=0\-(\d+)$`)
-	// chunkSize is the size of the chunks created during a resumable upload and should be a power of two.
-	// 1<<18 is the minimum size supported by the Google uploader, and there is no maximum.
-	chunkSize int64 = 1 << 18
+	// ChunkSize is the size of the chunks created during a resumable upload and should be a multiple of
+	// 256KB, per Google Cloud Storage requirements. While Google Cloud Storage does not specify maximum,
+	// note that classic app engine urlfetch limits outgoing HTTP request size to 10MB max.
+	ChunkSize int64 = 8 << 20
 )
+
+// Configure interrogates the supplied io.Reader for additional capabilities, and initializes
+// the following fields in the ResumableUpload struct:
+//  - Media is set to an appropriate io.ReaderAt, which is possibly a *fakeReaderAt.
+//  - MediaType is set to user-provided value, or guessed using http.DetectContentType.
+//  - ContentLength is set to user-provided value, or possibly guessed, or left as 0
+//    indicating that content length is unknown.
+//  - ChunkSize is set to user-provided value, or to package default value,
+//    or left as 0 indicating that chunking should be skipped.
+//
+// The method expects all the above fields to be at their zero values prior to the method
+// invocation. No other fields will be touched by this method. The method must be invoked
+// prior to starting the resumable upload.
+//
+// The additional io.Reader capabilities that this method looks for are:
+//  - whether reader supports io.ReaderAt interface
+//  - whether reader supports os.File.Stat() method
+//  - whether reader is also an UploadParameters struct value or struct pointer
+//  - whether Reader embedded in UploadParameters supports io.ReaderAt and os.File.Stat()
+//
+// The ultimate goal of this configuration is to ensure that resumable upload is done
+// in the most efficient manner whenever possible, while falling back to the less efficient
+// method when required (with buffering content and chunking). For example, the most
+// common case of user passing *os.File as io.Reader is handled efficiently - buffering
+// and chunking are avoided.
+// This method is called from, and private to the auto-generated API code, and should
+// not be invoked directly by the user.
+func (rx *ResumableUpload) Configure(r io.Reader) {
+	type fileLike interface { // relevant subset of os.File methods
+		io.ReaderAt
+		Stat() (os.FileInfo, error)
+	}
+	if file, ok := r.(fileLike); ok {
+		if fileinfo, err := file.Stat(); err == nil {
+			rx.ContentLength = fileinfo.Size()
+			rx.Media = file
+			rx.MediaType = DetectMediaType(file)
+			return
+		}
+	}
+	// Check for UploadParameters. Allow either struct or *struct since both
+	// forms satisfy io.Reader and either could be used by the user.
+	params, ok := r.(*UploadParameters)
+	if !ok {
+		if params1, ok := r.(UploadParameters); ok {
+			params = &params1
+		}
+	}
+	if params != nil {
+		rx.ContentLength = params.Size
+		rx.MediaType = params.MediaType
+		rx.ChunkSize = calcChunkSize(params.ChunkSize)
+		if rx.Media, ok = params.Reader.(io.ReaderAt); ok {
+			if params.Size <= 0 {
+				// try to guess size from File
+				rx.Media = nil
+				if file, ok := params.Reader.(fileLike); ok {
+					if fileinfo, err := file.Stat(); err == nil {
+						rx.ContentLength = fileinfo.Size()
+						rx.Media = file
+					}
+				}
+			}
+		}
+	}
+	if rx.Media == nil {
+		rx.Media = &fakeReaderAt{r: r}
+		// always force chunking when using fakeReaderAt
+		if rx.ChunkSize <= 0 {
+			rx.ChunkSize = ChunkSize // use package default
+		}
+	}
+	if rx.MediaType == "" {
+		rx.MediaType = DetectMediaType(rx.Media)
+	}
+}
 
 // Progress returns the number of bytes uploaded at this point.
 func (rx *ResumableUpload) Progress() int64 {
@@ -332,7 +432,7 @@ func (rx *ResumableUpload) transferStatus() (int64, *http.Response, error) {
 	req, _ := http.NewRequest("POST", rx.URI, nil)
 	req.ContentLength = 0
 	req.Header.Set("User-Agent", rx.UserAgent)
-	req.Header.Set("Content-Range", fmt.Sprintf("bytes */%v", rx.ContentLength))
+	req.Header.Set("Content-Range", "bytes */*")
 	res, err := rx.Client.Do(req)
 	if err != nil || res.StatusCode != statusResumeIncomplete {
 		return 0, res, err
@@ -373,14 +473,36 @@ func (rx *ResumableUpload) transferChunks(ctx context.Context) (*http.Response, 
 			return res, ctx.Err()
 		default:
 		}
-		reqSize := rx.ContentLength - start
-		if reqSize > chunkSize {
-			reqSize = chunkSize
+
+		var reqSize int64
+		if fr, ok := rx.Media.(*fakeReaderAt); ok && rx.ContentLength <= 0 {
+			chunkSize_ := rx.ChunkSize
+			if chunkSize_ <= 0 {
+				chunkSize_ = ChunkSize // use package default
+			}
+			size, err := fr.SizeAt(start, int(chunkSize_))
+			reqSize = int64(size)
+			if err != nil && err != io.EOF {
+				return res, err
+			}
+			if err == io.EOF { // reached end of stream, this is our final chunk
+				rx.ContentLength = start + int64(reqSize) // finally learned content length
+			}
+		} else { // we have real ReaderAt with known content size
+			reqSize = rx.ContentLength - start
+			// use chunking only if explicitly requested
+			if rx.ChunkSize > 0 && reqSize > rx.ChunkSize {
+				reqSize = rx.ChunkSize
+			}
 		}
 		r := io.NewSectionReader(rx.Media, start, reqSize)
 		req, _ := http.NewRequest("POST", rx.URI, r)
 		req.ContentLength = reqSize
-		req.Header.Set("Content-Range", fmt.Sprintf("bytes %v-%v/%v", start, start+reqSize-1, rx.ContentLength))
+		if rx.ContentLength <= 0 {
+			req.Header.Set("Content-Range", fmt.Sprintf("bytes %v-%v/*", start, start+reqSize-1))
+		} else {
+			req.Header.Set("Content-Range", fmt.Sprintf("bytes %v-%v/%v", start, start+reqSize-1, rx.ContentLength))
+		}
 		req.Header.Set("Content-Type", rx.MediaType)
 		req.Header.Set("User-Agent", rx.UserAgent)
 		res, err = rx.Client.Do(req)
@@ -398,6 +520,19 @@ func (rx *ResumableUpload) transferChunks(ctx context.Context) (*http.Response, 
 		}
 	}
 	return res, err
+}
+
+// calcChunkSize returns smallest multiple of 256K (GCS requirement) greater or equal
+// to chunkSize.  However, 0 or negative values are left unmodified.
+func calcChunkSize(size int64) int64 {
+	const (
+		c     = int64(256 << 10)
+		cmask = c - 1
+	)
+	if size <= 0 || size&cmask == 0 {
+		return size
+	}
+	return ((size >> 18) + 1) << 18
 }
 
 var sleep = time.Sleep // override in unit tests

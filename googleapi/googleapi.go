@@ -1,4 +1,5 @@
 // Copyright 2011 Google Inc. All rights reserved.
+// Copyright (C) 2015 Motorola Mobility LLC All Rights Reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -301,9 +302,13 @@ type ResumableUpload struct {
 	// Media is the object being uploaded.
 	Media io.ReaderAt
 	// MediaType defines the media type, e.g. "image/jpeg".
+	FakeRdr bool
+	// FakeRdr specifies whether Media is actually a FakeReaderAt
 	MediaType string
 	// ContentLength is the full size of the object being uploaded.
 	ContentLength int64
+	// ChunkSize is the chunk size to be using during upload. Zero or negative value means use default.
+	ChunkSize int64
 
 	mu       sync.Mutex // guards progress
 	progress int64      // number of bytes uploaded so far
@@ -318,7 +323,8 @@ var (
 	rangeRE = regexp.MustCompile(`^bytes=0\-(\d+)$`)
 	// chunkSize is the size of the chunks created during a resumable upload and should be a power of two.
 	// 1<<18 is the minimum size supported by the Google uploader, and there is no maximum.
-	chunkSize int64 = 1 << 18
+	// Note however that classic app engine urlfetch limits outgoing HTTP request size to 10MB max.
+	chunkSize int64 = 1 << 23
 )
 
 // Progress returns the number of bytes uploaded at this point.
@@ -332,7 +338,7 @@ func (rx *ResumableUpload) transferStatus() (int64, *http.Response, error) {
 	req, _ := http.NewRequest("POST", rx.URI, nil)
 	req.ContentLength = 0
 	req.Header.Set("User-Agent", rx.UserAgent)
-	req.Header.Set("Content-Range", fmt.Sprintf("bytes */%v", rx.ContentLength))
+	req.Header.Set("Content-Range", "bytes */*")
 	res, err := rx.Client.Do(req)
 	if err != nil || res.StatusCode != statusResumeIncomplete {
 		return 0, res, err
@@ -373,14 +379,37 @@ func (rx *ResumableUpload) transferChunks(ctx context.Context) (*http.Response, 
 			return res, ctx.Err()
 		default:
 		}
-		reqSize := rx.ContentLength - start
-		if reqSize > chunkSize {
-			reqSize = chunkSize
+
+		var reqSize int64
+		if rx.FakeRdr { // we have FakeReaderAt
+			fr := rx.Media.(FakeReaderAt)
+			chunkSize_ := rx.ChunkSize
+			if chunkSize_ <= 0 {
+				chunkSize_ = chunkSize // use package default
+			}
+			size, err := fr.SizeAt(start, int(chunkSize_))
+			reqSize = int64(size)
+			if err != nil && err != io.EOF {
+				return res, err
+			}
+			if err == io.EOF { // reached end of stream, this is our final chunk
+				rx.ContentLength = start + int64(reqSize) // finally learned content length
+			}
+		} else { // we have real ReaderAt with known content size
+			reqSize = rx.ContentLength - start
+			// use chunking only if explicitly requested
+			if rx.ChunkSize > 0 && reqSize > rx.ChunkSize {
+				reqSize = rx.ChunkSize
+			}
 		}
 		r := io.NewSectionReader(rx.Media, start, reqSize)
 		req, _ := http.NewRequest("POST", rx.URI, r)
 		req.ContentLength = reqSize
-		req.Header.Set("Content-Range", fmt.Sprintf("bytes %v-%v/%v", start, start+reqSize-1, rx.ContentLength))
+		if rx.ContentLength <= 0 {
+			req.Header.Set("Content-Range", fmt.Sprintf("bytes %v-%v/*", start, start+reqSize-1))
+		} else {
+			req.Header.Set("Content-Range", fmt.Sprintf("bytes %v-%v/%v", start, start+reqSize-1, rx.ContentLength))
+		}
 		req.Header.Set("Content-Type", rx.MediaType)
 		req.Header.Set("User-Agent", rx.UserAgent)
 		res, err = rx.Client.Do(req)
@@ -398,6 +427,19 @@ func (rx *ResumableUpload) transferChunks(ctx context.Context) (*http.Response, 
 		}
 	}
 	return res, err
+}
+
+// CalcChunkSize returns smallest multiple of 256K (GCS requirement) greater or equal
+// to chunkSize.  However, 0 or negative values are left unmodified.
+func CalcChunkSize(size int64) int64 {
+	const (
+		c     = int64(1 << 18) // 256K
+		cmask = c - 1
+	)
+	if size <= 0 || size&cmask == 0 {
+		return size
+	}
+	return ((size >> 18) + 1) << 18
 }
 
 var sleep = time.Sleep // override in unit tests

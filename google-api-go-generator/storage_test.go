@@ -1,7 +1,9 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
@@ -13,19 +15,38 @@ import (
 	storage "google.golang.org/api/storage/v1"
 )
 
+type myResp struct {
+	statusCode int
+	header     http.Header
+	body       []byte
+}
+
 type myHandler struct {
-	location string
-	r        *http.Request
-	body     []byte
-	err      error
+	resps []myResp
+	r     *http.Request
+	body  []byte
+	err   error
 }
 
 func (h *myHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	h.r = r
-	if h.location != "" {
-		w.Header().Set("Location", h.location)
-	}
 	h.body, h.err = ioutil.ReadAll(r.Body)
+	if len(h.resps) > 0 {
+		resp := h.resps[0]
+		h.resps = h.resps[1:]
+		for k, values := range resp.header {
+			for _, value := range values {
+				w.Header().Add(k, value)
+			}
+		}
+		if resp.statusCode > 0 {
+			w.WriteHeader(resp.statusCode)
+		}
+		if resp.body != nil {
+			io.Copy(w, bytes.NewReader(resp.body))
+		}
+		return
+	}
 	fmt.Fprintf(w, "{}")
 }
 
@@ -110,7 +131,6 @@ func TestResumableMedia(t *testing.T) {
 	server := httptest.NewServer(handler)
 	defer server.Close()
 
-	handler.location = server.URL
 	client := &http.Client{}
 	s, err := storage.New(client)
 	if err != nil {
@@ -127,11 +147,26 @@ func TestResumableMedia(t *testing.T) {
 		ContentEncoding: "utf-8",
 		ContentLanguage: "en",
 	}
-	// If all goes well, this will cause two POST requests to be sent to our fake GCS server:
-	// 1. Resumable upload session initiation request, to which server will respond with 200 OK and Location header.
-	// 2. Upload of the first and only chunk, with Content-Range header set to specify entire content.
-	// The test below verifies the content and headers of this second POST request.
-	_, err = s.Objects.Insert("mybucket", o).Name("filename").ResumableMedia(context.Background(), f, int64(len(data)), "text/plain").Do()
+
+	handler.resps = []myResp{
+		// response to session initiation request: empty 200 OK with Location header
+		myResp{header: http.Header{"Location": []string{server.URL}}},
+		// response to first chunk: empty 500 to trigger status request
+		myResp{statusCode: 500},
+		// response to status request: 308 Resume Incomplete with Range header; pretend we received 6 bytes
+		myResp{statusCode: 308, header: http.Header{"Range": []string{"bytes=0-5"}}},
+		// response to the resumed content: 200 OK, meaning upload complete
+		myResp{body: []byte("{}")},
+	}
+	// This should trigger the HTTP request/response sequence above to play out. The final
+	// request to the server should be the resumed upload of the partial content (bytes
+	// 6-end), and it's the content of this last request that's verified below.
+	_, err = s.Objects.Insert("mybucket", o).Name("filename").ResumableMedia(
+		context.Background(),
+		f,
+		-1, // unknown content size
+		-1, // default chunk size
+		"text/plain").Do()
 	if err != nil {
 		t.Fatalf("unable to insert object: %v", err)
 	}
@@ -154,16 +189,16 @@ func TestResumableMedia(t *testing.T) {
 	if w, k := "text/plain", "Content-Type"; len(g.Header[k]) != 1 || g.Header[k][0] != w {
 		t.Errorf("header %q = %#v; want %v", k, g.Header[k], w)
 	}
-	if w, k := fmt.Sprintf("bytes 0-%v/%v", len(data)-1, len(data)), "Content-Range"; len(g.Header[k]) != 1 || g.Header[k][0] != w {
+	if w, k := fmt.Sprintf("bytes 6-%v/%v", len(data)-1, len(data)), "Content-Range"; len(g.Header[k]) != 1 || g.Header[k][0] != w {
 		t.Errorf("header %q = %#v; want %v", k, g.Header[k], w)
 	}
 	if w, k := "gzip", "Accept-Encoding"; len(g.Header[k]) != 1 || g.Header[k][0] != w {
 		t.Errorf("header %q = %#v; want %q", k, g.Header[k], w)
 	}
-	if w := int64(len(data)); g.ContentLength != w {
+	if w := int64(len(data) - 6); g.ContentLength != w {
 		t.Errorf("ContentLength = %v; want %v", g.ContentLength, w)
 	}
-	if s := string(handler.body); s != data {
+	if s := string(handler.body); s != data[6:] {
 		t.Errorf("body = %q; want %q", s, data)
 	}
 	if len(g.TransferEncoding) != 0 {

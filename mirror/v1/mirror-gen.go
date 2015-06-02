@@ -1923,7 +1923,8 @@ type TimelineInsertCall struct {
 	timelineitem *TimelineItem
 	opt_         map[string]interface{}
 	media_       io.Reader
-	resumable_   googleapi.SizeReaderAt
+	size_        int64
+	chunkSize_   int64
 	mediaType_   string
 	ctx_         context.Context
 	protocol_    string
@@ -1946,12 +1947,20 @@ func (c *TimelineInsertCall) Media(r io.Reader) *TimelineInsertCall {
 
 // ResumableMedia specifies the media to upload in chunks and can be cancelled with ctx.
 // At most one of Media and ResumableMedia may be set.
-// mediaType identifies the MIME media type of the upload, such as "image/png".
+// Parameter size specifies the full content size in bytes, and should be set to -1 if
+// content size is not known (e.g. for dynamically generated content).
+// Parameter chunkSize specifies the size in bytes of individual upload chunk, and should
+// be typically set to -1 to allow the library to automatically select chunk size.
+// When explicitly selecting chunkSize, note the potential memory usage implications:
+// one full chunk may have to be buffered in memory.
+// Parameter mediaType identifies the MIME media type of the upload, such as "image/png".
 // If mediaType is "", it will be auto-detected.
-func (c *TimelineInsertCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *TimelineInsertCall {
+func (c *TimelineInsertCall) ResumableMedia(ctx context.Context, r io.Reader, size int64, chunkSize int64, mediaType string) *TimelineInsertCall {
 	c.ctx_ = ctx
-	c.resumable_ = io.NewSectionReader(r, 0, size)
+	c.media_ = r
 	c.mediaType_ = mediaType
+	c.size_ = size
+	c.chunkSize_ = chunkSize
 	c.protocol_ = "resumable"
 	return c
 }
@@ -1991,7 +2000,7 @@ func (c *TimelineInsertCall) Do() (*TimelineItem, error) {
 			progressUpdater_ = pu
 		}
 	}
-	if c.media_ != nil || c.resumable_ != nil {
+	if c.media_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
 		params.Set("uploadType", c.protocol_)
 	}
@@ -2005,9 +2014,16 @@ func (c *TimelineInsertCall) Do() (*TimelineItem, error) {
 	}
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
+	var fakeRdr bool
+	var resumable io.ReaderAt
 	if c.protocol_ == "resumable" {
+		var ok bool
+		if resumable, ok = c.media_.(io.ReaderAt); !ok || c.size_ <= 0 {
+			fakeRdr = true
+			resumable = googleapi.NewFakeReaderAt(c.media_)
+		}
 		if c.mediaType_ == "" {
-			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
+			c.mediaType_ = googleapi.DetectMediaType(resumable)
 		}
 		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
 		req.Header.Set("Content-Type", "application/json")
@@ -2029,9 +2045,11 @@ func (c *TimelineInsertCall) Do() (*TimelineItem, error) {
 			Client:        c.s.client,
 			UserAgent:     c.s.userAgent(),
 			URI:           loc,
-			Media:         c.resumable_,
+			Media:         resumable,
+			FakeRdr:       fakeRdr,
 			MediaType:     c.mediaType_,
-			ContentLength: c.resumable_.Size(),
+			ContentLength: c.size_,
+			ChunkSize:     googleapi.CalcChunkSize(c.chunkSize_),
 			Callback:      progressUpdater_,
 		}
 		res, err = rx.Upload(c.ctx_)
@@ -2364,7 +2382,8 @@ type TimelineUpdateCall struct {
 	timelineitem *TimelineItem
 	opt_         map[string]interface{}
 	media_       io.Reader
-	resumable_   googleapi.SizeReaderAt
+	size_        int64
+	chunkSize_   int64
 	mediaType_   string
 	ctx_         context.Context
 	protocol_    string
@@ -2388,12 +2407,20 @@ func (c *TimelineUpdateCall) Media(r io.Reader) *TimelineUpdateCall {
 
 // ResumableMedia specifies the media to upload in chunks and can be cancelled with ctx.
 // At most one of Media and ResumableMedia may be set.
-// mediaType identifies the MIME media type of the upload, such as "image/png".
+// Parameter size specifies the full content size in bytes, and should be set to -1 if
+// content size is not known (e.g. for dynamically generated content).
+// Parameter chunkSize specifies the size in bytes of individual upload chunk, and should
+// be typically set to -1 to allow the library to automatically select chunk size.
+// When explicitly selecting chunkSize, note the potential memory usage implications:
+// one full chunk may have to be buffered in memory.
+// Parameter mediaType identifies the MIME media type of the upload, such as "image/png".
 // If mediaType is "", it will be auto-detected.
-func (c *TimelineUpdateCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *TimelineUpdateCall {
+func (c *TimelineUpdateCall) ResumableMedia(ctx context.Context, r io.Reader, size int64, chunkSize int64, mediaType string) *TimelineUpdateCall {
 	c.ctx_ = ctx
-	c.resumable_ = io.NewSectionReader(r, 0, size)
+	c.media_ = r
 	c.mediaType_ = mediaType
+	c.size_ = size
+	c.chunkSize_ = chunkSize
 	c.protocol_ = "resumable"
 	return c
 }
@@ -2433,7 +2460,7 @@ func (c *TimelineUpdateCall) Do() (*TimelineItem, error) {
 			progressUpdater_ = pu
 		}
 	}
-	if c.media_ != nil || c.resumable_ != nil {
+	if c.media_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
 		params.Set("uploadType", c.protocol_)
 	}
@@ -2449,9 +2476,16 @@ func (c *TimelineUpdateCall) Do() (*TimelineItem, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
 	})
+	var fakeRdr bool
+	var resumable io.ReaderAt
 	if c.protocol_ == "resumable" {
+		var ok bool
+		if resumable, ok = c.media_.(io.ReaderAt); !ok || c.size_ <= 0 {
+			fakeRdr = true
+			resumable = googleapi.NewFakeReaderAt(c.media_)
+		}
 		if c.mediaType_ == "" {
-			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
+			c.mediaType_ = googleapi.DetectMediaType(resumable)
 		}
 		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
 		req.Header.Set("Content-Type", "application/json")
@@ -2473,9 +2507,11 @@ func (c *TimelineUpdateCall) Do() (*TimelineItem, error) {
 			Client:        c.s.client,
 			UserAgent:     c.s.userAgent(),
 			URI:           loc,
-			Media:         c.resumable_,
+			Media:         resumable,
+			FakeRdr:       fakeRdr,
 			MediaType:     c.mediaType_,
-			ContentLength: c.resumable_.Size(),
+			ContentLength: c.size_,
+			ChunkSize:     googleapi.CalcChunkSize(c.chunkSize_),
 			Callback:      progressUpdater_,
 		}
 		res, err = rx.Upload(c.ctx_)
@@ -2712,7 +2748,8 @@ type TimelineAttachmentsInsertCall struct {
 	itemId     string
 	opt_       map[string]interface{}
 	media_     io.Reader
-	resumable_ googleapi.SizeReaderAt
+	size_      int64
+	chunkSize_ int64
 	mediaType_ string
 	ctx_       context.Context
 	protocol_  string
@@ -2735,12 +2772,20 @@ func (c *TimelineAttachmentsInsertCall) Media(r io.Reader) *TimelineAttachmentsI
 
 // ResumableMedia specifies the media to upload in chunks and can be cancelled with ctx.
 // At most one of Media and ResumableMedia may be set.
-// mediaType identifies the MIME media type of the upload, such as "image/png".
+// Parameter size specifies the full content size in bytes, and should be set to -1 if
+// content size is not known (e.g. for dynamically generated content).
+// Parameter chunkSize specifies the size in bytes of individual upload chunk, and should
+// be typically set to -1 to allow the library to automatically select chunk size.
+// When explicitly selecting chunkSize, note the potential memory usage implications:
+// one full chunk may have to be buffered in memory.
+// Parameter mediaType identifies the MIME media type of the upload, such as "image/png".
 // If mediaType is "", it will be auto-detected.
-func (c *TimelineAttachmentsInsertCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *TimelineAttachmentsInsertCall {
+func (c *TimelineAttachmentsInsertCall) ResumableMedia(ctx context.Context, r io.Reader, size int64, chunkSize int64, mediaType string) *TimelineAttachmentsInsertCall {
 	c.ctx_ = ctx
-	c.resumable_ = io.NewSectionReader(r, 0, size)
+	c.media_ = r
 	c.mediaType_ = mediaType
+	c.size_ = size
+	c.chunkSize_ = chunkSize
 	c.protocol_ = "resumable"
 	return c
 }
@@ -2775,7 +2820,7 @@ func (c *TimelineAttachmentsInsertCall) Do() (*Attachment, error) {
 			progressUpdater_ = pu
 		}
 	}
-	if c.media_ != nil || c.resumable_ != nil {
+	if c.media_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
 		params.Set("uploadType", c.protocol_)
 	}
@@ -2793,9 +2838,16 @@ func (c *TimelineAttachmentsInsertCall) Do() (*Attachment, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"itemId": c.itemId,
 	})
+	var fakeRdr bool
+	var resumable io.ReaderAt
 	if c.protocol_ == "resumable" {
+		var ok bool
+		if resumable, ok = c.media_.(io.ReaderAt); !ok || c.size_ <= 0 {
+			fakeRdr = true
+			resumable = googleapi.NewFakeReaderAt(c.media_)
+		}
 		if c.mediaType_ == "" {
-			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
+			c.mediaType_ = googleapi.DetectMediaType(resumable)
 		}
 		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
 		req.Header.Set("Content-Type", "application/json")
@@ -2817,9 +2869,11 @@ func (c *TimelineAttachmentsInsertCall) Do() (*Attachment, error) {
 			Client:        c.s.client,
 			UserAgent:     c.s.userAgent(),
 			URI:           loc,
-			Media:         c.resumable_,
+			Media:         resumable,
+			FakeRdr:       fakeRdr,
 			MediaType:     c.mediaType_,
-			ContentLength: c.resumable_.Size(),
+			ContentLength: c.size_,
+			ChunkSize:     googleapi.CalcChunkSize(c.chunkSize_),
 			Callback:      progressUpdater_,
 		}
 		res, err = rx.Upload(c.ctx_)

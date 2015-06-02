@@ -3783,14 +3783,13 @@ func (c *FilesGetCall) Do() (*File, error) {
 // method id "drive.files.insert":
 
 type FilesInsertCall struct {
-	s          *Service
-	file       *File
-	opt_       map[string]interface{}
-	media_     io.Reader
-	resumable_ googleapi.SizeReaderAt
-	mediaType_ string
-	ctx_       context.Context
-	protocol_  string
+	s           *Service
+	file        *File
+	opt_        map[string]interface{}
+	media_      io.Reader
+	ctx_        context.Context
+	protocol_   string
+	uploadOpts_ []googleapi.UploadOption
 }
 
 // Insert: Insert a new file.
@@ -3873,13 +3872,11 @@ func (c *FilesInsertCall) Media(r io.Reader) *FilesInsertCall {
 
 // ResumableMedia specifies the media to upload in chunks and can be cancelled with ctx.
 // At most one of Media and ResumableMedia may be set.
-// mediaType identifies the MIME media type of the upload, such as "image/png".
-// If mediaType is "", it will be auto-detected.
-func (c *FilesInsertCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *FilesInsertCall {
+func (c *FilesInsertCall) ResumableMedia(ctx context.Context, r io.Reader, opt ...googleapi.UploadOption) *FilesInsertCall {
 	c.ctx_ = ctx
-	c.resumable_ = io.NewSectionReader(r, 0, size)
-	c.mediaType_ = mediaType
+	c.media_ = r
 	c.protocol_ = "resumable"
+	c.uploadOpts_ = opt
 	return c
 }
 
@@ -3942,7 +3939,7 @@ func (c *FilesInsertCall) Do() (*File, error) {
 			progressUpdater_ = pu
 		}
 	}
-	if c.media_ != nil || c.resumable_ != nil {
+	if c.media_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
 		params.Set("uploadType", c.protocol_)
 	}
@@ -3956,11 +3953,15 @@ func (c *FilesInsertCall) Do() (*File, error) {
 	}
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
+	var rx *googleapi.ResumableUpload
 	if c.protocol_ == "resumable" {
-		if c.mediaType_ == "" {
-			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
+		rx = &googleapi.ResumableUpload{
+			Client:    c.s.client,
+			UserAgent: c.s.userAgent(),
+			Callback:  progressUpdater_,
 		}
-		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
+		mediaType := rx.Configure(c.media_, c.uploadOpts_...)
+		req.Header.Set("X-Upload-Content-Type", mediaType)
 		req.Header.Set("Content-Type", "application/json; charset=utf-8")
 	} else {
 		req.Header.Set("Content-Type", ctype)
@@ -3975,16 +3976,7 @@ func (c *FilesInsertCall) Do() (*File, error) {
 		return nil, err
 	}
 	if c.protocol_ == "resumable" {
-		loc := res.Header.Get("Location")
-		rx := &googleapi.ResumableUpload{
-			Client:        c.s.client,
-			UserAgent:     c.s.userAgent(),
-			URI:           loc,
-			Media:         c.resumable_,
-			MediaType:     c.mediaType_,
-			ContentLength: c.resumable_.Size(),
-			Callback:      progressUpdater_,
-		}
+		rx.URI = res.Header.Get("Location")
 		res, err = rx.Upload(c.ctx_)
 		if err != nil {
 			return nil, err
@@ -4846,15 +4838,14 @@ func (c *FilesUntrashCall) Do() (*File, error) {
 // method id "drive.files.update":
 
 type FilesUpdateCall struct {
-	s          *Service
-	fileId     string
-	file       *File
-	opt_       map[string]interface{}
-	media_     io.Reader
-	resumable_ googleapi.SizeReaderAt
-	mediaType_ string
-	ctx_       context.Context
-	protocol_  string
+	s           *Service
+	fileId      string
+	file        *File
+	opt_        map[string]interface{}
+	media_      io.Reader
+	ctx_        context.Context
+	protocol_   string
+	uploadOpts_ []googleapi.UploadOption
 }
 
 // Update: Updates file metadata and/or content.
@@ -4985,13 +4976,11 @@ func (c *FilesUpdateCall) Media(r io.Reader) *FilesUpdateCall {
 
 // ResumableMedia specifies the media to upload in chunks and can be cancelled with ctx.
 // At most one of Media and ResumableMedia may be set.
-// mediaType identifies the MIME media type of the upload, such as "image/png".
-// If mediaType is "", it will be auto-detected.
-func (c *FilesUpdateCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *FilesUpdateCall {
+func (c *FilesUpdateCall) ResumableMedia(ctx context.Context, r io.Reader, opt ...googleapi.UploadOption) *FilesUpdateCall {
 	c.ctx_ = ctx
-	c.resumable_ = io.NewSectionReader(r, 0, size)
-	c.mediaType_ = mediaType
+	c.media_ = r
 	c.protocol_ = "resumable"
+	c.uploadOpts_ = opt
 	return c
 }
 
@@ -5069,7 +5058,7 @@ func (c *FilesUpdateCall) Do() (*File, error) {
 			progressUpdater_ = pu
 		}
 	}
-	if c.media_ != nil || c.resumable_ != nil {
+	if c.media_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
 		params.Set("uploadType", c.protocol_)
 	}
@@ -5085,11 +5074,15 @@ func (c *FilesUpdateCall) Do() (*File, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"fileId": c.fileId,
 	})
+	var rx *googleapi.ResumableUpload
 	if c.protocol_ == "resumable" {
-		if c.mediaType_ == "" {
-			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
+		rx = &googleapi.ResumableUpload{
+			Client:    c.s.client,
+			UserAgent: c.s.userAgent(),
+			Callback:  progressUpdater_,
 		}
-		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
+		mediaType := rx.Configure(c.media_, c.uploadOpts_...)
+		req.Header.Set("X-Upload-Content-Type", mediaType)
 		req.Header.Set("Content-Type", "application/json; charset=utf-8")
 	} else {
 		req.Header.Set("Content-Type", ctype)
@@ -5104,16 +5097,7 @@ func (c *FilesUpdateCall) Do() (*File, error) {
 		return nil, err
 	}
 	if c.protocol_ == "resumable" {
-		loc := res.Header.Get("Location")
-		rx := &googleapi.ResumableUpload{
-			Client:        c.s.client,
-			UserAgent:     c.s.userAgent(),
-			URI:           loc,
-			Media:         c.resumable_,
-			MediaType:     c.mediaType_,
-			ContentLength: c.resumable_.Size(),
-			Callback:      progressUpdater_,
-		}
+		rx.URI = res.Header.Get("Location")
 		res, err = rx.Upload(c.ctx_)
 		if err != nil {
 			return nil, err
@@ -7164,14 +7148,13 @@ func (c *RealtimeGetCall) Do() error {
 // method id "drive.realtime.update":
 
 type RealtimeUpdateCall struct {
-	s          *Service
-	fileId     string
-	opt_       map[string]interface{}
-	media_     io.Reader
-	resumable_ googleapi.SizeReaderAt
-	mediaType_ string
-	ctx_       context.Context
-	protocol_  string
+	s           *Service
+	fileId      string
+	opt_        map[string]interface{}
+	media_      io.Reader
+	ctx_        context.Context
+	protocol_   string
+	uploadOpts_ []googleapi.UploadOption
 }
 
 // Update: Overwrites the Realtime API data model associated with this
@@ -7203,13 +7186,11 @@ func (c *RealtimeUpdateCall) Media(r io.Reader) *RealtimeUpdateCall {
 
 // ResumableMedia specifies the media to upload in chunks and can be cancelled with ctx.
 // At most one of Media and ResumableMedia may be set.
-// mediaType identifies the MIME media type of the upload, such as "image/png".
-// If mediaType is "", it will be auto-detected.
-func (c *RealtimeUpdateCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *RealtimeUpdateCall {
+func (c *RealtimeUpdateCall) ResumableMedia(ctx context.Context, r io.Reader, opt ...googleapi.UploadOption) *RealtimeUpdateCall {
 	c.ctx_ = ctx
-	c.resumable_ = io.NewSectionReader(r, 0, size)
-	c.mediaType_ = mediaType
+	c.media_ = r
 	c.protocol_ = "resumable"
+	c.uploadOpts_ = opt
 	return c
 }
 
@@ -7246,7 +7227,7 @@ func (c *RealtimeUpdateCall) Do() error {
 			progressUpdater_ = pu
 		}
 	}
-	if c.media_ != nil || c.resumable_ != nil {
+	if c.media_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
 		params.Set("uploadType", c.protocol_)
 	}
@@ -7264,11 +7245,15 @@ func (c *RealtimeUpdateCall) Do() error {
 	googleapi.Expand(req.URL, map[string]string{
 		"fileId": c.fileId,
 	})
+	var rx *googleapi.ResumableUpload
 	if c.protocol_ == "resumable" {
-		if c.mediaType_ == "" {
-			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
+		rx = &googleapi.ResumableUpload{
+			Client:    c.s.client,
+			UserAgent: c.s.userAgent(),
+			Callback:  progressUpdater_,
 		}
-		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
+		mediaType := rx.Configure(c.media_, c.uploadOpts_...)
+		req.Header.Set("X-Upload-Content-Type", mediaType)
 		req.Header.Set("Content-Type", "application/json; charset=utf-8")
 	} else {
 		req.Header.Set("Content-Type", ctype)
@@ -7283,16 +7268,7 @@ func (c *RealtimeUpdateCall) Do() error {
 		return err
 	}
 	if c.protocol_ == "resumable" {
-		loc := res.Header.Get("Location")
-		rx := &googleapi.ResumableUpload{
-			Client:        c.s.client,
-			UserAgent:     c.s.userAgent(),
-			URI:           loc,
-			Media:         c.resumable_,
-			MediaType:     c.mediaType_,
-			ContentLength: c.resumable_.Size(),
-			Callback:      progressUpdater_,
-		}
+		rx.URI = res.Header.Get("Location")
 		res, err = rx.Upload(c.ctx_)
 		if err != nil {
 			return err

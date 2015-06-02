@@ -14147,10 +14147,10 @@ type CreativeAssetsInsertCall struct {
 	creativeassetmetadata *CreativeAssetMetadata
 	opt_                  map[string]interface{}
 	media_                io.Reader
-	resumable_            googleapi.SizeReaderAt
-	mediaType_            string
 	ctx_                  context.Context
 	protocol_             string
+	uploadOpts_           []googleapi.UploadOption
+	resumable_            *googleapi.ResumableUpload
 }
 
 // Insert: Inserts a new creative asset.
@@ -14164,29 +14164,20 @@ func (r *CreativeAssetsService) Insert(profileId int64, advertiserId int64, crea
 
 // Media specifies the media to upload in a single chunk.
 // At most one of Media and ResumableMedia may be set.
-func (c *CreativeAssetsInsertCall) Media(r io.Reader) *CreativeAssetsInsertCall {
+func (c *CreativeAssetsInsertCall) Media(r io.Reader, opt ...googleapi.UploadOption) *CreativeAssetsInsertCall {
 	c.media_ = r
 	c.protocol_ = "multipart"
+	c.uploadOpts_ = opt
 	return c
 }
 
 // ResumableMedia specifies the media to upload in chunks and can be cancelled with ctx.
 // At most one of Media and ResumableMedia may be set.
-// mediaType identifies the MIME media type of the upload, such as "image/png".
-// If mediaType is "", it will be auto-detected.
-func (c *CreativeAssetsInsertCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *CreativeAssetsInsertCall {
+func (c *CreativeAssetsInsertCall) ResumableMedia(ctx context.Context, r io.Reader, opt ...googleapi.UploadOption) *CreativeAssetsInsertCall {
 	c.ctx_ = ctx
-	c.resumable_ = io.NewSectionReader(r, 0, size)
-	c.mediaType_ = mediaType
+	c.media_ = r
 	c.protocol_ = "resumable"
-	return c
-}
-
-// ProgressUpdater provides a callback function that will be called after every chunk.
-// It should be a low-latency function in order to not slow down the upload operation.
-// This should only be called when using ResumableMedia (as opposed to Media).
-func (c *CreativeAssetsInsertCall) ProgressUpdater(pu googleapi.ProgressUpdater) *CreativeAssetsInsertCall {
-	c.opt_["progressUpdater"] = pu
+	c.uploadOpts_ = opt
 	return c
 }
 
@@ -14211,14 +14202,14 @@ func (c *CreativeAssetsInsertCall) doRequest(alt string) (*http.Response, error)
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{profileId}/creativeAssets/{advertiserId}/creativeAssets")
-	if c.media_ != nil || c.resumable_ != nil {
+	if c.media_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
 		params.Set("uploadType", c.protocol_)
 	}
 	urls += "?" + params.Encode()
 	if c.protocol_ != "resumable" {
 		var cancel func()
-		cancel, _ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+		cancel, _ = googleapi.ConditionallyIncludeMedia(c.media_, c.uploadOpts_, &body, &ctype)
 		if cancel != nil {
 			defer cancel()
 		}
@@ -14229,10 +14220,15 @@ func (c *CreativeAssetsInsertCall) doRequest(alt string) (*http.Response, error)
 		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
 	})
 	if c.protocol_ == "resumable" {
-		if c.mediaType_ == "" {
-			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
+		c.resumable_ = &googleapi.ResumableUpload{
+			Client:    c.s.client,
+			UserAgent: c.s.userAgent(),
 		}
-		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
+		mediaType, err := c.resumable_.Configure(c.media_, c.uploadOpts_...)
+		if err != nil {
+			return nil, err
+		}
+		req.Header.Set("X-Upload-Content-Type", mediaType)
 		req.Header.Set("Content-Type", "application/json; charset=utf-8")
 	} else {
 		req.Header.Set("Content-Type", ctype)
@@ -14250,24 +14246,9 @@ func (c *CreativeAssetsInsertCall) Do() (*CreativeAssetMetadata, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var progressUpdater_ googleapi.ProgressUpdater
-	if v, ok := c.opt_["progressUpdater"]; ok {
-		if pu, ok := v.(googleapi.ProgressUpdater); ok {
-			progressUpdater_ = pu
-		}
-	}
 	if c.protocol_ == "resumable" {
-		loc := res.Header.Get("Location")
-		rx := &googleapi.ResumableUpload{
-			Client:        c.s.client,
-			UserAgent:     c.s.userAgent(),
-			URI:           loc,
-			Media:         c.resumable_,
-			MediaType:     c.mediaType_,
-			ContentLength: c.resumable_.Size(),
-			Callback:      progressUpdater_,
-		}
-		res, err = rx.Upload(c.ctx_)
+		c.resumable_.URI = res.Header.Get("Location")
+		res, err = c.resumable_.Upload(c.ctx_)
 		if err != nil {
 			return nil, err
 		}

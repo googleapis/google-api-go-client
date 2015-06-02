@@ -398,7 +398,7 @@ func (c *SearchanalyticsQueryCall) Fields(s ...googleapi.Field) *Searchanalytics
 	return c
 }
 
-func (c *SearchanalyticsQueryCall) Do() (*SearchAnalyticsQueryResponse, error) {
+func (c *SearchanalyticsQueryCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.searchanalyticsqueryrequest)
 	if err != nil {
@@ -406,7 +406,7 @@ func (c *SearchanalyticsQueryCall) Do() (*SearchAnalyticsQueryResponse, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -418,7 +418,11 @@ func (c *SearchanalyticsQueryCall) Do() (*SearchAnalyticsQueryResponse, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *SearchanalyticsQueryCall) Do() (*SearchAnalyticsQueryResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -486,10 +490,10 @@ func (c *SitemapsDeleteCall) Fields(s ...googleapi.Field) *SitemapsDeleteCall {
 	return c
 }
 
-func (c *SitemapsDeleteCall) Do() error {
+func (c *SitemapsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -501,7 +505,11 @@ func (c *SitemapsDeleteCall) Do() error {
 		"feedpath": c.feedpath,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *SitemapsDeleteCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -565,10 +573,10 @@ func (c *SitemapsGetCall) Fields(s ...googleapi.Field) *SitemapsGetCall {
 	return c
 }
 
-func (c *SitemapsGetCall) Do() (*WmxSitemap, error) {
+func (c *SitemapsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -580,7 +588,11 @@ func (c *SitemapsGetCall) Do() (*WmxSitemap, error) {
 		"feedpath": c.feedpath,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *SitemapsGetCall) Do() (*WmxSitemap, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -660,10 +672,10 @@ func (c *SitemapsListCall) Fields(s ...googleapi.Field) *SitemapsListCall {
 	return c
 }
 
-func (c *SitemapsListCall) Do() (*SitemapsListResponse, error) {
+func (c *SitemapsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["sitemapIndex"]; ok {
 		params.Set("sitemapIndex", fmt.Sprintf("%v", v))
 	}
@@ -677,7 +689,11 @@ func (c *SitemapsListCall) Do() (*SitemapsListResponse, error) {
 		"siteUrl": c.siteUrl,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *SitemapsListCall) Do() (*SitemapsListResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -747,10 +763,10 @@ func (c *SitemapsSubmitCall) Fields(s ...googleapi.Field) *SitemapsSubmitCall {
 	return c
 }
 
-func (c *SitemapsSubmitCall) Do() error {
+func (c *SitemapsSubmitCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -762,7 +778,11 @@ func (c *SitemapsSubmitCall) Do() error {
 		"feedpath": c.feedpath,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *SitemapsSubmitCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -824,10 +844,10 @@ func (c *SitesAddCall) Fields(s ...googleapi.Field) *SitesAddCall {
 	return c
 }
 
-func (c *SitesAddCall) Do() error {
+func (c *SitesAddCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -838,7 +858,11 @@ func (c *SitesAddCall) Do() error {
 		"siteUrl": c.siteUrl,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *SitesAddCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -894,10 +918,10 @@ func (c *SitesDeleteCall) Fields(s ...googleapi.Field) *SitesDeleteCall {
 	return c
 }
 
-func (c *SitesDeleteCall) Do() error {
+func (c *SitesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -908,7 +932,11 @@ func (c *SitesDeleteCall) Do() error {
 		"siteUrl": c.siteUrl,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *SitesDeleteCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -963,10 +991,10 @@ func (c *SitesGetCall) Fields(s ...googleapi.Field) *SitesGetCall {
 	return c
 }
 
-func (c *SitesGetCall) Do() (*WmxSite, error) {
+func (c *SitesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -977,7 +1005,11 @@ func (c *SitesGetCall) Do() (*WmxSite, error) {
 		"siteUrl": c.siteUrl,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *SitesGetCall) Do() (*WmxSite, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1038,10 +1070,10 @@ func (c *SitesListCall) Fields(s ...googleapi.Field) *SitesListCall {
 	return c
 }
 
-func (c *SitesListCall) Do() (*SitesListResponse, error) {
+func (c *SitesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1050,7 +1082,11 @@ func (c *SitesListCall) Do() (*SitesListResponse, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *SitesListCall) Do() (*SitesListResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1141,10 +1177,10 @@ func (c *UrlcrawlerrorscountsQueryCall) Fields(s ...googleapi.Field) *Urlcrawler
 	return c
 }
 
-func (c *UrlcrawlerrorscountsQueryCall) Do() (*UrlCrawlErrorsCountsQueryResponse, error) {
+func (c *UrlcrawlerrorscountsQueryCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["category"]; ok {
 		params.Set("category", fmt.Sprintf("%v", v))
 	}
@@ -1164,7 +1200,11 @@ func (c *UrlcrawlerrorscountsQueryCall) Do() (*UrlCrawlErrorsCountsQueryResponse
 		"siteUrl": c.siteUrl,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *UrlcrawlerrorscountsQueryCall) Do() (*UrlCrawlErrorsCountsQueryResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1279,10 +1319,10 @@ func (c *UrlcrawlerrorssamplesGetCall) Fields(s ...googleapi.Field) *Urlcrawlerr
 	return c
 }
 
-func (c *UrlcrawlerrorssamplesGetCall) Do() (*UrlCrawlErrorsSample, error) {
+func (c *UrlcrawlerrorssamplesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	params.Set("category", fmt.Sprintf("%v", c.category))
 	params.Set("platform", fmt.Sprintf("%v", c.platform))
 	if v, ok := c.opt_["fields"]; ok {
@@ -1296,7 +1336,11 @@ func (c *UrlcrawlerrorssamplesGetCall) Do() (*UrlCrawlErrorsSample, error) {
 		"url":     c.url,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *UrlcrawlerrorssamplesGetCall) Do() (*UrlCrawlErrorsSample, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1415,10 +1459,10 @@ func (c *UrlcrawlerrorssamplesListCall) Fields(s ...googleapi.Field) *Urlcrawler
 	return c
 }
 
-func (c *UrlcrawlerrorssamplesListCall) Do() (*UrlCrawlErrorsSamplesListResponse, error) {
+func (c *UrlcrawlerrorssamplesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	params.Set("category", fmt.Sprintf("%v", c.category))
 	params.Set("platform", fmt.Sprintf("%v", c.platform))
 	if v, ok := c.opt_["fields"]; ok {
@@ -1431,7 +1475,11 @@ func (c *UrlcrawlerrorssamplesListCall) Do() (*UrlCrawlErrorsSamplesListResponse
 		"siteUrl": c.siteUrl,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *UrlcrawlerrorssamplesListCall) Do() (*UrlCrawlErrorsSamplesListResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1545,10 +1593,10 @@ func (c *UrlcrawlerrorssamplesMarkAsFixedCall) Fields(s ...googleapi.Field) *Url
 	return c
 }
 
-func (c *UrlcrawlerrorssamplesMarkAsFixedCall) Do() error {
+func (c *UrlcrawlerrorssamplesMarkAsFixedCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	params.Set("category", fmt.Sprintf("%v", c.category))
 	params.Set("platform", fmt.Sprintf("%v", c.platform))
 	if v, ok := c.opt_["fields"]; ok {
@@ -1562,7 +1610,11 @@ func (c *UrlcrawlerrorssamplesMarkAsFixedCall) Do() error {
 		"url":     c.url,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *UrlcrawlerrorssamplesMarkAsFixedCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}

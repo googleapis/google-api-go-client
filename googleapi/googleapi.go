@@ -1,4 +1,4 @@
-// Copyright 2011 Google Inc. All rights reserved.
+// Copyright 2015 The Go Authors
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -17,10 +17,10 @@ import (
 	"net/http"
 	"net/textproto"
 	"net/url"
+	"os"
 	"regexp"
 	"strconv"
 	"strings"
-	"sync"
 	"time"
 
 	"golang.org/x/net/context"
@@ -35,12 +35,44 @@ type ContentTyper interface {
 	ContentType() string
 }
 
-// A SizeReaderAt is a ReaderAt with a Size method.
-// An io.SectionReader implements SizeReaderAt.
-type SizeReaderAt interface {
-	io.ReaderAt
-	Size() int64
+// uploadOptions is the union of options applying to regular and resumable upload.
+type uploadOptions struct {
+	chunkSize int64
+	mediaType string
 }
+
+// UploadOption is used to optionally configure Media and ResumableMedia uploads.
+type UploadOption interface {
+	setOption(opt *uploadOptions)
+}
+
+// SetMediaType returns an UploadOption to specify content MIME type, such as "image/png".
+// If left unspecified, media type is auto-detected using http.DetectContentType.
+func SetMediaType(mediaType string) UploadOption { return setMediaType(mediaType) }
+
+type setMediaType string
+
+func (val setMediaType) setOption(opt *uploadOptions) { opt.mediaType = string(val) }
+
+// SetChunkSize returns an UploadOption to specify upload chunk size. This option
+// applies to resumable uploads only, and will be ignored for regular uploads.
+//
+// Chunk size will be auto-selected if it is left unspecified, or chunking may be
+// skipped altogether if not required - when reader is io.ReaderAt that implements
+// either Stat() (os.FileInfo, error) or Size() int64 method.
+//
+// When specified size is not a multiple of 256KB it will be automatically upgraded
+// to the next smallest multiple of 256KB, in accordance with the Google Cloud
+// Storage specification:
+// https://cloud.google.com/storage/docs/json_api/v1/how-tos/upload.
+//
+// Note the RAM impact of chunk size selection: one full chunk may be buffered in
+// memory.
+func SetChunkSize(size int64) UploadOption { return setChunkSize(size) }
+
+type setChunkSize int64
+
+func (val setChunkSize) setOption(opt *uploadOptions) { opt.chunkSize = roundChunkSize(int64(val)) }
 
 const (
 	Version = "0.5"
@@ -163,7 +195,17 @@ func (wrap MarshalStyle) JSONReader(v interface{}) (io.Reader, error) {
 	return buf, nil
 }
 
-func getMediaType(media io.Reader) (io.Reader, string) {
+// getMediaType determines content type of the provided media either from the
+// supplied UploadOptions(s) or from the media itself. The returned reader
+// should be used by the caller in lieu of the original reader.
+func getMediaType(media io.Reader, opts []UploadOption) (io.Reader, string) {
+	var opt uploadOptions
+	for _, val := range opts {
+		val.setOption(&opt)
+	}
+	if opt.mediaType != "" {
+		return media, opt.mediaType
+	}
 	if typer, ok := media.(ContentTyper); ok {
 		return media, typer.ContentType()
 	}
@@ -186,23 +228,6 @@ func getMediaType(media io.Reader) (io.Reader, string) {
 		pw.Close()
 	}()
 	return pr, typ
-}
-
-// DetectMediaType detects and returns the content type of the provided media.
-// If the type can not be determined, "application/octet-stream" is returned.
-func DetectMediaType(media io.ReaderAt) string {
-	if typer, ok := media.(ContentTyper); ok {
-		return typer.ContentType()
-	}
-
-	typ := "application/octet-stream"
-	buf := make([]byte, 1024)
-	n, err := media.ReadAt(buf, 0)
-	buf = buf[:n]
-	if err == nil || err == io.EOF {
-		typ = http.DetectContentType(buf)
-	}
-	return typ
 }
 
 type Lengther interface {
@@ -251,14 +276,19 @@ func (w countingWriter) Write(p []byte) (int, error) {
 // content type of the bodyp, usually "application/json".  It's updated
 // to the "multipart/related" content type, with random boundary.
 //
+// UploadOptions can be used to specify media content type.
+//
 // The return value is the content-length of the entire multpart body.
-func ConditionallyIncludeMedia(media io.Reader, bodyp *io.Reader, ctypep *string) (cancel func(), ok bool) {
+//
+// ConditionallyIncludeMedia is private to the auto-generated API code,
+// and should not be invoked directly by the user.
+func ConditionallyIncludeMedia(media io.Reader, opts []UploadOption, bodyp *io.Reader, ctypep *string) (cancel func(), ok bool) {
 	if media == nil {
 		return
 	}
 	// Get the media type, which might return a different reader instance.
 	var mediaType string
-	media, mediaType = getMediaType(media)
+	media, mediaType = getMediaType(media, opts)
 
 	body, bodyType := *bodyp, *ctypep
 
@@ -301,11 +331,6 @@ func ConditionallyIncludeMedia(media io.Reader, bodyp *io.Reader, ctypep *string
 
 var errAborted = errors.New("googleapi: upload aborted")
 
-// ProgressUpdater is a function that is called upon every progress update of a resumable upload.
-// This is the only part of a resumable upload (from googleapi) that is usable by the developer.
-// The remaining usable pieces of resumable uploads is exposed in each auto-generated API.
-type ProgressUpdater func(current, total int64)
-
 // ResumableUpload is used by the generated APIs to provide resumable uploads.
 // It is not used by developers directly.
 type ResumableUpload struct {
@@ -313,41 +338,84 @@ type ResumableUpload struct {
 	// URI is the resumable resource destination provided by the server after specifying "&uploadType=resumable".
 	URI       string
 	UserAgent string // User-Agent for header of the request
-	// Media is the object being uploaded.
-	Media io.ReaderAt
-	// MediaType defines the media type, e.g. "image/jpeg".
-	MediaType string
-	// ContentLength is the full size of the object being uploaded.
-	ContentLength int64
 
-	mu       sync.Mutex // guards progress
-	progress int64      // number of bytes uploaded so far
-	started  bool       // whether the upload has been started
+	media     sequentialChunker // object being uploaded
+	mediaType string            // media type
+	started   bool              // whether the upload has been started
 
-	// Callback is an optional function that will be called upon every progress update.
-	Callback ProgressUpdater
 }
 
 var (
 	// rangeRE matches the transfer status response from the server. $1 is the last byte index uploaded.
 	rangeRE = regexp.MustCompile(`^bytes=0\-(\d+)$`)
-	// chunkSize is the size of the chunks created during a resumable upload and should be a power of two.
-	// 1<<18 is the minimum size supported by the Google uploader, and there is no maximum.
-	chunkSize int64 = 1 << 18
+	// ChunkSize is the size of the chunks created during a resumable upload and should be a multiple of
+	// 256KB, per Google Cloud Storage requirements. While Google Cloud Storage does not specify maximum,
+	// note that classic app engine urlfetch limits outgoing HTTP request size to 10MB max.
+	ChunkSize int64 = 8 << 20
 )
 
-// Progress returns the number of bytes uploaded at this point.
-func (rx *ResumableUpload) Progress() int64 {
-	rx.mu.Lock()
-	defer rx.mu.Unlock()
-	return rx.progress
+// Configure interrogates the supplied io.Reader for additional capabilities, and processes
+// the supplied UploadOption(s). Configure returns media type, either as specified by
+// UploadOptions, or guessed using http.DetectContentType.
+//
+// When supplied reader is io.ReaderAt that also implements either Stat() (os.FileInfo, error) or
+// Size() int64 method, ResumableUpload is configured to avoid buffering content. Chunking is
+// also avoided under those conditions, unless it is explicitly requested via an UploadOption.
+//
+// This method must be called prior to calling Upload method to start the upload.
+// Configure is private to the auto-generated API code, and should
+// not be invoked directly by the user.
+func (rx *ResumableUpload) Configure(r io.Reader, opts ...UploadOption) (string, error) {
+	type statter interface {
+		Stat() (os.FileInfo, error)
+	}
+	type sizer interface {
+		Size() int64
+	}
+	var opt uploadOptions
+	for _, val := range opts { // apply all options
+		val.setOption(&opt)
+	}
+	if readerAt, ok := r.(io.ReaderAt); ok { // try to guess content size
+		var cs int64
+		if file, ok := r.(statter); ok {
+			if fileinfo, err := file.Stat(); err == nil {
+				cs = fileinfo.Size()
+			}
+		}
+		if s, ok := r.(sizer); ok && cs == 0 {
+			cs = s.Size()
+		}
+		if cs > 0 {
+			rx.media = &sizedChunker{r: readerAt, size: cs, chunkSize: opt.chunkSize}
+		}
+	}
+	if rx.media == nil {
+		// always force chunking when using bufferedChunker
+		if opt.chunkSize <= 0 {
+			opt.chunkSize = ChunkSize // use package default
+		}
+		rx.media = &bufferedChunker{r: r, chunkSize: opt.chunkSize}
+	}
+	rx.mediaType = opt.mediaType
+	if rx.mediaType == "" {
+		rx.mediaType = "application/octet-stream"
+		rdr, _, err := rx.media.ChunkAt(0)
+		if err != nil && err != io.EOF {
+			return rx.mediaType, err
+		}
+		if buf, err := ioutil.ReadAll(io.LimitReader(rdr, 512)); err == nil {
+			rx.mediaType = http.DetectContentType(buf)
+		}
+	}
+	return rx.mediaType, nil
 }
 
 func (rx *ResumableUpload) transferStatus() (int64, *http.Response, error) {
 	req, _ := http.NewRequest("POST", rx.URI, nil)
 	req.ContentLength = 0
 	req.Header.Set("User-Agent", rx.UserAgent)
-	req.Header.Set("Content-Range", fmt.Sprintf("bytes */%v", rx.ContentLength))
+	req.Header.Set("Content-Range", "bytes */*")
 	res, err := rx.Client.Do(req)
 	if err != nil || res.StatusCode != statusResumeIncomplete {
 		return 0, res, err
@@ -388,31 +456,47 @@ func (rx *ResumableUpload) transferChunks(ctx context.Context) (*http.Response, 
 			return res, ctx.Err()
 		default:
 		}
-		reqSize := rx.ContentLength - start
-		if reqSize > chunkSize {
-			reqSize = chunkSize
+
+		rdr, reqSize, err := rx.media.ChunkAt(start)
+		if err != nil && err != io.EOF {
+			return res, err
 		}
-		r := io.NewSectionReader(rx.Media, start, reqSize)
-		req, _ := http.NewRequest("POST", rx.URI, r)
+		cs := "*"          // content size unknown
+		if err == io.EOF { // reached end of stream, this is our final chunk
+			cs = strconv.FormatInt(start+reqSize, 10)
+		}
+		req, _ := http.NewRequest("POST", rx.URI, rdr)
 		req.ContentLength = reqSize
-		req.Header.Set("Content-Range", fmt.Sprintf("bytes %v-%v/%v", start, start+reqSize-1, rx.ContentLength))
-		req.Header.Set("Content-Type", rx.MediaType)
+		if reqSize > 0 {
+			req.Header.Set("Content-Range", fmt.Sprintf("bytes %v-%v/%v", start, start+reqSize-1, cs))
+		} else { // sending no data
+			req.Header.Set("Content-Range", fmt.Sprintf("bytes */%v", cs))
+		}
+		req.Header.Set("Content-Type", rx.mediaType)
 		req.Header.Set("User-Agent", rx.UserAgent)
 		res, err = rx.Client.Do(req)
+		if err != nil {
+			return res, err
+		}
+		if res.StatusCode != statusResumeIncomplete {
+			return res, nil
+		}
 		start += reqSize
-		if err == nil && (res.StatusCode == statusResumeIncomplete || res.StatusCode == http.StatusOK) {
-			rx.mu.Lock()
-			rx.progress = start // keep track of number of bytes sent so far
-			rx.mu.Unlock()
-			if rx.Callback != nil {
-				rx.Callback(start, rx.ContentLength)
-			}
-		}
-		if err != nil || res.StatusCode != statusResumeIncomplete {
-			break
-		}
+		res.Body.Close()
 	}
-	return res, err
+}
+
+// roundChunkSize returns smallest multiple of 256K (GCS requirement) greater or equal
+// to chunkSize.  However, 0 or negative values are left unmodified.
+func roundChunkSize(size int64) int64 {
+	const (
+		c     = int64(256 << 10)
+		cmask = c - 1
+	)
+	if size <= 0 || size&cmask == 0 {
+		return size
+	}
+	return ((size >> 18) + 1) << 18
 }
 
 var sleep = time.Sleep // override in unit tests
@@ -420,15 +504,21 @@ var sleep = time.Sleep // override in unit tests
 // Upload starts the process of a resumable upload with a cancellable context.
 // It retries indefinitely (with a pause of uploadPause between attempts) until cancelled.
 // It is called from the auto-generated API code and is not visible to the user.
+// When error is nil, http response is guaranteed to have non-nil Body, and caller
+// is responsible for closing it.
 // rx is private to the auto-generated API code.
 func (rx *ResumableUpload) Upload(ctx context.Context) (*http.Response, error) {
 	var res *http.Response
 	var err error
 	for {
 		res, err = rx.transferChunks(ctx)
-		if err != nil || res.StatusCode == http.StatusCreated || res.StatusCode == http.StatusOK {
+		if err != nil {
 			return res, err
 		}
+		if res.StatusCode == http.StatusCreated || res.StatusCode == http.StatusOK {
+			return res, nil // caller is responsible for closing response body
+		}
+		res.Body.Close()
 		select { // Check for cancellation
 		case <-ctx.Done():
 			res.StatusCode = http.StatusRequestTimeout

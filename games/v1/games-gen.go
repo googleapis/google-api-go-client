@@ -2646,10 +2646,10 @@ func (c *AchievementDefinitionsListCall) Fields(s ...googleapi.Field) *Achieveme
 	return c
 }
 
-func (c *AchievementDefinitionsListCall) Do() (*AchievementDefinitionsListResponse, error) {
+func (c *AchievementDefinitionsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["language"]; ok {
 		params.Set("language", fmt.Sprintf("%v", v))
 	}
@@ -2667,7 +2667,11 @@ func (c *AchievementDefinitionsListCall) Do() (*AchievementDefinitionsListRespon
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AchievementDefinitionsListCall) Do() (*AchievementDefinitionsListResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2751,10 +2755,10 @@ func (c *AchievementsIncrementCall) Fields(s ...googleapi.Field) *AchievementsIn
 	return c
 }
 
-func (c *AchievementsIncrementCall) Do() (*AchievementIncrementResponse, error) {
+func (c *AchievementsIncrementCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	params.Set("stepsToIncrement", fmt.Sprintf("%v", c.stepsToIncrement))
 	if v, ok := c.opt_["requestId"]; ok {
 		params.Set("requestId", fmt.Sprintf("%v", v))
@@ -2769,7 +2773,11 @@ func (c *AchievementsIncrementCall) Do() (*AchievementIncrementResponse, error) 
 		"achievementId": c.achievementId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AchievementsIncrementCall) Do() (*AchievementIncrementResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2885,10 +2893,10 @@ func (c *AchievementsListCall) Fields(s ...googleapi.Field) *AchievementsListCal
 	return c
 }
 
-func (c *AchievementsListCall) Do() (*PlayerAchievementListResponse, error) {
+func (c *AchievementsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["language"]; ok {
 		params.Set("language", fmt.Sprintf("%v", v))
 	}
@@ -2911,7 +2919,11 @@ func (c *AchievementsListCall) Do() (*PlayerAchievementListResponse, error) {
 		"playerId": c.playerId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AchievementsListCall) Do() (*PlayerAchievementListResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3010,10 +3022,10 @@ func (c *AchievementsRevealCall) Fields(s ...googleapi.Field) *AchievementsRevea
 	return c
 }
 
-func (c *AchievementsRevealCall) Do() (*AchievementRevealResponse, error) {
+func (c *AchievementsRevealCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -3024,7 +3036,11 @@ func (c *AchievementsRevealCall) Do() (*AchievementRevealResponse, error) {
 		"achievementId": c.achievementId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AchievementsRevealCall) Do() (*AchievementRevealResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3092,10 +3108,10 @@ func (c *AchievementsSetStepsAtLeastCall) Fields(s ...googleapi.Field) *Achievem
 	return c
 }
 
-func (c *AchievementsSetStepsAtLeastCall) Do() (*AchievementSetStepsAtLeastResponse, error) {
+func (c *AchievementsSetStepsAtLeastCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	params.Set("steps", fmt.Sprintf("%v", c.steps))
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
@@ -3107,7 +3123,11 @@ func (c *AchievementsSetStepsAtLeastCall) Do() (*AchievementSetStepsAtLeastRespo
 		"achievementId": c.achievementId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AchievementsSetStepsAtLeastCall) Do() (*AchievementSetStepsAtLeastResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3180,10 +3200,10 @@ func (c *AchievementsUnlockCall) Fields(s ...googleapi.Field) *AchievementsUnloc
 	return c
 }
 
-func (c *AchievementsUnlockCall) Do() (*AchievementUnlockResponse, error) {
+func (c *AchievementsUnlockCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -3194,7 +3214,11 @@ func (c *AchievementsUnlockCall) Do() (*AchievementUnlockResponse, error) {
 		"achievementId": c.achievementId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AchievementsUnlockCall) Do() (*AchievementUnlockResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3258,7 +3282,7 @@ func (c *AchievementsUpdateMultipleCall) Fields(s ...googleapi.Field) *Achieveme
 	return c
 }
 
-func (c *AchievementsUpdateMultipleCall) Do() (*AchievementUpdateMultipleResponse, error) {
+func (c *AchievementsUpdateMultipleCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.achievementupdatemultiplerequest)
 	if err != nil {
@@ -3266,7 +3290,7 @@ func (c *AchievementsUpdateMultipleCall) Do() (*AchievementUpdateMultipleRespons
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -3276,7 +3300,11 @@ func (c *AchievementsUpdateMultipleCall) Do() (*AchievementUpdateMultipleRespons
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AchievementsUpdateMultipleCall) Do() (*AchievementUpdateMultipleResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3354,10 +3382,10 @@ func (c *ApplicationsGetCall) Fields(s ...googleapi.Field) *ApplicationsGetCall 
 	return c
 }
 
-func (c *ApplicationsGetCall) Do() (*Application, error) {
+func (c *ApplicationsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["language"]; ok {
 		params.Set("language", fmt.Sprintf("%v", v))
 	}
@@ -3374,7 +3402,11 @@ func (c *ApplicationsGetCall) Do() (*Application, error) {
 		"applicationId": c.applicationId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ApplicationsGetCall) Do() (*Application, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3456,10 +3488,10 @@ func (c *ApplicationsPlayedCall) Fields(s ...googleapi.Field) *ApplicationsPlaye
 	return c
 }
 
-func (c *ApplicationsPlayedCall) Do() error {
+func (c *ApplicationsPlayedCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -3468,7 +3500,11 @@ func (c *ApplicationsPlayedCall) Do() error {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ApplicationsPlayedCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -3535,10 +3571,10 @@ func (c *EventsListByPlayerCall) Fields(s ...googleapi.Field) *EventsListByPlaye
 	return c
 }
 
-func (c *EventsListByPlayerCall) Do() (*PlayerEventListResponse, error) {
+func (c *EventsListByPlayerCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["language"]; ok {
 		params.Set("language", fmt.Sprintf("%v", v))
 	}
@@ -3556,7 +3592,11 @@ func (c *EventsListByPlayerCall) Do() (*PlayerEventListResponse, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *EventsListByPlayerCall) Do() (*PlayerEventListResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3650,10 +3690,10 @@ func (c *EventsListDefinitionsCall) Fields(s ...googleapi.Field) *EventsListDefi
 	return c
 }
 
-func (c *EventsListDefinitionsCall) Do() (*EventDefinitionListResponse, error) {
+func (c *EventsListDefinitionsCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["language"]; ok {
 		params.Set("language", fmt.Sprintf("%v", v))
 	}
@@ -3671,7 +3711,11 @@ func (c *EventsListDefinitionsCall) Do() (*EventDefinitionListResponse, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *EventsListDefinitionsCall) Do() (*EventDefinitionListResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3751,7 +3795,7 @@ func (c *EventsRecordCall) Fields(s ...googleapi.Field) *EventsRecordCall {
 	return c
 }
 
-func (c *EventsRecordCall) Do() (*EventUpdateResponse, error) {
+func (c *EventsRecordCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.eventrecordrequest)
 	if err != nil {
@@ -3759,7 +3803,7 @@ func (c *EventsRecordCall) Do() (*EventUpdateResponse, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["language"]; ok {
 		params.Set("language", fmt.Sprintf("%v", v))
 	}
@@ -3772,7 +3816,11 @@ func (c *EventsRecordCall) Do() (*EventUpdateResponse, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *EventsRecordCall) Do() (*EventUpdateResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3841,10 +3889,10 @@ func (c *LeaderboardsGetCall) Fields(s ...googleapi.Field) *LeaderboardsGetCall 
 	return c
 }
 
-func (c *LeaderboardsGetCall) Do() (*Leaderboard, error) {
+func (c *LeaderboardsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["language"]; ok {
 		params.Set("language", fmt.Sprintf("%v", v))
 	}
@@ -3858,7 +3906,11 @@ func (c *LeaderboardsGetCall) Do() (*Leaderboard, error) {
 		"leaderboardId": c.leaderboardId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *LeaderboardsGetCall) Do() (*Leaderboard, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3947,10 +3999,10 @@ func (c *LeaderboardsListCall) Fields(s ...googleapi.Field) *LeaderboardsListCal
 	return c
 }
 
-func (c *LeaderboardsListCall) Do() (*LeaderboardListResponse, error) {
+func (c *LeaderboardsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["language"]; ok {
 		params.Set("language", fmt.Sprintf("%v", v))
 	}
@@ -3968,7 +4020,11 @@ func (c *LeaderboardsListCall) Do() (*LeaderboardListResponse, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *LeaderboardsListCall) Do() (*LeaderboardListResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -4039,10 +4095,10 @@ func (c *MetagameGetMetagameConfigCall) Fields(s ...googleapi.Field) *MetagameGe
 	return c
 }
 
-func (c *MetagameGetMetagameConfigCall) Do() (*MetagameConfig, error) {
+func (c *MetagameGetMetagameConfigCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -4051,7 +4107,11 @@ func (c *MetagameGetMetagameConfigCall) Do() (*MetagameConfig, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *MetagameGetMetagameConfigCall) Do() (*MetagameConfig, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -4129,10 +4189,10 @@ func (c *MetagameListCategoriesByPlayerCall) Fields(s ...googleapi.Field) *Metag
 	return c
 }
 
-func (c *MetagameListCategoriesByPlayerCall) Do() (*CategoryListResponse, error) {
+func (c *MetagameListCategoriesByPlayerCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["language"]; ok {
 		params.Set("language", fmt.Sprintf("%v", v))
 	}
@@ -4153,7 +4213,11 @@ func (c *MetagameListCategoriesByPlayerCall) Do() (*CategoryListResponse, error)
 		"collection": c.collection,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *MetagameListCategoriesByPlayerCall) Do() (*CategoryListResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -4255,10 +4319,10 @@ func (c *PlayersGetCall) Fields(s ...googleapi.Field) *PlayersGetCall {
 	return c
 }
 
-func (c *PlayersGetCall) Do() (*Player, error) {
+func (c *PlayersGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["language"]; ok {
 		params.Set("language", fmt.Sprintf("%v", v))
 	}
@@ -4272,7 +4336,11 @@ func (c *PlayersGetCall) Do() (*Player, error) {
 		"playerId": c.playerId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *PlayersGetCall) Do() (*Player, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -4364,10 +4432,10 @@ func (c *PlayersListCall) Fields(s ...googleapi.Field) *PlayersListCall {
 	return c
 }
 
-func (c *PlayersListCall) Do() (*PlayerListResponse, error) {
+func (c *PlayersListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["language"]; ok {
 		params.Set("language", fmt.Sprintf("%v", v))
 	}
@@ -4387,7 +4455,11 @@ func (c *PlayersListCall) Do() (*PlayerListResponse, error) {
 		"collection": c.collection,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *PlayersListCall) Do() (*PlayerListResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -4477,15 +4549,15 @@ func (c *PushtokensRemoveCall) Fields(s ...googleapi.Field) *PushtokensRemoveCal
 	return c
 }
 
-func (c *PushtokensRemoveCall) Do() error {
+func (c *PushtokensRemoveCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.pushtokenid)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -4495,7 +4567,11 @@ func (c *PushtokensRemoveCall) Do() error {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *PushtokensRemoveCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -4543,15 +4619,15 @@ func (c *PushtokensUpdateCall) Fields(s ...googleapi.Field) *PushtokensUpdateCal
 	return c
 }
 
-func (c *PushtokensUpdateCall) Do() error {
+func (c *PushtokensUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.pushtoken)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -4561,7 +4637,11 @@ func (c *PushtokensUpdateCall) Do() error {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *PushtokensUpdateCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -4615,10 +4695,10 @@ func (c *QuestMilestonesClaimCall) Fields(s ...googleapi.Field) *QuestMilestones
 	return c
 }
 
-func (c *QuestMilestonesClaimCall) Do() error {
+func (c *QuestMilestonesClaimCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	params.Set("requestId", fmt.Sprintf("%v", c.requestId))
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
@@ -4631,7 +4711,11 @@ func (c *QuestMilestonesClaimCall) Do() error {
 		"milestoneId": c.milestoneId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *QuestMilestonesClaimCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -4710,10 +4794,10 @@ func (c *QuestsAcceptCall) Fields(s ...googleapi.Field) *QuestsAcceptCall {
 	return c
 }
 
-func (c *QuestsAcceptCall) Do() (*Quest, error) {
+func (c *QuestsAcceptCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["language"]; ok {
 		params.Set("language", fmt.Sprintf("%v", v))
 	}
@@ -4727,7 +4811,11 @@ func (c *QuestsAcceptCall) Do() (*Quest, error) {
 		"questId": c.questId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *QuestsAcceptCall) Do() (*Quest, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -4820,10 +4908,10 @@ func (c *QuestsListCall) Fields(s ...googleapi.Field) *QuestsListCall {
 	return c
 }
 
-func (c *QuestsListCall) Do() (*QuestListResponse, error) {
+func (c *QuestsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["language"]; ok {
 		params.Set("language", fmt.Sprintf("%v", v))
 	}
@@ -4843,7 +4931,11 @@ func (c *QuestsListCall) Do() (*QuestListResponse, error) {
 		"playerId": c.playerId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *QuestsListCall) Do() (*QuestListResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -4924,10 +5016,10 @@ func (c *RevisionsCheckCall) Fields(s ...googleapi.Field) *RevisionsCheckCall {
 	return c
 }
 
-func (c *RevisionsCheckCall) Do() (*RevisionCheckResponse, error) {
+func (c *RevisionsCheckCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	params.Set("clientRevision", fmt.Sprintf("%v", c.clientRevision))
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
@@ -4937,7 +5029,11 @@ func (c *RevisionsCheckCall) Do() (*RevisionCheckResponse, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *RevisionsCheckCall) Do() (*RevisionCheckResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -5008,7 +5104,7 @@ func (c *RoomsCreateCall) Fields(s ...googleapi.Field) *RoomsCreateCall {
 	return c
 }
 
-func (c *RoomsCreateCall) Do() (*Room, error) {
+func (c *RoomsCreateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.roomcreaterequest)
 	if err != nil {
@@ -5016,7 +5112,7 @@ func (c *RoomsCreateCall) Do() (*Room, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["language"]; ok {
 		params.Set("language", fmt.Sprintf("%v", v))
 	}
@@ -5029,7 +5125,11 @@ func (c *RoomsCreateCall) Do() (*Room, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *RoomsCreateCall) Do() (*Room, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -5099,10 +5199,10 @@ func (c *RoomsDeclineCall) Fields(s ...googleapi.Field) *RoomsDeclineCall {
 	return c
 }
 
-func (c *RoomsDeclineCall) Do() (*Room, error) {
+func (c *RoomsDeclineCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["language"]; ok {
 		params.Set("language", fmt.Sprintf("%v", v))
 	}
@@ -5116,7 +5216,11 @@ func (c *RoomsDeclineCall) Do() (*Room, error) {
 		"roomId": c.roomId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *RoomsDeclineCall) Do() (*Room, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -5185,10 +5289,10 @@ func (c *RoomsDismissCall) Fields(s ...googleapi.Field) *RoomsDismissCall {
 	return c
 }
 
-func (c *RoomsDismissCall) Do() error {
+func (c *RoomsDismissCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -5199,7 +5303,11 @@ func (c *RoomsDismissCall) Do() error {
 		"roomId": c.roomId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *RoomsDismissCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -5262,10 +5370,10 @@ func (c *RoomsGetCall) Fields(s ...googleapi.Field) *RoomsGetCall {
 	return c
 }
 
-func (c *RoomsGetCall) Do() (*Room, error) {
+func (c *RoomsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["language"]; ok {
 		params.Set("language", fmt.Sprintf("%v", v))
 	}
@@ -5279,7 +5387,11 @@ func (c *RoomsGetCall) Do() (*Room, error) {
 		"roomId": c.roomId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *RoomsGetCall) Do() (*Room, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -5357,7 +5469,7 @@ func (c *RoomsJoinCall) Fields(s ...googleapi.Field) *RoomsJoinCall {
 	return c
 }
 
-func (c *RoomsJoinCall) Do() (*Room, error) {
+func (c *RoomsJoinCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.roomjoinrequest)
 	if err != nil {
@@ -5365,7 +5477,7 @@ func (c *RoomsJoinCall) Do() (*Room, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["language"]; ok {
 		params.Set("language", fmt.Sprintf("%v", v))
 	}
@@ -5380,7 +5492,11 @@ func (c *RoomsJoinCall) Do() (*Room, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *RoomsJoinCall) Do() (*Room, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -5461,7 +5577,7 @@ func (c *RoomsLeaveCall) Fields(s ...googleapi.Field) *RoomsLeaveCall {
 	return c
 }
 
-func (c *RoomsLeaveCall) Do() (*Room, error) {
+func (c *RoomsLeaveCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.roomleaverequest)
 	if err != nil {
@@ -5469,7 +5585,7 @@ func (c *RoomsLeaveCall) Do() (*Room, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["language"]; ok {
 		params.Set("language", fmt.Sprintf("%v", v))
 	}
@@ -5484,7 +5600,11 @@ func (c *RoomsLeaveCall) Do() (*Room, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *RoomsLeaveCall) Do() (*Room, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -5576,10 +5696,10 @@ func (c *RoomsListCall) Fields(s ...googleapi.Field) *RoomsListCall {
 	return c
 }
 
-func (c *RoomsListCall) Do() (*RoomList, error) {
+func (c *RoomsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["language"]; ok {
 		params.Set("language", fmt.Sprintf("%v", v))
 	}
@@ -5597,7 +5717,11 @@ func (c *RoomsListCall) Do() (*RoomList, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *RoomsListCall) Do() (*RoomList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -5680,7 +5804,7 @@ func (c *RoomsReportStatusCall) Fields(s ...googleapi.Field) *RoomsReportStatusC
 	return c
 }
 
-func (c *RoomsReportStatusCall) Do() (*RoomStatus, error) {
+func (c *RoomsReportStatusCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.roomp2pstatuses)
 	if err != nil {
@@ -5688,7 +5812,7 @@ func (c *RoomsReportStatusCall) Do() (*RoomStatus, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["language"]; ok {
 		params.Set("language", fmt.Sprintf("%v", v))
 	}
@@ -5703,7 +5827,11 @@ func (c *RoomsReportStatusCall) Do() (*RoomStatus, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *RoomsReportStatusCall) Do() (*RoomStatus, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -5820,10 +5948,10 @@ func (c *ScoresGetCall) Fields(s ...googleapi.Field) *ScoresGetCall {
 	return c
 }
 
-func (c *ScoresGetCall) Do() (*PlayerLeaderboardScoreListResponse, error) {
+func (c *ScoresGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["includeRankType"]; ok {
 		params.Set("includeRankType", fmt.Sprintf("%v", v))
 	}
@@ -5848,7 +5976,11 @@ func (c *ScoresGetCall) Do() (*PlayerLeaderboardScoreListResponse, error) {
 		"timeSpan":      c.timeSpan,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ScoresGetCall) Do() (*PlayerLeaderboardScoreListResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -5997,10 +6129,10 @@ func (c *ScoresListCall) Fields(s ...googleapi.Field) *ScoresListCall {
 	return c
 }
 
-func (c *ScoresListCall) Do() (*LeaderboardScores, error) {
+func (c *ScoresListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	params.Set("timeSpan", fmt.Sprintf("%v", c.timeSpan))
 	if v, ok := c.opt_["language"]; ok {
 		params.Set("language", fmt.Sprintf("%v", v))
@@ -6022,7 +6154,11 @@ func (c *ScoresListCall) Do() (*LeaderboardScores, error) {
 		"collection":    c.collection,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ScoresListCall) Do() (*LeaderboardScores, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -6181,10 +6317,10 @@ func (c *ScoresListWindowCall) Fields(s ...googleapi.Field) *ScoresListWindowCal
 	return c
 }
 
-func (c *ScoresListWindowCall) Do() (*LeaderboardScores, error) {
+func (c *ScoresListWindowCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	params.Set("timeSpan", fmt.Sprintf("%v", c.timeSpan))
 	if v, ok := c.opt_["language"]; ok {
 		params.Set("language", fmt.Sprintf("%v", v))
@@ -6212,7 +6348,11 @@ func (c *ScoresListWindowCall) Do() (*LeaderboardScores, error) {
 		"collection":    c.collection,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ScoresListWindowCall) Do() (*LeaderboardScores, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -6354,10 +6494,10 @@ func (c *ScoresSubmitCall) Fields(s ...googleapi.Field) *ScoresSubmitCall {
 	return c
 }
 
-func (c *ScoresSubmitCall) Do() (*PlayerScoreResponse, error) {
+func (c *ScoresSubmitCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	params.Set("score", fmt.Sprintf("%v", c.score))
 	if v, ok := c.opt_["language"]; ok {
 		params.Set("language", fmt.Sprintf("%v", v))
@@ -6375,7 +6515,11 @@ func (c *ScoresSubmitCall) Do() (*PlayerScoreResponse, error) {
 		"leaderboardId": c.leaderboardId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ScoresSubmitCall) Do() (*PlayerScoreResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -6464,7 +6608,7 @@ func (c *ScoresSubmitMultipleCall) Fields(s ...googleapi.Field) *ScoresSubmitMul
 	return c
 }
 
-func (c *ScoresSubmitMultipleCall) Do() (*PlayerScoreListResponse, error) {
+func (c *ScoresSubmitMultipleCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.playerscoresubmissionlist)
 	if err != nil {
@@ -6472,7 +6616,7 @@ func (c *ScoresSubmitMultipleCall) Do() (*PlayerScoreListResponse, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["language"]; ok {
 		params.Set("language", fmt.Sprintf("%v", v))
 	}
@@ -6485,7 +6629,11 @@ func (c *ScoresSubmitMultipleCall) Do() (*PlayerScoreListResponse, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ScoresSubmitMultipleCall) Do() (*PlayerScoreListResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -6554,10 +6702,10 @@ func (c *SnapshotsGetCall) Fields(s ...googleapi.Field) *SnapshotsGetCall {
 	return c
 }
 
-func (c *SnapshotsGetCall) Do() (*Snapshot, error) {
+func (c *SnapshotsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["language"]; ok {
 		params.Set("language", fmt.Sprintf("%v", v))
 	}
@@ -6571,7 +6719,11 @@ func (c *SnapshotsGetCall) Do() (*Snapshot, error) {
 		"snapshotId": c.snapshotId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *SnapshotsGetCall) Do() (*Snapshot, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -6664,10 +6816,10 @@ func (c *SnapshotsListCall) Fields(s ...googleapi.Field) *SnapshotsListCall {
 	return c
 }
 
-func (c *SnapshotsListCall) Do() (*SnapshotListResponse, error) {
+func (c *SnapshotsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["language"]; ok {
 		params.Set("language", fmt.Sprintf("%v", v))
 	}
@@ -6687,7 +6839,11 @@ func (c *SnapshotsListCall) Do() (*SnapshotListResponse, error) {
 		"playerId": c.playerId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *SnapshotsListCall) Do() (*SnapshotListResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -6769,10 +6925,10 @@ func (c *TurnBasedMatchesCancelCall) Fields(s ...googleapi.Field) *TurnBasedMatc
 	return c
 }
 
-func (c *TurnBasedMatchesCancelCall) Do() error {
+func (c *TurnBasedMatchesCancelCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -6783,7 +6939,11 @@ func (c *TurnBasedMatchesCancelCall) Do() error {
 		"matchId": c.matchId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TurnBasedMatchesCancelCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -6846,7 +7006,7 @@ func (c *TurnBasedMatchesCreateCall) Fields(s ...googleapi.Field) *TurnBasedMatc
 	return c
 }
 
-func (c *TurnBasedMatchesCreateCall) Do() (*TurnBasedMatch, error) {
+func (c *TurnBasedMatchesCreateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.turnbasedmatchcreaterequest)
 	if err != nil {
@@ -6854,7 +7014,7 @@ func (c *TurnBasedMatchesCreateCall) Do() (*TurnBasedMatch, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["language"]; ok {
 		params.Set("language", fmt.Sprintf("%v", v))
 	}
@@ -6867,7 +7027,11 @@ func (c *TurnBasedMatchesCreateCall) Do() (*TurnBasedMatch, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TurnBasedMatchesCreateCall) Do() (*TurnBasedMatch, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -6936,10 +7100,10 @@ func (c *TurnBasedMatchesDeclineCall) Fields(s ...googleapi.Field) *TurnBasedMat
 	return c
 }
 
-func (c *TurnBasedMatchesDeclineCall) Do() (*TurnBasedMatch, error) {
+func (c *TurnBasedMatchesDeclineCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["language"]; ok {
 		params.Set("language", fmt.Sprintf("%v", v))
 	}
@@ -6953,7 +7117,11 @@ func (c *TurnBasedMatchesDeclineCall) Do() (*TurnBasedMatch, error) {
 		"matchId": c.matchId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TurnBasedMatchesDeclineCall) Do() (*TurnBasedMatch, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -7023,10 +7191,10 @@ func (c *TurnBasedMatchesDismissCall) Fields(s ...googleapi.Field) *TurnBasedMat
 	return c
 }
 
-func (c *TurnBasedMatchesDismissCall) Do() error {
+func (c *TurnBasedMatchesDismissCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -7037,7 +7205,11 @@ func (c *TurnBasedMatchesDismissCall) Do() error {
 		"matchId": c.matchId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TurnBasedMatchesDismissCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -7104,7 +7276,7 @@ func (c *TurnBasedMatchesFinishCall) Fields(s ...googleapi.Field) *TurnBasedMatc
 	return c
 }
 
-func (c *TurnBasedMatchesFinishCall) Do() (*TurnBasedMatch, error) {
+func (c *TurnBasedMatchesFinishCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.turnbasedmatchresults)
 	if err != nil {
@@ -7112,7 +7284,7 @@ func (c *TurnBasedMatchesFinishCall) Do() (*TurnBasedMatch, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["language"]; ok {
 		params.Set("language", fmt.Sprintf("%v", v))
 	}
@@ -7127,7 +7299,11 @@ func (c *TurnBasedMatchesFinishCall) Do() (*TurnBasedMatch, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TurnBasedMatchesFinishCall) Do() (*TurnBasedMatch, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -7212,10 +7388,10 @@ func (c *TurnBasedMatchesGetCall) Fields(s ...googleapi.Field) *TurnBasedMatches
 	return c
 }
 
-func (c *TurnBasedMatchesGetCall) Do() (*TurnBasedMatch, error) {
+func (c *TurnBasedMatchesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["includeMatchData"]; ok {
 		params.Set("includeMatchData", fmt.Sprintf("%v", v))
 	}
@@ -7232,7 +7408,11 @@ func (c *TurnBasedMatchesGetCall) Do() (*TurnBasedMatch, error) {
 		"matchId": c.matchId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TurnBasedMatchesGetCall) Do() (*TurnBasedMatch, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -7312,10 +7492,10 @@ func (c *TurnBasedMatchesJoinCall) Fields(s ...googleapi.Field) *TurnBasedMatche
 	return c
 }
 
-func (c *TurnBasedMatchesJoinCall) Do() (*TurnBasedMatch, error) {
+func (c *TurnBasedMatchesJoinCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["language"]; ok {
 		params.Set("language", fmt.Sprintf("%v", v))
 	}
@@ -7329,7 +7509,11 @@ func (c *TurnBasedMatchesJoinCall) Do() (*TurnBasedMatch, error) {
 		"matchId": c.matchId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TurnBasedMatchesJoinCall) Do() (*TurnBasedMatch, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -7405,10 +7589,10 @@ func (c *TurnBasedMatchesLeaveCall) Fields(s ...googleapi.Field) *TurnBasedMatch
 	return c
 }
 
-func (c *TurnBasedMatchesLeaveCall) Do() (*TurnBasedMatch, error) {
+func (c *TurnBasedMatchesLeaveCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["language"]; ok {
 		params.Set("language", fmt.Sprintf("%v", v))
 	}
@@ -7422,7 +7606,11 @@ func (c *TurnBasedMatchesLeaveCall) Do() (*TurnBasedMatch, error) {
 		"matchId": c.matchId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TurnBasedMatchesLeaveCall) Do() (*TurnBasedMatch, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -7510,10 +7698,10 @@ func (c *TurnBasedMatchesLeaveTurnCall) Fields(s ...googleapi.Field) *TurnBasedM
 	return c
 }
 
-func (c *TurnBasedMatchesLeaveTurnCall) Do() (*TurnBasedMatch, error) {
+func (c *TurnBasedMatchesLeaveTurnCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	params.Set("matchVersion", fmt.Sprintf("%v", c.matchVersion))
 	if v, ok := c.opt_["language"]; ok {
 		params.Set("language", fmt.Sprintf("%v", v))
@@ -7531,7 +7719,11 @@ func (c *TurnBasedMatchesLeaveTurnCall) Do() (*TurnBasedMatch, error) {
 		"matchId": c.matchId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TurnBasedMatchesLeaveTurnCall) Do() (*TurnBasedMatch, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -7653,10 +7845,10 @@ func (c *TurnBasedMatchesListCall) Fields(s ...googleapi.Field) *TurnBasedMatche
 	return c
 }
 
-func (c *TurnBasedMatchesListCall) Do() (*TurnBasedMatchList, error) {
+func (c *TurnBasedMatchesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["includeMatchData"]; ok {
 		params.Set("includeMatchData", fmt.Sprintf("%v", v))
 	}
@@ -7680,7 +7872,11 @@ func (c *TurnBasedMatchesListCall) Do() (*TurnBasedMatchList, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TurnBasedMatchesListCall) Do() (*TurnBasedMatchList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -7784,10 +7980,10 @@ func (c *TurnBasedMatchesRematchCall) Fields(s ...googleapi.Field) *TurnBasedMat
 	return c
 }
 
-func (c *TurnBasedMatchesRematchCall) Do() (*TurnBasedMatchRematch, error) {
+func (c *TurnBasedMatchesRematchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["language"]; ok {
 		params.Set("language", fmt.Sprintf("%v", v))
 	}
@@ -7804,7 +8000,11 @@ func (c *TurnBasedMatchesRematchCall) Do() (*TurnBasedMatchRematch, error) {
 		"matchId": c.matchId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TurnBasedMatchesRematchCall) Do() (*TurnBasedMatchRematch, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -7922,10 +8122,10 @@ func (c *TurnBasedMatchesSyncCall) Fields(s ...googleapi.Field) *TurnBasedMatche
 	return c
 }
 
-func (c *TurnBasedMatchesSyncCall) Do() (*TurnBasedMatchSync, error) {
+func (c *TurnBasedMatchesSyncCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["includeMatchData"]; ok {
 		params.Set("includeMatchData", fmt.Sprintf("%v", v))
 	}
@@ -7949,7 +8149,11 @@ func (c *TurnBasedMatchesSyncCall) Do() (*TurnBasedMatchSync, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TurnBasedMatchesSyncCall) Do() (*TurnBasedMatchSync, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -8043,7 +8247,7 @@ func (c *TurnBasedMatchesTakeTurnCall) Fields(s ...googleapi.Field) *TurnBasedMa
 	return c
 }
 
-func (c *TurnBasedMatchesTakeTurnCall) Do() (*TurnBasedMatch, error) {
+func (c *TurnBasedMatchesTakeTurnCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.turnbasedmatchturn)
 	if err != nil {
@@ -8051,7 +8255,7 @@ func (c *TurnBasedMatchesTakeTurnCall) Do() (*TurnBasedMatch, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["language"]; ok {
 		params.Set("language", fmt.Sprintf("%v", v))
 	}
@@ -8066,7 +8270,11 @@ func (c *TurnBasedMatchesTakeTurnCall) Do() (*TurnBasedMatch, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TurnBasedMatchesTakeTurnCall) Do() (*TurnBasedMatch, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}

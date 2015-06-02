@@ -622,7 +622,7 @@ func (c *ControllerDebuggeesRegisterCall) Fields(s ...googleapi.Field) *Controll
 	return c
 }
 
-func (c *ControllerDebuggeesRegisterCall) Do() (*RegisterDebuggeeResponse, error) {
+func (c *ControllerDebuggeesRegisterCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.registerdebuggeerequest)
 	if err != nil {
@@ -630,7 +630,7 @@ func (c *ControllerDebuggeesRegisterCall) Do() (*RegisterDebuggeeResponse, error
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -640,7 +640,11 @@ func (c *ControllerDebuggeesRegisterCall) Do() (*RegisterDebuggeeResponse, error
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ControllerDebuggeesRegisterCall) Do() (*RegisterDebuggeeResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -715,10 +719,10 @@ func (c *ControllerDebuggeesBreakpointsListCall) Fields(s ...googleapi.Field) *C
 	return c
 }
 
-func (c *ControllerDebuggeesBreakpointsListCall) Do() (*ListActiveBreakpointsResponse, error) {
+func (c *ControllerDebuggeesBreakpointsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["waitToken"]; ok {
 		params.Set("waitToken", fmt.Sprintf("%v", v))
 	}
@@ -732,7 +736,11 @@ func (c *ControllerDebuggeesBreakpointsListCall) Do() (*ListActiveBreakpointsRes
 		"debuggeeId": c.debuggeeId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ControllerDebuggeesBreakpointsListCall) Do() (*ListActiveBreakpointsResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -810,7 +818,7 @@ func (c *ControllerDebuggeesBreakpointsUpdateCall) Fields(s ...googleapi.Field) 
 	return c
 }
 
-func (c *ControllerDebuggeesBreakpointsUpdateCall) Do() (*UpdateActiveBreakpointResponse, error) {
+func (c *ControllerDebuggeesBreakpointsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.updateactivebreakpointrequest)
 	if err != nil {
@@ -818,7 +826,7 @@ func (c *ControllerDebuggeesBreakpointsUpdateCall) Do() (*UpdateActiveBreakpoint
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -831,7 +839,11 @@ func (c *ControllerDebuggeesBreakpointsUpdateCall) Do() (*UpdateActiveBreakpoint
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ControllerDebuggeesBreakpointsUpdateCall) Do() (*UpdateActiveBreakpointResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -918,10 +930,10 @@ func (c *DebuggerDebuggeesListCall) Fields(s ...googleapi.Field) *DebuggerDebugg
 	return c
 }
 
-func (c *DebuggerDebuggeesListCall) Do() (*ListDebuggeesResponse, error) {
+func (c *DebuggerDebuggeesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["includeInactive"]; ok {
 		params.Set("includeInactive", fmt.Sprintf("%v", v))
 	}
@@ -936,7 +948,11 @@ func (c *DebuggerDebuggeesListCall) Do() (*ListDebuggeesResponse, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *DebuggerDebuggeesListCall) Do() (*ListDebuggeesResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1002,10 +1018,10 @@ func (c *DebuggerDebuggeesBreakpointsDeleteCall) Fields(s ...googleapi.Field) *D
 	return c
 }
 
-func (c *DebuggerDebuggeesBreakpointsDeleteCall) Do() (*Empty, error) {
+func (c *DebuggerDebuggeesBreakpointsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1017,7 +1033,11 @@ func (c *DebuggerDebuggeesBreakpointsDeleteCall) Do() (*Empty, error) {
 		"breakpointId": c.breakpointId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *DebuggerDebuggeesBreakpointsDeleteCall) Do() (*Empty, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1089,10 +1109,10 @@ func (c *DebuggerDebuggeesBreakpointsGetCall) Fields(s ...googleapi.Field) *Debu
 	return c
 }
 
-func (c *DebuggerDebuggeesBreakpointsGetCall) Do() (*GetBreakpointResponse, error) {
+func (c *DebuggerDebuggeesBreakpointsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1104,7 +1124,11 @@ func (c *DebuggerDebuggeesBreakpointsGetCall) Do() (*GetBreakpointResponse, erro
 		"breakpointId": c.breakpointId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *DebuggerDebuggeesBreakpointsGetCall) Do() (*GetBreakpointResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1221,10 +1245,10 @@ func (c *DebuggerDebuggeesBreakpointsListCall) Fields(s ...googleapi.Field) *Deb
 	return c
 }
 
-func (c *DebuggerDebuggeesBreakpointsListCall) Do() (*ListBreakpointsResponse, error) {
+func (c *DebuggerDebuggeesBreakpointsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["action.value"]; ok {
 		params.Set("action.value", fmt.Sprintf("%v", v))
 	}
@@ -1250,7 +1274,11 @@ func (c *DebuggerDebuggeesBreakpointsListCall) Do() (*ListBreakpointsResponse, e
 		"debuggeeId": c.debuggeeId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *DebuggerDebuggeesBreakpointsListCall) Do() (*ListBreakpointsResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1344,7 +1372,7 @@ func (c *DebuggerDebuggeesBreakpointsSetCall) Fields(s ...googleapi.Field) *Debu
 	return c
 }
 
-func (c *DebuggerDebuggeesBreakpointsSetCall) Do() (*SetBreakpointResponse, error) {
+func (c *DebuggerDebuggeesBreakpointsSetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.breakpoint)
 	if err != nil {
@@ -1352,7 +1380,7 @@ func (c *DebuggerDebuggeesBreakpointsSetCall) Do() (*SetBreakpointResponse, erro
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1364,7 +1392,11 @@ func (c *DebuggerDebuggeesBreakpointsSetCall) Do() (*SetBreakpointResponse, erro
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *DebuggerDebuggeesBreakpointsSetCall) Do() (*SetBreakpointResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}

@@ -1326,10 +1326,10 @@ func (c *DatasetsDeleteCall) Fields(s ...googleapi.Field) *DatasetsDeleteCall {
 	return c
 }
 
-func (c *DatasetsDeleteCall) Do() error {
+func (c *DatasetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["deleteContents"]; ok {
 		params.Set("deleteContents", fmt.Sprintf("%v", v))
 	}
@@ -1344,7 +1344,11 @@ func (c *DatasetsDeleteCall) Do() error {
 		"datasetId": c.datasetId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *DatasetsDeleteCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -1414,10 +1418,10 @@ func (c *DatasetsGetCall) Fields(s ...googleapi.Field) *DatasetsGetCall {
 	return c
 }
 
-func (c *DatasetsGetCall) Do() (*Dataset, error) {
+func (c *DatasetsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1429,7 +1433,11 @@ func (c *DatasetsGetCall) Do() (*Dataset, error) {
 		"datasetId": c.datasetId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *DatasetsGetCall) Do() (*Dataset, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1501,7 +1509,7 @@ func (c *DatasetsInsertCall) Fields(s ...googleapi.Field) *DatasetsInsertCall {
 	return c
 }
 
-func (c *DatasetsInsertCall) Do() (*Dataset, error) {
+func (c *DatasetsInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.dataset)
 	if err != nil {
@@ -1509,7 +1517,7 @@ func (c *DatasetsInsertCall) Do() (*Dataset, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1521,7 +1529,11 @@ func (c *DatasetsInsertCall) Do() (*Dataset, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *DatasetsInsertCall) Do() (*Dataset, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1609,10 +1621,10 @@ func (c *DatasetsListCall) Fields(s ...googleapi.Field) *DatasetsListCall {
 	return c
 }
 
-func (c *DatasetsListCall) Do() (*DatasetList, error) {
+func (c *DatasetsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["all"]; ok {
 		params.Set("all", fmt.Sprintf("%v", v))
 	}
@@ -1632,7 +1644,11 @@ func (c *DatasetsListCall) Do() (*DatasetList, error) {
 		"projectId": c.projectId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *DatasetsListCall) Do() (*DatasetList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1718,7 +1734,7 @@ func (c *DatasetsPatchCall) Fields(s ...googleapi.Field) *DatasetsPatchCall {
 	return c
 }
 
-func (c *DatasetsPatchCall) Do() (*Dataset, error) {
+func (c *DatasetsPatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.dataset)
 	if err != nil {
@@ -1726,7 +1742,7 @@ func (c *DatasetsPatchCall) Do() (*Dataset, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1739,7 +1755,11 @@ func (c *DatasetsPatchCall) Do() (*Dataset, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *DatasetsPatchCall) Do() (*Dataset, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1818,7 +1838,7 @@ func (c *DatasetsUpdateCall) Fields(s ...googleapi.Field) *DatasetsUpdateCall {
 	return c
 }
 
-func (c *DatasetsUpdateCall) Do() (*Dataset, error) {
+func (c *DatasetsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.dataset)
 	if err != nil {
@@ -1826,7 +1846,7 @@ func (c *DatasetsUpdateCall) Do() (*Dataset, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1839,7 +1859,11 @@ func (c *DatasetsUpdateCall) Do() (*Dataset, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *DatasetsUpdateCall) Do() (*Dataset, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1916,10 +1940,10 @@ func (c *JobsCancelCall) Fields(s ...googleapi.Field) *JobsCancelCall {
 	return c
 }
 
-func (c *JobsCancelCall) Do() (*JobCancelResponse, error) {
+func (c *JobsCancelCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1931,7 +1955,11 @@ func (c *JobsCancelCall) Do() (*JobCancelResponse, error) {
 		"jobId":     c.jobId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *JobsCancelCall) Do() (*JobCancelResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2005,10 +2033,10 @@ func (c *JobsGetCall) Fields(s ...googleapi.Field) *JobsGetCall {
 	return c
 }
 
-func (c *JobsGetCall) Do() (*Job, error) {
+func (c *JobsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -2020,7 +2048,11 @@ func (c *JobsGetCall) Do() (*Job, error) {
 		"jobId":     c.jobId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *JobsGetCall) Do() (*Job, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2122,10 +2154,10 @@ func (c *JobsGetQueryResultsCall) Fields(s ...googleapi.Field) *JobsGetQueryResu
 	return c
 }
 
-func (c *JobsGetQueryResultsCall) Do() (*GetQueryResultsResponse, error) {
+func (c *JobsGetQueryResultsCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
@@ -2149,7 +2181,11 @@ func (c *JobsGetQueryResultsCall) Do() (*GetQueryResultsResponse, error) {
 		"jobId":     c.jobId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *JobsGetQueryResultsCall) Do() (*GetQueryResultsResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2222,15 +2258,15 @@ func (c *JobsGetQueryResultsCall) Do() (*GetQueryResultsResponse, error) {
 // method id "bigquery.jobs.insert":
 
 type JobsInsertCall struct {
-	s          *Service
-	projectId  string
-	job        *Job
-	opt_       map[string]interface{}
-	media_     io.Reader
-	resumable_ googleapi.SizeReaderAt
-	mediaType_ string
-	ctx_       context.Context
-	protocol_  string
+	s           *Service
+	projectId   string
+	job         *Job
+	opt_        map[string]interface{}
+	media_      io.Reader
+	ctx_        context.Context
+	protocol_   string
+	uploadOpts_ []googleapi.UploadOption
+	resumable_  *googleapi.ResumableUpload
 }
 
 // Insert: Starts a new asynchronous job. Requires the Can View project
@@ -2244,29 +2280,20 @@ func (r *JobsService) Insert(projectId string, job *Job) *JobsInsertCall {
 
 // Media specifies the media to upload in a single chunk.
 // At most one of Media and ResumableMedia may be set.
-func (c *JobsInsertCall) Media(r io.Reader) *JobsInsertCall {
+func (c *JobsInsertCall) Media(r io.Reader, opt ...googleapi.UploadOption) *JobsInsertCall {
 	c.media_ = r
 	c.protocol_ = "multipart"
+	c.uploadOpts_ = opt
 	return c
 }
 
 // ResumableMedia specifies the media to upload in chunks and can be cancelled with ctx.
 // At most one of Media and ResumableMedia may be set.
-// mediaType identifies the MIME media type of the upload, such as "image/png".
-// If mediaType is "", it will be auto-detected.
-func (c *JobsInsertCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *JobsInsertCall {
+func (c *JobsInsertCall) ResumableMedia(ctx context.Context, r io.Reader, opt ...googleapi.UploadOption) *JobsInsertCall {
 	c.ctx_ = ctx
-	c.resumable_ = io.NewSectionReader(r, 0, size)
-	c.mediaType_ = mediaType
+	c.media_ = r
 	c.protocol_ = "resumable"
-	return c
-}
-
-// ProgressUpdater provides a callback function that will be called after every chunk.
-// It should be a low-latency function in order to not slow down the upload operation.
-// This should only be called when using ResumableMedia (as opposed to Media).
-func (c *JobsInsertCall) ProgressUpdater(pu googleapi.ProgressUpdater) *JobsInsertCall {
-	c.opt_["progressUpdater"] = pu
+	c.uploadOpts_ = opt
 	return c
 }
 
@@ -2278,7 +2305,7 @@ func (c *JobsInsertCall) Fields(s ...googleapi.Field) *JobsInsertCall {
 	return c
 }
 
-func (c *JobsInsertCall) Do() (*Job, error) {
+func (c *JobsInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.job)
 	if err != nil {
@@ -2286,25 +2313,19 @@ func (c *JobsInsertCall) Do() (*Job, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/jobs")
-	var progressUpdater_ googleapi.ProgressUpdater
-	if v, ok := c.opt_["progressUpdater"]; ok {
-		if pu, ok := v.(googleapi.ProgressUpdater); ok {
-			progressUpdater_ = pu
-		}
-	}
-	if c.media_ != nil || c.resumable_ != nil {
+	if c.media_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
 		params.Set("uploadType", c.protocol_)
 	}
 	urls += "?" + params.Encode()
 	if c.protocol_ != "resumable" {
 		var cancel func()
-		cancel, _ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+		cancel, _ = googleapi.ConditionallyIncludeMedia(c.media_, c.uploadOpts_, &body, &ctype)
 		if cancel != nil {
 			defer cancel()
 		}
@@ -2314,16 +2335,25 @@ func (c *JobsInsertCall) Do() (*Job, error) {
 		"projectId": c.projectId,
 	})
 	if c.protocol_ == "resumable" {
-		if c.mediaType_ == "" {
-			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
+		c.resumable_ = &googleapi.ResumableUpload{
+			Client:    c.s.client,
+			UserAgent: c.s.userAgent(),
 		}
-		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
+		mediaType, err := c.resumable_.Configure(c.media_, c.uploadOpts_...)
+		if err != nil {
+			return nil, err
+		}
+		req.Header.Set("X-Upload-Content-Type", mediaType)
 		req.Header.Set("Content-Type", "application/json; charset=utf-8")
 	} else {
 		req.Header.Set("Content-Type", ctype)
 	}
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *JobsInsertCall) Do() (*Job, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2332,17 +2362,8 @@ func (c *JobsInsertCall) Do() (*Job, error) {
 		return nil, err
 	}
 	if c.protocol_ == "resumable" {
-		loc := res.Header.Get("Location")
-		rx := &googleapi.ResumableUpload{
-			Client:        c.s.client,
-			UserAgent:     c.s.userAgent(),
-			URI:           loc,
-			Media:         c.resumable_,
-			MediaType:     c.mediaType_,
-			ContentLength: c.resumable_.Size(),
-			Callback:      progressUpdater_,
-		}
-		res, err = rx.Upload(c.ctx_)
+		c.resumable_.URI = res.Header.Get("Location")
+		res, err = c.resumable_.Upload(c.ctx_)
 		if err != nil {
 			return nil, err
 		}
@@ -2473,10 +2494,10 @@ func (c *JobsListCall) Fields(s ...googleapi.Field) *JobsListCall {
 	return c
 }
 
-func (c *JobsListCall) Do() (*JobList, error) {
+func (c *JobsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["allUsers"]; ok {
 		params.Set("allUsers", fmt.Sprintf("%v", v))
 	}
@@ -2502,7 +2523,11 @@ func (c *JobsListCall) Do() (*JobList, error) {
 		"projectId": c.projectId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *JobsListCall) Do() (*JobList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2613,7 +2638,7 @@ func (c *JobsQueryCall) Fields(s ...googleapi.Field) *JobsQueryCall {
 	return c
 }
 
-func (c *JobsQueryCall) Do() (*QueryResponse, error) {
+func (c *JobsQueryCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.queryrequest)
 	if err != nil {
@@ -2621,7 +2646,7 @@ func (c *JobsQueryCall) Do() (*QueryResponse, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -2633,7 +2658,11 @@ func (c *JobsQueryCall) Do() (*QueryResponse, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *JobsQueryCall) Do() (*QueryResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2712,10 +2741,10 @@ func (c *ProjectsListCall) Fields(s ...googleapi.Field) *ProjectsListCall {
 	return c
 }
 
-func (c *ProjectsListCall) Do() (*ProjectList, error) {
+func (c *ProjectsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
@@ -2730,7 +2759,11 @@ func (c *ProjectsListCall) Do() (*ProjectList, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ProjectsListCall) Do() (*ProjectList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2802,7 +2835,7 @@ func (c *TabledataInsertAllCall) Fields(s ...googleapi.Field) *TabledataInsertAl
 	return c
 }
 
-func (c *TabledataInsertAllCall) Do() (*TableDataInsertAllResponse, error) {
+func (c *TabledataInsertAllCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.tabledatainsertallrequest)
 	if err != nil {
@@ -2810,7 +2843,7 @@ func (c *TabledataInsertAllCall) Do() (*TableDataInsertAllResponse, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -2824,7 +2857,11 @@ func (c *TabledataInsertAllCall) Do() (*TableDataInsertAllResponse, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TabledataInsertAllCall) Do() (*TableDataInsertAllResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2931,10 +2968,10 @@ func (c *TabledataListCall) Fields(s ...googleapi.Field) *TabledataListCall {
 	return c
 }
 
-func (c *TabledataListCall) Do() (*TableDataList, error) {
+func (c *TabledataListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
@@ -2956,7 +2993,11 @@ func (c *TabledataListCall) Do() (*TableDataList, error) {
 		"tableId":   c.tableId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TabledataListCall) Do() (*TableDataList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3055,10 +3096,10 @@ func (c *TablesDeleteCall) Fields(s ...googleapi.Field) *TablesDeleteCall {
 	return c
 }
 
-func (c *TablesDeleteCall) Do() error {
+func (c *TablesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -3071,7 +3112,11 @@ func (c *TablesDeleteCall) Do() error {
 		"tableId":   c.tableId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TablesDeleteCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -3147,10 +3192,10 @@ func (c *TablesGetCall) Fields(s ...googleapi.Field) *TablesGetCall {
 	return c
 }
 
-func (c *TablesGetCall) Do() (*Table, error) {
+func (c *TablesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -3163,7 +3208,11 @@ func (c *TablesGetCall) Do() (*Table, error) {
 		"tableId":   c.tableId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TablesGetCall) Do() (*Table, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3244,7 +3293,7 @@ func (c *TablesInsertCall) Fields(s ...googleapi.Field) *TablesInsertCall {
 	return c
 }
 
-func (c *TablesInsertCall) Do() (*Table, error) {
+func (c *TablesInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.table)
 	if err != nil {
@@ -3252,7 +3301,7 @@ func (c *TablesInsertCall) Do() (*Table, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -3265,7 +3314,11 @@ func (c *TablesInsertCall) Do() (*Table, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TablesInsertCall) Do() (*Table, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3355,10 +3408,10 @@ func (c *TablesListCall) Fields(s ...googleapi.Field) *TablesListCall {
 	return c
 }
 
-func (c *TablesListCall) Do() (*TableList, error) {
+func (c *TablesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
@@ -3376,7 +3429,11 @@ func (c *TablesListCall) Do() (*TableList, error) {
 		"datasetId": c.datasetId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TablesListCall) Do() (*TableList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3466,7 +3523,7 @@ func (c *TablesPatchCall) Fields(s ...googleapi.Field) *TablesPatchCall {
 	return c
 }
 
-func (c *TablesPatchCall) Do() (*Table, error) {
+func (c *TablesPatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.table)
 	if err != nil {
@@ -3474,7 +3531,7 @@ func (c *TablesPatchCall) Do() (*Table, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -3488,7 +3545,11 @@ func (c *TablesPatchCall) Do() (*Table, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TablesPatchCall) Do() (*Table, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3576,7 +3637,7 @@ func (c *TablesUpdateCall) Fields(s ...googleapi.Field) *TablesUpdateCall {
 	return c
 }
 
-func (c *TablesUpdateCall) Do() (*Table, error) {
+func (c *TablesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.table)
 	if err != nil {
@@ -3584,7 +3645,7 @@ func (c *TablesUpdateCall) Do() (*Table, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -3598,7 +3659,11 @@ func (c *TablesUpdateCall) Do() (*Table, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TablesUpdateCall) Do() (*Table, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}

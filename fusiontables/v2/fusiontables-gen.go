@@ -2311,14 +2311,14 @@ func (c *TableGetCall) Do() (*Table, error) {
 // method id "fusiontables.table.importRows":
 
 type TableImportRowsCall struct {
-	s          *Service
-	tableId    string
-	opt_       map[string]interface{}
-	media_     io.Reader
-	resumable_ googleapi.SizeReaderAt
-	mediaType_ string
-	ctx_       context.Context
-	protocol_  string
+	s           *Service
+	tableId     string
+	opt_        map[string]interface{}
+	media_      io.Reader
+	ctx_        context.Context
+	protocol_   string
+	uploadOpts_ []googleapi.UploadOption
+	resumable_  *googleapi.ResumableUpload
 }
 
 // ImportRows: Imports more rows into a table.
@@ -2370,29 +2370,20 @@ func (c *TableImportRowsCall) StartLine(startLine int64) *TableImportRowsCall {
 
 // Media specifies the media to upload in a single chunk.
 // At most one of Media and ResumableMedia may be set.
-func (c *TableImportRowsCall) Media(r io.Reader) *TableImportRowsCall {
+func (c *TableImportRowsCall) Media(r io.Reader, opt ...googleapi.UploadOption) *TableImportRowsCall {
 	c.media_ = r
 	c.protocol_ = "multipart"
+	c.uploadOpts_ = opt
 	return c
 }
 
 // ResumableMedia specifies the media to upload in chunks and can be cancelled with ctx.
 // At most one of Media and ResumableMedia may be set.
-// mediaType identifies the MIME media type of the upload, such as "image/png".
-// If mediaType is "", it will be auto-detected.
-func (c *TableImportRowsCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *TableImportRowsCall {
+func (c *TableImportRowsCall) ResumableMedia(ctx context.Context, r io.Reader, opt ...googleapi.UploadOption) *TableImportRowsCall {
 	c.ctx_ = ctx
-	c.resumable_ = io.NewSectionReader(r, 0, size)
-	c.mediaType_ = mediaType
+	c.media_ = r
 	c.protocol_ = "resumable"
-	return c
-}
-
-// ProgressUpdater provides a callback function that will be called after every chunk.
-// It should be a low-latency function in order to not slow down the upload operation.
-// This should only be called when using ResumableMedia (as opposed to Media).
-func (c *TableImportRowsCall) ProgressUpdater(pu googleapi.ProgressUpdater) *TableImportRowsCall {
-	c.opt_["progressUpdater"] = pu
+	c.uploadOpts_ = opt
 	return c
 }
 
@@ -2427,7 +2418,7 @@ func (c *TableImportRowsCall) doRequest(alt string) (*http.Response, error) {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{tableId}/import")
-	if c.media_ != nil || c.resumable_ != nil {
+	if c.media_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
 		params.Set("uploadType", c.protocol_)
 	}
@@ -2436,7 +2427,7 @@ func (c *TableImportRowsCall) doRequest(alt string) (*http.Response, error) {
 	ctype := "application/json"
 	if c.protocol_ != "resumable" {
 		var cancel func()
-		cancel, _ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+		cancel, _ = googleapi.ConditionallyIncludeMedia(c.media_, c.uploadOpts_, &body, &ctype)
 		if cancel != nil {
 			defer cancel()
 		}
@@ -2446,10 +2437,15 @@ func (c *TableImportRowsCall) doRequest(alt string) (*http.Response, error) {
 		"tableId": c.tableId,
 	})
 	if c.protocol_ == "resumable" {
-		if c.mediaType_ == "" {
-			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
+		c.resumable_ = &googleapi.ResumableUpload{
+			Client:    c.s.client,
+			UserAgent: c.s.userAgent(),
 		}
-		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
+		mediaType, err := c.resumable_.Configure(c.media_, c.uploadOpts_...)
+		if err != nil {
+			return nil, err
+		}
+		req.Header.Set("X-Upload-Content-Type", mediaType)
 		req.Header.Set("Content-Type", "application/json; charset=utf-8")
 	} else {
 		req.Header.Set("Content-Type", ctype)
@@ -2467,24 +2463,9 @@ func (c *TableImportRowsCall) Do() (*Import, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var progressUpdater_ googleapi.ProgressUpdater
-	if v, ok := c.opt_["progressUpdater"]; ok {
-		if pu, ok := v.(googleapi.ProgressUpdater); ok {
-			progressUpdater_ = pu
-		}
-	}
 	if c.protocol_ == "resumable" {
-		loc := res.Header.Get("Location")
-		rx := &googleapi.ResumableUpload{
-			Client:        c.s.client,
-			UserAgent:     c.s.userAgent(),
-			URI:           loc,
-			Media:         c.resumable_,
-			MediaType:     c.mediaType_,
-			ContentLength: c.resumable_.Size(),
-			Callback:      progressUpdater_,
-		}
-		res, err = rx.Upload(c.ctx_)
+		c.resumable_.URI = res.Header.Get("Location")
+		res, err = c.resumable_.Upload(c.ctx_)
 		if err != nil {
 			return nil, err
 		}
@@ -2568,14 +2549,14 @@ func (c *TableImportRowsCall) Do() (*Import, error) {
 // method id "fusiontables.table.importTable":
 
 type TableImportTableCall struct {
-	s          *Service
-	name       string
-	opt_       map[string]interface{}
-	media_     io.Reader
-	resumable_ googleapi.SizeReaderAt
-	mediaType_ string
-	ctx_       context.Context
-	protocol_  string
+	s           *Service
+	name        string
+	opt_        map[string]interface{}
+	media_      io.Reader
+	ctx_        context.Context
+	protocol_   string
+	uploadOpts_ []googleapi.UploadOption
+	resumable_  *googleapi.ResumableUpload
 }
 
 // ImportTable: Imports a new table.
@@ -2603,29 +2584,20 @@ func (c *TableImportTableCall) Encoding(encoding string) *TableImportTableCall {
 
 // Media specifies the media to upload in a single chunk.
 // At most one of Media and ResumableMedia may be set.
-func (c *TableImportTableCall) Media(r io.Reader) *TableImportTableCall {
+func (c *TableImportTableCall) Media(r io.Reader, opt ...googleapi.UploadOption) *TableImportTableCall {
 	c.media_ = r
 	c.protocol_ = "multipart"
+	c.uploadOpts_ = opt
 	return c
 }
 
 // ResumableMedia specifies the media to upload in chunks and can be cancelled with ctx.
 // At most one of Media and ResumableMedia may be set.
-// mediaType identifies the MIME media type of the upload, such as "image/png".
-// If mediaType is "", it will be auto-detected.
-func (c *TableImportTableCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *TableImportTableCall {
+func (c *TableImportTableCall) ResumableMedia(ctx context.Context, r io.Reader, opt ...googleapi.UploadOption) *TableImportTableCall {
 	c.ctx_ = ctx
-	c.resumable_ = io.NewSectionReader(r, 0, size)
-	c.mediaType_ = mediaType
+	c.media_ = r
 	c.protocol_ = "resumable"
-	return c
-}
-
-// ProgressUpdater provides a callback function that will be called after every chunk.
-// It should be a low-latency function in order to not slow down the upload operation.
-// This should only be called when using ResumableMedia (as opposed to Media).
-func (c *TableImportTableCall) ProgressUpdater(pu googleapi.ProgressUpdater) *TableImportTableCall {
-	c.opt_["progressUpdater"] = pu
+	c.uploadOpts_ = opt
 	return c
 }
 
@@ -2652,7 +2624,7 @@ func (c *TableImportTableCall) doRequest(alt string) (*http.Response, error) {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/import")
-	if c.media_ != nil || c.resumable_ != nil {
+	if c.media_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
 		params.Set("uploadType", c.protocol_)
 	}
@@ -2661,7 +2633,7 @@ func (c *TableImportTableCall) doRequest(alt string) (*http.Response, error) {
 	ctype := "application/json"
 	if c.protocol_ != "resumable" {
 		var cancel func()
-		cancel, _ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+		cancel, _ = googleapi.ConditionallyIncludeMedia(c.media_, c.uploadOpts_, &body, &ctype)
 		if cancel != nil {
 			defer cancel()
 		}
@@ -2669,10 +2641,15 @@ func (c *TableImportTableCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	if c.protocol_ == "resumable" {
-		if c.mediaType_ == "" {
-			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
+		c.resumable_ = &googleapi.ResumableUpload{
+			Client:    c.s.client,
+			UserAgent: c.s.userAgent(),
 		}
-		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
+		mediaType, err := c.resumable_.Configure(c.media_, c.uploadOpts_...)
+		if err != nil {
+			return nil, err
+		}
+		req.Header.Set("X-Upload-Content-Type", mediaType)
 		req.Header.Set("Content-Type", "application/json; charset=utf-8")
 	} else {
 		req.Header.Set("Content-Type", ctype)
@@ -2690,24 +2667,9 @@ func (c *TableImportTableCall) Do() (*Table, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var progressUpdater_ googleapi.ProgressUpdater
-	if v, ok := c.opt_["progressUpdater"]; ok {
-		if pu, ok := v.(googleapi.ProgressUpdater); ok {
-			progressUpdater_ = pu
-		}
-	}
 	if c.protocol_ == "resumable" {
-		loc := res.Header.Get("Location")
-		rx := &googleapi.ResumableUpload{
-			Client:        c.s.client,
-			UserAgent:     c.s.userAgent(),
-			URI:           loc,
-			Media:         c.resumable_,
-			MediaType:     c.mediaType_,
-			ContentLength: c.resumable_.Size(),
-			Callback:      progressUpdater_,
-		}
-		res, err = rx.Upload(c.ctx_)
+		c.resumable_.URI = res.Header.Get("Location")
+		res, err = c.resumable_.Upload(c.ctx_)
 		if err != nil {
 			return nil, err
 		}
@@ -3060,14 +3022,14 @@ func (c *TablePatchCall) Do() (*Table, error) {
 // method id "fusiontables.table.replaceRows":
 
 type TableReplaceRowsCall struct {
-	s          *Service
-	tableId    string
-	opt_       map[string]interface{}
-	media_     io.Reader
-	resumable_ googleapi.SizeReaderAt
-	mediaType_ string
-	ctx_       context.Context
-	protocol_  string
+	s           *Service
+	tableId     string
+	opt_        map[string]interface{}
+	media_      io.Reader
+	ctx_        context.Context
+	protocol_   string
+	uploadOpts_ []googleapi.UploadOption
+	resumable_  *googleapi.ResumableUpload
 }
 
 // ReplaceRows: Replaces rows of an existing table. Current rows remain
@@ -3122,29 +3084,20 @@ func (c *TableReplaceRowsCall) StartLine(startLine int64) *TableReplaceRowsCall 
 
 // Media specifies the media to upload in a single chunk.
 // At most one of Media and ResumableMedia may be set.
-func (c *TableReplaceRowsCall) Media(r io.Reader) *TableReplaceRowsCall {
+func (c *TableReplaceRowsCall) Media(r io.Reader, opt ...googleapi.UploadOption) *TableReplaceRowsCall {
 	c.media_ = r
 	c.protocol_ = "multipart"
+	c.uploadOpts_ = opt
 	return c
 }
 
 // ResumableMedia specifies the media to upload in chunks and can be cancelled with ctx.
 // At most one of Media and ResumableMedia may be set.
-// mediaType identifies the MIME media type of the upload, such as "image/png".
-// If mediaType is "", it will be auto-detected.
-func (c *TableReplaceRowsCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *TableReplaceRowsCall {
+func (c *TableReplaceRowsCall) ResumableMedia(ctx context.Context, r io.Reader, opt ...googleapi.UploadOption) *TableReplaceRowsCall {
 	c.ctx_ = ctx
-	c.resumable_ = io.NewSectionReader(r, 0, size)
-	c.mediaType_ = mediaType
+	c.media_ = r
 	c.protocol_ = "resumable"
-	return c
-}
-
-// ProgressUpdater provides a callback function that will be called after every chunk.
-// It should be a low-latency function in order to not slow down the upload operation.
-// This should only be called when using ResumableMedia (as opposed to Media).
-func (c *TableReplaceRowsCall) ProgressUpdater(pu googleapi.ProgressUpdater) *TableReplaceRowsCall {
-	c.opt_["progressUpdater"] = pu
+	c.uploadOpts_ = opt
 	return c
 }
 
@@ -3179,7 +3132,7 @@ func (c *TableReplaceRowsCall) doRequest(alt string) (*http.Response, error) {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{tableId}/replace")
-	if c.media_ != nil || c.resumable_ != nil {
+	if c.media_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
 		params.Set("uploadType", c.protocol_)
 	}
@@ -3188,7 +3141,7 @@ func (c *TableReplaceRowsCall) doRequest(alt string) (*http.Response, error) {
 	ctype := "application/json"
 	if c.protocol_ != "resumable" {
 		var cancel func()
-		cancel, _ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+		cancel, _ = googleapi.ConditionallyIncludeMedia(c.media_, c.uploadOpts_, &body, &ctype)
 		if cancel != nil {
 			defer cancel()
 		}
@@ -3198,10 +3151,15 @@ func (c *TableReplaceRowsCall) doRequest(alt string) (*http.Response, error) {
 		"tableId": c.tableId,
 	})
 	if c.protocol_ == "resumable" {
-		if c.mediaType_ == "" {
-			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
+		c.resumable_ = &googleapi.ResumableUpload{
+			Client:    c.s.client,
+			UserAgent: c.s.userAgent(),
 		}
-		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
+		mediaType, err := c.resumable_.Configure(c.media_, c.uploadOpts_...)
+		if err != nil {
+			return nil, err
+		}
+		req.Header.Set("X-Upload-Content-Type", mediaType)
 		req.Header.Set("Content-Type", "application/json; charset=utf-8")
 	} else {
 		req.Header.Set("Content-Type", ctype)
@@ -3219,24 +3177,9 @@ func (c *TableReplaceRowsCall) Do() (*Task, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var progressUpdater_ googleapi.ProgressUpdater
-	if v, ok := c.opt_["progressUpdater"]; ok {
-		if pu, ok := v.(googleapi.ProgressUpdater); ok {
-			progressUpdater_ = pu
-		}
-	}
 	if c.protocol_ == "resumable" {
-		loc := res.Header.Get("Location")
-		rx := &googleapi.ResumableUpload{
-			Client:        c.s.client,
-			UserAgent:     c.s.userAgent(),
-			URI:           loc,
-			Media:         c.resumable_,
-			MediaType:     c.mediaType_,
-			ContentLength: c.resumable_.Size(),
-			Callback:      progressUpdater_,
-		}
-		res, err = rx.Upload(c.ctx_)
+		c.resumable_.URI = res.Header.Get("Location")
+		res, err = c.resumable_.Upload(c.ctx_)
 		if err != nil {
 			return nil, err
 		}

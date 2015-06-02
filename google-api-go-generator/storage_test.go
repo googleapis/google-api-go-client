@@ -1,7 +1,9 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
@@ -10,132 +12,144 @@ import (
 	"testing/iotest"
 
 	"golang.org/x/net/context"
+	"google.golang.org/api/googleapi"
 	storage "google.golang.org/api/storage/v1"
 )
 
+type briefString string
+
+func (s briefString) String() string {
+	if len(s) < 20 {
+		return string(s)
+	}
+	return fmt.Sprintf("%v...%d chars...%v", s[0:8], len(s)-16, s[len(s)-8:])
+}
+
+type myResp struct {
+	statusCode int
+	header     http.Header
+	body       []byte
+}
+
 type myHandler struct {
-	location string
-	r        *http.Request
-	body     []byte
-	err      error
+	resps  []myResp
+	r      *http.Request
+	reqs   []*http.Request
+	body   []byte
+	bodies [][]byte
+	err    error
 }
 
 func (h *myHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	h.r = r
-	if h.location != "" {
-		w.Header().Set("Location", h.location)
-	}
+	h.reqs = append(h.reqs, r)
 	h.body, h.err = ioutil.ReadAll(r.Body)
+	h.bodies = append(h.bodies, h.body)
+	if len(h.resps) > 0 {
+		resp := h.resps[0]
+		h.resps = h.resps[1:]
+		for k, values := range resp.header {
+			for _, value := range values {
+				w.Header().Add(k, value)
+			}
+		}
+		if resp.statusCode > 0 {
+			w.WriteHeader(resp.statusCode)
+		}
+		if resp.body != nil {
+			io.Copy(w, bytes.NewReader(resp.body))
+		}
+		return
+	}
 	fmt.Fprintf(w, "{}")
 }
 
 func TestMedia(t *testing.T) {
-	handler := &myHandler{}
-	server := httptest.NewServer(handler)
-	defer server.Close()
-
-	client := &http.Client{}
-	s, err := storage.New(client)
-	if err != nil {
-		t.Fatalf("unable to create service: %v", err)
-	}
-	s.BasePath = server.URL
-
 	const body = "fake media data"
-	f := strings.NewReader(body)
-	o := &storage.Object{
-		Bucket:          "mybucket",
-		Name:            "filename",
-		ContentType:     "plain/text",
-		ContentEncoding: "utf-8",
-		ContentLanguage: "en",
-	}
-	_, err = s.Objects.Insert("mybucket", o).Media(f).Do()
-	if err != nil {
-		t.Fatalf("unable to insert object: %v", err)
-	}
-	g := handler.r
-	if w := "POST"; g.Method != w {
-		t.Errorf("Method = %q; want %q", g.Method, w)
-	}
-	if w := "HTTP/1.1"; g.Proto != w {
-		t.Errorf("Proto = %q; want %q", g.Proto, w)
-	}
-	if w := 1; g.ProtoMajor != w {
-		t.Errorf("ProtoMajor = %v; want %v", g.ProtoMajor, w)
-	}
-	if w := 1; g.ProtoMinor != w {
-		t.Errorf("ProtoMinor = %v; want %v", g.ProtoMinor, w)
-	}
-	if w, k := "google-api-go-client/0.5", "User-Agent"; len(g.Header[k]) != 1 || g.Header[k][0] != w {
-		t.Errorf("header %q = %#v; want %q", k, g.Header[k], w)
-	}
-	if w, k := "multipart/related; boundary=", "Content-Type"; len(g.Header[k]) != 1 || !strings.HasPrefix(g.Header[k][0], w) {
-		t.Errorf("header %q = %#v; want %q", k, g.Header[k], w)
-	}
-	if w, k := "gzip", "Accept-Encoding"; len(g.Header[k]) != 1 || g.Header[k][0] != w {
-		t.Errorf("header %q = %#v; want %q", k, g.Header[k], w)
-	}
-	if w := int64(-1); g.ContentLength != w {
-		t.Errorf("ContentLength = %v; want %v", g.ContentLength, w)
-	}
-	if w := "chunked"; len(g.TransferEncoding) != 1 || g.TransferEncoding[0] != w {
-		t.Errorf("TransferEncoding = %#v; want %q", g.TransferEncoding, w)
-	}
-	if w := strings.TrimPrefix(s.BasePath, "http://"); g.Host != w {
-		t.Errorf("Host = %q; want %q", g.Host, w)
-	}
-	if g.Form != nil {
-		t.Errorf("Form = %#v; want nil", g.Form)
-	}
-	if g.PostForm != nil {
-		t.Errorf("PostForm = %#v; want nil", g.PostForm)
-	}
-	if g.MultipartForm != nil {
-		t.Errorf("MultipartForm = %#v; want nil", g.MultipartForm)
-	}
-	if w := s.BasePath + "/b/mybucket/o?alt=json&uploadType=multipart"; g.RequestURI != w {
-		t.Errorf("RequestURI = %q; want %q", g.RequestURI, w)
-	}
-	if w := "\r\n\r\n" + body + "\r\n"; !strings.Contains(string(handler.body), w) {
-		t.Errorf("Body = %q, want substring %q", handler.body, w)
-	}
-	if handler.err != nil {
-		t.Errorf("handler err = %v, want nil", handler.err)
+	const bogusMediaType = "foo/bar"
+	setMediaType := googleapi.SetMediaType(bogusMediaType)
+	options := [][]googleapi.UploadOption{nil, []googleapi.UploadOption{setMediaType}}
+	contentTypes := []string{http.DetectContentType([]byte(body)), bogusMediaType}
+
+	for i, opts := range options {
+		contentType := contentTypes[i]
+		handler := &myHandler{}
+		server := httptest.NewServer(handler)
+		defer server.Close()
+
+		client := &http.Client{}
+		s, err := storage.New(client)
+		if err != nil {
+			t.Fatalf("unable to create service: %v", err)
+		}
+		s.BasePath = server.URL
+
+		f := strings.NewReader(body)
+		o := &storage.Object{
+			Bucket:          "mybucket",
+			Name:            "filename",
+			ContentType:     "plain/text",
+			ContentEncoding: "utf-8",
+			ContentLanguage: "en",
+		}
+		_, err = s.Objects.Insert("mybucket", o).Media(f, opts...).Do()
+		if err != nil {
+			t.Fatalf("unable to insert object: %v", err)
+		}
+		g := handler.r
+		if w := "POST"; g.Method != w {
+			t.Errorf("Method = %q; want %q", g.Method, w)
+		}
+		if w := "HTTP/1.1"; g.Proto != w {
+			t.Errorf("Proto = %q; want %q", g.Proto, w)
+		}
+		if w := 1; g.ProtoMajor != w {
+			t.Errorf("ProtoMajor = %v; want %v", g.ProtoMajor, w)
+		}
+		if w := 1; g.ProtoMinor != w {
+			t.Errorf("ProtoMinor = %v; want %v", g.ProtoMinor, w)
+		}
+		if w, k := "google-api-go-client/0.5", "User-Agent"; len(g.Header[k]) != 1 || g.Header[k][0] != w {
+			t.Errorf("header %q = %#v; want %q", k, g.Header[k], w)
+		}
+		if w, k := "multipart/related; boundary=", "Content-Type"; len(g.Header[k]) != 1 || !strings.HasPrefix(g.Header[k][0], w) {
+			t.Errorf("header %q = %#v; want %q", k, g.Header[k], w)
+		}
+		if w, k := "gzip", "Accept-Encoding"; len(g.Header[k]) != 1 || g.Header[k][0] != w {
+			t.Errorf("header %q = %#v; want %q", k, g.Header[k], w)
+		}
+		if w := int64(-1); g.ContentLength != w {
+			t.Errorf("ContentLength = %v; want %v", g.ContentLength, w)
+		}
+		if w := "chunked"; len(g.TransferEncoding) != 1 || g.TransferEncoding[0] != w {
+			t.Errorf("TransferEncoding = %#v; want %q", g.TransferEncoding, w)
+		}
+		if w := strings.TrimPrefix(s.BasePath, "http://"); g.Host != w {
+			t.Errorf("Host = %q; want %q", g.Host, w)
+		}
+		if g.Form != nil {
+			t.Errorf("Form = %#v; want nil", g.Form)
+		}
+		if g.PostForm != nil {
+			t.Errorf("PostForm = %#v; want nil", g.PostForm)
+		}
+		if g.MultipartForm != nil {
+			t.Errorf("MultipartForm = %#v; want nil", g.MultipartForm)
+		}
+		if w := s.BasePath + "/b/mybucket/o?alt=json&uploadType=multipart"; g.RequestURI != w {
+			t.Errorf("RequestURI = %q; want %q", g.RequestURI, w)
+		}
+		if w := "Content-Type: " + contentType + "\r\n\r\n" + body + "\r\n"; !strings.Contains(string(handler.body), w) {
+			t.Errorf("Body = %q, want substring %q", handler.body, w)
+		}
+		if handler.err != nil {
+			t.Errorf("handler err = %v, want nil", handler.err)
+		}
 	}
 }
 
-func TestResumableMedia(t *testing.T) {
-	handler := &myHandler{}
-	server := httptest.NewServer(handler)
-	defer server.Close()
-
-	handler.location = server.URL
-	client := &http.Client{}
-	s, err := storage.New(client)
-	if err != nil {
-		t.Fatalf("unable to create service: %v", err)
-	}
-	s.BasePath = server.URL
-
-	const data = "fake resumable media data"
-	f := strings.NewReader(data)
-	o := &storage.Object{
-		Bucket:          "mybucket",
-		Name:            "filename",
-		ContentType:     "plain/text",
-		ContentEncoding: "utf-8",
-		ContentLanguage: "en",
-	}
-	// If all goes well, this will cause two POST requests to be sent to our fake GCS server:
-	// 1. Resumable upload session initiation request, to which server will respond with 200 OK and Location header.
-	// 2. Upload of the first and only chunk, with Content-Range header set to specify entire content.
-	// The test below verifies the content and headers of this second POST request.
-	_, err = s.Objects.Insert("mybucket", o).Name("filename").ResumableMedia(context.Background(), f, int64(len(data)), "text/plain").Do()
-	if err != nil {
-		t.Fatalf("unable to insert object: %v", err)
-	}
-	g := handler.r
+// verifyResumableMediaRequest verifies resumable upload request headers and body
+func verifyResumableMediaRequest(t *testing.T, g *http.Request, body []byte, contentType string, contentRange string, contentLength int64, bodyWanted string) {
 	if w := "POST"; g.Method != w {
 		t.Errorf("Method = %q; want %q", g.Method, w)
 	}
@@ -151,20 +165,20 @@ func TestResumableMedia(t *testing.T) {
 	if w, k := "google-api-go-client/0.5", "User-Agent"; len(g.Header[k]) != 1 || g.Header[k][0] != w {
 		t.Errorf("header %q = %#v; want %q", k, g.Header[k], w)
 	}
-	if w, k := "text/plain", "Content-Type"; len(g.Header[k]) != 1 || g.Header[k][0] != w {
+	if w, k := contentType, "Content-Type"; len(g.Header[k]) != 1 || g.Header[k][0] != w {
 		t.Errorf("header %q = %#v; want %v", k, g.Header[k], w)
 	}
-	if w, k := fmt.Sprintf("bytes 0-%v/%v", len(data)-1, len(data)), "Content-Range"; len(g.Header[k]) != 1 || g.Header[k][0] != w {
+	if w, k := contentRange, "Content-Range"; len(g.Header[k]) != 1 || g.Header[k][0] != w {
 		t.Errorf("header %q = %#v; want %v", k, g.Header[k], w)
 	}
 	if w, k := "gzip", "Accept-Encoding"; len(g.Header[k]) != 1 || g.Header[k][0] != w {
 		t.Errorf("header %q = %#v; want %q", k, g.Header[k], w)
 	}
-	if w := int64(len(data)); g.ContentLength != w {
+	if w := contentLength; g.ContentLength != w {
 		t.Errorf("ContentLength = %v; want %v", g.ContentLength, w)
 	}
-	if s := string(handler.body); s != data {
-		t.Errorf("body = %q; want %q", s, data)
+	if s, w := string(body), bodyWanted; s != w {
+		t.Errorf("body = %q; want %q", briefString(s), briefString(w))
 	}
 	if len(g.TransferEncoding) != 0 {
 		t.Errorf("TransferEncoding = %#v; want nil", g.TransferEncoding)
@@ -178,9 +192,148 @@ func TestResumableMedia(t *testing.T) {
 	if g.MultipartForm != nil {
 		t.Errorf("MultipartForm = %#v; want nil", g.MultipartForm)
 	}
+}
+
+// testResumableMediaHelper creates a httptest.Server and runs resumable upload flow against it.
+// The server plays out a premeditated sequence of responses:
+//   1a. CLIENT ---- upload session initiation request   ---> SERVER
+//   1b.        <--- 200 OK (Location header, no body)   ----
+//   2a.        ---- first chunk of content              --->
+//   2b.        <--- 500 (server error)                  ----
+//   3a.        ---- upload status request               --->
+//   3b.        <--- 308 resume incomplete, range header ----
+//   4a.        ---- new chunk of content                --->
+//   4b.        <--- 200 OK (upload complete)            ----
+// Parameter received specifies how many bytes the server should pretend to have received and stored
+// as part of 2a prior to encountering an error (2b). Range header in response 3b therefore specifies
+// range "bytes=0-(received-1)", or "bytes=*" if received is 0.
+func testResumableMediaHelper(t *testing.T, received int, rdr io.Reader, opt ...googleapi.UploadOption) *myHandler {
+	handler := &myHandler{}
+	server := httptest.NewServer(handler)
+	defer server.Close()
+	rangeHdr := "*"
+	if received > 0 {
+		rangeHdr = fmt.Sprintf("bytes=0-%v", received-1)
+	}
+	handler.resps = []myResp{
+		// response to session initiation request: empty 200 OK with Location header
+		myResp{header: http.Header{"Location": []string{server.URL}}},
+		// response to first chunk: empty 500 to trigger status request
+		myResp{statusCode: 500},
+		// response to status request: 308 Resume Incomplete with Range header
+		myResp{statusCode: 308, header: http.Header{"Range": []string{rangeHdr}}},
+		// response to the resumed content: 200 OK, meaning upload complete
+		myResp{body: []byte("{}")},
+	}
+
+	client := &http.Client{}
+	s, err := storage.New(client)
+	if err != nil {
+		t.Fatalf("unable to create service: %v", err)
+	}
+	s.BasePath = server.URL
+
+	o := &storage.Object{
+		Bucket:          "mybucket",
+		Name:            "filename",
+		ContentType:     "plain/text",
+		ContentEncoding: "utf-8",
+		ContentLanguage: "en",
+	}
+
+	// This should trigger the HTTP request/response sequence above to play out. The final
+	// request to the server should be the resumed upload of the partial content (bytes
+	// 6-end).
+	_, err = s.Objects.Insert("mybucket", o).Name("filename").ResumableMedia(context.Background(), rdr, opt...).Do()
+	if err != nil {
+		t.Fatalf("unable to insert object: %v", err)
+	}
 	if handler.err != nil {
 		t.Errorf("handler err = %v, want nil", handler.err)
 	}
+	if l, w := len(handler.reqs), 4; l != w {
+		t.Fatalf("Seen %v requests; want %v", l, w)
+	}
+	return handler
+}
+
+// sizedReader wraps strings.Reader with an additional Size() method.
+type sizedReader struct {
+	strings.Reader
+}
+
+func (sr *sizedReader) Size() int64 { return int64(sr.Len()) }
+
+func TestResumableMedia(t *testing.T) {
+	const received = 6 // pretend server received this many bytes before server error
+	data := strings.Repeat("fake resumable media data", 2000)
+	dataLen := int64(len(data))
+	bogusMediaType := "foo/bar"
+	mediaType := http.DetectContentType([]byte(data))
+
+	// Temporarily shorten the default chunk size so we can observe chunking.
+	// We've chosen new default chunkSize (dataLen-3) to be shorter than the full content
+	// to be sent (dataLen), but longer than the rest of the content to be sent after upload
+	// resumption (dataLen-6).
+	// That way the upload should complete in the same number of requests regardless of
+	// whether chunking is taking place, so we can use the same sequence of fake server
+	// responses in all cases. We observe chunking indirectly, by observing content
+	// size and content range header.
+	chunkSize, origChunkSize := dataLen-3, googleapi.ChunkSize
+	googleapi.ChunkSize = chunkSize
+	defer func() { googleapi.ChunkSize = origChunkSize }()
+
+	// Note that strings.Reader supports io.ReaderAt interface, but content will be
+	// buffered since content size is not known. We expect chunking to take place.
+	t.Log("Resumable upload, buffered chunker")
+	handler := testResumableMediaHelper(t, received, strings.NewReader(data))
+	// Verify first chunk with data payload
+	verifyResumableMediaRequest(t, handler.reqs[1], handler.bodies[1],
+		mediaType,
+		fmt.Sprintf("bytes %v-%v/%v", 0, chunkSize-1, "*"),
+		chunkSize,
+		data[:chunkSize])
+	// Verify second chunk with data payload (one after upload resumption)
+	verifyResumableMediaRequest(t, handler.reqs[3], handler.bodies[3],
+		mediaType,
+		fmt.Sprintf("bytes %v-%v/%v", received, dataLen-1, dataLen),
+		dataLen-received,
+		data[received:])
+
+	// Here we explicitly specify content size, allowing io.ReaderAt usage. No chunking expected.
+	t.Log("Resumable upload, io.ReaderAt, no chunking")
+	sr := &sizedReader{*strings.NewReader(data)}
+	handler = testResumableMediaHelper(t, received, sr)
+	verifyResumableMediaRequest(t, handler.reqs[1], handler.bodies[1],
+		mediaType,
+		fmt.Sprintf("bytes %v-%v/%v", 0, dataLen-1, dataLen),
+		dataLen,
+		data)
+	verifyResumableMediaRequest(t, handler.reqs[3], handler.bodies[3],
+		mediaType,
+		fmt.Sprintf("bytes %v-%v/%v", received, dataLen-1, dataLen),
+		dataLen-received,
+		data[received:])
+
+	// empty content tests
+	var empty []byte
+	emptyType := http.DetectContentType(empty)
+	t.Log("Resumable upload, empty content, size not known up-front")
+	handler = testResumableMediaHelper(t, 0, bytes.NewReader(empty))
+	verifyResumableMediaRequest(t, handler.reqs[1], handler.bodies[1], emptyType, "bytes */0", 0, "")
+	verifyResumableMediaRequest(t, handler.reqs[3], handler.bodies[3], emptyType, "bytes */0", 0, "")
+
+	// same as above, but with media type specified
+	t.Log("Resumable upload, empty content, size not known up-front, media type set")
+	handler = testResumableMediaHelper(t, 0, bytes.NewReader(empty), googleapi.SetMediaType(bogusMediaType))
+	verifyResumableMediaRequest(t, handler.reqs[1], handler.bodies[1], bogusMediaType, "bytes */0", 0, "")
+	verifyResumableMediaRequest(t, handler.reqs[3], handler.bodies[3], bogusMediaType, "bytes */0", 0, "")
+
+	t.Log("Resumable upload, empty content, size known up-front")
+	sr = &sizedReader{*strings.NewReader("")}
+	handler = testResumableMediaHelper(t, 0, sr)
+	verifyResumableMediaRequest(t, handler.reqs[1], handler.bodies[1], emptyType, "bytes */0", 0, "")
+	verifyResumableMediaRequest(t, handler.reqs[3], handler.bodies[3], emptyType, "bytes */0", 0, "")
 }
 
 func TestNoMedia(t *testing.T) {
@@ -258,36 +411,44 @@ func TestNoMedia(t *testing.T) {
 }
 
 func TestMediaErrHandling(t *testing.T) {
-	handler := &myHandler{}
-	server := httptest.NewServer(handler)
-	defer server.Close()
+	for _, resumable := range []bool{false, true} {
+		handler := &myHandler{}
+		server := httptest.NewServer(handler)
+		defer server.Close()
 
-	client := &http.Client{}
-	s, err := storage.New(client)
-	if err != nil {
-		t.Fatalf("unable to create service: %v", err)
-	}
-	s.BasePath = server.URL
+		client := &http.Client{}
+		s, err := storage.New(client)
+		if err != nil {
+			t.Fatalf("unable to create service: %v", err)
+		}
+		s.BasePath = server.URL
 
-	const body = "fake media data"
-	f := strings.NewReader(body)
-	// The combination of TimeoutReader and OneByteReader causes the first byte to
-	// be successfully delivered, but then a timeout error is reported.  This
-	// allows us to test the goroutine within the getMediaType function.
-	r := iotest.TimeoutReader(iotest.OneByteReader(f))
-	o := &storage.Object{
-		Bucket:          "mybucket",
-		Name:            "filename",
-		ContentType:     "plain/text",
-		ContentEncoding: "utf-8",
-		ContentLanguage: "en",
-	}
-	_, err = s.Objects.Insert("mybucket", o).Media(r).Do()
-	if err == nil || !strings.Contains(err.Error(), "timeout") {
-		t.Errorf("expected timeout error, got %v", err)
-	}
-	if handler.err != nil {
-		t.Errorf("handler err = %v, want nil", handler.err)
+		const body = "fake media data"
+		f := strings.NewReader(body)
+		// The combination of TimeoutReader and OneByteReader causes the first byte to
+		// be successfully delivered, but then a timeout error is reported.  This
+		// allows us to test the goroutine within the getMediaType function.
+		r := iotest.TimeoutReader(iotest.OneByteReader(f))
+		o := &storage.Object{
+			Bucket:          "mybucket",
+			Name:            "filename",
+			ContentType:     "plain/text",
+			ContentEncoding: "utf-8",
+			ContentLanguage: "en",
+		}
+		intermediate := s.Objects.Insert("mybucket", o)
+		if resumable {
+			intermediate = intermediate.Media(r)
+		} else {
+			intermediate = intermediate.ResumableMedia(context.Background(), r)
+		}
+		_, err = intermediate.Do()
+		if err == nil || !strings.Contains(err.Error(), "timeout") {
+			t.Errorf("[resumable=%v]: expected timeout error, got %v", resumable, err)
+		}
+		if handler.err != nil {
+			t.Errorf("[resumable=%v]: handler err = %v, want nil", resumable, handler.err)
+		}
 	}
 }
 

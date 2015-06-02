@@ -549,7 +549,8 @@ type UsersDraftsCreateCall struct {
 	draft      *Draft
 	opt_       map[string]interface{}
 	media_     io.Reader
-	resumable_ googleapi.SizeReaderAt
+	size_      int64
+	chunkSize_ int64
 	mediaType_ string
 	ctx_       context.Context
 	protocol_  string
@@ -575,10 +576,12 @@ func (c *UsersDraftsCreateCall) Media(r io.Reader) *UsersDraftsCreateCall {
 // At most one of Media and ResumableMedia may be set.
 // mediaType identifies the MIME media type of the upload, such as "image/png".
 // If mediaType is "", it will be auto-detected.
-func (c *UsersDraftsCreateCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *UsersDraftsCreateCall {
+func (c *UsersDraftsCreateCall) ResumableMedia(ctx context.Context, r io.Reader, size int64, chunkSize int64, mediaType string) *UsersDraftsCreateCall {
 	c.ctx_ = ctx
-	c.resumable_ = io.NewSectionReader(r, 0, size)
+	c.media_ = r
 	c.mediaType_ = mediaType
+	c.size_ = size
+	c.chunkSize_ = chunkSize
 	c.protocol_ = "resumable"
 	return c
 }
@@ -618,7 +621,7 @@ func (c *UsersDraftsCreateCall) Do() (*Draft, error) {
 			progressUpdater_ = pu
 		}
 	}
-	if c.media_ != nil || c.resumable_ != nil {
+	if c.media_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
 		params.Set("uploadType", c.protocol_)
 	}
@@ -634,9 +637,18 @@ func (c *UsersDraftsCreateCall) Do() (*Draft, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"userId": c.userId,
 	})
+	var limited bool
+	var resumable io.ReaderAt
 	if c.protocol_ == "resumable" {
+		var ok bool
+		if resumable, ok = c.media_.(io.ReaderAt); ok && c.size_ > 0 {
+			limited = false
+		} else {
+			limited = true
+			resumable = googleapi.NewFakeReaderAt(c.media_)
+		}
 		if c.mediaType_ == "" {
-			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
+			c.mediaType_ = googleapi.DetectMediaType(resumable)
 		}
 		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
 		req.Header.Set("Content-Type", "application/json")
@@ -658,9 +670,11 @@ func (c *UsersDraftsCreateCall) Do() (*Draft, error) {
 			Client:        c.s.client,
 			UserAgent:     c.s.userAgent(),
 			URI:           loc,
-			Media:         c.resumable_,
+			Media:         resumable,
+			Limited:       limited,
 			MediaType:     c.mediaType_,
-			ContentLength: c.resumable_.Size(),
+			ContentLength: c.size_,
+			ChunkSize:     googleapi.CalcChunkSize(c.chunkSize_),
 			Callback:      progressUpdater_,
 		}
 		res, err = rx.Upload(c.ctx_)
@@ -1050,7 +1064,8 @@ type UsersDraftsSendCall struct {
 	draft      *Draft
 	opt_       map[string]interface{}
 	media_     io.Reader
-	resumable_ googleapi.SizeReaderAt
+	size_      int64
+	chunkSize_ int64
 	mediaType_ string
 	ctx_       context.Context
 	protocol_  string
@@ -1077,10 +1092,12 @@ func (c *UsersDraftsSendCall) Media(r io.Reader) *UsersDraftsSendCall {
 // At most one of Media and ResumableMedia may be set.
 // mediaType identifies the MIME media type of the upload, such as "image/png".
 // If mediaType is "", it will be auto-detected.
-func (c *UsersDraftsSendCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *UsersDraftsSendCall {
+func (c *UsersDraftsSendCall) ResumableMedia(ctx context.Context, r io.Reader, size int64, chunkSize int64, mediaType string) *UsersDraftsSendCall {
 	c.ctx_ = ctx
-	c.resumable_ = io.NewSectionReader(r, 0, size)
+	c.media_ = r
 	c.mediaType_ = mediaType
+	c.size_ = size
+	c.chunkSize_ = chunkSize
 	c.protocol_ = "resumable"
 	return c
 }
@@ -1120,7 +1137,7 @@ func (c *UsersDraftsSendCall) Do() (*Message, error) {
 			progressUpdater_ = pu
 		}
 	}
-	if c.media_ != nil || c.resumable_ != nil {
+	if c.media_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
 		params.Set("uploadType", c.protocol_)
 	}
@@ -1136,9 +1153,18 @@ func (c *UsersDraftsSendCall) Do() (*Message, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"userId": c.userId,
 	})
+	var limited bool
+	var resumable io.ReaderAt
 	if c.protocol_ == "resumable" {
+		var ok bool
+		if resumable, ok = c.media_.(io.ReaderAt); ok && c.size_ > 0 {
+			limited = false
+		} else {
+			limited = true
+			resumable = googleapi.NewFakeReaderAt(c.media_)
+		}
 		if c.mediaType_ == "" {
-			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
+			c.mediaType_ = googleapi.DetectMediaType(resumable)
 		}
 		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
 		req.Header.Set("Content-Type", "application/json")
@@ -1160,9 +1186,11 @@ func (c *UsersDraftsSendCall) Do() (*Message, error) {
 			Client:        c.s.client,
 			UserAgent:     c.s.userAgent(),
 			URI:           loc,
-			Media:         c.resumable_,
+			Media:         resumable,
+			Limited:       limited,
 			MediaType:     c.mediaType_,
-			ContentLength: c.resumable_.Size(),
+			ContentLength: c.size_,
+			ChunkSize:     googleapi.CalcChunkSize(c.chunkSize_),
 			Callback:      progressUpdater_,
 		}
 		res, err = rx.Upload(c.ctx_)
@@ -1234,7 +1262,8 @@ type UsersDraftsUpdateCall struct {
 	draft      *Draft
 	opt_       map[string]interface{}
 	media_     io.Reader
-	resumable_ googleapi.SizeReaderAt
+	size_      int64
+	chunkSize_ int64
 	mediaType_ string
 	ctx_       context.Context
 	protocol_  string
@@ -1261,10 +1290,12 @@ func (c *UsersDraftsUpdateCall) Media(r io.Reader) *UsersDraftsUpdateCall {
 // At most one of Media and ResumableMedia may be set.
 // mediaType identifies the MIME media type of the upload, such as "image/png".
 // If mediaType is "", it will be auto-detected.
-func (c *UsersDraftsUpdateCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *UsersDraftsUpdateCall {
+func (c *UsersDraftsUpdateCall) ResumableMedia(ctx context.Context, r io.Reader, size int64, chunkSize int64, mediaType string) *UsersDraftsUpdateCall {
 	c.ctx_ = ctx
-	c.resumable_ = io.NewSectionReader(r, 0, size)
+	c.media_ = r
 	c.mediaType_ = mediaType
+	c.size_ = size
+	c.chunkSize_ = chunkSize
 	c.protocol_ = "resumable"
 	return c
 }
@@ -1304,7 +1335,7 @@ func (c *UsersDraftsUpdateCall) Do() (*Draft, error) {
 			progressUpdater_ = pu
 		}
 	}
-	if c.media_ != nil || c.resumable_ != nil {
+	if c.media_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
 		params.Set("uploadType", c.protocol_)
 	}
@@ -1321,9 +1352,18 @@ func (c *UsersDraftsUpdateCall) Do() (*Draft, error) {
 		"userId": c.userId,
 		"id":     c.id,
 	})
+	var limited bool
+	var resumable io.ReaderAt
 	if c.protocol_ == "resumable" {
+		var ok bool
+		if resumable, ok = c.media_.(io.ReaderAt); ok && c.size_ > 0 {
+			limited = false
+		} else {
+			limited = true
+			resumable = googleapi.NewFakeReaderAt(c.media_)
+		}
 		if c.mediaType_ == "" {
-			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
+			c.mediaType_ = googleapi.DetectMediaType(resumable)
 		}
 		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
 		req.Header.Set("Content-Type", "application/json")
@@ -1345,9 +1385,11 @@ func (c *UsersDraftsUpdateCall) Do() (*Draft, error) {
 			Client:        c.s.client,
 			UserAgent:     c.s.userAgent(),
 			URI:           loc,
-			Media:         c.resumable_,
+			Media:         resumable,
+			Limited:       limited,
 			MediaType:     c.mediaType_,
-			ContentLength: c.resumable_.Size(),
+			ContentLength: c.size_,
+			ChunkSize:     googleapi.CalcChunkSize(c.chunkSize_),
 			Callback:      progressUpdater_,
 		}
 		res, err = rx.Upload(c.ctx_)
@@ -2342,7 +2384,8 @@ type UsersMessagesImportCall struct {
 	message    *Message
 	opt_       map[string]interface{}
 	media_     io.Reader
-	resumable_ googleapi.SizeReaderAt
+	size_      int64
+	chunkSize_ int64
 	mediaType_ string
 	ctx_       context.Context
 	protocol_  string
@@ -2406,10 +2449,12 @@ func (c *UsersMessagesImportCall) Media(r io.Reader) *UsersMessagesImportCall {
 // At most one of Media and ResumableMedia may be set.
 // mediaType identifies the MIME media type of the upload, such as "image/png".
 // If mediaType is "", it will be auto-detected.
-func (c *UsersMessagesImportCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *UsersMessagesImportCall {
+func (c *UsersMessagesImportCall) ResumableMedia(ctx context.Context, r io.Reader, size int64, chunkSize int64, mediaType string) *UsersMessagesImportCall {
 	c.ctx_ = ctx
-	c.resumable_ = io.NewSectionReader(r, 0, size)
+	c.media_ = r
 	c.mediaType_ = mediaType
+	c.size_ = size
+	c.chunkSize_ = chunkSize
 	c.protocol_ = "resumable"
 	return c
 }
@@ -2461,7 +2506,7 @@ func (c *UsersMessagesImportCall) Do() (*Message, error) {
 			progressUpdater_ = pu
 		}
 	}
-	if c.media_ != nil || c.resumable_ != nil {
+	if c.media_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
 		params.Set("uploadType", c.protocol_)
 	}
@@ -2477,9 +2522,18 @@ func (c *UsersMessagesImportCall) Do() (*Message, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"userId": c.userId,
 	})
+	var limited bool
+	var resumable io.ReaderAt
 	if c.protocol_ == "resumable" {
+		var ok bool
+		if resumable, ok = c.media_.(io.ReaderAt); ok && c.size_ > 0 {
+			limited = false
+		} else {
+			limited = true
+			resumable = googleapi.NewFakeReaderAt(c.media_)
+		}
 		if c.mediaType_ == "" {
-			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
+			c.mediaType_ = googleapi.DetectMediaType(resumable)
 		}
 		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
 		req.Header.Set("Content-Type", "application/json")
@@ -2501,9 +2555,11 @@ func (c *UsersMessagesImportCall) Do() (*Message, error) {
 			Client:        c.s.client,
 			UserAgent:     c.s.userAgent(),
 			URI:           loc,
-			Media:         c.resumable_,
+			Media:         resumable,
+			Limited:       limited,
 			MediaType:     c.mediaType_,
-			ContentLength: c.resumable_.Size(),
+			ContentLength: c.size_,
+			ChunkSize:     googleapi.CalcChunkSize(c.chunkSize_),
 			Callback:      progressUpdater_,
 		}
 		res, err = rx.Upload(c.ctx_)
@@ -2606,7 +2662,8 @@ type UsersMessagesInsertCall struct {
 	message    *Message
 	opt_       map[string]interface{}
 	media_     io.Reader
-	resumable_ googleapi.SizeReaderAt
+	size_      int64
+	chunkSize_ int64
 	mediaType_ string
 	ctx_       context.Context
 	protocol_  string
@@ -2654,10 +2711,12 @@ func (c *UsersMessagesInsertCall) Media(r io.Reader) *UsersMessagesInsertCall {
 // At most one of Media and ResumableMedia may be set.
 // mediaType identifies the MIME media type of the upload, such as "image/png".
 // If mediaType is "", it will be auto-detected.
-func (c *UsersMessagesInsertCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *UsersMessagesInsertCall {
+func (c *UsersMessagesInsertCall) ResumableMedia(ctx context.Context, r io.Reader, size int64, chunkSize int64, mediaType string) *UsersMessagesInsertCall {
 	c.ctx_ = ctx
-	c.resumable_ = io.NewSectionReader(r, 0, size)
+	c.media_ = r
 	c.mediaType_ = mediaType
+	c.size_ = size
+	c.chunkSize_ = chunkSize
 	c.protocol_ = "resumable"
 	return c
 }
@@ -2703,7 +2762,7 @@ func (c *UsersMessagesInsertCall) Do() (*Message, error) {
 			progressUpdater_ = pu
 		}
 	}
-	if c.media_ != nil || c.resumable_ != nil {
+	if c.media_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
 		params.Set("uploadType", c.protocol_)
 	}
@@ -2719,9 +2778,18 @@ func (c *UsersMessagesInsertCall) Do() (*Message, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"userId": c.userId,
 	})
+	var limited bool
+	var resumable io.ReaderAt
 	if c.protocol_ == "resumable" {
+		var ok bool
+		if resumable, ok = c.media_.(io.ReaderAt); ok && c.size_ > 0 {
+			limited = false
+		} else {
+			limited = true
+			resumable = googleapi.NewFakeReaderAt(c.media_)
+		}
 		if c.mediaType_ == "" {
-			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
+			c.mediaType_ = googleapi.DetectMediaType(resumable)
 		}
 		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
 		req.Header.Set("Content-Type", "application/json")
@@ -2743,9 +2811,11 @@ func (c *UsersMessagesInsertCall) Do() (*Message, error) {
 			Client:        c.s.client,
 			UserAgent:     c.s.userAgent(),
 			URI:           loc,
-			Media:         c.resumable_,
+			Media:         resumable,
+			Limited:       limited,
 			MediaType:     c.mediaType_,
-			ContentLength: c.resumable_.Size(),
+			ContentLength: c.size_,
+			ChunkSize:     googleapi.CalcChunkSize(c.chunkSize_),
 			Callback:      progressUpdater_,
 		}
 		res, err = rx.Upload(c.ctx_)
@@ -3094,7 +3164,8 @@ type UsersMessagesSendCall struct {
 	message    *Message
 	opt_       map[string]interface{}
 	media_     io.Reader
-	resumable_ googleapi.SizeReaderAt
+	size_      int64
+	chunkSize_ int64
 	mediaType_ string
 	ctx_       context.Context
 	protocol_  string
@@ -3121,10 +3192,12 @@ func (c *UsersMessagesSendCall) Media(r io.Reader) *UsersMessagesSendCall {
 // At most one of Media and ResumableMedia may be set.
 // mediaType identifies the MIME media type of the upload, such as "image/png".
 // If mediaType is "", it will be auto-detected.
-func (c *UsersMessagesSendCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *UsersMessagesSendCall {
+func (c *UsersMessagesSendCall) ResumableMedia(ctx context.Context, r io.Reader, size int64, chunkSize int64, mediaType string) *UsersMessagesSendCall {
 	c.ctx_ = ctx
-	c.resumable_ = io.NewSectionReader(r, 0, size)
+	c.media_ = r
 	c.mediaType_ = mediaType
+	c.size_ = size
+	c.chunkSize_ = chunkSize
 	c.protocol_ = "resumable"
 	return c
 }
@@ -3164,7 +3237,7 @@ func (c *UsersMessagesSendCall) Do() (*Message, error) {
 			progressUpdater_ = pu
 		}
 	}
-	if c.media_ != nil || c.resumable_ != nil {
+	if c.media_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
 		params.Set("uploadType", c.protocol_)
 	}
@@ -3180,9 +3253,18 @@ func (c *UsersMessagesSendCall) Do() (*Message, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"userId": c.userId,
 	})
+	var limited bool
+	var resumable io.ReaderAt
 	if c.protocol_ == "resumable" {
+		var ok bool
+		if resumable, ok = c.media_.(io.ReaderAt); ok && c.size_ > 0 {
+			limited = false
+		} else {
+			limited = true
+			resumable = googleapi.NewFakeReaderAt(c.media_)
+		}
 		if c.mediaType_ == "" {
-			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
+			c.mediaType_ = googleapi.DetectMediaType(resumable)
 		}
 		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
 		req.Header.Set("Content-Type", "application/json")
@@ -3204,9 +3286,11 @@ func (c *UsersMessagesSendCall) Do() (*Message, error) {
 			Client:        c.s.client,
 			UserAgent:     c.s.userAgent(),
 			URI:           loc,
-			Media:         c.resumable_,
+			Media:         resumable,
+			Limited:       limited,
 			MediaType:     c.mediaType_,
-			ContentLength: c.resumable_.Size(),
+			ContentLength: c.size_,
+			ChunkSize:     googleapi.CalcChunkSize(c.chunkSize_),
 			Callback:      progressUpdater_,
 		}
 		res, err = rx.Upload(c.ctx_)

@@ -533,6 +533,7 @@ func TestInterruptedTransferChunks(t *testing.T) {
 		Client:        &http.Client{Transport: tr},
 		Media:         f,
 		MediaType:     "text/plain",
+		ChunkSize:     100,
 		ContentLength: st.Size(),
 		Callback:      tr.ProgressUpdate,
 	}
@@ -583,6 +584,7 @@ func TestCancelUpload(t *testing.T) {
 		Media:         f,
 		MediaType:     "text/plain",
 		ContentLength: st.Size(),
+		ChunkSize:     chunkSize,
 		Callback:      tr.ProgressUpdate,
 	}
 	ctx, cancelFunc := context.WithCancel(context.Background())

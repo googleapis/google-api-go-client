@@ -9621,7 +9621,8 @@ type ManagementUploadsUploadDataCall struct {
 	customDataSourceId string
 	opt_               map[string]interface{}
 	media_             io.Reader
-	resumable_         googleapi.SizeReaderAt
+	size_              int64
+	chunkSize_         int64
 	mediaType_         string
 	ctx_               context.Context
 	protocol_          string
@@ -9648,10 +9649,12 @@ func (c *ManagementUploadsUploadDataCall) Media(r io.Reader) *ManagementUploadsU
 // At most one of Media and ResumableMedia may be set.
 // mediaType identifies the MIME media type of the upload, such as "image/png".
 // If mediaType is "", it will be auto-detected.
-func (c *ManagementUploadsUploadDataCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *ManagementUploadsUploadDataCall {
+func (c *ManagementUploadsUploadDataCall) ResumableMedia(ctx context.Context, r io.Reader, size int64, chunkSize int64, mediaType string) *ManagementUploadsUploadDataCall {
 	c.ctx_ = ctx
-	c.resumable_ = io.NewSectionReader(r, 0, size)
+	c.media_ = r
 	c.mediaType_ = mediaType
+	c.size_ = size
+	c.chunkSize_ = chunkSize
 	c.protocol_ = "resumable"
 	return c
 }
@@ -9686,7 +9689,7 @@ func (c *ManagementUploadsUploadDataCall) Do() (*Upload, error) {
 			progressUpdater_ = pu
 		}
 	}
-	if c.media_ != nil || c.resumable_ != nil {
+	if c.media_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
 		params.Set("uploadType", c.protocol_)
 	}
@@ -9706,9 +9709,18 @@ func (c *ManagementUploadsUploadDataCall) Do() (*Upload, error) {
 		"webPropertyId":      c.webPropertyId,
 		"customDataSourceId": c.customDataSourceId,
 	})
+	var limited bool
+	var resumable io.ReaderAt
 	if c.protocol_ == "resumable" {
+		var ok bool
+		if resumable, ok = c.media_.(io.ReaderAt); ok && c.size_ > 0 {
+			limited = false
+		} else {
+			limited = true
+			resumable = googleapi.NewFakeReaderAt(c.media_)
+		}
 		if c.mediaType_ == "" {
-			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
+			c.mediaType_ = googleapi.DetectMediaType(resumable)
 		}
 		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
 		req.Header.Set("Content-Type", "application/json")
@@ -9730,9 +9742,11 @@ func (c *ManagementUploadsUploadDataCall) Do() (*Upload, error) {
 			Client:        c.s.client,
 			UserAgent:     c.s.userAgent(),
 			URI:           loc,
-			Media:         c.resumable_,
+			Media:         resumable,
+			Limited:       limited,
 			MediaType:     c.mediaType_,
-			ContentLength: c.resumable_.Size(),
+			ContentLength: c.size_,
+			ChunkSize:     googleapi.CalcChunkSize(c.chunkSize_),
 			Callback:      progressUpdater_,
 		}
 		res, err = rx.Upload(c.ctx_)

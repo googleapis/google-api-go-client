@@ -131,7 +131,7 @@ func TestResumableMedia(t *testing.T) {
 	// 1. Resumable upload session initiation request, to which server will respond with 200 OK and Location header
 	// 2. Upload of the first and only chunk, with Content-Range header set to specify entire content
 	// The test below verifies the content and headers of this second POST request
-	_, err = s.Objects.Insert("mybucket", o).Name("filename").ResumableMedia(context.Background(), f, int64(len(data)), "text/plain").Do()
+	_, err = s.Objects.Insert("mybucket", o).Name("filename").ResumableMedia(context.Background(), f, int64(len(data)), -1, "text/plain").Do()
 	if err != nil {
 		t.Fatalf("unable to insert object: %v", err)
 	}

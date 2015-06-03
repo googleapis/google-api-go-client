@@ -80,3 +80,71 @@ func TestScope(t *testing.T) {
 		}
 	}
 }
+
+func TestDepunct(t *testing.T) {
+	tests := []struct {
+		needCap  bool
+		in, want string
+	}{
+		{
+			needCap: true,
+			in:      "part__description",
+			want:    "Part__description",
+		},
+		{
+			needCap: true,
+			in:      "Part_description",
+			want:    "PartDescription",
+		},
+		{
+			needCap: false,
+			in:      "part_description",
+			want:    "partDescription",
+		},
+		{
+			needCap: false,
+			in:      "part-description",
+			want:    "partDescription",
+		},
+		{
+			needCap: false,
+			in:      "part.description",
+			want:    "partDescription",
+		},
+		{
+			needCap: false,
+			in:      "part$description",
+			want:    "partDescription",
+		},
+		{
+			needCap: false,
+			in:      "part/description",
+			want:    "partDescription",
+		},
+		{
+			needCap: true,
+			in:      "Part__description_name",
+			want:    "Part__descriptionName",
+		},
+		{
+			needCap: true,
+			in:      "Part_description_name",
+			want:    "PartDescriptionName",
+		},
+		{
+			needCap: true,
+			in:      "Part__description__name",
+			want:    "Part__description__name",
+		},
+		{
+			needCap: true,
+			in:      "Part_description__name",
+			want:    "PartDescription__name",
+		},
+	}
+	for _, test := range tests {
+		if got := depunct(test.in, test.needCap); got != test.want {
+			t.Errorf("depunct(%q,%v) = %q; want %q", test.in, test.needCap, got, test.want)
+		}
+	}
+}

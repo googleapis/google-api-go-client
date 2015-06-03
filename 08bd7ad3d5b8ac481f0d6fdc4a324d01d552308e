@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f955b039_e629f014",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 1929,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-06-03T22:44:36Z",
+      "side": 1,
+      "message": "I\u0027m sorry, Brad... maybe I\u0027m just being a bit slow here...\n\nbut I don\u0027t think using lastRune will help much because I actually need to have look-ahead capability which the ident[i:] gives me.\n\nIn other words, to determine if we \"needCap\u003dtrue\" and skip the \u0027_\u0027, we must know what the next rune is...\n\nJust for kicks, I tried implementing this with \"lastRune\" and then sending out the lastRune instead of \"c\", but then I need to deal with the end condition, and it was uglier.\n\nBut maybe I\u0027m just missing something.",
+      "parentUuid": "f955b039_ba1f0d91",
+      "revId": "08bd7ad3d5b8ac481f0d6fdc4a324d01d552308e",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f955b039_3a05bd4a",
         "filename": "google-api-go-generator/gen_test.go",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "f955b039_865ab479",
+        "filename": "google-api-go-generator/gen_test.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-06-03T22:44:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f955b039_3a05bd4a",
+      "revId": "08bd7ad3d5b8ac481f0d6fdc4a324d01d552308e",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f955b039_7ad8d562",
         "filename": "google-api-go-generator/gen_test.go",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2015-06-03T18:30:49Z",
       "side": 1,
       "message": "Maybe just \"depuct(%q) \u003d %q; want %q\"",
+      "revId": "08bd7ad3d5b8ac481f0d6fdc4a324d01d552308e",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f955b039_665fa06b",
+        "filename": "google-api-go-generator/gen_test.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-06-03T22:44:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f955b039_7ad8d562",
       "revId": "08bd7ad3d5b8ac481f0d6fdc4a324d01d552308e",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false

@@ -1,0 +1,6 @@
+Code-Review+2: Brad Fitzpatrick <bradfitz@golang.org>
+Submitted-by: Brad Fitzpatrick <bradfitz@golang.org>
+Submitted-at: Wed, 03 Jun 2015 22:02:27 +0000
+Reviewed-on: https://code-review.googlesource.com/2701
+Project: google-api-go-client
+Branch: refs/heads/master

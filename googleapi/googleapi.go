@@ -307,6 +307,7 @@ type ResumableUpload struct {
 
 	mu       sync.Mutex // guards progress
 	progress int64      // number of bytes uploaded so far
+	started  bool       // whether the upload has been started
 
 	// Callback is an optional function that will be called upon every progress update.
 	Callback ProgressUpdater
@@ -354,9 +355,16 @@ type chunk struct {
 }
 
 func (rx *ResumableUpload) transferChunks(ctx context.Context) (*http.Response, error) {
-	start, res, err := rx.transferStatus()
-	if err != nil || res.StatusCode != statusResumeIncomplete {
-		return res, err
+	start := int64(0)
+	res := &http.Response{}
+	var err error
+	if rx.started {
+		start, res, err = rx.transferStatus()
+		if err != nil || res.StatusCode != statusResumeIncomplete {
+			return res, err
+		}
+	} else {
+		rx.started = true
 	}
 
 	for {

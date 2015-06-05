@@ -127,6 +127,10 @@ func TestResumableMedia(t *testing.T) {
 		ContentEncoding: "utf-8",
 		ContentLanguage: "en",
 	}
+	// If all goes well, this will cause two POST requests to be sent to our fake GCS server:
+	// 1. Resumable upload session initiation request, to which server will respond with 200 OK and Location header.
+	// 2. Upload of the first and only chunk, with Content-Range header set to specify entire content.
+	// The test below verifies the content and headers of this second POST request.
 	_, err = s.Objects.Insert("mybucket", o).Name("filename").ResumableMedia(context.Background(), f, int64(len(data)), "text/plain").Do()
 	if err != nil {
 		t.Fatalf("unable to insert object: %v", err)
@@ -147,14 +151,20 @@ func TestResumableMedia(t *testing.T) {
 	if w, k := "google-api-go-client/0.5", "User-Agent"; len(g.Header[k]) != 1 || g.Header[k][0] != w {
 		t.Errorf("header %q = %#v; want %q", k, g.Header[k], w)
 	}
-	if k := "Content-Type"; len(g.Header[k]) != 0 {
-		t.Errorf("header %q = %#v; want nil", k, g.Header[k])
+	if w, k := "text/plain", "Content-Type"; len(g.Header[k]) != 1 || g.Header[k][0] != w {
+		t.Errorf("header %q = %#v; want %v", k, g.Header[k], w)
+	}
+	if w, k := fmt.Sprintf("bytes 0-%v/%v", len(data)-1, len(data)), "Content-Range"; len(g.Header[k]) != 1 || g.Header[k][0] != w {
+		t.Errorf("header %q = %#v; want %v", k, g.Header[k], w)
 	}
 	if w, k := "gzip", "Accept-Encoding"; len(g.Header[k]) != 1 || g.Header[k][0] != w {
 		t.Errorf("header %q = %#v; want %q", k, g.Header[k], w)
 	}
-	if w := int64(0); g.ContentLength != w {
+	if w := int64(len(data)); g.ContentLength != w {
 		t.Errorf("ContentLength = %v; want %v", g.ContentLength, w)
+	}
+	if s := string(handler.body); s != data {
+		t.Errorf("body = %q; want %q", s, data)
 	}
 	if len(g.TransferEncoding) != 0 {
 		t.Errorf("TransferEncoding = %#v; want nil", g.TransferEncoding)

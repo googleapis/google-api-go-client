@@ -3904,12 +3904,11 @@ func (c *FilesInsertCall) Do() (*File, error) {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	if c.protocol_ == "resumable" {
-		req.ContentLength = 0
 		if c.mediaType_ == "" {
 			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
 		}
 		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
-		req.Body = nil
+		req.Header.Set("Content-Type", "application/json")
 	} else {
 		req.Header.Set("Content-Type", ctype)
 	}
@@ -4967,12 +4966,11 @@ func (c *FilesUpdateCall) Do() (*File, error) {
 		"fileId": c.fileId,
 	})
 	if c.protocol_ == "resumable" {
-		req.ContentLength = 0
 		if c.mediaType_ == "" {
 			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
 		}
 		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
-		req.Body = nil
+		req.Header.Set("Content-Type", "application/json")
 	} else {
 		req.Header.Set("Content-Type", ctype)
 	}
@@ -7126,12 +7124,11 @@ func (c *RealtimeUpdateCall) Do() error {
 		"fileId": c.fileId,
 	})
 	if c.protocol_ == "resumable" {
-		req.ContentLength = 0
 		if c.mediaType_ == "" {
 			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
 		}
 		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
-		req.Body = nil
+		req.Header.Set("Content-Type", "application/json")
 	} else {
 		req.Header.Set("Content-Type", ctype)
 	}

@@ -1519,12 +1519,11 @@ func (meth *Method) generateCode() {
 
 	if meth.supportsMediaUpload() {
 		pn(`if c.protocol_ == "resumable" {`)
-		pn(" req.ContentLength = 0")
 		pn(` if c.mediaType_ == "" {`)
 		pn("  c.mediaType_ = googleapi.DetectMediaType(c.resumable_)")
 		pn(" }")
 		pn(` req.Header.Set("X-Upload-Content-Type", c.mediaType_)`)
-		pn(" req.Body = nil")
+		pn(` req.Header.Set("Content-Type", "application/json")`)
 		pn("} else {")
 		pn(` req.Header.Set("Content-Type", ctype)`)
 		pn("}")

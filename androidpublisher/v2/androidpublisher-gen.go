@@ -2052,12 +2052,11 @@ func (c *EditsApksUploadCall) Do() (*Apk, error) {
 		"editId":      c.editId,
 	})
 	if c.protocol_ == "resumable" {
-		req.ContentLength = 0
 		if c.mediaType_ == "" {
 			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
 		}
 		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
-		req.Body = nil
+		req.Header.Set("Content-Type", "application/json")
 	} else {
 		req.Header.Set("Content-Type", ctype)
 	}
@@ -2891,12 +2890,11 @@ func (c *EditsExpansionfilesUploadCall) Do() (*ExpansionFilesUploadResponse, err
 		"expansionFileType": c.expansionFileType,
 	})
 	if c.protocol_ == "resumable" {
-		req.ContentLength = 0
 		if c.mediaType_ == "" {
 			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
 		}
 		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
-		req.Body = nil
+		req.Header.Set("Content-Type", "application/json")
 	} else {
 		req.Header.Set("Content-Type", ctype)
 	}
@@ -3481,12 +3479,11 @@ func (c *EditsImagesUploadCall) Do() (*ImagesUploadResponse, error) {
 		"imageType":   c.imageType,
 	})
 	if c.protocol_ == "resumable" {
-		req.ContentLength = 0
 		if c.mediaType_ == "" {
 			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
 		}
 		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
-		req.Body = nil
+		req.Header.Set("Content-Type", "application/json")
 	} else {
 		req.Header.Set("Content-Type", ctype)
 	}

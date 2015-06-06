@@ -4239,12 +4239,11 @@ func (c *ObjectsInsertCall) Do() (*Object, error) {
 		"bucket": c.bucket,
 	})
 	if c.protocol_ == "resumable" {
-		req.ContentLength = 0
 		if c.mediaType_ == "" {
 			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
 		}
 		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
-		req.Body = nil
+		req.Header.Set("Content-Type", "application/json; charset=utf-8")
 	} else {
 		req.Header.Set("Content-Type", ctype)
 	}

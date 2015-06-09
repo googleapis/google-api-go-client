@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "796b8031_718c9b8d",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 1415,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-06-09T04:08:54Z",
+      "side": 1,
+      "message": "Please add a comment describing how to use \"size\" and \"chunkSize\".",
+      "revId": "aab7779ecd272d2b5479d110a1520c1ca21e606d",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "39c4a87c_0d9201ad",
         "filename": "google-api-go-generator/gen.go",
         "patchSetId": 2

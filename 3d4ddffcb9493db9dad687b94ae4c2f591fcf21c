@@ -16,6 +16,24 @@
       "revId": "3d4ddffcb9493db9dad687b94ae4c2f591fcf21c",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "59d79c7e_ea5c8750",
+        "filename": "bigquery/v2/example_test.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-06-12T23:13:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59d79c7e_aa044f4e",
+      "revId": "3d4ddffcb9493db9dad687b94ae4c2f591fcf21c",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
     }
   ]
 }

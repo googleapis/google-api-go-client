@@ -326,22 +326,6 @@
   },
   {
    "kind": "discovery#directoryItem",
-   "id": "audit:v1",
-   "name": "audit",
-   "version": "v1",
-   "title": "Enterprise Audit API",
-   "description": "Lets you access user activities in your enterprise made through various applications.",
-   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/audit/v1/rest",
-   "discoveryLink": "./apis/audit/v1/rest",
-   "icons": {
-    "x16": "http://www.google.com/images/icons/product/search-16.gif",
-    "x32": "http://www.google.com/images/icons/product/search-32.gif"
-   },
-   "documentationLink": "https://developers.google.com/google-apps/admin-audit/get_started",
-   "preferred": true
-  },
-  {
-   "kind": "discovery#directoryItem",
    "id": "autoscaler:v1beta2",
    "name": "autoscaler",
    "version": "v1beta2",
@@ -1109,6 +1093,38 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "cloudresourcemanager:v1beta1",
+   "name": "cloudresourcemanager",
+   "version": "v1beta1",
+   "title": "Google Cloud Resource Manager API",
+   "description": "The Google Cloud Resource Manager API provides methods for creating, reading, and updating of project metadata, including IAM policies, and will shortly provide the same for other high-level entities (e.g. customers and resource groups). Longer term, we expect the cloudresourcemanager API to encompass other Cloud resources as well.",
+   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/cloudresourcemanager/v1beta1/rest",
+   "discoveryLink": "./apis/cloudresourcemanager/v1beta1/rest",
+   "icons": {
+    "x16": "http://www.google.com/images/icons/product/search-16.gif",
+    "x32": "http://www.google.com/images/icons/product/search-32.gif"
+   },
+   "documentationLink": "https://cloud.google.com/resource-manager",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "genomics:v1",
+   "name": "genomics",
+   "version": "v1",
+   "title": "Genomics API",
+   "description": "An API to store, process, explore, and share DNA sequence reads, reference-based alignments, and variant calls.",
+   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/genomics/v1/rest",
+   "discoveryLink": "./apis/genomics/v1/rest",
+   "icons": {
+    "x16": "http://www.google.com/images/icons/product/search-16.gif",
+    "x32": "http://www.google.com/images/icons/product/search-32.gif"
+   },
+   "documentationLink": "",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "logging:v1beta3",
    "name": "logging",
    "version": "v1beta3",
@@ -1121,6 +1137,38 @@
     "x32": "http://www.google.com/images/icons/product/search-32.gif"
    },
    "documentationLink": "",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "pubsub:v1beta1a",
+   "name": "pubsub",
+   "version": "v1beta1a",
+   "title": "Google Cloud Pub/Sub API",
+   "description": "Provides reliable, many-to-many, asynchronous messaging between applications.",
+   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/pubsub/v1beta1a/rest",
+   "discoveryLink": "./apis/pubsub/v1beta1a/rest",
+   "icons": {
+    "x16": "http://www.google.com/images/icons/product/search-16.gif",
+    "x32": "http://www.google.com/images/icons/product/search-32.gif"
+   },
+   "documentationLink": "https://cloud.google.com/pubsub/docs",
+   "preferred": false
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "pubsub:v1beta2",
+   "name": "pubsub",
+   "version": "v1beta2",
+   "title": "Google Cloud Pub/Sub API",
+   "description": "Provides reliable, many-to-many, asynchronous messaging between applications.",
+   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/pubsub/v1beta2/rest",
+   "discoveryLink": "./apis/pubsub/v1beta2/rest",
+   "icons": {
+    "x16": "http://www.google.com/images/icons/product/search-16.gif",
+    "x32": "http://www.google.com/images/icons/product/search-32.gif"
+   },
+   "documentationLink": "https://cloud.google.com/pubsub/docs",
    "preferred": true
   },
   {
@@ -1403,22 +1451,6 @@
   },
   {
    "kind": "discovery#directoryItem",
-   "id": "pubsub:v1beta1a",
-   "name": "pubsub",
-   "version": "v1beta1a",
-   "title": "Google Cloud Pub/Sub API",
-   "description": "Provides reliable, many-to-many, asynchronous messaging between applications.",
-   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/pubsub/v1beta1a/rest",
-   "discoveryLink": "./apis/pubsub/v1beta1a/rest",
-   "icons": {
-    "x16": "http://www.google.com/images/icons/product/search-16.gif",
-    "x32": "http://www.google.com/images/icons/product/search-32.gif"
-   },
-   "documentationLink": "",
-   "preferred": false
-  },
-  {
-   "kind": "discovery#directoryItem",
    "id": "pubsub:v1beta1",
    "name": "pubsub",
    "version": "v1beta1",
@@ -1434,22 +1466,6 @@
    "labels": [
     "limited_availability"
    ],
-   "preferred": false
-  },
-  {
-   "kind": "discovery#directoryItem",
-   "id": "pubsub:v1beta2",
-   "name": "pubsub",
-   "version": "v1beta2",
-   "title": "Google Cloud Pub/Sub API",
-   "description": "Provides reliable, many-to-many, asynchronous messaging between applications.",
-   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/pubsub/v1beta2/rest",
-   "discoveryLink": "./apis/pubsub/v1beta2/rest",
-   "icons": {
-    "x16": "http://www.google.com/images/icons/product/search-16.gif",
-    "x32": "http://www.google.com/images/icons/product/search-32.gif"
-   },
-   "documentationLink": "",
    "preferred": true
   },
   {
@@ -1635,22 +1651,6 @@
   },
   {
    "kind": "discovery#directoryItem",
-   "id": "sqladmin:v1beta1",
-   "name": "sqladmin",
-   "version": "v1beta1",
-   "title": "Cloud SQL Administration API",
-   "description": "API for Cloud SQL database instance management.",
-   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/sqladmin/v1beta1/rest",
-   "discoveryLink": "./apis/sqladmin/v1beta1/rest",
-   "icons": {
-    "x16": "http://www.google.com/images/icons/product/search-16.gif",
-    "x32": "http://www.google.com/images/icons/product/search-32.gif"
-   },
-   "documentationLink": "https://developers.google.com/cloud-sql/docs/admin-api/",
-   "preferred": false
-  },
-  {
-   "kind": "discovery#directoryItem",
    "id": "sqladmin:v1beta3",
    "name": "sqladmin",
    "version": "v1beta3",
@@ -1662,7 +1662,7 @@
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
     "x32": "http://www.google.com/images/icons/product/search-32.gif"
    },
-   "documentationLink": "https://developers.google.com/cloud-sql/docs/admin-api/",
+   "documentationLink": "https://cloud.google.com/sql/docs/reference/latest",
    "preferred": false
   },
   {
@@ -1678,7 +1678,7 @@
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
     "x32": "http://www.google.com/images/icons/product/search-32.gif"
    },
-   "documentationLink": "https://developers.google.com/cloud-sql/docs/admin-api/",
+   "documentationLink": "https://cloud.google.com/sql/docs/reference/latest",
    "preferred": true
   },
   {

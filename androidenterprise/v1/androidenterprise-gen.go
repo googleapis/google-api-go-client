@@ -251,6 +251,26 @@ type AppRestrictionsSchemaRestrictionRestrictionValue struct {
 	ValueString string `json:"valueString,omitempty"`
 }
 
+type AppVersion struct {
+	// VersionCode: Unique increasing identifier for the apk version.
+	VersionCode int64 `json:"versionCode,omitempty"`
+
+	// VersionString: The string used in the Play Store by the app developer
+	// to identify a version of an app. The string is not necessarily unique
+	// or localized (e.g. "1.4").
+	VersionString string `json:"versionString,omitempty"`
+}
+
+type ApprovalUrlInfo struct {
+	// ApprovalUrl: A URL that displays a product's permissions and that can
+	// also be used to approve the product with the Products.approve call.
+	ApprovalUrl string `json:"approvalUrl,omitempty"`
+
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "androidenterprise#approvalUrlInfo".
+	Kind string `json:"kind,omitempty"`
+}
+
 type Collection struct {
 	// CollectionId: Arbitrary unique ID, allocated by the API on creation.
 	CollectionId string `json:"collectionId,omitempty"`
@@ -496,6 +516,11 @@ type Permission struct {
 }
 
 type Product struct {
+	// AppVersion: List of app versions available for this product. The
+	// returned list contains only public versions. E.g. alpha, beta or
+	// canary versions will not be included.
+	AppVersion []*AppVersion `json:"appVersion,omitempty"`
+
 	// AuthorName: The name of the author of the product (e.g. the app
 	// developer).
 	AuthorName string `json:"authorName,omitempty"`
@@ -503,6 +528,9 @@ type Product struct {
 	// DetailsUrl: A link to the (consumer) Google Play details page for the
 	// product.
 	DetailsUrl string `json:"detailsUrl,omitempty"`
+
+	// DistributionChannel: How and to whom the package is made available.
+	DistributionChannel string `json:"distributionChannel,omitempty"`
 
 	// IconUrl: A link to an image that can be used as an icon for the
 	// product.
@@ -547,6 +575,21 @@ type ProductPermissions struct {
 	// ProductId: The ID of the app that the permissions relate to, e.g.
 	// "app:com.google.android.gm".
 	ProductId string `json:"productId,omitempty"`
+}
+
+type ProductsApproveRequest struct {
+	ApprovalUrlInfo *ApprovalUrlInfo `json:"approvalUrlInfo,omitempty"`
+}
+
+type ProductsGenerateApprovalUrlResponse struct {
+	// Url: A iframe-able URL that displays a product's permissions (if
+	// any). This URL can be used to approve the product only once and for a
+	// limited time (1 hour), using the Products.approve call. If the
+	// product is not currently approved and has no permissions, this URL
+	// will point to an empty page. If the product is currently approved and
+	// all of its permissions (if any) are also approved, this field will
+	// not be populated.
+	Url string `json:"url,omitempty"`
 }
 
 type User struct {
@@ -3949,6 +3992,202 @@ func (c *PermissionsGetCall) Do() (*Permission, error) {
 	//   "path": "permissions/{permissionId}",
 	//   "response": {
 	//     "$ref": "Permission"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidenterprise"
+	//   ]
+	// }
+
+}
+
+// method id "androidenterprise.products.approve":
+
+type ProductsApproveCall struct {
+	s                      *Service
+	enterpriseId           string
+	productId              string
+	productsapproverequest *ProductsApproveRequest
+	opt_                   map[string]interface{}
+}
+
+// Approve: Approves the specified product (and the relevant app
+// permissions, if any).
+func (r *ProductsService) Approve(enterpriseId string, productId string, productsapproverequest *ProductsApproveRequest) *ProductsApproveCall {
+	c := &ProductsApproveCall{s: r.s, opt_: make(map[string]interface{})}
+	c.enterpriseId = enterpriseId
+	c.productId = productId
+	c.productsapproverequest = productsapproverequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProductsApproveCall) Fields(s ...googleapi.Field) *ProductsApproveCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *ProductsApproveCall) Do() error {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.productsapproverequest)
+	if err != nil {
+		return err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/products/{productId}/approve")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"enterpriseId": c.enterpriseId,
+		"productId":    c.productId,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Approves the specified product (and the relevant app permissions, if any).",
+	//   "httpMethod": "POST",
+	//   "id": "androidenterprise.products.approve",
+	//   "parameterOrder": [
+	//     "enterpriseId",
+	//     "productId"
+	//   ],
+	//   "parameters": {
+	//     "enterpriseId": {
+	//       "description": "The ID of the enterprise.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "productId": {
+	//       "description": "The ID of the product.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "enterprises/{enterpriseId}/products/{productId}/approve",
+	//   "request": {
+	//     "$ref": "ProductsApproveRequest"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidenterprise"
+	//   ]
+	// }
+
+}
+
+// method id "androidenterprise.products.generateApprovalUrl":
+
+type ProductsGenerateApprovalUrlCall struct {
+	s            *Service
+	enterpriseId string
+	productId    string
+	opt_         map[string]interface{}
+}
+
+// GenerateApprovalUrl: Generates a URL that can be used to display an
+// iframe to view the product's permissions (if any) and approve the
+// product. This URL can be used to approve the product for a limited
+// time (currently 1 hour) using the Products.approve call.
+func (r *ProductsService) GenerateApprovalUrl(enterpriseId string, productId string) *ProductsGenerateApprovalUrlCall {
+	c := &ProductsGenerateApprovalUrlCall{s: r.s, opt_: make(map[string]interface{})}
+	c.enterpriseId = enterpriseId
+	c.productId = productId
+	return c
+}
+
+// LanguageCode sets the optional parameter "languageCode": The language
+// code that will be used for permission names and descriptions in the
+// returned iframe.
+func (c *ProductsGenerateApprovalUrlCall) LanguageCode(languageCode string) *ProductsGenerateApprovalUrlCall {
+	c.opt_["languageCode"] = languageCode
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProductsGenerateApprovalUrlCall) Fields(s ...googleapi.Field) *ProductsGenerateApprovalUrlCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *ProductsGenerateApprovalUrlCall) Do() (*ProductsGenerateApprovalUrlResponse, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["languageCode"]; ok {
+		params.Set("languageCode", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/products/{productId}/generateApprovalUrl")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"enterpriseId": c.enterpriseId,
+		"productId":    c.productId,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *ProductsGenerateApprovalUrlResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Generates a URL that can be used to display an iframe to view the product's permissions (if any) and approve the product. This URL can be used to approve the product for a limited time (currently 1 hour) using the Products.approve call.",
+	//   "httpMethod": "POST",
+	//   "id": "androidenterprise.products.generateApprovalUrl",
+	//   "parameterOrder": [
+	//     "enterpriseId",
+	//     "productId"
+	//   ],
+	//   "parameters": {
+	//     "enterpriseId": {
+	//       "description": "The ID of the enterprise.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "languageCode": {
+	//       "description": "The language code that will be used for permission names and descriptions in the returned iframe.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "productId": {
+	//       "description": "The ID of the product.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "enterprises/{enterpriseId}/products/{productId}/generateApprovalUrl",
+	//   "response": {
+	//     "$ref": "ProductsGenerateApprovalUrlResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/androidenterprise"

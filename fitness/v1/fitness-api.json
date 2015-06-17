@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/NViEYVhdyE08LWyL01EX31ABjdw\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/ON1-o8QnfSjPgDpi2fa5Rxma0qA\"",
  "discoveryVersion": "v1",
  "id": "fitness:v1",
  "name": "fitness",
  "version": "v1",
- "revision": "20150326",
+ "revision": "20150527",
  "title": "Fitness",
  "description": "Google Fit API",
  "ownerDomain": "google.com",
@@ -91,6 +91,119 @@
   }
  },
  "schemas": {
+  "AggregateBucket": {
+   "id": "AggregateBucket",
+   "type": "object",
+   "properties": {
+    "activity": {
+     "type": "integer",
+     "description": "available for Bucket.Type.ACTIVITY_TYPE, Bucket.Type.ACTIVITY_SEGMENT",
+     "format": "int32"
+    },
+    "dataset": {
+     "type": "array",
+     "description": "There will be one dataset per datatype/datasource",
+     "items": {
+      "$ref": "Dataset"
+     }
+    },
+    "endTimeMillis": {
+     "type": "string",
+     "format": "int64"
+    },
+    "session": {
+     "$ref": "Session",
+     "description": "available for Bucket.Type.SESSION"
+    },
+    "startTimeMillis": {
+     "type": "string",
+     "format": "int64"
+    },
+    "type": {
+     "type": "string",
+     "description": "The type of a bucket signifies how the data aggregation is performed in the bucket.",
+     "enum": [
+      "activitySegment",
+      "activityType",
+      "session",
+      "time",
+      "unknown"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    }
+   }
+  },
+  "AggregateBy": {
+   "id": "AggregateBy",
+   "type": "object",
+   "properties": {
+    "dataSourceId": {
+     "type": "string"
+    },
+    "dataTypeName": {
+     "type": "string",
+     "description": "by dataype or by datasource"
+    },
+    "outputDataSourceId": {
+     "type": "string"
+    },
+    "outputDataTypeName": {
+     "type": "string"
+    }
+   }
+  },
+  "AggregateRequest": {
+   "id": "AggregateRequest",
+   "type": "object",
+   "properties": {
+    "aggregateBy": {
+     "type": "array",
+     "items": {
+      "$ref": "AggregateBy"
+     }
+    },
+    "bucketByActivitySegment": {
+     "$ref": "BucketByActivity"
+    },
+    "bucketByActivityType": {
+     "$ref": "BucketByActivity"
+    },
+    "bucketBySession": {
+     "$ref": "BucketBySession"
+    },
+    "bucketByTime": {
+     "$ref": "BucketByTime",
+     "description": "apparently oneof is not supported by reduced_nano_proto"
+    },
+    "endTimeMillis": {
+     "type": "string",
+     "format": "int64"
+    },
+    "startTimeMillis": {
+     "type": "string",
+     "description": "required time range",
+     "format": "int64"
+    }
+   }
+  },
+  "AggregateResponse": {
+   "id": "AggregateResponse",
+   "type": "object",
+   "properties": {
+    "bucket": {
+     "type": "array",
+     "items": {
+      "$ref": "AggregateBucket"
+     }
+    }
+   }
+  },
   "Application": {
    "id": "Application",
    "type": "object",
@@ -118,6 +231,42 @@
     "version": {
      "type": "string",
      "description": "Version of the application. You should update this field whenever the application changes in a way that affects the computation of the data."
+    }
+   }
+  },
+  "BucketByActivity": {
+   "id": "BucketByActivity",
+   "type": "object",
+   "properties": {
+    "activityDataSourceId": {
+     "type": "string",
+     "description": "default activity stream will be used if not specified"
+    },
+    "minDurationMillis": {
+     "type": "string",
+     "description": "Only activity segments of duration longer than this is used",
+     "format": "int64"
+    }
+   }
+  },
+  "BucketBySession": {
+   "id": "BucketBySession",
+   "type": "object",
+   "properties": {
+    "minDurationMillis": {
+     "type": "string",
+     "description": "Only sessions of duration longer than this is used",
+     "format": "int64"
+    }
+   }
+  },
+  "BucketByTime": {
+   "id": "BucketByTime",
+   "type": "object",
+   "properties": {
+    "durationMillis": {
+     "type": "string",
+     "format": "int64"
     }
    }
   },
@@ -951,6 +1100,31 @@
           "https://www.googleapis.com/auth/fitness.location.write"
          ]
         }
+       }
+      }
+     }
+    },
+    "dataset": {
+     "methods": {
+      "aggregate": {
+       "id": "fitness.users.dataset.aggregate",
+       "path": "{userId}/dataset:aggregate",
+       "httpMethod": "POST",
+       "parameters": {
+        "userId": {
+         "type": "string",
+         "required": true,
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "userId"
+       ],
+       "request": {
+        "$ref": "AggregateRequest"
+       },
+       "response": {
+        "$ref": "AggregateResponse"
        }
       }
      }

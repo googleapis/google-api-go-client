@@ -49,6 +49,9 @@ const (
 	// View and manage the files in your Google Drive
 	DriveScope = "https://www.googleapis.com/auth/drive"
 
+	// View and manage metadata of files in your Google Drive
+	DriveMetadataScope = "https://www.googleapis.com/auth/drive.metadata"
+
 	// View metadata for files in your Google Drive
 	DriveMetadataReadonlyScope = "https://www.googleapis.com/auth/drive.metadata.readonly"
 
@@ -443,6 +446,7 @@ func (c *ActivitiesListCall) Do() (*ListActivitiesResponse, error) {
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/activity",
 	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.metadata",
 	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
 	//     "https://www.googleapis.com/auth/drive.readonly"
 	//   ]

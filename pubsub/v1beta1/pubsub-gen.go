@@ -160,11 +160,17 @@ type ModifyAckDeadlineRequest struct {
 	// may immediately make the message available for another pull request.
 	AckDeadlineSeconds int64 `json:"ackDeadlineSeconds,omitempty"`
 
-	// AckId: The acknowledgment ID.
+	// AckId: The acknowledgment ID. Either this or ack_ids must be
+	// populated, not both.
 	AckId string `json:"ackId,omitempty"`
 
-	// Subscription: The name of the subscription from which messages are
-	// being pulled.
+	// AckIds: List of acknowledgment IDs. Either this field or ack_id
+	// should be populated, not both. TODO(handrei): mark the above field
+	// deprecated once it's not used internally.
+	AckIds []string `json:"ackIds,omitempty"`
+
+	// Subscription: Next Index: 5 The name of the subscription from which
+	// messages are being pulled.
 	Subscription string `json:"subscription,omitempty"`
 }
 
@@ -304,11 +310,12 @@ type Subscription struct {
 	// the call to the push endpoint.
 	//
 	// For pull delivery, this value is used as the initial value for the
-	// Ack deadline. It may be overridden for a specific pull request
-	// (message) with ModifyAckDeadline. While a message is outstanding
-	// (i.e. it has been delivered to a pull subscriber and the subscriber
-	// has not yet Acked or Nacked), the Pub/Sub system will not deliver
-	// that message to another pull subscriber (on a best-effort basis).
+	// Ack deadline. It may be overridden for each message using its
+	// corresponding ack_id with ModifyAckDeadline. While a message is
+	// outstanding (i.e. it has been delivered to a pull subscriber and the
+	// subscriber has not yet Acked or Nacked), the Pub/Sub system will not
+	// deliver that message to another pull subscriber (on a best-effort
+	// basis).
 	AckDeadlineSeconds int64 `json:"ackDeadlineSeconds,omitempty"`
 
 	// Name: Name of the subscription.

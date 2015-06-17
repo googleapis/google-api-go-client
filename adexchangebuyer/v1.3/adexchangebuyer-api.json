@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/LngzzVwqv1YJhBSD4vnWK91Oc64\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/ekf6O2lwsP92coEGgGA2ge5cRGA\"",
  "discoveryVersion": "v1",
  "id": "adexchangebuyer:v1.3",
  "name": "adexchangebuyer",
  "canonicalName": "Ad Exchange Buyer",
  "version": "v1.3",
- "revision": "20150326",
+ "revision": "20150520",
  "title": "Ad Exchange Buyer API",
  "description": "Accesses your bidding-account information, submits creatives for validation, finds available direct deals, and retrieves performance reports.",
  "ownerDomain": "google.com",
@@ -555,6 +555,16 @@
    "type": "object",
    "description": "The configuration data for an Ad Exchange performance report list.",
    "properties": {
+    "bidRate": {
+     "type": "number",
+     "description": "The number of bid responses with an ad.",
+     "format": "double"
+    },
+    "bidRequestRate": {
+     "type": "number",
+     "description": "The number of bid requests sent to your bidder.",
+     "format": "double"
+    },
     "calloutStatusRate": {
      "type": "array",
      "description": "Rate of various prefiltering statuses per match. Please refer to the callout-status-codes.txt file for different statuses.",
@@ -576,12 +586,22 @@
       "type": "any"
      }
     },
+    "filteredBidRate": {
+     "type": "number",
+     "description": "The number of bid responses that were filtered due to a policy violation or other errors.",
+     "format": "double"
+    },
     "hostedMatchStatusRate": {
      "type": "array",
      "description": "Average QPS for hosted match operations.",
      "items": {
       "type": "any"
      }
+    },
+    "inventoryMatchRate": {
+     "type": "number",
+     "description": "The number of potential queries based on your pretargeting settings.",
+     "format": "double"
     },
     "kind": {
      "type": "string",
@@ -637,10 +657,20 @@
      "type": "string",
      "description": "The trading location of this data."
     },
+    "successfulRequestRate": {
+     "type": "number",
+     "description": "The number of properly formed bid responses received by our servers within the deadline.",
+     "format": "double"
+    },
     "timestamp": {
      "type": "string",
      "description": "The unix timestamp of the starting time of this performance data.",
      "format": "int64"
+    },
+    "unsuccessfulRequestRate": {
+     "type": "number",
+     "description": "The number of bid responses that were unsuccessful due to timeouts, incorrect formatting, etc.",
+     "format": "double"
     }
    }
   },

@@ -1,6 +1,6 @@
 // Package sqladmin provides access to the Cloud SQL Administration API.
 //
-// See https://developers.google.com/cloud-sql/docs/admin-api/
+// See https://cloud.google.com/sql/docs/reference/latest
 //
 // Usage example:
 //
@@ -404,6 +404,7 @@ type DatabaseInstance struct {
 	// with billing.
 	// PENDING_CREATE: The instance is being created.
 	// MAINTENANCE: The instance is down for maintenance.
+	// FAILED: The instance creation failed.
 	// UNKNOWN_STATE: The state of the instance is unknown.
 	State string `json:"state,omitempty"`
 }
@@ -658,6 +659,8 @@ type Operation struct {
 	// format, for example 2012-11-15T16:19:00.094Z.
 	EndTime string `json:"endTime,omitempty"`
 
+	// Error: If errors occurred during processing of this operation, this
+	// field will be populated.
 	Error *OperationErrors `json:"error,omitempty"`
 
 	// ExportContext: The context for export operation, if applicable.
@@ -852,6 +855,7 @@ type SslCert struct {
 	// Kind: This is always sql#sslCert.
 	Kind string `json:"kind,omitempty"`
 
+	// SelfLink: The URI of this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// Sha1Fingerprint: Sha1 Fingerprint.

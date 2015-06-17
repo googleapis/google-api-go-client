@@ -89,6 +89,7 @@ func (s *Service) userAgent() string {
 func NewUsersService(s *Service) *UsersService {
 	rs := &UsersService{s: s}
 	rs.DataSources = NewUsersDataSourcesService(s)
+	rs.Dataset = NewUsersDatasetService(s)
 	rs.Sessions = NewUsersSessionsService(s)
 	return rs
 }
@@ -97,6 +98,8 @@ type UsersService struct {
 	s *Service
 
 	DataSources *UsersDataSourcesService
+
+	Dataset *UsersDatasetService
 
 	Sessions *UsersSessionsService
 }
@@ -122,6 +125,15 @@ type UsersDataSourcesDatasetsService struct {
 	s *Service
 }
 
+func NewUsersDatasetService(s *Service) *UsersDatasetService {
+	rs := &UsersDatasetService{s: s}
+	return rs
+}
+
+type UsersDatasetService struct {
+	s *Service
+}
+
 func NewUsersSessionsService(s *Service) *UsersSessionsService {
 	rs := &UsersSessionsService{s: s}
 	return rs
@@ -129,6 +141,66 @@ func NewUsersSessionsService(s *Service) *UsersSessionsService {
 
 type UsersSessionsService struct {
 	s *Service
+}
+
+type AggregateBucket struct {
+	// Activity: available for Bucket.Type.ACTIVITY_TYPE,
+	// Bucket.Type.ACTIVITY_SEGMENT
+	Activity int64 `json:"activity,omitempty"`
+
+	// Dataset: There will be one dataset per datatype/datasource
+	Dataset []*Dataset `json:"dataset,omitempty"`
+
+	EndTimeMillis int64 `json:"endTimeMillis,omitempty,string"`
+
+	// Session: available for Bucket.Type.SESSION
+	Session *Session `json:"session,omitempty"`
+
+	StartTimeMillis int64 `json:"startTimeMillis,omitempty,string"`
+
+	// Type: The type of a bucket signifies how the data aggregation is
+	// performed in the bucket.
+	//
+	// Possible values:
+	//   "activitySegment"
+	//   "activityType"
+	//   "session"
+	//   "time"
+	//   "unknown"
+	Type string `json:"type,omitempty"`
+}
+
+type AggregateBy struct {
+	DataSourceId string `json:"dataSourceId,omitempty"`
+
+	// DataTypeName: by dataype or by datasource
+	DataTypeName string `json:"dataTypeName,omitempty"`
+
+	OutputDataSourceId string `json:"outputDataSourceId,omitempty"`
+
+	OutputDataTypeName string `json:"outputDataTypeName,omitempty"`
+}
+
+type AggregateRequest struct {
+	AggregateBy []*AggregateBy `json:"aggregateBy,omitempty"`
+
+	BucketByActivitySegment *BucketByActivity `json:"bucketByActivitySegment,omitempty"`
+
+	BucketByActivityType *BucketByActivity `json:"bucketByActivityType,omitempty"`
+
+	BucketBySession *BucketBySession `json:"bucketBySession,omitempty"`
+
+	// BucketByTime: apparently oneof is not supported by reduced_nano_proto
+	BucketByTime *BucketByTime `json:"bucketByTime,omitempty"`
+
+	EndTimeMillis int64 `json:"endTimeMillis,omitempty,string"`
+
+	// StartTimeMillis: required time range
+	StartTimeMillis int64 `json:"startTimeMillis,omitempty,string"`
+}
+
+type AggregateResponse struct {
+	Bucket []*AggregateBucket `json:"bucket,omitempty"`
 }
 
 type Application struct {
@@ -153,6 +225,25 @@ type Application struct {
 	// whenever the application changes in a way that affects the
 	// computation of the data.
 	Version string `json:"version,omitempty"`
+}
+
+type BucketByActivity struct {
+	// ActivityDataSourceId: default activity stream will be used if not
+	// specified
+	ActivityDataSourceId string `json:"activityDataSourceId,omitempty"`
+
+	// MinDurationMillis: Only activity segments of duration longer than
+	// this is used
+	MinDurationMillis int64 `json:"minDurationMillis,omitempty,string"`
+}
+
+type BucketBySession struct {
+	// MinDurationMillis: Only sessions of duration longer than this is used
+	MinDurationMillis int64 `json:"minDurationMillis,omitempty,string"`
+}
+
+type BucketByTime struct {
+	DurationMillis int64 `json:"durationMillis,omitempty,string"`
 }
 
 type DataPoint struct {
@@ -1409,6 +1500,88 @@ func (c *UsersDataSourcesDatasetsPatchCall) Do() (*Dataset, error) {
 	//     "https://www.googleapis.com/auth/fitness.body.write",
 	//     "https://www.googleapis.com/auth/fitness.location.write"
 	//   ]
+	// }
+
+}
+
+// method id "fitness.users.dataset.aggregate":
+
+type UsersDatasetAggregateCall struct {
+	s                *Service
+	userId           string
+	aggregaterequest *AggregateRequest
+	opt_             map[string]interface{}
+}
+
+// Aggregate:
+func (r *UsersDatasetService) Aggregate(userId string, aggregaterequest *AggregateRequest) *UsersDatasetAggregateCall {
+	c := &UsersDatasetAggregateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.userId = userId
+	c.aggregaterequest = aggregaterequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UsersDatasetAggregateCall) Fields(s ...googleapi.Field) *UsersDatasetAggregateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *UsersDatasetAggregateCall) Do() (*AggregateResponse, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.aggregaterequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/dataset:aggregate")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"userId": c.userId,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *AggregateResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "httpMethod": "POST",
+	//   "id": "fitness.users.dataset.aggregate",
+	//   "parameterOrder": [
+	//     "userId"
+	//   ],
+	//   "parameters": {
+	//     "userId": {
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{userId}/dataset:aggregate",
+	//   "request": {
+	//     "$ref": "AggregateRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "AggregateResponse"
+	//   }
 	// }
 
 }

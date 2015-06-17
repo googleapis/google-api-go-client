@@ -168,6 +168,10 @@ type Cluster struct {
 	// from the Kubernetes components themselves.
 	EnableCloudLogging bool `json:"enableCloudLogging,omitempty"`
 
+	// EnableCloudMonitoring: Whether metrics from the cluster should be
+	// made available via the Google Cloud Monitoring service.
+	EnableCloudMonitoring bool `json:"enableCloudMonitoring,omitempty"`
+
 	// Endpoint: [Output only] The IP address of this cluster's Kubernetes
 	// master. The endpoint can be accessed from the internet at
 	// https://username:password@endpoint/.
@@ -175,6 +179,10 @@ type Cluster struct {
 	// See the masterAuth property of this resource for username and
 	// password information.
 	Endpoint string `json:"endpoint,omitempty"`
+
+	// InstanceGroupUrls: [Output only] The resource URLs of [instance
+	// groups](/compute/docs/instance-groups/) associated with this cluster.
+	InstanceGroupUrls []string `json:"instanceGroupUrls,omitempty"`
 
 	// MasterAuth: The authentication information for accessing the master.
 	MasterAuth *MasterAuth `json:"masterAuth,omitempty"`
@@ -264,6 +272,18 @@ type MasterAuth struct {
 	// in all requests to the master endpoint. The format of the header is:
 	// "Authorization: Bearer ".
 	BearerToken string `json:"bearerToken,omitempty"`
+
+	// ClientCertificate: [Output only] Base64 encoded public certificate
+	// used by clients to authenticate to the cluster endpoint.
+	ClientCertificate string `json:"clientCertificate,omitempty"`
+
+	// ClientKey: [Output only] Base64 encoded private key used by clients
+	// to authenticate to the cluster endpoint.
+	ClientKey string `json:"clientKey,omitempty"`
+
+	// ClusterCaCertificate: [Output only] Base64 encoded public certificate
+	// that is the root of trust for the cluster.
+	ClusterCaCertificate string `json:"clusterCaCertificate,omitempty"`
 
 	// Password: The password to use for HTTP basic authentication when
 	// accessing the Kubernetes master endpoint. Because the master endpoint

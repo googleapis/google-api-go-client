@@ -1,6 +1,6 @@
 // Package sqladmin provides access to the Cloud SQL Administration API.
 //
-// See https://developers.google.com/cloud-sql/docs/admin-api/
+// See https://cloud.google.com/sql/docs/reference/latest
 //
 // Usage example:
 //

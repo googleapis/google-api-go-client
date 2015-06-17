@@ -306,7 +306,7 @@ type Annotation struct {
 	// Id: The generated unique ID for this annotation.
 	Id string `json:"id,omitempty"`
 
-	// Info: A map of additional data for this annotation.
+	// Info: A string which maps to an array of values.
 	Info map[string][]string `json:"info,omitempty"`
 
 	// Name: The display name of this annotation.
@@ -346,7 +346,7 @@ type AnnotationSet struct {
 	// Id: The generated unique ID for this annotation set.
 	Id string `json:"id,omitempty"`
 
-	// Info: A map of additional data for this annotation set.
+	// Info: A string which maps to an array of values.
 	Info map[string][]string `json:"info,omitempty"`
 
 	// Name: The display name for this annotation set.
@@ -425,7 +425,7 @@ type Call struct {
 	// in info.
 	GenotypeLikelihood []float64 `json:"genotypeLikelihood,omitempty"`
 
-	// Info: A map of additional variant call information.
+	// Info: A string which maps to an array of values.
 	Info map[string][]string `json:"info,omitempty"`
 
 	// Phaseset: If this field is present, this variant call's genotype
@@ -467,7 +467,7 @@ type CallSet struct {
 	// Id: The Google generated ID of the call set, immutable.
 	Id string `json:"id,omitempty"`
 
-	// Info: A map of additional call set information.
+	// Info: A string which maps to an array of values.
 	Info map[string][]string `json:"info,omitempty"`
 
 	// Name: The call set name.
@@ -568,16 +568,16 @@ type ExperimentalCreateJobResponse struct {
 }
 
 type ExportReadGroupSetsRequest struct {
-	// ExportUri: A Google Cloud Storage URI for the exported BAM file. The
-	// currently authenticated user must have write access to the new file.
-	// An error will be returned if the URI already contains data.
+	// ExportUri: Required. A Google Cloud Storage URI for the exported BAM
+	// file. The currently authenticated user must have write access to the
+	// new file. An error will be returned if the URI already contains data.
 	ExportUri string `json:"exportUri,omitempty"`
 
-	// ProjectNumber: The Google Developers Console project number that owns
-	// this export.
+	// ProjectNumber: Required. The Google Developers Console project number
+	// that owns this export.
 	ProjectNumber int64 `json:"projectNumber,omitempty,string"`
 
-	// ReadGroupSetIds: The IDs of the read group sets to export.
+	// ReadGroupSetIds: Required. The IDs of the read group sets to export.
 	ReadGroupSetIds []string `json:"readGroupSetIds,omitempty"`
 
 	// ReferenceNames: The reference names to export. If this is not
@@ -592,13 +592,14 @@ type ExportReadGroupSetsResponse struct {
 }
 
 type ExportVariantSetRequest struct {
-	// BigqueryDataset: The BigQuery dataset to export data to. Note that
-	// this is distinct from the Genomics concept of "dataset".
+	// BigqueryDataset: Required. The BigQuery dataset to export data to.
+	// This dataset must already exist. Note that this is distinct from the
+	// Genomics concept of "dataset".
 	BigqueryDataset string `json:"bigqueryDataset,omitempty"`
 
-	// BigqueryTable: The BigQuery table to export data to. If the table
-	// doesn't exist, it will be created. If it already exists, it will be
-	// overwritten.
+	// BigqueryTable: Required. The BigQuery table to export data to. If the
+	// table doesn't exist, it will be created. If it already exists, it
+	// will be overwritten.
 	BigqueryTable string `json:"bigqueryTable,omitempty"`
 
 	// CallSetIds: If provided, only variant call information from the
@@ -612,9 +613,9 @@ type ExportVariantSetRequest struct {
 	//   "BIGQUERY"
 	Format string `json:"format,omitempty"`
 
-	// ProjectNumber: The Google Cloud project number that owns the
-	// destination BigQuery dataset. The caller must have WRITE access to
-	// this project. This project will also own the resulting export job.
+	// ProjectNumber: Required. The Google Cloud project number that owns
+	// the destination BigQuery dataset. The caller must have WRITE access
+	// to this project. This project will also own the resulting export job.
 	ProjectNumber int64 `json:"projectNumber,omitempty,string"`
 }
 
@@ -693,6 +694,15 @@ type ImportVariantsRequest struct {
 	//   "COMPLETE_GENOMICS"
 	//   "VCF"
 	Format string `json:"format,omitempty"`
+
+	// NormalizeReferenceNames: Convert reference names to the canonical
+	// representation. hg19 haploytypes (those reference names containing
+	// "_hap") are not modified in any way. All other reference names are
+	// modified according to the following rules: The reference name is
+	// capitalized. The "chr" prefix is dropped for all autosomes and sex
+	// chromsomes. For example "chr17" becomes "17" and "chrX" becomes "X".
+	// All mitochondrial chromosomes ("chrM", "chrMT", etc) become "MT".
+	NormalizeReferenceNames bool `json:"normalizeReferenceNames,omitempty"`
 
 	// SourceUris: A list of URIs referencing variant files in Google Cloud
 	// Storage. URIs can include wildcards as described here. Note that
@@ -786,6 +796,14 @@ type JobRequest struct {
 	Type string `json:"type,omitempty"`
 }
 
+type KeyValue struct {
+	// Key: A string which maps to an array of values.
+	Key string `json:"key,omitempty"`
+
+	// Value: The string values.
+	Value []string `json:"value,omitempty"`
+}
+
 type LinearAlignment struct {
 	// Cigar: Represents the local alignment of this sequence (alignment
 	// matches, indels, etc) against the reference.
@@ -860,7 +878,7 @@ type Metadata struct {
 	// considered equivalent.
 	Id string `json:"id,omitempty"`
 
-	// Info: Remaining structured metadata key-value pairs.
+	// Info: A string which maps to an array of values.
 	Info map[string][]string `json:"info,omitempty"`
 
 	// Key: The top-level key.
@@ -1025,7 +1043,7 @@ type Read struct {
 	// to be confused with fragmentName.
 	Id string `json:"id,omitempty"`
 
-	// Info: A map of additional read alignment information.
+	// Info: A string which maps to an array of values.
 	Info map[string][]string `json:"info,omitempty"`
 
 	// NextMatePosition: The position of the primary alignment of the
@@ -1091,7 +1109,7 @@ type ReadGroup struct {
 	// the @RG ID field in the SAM spec. For that value, see the name field.
 	Id string `json:"id,omitempty"`
 
-	// Info: A map of additional read group information.
+	// Info: A string which maps to an array of values.
 	Info map[string][]string `json:"info,omitempty"`
 
 	// Name: The read group name. This corresponds to the @RG ID field in
@@ -1169,7 +1187,7 @@ type ReadGroupSet struct {
 	// Id: The read group set ID.
 	Id string `json:"id,omitempty"`
 
-	// Info: A map of additional read group set information.
+	// Info: A string which maps to an array of values.
 	Info map[string][]string `json:"info,omitempty"`
 
 	// Name: The read group set name. By default this will be initialized to
@@ -1734,7 +1752,7 @@ type Variant struct {
 	// Id: The Google generated ID of the variant, immutable.
 	Id string `json:"id,omitempty"`
 
-	// Info: A map of additional variant information.
+	// Info: A string which maps to an array of values.
 	Info map[string][]string `json:"info,omitempty"`
 
 	// Names: Names for the variant, for example a RefSNP ID.
@@ -6604,7 +6622,7 @@ func (c *VariantsetsPatchCall) Do() (*VariantSet, error) {
 	//   ],
 	//   "parameters": {
 	//     "variantSetId": {
-	//       "description": "The ID of the variant to be updated.",
+	//       "description": "The ID of the variant to be updated (must already exist).",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -6770,7 +6788,7 @@ func (c *VariantsetsUpdateCall) Do() (*VariantSet, error) {
 	//   ],
 	//   "parameters": {
 	//     "variantSetId": {
-	//       "description": "The ID of the variant to be updated.",
+	//       "description": "The ID of the variant to be updated (must already exist).",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"

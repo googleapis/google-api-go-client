@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/N4cXXve_XAApBoGGTgv5pYZt-Zk\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/TAGoQX581k0pUlJRReLGRYb2z5U\"",
  "discoveryVersion": "v1",
  "id": "androidenterprise:v1",
  "name": "androidenterprise",
  "canonicalName": "Android Enterprise",
  "version": "v1",
- "revision": "20141112",
+ "revision": "20150303",
  "title": "Google Play EMM API",
  "description": "Allows MDMs/EMMs and enterprises to manage the deployment of apps to Android for Work users.",
  "ownerDomain": "google.com",
@@ -159,6 +159,38 @@
     "valueString": {
      "type": "string",
      "description": "The string value - this will be present for types string, choice and hidden."
+    }
+   }
+  },
+  "AppVersion": {
+   "id": "AppVersion",
+   "type": "object",
+   "description": "App version represents a single APK version.",
+   "properties": {
+    "versionCode": {
+     "type": "integer",
+     "description": "Unique increasing identifier for the apk version.",
+     "format": "int32"
+    },
+    "versionString": {
+     "type": "string",
+     "description": "The string used in the Play Store by the app developer to identify a version of an app. The string is not necessarily unique or localized (e.g. \"1.4\")."
+    }
+   }
+  },
+  "ApprovalUrlInfo": {
+   "id": "ApprovalUrlInfo",
+   "type": "object",
+   "description": "Information on an approval URL.",
+   "properties": {
+    "approvalUrl": {
+     "type": "string",
+     "description": "A URL that displays a product's permissions and that can also be used to approve the product with the Products.approve call."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"androidenterprise#approvalUrlInfo\".",
+     "default": "androidenterprise#approvalUrlInfo"
     }
    }
   },
@@ -546,6 +578,13 @@
    "type": "object",
    "description": "A product represents an app in the Google Play Store that is available to at least some users in the enterprise. (Some apps are restricted to a single enterprise, and no information about them is made available outside that enterprise.)\n\nThe information provided for each product (localized name, icon, link to the full Google Play details page) is intended to allow a basic representation of the product within an MDM user interface.",
    "properties": {
+    "appVersion": {
+     "type": "array",
+     "description": "List of app versions available for this product. The returned list contains only public versions. E.g. alpha, beta or canary versions will not be included.",
+     "items": {
+      "$ref": "AppVersion"
+     }
+    },
     "authorName": {
      "type": "string",
      "description": "The name of the author of the product (e.g. the app developer)."
@@ -553,6 +592,10 @@
     "detailsUrl": {
      "type": "string",
      "description": "A link to the (consumer) Google Play details page for the product."
+    },
+    "distributionChannel": {
+     "type": "string",
+     "description": "How and to whom the package is made available."
     },
     "iconUrl": {
      "type": "string",
@@ -621,6 +664,25 @@
     "productId": {
      "type": "string",
      "description": "The ID of the app that the permissions relate to, e.g. \"app:com.google.android.gm\"."
+    }
+   }
+  },
+  "ProductsApproveRequest": {
+   "id": "ProductsApproveRequest",
+   "type": "object",
+   "properties": {
+    "approvalUrlInfo": {
+     "$ref": "ApprovalUrlInfo"
+    }
+   }
+  },
+  "ProductsGenerateApprovalUrlResponse": {
+   "id": "ProductsGenerateApprovalUrlResponse",
+   "type": "object",
+   "properties": {
+    "url": {
+     "type": "string",
+     "description": "A iframe-able URL that displays a product's permissions (if any). This URL can be used to approve the product only once and for a limited time (1 hour), using the Products.approve call. If the product is not currently approved and has no permissions, this URL will point to an empty page. If the product is currently approved and all of its permissions (if any) are also approved, this field will not be populated."
     }
    }
   },
@@ -1902,6 +1964,71 @@
   },
   "products": {
    "methods": {
+    "approve": {
+     "id": "androidenterprise.products.approve",
+     "path": "enterprises/{enterpriseId}/products/{productId}/approve",
+     "httpMethod": "POST",
+     "description": "Approves the specified product (and the relevant app permissions, if any).",
+     "parameters": {
+      "enterpriseId": {
+       "type": "string",
+       "description": "The ID of the enterprise.",
+       "required": true,
+       "location": "path"
+      },
+      "productId": {
+       "type": "string",
+       "description": "The ID of the product.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "enterpriseId",
+      "productId"
+     ],
+     "request": {
+      "$ref": "ProductsApproveRequest"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/androidenterprise"
+     ]
+    },
+    "generateApprovalUrl": {
+     "id": "androidenterprise.products.generateApprovalUrl",
+     "path": "enterprises/{enterpriseId}/products/{productId}/generateApprovalUrl",
+     "httpMethod": "POST",
+     "description": "Generates a URL that can be used to display an iframe to view the product's permissions (if any) and approve the product. This URL can be used to approve the product for a limited time (currently 1 hour) using the Products.approve call.",
+     "parameters": {
+      "enterpriseId": {
+       "type": "string",
+       "description": "The ID of the enterprise.",
+       "required": true,
+       "location": "path"
+      },
+      "languageCode": {
+       "type": "string",
+       "description": "The language code that will be used for permission names and descriptions in the returned iframe.",
+       "location": "query"
+      },
+      "productId": {
+       "type": "string",
+       "description": "The ID of the product.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "enterpriseId",
+      "productId"
+     ],
+     "response": {
+      "$ref": "ProductsGenerateApprovalUrlResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/androidenterprise"
+     ]
+    },
     "get": {
      "id": "androidenterprise.products.get",
      "path": "enterprises/{enterpriseId}/products/{productId}",

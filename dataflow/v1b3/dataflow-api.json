@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/Olf0__B-F221nGIY4YSI7FVjTkg\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/0aH3PsMrpC4Dqa5K4gjLDjAQxF8\"",
  "discoveryVersion": "v1",
  "id": "dataflow:v1b3",
  "name": "dataflow",
  "version": "v1b3",
- "revision": "20150417",
+ "revision": "20150303",
  "title": "Google Dataflow API",
  "description": "Google Dataflow API.",
  "ownerDomain": "google.com",
@@ -306,6 +306,9 @@
    "id": "Job",
    "type": "object",
    "properties": {
+    "clientRequestId": {
+     "type": "string"
+    },
     "createTime": {
      "type": "string"
     },
@@ -346,6 +349,9 @@
     "projectId": {
      "type": "string"
     },
+    "replaceJobId": {
+     "type": "string"
+    },
     "requestedState": {
      "type": "string",
      "enum": [
@@ -369,6 +375,12 @@
      "type": "array",
      "items": {
       "$ref": "Step"
+     }
+    },
+    "transformNameMapping": {
+     "type": "object",
+     "additionalProperties": {
+      "type": "string"
      }
     },
     "type": {
@@ -420,6 +432,7 @@
     "messageImportance": {
      "type": "string",
      "enum": [
+      "JOB_MESSAGE_BASIC",
       "JOB_MESSAGE_DEBUG",
       "JOB_MESSAGE_DETAILED",
       "JOB_MESSAGE_ERROR",
@@ -427,6 +440,7 @@
       "JOB_MESSAGE_WARNING"
      ],
      "enumDescriptions": [
+      "",
       "",
       "",
       "",
@@ -1516,6 +1530,9 @@
       "type": "string"
      }
     },
+    "network": {
+     "type": "string"
+    },
     "numWorkers": {
      "type": "integer",
      "format": "int32"
@@ -1852,6 +1869,7 @@
           "minimumImportance": {
            "type": "string",
            "enum": [
+            "JOB_MESSAGE_BASIC",
             "JOB_MESSAGE_DEBUG",
             "JOB_MESSAGE_DETAILED",
             "JOB_MESSAGE_ERROR",
@@ -1859,6 +1877,7 @@
             "JOB_MESSAGE_WARNING"
            ],
            "enumDescriptions": [
+            "",
             "",
             "",
             "",

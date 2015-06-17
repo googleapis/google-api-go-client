@@ -43,8 +43,8 @@ const basePath = "https://www.googleapis.com/drive/v1/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage Google Drive files that you have opened or created
-	// with this app
+	// View and manage Google Drive files and folders that you have opened
+	// or created with this app
 	DriveFileScope = "https://www.googleapis.com/auth/drive.file"
 )
 
@@ -505,8 +505,10 @@ func (r *FilesService) Patch(id string, file *File) *FilesPatchCall {
 // NewRevision sets the optional parameter "newRevision": Whether a blob
 // upload should create a new revision. If false, the blob data in the
 // current head revision is replaced. If true or not set, a new blob is
-// created as head revision, and previous revisions are preserved
-// (causing increased use of the user's data storage quota).
+// created as head revision, and previous unpinned revisions are
+// preserved for a short period of time. Pinned revisions are stored
+// indefinitely, using additional storage quota, up to a maximum of 200
+// revisions.
 func (c *FilesPatchCall) NewRevision(newRevision bool) *FilesPatchCall {
 	c.opt_["newRevision"] = newRevision
 	return c
@@ -596,7 +598,7 @@ func (c *FilesPatchCall) Do() (*File, error) {
 	//     },
 	//     "newRevision": {
 	//       "default": "true",
-	//       "description": "Whether a blob upload should create a new revision. If false, the blob data in the current head revision is replaced. If true or not set, a new blob is created as head revision, and previous revisions are preserved (causing increased use of the user's data storage quota).",
+	//       "description": "Whether a blob upload should create a new revision. If false, the blob data in the current head revision is replaced. If true or not set, a new blob is created as head revision, and previous unpinned revisions are preserved for a short period of time. Pinned revisions are stored indefinitely, using additional storage quota, up to a maximum of 200 revisions.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -652,8 +654,10 @@ func (r *FilesService) Update(id string, file *File) *FilesUpdateCall {
 // NewRevision sets the optional parameter "newRevision": Whether a blob
 // upload should create a new revision. If false, the blob data in the
 // current head revision is replaced. If true or not set, a new blob is
-// created as head revision, and previous revisions are preserved
-// (causing increased use of the user's data storage quota).
+// created as head revision, and previous unpinned revisions are
+// preserved for a short period of time. Pinned revisions are stored
+// indefinitely, using additional storage quota, up to a maximum of 200
+// revisions.
 func (c *FilesUpdateCall) NewRevision(newRevision bool) *FilesUpdateCall {
 	c.opt_["newRevision"] = newRevision
 	return c
@@ -830,7 +834,7 @@ func (c *FilesUpdateCall) Do() (*File, error) {
 	//     },
 	//     "newRevision": {
 	//       "default": "true",
-	//       "description": "Whether a blob upload should create a new revision. If false, the blob data in the current head revision is replaced. If true or not set, a new blob is created as head revision, and previous revisions are preserved (causing increased use of the user's data storage quota).",
+	//       "description": "Whether a blob upload should create a new revision. If false, the blob data in the current head revision is replaced. If true or not set, a new blob is created as head revision, and previous unpinned revisions are preserved for a short period of time. Pinned revisions are stored indefinitely, using additional storage quota, up to a maximum of 200 revisions.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },

@@ -1029,6 +1029,9 @@ type User struct {
 	// SuspensionReason: Suspension reason if user is suspended (Read-only)
 	SuspensionReason string `json:"suspensionReason,omitempty"`
 
+	// ThumbnailPhotoEtag: ETag of the user's photo (Read-only)
+	ThumbnailPhotoEtag string `json:"thumbnailPhotoEtag,omitempty"`
+
 	// ThumbnailPhotoUrl: Photo Url of the user (Read-only)
 	ThumbnailPhotoUrl string `json:"thumbnailPhotoUrl,omitempty"`
 

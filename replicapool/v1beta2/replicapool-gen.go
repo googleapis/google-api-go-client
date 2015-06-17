@@ -99,6 +99,10 @@ type ZoneOperationsService struct {
 }
 
 type InstanceGroupManager struct {
+	// AutoHealingPolicies: The autohealing policy for this managed instance
+	// group. You can specify only one value.
+	AutoHealingPolicies []*ReplicaPoolAutoHealingPolicy `json:"autoHealingPolicies,omitempty"`
+
 	// BaseInstanceName: The base instance name to use for instances in this
 	// group. The value must be a valid RFC1035 name. Supported characters
 	// are lowercase letters, numbers, and hyphens (-). Instances are named
@@ -386,6 +390,11 @@ type OperationList struct {
 
 	// SelfLink: Server defined URL for this resource (output only).
 	SelfLink string `json:"selfLink,omitempty"`
+}
+
+type ReplicaPoolAutoHealingPolicy struct {
+	// HealthCheck: The URL for the HealthCheck that signals autohealing.
+	HealthCheck string `json:"healthCheck,omitempty"`
 }
 
 // method id "replicapool.instanceGroupManagers.abandonInstances":

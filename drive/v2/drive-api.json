@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/q7G5QdguNPp3b-d0oF62ZLMOZNU\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/KEeW0PsH1Koyy8hFKaOTlOvpjfI\"",
  "discoveryVersion": "v1",
  "id": "drive:v2",
  "name": "drive",
  "version": "v2",
- "revision": "20150326",
+ "revision": "20150305",
  "title": "Drive API",
  "description": "The API to interact with Drive.",
  "ownerDomain": "google.com",
@@ -79,7 +79,7 @@
      "description": "View your Google Drive apps"
     },
     "https://www.googleapis.com/auth/drive.file": {
-     "description": "View and manage Google Drive files that you have opened or created with this app"
+     "description": "View and manage Google Drive files and folders that you have opened or created with this app"
     },
     "https://www.googleapis.com/auth/drive.metadata": {
      "description": "View and manage metadata of files in your Google Drive"
@@ -137,7 +137,7 @@
     },
     "domainSharingPolicy": {
      "type": "string",
-     "description": "The domain sharing policy for the current user."
+     "description": "The domain sharing policy for the current user. Possible values are:  \n- ALLOWED \n- ALLOWED_WITH_WARNING \n- INCOMING_ONLY \n- DISALLOWED"
     },
     "etag": {
      "type": "string",
@@ -1223,6 +1223,13 @@
      "$ref": "User",
      "description": "User that shared the item with the current user, if available."
     },
+    "spaces": {
+     "type": "array",
+     "description": "The list of spaces which contain the file. Supported values are 'drive' and 'appDataFolder'.",
+     "items": {
+      "type": "string"
+     }
+    },
     "thumbnail": {
      "type": "object",
      "description": "Thumbnail for the file. Only accepted on upload and for files that are not already thumbnailed by Google.",
@@ -1885,6 +1892,11 @@
        "description": "Page token for changes.",
        "location": "query"
       },
+      "spaces": {
+       "type": "string",
+       "description": "A comma-separated list of spaces to query. Supported values are 'drive' and 'appDataFolder'.",
+       "location": "query"
+      },
       "startChangeId": {
        "type": "string",
        "description": "Change ID to start listing changes from.",
@@ -1935,6 +1947,11 @@
       "pageToken": {
        "type": "string",
        "description": "Page token for changes.",
+       "location": "query"
+      },
+      "spaces": {
+       "type": "string",
+       "description": "A comma-separated list of spaces to query. Supported values are 'drive' and 'appDataFolder'.",
        "location": "query"
       },
       "startChangeId": {
@@ -2155,8 +2172,7 @@
      ],
      "scopes": [
       "https://www.googleapis.com/auth/drive",
-      "https://www.googleapis.com/auth/drive.file",
-      "https://www.googleapis.com/auth/drive.readonly"
+      "https://www.googleapis.com/auth/drive.file"
      ]
     },
     "get": {
@@ -2372,7 +2388,7 @@
       },
       "ocrLanguage": {
        "type": "string",
-       "description": "If ocr is true, hints at the language to use. Valid values are ISO 639-1 codes.",
+       "description": "If ocr is true, hints at the language to use. Valid values are BCP 47 codes.",
        "location": "query"
       },
       "pinned": {
@@ -2534,7 +2550,7 @@
       },
       "ocrLanguage": {
        "type": "string",
-       "description": "If ocr is true, hints at the language to use. Valid values are ISO 639-1 codes.",
+       "description": "If ocr is true, hints at the language to use. Valid values are BCP 47 codes.",
        "location": "query"
       },
       "pinned": {
@@ -2654,6 +2670,11 @@
        "type": "string",
        "description": "Query string for searching files.",
        "location": "query"
+      },
+      "spaces": {
+       "type": "string",
+       "description": "A comma-separated list of spaces to query. Supported values are 'drive' and 'appDataFolder'.",
+       "location": "query"
       }
      },
      "response": {
@@ -2694,7 +2715,7 @@
       },
       "newRevision": {
        "type": "boolean",
-       "description": "Whether a blob upload should create a new revision. If false, the blob data in the current head revision is replaced. If true or not set, a new blob is created as head revision, and previous revisions are preserved (causing increased use of the user's data storage quota).",
+       "description": "Whether a blob upload should create a new revision. If false, the blob data in the current head revision is replaced. If true or not set, a new blob is created as head revision, and previous unpinned revisions are preserved for a short period of time. Pinned revisions are stored indefinitely, using additional storage quota, up to a maximum of 200 revisions.",
        "default": "true",
        "location": "query"
       },
@@ -2706,7 +2727,7 @@
       },
       "ocrLanguage": {
        "type": "string",
-       "description": "If ocr is true, hints at the language to use. Valid values are ISO 639-1 codes.",
+       "description": "If ocr is true, hints at the language to use. Valid values are BCP 47 codes.",
        "location": "query"
       },
       "pinned": {
@@ -2871,7 +2892,7 @@
       },
       "newRevision": {
        "type": "boolean",
-       "description": "Whether a blob upload should create a new revision. If false, the blob data in the current head revision is replaced. If true or not set, a new blob is created as head revision, and previous revisions are preserved (causing increased use of the user's data storage quota).",
+       "description": "Whether a blob upload should create a new revision. If false, the blob data in the current head revision is replaced. If true or not set, a new blob is created as head revision, and previous unpinned revisions are preserved for a short period of time. Pinned revisions are stored indefinitely, using additional storage quota, up to a maximum of 200 revisions.",
        "default": "true",
        "location": "query"
       },
@@ -2883,7 +2904,7 @@
       },
       "ocrLanguage": {
        "type": "string",
-       "description": "If ocr is true, hints at the language to use. Valid values are ISO 639-1 codes.",
+       "description": "If ocr is true, hints at the language to use. Valid values are BCP 47 codes.",
        "location": "query"
       },
       "pinned": {

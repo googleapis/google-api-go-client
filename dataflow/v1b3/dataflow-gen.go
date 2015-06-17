@@ -221,6 +221,8 @@ type InstructionOutput struct {
 type InstructionOutputCodec interface{}
 
 type Job struct {
+	ClientRequestId string `json:"clientRequestId,omitempty"`
+
 	CreateTime string `json:"createTime,omitempty"`
 
 	// Possible values:
@@ -244,6 +246,8 @@ type Job struct {
 
 	ProjectId string `json:"projectId,omitempty"`
 
+	ReplaceJobId string `json:"replaceJobId,omitempty"`
+
 	// Possible values:
 	//   "JOB_STATE_CANCELLED"
 	//   "JOB_STATE_DONE"
@@ -254,6 +258,8 @@ type Job struct {
 	RequestedState string `json:"requestedState,omitempty"`
 
 	Steps []*Step `json:"steps,omitempty"`
+
+	TransformNameMapping map[string]string `json:"transformNameMapping,omitempty"`
 
 	// Possible values:
 	//   "JOB_TYPE_BATCH"
@@ -274,6 +280,7 @@ type JobMessage struct {
 	Id string `json:"id,omitempty"`
 
 	// Possible values:
+	//   "JOB_MESSAGE_BASIC"
 	//   "JOB_MESSAGE_DEBUG"
 	//   "JOB_MESSAGE_DETAILED"
 	//   "JOB_MESSAGE_ERROR"
@@ -816,6 +823,8 @@ type WorkerPool struct {
 	MachineType string `json:"machineType,omitempty"`
 
 	Metadata map[string]string `json:"metadata,omitempty"`
+
+	Network string `json:"network,omitempty"`
 
 	NumWorkers int64 `json:"numWorkers,omitempty"`
 
@@ -1548,6 +1557,7 @@ func (c *ProjectsJobsMessagesListCall) EndTime(endTime string) *ProjectsJobsMess
 // MinimumImportance sets the optional parameter "minimumImportance":
 //
 // Possible values:
+//   "JOB_MESSAGE_BASIC"
 //   "JOB_MESSAGE_DEBUG"
 //   "JOB_MESSAGE_DETAILED"
 //   "JOB_MESSAGE_ERROR"
@@ -1647,6 +1657,7 @@ func (c *ProjectsJobsMessagesListCall) Do() (*ListJobMessagesResponse, error) {
 	//     },
 	//     "minimumImportance": {
 	//       "enum": [
+	//         "JOB_MESSAGE_BASIC",
 	//         "JOB_MESSAGE_DEBUG",
 	//         "JOB_MESSAGE_DETAILED",
 	//         "JOB_MESSAGE_ERROR",
@@ -1654,6 +1665,7 @@ func (c *ProjectsJobsMessagesListCall) Do() (*ListJobMessagesResponse, error) {
 	//         "JOB_MESSAGE_WARNING"
 	//       ],
 	//       "enumDescriptions": [
+	//         "",
 	//         "",
 	//         "",
 	//         "",

@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/hFGSutIVQj0PQfQgMG3Y44JNJU0\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/pmREb3OGxyr4EpATg57-x7surxg\"",
  "discoveryVersion": "v1",
  "id": "gmail:v1",
  "name": "gmail",
  "version": "v1",
- "revision": "20150303",
+ "revision": "20150526",
  "title": "Gmail API",
  "description": "The Gmail REST API.",
  "ownerDomain": "google.com",
@@ -622,6 +622,53 @@
      "description": "A short part of the message text."
     }
    }
+  },
+  "WatchRequest": {
+   "id": "WatchRequest",
+   "type": "object",
+   "description": "Set up or update a new push notification watch on this user's mailbox.",
+   "properties": {
+    "labelFilterAction": {
+     "type": "string",
+     "description": "Filtering behavior of labelIds list specified.",
+     "enum": [
+      "exclude",
+      "include"
+     ],
+     "enumDescriptions": [
+      "",
+      ""
+     ]
+    },
+    "labelIds": {
+     "type": "array",
+     "description": "List of label_ids to restrict notifications about. By default, if unspecified, all changes are pushed out. If specified then dictates which labels are required for a push notification to be generated.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "topicName": {
+     "type": "string",
+     "description": "Fully qualified Cloud PubSub API topic name to publish events to. This topic name should already exist in Cloud PubSub and you should have already granted gmail \"publish\" privileges on it. For example, \"projects/my-project-identifier/topics/my-topic-name\" (using the new Cloud PubSub \"v1beta2\" topic naming format).\n\nNote that the \"my-project-identifier\" portion must exactly match your developer console project id (the one executing this watch request)."
+    }
+   }
+  },
+  "WatchResponse": {
+   "id": "WatchResponse",
+   "type": "object",
+   "description": "Push notification watch response.",
+   "properties": {
+    "expiration": {
+     "type": "string",
+     "description": "When Gmail will stop sending notifications for mailbox updates. Call watch again before this time to renew the subscription.",
+     "format": "int64"
+    },
+    "historyId": {
+     "type": "string",
+     "description": "The ID of the mailbox's current history record.",
+     "format": "uint64"
+    }
+   }
   }
  },
  "resources": {
@@ -650,6 +697,58 @@
      "scopes": [
       "https://mail.google.com/",
       "https://www.googleapis.com/auth/gmail.compose",
+      "https://www.googleapis.com/auth/gmail.modify",
+      "https://www.googleapis.com/auth/gmail.readonly"
+     ]
+    },
+    "stop": {
+     "id": "gmail.users.stop",
+     "path": "{userId}/stop",
+     "httpMethod": "POST",
+     "description": "Stop receiving push notifications for the given user mailbox.",
+     "parameters": {
+      "userId": {
+       "type": "string",
+       "description": "The user's email address. The special value me can be used to indicate the authenticated user.",
+       "default": "me",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "userId"
+     ],
+     "scopes": [
+      "https://mail.google.com/",
+      "https://www.googleapis.com/auth/gmail.modify",
+      "https://www.googleapis.com/auth/gmail.readonly"
+     ]
+    },
+    "watch": {
+     "id": "gmail.users.watch",
+     "path": "{userId}/watch",
+     "httpMethod": "POST",
+     "description": "Set up or update a push notification watch on the given user mailbox.",
+     "parameters": {
+      "userId": {
+       "type": "string",
+       "description": "The user's email address. The special value me can be used to indicate the authenticated user.",
+       "default": "me",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "userId"
+     ],
+     "request": {
+      "$ref": "WatchRequest"
+     },
+     "response": {
+      "$ref": "WatchResponse"
+     },
+     "scopes": [
+      "https://mail.google.com/",
       "https://www.googleapis.com/auth/gmail.modify",
       "https://www.googleapis.com/auth/gmail.readonly"
      ]

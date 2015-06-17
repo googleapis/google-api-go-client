@@ -235,6 +235,7 @@ type Condition struct {
 	//
 	// Possible values:
 	//   "contains"
+	//   "cssSelector"
 	//   "endsWith"
 	//   "equals"
 	//   "greater"

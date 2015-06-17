@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/9b14UG5ctgjXECBrDTc8OvoOoyM\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/_MU5PPcJ1QQhdPzgwNErr00pIY8\"",
  "discoveryVersion": "v1",
  "id": "computeaccounts:alpha",
  "name": "computeaccounts",
  "canonicalName": "Compute Accounts",
  "version": "alpha",
- "revision": "20150423",
+ "revision": "20150320",
  "title": "Compute Accounts API",
  "description": "API for the Google Compute Accounts service.",
  "ownerDomain": "google.com",
@@ -86,11 +86,11 @@
   "AuthorizedKeysView": {
    "id": "AuthorizedKeysView",
    "type": "object",
-   "description": "A list of authorized public keys for a user.",
+   "description": "A list of authorized public keys for a user account.",
    "properties": {
     "keys": {
      "type": "array",
-     "description": "[Output Only] The authorized public keys in SSH format.",
+     "description": "[Output Only] The list of authorized public keys in SSH format.",
      "items": {
       "type": "string"
      }
@@ -202,7 +202,7 @@
   "LinuxAccountViews": {
    "id": "LinuxAccountViews",
    "type": "object",
-   "description": "A list of all Linux accounts for this project. Linux Account Views are only used by Compute Engine virtual machines to get information about user accounts for a project or instance. They are read-only views into users and groups managed by the Compute Engine Accounts API.",
+   "description": "A list of all Linux accounts for this project. This API is only used by Compute Engine virtual machines to get information about user accounts for a project or instance. Linux resources are read-only views into users and groups managed by the Compute Engine Accounts API.",
    "properties": {
     "groupViews": {
      "type": "array",
@@ -213,7 +213,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "[Output Only] Type of the resource. Always computeaccounts#linuxAccountViews for Linux views.",
+     "description": "[Output Only] Type of the resource. Always computeaccounts#linuxAccountViews for Linux resources.",
      "default": "computeaccounts#linuxAccountViews"
     },
     "userViews": {
@@ -252,7 +252,7 @@
    "properties": {
     "gid": {
      "type": "integer",
-     "description": "[Output Only] GID.",
+     "description": "[Output Only] The Group ID.",
      "format": "uint32"
     },
     "groupName": {
@@ -261,7 +261,7 @@
     },
     "members": {
      "type": "array",
-     "description": "[Output Only] List of usernames who belong to the group.",
+     "description": "[Output Only] List of user accounts that belong to the group.",
      "items": {
       "type": "string"
      }
@@ -297,7 +297,7 @@
     },
     "username": {
      "type": "string",
-     "description": "[Output Only] The username for the account."
+     "description": "[Output Only] The username of the account."
     }
    }
   },
@@ -308,7 +308,7 @@
    "properties": {
     "clientOperationId": {
      "type": "string",
-     "description": "[Output Only] An optional identifier specified by the client when the mutation was initiated. Must be unique for all operation resources in the project"
+     "description": "[Output Only] An optional identifier specified by the client when the mutation was initiated. Must be unique for all operation resources in the project."
     },
     "creationTimestamp": {
      "type": "string",
@@ -378,7 +378,7 @@
     },
     "progress": {
      "type": "integer",
-     "description": "[Output Only] An optional progress indicator that ranges from 0 to 100. There is no requirement that this be linear or support any granularity of operations. This should not be used to guess at when the operation will be complete. This number should be monotonically increasing as the operation progresses.",
+     "description": "[Output Only] An optional progress indicator that ranges from 0 to 100. There is no requirement that this be linear or support any granularity of operations. This should not be used to guess at when the operation will be complete. This number should monotonically increase as the operation progresses.",
      "format": "int32"
     },
     "region": {
@@ -722,21 +722,25 @@
      "parameters": {
       "filter": {
        "type": "string",
-       "description": "Optional. Filter expression for filtering listed resources.",
+       "description": "Filter expression for filtering listed resources.",
        "location": "query"
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "description": "Maximum count of results to be returned.",
        "default": "500",
        "format": "uint32",
        "minimum": "0",
        "maximum": "500",
        "location": "query"
       },
+      "orderBy": {
+       "type": "string",
+       "location": "query"
+      },
       "pageToken": {
        "type": "string",
-       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
        "location": "query"
       },
       "project": {
@@ -803,11 +807,11 @@
      "id": "computeaccounts.groups.delete",
      "path": "{project}/global/groups/{groupName}",
      "httpMethod": "DELETE",
-     "description": "Deletes the specified group resource.",
+     "description": "Deletes the specified Group resource.",
      "parameters": {
       "groupName": {
        "type": "string",
-       "description": "Name of the group resource to delete.",
+       "description": "Name of the Group resource to delete.",
        "required": true,
        "pattern": "[a-z][-a-z0-9_]{0,31}",
        "location": "path"
@@ -836,11 +840,11 @@
      "id": "computeaccounts.groups.get",
      "path": "{project}/global/groups/{groupName}",
      "httpMethod": "GET",
-     "description": "Returns the specified group resource.",
+     "description": "Returns the specified Group resource.",
      "parameters": {
       "groupName": {
        "type": "string",
-       "description": "Name of the group resource to return.",
+       "description": "Name of the Group resource to return.",
        "required": true,
        "pattern": "[a-z][-a-z0-9_]{0,31}",
        "location": "path"
@@ -870,7 +874,7 @@
      "id": "computeaccounts.groups.insert",
      "path": "{project}/global/groups",
      "httpMethod": "POST",
-     "description": "Creates a group resource in the specified project using the data included in the request.",
+     "description": "Creates a Group resource in the specified project using the data included in the request.",
      "parameters": {
       "project": {
        "type": "string",
@@ -902,21 +906,25 @@
      "parameters": {
       "filter": {
        "type": "string",
-       "description": "Optional. Filter expression for filtering listed resources.",
+       "description": "Filter expression for filtering listed resources.",
        "location": "query"
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "description": "Maximum count of results to be returned.",
        "default": "500",
        "format": "uint32",
        "minimum": "0",
        "maximum": "500",
        "location": "query"
       },
+      "orderBy": {
+       "type": "string",
+       "location": "query"
+      },
       "pageToken": {
        "type": "string",
-       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
        "location": "query"
       },
       "project": {
@@ -983,11 +991,11 @@
      "id": "computeaccounts.linux.getAuthorizedKeysView",
      "path": "{project}/zones/{zone}/authorizedKeysView/{user}",
      "httpMethod": "POST",
-     "description": "Returns the AuthorizedKeysView of the specified user.",
+     "description": "Returns a list of authorized public keys for a specific user account.",
      "parameters": {
       "instance": {
        "type": "string",
-       "description": "The fully-qualified URL of the instance requesting the view.",
+       "description": "The fully-qualified URL of the virtual machine requesting the view.",
        "required": true,
        "location": "query"
       },
@@ -1000,7 +1008,7 @@
       },
       "user": {
        "type": "string",
-       "description": "Username of the AuthorizedKeysView to return.",
+       "description": "The user account for which you want to get a list of authorized public keys.",
        "required": true,
        "pattern": "[a-z][-a-z0-9_]{0,31}",
        "location": "path"
@@ -1032,31 +1040,35 @@
      "id": "computeaccounts.linux.getLinuxAccountViews",
      "path": "{project}/zones/{zone}/linuxAccountViews",
      "httpMethod": "POST",
-     "description": "Retrieves the Linux views for an instance contained within the specified project.",
+     "description": "Retrieves a list of user accounts for an instance within a specific project.",
      "parameters": {
       "filter": {
        "type": "string",
-       "description": "Optional. Filter expression for filtering listed resources.",
+       "description": "Filter expression for filtering listed resources.",
        "location": "query"
       },
       "instance": {
        "type": "string",
-       "description": "The fully-qualified URL of the instance requesting the views.",
+       "description": "The fully-qualified URL of the virtual machine requesting the views.",
        "required": true,
        "location": "query"
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "description": "Maximum count of results to be returned.",
        "default": "500",
        "format": "uint32",
        "minimum": "0",
        "maximum": "500",
        "location": "query"
       },
+      "orderBy": {
+       "type": "string",
+       "location": "query"
+      },
       "pageToken": {
        "type": "string",
-       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
        "location": "query"
       },
       "project": {
@@ -1068,7 +1080,7 @@
       },
       "user": {
        "type": "string",
-       "description": "If provided, the user whose login is triggering an immediate refresh of the views.",
+       "description": "If provided, the user requesting the views. If left blank, the system is requesting the views, instead of a particular user.",
        "pattern": "[a-z][-a-z0-9_]{0,31}",
        "location": "query"
       },
@@ -1102,7 +1114,7 @@
      "id": "computeaccounts.users.addPublicKey",
      "path": "{project}/global/users/{user}/addPublicKey",
      "httpMethod": "POST",
-     "description": "Adds a public key to the specified user using the data included in the request.",
+     "description": "Adds a public key to the specified User resource with the data included in the request.",
      "parameters": {
       "project": {
        "type": "string",
@@ -1138,7 +1150,7 @@
      "id": "computeaccounts.users.delete",
      "path": "{project}/global/users/{user}",
      "httpMethod": "DELETE",
-     "description": "Deletes the specified user resource.",
+     "description": "Deletes the specified User resource.",
      "parameters": {
       "project": {
        "type": "string",
@@ -1171,7 +1183,7 @@
      "id": "computeaccounts.users.get",
      "path": "{project}/global/users/{user}",
      "httpMethod": "GET",
-     "description": "Returns the specified user resource.",
+     "description": "Returns the specified User resource.",
      "parameters": {
       "project": {
        "type": "string",
@@ -1205,7 +1217,7 @@
      "id": "computeaccounts.users.insert",
      "path": "{project}/global/users",
      "httpMethod": "POST",
-     "description": "Creates a user resource in the specified project using the data included in the request.",
+     "description": "Creates a User resource in the specified project using the data included in the request.",
      "parameters": {
       "project": {
        "type": "string",
@@ -1233,25 +1245,29 @@
      "id": "computeaccounts.users.list",
      "path": "{project}/global/users",
      "httpMethod": "GET",
-     "description": "Retrieves the list of users contained within the specified project.",
+     "description": "Retrieves a list of users contained within the specified project.",
      "parameters": {
       "filter": {
        "type": "string",
-       "description": "Optional. Filter expression for filtering listed resources.",
+       "description": "Filter expression for filtering listed resources.",
        "location": "query"
       },
       "maxResults": {
        "type": "integer",
-       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+       "description": "Maximum count of results to be returned.",
        "default": "500",
        "format": "uint32",
        "minimum": "0",
        "maximum": "500",
        "location": "query"
       },
+      "orderBy": {
+       "type": "string",
+       "location": "query"
+      },
       "pageToken": {
        "type": "string",
-       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
        "location": "query"
       },
       "project": {

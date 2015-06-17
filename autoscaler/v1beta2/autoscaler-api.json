@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/XUQeU-cuoYjCkXsmRMDCIykBSb0\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/UcR-fBYlWEXj2JrwS8u3wjdNZ58\"",
  "discoveryVersion": "v1",
  "id": "autoscaler:v1beta2",
  "name": "autoscaler",
  "version": "v1beta2",
- "revision": "20141213",
+ "revision": "20150213",
  "title": "Google Compute Engine Autoscaler API",
  "description": "The Google Compute Engine Autoscaler API provides autoscaling for groups of Cloud VMs.",
  "ownerDomain": "google.com",
@@ -298,7 +298,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "[Output Only] Type of the resource. Always kind#operation for Operation resources.",
+     "description": "[Output Only] Type of the resource. Always compute#Operation for Operation resources.",
      "default": "autoscaler#operation"
     },
     "name": {
@@ -384,7 +384,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "Type of resource. Always compute#operations for Operations resource.",
+     "description": "[Output Only] Type of resource. Always compute#operations for Operations resource.",
      "default": "autoscaler#operationList"
     },
     "nextPageToken": {
@@ -414,7 +414,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "Type of the resource.",
+     "description": "[Output Only] Type of the resource. Always kind#zone for zones.",
      "default": "autoscaler#zone"
     },
     "maintenanceWindows": {
@@ -445,7 +445,7 @@
     },
     "selfLink": {
      "type": "string",
-     "description": "Server defined URL for the resource (output only)."
+     "description": "[Output Only] Server defined URL for the resource."
     },
     "status": {
      "type": "string"

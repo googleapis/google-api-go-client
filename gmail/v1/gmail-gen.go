@@ -461,6 +461,40 @@ type Thread struct {
 	Snippet string `json:"snippet,omitempty"`
 }
 
+type WatchRequest struct {
+	// LabelFilterAction: Filtering behavior of labelIds list specified.
+	//
+	// Possible values:
+	//   "exclude"
+	//   "include"
+	LabelFilterAction string `json:"labelFilterAction,omitempty"`
+
+	// LabelIds: List of label_ids to restrict notifications about. By
+	// default, if unspecified, all changes are pushed out. If specified
+	// then dictates which labels are required for a push notification to be
+	// generated.
+	LabelIds []string `json:"labelIds,omitempty"`
+
+	// TopicName: Fully qualified Cloud PubSub API topic name to publish
+	// events to. This topic name should already exist in Cloud PubSub and
+	// you should have already granted gmail "publish" privileges on it. For
+	// example, "projects/my-project-identifier/topics/my-topic-name" (using
+	// the new Cloud PubSub "v1beta2" topic naming format).
+	//
+	// Note that the "my-project-identifier" portion must exactly match your
+	// developer console project id (the one executing this watch request).
+	TopicName string `json:"topicName,omitempty"`
+}
+
+type WatchResponse struct {
+	// Expiration: When Gmail will stop sending notifications for mailbox
+	// updates. Call watch again before this time to renew the subscription.
+	Expiration int64 `json:"expiration,omitempty,string"`
+
+	// HistoryId: The ID of the mailbox's current history record.
+	HistoryId uint64 `json:"historyId,omitempty,string"`
+}
+
 // method id "gmail.users.getProfile":
 
 type UsersGetProfileCall struct {
@@ -534,6 +568,169 @@ func (c *UsersGetProfileCall) Do() (*Profile, error) {
 	//   "scopes": [
 	//     "https://mail.google.com/",
 	//     "https://www.googleapis.com/auth/gmail.compose",
+	//     "https://www.googleapis.com/auth/gmail.modify",
+	//     "https://www.googleapis.com/auth/gmail.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "gmail.users.stop":
+
+type UsersStopCall struct {
+	s      *Service
+	userId string
+	opt_   map[string]interface{}
+}
+
+// Stop: Stop receiving push notifications for the given user mailbox.
+func (r *UsersService) Stop(userId string) *UsersStopCall {
+	c := &UsersStopCall{s: r.s, opt_: make(map[string]interface{})}
+	c.userId = userId
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UsersStopCall) Fields(s ...googleapi.Field) *UsersStopCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *UsersStopCall) Do() error {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/stop")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"userId": c.userId,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Stop receiving push notifications for the given user mailbox.",
+	//   "httpMethod": "POST",
+	//   "id": "gmail.users.stop",
+	//   "parameterOrder": [
+	//     "userId"
+	//   ],
+	//   "parameters": {
+	//     "userId": {
+	//       "default": "me",
+	//       "description": "The user's email address. The special value me can be used to indicate the authenticated user.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{userId}/stop",
+	//   "scopes": [
+	//     "https://mail.google.com/",
+	//     "https://www.googleapis.com/auth/gmail.modify",
+	//     "https://www.googleapis.com/auth/gmail.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "gmail.users.watch":
+
+type UsersWatchCall struct {
+	s            *Service
+	userId       string
+	watchrequest *WatchRequest
+	opt_         map[string]interface{}
+}
+
+// Watch: Set up or update a push notification watch on the given user
+// mailbox.
+func (r *UsersService) Watch(userId string, watchrequest *WatchRequest) *UsersWatchCall {
+	c := &UsersWatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c.userId = userId
+	c.watchrequest = watchrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UsersWatchCall) Fields(s ...googleapi.Field) *UsersWatchCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *UsersWatchCall) Do() (*WatchResponse, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.watchrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/watch")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"userId": c.userId,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *WatchResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Set up or update a push notification watch on the given user mailbox.",
+	//   "httpMethod": "POST",
+	//   "id": "gmail.users.watch",
+	//   "parameterOrder": [
+	//     "userId"
+	//   ],
+	//   "parameters": {
+	//     "userId": {
+	//       "default": "me",
+	//       "description": "The user's email address. The special value me can be used to indicate the authenticated user.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{userId}/watch",
+	//   "request": {
+	//     "$ref": "WatchRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "WatchResponse"
+	//   },
+	//   "scopes": [
+	//     "https://mail.google.com/",
 	//     "https://www.googleapis.com/auth/gmail.modify",
 	//     "https://www.googleapis.com/auth/gmail.readonly"
 	//   ]

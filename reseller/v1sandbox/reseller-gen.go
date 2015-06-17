@@ -232,6 +232,9 @@ type Subscription struct {
 	// SubscriptionId: The id of the subscription.
 	SubscriptionId string `json:"subscriptionId,omitempty"`
 
+	// SuspensionReasons: Suspension Reasons
+	SuspensionReasons []string `json:"suspensionReasons,omitempty"`
+
 	// TransferInfo: Transfer related information for the subscription.
 	TransferInfo *SubscriptionTransferInfo `json:"transferInfo,omitempty"`
 

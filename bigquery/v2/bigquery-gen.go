@@ -177,7 +177,9 @@ type CsvOptions struct {
 	// your data does not contain quoted sections, set the property value to
 	// an empty string. If your data contains quoted newline characters, you
 	// must also set the allowQuotedNewlines property to true.
-	Quote string `json:"quote,omitempty"`
+	//
+	// Default: "
+	Quote *string `json:"quote,omitempty"`
 
 	// SkipLeadingRows: [Optional] The number of rows at the top of a CSV
 	// file that BigQuery will skip when reading the data. The default value
@@ -463,6 +465,14 @@ type Job struct {
 	UserEmail string `json:"user_email,omitempty"`
 }
 
+type JobCancelResponse struct {
+	// Job: The final state of the job.
+	Job *Job `json:"job,omitempty"`
+
+	// Kind: The resource type of the response.
+	Kind string `json:"kind,omitempty"`
+}
+
 type JobConfiguration struct {
 	// Copy: [Pick one] Copies a table.
 	Copy *JobConfigurationTableCopy `json:"copy,omitempty"`
@@ -513,7 +523,9 @@ type JobConfigurationExtract struct {
 
 	// PrintHeader: [Optional] Whether to print out a header row in the
 	// results. Default is true.
-	PrintHeader bool `json:"printHeader,omitempty"`
+	//
+	// Default: true
+	PrintHeader *bool `json:"printHeader,omitempty"`
 
 	// SourceTable: [Required] A reference to the table being exported.
 	SourceTable *TableReference `json:"sourceTable,omitempty"`
@@ -621,7 +633,9 @@ type JobConfigurationLoad struct {
 	// your data does not contain quoted sections, set the property value to
 	// an empty string. If your data contains quoted newline characters, you
 	// must also set the allowQuotedNewlines property to true.
-	Quote string `json:"quote,omitempty"`
+	//
+	// Default: "
+	Quote *string `json:"quote,omitempty"`
 
 	// Schema: [Optional] The schema for the destination table. The schema
 	// can be omitted if the destination table already exists or if the
@@ -660,7 +674,7 @@ type JobConfigurationLoad struct {
 	// table data. WRITE_APPEND: If the table already exists, BigQuery
 	// appends the data to the table. WRITE_EMPTY: If the table already
 	// exists and contains data, a 'duplicate' error is returned in the job
-	// result. The default value is WRITE_EMPTY. Each action is atomic and
+	// result. The default value is WRITE_APPEND. Each action is atomic and
 	// only occurs if BigQuery is able to complete the job successfully.
 	// Creation, truncation and append actions occur as one atomic update
 	// upon job completion.
@@ -694,7 +708,9 @@ type JobConfigurationQuery struct {
 	// FlattenResults: [Optional] Flattens all nested and repeated fields in
 	// the query results. The default value is true. allowLargeResults must
 	// be true if this is set to false.
-	FlattenResults bool `json:"flattenResults,omitempty"`
+	//
+	// Default: true
+	FlattenResults *bool `json:"flattenResults,omitempty"`
 
 	// PreserveNulls: [Deprecated] This property is deprecated.
 	PreserveNulls bool `json:"preserveNulls,omitempty"`
@@ -717,8 +733,10 @@ type JobConfigurationQuery struct {
 	// cache. The query cache is a best-effort cache that will be flushed
 	// whenever tables in the query are modified. Moreover, the query cache
 	// is only available when a query does not have a destination table
-	// specified.
-	UseQueryCache bool `json:"useQueryCache,omitempty"`
+	// specified. The default value is true.
+	//
+	// Default: true
+	UseQueryCache *bool `json:"useQueryCache,omitempty"`
 
 	// WriteDisposition: [Optional] Specifies the action that occurs if the
 	// destination table already exists. The following values are supported:
@@ -777,9 +795,6 @@ type JobList struct {
 
 	// NextPageToken: A token to request the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// TotalItems: Total number of jobs in this collection.
-	TotalItems int64 `json:"totalItems,omitempty"`
 }
 
 type JobListJobs struct {
@@ -992,7 +1007,9 @@ type QueryRequest struct {
 	// UseQueryCache: [Optional] Whether to look for the result in the query
 	// cache. The query cache is a best-effort cache that will be flushed
 	// whenever tables in the query are modified. The default value is true.
-	UseQueryCache bool `json:"useQueryCache,omitempty"`
+	//
+	// Default: true
+	UseQueryCache *bool `json:"useQueryCache,omitempty"`
 }
 
 type QueryResponse struct {
@@ -1239,6 +1256,8 @@ type TableReference struct {
 }
 
 type TableRow struct {
+	// F: Represents a single row in the result set, consisting of one or
+	// more fields.
 	F []*TableCell `json:"f,omitempty"`
 }
 
@@ -1843,6 +1862,95 @@ func (c *DatasetsUpdateCall) Do() (*Dataset, error) {
 	//   },
 	//   "response": {
 	//     "$ref": "Dataset"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/bigquery",
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "bigquery.jobs.cancel":
+
+type JobsCancelCall struct {
+	s         *Service
+	projectId string
+	jobId     string
+	opt_      map[string]interface{}
+}
+
+// Cancel: Requests that a job be cancelled. This call will return
+// immediately, and the client will need to poll for the job status to
+// see if the cancel completed successfully.
+func (r *JobsService) Cancel(projectId string, jobId string) *JobsCancelCall {
+	c := &JobsCancelCall{s: r.s, opt_: make(map[string]interface{})}
+	c.projectId = projectId
+	c.jobId = jobId
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *JobsCancelCall) Fields(s ...googleapi.Field) *JobsCancelCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *JobsCancelCall) Do() (*JobCancelResponse, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "project/{projectId}/jobs/{jobId}/cancel")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"projectId": c.projectId,
+		"jobId":     c.jobId,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *JobCancelResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Requests that a job be cancelled. This call will return immediately, and the client will need to poll for the job status to see if the cancel completed successfully.",
+	//   "httpMethod": "POST",
+	//   "id": "bigquery.jobs.cancel",
+	//   "parameterOrder": [
+	//     "projectId",
+	//     "jobId"
+	//   ],
+	//   "parameters": {
+	//     "jobId": {
+	//       "description": "Job ID of the job to cancel",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "projectId": {
+	//       "description": "Project ID of the job to cancel",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "project/{projectId}/jobs/{jobId}/cancel",
+	//   "response": {
+	//     "$ref": "JobCancelResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/bigquery",

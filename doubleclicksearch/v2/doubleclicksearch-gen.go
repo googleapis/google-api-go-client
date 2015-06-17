@@ -141,20 +141,26 @@ type Conversion struct {
 	// AgencyId: DS agency ID.
 	AgencyId int64 `json:"agencyId,omitempty,string"`
 
-	// AttributionModel: Attribution model name. This field is ignored.
+	// AttributionModel: This field is ignored.
 	AttributionModel string `json:"attributionModel,omitempty"`
 
 	// CampaignId: DS campaign ID.
 	CampaignId int64 `json:"campaignId,omitempty,string"`
 
-	// Channel: Channel of the product: local or online.
+	// Channel: Sales channel for the product. Acceptable values are:
+	// - "local": a physical store
+	// - "online": an online store
 	Channel string `json:"channel,omitempty"`
 
 	// ClickId: DS click ID for the conversion.
 	ClickId string `json:"clickId,omitempty"`
 
-	// ConversionId: Advertiser-provided ID for the conversion, also known
-	// as the order ID.
+	// ConversionId: For offline conversions, this is an ID provided by
+	// advertisers. Advertisers can use this property to specify an ID that
+	// is meaningful to them. If an advertiser doesn't specify a
+	// conversionId, DoubleClick Search generates one. For online
+	// conversions, DS copies the dsConversionId or floodlightOrderId into
+	// this property depending on the advertiser's Floodlight instructions.
 	ConversionId string `json:"conversionId,omitempty"`
 
 	// ConversionModifiedTimestamp: The time at which the conversion was
@@ -165,8 +171,7 @@ type Conversion struct {
 	// epoch millis UTC.
 	ConversionTimestamp uint64 `json:"conversionTimestamp,omitempty,string"`
 
-	// CountMillis: The number of conversions, formatted in millis
-	// (conversions multiplied by 1000). This field is ignored.
+	// CountMillis: This field is ignored.
 	CountMillis int64 `json:"countMillis,omitempty,string"`
 
 	// CriterionId: DS criterion (keyword) ID.
@@ -184,24 +189,25 @@ type Conversion struct {
 	CustomMetric []*CustomMetric `json:"customMetric,omitempty"`
 
 	// DeviceType: The type of device on which the conversion occurred.
-	// Valid values are "DESKTOP", "TABLET", "HIGH_END_MOBILE",
-	// "OTHER_DEVICE".
 	DeviceType string `json:"deviceType,omitempty"`
 
-	// DsConversionId: DS conversion ID.
+	// DsConversionId: ID that DoubleClick Search generates for each
+	// conversion.
 	DsConversionId int64 `json:"dsConversionId,omitempty,string"`
 
 	// EngineAccountId: DS engine account ID.
 	EngineAccountId int64 `json:"engineAccountId,omitempty,string"`
 
-	// FeedId: DS inventory feed ID.
-	FeedId int64 `json:"feedId,omitempty,string"`
-
-	// FloodlightOrderId: The advertiser-provided order id for the
-	// conversion.
+	// FloodlightOrderId: The Floodlight order ID provided by the advertiser
+	// for the conversion.
 	FloodlightOrderId string `json:"floodlightOrderId,omitempty"`
 
-	// ProductCountry: ISO 3166 code of the product country.
+	// InventoryAccountId: ID that DS generates and uses to uniquely
+	// identify the inventory account that contains the product.
+	InventoryAccountId int64 `json:"inventoryAccountId,omitempty,string"`
+
+	// ProductCountry: The country registered for the Merchant Center feed
+	// that contains the product. Use an ISO 3166 code to specify a country.
 	ProductCountry string `json:"productCountry,omitempty"`
 
 	// ProductGroupId: DS product group ID.
@@ -210,7 +216,8 @@ type Conversion struct {
 	// ProductId: The product ID (SKU).
 	ProductId string `json:"productId,omitempty"`
 
-	// ProductLanguage: ISO 639 code of the product language.
+	// ProductLanguage: The language registered for the Merchant Center feed
+	// that contains the product. Use an ISO 639 code to specify a language.
 	ProductLanguage string `json:"productLanguage,omitempty"`
 
 	// QuantityMillis: The quantity of this conversion, in millis.
@@ -236,8 +243,8 @@ type Conversion struct {
 	// REMOVED. Note: state DELETED is deprecated.
 	State string `json:"state,omitempty"`
 
-	// StoreId: The store id for which the product was advertised, when the
-	// channel is "local".
+	// StoreId: The ID of the local store for which the product was
+	// advertised. Applicable only when the channel is "local".
 	StoreId string `json:"storeId,omitempty"`
 
 	// Type: The type of the conversion, that is, either ACTION or

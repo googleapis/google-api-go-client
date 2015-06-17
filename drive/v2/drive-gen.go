@@ -52,8 +52,8 @@ const (
 	// View your Google Drive apps
 	DriveAppsReadonlyScope = "https://www.googleapis.com/auth/drive.apps.readonly"
 
-	// View and manage Google Drive files that you have opened or created
-	// with this app
+	// View and manage Google Drive files and folders that you have opened
+	// or created with this app
 	DriveFileScope = "https://www.googleapis.com/auth/drive.file"
 
 	// View and manage metadata of files in your Google Drive
@@ -252,6 +252,11 @@ type About struct {
 	AdditionalRoleInfo []*AboutAdditionalRoleInfo `json:"additionalRoleInfo,omitempty"`
 
 	// DomainSharingPolicy: The domain sharing policy for the current user.
+	// Possible values are:
+	// - ALLOWED
+	// - ALLOWED_WITH_WARNING
+	// - INCOMING_ONLY
+	// - DISALLOWED
 	DomainSharingPolicy string `json:"domainSharingPolicy,omitempty"`
 
 	// Etag: The ETag of the item.
@@ -934,6 +939,10 @@ type File struct {
 	// SharingUser: User that shared the item with the current user, if
 	// available.
 	SharingUser *User `json:"sharingUser,omitempty"`
+
+	// Spaces: The list of spaces which contain the file. Supported values
+	// are 'drive' and 'appDataFolder'.
+	Spaces []string `json:"spaces,omitempty"`
 
 	// Thumbnail: Thumbnail for the file. Only accepted on upload and for
 	// files that are not already thumbnailed by Google.
@@ -1827,6 +1836,13 @@ func (c *ChangesListCall) PageToken(pageToken string) *ChangesListCall {
 	return c
 }
 
+// Spaces sets the optional parameter "spaces": A comma-separated list
+// of spaces to query. Supported values are 'drive' and 'appDataFolder'.
+func (c *ChangesListCall) Spaces(spaces string) *ChangesListCall {
+	c.opt_["spaces"] = spaces
+	return c
+}
+
 // StartChangeId sets the optional parameter "startChangeId": Change ID
 // to start listing changes from.
 func (c *ChangesListCall) StartChangeId(startChangeId int64) *ChangesListCall {
@@ -1857,6 +1873,9 @@ func (c *ChangesListCall) Do() (*ChangeList, error) {
 	}
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["spaces"]; ok {
+		params.Set("spaces", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["startChangeId"]; ok {
 		params.Set("startChangeId", fmt.Sprintf("%v", v))
@@ -1909,6 +1928,11 @@ func (c *ChangesListCall) Do() (*ChangeList, error) {
 	//     },
 	//     "pageToken": {
 	//       "description": "Page token for changes.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "spaces": {
+	//       "description": "A comma-separated list of spaces to query. Supported values are 'drive' and 'appDataFolder'.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1982,6 +2006,13 @@ func (c *ChangesWatchCall) PageToken(pageToken string) *ChangesWatchCall {
 	return c
 }
 
+// Spaces sets the optional parameter "spaces": A comma-separated list
+// of spaces to query. Supported values are 'drive' and 'appDataFolder'.
+func (c *ChangesWatchCall) Spaces(spaces string) *ChangesWatchCall {
+	c.opt_["spaces"] = spaces
+	return c
+}
+
 // StartChangeId sets the optional parameter "startChangeId": Change ID
 // to start listing changes from.
 func (c *ChangesWatchCall) StartChangeId(startChangeId int64) *ChangesWatchCall {
@@ -2017,6 +2048,9 @@ func (c *ChangesWatchCall) Do() (*Channel, error) {
 	}
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["spaces"]; ok {
+		params.Set("spaces", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["startChangeId"]; ok {
 		params.Set("startChangeId", fmt.Sprintf("%v", v))
@@ -2070,6 +2104,11 @@ func (c *ChangesWatchCall) Do() (*Channel, error) {
 	//     },
 	//     "pageToken": {
 	//       "description": "Page token for changes.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "spaces": {
+	//       "description": "A comma-separated list of spaces to query. Supported values are 'drive' and 'appDataFolder'.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2637,8 +2676,7 @@ func (c *CommentsDeleteCall) Do() error {
 	//   "path": "files/{fileId}/comments/{commentId}",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
-	//     "https://www.googleapis.com/auth/drive.file",
-	//     "https://www.googleapis.com/auth/drive.readonly"
+	//     "https://www.googleapis.com/auth/drive.file"
 	//   ]
 	// }
 
@@ -3213,7 +3251,7 @@ func (c *FilesCopyCall) Ocr(ocr bool) *FilesCopyCall {
 }
 
 // OcrLanguage sets the optional parameter "ocrLanguage": If ocr is
-// true, hints at the language to use. Valid values are ISO 639-1 codes.
+// true, hints at the language to use. Valid values are BCP 47 codes.
 func (c *FilesCopyCall) OcrLanguage(ocrLanguage string) *FilesCopyCall {
 	c.opt_["ocrLanguage"] = ocrLanguage
 	return c
@@ -3343,7 +3381,7 @@ func (c *FilesCopyCall) Do() (*File, error) {
 	//       "type": "boolean"
 	//     },
 	//     "ocrLanguage": {
-	//       "description": "If ocr is true, hints at the language to use. Valid values are ISO 639-1 codes.",
+	//       "description": "If ocr is true, hints at the language to use. Valid values are BCP 47 codes.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3717,7 +3755,7 @@ func (c *FilesInsertCall) Ocr(ocr bool) *FilesInsertCall {
 }
 
 // OcrLanguage sets the optional parameter "ocrLanguage": If ocr is
-// true, hints at the language to use. Valid values are ISO 639-1 codes.
+// true, hints at the language to use. Valid values are BCP 47 codes.
 func (c *FilesInsertCall) OcrLanguage(ocrLanguage string) *FilesInsertCall {
 	c.opt_["ocrLanguage"] = ocrLanguage
 	return c
@@ -3933,7 +3971,7 @@ func (c *FilesInsertCall) Do() (*File, error) {
 	//       "type": "boolean"
 	//     },
 	//     "ocrLanguage": {
-	//       "description": "If ocr is true, hints at the language to use. Valid values are ISO 639-1 codes.",
+	//       "description": "If ocr is true, hints at the language to use. Valid values are BCP 47 codes.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4048,6 +4086,13 @@ func (c *FilesListCall) Q(q string) *FilesListCall {
 	return c
 }
 
+// Spaces sets the optional parameter "spaces": A comma-separated list
+// of spaces to query. Supported values are 'drive' and 'appDataFolder'.
+func (c *FilesListCall) Spaces(spaces string) *FilesListCall {
+	c.opt_["spaces"] = spaces
+	return c
+}
+
 // Fields allows partial responses to be retrieved.
 // See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -4074,6 +4119,9 @@ func (c *FilesListCall) Do() (*FileList, error) {
 	}
 	if v, ok := c.opt_["q"]; ok {
 		params.Set("q", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["spaces"]; ok {
+		params.Set("spaces", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
@@ -4144,6 +4192,11 @@ func (c *FilesListCall) Do() (*FileList, error) {
 	//       "description": "Query string for searching files.",
 	//       "location": "query",
 	//       "type": "string"
+	//     },
+	//     "spaces": {
+	//       "description": "A comma-separated list of spaces to query. Supported values are 'drive' and 'appDataFolder'.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "files",
@@ -4198,8 +4251,10 @@ func (c *FilesPatchCall) Convert(convert bool) *FilesPatchCall {
 // NewRevision sets the optional parameter "newRevision": Whether a blob
 // upload should create a new revision. If false, the blob data in the
 // current head revision is replaced. If true or not set, a new blob is
-// created as head revision, and previous revisions are preserved
-// (causing increased use of the user's data storage quota).
+// created as head revision, and previous unpinned revisions are
+// preserved for a short period of time. Pinned revisions are stored
+// indefinitely, using additional storage quota, up to a maximum of 200
+// revisions.
 func (c *FilesPatchCall) NewRevision(newRevision bool) *FilesPatchCall {
 	c.opt_["newRevision"] = newRevision
 	return c
@@ -4213,7 +4268,7 @@ func (c *FilesPatchCall) Ocr(ocr bool) *FilesPatchCall {
 }
 
 // OcrLanguage sets the optional parameter "ocrLanguage": If ocr is
-// true, hints at the language to use. Valid values are ISO 639-1 codes.
+// true, hints at the language to use. Valid values are BCP 47 codes.
 func (c *FilesPatchCall) OcrLanguage(ocrLanguage string) *FilesPatchCall {
 	c.opt_["ocrLanguage"] = ocrLanguage
 	return c
@@ -4373,7 +4428,7 @@ func (c *FilesPatchCall) Do() (*File, error) {
 	//     },
 	//     "newRevision": {
 	//       "default": "true",
-	//       "description": "Whether a blob upload should create a new revision. If false, the blob data in the current head revision is replaced. If true or not set, a new blob is created as head revision, and previous revisions are preserved (causing increased use of the user's data storage quota).",
+	//       "description": "Whether a blob upload should create a new revision. If false, the blob data in the current head revision is replaced. If true or not set, a new blob is created as head revision, and previous unpinned revisions are preserved for a short period of time. Pinned revisions are stored indefinitely, using additional storage quota, up to a maximum of 200 revisions.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -4384,7 +4439,7 @@ func (c *FilesPatchCall) Do() (*File, error) {
 	//       "type": "boolean"
 	//     },
 	//     "ocrLanguage": {
-	//       "description": "If ocr is true, hints at the language to use. Valid values are ISO 639-1 codes.",
+	//       "description": "If ocr is true, hints at the language to use. Valid values are BCP 47 codes.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4724,8 +4779,10 @@ func (c *FilesUpdateCall) Convert(convert bool) *FilesUpdateCall {
 // NewRevision sets the optional parameter "newRevision": Whether a blob
 // upload should create a new revision. If false, the blob data in the
 // current head revision is replaced. If true or not set, a new blob is
-// created as head revision, and previous revisions are preserved
-// (causing increased use of the user's data storage quota).
+// created as head revision, and previous unpinned revisions are
+// preserved for a short period of time. Pinned revisions are stored
+// indefinitely, using additional storage quota, up to a maximum of 200
+// revisions.
 func (c *FilesUpdateCall) NewRevision(newRevision bool) *FilesUpdateCall {
 	c.opt_["newRevision"] = newRevision
 	return c
@@ -4739,7 +4796,7 @@ func (c *FilesUpdateCall) Ocr(ocr bool) *FilesUpdateCall {
 }
 
 // OcrLanguage sets the optional parameter "ocrLanguage": If ocr is
-// true, hints at the language to use. Valid values are ISO 639-1 codes.
+// true, hints at the language to use. Valid values are BCP 47 codes.
 func (c *FilesUpdateCall) OcrLanguage(ocrLanguage string) *FilesUpdateCall {
 	c.opt_["ocrLanguage"] = ocrLanguage
 	return c
@@ -4986,7 +5043,7 @@ func (c *FilesUpdateCall) Do() (*File, error) {
 	//     },
 	//     "newRevision": {
 	//       "default": "true",
-	//       "description": "Whether a blob upload should create a new revision. If false, the blob data in the current head revision is replaced. If true or not set, a new blob is created as head revision, and previous revisions are preserved (causing increased use of the user's data storage quota).",
+	//       "description": "Whether a blob upload should create a new revision. If false, the blob data in the current head revision is replaced. If true or not set, a new blob is created as head revision, and previous unpinned revisions are preserved for a short period of time. Pinned revisions are stored indefinitely, using additional storage quota, up to a maximum of 200 revisions.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -4997,7 +5054,7 @@ func (c *FilesUpdateCall) Do() (*File, error) {
 	//       "type": "boolean"
 	//     },
 	//     "ocrLanguage": {
-	//       "description": "If ocr is true, hints at the language to use. Valid values are ISO 639-1 codes.",
+	//       "description": "If ocr is true, hints at the language to use. Valid values are BCP 47 codes.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

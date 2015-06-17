@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/XH5kx6DVwHOxcDh-sCub5wYn1Ss\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/MKubU0FmYvcCiak8-htY8xGlT7I\"",
  "discoveryVersion": "v1",
  "id": "prediction:v1.6",
  "name": "prediction",
@@ -489,9 +489,8 @@
      }
     },
     "outputValue": {
-     "type": "number",
-     "description": "The estimated regression value (Regression models only).",
-     "format": "double"
+     "type": "string",
+     "description": "The estimated regression value (Regression models only)."
     },
     "selfLink": {
      "type": "string",

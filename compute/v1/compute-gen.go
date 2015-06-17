@@ -715,10 +715,10 @@ type Backend struct {
 	//   "UTILIZATION"
 	BalancingMode string `json:"balancingMode,omitempty"`
 
-	// CapacityScaler: The multiplier (a value between 0 and 1e6) of the max
-	// capacity (CPU or RPS, depending on 'balancingMode') the group should
-	// serve up to. 0 means the group is totally drained. Default value is
-	// 1. Valid range is [0, 1e6].
+	// CapacityScaler: The multiplier (a value between 0.0 and 1.0) of the
+	// max capacity (CPU or RPS, depending on 'balancingMode') the group
+	// should serve up to. 0 means the group is totally drained. Default
+	// value is 1. Valid range is [0.0, 1.0].
 	CapacityScaler float64 `json:"capacityScaler,omitempty"`
 
 	// Description: An optional textual description of the resource, which
@@ -879,6 +879,14 @@ type Disk struct {
 	// disks.
 	Kind string `json:"kind,omitempty"`
 
+	// LastAttachTimestamp: [Output Only] Last attach timestamp in RFC3339
+	// text format.
+	LastAttachTimestamp string `json:"lastAttachTimestamp,omitempty"`
+
+	// LastDetachTimestamp: [Output Only] Last detach timestamp in RFC3339
+	// text format.
+	LastDetachTimestamp string `json:"lastDetachTimestamp,omitempty"`
+
 	// Licenses: Any applicable publicly visible licenses.
 	Licenses []string `json:"licenses,omitempty"`
 
@@ -968,6 +976,10 @@ type Disk struct {
 	// Type: URL of the disk type resource describing which disk type to use
 	// to create the disk; provided by the client when the disk is created.
 	Type string `json:"type,omitempty"`
+
+	// Users: Links to the users of the disk (attached instances) in form:
+	// project/zones/zone/instances/instance
+	Users []string `json:"users,omitempty"`
 
 	// Zone: [Output Only] URL of the zone where the disk resides.
 	Zone string `json:"zone,omitempty"`
@@ -1759,7 +1771,7 @@ type Instance struct {
 	ServiceAccounts []*ServiceAccount `json:"serviceAccounts,omitempty"`
 
 	// Status: [Output Only] The status of the instance. One of the
-	// following values: PROVISIONING, STAGING, RUNNING, STOPPING, STOPPED,
+	// following values: PROVISIONING, STAGING, RUNNING, STOPPING, and
 	// TERMINATED.
 	//
 	// Possible values:
@@ -1768,6 +1780,8 @@ type Instance struct {
 	//   "STAGING"
 	//   "STOPPED"
 	//   "STOPPING"
+	//   "SUSPENDED"
+	//   "SUSPENDING"
 	//   "TERMINATED"
 	Status string `json:"status,omitempty"`
 
@@ -2598,6 +2612,7 @@ type Quota struct {
 	//   "HEALTH_CHECKS"
 	//   "IMAGES"
 	//   "INSTANCES"
+	//   "INSTANCE_TEMPLATES"
 	//   "IN_USE_ADDRESSES"
 	//   "LOCAL_SSD_TOTAL_GB"
 	//   "NETWORKS"
@@ -3650,6 +3665,7 @@ type VpnTunnel struct {
 	//   "FIRST_HANDSHAKE"
 	//   "NEGOTIATION_FAILURE"
 	//   "NETWORK_ERROR"
+	//   "NO_INCOMING_PACKETS"
 	//   "PROVISIONING"
 	//   "WAITING_FOR_FULL_CONFIG"
 	Status string `json:"status,omitempty"`
@@ -12254,7 +12270,7 @@ func (c *InstancesStopCall) Do() (*Operation, error) {
 	//   ],
 	//   "parameters": {
 	//     "instance": {
-	//       "description": "Name of the instance resource to start.",
+	//       "description": "Name of the instance resource to stop.",
 	//       "location": "path",
 	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,

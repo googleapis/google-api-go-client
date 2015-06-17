@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/n2LVhGPabQO3DmbKxkomJprJEEo\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/dfyqUMrFd-mvh1ZHmWj5OJLDhTI\"",
  "discoveryVersion": "v1",
  "id": "bigquery:v2",
  "name": "bigquery",
  "version": "v2",
- "revision": "20141112",
+ "revision": "20150526",
  "title": "BigQuery API",
  "description": "A data platform for customers to create, manage, share and query data.",
  "ownerDomain": "google.com",
@@ -115,7 +115,9 @@
     },
     "quote": {
      "type": "string",
-     "description": "[Optional] The value that is used to quote data sections in a CSV file. BigQuery converts the string to ISO-8859-1 encoding, and then uses the first byte of the encoded string to split the data in its raw, binary state. The default value is a double-quote ('\"'). If your data does not contain quoted sections, set the property value to an empty string. If your data contains quoted newline characters, you must also set the allowQuotedNewlines property to true."
+     "description": "[Optional] The value that is used to quote data sections in a CSV file. BigQuery converts the string to ISO-8859-1 encoding, and then uses the first byte of the encoded string to split the data in its raw, binary state. The default value is a double-quote ('\"'). If your data does not contain quoted sections, set the property value to an empty string. If your data contains quoted newline characters, you must also set the allowQuotedNewlines property to true.",
+     "default": "\"",
+     "pattern": ".?"
     },
     "skipLeadingRows": {
      "type": "integer",
@@ -435,6 +437,21 @@
     }
    }
   },
+  "JobCancelResponse": {
+   "id": "JobCancelResponse",
+   "type": "object",
+   "properties": {
+    "job": {
+     "$ref": "Job",
+     "description": "The final state of the job."
+    },
+    "kind": {
+     "type": "string",
+     "description": "The resource type of the response.",
+     "default": "bigquery#jobCancelResponse"
+    }
+   }
+  },
   "JobConfiguration": {
    "id": "JobConfiguration",
    "type": "object",
@@ -494,7 +511,8 @@
     },
     "printHeader": {
      "type": "boolean",
-     "description": "[Optional] Whether to print out a header row in the results. Default is true."
+     "description": "[Optional] Whether to print out a header row in the results. Default is true.",
+     "default": "true"
     },
     "sourceTable": {
      "$ref": "TableReference",
@@ -573,7 +591,9 @@
     },
     "quote": {
      "type": "string",
-     "description": "[Optional] The value that is used to quote data sections in a CSV file. BigQuery converts the string to ISO-8859-1 encoding, and then uses the first byte of the encoded string to split the data in its raw, binary state. The default value is a double-quote ('\"'). If your data does not contain quoted sections, set the property value to an empty string. If your data contains quoted newline characters, you must also set the allowQuotedNewlines property to true."
+     "description": "[Optional] The value that is used to quote data sections in a CSV file. BigQuery converts the string to ISO-8859-1 encoding, and then uses the first byte of the encoded string to split the data in its raw, binary state. The default value is a double-quote ('\"'). If your data does not contain quoted sections, set the property value to an empty string. If your data contains quoted newline characters, you must also set the allowQuotedNewlines property to true.",
+     "default": "\"",
+     "pattern": ".?"
     },
     "schema": {
      "$ref": "TableSchema",
@@ -605,7 +625,7 @@
     },
     "writeDisposition": {
      "type": "string",
-     "description": "[Optional] Specifies the action that occurs if the destination table already exists. The following values are supported: WRITE_TRUNCATE: If the table already exists, BigQuery overwrites the table data. WRITE_APPEND: If the table already exists, BigQuery appends the data to the table. WRITE_EMPTY: If the table already exists and contains data, a 'duplicate' error is returned in the job result. The default value is WRITE_EMPTY. Each action is atomic and only occurs if BigQuery is able to complete the job successfully. Creation, truncation and append actions occur as one atomic update upon job completion."
+     "description": "[Optional] Specifies the action that occurs if the destination table already exists. The following values are supported: WRITE_TRUNCATE: If the table already exists, BigQuery overwrites the table data. WRITE_APPEND: If the table already exists, BigQuery appends the data to the table. WRITE_EMPTY: If the table already exists and contains data, a 'duplicate' error is returned in the job result. The default value is WRITE_APPEND. Each action is atomic and only occurs if BigQuery is able to complete the job successfully. Creation, truncation and append actions occur as one atomic update upon job completion."
     }
    }
   },
@@ -631,7 +651,8 @@
     },
     "flattenResults": {
      "type": "boolean",
-     "description": "[Optional] Flattens all nested and repeated fields in the query results. The default value is true. allowLargeResults must be true if this is set to false."
+     "description": "[Optional] Flattens all nested and repeated fields in the query results. The default value is true. allowLargeResults must be true if this is set to false.",
+     "default": "true"
     },
     "preserveNulls": {
      "type": "boolean",
@@ -654,7 +675,8 @@
     },
     "useQueryCache": {
      "type": "boolean",
-     "description": "[Optional] Whether to look for the result in the query cache. The query cache is a best-effort cache that will be flushed whenever tables in the query are modified. Moreover, the query cache is only available when a query does not have a destination table specified."
+     "description": "[Optional] Whether to look for the result in the query cache. The query cache is a best-effort cache that will be flushed whenever tables in the query are modified. Moreover, the query cache is only available when a query does not have a destination table specified. The default value is true.",
+     "default": "true"
     },
     "writeDisposition": {
      "type": "string",
@@ -753,11 +775,6 @@
     "nextPageToken": {
      "type": "string",
      "description": "A token to request the next page of results."
-    },
-    "totalItems": {
-     "type": "integer",
-     "description": "Total number of jobs in this collection.",
-     "format": "int32"
     }
    }
   },
@@ -1018,7 +1035,8 @@
     },
     "useQueryCache": {
      "type": "boolean",
-     "description": "[Optional] Whether to look for the result in the query cache. The query cache is a best-effort cache that will be flushed whenever tables in the query are modified. The default value is true."
+     "description": "[Optional] Whether to look for the result in the query cache. The query cache is a best-effort cache that will be flushed whenever tables in the query are modified. The default value is true.",
+     "default": "true"
     }
    }
   },
@@ -1145,7 +1163,6 @@
   "TableCell": {
    "id": "TableCell",
    "type": "object",
-   "description": "Represents a single cell in the result set. Users of the java client can detect whether their value result is null by calling 'com.google.api.client.util.Data.isNull(cell.getV())'.",
    "properties": {
     "v": {
      "type": "any"
@@ -1370,10 +1387,10 @@
   "TableRow": {
    "id": "TableRow",
    "type": "object",
-   "description": "Represents a single row in the result set, consisting of one or more fields.",
    "properties": {
     "f": {
      "type": "array",
+     "description": "Represents a single row in the result set, consisting of one or more fields.",
      "items": {
       "$ref": "TableCell"
      }
@@ -1610,6 +1627,37 @@
   },
   "jobs": {
    "methods": {
+    "cancel": {
+     "id": "bigquery.jobs.cancel",
+     "path": "project/{projectId}/jobs/{jobId}/cancel",
+     "httpMethod": "POST",
+     "description": "Requests that a job be cancelled. This call will return immediately, and the client will need to poll for the job status to see if the cancel completed successfully.",
+     "parameters": {
+      "jobId": {
+       "type": "string",
+       "description": "Job ID of the job to cancel",
+       "required": true,
+       "location": "path"
+      },
+      "projectId": {
+       "type": "string",
+       "description": "Project ID of the job to cancel",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "projectId",
+      "jobId"
+     ],
+     "response": {
+      "$ref": "JobCancelResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/bigquery",
+      "https://www.googleapis.com/auth/cloud-platform"
+     ]
+    },
     "get": {
      "id": "bigquery.jobs.get",
      "path": "projects/{projectId}/jobs/{jobId}",

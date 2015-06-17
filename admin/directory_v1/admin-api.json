@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/Gkp35yY2tnMjjfSgryNCrENSB-w\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/QlXkTp8arWMqhMMilmdrbkzNu_E\"",
  "discoveryVersion": "v1",
  "id": "admin:directory_v1",
  "name": "admin",
  "canonicalName": "directory",
  "version": "directory_v1",
- "revision": "20150314",
+ "revision": "20150326",
  "title": "Admin Directory API",
  "description": "The Admin SDK Directory API lets you view and manage enterprise resources such as users and groups, administrative notifications, security features, and more.",
  "ownerDomain": "google.com",
@@ -1303,6 +1303,10 @@
     "suspensionReason": {
      "type": "string",
      "description": "Suspension reason if user is suspended (Read-only)"
+    },
+    "thumbnailPhotoEtag": {
+     "type": "string",
+     "description": "ETag of the user's photo (Read-only)"
     },
     "thumbnailPhotoUrl": {
      "type": "string",

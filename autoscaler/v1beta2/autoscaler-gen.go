@@ -249,8 +249,8 @@ type Operation struct {
 
 	InsertTime string `json:"insertTime,omitempty"`
 
-	// Kind: [Output Only] Type of the resource. Always kind#operation for
-	// Operation resources.
+	// Kind: [Output Only] Type of the resource. Always compute#Operation
+	// for Operation resources.
 	Kind string `json:"kind,omitempty"`
 
 	Name string `json:"name,omitempty"`
@@ -311,8 +311,8 @@ type OperationList struct {
 
 	Items []*Operation `json:"items,omitempty"`
 
-	// Kind: Type of resource. Always compute#operations for Operations
-	// resource.
+	// Kind: [Output Only] Type of resource. Always compute#operations for
+	// Operations resource.
 	Kind string `json:"kind,omitempty"`
 
 	NextPageToken string `json:"nextPageToken,omitempty"`
@@ -329,7 +329,7 @@ type Zone struct {
 
 	Id uint64 `json:"id,omitempty,string"`
 
-	// Kind: Type of the resource.
+	// Kind: [Output Only] Type of the resource. Always kind#zone for zones.
 	Kind string `json:"kind,omitempty"`
 
 	MaintenanceWindows []*ZoneMaintenanceWindows `json:"maintenanceWindows,omitempty"`
@@ -338,7 +338,7 @@ type Zone struct {
 
 	Region string `json:"region,omitempty"`
 
-	// SelfLink: Server defined URL for the resource (output only).
+	// SelfLink: [Output Only] Server defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	Status string `json:"status,omitempty"`

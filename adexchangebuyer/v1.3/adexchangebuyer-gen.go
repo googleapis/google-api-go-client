@@ -447,6 +447,12 @@ type DirectDealsList struct {
 }
 
 type PerformanceReport struct {
+	// BidRate: The number of bid responses with an ad.
+	BidRate float64 `json:"bidRate,omitempty"`
+
+	// BidRequestRate: The number of bid requests sent to your bidder.
+	BidRequestRate float64 `json:"bidRequestRate,omitempty"`
+
 	// CalloutStatusRate: Rate of various prefiltering statuses per match.
 	// Please refer to the callout-status-codes.txt file for different
 	// statuses.
@@ -459,8 +465,16 @@ type PerformanceReport struct {
 	// the creative-status-codes.txt file for different statuses.
 	CreativeStatusRate []interface{} `json:"creativeStatusRate,omitempty"`
 
+	// FilteredBidRate: The number of bid responses that were filtered due
+	// to a policy violation or other errors.
+	FilteredBidRate float64 `json:"filteredBidRate,omitempty"`
+
 	// HostedMatchStatusRate: Average QPS for hosted match operations.
 	HostedMatchStatusRate []interface{} `json:"hostedMatchStatusRate,omitempty"`
+
+	// InventoryMatchRate: The number of potential queries based on your
+	// pretargeting settings.
+	InventoryMatchRate float64 `json:"inventoryMatchRate,omitempty"`
 
 	// Kind: Resource type.
 	Kind string `json:"kind,omitempty"`
@@ -504,9 +518,17 @@ type PerformanceReport struct {
 	// Region: The trading location of this data.
 	Region string `json:"region,omitempty"`
 
+	// SuccessfulRequestRate: The number of properly formed bid responses
+	// received by our servers within the deadline.
+	SuccessfulRequestRate float64 `json:"successfulRequestRate,omitempty"`
+
 	// Timestamp: The unix timestamp of the starting time of this
 	// performance data.
 	Timestamp int64 `json:"timestamp,omitempty,string"`
+
+	// UnsuccessfulRequestRate: The number of bid responses that were
+	// unsuccessful due to timeouts, incorrect formatting, etc.
+	UnsuccessfulRequestRate float64 `json:"unsuccessfulRequestRate,omitempty"`
 }
 
 type PerformanceReportList struct {

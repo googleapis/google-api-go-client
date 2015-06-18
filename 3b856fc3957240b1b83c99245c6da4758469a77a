@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e872ed3_a1d37e4a",
+        "filename": "bigquery/v2/example_test.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-06-18T00:44:14Z",
+      "side": 1,
+      "message": "what are these two? Backoff in what units? comments?",
+      "revId": "3b856fc3957240b1b83c99245c6da4758469a77a",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e872ed3_21d9ae65",
+        "filename": "bigquery/v2/example_test.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-06-18T00:44:14Z",
+      "side": 1,
+      "message": "searching err.Error() substrings is bad practice we shouldn\u0027t exemplify",
+      "revId": "3b856fc3957240b1b83c99245c6da4758469a77a",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e872ed3_41de324f",
+        "filename": "bigquery/v2/example_test.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-06-18T00:44:14Z",
+      "side": 1,
+      "message": "comment?",
+      "revId": "3b856fc3957240b1b83c99245c6da4758469a77a",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e872ed3_81099a66",
+        "filename": "bigquery/v2/example_test.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-06-18T00:44:14Z",
+      "side": 1,
+      "message": "kinda a lot of position arguments.\n\ndoes the example need to use any flags or args, though?  Could it just hard-code some values?",
+      "revId": "3b856fc3957240b1b83c99245c6da4758469a77a",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e872ed3_41139296",
+        "filename": "bigquery/v2/example_test.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-06-18T00:44:14Z",
+      "side": 1,
+      "message": "seems like a distraction from the thing being demoed.",
+      "revId": "3b856fc3957240b1b83c99245c6da4758469a77a",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e872ed3_a1013e3a",
+        "filename": "bigquery/v2/example_test.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-06-18T00:44:14Z",
+      "side": 1,
+      "message": "listCall :\u003d ....\n\n?",
+      "revId": "3b856fc3957240b1b83c99245c6da4758469a77a",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e872ed3_c1fec2a5",
+        "filename": "bigquery/v2/example_test.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-06-18T00:44:14Z",
+      "side": 1,
+      "message": "log.Fatal(err)  ?",
+      "revId": "3b856fc3957240b1b83c99245c6da4758469a77a",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e872ed3_8132fa2e",
+        "filename": "bigquery/v2/example_test.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-06-18T00:44:14Z",
+      "side": 1,
+      "message": "// bqDataset wraps the ...",
+      "revId": "3b856fc3957240b1b83c99245c6da4758469a77a",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e872ed3_612d76cd",
+        "filename": "bigquery/v2/example_test.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-06-18T00:44:14Z",
+      "side": 1,
+      "message": "// jobStats is ...",
+      "revId": "3b856fc3957240b1b83c99245c6da4758469a77a",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e872ed3_412cf2ce",
+        "filename": "bigquery/v2/example_test.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-06-18T00:44:14Z",
+      "side": 1,
+      "message": "why is it a GoString? Why not just String() string so it\u0027s a Stringer?",
+      "revId": "3b856fc3957240b1b83c99245c6da4758469a77a",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

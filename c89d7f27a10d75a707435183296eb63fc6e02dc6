@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "9efbba85_afbfb5ab",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-06-23T15:58:27Z",
+      "side": 1,
+      "message": "use a keyed literal when the types are the same. It prevents a rearrangement of the FieldName type fields later from letting this code accidentally still compile.",
+      "revId": "c89d7f27a10d75a707435183296eb63fc6e02dc6",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ebe4e91_7ee19548",
         "filename": "google-api-go-generator/gen.go",
         "patchSetId": 1
@@ -42,6 +59,23 @@
         "endLine": 674,
         "endChar": 35
       },
+      "revId": "c89d7f27a10d75a707435183296eb63fc6e02dc6",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dec53225_a22b660b",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-06-23T15:58:27Z",
+      "side": 1,
+      "message": "likewise",
       "revId": "c89d7f27a10d75a707435183296eb63fc6e02dc6",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false

@@ -657,6 +657,34 @@ func (p *Property) Pattern() (string, bool) {
 	return "", false
 }
 
+// A FieldName uniquely identifies a field within a Schema struct for an API.
+type FieldName struct {
+	api    string // The ID of an API.
+	schema string // The Go name of a Schema struct.
+	field  string // The Go name of a field.
+}
+
+// pointerFields is a list of fields that should use a pointer type.
+// This makes it possible to distinguish between a field being unset vs having
+// an empty value.
+var pointerFields = []FieldName{
+	{"compute:v1", "MetadataItems", "Value"},
+}
+
+func (p *Property) ForcePointerType() bool {
+	if p.UnfortunateDefault() {
+		return true
+	}
+
+	name := FieldName{p.s.api.ID, p.s.GoName(), p.GoName()}
+	for _, pf := range pointerFields {
+		if pf == name {
+			return true
+		}
+	}
+	return false
+}
+
 // UnfortunateDefault reports whether p may be set to a zero value, but has a non-zero default.
 func (p *Property) UnfortunateDefault() bool {
 	switch p.Type().AsGo() {
@@ -1141,7 +1169,7 @@ func (s *Schema) writeSchemaStruct(api *API) {
 			extraOpt += ",string"
 		}
 		typ := p.Type().AsGo()
-		if p.UnfortunateDefault() {
+		if p.ForcePointerType() {
 			typ = "*" + typ
 		}
 		s.api.p("\t%s %s `json:\"%s,omitempty%s\"`\n", p.GoName(), typ, p.APIName(), extraOpt)

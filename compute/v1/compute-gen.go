@@ -3077,7 +3077,7 @@ type MetadataItems struct {
 	// only have meaning as interpreted by the image running in the
 	// instance. The only restriction placed on values is that their size
 	// must be less than or equal to 32768 bytes.
-	Value string `json:"value,omitempty"`
+	Value *string `json:"value,omitempty"`
 }
 
 // NamedPort: The named port information. For example: .

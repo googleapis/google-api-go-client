@@ -609,11 +609,29 @@ func (c *RelyingpartyCreateAuthUriCall) Fields(s ...googleapi.Field) *Relyingpar
 	return c
 }
 
-func (c *RelyingpartyCreateAuthUriCall) Do() (*CreateAuthUriResponse, error) {
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *RelyingpartyCreateAuthUriCall) IfNoneMatch(entityTag string) *RelyingpartyCreateAuthUriCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do performs a round-trip call to the server.
+func (c *RelyingpartyCreateAuthUriCall) Do() (ret *CreateAuthUriResponse, err error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+// DoHeader performs a round-trip call to the server.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *RelyingpartyCreateAuthUriCall) DoHeader() (ret *CreateAuthUriResponse, resHeader http.Header, err error) {
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.identitytoolkitrelyingpartycreateauthurirequest)
+	body, err = googleapi.WithoutDataWrapper.JSONReader(c.identitytoolkitrelyingpartycreateauthurirequest)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -627,19 +645,21 @@ func (c *RelyingpartyCreateAuthUriCall) Do() (*CreateAuthUriResponse, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *CreateAuthUriResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Creates the URI used by the IdP to authenticate the user.",
 	//   "httpMethod": "POST",
@@ -678,11 +698,29 @@ func (c *RelyingpartyDeleteAccountCall) Fields(s ...googleapi.Field) *Relyingpar
 	return c
 }
 
-func (c *RelyingpartyDeleteAccountCall) Do() (*DeleteAccountResponse, error) {
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *RelyingpartyDeleteAccountCall) IfNoneMatch(entityTag string) *RelyingpartyDeleteAccountCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do performs a round-trip call to the server.
+func (c *RelyingpartyDeleteAccountCall) Do() (ret *DeleteAccountResponse, err error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+// DoHeader performs a round-trip call to the server.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *RelyingpartyDeleteAccountCall) DoHeader() (ret *DeleteAccountResponse, resHeader http.Header, err error) {
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.identitytoolkitrelyingpartydeleteaccountrequest)
+	body, err = googleapi.WithoutDataWrapper.JSONReader(c.identitytoolkitrelyingpartydeleteaccountrequest)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -696,19 +734,21 @@ func (c *RelyingpartyDeleteAccountCall) Do() (*DeleteAccountResponse, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *DeleteAccountResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Delete user account.",
 	//   "httpMethod": "POST",
@@ -747,11 +787,29 @@ func (c *RelyingpartyDownloadAccountCall) Fields(s ...googleapi.Field) *Relyingp
 	return c
 }
 
-func (c *RelyingpartyDownloadAccountCall) Do() (*DownloadAccountResponse, error) {
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *RelyingpartyDownloadAccountCall) IfNoneMatch(entityTag string) *RelyingpartyDownloadAccountCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do performs a round-trip call to the server.
+func (c *RelyingpartyDownloadAccountCall) Do() (ret *DownloadAccountResponse, err error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+// DoHeader performs a round-trip call to the server.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *RelyingpartyDownloadAccountCall) DoHeader() (ret *DownloadAccountResponse, resHeader http.Header, err error) {
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.identitytoolkitrelyingpartydownloadaccountrequest)
+	body, err = googleapi.WithoutDataWrapper.JSONReader(c.identitytoolkitrelyingpartydownloadaccountrequest)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -765,19 +823,21 @@ func (c *RelyingpartyDownloadAccountCall) Do() (*DownloadAccountResponse, error)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *DownloadAccountResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Batch download user accounts.",
 	//   "httpMethod": "POST",
@@ -816,11 +876,29 @@ func (c *RelyingpartyGetAccountInfoCall) Fields(s ...googleapi.Field) *Relyingpa
 	return c
 }
 
-func (c *RelyingpartyGetAccountInfoCall) Do() (*GetAccountInfoResponse, error) {
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *RelyingpartyGetAccountInfoCall) IfNoneMatch(entityTag string) *RelyingpartyGetAccountInfoCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do performs a round-trip call to the server.
+func (c *RelyingpartyGetAccountInfoCall) Do() (ret *GetAccountInfoResponse, err error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+// DoHeader performs a round-trip call to the server.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *RelyingpartyGetAccountInfoCall) DoHeader() (ret *GetAccountInfoResponse, resHeader http.Header, err error) {
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.identitytoolkitrelyingpartygetaccountinforequest)
+	body, err = googleapi.WithoutDataWrapper.JSONReader(c.identitytoolkitrelyingpartygetaccountinforequest)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -834,19 +912,21 @@ func (c *RelyingpartyGetAccountInfoCall) Do() (*GetAccountInfoResponse, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *GetAccountInfoResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Returns the account info.",
 	//   "httpMethod": "POST",
@@ -885,11 +965,29 @@ func (c *RelyingpartyGetOobConfirmationCodeCall) Fields(s ...googleapi.Field) *R
 	return c
 }
 
-func (c *RelyingpartyGetOobConfirmationCodeCall) Do() (*GetOobConfirmationCodeResponse, error) {
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *RelyingpartyGetOobConfirmationCodeCall) IfNoneMatch(entityTag string) *RelyingpartyGetOobConfirmationCodeCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do performs a round-trip call to the server.
+func (c *RelyingpartyGetOobConfirmationCodeCall) Do() (ret *GetOobConfirmationCodeResponse, err error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+// DoHeader performs a round-trip call to the server.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *RelyingpartyGetOobConfirmationCodeCall) DoHeader() (ret *GetOobConfirmationCodeResponse, resHeader http.Header, err error) {
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.relyingparty)
+	body, err = googleapi.WithoutDataWrapper.JSONReader(c.relyingparty)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -903,19 +1001,21 @@ func (c *RelyingpartyGetOobConfirmationCodeCall) Do() (*GetOobConfirmationCodeRe
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *GetOobConfirmationCodeResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Get a code for user action confirmation.",
 	//   "httpMethod": "POST",
@@ -952,7 +1052,25 @@ func (c *RelyingpartyGetPublicKeysCall) Fields(s ...googleapi.Field) *Relyingpar
 	return c
 }
 
-func (c *RelyingpartyGetPublicKeysCall) Do() (map[string]string, error) {
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *RelyingpartyGetPublicKeysCall) IfNoneMatch(entityTag string) *RelyingpartyGetPublicKeysCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do performs a round-trip call to the server.
+func (c *RelyingpartyGetPublicKeysCall) Do() (ret map[string]string, err error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+// DoHeader performs a round-trip call to the server.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *RelyingpartyGetPublicKeysCall) DoHeader() (ret map[string]string, resHeader http.Header, err error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -964,19 +1082,21 @@ func (c *RelyingpartyGetPublicKeysCall) Do() (map[string]string, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret map[string]string
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Get token signing public key.",
 	//   "httpMethod": "GET",
@@ -1010,7 +1130,25 @@ func (c *RelyingpartyGetRecaptchaParamCall) Fields(s ...googleapi.Field) *Relyin
 	return c
 }
 
-func (c *RelyingpartyGetRecaptchaParamCall) Do() (*GetRecaptchaParamResponse, error) {
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *RelyingpartyGetRecaptchaParamCall) IfNoneMatch(entityTag string) *RelyingpartyGetRecaptchaParamCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do performs a round-trip call to the server.
+func (c *RelyingpartyGetRecaptchaParamCall) Do() (ret *GetRecaptchaParamResponse, err error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+// DoHeader performs a round-trip call to the server.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *RelyingpartyGetRecaptchaParamCall) DoHeader() (ret *GetRecaptchaParamResponse, resHeader http.Header, err error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1022,19 +1160,21 @@ func (c *RelyingpartyGetRecaptchaParamCall) Do() (*GetRecaptchaParamResponse, er
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *GetRecaptchaParamResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Get recaptcha secure param.",
 	//   "httpMethod": "GET",
@@ -1070,11 +1210,29 @@ func (c *RelyingpartyResetPasswordCall) Fields(s ...googleapi.Field) *Relyingpar
 	return c
 }
 
-func (c *RelyingpartyResetPasswordCall) Do() (*ResetPasswordResponse, error) {
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *RelyingpartyResetPasswordCall) IfNoneMatch(entityTag string) *RelyingpartyResetPasswordCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do performs a round-trip call to the server.
+func (c *RelyingpartyResetPasswordCall) Do() (ret *ResetPasswordResponse, err error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+// DoHeader performs a round-trip call to the server.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *RelyingpartyResetPasswordCall) DoHeader() (ret *ResetPasswordResponse, resHeader http.Header, err error) {
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.identitytoolkitrelyingpartyresetpasswordrequest)
+	body, err = googleapi.WithoutDataWrapper.JSONReader(c.identitytoolkitrelyingpartyresetpasswordrequest)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -1088,19 +1246,21 @@ func (c *RelyingpartyResetPasswordCall) Do() (*ResetPasswordResponse, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *ResetPasswordResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Reset password for a user.",
 	//   "httpMethod": "POST",
@@ -1139,11 +1299,29 @@ func (c *RelyingpartySetAccountInfoCall) Fields(s ...googleapi.Field) *Relyingpa
 	return c
 }
 
-func (c *RelyingpartySetAccountInfoCall) Do() (*SetAccountInfoResponse, error) {
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *RelyingpartySetAccountInfoCall) IfNoneMatch(entityTag string) *RelyingpartySetAccountInfoCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do performs a round-trip call to the server.
+func (c *RelyingpartySetAccountInfoCall) Do() (ret *SetAccountInfoResponse, err error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+// DoHeader performs a round-trip call to the server.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *RelyingpartySetAccountInfoCall) DoHeader() (ret *SetAccountInfoResponse, resHeader http.Header, err error) {
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.identitytoolkitrelyingpartysetaccountinforequest)
+	body, err = googleapi.WithoutDataWrapper.JSONReader(c.identitytoolkitrelyingpartysetaccountinforequest)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -1157,19 +1335,21 @@ func (c *RelyingpartySetAccountInfoCall) Do() (*SetAccountInfoResponse, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *SetAccountInfoResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Set account info for a user.",
 	//   "httpMethod": "POST",
@@ -1208,11 +1388,29 @@ func (c *RelyingpartyUploadAccountCall) Fields(s ...googleapi.Field) *Relyingpar
 	return c
 }
 
-func (c *RelyingpartyUploadAccountCall) Do() (*UploadAccountResponse, error) {
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *RelyingpartyUploadAccountCall) IfNoneMatch(entityTag string) *RelyingpartyUploadAccountCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do performs a round-trip call to the server.
+func (c *RelyingpartyUploadAccountCall) Do() (ret *UploadAccountResponse, err error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+// DoHeader performs a round-trip call to the server.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *RelyingpartyUploadAccountCall) DoHeader() (ret *UploadAccountResponse, resHeader http.Header, err error) {
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.identitytoolkitrelyingpartyuploadaccountrequest)
+	body, err = googleapi.WithoutDataWrapper.JSONReader(c.identitytoolkitrelyingpartyuploadaccountrequest)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -1226,19 +1424,21 @@ func (c *RelyingpartyUploadAccountCall) Do() (*UploadAccountResponse, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *UploadAccountResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Batch upload existing user accounts.",
 	//   "httpMethod": "POST",
@@ -1277,11 +1477,29 @@ func (c *RelyingpartyVerifyAssertionCall) Fields(s ...googleapi.Field) *Relyingp
 	return c
 }
 
-func (c *RelyingpartyVerifyAssertionCall) Do() (*VerifyAssertionResponse, error) {
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *RelyingpartyVerifyAssertionCall) IfNoneMatch(entityTag string) *RelyingpartyVerifyAssertionCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do performs a round-trip call to the server.
+func (c *RelyingpartyVerifyAssertionCall) Do() (ret *VerifyAssertionResponse, err error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+// DoHeader performs a round-trip call to the server.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *RelyingpartyVerifyAssertionCall) DoHeader() (ret *VerifyAssertionResponse, resHeader http.Header, err error) {
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.identitytoolkitrelyingpartyverifyassertionrequest)
+	body, err = googleapi.WithoutDataWrapper.JSONReader(c.identitytoolkitrelyingpartyverifyassertionrequest)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -1295,19 +1513,21 @@ func (c *RelyingpartyVerifyAssertionCall) Do() (*VerifyAssertionResponse, error)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *VerifyAssertionResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Verifies the assertion returned by the IdP.",
 	//   "httpMethod": "POST",
@@ -1346,11 +1566,29 @@ func (c *RelyingpartyVerifyPasswordCall) Fields(s ...googleapi.Field) *Relyingpa
 	return c
 }
 
-func (c *RelyingpartyVerifyPasswordCall) Do() (*VerifyPasswordResponse, error) {
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *RelyingpartyVerifyPasswordCall) IfNoneMatch(entityTag string) *RelyingpartyVerifyPasswordCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do performs a round-trip call to the server.
+func (c *RelyingpartyVerifyPasswordCall) Do() (ret *VerifyPasswordResponse, err error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+// DoHeader performs a round-trip call to the server.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *RelyingpartyVerifyPasswordCall) DoHeader() (ret *VerifyPasswordResponse, resHeader http.Header, err error) {
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.identitytoolkitrelyingpartyverifypasswordrequest)
+	body, err = googleapi.WithoutDataWrapper.JSONReader(c.identitytoolkitrelyingpartyverifypasswordrequest)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -1364,19 +1602,21 @@ func (c *RelyingpartyVerifyPasswordCall) Do() (*VerifyPasswordResponse, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *VerifyPasswordResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Verifies the user entered password.",
 	//   "httpMethod": "POST",

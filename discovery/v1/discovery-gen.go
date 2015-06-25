@@ -489,7 +489,25 @@ func (c *ApisGetRestCall) Fields(s ...googleapi.Field) *ApisGetRestCall {
 	return c
 }
 
-func (c *ApisGetRestCall) Do() (*RestDescription, error) {
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ApisGetRestCall) IfNoneMatch(entityTag string) *ApisGetRestCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do performs a round-trip call to the server.
+func (c *ApisGetRestCall) Do() (ret *RestDescription, err error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+// DoHeader performs a round-trip call to the server.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *ApisGetRestCall) DoHeader() (ret *RestDescription, resHeader http.Header, err error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -504,19 +522,21 @@ func (c *ApisGetRestCall) Do() (*RestDescription, error) {
 		"version": c.version,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *RestDescription
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Retrieve the description of a particular version of an api.",
 	//   "httpMethod": "GET",
@@ -582,7 +602,25 @@ func (c *ApisListCall) Fields(s ...googleapi.Field) *ApisListCall {
 	return c
 }
 
-func (c *ApisListCall) Do() (*DirectoryList, error) {
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ApisListCall) IfNoneMatch(entityTag string) *ApisListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do performs a round-trip call to the server.
+func (c *ApisListCall) Do() (ret *DirectoryList, err error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+// DoHeader performs a round-trip call to the server.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *ApisListCall) DoHeader() (ret *DirectoryList, resHeader http.Header, err error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -600,19 +638,21 @@ func (c *ApisListCall) Do() (*DirectoryList, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *DirectoryList
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Retrieve the list of APIs supported at this endpoint.",
 	//   "httpMethod": "GET",

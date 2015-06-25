@@ -8,6 +8,7 @@ import (
 	"strings"
 
 	compute "google.golang.org/api/compute/v1"
+	"google.golang.org/api/googleapi"
 )
 
 func init() {
@@ -77,6 +78,15 @@ func computeMain(client *http.Client, argv []string) {
 		},
 	}
 
-	op, err := service.Instances.Insert(projectId, zone, instance).Do()
+	op, h, err := service.Instances.Insert(projectId, zone, instance).DoHeader()
 	log.Printf("Got compute.Operation, err: %#v, %v", op, err)
+	log.Printf("Etag=%v", h.Get("Etag"))
+
+	inst, err := service.Instances.Get(projectId, zone, instanceName).IfNoneMatch(h.Get("Etag")).Do()
+	log.Printf("Got compute.Instance, err: %#v, %v", inst, err)
+	if googleapi.IsError(err, http.StatusNotModified) {
+		log.Printf("Instance not modified since insert.")
+	} else {
+		log.Printf("Instance modified since insert.")
+	}
 }

@@ -1335,7 +1335,7 @@ func (meth *Method) generateCode() {
 
 	retTypeComma := responseType(a, meth.m)
 	if retTypeComma != "" {
-		retTypeComma += ", "
+		retTypeComma = "ret " + retTypeComma + ", "
 	}
 
 	args := meth.NewArguments()
@@ -1435,8 +1435,29 @@ func (meth *Method) generateCode() {
 	pn(`c.opt_["fields"] = googleapi.CombineFields(s)`)
 	pn("return c")
 	pn("}")
+	pn("\n// IfNoneMatch sets the optional parameter which makes the operation fail if")
+	pn("// the object's Etag matches the given value. This is useful for getting updates")
+	pn("// only after the object has changed since the last request.")
+	pn("func (c *%s) IfNoneMatch(entityTag string) *%s {", callName, callName)
+	pn(`c.opt_["ifNoneMatch"] = entityTag`)
+	pn("return c")
+	pn("}")
 
-	pn("\nfunc (c *%s) Do() (%serror) {", callName, retTypeComma)
+	pn("\n// Do performs a round-trip call to the server.")
+	pn("func (c *%s) Do() (%serr error) {", callName, retTypeComma)
+	if retTypeComma == "" {
+		pn("_, err = c.DoHeader()")
+		pn("return err")
+	} else {
+		pn("v, _, err := c.DoHeader()")
+		pn("return v, err")
+	}
+	pn("}")
+	pn("\n// DoHeader performs a round-trip call to the server.")
+	pn("// resHeader is populated with the response header when a response is received,")
+	pn("// regardless of the status code returned. This can be useful for checking for")
+	pn(`// header values such as "Etag" even when http.StatusNotModified is returned.`)
+	pn("func (c *%s) DoHeader() (%sresHeader http.Header, err error) {", callName, retTypeComma)
 
 	nilRet := ""
 	if retTypeComma != "" {
@@ -1450,8 +1471,8 @@ func (meth *Method) generateCode() {
 		if a.needsDataWrapper() {
 			style = "WithDataWrapper"
 		}
-		pn("body, err := googleapi.%s.JSONReader(c.%s)", style, ba.goname)
-		pn("if err != nil { return %serr }", nilRet)
+		pn("body, err = googleapi.%s.JSONReader(c.%s)", style, ba.goname)
+		pn("if err != nil { return %snil, err }", nilRet)
 		pn(`ctype := "application/json"`)
 		hasContentType = true
 	}
@@ -1532,10 +1553,13 @@ func (meth *Method) generateCode() {
 		pn(`req.Header.Set("Content-Type", ctype)`)
 	}
 	pn(`req.Header.Set("User-Agent", c.s.userAgent())`)
+	pn(`if v, ok := c.opt_["ifNoneMatch"]; ok {`)
+	pn("	req.Header.Set(\"If-None-Match\", fmt.Sprintf(\"%%v\", v))")
+	pn("}")
 	pn("res, err := c.s.client.Do(req);")
-	pn("if err != nil { return %serr }", nilRet)
+	pn("if err != nil { return %snil, err }", nilRet)
 	pn("defer googleapi.CloseBody(res)")
-	pn("if err := googleapi.CheckResponse(res); err != nil { return %serr }", nilRet)
+	pn("if err := googleapi.CheckResponse(res); err != nil { return %sres.Header, err }", nilRet)
 	if meth.supportsMediaUpload() {
 		pn(`if c.protocol_ == "resumable" {`)
 		pn(` loc := res.Header.Get("Location")`)
@@ -1549,16 +1573,15 @@ func (meth *Method) generateCode() {
 		pn("  Callback:      progressUpdater_,")
 		pn(" }")
 		pn(" res, err = rx.Upload(c.ctx_)")
-		pn(" if err != nil { return %serr }", nilRet)
+		pn(" if err != nil { return %sres.Header, err }", nilRet)
 		pn(" defer res.Body.Close()")
 		pn("}")
 	}
 	if retTypeComma == "" {
-		pn("return nil")
+		pn("return res.Header, nil")
 	} else {
-		pn("var ret %s", responseType(a, meth.m))
-		pn("if err := json.NewDecoder(res.Body).Decode(&ret); err != nil { return nil, err }")
-		pn("return ret, nil")
+		pn("if err := json.NewDecoder(res.Body).Decode(&ret); err != nil { return nil, res.Header, err }")
+		pn("return ret, res.Header, nil")
 	}
 
 	bs, _ := json.MarshalIndent(meth.m, "\t// ", "  ")

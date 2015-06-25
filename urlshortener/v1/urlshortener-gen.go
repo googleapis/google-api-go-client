@@ -214,10 +214,25 @@ func (c *UrlGetCall) Fields(s ...googleapi.Field) *UrlGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *UrlGetCall) IfNoneMatch(entityTag string) *UrlGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "urlshortener.url.get" call.
+// Exactly one of the return values is non-nil.
 func (c *UrlGetCall) Do() (*Url, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *UrlGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	params.Set("shortUrl", fmt.Sprintf("%v", c.shortUrl))
 	if v, ok := c.opt_["projection"]; ok {
 		params.Set("projection", fmt.Sprintf("%v", v))
@@ -230,19 +245,29 @@ func (c *UrlGetCall) Do() (*Url, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
+	return c.s.client.Do(req)
+}
+
+// DoHeader executes the "urlshortener.url.get" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *UrlGetCall) DoHeader() (ret *Url, resHeader http.Header, err error) {
+	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Url
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Expands a short URL or gets creation time and analytics.",
 	//   "httpMethod": "GET",
@@ -307,7 +332,22 @@ func (c *UrlInsertCall) Fields(s ...googleapi.Field) *UrlInsertCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *UrlInsertCall) IfNoneMatch(entityTag string) *UrlInsertCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "urlshortener.url.insert" call.
+// Exactly one of the return values is non-nil.
 func (c *UrlInsertCall) Do() (*Url, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *UrlInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.url)
 	if err != nil {
@@ -315,7 +355,7 @@ func (c *UrlInsertCall) Do() (*Url, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -325,19 +365,29 @@ func (c *UrlInsertCall) Do() (*Url, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
+	return c.s.client.Do(req)
+}
+
+// DoHeader executes the "urlshortener.url.insert" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *UrlInsertCall) DoHeader() (ret *Url, resHeader http.Header, err error) {
+	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Url
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Creates a new short URL.",
 	//   "httpMethod": "POST",
@@ -395,10 +445,25 @@ func (c *UrlListCall) Fields(s ...googleapi.Field) *UrlListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *UrlListCall) IfNoneMatch(entityTag string) *UrlListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "urlshortener.url.list" call.
+// Exactly one of the return values is non-nil.
 func (c *UrlListCall) Do() (*UrlHistory, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *UrlListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["projection"]; ok {
 		params.Set("projection", fmt.Sprintf("%v", v))
 	}
@@ -413,19 +478,29 @@ func (c *UrlListCall) Do() (*UrlHistory, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
+	return c.s.client.Do(req)
+}
+
+// DoHeader executes the "urlshortener.url.list" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *UrlListCall) DoHeader() (ret *UrlHistory, resHeader http.Header, err error) {
+	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *UrlHistory
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Retrieves a list of URLs shortened by a user.",
 	//   "httpMethod": "GET",

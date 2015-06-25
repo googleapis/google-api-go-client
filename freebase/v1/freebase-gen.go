@@ -196,6 +196,21 @@ func (c *ReconcileCall) Fields(s ...googleapi.Field) *ReconcileCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ReconcileCall) IfNoneMatch(entityTag string) *ReconcileCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "freebase.reconcile" call.
+// Exactly one of the return values is non-nil.
+func (c *ReconcileCall) Do() (*ReconcileGet, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *ReconcileCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -226,23 +241,29 @@ func (c *ReconcileCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *ReconcileCall) Do() (*ReconcileGet, error) {
+// DoHeader executes the "freebase.reconcile" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *ReconcileCall) DoHeader() (ret *ReconcileGet, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *ReconcileGet
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Reconcile entities to Freebase open data.",
 	//   "httpMethod": "GET",
@@ -513,6 +534,20 @@ func (c *SearchCall) Fields(s ...googleapi.Field) *SearchCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *SearchCall) IfNoneMatch(entityTag string) *SearchCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "freebase.search" call.
+func (c *SearchCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
 func (c *SearchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -594,6 +629,9 @@ func (c *SearchCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
@@ -612,16 +650,20 @@ func (c *SearchCall) Download() (*http.Response, error) {
 	return res, nil
 }
 
-func (c *SearchCall) Do() error {
+// DoHeader executes the "freebase.search" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *SearchCall) DoHeader() (resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Search Freebase open data.",
 	//   "httpMethod": "GET",

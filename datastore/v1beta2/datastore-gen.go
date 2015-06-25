@@ -666,7 +666,22 @@ func (c *DatasetsAllocateIdsCall) Fields(s ...googleapi.Field) *DatasetsAllocate
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *DatasetsAllocateIdsCall) IfNoneMatch(entityTag string) *DatasetsAllocateIdsCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "datastore.datasets.allocateIds" call.
+// Exactly one of the return values is non-nil.
 func (c *DatasetsAllocateIdsCall) Do() (*AllocateIdsResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *DatasetsAllocateIdsCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.allocateidsrequest)
 	if err != nil {
@@ -674,7 +689,7 @@ func (c *DatasetsAllocateIdsCall) Do() (*AllocateIdsResponse, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -686,19 +701,29 @@ func (c *DatasetsAllocateIdsCall) Do() (*AllocateIdsResponse, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
+	return c.s.client.Do(req)
+}
+
+// DoHeader executes the "datastore.datasets.allocateIds" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *DatasetsAllocateIdsCall) DoHeader() (ret *AllocateIdsResponse, resHeader http.Header, err error) {
+	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *AllocateIdsResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Allocate IDs for incomplete keys (useful for referencing an entity before it is inserted).",
 	//   "httpMethod": "POST",
@@ -755,7 +780,22 @@ func (c *DatasetsBeginTransactionCall) Fields(s ...googleapi.Field) *DatasetsBeg
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *DatasetsBeginTransactionCall) IfNoneMatch(entityTag string) *DatasetsBeginTransactionCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "datastore.datasets.beginTransaction" call.
+// Exactly one of the return values is non-nil.
 func (c *DatasetsBeginTransactionCall) Do() (*BeginTransactionResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *DatasetsBeginTransactionCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.begintransactionrequest)
 	if err != nil {
@@ -763,7 +803,7 @@ func (c *DatasetsBeginTransactionCall) Do() (*BeginTransactionResponse, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -775,19 +815,29 @@ func (c *DatasetsBeginTransactionCall) Do() (*BeginTransactionResponse, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
+	return c.s.client.Do(req)
+}
+
+// DoHeader executes the "datastore.datasets.beginTransaction" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *DatasetsBeginTransactionCall) DoHeader() (ret *BeginTransactionResponse, resHeader http.Header, err error) {
+	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *BeginTransactionResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Begin a new transaction.",
 	//   "httpMethod": "POST",
@@ -845,7 +895,22 @@ func (c *DatasetsCommitCall) Fields(s ...googleapi.Field) *DatasetsCommitCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *DatasetsCommitCall) IfNoneMatch(entityTag string) *DatasetsCommitCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "datastore.datasets.commit" call.
+// Exactly one of the return values is non-nil.
 func (c *DatasetsCommitCall) Do() (*CommitResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *DatasetsCommitCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.commitrequest)
 	if err != nil {
@@ -853,7 +918,7 @@ func (c *DatasetsCommitCall) Do() (*CommitResponse, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -865,19 +930,29 @@ func (c *DatasetsCommitCall) Do() (*CommitResponse, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
+	return c.s.client.Do(req)
+}
+
+// DoHeader executes the "datastore.datasets.commit" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *DatasetsCommitCall) DoHeader() (ret *CommitResponse, resHeader http.Header, err error) {
+	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *CommitResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Commit a transaction, optionally creating, deleting or modifying some entities.",
 	//   "httpMethod": "POST",
@@ -934,7 +1009,22 @@ func (c *DatasetsLookupCall) Fields(s ...googleapi.Field) *DatasetsLookupCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *DatasetsLookupCall) IfNoneMatch(entityTag string) *DatasetsLookupCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "datastore.datasets.lookup" call.
+// Exactly one of the return values is non-nil.
 func (c *DatasetsLookupCall) Do() (*LookupResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *DatasetsLookupCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.lookuprequest)
 	if err != nil {
@@ -942,7 +1032,7 @@ func (c *DatasetsLookupCall) Do() (*LookupResponse, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -954,19 +1044,29 @@ func (c *DatasetsLookupCall) Do() (*LookupResponse, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
+	return c.s.client.Do(req)
+}
+
+// DoHeader executes the "datastore.datasets.lookup" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *DatasetsLookupCall) DoHeader() (ret *LookupResponse, resHeader http.Header, err error) {
+	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *LookupResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Look up some entities by key.",
 	//   "httpMethod": "POST",
@@ -1023,7 +1123,22 @@ func (c *DatasetsRollbackCall) Fields(s ...googleapi.Field) *DatasetsRollbackCal
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *DatasetsRollbackCall) IfNoneMatch(entityTag string) *DatasetsRollbackCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "datastore.datasets.rollback" call.
+// Exactly one of the return values is non-nil.
 func (c *DatasetsRollbackCall) Do() (*RollbackResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *DatasetsRollbackCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.rollbackrequest)
 	if err != nil {
@@ -1031,7 +1146,7 @@ func (c *DatasetsRollbackCall) Do() (*RollbackResponse, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1043,19 +1158,29 @@ func (c *DatasetsRollbackCall) Do() (*RollbackResponse, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
+	return c.s.client.Do(req)
+}
+
+// DoHeader executes the "datastore.datasets.rollback" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *DatasetsRollbackCall) DoHeader() (ret *RollbackResponse, resHeader http.Header, err error) {
+	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *RollbackResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Roll back a transaction.",
 	//   "httpMethod": "POST",
@@ -1112,7 +1237,22 @@ func (c *DatasetsRunQueryCall) Fields(s ...googleapi.Field) *DatasetsRunQueryCal
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *DatasetsRunQueryCall) IfNoneMatch(entityTag string) *DatasetsRunQueryCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "datastore.datasets.runQuery" call.
+// Exactly one of the return values is non-nil.
 func (c *DatasetsRunQueryCall) Do() (*RunQueryResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *DatasetsRunQueryCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.runqueryrequest)
 	if err != nil {
@@ -1120,7 +1260,7 @@ func (c *DatasetsRunQueryCall) Do() (*RunQueryResponse, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1132,19 +1272,29 @@ func (c *DatasetsRunQueryCall) Do() (*RunQueryResponse, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
+	return c.s.client.Do(req)
+}
+
+// DoHeader executes the "datastore.datasets.runQuery" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *DatasetsRunQueryCall) DoHeader() (ret *RunQueryResponse, resHeader http.Header, err error) {
+	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *RunQueryResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Query for entities.",
 	//   "httpMethod": "POST",

@@ -432,7 +432,22 @@ func (c *CoursesCreateCall) Fields(s ...googleapi.Field) *CoursesCreateCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *CoursesCreateCall) IfNoneMatch(entityTag string) *CoursesCreateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "classroom.courses.create" call.
+// Exactly one of the return values is non-nil.
 func (c *CoursesCreateCall) Do() (*Course, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *CoursesCreateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.course)
 	if err != nil {
@@ -440,7 +455,7 @@ func (c *CoursesCreateCall) Do() (*Course, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -450,19 +465,29 @@ func (c *CoursesCreateCall) Do() (*Course, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
+	return c.s.client.Do(req)
+}
+
+// DoHeader executes the "classroom.courses.create" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *CoursesCreateCall) DoHeader() (ret *Course, resHeader http.Header, err error) {
+	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Course
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Creates a course. The user specified as the primary teacher in `primary_teacher_id` is the owner of the created course and added as a teacher. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to create courses. * `NOT_FOUND` if the primary teacher is not a valid user. * `ALREADY_EXISTS` if an alias was specified and already exists.",
 	//   "httpMethod": "POST",
@@ -507,10 +532,25 @@ func (c *CoursesDeleteCall) Fields(s ...googleapi.Field) *CoursesDeleteCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *CoursesDeleteCall) IfNoneMatch(entityTag string) *CoursesDeleteCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "classroom.courses.delete" call.
+// Exactly one of the return values is non-nil.
 func (c *CoursesDeleteCall) Do() (*Empty, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *CoursesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -521,19 +561,29 @@ func (c *CoursesDeleteCall) Do() (*Empty, error) {
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
+	return c.s.client.Do(req)
+}
+
+// DoHeader executes the "classroom.courses.delete" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *CoursesDeleteCall) DoHeader() (ret *Empty, resHeader http.Header, err error) {
+	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Empty
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Deletes a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to delete the requested course. * `NOT_FOUND` if no course exists with the requested ID.",
 	//   "httpMethod": "DELETE",
@@ -586,10 +636,25 @@ func (c *CoursesGetCall) Fields(s ...googleapi.Field) *CoursesGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *CoursesGetCall) IfNoneMatch(entityTag string) *CoursesGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "classroom.courses.get" call.
+// Exactly one of the return values is non-nil.
 func (c *CoursesGetCall) Do() (*Course, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *CoursesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -600,19 +665,29 @@ func (c *CoursesGetCall) Do() (*Course, error) {
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
+	return c.s.client.Do(req)
+}
+
+// DoHeader executes the "classroom.courses.get" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *CoursesGetCall) DoHeader() (ret *Course, resHeader http.Header, err error) {
+	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Course
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Returns a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access the requested course. * `NOT_FOUND` if no course exists with the requested ID.",
 	//   "httpMethod": "GET",
@@ -706,10 +781,25 @@ func (c *CoursesListCall) Fields(s ...googleapi.Field) *CoursesListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *CoursesListCall) IfNoneMatch(entityTag string) *CoursesListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "classroom.courses.list" call.
+// Exactly one of the return values is non-nil.
 func (c *CoursesListCall) Do() (*ListCoursesResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *CoursesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["pageSize"]; ok {
 		params.Set("pageSize", fmt.Sprintf("%v", v))
 	}
@@ -730,19 +820,29 @@ func (c *CoursesListCall) Do() (*ListCoursesResponse, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
+	return c.s.client.Do(req)
+}
+
+// DoHeader executes the "classroom.courses.list" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *CoursesListCall) DoHeader() (ret *ListCoursesResponse, resHeader http.Header, err error) {
+	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *ListCoursesResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Returns a list of courses that the requesting user is permitted to view, restricted to those that match the request. This method returns the following error codes: * `INVALID_ARGUMENT` if the query argument is malformed. * `NOT_FOUND` if any users specified in the query arguments do not exist.",
 	//   "httpMethod": "GET",
@@ -824,7 +924,22 @@ func (c *CoursesPatchCall) Fields(s ...googleapi.Field) *CoursesPatchCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *CoursesPatchCall) IfNoneMatch(entityTag string) *CoursesPatchCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "classroom.courses.patch" call.
+// Exactly one of the return values is non-nil.
 func (c *CoursesPatchCall) Do() (*Course, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *CoursesPatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.course)
 	if err != nil {
@@ -832,7 +947,7 @@ func (c *CoursesPatchCall) Do() (*Course, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["updateMask"]; ok {
 		params.Set("updateMask", fmt.Sprintf("%v", v))
 	}
@@ -847,19 +962,29 @@ func (c *CoursesPatchCall) Do() (*Course, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
+	return c.s.client.Do(req)
+}
+
+// DoHeader executes the "classroom.courses.patch" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *CoursesPatchCall) DoHeader() (ret *Course, resHeader http.Header, err error) {
+	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Course
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Updates one or more fields a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to modify the requested course. * `NOT_FOUND` if no course exists with the requested ID. * `INVALID_ARGUMENT` if invalid fields are specified in the update mask or if no update mask is supplied.",
 	//   "httpMethod": "PATCH",
@@ -922,7 +1047,22 @@ func (c *CoursesUpdateCall) Fields(s ...googleapi.Field) *CoursesUpdateCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *CoursesUpdateCall) IfNoneMatch(entityTag string) *CoursesUpdateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "classroom.courses.update" call.
+// Exactly one of the return values is non-nil.
 func (c *CoursesUpdateCall) Do() (*Course, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *CoursesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.course)
 	if err != nil {
@@ -930,7 +1070,7 @@ func (c *CoursesUpdateCall) Do() (*Course, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -942,19 +1082,29 @@ func (c *CoursesUpdateCall) Do() (*Course, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
+	return c.s.client.Do(req)
+}
+
+// DoHeader executes the "classroom.courses.update" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *CoursesUpdateCall) DoHeader() (ret *Course, resHeader http.Header, err error) {
+	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Course
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Updates a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to modify the requested course. * `NOT_FOUND` if no course exists with the requested ID.",
 	//   "httpMethod": "PUT",
@@ -1012,7 +1162,22 @@ func (c *CoursesAliasesCreateCall) Fields(s ...googleapi.Field) *CoursesAliasesC
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *CoursesAliasesCreateCall) IfNoneMatch(entityTag string) *CoursesAliasesCreateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "classroom.courses.aliases.create" call.
+// Exactly one of the return values is non-nil.
 func (c *CoursesAliasesCreateCall) Do() (*CourseAlias, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *CoursesAliasesCreateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.coursealias)
 	if err != nil {
@@ -1020,7 +1185,7 @@ func (c *CoursesAliasesCreateCall) Do() (*CourseAlias, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1032,19 +1197,29 @@ func (c *CoursesAliasesCreateCall) Do() (*CourseAlias, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
+	return c.s.client.Do(req)
+}
+
+// DoHeader executes the "classroom.courses.aliases.create" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *CoursesAliasesCreateCall) DoHeader() (ret *CourseAlias, resHeader http.Header, err error) {
+	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *CourseAlias
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Creates an alias to a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to create the alias. * `NOT_FOUND` if the course does not exist. * `ALREADY_EXISTS` if the alias already exists.",
 	//   "httpMethod": "POST",
@@ -1102,10 +1277,25 @@ func (c *CoursesAliasesDeleteCall) Fields(s ...googleapi.Field) *CoursesAliasesD
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *CoursesAliasesDeleteCall) IfNoneMatch(entityTag string) *CoursesAliasesDeleteCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "classroom.courses.aliases.delete" call.
+// Exactly one of the return values is non-nil.
 func (c *CoursesAliasesDeleteCall) Do() (*Empty, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *CoursesAliasesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1117,19 +1307,29 @@ func (c *CoursesAliasesDeleteCall) Do() (*Empty, error) {
 		"alias":    c.aliasid,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
+	return c.s.client.Do(req)
+}
+
+// DoHeader executes the "classroom.courses.aliases.delete" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *CoursesAliasesDeleteCall) DoHeader() (ret *Empty, resHeader http.Header, err error) {
+	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Empty
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Deletes an alias of a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to remove the alias. * `NOT_FOUND` if the alias does not exist.",
 	//   "httpMethod": "DELETE",
@@ -1210,10 +1410,25 @@ func (c *CoursesAliasesListCall) Fields(s ...googleapi.Field) *CoursesAliasesLis
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *CoursesAliasesListCall) IfNoneMatch(entityTag string) *CoursesAliasesListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "classroom.courses.aliases.list" call.
+// Exactly one of the return values is non-nil.
 func (c *CoursesAliasesListCall) Do() (*ListCourseAliasesResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *CoursesAliasesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["pageSize"]; ok {
 		params.Set("pageSize", fmt.Sprintf("%v", v))
 	}
@@ -1230,19 +1445,29 @@ func (c *CoursesAliasesListCall) Do() (*ListCourseAliasesResponse, error) {
 		"courseId": c.courseId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
+	return c.s.client.Do(req)
+}
+
+// DoHeader executes the "classroom.courses.aliases.list" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *CoursesAliasesListCall) DoHeader() (ret *ListCourseAliasesResponse, resHeader http.Header, err error) {
+	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *ListCourseAliasesResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Lists the aliases of a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access the course. * `NOT_FOUND` if the course does not exist.",
 	//   "httpMethod": "GET",
@@ -1320,7 +1545,22 @@ func (c *CoursesStudentsCreateCall) Fields(s ...googleapi.Field) *CoursesStudent
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *CoursesStudentsCreateCall) IfNoneMatch(entityTag string) *CoursesStudentsCreateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "classroom.courses.students.create" call.
+// Exactly one of the return values is non-nil.
 func (c *CoursesStudentsCreateCall) Do() (*Student, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *CoursesStudentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.student)
 	if err != nil {
@@ -1328,7 +1568,7 @@ func (c *CoursesStudentsCreateCall) Do() (*Student, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["enrollmentCode"]; ok {
 		params.Set("enrollmentCode", fmt.Sprintf("%v", v))
 	}
@@ -1343,19 +1583,29 @@ func (c *CoursesStudentsCreateCall) Do() (*Student, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
+	return c.s.client.Do(req)
+}
+
+// DoHeader executes the "classroom.courses.students.create" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *CoursesStudentsCreateCall) DoHeader() (ret *Student, resHeader http.Header, err error) {
+	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Student
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Adds a user as a student of a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to create students in this course. * `NOT_FOUND` if the requested course ID does not exist. * `ALREADY_EXISTS` if the user is already a student or student in the course.",
 	//   "httpMethod": "POST",
@@ -1421,10 +1671,25 @@ func (c *CoursesStudentsDeleteCall) Fields(s ...googleapi.Field) *CoursesStudent
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *CoursesStudentsDeleteCall) IfNoneMatch(entityTag string) *CoursesStudentsDeleteCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "classroom.courses.students.delete" call.
+// Exactly one of the return values is non-nil.
 func (c *CoursesStudentsDeleteCall) Do() (*Empty, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *CoursesStudentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1436,19 +1701,29 @@ func (c *CoursesStudentsDeleteCall) Do() (*Empty, error) {
 		"userId":   c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
+	return c.s.client.Do(req)
+}
+
+// DoHeader executes the "classroom.courses.students.delete" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *CoursesStudentsDeleteCall) DoHeader() (ret *Empty, resHeader http.Header, err error) {
+	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Empty
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Deletes a student of a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to delete students of this course. * `NOT_FOUND` if no student of this course has the requested ID or if the course does not exist.",
 	//   "httpMethod": "DELETE",
@@ -1511,10 +1786,25 @@ func (c *CoursesStudentsGetCall) Fields(s ...googleapi.Field) *CoursesStudentsGe
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *CoursesStudentsGetCall) IfNoneMatch(entityTag string) *CoursesStudentsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "classroom.courses.students.get" call.
+// Exactly one of the return values is non-nil.
 func (c *CoursesStudentsGetCall) Do() (*Student, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *CoursesStudentsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1526,19 +1816,29 @@ func (c *CoursesStudentsGetCall) Do() (*Student, error) {
 		"userId":   c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
+	return c.s.client.Do(req)
+}
+
+// DoHeader executes the "classroom.courses.students.get" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *CoursesStudentsGetCall) DoHeader() (ret *Student, resHeader http.Header, err error) {
+	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Student
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Returns a student of a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to view students of this course. * `NOT_FOUND` if no student of this course has the requested ID or if the course does not exist.",
 	//   "httpMethod": "GET",
@@ -1620,10 +1920,25 @@ func (c *CoursesStudentsListCall) Fields(s ...googleapi.Field) *CoursesStudentsL
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *CoursesStudentsListCall) IfNoneMatch(entityTag string) *CoursesStudentsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "classroom.courses.students.list" call.
+// Exactly one of the return values is non-nil.
 func (c *CoursesStudentsListCall) Do() (*ListStudentsResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *CoursesStudentsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["pageSize"]; ok {
 		params.Set("pageSize", fmt.Sprintf("%v", v))
 	}
@@ -1640,19 +1955,29 @@ func (c *CoursesStudentsListCall) Do() (*ListStudentsResponse, error) {
 		"courseId": c.courseId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
+	return c.s.client.Do(req)
+}
+
+// DoHeader executes the "classroom.courses.students.list" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *CoursesStudentsListCall) DoHeader() (ret *ListStudentsResponse, resHeader http.Header, err error) {
+	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *ListStudentsResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Returns a list of students of this course that the requester is permitted to view. Fails with `NOT_FOUND` if the course does not exist.",
 	//   "httpMethod": "GET",
@@ -1722,7 +2047,22 @@ func (c *CoursesTeachersCreateCall) Fields(s ...googleapi.Field) *CoursesTeacher
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *CoursesTeachersCreateCall) IfNoneMatch(entityTag string) *CoursesTeachersCreateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "classroom.courses.teachers.create" call.
+// Exactly one of the return values is non-nil.
 func (c *CoursesTeachersCreateCall) Do() (*Teacher, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *CoursesTeachersCreateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.teacher)
 	if err != nil {
@@ -1730,7 +2070,7 @@ func (c *CoursesTeachersCreateCall) Do() (*Teacher, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1742,19 +2082,29 @@ func (c *CoursesTeachersCreateCall) Do() (*Teacher, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
+	return c.s.client.Do(req)
+}
+
+// DoHeader executes the "classroom.courses.teachers.create" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *CoursesTeachersCreateCall) DoHeader() (ret *Teacher, resHeader http.Header, err error) {
+	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Teacher
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Creates a teacher of a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to create teachers in this course. * `NOT_FOUND` if the requested course ID does not exist. * `ALREADY_EXISTS` if the user is already a teacher or student in the course.",
 	//   "httpMethod": "POST",
@@ -1816,10 +2166,25 @@ func (c *CoursesTeachersDeleteCall) Fields(s ...googleapi.Field) *CoursesTeacher
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *CoursesTeachersDeleteCall) IfNoneMatch(entityTag string) *CoursesTeachersDeleteCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "classroom.courses.teachers.delete" call.
+// Exactly one of the return values is non-nil.
 func (c *CoursesTeachersDeleteCall) Do() (*Empty, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *CoursesTeachersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1831,19 +2196,29 @@ func (c *CoursesTeachersDeleteCall) Do() (*Empty, error) {
 		"userId":   c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
+	return c.s.client.Do(req)
+}
+
+// DoHeader executes the "classroom.courses.teachers.delete" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *CoursesTeachersDeleteCall) DoHeader() (ret *Empty, resHeader http.Header, err error) {
+	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Empty
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Deletes a teacher of a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to delete teachers of this course. * `NOT_FOUND` if no teacher of this course has the requested ID or if the course does not exist. * `FAILED_PRECONDITION` if the requested ID belongs to the primary teacher of this course.",
 	//   "httpMethod": "DELETE",
@@ -1906,10 +2281,25 @@ func (c *CoursesTeachersGetCall) Fields(s ...googleapi.Field) *CoursesTeachersGe
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *CoursesTeachersGetCall) IfNoneMatch(entityTag string) *CoursesTeachersGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "classroom.courses.teachers.get" call.
+// Exactly one of the return values is non-nil.
 func (c *CoursesTeachersGetCall) Do() (*Teacher, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *CoursesTeachersGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1921,19 +2311,29 @@ func (c *CoursesTeachersGetCall) Do() (*Teacher, error) {
 		"userId":   c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
+	return c.s.client.Do(req)
+}
+
+// DoHeader executes the "classroom.courses.teachers.get" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *CoursesTeachersGetCall) DoHeader() (ret *Teacher, resHeader http.Header, err error) {
+	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Teacher
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Returns a teacher of a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to view teachers of this course. * `NOT_FOUND` if no teacher of this course has the requested ID or if the course does not exist.",
 	//   "httpMethod": "GET",
@@ -2015,10 +2415,25 @@ func (c *CoursesTeachersListCall) Fields(s ...googleapi.Field) *CoursesTeachersL
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *CoursesTeachersListCall) IfNoneMatch(entityTag string) *CoursesTeachersListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "classroom.courses.teachers.list" call.
+// Exactly one of the return values is non-nil.
 func (c *CoursesTeachersListCall) Do() (*ListTeachersResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *CoursesTeachersListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["pageSize"]; ok {
 		params.Set("pageSize", fmt.Sprintf("%v", v))
 	}
@@ -2035,19 +2450,29 @@ func (c *CoursesTeachersListCall) Do() (*ListTeachersResponse, error) {
 		"courseId": c.courseId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
+	return c.s.client.Do(req)
+}
+
+// DoHeader executes the "classroom.courses.teachers.list" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *CoursesTeachersListCall) DoHeader() (ret *ListTeachersResponse, resHeader http.Header, err error) {
+	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *ListTeachersResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Returns a list of teachers of this course that the requester is permitted to view. Fails with `NOT_FOUND` if the course does not exist.",
 	//   "httpMethod": "GET",
@@ -2116,10 +2541,25 @@ func (c *InvitationsAcceptCall) Fields(s ...googleapi.Field) *InvitationsAcceptC
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *InvitationsAcceptCall) IfNoneMatch(entityTag string) *InvitationsAcceptCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "classroom.invitations.accept" call.
+// Exactly one of the return values is non-nil.
 func (c *InvitationsAcceptCall) Do() (*Empty, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *InvitationsAcceptCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -2130,19 +2570,29 @@ func (c *InvitationsAcceptCall) Do() (*Empty, error) {
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
+	return c.s.client.Do(req)
+}
+
+// DoHeader executes the "classroom.invitations.accept" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *InvitationsAcceptCall) DoHeader() (ret *Empty, resHeader http.Header, err error) {
+	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Empty
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Accepts an invitation, removing it and adding the invited user to the teachers or students (as appropriate) of the specified course. Only the invited user may accept an invitation. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to accept the requested invitation. * `NOT_FOUND` if no invitation exists with the requested ID.",
 	//   "httpMethod": "POST",
@@ -2198,7 +2648,22 @@ func (c *InvitationsCreateCall) Fields(s ...googleapi.Field) *InvitationsCreateC
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *InvitationsCreateCall) IfNoneMatch(entityTag string) *InvitationsCreateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "classroom.invitations.create" call.
+// Exactly one of the return values is non-nil.
 func (c *InvitationsCreateCall) Do() (*Invitation, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *InvitationsCreateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.invitation)
 	if err != nil {
@@ -2206,7 +2671,7 @@ func (c *InvitationsCreateCall) Do() (*Invitation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -2216,19 +2681,29 @@ func (c *InvitationsCreateCall) Do() (*Invitation, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
+	return c.s.client.Do(req)
+}
+
+// DoHeader executes the "classroom.invitations.create" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *InvitationsCreateCall) DoHeader() (ret *Invitation, resHeader http.Header, err error) {
+	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Invitation
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Creates a invitation. Only one invitation for a user and course may exist at a time. Delete and recreate an invitation to make changes. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to create invitations for this course. * `NOT_FOUND` if the course or the user does not exist. * `ALREADY_EXISTS` if an invitation for the specified user and course already exists.",
 	//   "httpMethod": "POST",
@@ -2273,10 +2748,25 @@ func (c *InvitationsDeleteCall) Fields(s ...googleapi.Field) *InvitationsDeleteC
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *InvitationsDeleteCall) IfNoneMatch(entityTag string) *InvitationsDeleteCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "classroom.invitations.delete" call.
+// Exactly one of the return values is non-nil.
 func (c *InvitationsDeleteCall) Do() (*Empty, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *InvitationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -2287,19 +2777,29 @@ func (c *InvitationsDeleteCall) Do() (*Empty, error) {
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
+	return c.s.client.Do(req)
+}
+
+// DoHeader executes the "classroom.invitations.delete" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *InvitationsDeleteCall) DoHeader() (ret *Empty, resHeader http.Header, err error) {
+	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Empty
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Deletes a invitation. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to delete the requested invitation. * `NOT_FOUND` if no invitation exists with the requested ID.",
 	//   "httpMethod": "DELETE",
@@ -2352,10 +2852,25 @@ func (c *InvitationsGetCall) Fields(s ...googleapi.Field) *InvitationsGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *InvitationsGetCall) IfNoneMatch(entityTag string) *InvitationsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "classroom.invitations.get" call.
+// Exactly one of the return values is non-nil.
 func (c *InvitationsGetCall) Do() (*Invitation, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *InvitationsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -2366,19 +2881,29 @@ func (c *InvitationsGetCall) Do() (*Invitation, error) {
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
+	return c.s.client.Do(req)
+}
+
+// DoHeader executes the "classroom.invitations.get" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *InvitationsGetCall) DoHeader() (ret *Invitation, resHeader http.Header, err error) {
+	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Invitation
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Returns a invitation. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to view the requested invitation. * `NOT_FOUND` if no invitation exists with the requested ID.",
 	//   "httpMethod": "GET",
@@ -2466,10 +2991,25 @@ func (c *InvitationsListCall) Fields(s ...googleapi.Field) *InvitationsListCall 
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *InvitationsListCall) IfNoneMatch(entityTag string) *InvitationsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "classroom.invitations.list" call.
+// Exactly one of the return values is non-nil.
 func (c *InvitationsListCall) Do() (*ListInvitationsResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *InvitationsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["courseId"]; ok {
 		params.Set("courseId", fmt.Sprintf("%v", v))
 	}
@@ -2490,19 +3030,29 @@ func (c *InvitationsListCall) Do() (*ListInvitationsResponse, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
+	return c.s.client.Do(req)
+}
+
+// DoHeader executes the "classroom.invitations.list" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *InvitationsListCall) DoHeader() (ret *ListInvitationsResponse, resHeader http.Header, err error) {
+	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *ListInvitationsResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Returns a list of invitations that the requesting user is permitted to view, restricted to those that match the request. *Note:* At least one of `user_id` or `course_id` must be supplied.",
 	//   "httpMethod": "GET",
@@ -2568,10 +3118,25 @@ func (c *UserProfilesGetCall) Fields(s ...googleapi.Field) *UserProfilesGetCall 
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *UserProfilesGetCall) IfNoneMatch(entityTag string) *UserProfilesGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "classroom.userProfiles.get" call.
+// Exactly one of the return values is non-nil.
 func (c *UserProfilesGetCall) Do() (*UserProfile, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *UserProfilesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -2582,19 +3147,29 @@ func (c *UserProfilesGetCall) Do() (*UserProfile, error) {
 		"userId": c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
+	return c.s.client.Do(req)
+}
+
+// DoHeader executes the "classroom.userProfiles.get" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *UserProfilesGetCall) DoHeader() (ret *UserProfile, resHeader http.Header, err error) {
+	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *UserProfile
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Returns a user profile. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access this user profile. * `NOT_FOUND` if the profile does not exist.",
 	//   "httpMethod": "GET",

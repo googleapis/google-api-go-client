@@ -383,11 +383,29 @@ func (c *SubscriptionsAcknowledgeCall) Fields(s ...googleapi.Field) *Subscriptio
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *SubscriptionsAcknowledgeCall) IfNoneMatch(entityTag string) *SubscriptionsAcknowledgeCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "pubsub.subscriptions.acknowledge" call.
 func (c *SubscriptionsAcknowledgeCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+// DoHeader executes the "pubsub.subscriptions.acknowledge" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *SubscriptionsAcknowledgeCall) DoHeader() (resHeader http.Header, err error) {
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.acknowledgerequest)
+	body, err = googleapi.WithoutDataWrapper.JSONReader(c.acknowledgerequest)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -401,15 +419,18 @@ func (c *SubscriptionsAcknowledgeCall) Do() error {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Acknowledges a particular received message: the Pub/Sub system can remove the given message from the subscription. Acknowledging a message whose Ack deadline has expired may succeed, but the message could have been already redelivered. Acknowledging a message more than once will not result in an error. This is only used for messages received via pull.",
 	//   "httpMethod": "POST",
@@ -455,11 +476,30 @@ func (c *SubscriptionsCreateCall) Fields(s ...googleapi.Field) *SubscriptionsCre
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *SubscriptionsCreateCall) IfNoneMatch(entityTag string) *SubscriptionsCreateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "pubsub.subscriptions.create" call.
+// Exactly one of the return values is non-nil.
 func (c *SubscriptionsCreateCall) Do() (*Subscription, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+// DoHeader executes the "pubsub.subscriptions.create" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *SubscriptionsCreateCall) DoHeader() (ret *Subscription, resHeader http.Header, err error) {
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.subscription)
+	body, err = googleapi.WithoutDataWrapper.JSONReader(c.subscription)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -473,19 +513,21 @@ func (c *SubscriptionsCreateCall) Do() (*Subscription, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Subscription
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Creates a subscription on a given topic for a given subscriber. If the subscription already exists, returns ALREADY_EXISTS. If the corresponding topic doesn't exist, returns NOT_FOUND.\n\nIf the name is not provided in the request, the server will assign a random name for this subscription on the same project as the topic.",
 	//   "httpMethod": "POST",
@@ -530,7 +572,25 @@ func (c *SubscriptionsDeleteCall) Fields(s ...googleapi.Field) *SubscriptionsDel
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *SubscriptionsDeleteCall) IfNoneMatch(entityTag string) *SubscriptionsDeleteCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "pubsub.subscriptions.delete" call.
 func (c *SubscriptionsDeleteCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+// DoHeader executes the "pubsub.subscriptions.delete" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *SubscriptionsDeleteCall) DoHeader() (resHeader http.Header, err error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -544,15 +604,18 @@ func (c *SubscriptionsDeleteCall) Do() error {
 		"subscription": c.subscription,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Deletes an existing subscription. All pending messages in the subscription are immediately dropped. Calls to Pull after deletion will return NOT_FOUND.",
 	//   "httpMethod": "DELETE",
@@ -600,7 +663,26 @@ func (c *SubscriptionsGetCall) Fields(s ...googleapi.Field) *SubscriptionsGetCal
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *SubscriptionsGetCall) IfNoneMatch(entityTag string) *SubscriptionsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "pubsub.subscriptions.get" call.
+// Exactly one of the return values is non-nil.
 func (c *SubscriptionsGetCall) Do() (*Subscription, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+// DoHeader executes the "pubsub.subscriptions.get" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *SubscriptionsGetCall) DoHeader() (ret *Subscription, resHeader http.Header, err error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -614,19 +696,21 @@ func (c *SubscriptionsGetCall) Do() (*Subscription, error) {
 		"subscription": c.subscription,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Subscription
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Gets the configuration details of a subscription.",
 	//   "httpMethod": "GET",
@@ -696,7 +780,26 @@ func (c *SubscriptionsListCall) Fields(s ...googleapi.Field) *SubscriptionsListC
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *SubscriptionsListCall) IfNoneMatch(entityTag string) *SubscriptionsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "pubsub.subscriptions.list" call.
+// Exactly one of the return values is non-nil.
 func (c *SubscriptionsListCall) Do() (*ListSubscriptionsResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+// DoHeader executes the "pubsub.subscriptions.list" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *SubscriptionsListCall) DoHeader() (ret *ListSubscriptionsResponse, resHeader http.Header, err error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -717,19 +820,21 @@ func (c *SubscriptionsListCall) Do() (*ListSubscriptionsResponse, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *ListSubscriptionsResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Lists matching subscriptions.",
 	//   "httpMethod": "GET",
@@ -788,11 +893,29 @@ func (c *SubscriptionsModifyAckDeadlineCall) Fields(s ...googleapi.Field) *Subsc
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *SubscriptionsModifyAckDeadlineCall) IfNoneMatch(entityTag string) *SubscriptionsModifyAckDeadlineCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "pubsub.subscriptions.modifyAckDeadline" call.
 func (c *SubscriptionsModifyAckDeadlineCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+// DoHeader executes the "pubsub.subscriptions.modifyAckDeadline" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *SubscriptionsModifyAckDeadlineCall) DoHeader() (resHeader http.Header, err error) {
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.modifyackdeadlinerequest)
+	body, err = googleapi.WithoutDataWrapper.JSONReader(c.modifyackdeadlinerequest)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -806,15 +929,18 @@ func (c *SubscriptionsModifyAckDeadlineCall) Do() error {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Modifies the Ack deadline for a message received from a pull request.",
 	//   "httpMethod": "POST",
@@ -858,11 +984,29 @@ func (c *SubscriptionsModifyPushConfigCall) Fields(s ...googleapi.Field) *Subscr
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *SubscriptionsModifyPushConfigCall) IfNoneMatch(entityTag string) *SubscriptionsModifyPushConfigCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "pubsub.subscriptions.modifyPushConfig" call.
 func (c *SubscriptionsModifyPushConfigCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+// DoHeader executes the "pubsub.subscriptions.modifyPushConfig" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *SubscriptionsModifyPushConfigCall) DoHeader() (resHeader http.Header, err error) {
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.modifypushconfigrequest)
+	body, err = googleapi.WithoutDataWrapper.JSONReader(c.modifypushconfigrequest)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -876,15 +1020,18 @@ func (c *SubscriptionsModifyPushConfigCall) Do() error {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Modifies the PushConfig for a specified subscription. This method can be used to suspend the flow of messages to an endpoint by clearing the PushConfig field in the request. Messages will be accumulated for delivery even if no push configuration is defined or while the configuration is modified.",
 	//   "httpMethod": "POST",
@@ -928,11 +1075,30 @@ func (c *SubscriptionsPullCall) Fields(s ...googleapi.Field) *SubscriptionsPullC
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *SubscriptionsPullCall) IfNoneMatch(entityTag string) *SubscriptionsPullCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "pubsub.subscriptions.pull" call.
+// Exactly one of the return values is non-nil.
 func (c *SubscriptionsPullCall) Do() (*PullResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+// DoHeader executes the "pubsub.subscriptions.pull" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *SubscriptionsPullCall) DoHeader() (ret *PullResponse, resHeader http.Header, err error) {
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.pullrequest)
+	body, err = googleapi.WithoutDataWrapper.JSONReader(c.pullrequest)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -946,19 +1112,21 @@ func (c *SubscriptionsPullCall) Do() (*PullResponse, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *PullResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Pulls a single message from the server. If return_immediately is true, and no messages are available in the subscription, this method returns FAILED_PRECONDITION. The system is free to return an UNAVAILABLE error if no messages are available in a reasonable amount of time (to reduce system load).",
 	//   "httpMethod": "POST",
@@ -1004,11 +1172,30 @@ func (c *SubscriptionsPullBatchCall) Fields(s ...googleapi.Field) *Subscriptions
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *SubscriptionsPullBatchCall) IfNoneMatch(entityTag string) *SubscriptionsPullBatchCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "pubsub.subscriptions.pullBatch" call.
+// Exactly one of the return values is non-nil.
 func (c *SubscriptionsPullBatchCall) Do() (*PullBatchResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+// DoHeader executes the "pubsub.subscriptions.pullBatch" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *SubscriptionsPullBatchCall) DoHeader() (ret *PullBatchResponse, resHeader http.Header, err error) {
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.pullbatchrequest)
+	body, err = googleapi.WithoutDataWrapper.JSONReader(c.pullbatchrequest)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -1022,19 +1209,21 @@ func (c *SubscriptionsPullBatchCall) Do() (*PullBatchResponse, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *PullBatchResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Pulls messages from the server. Returns an empty list if there are no messages available in the backlog. The system is free to return UNAVAILABLE if there are too many pull requests outstanding for the given subscription.",
 	//   "httpMethod": "POST",
@@ -1077,11 +1266,30 @@ func (c *TopicsCreateCall) Fields(s ...googleapi.Field) *TopicsCreateCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *TopicsCreateCall) IfNoneMatch(entityTag string) *TopicsCreateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "pubsub.topics.create" call.
+// Exactly one of the return values is non-nil.
 func (c *TopicsCreateCall) Do() (*Topic, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+// DoHeader executes the "pubsub.topics.create" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *TopicsCreateCall) DoHeader() (ret *Topic, resHeader http.Header, err error) {
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.topic)
+	body, err = googleapi.WithoutDataWrapper.JSONReader(c.topic)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -1095,19 +1303,21 @@ func (c *TopicsCreateCall) Do() (*Topic, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Topic
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Creates the given topic with the given name.",
 	//   "httpMethod": "POST",
@@ -1152,7 +1362,25 @@ func (c *TopicsDeleteCall) Fields(s ...googleapi.Field) *TopicsDeleteCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *TopicsDeleteCall) IfNoneMatch(entityTag string) *TopicsDeleteCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "pubsub.topics.delete" call.
 func (c *TopicsDeleteCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+// DoHeader executes the "pubsub.topics.delete" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *TopicsDeleteCall) DoHeader() (resHeader http.Header, err error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1166,15 +1394,18 @@ func (c *TopicsDeleteCall) Do() error {
 		"topic": c.topic,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Deletes the topic with the given name. Returns NOT_FOUND if the topic does not exist. After a topic is deleted, a new topic may be created with the same name.",
 	//   "httpMethod": "DELETE",
@@ -1225,7 +1456,26 @@ func (c *TopicsGetCall) Fields(s ...googleapi.Field) *TopicsGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *TopicsGetCall) IfNoneMatch(entityTag string) *TopicsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "pubsub.topics.get" call.
+// Exactly one of the return values is non-nil.
 func (c *TopicsGetCall) Do() (*Topic, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+// DoHeader executes the "pubsub.topics.get" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *TopicsGetCall) DoHeader() (ret *Topic, resHeader http.Header, err error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1239,19 +1489,21 @@ func (c *TopicsGetCall) Do() (*Topic, error) {
 		"topic": c.topic,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Topic
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Gets the configuration of a topic. Since the topic only has the name attribute, this method is only useful to check the existence of a topic. If other attributes are added in the future, they will be returned here.",
 	//   "httpMethod": "GET",
@@ -1321,7 +1573,26 @@ func (c *TopicsListCall) Fields(s ...googleapi.Field) *TopicsListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *TopicsListCall) IfNoneMatch(entityTag string) *TopicsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "pubsub.topics.list" call.
+// Exactly one of the return values is non-nil.
 func (c *TopicsListCall) Do() (*ListTopicsResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+// DoHeader executes the "pubsub.topics.list" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *TopicsListCall) DoHeader() (ret *ListTopicsResponse, resHeader http.Header, err error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1342,19 +1613,21 @@ func (c *TopicsListCall) Do() (*ListTopicsResponse, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *ListTopicsResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Lists matching topics.",
 	//   "httpMethod": "GET",
@@ -1413,11 +1686,29 @@ func (c *TopicsPublishCall) Fields(s ...googleapi.Field) *TopicsPublishCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *TopicsPublishCall) IfNoneMatch(entityTag string) *TopicsPublishCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "pubsub.topics.publish" call.
 func (c *TopicsPublishCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+// DoHeader executes the "pubsub.topics.publish" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *TopicsPublishCall) DoHeader() (resHeader http.Header, err error) {
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.publishrequest)
+	body, err = googleapi.WithoutDataWrapper.JSONReader(c.publishrequest)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -1431,15 +1722,18 @@ func (c *TopicsPublishCall) Do() error {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Adds a message to the topic. Returns NOT_FOUND if the topic does not exist.",
 	//   "httpMethod": "POST",
@@ -1480,11 +1774,30 @@ func (c *TopicsPublishBatchCall) Fields(s ...googleapi.Field) *TopicsPublishBatc
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *TopicsPublishBatchCall) IfNoneMatch(entityTag string) *TopicsPublishBatchCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "pubsub.topics.publishBatch" call.
+// Exactly one of the return values is non-nil.
 func (c *TopicsPublishBatchCall) Do() (*PublishBatchResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+// DoHeader executes the "pubsub.topics.publishBatch" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *TopicsPublishBatchCall) DoHeader() (ret *PublishBatchResponse, resHeader http.Header, err error) {
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.publishbatchrequest)
+	body, err = googleapi.WithoutDataWrapper.JSONReader(c.publishbatchrequest)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -1498,19 +1811,21 @@ func (c *TopicsPublishBatchCall) Do() (*PublishBatchResponse, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *PublishBatchResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Adds one or more messages to the topic. Returns NOT_FOUND if the topic does not exist.",
 	//   "httpMethod": "POST",

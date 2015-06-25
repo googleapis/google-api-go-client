@@ -419,7 +419,26 @@ func (c *AchievementsResetCall) Fields(s ...googleapi.Field) *AchievementsResetC
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AchievementsResetCall) IfNoneMatch(entityTag string) *AchievementsResetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "gamesManagement.achievements.reset" call.
+// Exactly one of the return values is non-nil.
 func (c *AchievementsResetCall) Do() (*AchievementResetResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+// DoHeader executes the "gamesManagement.achievements.reset" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *AchievementsResetCall) DoHeader() (ret *AchievementResetResponse, resHeader http.Header, err error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -433,19 +452,21 @@ func (c *AchievementsResetCall) Do() (*AchievementResetResponse, error) {
 		"achievementId": c.achievementId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *AchievementResetResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Resets the achievement with the given ID for the currently authenticated player. This method is only accessible to whitelisted tester accounts for your application.",
 	//   "httpMethod": "POST",
@@ -496,7 +517,26 @@ func (c *AchievementsResetAllCall) Fields(s ...googleapi.Field) *AchievementsRes
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AchievementsResetAllCall) IfNoneMatch(entityTag string) *AchievementsResetAllCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "gamesManagement.achievements.resetAll" call.
+// Exactly one of the return values is non-nil.
 func (c *AchievementsResetAllCall) Do() (*AchievementResetAllResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+// DoHeader executes the "gamesManagement.achievements.resetAll" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *AchievementsResetAllCall) DoHeader() (ret *AchievementResetAllResponse, resHeader http.Header, err error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -508,19 +548,21 @@ func (c *AchievementsResetAllCall) Do() (*AchievementResetAllResponse, error) {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *AchievementResetAllResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Resets all achievements for the currently authenticated player for your application. This method is only accessible to whitelisted tester accounts for your application.",
 	//   "httpMethod": "POST",
@@ -560,7 +602,25 @@ func (c *AchievementsResetAllForAllPlayersCall) Fields(s ...googleapi.Field) *Ac
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AchievementsResetAllForAllPlayersCall) IfNoneMatch(entityTag string) *AchievementsResetAllForAllPlayersCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "gamesManagement.achievements.resetAllForAllPlayers" call.
 func (c *AchievementsResetAllForAllPlayersCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+// DoHeader executes the "gamesManagement.achievements.resetAllForAllPlayers" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *AchievementsResetAllForAllPlayersCall) DoHeader() (resHeader http.Header, err error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -572,15 +632,18 @@ func (c *AchievementsResetAllForAllPlayersCall) Do() error {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Resets all draft achievements for all players. This method is only available to user accounts for your developer console.",
 	//   "httpMethod": "POST",
@@ -619,7 +682,25 @@ func (c *AchievementsResetForAllPlayersCall) Fields(s ...googleapi.Field) *Achie
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AchievementsResetForAllPlayersCall) IfNoneMatch(entityTag string) *AchievementsResetForAllPlayersCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "gamesManagement.achievements.resetForAllPlayers" call.
 func (c *AchievementsResetForAllPlayersCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+// DoHeader executes the "gamesManagement.achievements.resetForAllPlayers" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *AchievementsResetForAllPlayersCall) DoHeader() (resHeader http.Header, err error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -633,15 +714,18 @@ func (c *AchievementsResetForAllPlayersCall) Do() error {
 		"achievementId": c.achievementId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Resets the achievement with the given ID for all players. This method is only available to user accounts for your developer console. Only draft achievements can be reset.",
 	//   "httpMethod": "POST",
@@ -691,11 +775,29 @@ func (c *AchievementsResetMultipleForAllPlayersCall) Fields(s ...googleapi.Field
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AchievementsResetMultipleForAllPlayersCall) IfNoneMatch(entityTag string) *AchievementsResetMultipleForAllPlayersCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "gamesManagement.achievements.resetMultipleForAllPlayers" call.
 func (c *AchievementsResetMultipleForAllPlayersCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+// DoHeader executes the "gamesManagement.achievements.resetMultipleForAllPlayers" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *AchievementsResetMultipleForAllPlayersCall) DoHeader() (resHeader http.Header, err error) {
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.achievementresetmultipleforallrequest)
+	body, err = googleapi.WithoutDataWrapper.JSONReader(c.achievementresetmultipleforallrequest)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -709,15 +811,18 @@ func (c *AchievementsResetMultipleForAllPlayersCall) Do() error {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Resets achievements with the given IDs for all players. This method is only available to user accounts for your developer console. Only draft achievements may be reset.",
 	//   "httpMethod": "POST",
@@ -775,7 +880,26 @@ func (c *ApplicationsListHiddenCall) Fields(s ...googleapi.Field) *ApplicationsL
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ApplicationsListHiddenCall) IfNoneMatch(entityTag string) *ApplicationsListHiddenCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "gamesManagement.applications.listHidden" call.
+// Exactly one of the return values is non-nil.
 func (c *ApplicationsListHiddenCall) Do() (*HiddenPlayerList, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+// DoHeader executes the "gamesManagement.applications.listHidden" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *ApplicationsListHiddenCall) DoHeader() (ret *HiddenPlayerList, resHeader http.Header, err error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -795,19 +919,21 @@ func (c *ApplicationsListHiddenCall) Do() (*HiddenPlayerList, error) {
 		"applicationId": c.applicationId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *HiddenPlayerList
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Get the list of players hidden from the given application. This method is only available to user accounts for your developer console.",
 	//   "httpMethod": "GET",
@@ -874,7 +1000,25 @@ func (c *EventsResetCall) Fields(s ...googleapi.Field) *EventsResetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *EventsResetCall) IfNoneMatch(entityTag string) *EventsResetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "gamesManagement.events.reset" call.
 func (c *EventsResetCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+// DoHeader executes the "gamesManagement.events.reset" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *EventsResetCall) DoHeader() (resHeader http.Header, err error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -888,15 +1032,18 @@ func (c *EventsResetCall) Do() error {
 		"eventId": c.eventId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Resets all player progress on the event with the given ID for the currently authenticated player. This method is only accessible to whitelisted tester accounts for your application. All quests for this player that use the event will also be reset.",
 	//   "httpMethod": "POST",
@@ -945,7 +1092,25 @@ func (c *EventsResetAllCall) Fields(s ...googleapi.Field) *EventsResetAllCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *EventsResetAllCall) IfNoneMatch(entityTag string) *EventsResetAllCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "gamesManagement.events.resetAll" call.
 func (c *EventsResetAllCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+// DoHeader executes the "gamesManagement.events.resetAll" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *EventsResetAllCall) DoHeader() (resHeader http.Header, err error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -957,15 +1122,18 @@ func (c *EventsResetAllCall) Do() error {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Resets all player progress on all events for the currently authenticated player. This method is only accessible to whitelisted tester accounts for your application. All quests for this player will also be reset.",
 	//   "httpMethod": "POST",
@@ -1002,7 +1170,25 @@ func (c *EventsResetAllForAllPlayersCall) Fields(s ...googleapi.Field) *EventsRe
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *EventsResetAllForAllPlayersCall) IfNoneMatch(entityTag string) *EventsResetAllForAllPlayersCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "gamesManagement.events.resetAllForAllPlayers" call.
 func (c *EventsResetAllForAllPlayersCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+// DoHeader executes the "gamesManagement.events.resetAllForAllPlayers" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *EventsResetAllForAllPlayersCall) DoHeader() (resHeader http.Header, err error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1014,15 +1200,18 @@ func (c *EventsResetAllForAllPlayersCall) Do() error {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Resets all draft events for all players. This method is only available to user accounts for your developer console. All quests that use any of these events will also be reset.",
 	//   "httpMethod": "POST",
@@ -1062,7 +1251,25 @@ func (c *EventsResetForAllPlayersCall) Fields(s ...googleapi.Field) *EventsReset
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *EventsResetForAllPlayersCall) IfNoneMatch(entityTag string) *EventsResetForAllPlayersCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "gamesManagement.events.resetForAllPlayers" call.
 func (c *EventsResetForAllPlayersCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+// DoHeader executes the "gamesManagement.events.resetForAllPlayers" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *EventsResetForAllPlayersCall) DoHeader() (resHeader http.Header, err error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1076,15 +1283,18 @@ func (c *EventsResetForAllPlayersCall) Do() error {
 		"eventId": c.eventId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Resets the event with the given ID for all players. This method is only available to user accounts for your developer console. Only draft events can be reset. All quests that use the event will also be reset.",
 	//   "httpMethod": "POST",
@@ -1135,11 +1345,29 @@ func (c *EventsResetMultipleForAllPlayersCall) Fields(s ...googleapi.Field) *Eve
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *EventsResetMultipleForAllPlayersCall) IfNoneMatch(entityTag string) *EventsResetMultipleForAllPlayersCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "gamesManagement.events.resetMultipleForAllPlayers" call.
 func (c *EventsResetMultipleForAllPlayersCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+// DoHeader executes the "gamesManagement.events.resetMultipleForAllPlayers" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *EventsResetMultipleForAllPlayersCall) DoHeader() (resHeader http.Header, err error) {
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.eventsresetmultipleforallrequest)
+	body, err = googleapi.WithoutDataWrapper.JSONReader(c.eventsresetmultipleforallrequest)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -1153,15 +1381,18 @@ func (c *EventsResetMultipleForAllPlayersCall) Do() error {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Resets events with the given IDs for all players. This method is only available to user accounts for your developer console. Only draft events may be reset. All quests that use any of the events will also be reset.",
 	//   "httpMethod": "POST",
@@ -1205,7 +1436,25 @@ func (c *PlayersHideCall) Fields(s ...googleapi.Field) *PlayersHideCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *PlayersHideCall) IfNoneMatch(entityTag string) *PlayersHideCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "gamesManagement.players.hide" call.
 func (c *PlayersHideCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+// DoHeader executes the "gamesManagement.players.hide" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *PlayersHideCall) DoHeader() (resHeader http.Header, err error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1220,15 +1469,18 @@ func (c *PlayersHideCall) Do() error {
 		"playerId":      c.playerId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Hide the given player's leaderboard scores from the given application. This method is only available to user accounts for your developer console.",
 	//   "httpMethod": "POST",
@@ -1287,7 +1539,25 @@ func (c *PlayersUnhideCall) Fields(s ...googleapi.Field) *PlayersUnhideCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *PlayersUnhideCall) IfNoneMatch(entityTag string) *PlayersUnhideCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "gamesManagement.players.unhide" call.
 func (c *PlayersUnhideCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+// DoHeader executes the "gamesManagement.players.unhide" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *PlayersUnhideCall) DoHeader() (resHeader http.Header, err error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1302,15 +1572,18 @@ func (c *PlayersUnhideCall) Do() error {
 		"playerId":      c.playerId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Unhide the given player's leaderboard scores from the given application. This method is only available to user accounts for your developer console.",
 	//   "httpMethod": "DELETE",
@@ -1367,7 +1640,25 @@ func (c *QuestsResetCall) Fields(s ...googleapi.Field) *QuestsResetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *QuestsResetCall) IfNoneMatch(entityTag string) *QuestsResetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "gamesManagement.quests.reset" call.
 func (c *QuestsResetCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+// DoHeader executes the "gamesManagement.quests.reset" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *QuestsResetCall) DoHeader() (resHeader http.Header, err error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1381,15 +1672,18 @@ func (c *QuestsResetCall) Do() error {
 		"questId": c.questId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Resets all player progress on the quest with the given ID for the currently authenticated player. This method is only accessible to whitelisted tester accounts for your application.",
 	//   "httpMethod": "POST",
@@ -1437,7 +1731,25 @@ func (c *QuestsResetAllCall) Fields(s ...googleapi.Field) *QuestsResetAllCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *QuestsResetAllCall) IfNoneMatch(entityTag string) *QuestsResetAllCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "gamesManagement.quests.resetAll" call.
 func (c *QuestsResetAllCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+// DoHeader executes the "gamesManagement.quests.resetAll" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *QuestsResetAllCall) DoHeader() (resHeader http.Header, err error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1449,15 +1761,18 @@ func (c *QuestsResetAllCall) Do() error {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Resets all player progress on all quests for the currently authenticated player. This method is only accessible to whitelisted tester accounts for your application.",
 	//   "httpMethod": "POST",
@@ -1493,7 +1808,25 @@ func (c *QuestsResetAllForAllPlayersCall) Fields(s ...googleapi.Field) *QuestsRe
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *QuestsResetAllForAllPlayersCall) IfNoneMatch(entityTag string) *QuestsResetAllForAllPlayersCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "gamesManagement.quests.resetAllForAllPlayers" call.
 func (c *QuestsResetAllForAllPlayersCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+// DoHeader executes the "gamesManagement.quests.resetAllForAllPlayers" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *QuestsResetAllForAllPlayersCall) DoHeader() (resHeader http.Header, err error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1505,15 +1838,18 @@ func (c *QuestsResetAllForAllPlayersCall) Do() error {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Resets all draft quests for all players. This method is only available to user accounts for your developer console.",
 	//   "httpMethod": "POST",
@@ -1552,7 +1888,25 @@ func (c *QuestsResetForAllPlayersCall) Fields(s ...googleapi.Field) *QuestsReset
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *QuestsResetForAllPlayersCall) IfNoneMatch(entityTag string) *QuestsResetForAllPlayersCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "gamesManagement.quests.resetForAllPlayers" call.
 func (c *QuestsResetForAllPlayersCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+// DoHeader executes the "gamesManagement.quests.resetForAllPlayers" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *QuestsResetForAllPlayersCall) DoHeader() (resHeader http.Header, err error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1566,15 +1920,18 @@ func (c *QuestsResetForAllPlayersCall) Do() error {
 		"questId": c.questId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Resets all player progress on the quest with the given ID for all players. This method is only available to user accounts for your developer console. Only draft quests can be reset.",
 	//   "httpMethod": "POST",
@@ -1624,11 +1981,29 @@ func (c *QuestsResetMultipleForAllPlayersCall) Fields(s ...googleapi.Field) *Que
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *QuestsResetMultipleForAllPlayersCall) IfNoneMatch(entityTag string) *QuestsResetMultipleForAllPlayersCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "gamesManagement.quests.resetMultipleForAllPlayers" call.
 func (c *QuestsResetMultipleForAllPlayersCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+// DoHeader executes the "gamesManagement.quests.resetMultipleForAllPlayers" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *QuestsResetMultipleForAllPlayersCall) DoHeader() (resHeader http.Header, err error) {
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.questsresetmultipleforallrequest)
+	body, err = googleapi.WithoutDataWrapper.JSONReader(c.questsresetmultipleforallrequest)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -1642,15 +2017,18 @@ func (c *QuestsResetMultipleForAllPlayersCall) Do() error {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Resets quests with the given IDs for all players. This method is only available to user accounts for your developer console. Only draft quests may be reset.",
 	//   "httpMethod": "POST",
@@ -1690,7 +2068,25 @@ func (c *RoomsResetCall) Fields(s ...googleapi.Field) *RoomsResetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *RoomsResetCall) IfNoneMatch(entityTag string) *RoomsResetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "gamesManagement.rooms.reset" call.
 func (c *RoomsResetCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+// DoHeader executes the "gamesManagement.rooms.reset" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *RoomsResetCall) DoHeader() (resHeader http.Header, err error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1702,15 +2098,18 @@ func (c *RoomsResetCall) Do() error {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Reset all rooms for the currently authenticated player for your application. This method is only accessible to whitelisted tester accounts for your application.",
 	//   "httpMethod": "POST",
@@ -1747,7 +2146,25 @@ func (c *RoomsResetForAllPlayersCall) Fields(s ...googleapi.Field) *RoomsResetFo
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *RoomsResetForAllPlayersCall) IfNoneMatch(entityTag string) *RoomsResetForAllPlayersCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "gamesManagement.rooms.resetForAllPlayers" call.
 func (c *RoomsResetForAllPlayersCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+// DoHeader executes the "gamesManagement.rooms.resetForAllPlayers" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *RoomsResetForAllPlayersCall) DoHeader() (resHeader http.Header, err error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1759,15 +2176,18 @@ func (c *RoomsResetForAllPlayersCall) Do() error {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Deletes rooms where the only room participants are from whitelisted tester accounts for your application. This method is only available to user accounts for your developer console.",
 	//   "httpMethod": "POST",
@@ -1806,7 +2226,26 @@ func (c *ScoresResetCall) Fields(s ...googleapi.Field) *ScoresResetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ScoresResetCall) IfNoneMatch(entityTag string) *ScoresResetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "gamesManagement.scores.reset" call.
+// Exactly one of the return values is non-nil.
 func (c *ScoresResetCall) Do() (*PlayerScoreResetResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+// DoHeader executes the "gamesManagement.scores.reset" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *ScoresResetCall) DoHeader() (ret *PlayerScoreResetResponse, resHeader http.Header, err error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1820,19 +2259,21 @@ func (c *ScoresResetCall) Do() (*PlayerScoreResetResponse, error) {
 		"leaderboardId": c.leaderboardId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *PlayerScoreResetResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Resets scores for the leaderboard with the given ID for the currently authenticated player. This method is only accessible to whitelisted tester accounts for your application.",
 	//   "httpMethod": "POST",
@@ -1883,7 +2324,26 @@ func (c *ScoresResetAllCall) Fields(s ...googleapi.Field) *ScoresResetAllCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ScoresResetAllCall) IfNoneMatch(entityTag string) *ScoresResetAllCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "gamesManagement.scores.resetAll" call.
+// Exactly one of the return values is non-nil.
 func (c *ScoresResetAllCall) Do() (*PlayerScoreResetAllResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+// DoHeader executes the "gamesManagement.scores.resetAll" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *ScoresResetAllCall) DoHeader() (ret *PlayerScoreResetAllResponse, resHeader http.Header, err error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1895,19 +2355,21 @@ func (c *ScoresResetAllCall) Do() (*PlayerScoreResetAllResponse, error) {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *PlayerScoreResetAllResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Resets all scores for all leaderboards for the currently authenticated players. This method is only accessible to whitelisted tester accounts for your application.",
 	//   "httpMethod": "POST",
@@ -1947,7 +2409,25 @@ func (c *ScoresResetAllForAllPlayersCall) Fields(s ...googleapi.Field) *ScoresRe
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ScoresResetAllForAllPlayersCall) IfNoneMatch(entityTag string) *ScoresResetAllForAllPlayersCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "gamesManagement.scores.resetAllForAllPlayers" call.
 func (c *ScoresResetAllForAllPlayersCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+// DoHeader executes the "gamesManagement.scores.resetAllForAllPlayers" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *ScoresResetAllForAllPlayersCall) DoHeader() (resHeader http.Header, err error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1959,15 +2439,18 @@ func (c *ScoresResetAllForAllPlayersCall) Do() error {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Resets scores for all draft leaderboards for all players. This method is only available to user accounts for your developer console.",
 	//   "httpMethod": "POST",
@@ -2006,7 +2489,25 @@ func (c *ScoresResetForAllPlayersCall) Fields(s ...googleapi.Field) *ScoresReset
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ScoresResetForAllPlayersCall) IfNoneMatch(entityTag string) *ScoresResetForAllPlayersCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "gamesManagement.scores.resetForAllPlayers" call.
 func (c *ScoresResetForAllPlayersCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+// DoHeader executes the "gamesManagement.scores.resetForAllPlayers" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *ScoresResetForAllPlayersCall) DoHeader() (resHeader http.Header, err error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -2020,15 +2521,18 @@ func (c *ScoresResetForAllPlayersCall) Do() error {
 		"leaderboardId": c.leaderboardId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Resets scores for the leaderboard with the given ID for all players. This method is only available to user accounts for your developer console. Only draft leaderboards can be reset.",
 	//   "httpMethod": "POST",
@@ -2079,11 +2583,29 @@ func (c *ScoresResetMultipleForAllPlayersCall) Fields(s ...googleapi.Field) *Sco
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ScoresResetMultipleForAllPlayersCall) IfNoneMatch(entityTag string) *ScoresResetMultipleForAllPlayersCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "gamesManagement.scores.resetMultipleForAllPlayers" call.
 func (c *ScoresResetMultipleForAllPlayersCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+// DoHeader executes the "gamesManagement.scores.resetMultipleForAllPlayers" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *ScoresResetMultipleForAllPlayersCall) DoHeader() (resHeader http.Header, err error) {
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.scoresresetmultipleforallrequest)
+	body, err = googleapi.WithoutDataWrapper.JSONReader(c.scoresresetmultipleforallrequest)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -2097,15 +2619,18 @@ func (c *ScoresResetMultipleForAllPlayersCall) Do() error {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Resets scores for the leaderboards with the given IDs for all players. This method is only available to user accounts for your developer console. Only draft leaderboards may be reset.",
 	//   "httpMethod": "POST",
@@ -2144,7 +2669,25 @@ func (c *TurnBasedMatchesResetCall) Fields(s ...googleapi.Field) *TurnBasedMatch
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *TurnBasedMatchesResetCall) IfNoneMatch(entityTag string) *TurnBasedMatchesResetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "gamesManagement.turnBasedMatches.reset" call.
 func (c *TurnBasedMatchesResetCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+// DoHeader executes the "gamesManagement.turnBasedMatches.reset" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *TurnBasedMatchesResetCall) DoHeader() (resHeader http.Header, err error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -2156,15 +2699,18 @@ func (c *TurnBasedMatchesResetCall) Do() error {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Reset all turn-based match data for a user. This method is only accessible to whitelisted tester accounts for your application.",
 	//   "httpMethod": "POST",
@@ -2202,7 +2748,25 @@ func (c *TurnBasedMatchesResetForAllPlayersCall) Fields(s ...googleapi.Field) *T
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *TurnBasedMatchesResetForAllPlayersCall) IfNoneMatch(entityTag string) *TurnBasedMatchesResetForAllPlayersCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "gamesManagement.turnBasedMatches.resetForAllPlayers" call.
 func (c *TurnBasedMatchesResetForAllPlayersCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+// DoHeader executes the "gamesManagement.turnBasedMatches.resetForAllPlayers" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *TurnBasedMatchesResetForAllPlayersCall) DoHeader() (resHeader http.Header, err error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -2214,15 +2778,18 @@ func (c *TurnBasedMatchesResetForAllPlayersCall) Do() error {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Deletes turn-based matches where the only match participants are from whitelisted tester accounts for your application. This method is only available to user accounts for your developer console.",
 	//   "httpMethod": "POST",

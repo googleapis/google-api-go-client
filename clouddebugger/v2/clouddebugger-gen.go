@@ -540,11 +540,30 @@ func (c *ControllerDebuggeesRegisterCall) Fields(s ...googleapi.Field) *Controll
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ControllerDebuggeesRegisterCall) IfNoneMatch(entityTag string) *ControllerDebuggeesRegisterCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "clouddebugger.controller.debuggees.register" call.
+// Exactly one of the return values is non-nil.
 func (c *ControllerDebuggeesRegisterCall) Do() (*RegisterDebuggeeResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+// DoHeader executes the "clouddebugger.controller.debuggees.register" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *ControllerDebuggeesRegisterCall) DoHeader() (ret *RegisterDebuggeeResponse, resHeader http.Header, err error) {
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.registerdebuggeerequest)
+	body, err = googleapi.WithoutDataWrapper.JSONReader(c.registerdebuggeerequest)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -558,19 +577,21 @@ func (c *ControllerDebuggeesRegisterCall) Do() (*RegisterDebuggeeResponse, error
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *RegisterDebuggeeResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Registers the debuggee with the controller. All agents should call this API with the same request content to get back the same stable 'debuggee_id'. Agents should call this API again whenever ListActiveBreakpoints or UpdateActiveBreakpoint return the error google.rpc.Code.NOT_FOUND. It allows the server to disable the agent or recover from any registration loss. If the debuggee is disabled server, the response will have is_disabled' set to true.",
 	//   "httpMethod": "POST",
@@ -633,7 +654,26 @@ func (c *ControllerDebuggeesBreakpointsListCall) Fields(s ...googleapi.Field) *C
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ControllerDebuggeesBreakpointsListCall) IfNoneMatch(entityTag string) *ControllerDebuggeesBreakpointsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "clouddebugger.controller.debuggees.breakpoints.list" call.
+// Exactly one of the return values is non-nil.
 func (c *ControllerDebuggeesBreakpointsListCall) Do() (*ListActiveBreakpointsResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+// DoHeader executes the "clouddebugger.controller.debuggees.breakpoints.list" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *ControllerDebuggeesBreakpointsListCall) DoHeader() (ret *ListActiveBreakpointsResponse, resHeader http.Header, err error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -650,19 +690,21 @@ func (c *ControllerDebuggeesBreakpointsListCall) Do() (*ListActiveBreakpointsRes
 		"debuggeeId": c.debuggeeId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *ListActiveBreakpointsResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Returns the list of all active breakpoints for the specified debuggee. The breakpoint specification (location, condition, and expression fields) is semantically immutable, although the field values may change. For example, an agent may update the location line number to reflect the actual line the breakpoint was set to, but that doesn't change the breakpoint semantics. Thus, an agent does not need to check if a breakpoint has changed when it encounters the same breakpoint on a successive call. Moreover, an agent should remember breakpoints that are complete until the controller removes them from the active list to avoid setting those breakpoints again.",
 	//   "httpMethod": "GET",
@@ -728,11 +770,30 @@ func (c *ControllerDebuggeesBreakpointsUpdateCall) Fields(s ...googleapi.Field) 
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ControllerDebuggeesBreakpointsUpdateCall) IfNoneMatch(entityTag string) *ControllerDebuggeesBreakpointsUpdateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "clouddebugger.controller.debuggees.breakpoints.update" call.
+// Exactly one of the return values is non-nil.
 func (c *ControllerDebuggeesBreakpointsUpdateCall) Do() (*UpdateActiveBreakpointResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+// DoHeader executes the "clouddebugger.controller.debuggees.breakpoints.update" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *ControllerDebuggeesBreakpointsUpdateCall) DoHeader() (ret *UpdateActiveBreakpointResponse, resHeader http.Header, err error) {
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.updateactivebreakpointrequest)
+	body, err = googleapi.WithoutDataWrapper.JSONReader(c.updateactivebreakpointrequest)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -749,19 +810,21 @@ func (c *ControllerDebuggeesBreakpointsUpdateCall) Do() (*UpdateActiveBreakpoint
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *UpdateActiveBreakpointResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Updates the breakpoint state or mutable fields. The entire Breakpoint protobuf must be sent back to the controller. Updates to active breakpoint fields are only allowed if the new value does not change the breakpoint specification. Updates to the 'location', 'condition' and 'expression' fields should not alter the breakpoint semantics. They are restricted to changes such as canonicalizing a value or snapping the location to the correct line of code.",
 	//   "httpMethod": "PUT",
@@ -836,7 +899,26 @@ func (c *DebuggerDebuggeesListCall) Fields(s ...googleapi.Field) *DebuggerDebugg
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *DebuggerDebuggeesListCall) IfNoneMatch(entityTag string) *DebuggerDebuggeesListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "clouddebugger.debugger.debuggees.list" call.
+// Exactly one of the return values is non-nil.
 func (c *DebuggerDebuggeesListCall) Do() (*ListDebuggeesResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+// DoHeader executes the "clouddebugger.debugger.debuggees.list" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *DebuggerDebuggeesListCall) DoHeader() (ret *ListDebuggeesResponse, resHeader http.Header, err error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -854,19 +936,21 @@ func (c *DebuggerDebuggeesListCall) Do() (*ListDebuggeesResponse, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *ListDebuggeesResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Lists all the debuggees that the user can set breakpoints to.",
 	//   "httpMethod": "GET",
@@ -920,7 +1004,26 @@ func (c *DebuggerDebuggeesBreakpointsDeleteCall) Fields(s ...googleapi.Field) *D
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *DebuggerDebuggeesBreakpointsDeleteCall) IfNoneMatch(entityTag string) *DebuggerDebuggeesBreakpointsDeleteCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "clouddebugger.debugger.debuggees.breakpoints.delete" call.
+// Exactly one of the return values is non-nil.
 func (c *DebuggerDebuggeesBreakpointsDeleteCall) Do() (*Empty, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+// DoHeader executes the "clouddebugger.debugger.debuggees.breakpoints.delete" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *DebuggerDebuggeesBreakpointsDeleteCall) DoHeader() (ret *Empty, resHeader http.Header, err error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -935,19 +1038,21 @@ func (c *DebuggerDebuggeesBreakpointsDeleteCall) Do() (*Empty, error) {
 		"breakpointId": c.breakpointId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Empty
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Deletes the breakpoint from the debuggee.",
 	//   "httpMethod": "DELETE",
@@ -1007,7 +1112,26 @@ func (c *DebuggerDebuggeesBreakpointsGetCall) Fields(s ...googleapi.Field) *Debu
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *DebuggerDebuggeesBreakpointsGetCall) IfNoneMatch(entityTag string) *DebuggerDebuggeesBreakpointsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "clouddebugger.debugger.debuggees.breakpoints.get" call.
+// Exactly one of the return values is non-nil.
 func (c *DebuggerDebuggeesBreakpointsGetCall) Do() (*GetBreakpointResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+// DoHeader executes the "clouddebugger.debugger.debuggees.breakpoints.get" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *DebuggerDebuggeesBreakpointsGetCall) DoHeader() (ret *GetBreakpointResponse, resHeader http.Header, err error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1022,19 +1146,21 @@ func (c *DebuggerDebuggeesBreakpointsGetCall) Do() (*GetBreakpointResponse, erro
 		"breakpointId": c.breakpointId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *GetBreakpointResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Gets breakpoint information.",
 	//   "httpMethod": "GET",
@@ -1139,7 +1265,26 @@ func (c *DebuggerDebuggeesBreakpointsListCall) Fields(s ...googleapi.Field) *Deb
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *DebuggerDebuggeesBreakpointsListCall) IfNoneMatch(entityTag string) *DebuggerDebuggeesBreakpointsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "clouddebugger.debugger.debuggees.breakpoints.list" call.
+// Exactly one of the return values is non-nil.
 func (c *DebuggerDebuggeesBreakpointsListCall) Do() (*ListBreakpointsResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+// DoHeader executes the "clouddebugger.debugger.debuggees.breakpoints.list" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *DebuggerDebuggeesBreakpointsListCall) DoHeader() (ret *ListBreakpointsResponse, resHeader http.Header, err error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1168,19 +1313,21 @@ func (c *DebuggerDebuggeesBreakpointsListCall) Do() (*ListBreakpointsResponse, e
 		"debuggeeId": c.debuggeeId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *ListBreakpointsResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Lists all breakpoints of the debuggee that the user has access to.",
 	//   "httpMethod": "GET",
@@ -1262,11 +1409,30 @@ func (c *DebuggerDebuggeesBreakpointsSetCall) Fields(s ...googleapi.Field) *Debu
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *DebuggerDebuggeesBreakpointsSetCall) IfNoneMatch(entityTag string) *DebuggerDebuggeesBreakpointsSetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "clouddebugger.debugger.debuggees.breakpoints.set" call.
+// Exactly one of the return values is non-nil.
 func (c *DebuggerDebuggeesBreakpointsSetCall) Do() (*SetBreakpointResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+// DoHeader executes the "clouddebugger.debugger.debuggees.breakpoints.set" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *DebuggerDebuggeesBreakpointsSetCall) DoHeader() (ret *SetBreakpointResponse, resHeader http.Header, err error) {
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.breakpoint)
+	body, err = googleapi.WithoutDataWrapper.JSONReader(c.breakpoint)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -1282,19 +1448,21 @@ func (c *DebuggerDebuggeesBreakpointsSetCall) Do() (*SetBreakpointResponse, erro
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *SetBreakpointResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Sets the breakpoint to the debuggee.",
 	//   "httpMethod": "POST",

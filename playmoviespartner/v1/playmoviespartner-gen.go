@@ -765,6 +765,21 @@ func (c *AccountsAvailsListCall) Fields(s ...googleapi.Field) *AccountsAvailsLis
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsAvailsListCall) IfNoneMatch(entityTag string) *AccountsAvailsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "playmoviespartner.accounts.avails.list" call.
+// Exactly one of the return values is non-nil.
+func (c *AccountsAvailsListCall) Do() (*ListAvailsResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *AccountsAvailsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -803,23 +818,29 @@ func (c *AccountsAvailsListCall) doRequest(alt string) (*http.Response, error) {
 		"accountId": c.accountId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *AccountsAvailsListCall) Do() (*ListAvailsResponse, error) {
+// DoHeader executes the "playmoviespartner.accounts.avails.list" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *AccountsAvailsListCall) DoHeader() (ret *ListAvailsResponse, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *ListAvailsResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "List Avails owned or managed by the partner. See _Authentication and Authorization rules_ and _List methods rules_ for more information about this method.",
 	//   "httpMethod": "GET",
@@ -918,6 +939,21 @@ func (c *AccountsExperienceLocalesGetCall) Fields(s ...googleapi.Field) *Account
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsExperienceLocalesGetCall) IfNoneMatch(entityTag string) *AccountsExperienceLocalesGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "playmoviespartner.accounts.experienceLocales.get" call.
+// Exactly one of the return values is non-nil.
+func (c *AccountsExperienceLocalesGetCall) Do() (*ExperienceLocale, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *AccountsExperienceLocalesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -933,23 +969,29 @@ func (c *AccountsExperienceLocalesGetCall) doRequest(alt string) (*http.Response
 		"elId":      c.elId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *AccountsExperienceLocalesGetCall) Do() (*ExperienceLocale, error) {
+// DoHeader executes the "playmoviespartner.accounts.experienceLocales.get" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *AccountsExperienceLocalesGetCall) DoHeader() (ret *ExperienceLocale, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *ExperienceLocale
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Get an ExperienceLocale given its id. See _Authentication and Authorization rules_ and _Get methods rules_ for more information about this method.",
 	//   "httpMethod": "GET",
@@ -1081,6 +1123,21 @@ func (c *AccountsExperienceLocalesListCall) Fields(s ...googleapi.Field) *Accoun
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsExperienceLocalesListCall) IfNoneMatch(entityTag string) *AccountsExperienceLocalesListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "playmoviespartner.accounts.experienceLocales.list" call.
+// Exactly one of the return values is non-nil.
+func (c *AccountsExperienceLocalesListCall) Do() (*ListExperienceLocalesResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *AccountsExperienceLocalesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1122,23 +1179,29 @@ func (c *AccountsExperienceLocalesListCall) doRequest(alt string) (*http.Respons
 		"accountId": c.accountId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *AccountsExperienceLocalesListCall) Do() (*ListExperienceLocalesResponse, error) {
+// DoHeader executes the "playmoviespartner.accounts.experienceLocales.list" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *AccountsExperienceLocalesListCall) DoHeader() (ret *ListExperienceLocalesResponse, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *ListExperienceLocalesResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "List ExperienceLocales owned or managed by the partner. See _Authentication and Authorization rules_ and _List methods rules_ for more information about this method.",
 	//   "httpMethod": "GET",
@@ -1249,6 +1312,21 @@ func (c *AccountsOrdersGetCall) Fields(s ...googleapi.Field) *AccountsOrdersGetC
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsOrdersGetCall) IfNoneMatch(entityTag string) *AccountsOrdersGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "playmoviespartner.accounts.orders.get" call.
+// Exactly one of the return values is non-nil.
+func (c *AccountsOrdersGetCall) Do() (*Order, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *AccountsOrdersGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1264,23 +1342,29 @@ func (c *AccountsOrdersGetCall) doRequest(alt string) (*http.Response, error) {
 		"orderId":   c.orderId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *AccountsOrdersGetCall) Do() (*Order, error) {
+// DoHeader executes the "playmoviespartner.accounts.orders.get" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *AccountsOrdersGetCall) DoHeader() (ret *Order, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Order
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Get an Order given its id. See _Authentication and Authorization rules_ and _Get methods rules_ for more information about this method.",
 	//   "httpMethod": "GET",
@@ -1396,6 +1480,21 @@ func (c *AccountsOrdersListCall) Fields(s ...googleapi.Field) *AccountsOrdersLis
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsOrdersListCall) IfNoneMatch(entityTag string) *AccountsOrdersListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "playmoviespartner.accounts.orders.list" call.
+// Exactly one of the return values is non-nil.
+func (c *AccountsOrdersListCall) Do() (*ListOrdersResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *AccountsOrdersListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1431,23 +1530,29 @@ func (c *AccountsOrdersListCall) doRequest(alt string) (*http.Response, error) {
 		"accountId": c.accountId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *AccountsOrdersListCall) Do() (*ListOrdersResponse, error) {
+// DoHeader executes the "playmoviespartner.accounts.orders.list" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *AccountsOrdersListCall) DoHeader() (ret *ListOrdersResponse, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *ListOrdersResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "List Orders owned or managed by the partner. See _Authentication and Authorization rules_ and _List methods rules_ for more information about this method.",
 	//   "httpMethod": "GET",
@@ -1604,6 +1709,21 @@ func (c *AccountsStoreInfosListCall) Fields(s ...googleapi.Field) *AccountsStore
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsStoreInfosListCall) IfNoneMatch(entityTag string) *AccountsStoreInfosListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "playmoviespartner.accounts.storeInfos.list" call.
+// Exactly one of the return values is non-nil.
+func (c *AccountsStoreInfosListCall) Do() (*ListStoreInfosResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *AccountsStoreInfosListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1642,23 +1762,29 @@ func (c *AccountsStoreInfosListCall) doRequest(alt string) (*http.Response, erro
 		"accountId": c.accountId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *AccountsStoreInfosListCall) Do() (*ListStoreInfosResponse, error) {
+// DoHeader executes the "playmoviespartner.accounts.storeInfos.list" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *AccountsStoreInfosListCall) DoHeader() (ret *ListStoreInfosResponse, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *ListStoreInfosResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "List StoreInfos owned or managed by the partner. See _Authentication and Authorization rules_ and _List methods rules_ for more information about this method.",
 	//   "httpMethod": "GET",
@@ -1759,6 +1885,21 @@ func (c *AccountsStoreInfosCountryGetCall) Fields(s ...googleapi.Field) *Account
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsStoreInfosCountryGetCall) IfNoneMatch(entityTag string) *AccountsStoreInfosCountryGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "playmoviespartner.accounts.storeInfos.country.get" call.
+// Exactly one of the return values is non-nil.
+func (c *AccountsStoreInfosCountryGetCall) Do() (*StoreInfo, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *AccountsStoreInfosCountryGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1775,23 +1916,29 @@ func (c *AccountsStoreInfosCountryGetCall) doRequest(alt string) (*http.Response
 		"country":   c.country,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *AccountsStoreInfosCountryGetCall) Do() (*StoreInfo, error) {
+// DoHeader executes the "playmoviespartner.accounts.storeInfos.country.get" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *AccountsStoreInfosCountryGetCall) DoHeader() (ret *StoreInfo, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *StoreInfo
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Get a StoreInfo given its video id and country. See _Authentication and Authorization rules_ and _Get methods rules_ for more information about this method.",
 	//   "httpMethod": "GET",

@@ -145,6 +145,21 @@ func (c *ArchiveInsertCall) Fields(s ...googleapi.Field) *ArchiveInsertCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ArchiveInsertCall) IfNoneMatch(entityTag string) *ArchiveInsertCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "groupsmigration.archive.insert" call.
+// Exactly one of the return values is non-nil.
+func (c *ArchiveInsertCall) Do() (*Groups, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *ArchiveInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -181,17 +196,24 @@ func (c *ArchiveInsertCall) doRequest(alt string) (*http.Response, error) {
 		req.Header.Set("Content-Type", ctype)
 	}
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *ArchiveInsertCall) Do() (*Groups, error) {
+// DoHeader executes the "groupsmigration.archive.insert" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *ArchiveInsertCall) DoHeader() (ret *Groups, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var progressUpdater_ googleapi.ProgressUpdater
 	if v, ok := c.opt_["progressUpdater"]; ok {
@@ -212,15 +234,14 @@ func (c *ArchiveInsertCall) Do() (*Groups, error) {
 		}
 		res, err = rx.Upload(c.ctx_)
 		if err != nil {
-			return nil, err
+			return nil, res.Header, err
 		}
 		defer res.Body.Close()
 	}
-	var ret *Groups
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Inserts a new mail into the archive of the Google group.",
 	//   "httpMethod": "POST",

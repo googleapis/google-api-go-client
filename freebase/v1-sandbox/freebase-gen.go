@@ -4,7 +4,7 @@
 //
 // Usage example:
 //
-//   import "google.golang.org/api/freebase/v1"
+//   import "google.golang.org/api/freebase/v1-sandbox"
 //   ...
 //   freebaseService, err := freebase.New(oauthHttpClient)
 package freebase
@@ -36,10 +36,10 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Background
 
-const apiId = "freebase:v1"
+const apiId = "freebase:v1-sandbox"
 const apiName = "freebase"
-const apiVersion = "v1"
-const basePath = "https://www.googleapis.com/freebase/v1/"
+const apiVersion = "v1-sandbox"
+const basePath = "https://www.googleapis.com/freebase/v1-sandbox/"
 
 func New(client *http.Client) (*Service, error) {
 	if client == nil {

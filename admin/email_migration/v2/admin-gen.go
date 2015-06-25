@@ -168,6 +168,20 @@ func (c *MailInsertCall) Fields(s ...googleapi.Field) *MailInsertCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *MailInsertCall) IfNoneMatch(entityTag string) *MailInsertCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "emailMigration.mail.insert" call.
+func (c *MailInsertCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
 func (c *MailInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.mailitem)
@@ -207,17 +221,24 @@ func (c *MailInsertCall) doRequest(alt string) (*http.Response, error) {
 		req.Header.Set("Content-Type", ctype)
 	}
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *MailInsertCall) Do() error {
+// DoHeader executes the "emailMigration.mail.insert" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *MailInsertCall) DoHeader() (resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
 	var progressUpdater_ googleapi.ProgressUpdater
 	if v, ok := c.opt_["progressUpdater"]; ok {
@@ -238,11 +259,11 @@ func (c *MailInsertCall) Do() error {
 		}
 		res, err = rx.Upload(c.ctx_)
 		if err != nil {
-			return err
+			return res.Header, err
 		}
 		defer res.Body.Close()
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Insert Mail into Google's Gmail backends",
 	//   "httpMethod": "POST",

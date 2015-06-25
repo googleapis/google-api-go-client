@@ -128,6 +128,20 @@ func (c *PurchasesCancelCall) Fields(s ...googleapi.Field) *PurchasesCancelCall 
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *PurchasesCancelCall) IfNoneMatch(entityTag string) *PurchasesCancelCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "androidpublisher.purchases.cancel" call.
+func (c *PurchasesCancelCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
 func (c *PurchasesCancelCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -144,19 +158,26 @@ func (c *PurchasesCancelCall) doRequest(alt string) (*http.Response, error) {
 		"token":          c.token,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *PurchasesCancelCall) Do() error {
+// DoHeader executes the "androidpublisher.purchases.cancel" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *PurchasesCancelCall) DoHeader() (resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Cancels a user's subscription purchase. The subscription remains valid until its expiration time.",
 	//   "httpMethod": "POST",
@@ -222,6 +243,21 @@ func (c *PurchasesGetCall) Fields(s ...googleapi.Field) *PurchasesGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *PurchasesGetCall) IfNoneMatch(entityTag string) *PurchasesGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "androidpublisher.purchases.get" call.
+// Exactly one of the return values is non-nil.
+func (c *PurchasesGetCall) Do() (*SubscriptionPurchase, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *PurchasesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -238,23 +274,29 @@ func (c *PurchasesGetCall) doRequest(alt string) (*http.Response, error) {
 		"token":          c.token,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *PurchasesGetCall) Do() (*SubscriptionPurchase, error) {
+// DoHeader executes the "androidpublisher.purchases.get" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *PurchasesGetCall) DoHeader() (ret *SubscriptionPurchase, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *SubscriptionPurchase
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Checks whether a user's subscription purchase is valid and returns its expiry time.",
 	//   "httpMethod": "GET",

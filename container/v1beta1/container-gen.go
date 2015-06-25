@@ -151,7 +151,8 @@ type Cluster struct {
 
 	// ContainerIpv4Cidr: The IP address range of the container pods in this
 	// cluster, in  CIDR notation (e.g. 10.96.0.0/14). Leave blank to have
-	// one automatically chosen or specify a /14 block in 10.0.0.0/8.
+	// one automatically chosen or specify a /14 block in 10.0.0.0/8 or
+	// 172.16.0.0/12.
 	ContainerIpv4Cidr string `json:"containerIpv4Cidr,omitempty"`
 
 	// CreationTimestamp: [Output only] The time the cluster was created, in
@@ -397,6 +398,21 @@ func (c *ProjectsClustersListCall) Fields(s ...googleapi.Field) *ProjectsCluster
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsClustersListCall) IfNoneMatch(entityTag string) *ProjectsClustersListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "container.projects.clusters.list" call.
+// Exactly one of the return values is non-nil.
+func (c *ProjectsClustersListCall) Do() (*ListAggregatedClustersResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *ProjectsClustersListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -411,23 +427,29 @@ func (c *ProjectsClustersListCall) doRequest(alt string) (*http.Response, error)
 		"projectId": c.projectId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *ProjectsClustersListCall) Do() (*ListAggregatedClustersResponse, error) {
+// DoHeader executes the "container.projects.clusters.list" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *ProjectsClustersListCall) DoHeader() (ret *ListAggregatedClustersResponse, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *ListAggregatedClustersResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Lists all clusters owned by a project across all zones.",
 	//   "httpMethod": "GET",
@@ -477,6 +499,21 @@ func (c *ProjectsOperationsListCall) Fields(s ...googleapi.Field) *ProjectsOpera
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsOperationsListCall) IfNoneMatch(entityTag string) *ProjectsOperationsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "container.projects.operations.list" call.
+// Exactly one of the return values is non-nil.
+func (c *ProjectsOperationsListCall) Do() (*ListAggregatedOperationsResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *ProjectsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -491,23 +528,29 @@ func (c *ProjectsOperationsListCall) doRequest(alt string) (*http.Response, erro
 		"projectId": c.projectId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *ProjectsOperationsListCall) Do() (*ListAggregatedOperationsResponse, error) {
+// DoHeader executes the "container.projects.operations.list" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *ProjectsOperationsListCall) DoHeader() (ret *ListAggregatedOperationsResponse, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *ListAggregatedOperationsResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Lists all operations in a project, across all zones.",
 	//   "httpMethod": "GET",
@@ -573,6 +616,21 @@ func (c *ProjectsZonesClustersCreateCall) Fields(s ...googleapi.Field) *Projects
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsZonesClustersCreateCall) IfNoneMatch(entityTag string) *ProjectsZonesClustersCreateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "container.projects.zones.clusters.create" call.
+// Exactly one of the return values is non-nil.
+func (c *ProjectsZonesClustersCreateCall) Do() (*Operation, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *ProjectsZonesClustersCreateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.createclusterrequest)
@@ -594,23 +652,29 @@ func (c *ProjectsZonesClustersCreateCall) doRequest(alt string) (*http.Response,
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *ProjectsZonesClustersCreateCall) Do() (*Operation, error) {
+// DoHeader executes the "container.projects.zones.clusters.create" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *ProjectsZonesClustersCreateCall) DoHeader() (ret *Operation, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Operation
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Creates a cluster, consisting of the specified number and type of Google Compute Engine instances, plus a Kubernetes master instance.\n\nThe cluster is created in the project's default network.\n\nA firewall is added that allows traffic into port 443 on the master, which enables HTTPS. A firewall and a route is added for each node to allow the containers on that node to communicate with all other instances in the cluster.\n\nFinally, an entry is added to the project's global metadata indicating which CIDR range is being used by the cluster.",
 	//   "httpMethod": "POST",
@@ -678,6 +742,21 @@ func (c *ProjectsZonesClustersDeleteCall) Fields(s ...googleapi.Field) *Projects
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsZonesClustersDeleteCall) IfNoneMatch(entityTag string) *ProjectsZonesClustersDeleteCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "container.projects.zones.clusters.delete" call.
+// Exactly one of the return values is non-nil.
+func (c *ProjectsZonesClustersDeleteCall) Do() (*Operation, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *ProjectsZonesClustersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -694,23 +773,29 @@ func (c *ProjectsZonesClustersDeleteCall) doRequest(alt string) (*http.Response,
 		"clusterId": c.clusterId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *ProjectsZonesClustersDeleteCall) Do() (*Operation, error) {
+// DoHeader executes the "container.projects.zones.clusters.delete" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *ProjectsZonesClustersDeleteCall) DoHeader() (ret *Operation, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Operation
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Deletes the cluster, including the Kubernetes master and all worker nodes.\n\nFirewalls and routes that were configured at cluster creation are also deleted.",
 	//   "httpMethod": "DELETE",
@@ -778,6 +863,21 @@ func (c *ProjectsZonesClustersGetCall) Fields(s ...googleapi.Field) *ProjectsZon
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsZonesClustersGetCall) IfNoneMatch(entityTag string) *ProjectsZonesClustersGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "container.projects.zones.clusters.get" call.
+// Exactly one of the return values is non-nil.
+func (c *ProjectsZonesClustersGetCall) Do() (*Cluster, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *ProjectsZonesClustersGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -794,23 +894,29 @@ func (c *ProjectsZonesClustersGetCall) doRequest(alt string) (*http.Response, er
 		"clusterId": c.clusterId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *ProjectsZonesClustersGetCall) Do() (*Cluster, error) {
+// DoHeader executes the "container.projects.zones.clusters.get" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *ProjectsZonesClustersGetCall) DoHeader() (ret *Cluster, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Cluster
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Gets a specific cluster.",
 	//   "httpMethod": "GET",
@@ -876,6 +982,21 @@ func (c *ProjectsZonesClustersListCall) Fields(s ...googleapi.Field) *ProjectsZo
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsZonesClustersListCall) IfNoneMatch(entityTag string) *ProjectsZonesClustersListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "container.projects.zones.clusters.list" call.
+// Exactly one of the return values is non-nil.
+func (c *ProjectsZonesClustersListCall) Do() (*ListClustersResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *ProjectsZonesClustersListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -891,23 +1012,29 @@ func (c *ProjectsZonesClustersListCall) doRequest(alt string) (*http.Response, e
 		"zoneId":    c.zoneId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *ProjectsZonesClustersListCall) Do() (*ListClustersResponse, error) {
+// DoHeader executes the "container.projects.zones.clusters.list" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *ProjectsZonesClustersListCall) DoHeader() (ret *ListClustersResponse, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *ListClustersResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Lists all clusters owned by a project in the specified zone.",
 	//   "httpMethod": "GET",
@@ -968,6 +1095,21 @@ func (c *ProjectsZonesOperationsGetCall) Fields(s ...googleapi.Field) *ProjectsZ
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsZonesOperationsGetCall) IfNoneMatch(entityTag string) *ProjectsZonesOperationsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "container.projects.zones.operations.get" call.
+// Exactly one of the return values is non-nil.
+func (c *ProjectsZonesOperationsGetCall) Do() (*Operation, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *ProjectsZonesOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -984,23 +1126,29 @@ func (c *ProjectsZonesOperationsGetCall) doRequest(alt string) (*http.Response, 
 		"operationId": c.operationId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *ProjectsZonesOperationsGetCall) Do() (*Operation, error) {
+// DoHeader executes the "container.projects.zones.operations.get" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *ProjectsZonesOperationsGetCall) DoHeader() (ret *Operation, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Operation
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Gets the specified operation.",
 	//   "httpMethod": "GET",
@@ -1066,6 +1214,21 @@ func (c *ProjectsZonesOperationsListCall) Fields(s ...googleapi.Field) *Projects
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsZonesOperationsListCall) IfNoneMatch(entityTag string) *ProjectsZonesOperationsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "container.projects.zones.operations.list" call.
+// Exactly one of the return values is non-nil.
+func (c *ProjectsZonesOperationsListCall) Do() (*ListOperationsResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *ProjectsZonesOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1081,23 +1244,29 @@ func (c *ProjectsZonesOperationsListCall) doRequest(alt string) (*http.Response,
 		"zoneId":    c.zoneId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *ProjectsZonesOperationsListCall) Do() (*ListOperationsResponse, error) {
+// DoHeader executes the "container.projects.zones.operations.list" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *ProjectsZonesOperationsListCall) DoHeader() (ret *ListOperationsResponse, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *ListOperationsResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Lists all operations in a project in a specific zone.",
 	//   "httpMethod": "GET",

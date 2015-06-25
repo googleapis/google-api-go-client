@@ -596,6 +596,20 @@ func (c *ColumnDeleteCall) Fields(s ...googleapi.Field) *ColumnDeleteCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ColumnDeleteCall) IfNoneMatch(entityTag string) *ColumnDeleteCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "fusiontables.column.delete" call.
+func (c *ColumnDeleteCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
 func (c *ColumnDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -611,19 +625,26 @@ func (c *ColumnDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"columnId": c.columnId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *ColumnDeleteCall) Do() error {
+// DoHeader executes the "fusiontables.column.delete" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *ColumnDeleteCall) DoHeader() (resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Deletes the column.",
 	//   "httpMethod": "DELETE",
@@ -679,6 +700,21 @@ func (c *ColumnGetCall) Fields(s ...googleapi.Field) *ColumnGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ColumnGetCall) IfNoneMatch(entityTag string) *ColumnGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "fusiontables.column.get" call.
+// Exactly one of the return values is non-nil.
+func (c *ColumnGetCall) Do() (*Column, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *ColumnGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -694,23 +730,29 @@ func (c *ColumnGetCall) doRequest(alt string) (*http.Response, error) {
 		"columnId": c.columnId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *ColumnGetCall) Do() (*Column, error) {
+// DoHeader executes the "fusiontables.column.get" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *ColumnGetCall) DoHeader() (ret *Column, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Column
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Retrieves a specific column by its id.",
 	//   "httpMethod": "GET",
@@ -770,6 +812,21 @@ func (c *ColumnInsertCall) Fields(s ...googleapi.Field) *ColumnInsertCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ColumnInsertCall) IfNoneMatch(entityTag string) *ColumnInsertCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "fusiontables.column.insert" call.
+// Exactly one of the return values is non-nil.
+func (c *ColumnInsertCall) Do() (*Column, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *ColumnInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.column)
@@ -790,23 +847,29 @@ func (c *ColumnInsertCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *ColumnInsertCall) Do() (*Column, error) {
+// DoHeader executes the "fusiontables.column.insert" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *ColumnInsertCall) DoHeader() (ret *Column, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Column
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Adds a new column to the table.",
 	//   "httpMethod": "POST",
@@ -873,6 +936,21 @@ func (c *ColumnListCall) Fields(s ...googleapi.Field) *ColumnListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ColumnListCall) IfNoneMatch(entityTag string) *ColumnListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "fusiontables.column.list" call.
+// Exactly one of the return values is non-nil.
+func (c *ColumnListCall) Do() (*ColumnList, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *ColumnListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -893,23 +971,29 @@ func (c *ColumnListCall) doRequest(alt string) (*http.Response, error) {
 		"tableId": c.tableId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *ColumnListCall) Do() (*ColumnList, error) {
+// DoHeader executes the "fusiontables.column.list" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *ColumnListCall) DoHeader() (ret *ColumnList, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *ColumnList
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Retrieves a list of columns.",
 	//   "httpMethod": "GET",
@@ -977,6 +1061,21 @@ func (c *ColumnPatchCall) Fields(s ...googleapi.Field) *ColumnPatchCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ColumnPatchCall) IfNoneMatch(entityTag string) *ColumnPatchCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "fusiontables.column.patch" call.
+// Exactly one of the return values is non-nil.
+func (c *ColumnPatchCall) Do() (*Column, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *ColumnPatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.column)
@@ -998,23 +1097,29 @@ func (c *ColumnPatchCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *ColumnPatchCall) Do() (*Column, error) {
+// DoHeader executes the "fusiontables.column.patch" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *ColumnPatchCall) DoHeader() (ret *Column, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Column
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Updates the name or type of an existing column. This method supports patch semantics.",
 	//   "httpMethod": "PATCH",
@@ -1078,6 +1183,21 @@ func (c *ColumnUpdateCall) Fields(s ...googleapi.Field) *ColumnUpdateCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ColumnUpdateCall) IfNoneMatch(entityTag string) *ColumnUpdateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "fusiontables.column.update" call.
+// Exactly one of the return values is non-nil.
+func (c *ColumnUpdateCall) Do() (*Column, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *ColumnUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.column)
@@ -1099,23 +1219,29 @@ func (c *ColumnUpdateCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *ColumnUpdateCall) Do() (*Column, error) {
+// DoHeader executes the "fusiontables.column.update" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *ColumnUpdateCall) DoHeader() (ret *Column, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Column
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Updates the name or type of an existing column.",
 	//   "httpMethod": "PUT",
@@ -1191,6 +1317,21 @@ func (c *QuerySqlCall) Fields(s ...googleapi.Field) *QuerySqlCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *QuerySqlCall) IfNoneMatch(entityTag string) *QuerySqlCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "fusiontables.query.sql" call.
+// Exactly one of the return values is non-nil.
+func (c *QuerySqlCall) Do() (*Sqlresponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *QuerySqlCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1210,6 +1351,9 @@ func (c *QuerySqlCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1228,20 +1372,23 @@ func (c *QuerySqlCall) Download() (*http.Response, error) {
 	return res, nil
 }
 
-func (c *QuerySqlCall) Do() (*Sqlresponse, error) {
+// DoHeader executes the "fusiontables.query.sql" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *QuerySqlCall) DoHeader() (ret *Sqlresponse, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Sqlresponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Executes an SQL SELECT/INSERT/UPDATE/DELETE/SHOW/DESCRIBE/CREATE statement.",
 	//   "httpMethod": "POST",
@@ -1318,6 +1465,21 @@ func (c *QuerySqlGetCall) Fields(s ...googleapi.Field) *QuerySqlGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *QuerySqlGetCall) IfNoneMatch(entityTag string) *QuerySqlGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "fusiontables.query.sqlGet" call.
+// Exactly one of the return values is non-nil.
+func (c *QuerySqlGetCall) Do() (*Sqlresponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *QuerySqlGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1337,6 +1499,9 @@ func (c *QuerySqlGetCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1355,20 +1520,23 @@ func (c *QuerySqlGetCall) Download() (*http.Response, error) {
 	return res, nil
 }
 
-func (c *QuerySqlGetCall) Do() (*Sqlresponse, error) {
+// DoHeader executes the "fusiontables.query.sqlGet" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *QuerySqlGetCall) DoHeader() (ret *Sqlresponse, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Sqlresponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Executes an SQL SELECT/SHOW/DESCRIBE statement.",
 	//   "httpMethod": "GET",
@@ -1432,6 +1600,20 @@ func (c *StyleDeleteCall) Fields(s ...googleapi.Field) *StyleDeleteCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *StyleDeleteCall) IfNoneMatch(entityTag string) *StyleDeleteCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "fusiontables.style.delete" call.
+func (c *StyleDeleteCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
 func (c *StyleDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1447,19 +1629,26 @@ func (c *StyleDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"styleId": strconv.FormatInt(c.styleId, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *StyleDeleteCall) Do() error {
+// DoHeader executes the "fusiontables.style.delete" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *StyleDeleteCall) DoHeader() (resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Deletes a style.",
 	//   "httpMethod": "DELETE",
@@ -1516,6 +1705,21 @@ func (c *StyleGetCall) Fields(s ...googleapi.Field) *StyleGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *StyleGetCall) IfNoneMatch(entityTag string) *StyleGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "fusiontables.style.get" call.
+// Exactly one of the return values is non-nil.
+func (c *StyleGetCall) Do() (*StyleSetting, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *StyleGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1531,23 +1735,29 @@ func (c *StyleGetCall) doRequest(alt string) (*http.Response, error) {
 		"styleId": strconv.FormatInt(c.styleId, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *StyleGetCall) Do() (*StyleSetting, error) {
+// DoHeader executes the "fusiontables.style.get" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *StyleGetCall) DoHeader() (ret *StyleSetting, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *StyleSetting
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Gets a specific style.",
 	//   "httpMethod": "GET",
@@ -1608,6 +1818,21 @@ func (c *StyleInsertCall) Fields(s ...googleapi.Field) *StyleInsertCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *StyleInsertCall) IfNoneMatch(entityTag string) *StyleInsertCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "fusiontables.style.insert" call.
+// Exactly one of the return values is non-nil.
+func (c *StyleInsertCall) Do() (*StyleSetting, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *StyleInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.stylesetting)
@@ -1628,23 +1853,29 @@ func (c *StyleInsertCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *StyleInsertCall) Do() (*StyleSetting, error) {
+// DoHeader executes the "fusiontables.style.insert" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *StyleInsertCall) DoHeader() (ret *StyleSetting, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *StyleSetting
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Adds a new style for the table.",
 	//   "httpMethod": "POST",
@@ -1711,6 +1942,21 @@ func (c *StyleListCall) Fields(s ...googleapi.Field) *StyleListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *StyleListCall) IfNoneMatch(entityTag string) *StyleListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "fusiontables.style.list" call.
+// Exactly one of the return values is non-nil.
+func (c *StyleListCall) Do() (*StyleSettingList, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *StyleListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1731,23 +1977,29 @@ func (c *StyleListCall) doRequest(alt string) (*http.Response, error) {
 		"tableId": c.tableId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *StyleListCall) Do() (*StyleSettingList, error) {
+// DoHeader executes the "fusiontables.style.list" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *StyleListCall) DoHeader() (ret *StyleSettingList, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *StyleSettingList
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Retrieves a list of styles.",
 	//   "httpMethod": "GET",
@@ -1815,6 +2067,21 @@ func (c *StylePatchCall) Fields(s ...googleapi.Field) *StylePatchCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *StylePatchCall) IfNoneMatch(entityTag string) *StylePatchCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "fusiontables.style.patch" call.
+// Exactly one of the return values is non-nil.
+func (c *StylePatchCall) Do() (*StyleSetting, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *StylePatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.stylesetting)
@@ -1836,23 +2103,29 @@ func (c *StylePatchCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *StylePatchCall) Do() (*StyleSetting, error) {
+// DoHeader executes the "fusiontables.style.patch" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *StylePatchCall) DoHeader() (ret *StyleSetting, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *StyleSetting
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Updates an existing style. This method supports patch semantics.",
 	//   "httpMethod": "PATCH",
@@ -1917,6 +2190,21 @@ func (c *StyleUpdateCall) Fields(s ...googleapi.Field) *StyleUpdateCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *StyleUpdateCall) IfNoneMatch(entityTag string) *StyleUpdateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "fusiontables.style.update" call.
+// Exactly one of the return values is non-nil.
+func (c *StyleUpdateCall) Do() (*StyleSetting, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *StyleUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.stylesetting)
@@ -1938,23 +2226,29 @@ func (c *StyleUpdateCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *StyleUpdateCall) Do() (*StyleSetting, error) {
+// DoHeader executes the "fusiontables.style.update" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *StyleUpdateCall) DoHeader() (ret *StyleSetting, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *StyleSetting
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Updates an existing style.",
 	//   "httpMethod": "PUT",
@@ -2022,6 +2316,21 @@ func (c *TableCopyCall) Fields(s ...googleapi.Field) *TableCopyCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *TableCopyCall) IfNoneMatch(entityTag string) *TableCopyCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "fusiontables.table.copy" call.
+// Exactly one of the return values is non-nil.
+func (c *TableCopyCall) Do() (*Table, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *TableCopyCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2039,23 +2348,29 @@ func (c *TableCopyCall) doRequest(alt string) (*http.Response, error) {
 		"tableId": c.tableId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *TableCopyCall) Do() (*Table, error) {
+// DoHeader executes the "fusiontables.table.copy" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *TableCopyCall) DoHeader() (ret *Table, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Table
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Copies a table.",
 	//   "httpMethod": "POST",
@@ -2111,6 +2426,20 @@ func (c *TableDeleteCall) Fields(s ...googleapi.Field) *TableDeleteCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *TableDeleteCall) IfNoneMatch(entityTag string) *TableDeleteCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "fusiontables.table.delete" call.
+func (c *TableDeleteCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
 func (c *TableDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2125,19 +2454,26 @@ func (c *TableDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"tableId": c.tableId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *TableDeleteCall) Do() error {
+// DoHeader executes the "fusiontables.table.delete" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *TableDeleteCall) DoHeader() (resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Deletes a table.",
 	//   "httpMethod": "DELETE",
@@ -2184,6 +2520,21 @@ func (c *TableGetCall) Fields(s ...googleapi.Field) *TableGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *TableGetCall) IfNoneMatch(entityTag string) *TableGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "fusiontables.table.get" call.
+// Exactly one of the return values is non-nil.
+func (c *TableGetCall) Do() (*Table, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *TableGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2198,23 +2549,29 @@ func (c *TableGetCall) doRequest(alt string) (*http.Response, error) {
 		"tableId": c.tableId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *TableGetCall) Do() (*Table, error) {
+// DoHeader executes the "fusiontables.table.get" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *TableGetCall) DoHeader() (ret *Table, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Table
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Retrieves a specific table by its id.",
 	//   "httpMethod": "GET",
@@ -2343,6 +2700,21 @@ func (c *TableImportRowsCall) Fields(s ...googleapi.Field) *TableImportRowsCall 
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *TableImportRowsCall) IfNoneMatch(entityTag string) *TableImportRowsCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "fusiontables.table.importRows" call.
+// Exactly one of the return values is non-nil.
+func (c *TableImportRowsCall) Do() (*Import, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *TableImportRowsCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2394,17 +2766,24 @@ func (c *TableImportRowsCall) doRequest(alt string) (*http.Response, error) {
 		req.Header.Set("Content-Type", ctype)
 	}
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *TableImportRowsCall) Do() (*Import, error) {
+// DoHeader executes the "fusiontables.table.importRows" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *TableImportRowsCall) DoHeader() (ret *Import, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var progressUpdater_ googleapi.ProgressUpdater
 	if v, ok := c.opt_["progressUpdater"]; ok {
@@ -2425,15 +2804,14 @@ func (c *TableImportRowsCall) Do() (*Import, error) {
 		}
 		res, err = rx.Upload(c.ctx_)
 		if err != nil {
-			return nil, err
+			return nil, res.Header, err
 		}
 		defer res.Body.Close()
 	}
-	var ret *Import
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Import more rows into a table.",
 	//   "httpMethod": "POST",
@@ -2576,6 +2954,21 @@ func (c *TableImportTableCall) Fields(s ...googleapi.Field) *TableImportTableCal
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *TableImportTableCall) IfNoneMatch(entityTag string) *TableImportTableCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "fusiontables.table.importTable" call.
+// Exactly one of the return values is non-nil.
+func (c *TableImportTableCall) Do() (*Table, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *TableImportTableCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2617,17 +3010,24 @@ func (c *TableImportTableCall) doRequest(alt string) (*http.Response, error) {
 		req.Header.Set("Content-Type", ctype)
 	}
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *TableImportTableCall) Do() (*Table, error) {
+// DoHeader executes the "fusiontables.table.importTable" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *TableImportTableCall) DoHeader() (ret *Table, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var progressUpdater_ googleapi.ProgressUpdater
 	if v, ok := c.opt_["progressUpdater"]; ok {
@@ -2648,15 +3048,14 @@ func (c *TableImportTableCall) Do() (*Table, error) {
 		}
 		res, err = rx.Upload(c.ctx_)
 		if err != nil {
-			return nil, err
+			return nil, res.Header, err
 		}
 		defer res.Body.Close()
 	}
-	var ret *Table
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Import a new table.",
 	//   "httpMethod": "POST",
@@ -2733,6 +3132,21 @@ func (c *TableInsertCall) Fields(s ...googleapi.Field) *TableInsertCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *TableInsertCall) IfNoneMatch(entityTag string) *TableInsertCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "fusiontables.table.insert" call.
+// Exactly one of the return values is non-nil.
+func (c *TableInsertCall) Do() (*Table, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *TableInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.table)
@@ -2751,23 +3165,29 @@ func (c *TableInsertCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *TableInsertCall) Do() (*Table, error) {
+// DoHeader executes the "fusiontables.table.insert" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *TableInsertCall) DoHeader() (ret *Table, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Table
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Creates a new table.",
 	//   "httpMethod": "POST",
@@ -2821,6 +3241,21 @@ func (c *TableListCall) Fields(s ...googleapi.Field) *TableListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *TableListCall) IfNoneMatch(entityTag string) *TableListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "fusiontables.table.list" call.
+// Exactly one of the return values is non-nil.
+func (c *TableListCall) Do() (*TableList, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *TableListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2839,23 +3274,29 @@ func (c *TableListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *TableListCall) Do() (*TableList, error) {
+// DoHeader executes the "fusiontables.table.list" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *TableListCall) DoHeader() (ret *TableList, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *TableList
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Retrieves a list of tables a user owns.",
 	//   "httpMethod": "GET",
@@ -2922,6 +3363,21 @@ func (c *TablePatchCall) Fields(s ...googleapi.Field) *TablePatchCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *TablePatchCall) IfNoneMatch(entityTag string) *TablePatchCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "fusiontables.table.patch" call.
+// Exactly one of the return values is non-nil.
+func (c *TablePatchCall) Do() (*Table, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *TablePatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.table)
@@ -2945,23 +3401,29 @@ func (c *TablePatchCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *TablePatchCall) Do() (*Table, error) {
+// DoHeader executes the "fusiontables.table.patch" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *TablePatchCall) DoHeader() (ret *Table, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Table
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Updates an existing table. Unless explicitly requested, only the name, description, and attribution will be updated. This method supports patch semantics.",
 	//   "httpMethod": "PATCH",
@@ -3031,6 +3493,21 @@ func (c *TableUpdateCall) Fields(s ...googleapi.Field) *TableUpdateCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *TableUpdateCall) IfNoneMatch(entityTag string) *TableUpdateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "fusiontables.table.update" call.
+// Exactly one of the return values is non-nil.
+func (c *TableUpdateCall) Do() (*Table, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *TableUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.table)
@@ -3054,23 +3531,29 @@ func (c *TableUpdateCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *TableUpdateCall) Do() (*Table, error) {
+// DoHeader executes the "fusiontables.table.update" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *TableUpdateCall) DoHeader() (ret *Table, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Table
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Updates an existing table. Unless explicitly requested, only the name, description, and attribution will be updated.",
 	//   "httpMethod": "PUT",
@@ -3130,6 +3613,20 @@ func (c *TaskDeleteCall) Fields(s ...googleapi.Field) *TaskDeleteCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *TaskDeleteCall) IfNoneMatch(entityTag string) *TaskDeleteCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "fusiontables.task.delete" call.
+func (c *TaskDeleteCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
 func (c *TaskDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3145,19 +3642,26 @@ func (c *TaskDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"taskId":  c.taskId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *TaskDeleteCall) Do() error {
+// DoHeader executes the "fusiontables.task.delete" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *TaskDeleteCall) DoHeader() (resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Deletes the task, unless already started.",
 	//   "httpMethod": "DELETE",
@@ -3212,6 +3716,21 @@ func (c *TaskGetCall) Fields(s ...googleapi.Field) *TaskGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *TaskGetCall) IfNoneMatch(entityTag string) *TaskGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "fusiontables.task.get" call.
+// Exactly one of the return values is non-nil.
+func (c *TaskGetCall) Do() (*Task, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *TaskGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3227,23 +3746,29 @@ func (c *TaskGetCall) doRequest(alt string) (*http.Response, error) {
 		"taskId":  c.taskId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *TaskGetCall) Do() (*Task, error) {
+// DoHeader executes the "fusiontables.task.get" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *TaskGetCall) DoHeader() (ret *Task, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Task
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Retrieves a specific task by its id.",
 	//   "httpMethod": "GET",
@@ -3319,6 +3844,21 @@ func (c *TaskListCall) Fields(s ...googleapi.Field) *TaskListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *TaskListCall) IfNoneMatch(entityTag string) *TaskListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "fusiontables.task.list" call.
+// Exactly one of the return values is non-nil.
+func (c *TaskListCall) Do() (*TaskList, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *TaskListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3342,23 +3882,29 @@ func (c *TaskListCall) doRequest(alt string) (*http.Response, error) {
 		"tableId": c.tableId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *TaskListCall) Do() (*TaskList, error) {
+// DoHeader executes the "fusiontables.task.list" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *TaskListCall) DoHeader() (ret *TaskList, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *TaskList
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Retrieves a list of tasks.",
 	//   "httpMethod": "GET",
@@ -3427,6 +3973,20 @@ func (c *TemplateDeleteCall) Fields(s ...googleapi.Field) *TemplateDeleteCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *TemplateDeleteCall) IfNoneMatch(entityTag string) *TemplateDeleteCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "fusiontables.template.delete" call.
+func (c *TemplateDeleteCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
 func (c *TemplateDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3442,19 +4002,26 @@ func (c *TemplateDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"templateId": strconv.FormatInt(c.templateId, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *TemplateDeleteCall) Do() error {
+// DoHeader executes the "fusiontables.template.delete" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *TemplateDeleteCall) DoHeader() (resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Deletes a template",
 	//   "httpMethod": "DELETE",
@@ -3511,6 +4078,21 @@ func (c *TemplateGetCall) Fields(s ...googleapi.Field) *TemplateGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *TemplateGetCall) IfNoneMatch(entityTag string) *TemplateGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "fusiontables.template.get" call.
+// Exactly one of the return values is non-nil.
+func (c *TemplateGetCall) Do() (*Template, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *TemplateGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3526,23 +4108,29 @@ func (c *TemplateGetCall) doRequest(alt string) (*http.Response, error) {
 		"templateId": strconv.FormatInt(c.templateId, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *TemplateGetCall) Do() (*Template, error) {
+// DoHeader executes the "fusiontables.template.get" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *TemplateGetCall) DoHeader() (ret *Template, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Template
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Retrieves a specific template by its id",
 	//   "httpMethod": "GET",
@@ -3603,6 +4191,21 @@ func (c *TemplateInsertCall) Fields(s ...googleapi.Field) *TemplateInsertCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *TemplateInsertCall) IfNoneMatch(entityTag string) *TemplateInsertCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "fusiontables.template.insert" call.
+// Exactly one of the return values is non-nil.
+func (c *TemplateInsertCall) Do() (*Template, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *TemplateInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.template)
@@ -3623,23 +4226,29 @@ func (c *TemplateInsertCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *TemplateInsertCall) Do() (*Template, error) {
+// DoHeader executes the "fusiontables.template.insert" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *TemplateInsertCall) DoHeader() (ret *Template, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Template
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Creates a new template for the table.",
 	//   "httpMethod": "POST",
@@ -3706,6 +4315,21 @@ func (c *TemplateListCall) Fields(s ...googleapi.Field) *TemplateListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *TemplateListCall) IfNoneMatch(entityTag string) *TemplateListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "fusiontables.template.list" call.
+// Exactly one of the return values is non-nil.
+func (c *TemplateListCall) Do() (*TemplateList, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *TemplateListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3726,23 +4350,29 @@ func (c *TemplateListCall) doRequest(alt string) (*http.Response, error) {
 		"tableId": c.tableId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *TemplateListCall) Do() (*TemplateList, error) {
+// DoHeader executes the "fusiontables.template.list" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *TemplateListCall) DoHeader() (ret *TemplateList, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *TemplateList
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Retrieves a list of templates.",
 	//   "httpMethod": "GET",
@@ -3810,6 +4440,21 @@ func (c *TemplatePatchCall) Fields(s ...googleapi.Field) *TemplatePatchCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *TemplatePatchCall) IfNoneMatch(entityTag string) *TemplatePatchCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "fusiontables.template.patch" call.
+// Exactly one of the return values is non-nil.
+func (c *TemplatePatchCall) Do() (*Template, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *TemplatePatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.template)
@@ -3831,23 +4476,29 @@ func (c *TemplatePatchCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *TemplatePatchCall) Do() (*Template, error) {
+// DoHeader executes the "fusiontables.template.patch" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *TemplatePatchCall) DoHeader() (ret *Template, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Template
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Updates an existing template. This method supports patch semantics.",
 	//   "httpMethod": "PATCH",
@@ -3912,6 +4563,21 @@ func (c *TemplateUpdateCall) Fields(s ...googleapi.Field) *TemplateUpdateCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *TemplateUpdateCall) IfNoneMatch(entityTag string) *TemplateUpdateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "fusiontables.template.update" call.
+// Exactly one of the return values is non-nil.
+func (c *TemplateUpdateCall) Do() (*Template, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *TemplateUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.template)
@@ -3933,23 +4599,29 @@ func (c *TemplateUpdateCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *TemplateUpdateCall) Do() (*Template, error) {
+// DoHeader executes the "fusiontables.template.update" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *TemplateUpdateCall) DoHeader() (ret *Template, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Template
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Updates an existing template",
 	//   "httpMethod": "PUT",

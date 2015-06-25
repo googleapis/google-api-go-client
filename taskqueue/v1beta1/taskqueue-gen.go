@@ -220,6 +220,21 @@ func (c *TaskqueuesGetCall) Fields(s ...googleapi.Field) *TaskqueuesGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *TaskqueuesGetCall) IfNoneMatch(entityTag string) *TaskqueuesGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "taskqueue.taskqueues.get" call.
+// Exactly one of the return values is non-nil.
+func (c *TaskqueuesGetCall) Do() (*TaskQueue, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *TaskqueuesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -238,23 +253,29 @@ func (c *TaskqueuesGetCall) doRequest(alt string) (*http.Response, error) {
 		"taskqueue": c.taskqueue,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *TaskqueuesGetCall) Do() (*TaskQueue, error) {
+// DoHeader executes the "taskqueue.taskqueues.get" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *TaskqueuesGetCall) DoHeader() (ret *TaskQueue, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *TaskQueue
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Get detailed information about a TaskQueue.",
 	//   "httpMethod": "GET",
@@ -321,6 +342,20 @@ func (c *TasksDeleteCall) Fields(s ...googleapi.Field) *TasksDeleteCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *TasksDeleteCall) IfNoneMatch(entityTag string) *TasksDeleteCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "taskqueue.tasks.delete" call.
+func (c *TasksDeleteCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
 func (c *TasksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -337,19 +372,26 @@ func (c *TasksDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"task":      c.task,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *TasksDeleteCall) Do() error {
+// DoHeader executes the "taskqueue.tasks.delete" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *TasksDeleteCall) DoHeader() (resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Delete a task from a TaskQueue.",
 	//   "httpMethod": "DELETE",
@@ -415,6 +457,21 @@ func (c *TasksGetCall) Fields(s ...googleapi.Field) *TasksGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *TasksGetCall) IfNoneMatch(entityTag string) *TasksGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "taskqueue.tasks.get" call.
+// Exactly one of the return values is non-nil.
+func (c *TasksGetCall) Do() (*Task, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *TasksGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -431,23 +488,29 @@ func (c *TasksGetCall) doRequest(alt string) (*http.Response, error) {
 		"task":      c.task,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *TasksGetCall) Do() (*Task, error) {
+// DoHeader executes the "taskqueue.tasks.get" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *TasksGetCall) DoHeader() (ret *Task, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Task
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Get a particular task from a TaskQueue.",
 	//   "httpMethod": "GET",
@@ -518,6 +581,21 @@ func (c *TasksLeaseCall) Fields(s ...googleapi.Field) *TasksLeaseCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *TasksLeaseCall) IfNoneMatch(entityTag string) *TasksLeaseCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "taskqueue.tasks.lease" call.
+// Exactly one of the return values is non-nil.
+func (c *TasksLeaseCall) Do() (*Tasks, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *TasksLeaseCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -535,23 +613,29 @@ func (c *TasksLeaseCall) doRequest(alt string) (*http.Response, error) {
 		"taskqueue": c.taskqueue,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *TasksLeaseCall) Do() (*Tasks, error) {
+// DoHeader executes the "taskqueue.tasks.lease" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *TasksLeaseCall) DoHeader() (ret *Tasks, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Tasks
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Lease 1 or more tasks from a TaskQueue.",
 	//   "httpMethod": "POST",
@@ -627,6 +711,21 @@ func (c *TasksListCall) Fields(s ...googleapi.Field) *TasksListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *TasksListCall) IfNoneMatch(entityTag string) *TasksListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "taskqueue.tasks.list" call.
+// Exactly one of the return values is non-nil.
+func (c *TasksListCall) Do() (*Tasks2, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *TasksListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -642,23 +741,29 @@ func (c *TasksListCall) doRequest(alt string) (*http.Response, error) {
 		"taskqueue": c.taskqueue,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *TasksListCall) Do() (*Tasks2, error) {
+// DoHeader executes the "taskqueue.tasks.list" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *TasksListCall) DoHeader() (ret *Tasks2, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Tasks2
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "List Tasks in a TaskQueue",
 	//   "httpMethod": "GET",

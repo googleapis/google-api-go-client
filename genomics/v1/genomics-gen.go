@@ -210,25 +210,6 @@ type VariantsetsService struct {
 	s *Service
 }
 
-// Binding: Associates members with roles. See below for allowed formats
-// of members.
-type Binding struct {
-	// Members: Format of member entries: 1. allUsers Matches any requesting
-	// principal (users, service accounts or anonymous). 2.
-	// allAuthenticatedUsers Matches any requesting authenticated principal
-	// (users or service accounts). 3. user:{emailid} A google user account
-	// using an email address. For example alice@gmail.com, joe@example.com
-	// 4. serviceAccount:{emailid} An service account email. 5.
-	// group:{emailid} A google group with an email address. For example
-	// auth-ti-cloud@google.com 6. domain:{domain} A Google Apps domain
-	// name. For example google.com, example.com
-	Members []string `json:"members,omitempty"`
-
-	// Role: The name of the role to which the members should be bound.
-	// Examples: "roles/viewer", "roles/editor", "roles/owner". Required
-	Role string `json:"role,omitempty"`
-}
-
 // CallSet: A call set is a collection of variant calls, typically for
 // one sample. It belongs to a variant set.
 type CallSet struct {
@@ -250,11 +231,6 @@ type CallSet struct {
 	SampleId string `json:"sampleId,omitempty"`
 
 	// VariantSetIds: The IDs of the variant sets this call set belongs to.
-	// This field must have exactly length one, as a call set belongs to a
-	// single variant set. This field is repeated for compatibility with the
-	// [GA4GH 0.5.1
-	// API](https://github.com/ga4gh/schemas/blob/v0.5.1/src/main/resources/a
-	// vro/variants.avdl#L76).
 	VariantSetIds []string `json:"variantSetIds,omitempty"`
 }
 
@@ -295,62 +271,6 @@ type CigarUnit struct {
 	ReferenceSequence string `json:"referenceSequence,omitempty"`
 }
 
-// CloudAuditOptions: Write a Cloud Audit log
-type CloudAuditOptions struct {
-}
-
-// Condition: A condition to be met.
-type Condition struct {
-	// Iam: Trusted attributes supplied by the IAM system.
-	//
-	// Possible values:
-	//   "NO_ATTR"
-	//   "AUTHORITY"
-	//   "ATTRIBUTION"
-	Iam string `json:"iam,omitempty"`
-
-	// Op: An operator to apply the subject with.
-	//
-	// Possible values:
-	//   "NO_OP"
-	//   "EQUALS"
-	//   "NOT_EQUALS"
-	//   "IN"
-	//   "NOT_IN"
-	//   "DISCHARGED"
-	Op string `json:"op,omitempty"`
-
-	// Svc: Trusted attributes discharged by the service.
-	Svc string `json:"svc,omitempty"`
-
-	// Sys: Trusted attributes supplied by any service that owns resources
-	// and uses the IAM system for access control.
-	//
-	// Possible values:
-	//   "NO_ATTR"
-	//   "REGION"
-	//   "SERVICE"
-	//   "NAME"
-	//   "IP"
-	Sys string `json:"sys,omitempty"`
-
-	// Value: The object of the condition. Exactly one of these must be set.
-	Value string `json:"value,omitempty"`
-
-	// Values: The objects of the condition. This is mutually exclusive with
-	// 'value'.
-	Values []string `json:"values,omitempty"`
-}
-
-// CounterOptions: Options for counters
-type CounterOptions struct {
-	// Field: The field value to attribute.
-	Field string `json:"field,omitempty"`
-
-	// Metric: The metric to update.
-	Metric string `json:"metric,omitempty"`
-}
-
 // CoverageBucket: A bucket over which read coverage has been
 // precomputed. A bucket corresponds to a specific range of the
 // reference sequence.
@@ -361,10 +281,6 @@ type CoverageBucket struct {
 
 	// Range: The genomic coordinate range spanned by this bucket.
 	Range *Range `json:"range,omitempty"`
-}
-
-// DataAccessOptions: Write a Data Access (Gin) log
-type DataAccessOptions struct {
 }
 
 // Dataset: A Dataset is a collection of genomic data.
@@ -460,10 +376,6 @@ type ExportVariantSetRequest struct {
 	ProjectId string `json:"projectId,omitempty"`
 }
 
-// GetIamPolicyRequest: Request message for `GetIamPolicy` method.
-type GetIamPolicyRequest struct {
-}
-
 // ImportReadGroupSetsRequest: The read group set import request.
 type ImportReadGroupSetsRequest struct {
 	// DatasetId: Required. The ID of the dataset these read group sets will
@@ -486,9 +398,8 @@ type ImportReadGroupSetsRequest struct {
 	// associate with a matching reference set.
 	ReferenceSetId string `json:"referenceSetId,omitempty"`
 
-	// SourceUris: A list of URIs pointing at [BAM
-	// files](https://samtools.github.io/hts-specs/SAMv1.pdf) in Google
-	// Cloud Storage.
+	// SourceUris: A list of URIs pointing at BAM files in Google Cloud
+	// Storage.
 	SourceUris []string `json:"sourceUris,omitempty"`
 }
 
@@ -611,28 +522,12 @@ type ListOperationsResponse struct {
 	Operations []*Operation `json:"operations,omitempty"`
 }
 
-// LogConfig: Specifies what kind of log the caller must write Increment
-// a streamz counter with the specified metric and field names. Metric
-// names should start with a '/', generally be lowercase-only, and end
-// in "_count". Field names should not contain an initial slash. The
-// actual exported metric names will have "/iam/policy" prepended. Field
-// names correspond to IAM request parameters and field values are their
-// respective values. At present only "iam_principal", corresponding to
-// IAMContext.principal, is supported. Examples: counter { metric:
-// "/debug_access_count" field: "iam_principal" } ==> increment counter
-// /iam/policy/backend_debug_access_count {iam_principal=[value of
-// IAMContext.principal]} At this time we do not support: * multiple
-// field names (though this may be supported in the future) *
-// decrementing the counter * incrementing it by anything other than 1
-type LogConfig struct {
-	// CloudAudit: Cloud audit options.
-	CloudAudit *CloudAuditOptions `json:"cloudAudit,omitempty"`
+type MergeVariantsRequest struct {
+	// VariantSetId: The destination variant set.
+	VariantSetId string `json:"variantSetId,omitempty"`
 
-	// Counter: Counter options.
-	Counter *CounterOptions `json:"counter,omitempty"`
-
-	// DataAccess: Data access options.
-	DataAccess *DataAccessOptions `json:"dataAccess,omitempty"`
+	// Variants: The variants to be merged with existing variants.
+	Variants []*Variant `json:"variants,omitempty"`
 }
 
 // Operation: This resource represents a long-running operation that is
@@ -701,38 +596,6 @@ type OperationMetadata1 struct {
 }
 
 type OperationMetadataRequest interface{}
-
-// Policy: # Overview The `Policy` defines an access control policy
-// language. It is used to define policies that are attached to
-// resources like files, folders, VMs, etc. # Policy structure A
-// `Policy` consists of a list of bindings. A `Binding` binds a set of
-// members to a role, where the members include user accounts, user
-// groups, user domains, and service accounts. A 'role' is a named set
-// of permissions, defined by IAM. The definition of a role is outside
-// the policy. A permission check first determines the roles that
-// include the specified permission, and then determines if the
-// principal specified is a member of a binding to at least one of these
-// roles. The membership check is recursive when a group is bound to a
-// role. Policy examples: ``` { "bindings": [ { "role": "roles/owner",
-// "members": [ "user:mike@example.com", "group:admins@example.com",
-// "domain:google.com",
-// "serviceAccount:frontend@example.iam.gserviceaccounts.com"] }, {
-// "role": "roles/viewer", "members": ["user:sean@example.com"] } ] }
-// ```
-type Policy struct {
-	// Bindings: It is an error to specify multiple bindings for the same
-	// role. It is an error to specify a binding with no members.
-	Bindings []*Binding `json:"bindings,omitempty"`
-
-	// Etag: Can be used to perform a read-modify-write.
-	Etag string `json:"etag,omitempty"`
-
-	Rules []*Rule `json:"rules,omitempty"`
-
-	// Version: The policy language version. The version of the policy is
-	// represented by the etag. The default version is 0.
-	Version int64 `json:"version,omitempty"`
-}
 
 // Position: An abstraction for referring to a genomic position, in
 // relation to some already known reference. For now, represents a
@@ -1093,44 +956,6 @@ type ReferenceSet struct {
 	SourceUri string `json:"sourceUri,omitempty"`
 }
 
-// Rule: A rule to be applied in a Policy.
-type Rule struct {
-	// Action: Required
-	//
-	// Possible values:
-	//   "NO_ACTION"
-	//   "ALLOW"
-	//   "ALLOW_WITH_LOG"
-	//   "DENY"
-	//   "DENY_WITH_LOG"
-	//   "LOG"
-	Action string `json:"action,omitempty"`
-
-	// Conditions: Additional restrictions that must be met
-	Conditions []*Condition `json:"conditions,omitempty"`
-
-	// Description: Human-readable description of the rule.
-	Description string `json:"description,omitempty"`
-
-	// In: The rule matches if the PRINCIPAL/AUTHORITY_SELECTOR is in this
-	// set of entries.
-	In []string `json:"in,omitempty"`
-
-	// LogConfig: The config returned to callers of tech.iam.IAM.CheckPolicy
-	// for any entries that match the LOG action.
-	LogConfig []*LogConfig `json:"logConfig,omitempty"`
-
-	// NotIn: The rule matches if the PRINCIPAL/AUTHORITY_SELECTOR is not in
-	// this set of entries. The formation for in and not_in entries is the
-	// same as members in a Binding above.
-	NotIn []string `json:"notIn,omitempty"`
-
-	// Permissions: A permission is a string of form '..' (e.g.,
-	// 'storage.buckets.list'). A value of '*' matches all permissions, and
-	// a verb part of '*' (e.g., 'storage.buckets.*') matches all verbs.
-	Permissions []string `json:"permissions,omitempty"`
-}
-
 // SearchCallSetsRequest: The call set search request.
 type SearchCallSetsRequest struct {
 	// Name: Only return call sets for which a substring of the name matches
@@ -1235,8 +1060,8 @@ type SearchReadsRequest struct {
 type SearchReadsResponse struct {
 	// Alignments: The list of matching alignments sorted by mapped genomic
 	// coordinate, if any, ascending in position within the same reference.
-	// Unmapped reads, which have no position, are returned contiguously and
-	// are sorted in ascending lexicographic order by fragment name.
+	// Unmapped reads, which have no position, are returned last and are
+	// further sorted in ascending lexicographic order by fragment name.
 	Alignments []*Read `json:"alignments,omitempty"`
 
 	// NextPageToken: The continuation token, which is used to page through
@@ -1406,30 +1231,21 @@ type SearchVariantsResponse struct {
 	Variants []*Variant `json:"variants,omitempty"`
 }
 
-// SetIamPolicyRequest: Request message for `SetIamPolicy` method.
-type SetIamPolicyRequest struct {
-	// Policy: REQUIRED: The complete policy to be applied to the
-	// 'resource'. The size of the policy is limited to a few 10s of KB. An
-	// empty policy is in general a valid policy but certain services (like
-	// Projects) might reject them.
-	Policy *Policy `json:"policy,omitempty"`
-}
-
-// Status: The `Status` type defines a logical error model that is
-// suitable for different programming environments, including REST APIs
-// and RPC APIs. It is used by [gRPC](https://github.com/grpc). The
-// error model is designed to be: - Simple to use and understand for
-// most users - Flexible enough to meet unexpected needs # Overview The
-// `Status` message contains three pieces of data: error code, error
-// message, and error details. The error code should be an enum value of
+// Status: The `Status` defines a logical error model that is suitable
+// for different programming environments, including REST APIs and RPC
+// APIs. It is used by [gRPC](https://github.com/grpc). The error model
+// is designed to be: - Simple to use and understand for most users. -
+// Flexible enough to meet unexpected needs. # Overview The `Status`
+// message contains 3 pieces of data: error code, error message, and
+// error details. The error code should be an enum value of
 // [google.rpc.Code][google.rpc.Code], but it may accept additional
 // error codes if needed. The error message should be a developer-facing
 // English message that helps developers *understand* and *resolve* the
-// error. If a localized user-facing error message is needed, put the
-// localized message in the error details or localize it in the client.
-// The optional error details may contain arbitrary information about
-// the error. There is a predefined set of error detail types in the
-// package `google.rpc` which can be used for common error conditions. #
+// error. If a localized user-facing error message is needed, it can be
+// sent in the error details or localized by the client. The optional
+// error details may contain arbitrary information about the error.
+// There is a predefined set of error detail types in the package
+// `google.rpc` which can be used for common error conditions. #
 // Language mapping The `Status` message is the logical representation
 // of the error model, but it is not necessarily the actual wire format.
 // When the `Status` message is exposed in different client libraries
@@ -1437,7 +1253,7 @@ type SetIamPolicyRequest struct {
 // example, it will likely be mapped to some exceptions in Java, but
 // more likely mapped to some error codes in C. # Other uses The error
 // model and the `Status` message can be used in a variety of
-// environments, either with or without APIs, to provide a consistent
+// environments - either with or without APIs - to provide consistent
 // developer experience across different environments. Example uses of
 // this error model include: - Partial errors. If a service needs to
 // return partial errors to the client, it may embed the `Status` in the
@@ -1469,27 +1285,6 @@ type Status struct {
 }
 
 type StatusDetails interface{}
-
-// TestIamPermissionsRequest: Request message for `TestIamPermissions`
-// method.
-type TestIamPermissionsRequest struct {
-	// Permissions: REQUIRED: The set of permissions to check for the
-	// 'resource'. Permissions with wildcards (such as '*' or 'storage.*')
-	// are not allowed. Allowed permissions are: *
-	// `genomics.datasets.create` * `genomics.datasets.delete` *
-	// `genomics.datasets.get` * `genomics.datasets.list` *
-	// `genomics.datasets.update` * `genomics.datasets.getIamPolicy` *
-	// `genomics.datasets.setIamPolicy`
-	Permissions []string `json:"permissions,omitempty"`
-}
-
-// TestIamPermissionsResponse: Response message for `TestIamPermissions`
-// method.
-type TestIamPermissionsResponse struct {
-	// Permissions: A subset of `TestPermissionsRequest.permissions` that
-	// the caller is allowed.
-	Permissions []string `json:"permissions,omitempty"`
-}
 
 type UndeleteDatasetRequest struct {
 }
@@ -1653,7 +1448,7 @@ type VariantSetMetadata struct {
 
 	// Number: The number of values that can be included in a field
 	// described by this metadata.
-	Number string `json:"number,omitempty"`
+	Number int64 `json:"number,omitempty"`
 
 	// Type: The type of data. Possible types include: Integer, Float, Flag,
 	// Character, and String.
@@ -1700,6 +1495,21 @@ func (c *CallsetsCreateCall) Fields(s ...googleapi.Field) *CallsetsCreateCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *CallsetsCreateCall) IfNoneMatch(entityTag string) *CallsetsCreateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "genomics.callsets.create" call.
+// Exactly one of the return values is non-nil.
+func (c *CallsetsCreateCall) Do() (*CallSet, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *CallsetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.callset)
@@ -1718,23 +1528,29 @@ func (c *CallsetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *CallsetsCreateCall) Do() (*CallSet, error) {
+// DoHeader executes the "genomics.callsets.create" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *CallsetsCreateCall) DoHeader() (ret *CallSet, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *CallSet
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Creates a new call set.",
 	//   "httpMethod": "POST",
@@ -1777,6 +1593,21 @@ func (c *CallsetsDeleteCall) Fields(s ...googleapi.Field) *CallsetsDeleteCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *CallsetsDeleteCall) IfNoneMatch(entityTag string) *CallsetsDeleteCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "genomics.callsets.delete" call.
+// Exactly one of the return values is non-nil.
+func (c *CallsetsDeleteCall) Do() (*Empty, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *CallsetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1791,23 +1622,29 @@ func (c *CallsetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"callSetId": c.callSetId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *CallsetsDeleteCall) Do() (*Empty, error) {
+// DoHeader executes the "genomics.callsets.delete" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *CallsetsDeleteCall) DoHeader() (ret *Empty, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Empty
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Deletes a call set.",
 	//   "httpMethod": "DELETE",
@@ -1858,6 +1695,21 @@ func (c *CallsetsGetCall) Fields(s ...googleapi.Field) *CallsetsGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *CallsetsGetCall) IfNoneMatch(entityTag string) *CallsetsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "genomics.callsets.get" call.
+// Exactly one of the return values is non-nil.
+func (c *CallsetsGetCall) Do() (*CallSet, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *CallsetsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1872,23 +1724,29 @@ func (c *CallsetsGetCall) doRequest(alt string) (*http.Response, error) {
 		"callSetId": c.callSetId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *CallsetsGetCall) Do() (*CallSet, error) {
+// DoHeader executes the "genomics.callsets.get" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *CallsetsGetCall) DoHeader() (ret *CallSet, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *CallSet
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Gets a call set by ID.",
 	//   "httpMethod": "GET",
@@ -1951,6 +1809,21 @@ func (c *CallsetsPatchCall) Fields(s ...googleapi.Field) *CallsetsPatchCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *CallsetsPatchCall) IfNoneMatch(entityTag string) *CallsetsPatchCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "genomics.callsets.patch" call.
+// Exactly one of the return values is non-nil.
+func (c *CallsetsPatchCall) Do() (*CallSet, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *CallsetsPatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.callset)
@@ -1974,23 +1847,29 @@ func (c *CallsetsPatchCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *CallsetsPatchCall) Do() (*CallSet, error) {
+// DoHeader executes the "genomics.callsets.patch" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *CallsetsPatchCall) DoHeader() (ret *CallSet, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *CallSet
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Updates a call set. This method supports patch semantics.",
 	//   "httpMethod": "PATCH",
@@ -2051,6 +1930,21 @@ func (c *CallsetsSearchCall) Fields(s ...googleapi.Field) *CallsetsSearchCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *CallsetsSearchCall) IfNoneMatch(entityTag string) *CallsetsSearchCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "genomics.callsets.search" call.
+// Exactly one of the return values is non-nil.
+func (c *CallsetsSearchCall) Do() (*SearchCallSetsResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *CallsetsSearchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.searchcallsetsrequest)
@@ -2069,23 +1963,29 @@ func (c *CallsetsSearchCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *CallsetsSearchCall) Do() (*SearchCallSetsResponse, error) {
+// DoHeader executes the "genomics.callsets.search" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *CallsetsSearchCall) DoHeader() (ret *SearchCallSetsResponse, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *SearchCallSetsResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Gets a list of call sets matching the criteria. Implements [GlobalAllianceApi.searchCallSets](https://github.com/ga4gh/schemas/blob/v0.5.1/src/main/resources/avro/variantmethods.avdl#L178).",
 	//   "httpMethod": "POST",
@@ -2129,6 +2029,21 @@ func (c *DatasetsCreateCall) Fields(s ...googleapi.Field) *DatasetsCreateCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *DatasetsCreateCall) IfNoneMatch(entityTag string) *DatasetsCreateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "genomics.datasets.create" call.
+// Exactly one of the return values is non-nil.
+func (c *DatasetsCreateCall) Do() (*Dataset, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *DatasetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.dataset)
@@ -2147,23 +2062,29 @@ func (c *DatasetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *DatasetsCreateCall) Do() (*Dataset, error) {
+// DoHeader executes the "genomics.datasets.create" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *DatasetsCreateCall) DoHeader() (ret *Dataset, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Dataset
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Creates a new dataset.",
 	//   "httpMethod": "POST",
@@ -2206,6 +2127,21 @@ func (c *DatasetsDeleteCall) Fields(s ...googleapi.Field) *DatasetsDeleteCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *DatasetsDeleteCall) IfNoneMatch(entityTag string) *DatasetsDeleteCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "genomics.datasets.delete" call.
+// Exactly one of the return values is non-nil.
+func (c *DatasetsDeleteCall) Do() (*Empty, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *DatasetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2220,23 +2156,29 @@ func (c *DatasetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"datasetId": c.datasetId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *DatasetsDeleteCall) Do() (*Empty, error) {
+// DoHeader executes the "genomics.datasets.delete" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *DatasetsDeleteCall) DoHeader() (ret *Empty, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Empty
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Deletes a dataset.",
 	//   "httpMethod": "DELETE",
@@ -2287,6 +2229,21 @@ func (c *DatasetsGetCall) Fields(s ...googleapi.Field) *DatasetsGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *DatasetsGetCall) IfNoneMatch(entityTag string) *DatasetsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "genomics.datasets.get" call.
+// Exactly one of the return values is non-nil.
+func (c *DatasetsGetCall) Do() (*Dataset, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *DatasetsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2301,23 +2258,29 @@ func (c *DatasetsGetCall) doRequest(alt string) (*http.Response, error) {
 		"datasetId": c.datasetId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *DatasetsGetCall) Do() (*Dataset, error) {
+// DoHeader executes the "genomics.datasets.get" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *DatasetsGetCall) DoHeader() (ret *Dataset, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Dataset
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Gets a dataset by ID.",
 	//   "httpMethod": "GET",
@@ -2341,99 +2304,6 @@ func (c *DatasetsGetCall) Do() (*Dataset, error) {
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/genomics",
 	//     "https://www.googleapis.com/auth/genomics.readonly"
-	//   ]
-	// }
-
-}
-
-// method id "genomics.datasets.getIamPolicy":
-
-type DatasetsGetIamPolicyCall struct {
-	s                   *Service
-	resource            string
-	getiampolicyrequest *GetIamPolicyRequest
-	opt_                map[string]interface{}
-}
-
-// GetIamPolicy:
-func (r *DatasetsService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *DatasetsGetIamPolicyCall {
-	c := &DatasetsGetIamPolicyCall{s: r.s, opt_: make(map[string]interface{})}
-	c.resource = resource
-	c.getiampolicyrequest = getiampolicyrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *DatasetsGetIamPolicyCall) Fields(s ...googleapi.Field) *DatasetsGetIamPolicyCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
-	return c
-}
-
-func (c *DatasetsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.getiampolicyrequest)
-	if err != nil {
-		return nil, err
-	}
-	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:getIamPolicy")
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("POST", urls, body)
-	googleapi.Expand(req.URL, map[string]string{
-		"resource": c.resource,
-	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
-	return c.s.client.Do(req)
-}
-
-func (c *DatasetsGetIamPolicyCall) Do() (*Policy, error) {
-	res, err := c.doRequest("json")
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	var ret *Policy
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "",
-	//   "httpMethod": "POST",
-	//   "id": "genomics.datasets.getIamPolicy",
-	//   "parameterOrder": [
-	//     "resource"
-	//   ],
-	//   "parameters": {
-	//     "resource": {
-	//       "description": "REQUIRED: The resource for which policy is being specified. Format is `datasets/`.",
-	//       "location": "path",
-	//       "pattern": "^datasets/[^/]*$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+resource}:getIamPolicy",
-	//   "request": {
-	//     "$ref": "GetIamPolicyRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Policy"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/genomics"
 	//   ]
 	// }
 
@@ -2484,6 +2354,21 @@ func (c *DatasetsListCall) Fields(s ...googleapi.Field) *DatasetsListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *DatasetsListCall) IfNoneMatch(entityTag string) *DatasetsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "genomics.datasets.list" call.
+// Exactly one of the return values is non-nil.
+func (c *DatasetsListCall) Do() (*ListDatasetsResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *DatasetsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2505,23 +2390,29 @@ func (c *DatasetsListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *DatasetsListCall) Do() (*ListDatasetsResponse, error) {
+// DoHeader executes the "genomics.datasets.list" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *DatasetsListCall) DoHeader() (ret *ListDatasetsResponse, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *ListDatasetsResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Lists datasets within a project.",
 	//   "httpMethod": "GET",
@@ -2591,6 +2482,21 @@ func (c *DatasetsPatchCall) Fields(s ...googleapi.Field) *DatasetsPatchCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *DatasetsPatchCall) IfNoneMatch(entityTag string) *DatasetsPatchCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "genomics.datasets.patch" call.
+// Exactly one of the return values is non-nil.
+func (c *DatasetsPatchCall) Do() (*Dataset, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *DatasetsPatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.dataset)
@@ -2614,23 +2520,29 @@ func (c *DatasetsPatchCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *DatasetsPatchCall) Do() (*Dataset, error) {
+// DoHeader executes the "genomics.datasets.patch" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *DatasetsPatchCall) DoHeader() (ret *Dataset, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Dataset
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Updates a dataset. This method supports patch semantics.",
 	//   "httpMethod": "PATCH",
@@ -2657,192 +2569,6 @@ func (c *DatasetsPatchCall) Do() (*Dataset, error) {
 	//   },
 	//   "response": {
 	//     "$ref": "Dataset"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/genomics"
-	//   ]
-	// }
-
-}
-
-// method id "genomics.datasets.setIamPolicy":
-
-type DatasetsSetIamPolicyCall struct {
-	s                   *Service
-	resource            string
-	setiampolicyrequest *SetIamPolicyRequest
-	opt_                map[string]interface{}
-}
-
-// SetIamPolicy:
-func (r *DatasetsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *DatasetsSetIamPolicyCall {
-	c := &DatasetsSetIamPolicyCall{s: r.s, opt_: make(map[string]interface{})}
-	c.resource = resource
-	c.setiampolicyrequest = setiampolicyrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *DatasetsSetIamPolicyCall) Fields(s ...googleapi.Field) *DatasetsSetIamPolicyCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
-	return c
-}
-
-func (c *DatasetsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.setiampolicyrequest)
-	if err != nil {
-		return nil, err
-	}
-	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:setIamPolicy")
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("POST", urls, body)
-	googleapi.Expand(req.URL, map[string]string{
-		"resource": c.resource,
-	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
-	return c.s.client.Do(req)
-}
-
-func (c *DatasetsSetIamPolicyCall) Do() (*Policy, error) {
-	res, err := c.doRequest("json")
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	var ret *Policy
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "",
-	//   "httpMethod": "POST",
-	//   "id": "genomics.datasets.setIamPolicy",
-	//   "parameterOrder": [
-	//     "resource"
-	//   ],
-	//   "parameters": {
-	//     "resource": {
-	//       "description": "REQUIRED: The resource for which policy is being specified. Format is `datasets/`.",
-	//       "location": "path",
-	//       "pattern": "^datasets/[^/]*$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+resource}:setIamPolicy",
-	//   "request": {
-	//     "$ref": "SetIamPolicyRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Policy"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/genomics"
-	//   ]
-	// }
-
-}
-
-// method id "genomics.datasets.testIamPermissions":
-
-type DatasetsTestIamPermissionsCall struct {
-	s                         *Service
-	resource                  string
-	testiampermissionsrequest *TestIamPermissionsRequest
-	opt_                      map[string]interface{}
-}
-
-// TestIamPermissions:
-func (r *DatasetsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *DatasetsTestIamPermissionsCall {
-	c := &DatasetsTestIamPermissionsCall{s: r.s, opt_: make(map[string]interface{})}
-	c.resource = resource
-	c.testiampermissionsrequest = testiampermissionsrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *DatasetsTestIamPermissionsCall) Fields(s ...googleapi.Field) *DatasetsTestIamPermissionsCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
-	return c
-}
-
-func (c *DatasetsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.testiampermissionsrequest)
-	if err != nil {
-		return nil, err
-	}
-	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:testIamPermissions")
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("POST", urls, body)
-	googleapi.Expand(req.URL, map[string]string{
-		"resource": c.resource,
-	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
-	return c.s.client.Do(req)
-}
-
-func (c *DatasetsTestIamPermissionsCall) Do() (*TestIamPermissionsResponse, error) {
-	res, err := c.doRequest("json")
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	var ret *TestIamPermissionsResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "",
-	//   "httpMethod": "POST",
-	//   "id": "genomics.datasets.testIamPermissions",
-	//   "parameterOrder": [
-	//     "resource"
-	//   ],
-	//   "parameters": {
-	//     "resource": {
-	//       "description": "REQUIRED: The resource for which policy is being specified. Format is `datasets/`.",
-	//       "location": "path",
-	//       "pattern": "^datasets/[^/]*$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+resource}:testIamPermissions",
-	//   "request": {
-	//     "$ref": "TestIamPermissionsRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "TestIamPermissionsResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
@@ -2879,6 +2605,21 @@ func (c *DatasetsUndeleteCall) Fields(s ...googleapi.Field) *DatasetsUndeleteCal
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *DatasetsUndeleteCall) IfNoneMatch(entityTag string) *DatasetsUndeleteCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "genomics.datasets.undelete" call.
+// Exactly one of the return values is non-nil.
+func (c *DatasetsUndeleteCall) Do() (*Dataset, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *DatasetsUndeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.undeletedatasetrequest)
@@ -2899,23 +2640,29 @@ func (c *DatasetsUndeleteCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *DatasetsUndeleteCall) Do() (*Dataset, error) {
+// DoHeader executes the "genomics.datasets.undelete" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *DatasetsUndeleteCall) DoHeader() (ret *Dataset, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Dataset
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Undeletes a dataset by restoring a dataset which was deleted via this API. This operation is only possible for a week after the deletion occurred.",
 	//   "httpMethod": "POST",
@@ -2978,6 +2725,21 @@ func (c *OperationsCancelCall) Fields(s ...googleapi.Field) *OperationsCancelCal
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OperationsCancelCall) IfNoneMatch(entityTag string) *OperationsCancelCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "genomics.operations.cancel" call.
+// Exactly one of the return values is non-nil.
+func (c *OperationsCancelCall) Do() (*Empty, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.canceloperationrequest)
@@ -2998,23 +2760,29 @@ func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *OperationsCancelCall) Do() (*Empty, error) {
+// DoHeader executes the "genomics.operations.cancel" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *OperationsCancelCall) DoHeader() (ret *Empty, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Empty
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. Clients may use [Operations.GetOperation][google.longrunning.Operations.GetOperation] or [Operations.ListOperations][google.longrunning.Operations.ListOperations] to check whether the cancellation succeeded or the operation completed despite cancellation.",
 	//   "httpMethod": "POST",
@@ -3072,6 +2840,21 @@ func (c *OperationsDeleteCall) Fields(s ...googleapi.Field) *OperationsDeleteCal
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OperationsDeleteCall) IfNoneMatch(entityTag string) *OperationsDeleteCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "genomics.operations.delete" call.
+// Exactly one of the return values is non-nil.
+func (c *OperationsDeleteCall) Do() (*Empty, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3086,23 +2869,29 @@ func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"name": c.name,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *OperationsDeleteCall) Do() (*Empty, error) {
+// DoHeader executes the "genomics.operations.delete" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *OperationsDeleteCall) DoHeader() (ret *Empty, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Empty
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "This method is not implemented. To cancel an operation, please use [Operations.CancelOperation][google.longrunning.Operations.CancelOperation].",
 	//   "httpMethod": "DELETE",
@@ -3156,6 +2945,21 @@ func (c *OperationsGetCall) Fields(s ...googleapi.Field) *OperationsGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OperationsGetCall) IfNoneMatch(entityTag string) *OperationsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "genomics.operations.get" call.
+// Exactly one of the return values is non-nil.
+func (c *OperationsGetCall) Do() (*Operation, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3170,23 +2974,29 @@ func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 		"name": c.name,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *OperationsGetCall) Do() (*Operation, error) {
+// DoHeader executes the "genomics.operations.get" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *OperationsGetCall) DoHeader() (ret *Operation, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Operation
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
 	//   "httpMethod": "GET",
@@ -3252,7 +3062,7 @@ func (c *OperationsListCall) PageSize(pageSize int64) *OperationsListCall {
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The standard list
+// PageToken sets the optional parameter "pageToken": The standard List
 // page token.
 func (c *OperationsListCall) PageToken(pageToken string) *OperationsListCall {
 	c.opt_["pageToken"] = pageToken
@@ -3265,6 +3075,21 @@ func (c *OperationsListCall) PageToken(pageToken string) *OperationsListCall {
 func (c *OperationsListCall) Fields(s ...googleapi.Field) *OperationsListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OperationsListCall) IfNoneMatch(entityTag string) *OperationsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "genomics.operations.list" call.
+// Exactly one of the return values is non-nil.
+func (c *OperationsListCall) Do() (*ListOperationsResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
 }
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
@@ -3290,23 +3115,29 @@ func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 		"name": c.name,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *OperationsListCall) Do() (*ListOperationsResponse, error) {
+// DoHeader executes the "genomics.operations.list" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *OperationsListCall) DoHeader() (ret *ListOperationsResponse, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *ListOperationsResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Lists operations that match the specified filter in the request.",
 	//   "httpMethod": "GET",
@@ -3334,7 +3165,7 @@ func (c *OperationsListCall) Do() (*ListOperationsResponse, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The standard list page token.",
+	//       "description": "The standard List page token.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -3374,6 +3205,21 @@ func (c *ReadgroupsetsDeleteCall) Fields(s ...googleapi.Field) *ReadgroupsetsDel
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ReadgroupsetsDeleteCall) IfNoneMatch(entityTag string) *ReadgroupsetsDeleteCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "genomics.readgroupsets.delete" call.
+// Exactly one of the return values is non-nil.
+func (c *ReadgroupsetsDeleteCall) Do() (*Empty, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *ReadgroupsetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3388,23 +3234,29 @@ func (c *ReadgroupsetsDeleteCall) doRequest(alt string) (*http.Response, error) 
 		"readGroupSetId": c.readGroupSetId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *ReadgroupsetsDeleteCall) Do() (*Empty, error) {
+// DoHeader executes the "genomics.readgroupsets.delete" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *ReadgroupsetsDeleteCall) DoHeader() (ret *Empty, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Empty
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Deletes a read group set.",
 	//   "httpMethod": "DELETE",
@@ -3444,9 +3296,9 @@ type ReadgroupsetsExportCall struct {
 // Export: Exports a read group set to a BAM file in Google Cloud
 // Storage. Note that currently there may be some differences between
 // exported BAM files and the original BAM file at the time of import.
-// See
-// [ImportReadGroupSets](google.genomics.v1.ReadServiceV1.ImportReadGroup
-// Sets) for caveats.
+// In particular, comments in the input file header will not be
+// preserved, some custom tags will be converted to strings, and
+// original reference sequence order is not necessarily preserved.
 func (r *ReadgroupsetsService) Export(readGroupSetId string, exportreadgroupsetrequest *ExportReadGroupSetRequest) *ReadgroupsetsExportCall {
 	c := &ReadgroupsetsExportCall{s: r.s, opt_: make(map[string]interface{})}
 	c.readGroupSetId = readGroupSetId
@@ -3460,6 +3312,21 @@ func (r *ReadgroupsetsService) Export(readGroupSetId string, exportreadgroupsetr
 func (c *ReadgroupsetsExportCall) Fields(s ...googleapi.Field) *ReadgroupsetsExportCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ReadgroupsetsExportCall) IfNoneMatch(entityTag string) *ReadgroupsetsExportCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "genomics.readgroupsets.export" call.
+// Exactly one of the return values is non-nil.
+func (c *ReadgroupsetsExportCall) Do() (*Operation, error) {
+	v, _, err := c.DoHeader()
+	return v, err
 }
 
 func (c *ReadgroupsetsExportCall) doRequest(alt string) (*http.Response, error) {
@@ -3482,25 +3349,31 @@ func (c *ReadgroupsetsExportCall) doRequest(alt string) (*http.Response, error) 
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *ReadgroupsetsExportCall) Do() (*Operation, error) {
+// DoHeader executes the "genomics.readgroupsets.export" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *ReadgroupsetsExportCall) DoHeader() (ret *Operation, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Operation
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
-	//   "description": "Exports a read group set to a BAM file in Google Cloud Storage. Note that currently there may be some differences between exported BAM files and the original BAM file at the time of import. See [ImportReadGroupSets](google.genomics.v1.ReadServiceV1.ImportReadGroupSets) for caveats.",
+	//   "description": "Exports a read group set to a BAM file in Google Cloud Storage. Note that currently there may be some differences between exported BAM files and the original BAM file at the time of import. In particular, comments in the input file header will not be preserved, some custom tags will be converted to strings, and original reference sequence order is not necessarily preserved.",
 	//   "httpMethod": "POST",
 	//   "id": "genomics.readgroupsets.export",
 	//   "parameterOrder": [
@@ -3553,6 +3426,21 @@ func (c *ReadgroupsetsGetCall) Fields(s ...googleapi.Field) *ReadgroupsetsGetCal
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ReadgroupsetsGetCall) IfNoneMatch(entityTag string) *ReadgroupsetsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "genomics.readgroupsets.get" call.
+// Exactly one of the return values is non-nil.
+func (c *ReadgroupsetsGetCall) Do() (*ReadGroupSet, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *ReadgroupsetsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3567,23 +3455,29 @@ func (c *ReadgroupsetsGetCall) doRequest(alt string) (*http.Response, error) {
 		"readGroupSetId": c.readGroupSetId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *ReadgroupsetsGetCall) Do() (*ReadGroupSet, error) {
+// DoHeader executes the "genomics.readgroupsets.get" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *ReadgroupsetsGetCall) DoHeader() (ret *ReadGroupSet, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *ReadGroupSet
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Gets a read group set by ID.",
 	//   "httpMethod": "GET",
@@ -3621,16 +3515,10 @@ type ReadgroupsetsImportCall struct {
 }
 
 // Import: Creates read group sets by asynchronously importing the
-// provided information. The caller must have WRITE permissions to the
-// dataset. ## Notes on
-// [BAM](https://samtools.github.io/hts-specs/SAMv1.pdf) import - Tags
-// will be converted to strings - tag types are not preserved - Comments
-// (`@CO`) in the input file header will not be preserved - Original
-// header order of references (`@SQ`) will not be preserved - Any
-// reverse stranded unmapped reads will be reverse complemented, and
-// their qualities (and "BQ" tag, if any) will be reversed - Unmapped
-// reads will be stripped of positional information (reference name and
-// position)
+// provided information. Note that currently comments in the input file
+// header are **not** imported and some custom tags will be converted to
+// strings, rather than preserving tag types. The caller must have WRITE
+// permissions to the dataset.
 func (r *ReadgroupsetsService) Import(importreadgroupsetsrequest *ImportReadGroupSetsRequest) *ReadgroupsetsImportCall {
 	c := &ReadgroupsetsImportCall{s: r.s, opt_: make(map[string]interface{})}
 	c.importreadgroupsetsrequest = importreadgroupsetsrequest
@@ -3643,6 +3531,21 @@ func (r *ReadgroupsetsService) Import(importreadgroupsetsrequest *ImportReadGrou
 func (c *ReadgroupsetsImportCall) Fields(s ...googleapi.Field) *ReadgroupsetsImportCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ReadgroupsetsImportCall) IfNoneMatch(entityTag string) *ReadgroupsetsImportCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "genomics.readgroupsets.import" call.
+// Exactly one of the return values is non-nil.
+func (c *ReadgroupsetsImportCall) Do() (*Operation, error) {
+	v, _, err := c.DoHeader()
+	return v, err
 }
 
 func (c *ReadgroupsetsImportCall) doRequest(alt string) (*http.Response, error) {
@@ -3663,25 +3566,31 @@ func (c *ReadgroupsetsImportCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *ReadgroupsetsImportCall) Do() (*Operation, error) {
+// DoHeader executes the "genomics.readgroupsets.import" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *ReadgroupsetsImportCall) DoHeader() (ret *Operation, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Operation
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
-	//   "description": "Creates read group sets by asynchronously importing the provided information. The caller must have WRITE permissions to the dataset. ## Notes on [BAM](https://samtools.github.io/hts-specs/SAMv1.pdf) import - Tags will be converted to strings - tag types are not preserved - Comments (`@CO`) in the input file header will not be preserved - Original header order of references (`@SQ`) will not be preserved - Any reverse stranded unmapped reads will be reverse complemented, and their qualities (and \"BQ\" tag, if any) will be reversed - Unmapped reads will be stripped of positional information (reference name and position)",
+	//   "description": "Creates read group sets by asynchronously importing the provided information. Note that currently comments in the input file header are **not** imported and some custom tags will be converted to strings, rather than preserving tag types. The caller must have WRITE permissions to the dataset.",
 	//   "httpMethod": "POST",
 	//   "id": "genomics.readgroupsets.import",
 	//   "path": "v1/readgroupsets:import",
@@ -3737,6 +3646,21 @@ func (c *ReadgroupsetsPatchCall) Fields(s ...googleapi.Field) *ReadgroupsetsPatc
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ReadgroupsetsPatchCall) IfNoneMatch(entityTag string) *ReadgroupsetsPatchCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "genomics.readgroupsets.patch" call.
+// Exactly one of the return values is non-nil.
+func (c *ReadgroupsetsPatchCall) Do() (*ReadGroupSet, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *ReadgroupsetsPatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.readgroupset)
@@ -3760,23 +3684,29 @@ func (c *ReadgroupsetsPatchCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *ReadgroupsetsPatchCall) Do() (*ReadGroupSet, error) {
+// DoHeader executes the "genomics.readgroupsets.patch" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *ReadgroupsetsPatchCall) DoHeader() (ret *ReadGroupSet, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *ReadGroupSet
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Updates a read group set. This method supports patch semantics.",
 	//   "httpMethod": "PATCH",
@@ -3838,6 +3768,21 @@ func (c *ReadgroupsetsSearchCall) Fields(s ...googleapi.Field) *ReadgroupsetsSea
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ReadgroupsetsSearchCall) IfNoneMatch(entityTag string) *ReadgroupsetsSearchCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "genomics.readgroupsets.search" call.
+// Exactly one of the return values is non-nil.
+func (c *ReadgroupsetsSearchCall) Do() (*SearchReadGroupSetsResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *ReadgroupsetsSearchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.searchreadgroupsetsrequest)
@@ -3856,23 +3801,29 @@ func (c *ReadgroupsetsSearchCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *ReadgroupsetsSearchCall) Do() (*SearchReadGroupSetsResponse, error) {
+// DoHeader executes the "genomics.readgroupsets.search" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *ReadgroupsetsSearchCall) DoHeader() (ret *SearchReadGroupSetsResponse, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *SearchReadGroupSetsResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Searches for read group sets matching the criteria. Implements [GlobalAllianceApi.searchReadGroupSets](https://github.com/ga4gh/schemas/blob/v0.5.1/src/main/resources/avro/readmethods.avdl#L135).",
 	//   "httpMethod": "POST",
@@ -3978,6 +3929,21 @@ func (c *ReadgroupsetsCoveragebucketsListCall) Fields(s ...googleapi.Field) *Rea
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ReadgroupsetsCoveragebucketsListCall) IfNoneMatch(entityTag string) *ReadgroupsetsCoveragebucketsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "genomics.readgroupsets.coveragebuckets.list" call.
+// Exactly one of the return values is non-nil.
+func (c *ReadgroupsetsCoveragebucketsListCall) Do() (*ListCoverageBucketsResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *ReadgroupsetsCoveragebucketsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4010,23 +3976,29 @@ func (c *ReadgroupsetsCoveragebucketsListCall) doRequest(alt string) (*http.Resp
 		"readGroupSetId": c.readGroupSetId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *ReadgroupsetsCoveragebucketsListCall) Do() (*ListCoverageBucketsResponse, error) {
+// DoHeader executes the "genomics.readgroupsets.coveragebuckets.list" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *ReadgroupsetsCoveragebucketsListCall) DoHeader() (ret *ListCoverageBucketsResponse, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *ListCoverageBucketsResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Lists fixed width coverage buckets for a read group set, each of which correspond to a range of a reference sequence. Each bucket summarizes coverage information across its corresponding genomic range. Coverage is defined as the number of reads which are aligned to a given base in the reference sequence. Coverage buckets are available at several precomputed bucket widths, enabling retrieval of various coverage 'zoom levels'. The caller must have READ permissions for the target read group set.",
 	//   "httpMethod": "GET",
@@ -4124,6 +4096,21 @@ func (c *ReadsSearchCall) Fields(s ...googleapi.Field) *ReadsSearchCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ReadsSearchCall) IfNoneMatch(entityTag string) *ReadsSearchCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "genomics.reads.search" call.
+// Exactly one of the return values is non-nil.
+func (c *ReadsSearchCall) Do() (*SearchReadsResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *ReadsSearchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.searchreadsrequest)
@@ -4142,23 +4129,29 @@ func (c *ReadsSearchCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *ReadsSearchCall) Do() (*SearchReadsResponse, error) {
+// DoHeader executes the "genomics.reads.search" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *ReadsSearchCall) DoHeader() (ret *SearchReadsResponse, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *SearchReadsResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Gets a list of reads for one or more read group sets. Reads search operates over a genomic coordinate space of reference sequence \u0026 position defined over the reference sequences to which the requested read group sets are aligned. If a target positional range is specified, search returns all reads whose alignment to the reference genome overlap the range. A query which specifies only read group set IDs yields all reads in those read group sets, including unmapped reads. All reads returned (including reads on subsequent pages) are ordered by genomic coordinate (reference sequence \u0026 position). Reads with equivalent genomic coordinates are returned in a deterministic order. Implements [GlobalAllianceApi.searchReads](https://github.com/ga4gh/schemas/blob/v0.5.1/src/main/resources/avro/readmethods.avdl#L85).",
 	//   "httpMethod": "POST",
@@ -4204,6 +4197,21 @@ func (c *ReferencesGetCall) Fields(s ...googleapi.Field) *ReferencesGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ReferencesGetCall) IfNoneMatch(entityTag string) *ReferencesGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "genomics.references.get" call.
+// Exactly one of the return values is non-nil.
+func (c *ReferencesGetCall) Do() (*Reference, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *ReferencesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4218,23 +4226,29 @@ func (c *ReferencesGetCall) doRequest(alt string) (*http.Response, error) {
 		"referenceId": c.referenceId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *ReferencesGetCall) Do() (*Reference, error) {
+// DoHeader executes the "genomics.references.get" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *ReferencesGetCall) DoHeader() (ret *Reference, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Reference
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Gets a reference. Implements [GlobalAllianceApi.getReference](https://github.com/ga4gh/schemas/blob/v0.5.1/src/main/resources/avro/referencemethods.avdl#L158).",
 	//   "httpMethod": "GET",
@@ -4289,6 +4303,21 @@ func (c *ReferencesSearchCall) Fields(s ...googleapi.Field) *ReferencesSearchCal
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ReferencesSearchCall) IfNoneMatch(entityTag string) *ReferencesSearchCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "genomics.references.search" call.
+// Exactly one of the return values is non-nil.
+func (c *ReferencesSearchCall) Do() (*SearchReferencesResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *ReferencesSearchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.searchreferencesrequest)
@@ -4307,23 +4336,29 @@ func (c *ReferencesSearchCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *ReferencesSearchCall) Do() (*SearchReferencesResponse, error) {
+// DoHeader executes the "genomics.references.search" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *ReferencesSearchCall) DoHeader() (ret *SearchReferencesResponse, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *SearchReferencesResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Searches for references which match the given criteria. Implements [GlobalAllianceApi.searchReferences](https://github.com/ga4gh/schemas/blob/v0.5.1/src/main/resources/avro/referencemethods.avdl#L146).",
 	//   "httpMethod": "POST",
@@ -4400,6 +4435,21 @@ func (c *ReferencesBasesListCall) Fields(s ...googleapi.Field) *ReferencesBasesL
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ReferencesBasesListCall) IfNoneMatch(entityTag string) *ReferencesBasesListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "genomics.references.bases.list" call.
+// Exactly one of the return values is non-nil.
+func (c *ReferencesBasesListCall) Do() (*ListBasesResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *ReferencesBasesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4426,23 +4476,29 @@ func (c *ReferencesBasesListCall) doRequest(alt string) (*http.Response, error) 
 		"referenceId": c.referenceId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *ReferencesBasesListCall) Do() (*ListBasesResponse, error) {
+// DoHeader executes the "genomics.references.bases.list" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *ReferencesBasesListCall) DoHeader() (ret *ListBasesResponse, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *ListBasesResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Lists the bases in a reference, optionally restricted to a range. Implements [GlobalAllianceApi.getReferenceBases](https://github.com/ga4gh/schemas/blob/v0.5.1/src/main/resources/avro/referencemethods.avdl#L221).",
 	//   "httpMethod": "GET",
@@ -4519,6 +4575,21 @@ func (c *ReferencesetsGetCall) Fields(s ...googleapi.Field) *ReferencesetsGetCal
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ReferencesetsGetCall) IfNoneMatch(entityTag string) *ReferencesetsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "genomics.referencesets.get" call.
+// Exactly one of the return values is non-nil.
+func (c *ReferencesetsGetCall) Do() (*ReferenceSet, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *ReferencesetsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4533,23 +4604,29 @@ func (c *ReferencesetsGetCall) doRequest(alt string) (*http.Response, error) {
 		"referenceSetId": c.referenceSetId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *ReferencesetsGetCall) Do() (*ReferenceSet, error) {
+// DoHeader executes the "genomics.referencesets.get" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *ReferencesetsGetCall) DoHeader() (ret *ReferenceSet, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *ReferenceSet
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Gets a reference set. Implements [GlobalAllianceApi.getReferenceSet](https://github.com/ga4gh/schemas/blob/v0.5.1/src/main/resources/avro/referencemethods.avdl#L83).",
 	//   "httpMethod": "GET",
@@ -4604,6 +4681,21 @@ func (c *ReferencesetsSearchCall) Fields(s ...googleapi.Field) *ReferencesetsSea
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ReferencesetsSearchCall) IfNoneMatch(entityTag string) *ReferencesetsSearchCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "genomics.referencesets.search" call.
+// Exactly one of the return values is non-nil.
+func (c *ReferencesetsSearchCall) Do() (*SearchReferenceSetsResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *ReferencesetsSearchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.searchreferencesetsrequest)
@@ -4622,23 +4714,29 @@ func (c *ReferencesetsSearchCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *ReferencesetsSearchCall) Do() (*SearchReferenceSetsResponse, error) {
+// DoHeader executes the "genomics.referencesets.search" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *ReferencesetsSearchCall) DoHeader() (ret *SearchReferenceSetsResponse, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *SearchReferenceSetsResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Searches for reference sets which match the given criteria. Implements [GlobalAllianceApi.searchReferenceSets](http://ga4gh.org/documentation/api/v0.5.1/ga4gh_api.html#/schema/org.ga4gh.searchReferenceSets).",
 	//   "httpMethod": "POST",
@@ -4682,6 +4780,21 @@ func (c *VariantsCreateCall) Fields(s ...googleapi.Field) *VariantsCreateCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *VariantsCreateCall) IfNoneMatch(entityTag string) *VariantsCreateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "genomics.variants.create" call.
+// Exactly one of the return values is non-nil.
+func (c *VariantsCreateCall) Do() (*Variant, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *VariantsCreateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.variant)
@@ -4700,23 +4813,29 @@ func (c *VariantsCreateCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *VariantsCreateCall) Do() (*Variant, error) {
+// DoHeader executes the "genomics.variants.create" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *VariantsCreateCall) DoHeader() (ret *Variant, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Variant
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Creates a new variant.",
 	//   "httpMethod": "POST",
@@ -4759,6 +4878,21 @@ func (c *VariantsDeleteCall) Fields(s ...googleapi.Field) *VariantsDeleteCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *VariantsDeleteCall) IfNoneMatch(entityTag string) *VariantsDeleteCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "genomics.variants.delete" call.
+// Exactly one of the return values is non-nil.
+func (c *VariantsDeleteCall) Do() (*Empty, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *VariantsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4773,23 +4907,29 @@ func (c *VariantsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"variantId": c.variantId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *VariantsDeleteCall) Do() (*Empty, error) {
+// DoHeader executes the "genomics.variants.delete" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *VariantsDeleteCall) DoHeader() (ret *Empty, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Empty
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Deletes a variant.",
 	//   "httpMethod": "DELETE",
@@ -4840,6 +4980,21 @@ func (c *VariantsGetCall) Fields(s ...googleapi.Field) *VariantsGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *VariantsGetCall) IfNoneMatch(entityTag string) *VariantsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "genomics.variants.get" call.
+// Exactly one of the return values is non-nil.
+func (c *VariantsGetCall) Do() (*Variant, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *VariantsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4854,23 +5009,29 @@ func (c *VariantsGetCall) doRequest(alt string) (*http.Response, error) {
 		"variantId": c.variantId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *VariantsGetCall) Do() (*Variant, error) {
+// DoHeader executes the "genomics.variants.get" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *VariantsGetCall) DoHeader() (ret *Variant, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Variant
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Gets a variant by ID.",
 	//   "httpMethod": "GET",
@@ -4930,6 +5091,21 @@ func (c *VariantsImportCall) Fields(s ...googleapi.Field) *VariantsImportCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *VariantsImportCall) IfNoneMatch(entityTag string) *VariantsImportCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "genomics.variants.import" call.
+// Exactly one of the return values is non-nil.
+func (c *VariantsImportCall) Do() (*Operation, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *VariantsImportCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.importvariantsrequest)
@@ -4948,23 +5124,29 @@ func (c *VariantsImportCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *VariantsImportCall) Do() (*Operation, error) {
+// DoHeader executes the "genomics.variants.import" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *VariantsImportCall) DoHeader() (ret *Operation, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Operation
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Creates variant data by asynchronously importing the provided information. The variants for import will be merged with any existing data and each other according to the behavior of mergeVariants. In particular, this means for merged VCF variants that have conflicting INFO fields, some data will be arbitrarily discarded. As a special case, for single-sample VCF files, QUAL and FILTER fields will be moved to the call level; these are sometimes interpreted in a call-specific context. Imported VCF headers are appended to the metadata already in a variant set.",
 	//   "httpMethod": "POST",
@@ -4979,6 +5161,110 @@ func (c *VariantsImportCall) Do() (*Operation, error) {
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/devstorage.read_write",
+	//     "https://www.googleapis.com/auth/genomics"
+	//   ]
+	// }
+
+}
+
+// method id "genomics.variants.merge":
+
+type VariantsMergeCall struct {
+	s                    *Service
+	mergevariantsrequest *MergeVariantsRequest
+	opt_                 map[string]interface{}
+}
+
+// Merge: Merges the given variants with existing variants. Each variant
+// will be merged with an existing variant that matches its reference
+// sequence, start, end, reference bases, and alternative bases. If no
+// such variant exists, a new one will be created. When variants are
+// merged, the call information from the new variant is added to the
+// existing variant, and other fields (such as key/value pairs) are
+// discarded.
+func (r *VariantsService) Merge(mergevariantsrequest *MergeVariantsRequest) *VariantsMergeCall {
+	c := &VariantsMergeCall{s: r.s, opt_: make(map[string]interface{})}
+	c.mergevariantsrequest = mergevariantsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *VariantsMergeCall) Fields(s ...googleapi.Field) *VariantsMergeCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *VariantsMergeCall) IfNoneMatch(entityTag string) *VariantsMergeCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "genomics.variants.merge" call.
+// Exactly one of the return values is non-nil.
+func (c *VariantsMergeCall) Do() (*Empty, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *VariantsMergeCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.mergevariantsrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/variants:merge")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
+	return c.s.client.Do(req)
+}
+
+// DoHeader executes the "genomics.variants.merge" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *VariantsMergeCall) DoHeader() (ret *Empty, resHeader http.Header, err error) {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return nil, nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, res.Header, err
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, res.Header, err
+	}
+	return ret, res.Header, nil
+	// {
+	//   "description": "Merges the given variants with existing variants. Each variant will be merged with an existing variant that matches its reference sequence, start, end, reference bases, and alternative bases. If no such variant exists, a new one will be created. When variants are merged, the call information from the new variant is added to the existing variant, and other fields (such as key/value pairs) are discarded.",
+	//   "httpMethod": "POST",
+	//   "id": "genomics.variants.merge",
+	//   "path": "v1/variants:merge",
+	//   "request": {
+	//     "$ref": "MergeVariantsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/genomics"
 	//   ]
 	// }
@@ -5022,6 +5308,21 @@ func (c *VariantsPatchCall) Fields(s ...googleapi.Field) *VariantsPatchCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *VariantsPatchCall) IfNoneMatch(entityTag string) *VariantsPatchCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "genomics.variants.patch" call.
+// Exactly one of the return values is non-nil.
+func (c *VariantsPatchCall) Do() (*Variant, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *VariantsPatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.variant)
@@ -5045,23 +5346,29 @@ func (c *VariantsPatchCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *VariantsPatchCall) Do() (*Variant, error) {
+// DoHeader executes the "genomics.variants.patch" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *VariantsPatchCall) DoHeader() (ret *Variant, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Variant
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Updates a variant. This method supports patch semantics. Returns the modified variant without its calls.",
 	//   "httpMethod": "PATCH",
@@ -5122,6 +5429,21 @@ func (c *VariantsSearchCall) Fields(s ...googleapi.Field) *VariantsSearchCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *VariantsSearchCall) IfNoneMatch(entityTag string) *VariantsSearchCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "genomics.variants.search" call.
+// Exactly one of the return values is non-nil.
+func (c *VariantsSearchCall) Do() (*SearchVariantsResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *VariantsSearchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.searchvariantsrequest)
@@ -5140,23 +5462,29 @@ func (c *VariantsSearchCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *VariantsSearchCall) Do() (*SearchVariantsResponse, error) {
+// DoHeader executes the "genomics.variants.search" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *VariantsSearchCall) DoHeader() (ret *SearchVariantsResponse, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *SearchVariantsResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Gets a list of variants matching the criteria. Implements [GlobalAllianceApi.searchVariants](https://github.com/ga4gh/schemas/blob/v0.5.1/src/main/resources/avro/variantmethods.avdl#L126).",
 	//   "httpMethod": "POST",
@@ -5185,9 +5513,7 @@ type VariantsetsCreateCall struct {
 	opt_       map[string]interface{}
 }
 
-// Create: Creates a new variant set. The provided variant set must have
-// a valid `datasetId` set - all other fields are optional. Note that
-// the `id` field will be ignored, as this is assigned by the server.
+// Create: Creates a new variant set.
 func (r *VariantsetsService) Create(variantset *VariantSet) *VariantsetsCreateCall {
 	c := &VariantsetsCreateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.variantset = variantset
@@ -5200,6 +5526,21 @@ func (r *VariantsetsService) Create(variantset *VariantSet) *VariantsetsCreateCa
 func (c *VariantsetsCreateCall) Fields(s ...googleapi.Field) *VariantsetsCreateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *VariantsetsCreateCall) IfNoneMatch(entityTag string) *VariantsetsCreateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "genomics.variantsets.create" call.
+// Exactly one of the return values is non-nil.
+func (c *VariantsetsCreateCall) Do() (*VariantSet, error) {
+	v, _, err := c.DoHeader()
+	return v, err
 }
 
 func (c *VariantsetsCreateCall) doRequest(alt string) (*http.Response, error) {
@@ -5220,25 +5561,31 @@ func (c *VariantsetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *VariantsetsCreateCall) Do() (*VariantSet, error) {
+// DoHeader executes the "genomics.variantsets.create" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *VariantsetsCreateCall) DoHeader() (ret *VariantSet, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *VariantSet
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
-	//   "description": "Creates a new variant set. The provided variant set must have a valid `datasetId` set - all other fields are optional. Note that the `id` field will be ignored, as this is assigned by the server.",
+	//   "description": "Creates a new variant set.",
 	//   "httpMethod": "POST",
 	//   "id": "genomics.variantsets.create",
 	//   "path": "v1/variantsets",
@@ -5280,6 +5627,21 @@ func (c *VariantsetsDeleteCall) Fields(s ...googleapi.Field) *VariantsetsDeleteC
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *VariantsetsDeleteCall) IfNoneMatch(entityTag string) *VariantsetsDeleteCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "genomics.variantsets.delete" call.
+// Exactly one of the return values is non-nil.
+func (c *VariantsetsDeleteCall) Do() (*Empty, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *VariantsetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5294,23 +5656,29 @@ func (c *VariantsetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"variantSetId": c.variantSetId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *VariantsetsDeleteCall) Do() (*Empty, error) {
+// DoHeader executes the "genomics.variantsets.delete" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *VariantsetsDeleteCall) DoHeader() (ret *Empty, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Empty
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Deletes the contents of a variant set. The variant set object is not deleted.",
 	//   "httpMethod": "DELETE",
@@ -5363,6 +5731,21 @@ func (c *VariantsetsExportCall) Fields(s ...googleapi.Field) *VariantsetsExportC
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *VariantsetsExportCall) IfNoneMatch(entityTag string) *VariantsetsExportCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "genomics.variantsets.export" call.
+// Exactly one of the return values is non-nil.
+func (c *VariantsetsExportCall) Do() (*Operation, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *VariantsetsExportCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.exportvariantsetrequest)
@@ -5383,23 +5766,29 @@ func (c *VariantsetsExportCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *VariantsetsExportCall) Do() (*Operation, error) {
+// DoHeader executes the "genomics.variantsets.export" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *VariantsetsExportCall) DoHeader() (ret *Operation, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Operation
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Exports variant set data to an external destination.",
 	//   "httpMethod": "POST",
@@ -5454,6 +5843,21 @@ func (c *VariantsetsGetCall) Fields(s ...googleapi.Field) *VariantsetsGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *VariantsetsGetCall) IfNoneMatch(entityTag string) *VariantsetsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "genomics.variantsets.get" call.
+// Exactly one of the return values is non-nil.
+func (c *VariantsetsGetCall) Do() (*VariantSet, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *VariantsetsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5468,23 +5872,29 @@ func (c *VariantsetsGetCall) doRequest(alt string) (*http.Response, error) {
 		"variantSetId": c.variantSetId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *VariantsetsGetCall) Do() (*VariantSet, error) {
+// DoHeader executes the "genomics.variantsets.get" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *VariantsetsGetCall) DoHeader() (ret *VariantSet, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *VariantSet
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Gets a variant set by ID.",
 	//   "httpMethod": "GET",
@@ -5548,6 +5958,21 @@ func (c *VariantsetsPatchCall) Fields(s ...googleapi.Field) *VariantsetsPatchCal
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *VariantsetsPatchCall) IfNoneMatch(entityTag string) *VariantsetsPatchCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "genomics.variantsets.patch" call.
+// Exactly one of the return values is non-nil.
+func (c *VariantsetsPatchCall) Do() (*VariantSet, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *VariantsetsPatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.variantset)
@@ -5571,23 +5996,29 @@ func (c *VariantsetsPatchCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *VariantsetsPatchCall) Do() (*VariantSet, error) {
+// DoHeader executes the "genomics.variantsets.patch" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *VariantsetsPatchCall) DoHeader() (ret *VariantSet, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *VariantSet
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Updates a variant set. This method supports patch semantics.",
 	//   "httpMethod": "PATCH",
@@ -5649,6 +6080,21 @@ func (c *VariantsetsSearchCall) Fields(s ...googleapi.Field) *VariantsetsSearchC
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *VariantsetsSearchCall) IfNoneMatch(entityTag string) *VariantsetsSearchCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "genomics.variantsets.search" call.
+// Exactly one of the return values is non-nil.
+func (c *VariantsetsSearchCall) Do() (*SearchVariantSetsResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *VariantsetsSearchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.searchvariantsetsrequest)
@@ -5667,23 +6113,29 @@ func (c *VariantsetsSearchCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *VariantsetsSearchCall) Do() (*SearchVariantSetsResponse, error) {
+// DoHeader executes the "genomics.variantsets.search" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *VariantsetsSearchCall) DoHeader() (ret *SearchVariantSetsResponse, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *SearchVariantSetsResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Returns a list of all variant sets matching search criteria. Implements [GlobalAllianceApi.searchVariantSets](https://github.com/ga4gh/schemas/blob/v0.5.1/src/main/resources/avro/variantmethods.avdl#L49).",
 	//   "httpMethod": "POST",

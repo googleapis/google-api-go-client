@@ -566,6 +566,21 @@ func (c *DimensionValuesQueryCall) Fields(s ...googleapi.Field) *DimensionValues
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *DimensionValuesQueryCall) IfNoneMatch(entityTag string) *DimensionValuesQueryCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "dfareporting.dimensionValues.query" call.
+// Exactly one of the return values is non-nil.
+func (c *DimensionValuesQueryCall) Do() (*DimensionValueList, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *DimensionValuesQueryCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.dimensionvaluerequest)
@@ -592,23 +607,29 @@ func (c *DimensionValuesQueryCall) doRequest(alt string) (*http.Response, error)
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *DimensionValuesQueryCall) Do() (*DimensionValueList, error) {
+// DoHeader executes the "dfareporting.dimensionValues.query" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *DimensionValuesQueryCall) DoHeader() (ret *DimensionValueList, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *DimensionValueList
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Retrieves list of report dimension values for a list of filters.",
 	//   "httpMethod": "POST",
@@ -711,6 +732,21 @@ func (c *FilesListCall) Fields(s ...googleapi.Field) *FilesListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *FilesListCall) IfNoneMatch(entityTag string) *FilesListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "dfareporting.files.list" call.
+// Exactly one of the return values is non-nil.
+func (c *FilesListCall) Do() (*FileList, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *FilesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -737,23 +773,29 @@ func (c *FilesListCall) doRequest(alt string) (*http.Response, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *FilesListCall) Do() (*FileList, error) {
+// DoHeader executes the "dfareporting.files.list" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *FilesListCall) DoHeader() (ret *FileList, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *FileList
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Lists files for a user profile.",
 	//   "httpMethod": "GET",
@@ -847,6 +889,20 @@ func (c *ReportsDeleteCall) Fields(s ...googleapi.Field) *ReportsDeleteCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ReportsDeleteCall) IfNoneMatch(entityTag string) *ReportsDeleteCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "dfareporting.reports.delete" call.
+func (c *ReportsDeleteCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
 func (c *ReportsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -862,19 +918,26 @@ func (c *ReportsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"reportId":  strconv.FormatInt(c.reportId, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *ReportsDeleteCall) Do() error {
+// DoHeader executes the "dfareporting.reports.delete" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *ReportsDeleteCall) DoHeader() (resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Deletes a report by its id.",
 	//   "httpMethod": "DELETE",
@@ -932,6 +995,21 @@ func (c *ReportsGetCall) Fields(s ...googleapi.Field) *ReportsGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ReportsGetCall) IfNoneMatch(entityTag string) *ReportsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "dfareporting.reports.get" call.
+// Exactly one of the return values is non-nil.
+func (c *ReportsGetCall) Do() (*Report, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *ReportsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -947,23 +1025,29 @@ func (c *ReportsGetCall) doRequest(alt string) (*http.Response, error) {
 		"reportId":  strconv.FormatInt(c.reportId, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *ReportsGetCall) Do() (*Report, error) {
+// DoHeader executes the "dfareporting.reports.get" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *ReportsGetCall) DoHeader() (ret *Report, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Report
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Retrieves a report by its id.",
 	//   "httpMethod": "GET",
@@ -1024,6 +1108,21 @@ func (c *ReportsInsertCall) Fields(s ...googleapi.Field) *ReportsInsertCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ReportsInsertCall) IfNoneMatch(entityTag string) *ReportsInsertCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "dfareporting.reports.insert" call.
+// Exactly one of the return values is non-nil.
+func (c *ReportsInsertCall) Do() (*Report, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *ReportsInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.report)
@@ -1044,23 +1143,29 @@ func (c *ReportsInsertCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *ReportsInsertCall) Do() (*Report, error) {
+// DoHeader executes the "dfareporting.reports.insert" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *ReportsInsertCall) DoHeader() (ret *Report, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Report
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Creates a report.",
 	//   "httpMethod": "POST",
@@ -1151,6 +1256,21 @@ func (c *ReportsListCall) Fields(s ...googleapi.Field) *ReportsListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ReportsListCall) IfNoneMatch(entityTag string) *ReportsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "dfareporting.reports.list" call.
+// Exactly one of the return values is non-nil.
+func (c *ReportsListCall) Do() (*ReportList, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *ReportsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1177,23 +1297,29 @@ func (c *ReportsListCall) doRequest(alt string) (*http.Response, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *ReportsListCall) Do() (*ReportList, error) {
+// DoHeader executes the "dfareporting.reports.list" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *ReportsListCall) DoHeader() (ret *ReportList, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *ReportList
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Retrieves list of reports.",
 	//   "httpMethod": "GET",
@@ -1291,6 +1417,21 @@ func (c *ReportsPatchCall) Fields(s ...googleapi.Field) *ReportsPatchCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ReportsPatchCall) IfNoneMatch(entityTag string) *ReportsPatchCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "dfareporting.reports.patch" call.
+// Exactly one of the return values is non-nil.
+func (c *ReportsPatchCall) Do() (*Report, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *ReportsPatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.report)
@@ -1312,23 +1453,29 @@ func (c *ReportsPatchCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *ReportsPatchCall) Do() (*Report, error) {
+// DoHeader executes the "dfareporting.reports.patch" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *ReportsPatchCall) DoHeader() (ret *Report, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Report
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Updates a report. This method supports patch semantics.",
 	//   "httpMethod": "PATCH",
@@ -1399,6 +1546,21 @@ func (c *ReportsRunCall) Fields(s ...googleapi.Field) *ReportsRunCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ReportsRunCall) IfNoneMatch(entityTag string) *ReportsRunCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "dfareporting.reports.run" call.
+// Exactly one of the return values is non-nil.
+func (c *ReportsRunCall) Do() (*File, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *ReportsRunCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1417,23 +1579,29 @@ func (c *ReportsRunCall) doRequest(alt string) (*http.Response, error) {
 		"reportId":  strconv.FormatInt(c.reportId, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *ReportsRunCall) Do() (*File, error) {
+// DoHeader executes the "dfareporting.reports.run" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *ReportsRunCall) DoHeader() (ret *File, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *File
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Runs a report.",
 	//   "httpMethod": "POST",
@@ -1501,6 +1669,21 @@ func (c *ReportsUpdateCall) Fields(s ...googleapi.Field) *ReportsUpdateCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ReportsUpdateCall) IfNoneMatch(entityTag string) *ReportsUpdateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "dfareporting.reports.update" call.
+// Exactly one of the return values is non-nil.
+func (c *ReportsUpdateCall) Do() (*Report, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *ReportsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.report)
@@ -1522,23 +1705,29 @@ func (c *ReportsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *ReportsUpdateCall) Do() (*Report, error) {
+// DoHeader executes the "dfareporting.reports.update" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *ReportsUpdateCall) DoHeader() (ret *Report, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Report
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Updates a report.",
 	//   "httpMethod": "PUT",
@@ -1604,6 +1793,21 @@ func (c *ReportsFilesGetCall) Fields(s ...googleapi.Field) *ReportsFilesGetCall 
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ReportsFilesGetCall) IfNoneMatch(entityTag string) *ReportsFilesGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "dfareporting.reports.files.get" call.
+// Exactly one of the return values is non-nil.
+func (c *ReportsFilesGetCall) Do() (*File, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *ReportsFilesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1620,23 +1824,29 @@ func (c *ReportsFilesGetCall) doRequest(alt string) (*http.Response, error) {
 		"fileId":    strconv.FormatInt(c.fileId, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *ReportsFilesGetCall) Do() (*File, error) {
+// DoHeader executes the "dfareporting.reports.files.get" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *ReportsFilesGetCall) DoHeader() (ret *File, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *File
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Retrieves a report file.",
 	//   "httpMethod": "GET",
@@ -1741,6 +1951,21 @@ func (c *ReportsFilesListCall) Fields(s ...googleapi.Field) *ReportsFilesListCal
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ReportsFilesListCall) IfNoneMatch(entityTag string) *ReportsFilesListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "dfareporting.reports.files.list" call.
+// Exactly one of the return values is non-nil.
+func (c *ReportsFilesListCall) Do() (*FileList, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *ReportsFilesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1768,23 +1993,29 @@ func (c *ReportsFilesListCall) doRequest(alt string) (*http.Response, error) {
 		"reportId":  strconv.FormatInt(c.reportId, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *ReportsFilesListCall) Do() (*FileList, error) {
+// DoHeader executes the "dfareporting.reports.files.list" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *ReportsFilesListCall) DoHeader() (ret *FileList, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *FileList
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Lists files for a report.",
 	//   "httpMethod": "GET",
@@ -1884,6 +2115,21 @@ func (c *UserProfilesGetCall) Fields(s ...googleapi.Field) *UserProfilesGetCall 
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *UserProfilesGetCall) IfNoneMatch(entityTag string) *UserProfilesGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "dfareporting.userProfiles.get" call.
+// Exactly one of the return values is non-nil.
+func (c *UserProfilesGetCall) Do() (*UserProfile, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *UserProfilesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1898,23 +2144,29 @@ func (c *UserProfilesGetCall) doRequest(alt string) (*http.Response, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *UserProfilesGetCall) Do() (*UserProfile, error) {
+// DoHeader executes the "dfareporting.userProfiles.get" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *UserProfilesGetCall) DoHeader() (ret *UserProfile, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *UserProfile
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Gets one user profile by id.",
 	//   "httpMethod": "GET",
@@ -1963,6 +2215,21 @@ func (c *UserProfilesListCall) Fields(s ...googleapi.Field) *UserProfilesListCal
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *UserProfilesListCall) IfNoneMatch(entityTag string) *UserProfilesListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "dfareporting.userProfiles.list" call.
+// Exactly one of the return values is non-nil.
+func (c *UserProfilesListCall) Do() (*UserProfileList, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *UserProfilesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1975,23 +2242,29 @@ func (c *UserProfilesListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *UserProfilesListCall) Do() (*UserProfileList, error) {
+// DoHeader executes the "dfareporting.userProfiles.list" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *UserProfilesListCall) DoHeader() (ret *UserProfileList, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *UserProfileList
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Retrieves list of user profiles for a user.",
 	//   "httpMethod": "GET",

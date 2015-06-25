@@ -46,10 +46,6 @@ const (
 	// View and manage your data across Google Cloud Platform services
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
-	// MESSAGE UNDER CONSTRUCTION View your data across Google Cloud
-	// Platform services
-	CloudPlatformReadOnlyScope = "https://www.googleapis.com/auth/cloud-platform.read-only"
-
 	// View and manage your Google Compute Engine resources
 	ComputeScope = "https://www.googleapis.com/auth/compute"
 
@@ -428,6 +424,21 @@ func (c *ZoneOperationsGetCall) Fields(s ...googleapi.Field) *ZoneOperationsGetC
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ZoneOperationsGetCall) IfNoneMatch(entityTag string) *ZoneOperationsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "resourceviews.zoneOperations.get" call.
+// Exactly one of the return values is non-nil.
+func (c *ZoneOperationsGetCall) Do() (*Operation, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *ZoneOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -444,23 +455,29 @@ func (c *ZoneOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 		"operation": c.operation,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *ZoneOperationsGetCall) Do() (*Operation, error) {
+// DoHeader executes the "resourceviews.zoneOperations.get" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *ZoneOperationsGetCall) DoHeader() (ret *Operation, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Operation
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Retrieves the specified zone-specific operation resource.",
 	//   "httpMethod": "GET",
@@ -499,7 +516,6 @@ func (c *ZoneOperationsGetCall) Do() (*Operation, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly",
 	//     "https://www.googleapis.com/auth/ndev.cloudman",
@@ -558,6 +574,21 @@ func (c *ZoneOperationsListCall) Fields(s ...googleapi.Field) *ZoneOperationsLis
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ZoneOperationsListCall) IfNoneMatch(entityTag string) *ZoneOperationsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "resourceviews.zoneOperations.list" call.
+// Exactly one of the return values is non-nil.
+func (c *ZoneOperationsListCall) Do() (*OperationList, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *ZoneOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -582,23 +613,29 @@ func (c *ZoneOperationsListCall) doRequest(alt string) (*http.Response, error) {
 		"zone":    c.zone,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *ZoneOperationsListCall) Do() (*OperationList, error) {
+// DoHeader executes the "resourceviews.zoneOperations.list" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *ZoneOperationsListCall) DoHeader() (ret *OperationList, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *OperationList
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Retrieves the list of operation resources contained within the specified zone.",
 	//   "httpMethod": "GET",
@@ -648,7 +685,6 @@ func (c *ZoneOperationsListCall) Do() (*OperationList, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly",
 	//     "https://www.googleapis.com/auth/ndev.cloudman",
@@ -687,6 +723,21 @@ func (c *ZoneViewsAddResourcesCall) Fields(s ...googleapi.Field) *ZoneViewsAddRe
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ZoneViewsAddResourcesCall) IfNoneMatch(entityTag string) *ZoneViewsAddResourcesCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "resourceviews.zoneViews.addResources" call.
+// Exactly one of the return values is non-nil.
+func (c *ZoneViewsAddResourcesCall) Do() (*Operation, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *ZoneViewsAddResourcesCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.zoneviewsaddresourcesrequest)
@@ -709,23 +760,29 @@ func (c *ZoneViewsAddResourcesCall) doRequest(alt string) (*http.Response, error
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *ZoneViewsAddResourcesCall) Do() (*Operation, error) {
+// DoHeader executes the "resourceviews.zoneViews.addResources" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *ZoneViewsAddResourcesCall) DoHeader() (ret *Operation, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Operation
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Add resources to the view.",
 	//   "httpMethod": "POST",
@@ -798,6 +855,21 @@ func (c *ZoneViewsDeleteCall) Fields(s ...googleapi.Field) *ZoneViewsDeleteCall 
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ZoneViewsDeleteCall) IfNoneMatch(entityTag string) *ZoneViewsDeleteCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "resourceviews.zoneViews.delete" call.
+// Exactly one of the return values is non-nil.
+func (c *ZoneViewsDeleteCall) Do() (*Operation, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *ZoneViewsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -814,23 +886,29 @@ func (c *ZoneViewsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"resourceView": c.resourceView,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *ZoneViewsDeleteCall) Do() (*Operation, error) {
+// DoHeader executes the "resourceviews.zoneViews.delete" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *ZoneViewsDeleteCall) DoHeader() (ret *Operation, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Operation
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Delete a resource view.",
 	//   "httpMethod": "DELETE",
@@ -900,6 +978,21 @@ func (c *ZoneViewsGetCall) Fields(s ...googleapi.Field) *ZoneViewsGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ZoneViewsGetCall) IfNoneMatch(entityTag string) *ZoneViewsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "resourceviews.zoneViews.get" call.
+// Exactly one of the return values is non-nil.
+func (c *ZoneViewsGetCall) Do() (*ResourceView, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *ZoneViewsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -916,23 +1009,29 @@ func (c *ZoneViewsGetCall) doRequest(alt string) (*http.Response, error) {
 		"resourceView": c.resourceView,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *ZoneViewsGetCall) Do() (*ResourceView, error) {
+// DoHeader executes the "resourceviews.zoneViews.get" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *ZoneViewsGetCall) DoHeader() (ret *ResourceView, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *ResourceView
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Get the information of a zonal resource view.",
 	//   "httpMethod": "GET",
@@ -968,7 +1067,6 @@ func (c *ZoneViewsGetCall) Do() (*ResourceView, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly",
 	//     "https://www.googleapis.com/auth/ndev.cloudman",
@@ -1014,6 +1112,21 @@ func (c *ZoneViewsGetServiceCall) Fields(s ...googleapi.Field) *ZoneViewsGetServ
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ZoneViewsGetServiceCall) IfNoneMatch(entityTag string) *ZoneViewsGetServiceCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "resourceviews.zoneViews.getService" call.
+// Exactly one of the return values is non-nil.
+func (c *ZoneViewsGetServiceCall) Do() (*ZoneViewsGetServiceResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *ZoneViewsGetServiceCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1033,23 +1146,29 @@ func (c *ZoneViewsGetServiceCall) doRequest(alt string) (*http.Response, error) 
 		"resourceView": c.resourceView,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *ZoneViewsGetServiceCall) Do() (*ZoneViewsGetServiceResponse, error) {
+// DoHeader executes the "resourceviews.zoneViews.getService" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *ZoneViewsGetServiceCall) DoHeader() (ret *ZoneViewsGetServiceResponse, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *ZoneViewsGetServiceResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Get the service information of a resource view or a resource.",
 	//   "httpMethod": "POST",
@@ -1124,6 +1243,21 @@ func (c *ZoneViewsInsertCall) Fields(s ...googleapi.Field) *ZoneViewsInsertCall 
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ZoneViewsInsertCall) IfNoneMatch(entityTag string) *ZoneViewsInsertCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "resourceviews.zoneViews.insert" call.
+// Exactly one of the return values is non-nil.
+func (c *ZoneViewsInsertCall) Do() (*Operation, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *ZoneViewsInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.resourceview)
@@ -1145,23 +1279,29 @@ func (c *ZoneViewsInsertCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *ZoneViewsInsertCall) Do() (*Operation, error) {
+// DoHeader executes the "resourceviews.zoneViews.insert" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *ZoneViewsInsertCall) DoHeader() (ret *Operation, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Operation
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Create a resource view.",
 	//   "httpMethod": "POST",
@@ -1242,6 +1382,21 @@ func (c *ZoneViewsListCall) Fields(s ...googleapi.Field) *ZoneViewsListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ZoneViewsListCall) IfNoneMatch(entityTag string) *ZoneViewsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "resourceviews.zoneViews.list" call.
+// Exactly one of the return values is non-nil.
+func (c *ZoneViewsListCall) Do() (*ZoneViewsList, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *ZoneViewsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1263,23 +1418,29 @@ func (c *ZoneViewsListCall) doRequest(alt string) (*http.Response, error) {
 		"zone":    c.zone,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *ZoneViewsListCall) Do() (*ZoneViewsList, error) {
+// DoHeader executes the "resourceviews.zoneViews.list" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *ZoneViewsListCall) DoHeader() (ret *ZoneViewsList, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *ZoneViewsList
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "List resource views.",
 	//   "httpMethod": "GET",
@@ -1322,7 +1483,6 @@ func (c *ZoneViewsListCall) Do() (*ZoneViewsList, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly",
 	//     "https://www.googleapis.com/auth/ndev.cloudman",
@@ -1409,6 +1569,21 @@ func (c *ZoneViewsListResourcesCall) Fields(s ...googleapi.Field) *ZoneViewsList
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ZoneViewsListResourcesCall) IfNoneMatch(entityTag string) *ZoneViewsListResourcesCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "resourceviews.zoneViews.listResources" call.
+// Exactly one of the return values is non-nil.
+func (c *ZoneViewsListResourcesCall) Do() (*ZoneViewsListResourcesResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *ZoneViewsListResourcesCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1440,23 +1615,29 @@ func (c *ZoneViewsListResourcesCall) doRequest(alt string) (*http.Response, erro
 		"resourceView": c.resourceView,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *ZoneViewsListResourcesCall) Do() (*ZoneViewsListResourcesResponse, error) {
+// DoHeader executes the "resourceviews.zoneViews.listResources" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *ZoneViewsListResourcesCall) DoHeader() (ret *ZoneViewsListResourcesResponse, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *ZoneViewsListResourcesResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "List the resources of the resource view.",
 	//   "httpMethod": "GET",
@@ -1540,7 +1721,6 @@ func (c *ZoneViewsListResourcesCall) Do() (*ZoneViewsListResourcesResponse, erro
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly",
 	//     "https://www.googleapis.com/auth/ndev.cloudman",
@@ -1579,6 +1759,21 @@ func (c *ZoneViewsRemoveResourcesCall) Fields(s ...googleapi.Field) *ZoneViewsRe
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ZoneViewsRemoveResourcesCall) IfNoneMatch(entityTag string) *ZoneViewsRemoveResourcesCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "resourceviews.zoneViews.removeResources" call.
+// Exactly one of the return values is non-nil.
+func (c *ZoneViewsRemoveResourcesCall) Do() (*Operation, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *ZoneViewsRemoveResourcesCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.zoneviewsremoveresourcesrequest)
@@ -1601,23 +1796,29 @@ func (c *ZoneViewsRemoveResourcesCall) doRequest(alt string) (*http.Response, er
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *ZoneViewsRemoveResourcesCall) Do() (*Operation, error) {
+// DoHeader executes the "resourceviews.zoneViews.removeResources" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *ZoneViewsRemoveResourcesCall) DoHeader() (ret *Operation, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Operation
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Remove resources from the view.",
 	//   "httpMethod": "POST",
@@ -1693,6 +1894,21 @@ func (c *ZoneViewsSetServiceCall) Fields(s ...googleapi.Field) *ZoneViewsSetServ
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ZoneViewsSetServiceCall) IfNoneMatch(entityTag string) *ZoneViewsSetServiceCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "resourceviews.zoneViews.setService" call.
+// Exactly one of the return values is non-nil.
+func (c *ZoneViewsSetServiceCall) Do() (*Operation, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *ZoneViewsSetServiceCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.zoneviewssetservicerequest)
@@ -1715,23 +1931,29 @@ func (c *ZoneViewsSetServiceCall) doRequest(alt string) (*http.Response, error) 
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *ZoneViewsSetServiceCall) Do() (*Operation, error) {
+// DoHeader executes the "resourceviews.zoneViews.setService" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *ZoneViewsSetServiceCall) DoHeader() (ret *Operation, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Operation
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Update the service information of a resource view or a resource.",
 	//   "httpMethod": "POST",

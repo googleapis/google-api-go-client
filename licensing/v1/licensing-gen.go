@@ -153,6 +153,20 @@ func (c *LicenseAssignmentsDeleteCall) Fields(s ...googleapi.Field) *LicenseAssi
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *LicenseAssignmentsDeleteCall) IfNoneMatch(entityTag string) *LicenseAssignmentsDeleteCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "licensing.licenseAssignments.delete" call.
+func (c *LicenseAssignmentsDeleteCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
 func (c *LicenseAssignmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -169,19 +183,26 @@ func (c *LicenseAssignmentsDeleteCall) doRequest(alt string) (*http.Response, er
 		"userId":    c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *LicenseAssignmentsDeleteCall) Do() error {
+// DoHeader executes the "licensing.licenseAssignments.delete" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *LicenseAssignmentsDeleteCall) DoHeader() (resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Revoke License.",
 	//   "httpMethod": "DELETE",
@@ -247,6 +268,21 @@ func (c *LicenseAssignmentsGetCall) Fields(s ...googleapi.Field) *LicenseAssignm
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *LicenseAssignmentsGetCall) IfNoneMatch(entityTag string) *LicenseAssignmentsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "licensing.licenseAssignments.get" call.
+// Exactly one of the return values is non-nil.
+func (c *LicenseAssignmentsGetCall) Do() (*LicenseAssignment, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *LicenseAssignmentsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -263,23 +299,29 @@ func (c *LicenseAssignmentsGetCall) doRequest(alt string) (*http.Response, error
 		"userId":    c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *LicenseAssignmentsGetCall) Do() (*LicenseAssignment, error) {
+// DoHeader executes the "licensing.licenseAssignments.get" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *LicenseAssignmentsGetCall) DoHeader() (ret *LicenseAssignment, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *LicenseAssignment
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Get license assignment of a particular product and sku for a user",
 	//   "httpMethod": "GET",
@@ -347,6 +389,21 @@ func (c *LicenseAssignmentsInsertCall) Fields(s ...googleapi.Field) *LicenseAssi
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *LicenseAssignmentsInsertCall) IfNoneMatch(entityTag string) *LicenseAssignmentsInsertCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "licensing.licenseAssignments.insert" call.
+// Exactly one of the return values is non-nil.
+func (c *LicenseAssignmentsInsertCall) Do() (*LicenseAssignment, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *LicenseAssignmentsInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.licenseassignmentinsert)
@@ -368,23 +425,29 @@ func (c *LicenseAssignmentsInsertCall) doRequest(alt string) (*http.Response, er
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *LicenseAssignmentsInsertCall) Do() (*LicenseAssignment, error) {
+// DoHeader executes the "licensing.licenseAssignments.insert" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *LicenseAssignmentsInsertCall) DoHeader() (ret *LicenseAssignment, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *LicenseAssignment
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Assign License.",
 	//   "httpMethod": "POST",
@@ -462,6 +525,21 @@ func (c *LicenseAssignmentsListForProductCall) Fields(s ...googleapi.Field) *Lic
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *LicenseAssignmentsListForProductCall) IfNoneMatch(entityTag string) *LicenseAssignmentsListForProductCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "licensing.licenseAssignments.listForProduct" call.
+// Exactly one of the return values is non-nil.
+func (c *LicenseAssignmentsListForProductCall) Do() (*LicenseAssignmentList, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *LicenseAssignmentsListForProductCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -483,23 +561,29 @@ func (c *LicenseAssignmentsListForProductCall) doRequest(alt string) (*http.Resp
 		"productId": c.productId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *LicenseAssignmentsListForProductCall) Do() (*LicenseAssignmentList, error) {
+// DoHeader executes the "licensing.licenseAssignments.listForProduct" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *LicenseAssignmentsListForProductCall) DoHeader() (ret *LicenseAssignmentList, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *LicenseAssignmentList
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "List license assignments for given product of the customer.",
 	//   "httpMethod": "GET",
@@ -591,6 +675,21 @@ func (c *LicenseAssignmentsListForProductAndSkuCall) Fields(s ...googleapi.Field
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *LicenseAssignmentsListForProductAndSkuCall) IfNoneMatch(entityTag string) *LicenseAssignmentsListForProductAndSkuCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "licensing.licenseAssignments.listForProductAndSku" call.
+// Exactly one of the return values is non-nil.
+func (c *LicenseAssignmentsListForProductAndSkuCall) Do() (*LicenseAssignmentList, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *LicenseAssignmentsListForProductAndSkuCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -613,23 +712,29 @@ func (c *LicenseAssignmentsListForProductAndSkuCall) doRequest(alt string) (*htt
 		"skuId":     c.skuId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *LicenseAssignmentsListForProductAndSkuCall) Do() (*LicenseAssignmentList, error) {
+// DoHeader executes the "licensing.licenseAssignments.listForProductAndSku" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *LicenseAssignmentsListForProductAndSkuCall) DoHeader() (ret *LicenseAssignmentList, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *LicenseAssignmentList
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "List license assignments for given product and sku of the customer.",
 	//   "httpMethod": "GET",
@@ -714,6 +819,21 @@ func (c *LicenseAssignmentsPatchCall) Fields(s ...googleapi.Field) *LicenseAssig
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *LicenseAssignmentsPatchCall) IfNoneMatch(entityTag string) *LicenseAssignmentsPatchCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "licensing.licenseAssignments.patch" call.
+// Exactly one of the return values is non-nil.
+func (c *LicenseAssignmentsPatchCall) Do() (*LicenseAssignment, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *LicenseAssignmentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.licenseassignment)
@@ -736,23 +856,29 @@ func (c *LicenseAssignmentsPatchCall) doRequest(alt string) (*http.Response, err
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *LicenseAssignmentsPatchCall) Do() (*LicenseAssignment, error) {
+// DoHeader executes the "licensing.licenseAssignments.patch" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *LicenseAssignmentsPatchCall) DoHeader() (ret *LicenseAssignment, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *LicenseAssignment
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Assign License. This method supports patch semantics.",
 	//   "httpMethod": "PATCH",
@@ -825,6 +951,21 @@ func (c *LicenseAssignmentsUpdateCall) Fields(s ...googleapi.Field) *LicenseAssi
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *LicenseAssignmentsUpdateCall) IfNoneMatch(entityTag string) *LicenseAssignmentsUpdateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "licensing.licenseAssignments.update" call.
+// Exactly one of the return values is non-nil.
+func (c *LicenseAssignmentsUpdateCall) Do() (*LicenseAssignment, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *LicenseAssignmentsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.licenseassignment)
@@ -847,23 +988,29 @@ func (c *LicenseAssignmentsUpdateCall) doRequest(alt string) (*http.Response, er
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *LicenseAssignmentsUpdateCall) Do() (*LicenseAssignment, error) {
+// DoHeader executes the "licensing.licenseAssignments.update" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *LicenseAssignmentsUpdateCall) DoHeader() (ret *LicenseAssignment, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *LicenseAssignment
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Assign License.",
 	//   "httpMethod": "PUT",

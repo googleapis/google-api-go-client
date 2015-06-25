@@ -1084,6 +1084,21 @@ func (c *PawsGetSpectrumCall) Fields(s ...googleapi.Field) *PawsGetSpectrumCall 
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *PawsGetSpectrumCall) IfNoneMatch(entityTag string) *PawsGetSpectrumCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "spectrum.paws.getSpectrum" call.
+// Exactly one of the return values is non-nil.
+func (c *PawsGetSpectrumCall) Do() (*PawsGetSpectrumResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *PawsGetSpectrumCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.pawsgetspectrumrequest)
@@ -1102,23 +1117,29 @@ func (c *PawsGetSpectrumCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *PawsGetSpectrumCall) Do() (*PawsGetSpectrumResponse, error) {
+// DoHeader executes the "spectrum.paws.getSpectrum" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *PawsGetSpectrumCall) DoHeader() (ret *PawsGetSpectrumResponse, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *PawsGetSpectrumResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Requests information about the available spectrum for a device at a location. Requests from a fixed-mode device must include owner information so the device can be registered with the database.",
 	//   "httpMethod": "POST",
@@ -1158,6 +1179,21 @@ func (c *PawsGetSpectrumBatchCall) Fields(s ...googleapi.Field) *PawsGetSpectrum
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *PawsGetSpectrumBatchCall) IfNoneMatch(entityTag string) *PawsGetSpectrumBatchCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "spectrum.paws.getSpectrumBatch" call.
+// Exactly one of the return values is non-nil.
+func (c *PawsGetSpectrumBatchCall) Do() (*PawsGetSpectrumBatchResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *PawsGetSpectrumBatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.pawsgetspectrumbatchrequest)
@@ -1176,23 +1212,29 @@ func (c *PawsGetSpectrumBatchCall) doRequest(alt string) (*http.Response, error)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *PawsGetSpectrumBatchCall) Do() (*PawsGetSpectrumBatchResponse, error) {
+// DoHeader executes the "spectrum.paws.getSpectrumBatch" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *PawsGetSpectrumBatchCall) DoHeader() (ret *PawsGetSpectrumBatchResponse, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *PawsGetSpectrumBatchResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "The Google Spectrum Database does not support batch requests, so this method always yields an UNIMPLEMENTED error.",
 	//   "httpMethod": "POST",
@@ -1232,6 +1274,21 @@ func (c *PawsInitCall) Fields(s ...googleapi.Field) *PawsInitCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *PawsInitCall) IfNoneMatch(entityTag string) *PawsInitCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "spectrum.paws.init" call.
+// Exactly one of the return values is non-nil.
+func (c *PawsInitCall) Do() (*PawsInitResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *PawsInitCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.pawsinitrequest)
@@ -1250,23 +1307,29 @@ func (c *PawsInitCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *PawsInitCall) Do() (*PawsInitResponse, error) {
+// DoHeader executes the "spectrum.paws.init" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *PawsInitCall) DoHeader() (ret *PawsInitResponse, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *PawsInitResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Initializes the connection between a white space device and the database.",
 	//   "httpMethod": "POST",
@@ -1309,6 +1372,21 @@ func (c *PawsNotifySpectrumUseCall) Fields(s ...googleapi.Field) *PawsNotifySpec
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *PawsNotifySpectrumUseCall) IfNoneMatch(entityTag string) *PawsNotifySpectrumUseCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "spectrum.paws.notifySpectrumUse" call.
+// Exactly one of the return values is non-nil.
+func (c *PawsNotifySpectrumUseCall) Do() (*PawsNotifySpectrumUseResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *PawsNotifySpectrumUseCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.pawsnotifyspectrumuserequest)
@@ -1327,23 +1405,29 @@ func (c *PawsNotifySpectrumUseCall) doRequest(alt string) (*http.Response, error
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *PawsNotifySpectrumUseCall) Do() (*PawsNotifySpectrumUseResponse, error) {
+// DoHeader executes the "spectrum.paws.notifySpectrumUse" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *PawsNotifySpectrumUseCall) DoHeader() (ret *PawsNotifySpectrumUseResponse, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *PawsNotifySpectrumUseResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Notifies the database that the device has selected certain frequency ranges for transmission. Only to be invoked when required by the regulator. The Google Spectrum Database does not operate in domains that require notification, so this always yields an UNIMPLEMENTED error.",
 	//   "httpMethod": "POST",
@@ -1384,6 +1468,21 @@ func (c *PawsRegisterCall) Fields(s ...googleapi.Field) *PawsRegisterCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *PawsRegisterCall) IfNoneMatch(entityTag string) *PawsRegisterCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "spectrum.paws.register" call.
+// Exactly one of the return values is non-nil.
+func (c *PawsRegisterCall) Do() (*PawsRegisterResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *PawsRegisterCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.pawsregisterrequest)
@@ -1402,23 +1501,29 @@ func (c *PawsRegisterCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *PawsRegisterCall) Do() (*PawsRegisterResponse, error) {
+// DoHeader executes the "spectrum.paws.register" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *PawsRegisterCall) DoHeader() (ret *PawsRegisterResponse, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *PawsRegisterResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "The Google Spectrum Database implements registration in the getSpectrum method. As such this always returns an UNIMPLEMENTED error.",
 	//   "httpMethod": "POST",
@@ -1460,6 +1565,21 @@ func (c *PawsVerifyDeviceCall) Fields(s ...googleapi.Field) *PawsVerifyDeviceCal
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *PawsVerifyDeviceCall) IfNoneMatch(entityTag string) *PawsVerifyDeviceCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "spectrum.paws.verifyDevice" call.
+// Exactly one of the return values is non-nil.
+func (c *PawsVerifyDeviceCall) Do() (*PawsVerifyDeviceResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *PawsVerifyDeviceCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.pawsverifydevicerequest)
@@ -1478,23 +1598,29 @@ func (c *PawsVerifyDeviceCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *PawsVerifyDeviceCall) Do() (*PawsVerifyDeviceResponse, error) {
+// DoHeader executes the "spectrum.paws.verifyDevice" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *PawsVerifyDeviceCall) DoHeader() (ret *PawsVerifyDeviceResponse, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *PawsVerifyDeviceResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Validates a device for white space use in accordance with regulatory rules. The Google Spectrum Database does not support master/slave configurations, so this always yields an UNIMPLEMENTED error.",
 	//   "httpMethod": "POST",

@@ -945,6 +945,21 @@ func (c *LineitemsDownloadlineitemsCall) Fields(s ...googleapi.Field) *Lineitems
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *LineitemsDownloadlineitemsCall) IfNoneMatch(entityTag string) *LineitemsDownloadlineitemsCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "doubleclickbidmanager.lineitems.downloadlineitems" call.
+// Exactly one of the return values is non-nil.
+func (c *LineitemsDownloadlineitemsCall) Do() (*DownloadLineItemsResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *LineitemsDownloadlineitemsCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.downloadlineitemsrequest)
@@ -963,23 +978,29 @@ func (c *LineitemsDownloadlineitemsCall) doRequest(alt string) (*http.Response, 
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *LineitemsDownloadlineitemsCall) Do() (*DownloadLineItemsResponse, error) {
+// DoHeader executes the "doubleclickbidmanager.lineitems.downloadlineitems" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *LineitemsDownloadlineitemsCall) DoHeader() (ret *DownloadLineItemsResponse, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *DownloadLineItemsResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Retrieves line items in CSV format.",
 	//   "httpMethod": "POST",
@@ -1018,6 +1039,21 @@ func (c *LineitemsUploadlineitemsCall) Fields(s ...googleapi.Field) *LineitemsUp
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *LineitemsUploadlineitemsCall) IfNoneMatch(entityTag string) *LineitemsUploadlineitemsCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "doubleclickbidmanager.lineitems.uploadlineitems" call.
+// Exactly one of the return values is non-nil.
+func (c *LineitemsUploadlineitemsCall) Do() (*UploadLineItemsResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *LineitemsUploadlineitemsCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.uploadlineitemsrequest)
@@ -1036,23 +1072,29 @@ func (c *LineitemsUploadlineitemsCall) doRequest(alt string) (*http.Response, er
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *LineitemsUploadlineitemsCall) Do() (*UploadLineItemsResponse, error) {
+// DoHeader executes the "doubleclickbidmanager.lineitems.uploadlineitems" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *LineitemsUploadlineitemsCall) DoHeader() (ret *UploadLineItemsResponse, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *UploadLineItemsResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Uploads line items in CSV format.",
 	//   "httpMethod": "POST",
@@ -1091,6 +1133,21 @@ func (c *QueriesCreatequeryCall) Fields(s ...googleapi.Field) *QueriesCreatequer
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *QueriesCreatequeryCall) IfNoneMatch(entityTag string) *QueriesCreatequeryCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "doubleclickbidmanager.queries.createquery" call.
+// Exactly one of the return values is non-nil.
+func (c *QueriesCreatequeryCall) Do() (*Query, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *QueriesCreatequeryCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.query)
@@ -1109,23 +1166,29 @@ func (c *QueriesCreatequeryCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *QueriesCreatequeryCall) Do() (*Query, error) {
+// DoHeader executes the "doubleclickbidmanager.queries.createquery" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *QueriesCreatequeryCall) DoHeader() (ret *Query, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Query
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Creates a query.",
 	//   "httpMethod": "POST",
@@ -1165,6 +1228,20 @@ func (c *QueriesDeletequeryCall) Fields(s ...googleapi.Field) *QueriesDeletequer
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *QueriesDeletequeryCall) IfNoneMatch(entityTag string) *QueriesDeletequeryCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "doubleclickbidmanager.queries.deletequery" call.
+func (c *QueriesDeletequeryCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
 func (c *QueriesDeletequeryCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1179,19 +1256,26 @@ func (c *QueriesDeletequeryCall) doRequest(alt string) (*http.Response, error) {
 		"queryId": strconv.FormatInt(c.queryId, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *QueriesDeletequeryCall) Do() error {
+// DoHeader executes the "doubleclickbidmanager.queries.deletequery" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *QueriesDeletequeryCall) DoHeader() (resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Deletes a stored query as well as the associated stored reports.",
 	//   "httpMethod": "DELETE",
@@ -1236,6 +1320,21 @@ func (c *QueriesGetqueryCall) Fields(s ...googleapi.Field) *QueriesGetqueryCall 
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *QueriesGetqueryCall) IfNoneMatch(entityTag string) *QueriesGetqueryCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "doubleclickbidmanager.queries.getquery" call.
+// Exactly one of the return values is non-nil.
+func (c *QueriesGetqueryCall) Do() (*Query, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *QueriesGetqueryCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1250,23 +1349,29 @@ func (c *QueriesGetqueryCall) doRequest(alt string) (*http.Response, error) {
 		"queryId": strconv.FormatInt(c.queryId, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *QueriesGetqueryCall) Do() (*Query, error) {
+// DoHeader executes the "doubleclickbidmanager.queries.getquery" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *QueriesGetqueryCall) DoHeader() (ret *Query, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *Query
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Retrieves a stored query.",
 	//   "httpMethod": "GET",
@@ -1312,6 +1417,21 @@ func (c *QueriesListqueriesCall) Fields(s ...googleapi.Field) *QueriesListquerie
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *QueriesListqueriesCall) IfNoneMatch(entityTag string) *QueriesListqueriesCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "doubleclickbidmanager.queries.listqueries" call.
+// Exactly one of the return values is non-nil.
+func (c *QueriesListqueriesCall) Do() (*ListQueriesResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *QueriesListqueriesCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1324,23 +1444,29 @@ func (c *QueriesListqueriesCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *QueriesListqueriesCall) Do() (*ListQueriesResponse, error) {
+// DoHeader executes the "doubleclickbidmanager.queries.listqueries" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *QueriesListqueriesCall) DoHeader() (ret *ListQueriesResponse, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *ListQueriesResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Retrieves stored queries.",
 	//   "httpMethod": "GET",
@@ -1378,6 +1504,20 @@ func (c *QueriesRunqueryCall) Fields(s ...googleapi.Field) *QueriesRunqueryCall 
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *QueriesRunqueryCall) IfNoneMatch(entityTag string) *QueriesRunqueryCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "doubleclickbidmanager.queries.runquery" call.
+func (c *QueriesRunqueryCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
 func (c *QueriesRunqueryCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.runqueryrequest)
@@ -1398,19 +1538,26 @@ func (c *QueriesRunqueryCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *QueriesRunqueryCall) Do() error {
+// DoHeader executes the "doubleclickbidmanager.queries.runquery" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *QueriesRunqueryCall) DoHeader() (resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Runs a stored query to generate a report.",
 	//   "httpMethod": "POST",
@@ -1458,6 +1605,21 @@ func (c *ReportsListreportsCall) Fields(s ...googleapi.Field) *ReportsListreport
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ReportsListreportsCall) IfNoneMatch(entityTag string) *ReportsListreportsCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Do executes the "doubleclickbidmanager.reports.listreports" call.
+// Exactly one of the return values is non-nil.
+func (c *ReportsListreportsCall) Do() (*ListReportsResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
 func (c *ReportsListreportsCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1472,23 +1634,29 @@ func (c *ReportsListreportsCall) doRequest(alt string) (*http.Response, error) {
 		"queryId": strconv.FormatInt(c.queryId, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
-func (c *ReportsListreportsCall) Do() (*ListReportsResponse, error) {
+// DoHeader executes the "doubleclickbidmanager.reports.listreports" call.
+// resHeader is populated with the response header when a response is received,
+// regardless of the status code returned. This can be useful for checking for
+// header values such as "Etag" even when http.StatusNotModified is returned.
+func (c *ReportsListreportsCall) DoHeader() (ret *ListReportsResponse, resHeader http.Header, err error) {
 	res, err := c.doRequest("json")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	var ret *ListReportsResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Retrieves stored reports.",
 	//   "httpMethod": "GET",

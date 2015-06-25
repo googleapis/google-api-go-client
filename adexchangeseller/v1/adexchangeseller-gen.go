@@ -449,7 +449,20 @@ func (c *AdclientsListCall) Fields(s ...googleapi.Field) *AdclientsListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *AdclientsListCall) IfNoneMatch(ifNoneMatch string) *AdclientsListCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *AdclientsListCall) Do() (*AdClients, error) {
+	_, v, err := c.DoHeader()
+	return v, err
+}
+
+func (c *AdclientsListCall) DoHeader() (http.Header, *AdClients, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -467,19 +480,22 @@ func (c *AdclientsListCall) Do() (*AdClients, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
 	var ret *AdClients
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
-	return ret, nil
+	return res.Header, ret, nil
 	// {
 	//   "description": "List all ad clients in this Ad Exchange account.",
 	//   "httpMethod": "GET",
@@ -536,7 +552,20 @@ func (c *AdunitsGetCall) Fields(s ...googleapi.Field) *AdunitsGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *AdunitsGetCall) IfNoneMatch(ifNoneMatch string) *AdunitsGetCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *AdunitsGetCall) Do() (*AdUnit, error) {
+	_, v, err := c.DoHeader()
+	return v, err
+}
+
+func (c *AdunitsGetCall) DoHeader() (http.Header, *AdUnit, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -551,19 +580,22 @@ func (c *AdunitsGetCall) Do() (*AdUnit, error) {
 		"adUnitId":   c.adUnitId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
 	var ret *AdUnit
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
-	return ret, nil
+	return res.Header, ret, nil
 	// {
 	//   "description": "Gets the specified ad unit in the specified ad client.",
 	//   "httpMethod": "GET",
@@ -645,7 +677,20 @@ func (c *AdunitsListCall) Fields(s ...googleapi.Field) *AdunitsListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *AdunitsListCall) IfNoneMatch(ifNoneMatch string) *AdunitsListCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *AdunitsListCall) Do() (*AdUnits, error) {
+	_, v, err := c.DoHeader()
+	return v, err
+}
+
+func (c *AdunitsListCall) DoHeader() (http.Header, *AdUnits, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -668,19 +713,22 @@ func (c *AdunitsListCall) Do() (*AdUnits, error) {
 		"adClientId": c.adClientId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
 	var ret *AdUnits
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
-	return ret, nil
+	return res.Header, ret, nil
 	// {
 	//   "description": "List all ad units in the specified ad client for this Ad Exchange account.",
 	//   "httpMethod": "GET",
@@ -769,7 +817,20 @@ func (c *AdunitsCustomchannelsListCall) Fields(s ...googleapi.Field) *AdunitsCus
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *AdunitsCustomchannelsListCall) IfNoneMatch(ifNoneMatch string) *AdunitsCustomchannelsListCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *AdunitsCustomchannelsListCall) Do() (*CustomChannels, error) {
+	_, v, err := c.DoHeader()
+	return v, err
+}
+
+func (c *AdunitsCustomchannelsListCall) DoHeader() (http.Header, *CustomChannels, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -790,19 +851,22 @@ func (c *AdunitsCustomchannelsListCall) Do() (*CustomChannels, error) {
 		"adUnitId":   c.adUnitId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
 	var ret *CustomChannels
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
-	return ret, nil
+	return res.Header, ret, nil
 	// {
 	//   "description": "List all custom channels which the specified ad unit belongs to.",
 	//   "httpMethod": "GET",
@@ -875,7 +939,20 @@ func (c *CustomchannelsGetCall) Fields(s ...googleapi.Field) *CustomchannelsGetC
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *CustomchannelsGetCall) IfNoneMatch(ifNoneMatch string) *CustomchannelsGetCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *CustomchannelsGetCall) Do() (*CustomChannel, error) {
+	_, v, err := c.DoHeader()
+	return v, err
+}
+
+func (c *CustomchannelsGetCall) DoHeader() (http.Header, *CustomChannel, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -890,19 +967,22 @@ func (c *CustomchannelsGetCall) Do() (*CustomChannel, error) {
 		"customChannelId": c.customChannelId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
 	var ret *CustomChannel
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
-	return ret, nil
+	return res.Header, ret, nil
 	// {
 	//   "description": "Get the specified custom channel from the specified ad client.",
 	//   "httpMethod": "GET",
@@ -978,7 +1058,20 @@ func (c *CustomchannelsListCall) Fields(s ...googleapi.Field) *CustomchannelsLis
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *CustomchannelsListCall) IfNoneMatch(ifNoneMatch string) *CustomchannelsListCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *CustomchannelsListCall) Do() (*CustomChannels, error) {
+	_, v, err := c.DoHeader()
+	return v, err
+}
+
+func (c *CustomchannelsListCall) DoHeader() (http.Header, *CustomChannels, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -998,19 +1091,22 @@ func (c *CustomchannelsListCall) Do() (*CustomChannels, error) {
 		"adClientId": c.adClientId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
 	var ret *CustomChannels
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
-	return ret, nil
+	return res.Header, ret, nil
 	// {
 	//   "description": "List all custom channels in the specified ad client for this Ad Exchange account.",
 	//   "httpMethod": "GET",
@@ -1099,7 +1195,20 @@ func (c *CustomchannelsAdunitsListCall) Fields(s ...googleapi.Field) *Customchan
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *CustomchannelsAdunitsListCall) IfNoneMatch(ifNoneMatch string) *CustomchannelsAdunitsListCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *CustomchannelsAdunitsListCall) Do() (*AdUnits, error) {
+	_, v, err := c.DoHeader()
+	return v, err
+}
+
+func (c *CustomchannelsAdunitsListCall) DoHeader() (http.Header, *AdUnits, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1123,19 +1232,22 @@ func (c *CustomchannelsAdunitsListCall) Do() (*AdUnits, error) {
 		"customChannelId": c.customChannelId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
 	var ret *AdUnits
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
-	return ret, nil
+	return res.Header, ret, nil
 	// {
 	//   "description": "List all ad units in the specified custom channel.",
 	//   "httpMethod": "GET",
@@ -1267,7 +1379,20 @@ func (c *ReportsGenerateCall) Fields(s ...googleapi.Field) *ReportsGenerateCall 
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *ReportsGenerateCall) IfNoneMatch(ifNoneMatch string) *ReportsGenerateCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *ReportsGenerateCall) Do() (*Report, error) {
+	_, v, err := c.DoHeader()
+	return v, err
+}
+
+func (c *ReportsGenerateCall) DoHeader() (http.Header, *Report, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1302,19 +1427,22 @@ func (c *ReportsGenerateCall) Do() (*Report, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
 	var ret *Report
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
-	return ret, nil
+	return res.Header, ret, nil
 	// {
 	//   "description": "Generate an Ad Exchange report based on the report request sent in the query parameters. Returns the result as JSON; to retrieve output in CSV format specify \"alt=csv\" as a query parameter.",
 	//   "httpMethod": "GET",
@@ -1448,7 +1576,20 @@ func (c *ReportsSavedGenerateCall) Fields(s ...googleapi.Field) *ReportsSavedGen
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *ReportsSavedGenerateCall) IfNoneMatch(ifNoneMatch string) *ReportsSavedGenerateCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *ReportsSavedGenerateCall) Do() (*Report, error) {
+	_, v, err := c.DoHeader()
+	return v, err
+}
+
+func (c *ReportsSavedGenerateCall) DoHeader() (http.Header, *Report, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1471,19 +1612,22 @@ func (c *ReportsSavedGenerateCall) Do() (*Report, error) {
 		"savedReportId": c.savedReportId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
 	var ret *Report
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
-	return ret, nil
+	return res.Header, ret, nil
 	// {
 	//   "description": "Generate an Ad Exchange report based on the saved report ID sent in the query parameters.",
 	//   "httpMethod": "GET",
@@ -1570,7 +1714,20 @@ func (c *ReportsSavedListCall) Fields(s ...googleapi.Field) *ReportsSavedListCal
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *ReportsSavedListCall) IfNoneMatch(ifNoneMatch string) *ReportsSavedListCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *ReportsSavedListCall) Do() (*SavedReports, error) {
+	_, v, err := c.DoHeader()
+	return v, err
+}
+
+func (c *ReportsSavedListCall) DoHeader() (http.Header, *SavedReports, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1588,19 +1745,22 @@ func (c *ReportsSavedListCall) Do() (*SavedReports, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
 	var ret *SavedReports
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
-	return ret, nil
+	return res.Header, ret, nil
 	// {
 	//   "description": "List all saved reports in this Ad Exchange account.",
 	//   "httpMethod": "GET",
@@ -1672,7 +1832,20 @@ func (c *UrlchannelsListCall) Fields(s ...googleapi.Field) *UrlchannelsListCall 
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *UrlchannelsListCall) IfNoneMatch(ifNoneMatch string) *UrlchannelsListCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *UrlchannelsListCall) Do() (*UrlChannels, error) {
+	_, v, err := c.DoHeader()
+	return v, err
+}
+
+func (c *UrlchannelsListCall) DoHeader() (http.Header, *UrlChannels, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1692,19 +1865,22 @@ func (c *UrlchannelsListCall) Do() (*UrlChannels, error) {
 		"adClientId": c.adClientId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
 	var ret *UrlChannels
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
-	return ret, nil
+	return res.Header, ret, nil
 	// {
 	//   "description": "List all URL channels in the specified ad client for this Ad Exchange account.",
 	//   "httpMethod": "GET",

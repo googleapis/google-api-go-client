@@ -386,11 +386,24 @@ func (c *MetricDescriptorsCreateCall) Fields(s ...googleapi.Field) *MetricDescri
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *MetricDescriptorsCreateCall) IfNoneMatch(ifNoneMatch string) *MetricDescriptorsCreateCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *MetricDescriptorsCreateCall) Do() (*MetricDescriptor, error) {
+	_, v, err := c.DoHeader()
+	return v, err
+}
+
+func (c *MetricDescriptorsCreateCall) DoHeader() (http.Header, *MetricDescriptor, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.metricdescriptor)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -406,19 +419,22 @@ func (c *MetricDescriptorsCreateCall) Do() (*MetricDescriptor, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
 	var ret *MetricDescriptor
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
-	return ret, nil
+	return res.Header, ret, nil
 	// {
 	//   "description": "Create a new metric.",
 	//   "httpMethod": "POST",
@@ -473,7 +489,20 @@ func (c *MetricDescriptorsDeleteCall) Fields(s ...googleapi.Field) *MetricDescri
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *MetricDescriptorsDeleteCall) IfNoneMatch(ifNoneMatch string) *MetricDescriptorsDeleteCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *MetricDescriptorsDeleteCall) Do() (*DeleteMetricDescriptorResponse, error) {
+	_, v, err := c.DoHeader()
+	return v, err
+}
+
+func (c *MetricDescriptorsDeleteCall) DoHeader() (http.Header, *DeleteMetricDescriptorResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -488,19 +517,22 @@ func (c *MetricDescriptorsDeleteCall) Do() (*DeleteMetricDescriptorResponse, err
 		"metric":  c.metric,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
 	var ret *DeleteMetricDescriptorResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
-	return ret, nil
+	return res.Header, ret, nil
 	// {
 	//   "description": "Delete an existing metric.",
 	//   "httpMethod": "DELETE",
@@ -591,7 +623,20 @@ func (c *MetricDescriptorsListCall) Fields(s ...googleapi.Field) *MetricDescript
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *MetricDescriptorsListCall) IfNoneMatch(ifNoneMatch string) *MetricDescriptorsListCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *MetricDescriptorsListCall) Do() (*ListMetricDescriptorsResponse, error) {
+	_, v, err := c.DoHeader()
+	return v, err
+}
+
+func (c *MetricDescriptorsListCall) DoHeader() (http.Header, *ListMetricDescriptorsResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -614,19 +659,22 @@ func (c *MetricDescriptorsListCall) Do() (*ListMetricDescriptorsResponse, error)
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
 	var ret *ListMetricDescriptorsResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
-	return ret, nil
+	return res.Header, ret, nil
 	// {
 	//   "description": "List metric descriptors that match the query. If the query is not set, then all of the metric descriptors will be returned. Large responses will be paginated, use the nextPageToken returned in the response to request subsequent pages of results by setting the pageToken query parameter to the value of the nextPageToken.",
 	//   "httpMethod": "GET",
@@ -795,7 +843,20 @@ func (c *TimeseriesListCall) Fields(s ...googleapi.Field) *TimeseriesListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *TimeseriesListCall) IfNoneMatch(ifNoneMatch string) *TimeseriesListCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *TimeseriesListCall) Do() (*ListTimeseriesResponse, error) {
+	_, v, err := c.DoHeader()
+	return v, err
+}
+
+func (c *TimeseriesListCall) DoHeader() (http.Header, *ListTimeseriesResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -832,19 +893,22 @@ func (c *TimeseriesListCall) Do() (*ListTimeseriesResponse, error) {
 		"metric":  c.metric,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
 	var ret *ListTimeseriesResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
-	return ret, nil
+	return res.Header, ret, nil
 	// {
 	//   "description": "List the data points of the time series that match the metric and labels values and that have data points in the interval. Large responses are paginated; use the nextPageToken returned in the response to request subsequent pages of results by setting the pageToken query parameter to the value of the nextPageToken.",
 	//   "httpMethod": "GET",
@@ -975,11 +1039,24 @@ func (c *TimeseriesWriteCall) Fields(s ...googleapi.Field) *TimeseriesWriteCall 
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *TimeseriesWriteCall) IfNoneMatch(ifNoneMatch string) *TimeseriesWriteCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *TimeseriesWriteCall) Do() (*WriteTimeseriesResponse, error) {
+	_, v, err := c.DoHeader()
+	return v, err
+}
+
+func (c *TimeseriesWriteCall) DoHeader() (http.Header, *WriteTimeseriesResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.writetimeseriesrequest)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -995,19 +1072,22 @@ func (c *TimeseriesWriteCall) Do() (*WriteTimeseriesResponse, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
 	var ret *WriteTimeseriesResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
-	return ret, nil
+	return res.Header, ret, nil
 	// {
 	//   "description": "Put data points to one or more time series for one or more metrics. If a time series does not exist, a new time series will be created. It is not allowed to write a time series point that is older than the existing youngest point of that time series. Points that are older than the existing youngest point of that time series will be discarded silently. Therefore, users should make sure that points of a time series are written sequentially in the order of their end time.",
 	//   "httpMethod": "POST",
@@ -1158,7 +1238,20 @@ func (c *TimeseriesDescriptorsListCall) Fields(s ...googleapi.Field) *Timeseries
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *TimeseriesDescriptorsListCall) IfNoneMatch(ifNoneMatch string) *TimeseriesDescriptorsListCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *TimeseriesDescriptorsListCall) Do() (*ListTimeseriesDescriptorsResponse, error) {
+	_, v, err := c.DoHeader()
+	return v, err
+}
+
+func (c *TimeseriesDescriptorsListCall) DoHeader() (http.Header, *ListTimeseriesDescriptorsResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1195,19 +1288,22 @@ func (c *TimeseriesDescriptorsListCall) Do() (*ListTimeseriesDescriptorsResponse
 		"metric":  c.metric,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
 	var ret *ListTimeseriesDescriptorsResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
-	return ret, nil
+	return res.Header, ret, nil
 	// {
 	//   "description": "List the descriptors of the time series that match the metric and labels values and that have data points in the interval. Large responses are paginated; use the nextPageToken returned in the response to request subsequent pages of results by setting the pageToken query parameter to the value of the nextPageToken.",
 	//   "httpMethod": "GET",

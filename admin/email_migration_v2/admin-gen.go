@@ -167,11 +167,24 @@ func (c *MailInsertCall) Fields(s ...googleapi.Field) *MailInsertCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *MailInsertCall) IfNoneMatch(ifNoneMatch string) *MailInsertCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *MailInsertCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+func (c *MailInsertCall) DoHeader() (http.Header, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.mailitem)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -213,13 +226,16 @@ func (c *MailInsertCall) Do() error {
 		req.Header.Set("Content-Type", ctype)
 	}
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
 	if c.protocol_ == "resumable" {
 		loc := res.Header.Get("Location")
@@ -234,11 +250,11 @@ func (c *MailInsertCall) Do() error {
 		}
 		res, err = rx.Upload(c.ctx_)
 		if err != nil {
-			return err
+			return res.Header, err
 		}
 		defer res.Body.Close()
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Insert Mail into Google's Gmail backends",
 	//   "httpMethod": "POST",

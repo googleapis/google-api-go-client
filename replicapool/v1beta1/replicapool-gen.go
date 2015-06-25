@@ -525,11 +525,24 @@ func (c *PoolsDeleteCall) Fields(s ...googleapi.Field) *PoolsDeleteCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *PoolsDeleteCall) IfNoneMatch(ifNoneMatch string) *PoolsDeleteCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *PoolsDeleteCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+func (c *PoolsDeleteCall) DoHeader() (http.Header, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.poolsdeleterequest)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -547,15 +560,18 @@ func (c *PoolsDeleteCall) Do() error {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Deletes a replica pool.",
 	//   "httpMethod": "POST",
@@ -625,7 +641,20 @@ func (c *PoolsGetCall) Fields(s ...googleapi.Field) *PoolsGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *PoolsGetCall) IfNoneMatch(ifNoneMatch string) *PoolsGetCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *PoolsGetCall) Do() (*Pool, error) {
+	_, v, err := c.DoHeader()
+	return v, err
+}
+
+func (c *PoolsGetCall) DoHeader() (http.Header, *Pool, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -641,19 +670,22 @@ func (c *PoolsGetCall) Do() (*Pool, error) {
 		"poolName":    c.poolName,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
 	var ret *Pool
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
-	return ret, nil
+	return res.Header, ret, nil
 	// {
 	//   "description": "Gets information about a single replica pool.",
 	//   "httpMethod": "GET",
@@ -725,11 +757,24 @@ func (c *PoolsInsertCall) Fields(s ...googleapi.Field) *PoolsInsertCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *PoolsInsertCall) IfNoneMatch(ifNoneMatch string) *PoolsInsertCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *PoolsInsertCall) Do() (*Pool, error) {
+	_, v, err := c.DoHeader()
+	return v, err
+}
+
+func (c *PoolsInsertCall) DoHeader() (http.Header, *Pool, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.pool)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -746,19 +791,22 @@ func (c *PoolsInsertCall) Do() (*Pool, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
 	var ret *Pool
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
-	return ret, nil
+	return res.Header, ret, nil
 	// {
 	//   "description": "Inserts a new replica pool.",
 	//   "httpMethod": "POST",
@@ -838,7 +886,20 @@ func (c *PoolsListCall) Fields(s ...googleapi.Field) *PoolsListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *PoolsListCall) IfNoneMatch(ifNoneMatch string) *PoolsListCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *PoolsListCall) Do() (*PoolsListResponse, error) {
+	_, v, err := c.DoHeader()
+	return v, err
+}
+
+func (c *PoolsListCall) DoHeader() (http.Header, *PoolsListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -859,19 +920,22 @@ func (c *PoolsListCall) Do() (*PoolsListResponse, error) {
 		"zone":        c.zone,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
 	var ret *PoolsListResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
-	return ret, nil
+	return res.Header, ret, nil
 	// {
 	//   "description": "List all replica pools.",
 	//   "httpMethod": "GET",
@@ -961,7 +1025,20 @@ func (c *PoolsResizeCall) Fields(s ...googleapi.Field) *PoolsResizeCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *PoolsResizeCall) IfNoneMatch(ifNoneMatch string) *PoolsResizeCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *PoolsResizeCall) Do() (*Pool, error) {
+	_, v, err := c.DoHeader()
+	return v, err
+}
+
+func (c *PoolsResizeCall) DoHeader() (http.Header, *Pool, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -980,19 +1057,22 @@ func (c *PoolsResizeCall) Do() (*Pool, error) {
 		"poolName":    c.poolName,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
 	var ret *Pool
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
-	return ret, nil
+	return res.Header, ret, nil
 	// {
 	//   "description": "Resize a pool. This is an asynchronous operation, and multiple overlapping resize requests can be made. Replica Pools will use the information from the last resize request.",
 	//   "httpMethod": "POST",
@@ -1070,11 +1150,24 @@ func (c *PoolsUpdatetemplateCall) Fields(s ...googleapi.Field) *PoolsUpdatetempl
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *PoolsUpdatetemplateCall) IfNoneMatch(ifNoneMatch string) *PoolsUpdatetemplateCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *PoolsUpdatetemplateCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+func (c *PoolsUpdatetemplateCall) DoHeader() (http.Header, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.template)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -1092,15 +1185,18 @@ func (c *PoolsUpdatetemplateCall) Do() error {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Update the template used by the pool.",
 	//   "httpMethod": "POST",
@@ -1174,11 +1270,24 @@ func (c *ReplicasDeleteCall) Fields(s ...googleapi.Field) *ReplicasDeleteCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *ReplicasDeleteCall) IfNoneMatch(ifNoneMatch string) *ReplicasDeleteCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *ReplicasDeleteCall) Do() (*Replica, error) {
+	_, v, err := c.DoHeader()
+	return v, err
+}
+
+func (c *ReplicasDeleteCall) DoHeader() (http.Header, *Replica, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.replicasdeleterequest)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -1197,19 +1306,22 @@ func (c *ReplicasDeleteCall) Do() (*Replica, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
 	var ret *Replica
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
-	return ret, nil
+	return res.Header, ret, nil
 	// {
 	//   "description": "Deletes a replica from the pool.",
 	//   "httpMethod": "POST",
@@ -1291,7 +1403,20 @@ func (c *ReplicasGetCall) Fields(s ...googleapi.Field) *ReplicasGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *ReplicasGetCall) IfNoneMatch(ifNoneMatch string) *ReplicasGetCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *ReplicasGetCall) Do() (*Replica, error) {
+	_, v, err := c.DoHeader()
+	return v, err
+}
+
+func (c *ReplicasGetCall) DoHeader() (http.Header, *Replica, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1308,19 +1433,22 @@ func (c *ReplicasGetCall) Do() (*Replica, error) {
 		"replicaName": c.replicaName,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
 	var ret *Replica
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
-	return ret, nil
+	return res.Header, ret, nil
 	// {
 	//   "description": "Gets information about a specific replica.",
 	//   "httpMethod": "GET",
@@ -1415,7 +1543,20 @@ func (c *ReplicasListCall) Fields(s ...googleapi.Field) *ReplicasListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *ReplicasListCall) IfNoneMatch(ifNoneMatch string) *ReplicasListCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *ReplicasListCall) Do() (*ReplicasListResponse, error) {
+	_, v, err := c.DoHeader()
+	return v, err
+}
+
+func (c *ReplicasListCall) DoHeader() (http.Header, *ReplicasListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1437,19 +1578,22 @@ func (c *ReplicasListCall) Do() (*ReplicasListResponse, error) {
 		"poolName":    c.poolName,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
 	var ret *ReplicasListResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
-	return ret, nil
+	return res.Header, ret, nil
 	// {
 	//   "description": "Lists all replicas in a pool.",
 	//   "httpMethod": "GET",
@@ -1537,7 +1681,20 @@ func (c *ReplicasRestartCall) Fields(s ...googleapi.Field) *ReplicasRestartCall 
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *ReplicasRestartCall) IfNoneMatch(ifNoneMatch string) *ReplicasRestartCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *ReplicasRestartCall) Do() (*Replica, error) {
+	_, v, err := c.DoHeader()
+	return v, err
+}
+
+func (c *ReplicasRestartCall) DoHeader() (http.Header, *Replica, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1554,19 +1711,22 @@ func (c *ReplicasRestartCall) Do() (*Replica, error) {
 		"replicaName": c.replicaName,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
 	var ret *Replica
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
-	return ret, nil
+	return res.Header, ret, nil
 	// {
 	//   "description": "Restarts a replica in a pool.",
 	//   "httpMethod": "POST",

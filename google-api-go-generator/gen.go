@@ -1435,8 +1435,24 @@ func (meth *Method) generateCode() {
 	pn(`c.opt_["fields"] = googleapi.CombineFields(s)`)
 	pn("return c")
 	pn("}")
+	pn("\n// IfNoneMatch sets the optional parameter")
+	pn(`// "ifNoneMatch": Makes the operation conditional on whether`)
+	pn("// the object's Etag does not match the given value.")
+	pn("func (c *%s) IfNoneMatch(ifNoneMatch string) *%s {", callName, callName)
+	pn(`c.opt_["ifNoneMatch"] = ifNoneMatch`)
+	pn("return c")
+	pn("}")
 
 	pn("\nfunc (c *%s) Do() (%serror) {", callName, retTypeComma)
+	if retTypeComma == "" {
+		pn("_, err := c.DoHeader()")
+		pn("return err")
+	} else {
+		pn("_, v, err := c.DoHeader()")
+		pn("return v, err")
+	}
+	pn("}")
+	pn("\nfunc (c *%s) DoHeader() (http.Header, %serror) {", callName, retTypeComma)
 
 	nilRet := ""
 	if retTypeComma != "" {
@@ -1451,7 +1467,7 @@ func (meth *Method) generateCode() {
 			style = "WithDataWrapper"
 		}
 		pn("body, err := googleapi.%s.JSONReader(c.%s)", style, ba.goname)
-		pn("if err != nil { return %serr }", nilRet)
+		pn("if err != nil { return nil, %serr }", nilRet)
 		pn(`ctype := "application/json"`)
 		hasContentType = true
 	}
@@ -1532,10 +1548,13 @@ func (meth *Method) generateCode() {
 		pn(`req.Header.Set("Content-Type", ctype)`)
 	}
 	pn(`req.Header.Set("User-Agent", c.s.userAgent())`)
+	pn(`if v, ok := c.opt_["ifNoneMatch"]; ok {`)
+	pn("	req.Header.Set(\"If-None-Match\", fmt.Sprintf(\"%%v\", v))")
+	pn("}")
 	pn("res, err := c.s.client.Do(req);")
-	pn("if err != nil { return %serr }", nilRet)
+	pn("if err != nil { return nil, %serr }", nilRet)
 	pn("defer googleapi.CloseBody(res)")
-	pn("if err := googleapi.CheckResponse(res); err != nil { return %serr }", nilRet)
+	pn("if err := googleapi.CheckResponse(res); err != nil { return res.Header, %serr }", nilRet)
 	if meth.supportsMediaUpload() {
 		pn(`if c.protocol_ == "resumable" {`)
 		pn(` loc := res.Header.Get("Location")`)
@@ -1549,16 +1568,16 @@ func (meth *Method) generateCode() {
 		pn("  Callback:      progressUpdater_,")
 		pn(" }")
 		pn(" res, err = rx.Upload(c.ctx_)")
-		pn(" if err != nil { return %serr }", nilRet)
+		pn(" if err != nil { return res.Header, %serr }", nilRet)
 		pn(" defer res.Body.Close()")
 		pn("}")
 	}
 	if retTypeComma == "" {
-		pn("return nil")
+		pn("return res.Header, nil")
 	} else {
 		pn("var ret %s", responseType(a, meth.m))
-		pn("if err := json.NewDecoder(res.Body).Decode(&ret); err != nil { return nil, err }")
-		pn("return ret, nil")
+		pn("if err := json.NewDecoder(res.Body).Decode(&ret); err != nil { return res.Header, nil, err }")
+		pn("return res.Header, ret, nil")
 	}
 
 	bs, _ := json.MarshalIndent(meth.m, "\t// ", "  ")

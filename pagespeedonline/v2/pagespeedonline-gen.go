@@ -351,7 +351,20 @@ func (c *PagespeedapiRunpagespeedCall) Fields(s ...googleapi.Field) *Pagespeedap
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *PagespeedapiRunpagespeedCall) IfNoneMatch(ifNoneMatch string) *PagespeedapiRunpagespeedCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *PagespeedapiRunpagespeedCall) Do() (*Result, error) {
+	_, v, err := c.DoHeader()
+	return v, err
+}
+
+func (c *PagespeedapiRunpagespeedCall) DoHeader() (http.Header, *Result, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -379,19 +392,22 @@ func (c *PagespeedapiRunpagespeedCall) Do() (*Result, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
 	var ret *Result
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
-	return ret, nil
+	return res.Header, ret, nil
 	// {
 	//   "description": "Runs PageSpeed analysis on the page at the specified URL, and returns PageSpeed scores, a list of suggestions to make that page faster, and other information.",
 	//   "httpMethod": "GET",

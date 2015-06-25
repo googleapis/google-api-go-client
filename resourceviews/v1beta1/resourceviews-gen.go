@@ -238,11 +238,24 @@ func (c *RegionViewsAddresourcesCall) Fields(s ...googleapi.Field) *RegionViewsA
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *RegionViewsAddresourcesCall) IfNoneMatch(ifNoneMatch string) *RegionViewsAddresourcesCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *RegionViewsAddresourcesCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+func (c *RegionViewsAddresourcesCall) DoHeader() (http.Header, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.regionviewsaddresourcesrequest)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -260,15 +273,18 @@ func (c *RegionViewsAddresourcesCall) Do() error {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Add resources to the view.",
 	//   "httpMethod": "POST",
@@ -338,7 +354,20 @@ func (c *RegionViewsDeleteCall) Fields(s ...googleapi.Field) *RegionViewsDeleteC
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *RegionViewsDeleteCall) IfNoneMatch(ifNoneMatch string) *RegionViewsDeleteCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *RegionViewsDeleteCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+func (c *RegionViewsDeleteCall) DoHeader() (http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -354,15 +383,18 @@ func (c *RegionViewsDeleteCall) Do() error {
 		"resourceViewName": c.resourceViewName,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Delete a resource view.",
 	//   "httpMethod": "DELETE",
@@ -429,7 +461,20 @@ func (c *RegionViewsGetCall) Fields(s ...googleapi.Field) *RegionViewsGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *RegionViewsGetCall) IfNoneMatch(ifNoneMatch string) *RegionViewsGetCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *RegionViewsGetCall) Do() (*ResourceView, error) {
+	_, v, err := c.DoHeader()
+	return v, err
+}
+
+func (c *RegionViewsGetCall) DoHeader() (http.Header, *ResourceView, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -445,19 +490,22 @@ func (c *RegionViewsGetCall) Do() (*ResourceView, error) {
 		"resourceViewName": c.resourceViewName,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
 	var ret *ResourceView
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
-	return ret, nil
+	return res.Header, ret, nil
 	// {
 	//   "description": "Get the information of a resource view.",
 	//   "httpMethod": "GET",
@@ -529,11 +577,24 @@ func (c *RegionViewsInsertCall) Fields(s ...googleapi.Field) *RegionViewsInsertC
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *RegionViewsInsertCall) IfNoneMatch(ifNoneMatch string) *RegionViewsInsertCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *RegionViewsInsertCall) Do() (*RegionViewsInsertResponse, error) {
+	_, v, err := c.DoHeader()
+	return v, err
+}
+
+func (c *RegionViewsInsertCall) DoHeader() (http.Header, *RegionViewsInsertResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.resourceview)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -550,19 +611,22 @@ func (c *RegionViewsInsertCall) Do() (*RegionViewsInsertResponse, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
 	var ret *RegionViewsInsertResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
-	return ret, nil
+	return res.Header, ret, nil
 	// {
 	//   "description": "Create a resource view.",
 	//   "httpMethod": "POST",
@@ -643,7 +707,20 @@ func (c *RegionViewsListCall) Fields(s ...googleapi.Field) *RegionViewsListCall 
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *RegionViewsListCall) IfNoneMatch(ifNoneMatch string) *RegionViewsListCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *RegionViewsListCall) Do() (*RegionViewsListResponse, error) {
+	_, v, err := c.DoHeader()
+	return v, err
+}
+
+func (c *RegionViewsListCall) DoHeader() (http.Header, *RegionViewsListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -664,19 +741,22 @@ func (c *RegionViewsListCall) Do() (*RegionViewsListResponse, error) {
 		"region":      c.region,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
 	var ret *RegionViewsListResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
-	return ret, nil
+	return res.Header, ret, nil
 	// {
 	//   "description": "List resource views.",
 	//   "httpMethod": "GET",
@@ -772,7 +852,20 @@ func (c *RegionViewsListresourcesCall) Fields(s ...googleapi.Field) *RegionViews
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *RegionViewsListresourcesCall) IfNoneMatch(ifNoneMatch string) *RegionViewsListresourcesCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *RegionViewsListresourcesCall) Do() (*RegionViewsListResourcesResponse, error) {
+	_, v, err := c.DoHeader()
+	return v, err
+}
+
+func (c *RegionViewsListresourcesCall) DoHeader() (http.Header, *RegionViewsListResourcesResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -794,19 +887,22 @@ func (c *RegionViewsListresourcesCall) Do() (*RegionViewsListResourcesResponse, 
 		"resourceViewName": c.resourceViewName,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
 	var ret *RegionViewsListResourcesResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
-	return ret, nil
+	return res.Header, ret, nil
 	// {
 	//   "description": "List the resources in the view.",
 	//   "httpMethod": "POST",
@@ -894,11 +990,24 @@ func (c *RegionViewsRemoveresourcesCall) Fields(s ...googleapi.Field) *RegionVie
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *RegionViewsRemoveresourcesCall) IfNoneMatch(ifNoneMatch string) *RegionViewsRemoveresourcesCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *RegionViewsRemoveresourcesCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+func (c *RegionViewsRemoveresourcesCall) DoHeader() (http.Header, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.regionviewsremoveresourcesrequest)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -916,15 +1025,18 @@ func (c *RegionViewsRemoveresourcesCall) Do() error {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Remove resources from the view.",
 	//   "httpMethod": "POST",
@@ -996,11 +1108,24 @@ func (c *ZoneViewsAddresourcesCall) Fields(s ...googleapi.Field) *ZoneViewsAddre
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *ZoneViewsAddresourcesCall) IfNoneMatch(ifNoneMatch string) *ZoneViewsAddresourcesCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *ZoneViewsAddresourcesCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+func (c *ZoneViewsAddresourcesCall) DoHeader() (http.Header, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.zoneviewsaddresourcesrequest)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -1018,15 +1143,18 @@ func (c *ZoneViewsAddresourcesCall) Do() error {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Add resources to the view.",
 	//   "httpMethod": "POST",
@@ -1096,7 +1224,20 @@ func (c *ZoneViewsDeleteCall) Fields(s ...googleapi.Field) *ZoneViewsDeleteCall 
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *ZoneViewsDeleteCall) IfNoneMatch(ifNoneMatch string) *ZoneViewsDeleteCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *ZoneViewsDeleteCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+func (c *ZoneViewsDeleteCall) DoHeader() (http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1112,15 +1253,18 @@ func (c *ZoneViewsDeleteCall) Do() error {
 		"resourceViewName": c.resourceViewName,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Delete a resource view.",
 	//   "httpMethod": "DELETE",
@@ -1187,7 +1331,20 @@ func (c *ZoneViewsGetCall) Fields(s ...googleapi.Field) *ZoneViewsGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *ZoneViewsGetCall) IfNoneMatch(ifNoneMatch string) *ZoneViewsGetCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *ZoneViewsGetCall) Do() (*ResourceView, error) {
+	_, v, err := c.DoHeader()
+	return v, err
+}
+
+func (c *ZoneViewsGetCall) DoHeader() (http.Header, *ResourceView, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1203,19 +1360,22 @@ func (c *ZoneViewsGetCall) Do() (*ResourceView, error) {
 		"resourceViewName": c.resourceViewName,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
 	var ret *ResourceView
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
-	return ret, nil
+	return res.Header, ret, nil
 	// {
 	//   "description": "Get the information of a zonal resource view.",
 	//   "httpMethod": "GET",
@@ -1287,11 +1447,24 @@ func (c *ZoneViewsInsertCall) Fields(s ...googleapi.Field) *ZoneViewsInsertCall 
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *ZoneViewsInsertCall) IfNoneMatch(ifNoneMatch string) *ZoneViewsInsertCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *ZoneViewsInsertCall) Do() (*ZoneViewsInsertResponse, error) {
+	_, v, err := c.DoHeader()
+	return v, err
+}
+
+func (c *ZoneViewsInsertCall) DoHeader() (http.Header, *ZoneViewsInsertResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.resourceview)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -1308,19 +1481,22 @@ func (c *ZoneViewsInsertCall) Do() (*ZoneViewsInsertResponse, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
 	var ret *ZoneViewsInsertResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
-	return ret, nil
+	return res.Header, ret, nil
 	// {
 	//   "description": "Create a resource view.",
 	//   "httpMethod": "POST",
@@ -1401,7 +1577,20 @@ func (c *ZoneViewsListCall) Fields(s ...googleapi.Field) *ZoneViewsListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *ZoneViewsListCall) IfNoneMatch(ifNoneMatch string) *ZoneViewsListCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *ZoneViewsListCall) Do() (*ZoneViewsListResponse, error) {
+	_, v, err := c.DoHeader()
+	return v, err
+}
+
+func (c *ZoneViewsListCall) DoHeader() (http.Header, *ZoneViewsListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1422,19 +1611,22 @@ func (c *ZoneViewsListCall) Do() (*ZoneViewsListResponse, error) {
 		"zone":        c.zone,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
 	var ret *ZoneViewsListResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
-	return ret, nil
+	return res.Header, ret, nil
 	// {
 	//   "description": "List resource views.",
 	//   "httpMethod": "GET",
@@ -1530,7 +1722,20 @@ func (c *ZoneViewsListresourcesCall) Fields(s ...googleapi.Field) *ZoneViewsList
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *ZoneViewsListresourcesCall) IfNoneMatch(ifNoneMatch string) *ZoneViewsListresourcesCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *ZoneViewsListresourcesCall) Do() (*ZoneViewsListResourcesResponse, error) {
+	_, v, err := c.DoHeader()
+	return v, err
+}
+
+func (c *ZoneViewsListresourcesCall) DoHeader() (http.Header, *ZoneViewsListResourcesResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1552,19 +1757,22 @@ func (c *ZoneViewsListresourcesCall) Do() (*ZoneViewsListResourcesResponse, erro
 		"resourceViewName": c.resourceViewName,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
 	var ret *ZoneViewsListResourcesResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
-	return ret, nil
+	return res.Header, ret, nil
 	// {
 	//   "description": "List the resources of the resource view.",
 	//   "httpMethod": "POST",
@@ -1652,11 +1860,24 @@ func (c *ZoneViewsRemoveresourcesCall) Fields(s ...googleapi.Field) *ZoneViewsRe
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *ZoneViewsRemoveresourcesCall) IfNoneMatch(ifNoneMatch string) *ZoneViewsRemoveresourcesCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *ZoneViewsRemoveresourcesCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+func (c *ZoneViewsRemoveresourcesCall) DoHeader() (http.Header, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.zoneviewsremoveresourcesrequest)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -1674,15 +1895,18 @@ func (c *ZoneViewsRemoveresourcesCall) Do() error {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Remove resources from the view.",
 	//   "httpMethod": "POST",

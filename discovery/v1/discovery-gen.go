@@ -489,7 +489,20 @@ func (c *ApisGetRestCall) Fields(s ...googleapi.Field) *ApisGetRestCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *ApisGetRestCall) IfNoneMatch(ifNoneMatch string) *ApisGetRestCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *ApisGetRestCall) Do() (*RestDescription, error) {
+	_, v, err := c.DoHeader()
+	return v, err
+}
+
+func (c *ApisGetRestCall) DoHeader() (http.Header, *RestDescription, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -504,19 +517,22 @@ func (c *ApisGetRestCall) Do() (*RestDescription, error) {
 		"version": c.version,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
 	var ret *RestDescription
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
-	return ret, nil
+	return res.Header, ret, nil
 	// {
 	//   "description": "Retrieve the description of a particular version of an api.",
 	//   "httpMethod": "GET",
@@ -582,7 +598,20 @@ func (c *ApisListCall) Fields(s ...googleapi.Field) *ApisListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *ApisListCall) IfNoneMatch(ifNoneMatch string) *ApisListCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *ApisListCall) Do() (*DirectoryList, error) {
+	_, v, err := c.DoHeader()
+	return v, err
+}
+
+func (c *ApisListCall) DoHeader() (http.Header, *DirectoryList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -600,19 +629,22 @@ func (c *ApisListCall) Do() (*DirectoryList, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
 	var ret *DirectoryList
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
-	return ret, nil
+	return res.Header, ret, nil
 	// {
 	//   "description": "Retrieve the list of APIs supported at this endpoint.",
 	//   "httpMethod": "GET",

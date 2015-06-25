@@ -163,7 +163,20 @@ func (c *StatesClearCall) Fields(s ...googleapi.Field) *StatesClearCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *StatesClearCall) IfNoneMatch(ifNoneMatch string) *StatesClearCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *StatesClearCall) Do() (*WriteResult, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *StatesClearCall) DoHeader() (*WriteResult, http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -180,19 +193,22 @@ func (c *StatesClearCall) Do() (*WriteResult, error) {
 		"stateKey": strconv.FormatInt(c.stateKey, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *WriteResult
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Clears (sets to empty) the data for the passed key if and only if the passed version matches the currently stored version. This method results in a conflict error on version mismatch.",
 	//   "httpMethod": "POST",
@@ -255,7 +271,20 @@ func (c *StatesDeleteCall) Fields(s ...googleapi.Field) *StatesDeleteCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *StatesDeleteCall) IfNoneMatch(ifNoneMatch string) *StatesDeleteCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *StatesDeleteCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+func (c *StatesDeleteCall) DoHeader() (http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -269,15 +298,18 @@ func (c *StatesDeleteCall) Do() error {
 		"stateKey": strconv.FormatInt(c.stateKey, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Deletes a key and the data associated with it. The key is removed and no longer counts against the key quota. Note that since this method is not safe in the face of concurrent modifications, it should only be used for development and testing purposes. Invoking this method in shipping code can result in data loss and data corruption.",
 	//   "httpMethod": "DELETE",
@@ -328,7 +360,20 @@ func (c *StatesGetCall) Fields(s ...googleapi.Field) *StatesGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *StatesGetCall) IfNoneMatch(ifNoneMatch string) *StatesGetCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *StatesGetCall) Do() (*GetResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *StatesGetCall) DoHeader() (*GetResponse, http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -342,19 +387,22 @@ func (c *StatesGetCall) Do() (*GetResponse, error) {
 		"stateKey": strconv.FormatInt(c.stateKey, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *GetResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Retrieves the data corresponding to the passed key. If the key does not exist on the server, an HTTP 404 will be returned.",
 	//   "httpMethod": "GET",
@@ -412,7 +460,20 @@ func (c *StatesListCall) Fields(s ...googleapi.Field) *StatesListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *StatesListCall) IfNoneMatch(ifNoneMatch string) *StatesListCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *StatesListCall) Do() (*ListResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *StatesListCall) DoHeader() (*ListResponse, http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -427,19 +488,22 @@ func (c *StatesListCall) Do() (*ListResponse, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *ListResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Lists all the states keys, and optionally the state data.",
 	//   "httpMethod": "GET",
@@ -502,11 +566,24 @@ func (c *StatesUpdateCall) Fields(s ...googleapi.Field) *StatesUpdateCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *StatesUpdateCall) IfNoneMatch(ifNoneMatch string) *StatesUpdateCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *StatesUpdateCall) Do() (*WriteResult, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *StatesUpdateCall) DoHeader() (*WriteResult, http.Header, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.updaterequest)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -525,19 +602,22 @@ func (c *StatesUpdateCall) Do() (*WriteResult, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *WriteResult
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Update the data associated with the input key if and only if the passed version matches the currently stored version. This method is safe in the face of concurrent writes. Maximum per-key size is 128KB.",
 	//   "httpMethod": "PUT",

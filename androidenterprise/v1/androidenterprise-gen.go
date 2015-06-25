@@ -652,7 +652,20 @@ func (c *CollectionsDeleteCall) Fields(s ...googleapi.Field) *CollectionsDeleteC
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *CollectionsDeleteCall) IfNoneMatch(ifNoneMatch string) *CollectionsDeleteCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *CollectionsDeleteCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+func (c *CollectionsDeleteCall) DoHeader() (http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -667,15 +680,18 @@ func (c *CollectionsDeleteCall) Do() error {
 		"collectionId": c.collectionId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Deletes a collection.",
 	//   "httpMethod": "DELETE",
@@ -731,7 +747,20 @@ func (c *CollectionsGetCall) Fields(s ...googleapi.Field) *CollectionsGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *CollectionsGetCall) IfNoneMatch(ifNoneMatch string) *CollectionsGetCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *CollectionsGetCall) Do() (*Collection, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *CollectionsGetCall) DoHeader() (*Collection, http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -746,19 +775,22 @@ func (c *CollectionsGetCall) Do() (*Collection, error) {
 		"collectionId": c.collectionId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *Collection
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Retrieves the details of a collection.",
 	//   "httpMethod": "GET",
@@ -817,11 +849,24 @@ func (c *CollectionsInsertCall) Fields(s ...googleapi.Field) *CollectionsInsertC
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *CollectionsInsertCall) IfNoneMatch(ifNoneMatch string) *CollectionsInsertCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *CollectionsInsertCall) Do() (*Collection, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *CollectionsInsertCall) DoHeader() (*Collection, http.Header, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.collection)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -837,19 +882,22 @@ func (c *CollectionsInsertCall) Do() (*Collection, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *Collection
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Creates a new collection.",
 	//   "httpMethod": "POST",
@@ -902,7 +950,20 @@ func (c *CollectionsListCall) Fields(s ...googleapi.Field) *CollectionsListCall 
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *CollectionsListCall) IfNoneMatch(ifNoneMatch string) *CollectionsListCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *CollectionsListCall) Do() (*CollectionsListResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *CollectionsListCall) DoHeader() (*CollectionsListResponse, http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -916,19 +977,22 @@ func (c *CollectionsListCall) Do() (*CollectionsListResponse, error) {
 		"enterpriseId": c.enterpriseId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *CollectionsListResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Retrieves the IDs of all the collections for an enterprise.",
 	//   "httpMethod": "GET",
@@ -982,11 +1046,24 @@ func (c *CollectionsPatchCall) Fields(s ...googleapi.Field) *CollectionsPatchCal
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *CollectionsPatchCall) IfNoneMatch(ifNoneMatch string) *CollectionsPatchCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *CollectionsPatchCall) Do() (*Collection, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *CollectionsPatchCall) DoHeader() (*Collection, http.Header, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.collection)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -1003,19 +1080,22 @@ func (c *CollectionsPatchCall) Do() (*Collection, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *Collection
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Updates a collection. This method supports patch semantics.",
 	//   "httpMethod": "PATCH",
@@ -1079,11 +1159,24 @@ func (c *CollectionsUpdateCall) Fields(s ...googleapi.Field) *CollectionsUpdateC
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *CollectionsUpdateCall) IfNoneMatch(ifNoneMatch string) *CollectionsUpdateCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *CollectionsUpdateCall) Do() (*Collection, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *CollectionsUpdateCall) DoHeader() (*Collection, http.Header, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.collection)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -1100,19 +1193,22 @@ func (c *CollectionsUpdateCall) Do() (*Collection, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *Collection
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Updates a collection.",
 	//   "httpMethod": "PUT",
@@ -1178,7 +1274,20 @@ func (c *CollectionviewersDeleteCall) Fields(s ...googleapi.Field) *Collectionvi
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *CollectionviewersDeleteCall) IfNoneMatch(ifNoneMatch string) *CollectionviewersDeleteCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *CollectionviewersDeleteCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+func (c *CollectionviewersDeleteCall) DoHeader() (http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1194,15 +1303,18 @@ func (c *CollectionviewersDeleteCall) Do() error {
 		"userId":       c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Removes the user from the list of those specifically allowed to see the collection. If the collection's visibility is set to viewersOnly then only such users will see the collection.",
 	//   "httpMethod": "DELETE",
@@ -1269,7 +1381,20 @@ func (c *CollectionviewersGetCall) Fields(s ...googleapi.Field) *Collectionviewe
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *CollectionviewersGetCall) IfNoneMatch(ifNoneMatch string) *CollectionviewersGetCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *CollectionviewersGetCall) Do() (*User, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *CollectionviewersGetCall) DoHeader() (*User, http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1285,19 +1410,22 @@ func (c *CollectionviewersGetCall) Do() (*User, error) {
 		"userId":       c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *User
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Retrieves the ID of the user if they have been specifically allowed to see the collection. If the collection's visibility is set to viewersOnly then only these users will see the collection.",
 	//   "httpMethod": "GET",
@@ -1365,7 +1493,20 @@ func (c *CollectionviewersListCall) Fields(s ...googleapi.Field) *Collectionview
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *CollectionviewersListCall) IfNoneMatch(ifNoneMatch string) *CollectionviewersListCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *CollectionviewersListCall) Do() (*CollectionViewersListResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *CollectionviewersListCall) DoHeader() (*CollectionViewersListResponse, http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1380,19 +1521,22 @@ func (c *CollectionviewersListCall) Do() (*CollectionViewersListResponse, error)
 		"collectionId": c.collectionId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *CollectionViewersListResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Retrieves the IDs of the users who have been specifically allowed to see the collection. If the collection's visibility is set to viewersOnly then only these users will see the collection.",
 	//   "httpMethod": "GET",
@@ -1458,11 +1602,24 @@ func (c *CollectionviewersPatchCall) Fields(s ...googleapi.Field) *Collectionvie
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *CollectionviewersPatchCall) IfNoneMatch(ifNoneMatch string) *CollectionviewersPatchCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *CollectionviewersPatchCall) Do() (*User, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *CollectionviewersPatchCall) DoHeader() (*User, http.Header, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.user)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -1480,19 +1637,22 @@ func (c *CollectionviewersPatchCall) Do() (*User, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *User
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Adds the user to the list of those specifically allowed to see the collection. If the collection's visibility is set to viewersOnly then only such users will see the collection. This method supports patch semantics.",
 	//   "httpMethod": "PATCH",
@@ -1567,11 +1727,24 @@ func (c *CollectionviewersUpdateCall) Fields(s ...googleapi.Field) *Collectionvi
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *CollectionviewersUpdateCall) IfNoneMatch(ifNoneMatch string) *CollectionviewersUpdateCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *CollectionviewersUpdateCall) Do() (*User, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *CollectionviewersUpdateCall) DoHeader() (*User, http.Header, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.user)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -1589,19 +1762,22 @@ func (c *CollectionviewersUpdateCall) Do() (*User, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *User
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Adds the user to the list of those specifically allowed to see the collection. If the collection's visibility is set to viewersOnly then only such users will see the collection.",
 	//   "httpMethod": "PUT",
@@ -1672,7 +1848,20 @@ func (c *DevicesGetCall) Fields(s ...googleapi.Field) *DevicesGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *DevicesGetCall) IfNoneMatch(ifNoneMatch string) *DevicesGetCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *DevicesGetCall) Do() (*Device, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *DevicesGetCall) DoHeader() (*Device, http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1688,19 +1877,22 @@ func (c *DevicesGetCall) Do() (*Device, error) {
 		"deviceId":     c.deviceId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *Device
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Retrieves the details of a device.",
 	//   "httpMethod": "GET",
@@ -1772,7 +1964,20 @@ func (c *DevicesGetStateCall) Fields(s ...googleapi.Field) *DevicesGetStateCall 
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *DevicesGetStateCall) IfNoneMatch(ifNoneMatch string) *DevicesGetStateCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *DevicesGetStateCall) Do() (*DeviceState, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *DevicesGetStateCall) DoHeader() (*DeviceState, http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1788,19 +1993,22 @@ func (c *DevicesGetStateCall) Do() (*DeviceState, error) {
 		"deviceId":     c.deviceId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *DeviceState
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Retrieves whether a device is enabled or disabled for access by the user to Google services. The device state takes effect only if enforcing EMM policies on Android devices is enabled in the Google Admin Console. Otherwise, the device state is ignored and all devices are allowed access to Google services.",
 	//   "httpMethod": "GET",
@@ -1866,7 +2074,20 @@ func (c *DevicesListCall) Fields(s ...googleapi.Field) *DevicesListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *DevicesListCall) IfNoneMatch(ifNoneMatch string) *DevicesListCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *DevicesListCall) Do() (*DevicesListResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *DevicesListCall) DoHeader() (*DevicesListResponse, http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1881,19 +2102,22 @@ func (c *DevicesListCall) Do() (*DevicesListResponse, error) {
 		"userId":       c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *DevicesListResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Retrieves the IDs of all of a user's devices.",
 	//   "httpMethod": "GET",
@@ -1960,11 +2184,24 @@ func (c *DevicesSetStateCall) Fields(s ...googleapi.Field) *DevicesSetStateCall 
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *DevicesSetStateCall) IfNoneMatch(ifNoneMatch string) *DevicesSetStateCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *DevicesSetStateCall) Do() (*DeviceState, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *DevicesSetStateCall) DoHeader() (*DeviceState, http.Header, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.devicestate)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -1982,19 +2219,22 @@ func (c *DevicesSetStateCall) Do() (*DeviceState, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *DeviceState
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Sets whether a device is enabled or disabled for access by the user to Google services. The device state takes effect only if enforcing EMM policies on Android devices is enabled in the Google Admin Console. Otherwise, the device state is ignored and all devices are allowed access to Google services.",
 	//   "httpMethod": "PUT",
@@ -2064,7 +2304,20 @@ func (c *EnterprisesDeleteCall) Fields(s ...googleapi.Field) *EnterprisesDeleteC
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *EnterprisesDeleteCall) IfNoneMatch(ifNoneMatch string) *EnterprisesDeleteCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *EnterprisesDeleteCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+func (c *EnterprisesDeleteCall) DoHeader() (http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -2078,15 +2331,18 @@ func (c *EnterprisesDeleteCall) Do() error {
 		"enterpriseId": c.enterpriseId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Deletes the binding between the MDM and enterprise. This is now deprecated; use this to unenroll customers that were previously enrolled with the 'insert' call, then enroll them again with the 'enroll' call.",
 	//   "httpMethod": "DELETE",
@@ -2135,11 +2391,24 @@ func (c *EnterprisesEnrollCall) Fields(s ...googleapi.Field) *EnterprisesEnrollC
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *EnterprisesEnrollCall) IfNoneMatch(ifNoneMatch string) *EnterprisesEnrollCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *EnterprisesEnrollCall) Do() (*Enterprise, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *EnterprisesEnrollCall) DoHeader() (*Enterprise, http.Header, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.enterprise)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -2154,19 +2423,22 @@ func (c *EnterprisesEnrollCall) Do() (*Enterprise, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *Enterprise
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Enrolls an enterprise with the calling MDM.",
 	//   "httpMethod": "POST",
@@ -2219,7 +2491,20 @@ func (c *EnterprisesGetCall) Fields(s ...googleapi.Field) *EnterprisesGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *EnterprisesGetCall) IfNoneMatch(ifNoneMatch string) *EnterprisesGetCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *EnterprisesGetCall) Do() (*Enterprise, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *EnterprisesGetCall) DoHeader() (*Enterprise, http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -2233,19 +2518,22 @@ func (c *EnterprisesGetCall) Do() (*Enterprise, error) {
 		"enterpriseId": c.enterpriseId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *Enterprise
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Retrieves the name and domain of an enterprise.",
 	//   "httpMethod": "GET",
@@ -2298,11 +2586,24 @@ func (c *EnterprisesInsertCall) Fields(s ...googleapi.Field) *EnterprisesInsertC
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *EnterprisesInsertCall) IfNoneMatch(ifNoneMatch string) *EnterprisesInsertCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *EnterprisesInsertCall) Do() (*Enterprise, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *EnterprisesInsertCall) DoHeader() (*Enterprise, http.Header, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.enterprise)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -2317,19 +2618,22 @@ func (c *EnterprisesInsertCall) Do() (*Enterprise, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *Enterprise
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Establishes the binding between the MDM and an enterprise. This is now deprecated; use enroll instead.",
 	//   "httpMethod": "POST",
@@ -2382,7 +2686,20 @@ func (c *EnterprisesListCall) Fields(s ...googleapi.Field) *EnterprisesListCall 
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *EnterprisesListCall) IfNoneMatch(ifNoneMatch string) *EnterprisesListCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *EnterprisesListCall) Do() (*EnterprisesListResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *EnterprisesListCall) DoHeader() (*EnterprisesListResponse, http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -2395,19 +2712,22 @@ func (c *EnterprisesListCall) Do() (*EnterprisesListResponse, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *EnterprisesListResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Looks up an enterprise by domain name.",
 	//   "httpMethod": "GET",
@@ -2460,11 +2780,24 @@ func (c *EnterprisesSetAccountCall) Fields(s ...googleapi.Field) *EnterprisesSet
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *EnterprisesSetAccountCall) IfNoneMatch(ifNoneMatch string) *EnterprisesSetAccountCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *EnterprisesSetAccountCall) Do() (*EnterpriseAccount, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *EnterprisesSetAccountCall) DoHeader() (*EnterpriseAccount, http.Header, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.enterpriseaccount)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -2480,19 +2813,22 @@ func (c *EnterprisesSetAccountCall) Do() (*EnterpriseAccount, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *EnterpriseAccount
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Set the account that will be used to authenticate to the API as the enterprise.",
 	//   "httpMethod": "PUT",
@@ -2545,7 +2881,20 @@ func (c *EnterprisesUnenrollCall) Fields(s ...googleapi.Field) *EnterprisesUnenr
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *EnterprisesUnenrollCall) IfNoneMatch(ifNoneMatch string) *EnterprisesUnenrollCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *EnterprisesUnenrollCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+func (c *EnterprisesUnenrollCall) DoHeader() (http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -2559,15 +2908,18 @@ func (c *EnterprisesUnenrollCall) Do() error {
 		"enterpriseId": c.enterpriseId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Unenrolls an enterprise from the calling MDM.",
 	//   "httpMethod": "POST",
@@ -2619,7 +2971,20 @@ func (c *EntitlementsDeleteCall) Fields(s ...googleapi.Field) *EntitlementsDelet
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *EntitlementsDeleteCall) IfNoneMatch(ifNoneMatch string) *EntitlementsDeleteCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *EntitlementsDeleteCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+func (c *EntitlementsDeleteCall) DoHeader() (http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -2635,15 +3000,18 @@ func (c *EntitlementsDeleteCall) Do() error {
 		"entitlementId": c.entitlementId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Removes an entitlement to an app for a user and uninstalls it.",
 	//   "httpMethod": "DELETE",
@@ -2708,7 +3076,20 @@ func (c *EntitlementsGetCall) Fields(s ...googleapi.Field) *EntitlementsGetCall 
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *EntitlementsGetCall) IfNoneMatch(ifNoneMatch string) *EntitlementsGetCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *EntitlementsGetCall) Do() (*Entitlement, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *EntitlementsGetCall) DoHeader() (*Entitlement, http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -2724,19 +3105,22 @@ func (c *EntitlementsGetCall) Do() (*Entitlement, error) {
 		"entitlementId": c.entitlementId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *Entitlement
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Retrieves details of an entitlement.",
 	//   "httpMethod": "GET",
@@ -2803,7 +3187,20 @@ func (c *EntitlementsListCall) Fields(s ...googleapi.Field) *EntitlementsListCal
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *EntitlementsListCall) IfNoneMatch(ifNoneMatch string) *EntitlementsListCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *EntitlementsListCall) Do() (*EntitlementsListResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *EntitlementsListCall) DoHeader() (*EntitlementsListResponse, http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -2818,19 +3215,22 @@ func (c *EntitlementsListCall) Do() (*EntitlementsListResponse, error) {
 		"userId":       c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *EntitlementsListResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "List of all entitlements for the specified user. Only the ID is set.",
 	//   "httpMethod": "GET",
@@ -2904,11 +3304,24 @@ func (c *EntitlementsPatchCall) Fields(s ...googleapi.Field) *EntitlementsPatchC
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *EntitlementsPatchCall) IfNoneMatch(ifNoneMatch string) *EntitlementsPatchCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *EntitlementsPatchCall) Do() (*Entitlement, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *EntitlementsPatchCall) DoHeader() (*Entitlement, http.Header, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.entitlement)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -2929,19 +3342,22 @@ func (c *EntitlementsPatchCall) Do() (*Entitlement, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *Entitlement
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Adds or updates an entitlement to an app for a user. This method supports patch semantics.",
 	//   "httpMethod": "PATCH",
@@ -3029,11 +3445,24 @@ func (c *EntitlementsUpdateCall) Fields(s ...googleapi.Field) *EntitlementsUpdat
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *EntitlementsUpdateCall) IfNoneMatch(ifNoneMatch string) *EntitlementsUpdateCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *EntitlementsUpdateCall) Do() (*Entitlement, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *EntitlementsUpdateCall) DoHeader() (*Entitlement, http.Header, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.entitlement)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -3054,19 +3483,22 @@ func (c *EntitlementsUpdateCall) Do() (*Entitlement, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *Entitlement
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Adds or updates an entitlement to an app for a user.",
 	//   "httpMethod": "PUT",
@@ -3141,7 +3573,20 @@ func (c *GrouplicensesGetCall) Fields(s ...googleapi.Field) *GrouplicensesGetCal
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *GrouplicensesGetCall) IfNoneMatch(ifNoneMatch string) *GrouplicensesGetCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *GrouplicensesGetCall) Do() (*GroupLicense, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *GrouplicensesGetCall) DoHeader() (*GroupLicense, http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -3156,19 +3601,22 @@ func (c *GrouplicensesGetCall) Do() (*GroupLicense, error) {
 		"groupLicenseId": c.groupLicenseId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *GroupLicense
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Retrieves details of an enterprise's group license for a product.",
 	//   "httpMethod": "GET",
@@ -3226,7 +3674,20 @@ func (c *GrouplicensesListCall) Fields(s ...googleapi.Field) *GrouplicensesListC
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *GrouplicensesListCall) IfNoneMatch(ifNoneMatch string) *GrouplicensesListCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *GrouplicensesListCall) Do() (*GroupLicensesListResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *GrouplicensesListCall) DoHeader() (*GroupLicensesListResponse, http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -3240,19 +3701,22 @@ func (c *GrouplicensesListCall) Do() (*GroupLicensesListResponse, error) {
 		"enterpriseId": c.enterpriseId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *GroupLicensesListResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Retrieves IDs of all products for which the enterprise has a group license.",
 	//   "httpMethod": "GET",
@@ -3305,7 +3769,20 @@ func (c *GrouplicenseusersListCall) Fields(s ...googleapi.Field) *Grouplicenseus
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *GrouplicenseusersListCall) IfNoneMatch(ifNoneMatch string) *GrouplicenseusersListCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *GrouplicenseusersListCall) Do() (*GroupLicenseUsersListResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *GrouplicenseusersListCall) DoHeader() (*GroupLicenseUsersListResponse, http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -3320,19 +3797,22 @@ func (c *GrouplicenseusersListCall) Do() (*GroupLicenseUsersListResponse, error)
 		"groupLicenseId": c.groupLicenseId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *GroupLicenseUsersListResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Retrieves the IDs of the users who have been granted entitlements under the license.",
 	//   "httpMethod": "GET",
@@ -3397,7 +3877,20 @@ func (c *InstallsDeleteCall) Fields(s ...googleapi.Field) *InstallsDeleteCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *InstallsDeleteCall) IfNoneMatch(ifNoneMatch string) *InstallsDeleteCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *InstallsDeleteCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+func (c *InstallsDeleteCall) DoHeader() (http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -3414,15 +3907,18 @@ func (c *InstallsDeleteCall) Do() error {
 		"installId":    c.installId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Requests to remove an app from a device. A call to get or list will still show the app as installed on the device until it is actually removed.",
 	//   "httpMethod": "DELETE",
@@ -3496,7 +3992,20 @@ func (c *InstallsGetCall) Fields(s ...googleapi.Field) *InstallsGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *InstallsGetCall) IfNoneMatch(ifNoneMatch string) *InstallsGetCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *InstallsGetCall) Do() (*Install, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *InstallsGetCall) DoHeader() (*Install, http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -3513,19 +4022,22 @@ func (c *InstallsGetCall) Do() (*Install, error) {
 		"installId":    c.installId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *Install
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Retrieves details of an installation of an app on a device.",
 	//   "httpMethod": "GET",
@@ -3601,7 +4113,20 @@ func (c *InstallsListCall) Fields(s ...googleapi.Field) *InstallsListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *InstallsListCall) IfNoneMatch(ifNoneMatch string) *InstallsListCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *InstallsListCall) Do() (*InstallsListResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *InstallsListCall) DoHeader() (*InstallsListResponse, http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -3617,19 +4142,22 @@ func (c *InstallsListCall) Do() (*InstallsListResponse, error) {
 		"deviceId":     c.deviceId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *InstallsListResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Retrieves the details of all apps installed on the specified device.",
 	//   "httpMethod": "GET",
@@ -3703,11 +4231,24 @@ func (c *InstallsPatchCall) Fields(s ...googleapi.Field) *InstallsPatchCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *InstallsPatchCall) IfNoneMatch(ifNoneMatch string) *InstallsPatchCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *InstallsPatchCall) Do() (*Install, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *InstallsPatchCall) DoHeader() (*Install, http.Header, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.install)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -3726,19 +4267,22 @@ func (c *InstallsPatchCall) Do() (*Install, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *Install
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Requests to install the latest version of an app to a device. If the app is already installed then it is updated to the latest version if necessary. This method supports patch semantics.",
 	//   "httpMethod": "PATCH",
@@ -3822,11 +4366,24 @@ func (c *InstallsUpdateCall) Fields(s ...googleapi.Field) *InstallsUpdateCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *InstallsUpdateCall) IfNoneMatch(ifNoneMatch string) *InstallsUpdateCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *InstallsUpdateCall) Do() (*Install, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *InstallsUpdateCall) DoHeader() (*Install, http.Header, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.install)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -3845,19 +4402,22 @@ func (c *InstallsUpdateCall) Do() (*Install, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *Install
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Requests to install the latest version of an app to a device. If the app is already installed then it is updated to the latest version if necessary.",
 	//   "httpMethod": "PUT",
@@ -3939,7 +4499,20 @@ func (c *PermissionsGetCall) Fields(s ...googleapi.Field) *PermissionsGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *PermissionsGetCall) IfNoneMatch(ifNoneMatch string) *PermissionsGetCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *PermissionsGetCall) Do() (*Permission, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *PermissionsGetCall) DoHeader() (*Permission, http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -3956,19 +4529,22 @@ func (c *PermissionsGetCall) Do() (*Permission, error) {
 		"permissionId": c.permissionId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *Permission
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Retrieves details of an Android app permission for display to an enterprise admin.",
 	//   "httpMethod": "GET",
@@ -4028,11 +4604,24 @@ func (c *ProductsApproveCall) Fields(s ...googleapi.Field) *ProductsApproveCall 
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *ProductsApproveCall) IfNoneMatch(ifNoneMatch string) *ProductsApproveCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *ProductsApproveCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+func (c *ProductsApproveCall) DoHeader() (http.Header, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.productsapproverequest)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -4049,15 +4638,18 @@ func (c *ProductsApproveCall) Do() error {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Approves the specified product (and the relevant app permissions, if any).",
 	//   "httpMethod": "POST",
@@ -4127,7 +4719,20 @@ func (c *ProductsGenerateApprovalUrlCall) Fields(s ...googleapi.Field) *Products
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *ProductsGenerateApprovalUrlCall) IfNoneMatch(ifNoneMatch string) *ProductsGenerateApprovalUrlCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *ProductsGenerateApprovalUrlCall) Do() (*ProductsGenerateApprovalUrlResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *ProductsGenerateApprovalUrlCall) DoHeader() (*ProductsGenerateApprovalUrlResponse, http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -4145,19 +4750,22 @@ func (c *ProductsGenerateApprovalUrlCall) Do() (*ProductsGenerateApprovalUrlResp
 		"productId":    c.productId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *ProductsGenerateApprovalUrlResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Generates a URL that can be used to display an iframe to view the product's permissions (if any) and approve the product. This URL can be used to approve the product for a limited time (currently 1 hour) using the Products.approve call.",
 	//   "httpMethod": "POST",
@@ -4229,7 +4837,20 @@ func (c *ProductsGetCall) Fields(s ...googleapi.Field) *ProductsGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *ProductsGetCall) IfNoneMatch(ifNoneMatch string) *ProductsGetCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *ProductsGetCall) Do() (*Product, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *ProductsGetCall) DoHeader() (*Product, http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -4247,19 +4868,22 @@ func (c *ProductsGetCall) Do() (*Product, error) {
 		"productId":    c.productId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *Product
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Retrieves details of a product for display to an enterprise admin.",
 	//   "httpMethod": "GET",
@@ -4332,7 +4956,20 @@ func (c *ProductsGetAppRestrictionsSchemaCall) Fields(s ...googleapi.Field) *Pro
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *ProductsGetAppRestrictionsSchemaCall) IfNoneMatch(ifNoneMatch string) *ProductsGetAppRestrictionsSchemaCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *ProductsGetAppRestrictionsSchemaCall) Do() (*AppRestrictionsSchema, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *ProductsGetAppRestrictionsSchemaCall) DoHeader() (*AppRestrictionsSchema, http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -4350,19 +4987,22 @@ func (c *ProductsGetAppRestrictionsSchemaCall) Do() (*AppRestrictionsSchema, err
 		"productId":    c.productId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *AppRestrictionsSchema
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Retrieves the schema defining app restrictions configurable for this product. All products have a schema, but this may be empty if no app restrictions are defined.",
 	//   "httpMethod": "GET",
@@ -4427,7 +5067,20 @@ func (c *ProductsGetPermissionsCall) Fields(s ...googleapi.Field) *ProductsGetPe
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *ProductsGetPermissionsCall) IfNoneMatch(ifNoneMatch string) *ProductsGetPermissionsCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *ProductsGetPermissionsCall) Do() (*ProductPermissions, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *ProductsGetPermissionsCall) DoHeader() (*ProductPermissions, http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -4442,19 +5095,22 @@ func (c *ProductsGetPermissionsCall) Do() (*ProductPermissions, error) {
 		"productId":    c.productId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *ProductPermissions
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Retrieves the Android app permissions required by this app.",
 	//   "httpMethod": "GET",
@@ -4516,11 +5172,24 @@ func (c *ProductsUpdatePermissionsCall) Fields(s ...googleapi.Field) *ProductsUp
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *ProductsUpdatePermissionsCall) IfNoneMatch(ifNoneMatch string) *ProductsUpdatePermissionsCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *ProductsUpdatePermissionsCall) Do() (*ProductPermissions, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *ProductsUpdatePermissionsCall) DoHeader() (*ProductPermissions, http.Header, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.productpermissions)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -4537,19 +5206,22 @@ func (c *ProductsUpdatePermissionsCall) Do() (*ProductPermissions, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *ProductPermissions
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Updates the set of Android app permissions for this app that have been accepted by the enterprise.",
 	//   "httpMethod": "PUT",
@@ -4613,7 +5285,20 @@ func (c *UsersGenerateTokenCall) Fields(s ...googleapi.Field) *UsersGenerateToke
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *UsersGenerateTokenCall) IfNoneMatch(ifNoneMatch string) *UsersGenerateTokenCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *UsersGenerateTokenCall) Do() (*UserToken, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *UsersGenerateTokenCall) DoHeader() (*UserToken, http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -4628,19 +5313,22 @@ func (c *UsersGenerateTokenCall) Do() (*UserToken, error) {
 		"userId":       c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *UserToken
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Generates a token (activation code) to allow this user to configure their work account in the Android Setup Wizard. Revokes any previously generated token.",
 	//   "httpMethod": "POST",
@@ -4699,7 +5387,20 @@ func (c *UsersGetCall) Fields(s ...googleapi.Field) *UsersGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *UsersGetCall) IfNoneMatch(ifNoneMatch string) *UsersGetCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *UsersGetCall) Do() (*User, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *UsersGetCall) DoHeader() (*User, http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -4714,19 +5415,22 @@ func (c *UsersGetCall) Do() (*User, error) {
 		"userId":       c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *User
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Retrieves a user's details.",
 	//   "httpMethod": "GET",
@@ -4785,7 +5489,20 @@ func (c *UsersListCall) Fields(s ...googleapi.Field) *UsersListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *UsersListCall) IfNoneMatch(ifNoneMatch string) *UsersListCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *UsersListCall) Do() (*UsersListResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *UsersListCall) DoHeader() (*UsersListResponse, http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -4800,19 +5517,22 @@ func (c *UsersListCall) Do() (*UsersListResponse, error) {
 		"enterpriseId": c.enterpriseId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *UsersListResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Looks up a user by email address.",
 	//   "httpMethod": "GET",
@@ -4872,7 +5592,20 @@ func (c *UsersRevokeTokenCall) Fields(s ...googleapi.Field) *UsersRevokeTokenCal
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *UsersRevokeTokenCall) IfNoneMatch(ifNoneMatch string) *UsersRevokeTokenCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *UsersRevokeTokenCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+func (c *UsersRevokeTokenCall) DoHeader() (http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -4887,15 +5620,18 @@ func (c *UsersRevokeTokenCall) Do() error {
 		"userId":       c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Revokes a previously generated token (activation code) for the user.",
 	//   "httpMethod": "DELETE",

@@ -991,11 +991,24 @@ func (c *PawsGetSpectrumCall) Fields(s ...googleapi.Field) *PawsGetSpectrumCall 
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *PawsGetSpectrumCall) IfNoneMatch(ifNoneMatch string) *PawsGetSpectrumCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *PawsGetSpectrumCall) Do() (*PawsGetSpectrumResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *PawsGetSpectrumCall) DoHeader() (*PawsGetSpectrumResponse, http.Header, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.pawsgetspectrumrequest)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -1009,19 +1022,22 @@ func (c *PawsGetSpectrumCall) Do() (*PawsGetSpectrumResponse, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *PawsGetSpectrumResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Requests information about the available spectrum for a device at a location. Requests from a fixed-mode device must include owner information so the device can be registered with the database.",
 	//   "httpMethod": "POST",
@@ -1061,11 +1077,24 @@ func (c *PawsGetSpectrumBatchCall) Fields(s ...googleapi.Field) *PawsGetSpectrum
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *PawsGetSpectrumBatchCall) IfNoneMatch(ifNoneMatch string) *PawsGetSpectrumBatchCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *PawsGetSpectrumBatchCall) Do() (*PawsGetSpectrumBatchResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *PawsGetSpectrumBatchCall) DoHeader() (*PawsGetSpectrumBatchResponse, http.Header, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.pawsgetspectrumbatchrequest)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -1079,19 +1108,22 @@ func (c *PawsGetSpectrumBatchCall) Do() (*PawsGetSpectrumBatchResponse, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *PawsGetSpectrumBatchResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "The Google Spectrum Database does not support batch requests, so this method always yields an UNIMPLEMENTED error.",
 	//   "httpMethod": "POST",
@@ -1131,11 +1163,24 @@ func (c *PawsInitCall) Fields(s ...googleapi.Field) *PawsInitCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *PawsInitCall) IfNoneMatch(ifNoneMatch string) *PawsInitCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *PawsInitCall) Do() (*PawsInitResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *PawsInitCall) DoHeader() (*PawsInitResponse, http.Header, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.pawsinitrequest)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -1149,19 +1194,22 @@ func (c *PawsInitCall) Do() (*PawsInitResponse, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *PawsInitResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Initializes the connection between a white space device and the database.",
 	//   "httpMethod": "POST",
@@ -1204,11 +1252,24 @@ func (c *PawsNotifySpectrumUseCall) Fields(s ...googleapi.Field) *PawsNotifySpec
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *PawsNotifySpectrumUseCall) IfNoneMatch(ifNoneMatch string) *PawsNotifySpectrumUseCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *PawsNotifySpectrumUseCall) Do() (*PawsNotifySpectrumUseResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *PawsNotifySpectrumUseCall) DoHeader() (*PawsNotifySpectrumUseResponse, http.Header, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.pawsnotifyspectrumuserequest)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -1222,19 +1283,22 @@ func (c *PawsNotifySpectrumUseCall) Do() (*PawsNotifySpectrumUseResponse, error)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *PawsNotifySpectrumUseResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Notifies the database that the device has selected certain frequency ranges for transmission. Only to be invoked when required by the regulator. The Google Spectrum Database does not operate in domains that require notification, so this always yields an UNIMPLEMENTED error.",
 	//   "httpMethod": "POST",
@@ -1275,11 +1339,24 @@ func (c *PawsRegisterCall) Fields(s ...googleapi.Field) *PawsRegisterCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *PawsRegisterCall) IfNoneMatch(ifNoneMatch string) *PawsRegisterCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *PawsRegisterCall) Do() (*PawsRegisterResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *PawsRegisterCall) DoHeader() (*PawsRegisterResponse, http.Header, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.pawsregisterrequest)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -1293,19 +1370,22 @@ func (c *PawsRegisterCall) Do() (*PawsRegisterResponse, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *PawsRegisterResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "The Google Spectrum Database implements registration in the getSpectrum method. As such this always returns an UNIMPLEMENTED error.",
 	//   "httpMethod": "POST",
@@ -1347,11 +1427,24 @@ func (c *PawsVerifyDeviceCall) Fields(s ...googleapi.Field) *PawsVerifyDeviceCal
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *PawsVerifyDeviceCall) IfNoneMatch(ifNoneMatch string) *PawsVerifyDeviceCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *PawsVerifyDeviceCall) Do() (*PawsVerifyDeviceResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *PawsVerifyDeviceCall) DoHeader() (*PawsVerifyDeviceResponse, http.Header, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.pawsverifydevicerequest)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -1365,19 +1458,22 @@ func (c *PawsVerifyDeviceCall) Do() (*PawsVerifyDeviceResponse, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *PawsVerifyDeviceResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Validates a device for white space use in accordance with regulatory rules. The Google Spectrum Database does not support master/slave configurations, so this always yields an UNIMPLEMENTED error.",
 	//   "httpMethod": "POST",

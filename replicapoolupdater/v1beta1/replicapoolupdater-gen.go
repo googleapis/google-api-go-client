@@ -427,7 +427,20 @@ func (c *RollingUpdatesCancelCall) Fields(s ...googleapi.Field) *RollingUpdatesC
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *RollingUpdatesCancelCall) IfNoneMatch(ifNoneMatch string) *RollingUpdatesCancelCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *RollingUpdatesCancelCall) Do() (*Operation, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *RollingUpdatesCancelCall) DoHeader() (*Operation, http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -443,19 +456,22 @@ func (c *RollingUpdatesCancelCall) Do() (*Operation, error) {
 		"rollingUpdate": c.rollingUpdate,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *Operation
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Cancels an update. The update must be PAUSED before it can be cancelled. This has no effect if the update is already CANCELLED.",
 	//   "httpMethod": "POST",
@@ -526,7 +542,20 @@ func (c *RollingUpdatesGetCall) Fields(s ...googleapi.Field) *RollingUpdatesGetC
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *RollingUpdatesGetCall) IfNoneMatch(ifNoneMatch string) *RollingUpdatesGetCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *RollingUpdatesGetCall) Do() (*RollingUpdate, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *RollingUpdatesGetCall) DoHeader() (*RollingUpdate, http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -542,19 +571,22 @@ func (c *RollingUpdatesGetCall) Do() (*RollingUpdate, error) {
 		"rollingUpdate": c.rollingUpdate,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *RollingUpdate
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Returns information about an update.",
 	//   "httpMethod": "GET",
@@ -626,11 +658,24 @@ func (c *RollingUpdatesInsertCall) Fields(s ...googleapi.Field) *RollingUpdatesI
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *RollingUpdatesInsertCall) IfNoneMatch(ifNoneMatch string) *RollingUpdatesInsertCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *RollingUpdatesInsertCall) Do() (*Operation, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *RollingUpdatesInsertCall) DoHeader() (*Operation, http.Header, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.rollingupdate)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -647,19 +692,22 @@ func (c *RollingUpdatesInsertCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *Operation
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Inserts and starts a new update.",
 	//   "httpMethod": "POST",
@@ -757,7 +805,20 @@ func (c *RollingUpdatesListCall) Fields(s ...googleapi.Field) *RollingUpdatesLis
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *RollingUpdatesListCall) IfNoneMatch(ifNoneMatch string) *RollingUpdatesListCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *RollingUpdatesListCall) Do() (*RollingUpdateList, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *RollingUpdatesListCall) DoHeader() (*RollingUpdateList, http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -784,19 +845,22 @@ func (c *RollingUpdatesListCall) Do() (*RollingUpdateList, error) {
 		"zone":    c.zone,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *RollingUpdateList
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Lists recent updates for a given managed instance group, in reverse chronological order and paginated format.",
 	//   "httpMethod": "GET",
@@ -909,7 +973,20 @@ func (c *RollingUpdatesListInstanceUpdatesCall) Fields(s ...googleapi.Field) *Ro
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *RollingUpdatesListInstanceUpdatesCall) IfNoneMatch(ifNoneMatch string) *RollingUpdatesListInstanceUpdatesCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *RollingUpdatesListInstanceUpdatesCall) Do() (*InstanceUpdateList, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *RollingUpdatesListInstanceUpdatesCall) DoHeader() (*InstanceUpdateList, http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -934,19 +1011,22 @@ func (c *RollingUpdatesListInstanceUpdatesCall) Do() (*InstanceUpdateList, error
 		"rollingUpdate": c.rollingUpdate,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *InstanceUpdateList
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Lists the current status for each instance within a given update.",
 	//   "httpMethod": "GET",
@@ -1039,7 +1119,20 @@ func (c *RollingUpdatesPauseCall) Fields(s ...googleapi.Field) *RollingUpdatesPa
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *RollingUpdatesPauseCall) IfNoneMatch(ifNoneMatch string) *RollingUpdatesPauseCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *RollingUpdatesPauseCall) Do() (*Operation, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *RollingUpdatesPauseCall) DoHeader() (*Operation, http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1055,19 +1148,22 @@ func (c *RollingUpdatesPauseCall) Do() (*Operation, error) {
 		"rollingUpdate": c.rollingUpdate,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *Operation
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Pauses the update in state from ROLLING_FORWARD or ROLLING_BACK. Has no effect if invoked when the state of the update is PAUSED.",
 	//   "httpMethod": "POST",
@@ -1139,7 +1235,20 @@ func (c *RollingUpdatesResumeCall) Fields(s ...googleapi.Field) *RollingUpdatesR
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *RollingUpdatesResumeCall) IfNoneMatch(ifNoneMatch string) *RollingUpdatesResumeCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *RollingUpdatesResumeCall) Do() (*Operation, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *RollingUpdatesResumeCall) DoHeader() (*Operation, http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1155,19 +1264,22 @@ func (c *RollingUpdatesResumeCall) Do() (*Operation, error) {
 		"rollingUpdate": c.rollingUpdate,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *Operation
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Continues an update in PAUSED state. Has no effect if invoked when the state of the update is ROLLED_OUT.",
 	//   "httpMethod": "POST",
@@ -1240,7 +1352,20 @@ func (c *RollingUpdatesRollbackCall) Fields(s ...googleapi.Field) *RollingUpdate
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *RollingUpdatesRollbackCall) IfNoneMatch(ifNoneMatch string) *RollingUpdatesRollbackCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *RollingUpdatesRollbackCall) Do() (*Operation, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *RollingUpdatesRollbackCall) DoHeader() (*Operation, http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1256,19 +1381,22 @@ func (c *RollingUpdatesRollbackCall) Do() (*Operation, error) {
 		"rollingUpdate": c.rollingUpdate,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *Operation
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Rolls back the update in state from ROLLING_FORWARD or PAUSED. Has no effect if invoked when the state of the update is ROLLED_BACK.",
 	//   "httpMethod": "POST",
@@ -1338,7 +1466,20 @@ func (c *ZoneOperationsGetCall) Fields(s ...googleapi.Field) *ZoneOperationsGetC
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *ZoneOperationsGetCall) IfNoneMatch(ifNoneMatch string) *ZoneOperationsGetCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *ZoneOperationsGetCall) Do() (*Operation, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *ZoneOperationsGetCall) DoHeader() (*Operation, http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1354,19 +1495,22 @@ func (c *ZoneOperationsGetCall) Do() (*Operation, error) {
 		"operation": c.operation,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *Operation
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Retrieves the specified zone-specific operation resource.",
 	//   "httpMethod": "GET",

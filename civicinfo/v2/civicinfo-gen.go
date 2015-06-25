@@ -621,7 +621,20 @@ func (c *DivisionsSearchCall) Fields(s ...googleapi.Field) *DivisionsSearchCall 
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *DivisionsSearchCall) IfNoneMatch(ifNoneMatch string) *DivisionsSearchCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *DivisionsSearchCall) Do() (*DivisionSearchResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *DivisionsSearchCall) DoHeader() (*DivisionSearchResponse, http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -636,19 +649,22 @@ func (c *DivisionsSearchCall) Do() (*DivisionSearchResponse, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *DivisionSearchResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Searches for political divisions by their natural name or OCD ID.",
 	//   "httpMethod": "GET",
@@ -689,7 +705,20 @@ func (c *ElectionsElectionQueryCall) Fields(s ...googleapi.Field) *ElectionsElec
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *ElectionsElectionQueryCall) IfNoneMatch(ifNoneMatch string) *ElectionsElectionQueryCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *ElectionsElectionQueryCall) Do() (*ElectionsQueryResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *ElectionsElectionQueryCall) DoHeader() (*ElectionsQueryResponse, http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -701,19 +730,22 @@ func (c *ElectionsElectionQueryCall) Do() (*ElectionsQueryResponse, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *ElectionsQueryResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "List of available elections to query.",
 	//   "httpMethod": "GET",
@@ -765,7 +797,20 @@ func (c *ElectionsVoterInfoQueryCall) Fields(s ...googleapi.Field) *ElectionsVot
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *ElectionsVoterInfoQueryCall) IfNoneMatch(ifNoneMatch string) *ElectionsVoterInfoQueryCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *ElectionsVoterInfoQueryCall) Do() (*VoterInfoResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *ElectionsVoterInfoQueryCall) DoHeader() (*VoterInfoResponse, http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -784,19 +829,22 @@ func (c *ElectionsVoterInfoQueryCall) Do() (*VoterInfoResponse, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *VoterInfoResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Looks up information relevant to a voter based on the voter's registered address.",
 	//   "httpMethod": "GET",
@@ -912,7 +960,20 @@ func (c *RepresentativesRepresentativeInfoByAddressCall) Fields(s ...googleapi.F
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *RepresentativesRepresentativeInfoByAddressCall) IfNoneMatch(ifNoneMatch string) *RepresentativesRepresentativeInfoByAddressCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *RepresentativesRepresentativeInfoByAddressCall) Do() (*RepresentativeInfoResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *RepresentativesRepresentativeInfoByAddressCall) DoHeader() (*RepresentativeInfoResponse, http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -936,19 +997,22 @@ func (c *RepresentativesRepresentativeInfoByAddressCall) Do() (*RepresentativeIn
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *RepresentativeInfoResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Looks up political geography and representative information for a single address.",
 	//   "httpMethod": "GET",
@@ -1110,7 +1174,20 @@ func (c *RepresentativesRepresentativeInfoByDivisionCall) Fields(s ...googleapi.
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *RepresentativesRepresentativeInfoByDivisionCall) IfNoneMatch(ifNoneMatch string) *RepresentativesRepresentativeInfoByDivisionCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *RepresentativesRepresentativeInfoByDivisionCall) Do() (*RepresentativeInfoData, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *RepresentativesRepresentativeInfoByDivisionCall) DoHeader() (*RepresentativeInfoData, http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1133,19 +1210,22 @@ func (c *RepresentativesRepresentativeInfoByDivisionCall) Do() (*RepresentativeI
 		"ocdId": c.ocdId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *RepresentativeInfoData
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Looks up representative information for a single geographic division.",
 	//   "httpMethod": "GET",

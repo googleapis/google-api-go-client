@@ -391,7 +391,20 @@ func (c *AchievementsResetCall) Fields(s ...googleapi.Field) *AchievementsResetC
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *AchievementsResetCall) IfNoneMatch(ifNoneMatch string) *AchievementsResetCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *AchievementsResetCall) Do() (*AchievementResetResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *AchievementsResetCall) DoHeader() (*AchievementResetResponse, http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -405,19 +418,22 @@ func (c *AchievementsResetCall) Do() (*AchievementResetResponse, error) {
 		"achievementId": c.achievementId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *AchievementResetResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Resets the achievement with the given ID for the currently authenticated player. This method is only accessible to whitelisted tester accounts for your application.",
 	//   "httpMethod": "POST",
@@ -468,7 +484,20 @@ func (c *AchievementsResetAllCall) Fields(s ...googleapi.Field) *AchievementsRes
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *AchievementsResetAllCall) IfNoneMatch(ifNoneMatch string) *AchievementsResetAllCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *AchievementsResetAllCall) Do() (*AchievementResetAllResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *AchievementsResetAllCall) DoHeader() (*AchievementResetAllResponse, http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -480,19 +509,22 @@ func (c *AchievementsResetAllCall) Do() (*AchievementResetAllResponse, error) {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *AchievementResetAllResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Resets all achievements for the currently authenticated player for your application. This method is only accessible to whitelisted tester accounts for your application.",
 	//   "httpMethod": "POST",
@@ -532,7 +564,20 @@ func (c *AchievementsResetAllForAllPlayersCall) Fields(s ...googleapi.Field) *Ac
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *AchievementsResetAllForAllPlayersCall) IfNoneMatch(ifNoneMatch string) *AchievementsResetAllForAllPlayersCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *AchievementsResetAllForAllPlayersCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+func (c *AchievementsResetAllForAllPlayersCall) DoHeader() (http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -544,15 +589,18 @@ func (c *AchievementsResetAllForAllPlayersCall) Do() error {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Resets all draft achievements for all players. This method is only available to user accounts for your developer console.",
 	//   "httpMethod": "POST",
@@ -591,7 +639,20 @@ func (c *AchievementsResetForAllPlayersCall) Fields(s ...googleapi.Field) *Achie
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *AchievementsResetForAllPlayersCall) IfNoneMatch(ifNoneMatch string) *AchievementsResetForAllPlayersCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *AchievementsResetForAllPlayersCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+func (c *AchievementsResetForAllPlayersCall) DoHeader() (http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -605,15 +666,18 @@ func (c *AchievementsResetForAllPlayersCall) Do() error {
 		"achievementId": c.achievementId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Resets the achievement with the given ID for all players. This method is only available to user accounts for your developer console. Only draft achievements can be reset.",
 	//   "httpMethod": "POST",
@@ -663,11 +727,24 @@ func (c *AchievementsResetMultipleForAllPlayersCall) Fields(s ...googleapi.Field
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *AchievementsResetMultipleForAllPlayersCall) IfNoneMatch(ifNoneMatch string) *AchievementsResetMultipleForAllPlayersCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *AchievementsResetMultipleForAllPlayersCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+func (c *AchievementsResetMultipleForAllPlayersCall) DoHeader() (http.Header, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.achievementresetmultipleforallrequest)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -681,15 +758,18 @@ func (c *AchievementsResetMultipleForAllPlayersCall) Do() error {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Resets achievements with the given IDs for all players. This method is only available to user accounts for your developer console. Only draft achievements may be reset.",
 	//   "httpMethod": "POST",
@@ -747,7 +827,20 @@ func (c *ApplicationsListHiddenCall) Fields(s ...googleapi.Field) *ApplicationsL
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *ApplicationsListHiddenCall) IfNoneMatch(ifNoneMatch string) *ApplicationsListHiddenCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *ApplicationsListHiddenCall) Do() (*HiddenPlayerList, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *ApplicationsListHiddenCall) DoHeader() (*HiddenPlayerList, http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -767,19 +860,22 @@ func (c *ApplicationsListHiddenCall) Do() (*HiddenPlayerList, error) {
 		"applicationId": c.applicationId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *HiddenPlayerList
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Get the list of players hidden from the given application. This method is only available to user accounts for your developer console.",
 	//   "httpMethod": "GET",
@@ -846,7 +942,20 @@ func (c *EventsResetCall) Fields(s ...googleapi.Field) *EventsResetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *EventsResetCall) IfNoneMatch(ifNoneMatch string) *EventsResetCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *EventsResetCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+func (c *EventsResetCall) DoHeader() (http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -860,15 +969,18 @@ func (c *EventsResetCall) Do() error {
 		"eventId": c.eventId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Resets all player progress on the event with the given ID for the currently authenticated player. This method is only accessible to whitelisted tester accounts for your application. All quests for this player that use the event will also be reset.",
 	//   "httpMethod": "POST",
@@ -917,7 +1029,20 @@ func (c *EventsResetAllCall) Fields(s ...googleapi.Field) *EventsResetAllCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *EventsResetAllCall) IfNoneMatch(ifNoneMatch string) *EventsResetAllCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *EventsResetAllCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+func (c *EventsResetAllCall) DoHeader() (http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -929,15 +1054,18 @@ func (c *EventsResetAllCall) Do() error {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Resets all player progress on all events for the currently authenticated player. This method is only accessible to whitelisted tester accounts for your application. All quests for this player will also be reset.",
 	//   "httpMethod": "POST",
@@ -974,7 +1102,20 @@ func (c *EventsResetAllForAllPlayersCall) Fields(s ...googleapi.Field) *EventsRe
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *EventsResetAllForAllPlayersCall) IfNoneMatch(ifNoneMatch string) *EventsResetAllForAllPlayersCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *EventsResetAllForAllPlayersCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+func (c *EventsResetAllForAllPlayersCall) DoHeader() (http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -986,15 +1127,18 @@ func (c *EventsResetAllForAllPlayersCall) Do() error {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Resets all draft events for all players. This method is only available to user accounts for your developer console. All quests that use any of these events will also be reset.",
 	//   "httpMethod": "POST",
@@ -1034,7 +1178,20 @@ func (c *EventsResetForAllPlayersCall) Fields(s ...googleapi.Field) *EventsReset
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *EventsResetForAllPlayersCall) IfNoneMatch(ifNoneMatch string) *EventsResetForAllPlayersCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *EventsResetForAllPlayersCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+func (c *EventsResetForAllPlayersCall) DoHeader() (http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1048,15 +1205,18 @@ func (c *EventsResetForAllPlayersCall) Do() error {
 		"eventId": c.eventId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Resets the event with the given ID for all players. This method is only available to user accounts for your developer console. Only draft events can be reset. All quests that use the event will also be reset.",
 	//   "httpMethod": "POST",
@@ -1107,11 +1267,24 @@ func (c *EventsResetMultipleForAllPlayersCall) Fields(s ...googleapi.Field) *Eve
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *EventsResetMultipleForAllPlayersCall) IfNoneMatch(ifNoneMatch string) *EventsResetMultipleForAllPlayersCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *EventsResetMultipleForAllPlayersCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+func (c *EventsResetMultipleForAllPlayersCall) DoHeader() (http.Header, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.eventsresetmultipleforallrequest)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -1125,15 +1298,18 @@ func (c *EventsResetMultipleForAllPlayersCall) Do() error {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Resets events with the given IDs for all players. This method is only available to user accounts for your developer console. Only draft events may be reset. All quests that use any of the events will also be reset.",
 	//   "httpMethod": "POST",
@@ -1177,7 +1353,20 @@ func (c *PlayersHideCall) Fields(s ...googleapi.Field) *PlayersHideCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *PlayersHideCall) IfNoneMatch(ifNoneMatch string) *PlayersHideCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *PlayersHideCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+func (c *PlayersHideCall) DoHeader() (http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1192,15 +1381,18 @@ func (c *PlayersHideCall) Do() error {
 		"playerId":      c.playerId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Hide the given player's leaderboard scores from the given application. This method is only available to user accounts for your developer console.",
 	//   "httpMethod": "POST",
@@ -1259,7 +1451,20 @@ func (c *PlayersUnhideCall) Fields(s ...googleapi.Field) *PlayersUnhideCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *PlayersUnhideCall) IfNoneMatch(ifNoneMatch string) *PlayersUnhideCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *PlayersUnhideCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+func (c *PlayersUnhideCall) DoHeader() (http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1274,15 +1479,18 @@ func (c *PlayersUnhideCall) Do() error {
 		"playerId":      c.playerId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Unhide the given player's leaderboard scores from the given application. This method is only available to user accounts for your developer console.",
 	//   "httpMethod": "DELETE",
@@ -1339,7 +1547,20 @@ func (c *QuestsResetCall) Fields(s ...googleapi.Field) *QuestsResetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *QuestsResetCall) IfNoneMatch(ifNoneMatch string) *QuestsResetCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *QuestsResetCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+func (c *QuestsResetCall) DoHeader() (http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1353,15 +1574,18 @@ func (c *QuestsResetCall) Do() error {
 		"questId": c.questId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Resets all player progress on the quest with the given ID for the currently authenticated player. This method is only accessible to whitelisted tester accounts for your application.",
 	//   "httpMethod": "POST",
@@ -1409,7 +1633,20 @@ func (c *QuestsResetAllCall) Fields(s ...googleapi.Field) *QuestsResetAllCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *QuestsResetAllCall) IfNoneMatch(ifNoneMatch string) *QuestsResetAllCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *QuestsResetAllCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+func (c *QuestsResetAllCall) DoHeader() (http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1421,15 +1658,18 @@ func (c *QuestsResetAllCall) Do() error {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Resets all player progress on all quests for the currently authenticated player. This method is only accessible to whitelisted tester accounts for your application.",
 	//   "httpMethod": "POST",
@@ -1465,7 +1705,20 @@ func (c *QuestsResetAllForAllPlayersCall) Fields(s ...googleapi.Field) *QuestsRe
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *QuestsResetAllForAllPlayersCall) IfNoneMatch(ifNoneMatch string) *QuestsResetAllForAllPlayersCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *QuestsResetAllForAllPlayersCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+func (c *QuestsResetAllForAllPlayersCall) DoHeader() (http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1477,15 +1730,18 @@ func (c *QuestsResetAllForAllPlayersCall) Do() error {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Resets all draft quests for all players. This method is only available to user accounts for your developer console.",
 	//   "httpMethod": "POST",
@@ -1524,7 +1780,20 @@ func (c *QuestsResetForAllPlayersCall) Fields(s ...googleapi.Field) *QuestsReset
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *QuestsResetForAllPlayersCall) IfNoneMatch(ifNoneMatch string) *QuestsResetForAllPlayersCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *QuestsResetForAllPlayersCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+func (c *QuestsResetForAllPlayersCall) DoHeader() (http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1538,15 +1807,18 @@ func (c *QuestsResetForAllPlayersCall) Do() error {
 		"questId": c.questId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Resets all player progress on the quest with the given ID for all players. This method is only available to user accounts for your developer console. Only draft quests can be reset.",
 	//   "httpMethod": "POST",
@@ -1596,11 +1868,24 @@ func (c *QuestsResetMultipleForAllPlayersCall) Fields(s ...googleapi.Field) *Que
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *QuestsResetMultipleForAllPlayersCall) IfNoneMatch(ifNoneMatch string) *QuestsResetMultipleForAllPlayersCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *QuestsResetMultipleForAllPlayersCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+func (c *QuestsResetMultipleForAllPlayersCall) DoHeader() (http.Header, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.questsresetmultipleforallrequest)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -1614,15 +1899,18 @@ func (c *QuestsResetMultipleForAllPlayersCall) Do() error {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Resets quests with the given IDs for all players. This method is only available to user accounts for your developer console. Only draft quests may be reset.",
 	//   "httpMethod": "POST",
@@ -1662,7 +1950,20 @@ func (c *RoomsResetCall) Fields(s ...googleapi.Field) *RoomsResetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *RoomsResetCall) IfNoneMatch(ifNoneMatch string) *RoomsResetCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *RoomsResetCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+func (c *RoomsResetCall) DoHeader() (http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1674,15 +1975,18 @@ func (c *RoomsResetCall) Do() error {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Reset all rooms for the currently authenticated player for your application. This method is only accessible to whitelisted tester accounts for your application.",
 	//   "httpMethod": "POST",
@@ -1719,7 +2023,20 @@ func (c *RoomsResetForAllPlayersCall) Fields(s ...googleapi.Field) *RoomsResetFo
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *RoomsResetForAllPlayersCall) IfNoneMatch(ifNoneMatch string) *RoomsResetForAllPlayersCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *RoomsResetForAllPlayersCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+func (c *RoomsResetForAllPlayersCall) DoHeader() (http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1731,15 +2048,18 @@ func (c *RoomsResetForAllPlayersCall) Do() error {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Deletes rooms where the only room participants are from whitelisted tester accounts for your application. This method is only available to user accounts for your developer console.",
 	//   "httpMethod": "POST",
@@ -1778,7 +2098,20 @@ func (c *ScoresResetCall) Fields(s ...googleapi.Field) *ScoresResetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *ScoresResetCall) IfNoneMatch(ifNoneMatch string) *ScoresResetCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *ScoresResetCall) Do() (*PlayerScoreResetResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *ScoresResetCall) DoHeader() (*PlayerScoreResetResponse, http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1792,19 +2125,22 @@ func (c *ScoresResetCall) Do() (*PlayerScoreResetResponse, error) {
 		"leaderboardId": c.leaderboardId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *PlayerScoreResetResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Resets scores for the leaderboard with the given ID for the currently authenticated player. This method is only accessible to whitelisted tester accounts for your application.",
 	//   "httpMethod": "POST",
@@ -1855,7 +2191,20 @@ func (c *ScoresResetAllCall) Fields(s ...googleapi.Field) *ScoresResetAllCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *ScoresResetAllCall) IfNoneMatch(ifNoneMatch string) *ScoresResetAllCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *ScoresResetAllCall) Do() (*PlayerScoreResetAllResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *ScoresResetAllCall) DoHeader() (*PlayerScoreResetAllResponse, http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1867,19 +2216,22 @@ func (c *ScoresResetAllCall) Do() (*PlayerScoreResetAllResponse, error) {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *PlayerScoreResetAllResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Resets all scores for all leaderboards for the currently authenticated players. This method is only accessible to whitelisted tester accounts for your application.",
 	//   "httpMethod": "POST",
@@ -1919,7 +2271,20 @@ func (c *ScoresResetAllForAllPlayersCall) Fields(s ...googleapi.Field) *ScoresRe
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *ScoresResetAllForAllPlayersCall) IfNoneMatch(ifNoneMatch string) *ScoresResetAllForAllPlayersCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *ScoresResetAllForAllPlayersCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+func (c *ScoresResetAllForAllPlayersCall) DoHeader() (http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1931,15 +2296,18 @@ func (c *ScoresResetAllForAllPlayersCall) Do() error {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Resets scores for all draft leaderboards for all players. This method is only available to user accounts for your developer console.",
 	//   "httpMethod": "POST",
@@ -1978,7 +2346,20 @@ func (c *ScoresResetForAllPlayersCall) Fields(s ...googleapi.Field) *ScoresReset
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *ScoresResetForAllPlayersCall) IfNoneMatch(ifNoneMatch string) *ScoresResetForAllPlayersCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *ScoresResetForAllPlayersCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+func (c *ScoresResetForAllPlayersCall) DoHeader() (http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1992,15 +2373,18 @@ func (c *ScoresResetForAllPlayersCall) Do() error {
 		"leaderboardId": c.leaderboardId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Resets scores for the leaderboard with the given ID for all players. This method is only available to user accounts for your developer console. Only draft leaderboards can be reset.",
 	//   "httpMethod": "POST",
@@ -2051,11 +2435,24 @@ func (c *ScoresResetMultipleForAllPlayersCall) Fields(s ...googleapi.Field) *Sco
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *ScoresResetMultipleForAllPlayersCall) IfNoneMatch(ifNoneMatch string) *ScoresResetMultipleForAllPlayersCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *ScoresResetMultipleForAllPlayersCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+func (c *ScoresResetMultipleForAllPlayersCall) DoHeader() (http.Header, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.scoresresetmultipleforallrequest)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -2069,15 +2466,18 @@ func (c *ScoresResetMultipleForAllPlayersCall) Do() error {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Resets scores for the leaderboards with the given IDs for all players. This method is only available to user accounts for your developer console. Only draft leaderboards may be reset.",
 	//   "httpMethod": "POST",
@@ -2116,7 +2516,20 @@ func (c *TurnBasedMatchesResetCall) Fields(s ...googleapi.Field) *TurnBasedMatch
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *TurnBasedMatchesResetCall) IfNoneMatch(ifNoneMatch string) *TurnBasedMatchesResetCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *TurnBasedMatchesResetCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+func (c *TurnBasedMatchesResetCall) DoHeader() (http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -2128,15 +2541,18 @@ func (c *TurnBasedMatchesResetCall) Do() error {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Reset all turn-based match data for a user. This method is only accessible to whitelisted tester accounts for your application.",
 	//   "httpMethod": "POST",
@@ -2174,7 +2590,20 @@ func (c *TurnBasedMatchesResetForAllPlayersCall) Fields(s ...googleapi.Field) *T
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *TurnBasedMatchesResetForAllPlayersCall) IfNoneMatch(ifNoneMatch string) *TurnBasedMatchesResetForAllPlayersCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *TurnBasedMatchesResetForAllPlayersCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+func (c *TurnBasedMatchesResetForAllPlayersCall) DoHeader() (http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -2186,15 +2615,18 @@ func (c *TurnBasedMatchesResetForAllPlayersCall) Do() error {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Deletes turn-based matches where the only match participants are from whitelisted tester accounts for your application. This method is only available to user accounts for your developer console.",
 	//   "httpMethod": "POST",

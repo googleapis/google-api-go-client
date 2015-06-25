@@ -394,7 +394,20 @@ func (c *ProjectsClustersListCall) Fields(s ...googleapi.Field) *ProjectsCluster
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *ProjectsClustersListCall) IfNoneMatch(ifNoneMatch string) *ProjectsClustersListCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *ProjectsClustersListCall) Do() (*ListAggregatedClustersResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *ProjectsClustersListCall) DoHeader() (*ListAggregatedClustersResponse, http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -408,19 +421,22 @@ func (c *ProjectsClustersListCall) Do() (*ListAggregatedClustersResponse, error)
 		"projectId": c.projectId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *ListAggregatedClustersResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Lists all clusters owned by a project across all zones.",
 	//   "httpMethod": "GET",
@@ -470,7 +486,20 @@ func (c *ProjectsOperationsListCall) Fields(s ...googleapi.Field) *ProjectsOpera
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *ProjectsOperationsListCall) IfNoneMatch(ifNoneMatch string) *ProjectsOperationsListCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *ProjectsOperationsListCall) Do() (*ListAggregatedOperationsResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *ProjectsOperationsListCall) DoHeader() (*ListAggregatedOperationsResponse, http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -484,19 +513,22 @@ func (c *ProjectsOperationsListCall) Do() (*ListAggregatedOperationsResponse, er
 		"projectId": c.projectId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *ListAggregatedOperationsResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Lists all operations in a project, across all zones.",
 	//   "httpMethod": "GET",
@@ -562,11 +594,24 @@ func (c *ProjectsZonesClustersCreateCall) Fields(s ...googleapi.Field) *Projects
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *ProjectsZonesClustersCreateCall) IfNoneMatch(ifNoneMatch string) *ProjectsZonesClustersCreateCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *ProjectsZonesClustersCreateCall) Do() (*Operation, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *ProjectsZonesClustersCreateCall) DoHeader() (*Operation, http.Header, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.createclusterrequest)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -583,19 +628,22 @@ func (c *ProjectsZonesClustersCreateCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *Operation
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Creates a cluster, consisting of the specified number and type of Google Compute Engine instances, plus a Kubernetes master instance.\n\nThe cluster is created in the project's default network.\n\nA firewall is added that allows traffic into port 443 on the master, which enables HTTPS. A firewall and a route is added for each node to allow the containers on that node to communicate with all other instances in the cluster.\n\nFinally, an entry is added to the project's global metadata indicating which CIDR range is being used by the cluster.",
 	//   "httpMethod": "POST",
@@ -663,7 +711,20 @@ func (c *ProjectsZonesClustersDeleteCall) Fields(s ...googleapi.Field) *Projects
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *ProjectsZonesClustersDeleteCall) IfNoneMatch(ifNoneMatch string) *ProjectsZonesClustersDeleteCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *ProjectsZonesClustersDeleteCall) Do() (*Operation, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *ProjectsZonesClustersDeleteCall) DoHeader() (*Operation, http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -679,19 +740,22 @@ func (c *ProjectsZonesClustersDeleteCall) Do() (*Operation, error) {
 		"clusterId": c.clusterId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *Operation
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Deletes the cluster, including the Kubernetes master and all worker nodes.\n\nFirewalls and routes that were configured at cluster creation are also deleted.",
 	//   "httpMethod": "DELETE",
@@ -759,7 +823,20 @@ func (c *ProjectsZonesClustersGetCall) Fields(s ...googleapi.Field) *ProjectsZon
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *ProjectsZonesClustersGetCall) IfNoneMatch(ifNoneMatch string) *ProjectsZonesClustersGetCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *ProjectsZonesClustersGetCall) Do() (*Cluster, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *ProjectsZonesClustersGetCall) DoHeader() (*Cluster, http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -775,19 +852,22 @@ func (c *ProjectsZonesClustersGetCall) Do() (*Cluster, error) {
 		"clusterId": c.clusterId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *Cluster
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Gets a specific cluster.",
 	//   "httpMethod": "GET",
@@ -853,7 +933,20 @@ func (c *ProjectsZonesClustersListCall) Fields(s ...googleapi.Field) *ProjectsZo
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *ProjectsZonesClustersListCall) IfNoneMatch(ifNoneMatch string) *ProjectsZonesClustersListCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *ProjectsZonesClustersListCall) Do() (*ListClustersResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *ProjectsZonesClustersListCall) DoHeader() (*ListClustersResponse, http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -868,19 +961,22 @@ func (c *ProjectsZonesClustersListCall) Do() (*ListClustersResponse, error) {
 		"zoneId":    c.zoneId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *ListClustersResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Lists all clusters owned by a project in the specified zone.",
 	//   "httpMethod": "GET",
@@ -941,7 +1037,20 @@ func (c *ProjectsZonesOperationsGetCall) Fields(s ...googleapi.Field) *ProjectsZ
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *ProjectsZonesOperationsGetCall) IfNoneMatch(ifNoneMatch string) *ProjectsZonesOperationsGetCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *ProjectsZonesOperationsGetCall) Do() (*Operation, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *ProjectsZonesOperationsGetCall) DoHeader() (*Operation, http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -957,19 +1066,22 @@ func (c *ProjectsZonesOperationsGetCall) Do() (*Operation, error) {
 		"operationId": c.operationId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *Operation
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Gets the specified operation.",
 	//   "httpMethod": "GET",
@@ -1035,7 +1147,20 @@ func (c *ProjectsZonesOperationsListCall) Fields(s ...googleapi.Field) *Projects
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *ProjectsZonesOperationsListCall) IfNoneMatch(ifNoneMatch string) *ProjectsZonesOperationsListCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *ProjectsZonesOperationsListCall) Do() (*ListOperationsResponse, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *ProjectsZonesOperationsListCall) DoHeader() (*ListOperationsResponse, http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -1050,19 +1175,22 @@ func (c *ProjectsZonesOperationsListCall) Do() (*ListOperationsResponse, error) 
 		"zoneId":    c.zoneId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *ListOperationsResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Lists all operations in a project in a specific zone.",
 	//   "httpMethod": "GET",

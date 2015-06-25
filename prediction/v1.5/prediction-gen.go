@@ -405,11 +405,24 @@ func (c *HostedmodelsPredictCall) Fields(s ...googleapi.Field) *HostedmodelsPred
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *HostedmodelsPredictCall) IfNoneMatch(ifNoneMatch string) *HostedmodelsPredictCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *HostedmodelsPredictCall) Do() (*Output, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *HostedmodelsPredictCall) DoHeader() (*Output, http.Header, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.input)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -425,19 +438,22 @@ func (c *HostedmodelsPredictCall) Do() (*Output, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *Output
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Submit input and request an output against a hosted model.",
 	//   "httpMethod": "POST",
@@ -491,7 +507,20 @@ func (c *TrainedmodelsAnalyzeCall) Fields(s ...googleapi.Field) *TrainedmodelsAn
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *TrainedmodelsAnalyzeCall) IfNoneMatch(ifNoneMatch string) *TrainedmodelsAnalyzeCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *TrainedmodelsAnalyzeCall) Do() (*Analyze, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *TrainedmodelsAnalyzeCall) DoHeader() (*Analyze, http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -505,19 +534,22 @@ func (c *TrainedmodelsAnalyzeCall) Do() (*Analyze, error) {
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *Analyze
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Get analysis of the model and the data the model was trained on.",
 	//   "httpMethod": "GET",
@@ -567,7 +599,20 @@ func (c *TrainedmodelsDeleteCall) Fields(s ...googleapi.Field) *TrainedmodelsDel
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *TrainedmodelsDeleteCall) IfNoneMatch(ifNoneMatch string) *TrainedmodelsDeleteCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *TrainedmodelsDeleteCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+func (c *TrainedmodelsDeleteCall) DoHeader() (http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -581,15 +626,18 @@ func (c *TrainedmodelsDeleteCall) Do() error {
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Delete a trained model.",
 	//   "httpMethod": "DELETE",
@@ -636,7 +684,20 @@ func (c *TrainedmodelsGetCall) Fields(s ...googleapi.Field) *TrainedmodelsGetCal
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *TrainedmodelsGetCall) IfNoneMatch(ifNoneMatch string) *TrainedmodelsGetCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *TrainedmodelsGetCall) Do() (*Training, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *TrainedmodelsGetCall) DoHeader() (*Training, http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -650,19 +711,22 @@ func (c *TrainedmodelsGetCall) Do() (*Training, error) {
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *Training
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Check training status of your model.",
 	//   "httpMethod": "GET",
@@ -712,11 +776,24 @@ func (c *TrainedmodelsInsertCall) Fields(s ...googleapi.Field) *TrainedmodelsIns
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *TrainedmodelsInsertCall) IfNoneMatch(ifNoneMatch string) *TrainedmodelsInsertCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *TrainedmodelsInsertCall) Do() (*Training, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *TrainedmodelsInsertCall) DoHeader() (*Training, http.Header, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.training)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -730,19 +807,22 @@ func (c *TrainedmodelsInsertCall) Do() (*Training, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *Training
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Begin training your model.",
 	//   "httpMethod": "POST",
@@ -798,7 +878,20 @@ func (c *TrainedmodelsListCall) Fields(s ...googleapi.Field) *TrainedmodelsListC
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *TrainedmodelsListCall) IfNoneMatch(ifNoneMatch string) *TrainedmodelsListCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *TrainedmodelsListCall) Do() (*List, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *TrainedmodelsListCall) DoHeader() (*List, http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -816,19 +909,22 @@ func (c *TrainedmodelsListCall) Do() (*List, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *List
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "List available models.",
 	//   "httpMethod": "GET",
@@ -883,11 +979,24 @@ func (c *TrainedmodelsPredictCall) Fields(s ...googleapi.Field) *TrainedmodelsPr
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *TrainedmodelsPredictCall) IfNoneMatch(ifNoneMatch string) *TrainedmodelsPredictCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *TrainedmodelsPredictCall) Do() (*Output, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *TrainedmodelsPredictCall) DoHeader() (*Output, http.Header, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.input)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -903,19 +1012,22 @@ func (c *TrainedmodelsPredictCall) Do() (*Output, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *Output
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Submit model id and request a prediction.",
 	//   "httpMethod": "POST",
@@ -970,11 +1082,24 @@ func (c *TrainedmodelsUpdateCall) Fields(s ...googleapi.Field) *TrainedmodelsUpd
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *TrainedmodelsUpdateCall) IfNoneMatch(ifNoneMatch string) *TrainedmodelsUpdateCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *TrainedmodelsUpdateCall) Do() (*Training, error) {
+	v, _, err := c.DoHeader()
+	return v, err
+}
+
+func (c *TrainedmodelsUpdateCall) DoHeader() (*Training, http.Header, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.update)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
@@ -990,19 +1115,22 @@ func (c *TrainedmodelsUpdateCall) Do() (*Training, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
 	var ret *Training
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return nil, res.Header, err
 	}
-	return ret, nil
+	return ret, res.Header, nil
 	// {
 	//   "description": "Add new data to a trained model.",
 	//   "httpMethod": "PUT",

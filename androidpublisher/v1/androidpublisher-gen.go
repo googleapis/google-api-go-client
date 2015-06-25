@@ -126,7 +126,20 @@ func (c *PurchasesCancelCall) Fields(s ...googleapi.Field) *PurchasesCancelCall 
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *PurchasesCancelCall) IfNoneMatch(ifNoneMatch string) *PurchasesCancelCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *PurchasesCancelCall) Do() error {
+	_, err := c.DoHeader()
+	return err
+}
+
+func (c *PurchasesCancelCall) DoHeader() (http.Header, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -142,15 +155,18 @@ func (c *PurchasesCancelCall) Do() error {
 		"token":          c.token,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return res.Header, err
 	}
-	return nil
+	return res.Header, nil
 	// {
 	//   "description": "Cancels a user's subscription purchase. The subscription remains valid until its expiration time.",
 	//   "httpMethod": "POST",
@@ -216,7 +232,20 @@ func (c *PurchasesGetCall) Fields(s ...googleapi.Field) *PurchasesGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *PurchasesGetCall) IfNoneMatch(ifNoneMatch string) *PurchasesGetCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *PurchasesGetCall) Do() (*SubscriptionPurchase, error) {
+	_, v, err := c.DoHeader()
+	return v, err
+}
+
+func (c *PurchasesGetCall) DoHeader() (http.Header, *SubscriptionPurchase, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
@@ -232,19 +261,22 @@ func (c *PurchasesGetCall) Do() (*SubscriptionPurchase, error) {
 		"token":          c.token,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
 	var ret *SubscriptionPurchase
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
+		return res.Header, nil, err
 	}
-	return ret, nil
+	return res.Header, ret, nil
 	// {
 	//   "description": "Checks whether a user's subscription purchase is valid and returns its expiry time.",
 	//   "httpMethod": "GET",

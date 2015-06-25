@@ -141,6 +141,14 @@ func (c *StatscollectionUpdateaggregatedstatsCall) Fields(s ...googleapi.Field) 
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *StatscollectionUpdateaggregatedstatsCall) IfNoneMatch(ifNoneMatch string) *StatscollectionUpdateaggregatedstatsCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *StatscollectionUpdateaggregatedstatsCall) Do() (*AggregatedStatsReply, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.aggregatedstats)
@@ -159,6 +167,9 @@ func (c *StatscollectionUpdateaggregatedstatsCall) Do() (*AggregatedStatsReply, 
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -213,6 +224,14 @@ func (c *StatscollectionUpdatestatsCall) Fields(s ...googleapi.Field) *Statscoll
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *StatscollectionUpdatestatsCall) IfNoneMatch(ifNoneMatch string) *StatscollectionUpdatestatsCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *StatscollectionUpdatestatsCall) Do() (*StatsReply, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.stats)
@@ -231,6 +250,9 @@ func (c *StatscollectionUpdatestatsCall) Do() (*StatsReply, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err

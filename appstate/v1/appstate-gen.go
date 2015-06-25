@@ -163,6 +163,14 @@ func (c *StatesClearCall) Fields(s ...googleapi.Field) *StatesClearCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *StatesClearCall) IfNoneMatch(ifNoneMatch string) *StatesClearCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *StatesClearCall) Do() (*WriteResult, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -180,6 +188,9 @@ func (c *StatesClearCall) Do() (*WriteResult, error) {
 		"stateKey": strconv.FormatInt(c.stateKey, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -255,6 +266,14 @@ func (c *StatesDeleteCall) Fields(s ...googleapi.Field) *StatesDeleteCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *StatesDeleteCall) IfNoneMatch(ifNoneMatch string) *StatesDeleteCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *StatesDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -269,6 +288,9 @@ func (c *StatesDeleteCall) Do() error {
 		"stateKey": strconv.FormatInt(c.stateKey, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -328,6 +350,14 @@ func (c *StatesGetCall) Fields(s ...googleapi.Field) *StatesGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *StatesGetCall) IfNoneMatch(ifNoneMatch string) *StatesGetCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *StatesGetCall) Do() (*GetResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -342,6 +372,9 @@ func (c *StatesGetCall) Do() (*GetResponse, error) {
 		"stateKey": strconv.FormatInt(c.stateKey, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -412,6 +445,14 @@ func (c *StatesListCall) Fields(s ...googleapi.Field) *StatesListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *StatesListCall) IfNoneMatch(ifNoneMatch string) *StatesListCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *StatesListCall) Do() (*ListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -427,6 +468,9 @@ func (c *StatesListCall) Do() (*ListResponse, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -502,6 +546,14 @@ func (c *StatesUpdateCall) Fields(s ...googleapi.Field) *StatesUpdateCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *StatesUpdateCall) IfNoneMatch(ifNoneMatch string) *StatesUpdateCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *StatesUpdateCall) Do() (*WriteResult, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.updaterequest)
@@ -525,6 +577,9 @@ func (c *StatesUpdateCall) Do() (*WriteResult, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err

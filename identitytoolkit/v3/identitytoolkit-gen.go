@@ -609,6 +609,14 @@ func (c *RelyingpartyCreateAuthUriCall) Fields(s ...googleapi.Field) *Relyingpar
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *RelyingpartyCreateAuthUriCall) IfNoneMatch(ifNoneMatch string) *RelyingpartyCreateAuthUriCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *RelyingpartyCreateAuthUriCall) Do() (*CreateAuthUriResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.identitytoolkitrelyingpartycreateauthurirequest)
@@ -627,6 +635,9 @@ func (c *RelyingpartyCreateAuthUriCall) Do() (*CreateAuthUriResponse, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -678,6 +689,14 @@ func (c *RelyingpartyDeleteAccountCall) Fields(s ...googleapi.Field) *Relyingpar
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *RelyingpartyDeleteAccountCall) IfNoneMatch(ifNoneMatch string) *RelyingpartyDeleteAccountCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *RelyingpartyDeleteAccountCall) Do() (*DeleteAccountResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.identitytoolkitrelyingpartydeleteaccountrequest)
@@ -696,6 +715,9 @@ func (c *RelyingpartyDeleteAccountCall) Do() (*DeleteAccountResponse, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -747,6 +769,14 @@ func (c *RelyingpartyDownloadAccountCall) Fields(s ...googleapi.Field) *Relyingp
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *RelyingpartyDownloadAccountCall) IfNoneMatch(ifNoneMatch string) *RelyingpartyDownloadAccountCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *RelyingpartyDownloadAccountCall) Do() (*DownloadAccountResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.identitytoolkitrelyingpartydownloadaccountrequest)
@@ -765,6 +795,9 @@ func (c *RelyingpartyDownloadAccountCall) Do() (*DownloadAccountResponse, error)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -816,6 +849,14 @@ func (c *RelyingpartyGetAccountInfoCall) Fields(s ...googleapi.Field) *Relyingpa
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *RelyingpartyGetAccountInfoCall) IfNoneMatch(ifNoneMatch string) *RelyingpartyGetAccountInfoCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *RelyingpartyGetAccountInfoCall) Do() (*GetAccountInfoResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.identitytoolkitrelyingpartygetaccountinforequest)
@@ -834,6 +875,9 @@ func (c *RelyingpartyGetAccountInfoCall) Do() (*GetAccountInfoResponse, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -885,6 +929,14 @@ func (c *RelyingpartyGetOobConfirmationCodeCall) Fields(s ...googleapi.Field) *R
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *RelyingpartyGetOobConfirmationCodeCall) IfNoneMatch(ifNoneMatch string) *RelyingpartyGetOobConfirmationCodeCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *RelyingpartyGetOobConfirmationCodeCall) Do() (*GetOobConfirmationCodeResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.relyingparty)
@@ -903,6 +955,9 @@ func (c *RelyingpartyGetOobConfirmationCodeCall) Do() (*GetOobConfirmationCodeRe
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -952,6 +1007,14 @@ func (c *RelyingpartyGetPublicKeysCall) Fields(s ...googleapi.Field) *Relyingpar
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *RelyingpartyGetPublicKeysCall) IfNoneMatch(ifNoneMatch string) *RelyingpartyGetPublicKeysCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *RelyingpartyGetPublicKeysCall) Do() (map[string]string, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -964,6 +1027,9 @@ func (c *RelyingpartyGetPublicKeysCall) Do() (map[string]string, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1010,6 +1076,14 @@ func (c *RelyingpartyGetRecaptchaParamCall) Fields(s ...googleapi.Field) *Relyin
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *RelyingpartyGetRecaptchaParamCall) IfNoneMatch(ifNoneMatch string) *RelyingpartyGetRecaptchaParamCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *RelyingpartyGetRecaptchaParamCall) Do() (*GetRecaptchaParamResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1022,6 +1096,9 @@ func (c *RelyingpartyGetRecaptchaParamCall) Do() (*GetRecaptchaParamResponse, er
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1070,6 +1147,14 @@ func (c *RelyingpartyResetPasswordCall) Fields(s ...googleapi.Field) *Relyingpar
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *RelyingpartyResetPasswordCall) IfNoneMatch(ifNoneMatch string) *RelyingpartyResetPasswordCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *RelyingpartyResetPasswordCall) Do() (*ResetPasswordResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.identitytoolkitrelyingpartyresetpasswordrequest)
@@ -1088,6 +1173,9 @@ func (c *RelyingpartyResetPasswordCall) Do() (*ResetPasswordResponse, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1139,6 +1227,14 @@ func (c *RelyingpartySetAccountInfoCall) Fields(s ...googleapi.Field) *Relyingpa
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *RelyingpartySetAccountInfoCall) IfNoneMatch(ifNoneMatch string) *RelyingpartySetAccountInfoCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *RelyingpartySetAccountInfoCall) Do() (*SetAccountInfoResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.identitytoolkitrelyingpartysetaccountinforequest)
@@ -1157,6 +1253,9 @@ func (c *RelyingpartySetAccountInfoCall) Do() (*SetAccountInfoResponse, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1208,6 +1307,14 @@ func (c *RelyingpartyUploadAccountCall) Fields(s ...googleapi.Field) *Relyingpar
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *RelyingpartyUploadAccountCall) IfNoneMatch(ifNoneMatch string) *RelyingpartyUploadAccountCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *RelyingpartyUploadAccountCall) Do() (*UploadAccountResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.identitytoolkitrelyingpartyuploadaccountrequest)
@@ -1226,6 +1333,9 @@ func (c *RelyingpartyUploadAccountCall) Do() (*UploadAccountResponse, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1277,6 +1387,14 @@ func (c *RelyingpartyVerifyAssertionCall) Fields(s ...googleapi.Field) *Relyingp
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *RelyingpartyVerifyAssertionCall) IfNoneMatch(ifNoneMatch string) *RelyingpartyVerifyAssertionCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *RelyingpartyVerifyAssertionCall) Do() (*VerifyAssertionResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.identitytoolkitrelyingpartyverifyassertionrequest)
@@ -1295,6 +1413,9 @@ func (c *RelyingpartyVerifyAssertionCall) Do() (*VerifyAssertionResponse, error)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1346,6 +1467,14 @@ func (c *RelyingpartyVerifyPasswordCall) Fields(s ...googleapi.Field) *Relyingpa
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *RelyingpartyVerifyPasswordCall) IfNoneMatch(ifNoneMatch string) *RelyingpartyVerifyPasswordCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *RelyingpartyVerifyPasswordCall) Do() (*VerifyPasswordResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.identitytoolkitrelyingpartyverifypasswordrequest)
@@ -1364,6 +1493,9 @@ func (c *RelyingpartyVerifyPasswordCall) Do() (*VerifyPasswordResponse, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err

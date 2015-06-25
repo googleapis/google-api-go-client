@@ -268,6 +268,14 @@ func (c *SitemapsDeleteCall) Fields(s ...googleapi.Field) *SitemapsDeleteCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *SitemapsDeleteCall) IfNoneMatch(ifNoneMatch string) *SitemapsDeleteCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *SitemapsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -283,6 +291,9 @@ func (c *SitemapsDeleteCall) Do() error {
 		"feedpath": c.feedpath,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -347,6 +358,14 @@ func (c *SitemapsGetCall) Fields(s ...googleapi.Field) *SitemapsGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *SitemapsGetCall) IfNoneMatch(ifNoneMatch string) *SitemapsGetCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *SitemapsGetCall) Do() (*WmxSitemap, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -362,6 +381,9 @@ func (c *SitemapsGetCall) Do() (*WmxSitemap, error) {
 		"feedpath": c.feedpath,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -439,6 +461,14 @@ func (c *SitemapsListCall) Fields(s ...googleapi.Field) *SitemapsListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *SitemapsListCall) IfNoneMatch(ifNoneMatch string) *SitemapsListCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *SitemapsListCall) Do() (*SitemapsListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -456,6 +486,9 @@ func (c *SitemapsListCall) Do() (*SitemapsListResponse, error) {
 		"siteUrl": c.siteUrl,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -526,6 +559,14 @@ func (c *SitemapsSubmitCall) Fields(s ...googleapi.Field) *SitemapsSubmitCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *SitemapsSubmitCall) IfNoneMatch(ifNoneMatch string) *SitemapsSubmitCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *SitemapsSubmitCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -541,6 +582,9 @@ func (c *SitemapsSubmitCall) Do() error {
 		"feedpath": c.feedpath,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -603,6 +647,14 @@ func (c *SitesAddCall) Fields(s ...googleapi.Field) *SitesAddCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *SitesAddCall) IfNoneMatch(ifNoneMatch string) *SitesAddCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *SitesAddCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -617,6 +669,9 @@ func (c *SitesAddCall) Do() error {
 		"siteUrl": c.siteUrl,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -673,6 +728,14 @@ func (c *SitesDeleteCall) Fields(s ...googleapi.Field) *SitesDeleteCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *SitesDeleteCall) IfNoneMatch(ifNoneMatch string) *SitesDeleteCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *SitesDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -687,6 +750,9 @@ func (c *SitesDeleteCall) Do() error {
 		"siteUrl": c.siteUrl,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -742,6 +808,14 @@ func (c *SitesGetCall) Fields(s ...googleapi.Field) *SitesGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *SitesGetCall) IfNoneMatch(ifNoneMatch string) *SitesGetCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *SitesGetCall) Do() (*WmxSite, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -756,6 +830,9 @@ func (c *SitesGetCall) Do() (*WmxSite, error) {
 		"siteUrl": c.siteUrl,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -817,6 +894,14 @@ func (c *SitesListCall) Fields(s ...googleapi.Field) *SitesListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *SitesListCall) IfNoneMatch(ifNoneMatch string) *SitesListCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *SitesListCall) Do() (*SitesListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -829,6 +914,9 @@ func (c *SitesListCall) Do() (*SitesListResponse, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -920,6 +1008,14 @@ func (c *UrlcrawlerrorscountsQueryCall) Fields(s ...googleapi.Field) *Urlcrawler
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *UrlcrawlerrorscountsQueryCall) IfNoneMatch(ifNoneMatch string) *UrlcrawlerrorscountsQueryCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *UrlcrawlerrorscountsQueryCall) Do() (*UrlCrawlErrorsCountsQueryResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -943,6 +1039,9 @@ func (c *UrlcrawlerrorscountsQueryCall) Do() (*UrlCrawlErrorsCountsQueryResponse
 		"siteUrl": c.siteUrl,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1058,6 +1157,14 @@ func (c *UrlcrawlerrorssamplesGetCall) Fields(s ...googleapi.Field) *Urlcrawlerr
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *UrlcrawlerrorssamplesGetCall) IfNoneMatch(ifNoneMatch string) *UrlcrawlerrorssamplesGetCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *UrlcrawlerrorssamplesGetCall) Do() (*UrlCrawlErrorsSample, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1075,6 +1182,9 @@ func (c *UrlcrawlerrorssamplesGetCall) Do() (*UrlCrawlErrorsSample, error) {
 		"url":     c.url,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1194,6 +1304,14 @@ func (c *UrlcrawlerrorssamplesListCall) Fields(s ...googleapi.Field) *Urlcrawler
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *UrlcrawlerrorssamplesListCall) IfNoneMatch(ifNoneMatch string) *UrlcrawlerrorssamplesListCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *UrlcrawlerrorssamplesListCall) Do() (*UrlCrawlErrorsSamplesListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1210,6 +1328,9 @@ func (c *UrlcrawlerrorssamplesListCall) Do() (*UrlCrawlErrorsSamplesListResponse
 		"siteUrl": c.siteUrl,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1324,6 +1445,14 @@ func (c *UrlcrawlerrorssamplesMarkAsFixedCall) Fields(s ...googleapi.Field) *Url
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *UrlcrawlerrorssamplesMarkAsFixedCall) IfNoneMatch(ifNoneMatch string) *UrlcrawlerrorssamplesMarkAsFixedCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *UrlcrawlerrorssamplesMarkAsFixedCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1341,6 +1470,9 @@ func (c *UrlcrawlerrorssamplesMarkAsFixedCall) Do() error {
 		"url":     c.url,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err

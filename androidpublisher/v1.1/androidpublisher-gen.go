@@ -163,6 +163,14 @@ func (c *InapppurchasesGetCall) Fields(s ...googleapi.Field) *InapppurchasesGetC
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *InapppurchasesGetCall) IfNoneMatch(ifNoneMatch string) *InapppurchasesGetCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *InapppurchasesGetCall) Do() (*InappPurchase, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -179,6 +187,9 @@ func (c *InapppurchasesGetCall) Do() (*InappPurchase, error) {
 		"token":       c.token,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -260,6 +271,14 @@ func (c *PurchasesCancelCall) Fields(s ...googleapi.Field) *PurchasesCancelCall 
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *PurchasesCancelCall) IfNoneMatch(ifNoneMatch string) *PurchasesCancelCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *PurchasesCancelCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -276,6 +295,9 @@ func (c *PurchasesCancelCall) Do() error {
 		"token":          c.token,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -350,6 +372,14 @@ func (c *PurchasesGetCall) Fields(s ...googleapi.Field) *PurchasesGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *PurchasesGetCall) IfNoneMatch(ifNoneMatch string) *PurchasesGetCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *PurchasesGetCall) Do() (*SubscriptionPurchase, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -366,6 +396,9 @@ func (c *PurchasesGetCall) Do() (*SubscriptionPurchase, error) {
 		"token":          c.token,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err

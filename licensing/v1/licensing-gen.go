@@ -148,6 +148,14 @@ func (c *LicenseAssignmentsDeleteCall) Fields(s ...googleapi.Field) *LicenseAssi
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *LicenseAssignmentsDeleteCall) IfNoneMatch(ifNoneMatch string) *LicenseAssignmentsDeleteCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *LicenseAssignmentsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -164,6 +172,9 @@ func (c *LicenseAssignmentsDeleteCall) Do() error {
 		"userId":    c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -238,6 +249,14 @@ func (c *LicenseAssignmentsGetCall) Fields(s ...googleapi.Field) *LicenseAssignm
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *LicenseAssignmentsGetCall) IfNoneMatch(ifNoneMatch string) *LicenseAssignmentsGetCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *LicenseAssignmentsGetCall) Do() (*LicenseAssignment, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -254,6 +273,9 @@ func (c *LicenseAssignmentsGetCall) Do() (*LicenseAssignment, error) {
 		"userId":    c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -334,6 +356,14 @@ func (c *LicenseAssignmentsInsertCall) Fields(s ...googleapi.Field) *LicenseAssi
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *LicenseAssignmentsInsertCall) IfNoneMatch(ifNoneMatch string) *LicenseAssignmentsInsertCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *LicenseAssignmentsInsertCall) Do() (*LicenseAssignment, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.licenseassignmentinsert)
@@ -355,6 +385,9 @@ func (c *LicenseAssignmentsInsertCall) Do() (*LicenseAssignment, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -445,6 +478,14 @@ func (c *LicenseAssignmentsListForProductCall) Fields(s ...googleapi.Field) *Lic
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *LicenseAssignmentsListForProductCall) IfNoneMatch(ifNoneMatch string) *LicenseAssignmentsListForProductCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *LicenseAssignmentsListForProductCall) Do() (*LicenseAssignmentList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -466,6 +507,9 @@ func (c *LicenseAssignmentsListForProductCall) Do() (*LicenseAssignmentList, err
 		"productId": c.productId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -570,6 +614,14 @@ func (c *LicenseAssignmentsListForProductAndSkuCall) Fields(s ...googleapi.Field
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *LicenseAssignmentsListForProductAndSkuCall) IfNoneMatch(ifNoneMatch string) *LicenseAssignmentsListForProductAndSkuCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *LicenseAssignmentsListForProductAndSkuCall) Do() (*LicenseAssignmentList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -592,6 +644,9 @@ func (c *LicenseAssignmentsListForProductAndSkuCall) Do() (*LicenseAssignmentLis
 		"skuId":     c.skuId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -689,6 +744,14 @@ func (c *LicenseAssignmentsPatchCall) Fields(s ...googleapi.Field) *LicenseAssig
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *LicenseAssignmentsPatchCall) IfNoneMatch(ifNoneMatch string) *LicenseAssignmentsPatchCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *LicenseAssignmentsPatchCall) Do() (*LicenseAssignment, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.licenseassignment)
@@ -711,6 +774,9 @@ func (c *LicenseAssignmentsPatchCall) Do() (*LicenseAssignment, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -796,6 +862,14 @@ func (c *LicenseAssignmentsUpdateCall) Fields(s ...googleapi.Field) *LicenseAssi
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *LicenseAssignmentsUpdateCall) IfNoneMatch(ifNoneMatch string) *LicenseAssignmentsUpdateCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *LicenseAssignmentsUpdateCall) Do() (*LicenseAssignment, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.licenseassignment)
@@ -818,6 +892,9 @@ func (c *LicenseAssignmentsUpdateCall) Do() (*LicenseAssignment, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err

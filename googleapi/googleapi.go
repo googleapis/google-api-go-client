@@ -128,6 +128,15 @@ func CheckResponse(res *http.Response) error {
 	}
 }
 
+// IsError checks if an error (of type *Error) is the same as the provided code.
+func IsError(err error, code int) bool {
+	if err == nil {
+		return false
+	}
+	ae, ok := err.(*Error)
+	return ok && ae.Code == code
+}
+
 type MarshalStyle bool
 
 var WithDataWrapper = MarshalStyle(true)

@@ -1435,6 +1435,13 @@ func (meth *Method) generateCode() {
 	pn(`c.opt_["fields"] = googleapi.CombineFields(s)`)
 	pn("return c")
 	pn("}")
+	pn("\n// IfNoneMatch sets the optional parameter")
+	pn(`// "ifNoneMatch": Makes the operation conditional on whether`)
+	pn("// the object's Etag does not match the given value.")
+	pn("func (c *%s) IfNoneMatch(ifNoneMatch string) *%s {", callName, callName)
+	pn(`c.opt_["ifNoneMatch"] = ifNoneMatch`)
+	pn("return c")
+	pn("}")
 
 	pn("\nfunc (c *%s) Do() (%serror) {", callName, retTypeComma)
 
@@ -1532,6 +1539,9 @@ func (meth *Method) generateCode() {
 		pn(`req.Header.Set("Content-Type", ctype)`)
 	}
 	pn(`req.Header.Set("User-Agent", c.s.userAgent())`)
+	pn(`if v, ok := c.opt_["ifNoneMatch"]; ok {`)
+	pn("	req.Header.Set(\"If-None-Match\", fmt.Sprintf(\"%%v\", v))")
+	pn("}")
 	pn("res, err := c.s.client.Do(req);")
 	pn("if err != nil { return %serr }", nilRet)
 	pn("defer googleapi.CloseBody(res)")

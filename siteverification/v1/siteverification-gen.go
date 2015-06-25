@@ -170,6 +170,14 @@ func (c *WebResourceDeleteCall) Fields(s ...googleapi.Field) *WebResourceDeleteC
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *WebResourceDeleteCall) IfNoneMatch(ifNoneMatch string) *WebResourceDeleteCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *WebResourceDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -184,6 +192,9 @@ func (c *WebResourceDeleteCall) Do() error {
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -239,6 +250,14 @@ func (c *WebResourceGetCall) Fields(s ...googleapi.Field) *WebResourceGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *WebResourceGetCall) IfNoneMatch(ifNoneMatch string) *WebResourceGetCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *WebResourceGetCall) Do() (*SiteVerificationWebResourceResource, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -253,6 +272,9 @@ func (c *WebResourceGetCall) Do() (*SiteVerificationWebResourceResource, error) 
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -316,6 +338,14 @@ func (c *WebResourceGetTokenCall) Fields(s ...googleapi.Field) *WebResourceGetTo
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *WebResourceGetTokenCall) IfNoneMatch(ifNoneMatch string) *WebResourceGetTokenCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *WebResourceGetTokenCall) Do() (*SiteVerificationWebResourceGettokenResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.siteverificationwebresourcegettokenrequest)
@@ -334,6 +364,9 @@ func (c *WebResourceGetTokenCall) Do() (*SiteVerificationWebResourceGettokenResp
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -391,6 +424,14 @@ func (c *WebResourceInsertCall) Fields(s ...googleapi.Field) *WebResourceInsertC
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *WebResourceInsertCall) IfNoneMatch(ifNoneMatch string) *WebResourceInsertCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *WebResourceInsertCall) Do() (*SiteVerificationWebResourceResource, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.siteverificationwebresourceresource)
@@ -410,6 +451,9 @@ func (c *WebResourceInsertCall) Do() (*SiteVerificationWebResourceResource, erro
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -474,6 +518,14 @@ func (c *WebResourceListCall) Fields(s ...googleapi.Field) *WebResourceListCall 
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *WebResourceListCall) IfNoneMatch(ifNoneMatch string) *WebResourceListCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *WebResourceListCall) Do() (*SiteVerificationWebResourceListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -486,6 +538,9 @@ func (c *WebResourceListCall) Do() (*SiteVerificationWebResourceListResponse, er
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -540,6 +595,14 @@ func (c *WebResourcePatchCall) Fields(s ...googleapi.Field) *WebResourcePatchCal
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *WebResourcePatchCall) IfNoneMatch(ifNoneMatch string) *WebResourcePatchCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *WebResourcePatchCall) Do() (*SiteVerificationWebResourceResource, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.siteverificationwebresourceresource)
@@ -560,6 +623,9 @@ func (c *WebResourcePatchCall) Do() (*SiteVerificationWebResourceResource, error
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -627,6 +693,14 @@ func (c *WebResourceUpdateCall) Fields(s ...googleapi.Field) *WebResourceUpdateC
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *WebResourceUpdateCall) IfNoneMatch(ifNoneMatch string) *WebResourceUpdateCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *WebResourceUpdateCall) Do() (*SiteVerificationWebResourceResource, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.siteverificationwebresourceresource)
@@ -647,6 +721,9 @@ func (c *WebResourceUpdateCall) Do() (*SiteVerificationWebResourceResource, erro
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err

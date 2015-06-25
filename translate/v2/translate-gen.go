@@ -171,6 +171,14 @@ func (c *DetectionsListCall) Fields(s ...googleapi.Field) *DetectionsListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *DetectionsListCall) IfNoneMatch(ifNoneMatch string) *DetectionsListCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *DetectionsListCall) Do() (*DetectionsListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -186,6 +194,9 @@ func (c *DetectionsListCall) Do() (*DetectionsListResponse, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -251,6 +262,14 @@ func (c *LanguagesListCall) Fields(s ...googleapi.Field) *LanguagesListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *LanguagesListCall) IfNoneMatch(ifNoneMatch string) *LanguagesListCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *LanguagesListCall) Do() (*LanguagesListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -266,6 +285,9 @@ func (c *LanguagesListCall) Do() (*LanguagesListResponse, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -347,6 +369,14 @@ func (c *TranslationsListCall) Fields(s ...googleapi.Field) *TranslationsListCal
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *TranslationsListCall) IfNoneMatch(ifNoneMatch string) *TranslationsListCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *TranslationsListCall) Do() (*TranslationsListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -372,6 +402,9 @@ func (c *TranslationsListCall) Do() (*TranslationsListResponse, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err

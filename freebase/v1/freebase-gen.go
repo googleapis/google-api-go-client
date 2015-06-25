@@ -193,6 +193,14 @@ func (c *ReconcileCall) Fields(s ...googleapi.Field) *ReconcileCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *ReconcileCall) IfNoneMatch(ifNoneMatch string) *ReconcileCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *ReconcileCall) Do() (*ReconcileGet, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -223,6 +231,9 @@ func (c *ReconcileCall) Do() (*ReconcileGet, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -506,6 +517,14 @@ func (c *SearchCall) Fields(s ...googleapi.Field) *SearchCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *SearchCall) IfNoneMatch(ifNoneMatch string) *SearchCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *SearchCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -587,6 +606,9 @@ func (c *SearchCall) Do() error {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err

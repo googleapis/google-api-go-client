@@ -348,6 +348,14 @@ func (c *AchievementConfigurationsDeleteCall) Fields(s ...googleapi.Field) *Achi
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *AchievementConfigurationsDeleteCall) IfNoneMatch(ifNoneMatch string) *AchievementConfigurationsDeleteCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *AchievementConfigurationsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -362,6 +370,9 @@ func (c *AchievementConfigurationsDeleteCall) Do() error {
 		"achievementId": c.achievementId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -418,6 +429,14 @@ func (c *AchievementConfigurationsGetCall) Fields(s ...googleapi.Field) *Achieve
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *AchievementConfigurationsGetCall) IfNoneMatch(ifNoneMatch string) *AchievementConfigurationsGetCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *AchievementConfigurationsGetCall) Do() (*AchievementConfiguration, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -432,6 +451,9 @@ func (c *AchievementConfigurationsGetCall) Do() (*AchievementConfiguration, erro
 		"achievementId": c.achievementId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -496,6 +518,14 @@ func (c *AchievementConfigurationsInsertCall) Fields(s ...googleapi.Field) *Achi
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *AchievementConfigurationsInsertCall) IfNoneMatch(ifNoneMatch string) *AchievementConfigurationsInsertCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *AchievementConfigurationsInsertCall) Do() (*AchievementConfiguration, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.achievementconfiguration)
@@ -516,6 +546,9 @@ func (c *AchievementConfigurationsInsertCall) Do() (*AchievementConfiguration, e
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -598,6 +631,14 @@ func (c *AchievementConfigurationsListCall) Fields(s ...googleapi.Field) *Achiev
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *AchievementConfigurationsListCall) IfNoneMatch(ifNoneMatch string) *AchievementConfigurationsListCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *AchievementConfigurationsListCall) Do() (*AchievementConfigurationListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -618,6 +659,9 @@ func (c *AchievementConfigurationsListCall) Do() (*AchievementConfigurationListR
 		"applicationId": c.applicationId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -696,6 +740,14 @@ func (c *AchievementConfigurationsPatchCall) Fields(s ...googleapi.Field) *Achie
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *AchievementConfigurationsPatchCall) IfNoneMatch(ifNoneMatch string) *AchievementConfigurationsPatchCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *AchievementConfigurationsPatchCall) Do() (*AchievementConfiguration, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.achievementconfiguration)
@@ -716,6 +768,9 @@ func (c *AchievementConfigurationsPatchCall) Do() (*AchievementConfiguration, er
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -784,6 +839,14 @@ func (c *AchievementConfigurationsUpdateCall) Fields(s ...googleapi.Field) *Achi
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *AchievementConfigurationsUpdateCall) IfNoneMatch(ifNoneMatch string) *AchievementConfigurationsUpdateCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *AchievementConfigurationsUpdateCall) Do() (*AchievementConfiguration, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.achievementconfiguration)
@@ -804,6 +867,9 @@ func (c *AchievementConfigurationsUpdateCall) Do() (*AchievementConfiguration, e
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -905,6 +971,14 @@ func (c *ImageConfigurationsUploadCall) Fields(s ...googleapi.Field) *ImageConfi
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *ImageConfigurationsUploadCall) IfNoneMatch(ifNoneMatch string) *ImageConfigurationsUploadCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *ImageConfigurationsUploadCall) Do() (*ImageConfiguration, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -949,6 +1023,9 @@ func (c *ImageConfigurationsUploadCall) Do() (*ImageConfiguration, error) {
 		req.Header.Set("Content-Type", ctype)
 	}
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1060,6 +1137,14 @@ func (c *LeaderboardConfigurationsDeleteCall) Fields(s ...googleapi.Field) *Lead
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *LeaderboardConfigurationsDeleteCall) IfNoneMatch(ifNoneMatch string) *LeaderboardConfigurationsDeleteCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *LeaderboardConfigurationsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1074,6 +1159,9 @@ func (c *LeaderboardConfigurationsDeleteCall) Do() error {
 		"leaderboardId": c.leaderboardId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -1130,6 +1218,14 @@ func (c *LeaderboardConfigurationsGetCall) Fields(s ...googleapi.Field) *Leaderb
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *LeaderboardConfigurationsGetCall) IfNoneMatch(ifNoneMatch string) *LeaderboardConfigurationsGetCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *LeaderboardConfigurationsGetCall) Do() (*LeaderboardConfiguration, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1144,6 +1240,9 @@ func (c *LeaderboardConfigurationsGetCall) Do() (*LeaderboardConfiguration, erro
 		"leaderboardId": c.leaderboardId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1208,6 +1307,14 @@ func (c *LeaderboardConfigurationsInsertCall) Fields(s ...googleapi.Field) *Lead
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *LeaderboardConfigurationsInsertCall) IfNoneMatch(ifNoneMatch string) *LeaderboardConfigurationsInsertCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *LeaderboardConfigurationsInsertCall) Do() (*LeaderboardConfiguration, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.leaderboardconfiguration)
@@ -1228,6 +1335,9 @@ func (c *LeaderboardConfigurationsInsertCall) Do() (*LeaderboardConfiguration, e
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1310,6 +1420,14 @@ func (c *LeaderboardConfigurationsListCall) Fields(s ...googleapi.Field) *Leader
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *LeaderboardConfigurationsListCall) IfNoneMatch(ifNoneMatch string) *LeaderboardConfigurationsListCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *LeaderboardConfigurationsListCall) Do() (*LeaderboardConfigurationListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1330,6 +1448,9 @@ func (c *LeaderboardConfigurationsListCall) Do() (*LeaderboardConfigurationListR
 		"applicationId": c.applicationId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1408,6 +1529,14 @@ func (c *LeaderboardConfigurationsPatchCall) Fields(s ...googleapi.Field) *Leade
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *LeaderboardConfigurationsPatchCall) IfNoneMatch(ifNoneMatch string) *LeaderboardConfigurationsPatchCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *LeaderboardConfigurationsPatchCall) Do() (*LeaderboardConfiguration, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.leaderboardconfiguration)
@@ -1428,6 +1557,9 @@ func (c *LeaderboardConfigurationsPatchCall) Do() (*LeaderboardConfiguration, er
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1496,6 +1628,14 @@ func (c *LeaderboardConfigurationsUpdateCall) Fields(s ...googleapi.Field) *Lead
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *LeaderboardConfigurationsUpdateCall) IfNoneMatch(ifNoneMatch string) *LeaderboardConfigurationsUpdateCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *LeaderboardConfigurationsUpdateCall) Do() (*LeaderboardConfiguration, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.leaderboardconfiguration)
@@ -1516,6 +1656,9 @@ func (c *LeaderboardConfigurationsUpdateCall) Do() (*LeaderboardConfiguration, e
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err

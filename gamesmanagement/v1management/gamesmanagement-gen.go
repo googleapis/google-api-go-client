@@ -391,6 +391,14 @@ func (c *AchievementsResetCall) Fields(s ...googleapi.Field) *AchievementsResetC
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *AchievementsResetCall) IfNoneMatch(ifNoneMatch string) *AchievementsResetCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *AchievementsResetCall) Do() (*AchievementResetResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -405,6 +413,9 @@ func (c *AchievementsResetCall) Do() (*AchievementResetResponse, error) {
 		"achievementId": c.achievementId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -468,6 +479,14 @@ func (c *AchievementsResetAllCall) Fields(s ...googleapi.Field) *AchievementsRes
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *AchievementsResetAllCall) IfNoneMatch(ifNoneMatch string) *AchievementsResetAllCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *AchievementsResetAllCall) Do() (*AchievementResetAllResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -480,6 +499,9 @@ func (c *AchievementsResetAllCall) Do() (*AchievementResetAllResponse, error) {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -532,6 +554,14 @@ func (c *AchievementsResetAllForAllPlayersCall) Fields(s ...googleapi.Field) *Ac
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *AchievementsResetAllForAllPlayersCall) IfNoneMatch(ifNoneMatch string) *AchievementsResetAllForAllPlayersCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *AchievementsResetAllForAllPlayersCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -544,6 +574,9 @@ func (c *AchievementsResetAllForAllPlayersCall) Do() error {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -591,6 +624,14 @@ func (c *AchievementsResetForAllPlayersCall) Fields(s ...googleapi.Field) *Achie
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *AchievementsResetForAllPlayersCall) IfNoneMatch(ifNoneMatch string) *AchievementsResetForAllPlayersCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *AchievementsResetForAllPlayersCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -605,6 +646,9 @@ func (c *AchievementsResetForAllPlayersCall) Do() error {
 		"achievementId": c.achievementId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -663,6 +707,14 @@ func (c *AchievementsResetMultipleForAllPlayersCall) Fields(s ...googleapi.Field
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *AchievementsResetMultipleForAllPlayersCall) IfNoneMatch(ifNoneMatch string) *AchievementsResetMultipleForAllPlayersCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *AchievementsResetMultipleForAllPlayersCall) Do() error {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.achievementresetmultipleforallrequest)
@@ -681,6 +733,9 @@ func (c *AchievementsResetMultipleForAllPlayersCall) Do() error {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -747,6 +802,14 @@ func (c *ApplicationsListHiddenCall) Fields(s ...googleapi.Field) *ApplicationsL
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *ApplicationsListHiddenCall) IfNoneMatch(ifNoneMatch string) *ApplicationsListHiddenCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *ApplicationsListHiddenCall) Do() (*HiddenPlayerList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -767,6 +830,9 @@ func (c *ApplicationsListHiddenCall) Do() (*HiddenPlayerList, error) {
 		"applicationId": c.applicationId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -846,6 +912,14 @@ func (c *EventsResetCall) Fields(s ...googleapi.Field) *EventsResetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *EventsResetCall) IfNoneMatch(ifNoneMatch string) *EventsResetCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *EventsResetCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -860,6 +934,9 @@ func (c *EventsResetCall) Do() error {
 		"eventId": c.eventId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -917,6 +994,14 @@ func (c *EventsResetAllCall) Fields(s ...googleapi.Field) *EventsResetAllCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *EventsResetAllCall) IfNoneMatch(ifNoneMatch string) *EventsResetAllCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *EventsResetAllCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -929,6 +1014,9 @@ func (c *EventsResetAllCall) Do() error {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -974,6 +1062,14 @@ func (c *EventsResetAllForAllPlayersCall) Fields(s ...googleapi.Field) *EventsRe
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *EventsResetAllForAllPlayersCall) IfNoneMatch(ifNoneMatch string) *EventsResetAllForAllPlayersCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *EventsResetAllForAllPlayersCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -986,6 +1082,9 @@ func (c *EventsResetAllForAllPlayersCall) Do() error {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -1034,6 +1133,14 @@ func (c *EventsResetForAllPlayersCall) Fields(s ...googleapi.Field) *EventsReset
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *EventsResetForAllPlayersCall) IfNoneMatch(ifNoneMatch string) *EventsResetForAllPlayersCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *EventsResetForAllPlayersCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1048,6 +1155,9 @@ func (c *EventsResetForAllPlayersCall) Do() error {
 		"eventId": c.eventId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -1107,6 +1217,14 @@ func (c *EventsResetMultipleForAllPlayersCall) Fields(s ...googleapi.Field) *Eve
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *EventsResetMultipleForAllPlayersCall) IfNoneMatch(ifNoneMatch string) *EventsResetMultipleForAllPlayersCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *EventsResetMultipleForAllPlayersCall) Do() error {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.eventsresetmultipleforallrequest)
@@ -1125,6 +1243,9 @@ func (c *EventsResetMultipleForAllPlayersCall) Do() error {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -1177,6 +1298,14 @@ func (c *PlayersHideCall) Fields(s ...googleapi.Field) *PlayersHideCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *PlayersHideCall) IfNoneMatch(ifNoneMatch string) *PlayersHideCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *PlayersHideCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1192,6 +1321,9 @@ func (c *PlayersHideCall) Do() error {
 		"playerId":      c.playerId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -1259,6 +1391,14 @@ func (c *PlayersUnhideCall) Fields(s ...googleapi.Field) *PlayersUnhideCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *PlayersUnhideCall) IfNoneMatch(ifNoneMatch string) *PlayersUnhideCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *PlayersUnhideCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1274,6 +1414,9 @@ func (c *PlayersUnhideCall) Do() error {
 		"playerId":      c.playerId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -1339,6 +1482,14 @@ func (c *QuestsResetCall) Fields(s ...googleapi.Field) *QuestsResetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *QuestsResetCall) IfNoneMatch(ifNoneMatch string) *QuestsResetCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *QuestsResetCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1353,6 +1504,9 @@ func (c *QuestsResetCall) Do() error {
 		"questId": c.questId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -1409,6 +1563,14 @@ func (c *QuestsResetAllCall) Fields(s ...googleapi.Field) *QuestsResetAllCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *QuestsResetAllCall) IfNoneMatch(ifNoneMatch string) *QuestsResetAllCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *QuestsResetAllCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1421,6 +1583,9 @@ func (c *QuestsResetAllCall) Do() error {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -1465,6 +1630,14 @@ func (c *QuestsResetAllForAllPlayersCall) Fields(s ...googleapi.Field) *QuestsRe
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *QuestsResetAllForAllPlayersCall) IfNoneMatch(ifNoneMatch string) *QuestsResetAllForAllPlayersCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *QuestsResetAllForAllPlayersCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1477,6 +1650,9 @@ func (c *QuestsResetAllForAllPlayersCall) Do() error {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -1524,6 +1700,14 @@ func (c *QuestsResetForAllPlayersCall) Fields(s ...googleapi.Field) *QuestsReset
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *QuestsResetForAllPlayersCall) IfNoneMatch(ifNoneMatch string) *QuestsResetForAllPlayersCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *QuestsResetForAllPlayersCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1538,6 +1722,9 @@ func (c *QuestsResetForAllPlayersCall) Do() error {
 		"questId": c.questId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -1596,6 +1783,14 @@ func (c *QuestsResetMultipleForAllPlayersCall) Fields(s ...googleapi.Field) *Que
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *QuestsResetMultipleForAllPlayersCall) IfNoneMatch(ifNoneMatch string) *QuestsResetMultipleForAllPlayersCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *QuestsResetMultipleForAllPlayersCall) Do() error {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.questsresetmultipleforallrequest)
@@ -1614,6 +1809,9 @@ func (c *QuestsResetMultipleForAllPlayersCall) Do() error {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -1662,6 +1860,14 @@ func (c *RoomsResetCall) Fields(s ...googleapi.Field) *RoomsResetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *RoomsResetCall) IfNoneMatch(ifNoneMatch string) *RoomsResetCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *RoomsResetCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1674,6 +1880,9 @@ func (c *RoomsResetCall) Do() error {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -1719,6 +1928,14 @@ func (c *RoomsResetForAllPlayersCall) Fields(s ...googleapi.Field) *RoomsResetFo
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *RoomsResetForAllPlayersCall) IfNoneMatch(ifNoneMatch string) *RoomsResetForAllPlayersCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *RoomsResetForAllPlayersCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1731,6 +1948,9 @@ func (c *RoomsResetForAllPlayersCall) Do() error {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -1778,6 +1998,14 @@ func (c *ScoresResetCall) Fields(s ...googleapi.Field) *ScoresResetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *ScoresResetCall) IfNoneMatch(ifNoneMatch string) *ScoresResetCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *ScoresResetCall) Do() (*PlayerScoreResetResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1792,6 +2020,9 @@ func (c *ScoresResetCall) Do() (*PlayerScoreResetResponse, error) {
 		"leaderboardId": c.leaderboardId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1855,6 +2086,14 @@ func (c *ScoresResetAllCall) Fields(s ...googleapi.Field) *ScoresResetAllCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *ScoresResetAllCall) IfNoneMatch(ifNoneMatch string) *ScoresResetAllCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *ScoresResetAllCall) Do() (*PlayerScoreResetAllResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1867,6 +2106,9 @@ func (c *ScoresResetAllCall) Do() (*PlayerScoreResetAllResponse, error) {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return nil, err
@@ -1919,6 +2161,14 @@ func (c *ScoresResetAllForAllPlayersCall) Fields(s ...googleapi.Field) *ScoresRe
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *ScoresResetAllForAllPlayersCall) IfNoneMatch(ifNoneMatch string) *ScoresResetAllForAllPlayersCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *ScoresResetAllForAllPlayersCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1931,6 +2181,9 @@ func (c *ScoresResetAllForAllPlayersCall) Do() error {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -1978,6 +2231,14 @@ func (c *ScoresResetForAllPlayersCall) Fields(s ...googleapi.Field) *ScoresReset
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *ScoresResetForAllPlayersCall) IfNoneMatch(ifNoneMatch string) *ScoresResetForAllPlayersCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *ScoresResetForAllPlayersCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1992,6 +2253,9 @@ func (c *ScoresResetForAllPlayersCall) Do() error {
 		"leaderboardId": c.leaderboardId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -2051,6 +2315,14 @@ func (c *ScoresResetMultipleForAllPlayersCall) Fields(s ...googleapi.Field) *Sco
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *ScoresResetMultipleForAllPlayersCall) IfNoneMatch(ifNoneMatch string) *ScoresResetMultipleForAllPlayersCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *ScoresResetMultipleForAllPlayersCall) Do() error {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.scoresresetmultipleforallrequest)
@@ -2069,6 +2341,9 @@ func (c *ScoresResetMultipleForAllPlayersCall) Do() error {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -2116,6 +2391,14 @@ func (c *TurnBasedMatchesResetCall) Fields(s ...googleapi.Field) *TurnBasedMatch
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *TurnBasedMatchesResetCall) IfNoneMatch(ifNoneMatch string) *TurnBasedMatchesResetCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *TurnBasedMatchesResetCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2128,6 +2411,9 @@ func (c *TurnBasedMatchesResetCall) Do() error {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err
@@ -2174,6 +2460,14 @@ func (c *TurnBasedMatchesResetForAllPlayersCall) Fields(s ...googleapi.Field) *T
 	return c
 }
 
+// IfNoneMatch sets the optional parameter
+// "ifNoneMatch": Makes the operation conditional on whether
+// the object's Etag does not match the given value.
+func (c *TurnBasedMatchesResetForAllPlayersCall) IfNoneMatch(ifNoneMatch string) *TurnBasedMatchesResetForAllPlayersCall {
+	c.opt_["ifNoneMatch"] = ifNoneMatch
+	return c
+}
+
 func (c *TurnBasedMatchesResetForAllPlayersCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2186,6 +2480,9 @@ func (c *TurnBasedMatchesResetForAllPlayersCall) Do() error {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	res, err := c.s.client.Do(req)
 	if err != nil {
 		return err

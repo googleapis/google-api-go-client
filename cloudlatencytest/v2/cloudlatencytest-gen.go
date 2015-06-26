@@ -141,6 +141,12 @@ func (c *StatscollectionUpdateaggregatedstatsCall) Fields(s ...googleapi.Field) 
 	return c
 }
 
+// StatscollectionUpdateaggregatedstatsCallDoer makes it easy to provide your own testable version of Do.
+type StatscollectionUpdateaggregatedstatsCallDoer interface {
+	Do() (*AggregatedStatsReply, error)
+	Fields(s ...googleapi.Field) StatscollectionUpdateaggregatedstatsCallDoer
+}
+
 func (c *StatscollectionUpdateaggregatedstatsCall) Do() (*AggregatedStatsReply, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.aggregatedstats)
@@ -213,6 +219,12 @@ func (c *StatscollectionUpdatestatsCall) Fields(s ...googleapi.Field) *Statscoll
 	return c
 }
 
+// StatscollectionUpdatestatsCallDoer makes it easy to provide your own testable version of Do.
+type StatscollectionUpdatestatsCallDoer interface {
+	Do() (*StatsReply, error)
+	Fields(s ...googleapi.Field) StatscollectionUpdatestatsCallDoer
+}
+
 func (c *StatscollectionUpdatestatsCall) Do() (*StatsReply, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.stats)
@@ -260,4 +272,10 @@ func (c *StatscollectionUpdatestatsCall) Do() (*StatsReply, error) {
 	//   ]
 	// }
 
+}
+
+// StatscollectionServicer makes it easy to provide your own testable versions of StatscollectionService.
+type StatscollectionServicer interface {
+	Updateaggregatedstats(aggregatedstats *AggregatedStats) StatscollectionUpdateaggregatedstatsCallDoer
+	Updatestats(stats *Stats) StatscollectionUpdatestatsCallDoer
 }

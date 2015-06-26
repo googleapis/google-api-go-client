@@ -609,6 +609,12 @@ func (c *RelyingpartyCreateAuthUriCall) Fields(s ...googleapi.Field) *Relyingpar
 	return c
 }
 
+// RelyingpartyCreateAuthUriCallDoer makes it easy to provide your own testable version of Do.
+type RelyingpartyCreateAuthUriCallDoer interface {
+	Do() (*CreateAuthUriResponse, error)
+	Fields(s ...googleapi.Field) RelyingpartyCreateAuthUriCallDoer
+}
+
 func (c *RelyingpartyCreateAuthUriCall) Do() (*CreateAuthUriResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.identitytoolkitrelyingpartycreateauthurirequest)
@@ -676,6 +682,12 @@ func (r *RelyingpartyService) DeleteAccount(identitytoolkitrelyingpartydeleteacc
 func (c *RelyingpartyDeleteAccountCall) Fields(s ...googleapi.Field) *RelyingpartyDeleteAccountCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// RelyingpartyDeleteAccountCallDoer makes it easy to provide your own testable version of Do.
+type RelyingpartyDeleteAccountCallDoer interface {
+	Do() (*DeleteAccountResponse, error)
+	Fields(s ...googleapi.Field) RelyingpartyDeleteAccountCallDoer
 }
 
 func (c *RelyingpartyDeleteAccountCall) Do() (*DeleteAccountResponse, error) {
@@ -747,6 +759,12 @@ func (c *RelyingpartyDownloadAccountCall) Fields(s ...googleapi.Field) *Relyingp
 	return c
 }
 
+// RelyingpartyDownloadAccountCallDoer makes it easy to provide your own testable version of Do.
+type RelyingpartyDownloadAccountCallDoer interface {
+	Do() (*DownloadAccountResponse, error)
+	Fields(s ...googleapi.Field) RelyingpartyDownloadAccountCallDoer
+}
+
 func (c *RelyingpartyDownloadAccountCall) Do() (*DownloadAccountResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.identitytoolkitrelyingpartydownloadaccountrequest)
@@ -814,6 +832,12 @@ func (r *RelyingpartyService) GetAccountInfo(identitytoolkitrelyingpartygetaccou
 func (c *RelyingpartyGetAccountInfoCall) Fields(s ...googleapi.Field) *RelyingpartyGetAccountInfoCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// RelyingpartyGetAccountInfoCallDoer makes it easy to provide your own testable version of Do.
+type RelyingpartyGetAccountInfoCallDoer interface {
+	Do() (*GetAccountInfoResponse, error)
+	Fields(s ...googleapi.Field) RelyingpartyGetAccountInfoCallDoer
 }
 
 func (c *RelyingpartyGetAccountInfoCall) Do() (*GetAccountInfoResponse, error) {
@@ -885,6 +909,12 @@ func (c *RelyingpartyGetOobConfirmationCodeCall) Fields(s ...googleapi.Field) *R
 	return c
 }
 
+// RelyingpartyGetOobConfirmationCodeCallDoer makes it easy to provide your own testable version of Do.
+type RelyingpartyGetOobConfirmationCodeCallDoer interface {
+	Do() (*GetOobConfirmationCodeResponse, error)
+	Fields(s ...googleapi.Field) RelyingpartyGetOobConfirmationCodeCallDoer
+}
+
 func (c *RelyingpartyGetOobConfirmationCodeCall) Do() (*GetOobConfirmationCodeResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.relyingparty)
@@ -952,6 +982,12 @@ func (c *RelyingpartyGetPublicKeysCall) Fields(s ...googleapi.Field) *Relyingpar
 	return c
 }
 
+// RelyingpartyGetPublicKeysCallDoer makes it easy to provide your own testable version of Do.
+type RelyingpartyGetPublicKeysCallDoer interface {
+	Do() (map[string]string, error)
+	Fields(s ...googleapi.Field) RelyingpartyGetPublicKeysCallDoer
+}
+
 func (c *RelyingpartyGetPublicKeysCall) Do() (map[string]string, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1008,6 +1044,12 @@ func (r *RelyingpartyService) GetRecaptchaParam() *RelyingpartyGetRecaptchaParam
 func (c *RelyingpartyGetRecaptchaParamCall) Fields(s ...googleapi.Field) *RelyingpartyGetRecaptchaParamCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// RelyingpartyGetRecaptchaParamCallDoer makes it easy to provide your own testable version of Do.
+type RelyingpartyGetRecaptchaParamCallDoer interface {
+	Do() (*GetRecaptchaParamResponse, error)
+	Fields(s ...googleapi.Field) RelyingpartyGetRecaptchaParamCallDoer
 }
 
 func (c *RelyingpartyGetRecaptchaParamCall) Do() (*GetRecaptchaParamResponse, error) {
@@ -1068,6 +1110,12 @@ func (r *RelyingpartyService) ResetPassword(identitytoolkitrelyingpartyresetpass
 func (c *RelyingpartyResetPasswordCall) Fields(s ...googleapi.Field) *RelyingpartyResetPasswordCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// RelyingpartyResetPasswordCallDoer makes it easy to provide your own testable version of Do.
+type RelyingpartyResetPasswordCallDoer interface {
+	Do() (*ResetPasswordResponse, error)
+	Fields(s ...googleapi.Field) RelyingpartyResetPasswordCallDoer
 }
 
 func (c *RelyingpartyResetPasswordCall) Do() (*ResetPasswordResponse, error) {
@@ -1139,6 +1187,12 @@ func (c *RelyingpartySetAccountInfoCall) Fields(s ...googleapi.Field) *Relyingpa
 	return c
 }
 
+// RelyingpartySetAccountInfoCallDoer makes it easy to provide your own testable version of Do.
+type RelyingpartySetAccountInfoCallDoer interface {
+	Do() (*SetAccountInfoResponse, error)
+	Fields(s ...googleapi.Field) RelyingpartySetAccountInfoCallDoer
+}
+
 func (c *RelyingpartySetAccountInfoCall) Do() (*SetAccountInfoResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.identitytoolkitrelyingpartysetaccountinforequest)
@@ -1206,6 +1260,12 @@ func (r *RelyingpartyService) UploadAccount(identitytoolkitrelyingpartyuploadacc
 func (c *RelyingpartyUploadAccountCall) Fields(s ...googleapi.Field) *RelyingpartyUploadAccountCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// RelyingpartyUploadAccountCallDoer makes it easy to provide your own testable version of Do.
+type RelyingpartyUploadAccountCallDoer interface {
+	Do() (*UploadAccountResponse, error)
+	Fields(s ...googleapi.Field) RelyingpartyUploadAccountCallDoer
 }
 
 func (c *RelyingpartyUploadAccountCall) Do() (*UploadAccountResponse, error) {
@@ -1277,6 +1337,12 @@ func (c *RelyingpartyVerifyAssertionCall) Fields(s ...googleapi.Field) *Relyingp
 	return c
 }
 
+// RelyingpartyVerifyAssertionCallDoer makes it easy to provide your own testable version of Do.
+type RelyingpartyVerifyAssertionCallDoer interface {
+	Do() (*VerifyAssertionResponse, error)
+	Fields(s ...googleapi.Field) RelyingpartyVerifyAssertionCallDoer
+}
+
 func (c *RelyingpartyVerifyAssertionCall) Do() (*VerifyAssertionResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.identitytoolkitrelyingpartyverifyassertionrequest)
@@ -1346,6 +1412,12 @@ func (c *RelyingpartyVerifyPasswordCall) Fields(s ...googleapi.Field) *Relyingpa
 	return c
 }
 
+// RelyingpartyVerifyPasswordCallDoer makes it easy to provide your own testable version of Do.
+type RelyingpartyVerifyPasswordCallDoer interface {
+	Do() (*VerifyPasswordResponse, error)
+	Fields(s ...googleapi.Field) RelyingpartyVerifyPasswordCallDoer
+}
+
 func (c *RelyingpartyVerifyPasswordCall) Do() (*VerifyPasswordResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.identitytoolkitrelyingpartyverifypasswordrequest)
@@ -1390,4 +1462,20 @@ func (c *RelyingpartyVerifyPasswordCall) Do() (*VerifyPasswordResponse, error) {
 	//   }
 	// }
 
+}
+
+// RelyingpartyServicer makes it easy to provide your own testable versions of RelyingpartyService.
+type RelyingpartyServicer interface {
+	CreateAuthUri(identitytoolkitrelyingpartycreateauthurirequest *IdentitytoolkitRelyingpartyCreateAuthUriRequest) RelyingpartyCreateAuthUriCallDoer
+	DeleteAccount(identitytoolkitrelyingpartydeleteaccountrequest *IdentitytoolkitRelyingpartyDeleteAccountRequest) RelyingpartyDeleteAccountCallDoer
+	DownloadAccount(identitytoolkitrelyingpartydownloadaccountrequest *IdentitytoolkitRelyingpartyDownloadAccountRequest) RelyingpartyDownloadAccountCallDoer
+	GetAccountInfo(identitytoolkitrelyingpartygetaccountinforequest *IdentitytoolkitRelyingpartyGetAccountInfoRequest) RelyingpartyGetAccountInfoCallDoer
+	GetOobConfirmationCode(relyingparty *Relyingparty) RelyingpartyGetOobConfirmationCodeCallDoer
+	GetPublicKeys() RelyingpartyGetPublicKeysCallDoer
+	GetRecaptchaParam() RelyingpartyGetRecaptchaParamCallDoer
+	ResetPassword(identitytoolkitrelyingpartyresetpasswordrequest *IdentitytoolkitRelyingpartyResetPasswordRequest) RelyingpartyResetPasswordCallDoer
+	SetAccountInfo(identitytoolkitrelyingpartysetaccountinforequest *IdentitytoolkitRelyingpartySetAccountInfoRequest) RelyingpartySetAccountInfoCallDoer
+	UploadAccount(identitytoolkitrelyingpartyuploadaccountrequest *IdentitytoolkitRelyingpartyUploadAccountRequest) RelyingpartyUploadAccountCallDoer
+	VerifyAssertion(identitytoolkitrelyingpartyverifyassertionrequest *IdentitytoolkitRelyingpartyVerifyAssertionRequest) RelyingpartyVerifyAssertionCallDoer
+	VerifyPassword(identitytoolkitrelyingpartyverifypasswordrequest *IdentitytoolkitRelyingpartyVerifyPasswordRequest) RelyingpartyVerifyPasswordCallDoer
 }

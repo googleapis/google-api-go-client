@@ -211,6 +211,12 @@ func (c *GroupsGetCall) Fields(s ...googleapi.Field) *GroupsGetCall {
 	return c
 }
 
+// GroupsGetCallDoer makes it easy to provide your own testable version of Do.
+type GroupsGetCallDoer interface {
+	Do() (*Groups, error)
+	Fields(s ...googleapi.Field) GroupsGetCallDoer
+}
+
 func (c *GroupsGetCall) Do() (*Groups, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -288,6 +294,12 @@ func (r *GroupsService) Patch(groupUniqueId string, groups *Groups) *GroupsPatch
 func (c *GroupsPatchCall) Fields(s ...googleapi.Field) *GroupsPatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// GroupsPatchCallDoer makes it easy to provide your own testable version of Do.
+type GroupsPatchCallDoer interface {
+	Do() (*Groups, error)
+	Fields(s ...googleapi.Field) GroupsPatchCallDoer
 }
 
 func (c *GroupsPatchCall) Do() (*Groups, error) {
@@ -377,6 +389,12 @@ func (c *GroupsUpdateCall) Fields(s ...googleapi.Field) *GroupsUpdateCall {
 	return c
 }
 
+// GroupsUpdateCallDoer makes it easy to provide your own testable version of Do.
+type GroupsUpdateCallDoer interface {
+	Do() (*Groups, error)
+	Fields(s ...googleapi.Field) GroupsUpdateCallDoer
+}
+
 func (c *GroupsUpdateCall) Do() (*Groups, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.groups)
@@ -437,4 +455,11 @@ func (c *GroupsUpdateCall) Do() (*Groups, error) {
 	//   ]
 	// }
 
+}
+
+// GroupsServicer makes it easy to provide your own testable versions of GroupsService.
+type GroupsServicer interface {
+	Get(groupUniqueId string) GroupsGetCallDoer
+	Patch(groupUniqueId string, groups *Groups) GroupsPatchCallDoer
+	Update(groupUniqueId string, groups *Groups) GroupsUpdateCallDoer
 }

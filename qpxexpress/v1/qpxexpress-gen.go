@@ -665,6 +665,12 @@ func (c *TripsSearchCall) Fields(s ...googleapi.Field) *TripsSearchCall {
 	return c
 }
 
+// TripsSearchCallDoer makes it easy to provide your own testable version of Do.
+type TripsSearchCallDoer interface {
+	Do() (*TripsSearchResponse, error)
+	Fields(s ...googleapi.Field) TripsSearchCallDoer
+}
+
 func (c *TripsSearchCall) Do() (*TripsSearchResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.tripssearchrequest)
@@ -709,4 +715,9 @@ func (c *TripsSearchCall) Do() (*TripsSearchResponse, error) {
 	//   }
 	// }
 
+}
+
+// TripsServicer makes it easy to provide your own testable versions of TripsService.
+type TripsServicer interface {
+	Search(tripssearchrequest *TripsSearchRequest) TripsSearchCallDoer
 }

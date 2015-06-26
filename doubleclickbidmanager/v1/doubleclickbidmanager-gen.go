@@ -604,6 +604,12 @@ func (c *LineitemsDownloadlineitemsCall) Fields(s ...googleapi.Field) *Lineitems
 	return c
 }
 
+// LineitemsDownloadlineitemsCallDoer makes it easy to provide your own testable version of Do.
+type LineitemsDownloadlineitemsCallDoer interface {
+	Do() (*DownloadLineItemsResponse, error)
+	Fields(s ...googleapi.Field) LineitemsDownloadlineitemsCallDoer
+}
+
 func (c *LineitemsDownloadlineitemsCall) Do() (*DownloadLineItemsResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.downloadlineitemsrequest)
@@ -673,6 +679,12 @@ func (c *LineitemsUploadlineitemsCall) Fields(s ...googleapi.Field) *LineitemsUp
 	return c
 }
 
+// LineitemsUploadlineitemsCallDoer makes it easy to provide your own testable version of Do.
+type LineitemsUploadlineitemsCallDoer interface {
+	Do() (*UploadLineItemsResponse, error)
+	Fields(s ...googleapi.Field) LineitemsUploadlineitemsCallDoer
+}
+
 func (c *LineitemsUploadlineitemsCall) Do() (*UploadLineItemsResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.uploadlineitemsrequest)
@@ -719,6 +731,12 @@ func (c *LineitemsUploadlineitemsCall) Do() (*UploadLineItemsResponse, error) {
 
 }
 
+// LineitemsServicer makes it easy to provide your own testable versions of LineitemsService.
+type LineitemsServicer interface {
+	Downloadlineitems(downloadlineitemsrequest *DownloadLineItemsRequest) LineitemsDownloadlineitemsCallDoer
+	Uploadlineitems(uploadlineitemsrequest *UploadLineItemsRequest) LineitemsUploadlineitemsCallDoer
+}
+
 // method id "doubleclickbidmanager.queries.createquery":
 
 type QueriesCreatequeryCall struct {
@@ -740,6 +758,12 @@ func (r *QueriesService) Createquery(query *Query) *QueriesCreatequeryCall {
 func (c *QueriesCreatequeryCall) Fields(s ...googleapi.Field) *QueriesCreatequeryCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// QueriesCreatequeryCallDoer makes it easy to provide your own testable version of Do.
+type QueriesCreatequeryCallDoer interface {
+	Do() (*Query, error)
+	Fields(s ...googleapi.Field) QueriesCreatequeryCallDoer
 }
 
 func (c *QueriesCreatequeryCall) Do() (*Query, error) {
@@ -812,6 +836,12 @@ func (c *QueriesDeletequeryCall) Fields(s ...googleapi.Field) *QueriesDeletequer
 	return c
 }
 
+// QueriesDeletequeryCallDoer makes it easy to provide your own testable version of Do.
+type QueriesDeletequeryCallDoer interface {
+	Do() error
+	Fields(s ...googleapi.Field) QueriesDeletequeryCallDoer
+}
+
 func (c *QueriesDeletequeryCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -877,6 +907,12 @@ func (r *QueriesService) Getquery(queryId int64) *QueriesGetqueryCall {
 func (c *QueriesGetqueryCall) Fields(s ...googleapi.Field) *QueriesGetqueryCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// QueriesGetqueryCallDoer makes it easy to provide your own testable version of Do.
+type QueriesGetqueryCallDoer interface {
+	Do() (*Query, error)
+	Fields(s ...googleapi.Field) QueriesGetqueryCallDoer
 }
 
 func (c *QueriesGetqueryCall) Do() (*Query, error) {
@@ -951,6 +987,12 @@ func (c *QueriesListqueriesCall) Fields(s ...googleapi.Field) *QueriesListquerie
 	return c
 }
 
+// QueriesListqueriesCallDoer makes it easy to provide your own testable version of Do.
+type QueriesListqueriesCallDoer interface {
+	Do() (*ListQueriesResponse, error)
+	Fields(s ...googleapi.Field) QueriesListqueriesCallDoer
+}
+
 func (c *QueriesListqueriesCall) Do() (*ListQueriesResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1013,6 +1055,12 @@ func (c *QueriesRunqueryCall) Fields(s ...googleapi.Field) *QueriesRunqueryCall 
 	return c
 }
 
+// QueriesRunqueryCallDoer makes it easy to provide your own testable version of Do.
+type QueriesRunqueryCallDoer interface {
+	Do() error
+	Fields(s ...googleapi.Field) QueriesRunqueryCallDoer
+}
+
 func (c *QueriesRunqueryCall) Do() error {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.runqueryrequest)
@@ -1066,6 +1114,15 @@ func (c *QueriesRunqueryCall) Do() error {
 
 }
 
+// QueriesServicer makes it easy to provide your own testable versions of QueriesService.
+type QueriesServicer interface {
+	Createquery(query *Query) QueriesCreatequeryCallDoer
+	Deletequery(queryId int64) QueriesDeletequeryCallDoer
+	Getquery(queryId int64) QueriesGetqueryCallDoer
+	Listqueries() QueriesListqueriesCallDoer
+	Runquery(queryId int64, runqueryrequest *RunQueryRequest) QueriesRunqueryCallDoer
+}
+
 // method id "doubleclickbidmanager.reports.listreports":
 
 type ReportsListreportsCall struct {
@@ -1087,6 +1144,12 @@ func (r *ReportsService) Listreports(queryId int64) *ReportsListreportsCall {
 func (c *ReportsListreportsCall) Fields(s ...googleapi.Field) *ReportsListreportsCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ReportsListreportsCallDoer makes it easy to provide your own testable version of Do.
+type ReportsListreportsCallDoer interface {
+	Do() (*ListReportsResponse, error)
+	Fields(s ...googleapi.Field) ReportsListreportsCallDoer
 }
 
 func (c *ReportsListreportsCall) Do() (*ListReportsResponse, error) {
@@ -1138,4 +1201,9 @@ func (c *ReportsListreportsCall) Do() (*ListReportsResponse, error) {
 	//   }
 	// }
 
+}
+
+// ReportsServicer makes it easy to provide your own testable versions of ReportsService.
+type ReportsServicer interface {
+	Listreports(queryId int64) ReportsListreportsCallDoer
 }

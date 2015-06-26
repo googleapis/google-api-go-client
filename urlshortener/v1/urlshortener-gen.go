@@ -214,6 +214,13 @@ func (c *UrlGetCall) Fields(s ...googleapi.Field) *UrlGetCall {
 	return c
 }
 
+// UrlGetCallDoer makes it easy to provide your own testable version of Do.
+type UrlGetCallDoer interface {
+	Do() (*Url, error)
+	Projection(projection string) UrlGetCallDoer
+	Fields(s ...googleapi.Field) UrlGetCallDoer
+}
+
 func (c *UrlGetCall) Do() (*Url, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -307,6 +314,12 @@ func (c *UrlInsertCall) Fields(s ...googleapi.Field) *UrlInsertCall {
 	return c
 }
 
+// UrlInsertCallDoer makes it easy to provide your own testable version of Do.
+type UrlInsertCallDoer interface {
+	Do() (*Url, error)
+	Fields(s ...googleapi.Field) UrlInsertCallDoer
+}
+
 func (c *UrlInsertCall) Do() (*Url, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.url)
@@ -395,6 +408,14 @@ func (c *UrlListCall) Fields(s ...googleapi.Field) *UrlListCall {
 	return c
 }
 
+// UrlListCallDoer makes it easy to provide your own testable version of Do.
+type UrlListCallDoer interface {
+	Do() (*UrlHistory, error)
+	Projection(projection string) UrlListCallDoer
+	StartToken(startToken string) UrlListCallDoer
+	Fields(s ...googleapi.Field) UrlListCallDoer
+}
+
 func (c *UrlListCall) Do() (*UrlHistory, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -459,4 +480,11 @@ func (c *UrlListCall) Do() (*UrlHistory, error) {
 	//   ]
 	// }
 
+}
+
+// UrlServicer makes it easy to provide your own testable versions of UrlService.
+type UrlServicer interface {
+	Get(shortUrl string) UrlGetCallDoer
+	Insert(url *Url) UrlInsertCallDoer
+	List() UrlListCallDoer
 }

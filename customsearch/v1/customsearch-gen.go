@@ -629,6 +629,43 @@ func (c *CseListCall) Fields(s ...googleapi.Field) *CseListCall {
 	return c
 }
 
+// CseListCallDoer makes it easy to provide your own testable version of Do.
+type CseListCallDoer interface {
+	Do() (*Search, error)
+	C2coff(c2coff string) CseListCallDoer
+	Cr(cr string) CseListCallDoer
+	Cref(cref string) CseListCallDoer
+	Cx(cx string) CseListCallDoer
+	DateRestrict(dateRestrict string) CseListCallDoer
+	ExactTerms(exactTerms string) CseListCallDoer
+	ExcludeTerms(excludeTerms string) CseListCallDoer
+	FileType(fileType string) CseListCallDoer
+	Filter(filter string) CseListCallDoer
+	Gl(gl string) CseListCallDoer
+	Googlehost(googlehost string) CseListCallDoer
+	HighRange(highRange string) CseListCallDoer
+	Hl(hl string) CseListCallDoer
+	Hq(hq string) CseListCallDoer
+	ImgColorType(imgColorType string) CseListCallDoer
+	ImgDominantColor(imgDominantColor string) CseListCallDoer
+	ImgSize(imgSize string) CseListCallDoer
+	ImgType(imgType string) CseListCallDoer
+	LinkSite(linkSite string) CseListCallDoer
+	LowRange(lowRange string) CseListCallDoer
+	Lr(lr string) CseListCallDoer
+	Num(num int64) CseListCallDoer
+	OrTerms(orTerms string) CseListCallDoer
+	RelatedSite(relatedSite string) CseListCallDoer
+	Rights(rights string) CseListCallDoer
+	Safe(safe string) CseListCallDoer
+	SearchType(searchType string) CseListCallDoer
+	SiteSearch(siteSearch string) CseListCallDoer
+	SiteSearchFilter(siteSearchFilter string) CseListCallDoer
+	Sort(sort string) CseListCallDoer
+	Start(start int64) CseListCallDoer
+	Fields(s ...googleapi.Field) CseListCallDoer
+}
+
 func (c *CseListCall) Do() (*Search, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1100,4 +1137,9 @@ func (c *CseListCall) Do() (*Search, error) {
 	//   }
 	// }
 
+}
+
+// CseServicer makes it easy to provide your own testable versions of CseService.
+type CseServicer interface {
+	List(q string) CseListCallDoer
 }

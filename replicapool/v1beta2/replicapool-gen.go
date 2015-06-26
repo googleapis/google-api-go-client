@@ -428,6 +428,12 @@ func (c *InstanceGroupManagersAbandonInstancesCall) Fields(s ...googleapi.Field)
 	return c
 }
 
+// InstanceGroupManagersAbandonInstancesCallDoer makes it easy to provide your own testable version of Do.
+type InstanceGroupManagersAbandonInstancesCallDoer interface {
+	Do() (*Operation, error)
+	Fields(s ...googleapi.Field) InstanceGroupManagersAbandonInstancesCallDoer
+}
+
 func (c *InstanceGroupManagersAbandonInstancesCall) Do() (*Operation, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.instancegroupmanagersabandoninstancesrequest)
@@ -540,6 +546,12 @@ func (c *InstanceGroupManagersDeleteCall) Fields(s ...googleapi.Field) *Instance
 	return c
 }
 
+// InstanceGroupManagersDeleteCallDoer makes it easy to provide your own testable version of Do.
+type InstanceGroupManagersDeleteCallDoer interface {
+	Do() (*Operation, error)
+	Fields(s ...googleapi.Field) InstanceGroupManagersDeleteCallDoer
+}
+
 func (c *InstanceGroupManagersDeleteCall) Do() (*Operation, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -643,6 +655,12 @@ func (r *InstanceGroupManagersService) DeleteInstances(project string, zone stri
 func (c *InstanceGroupManagersDeleteInstancesCall) Fields(s ...googleapi.Field) *InstanceGroupManagersDeleteInstancesCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// InstanceGroupManagersDeleteInstancesCallDoer makes it easy to provide your own testable version of Do.
+type InstanceGroupManagersDeleteInstancesCallDoer interface {
+	Do() (*Operation, error)
+	Fields(s ...googleapi.Field) InstanceGroupManagersDeleteInstancesCallDoer
 }
 
 func (c *InstanceGroupManagersDeleteInstancesCall) Do() (*Operation, error) {
@@ -754,6 +772,12 @@ func (c *InstanceGroupManagersGetCall) Fields(s ...googleapi.Field) *InstanceGro
 	return c
 }
 
+// InstanceGroupManagersGetCallDoer makes it easy to provide your own testable version of Do.
+type InstanceGroupManagersGetCallDoer interface {
+	Do() (*InstanceGroupManager, error)
+	Fields(s ...googleapi.Field) InstanceGroupManagersGetCallDoer
+}
+
 func (c *InstanceGroupManagersGetCall) Do() (*InstanceGroupManager, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -856,6 +880,12 @@ func (r *InstanceGroupManagersService) Insert(project string, zone string, size 
 func (c *InstanceGroupManagersInsertCall) Fields(s ...googleapi.Field) *InstanceGroupManagersInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// InstanceGroupManagersInsertCallDoer makes it easy to provide your own testable version of Do.
+type InstanceGroupManagersInsertCallDoer interface {
+	Do() (*Operation, error)
+	Fields(s ...googleapi.Field) InstanceGroupManagersInsertCallDoer
 }
 
 func (c *InstanceGroupManagersInsertCall) Do() (*Operation, error) {
@@ -990,6 +1020,15 @@ func (c *InstanceGroupManagersListCall) Fields(s ...googleapi.Field) *InstanceGr
 	return c
 }
 
+// InstanceGroupManagersListCallDoer makes it easy to provide your own testable version of Do.
+type InstanceGroupManagersListCallDoer interface {
+	Do() (*InstanceGroupManagerList, error)
+	Filter(filter string) InstanceGroupManagersListCallDoer
+	MaxResults(maxResults int64) InstanceGroupManagersListCallDoer
+	PageToken(pageToken string) InstanceGroupManagersListCallDoer
+	Fields(s ...googleapi.Field) InstanceGroupManagersListCallDoer
+}
+
 func (c *InstanceGroupManagersListCall) Do() (*InstanceGroupManagerList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1114,6 +1153,12 @@ func (c *InstanceGroupManagersRecreateInstancesCall) Fields(s ...googleapi.Field
 	return c
 }
 
+// InstanceGroupManagersRecreateInstancesCallDoer makes it easy to provide your own testable version of Do.
+type InstanceGroupManagersRecreateInstancesCallDoer interface {
+	Do() (*Operation, error)
+	Fields(s ...googleapi.Field) InstanceGroupManagersRecreateInstancesCallDoer
+}
+
 func (c *InstanceGroupManagersRecreateInstancesCall) Do() (*Operation, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.instancegroupmanagersrecreateinstancesrequest)
@@ -1226,6 +1271,12 @@ func (r *InstanceGroupManagersService) Resize(project string, zone string, insta
 func (c *InstanceGroupManagersResizeCall) Fields(s ...googleapi.Field) *InstanceGroupManagersResizeCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// InstanceGroupManagersResizeCallDoer makes it easy to provide your own testable version of Do.
+type InstanceGroupManagersResizeCallDoer interface {
+	Do() (*Operation, error)
+	Fields(s ...googleapi.Field) InstanceGroupManagersResizeCallDoer
 }
 
 func (c *InstanceGroupManagersResizeCall) Do() (*Operation, error) {
@@ -1341,6 +1392,12 @@ func (c *InstanceGroupManagersSetInstanceTemplateCall) Fields(s ...googleapi.Fie
 	return c
 }
 
+// InstanceGroupManagersSetInstanceTemplateCallDoer makes it easy to provide your own testable version of Do.
+type InstanceGroupManagersSetInstanceTemplateCallDoer interface {
+	Do() (*Operation, error)
+	Fields(s ...googleapi.Field) InstanceGroupManagersSetInstanceTemplateCallDoer
+}
+
 func (c *InstanceGroupManagersSetInstanceTemplateCall) Do() (*Operation, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.instancegroupmanagerssetinstancetemplaterequest)
@@ -1454,6 +1511,12 @@ func (c *InstanceGroupManagersSetTargetPoolsCall) Fields(s ...googleapi.Field) *
 	return c
 }
 
+// InstanceGroupManagersSetTargetPoolsCallDoer makes it easy to provide your own testable version of Do.
+type InstanceGroupManagersSetTargetPoolsCallDoer interface {
+	Do() (*Operation, error)
+	Fields(s ...googleapi.Field) InstanceGroupManagersSetTargetPoolsCallDoer
+}
+
 func (c *InstanceGroupManagersSetTargetPoolsCall) Do() (*Operation, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.instancegroupmanagerssettargetpoolsrequest)
@@ -1536,6 +1599,20 @@ func (c *InstanceGroupManagersSetTargetPoolsCall) Do() (*Operation, error) {
 
 }
 
+// InstanceGroupManagersServicer makes it easy to provide your own testable versions of InstanceGroupManagersService.
+type InstanceGroupManagersServicer interface {
+	AbandonInstances(project string, zone string, instanceGroupManager string, instancegroupmanagersabandoninstancesrequest *InstanceGroupManagersAbandonInstancesRequest) InstanceGroupManagersAbandonInstancesCallDoer
+	Delete(project string, zone string, instanceGroupManager string) InstanceGroupManagersDeleteCallDoer
+	DeleteInstances(project string, zone string, instanceGroupManager string, instancegroupmanagersdeleteinstancesrequest *InstanceGroupManagersDeleteInstancesRequest) InstanceGroupManagersDeleteInstancesCallDoer
+	Get(project string, zone string, instanceGroupManager string) InstanceGroupManagersGetCallDoer
+	Insert(project string, zone string, size int64, instancegroupmanager *InstanceGroupManager) InstanceGroupManagersInsertCallDoer
+	List(project string, zone string) InstanceGroupManagersListCallDoer
+	RecreateInstances(project string, zone string, instanceGroupManager string, instancegroupmanagersrecreateinstancesrequest *InstanceGroupManagersRecreateInstancesRequest) InstanceGroupManagersRecreateInstancesCallDoer
+	Resize(project string, zone string, instanceGroupManager string, size int64) InstanceGroupManagersResizeCallDoer
+	SetInstanceTemplate(project string, zone string, instanceGroupManager string, instancegroupmanagerssetinstancetemplaterequest *InstanceGroupManagersSetInstanceTemplateRequest) InstanceGroupManagersSetInstanceTemplateCallDoer
+	SetTargetPools(project string, zone string, instanceGroupManager string, instancegroupmanagerssettargetpoolsrequest *InstanceGroupManagersSetTargetPoolsRequest) InstanceGroupManagersSetTargetPoolsCallDoer
+}
+
 // method id "replicapool.zoneOperations.get":
 
 type ZoneOperationsGetCall struct {
@@ -1561,6 +1638,12 @@ func (r *ZoneOperationsService) Get(project string, zone string, operation strin
 func (c *ZoneOperationsGetCall) Fields(s ...googleapi.Field) *ZoneOperationsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ZoneOperationsGetCallDoer makes it easy to provide your own testable version of Do.
+type ZoneOperationsGetCallDoer interface {
+	Do() (*Operation, error)
+	Fields(s ...googleapi.Field) ZoneOperationsGetCallDoer
 }
 
 func (c *ZoneOperationsGetCall) Do() (*Operation, error) {
@@ -1685,6 +1768,15 @@ func (c *ZoneOperationsListCall) Fields(s ...googleapi.Field) *ZoneOperationsLis
 	return c
 }
 
+// ZoneOperationsListCallDoer makes it easy to provide your own testable version of Do.
+type ZoneOperationsListCallDoer interface {
+	Do() (*OperationList, error)
+	Filter(filter string) ZoneOperationsListCallDoer
+	MaxResults(maxResults int64) ZoneOperationsListCallDoer
+	PageToken(pageToken string) ZoneOperationsListCallDoer
+	Fields(s ...googleapi.Field) ZoneOperationsListCallDoer
+}
+
 func (c *ZoneOperationsListCall) Do() (*OperationList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1775,4 +1867,10 @@ func (c *ZoneOperationsListCall) Do() (*OperationList, error) {
 	//   ]
 	// }
 
+}
+
+// ZoneOperationsServicer makes it easy to provide your own testable versions of ZoneOperationsService.
+type ZoneOperationsServicer interface {
+	Get(project string, zone string, operation string) ZoneOperationsGetCallDoer
+	List(project string, zone string) ZoneOperationsListCallDoer
 }

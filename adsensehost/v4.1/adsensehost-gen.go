@@ -556,6 +556,12 @@ func (c *AccountsGetCall) Fields(s ...googleapi.Field) *AccountsGetCall {
 	return c
 }
 
+// AccountsGetCallDoer makes it easy to provide your own testable version of Do.
+type AccountsGetCallDoer interface {
+	Do() (*Account, error)
+	Fields(s ...googleapi.Field) AccountsGetCallDoer
+}
+
 func (c *AccountsGetCall) Do() (*Account, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -631,6 +637,12 @@ func (r *AccountsService) List(filterAdClientId []string) *AccountsListCall {
 func (c *AccountsListCall) Fields(s ...googleapi.Field) *AccountsListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// AccountsListCallDoer makes it easy to provide your own testable version of Do.
+type AccountsListCallDoer interface {
+	Do() (*Accounts, error)
+	Fields(s ...googleapi.Field) AccountsListCallDoer
 }
 
 func (c *AccountsListCall) Do() (*Accounts, error) {
@@ -712,6 +724,12 @@ func (r *AccountsAdclientsService) Get(accountId string, adClientId string) *Acc
 func (c *AccountsAdclientsGetCall) Fields(s ...googleapi.Field) *AccountsAdclientsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// AccountsAdclientsGetCallDoer makes it easy to provide your own testable version of Do.
+type AccountsAdclientsGetCallDoer interface {
+	Do() (*AdClient, error)
+	Fields(s ...googleapi.Field) AccountsAdclientsGetCallDoer
 }
 
 func (c *AccountsAdclientsGetCall) Do() (*AdClient, error) {
@@ -814,6 +832,14 @@ func (c *AccountsAdclientsListCall) Fields(s ...googleapi.Field) *AccountsAdclie
 	return c
 }
 
+// AccountsAdclientsListCallDoer makes it easy to provide your own testable version of Do.
+type AccountsAdclientsListCallDoer interface {
+	Do() (*AdClients, error)
+	MaxResults(maxResults int64) AccountsAdclientsListCallDoer
+	PageToken(pageToken string) AccountsAdclientsListCallDoer
+	Fields(s ...googleapi.Field) AccountsAdclientsListCallDoer
+}
+
 func (c *AccountsAdclientsListCall) Do() (*AdClients, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -914,6 +940,12 @@ func (c *AccountsAdunitsDeleteCall) Fields(s ...googleapi.Field) *AccountsAdunit
 	return c
 }
 
+// AccountsAdunitsDeleteCallDoer makes it easy to provide your own testable version of Do.
+type AccountsAdunitsDeleteCallDoer interface {
+	Do() (*AdUnit, error)
+	Fields(s ...googleapi.Field) AccountsAdunitsDeleteCallDoer
+}
+
 func (c *AccountsAdunitsDeleteCall) Do() (*AdUnit, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1008,6 +1040,12 @@ func (r *AccountsAdunitsService) Get(accountId string, adClientId string, adUnit
 func (c *AccountsAdunitsGetCall) Fields(s ...googleapi.Field) *AccountsAdunitsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// AccountsAdunitsGetCallDoer makes it easy to provide your own testable version of Do.
+type AccountsAdunitsGetCallDoer interface {
+	Do() (*AdUnit, error)
+	Fields(s ...googleapi.Field) AccountsAdunitsGetCallDoer
 }
 
 func (c *AccountsAdunitsGetCall) Do() (*AdUnit, error) {
@@ -1114,6 +1152,13 @@ func (c *AccountsAdunitsGetAdCodeCall) Fields(s ...googleapi.Field) *AccountsAdu
 	return c
 }
 
+// AccountsAdunitsGetAdCodeCallDoer makes it easy to provide your own testable version of Do.
+type AccountsAdunitsGetAdCodeCallDoer interface {
+	Do() (*AdCode, error)
+	HostCustomChannelId(hostCustomChannelId string) AccountsAdunitsGetAdCodeCallDoer
+	Fields(s ...googleapi.Field) AccountsAdunitsGetAdCodeCallDoer
+}
+
 func (c *AccountsAdunitsGetAdCodeCall) Do() (*AdCode, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1218,6 +1263,12 @@ func (r *AccountsAdunitsService) Insert(accountId string, adClientId string, adu
 func (c *AccountsAdunitsInsertCall) Fields(s ...googleapi.Field) *AccountsAdunitsInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// AccountsAdunitsInsertCallDoer makes it easy to provide your own testable version of Do.
+type AccountsAdunitsInsertCallDoer interface {
+	Do() (*AdUnit, error)
+	Fields(s ...googleapi.Field) AccountsAdunitsInsertCallDoer
 }
 
 func (c *AccountsAdunitsInsertCall) Do() (*AdUnit, error) {
@@ -1338,6 +1389,15 @@ func (c *AccountsAdunitsListCall) Fields(s ...googleapi.Field) *AccountsAdunitsL
 	return c
 }
 
+// AccountsAdunitsListCallDoer makes it easy to provide your own testable version of Do.
+type AccountsAdunitsListCallDoer interface {
+	Do() (*AdUnits, error)
+	IncludeInactive(includeInactive bool) AccountsAdunitsListCallDoer
+	MaxResults(maxResults int64) AccountsAdunitsListCallDoer
+	PageToken(pageToken string) AccountsAdunitsListCallDoer
+	Fields(s ...googleapi.Field) AccountsAdunitsListCallDoer
+}
+
 func (c *AccountsAdunitsListCall) Do() (*AdUnits, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1456,6 +1516,12 @@ func (c *AccountsAdunitsPatchCall) Fields(s ...googleapi.Field) *AccountsAdunits
 	return c
 }
 
+// AccountsAdunitsPatchCallDoer makes it easy to provide your own testable version of Do.
+type AccountsAdunitsPatchCallDoer interface {
+	Do() (*AdUnit, error)
+	Fields(s ...googleapi.Field) AccountsAdunitsPatchCallDoer
+}
+
 func (c *AccountsAdunitsPatchCall) Do() (*AdUnit, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.adunit)
@@ -1560,6 +1626,12 @@ func (r *AccountsAdunitsService) Update(accountId string, adClientId string, adu
 func (c *AccountsAdunitsUpdateCall) Fields(s ...googleapi.Field) *AccountsAdunitsUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// AccountsAdunitsUpdateCallDoer makes it easy to provide your own testable version of Do.
+type AccountsAdunitsUpdateCallDoer interface {
+	Do() (*AdUnit, error)
+	Fields(s ...googleapi.Field) AccountsAdunitsUpdateCallDoer
 }
 
 func (c *AccountsAdunitsUpdateCall) Do() (*AdUnit, error) {
@@ -1713,6 +1785,19 @@ func (c *AccountsReportsGenerateCall) Fields(s ...googleapi.Field) *AccountsRepo
 	return c
 }
 
+// AccountsReportsGenerateCallDoer makes it easy to provide your own testable version of Do.
+type AccountsReportsGenerateCallDoer interface {
+	Do() (*Report, error)
+	Dimension(dimension string) AccountsReportsGenerateCallDoer
+	Filter(filter string) AccountsReportsGenerateCallDoer
+	Locale(locale string) AccountsReportsGenerateCallDoer
+	MaxResults(maxResults int64) AccountsReportsGenerateCallDoer
+	Metric(metric string) AccountsReportsGenerateCallDoer
+	Sort(sort string) AccountsReportsGenerateCallDoer
+	StartIndex(startIndex int64) AccountsReportsGenerateCallDoer
+	Fields(s ...googleapi.Field) AccountsReportsGenerateCallDoer
+}
+
 func (c *AccountsReportsGenerateCall) Do() (*Report, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1855,6 +1940,12 @@ func (c *AccountsReportsGenerateCall) Do() (*Report, error) {
 
 }
 
+// AccountsServicer makes it easy to provide your own testable versions of AccountsService.
+type AccountsServicer interface {
+	Get(accountId string) AccountsGetCallDoer
+	List(filterAdClientId []string) AccountsListCallDoer
+}
+
 // method id "adsensehost.adclients.get":
 
 type AdclientsGetCall struct {
@@ -1877,6 +1968,12 @@ func (r *AdclientsService) Get(adClientId string) *AdclientsGetCall {
 func (c *AdclientsGetCall) Fields(s ...googleapi.Field) *AdclientsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// AdclientsGetCallDoer makes it easy to provide your own testable version of Do.
+type AdclientsGetCallDoer interface {
+	Do() (*AdClient, error)
+	Fields(s ...googleapi.Field) AdclientsGetCallDoer
 }
 
 func (c *AdclientsGetCall) Do() (*AdClient, error) {
@@ -1969,6 +2066,14 @@ func (c *AdclientsListCall) Fields(s ...googleapi.Field) *AdclientsListCall {
 	return c
 }
 
+// AdclientsListCallDoer makes it easy to provide your own testable version of Do.
+type AdclientsListCallDoer interface {
+	Do() (*AdClients, error)
+	MaxResults(maxResults int64) AdclientsListCallDoer
+	PageToken(pageToken string) AdclientsListCallDoer
+	Fields(s ...googleapi.Field) AdclientsListCallDoer
+}
+
 func (c *AdclientsListCall) Do() (*AdClients, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2030,6 +2135,12 @@ func (c *AdclientsListCall) Do() (*AdClients, error) {
 
 }
 
+// AdclientsServicer makes it easy to provide your own testable versions of AdclientsService.
+type AdclientsServicer interface {
+	Get(adClientId string) AdclientsGetCallDoer
+	List() AdclientsListCallDoer
+}
+
 // method id "adsensehost.associationsessions.start":
 
 type AssociationsessionsStartCall struct {
@@ -2068,6 +2179,14 @@ func (c *AssociationsessionsStartCall) WebsiteLocale(websiteLocale string) *Asso
 func (c *AssociationsessionsStartCall) Fields(s ...googleapi.Field) *AssociationsessionsStartCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// AssociationsessionsStartCallDoer makes it easy to provide your own testable version of Do.
+type AssociationsessionsStartCallDoer interface {
+	Do() (*AssociationSession, error)
+	UserLocale(userLocale string) AssociationsessionsStartCallDoer
+	WebsiteLocale(websiteLocale string) AssociationsessionsStartCallDoer
+	Fields(s ...googleapi.Field) AssociationsessionsStartCallDoer
 }
 
 func (c *AssociationsessionsStartCall) Do() (*AssociationSession, error) {
@@ -2187,6 +2306,12 @@ func (c *AssociationsessionsVerifyCall) Fields(s ...googleapi.Field) *Associatio
 	return c
 }
 
+// AssociationsessionsVerifyCallDoer makes it easy to provide your own testable version of Do.
+type AssociationsessionsVerifyCallDoer interface {
+	Do() (*AssociationSession, error)
+	Fields(s ...googleapi.Field) AssociationsessionsVerifyCallDoer
+}
+
 func (c *AssociationsessionsVerifyCall) Do() (*AssociationSession, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2239,6 +2364,12 @@ func (c *AssociationsessionsVerifyCall) Do() (*AssociationSession, error) {
 
 }
 
+// AssociationsessionsServicer makes it easy to provide your own testable versions of AssociationsessionsService.
+type AssociationsessionsServicer interface {
+	Start(productCode []string, websiteUrl string) AssociationsessionsStartCallDoer
+	Verify(token string) AssociationsessionsVerifyCallDoer
+}
+
 // method id "adsensehost.customchannels.delete":
 
 type CustomchannelsDeleteCall struct {
@@ -2263,6 +2394,12 @@ func (r *CustomchannelsService) Delete(adClientId string, customChannelId string
 func (c *CustomchannelsDeleteCall) Fields(s ...googleapi.Field) *CustomchannelsDeleteCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// CustomchannelsDeleteCallDoer makes it easy to provide your own testable version of Do.
+type CustomchannelsDeleteCallDoer interface {
+	Do() (*CustomChannel, error)
+	Fields(s ...googleapi.Field) CustomchannelsDeleteCallDoer
 }
 
 func (c *CustomchannelsDeleteCall) Do() (*CustomChannel, error) {
@@ -2351,6 +2488,12 @@ func (c *CustomchannelsGetCall) Fields(s ...googleapi.Field) *CustomchannelsGetC
 	return c
 }
 
+// CustomchannelsGetCallDoer makes it easy to provide your own testable version of Do.
+type CustomchannelsGetCallDoer interface {
+	Do() (*CustomChannel, error)
+	Fields(s ...googleapi.Field) CustomchannelsGetCallDoer
+}
+
 func (c *CustomchannelsGetCall) Do() (*CustomChannel, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2435,6 +2578,12 @@ func (r *CustomchannelsService) Insert(adClientId string, customchannel *CustomC
 func (c *CustomchannelsInsertCall) Fields(s ...googleapi.Field) *CustomchannelsInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// CustomchannelsInsertCallDoer makes it easy to provide your own testable version of Do.
+type CustomchannelsInsertCallDoer interface {
+	Do() (*CustomChannel, error)
+	Fields(s ...googleapi.Field) CustomchannelsInsertCallDoer
 }
 
 func (c *CustomchannelsInsertCall) Do() (*CustomChannel, error) {
@@ -2539,6 +2688,14 @@ func (c *CustomchannelsListCall) Fields(s ...googleapi.Field) *CustomchannelsLis
 	return c
 }
 
+// CustomchannelsListCallDoer makes it easy to provide your own testable version of Do.
+type CustomchannelsListCallDoer interface {
+	Do() (*CustomChannels, error)
+	MaxResults(maxResults int64) CustomchannelsListCallDoer
+	PageToken(pageToken string) CustomchannelsListCallDoer
+	Fields(s ...googleapi.Field) CustomchannelsListCallDoer
+}
+
 func (c *CustomchannelsListCall) Do() (*CustomChannels, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2639,6 +2796,12 @@ func (c *CustomchannelsPatchCall) Fields(s ...googleapi.Field) *CustomchannelsPa
 	return c
 }
 
+// CustomchannelsPatchCallDoer makes it easy to provide your own testable version of Do.
+type CustomchannelsPatchCallDoer interface {
+	Do() (*CustomChannel, error)
+	Fields(s ...googleapi.Field) CustomchannelsPatchCallDoer
+}
+
 func (c *CustomchannelsPatchCall) Do() (*CustomChannel, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.customchannel)
@@ -2734,6 +2897,12 @@ func (c *CustomchannelsUpdateCall) Fields(s ...googleapi.Field) *CustomchannelsU
 	return c
 }
 
+// CustomchannelsUpdateCallDoer makes it easy to provide your own testable version of Do.
+type CustomchannelsUpdateCallDoer interface {
+	Do() (*CustomChannel, error)
+	Fields(s ...googleapi.Field) CustomchannelsUpdateCallDoer
+}
+
 func (c *CustomchannelsUpdateCall) Do() (*CustomChannel, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.customchannel)
@@ -2794,6 +2963,16 @@ func (c *CustomchannelsUpdateCall) Do() (*CustomChannel, error) {
 	//   ]
 	// }
 
+}
+
+// CustomchannelsServicer makes it easy to provide your own testable versions of CustomchannelsService.
+type CustomchannelsServicer interface {
+	Delete(adClientId string, customChannelId string) CustomchannelsDeleteCallDoer
+	Get(adClientId string, customChannelId string) CustomchannelsGetCallDoer
+	Insert(adClientId string, customchannel *CustomChannel) CustomchannelsInsertCallDoer
+	List(adClientId string) CustomchannelsListCallDoer
+	Patch(adClientId string, customChannelId string, customchannel *CustomChannel) CustomchannelsPatchCallDoer
+	Update(adClientId string, customchannel *CustomChannel) CustomchannelsUpdateCallDoer
 }
 
 // method id "adsensehost.reports.generate":
@@ -2873,6 +3052,19 @@ func (c *ReportsGenerateCall) StartIndex(startIndex int64) *ReportsGenerateCall 
 func (c *ReportsGenerateCall) Fields(s ...googleapi.Field) *ReportsGenerateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ReportsGenerateCallDoer makes it easy to provide your own testable version of Do.
+type ReportsGenerateCallDoer interface {
+	Do() (*Report, error)
+	Dimension(dimension string) ReportsGenerateCallDoer
+	Filter(filter string) ReportsGenerateCallDoer
+	Locale(locale string) ReportsGenerateCallDoer
+	MaxResults(maxResults int64) ReportsGenerateCallDoer
+	Metric(metric string) ReportsGenerateCallDoer
+	Sort(sort string) ReportsGenerateCallDoer
+	StartIndex(startIndex int64) ReportsGenerateCallDoer
+	Fields(s ...googleapi.Field) ReportsGenerateCallDoer
 }
 
 func (c *ReportsGenerateCall) Do() (*Report, error) {
@@ -3008,6 +3200,11 @@ func (c *ReportsGenerateCall) Do() (*Report, error) {
 
 }
 
+// ReportsServicer makes it easy to provide your own testable versions of ReportsService.
+type ReportsServicer interface {
+	Generate(startDate string, endDate string) ReportsGenerateCallDoer
+}
+
 // method id "adsensehost.urlchannels.delete":
 
 type UrlchannelsDeleteCall struct {
@@ -3031,6 +3228,12 @@ func (r *UrlchannelsService) Delete(adClientId string, urlChannelId string) *Url
 func (c *UrlchannelsDeleteCall) Fields(s ...googleapi.Field) *UrlchannelsDeleteCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// UrlchannelsDeleteCallDoer makes it easy to provide your own testable version of Do.
+type UrlchannelsDeleteCallDoer interface {
+	Do() (*UrlChannel, error)
+	Fields(s ...googleapi.Field) UrlchannelsDeleteCallDoer
 }
 
 func (c *UrlchannelsDeleteCall) Do() (*UrlChannel, error) {
@@ -3117,6 +3320,12 @@ func (r *UrlchannelsService) Insert(adClientId string, urlchannel *UrlChannel) *
 func (c *UrlchannelsInsertCall) Fields(s ...googleapi.Field) *UrlchannelsInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// UrlchannelsInsertCallDoer makes it easy to provide your own testable version of Do.
+type UrlchannelsInsertCallDoer interface {
+	Do() (*UrlChannel, error)
+	Fields(s ...googleapi.Field) UrlchannelsInsertCallDoer
 }
 
 func (c *UrlchannelsInsertCall) Do() (*UrlChannel, error) {
@@ -3220,6 +3429,14 @@ func (c *UrlchannelsListCall) Fields(s ...googleapi.Field) *UrlchannelsListCall 
 	return c
 }
 
+// UrlchannelsListCallDoer makes it easy to provide your own testable version of Do.
+type UrlchannelsListCallDoer interface {
+	Do() (*UrlChannels, error)
+	MaxResults(maxResults int64) UrlchannelsListCallDoer
+	PageToken(pageToken string) UrlchannelsListCallDoer
+	Fields(s ...googleapi.Field) UrlchannelsListCallDoer
+}
+
 func (c *UrlchannelsListCall) Do() (*UrlChannels, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3290,4 +3507,11 @@ func (c *UrlchannelsListCall) Do() (*UrlChannels, error) {
 	//   ]
 	// }
 
+}
+
+// UrlchannelsServicer makes it easy to provide your own testable versions of UrlchannelsService.
+type UrlchannelsServicer interface {
+	Delete(adClientId string, urlChannelId string) UrlchannelsDeleteCallDoer
+	Insert(adClientId string, urlchannel *UrlChannel) UrlchannelsInsertCallDoer
+	List(adClientId string) UrlchannelsListCallDoer
 }

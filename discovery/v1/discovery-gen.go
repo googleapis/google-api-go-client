@@ -489,6 +489,12 @@ func (c *ApisGetRestCall) Fields(s ...googleapi.Field) *ApisGetRestCall {
 	return c
 }
 
+// ApisGetRestCallDoer makes it easy to provide your own testable version of Do.
+type ApisGetRestCallDoer interface {
+	Do() (*RestDescription, error)
+	Fields(s ...googleapi.Field) ApisGetRestCallDoer
+}
+
 func (c *ApisGetRestCall) Do() (*RestDescription, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -582,6 +588,14 @@ func (c *ApisListCall) Fields(s ...googleapi.Field) *ApisListCall {
 	return c
 }
 
+// ApisListCallDoer makes it easy to provide your own testable version of Do.
+type ApisListCallDoer interface {
+	Do() (*DirectoryList, error)
+	Name(name string) ApisListCallDoer
+	Preferred(preferred bool) ApisListCallDoer
+	Fields(s ...googleapi.Field) ApisListCallDoer
+}
+
 func (c *ApisListCall) Do() (*DirectoryList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -636,4 +650,10 @@ func (c *ApisListCall) Do() (*DirectoryList, error) {
 	//   }
 	// }
 
+}
+
+// ApisServicer makes it easy to provide your own testable versions of ApisService.
+type ApisServicer interface {
+	GetRest(api string, version string) ApisGetRestCallDoer
+	List() ApisListCallDoer
 }

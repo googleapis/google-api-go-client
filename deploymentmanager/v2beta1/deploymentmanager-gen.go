@@ -391,6 +391,12 @@ func (c *DeploymentsDeleteCall) Fields(s ...googleapi.Field) *DeploymentsDeleteC
 	return c
 }
 
+// DeploymentsDeleteCallDoer makes it easy to provide your own testable version of Do.
+type DeploymentsDeleteCallDoer interface {
+	Do() (*Operation, error)
+	Fields(s ...googleapi.Field) DeploymentsDeleteCallDoer
+}
+
 func (c *DeploymentsDeleteCall) Do() (*Operation, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -478,6 +484,12 @@ func (r *DeploymentsService) Get(project string, deployment string) *Deployments
 func (c *DeploymentsGetCall) Fields(s ...googleapi.Field) *DeploymentsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// DeploymentsGetCallDoer makes it easy to provide your own testable version of Do.
+type DeploymentsGetCallDoer interface {
+	Do() (*Deployment, error)
+	Fields(s ...googleapi.Field) DeploymentsGetCallDoer
 }
 
 func (c *DeploymentsGetCall) Do() (*Deployment, error) {
@@ -569,6 +581,12 @@ func (r *DeploymentsService) Insert(project string, deployment *Deployment) *Dep
 func (c *DeploymentsInsertCall) Fields(s ...googleapi.Field) *DeploymentsInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// DeploymentsInsertCallDoer makes it easy to provide your own testable version of Do.
+type DeploymentsInsertCallDoer interface {
+	Do() (*Operation, error)
+	Fields(s ...googleapi.Field) DeploymentsInsertCallDoer
 }
 
 func (c *DeploymentsInsertCall) Do() (*Operation, error) {
@@ -675,6 +693,14 @@ func (c *DeploymentsListCall) Fields(s ...googleapi.Field) *DeploymentsListCall 
 	return c
 }
 
+// DeploymentsListCallDoer makes it easy to provide your own testable version of Do.
+type DeploymentsListCallDoer interface {
+	Do() (*DeploymentsListResponse, error)
+	MaxResults(maxResults int64) DeploymentsListCallDoer
+	PageToken(pageToken string) DeploymentsListCallDoer
+	Fields(s ...googleapi.Field) DeploymentsListCallDoer
+}
+
 func (c *DeploymentsListCall) Do() (*DeploymentsListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -751,6 +777,14 @@ func (c *DeploymentsListCall) Do() (*DeploymentsListResponse, error) {
 
 }
 
+// DeploymentsServicer makes it easy to provide your own testable versions of DeploymentsService.
+type DeploymentsServicer interface {
+	Delete(project string, deployment string) DeploymentsDeleteCallDoer
+	Get(project string, deployment string) DeploymentsGetCallDoer
+	Insert(project string, deployment *Deployment) DeploymentsInsertCallDoer
+	List(project string) DeploymentsListCallDoer
+}
+
 // method id "deploymentmanager.manifests.get":
 
 type ManifestsGetCall struct {
@@ -776,6 +810,12 @@ func (r *ManifestsService) Get(project string, deployment string, manifest strin
 func (c *ManifestsGetCall) Fields(s ...googleapi.Field) *ManifestsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ManifestsGetCallDoer makes it easy to provide your own testable version of Do.
+type ManifestsGetCallDoer interface {
+	Do() (*Manifest, error)
+	Fields(s ...googleapi.Field) ManifestsGetCallDoer
 }
 
 func (c *ManifestsGetCall) Do() (*Manifest, error) {
@@ -894,6 +934,14 @@ func (c *ManifestsListCall) Fields(s ...googleapi.Field) *ManifestsListCall {
 	return c
 }
 
+// ManifestsListCallDoer makes it easy to provide your own testable version of Do.
+type ManifestsListCallDoer interface {
+	Do() (*ManifestsListResponse, error)
+	MaxResults(maxResults int64) ManifestsListCallDoer
+	PageToken(pageToken string) ManifestsListCallDoer
+	Fields(s ...googleapi.Field) ManifestsListCallDoer
+}
+
 func (c *ManifestsListCall) Do() (*ManifestsListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -979,6 +1027,12 @@ func (c *ManifestsListCall) Do() (*ManifestsListResponse, error) {
 
 }
 
+// ManifestsServicer makes it easy to provide your own testable versions of ManifestsService.
+type ManifestsServicer interface {
+	Get(project string, deployment string, manifest string) ManifestsGetCallDoer
+	List(project string, deployment string) ManifestsListCallDoer
+}
+
 // method id "deploymentmanager.operations.get":
 
 type OperationsGetCall struct {
@@ -1002,6 +1056,12 @@ func (r *OperationsService) Get(project string, operation string) *OperationsGet
 func (c *OperationsGetCall) Fields(s ...googleapi.Field) *OperationsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// OperationsGetCallDoer makes it easy to provide your own testable version of Do.
+type OperationsGetCallDoer interface {
+	Do() (*Operation, error)
+	Fields(s ...googleapi.Field) OperationsGetCallDoer
 }
 
 func (c *OperationsGetCall) Do() (*Operation, error) {
@@ -1108,6 +1168,14 @@ func (c *OperationsListCall) Fields(s ...googleapi.Field) *OperationsListCall {
 	return c
 }
 
+// OperationsListCallDoer makes it easy to provide your own testable version of Do.
+type OperationsListCallDoer interface {
+	Do() (*OperationsListResponse, error)
+	MaxResults(maxResults int64) OperationsListCallDoer
+	PageToken(pageToken string) OperationsListCallDoer
+	Fields(s ...googleapi.Field) OperationsListCallDoer
+}
+
 func (c *OperationsListCall) Do() (*OperationsListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1184,6 +1252,12 @@ func (c *OperationsListCall) Do() (*OperationsListResponse, error) {
 
 }
 
+// OperationsServicer makes it easy to provide your own testable versions of OperationsService.
+type OperationsServicer interface {
+	Get(project string, operation string) OperationsGetCallDoer
+	List(project string) OperationsListCallDoer
+}
+
 // method id "deploymentmanager.resources.get":
 
 type ResourcesGetCall struct {
@@ -1209,6 +1283,12 @@ func (r *ResourcesService) Get(project string, deployment string, resource strin
 func (c *ResourcesGetCall) Fields(s ...googleapi.Field) *ResourcesGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ResourcesGetCallDoer makes it easy to provide your own testable version of Do.
+type ResourcesGetCallDoer interface {
+	Do() (*Resource, error)
+	Fields(s ...googleapi.Field) ResourcesGetCallDoer
 }
 
 func (c *ResourcesGetCall) Do() (*Resource, error) {
@@ -1327,6 +1407,14 @@ func (c *ResourcesListCall) Fields(s ...googleapi.Field) *ResourcesListCall {
 	return c
 }
 
+// ResourcesListCallDoer makes it easy to provide your own testable version of Do.
+type ResourcesListCallDoer interface {
+	Do() (*ResourcesListResponse, error)
+	MaxResults(maxResults int64) ResourcesListCallDoer
+	PageToken(pageToken string) ResourcesListCallDoer
+	Fields(s ...googleapi.Field) ResourcesListCallDoer
+}
+
 func (c *ResourcesListCall) Do() (*ResourcesListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1412,6 +1500,12 @@ func (c *ResourcesListCall) Do() (*ResourcesListResponse, error) {
 
 }
 
+// ResourcesServicer makes it easy to provide your own testable versions of ResourcesService.
+type ResourcesServicer interface {
+	Get(project string, deployment string, resource string) ResourcesGetCallDoer
+	List(project string, deployment string) ResourcesListCallDoer
+}
+
 // method id "deploymentmanager.types.list":
 
 type TypesListCall struct {
@@ -1450,6 +1544,14 @@ func (c *TypesListCall) PageToken(pageToken string) *TypesListCall {
 func (c *TypesListCall) Fields(s ...googleapi.Field) *TypesListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// TypesListCallDoer makes it easy to provide your own testable version of Do.
+type TypesListCallDoer interface {
+	Do() (*TypesListResponse, error)
+	MaxResults(maxResults int64) TypesListCallDoer
+	PageToken(pageToken string) TypesListCallDoer
+	Fields(s ...googleapi.Field) TypesListCallDoer
 }
 
 func (c *TypesListCall) Do() (*TypesListResponse, error) {
@@ -1526,4 +1628,9 @@ func (c *TypesListCall) Do() (*TypesListResponse, error) {
 	//   ]
 	// }
 
+}
+
+// TypesServicer makes it easy to provide your own testable versions of TypesService.
+type TypesServicer interface {
+	List(project string) TypesListCallDoer
 }

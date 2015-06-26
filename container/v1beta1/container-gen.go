@@ -394,6 +394,12 @@ func (c *ProjectsClustersListCall) Fields(s ...googleapi.Field) *ProjectsCluster
 	return c
 }
 
+// ProjectsClustersListCallDoer makes it easy to provide your own testable version of Do.
+type ProjectsClustersListCallDoer interface {
+	Do() (*ListAggregatedClustersResponse, error)
+	Fields(s ...googleapi.Field) ProjectsClustersListCallDoer
+}
+
 func (c *ProjectsClustersListCall) Do() (*ListAggregatedClustersResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -468,6 +474,12 @@ func (r *ProjectsOperationsService) List(projectId string) *ProjectsOperationsLi
 func (c *ProjectsOperationsListCall) Fields(s ...googleapi.Field) *ProjectsOperationsListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ProjectsOperationsListCallDoer makes it easy to provide your own testable version of Do.
+type ProjectsOperationsListCallDoer interface {
+	Do() (*ListAggregatedOperationsResponse, error)
+	Fields(s ...googleapi.Field) ProjectsOperationsListCallDoer
 }
 
 func (c *ProjectsOperationsListCall) Do() (*ListAggregatedOperationsResponse, error) {
@@ -560,6 +572,12 @@ func (r *ProjectsZonesClustersService) Create(projectId string, zoneId string, c
 func (c *ProjectsZonesClustersCreateCall) Fields(s ...googleapi.Field) *ProjectsZonesClustersCreateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ProjectsZonesClustersCreateCallDoer makes it easy to provide your own testable version of Do.
+type ProjectsZonesClustersCreateCallDoer interface {
+	Do() (*Operation, error)
+	Fields(s ...googleapi.Field) ProjectsZonesClustersCreateCallDoer
 }
 
 func (c *ProjectsZonesClustersCreateCall) Do() (*Operation, error) {
@@ -663,6 +681,12 @@ func (c *ProjectsZonesClustersDeleteCall) Fields(s ...googleapi.Field) *Projects
 	return c
 }
 
+// ProjectsZonesClustersDeleteCallDoer makes it easy to provide your own testable version of Do.
+type ProjectsZonesClustersDeleteCallDoer interface {
+	Do() (*Operation, error)
+	Fields(s ...googleapi.Field) ProjectsZonesClustersDeleteCallDoer
+}
+
 func (c *ProjectsZonesClustersDeleteCall) Do() (*Operation, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -759,6 +783,12 @@ func (c *ProjectsZonesClustersGetCall) Fields(s ...googleapi.Field) *ProjectsZon
 	return c
 }
 
+// ProjectsZonesClustersGetCallDoer makes it easy to provide your own testable version of Do.
+type ProjectsZonesClustersGetCallDoer interface {
+	Do() (*Cluster, error)
+	Fields(s ...googleapi.Field) ProjectsZonesClustersGetCallDoer
+}
+
 func (c *ProjectsZonesClustersGetCall) Do() (*Cluster, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -853,6 +883,12 @@ func (c *ProjectsZonesClustersListCall) Fields(s ...googleapi.Field) *ProjectsZo
 	return c
 }
 
+// ProjectsZonesClustersListCallDoer makes it easy to provide your own testable version of Do.
+type ProjectsZonesClustersListCallDoer interface {
+	Do() (*ListClustersResponse, error)
+	Fields(s ...googleapi.Field) ProjectsZonesClustersListCallDoer
+}
+
 func (c *ProjectsZonesClustersListCall) Do() (*ListClustersResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -939,6 +975,12 @@ func (r *ProjectsZonesOperationsService) Get(projectId string, zoneId string, op
 func (c *ProjectsZonesOperationsGetCall) Fields(s ...googleapi.Field) *ProjectsZonesOperationsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ProjectsZonesOperationsGetCallDoer makes it easy to provide your own testable version of Do.
+type ProjectsZonesOperationsGetCallDoer interface {
+	Do() (*Operation, error)
+	Fields(s ...googleapi.Field) ProjectsZonesOperationsGetCallDoer
 }
 
 func (c *ProjectsZonesOperationsGetCall) Do() (*Operation, error) {
@@ -1035,6 +1077,12 @@ func (c *ProjectsZonesOperationsListCall) Fields(s ...googleapi.Field) *Projects
 	return c
 }
 
+// ProjectsZonesOperationsListCallDoer makes it easy to provide your own testable version of Do.
+type ProjectsZonesOperationsListCallDoer interface {
+	Do() (*ListOperationsResponse, error)
+	Fields(s ...googleapi.Field) ProjectsZonesOperationsListCallDoer
+}
+
 func (c *ProjectsZonesOperationsListCall) Do() (*ListOperationsResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1094,4 +1142,8 @@ func (c *ProjectsZonesOperationsListCall) Do() (*ListOperationsResponse, error) 
 	//   ]
 	// }
 
+}
+
+// ProjectsServicer makes it easy to provide your own testable versions of ProjectsService.
+type ProjectsServicer interface {
 }

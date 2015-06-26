@@ -108,6 +108,12 @@ func (c *AtlasGetMapCall) Fields(s ...googleapi.Field) *AtlasGetMapCall {
 	return c
 }
 
+// AtlasGetMapCallDoer makes it easy to provide your own testable version of Do.
+type AtlasGetMapCallDoer interface {
+	Do() (map[string]string, error)
+	Fields(s ...googleapi.Field) AtlasGetMapCallDoer
+}
+
 func (c *AtlasGetMapCall) Do() (map[string]string, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -143,4 +149,9 @@ func (c *AtlasGetMapCall) Do() (map[string]string, error) {
 	//   }
 	// }
 
+}
+
+// AtlasServicer makes it easy to provide your own testable versions of AtlasService.
+type AtlasServicer interface {
+	GetMap() AtlasGetMapCallDoer
 }

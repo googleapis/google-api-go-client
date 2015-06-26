@@ -998,6 +998,12 @@ func (c *BackupRunsGetCall) Fields(s ...googleapi.Field) *BackupRunsGetCall {
 	return c
 }
 
+// BackupRunsGetCallDoer makes it easy to provide your own testable version of Do.
+type BackupRunsGetCallDoer interface {
+	Do() (*BackupRun, error)
+	Fields(s ...googleapi.Field) BackupRunsGetCallDoer
+}
+
 func (c *BackupRunsGetCall) Do() (*BackupRun, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1111,6 +1117,14 @@ func (c *BackupRunsListCall) Fields(s ...googleapi.Field) *BackupRunsListCall {
 	return c
 }
 
+// BackupRunsListCallDoer makes it easy to provide your own testable version of Do.
+type BackupRunsListCallDoer interface {
+	Do() (*BackupRunsListResponse, error)
+	MaxResults(maxResults int64) BackupRunsListCallDoer
+	PageToken(pageToken string) BackupRunsListCallDoer
+	Fields(s ...googleapi.Field) BackupRunsListCallDoer
+}
+
 func (c *BackupRunsListCall) Do() (*BackupRunsListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1190,6 +1204,12 @@ func (c *BackupRunsListCall) Do() (*BackupRunsListResponse, error) {
 
 }
 
+// BackupRunsServicer makes it easy to provide your own testable versions of BackupRunsService.
+type BackupRunsServicer interface {
+	Get(project string, instance string, id int64) BackupRunsGetCallDoer
+	List(project string, instance string) BackupRunsListCallDoer
+}
+
 // method id "sql.databases.delete":
 
 type DatabasesDeleteCall struct {
@@ -1216,6 +1236,12 @@ func (r *DatabasesService) Delete(project string, instance string, database stri
 func (c *DatabasesDeleteCall) Fields(s ...googleapi.Field) *DatabasesDeleteCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// DatabasesDeleteCallDoer makes it easy to provide your own testable version of Do.
+type DatabasesDeleteCallDoer interface {
+	Do() (*Operation, error)
+	Fields(s ...googleapi.Field) DatabasesDeleteCallDoer
 }
 
 func (c *DatabasesDeleteCall) Do() (*Operation, error) {
@@ -1316,6 +1342,12 @@ func (c *DatabasesGetCall) Fields(s ...googleapi.Field) *DatabasesGetCall {
 	return c
 }
 
+// DatabasesGetCallDoer makes it easy to provide your own testable version of Do.
+type DatabasesGetCallDoer interface {
+	Do() (*Database, error)
+	Fields(s ...googleapi.Field) DatabasesGetCallDoer
+}
+
 func (c *DatabasesGetCall) Do() (*Database, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1414,6 +1446,12 @@ func (c *DatabasesInsertCall) Fields(s ...googleapi.Field) *DatabasesInsertCall 
 	return c
 }
 
+// DatabasesInsertCallDoer makes it easy to provide your own testable version of Do.
+type DatabasesInsertCallDoer interface {
+	Do() (*Operation, error)
+	Fields(s ...googleapi.Field) DatabasesInsertCallDoer
+}
+
 func (c *DatabasesInsertCall) Do() (*Operation, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.database)
@@ -1510,6 +1548,12 @@ func (c *DatabasesListCall) Fields(s ...googleapi.Field) *DatabasesListCall {
 	return c
 }
 
+// DatabasesListCallDoer makes it easy to provide your own testable version of Do.
+type DatabasesListCallDoer interface {
+	Do() (*DatabasesListResponse, error)
+	Fields(s ...googleapi.Field) DatabasesListCallDoer
+}
+
 func (c *DatabasesListCall) Do() (*DatabasesListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1600,6 +1644,12 @@ func (r *DatabasesService) Patch(project string, instance string, database strin
 func (c *DatabasesPatchCall) Fields(s ...googleapi.Field) *DatabasesPatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// DatabasesPatchCallDoer makes it easy to provide your own testable version of Do.
+type DatabasesPatchCallDoer interface {
+	Do() (*Operation, error)
+	Fields(s ...googleapi.Field) DatabasesPatchCallDoer
 }
 
 func (c *DatabasesPatchCall) Do() (*Operation, error) {
@@ -1711,6 +1761,12 @@ func (c *DatabasesUpdateCall) Fields(s ...googleapi.Field) *DatabasesUpdateCall 
 	return c
 }
 
+// DatabasesUpdateCallDoer makes it easy to provide your own testable version of Do.
+type DatabasesUpdateCallDoer interface {
+	Do() (*Operation, error)
+	Fields(s ...googleapi.Field) DatabasesUpdateCallDoer
+}
+
 func (c *DatabasesUpdateCall) Do() (*Operation, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.database2)
@@ -1790,6 +1846,16 @@ func (c *DatabasesUpdateCall) Do() (*Operation, error) {
 
 }
 
+// DatabasesServicer makes it easy to provide your own testable versions of DatabasesService.
+type DatabasesServicer interface {
+	Delete(project string, instance string, database string) DatabasesDeleteCallDoer
+	Get(project string, instance string, database string) DatabasesGetCallDoer
+	Insert(project string, instance string, database *Database) DatabasesInsertCallDoer
+	List(project string, instance string) DatabasesListCallDoer
+	Patch(project string, instance string, database string, database2 *Database) DatabasesPatchCallDoer
+	Update(project string, instance string, database string, database2 *Database) DatabasesUpdateCallDoer
+}
+
 // method id "sql.flags.list":
 
 type FlagsListCall struct {
@@ -1810,6 +1876,12 @@ func (r *FlagsService) List() *FlagsListCall {
 func (c *FlagsListCall) Fields(s ...googleapi.Field) *FlagsListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// FlagsListCallDoer makes it easy to provide your own testable version of Do.
+type FlagsListCallDoer interface {
+	Do() (*FlagsListResponse, error)
+	Fields(s ...googleapi.Field) FlagsListCallDoer
 }
 
 func (c *FlagsListCall) Do() (*FlagsListResponse, error) {
@@ -1853,6 +1925,11 @@ func (c *FlagsListCall) Do() (*FlagsListResponse, error) {
 
 }
 
+// FlagsServicer makes it easy to provide your own testable versions of FlagsService.
+type FlagsServicer interface {
+	List() FlagsListCallDoer
+}
+
 // method id "sql.instances.clone":
 
 type InstancesCloneCall struct {
@@ -1879,6 +1956,12 @@ func (r *InstancesService) Clone(project string, instance string, instancesclone
 func (c *InstancesCloneCall) Fields(s ...googleapi.Field) *InstancesCloneCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// InstancesCloneCallDoer makes it easy to provide your own testable version of Do.
+type InstancesCloneCallDoer interface {
+	Do() (*Operation, error)
+	Fields(s ...googleapi.Field) InstancesCloneCallDoer
 }
 
 func (c *InstancesCloneCall) Do() (*Operation, error) {
@@ -1977,6 +2060,12 @@ func (c *InstancesDeleteCall) Fields(s ...googleapi.Field) *InstancesDeleteCall 
 	return c
 }
 
+// InstancesDeleteCallDoer makes it easy to provide your own testable version of Do.
+type InstancesDeleteCallDoer interface {
+	Do() (*Operation, error)
+	Fields(s ...googleapi.Field) InstancesDeleteCallDoer
+}
+
 func (c *InstancesDeleteCall) Do() (*Operation, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2065,6 +2154,12 @@ func (r *InstancesService) Export(project string, instance string, instancesexpo
 func (c *InstancesExportCall) Fields(s ...googleapi.Field) *InstancesExportCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// InstancesExportCallDoer makes it easy to provide your own testable version of Do.
+type InstancesExportCallDoer interface {
+	Do() (*Operation, error)
+	Fields(s ...googleapi.Field) InstancesExportCallDoer
 }
 
 func (c *InstancesExportCall) Do() (*Operation, error) {
@@ -2163,6 +2258,12 @@ func (c *InstancesGetCall) Fields(s ...googleapi.Field) *InstancesGetCall {
 	return c
 }
 
+// InstancesGetCallDoer makes it easy to provide your own testable version of Do.
+type InstancesGetCallDoer interface {
+	Do() (*DatabaseInstance, error)
+	Fields(s ...googleapi.Field) InstancesGetCallDoer
+}
+
 func (c *InstancesGetCall) Do() (*DatabaseInstance, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2251,6 +2352,12 @@ func (r *InstancesService) Import(project string, instance string, instancesimpo
 func (c *InstancesImportCall) Fields(s ...googleapi.Field) *InstancesImportCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// InstancesImportCallDoer makes it easy to provide your own testable version of Do.
+type InstancesImportCallDoer interface {
+	Do() (*Operation, error)
+	Fields(s ...googleapi.Field) InstancesImportCallDoer
 }
 
 func (c *InstancesImportCall) Do() (*Operation, error) {
@@ -2346,6 +2453,12 @@ func (r *InstancesService) Insert(project string, databaseinstance *DatabaseInst
 func (c *InstancesInsertCall) Fields(s ...googleapi.Field) *InstancesInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// InstancesInsertCallDoer makes it easy to provide your own testable version of Do.
+type InstancesInsertCallDoer interface {
+	Do() (*Operation, error)
+	Fields(s ...googleapi.Field) InstancesInsertCallDoer
 }
 
 func (c *InstancesInsertCall) Do() (*Operation, error) {
@@ -2450,6 +2563,14 @@ func (c *InstancesListCall) Fields(s ...googleapi.Field) *InstancesListCall {
 	return c
 }
 
+// InstancesListCallDoer makes it easy to provide your own testable version of Do.
+type InstancesListCallDoer interface {
+	Do() (*InstancesListResponse, error)
+	MaxResults(maxResults int64) InstancesListCallDoer
+	PageToken(pageToken string) InstancesListCallDoer
+	Fields(s ...googleapi.Field) InstancesListCallDoer
+}
+
 func (c *InstancesListCall) Do() (*InstancesListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2551,6 +2672,12 @@ func (c *InstancesPatchCall) Fields(s ...googleapi.Field) *InstancesPatchCall {
 	return c
 }
 
+// InstancesPatchCallDoer makes it easy to provide your own testable version of Do.
+type InstancesPatchCallDoer interface {
+	Do() (*Operation, error)
+	Fields(s ...googleapi.Field) InstancesPatchCallDoer
+}
+
 func (c *InstancesPatchCall) Do() (*Operation, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.databaseinstance)
@@ -2648,6 +2775,12 @@ func (c *InstancesPromoteReplicaCall) Fields(s ...googleapi.Field) *InstancesPro
 	return c
 }
 
+// InstancesPromoteReplicaCallDoer makes it easy to provide your own testable version of Do.
+type InstancesPromoteReplicaCallDoer interface {
+	Do() (*Operation, error)
+	Fields(s ...googleapi.Field) InstancesPromoteReplicaCallDoer
+}
+
 func (c *InstancesPromoteReplicaCall) Do() (*Operation, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2739,6 +2872,12 @@ func (c *InstancesResetSslConfigCall) Fields(s ...googleapi.Field) *InstancesRes
 	return c
 }
 
+// InstancesResetSslConfigCallDoer makes it easy to provide your own testable version of Do.
+type InstancesResetSslConfigCallDoer interface {
+	Do() (*Operation, error)
+	Fields(s ...googleapi.Field) InstancesResetSslConfigCallDoer
+}
+
 func (c *InstancesResetSslConfigCall) Do() (*Operation, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2824,6 +2963,12 @@ func (r *InstancesService) Restart(project string, instance string) *InstancesRe
 func (c *InstancesRestartCall) Fields(s ...googleapi.Field) *InstancesRestartCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// InstancesRestartCallDoer makes it easy to provide your own testable version of Do.
+type InstancesRestartCallDoer interface {
+	Do() (*Operation, error)
+	Fields(s ...googleapi.Field) InstancesRestartCallDoer
 }
 
 func (c *InstancesRestartCall) Do() (*Operation, error) {
@@ -2913,6 +3058,12 @@ func (r *InstancesService) RestoreBackup(project string, instance string, instan
 func (c *InstancesRestoreBackupCall) Fields(s ...googleapi.Field) *InstancesRestoreBackupCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// InstancesRestoreBackupCallDoer makes it easy to provide your own testable version of Do.
+type InstancesRestoreBackupCallDoer interface {
+	Do() (*Operation, error)
+	Fields(s ...googleapi.Field) InstancesRestoreBackupCallDoer
 }
 
 func (c *InstancesRestoreBackupCall) Do() (*Operation, error) {
@@ -3011,6 +3162,12 @@ func (c *InstancesStartReplicaCall) Fields(s ...googleapi.Field) *InstancesStart
 	return c
 }
 
+// InstancesStartReplicaCallDoer makes it easy to provide your own testable version of Do.
+type InstancesStartReplicaCallDoer interface {
+	Do() (*Operation, error)
+	Fields(s ...googleapi.Field) InstancesStartReplicaCallDoer
+}
+
 func (c *InstancesStartReplicaCall) Do() (*Operation, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3096,6 +3253,12 @@ func (r *InstancesService) StopReplica(project string, instance string) *Instanc
 func (c *InstancesStopReplicaCall) Fields(s ...googleapi.Field) *InstancesStopReplicaCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// InstancesStopReplicaCallDoer makes it easy to provide your own testable version of Do.
+type InstancesStopReplicaCallDoer interface {
+	Do() (*Operation, error)
+	Fields(s ...googleapi.Field) InstancesStopReplicaCallDoer
 }
 
 func (c *InstancesStopReplicaCall) Do() (*Operation, error) {
@@ -3189,6 +3352,12 @@ func (c *InstancesUpdateCall) Fields(s ...googleapi.Field) *InstancesUpdateCall 
 	return c
 }
 
+// InstancesUpdateCallDoer makes it easy to provide your own testable version of Do.
+type InstancesUpdateCallDoer interface {
+	Do() (*Operation, error)
+	Fields(s ...googleapi.Field) InstancesUpdateCallDoer
+}
+
 func (c *InstancesUpdateCall) Do() (*Operation, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.databaseinstance)
@@ -3261,6 +3430,25 @@ func (c *InstancesUpdateCall) Do() (*Operation, error) {
 
 }
 
+// InstancesServicer makes it easy to provide your own testable versions of InstancesService.
+type InstancesServicer interface {
+	Clone(project string, instance string, instancesclonerequest *InstancesCloneRequest) InstancesCloneCallDoer
+	Delete(project string, instance string) InstancesDeleteCallDoer
+	Export(project string, instance string, instancesexportrequest *InstancesExportRequest) InstancesExportCallDoer
+	Get(project string, instance string) InstancesGetCallDoer
+	Import(project string, instance string, instancesimportrequest *InstancesImportRequest) InstancesImportCallDoer
+	Insert(project string, databaseinstance *DatabaseInstance) InstancesInsertCallDoer
+	List(project string) InstancesListCallDoer
+	Patch(project string, instance string, databaseinstance *DatabaseInstance) InstancesPatchCallDoer
+	PromoteReplica(project string, instance string) InstancesPromoteReplicaCallDoer
+	ResetSslConfig(project string, instance string) InstancesResetSslConfigCallDoer
+	Restart(project string, instance string) InstancesRestartCallDoer
+	RestoreBackup(project string, instance string, instancesrestorebackuprequest *InstancesRestoreBackupRequest) InstancesRestoreBackupCallDoer
+	StartReplica(project string, instance string) InstancesStartReplicaCallDoer
+	StopReplica(project string, instance string) InstancesStopReplicaCallDoer
+	Update(project string, instance string, databaseinstance *DatabaseInstance) InstancesUpdateCallDoer
+}
+
 // method id "sql.operations.get":
 
 type OperationsGetCall struct {
@@ -3285,6 +3473,12 @@ func (r *OperationsService) Get(project string, operation string) *OperationsGet
 func (c *OperationsGetCall) Fields(s ...googleapi.Field) *OperationsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// OperationsGetCallDoer makes it easy to provide your own testable version of Do.
+type OperationsGetCallDoer interface {
+	Do() (*Operation, error)
+	Fields(s ...googleapi.Field) OperationsGetCallDoer
 }
 
 func (c *OperationsGetCall) Do() (*Operation, error) {
@@ -3391,6 +3585,14 @@ func (c *OperationsListCall) Fields(s ...googleapi.Field) *OperationsListCall {
 	return c
 }
 
+// OperationsListCallDoer makes it easy to provide your own testable version of Do.
+type OperationsListCallDoer interface {
+	Do() (*OperationsListResponse, error)
+	MaxResults(maxResults int64) OperationsListCallDoer
+	PageToken(pageToken string) OperationsListCallDoer
+	Fields(s ...googleapi.Field) OperationsListCallDoer
+}
+
 func (c *OperationsListCall) Do() (*OperationsListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3470,6 +3672,12 @@ func (c *OperationsListCall) Do() (*OperationsListResponse, error) {
 
 }
 
+// OperationsServicer makes it easy to provide your own testable versions of OperationsService.
+type OperationsServicer interface {
+	Get(project string, operation string) OperationsGetCallDoer
+	List(project string, instance string) OperationsListCallDoer
+}
+
 // method id "sql.sslCerts.delete":
 
 type SslCertsDeleteCall struct {
@@ -3496,6 +3704,12 @@ func (r *SslCertsService) Delete(project string, instance string, sha1Fingerprin
 func (c *SslCertsDeleteCall) Fields(s ...googleapi.Field) *SslCertsDeleteCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// SslCertsDeleteCallDoer makes it easy to provide your own testable version of Do.
+type SslCertsDeleteCallDoer interface {
+	Do() (*Operation, error)
+	Fields(s ...googleapi.Field) SslCertsDeleteCallDoer
 }
 
 func (c *SslCertsDeleteCall) Do() (*Operation, error) {
@@ -3597,6 +3811,12 @@ func (c *SslCertsGetCall) Fields(s ...googleapi.Field) *SslCertsGetCall {
 	return c
 }
 
+// SslCertsGetCallDoer makes it easy to provide your own testable version of Do.
+type SslCertsGetCallDoer interface {
+	Do() (*SslCert, error)
+	Fields(s ...googleapi.Field) SslCertsGetCallDoer
+}
+
 func (c *SslCertsGetCall) Do() (*SslCert, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3696,6 +3916,12 @@ func (c *SslCertsInsertCall) Fields(s ...googleapi.Field) *SslCertsInsertCall {
 	return c
 }
 
+// SslCertsInsertCallDoer makes it easy to provide your own testable version of Do.
+type SslCertsInsertCallDoer interface {
+	Do() (*SslCertsInsertResponse, error)
+	Fields(s ...googleapi.Field) SslCertsInsertCallDoer
+}
+
 func (c *SslCertsInsertCall) Do() (*SslCertsInsertResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.sslcertsinsertrequest)
@@ -3792,6 +4018,12 @@ func (c *SslCertsListCall) Fields(s ...googleapi.Field) *SslCertsListCall {
 	return c
 }
 
+// SslCertsListCallDoer makes it easy to provide your own testable version of Do.
+type SslCertsListCallDoer interface {
+	Do() (*SslCertsListResponse, error)
+	Fields(s ...googleapi.Field) SslCertsListCallDoer
+}
+
 func (c *SslCertsListCall) Do() (*SslCertsListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3854,6 +4086,14 @@ func (c *SslCertsListCall) Do() (*SslCertsListResponse, error) {
 
 }
 
+// SslCertsServicer makes it easy to provide your own testable versions of SslCertsService.
+type SslCertsServicer interface {
+	Delete(project string, instance string, sha1Fingerprint string) SslCertsDeleteCallDoer
+	Get(project string, instance string, sha1Fingerprint string) SslCertsGetCallDoer
+	Insert(project string, instance string, sslcertsinsertrequest *SslCertsInsertRequest) SslCertsInsertCallDoer
+	List(project string, instance string) SslCertsListCallDoer
+}
+
 // method id "sql.tiers.list":
 
 type TiersListCall struct {
@@ -3876,6 +4116,12 @@ func (r *TiersService) List(project string) *TiersListCall {
 func (c *TiersListCall) Fields(s ...googleapi.Field) *TiersListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// TiersListCallDoer makes it easy to provide your own testable version of Do.
+type TiersListCallDoer interface {
+	Do() (*TiersListResponse, error)
+	Fields(s ...googleapi.Field) TiersListCallDoer
 }
 
 func (c *TiersListCall) Do() (*TiersListResponse, error) {
@@ -3932,6 +4178,11 @@ func (c *TiersListCall) Do() (*TiersListResponse, error) {
 
 }
 
+// TiersServicer makes it easy to provide your own testable versions of TiersService.
+type TiersServicer interface {
+	List(project string) TiersListCallDoer
+}
+
 // method id "sql.users.delete":
 
 type UsersDeleteCall struct {
@@ -3959,6 +4210,12 @@ func (r *UsersService) Delete(project string, instance string, host string, name
 func (c *UsersDeleteCall) Fields(s ...googleapi.Field) *UsersDeleteCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// UsersDeleteCallDoer makes it easy to provide your own testable version of Do.
+type UsersDeleteCallDoer interface {
+	Do() (*Operation, error)
+	Fields(s ...googleapi.Field) UsersDeleteCallDoer
 }
 
 func (c *UsersDeleteCall) Do() (*Operation, error) {
@@ -4066,6 +4323,12 @@ func (c *UsersInsertCall) Fields(s ...googleapi.Field) *UsersInsertCall {
 	return c
 }
 
+// UsersInsertCallDoer makes it easy to provide your own testable version of Do.
+type UsersInsertCallDoer interface {
+	Do() (*Operation, error)
+	Fields(s ...googleapi.Field) UsersInsertCallDoer
+}
+
 func (c *UsersInsertCall) Do() (*Operation, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.user)
@@ -4162,6 +4425,12 @@ func (c *UsersListCall) Fields(s ...googleapi.Field) *UsersListCall {
 	return c
 }
 
+// UsersListCallDoer makes it easy to provide your own testable version of Do.
+type UsersListCallDoer interface {
+	Do() (*UsersListResponse, error)
+	Fields(s ...googleapi.Field) UsersListCallDoer
+}
+
 func (c *UsersListCall) Do() (*UsersListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4255,6 +4524,12 @@ func (c *UsersUpdateCall) Fields(s ...googleapi.Field) *UsersUpdateCall {
 	return c
 }
 
+// UsersUpdateCallDoer makes it easy to provide your own testable version of Do.
+type UsersUpdateCallDoer interface {
+	Do() (*Operation, error)
+	Fields(s ...googleapi.Field) UsersUpdateCallDoer
+}
+
 func (c *UsersUpdateCall) Do() (*Operation, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.user)
@@ -4340,4 +4615,12 @@ func (c *UsersUpdateCall) Do() (*Operation, error) {
 	//   ]
 	// }
 
+}
+
+// UsersServicer makes it easy to provide your own testable versions of UsersService.
+type UsersServicer interface {
+	Delete(project string, instance string, host string, name string) UsersDeleteCallDoer
+	Insert(project string, instance string, user *User) UsersInsertCallDoer
+	List(project string, instance string) UsersListCallDoer
+	Update(project string, instance string, host string, name string, user *User) UsersUpdateCallDoer
 }

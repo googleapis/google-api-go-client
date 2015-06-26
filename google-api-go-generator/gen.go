@@ -542,6 +542,13 @@ func (a *API) GenerateCode() ([]byte, error) {
 
 	for _, res := range reslist {
 		res.generateMethods()
+
+		pn("\n// %sr makes it easy to provide your own testable versions of %s.", res.GoType(), res.GoType())
+		pn("type %sr interface {", res.GoType())
+		for _, meth := range res.methodSigs {
+			pn("%s", meth)
+		}
+		pn("}\n")
 	}
 
 	clean, err := format.Source(buf.Bytes())
@@ -1185,11 +1192,12 @@ func (a *API) PopulateSchemas() {
 }
 
 type Resource struct {
-	api       *API
-	name      string
-	parent    string
-	m         map[string]interface{}
-	resources []*Resource
+	api        *API
+	name       string
+	parent     string
+	m          map[string]interface{}
+	resources  []*Resource
+	methodSigs []string
 }
 
 func (r *Resource) generateType() {
@@ -1218,6 +1226,7 @@ func (r *Resource) generateType() {
 func (r *Resource) generateMethods() {
 	for _, meth := range r.Methods() {
 		meth.generateCode()
+		r.methodSigs = append(r.methodSigs, meth.signature)
 	}
 	for _, res := range r.resources {
 		res.generateMethods()
@@ -1249,10 +1258,11 @@ func (r *Resource) Methods() []*Method {
 }
 
 type Method struct {
-	api  *API
-	r    *Resource // or nil if a API-level (top-level) method
-	name string
-	m    map[string]interface{} // original JSON
+	api       *API
+	r         *Resource // or nil if a API-level (top-level) method
+	name      string
+	m         map[string]interface{} // original JSON
+	signature string                 // reserved method signature
 
 	params []*Param // all Params, of each type, lazily set by first access to Parameters
 }
@@ -1368,12 +1378,14 @@ func (meth *Method) generateCode() {
 		}
 	}
 
+	meth.signature = fmt.Sprintf("%s(%s) %sDoer", methodName, args, callName)
+	signature := fmt.Sprintf("%s(%s) *%s", methodName, args, callName)
 	var servicePtr string
 	if res == nil {
-		p("func (s *Service) %s(%s) *%s {\n", methodName, args, callName)
+		p("func (s *Service) %s {\n", signature)
 		servicePtr = "s"
 	} else {
-		p("func (r *%s) %s(%s) *%s {\n", res.GoType(), methodName, args, callName)
+		p("func (r *%s) %s {\n", res.GoType(), signature)
 		servicePtr = "r.s"
 	}
 
@@ -1384,6 +1396,7 @@ func (meth *Method) generateCode() {
 	p("\treturn c\n")
 	p("}\n")
 
+	var doers []string
 	for _, opt := range meth.OptParams() {
 		setter := initialCap(opt.name)
 		des := jstr(opt.m, "description")
@@ -1394,46 +1407,64 @@ func (meth *Method) generateCode() {
 		np := new(namePool)
 		np.Get("c") // take the receiver's name
 		paramName := np.Get(validGoIdentifer(opt.name))
-		p("func (c *%s) %s(%s %s) *%s {\n", callName, setter, paramName, opt.GoType(), callName)
+		signature := fmt.Sprintf("%s(%s %s)", setter, paramName, opt.GoType())
+		p("func (c *%s) %s *%s {\n", callName, signature, callName)
 		p("c.opt_[%q] = %s\n", opt.name, paramName)
 		p("return c\n")
 		p("}\n")
+		doers = append(doers, signature+" "+callName+"Doer")
 	}
 
 	if meth.supportsMediaUpload() {
 		pn("\n// Media specifies the media to upload in a single chunk.")
 		pn("// At most one of Media and ResumableMedia may be set.")
-		pn("func (c *%s) Media(r io.Reader) *%s {", callName, callName)
+		signature := "Media(r io.Reader)"
+		pn("func (c *%s) %s *%s {", callName, signature, callName)
 		pn("c.media_ = r")
 		pn(`c.protocol_ = "multipart"`)
 		pn("return c")
 		pn("}")
+		doers = append(doers, signature+" "+callName+"Doer")
 		pn("\n// ResumableMedia specifies the media to upload in chunks and can be cancelled with ctx.")
 		pn("// At most one of Media and ResumableMedia may be set.")
 		pn(`// mediaType identifies the MIME media type of the upload, such as "image/png".`)
 		pn(`// If mediaType is "", it will be auto-detected.`)
-		pn("func (c *%s) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *%s {", callName, callName)
+		signature = "ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string)"
+		pn("func (c *%s) %s *%s {", callName, signature, callName)
 		pn("c.ctx_ = ctx")
 		pn("c.resumable_ = io.NewSectionReader(r, 0, size)")
 		pn("c.mediaType_ = mediaType")
 		pn(`c.protocol_ = "resumable"`)
 		pn("return c")
 		pn("}")
+		doers = append(doers, signature+" "+callName+"Doer")
 		pn("\n// ProgressUpdater provides a callback function that will be called after every chunk.")
 		pn("// It should be a low-latency function in order to not slow down the upload operation.")
 		pn("// This should only be called when using ResumableMedia (as opposed to Media).")
-		pn("func (c *%s) ProgressUpdater(pu googleapi.ProgressUpdater) *%s {", callName, callName)
+		signature = "ProgressUpdater(pu googleapi.ProgressUpdater)"
+		pn("func (c *%s) %s *%s {", callName, signature, callName)
 		pn(`c.opt_["progressUpdater"] = pu`)
 		pn("return c")
 		pn("}")
+		doers = append(doers, signature+" "+callName+"Doer")
 	}
 
 	pn("\n// Fields allows partial responses to be retrieved.")
 	pn("// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse")
 	pn("// for more information.")
-	pn("func (c *%s) Fields(s ...googleapi.Field) *%s {", callName, callName)
+	signature = "Fields(s ...googleapi.Field)"
+	pn("func (c *%s) %s *%s {", callName, signature, callName)
 	pn(`c.opt_["fields"] = googleapi.CombineFields(s)`)
 	pn("return c")
+	pn("}")
+	doers = append(doers, signature+" "+callName+"Doer")
+
+	pn("\n// %sDoer makes it easy to provide your own testable version of Do.", callName)
+	pn("type %sDoer interface {", callName)
+	pn("Do() (%serror)", retTypeComma)
+	for _, v := range doers {
+		pn("%s", v)
+	}
 	pn("}")
 
 	pn("\nfunc (c *%s) Do() (%serror) {", callName, retTypeComma)
@@ -1658,7 +1689,7 @@ func (a *API) Resources(m map[string]interface{}, p string) []*Resource {
 	for _, rname := range sortedKeys(resMap) {
 		rmi := resMap[rname]
 		rm := rmi.(map[string]interface{})
-		res = append(res, &Resource{a, rname, p, rm, a.Resources(rm, fmt.Sprintf("%s.%s", p, rname))})
+		res = append(res, &Resource{a, rname, p, rm, a.Resources(rm, fmt.Sprintf("%s.%s", p, rname)), []string{}})
 	}
 	return res
 }

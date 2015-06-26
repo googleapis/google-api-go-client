@@ -340,6 +340,12 @@ func (c *ChangesCreateCall) Fields(s ...googleapi.Field) *ChangesCreateCall {
 	return c
 }
 
+// ChangesCreateCallDoer makes it easy to provide your own testable version of Do.
+type ChangesCreateCallDoer interface {
+	Do() (*Change, error)
+	Fields(s ...googleapi.Field) ChangesCreateCallDoer
+}
+
 func (c *ChangesCreateCall) Do() (*Change, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.change)
@@ -436,6 +442,12 @@ func (r *ChangesService) Get(project string, managedZone string, changeId string
 func (c *ChangesGetCall) Fields(s ...googleapi.Field) *ChangesGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ChangesGetCallDoer makes it easy to provide your own testable version of Do.
+type ChangesGetCallDoer interface {
+	Do() (*Change, error)
+	Fields(s ...googleapi.Field) ChangesGetCallDoer
 }
 
 func (c *ChangesGetCall) Do() (*Change, error) {
@@ -567,6 +579,16 @@ func (c *ChangesListCall) Fields(s ...googleapi.Field) *ChangesListCall {
 	return c
 }
 
+// ChangesListCallDoer makes it easy to provide your own testable version of Do.
+type ChangesListCallDoer interface {
+	Do() (*ChangesListResponse, error)
+	MaxResults(maxResults int64) ChangesListCallDoer
+	PageToken(pageToken string) ChangesListCallDoer
+	SortBy(sortBy string) ChangesListCallDoer
+	SortOrder(sortOrder string) ChangesListCallDoer
+	Fields(s ...googleapi.Field) ChangesListCallDoer
+}
+
 func (c *ChangesListCall) Do() (*ChangesListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -670,6 +692,13 @@ func (c *ChangesListCall) Do() (*ChangesListResponse, error) {
 
 }
 
+// ChangesServicer makes it easy to provide your own testable versions of ChangesService.
+type ChangesServicer interface {
+	Create(project string, managedZone string, change *Change) ChangesCreateCallDoer
+	Get(project string, managedZone string, changeId string) ChangesGetCallDoer
+	List(project string, managedZone string) ChangesListCallDoer
+}
+
 // method id "dns.managedZones.create":
 
 type ManagedZonesCreateCall struct {
@@ -693,6 +722,12 @@ func (r *ManagedZonesService) Create(project string, managedzone *ManagedZone) *
 func (c *ManagedZonesCreateCall) Fields(s ...googleapi.Field) *ManagedZonesCreateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ManagedZonesCreateCallDoer makes it easy to provide your own testable version of Do.
+type ManagedZonesCreateCallDoer interface {
+	Do() (*ManagedZone, error)
+	Fields(s ...googleapi.Field) ManagedZonesCreateCallDoer
 }
 
 func (c *ManagedZonesCreateCall) Do() (*ManagedZone, error) {
@@ -783,6 +818,12 @@ func (c *ManagedZonesDeleteCall) Fields(s ...googleapi.Field) *ManagedZonesDelet
 	return c
 }
 
+// ManagedZonesDeleteCallDoer makes it easy to provide your own testable version of Do.
+type ManagedZonesDeleteCallDoer interface {
+	Do() error
+	Fields(s ...googleapi.Field) ManagedZonesDeleteCallDoer
+}
+
 func (c *ManagedZonesDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -861,6 +902,12 @@ func (r *ManagedZonesService) Get(project string, managedZone string) *ManagedZo
 func (c *ManagedZonesGetCall) Fields(s ...googleapi.Field) *ManagedZonesGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ManagedZonesGetCallDoer makes it easy to provide your own testable version of Do.
+type ManagedZonesGetCallDoer interface {
+	Do() (*ManagedZone, error)
+	Fields(s ...googleapi.Field) ManagedZonesGetCallDoer
 }
 
 func (c *ManagedZonesGetCall) Do() (*ManagedZone, error) {
@@ -966,6 +1013,14 @@ func (c *ManagedZonesListCall) Fields(s ...googleapi.Field) *ManagedZonesListCal
 	return c
 }
 
+// ManagedZonesListCallDoer makes it easy to provide your own testable version of Do.
+type ManagedZonesListCallDoer interface {
+	Do() (*ManagedZonesListResponse, error)
+	MaxResults(maxResults int64) ManagedZonesListCallDoer
+	PageToken(pageToken string) ManagedZonesListCallDoer
+	Fields(s ...googleapi.Field) ManagedZonesListCallDoer
+}
+
 func (c *ManagedZonesListCall) Do() (*ManagedZonesListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1038,6 +1093,14 @@ func (c *ManagedZonesListCall) Do() (*ManagedZonesListResponse, error) {
 
 }
 
+// ManagedZonesServicer makes it easy to provide your own testable versions of ManagedZonesService.
+type ManagedZonesServicer interface {
+	Create(project string, managedzone *ManagedZone) ManagedZonesCreateCallDoer
+	Delete(project string, managedZone string) ManagedZonesDeleteCallDoer
+	Get(project string, managedZone string) ManagedZonesGetCallDoer
+	List(project string) ManagedZonesListCallDoer
+}
+
 // method id "dns.projects.get":
 
 type ProjectsGetCall struct {
@@ -1059,6 +1122,12 @@ func (r *ProjectsService) Get(project string) *ProjectsGetCall {
 func (c *ProjectsGetCall) Fields(s ...googleapi.Field) *ProjectsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ProjectsGetCallDoer makes it easy to provide your own testable version of Do.
+type ProjectsGetCallDoer interface {
+	Do() (*Project, error)
+	Fields(s ...googleapi.Field) ProjectsGetCallDoer
 }
 
 func (c *ProjectsGetCall) Do() (*Project, error) {
@@ -1116,6 +1185,11 @@ func (c *ProjectsGetCall) Do() (*Project, error) {
 
 }
 
+// ProjectsServicer makes it easy to provide your own testable versions of ProjectsService.
+type ProjectsServicer interface {
+	Get(project string) ProjectsGetCallDoer
+}
+
 // method id "dns.resourceRecordSets.list":
 
 type ResourceRecordSetsListCall struct {
@@ -1171,6 +1245,16 @@ func (c *ResourceRecordSetsListCall) Type(type_ string) *ResourceRecordSetsListC
 func (c *ResourceRecordSetsListCall) Fields(s ...googleapi.Field) *ResourceRecordSetsListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ResourceRecordSetsListCallDoer makes it easy to provide your own testable version of Do.
+type ResourceRecordSetsListCallDoer interface {
+	Do() (*ResourceRecordSetsListResponse, error)
+	MaxResults(maxResults int64) ResourceRecordSetsListCallDoer
+	Name(name string) ResourceRecordSetsListCallDoer
+	PageToken(pageToken string) ResourceRecordSetsListCallDoer
+	Type(type_ string) ResourceRecordSetsListCallDoer
+	Fields(s ...googleapi.Field) ResourceRecordSetsListCallDoer
 }
 
 func (c *ResourceRecordSetsListCall) Do() (*ResourceRecordSetsListResponse, error) {
@@ -1267,4 +1351,9 @@ func (c *ResourceRecordSetsListCall) Do() (*ResourceRecordSetsListResponse, erro
 	//   ]
 	// }
 
+}
+
+// ResourceRecordSetsServicer makes it easy to provide your own testable versions of ResourceRecordSetsService.
+type ResourceRecordSetsServicer interface {
+	List(project string, managedZone string) ResourceRecordSetsListCallDoer
 }

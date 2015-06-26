@@ -1236,6 +1236,12 @@ func (c *ActivitiesGetCall) Fields(s ...googleapi.Field) *ActivitiesGetCall {
 	return c
 }
 
+// ActivitiesGetCallDoer makes it easy to provide your own testable version of Do.
+type ActivitiesGetCallDoer interface {
+	Do() (*Activity, error)
+	Fields(s ...googleapi.Field) ActivitiesGetCallDoer
+}
+
 func (c *ActivitiesGetCall) Do() (*Activity, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1332,6 +1338,14 @@ func (c *ActivitiesListCall) PageToken(pageToken string) *ActivitiesListCall {
 func (c *ActivitiesListCall) Fields(s ...googleapi.Field) *ActivitiesListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ActivitiesListCallDoer makes it easy to provide your own testable version of Do.
+type ActivitiesListCallDoer interface {
+	Do() (*ActivityFeed, error)
+	MaxResults(maxResults int64) ActivitiesListCallDoer
+	PageToken(pageToken string) ActivitiesListCallDoer
+	Fields(s ...googleapi.Field) ActivitiesListCallDoer
 }
 
 func (c *ActivitiesListCall) Do() (*ActivityFeed, error) {
@@ -1485,6 +1499,16 @@ func (c *ActivitiesSearchCall) Fields(s ...googleapi.Field) *ActivitiesSearchCal
 	return c
 }
 
+// ActivitiesSearchCallDoer makes it easy to provide your own testable version of Do.
+type ActivitiesSearchCallDoer interface {
+	Do() (*ActivityFeed, error)
+	Language(language string) ActivitiesSearchCallDoer
+	MaxResults(maxResults int64) ActivitiesSearchCallDoer
+	OrderBy(orderBy string) ActivitiesSearchCallDoer
+	PageToken(pageToken string) ActivitiesSearchCallDoer
+	Fields(s ...googleapi.Field) ActivitiesSearchCallDoer
+}
+
 func (c *ActivitiesSearchCall) Do() (*ActivityFeed, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1584,6 +1608,13 @@ func (c *ActivitiesSearchCall) Do() (*ActivityFeed, error) {
 
 }
 
+// ActivitiesServicer makes it easy to provide your own testable versions of ActivitiesService.
+type ActivitiesServicer interface {
+	Get(activityId string) ActivitiesGetCallDoer
+	List(userId string, collection string) ActivitiesListCallDoer
+	Search(query string) ActivitiesSearchCallDoer
+}
+
 // method id "plus.comments.get":
 
 type CommentsGetCall struct {
@@ -1605,6 +1636,12 @@ func (r *CommentsService) Get(commentId string) *CommentsGetCall {
 func (c *CommentsGetCall) Fields(s ...googleapi.Field) *CommentsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// CommentsGetCallDoer makes it easy to provide your own testable version of Do.
+type CommentsGetCallDoer interface {
+	Do() (*Comment, error)
+	Fields(s ...googleapi.Field) CommentsGetCallDoer
 }
 
 func (c *CommentsGetCall) Do() (*Comment, error) {
@@ -1713,6 +1750,15 @@ func (c *CommentsListCall) Fields(s ...googleapi.Field) *CommentsListCall {
 	return c
 }
 
+// CommentsListCallDoer makes it easy to provide your own testable version of Do.
+type CommentsListCallDoer interface {
+	Do() (*CommentFeed, error)
+	MaxResults(maxResults int64) CommentsListCallDoer
+	PageToken(pageToken string) CommentsListCallDoer
+	SortOrder(sortOrder string) CommentsListCallDoer
+	Fields(s ...googleapi.Field) CommentsListCallDoer
+}
+
 func (c *CommentsListCall) Do() (*CommentFeed, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1804,6 +1850,12 @@ func (c *CommentsListCall) Do() (*CommentFeed, error) {
 
 }
 
+// CommentsServicer makes it easy to provide your own testable versions of CommentsService.
+type CommentsServicer interface {
+	Get(commentId string) CommentsGetCallDoer
+	List(activityId string) CommentsListCallDoer
+}
+
 // method id "plus.moments.insert":
 
 type MomentsInsertCall struct {
@@ -1837,6 +1889,13 @@ func (c *MomentsInsertCall) Debug(debug bool) *MomentsInsertCall {
 func (c *MomentsInsertCall) Fields(s ...googleapi.Field) *MomentsInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// MomentsInsertCallDoer makes it easy to provide your own testable version of Do.
+type MomentsInsertCallDoer interface {
+	Do() (*Moment, error)
+	Debug(debug bool) MomentsInsertCallDoer
+	Fields(s ...googleapi.Field) MomentsInsertCallDoer
 }
 
 func (c *MomentsInsertCall) Do() (*Moment, error) {
@@ -1981,6 +2040,16 @@ func (c *MomentsListCall) Fields(s ...googleapi.Field) *MomentsListCall {
 	return c
 }
 
+// MomentsListCallDoer makes it easy to provide your own testable version of Do.
+type MomentsListCallDoer interface {
+	Do() (*MomentsFeed, error)
+	MaxResults(maxResults int64) MomentsListCallDoer
+	PageToken(pageToken string) MomentsListCallDoer
+	TargetUrl(targetUrl string) MomentsListCallDoer
+	Type(type_ string) MomentsListCallDoer
+	Fields(s ...googleapi.Field) MomentsListCallDoer
+}
+
 func (c *MomentsListCall) Do() (*MomentsFeed, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2108,6 +2177,12 @@ func (c *MomentsRemoveCall) Fields(s ...googleapi.Field) *MomentsRemoveCall {
 	return c
 }
 
+// MomentsRemoveCallDoer makes it easy to provide your own testable version of Do.
+type MomentsRemoveCallDoer interface {
+	Do() error
+	Fields(s ...googleapi.Field) MomentsRemoveCallDoer
+}
+
 func (c *MomentsRemoveCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2154,6 +2229,13 @@ func (c *MomentsRemoveCall) Do() error {
 
 }
 
+// MomentsServicer makes it easy to provide your own testable versions of MomentsService.
+type MomentsServicer interface {
+	Insert(userId string, collection string, moment *Moment) MomentsInsertCallDoer
+	List(userId string, collection string) MomentsListCallDoer
+	Remove(id string) MomentsRemoveCallDoer
+}
+
 // method id "plus.people.get":
 
 type PeopleGetCall struct {
@@ -2177,6 +2259,12 @@ func (r *PeopleService) Get(userId string) *PeopleGetCall {
 func (c *PeopleGetCall) Fields(s ...googleapi.Field) *PeopleGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// PeopleGetCallDoer makes it easy to provide your own testable version of Do.
+type PeopleGetCallDoer interface {
+	Do() (*Person, error)
+	Fields(s ...googleapi.Field) PeopleGetCallDoer
 }
 
 func (c *PeopleGetCall) Do() (*Person, error) {
@@ -2287,6 +2375,15 @@ func (c *PeopleListCall) PageToken(pageToken string) *PeopleListCall {
 func (c *PeopleListCall) Fields(s ...googleapi.Field) *PeopleListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// PeopleListCallDoer makes it easy to provide your own testable version of Do.
+type PeopleListCallDoer interface {
+	Do() (*PeopleFeed, error)
+	MaxResults(maxResults int64) PeopleListCallDoer
+	OrderBy(orderBy string) PeopleListCallDoer
+	PageToken(pageToken string) PeopleListCallDoer
+	Fields(s ...googleapi.Field) PeopleListCallDoer
 }
 
 func (c *PeopleListCall) Do() (*PeopleFeed, error) {
@@ -2439,6 +2536,14 @@ func (c *PeopleListByActivityCall) Fields(s ...googleapi.Field) *PeopleListByAct
 	return c
 }
 
+// PeopleListByActivityCallDoer makes it easy to provide your own testable version of Do.
+type PeopleListByActivityCallDoer interface {
+	Do() (*PeopleFeed, error)
+	MaxResults(maxResults int64) PeopleListByActivityCallDoer
+	PageToken(pageToken string) PeopleListByActivityCallDoer
+	Fields(s ...googleapi.Field) PeopleListByActivityCallDoer
+}
+
 func (c *PeopleListByActivityCall) Do() (*PeopleFeed, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2579,6 +2684,15 @@ func (c *PeopleSearchCall) Fields(s ...googleapi.Field) *PeopleSearchCall {
 	return c
 }
 
+// PeopleSearchCallDoer makes it easy to provide your own testable version of Do.
+type PeopleSearchCallDoer interface {
+	Do() (*PeopleFeed, error)
+	Language(language string) PeopleSearchCallDoer
+	MaxResults(maxResults int64) PeopleSearchCallDoer
+	PageToken(pageToken string) PeopleSearchCallDoer
+	Fields(s ...googleapi.Field) PeopleSearchCallDoer
+}
+
 func (c *PeopleSearchCall) Do() (*PeopleFeed, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2659,4 +2773,12 @@ func (c *PeopleSearchCall) Do() (*PeopleFeed, error) {
 	//   ]
 	// }
 
+}
+
+// PeopleServicer makes it easy to provide your own testable versions of PeopleService.
+type PeopleServicer interface {
+	Get(userId string) PeopleGetCallDoer
+	List(userId string, collection string) PeopleListCallDoer
+	ListByActivity(activityId string, collection string) PeopleListByActivityCallDoer
+	Search(query string) PeopleSearchCallDoer
 }

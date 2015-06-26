@@ -348,6 +348,11 @@ func (c *BatchReportDefinitionsListCall) Fields(s ...googleapi.Field) *BatchRepo
 	return c
 }
 
+// BatchReportDefinitionsListCallDoer makes it easy to provide your own testable version of Do.
+type BatchReportDefinitionsListCallDoer interface {
+	Do() (*BatchReportDefinitionList, error)
+}
+
 func (c *BatchReportDefinitionsListCall) Do() (*BatchReportDefinitionList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -401,6 +406,11 @@ func (c *BatchReportDefinitionsListCall) Do() (*BatchReportDefinitionList, error
 
 }
 
+// BatchReportDefinitionsServicer makes it easy to provide your own testable versions of BatchReportDefinitionsService.
+type BatchReportDefinitionsServicer interface {
+	List(onBehalfOfContentOwner string) *BatchReportDefinitionsListCall
+}
+
 // method id "youtubeAnalytics.batchReports.list":
 
 type BatchReportsListCall struct {
@@ -424,6 +434,11 @@ func (r *BatchReportsService) List(batchReportDefinitionId string, onBehalfOfCon
 func (c *BatchReportsListCall) Fields(s ...googleapi.Field) *BatchReportsListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// BatchReportsListCallDoer makes it easy to provide your own testable version of Do.
+type BatchReportsListCallDoer interface {
+	Do() (*BatchReportList, error)
 }
 
 func (c *BatchReportsListCall) Do() (*BatchReportList, error) {
@@ -487,6 +502,11 @@ func (c *BatchReportsListCall) Do() (*BatchReportList, error) {
 
 }
 
+// BatchReportsServicer makes it easy to provide your own testable versions of BatchReportsService.
+type BatchReportsServicer interface {
+	List(batchReportDefinitionId string, onBehalfOfContentOwner string) *BatchReportsListCall
+}
+
 // method id "youtubeAnalytics.groupItems.delete":
 
 type GroupItemsDeleteCall struct {
@@ -526,6 +546,11 @@ func (c *GroupItemsDeleteCall) OnBehalfOfContentOwner(onBehalfOfContentOwner str
 func (c *GroupItemsDeleteCall) Fields(s ...googleapi.Field) *GroupItemsDeleteCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// GroupItemsDeleteCallDoer makes it easy to provide your own testable version of Do.
+type GroupItemsDeleteCallDoer interface {
+	Do() error
 }
 
 func (c *GroupItemsDeleteCall) Do() error {
@@ -621,6 +646,11 @@ func (c *GroupItemsInsertCall) OnBehalfOfContentOwner(onBehalfOfContentOwner str
 func (c *GroupItemsInsertCall) Fields(s ...googleapi.Field) *GroupItemsInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// GroupItemsInsertCallDoer makes it easy to provide your own testable version of Do.
+type GroupItemsInsertCallDoer interface {
+	Do() (*GroupItem, error)
 }
 
 func (c *GroupItemsInsertCall) Do() (*GroupItem, error) {
@@ -725,6 +755,11 @@ func (c *GroupItemsListCall) Fields(s ...googleapi.Field) *GroupItemsListCall {
 	return c
 }
 
+// GroupItemsListCallDoer makes it easy to provide your own testable version of Do.
+type GroupItemsListCallDoer interface {
+	Do() (*GroupItemListResponse, error)
+}
+
 func (c *GroupItemsListCall) Do() (*GroupItemListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -788,6 +823,13 @@ func (c *GroupItemsListCall) Do() (*GroupItemListResponse, error) {
 
 }
 
+// GroupItemsServicer makes it easy to provide your own testable versions of GroupItemsService.
+type GroupItemsServicer interface {
+	Delete(id string) *GroupItemsDeleteCall
+	Insert(groupitem *GroupItem) *GroupItemsInsertCall
+	List(groupId string) *GroupItemsListCall
+}
+
 // method id "youtubeAnalytics.groups.delete":
 
 type GroupsDeleteCall struct {
@@ -827,6 +869,11 @@ func (c *GroupsDeleteCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string)
 func (c *GroupsDeleteCall) Fields(s ...googleapi.Field) *GroupsDeleteCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// GroupsDeleteCallDoer makes it easy to provide your own testable version of Do.
+type GroupsDeleteCallDoer interface {
+	Do() error
 }
 
 func (c *GroupsDeleteCall) Do() error {
@@ -922,6 +969,11 @@ func (c *GroupsInsertCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string)
 func (c *GroupsInsertCall) Fields(s ...googleapi.Field) *GroupsInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// GroupsInsertCallDoer makes it easy to provide your own testable version of Do.
+type GroupsInsertCallDoer interface {
+	Do() (*Group, error)
 }
 
 func (c *GroupsInsertCall) Do() (*Group, error) {
@@ -1043,6 +1095,11 @@ func (c *GroupsListCall) Fields(s ...googleapi.Field) *GroupsListCall {
 	return c
 }
 
+// GroupsListCallDoer makes it easy to provide your own testable version of Do.
+type GroupsListCallDoer interface {
+	Do() (*GroupListResponse, error)
+}
+
 func (c *GroupsListCall) Do() (*GroupListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1154,6 +1211,11 @@ func (c *GroupsUpdateCall) Fields(s ...googleapi.Field) *GroupsUpdateCall {
 	return c
 }
 
+// GroupsUpdateCallDoer makes it easy to provide your own testable version of Do.
+type GroupsUpdateCallDoer interface {
+	Do() (*Group, error)
+}
+
 func (c *GroupsUpdateCall) Do() (*Group, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.group)
@@ -1212,6 +1274,14 @@ func (c *GroupsUpdateCall) Do() (*Group, error) {
 	//   ]
 	// }
 
+}
+
+// GroupsServicer makes it easy to provide your own testable versions of GroupsService.
+type GroupsServicer interface {
+	Delete(id string) *GroupsDeleteCall
+	Insert(group *Group) *GroupsInsertCall
+	List() *GroupsListCall
+	Update(group *Group) *GroupsUpdateCall
 }
 
 // method id "youtubeAnalytics.reports.query":
@@ -1301,6 +1371,11 @@ func (c *ReportsQueryCall) StartIndex(startIndex int64) *ReportsQueryCall {
 func (c *ReportsQueryCall) Fields(s ...googleapi.Field) *ReportsQueryCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ReportsQueryCallDoer makes it easy to provide your own testable version of Do.
+type ReportsQueryCallDoer interface {
+	Do() (*ResultTable, error)
 }
 
 func (c *ReportsQueryCall) Do() (*ResultTable, error) {
@@ -1437,4 +1512,9 @@ func (c *ReportsQueryCall) Do() (*ResultTable, error) {
 	//   ]
 	// }
 
+}
+
+// ReportsServicer makes it easy to provide your own testable versions of ReportsService.
+type ReportsServicer interface {
+	Query(ids string, startDate string, endDate string, metrics string) *ReportsQueryCall
 }

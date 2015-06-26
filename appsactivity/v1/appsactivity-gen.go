@@ -340,6 +340,11 @@ func (c *ActivitiesListCall) Fields(s ...googleapi.Field) *ActivitiesListCall {
 	return c
 }
 
+// ActivitiesListCallDoer makes it easy to provide your own testable version of Do.
+type ActivitiesListCallDoer interface {
+	Do() (*ListActivitiesResponse, error)
+}
+
 func (c *ActivitiesListCall) Do() (*ListActivitiesResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -452,4 +457,9 @@ func (c *ActivitiesListCall) Do() (*ListActivitiesResponse, error) {
 	//   ]
 	// }
 
+}
+
+// ActivitiesServicer makes it easy to provide your own testable versions of ActivitiesService.
+type ActivitiesServicer interface {
+	List() *ActivitiesListCall
 }

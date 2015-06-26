@@ -430,6 +430,11 @@ func (c *ActivitiesListCall) Fields(s ...googleapi.Field) *ActivitiesListCall {
 	return c
 }
 
+// ActivitiesListCallDoer makes it easy to provide your own testable version of Do.
+type ActivitiesListCallDoer interface {
+	Do() (*Activities, error)
+}
+
 func (c *ActivitiesListCall) Do() (*Activities, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -649,6 +654,11 @@ func (c *ActivitiesWatchCall) Fields(s ...googleapi.Field) *ActivitiesWatchCall 
 	return c
 }
 
+// ActivitiesWatchCallDoer makes it easy to provide your own testable version of Do.
+type ActivitiesWatchCallDoer interface {
+	Do() (*Channel, error)
+}
+
 func (c *ActivitiesWatchCall) Do() (*Channel, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channel)
@@ -793,6 +803,12 @@ func (c *ActivitiesWatchCall) Do() (*Channel, error) {
 
 }
 
+// ActivitiesServicer makes it easy to provide your own testable versions of ActivitiesService.
+type ActivitiesServicer interface {
+	List(userKey string, applicationName string) *ActivitiesListCall
+	Watch(userKey string, applicationName string, channel *Channel) *ActivitiesWatchCall
+}
+
 // method id "admin.channels.stop":
 
 type ChannelsStopCall struct {
@@ -814,6 +830,11 @@ func (r *ChannelsService) Stop(channel *Channel) *ChannelsStopCall {
 func (c *ChannelsStopCall) Fields(s ...googleapi.Field) *ChannelsStopCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ChannelsStopCallDoer makes it easy to provide your own testable version of Do.
+type ChannelsStopCallDoer interface {
+	Do() error
 }
 
 func (c *ChannelsStopCall) Do() error {
@@ -857,6 +878,11 @@ func (c *ChannelsStopCall) Do() error {
 	//   ]
 	// }
 
+}
+
+// ChannelsServicer makes it easy to provide your own testable versions of ChannelsService.
+type ChannelsServicer interface {
+	Stop(channel *Channel) *ChannelsStopCall
 }
 
 // method id "reports.customerUsageReports.get":
@@ -903,6 +929,11 @@ func (c *CustomerUsageReportsGetCall) Parameters(parameters string) *CustomerUsa
 func (c *CustomerUsageReportsGetCall) Fields(s ...googleapi.Field) *CustomerUsageReportsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// CustomerUsageReportsGetCallDoer makes it easy to provide your own testable version of Do.
+type CustomerUsageReportsGetCallDoer interface {
+	Do() (*UsageReports, error)
 }
 
 func (c *CustomerUsageReportsGetCall) Do() (*UsageReports, error) {
@@ -985,6 +1016,11 @@ func (c *CustomerUsageReportsGetCall) Do() (*UsageReports, error) {
 
 }
 
+// CustomerUsageReportsServicer makes it easy to provide your own testable versions of CustomerUsageReportsService.
+type CustomerUsageReportsServicer interface {
+	Get(date string) *CustomerUsageReportsGetCall
+}
+
 // method id "reports.userUsageReport.get":
 
 type UserUsageReportGetCall struct {
@@ -1045,6 +1081,11 @@ func (c *UserUsageReportGetCall) Parameters(parameters string) *UserUsageReportG
 func (c *UserUsageReportGetCall) Fields(s ...googleapi.Field) *UserUsageReportGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// UserUsageReportGetCallDoer makes it easy to provide your own testable version of Do.
+type UserUsageReportGetCallDoer interface {
+	Do() (*UsageReports, error)
 }
 
 func (c *UserUsageReportGetCall) Do() (*UsageReports, error) {
@@ -1152,4 +1193,9 @@ func (c *UserUsageReportGetCall) Do() (*UsageReports, error) {
 	//   ]
 	// }
 
+}
+
+// UserUsageReportServicer makes it easy to provide your own testable versions of UserUsageReportService.
+type UserUsageReportServicer interface {
+	Get(userKey string, date string) *UserUsageReportGetCall
 }

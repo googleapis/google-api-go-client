@@ -2819,6 +2819,11 @@ func (c *DataGaGetCall) Fields(s ...googleapi.Field) *DataGaGetCall {
 	return c
 }
 
+// DataGaGetCallDoer makes it easy to provide your own testable version of Do.
+type DataGaGetCallDoer interface {
+	Do() (*GaData, error)
+}
+
 func (c *DataGaGetCall) Do() (*GaData, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3070,6 +3075,11 @@ func (c *DataMcfGetCall) Fields(s ...googleapi.Field) *DataMcfGetCall {
 	return c
 }
 
+// DataMcfGetCallDoer makes it easy to provide your own testable version of Do.
+type DataMcfGetCallDoer interface {
+	Do() (*McfData, error)
+}
+
 func (c *DataMcfGetCall) Do() (*McfData, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3270,6 +3280,11 @@ func (c *DataRealtimeGetCall) Fields(s ...googleapi.Field) *DataRealtimeGetCall 
 	return c
 }
 
+// DataRealtimeGetCallDoer makes it easy to provide your own testable version of Do.
+type DataRealtimeGetCallDoer interface {
+	Do() (*RealtimeData, error)
+}
+
 func (c *DataRealtimeGetCall) Do() (*RealtimeData, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3369,6 +3384,10 @@ func (c *DataRealtimeGetCall) Do() (*RealtimeData, error) {
 
 }
 
+// DataServicer makes it easy to provide your own testable versions of DataService.
+type DataServicer interface {
+}
+
 // method id "analytics.management.accountSummaries.list":
 
 type ManagementAccountSummariesListCall struct {
@@ -3405,6 +3424,11 @@ func (c *ManagementAccountSummariesListCall) StartIndex(startIndex int64) *Manag
 func (c *ManagementAccountSummariesListCall) Fields(s ...googleapi.Field) *ManagementAccountSummariesListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ManagementAccountSummariesListCallDoer makes it easy to provide your own testable version of Do.
+type ManagementAccountSummariesListCallDoer interface {
+	Do() (*AccountSummaries, error)
 }
 
 func (c *ManagementAccountSummariesListCall) Do() (*AccountSummaries, error) {
@@ -3494,6 +3518,11 @@ func (c *ManagementAccountUserLinksDeleteCall) Fields(s ...googleapi.Field) *Man
 	return c
 }
 
+// ManagementAccountUserLinksDeleteCallDoer makes it easy to provide your own testable version of Do.
+type ManagementAccountUserLinksDeleteCallDoer interface {
+	Do() error
+}
+
 func (c *ManagementAccountUserLinksDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3571,6 +3600,11 @@ func (r *ManagementAccountUserLinksService) Insert(accountId string, entityuserl
 func (c *ManagementAccountUserLinksInsertCall) Fields(s ...googleapi.Field) *ManagementAccountUserLinksInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ManagementAccountUserLinksInsertCallDoer makes it easy to provide your own testable version of Do.
+type ManagementAccountUserLinksInsertCallDoer interface {
+	Do() (*EntityUserLink, error)
 }
 
 func (c *ManagementAccountUserLinksInsertCall) Do() (*EntityUserLink, error) {
@@ -3673,6 +3707,11 @@ func (c *ManagementAccountUserLinksListCall) Fields(s ...googleapi.Field) *Manag
 	return c
 }
 
+// ManagementAccountUserLinksListCallDoer makes it easy to provide your own testable version of Do.
+type ManagementAccountUserLinksListCallDoer interface {
+	Do() (*EntityUserLinks, error)
+}
+
 func (c *ManagementAccountUserLinksListCall) Do() (*EntityUserLinks, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3772,6 +3811,11 @@ func (r *ManagementAccountUserLinksService) Update(accountId string, linkId stri
 func (c *ManagementAccountUserLinksUpdateCall) Fields(s ...googleapi.Field) *ManagementAccountUserLinksUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ManagementAccountUserLinksUpdateCallDoer makes it easy to provide your own testable version of Do.
+type ManagementAccountUserLinksUpdateCallDoer interface {
+	Do() (*EntityUserLink, error)
 }
 
 func (c *ManagementAccountUserLinksUpdateCall) Do() (*EntityUserLink, error) {
@@ -3880,6 +3924,11 @@ func (c *ManagementAccountsListCall) Fields(s ...googleapi.Field) *ManagementAcc
 	return c
 }
 
+// ManagementAccountsListCallDoer makes it easy to provide your own testable version of Do.
+type ManagementAccountsListCallDoer interface {
+	Do() (*Accounts, error)
+}
+
 func (c *ManagementAccountsListCall) Do() (*Accounts, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3981,6 +4030,11 @@ func (c *ManagementCustomDataSourcesListCall) StartIndex(startIndex int64) *Mana
 func (c *ManagementCustomDataSourcesListCall) Fields(s ...googleapi.Field) *ManagementCustomDataSourcesListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ManagementCustomDataSourcesListCallDoer makes it easy to provide your own testable version of Do.
+type ManagementCustomDataSourcesListCallDoer interface {
+	Do() (*CustomDataSources, error)
 }
 
 func (c *ManagementCustomDataSourcesListCall) Do() (*CustomDataSources, error) {
@@ -4095,6 +4149,11 @@ func (c *ManagementCustomDimensionsGetCall) Fields(s ...googleapi.Field) *Manage
 	return c
 }
 
+// ManagementCustomDimensionsGetCallDoer makes it easy to provide your own testable version of Do.
+type ManagementCustomDimensionsGetCallDoer interface {
+	Do() (*CustomDimension, error)
+}
+
 func (c *ManagementCustomDimensionsGetCall) Do() (*CustomDimension, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4190,6 +4249,11 @@ func (r *ManagementCustomDimensionsService) Insert(accountId string, webProperty
 func (c *ManagementCustomDimensionsInsertCall) Fields(s ...googleapi.Field) *ManagementCustomDimensionsInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ManagementCustomDimensionsInsertCallDoer makes it easy to provide your own testable version of Do.
+type ManagementCustomDimensionsInsertCallDoer interface {
+	Do() (*CustomDimension, error)
 }
 
 func (c *ManagementCustomDimensionsInsertCall) Do() (*CustomDimension, error) {
@@ -4300,6 +4364,11 @@ func (c *ManagementCustomDimensionsListCall) StartIndex(startIndex int64) *Manag
 func (c *ManagementCustomDimensionsListCall) Fields(s ...googleapi.Field) *ManagementCustomDimensionsListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ManagementCustomDimensionsListCallDoer makes it easy to provide your own testable version of Do.
+type ManagementCustomDimensionsListCallDoer interface {
+	Do() (*CustomDimensions, error)
 }
 
 func (c *ManagementCustomDimensionsListCall) Do() (*CustomDimensions, error) {
@@ -4420,6 +4489,11 @@ func (c *ManagementCustomDimensionsPatchCall) IgnoreCustomDataSourceLinks(ignore
 func (c *ManagementCustomDimensionsPatchCall) Fields(s ...googleapi.Field) *ManagementCustomDimensionsPatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ManagementCustomDimensionsPatchCallDoer makes it easy to provide your own testable version of Do.
+type ManagementCustomDimensionsPatchCallDoer interface {
+	Do() (*CustomDimension, error)
 }
 
 func (c *ManagementCustomDimensionsPatchCall) Do() (*CustomDimension, error) {
@@ -4547,6 +4621,11 @@ func (c *ManagementCustomDimensionsUpdateCall) Fields(s ...googleapi.Field) *Man
 	return c
 }
 
+// ManagementCustomDimensionsUpdateCallDoer makes it easy to provide your own testable version of Do.
+type ManagementCustomDimensionsUpdateCallDoer interface {
+	Do() (*CustomDimension, error)
+}
+
 func (c *ManagementCustomDimensionsUpdateCall) Do() (*CustomDimension, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.customdimension)
@@ -4661,6 +4740,11 @@ func (c *ManagementCustomMetricsGetCall) Fields(s ...googleapi.Field) *Managemen
 	return c
 }
 
+// ManagementCustomMetricsGetCallDoer makes it easy to provide your own testable version of Do.
+type ManagementCustomMetricsGetCallDoer interface {
+	Do() (*CustomMetric, error)
+}
+
 func (c *ManagementCustomMetricsGetCall) Do() (*CustomMetric, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4756,6 +4840,11 @@ func (r *ManagementCustomMetricsService) Insert(accountId string, webPropertyId 
 func (c *ManagementCustomMetricsInsertCall) Fields(s ...googleapi.Field) *ManagementCustomMetricsInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ManagementCustomMetricsInsertCallDoer makes it easy to provide your own testable version of Do.
+type ManagementCustomMetricsInsertCallDoer interface {
+	Do() (*CustomMetric, error)
 }
 
 func (c *ManagementCustomMetricsInsertCall) Do() (*CustomMetric, error) {
@@ -4866,6 +4955,11 @@ func (c *ManagementCustomMetricsListCall) StartIndex(startIndex int64) *Manageme
 func (c *ManagementCustomMetricsListCall) Fields(s ...googleapi.Field) *ManagementCustomMetricsListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ManagementCustomMetricsListCallDoer makes it easy to provide your own testable version of Do.
+type ManagementCustomMetricsListCallDoer interface {
+	Do() (*CustomMetrics, error)
 }
 
 func (c *ManagementCustomMetricsListCall) Do() (*CustomMetrics, error) {
@@ -4986,6 +5080,11 @@ func (c *ManagementCustomMetricsPatchCall) IgnoreCustomDataSourceLinks(ignoreCus
 func (c *ManagementCustomMetricsPatchCall) Fields(s ...googleapi.Field) *ManagementCustomMetricsPatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ManagementCustomMetricsPatchCallDoer makes it easy to provide your own testable version of Do.
+type ManagementCustomMetricsPatchCallDoer interface {
+	Do() (*CustomMetric, error)
 }
 
 func (c *ManagementCustomMetricsPatchCall) Do() (*CustomMetric, error) {
@@ -5113,6 +5212,11 @@ func (c *ManagementCustomMetricsUpdateCall) Fields(s ...googleapi.Field) *Manage
 	return c
 }
 
+// ManagementCustomMetricsUpdateCallDoer makes it easy to provide your own testable version of Do.
+type ManagementCustomMetricsUpdateCallDoer interface {
+	Do() (*CustomMetric, error)
+}
+
 func (c *ManagementCustomMetricsUpdateCall) Do() (*CustomMetric, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.custommetric)
@@ -5229,6 +5333,11 @@ func (c *ManagementExperimentsDeleteCall) Fields(s ...googleapi.Field) *Manageme
 	return c
 }
 
+// ManagementExperimentsDeleteCallDoer makes it easy to provide your own testable version of Do.
+type ManagementExperimentsDeleteCallDoer interface {
+	Do() error
+}
+
 func (c *ManagementExperimentsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5327,6 +5436,11 @@ func (r *ManagementExperimentsService) Get(accountId string, webPropertyId strin
 func (c *ManagementExperimentsGetCall) Fields(s ...googleapi.Field) *ManagementExperimentsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ManagementExperimentsGetCallDoer makes it easy to provide your own testable version of Do.
+type ManagementExperimentsGetCallDoer interface {
+	Do() (*Experiment, error)
 }
 
 func (c *ManagementExperimentsGetCall) Do() (*Experiment, error) {
@@ -5435,6 +5549,11 @@ func (r *ManagementExperimentsService) Insert(accountId string, webPropertyId st
 func (c *ManagementExperimentsInsertCall) Fields(s ...googleapi.Field) *ManagementExperimentsInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ManagementExperimentsInsertCallDoer makes it easy to provide your own testable version of Do.
+type ManagementExperimentsInsertCallDoer interface {
+	Do() (*Experiment, error)
 }
 
 func (c *ManagementExperimentsInsertCall) Do() (*Experiment, error) {
@@ -5556,6 +5675,11 @@ func (c *ManagementExperimentsListCall) StartIndex(startIndex int64) *Management
 func (c *ManagementExperimentsListCall) Fields(s ...googleapi.Field) *ManagementExperimentsListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ManagementExperimentsListCallDoer makes it easy to provide your own testable version of Do.
+type ManagementExperimentsListCallDoer interface {
+	Do() (*Experiments, error)
 }
 
 func (c *ManagementExperimentsListCall) Do() (*Experiments, error) {
@@ -5683,6 +5807,11 @@ func (c *ManagementExperimentsPatchCall) Fields(s ...googleapi.Field) *Managemen
 	return c
 }
 
+// ManagementExperimentsPatchCallDoer makes it easy to provide your own testable version of Do.
+type ManagementExperimentsPatchCallDoer interface {
+	Do() (*Experiment, error)
+}
+
 func (c *ManagementExperimentsPatchCall) Do() (*Experiment, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.experiment)
@@ -5801,6 +5930,11 @@ func (c *ManagementExperimentsUpdateCall) Fields(s ...googleapi.Field) *Manageme
 	return c
 }
 
+// ManagementExperimentsUpdateCallDoer makes it easy to provide your own testable version of Do.
+type ManagementExperimentsUpdateCallDoer interface {
+	Do() (*Experiment, error)
+}
+
 func (c *ManagementExperimentsUpdateCall) Do() (*Experiment, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.experiment)
@@ -5913,6 +6047,11 @@ func (c *ManagementFiltersDeleteCall) Fields(s ...googleapi.Field) *ManagementFi
 	return c
 }
 
+// ManagementFiltersDeleteCallDoer makes it easy to provide your own testable version of Do.
+type ManagementFiltersDeleteCallDoer interface {
+	Do() (*Filter, error)
+}
+
 func (c *ManagementFiltersDeleteCall) Do() (*Filter, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5997,6 +6136,11 @@ func (r *ManagementFiltersService) Get(accountId string, filterId string) *Manag
 func (c *ManagementFiltersGetCall) Fields(s ...googleapi.Field) *ManagementFiltersGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ManagementFiltersGetCallDoer makes it easy to provide your own testable version of Do.
+type ManagementFiltersGetCallDoer interface {
+	Do() (*Filter, error)
 }
 
 func (c *ManagementFiltersGetCall) Do() (*Filter, error) {
@@ -6084,6 +6228,11 @@ func (r *ManagementFiltersService) Insert(accountId string, filter *Filter) *Man
 func (c *ManagementFiltersInsertCall) Fields(s ...googleapi.Field) *ManagementFiltersInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ManagementFiltersInsertCallDoer makes it easy to provide your own testable version of Do.
+type ManagementFiltersInsertCallDoer interface {
+	Do() (*Filter, error)
 }
 
 func (c *ManagementFiltersInsertCall) Do() (*Filter, error) {
@@ -6184,6 +6333,11 @@ func (c *ManagementFiltersListCall) StartIndex(startIndex int64) *ManagementFilt
 func (c *ManagementFiltersListCall) Fields(s ...googleapi.Field) *ManagementFiltersListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ManagementFiltersListCallDoer makes it easy to provide your own testable version of Do.
+type ManagementFiltersListCallDoer interface {
+	Do() (*Filters, error)
 }
 
 func (c *ManagementFiltersListCall) Do() (*Filters, error) {
@@ -6288,6 +6442,11 @@ func (c *ManagementFiltersPatchCall) Fields(s ...googleapi.Field) *ManagementFil
 	return c
 }
 
+// ManagementFiltersPatchCallDoer makes it easy to provide your own testable version of Do.
+type ManagementFiltersPatchCallDoer interface {
+	Do() (*Filter, error)
+}
+
 func (c *ManagementFiltersPatchCall) Do() (*Filter, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.filter)
@@ -6383,6 +6542,11 @@ func (r *ManagementFiltersService) Update(accountId string, filterId string, fil
 func (c *ManagementFiltersUpdateCall) Fields(s ...googleapi.Field) *ManagementFiltersUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ManagementFiltersUpdateCallDoer makes it easy to provide your own testable version of Do.
+type ManagementFiltersUpdateCallDoer interface {
+	Do() (*Filter, error)
 }
 
 func (c *ManagementFiltersUpdateCall) Do() (*Filter, error) {
@@ -6482,6 +6646,11 @@ func (r *ManagementGoalsService) Get(accountId string, webPropertyId string, pro
 func (c *ManagementGoalsGetCall) Fields(s ...googleapi.Field) *ManagementGoalsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ManagementGoalsGetCallDoer makes it easy to provide your own testable version of Do.
+type ManagementGoalsGetCallDoer interface {
+	Do() (*Goal, error)
 }
 
 func (c *ManagementGoalsGetCall) Do() (*Goal, error) {
@@ -6589,6 +6758,11 @@ func (r *ManagementGoalsService) Insert(accountId string, webPropertyId string, 
 func (c *ManagementGoalsInsertCall) Fields(s ...googleapi.Field) *ManagementGoalsInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ManagementGoalsInsertCallDoer makes it easy to provide your own testable version of Do.
+type ManagementGoalsInsertCallDoer interface {
+	Do() (*Goal, error)
 }
 
 func (c *ManagementGoalsInsertCall) Do() (*Goal, error) {
@@ -6709,6 +6883,11 @@ func (c *ManagementGoalsListCall) StartIndex(startIndex int64) *ManagementGoalsL
 func (c *ManagementGoalsListCall) Fields(s ...googleapi.Field) *ManagementGoalsListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ManagementGoalsListCallDoer makes it easy to provide your own testable version of Do.
+type ManagementGoalsListCallDoer interface {
+	Do() (*Goals, error)
 }
 
 func (c *ManagementGoalsListCall) Do() (*Goals, error) {
@@ -6833,6 +7012,11 @@ func (c *ManagementGoalsPatchCall) Fields(s ...googleapi.Field) *ManagementGoals
 	return c
 }
 
+// ManagementGoalsPatchCallDoer makes it easy to provide your own testable version of Do.
+type ManagementGoalsPatchCallDoer interface {
+	Do() (*Goal, error)
+}
+
 func (c *ManagementGoalsPatchCall) Do() (*Goal, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.goal)
@@ -6950,6 +7134,11 @@ func (c *ManagementGoalsUpdateCall) Fields(s ...googleapi.Field) *ManagementGoal
 	return c
 }
 
+// ManagementGoalsUpdateCallDoer makes it easy to provide your own testable version of Do.
+type ManagementGoalsUpdateCallDoer interface {
+	Do() (*Goal, error)
+}
+
 func (c *ManagementGoalsUpdateCall) Do() (*Goal, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.goal)
@@ -7065,6 +7254,11 @@ func (c *ManagementProfileFilterLinksDeleteCall) Fields(s ...googleapi.Field) *M
 	return c
 }
 
+// ManagementProfileFilterLinksDeleteCallDoer makes it easy to provide your own testable version of Do.
+type ManagementProfileFilterLinksDeleteCallDoer interface {
+	Do() error
+}
+
 func (c *ManagementProfileFilterLinksDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -7166,6 +7360,11 @@ func (r *ManagementProfileFilterLinksService) Get(accountId string, webPropertyI
 func (c *ManagementProfileFilterLinksGetCall) Fields(s ...googleapi.Field) *ManagementProfileFilterLinksGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ManagementProfileFilterLinksGetCallDoer makes it easy to provide your own testable version of Do.
+type ManagementProfileFilterLinksGetCallDoer interface {
+	Do() (*ProfileFilterLink, error)
 }
 
 func (c *ManagementProfileFilterLinksGetCall) Do() (*ProfileFilterLink, error) {
@@ -7277,6 +7476,11 @@ func (r *ManagementProfileFilterLinksService) Insert(accountId string, webProper
 func (c *ManagementProfileFilterLinksInsertCall) Fields(s ...googleapi.Field) *ManagementProfileFilterLinksInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ManagementProfileFilterLinksInsertCallDoer makes it easy to provide your own testable version of Do.
+type ManagementProfileFilterLinksInsertCallDoer interface {
+	Do() (*ProfileFilterLink, error)
 }
 
 func (c *ManagementProfileFilterLinksInsertCall) Do() (*ProfileFilterLink, error) {
@@ -7402,6 +7606,11 @@ func (c *ManagementProfileFilterLinksListCall) Fields(s ...googleapi.Field) *Man
 	return c
 }
 
+// ManagementProfileFilterLinksListCallDoer makes it easy to provide your own testable version of Do.
+type ManagementProfileFilterLinksListCallDoer interface {
+	Do() (*ProfileFilterLinks, error)
+}
+
 func (c *ManagementProfileFilterLinksListCall) Do() (*ProfileFilterLinks, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -7522,6 +7731,11 @@ func (r *ManagementProfileFilterLinksService) Patch(accountId string, webPropert
 func (c *ManagementProfileFilterLinksPatchCall) Fields(s ...googleapi.Field) *ManagementProfileFilterLinksPatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ManagementProfileFilterLinksPatchCallDoer makes it easy to provide your own testable version of Do.
+type ManagementProfileFilterLinksPatchCallDoer interface {
+	Do() (*ProfileFilterLink, error)
 }
 
 func (c *ManagementProfileFilterLinksPatchCall) Do() (*ProfileFilterLink, error) {
@@ -7645,6 +7859,11 @@ func (c *ManagementProfileFilterLinksUpdateCall) Fields(s ...googleapi.Field) *M
 	return c
 }
 
+// ManagementProfileFilterLinksUpdateCallDoer makes it easy to provide your own testable version of Do.
+type ManagementProfileFilterLinksUpdateCallDoer interface {
+	Do() (*ProfileFilterLink, error)
+}
+
 func (c *ManagementProfileFilterLinksUpdateCall) Do() (*ProfileFilterLink, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.profilefilterlink)
@@ -7764,6 +7983,11 @@ func (c *ManagementProfileUserLinksDeleteCall) Fields(s ...googleapi.Field) *Man
 	return c
 }
 
+// ManagementProfileUserLinksDeleteCallDoer makes it easy to provide your own testable version of Do.
+type ManagementProfileUserLinksDeleteCallDoer interface {
+	Do() error
+}
+
 func (c *ManagementProfileUserLinksDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -7861,6 +8085,11 @@ func (r *ManagementProfileUserLinksService) Insert(accountId string, webProperty
 func (c *ManagementProfileUserLinksInsertCall) Fields(s ...googleapi.Field) *ManagementProfileUserLinksInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ManagementProfileUserLinksInsertCallDoer makes it easy to provide your own testable version of Do.
+type ManagementProfileUserLinksInsertCallDoer interface {
+	Do() (*EntityUserLink, error)
 }
 
 func (c *ManagementProfileUserLinksInsertCall) Do() (*EntityUserLink, error) {
@@ -7981,6 +8210,11 @@ func (c *ManagementProfileUserLinksListCall) StartIndex(startIndex int64) *Manag
 func (c *ManagementProfileUserLinksListCall) Fields(s ...googleapi.Field) *ManagementProfileUserLinksListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ManagementProfileUserLinksListCallDoer makes it easy to provide your own testable version of Do.
+type ManagementProfileUserLinksListCallDoer interface {
+	Do() (*EntityUserLinks, error)
 }
 
 func (c *ManagementProfileUserLinksListCall) Do() (*EntityUserLinks, error) {
@@ -8104,6 +8338,11 @@ func (c *ManagementProfileUserLinksUpdateCall) Fields(s ...googleapi.Field) *Man
 	return c
 }
 
+// ManagementProfileUserLinksUpdateCallDoer makes it easy to provide your own testable version of Do.
+type ManagementProfileUserLinksUpdateCallDoer interface {
+	Do() (*EntityUserLink, error)
+}
+
 func (c *ManagementProfileUserLinksUpdateCall) Do() (*EntityUserLink, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.entityuserlink)
@@ -8217,6 +8456,11 @@ func (c *ManagementProfilesDeleteCall) Fields(s ...googleapi.Field) *ManagementP
 	return c
 }
 
+// ManagementProfilesDeleteCallDoer makes it easy to provide your own testable version of Do.
+type ManagementProfilesDeleteCallDoer interface {
+	Do() error
+}
+
 func (c *ManagementProfilesDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -8304,6 +8548,11 @@ func (r *ManagementProfilesService) Get(accountId string, webPropertyId string, 
 func (c *ManagementProfilesGetCall) Fields(s ...googleapi.Field) *ManagementProfilesGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ManagementProfilesGetCallDoer makes it easy to provide your own testable version of Do.
+type ManagementProfilesGetCallDoer interface {
+	Do() (*Profile, error)
 }
 
 func (c *ManagementProfilesGetCall) Do() (*Profile, error) {
@@ -8404,6 +8653,11 @@ func (r *ManagementProfilesService) Insert(accountId string, webPropertyId strin
 func (c *ManagementProfilesInsertCall) Fields(s ...googleapi.Field) *ManagementProfilesInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ManagementProfilesInsertCallDoer makes it easy to provide your own testable version of Do.
+type ManagementProfilesInsertCallDoer interface {
+	Do() (*Profile, error)
 }
 
 func (c *ManagementProfilesInsertCall) Do() (*Profile, error) {
@@ -8514,6 +8768,11 @@ func (c *ManagementProfilesListCall) StartIndex(startIndex int64) *ManagementPro
 func (c *ManagementProfilesListCall) Fields(s ...googleapi.Field) *ManagementProfilesListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ManagementProfilesListCallDoer makes it easy to provide your own testable version of Do.
+type ManagementProfilesListCallDoer interface {
+	Do() (*Profiles, error)
 }
 
 func (c *ManagementProfilesListCall) Do() (*Profiles, error) {
@@ -8628,6 +8887,11 @@ func (c *ManagementProfilesPatchCall) Fields(s ...googleapi.Field) *ManagementPr
 	return c
 }
 
+// ManagementProfilesPatchCallDoer makes it easy to provide your own testable version of Do.
+type ManagementProfilesPatchCallDoer interface {
+	Do() (*Profile, error)
+}
+
 func (c *ManagementProfilesPatchCall) Do() (*Profile, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.profile)
@@ -8733,6 +8997,11 @@ func (r *ManagementProfilesService) Update(accountId string, webPropertyId strin
 func (c *ManagementProfilesUpdateCall) Fields(s ...googleapi.Field) *ManagementProfilesUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ManagementProfilesUpdateCallDoer makes it easy to provide your own testable version of Do.
+type ManagementProfilesUpdateCallDoer interface {
+	Do() (*Profile, error)
 }
 
 func (c *ManagementProfilesUpdateCall) Do() (*Profile, error) {
@@ -8849,6 +9118,11 @@ func (c *ManagementSegmentsListCall) Fields(s ...googleapi.Field) *ManagementSeg
 	return c
 }
 
+// ManagementSegmentsListCallDoer makes it easy to provide your own testable version of Do.
+type ManagementSegmentsListCallDoer interface {
+	Do() (*Segments, error)
+}
+
 func (c *ManagementSegmentsListCall) Do() (*Segments, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -8939,6 +9213,11 @@ func (r *ManagementUnsampledReportsService) Get(accountId string, webPropertyId 
 func (c *ManagementUnsampledReportsGetCall) Fields(s ...googleapi.Field) *ManagementUnsampledReportsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ManagementUnsampledReportsGetCallDoer makes it easy to provide your own testable version of Do.
+type ManagementUnsampledReportsGetCallDoer interface {
+	Do() (*UnsampledReport, error)
 }
 
 func (c *ManagementUnsampledReportsGetCall) Do() (*UnsampledReport, error) {
@@ -9047,6 +9326,11 @@ func (r *ManagementUnsampledReportsService) Insert(accountId string, webProperty
 func (c *ManagementUnsampledReportsInsertCall) Fields(s ...googleapi.Field) *ManagementUnsampledReportsInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ManagementUnsampledReportsInsertCallDoer makes it easy to provide your own testable version of Do.
+type ManagementUnsampledReportsInsertCallDoer interface {
+	Do() (*UnsampledReport, error)
 }
 
 func (c *ManagementUnsampledReportsInsertCall) Do() (*UnsampledReport, error) {
@@ -9170,6 +9454,11 @@ func (c *ManagementUnsampledReportsListCall) Fields(s ...googleapi.Field) *Manag
 	return c
 }
 
+// ManagementUnsampledReportsListCallDoer makes it easy to provide your own testable version of Do.
+type ManagementUnsampledReportsListCallDoer interface {
+	Do() (*UnsampledReports, error)
+}
+
 func (c *ManagementUnsampledReportsListCall) Do() (*UnsampledReports, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -9289,6 +9578,11 @@ func (c *ManagementUploadsDeleteUploadDataCall) Fields(s ...googleapi.Field) *Ma
 	return c
 }
 
+// ManagementUploadsDeleteUploadDataCallDoer makes it easy to provide your own testable version of Do.
+type ManagementUploadsDeleteUploadDataCallDoer interface {
+	Do() error
+}
+
 func (c *ManagementUploadsDeleteUploadDataCall) Do() error {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.analyticsdataimportdeleteuploaddatarequest)
@@ -9391,6 +9685,11 @@ func (r *ManagementUploadsService) Get(accountId string, webPropertyId string, c
 func (c *ManagementUploadsGetCall) Fields(s ...googleapi.Field) *ManagementUploadsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ManagementUploadsGetCallDoer makes it easy to provide your own testable version of Do.
+type ManagementUploadsGetCallDoer interface {
+	Do() (*Upload, error)
 }
 
 func (c *ManagementUploadsGetCall) Do() (*Upload, error) {
@@ -9516,6 +9815,11 @@ func (c *ManagementUploadsListCall) StartIndex(startIndex int64) *ManagementUplo
 func (c *ManagementUploadsListCall) Fields(s ...googleapi.Field) *ManagementUploadsListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ManagementUploadsListCallDoer makes it easy to provide your own testable version of Do.
+type ManagementUploadsListCallDoer interface {
+	Do() (*Uploads, error)
 }
 
 func (c *ManagementUploadsListCall) Do() (*Uploads, error) {
@@ -9670,6 +9974,11 @@ func (c *ManagementUploadsUploadDataCall) ProgressUpdater(pu googleapi.ProgressU
 func (c *ManagementUploadsUploadDataCall) Fields(s ...googleapi.Field) *ManagementUploadsUploadDataCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ManagementUploadsUploadDataCallDoer makes it easy to provide your own testable version of Do.
+type ManagementUploadsUploadDataCallDoer interface {
+	Do() (*Upload, error)
 }
 
 func (c *ManagementUploadsUploadDataCall) Do() (*Upload, error) {
@@ -9834,6 +10143,11 @@ func (c *ManagementWebPropertyAdWordsLinksDeleteCall) Fields(s ...googleapi.Fiel
 	return c
 }
 
+// ManagementWebPropertyAdWordsLinksDeleteCallDoer makes it easy to provide your own testable version of Do.
+type ManagementWebPropertyAdWordsLinksDeleteCallDoer interface {
+	Do() error
+}
+
 func (c *ManagementWebPropertyAdWordsLinksDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -9922,6 +10236,11 @@ func (r *ManagementWebPropertyAdWordsLinksService) Get(accountId string, webProp
 func (c *ManagementWebPropertyAdWordsLinksGetCall) Fields(s ...googleapi.Field) *ManagementWebPropertyAdWordsLinksGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ManagementWebPropertyAdWordsLinksGetCallDoer makes it easy to provide your own testable version of Do.
+type ManagementWebPropertyAdWordsLinksGetCallDoer interface {
+	Do() (*EntityAdWordsLink, error)
 }
 
 func (c *ManagementWebPropertyAdWordsLinksGetCall) Do() (*EntityAdWordsLink, error) {
@@ -10019,6 +10338,11 @@ func (r *ManagementWebPropertyAdWordsLinksService) Insert(accountId string, webP
 func (c *ManagementWebPropertyAdWordsLinksInsertCall) Fields(s ...googleapi.Field) *ManagementWebPropertyAdWordsLinksInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ManagementWebPropertyAdWordsLinksInsertCallDoer makes it easy to provide your own testable version of Do.
+type ManagementWebPropertyAdWordsLinksInsertCallDoer interface {
+	Do() (*EntityAdWordsLink, error)
 }
 
 func (c *ManagementWebPropertyAdWordsLinksInsertCall) Do() (*EntityAdWordsLink, error) {
@@ -10129,6 +10453,11 @@ func (c *ManagementWebPropertyAdWordsLinksListCall) StartIndex(startIndex int64)
 func (c *ManagementWebPropertyAdWordsLinksListCall) Fields(s ...googleapi.Field) *ManagementWebPropertyAdWordsLinksListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ManagementWebPropertyAdWordsLinksListCallDoer makes it easy to provide your own testable version of Do.
+type ManagementWebPropertyAdWordsLinksListCallDoer interface {
+	Do() (*EntityAdWordsLinks, error)
 }
 
 func (c *ManagementWebPropertyAdWordsLinksListCall) Do() (*EntityAdWordsLinks, error) {
@@ -10243,6 +10572,11 @@ func (c *ManagementWebPropertyAdWordsLinksPatchCall) Fields(s ...googleapi.Field
 	return c
 }
 
+// ManagementWebPropertyAdWordsLinksPatchCallDoer makes it easy to provide your own testable version of Do.
+type ManagementWebPropertyAdWordsLinksPatchCallDoer interface {
+	Do() (*EntityAdWordsLink, error)
+}
+
 func (c *ManagementWebPropertyAdWordsLinksPatchCall) Do() (*EntityAdWordsLink, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.entityadwordslink)
@@ -10350,6 +10684,11 @@ func (c *ManagementWebPropertyAdWordsLinksUpdateCall) Fields(s ...googleapi.Fiel
 	return c
 }
 
+// ManagementWebPropertyAdWordsLinksUpdateCallDoer makes it easy to provide your own testable version of Do.
+type ManagementWebPropertyAdWordsLinksUpdateCallDoer interface {
+	Do() (*EntityAdWordsLink, error)
+}
+
 func (c *ManagementWebPropertyAdWordsLinksUpdateCall) Do() (*EntityAdWordsLink, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.entityadwordslink)
@@ -10453,6 +10792,11 @@ func (c *ManagementWebpropertiesGetCall) Fields(s ...googleapi.Field) *Managemen
 	return c
 }
 
+// ManagementWebpropertiesGetCallDoer makes it easy to provide your own testable version of Do.
+type ManagementWebpropertiesGetCallDoer interface {
+	Do() (*Webproperty, error)
+}
+
 func (c *ManagementWebpropertiesGetCall) Do() (*Webproperty, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -10542,6 +10886,11 @@ func (r *ManagementWebpropertiesService) Insert(accountId string, webproperty *W
 func (c *ManagementWebpropertiesInsertCall) Fields(s ...googleapi.Field) *ManagementWebpropertiesInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ManagementWebpropertiesInsertCallDoer makes it easy to provide your own testable version of Do.
+type ManagementWebpropertiesInsertCallDoer interface {
+	Do() (*Webproperty, error)
 }
 
 func (c *ManagementWebpropertiesInsertCall) Do() (*Webproperty, error) {
@@ -10642,6 +10991,11 @@ func (c *ManagementWebpropertiesListCall) StartIndex(startIndex int64) *Manageme
 func (c *ManagementWebpropertiesListCall) Fields(s ...googleapi.Field) *ManagementWebpropertiesListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ManagementWebpropertiesListCallDoer makes it easy to provide your own testable version of Do.
+type ManagementWebpropertiesListCallDoer interface {
+	Do() (*Webproperties, error)
 }
 
 func (c *ManagementWebpropertiesListCall) Do() (*Webproperties, error) {
@@ -10746,6 +11100,11 @@ func (c *ManagementWebpropertiesPatchCall) Fields(s ...googleapi.Field) *Managem
 	return c
 }
 
+// ManagementWebpropertiesPatchCallDoer makes it easy to provide your own testable version of Do.
+type ManagementWebpropertiesPatchCallDoer interface {
+	Do() (*Webproperty, error)
+}
+
 func (c *ManagementWebpropertiesPatchCall) Do() (*Webproperty, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.webproperty)
@@ -10841,6 +11200,11 @@ func (r *ManagementWebpropertiesService) Update(accountId string, webPropertyId 
 func (c *ManagementWebpropertiesUpdateCall) Fields(s ...googleapi.Field) *ManagementWebpropertiesUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ManagementWebpropertiesUpdateCallDoer makes it easy to provide your own testable version of Do.
+type ManagementWebpropertiesUpdateCallDoer interface {
+	Do() (*Webproperty, error)
 }
 
 func (c *ManagementWebpropertiesUpdateCall) Do() (*Webproperty, error) {
@@ -10940,6 +11304,11 @@ func (c *ManagementWebpropertyUserLinksDeleteCall) Fields(s ...googleapi.Field) 
 	return c
 }
 
+// ManagementWebpropertyUserLinksDeleteCallDoer makes it easy to provide your own testable version of Do.
+type ManagementWebpropertyUserLinksDeleteCallDoer interface {
+	Do() error
+}
+
 func (c *ManagementWebpropertyUserLinksDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -11027,6 +11396,11 @@ func (r *ManagementWebpropertyUserLinksService) Insert(accountId string, webProp
 func (c *ManagementWebpropertyUserLinksInsertCall) Fields(s ...googleapi.Field) *ManagementWebpropertyUserLinksInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ManagementWebpropertyUserLinksInsertCallDoer makes it easy to provide your own testable version of Do.
+type ManagementWebpropertyUserLinksInsertCallDoer interface {
+	Do() (*EntityUserLink, error)
 }
 
 func (c *ManagementWebpropertyUserLinksInsertCall) Do() (*EntityUserLink, error) {
@@ -11137,6 +11511,11 @@ func (c *ManagementWebpropertyUserLinksListCall) StartIndex(startIndex int64) *M
 func (c *ManagementWebpropertyUserLinksListCall) Fields(s ...googleapi.Field) *ManagementWebpropertyUserLinksListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ManagementWebpropertyUserLinksListCallDoer makes it easy to provide your own testable version of Do.
+type ManagementWebpropertyUserLinksListCallDoer interface {
+	Do() (*EntityUserLinks, error)
 }
 
 func (c *ManagementWebpropertyUserLinksListCall) Do() (*EntityUserLinks, error) {
@@ -11250,6 +11629,11 @@ func (c *ManagementWebpropertyUserLinksUpdateCall) Fields(s ...googleapi.Field) 
 	return c
 }
 
+// ManagementWebpropertyUserLinksUpdateCallDoer makes it easy to provide your own testable version of Do.
+type ManagementWebpropertyUserLinksUpdateCallDoer interface {
+	Do() (*EntityUserLink, error)
+}
+
 func (c *ManagementWebpropertyUserLinksUpdateCall) Do() (*EntityUserLink, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.entityuserlink)
@@ -11328,6 +11712,10 @@ func (c *ManagementWebpropertyUserLinksUpdateCall) Do() (*EntityUserLink, error)
 
 }
 
+// ManagementServicer makes it easy to provide your own testable versions of ManagementService.
+type ManagementServicer interface {
+}
+
 // method id "analytics.metadata.columns.list":
 
 type MetadataColumnsListCall struct {
@@ -11349,6 +11737,11 @@ func (r *MetadataColumnsService) List(reportType string) *MetadataColumnsListCal
 func (c *MetadataColumnsListCall) Fields(s ...googleapi.Field) *MetadataColumnsListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// MetadataColumnsListCallDoer makes it easy to provide your own testable version of Do.
+type MetadataColumnsListCallDoer interface {
+	Do() (*Columns, error)
 }
 
 func (c *MetadataColumnsListCall) Do() (*Columns, error) {
@@ -11407,6 +11800,10 @@ func (c *MetadataColumnsListCall) Do() (*Columns, error) {
 
 }
 
+// MetadataServicer makes it easy to provide your own testable versions of MetadataService.
+type MetadataServicer interface {
+}
+
 // method id "analytics.provisioning.createAccountTicket":
 
 type ProvisioningCreateAccountTicketCall struct {
@@ -11428,6 +11825,11 @@ func (r *ProvisioningService) CreateAccountTicket(accountticket *AccountTicket) 
 func (c *ProvisioningCreateAccountTicketCall) Fields(s ...googleapi.Field) *ProvisioningCreateAccountTicketCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ProvisioningCreateAccountTicketCallDoer makes it easy to provide your own testable version of Do.
+type ProvisioningCreateAccountTicketCallDoer interface {
+	Do() (*AccountTicket, error)
 }
 
 func (c *ProvisioningCreateAccountTicketCall) Do() (*AccountTicket, error) {
@@ -11477,4 +11879,9 @@ func (c *ProvisioningCreateAccountTicketCall) Do() (*AccountTicket, error) {
 	//   ]
 	// }
 
+}
+
+// ProvisioningServicer makes it easy to provide your own testable versions of ProvisioningService.
+type ProvisioningServicer interface {
+	CreateAccountTicket(accountticket *AccountTicket) *ProvisioningCreateAccountTicketCall
 }

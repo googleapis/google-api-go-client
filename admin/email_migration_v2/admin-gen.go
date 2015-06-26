@@ -167,6 +167,11 @@ func (c *MailInsertCall) Fields(s ...googleapi.Field) *MailInsertCall {
 	return c
 }
 
+// MailInsertCallDoer makes it easy to provide your own testable version of Do.
+type MailInsertCallDoer interface {
+	Do() error
+}
+
 func (c *MailInsertCall) Do() error {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.mailitem)
@@ -280,4 +285,9 @@ func (c *MailInsertCall) Do() error {
 	//   "supportsMediaUpload": true
 	// }
 
+}
+
+// MailServicer makes it easy to provide your own testable versions of MailService.
+type MailServicer interface {
+	Insert(userKey string, mailitem *MailItem) *MailInsertCall
 }

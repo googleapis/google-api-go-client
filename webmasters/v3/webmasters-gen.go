@@ -268,6 +268,11 @@ func (c *SitemapsDeleteCall) Fields(s ...googleapi.Field) *SitemapsDeleteCall {
 	return c
 }
 
+// SitemapsDeleteCallDoer makes it easy to provide your own testable version of Do.
+type SitemapsDeleteCallDoer interface {
+	Do() error
+}
+
 func (c *SitemapsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -345,6 +350,11 @@ func (r *SitemapsService) Get(siteUrl string, feedpath string) *SitemapsGetCall 
 func (c *SitemapsGetCall) Fields(s ...googleapi.Field) *SitemapsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// SitemapsGetCallDoer makes it easy to provide your own testable version of Do.
+type SitemapsGetCallDoer interface {
+	Do() (*WmxSitemap, error)
 }
 
 func (c *SitemapsGetCall) Do() (*WmxSitemap, error) {
@@ -439,6 +449,11 @@ func (c *SitemapsListCall) Fields(s ...googleapi.Field) *SitemapsListCall {
 	return c
 }
 
+// SitemapsListCallDoer makes it easy to provide your own testable version of Do.
+type SitemapsListCallDoer interface {
+	Do() (*SitemapsListResponse, error)
+}
+
 func (c *SitemapsListCall) Do() (*SitemapsListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -526,6 +541,11 @@ func (c *SitemapsSubmitCall) Fields(s ...googleapi.Field) *SitemapsSubmitCall {
 	return c
 }
 
+// SitemapsSubmitCallDoer makes it easy to provide your own testable version of Do.
+type SitemapsSubmitCallDoer interface {
+	Do() error
+}
+
 func (c *SitemapsSubmitCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -580,6 +600,14 @@ func (c *SitemapsSubmitCall) Do() error {
 
 }
 
+// SitemapsServicer makes it easy to provide your own testable versions of SitemapsService.
+type SitemapsServicer interface {
+	Delete(siteUrl string, feedpath string) *SitemapsDeleteCall
+	Get(siteUrl string, feedpath string) *SitemapsGetCall
+	List(siteUrl string) *SitemapsListCall
+	Submit(siteUrl string, feedpath string) *SitemapsSubmitCall
+}
+
 // method id "webmasters.sites.add":
 
 type SitesAddCall struct {
@@ -601,6 +629,11 @@ func (r *SitesService) Add(siteUrl string) *SitesAddCall {
 func (c *SitesAddCall) Fields(s ...googleapi.Field) *SitesAddCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// SitesAddCallDoer makes it easy to provide your own testable version of Do.
+type SitesAddCallDoer interface {
+	Do() error
 }
 
 func (c *SitesAddCall) Do() error {
@@ -673,6 +706,11 @@ func (c *SitesDeleteCall) Fields(s ...googleapi.Field) *SitesDeleteCall {
 	return c
 }
 
+// SitesDeleteCallDoer makes it easy to provide your own testable version of Do.
+type SitesDeleteCallDoer interface {
+	Do() error
+}
+
 func (c *SitesDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -740,6 +778,11 @@ func (r *SitesService) Get(siteUrl string) *SitesGetCall {
 func (c *SitesGetCall) Fields(s ...googleapi.Field) *SitesGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// SitesGetCallDoer makes it easy to provide your own testable version of Do.
+type SitesGetCallDoer interface {
+	Do() (*WmxSite, error)
 }
 
 func (c *SitesGetCall) Do() (*WmxSite, error) {
@@ -817,6 +860,11 @@ func (c *SitesListCall) Fields(s ...googleapi.Field) *SitesListCall {
 	return c
 }
 
+// SitesListCallDoer makes it easy to provide your own testable version of Do.
+type SitesListCallDoer interface {
+	Do() (*SitesListResponse, error)
+}
+
 func (c *SitesListCall) Do() (*SitesListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -856,6 +904,14 @@ func (c *SitesListCall) Do() (*SitesListResponse, error) {
 	//   ]
 	// }
 
+}
+
+// SitesServicer makes it easy to provide your own testable versions of SitesService.
+type SitesServicer interface {
+	Add(siteUrl string) *SitesAddCall
+	Delete(siteUrl string) *SitesDeleteCall
+	Get(siteUrl string) *SitesGetCall
+	List() *SitesListCall
 }
 
 // method id "webmasters.urlcrawlerrorscounts.query":
@@ -918,6 +974,11 @@ func (c *UrlcrawlerrorscountsQueryCall) Platform(platform string) *Urlcrawlerror
 func (c *UrlcrawlerrorscountsQueryCall) Fields(s ...googleapi.Field) *UrlcrawlerrorscountsQueryCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// UrlcrawlerrorscountsQueryCallDoer makes it easy to provide your own testable version of Do.
+type UrlcrawlerrorscountsQueryCallDoer interface {
+	Do() (*UrlCrawlErrorsCountsQueryResponse, error)
 }
 
 func (c *UrlcrawlerrorscountsQueryCall) Do() (*UrlCrawlErrorsCountsQueryResponse, error) {
@@ -1029,6 +1090,11 @@ func (c *UrlcrawlerrorscountsQueryCall) Do() (*UrlCrawlErrorsCountsQueryResponse
 
 }
 
+// UrlcrawlerrorscountsServicer makes it easy to provide your own testable versions of UrlcrawlerrorscountsService.
+type UrlcrawlerrorscountsServicer interface {
+	Query(siteUrl string) *UrlcrawlerrorscountsQueryCall
+}
+
 // method id "webmasters.urlcrawlerrorssamples.get":
 
 type UrlcrawlerrorssamplesGetCall struct {
@@ -1056,6 +1122,11 @@ func (r *UrlcrawlerrorssamplesService) Get(siteUrl string, url string, category 
 func (c *UrlcrawlerrorssamplesGetCall) Fields(s ...googleapi.Field) *UrlcrawlerrorssamplesGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// UrlcrawlerrorssamplesGetCallDoer makes it easy to provide your own testable version of Do.
+type UrlcrawlerrorssamplesGetCallDoer interface {
+	Do() (*UrlCrawlErrorsSample, error)
 }
 
 func (c *UrlcrawlerrorssamplesGetCall) Do() (*UrlCrawlErrorsSample, error) {
@@ -1194,6 +1265,11 @@ func (c *UrlcrawlerrorssamplesListCall) Fields(s ...googleapi.Field) *Urlcrawler
 	return c
 }
 
+// UrlcrawlerrorssamplesListCallDoer makes it easy to provide your own testable version of Do.
+type UrlcrawlerrorssamplesListCallDoer interface {
+	Do() (*UrlCrawlErrorsSamplesListResponse, error)
+}
+
 func (c *UrlcrawlerrorssamplesListCall) Do() (*UrlCrawlErrorsSamplesListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1324,6 +1400,11 @@ func (c *UrlcrawlerrorssamplesMarkAsFixedCall) Fields(s ...googleapi.Field) *Url
 	return c
 }
 
+// UrlcrawlerrorssamplesMarkAsFixedCallDoer makes it easy to provide your own testable version of Do.
+type UrlcrawlerrorssamplesMarkAsFixedCallDoer interface {
+	Do() error
+}
+
 func (c *UrlcrawlerrorssamplesMarkAsFixedCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1422,4 +1503,11 @@ func (c *UrlcrawlerrorssamplesMarkAsFixedCall) Do() error {
 	//   ]
 	// }
 
+}
+
+// UrlcrawlerrorssamplesServicer makes it easy to provide your own testable versions of UrlcrawlerrorssamplesService.
+type UrlcrawlerrorssamplesServicer interface {
+	Get(siteUrl string, url string, category string, platform string) *UrlcrawlerrorssamplesGetCall
+	List(siteUrl string, category string, platform string) *UrlcrawlerrorssamplesListCall
+	MarkAsFixed(siteUrl string, url string, category string, platform string) *UrlcrawlerrorssamplesMarkAsFixedCall
 }

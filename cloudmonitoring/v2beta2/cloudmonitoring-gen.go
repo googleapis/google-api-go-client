@@ -386,6 +386,11 @@ func (c *MetricDescriptorsCreateCall) Fields(s ...googleapi.Field) *MetricDescri
 	return c
 }
 
+// MetricDescriptorsCreateCallDoer makes it easy to provide your own testable version of Do.
+type MetricDescriptorsCreateCallDoer interface {
+	Do() (*MetricDescriptor, error)
+}
+
 func (c *MetricDescriptorsCreateCall) Do() (*MetricDescriptor, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.metricdescriptor)
@@ -471,6 +476,11 @@ func (r *MetricDescriptorsService) Delete(project string, metric string) *Metric
 func (c *MetricDescriptorsDeleteCall) Fields(s ...googleapi.Field) *MetricDescriptorsDeleteCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// MetricDescriptorsDeleteCallDoer makes it easy to provide your own testable version of Do.
+type MetricDescriptorsDeleteCallDoer interface {
+	Do() (*DeleteMetricDescriptorResponse, error)
 }
 
 func (c *MetricDescriptorsDeleteCall) Do() (*DeleteMetricDescriptorResponse, error) {
@@ -591,6 +601,11 @@ func (c *MetricDescriptorsListCall) Fields(s ...googleapi.Field) *MetricDescript
 	return c
 }
 
+// MetricDescriptorsListCallDoer makes it easy to provide your own testable version of Do.
+type MetricDescriptorsListCallDoer interface {
+	Do() (*ListMetricDescriptorsResponse, error)
+}
+
 func (c *MetricDescriptorsListCall) Do() (*ListMetricDescriptorsResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -673,6 +688,13 @@ func (c *MetricDescriptorsListCall) Do() (*ListMetricDescriptorsResponse, error)
 	//   ]
 	// }
 
+}
+
+// MetricDescriptorsServicer makes it easy to provide your own testable versions of MetricDescriptorsService.
+type MetricDescriptorsServicer interface {
+	Create(project string, metricdescriptor *MetricDescriptor) *MetricDescriptorsCreateCall
+	Delete(project string, metric string) *MetricDescriptorsDeleteCall
+	List(project string, listmetricdescriptorsrequest *ListMetricDescriptorsRequest) *MetricDescriptorsListCall
 }
 
 // method id "cloudmonitoring.timeseries.list":
@@ -793,6 +815,11 @@ func (c *TimeseriesListCall) Window(window string) *TimeseriesListCall {
 func (c *TimeseriesListCall) Fields(s ...googleapi.Field) *TimeseriesListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// TimeseriesListCallDoer makes it easy to provide your own testable version of Do.
+type TimeseriesListCallDoer interface {
+	Do() (*ListTimeseriesResponse, error)
 }
 
 func (c *TimeseriesListCall) Do() (*ListTimeseriesResponse, error) {
@@ -975,6 +1002,11 @@ func (c *TimeseriesWriteCall) Fields(s ...googleapi.Field) *TimeseriesWriteCall 
 	return c
 }
 
+// TimeseriesWriteCallDoer makes it easy to provide your own testable version of Do.
+type TimeseriesWriteCallDoer interface {
+	Do() (*WriteTimeseriesResponse, error)
+}
+
 func (c *TimeseriesWriteCall) Do() (*WriteTimeseriesResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.writetimeseriesrequest)
@@ -1035,6 +1067,12 @@ func (c *TimeseriesWriteCall) Do() (*WriteTimeseriesResponse, error) {
 	//   ]
 	// }
 
+}
+
+// TimeseriesServicer makes it easy to provide your own testable versions of TimeseriesService.
+type TimeseriesServicer interface {
+	List(project string, metric string, youngest string, listtimeseriesrequest *ListTimeseriesRequest) *TimeseriesListCall
+	Write(project string, writetimeseriesrequest *WriteTimeseriesRequest) *TimeseriesWriteCall
 }
 
 // method id "cloudmonitoring.timeseriesDescriptors.list":
@@ -1156,6 +1194,11 @@ func (c *TimeseriesDescriptorsListCall) Window(window string) *TimeseriesDescrip
 func (c *TimeseriesDescriptorsListCall) Fields(s ...googleapi.Field) *TimeseriesDescriptorsListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// TimeseriesDescriptorsListCallDoer makes it easy to provide your own testable version of Do.
+type TimeseriesDescriptorsListCallDoer interface {
+	Do() (*ListTimeseriesDescriptorsResponse, error)
 }
 
 func (c *TimeseriesDescriptorsListCall) Do() (*ListTimeseriesDescriptorsResponse, error) {
@@ -1304,4 +1347,9 @@ func (c *TimeseriesDescriptorsListCall) Do() (*ListTimeseriesDescriptorsResponse
 	//   ]
 	// }
 
+}
+
+// TimeseriesDescriptorsServicer makes it easy to provide your own testable versions of TimeseriesDescriptorsService.
+type TimeseriesDescriptorsServicer interface {
+	List(project string, metric string, youngest string, listtimeseriesdescriptorsrequest *ListTimeseriesDescriptorsRequest) *TimeseriesDescriptorsListCall
 }

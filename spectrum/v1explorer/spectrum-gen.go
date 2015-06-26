@@ -991,6 +991,11 @@ func (c *PawsGetSpectrumCall) Fields(s ...googleapi.Field) *PawsGetSpectrumCall 
 	return c
 }
 
+// PawsGetSpectrumCallDoer makes it easy to provide your own testable version of Do.
+type PawsGetSpectrumCallDoer interface {
+	Do() (*PawsGetSpectrumResponse, error)
+}
+
 func (c *PawsGetSpectrumCall) Do() (*PawsGetSpectrumResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.pawsgetspectrumrequest)
@@ -1061,6 +1066,11 @@ func (c *PawsGetSpectrumBatchCall) Fields(s ...googleapi.Field) *PawsGetSpectrum
 	return c
 }
 
+// PawsGetSpectrumBatchCallDoer makes it easy to provide your own testable version of Do.
+type PawsGetSpectrumBatchCallDoer interface {
+	Do() (*PawsGetSpectrumBatchResponse, error)
+}
+
 func (c *PawsGetSpectrumBatchCall) Do() (*PawsGetSpectrumBatchResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.pawsgetspectrumbatchrequest)
@@ -1129,6 +1139,11 @@ func (r *PawsService) Init(pawsinitrequest *PawsInitRequest) *PawsInitCall {
 func (c *PawsInitCall) Fields(s ...googleapi.Field) *PawsInitCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// PawsInitCallDoer makes it easy to provide your own testable version of Do.
+type PawsInitCallDoer interface {
+	Do() (*PawsInitResponse, error)
 }
 
 func (c *PawsInitCall) Do() (*PawsInitResponse, error) {
@@ -1204,6 +1219,11 @@ func (c *PawsNotifySpectrumUseCall) Fields(s ...googleapi.Field) *PawsNotifySpec
 	return c
 }
 
+// PawsNotifySpectrumUseCallDoer makes it easy to provide your own testable version of Do.
+type PawsNotifySpectrumUseCallDoer interface {
+	Do() (*PawsNotifySpectrumUseResponse, error)
+}
+
 func (c *PawsNotifySpectrumUseCall) Do() (*PawsNotifySpectrumUseResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.pawsnotifyspectrumuserequest)
@@ -1273,6 +1293,11 @@ func (r *PawsService) Register(pawsregisterrequest *PawsRegisterRequest) *PawsRe
 func (c *PawsRegisterCall) Fields(s ...googleapi.Field) *PawsRegisterCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// PawsRegisterCallDoer makes it easy to provide your own testable version of Do.
+type PawsRegisterCallDoer interface {
+	Do() (*PawsRegisterResponse, error)
 }
 
 func (c *PawsRegisterCall) Do() (*PawsRegisterResponse, error) {
@@ -1347,6 +1372,11 @@ func (c *PawsVerifyDeviceCall) Fields(s ...googleapi.Field) *PawsVerifyDeviceCal
 	return c
 }
 
+// PawsVerifyDeviceCallDoer makes it easy to provide your own testable version of Do.
+type PawsVerifyDeviceCallDoer interface {
+	Do() (*PawsVerifyDeviceResponse, error)
+}
+
 func (c *PawsVerifyDeviceCall) Do() (*PawsVerifyDeviceResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.pawsverifydevicerequest)
@@ -1391,4 +1421,14 @@ func (c *PawsVerifyDeviceCall) Do() (*PawsVerifyDeviceResponse, error) {
 	//   }
 	// }
 
+}
+
+// PawsServicer makes it easy to provide your own testable versions of PawsService.
+type PawsServicer interface {
+	GetSpectrum(pawsgetspectrumrequest *PawsGetSpectrumRequest) *PawsGetSpectrumCall
+	GetSpectrumBatch(pawsgetspectrumbatchrequest *PawsGetSpectrumBatchRequest) *PawsGetSpectrumBatchCall
+	Init(pawsinitrequest *PawsInitRequest) *PawsInitCall
+	NotifySpectrumUse(pawsnotifyspectrumuserequest *PawsNotifySpectrumUseRequest) *PawsNotifySpectrumUseCall
+	Register(pawsregisterrequest *PawsRegisterRequest) *PawsRegisterCall
+	VerifyDevice(pawsverifydevicerequest *PawsVerifyDeviceRequest) *PawsVerifyDeviceCall
 }

@@ -811,6 +811,11 @@ func (c *AccountsGetCall) Fields(s ...googleapi.Field) *AccountsGetCall {
 	return c
 }
 
+// AccountsGetCallDoer makes it easy to provide your own testable version of Do.
+type AccountsGetCallDoer interface {
+	Do() (*Account, error)
+}
+
 func (c *AccountsGetCall) Do() (*Account, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -887,6 +892,11 @@ func (c *AccountsListCall) Fields(s ...googleapi.Field) *AccountsListCall {
 	return c
 }
 
+// AccountsListCallDoer makes it easy to provide your own testable version of Do.
+type AccountsListCallDoer interface {
+	Do() (*ListAccountsResponse, error)
+}
+
 func (c *AccountsListCall) Do() (*ListAccountsResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -960,6 +970,11 @@ func (c *AccountsUpdateCall) Fingerprint(fingerprint string) *AccountsUpdateCall
 func (c *AccountsUpdateCall) Fields(s ...googleapi.Field) *AccountsUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// AccountsUpdateCallDoer makes it easy to provide your own testable version of Do.
+type AccountsUpdateCallDoer interface {
+	Do() (*Account, error)
 }
 
 func (c *AccountsUpdateCall) Do() (*Account, error) {
@@ -1057,6 +1072,11 @@ func (c *AccountsContainersCreateCall) Fields(s ...googleapi.Field) *AccountsCon
 	return c
 }
 
+// AccountsContainersCreateCallDoer makes it easy to provide your own testable version of Do.
+type AccountsContainersCreateCallDoer interface {
+	Do() (*Container, error)
+}
+
 func (c *AccountsContainersCreateCall) Do() (*Container, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.container)
@@ -1144,6 +1164,11 @@ func (c *AccountsContainersDeleteCall) Fields(s ...googleapi.Field) *AccountsCon
 	return c
 }
 
+// AccountsContainersDeleteCallDoer makes it easy to provide your own testable version of Do.
+type AccountsContainersDeleteCallDoer interface {
+	Do() error
+}
+
 func (c *AccountsContainersDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1221,6 +1246,11 @@ func (r *AccountsContainersService) Get(accountId string, containerId string) *A
 func (c *AccountsContainersGetCall) Fields(s ...googleapi.Field) *AccountsContainersGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// AccountsContainersGetCallDoer makes it easy to provide your own testable version of Do.
+type AccountsContainersGetCallDoer interface {
+	Do() (*Container, error)
 }
 
 func (c *AccountsContainersGetCall) Do() (*Container, error) {
@@ -1306,6 +1336,11 @@ func (r *AccountsContainersService) List(accountId string) *AccountsContainersLi
 func (c *AccountsContainersListCall) Fields(s ...googleapi.Field) *AccountsContainersListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// AccountsContainersListCallDoer makes it easy to provide your own testable version of Do.
+type AccountsContainersListCallDoer interface {
+	Do() (*ListContainersResponse, error)
 }
 
 func (c *AccountsContainersListCall) Do() (*ListContainersResponse, error) {
@@ -1395,6 +1430,11 @@ func (c *AccountsContainersUpdateCall) Fingerprint(fingerprint string) *Accounts
 func (c *AccountsContainersUpdateCall) Fields(s ...googleapi.Field) *AccountsContainersUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// AccountsContainersUpdateCallDoer makes it easy to provide your own testable version of Do.
+type AccountsContainersUpdateCallDoer interface {
+	Do() (*Container, error)
 }
 
 func (c *AccountsContainersUpdateCall) Do() (*Container, error) {
@@ -1502,6 +1542,11 @@ func (c *AccountsContainersMacrosCreateCall) Fields(s ...googleapi.Field) *Accou
 	return c
 }
 
+// AccountsContainersMacrosCreateCallDoer makes it easy to provide your own testable version of Do.
+type AccountsContainersMacrosCreateCallDoer interface {
+	Do() (*Macro, error)
+}
+
 func (c *AccountsContainersMacrosCreateCall) Do() (*Macro, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.macro)
@@ -1599,6 +1644,11 @@ func (c *AccountsContainersMacrosDeleteCall) Fields(s ...googleapi.Field) *Accou
 	return c
 }
 
+// AccountsContainersMacrosDeleteCallDoer makes it easy to provide your own testable version of Do.
+type AccountsContainersMacrosDeleteCallDoer interface {
+	Do() error
+}
+
 func (c *AccountsContainersMacrosDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1686,6 +1736,11 @@ func (r *AccountsContainersMacrosService) Get(accountId string, containerId stri
 func (c *AccountsContainersMacrosGetCall) Fields(s ...googleapi.Field) *AccountsContainersMacrosGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// AccountsContainersMacrosGetCallDoer makes it easy to provide your own testable version of Do.
+type AccountsContainersMacrosGetCallDoer interface {
+	Do() (*Macro, error)
 }
 
 func (c *AccountsContainersMacrosGetCall) Do() (*Macro, error) {
@@ -1781,6 +1836,11 @@ func (r *AccountsContainersMacrosService) List(accountId string, containerId str
 func (c *AccountsContainersMacrosListCall) Fields(s ...googleapi.Field) *AccountsContainersMacrosListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// AccountsContainersMacrosListCallDoer makes it easy to provide your own testable version of Do.
+type AccountsContainersMacrosListCallDoer interface {
+	Do() (*ListMacrosResponse, error)
 }
 
 func (c *AccountsContainersMacrosListCall) Do() (*ListMacrosResponse, error) {
@@ -1879,6 +1939,11 @@ func (c *AccountsContainersMacrosUpdateCall) Fingerprint(fingerprint string) *Ac
 func (c *AccountsContainersMacrosUpdateCall) Fields(s ...googleapi.Field) *AccountsContainersMacrosUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// AccountsContainersMacrosUpdateCallDoer makes it easy to provide your own testable version of Do.
+type AccountsContainersMacrosUpdateCallDoer interface {
+	Do() (*Macro, error)
 }
 
 func (c *AccountsContainersMacrosUpdateCall) Do() (*Macro, error) {
@@ -1994,6 +2059,11 @@ func (c *AccountsContainersRulesCreateCall) Fields(s ...googleapi.Field) *Accoun
 	return c
 }
 
+// AccountsContainersRulesCreateCallDoer makes it easy to provide your own testable version of Do.
+type AccountsContainersRulesCreateCallDoer interface {
+	Do() (*Rule, error)
+}
+
 func (c *AccountsContainersRulesCreateCall) Do() (*Rule, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.rule)
@@ -2091,6 +2161,11 @@ func (c *AccountsContainersRulesDeleteCall) Fields(s ...googleapi.Field) *Accoun
 	return c
 }
 
+// AccountsContainersRulesDeleteCallDoer makes it easy to provide your own testable version of Do.
+type AccountsContainersRulesDeleteCallDoer interface {
+	Do() error
+}
+
 func (c *AccountsContainersRulesDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2178,6 +2253,11 @@ func (r *AccountsContainersRulesService) Get(accountId string, containerId strin
 func (c *AccountsContainersRulesGetCall) Fields(s ...googleapi.Field) *AccountsContainersRulesGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// AccountsContainersRulesGetCallDoer makes it easy to provide your own testable version of Do.
+type AccountsContainersRulesGetCallDoer interface {
+	Do() (*Rule, error)
 }
 
 func (c *AccountsContainersRulesGetCall) Do() (*Rule, error) {
@@ -2273,6 +2353,11 @@ func (r *AccountsContainersRulesService) List(accountId string, containerId stri
 func (c *AccountsContainersRulesListCall) Fields(s ...googleapi.Field) *AccountsContainersRulesListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// AccountsContainersRulesListCallDoer makes it easy to provide your own testable version of Do.
+type AccountsContainersRulesListCallDoer interface {
+	Do() (*ListRulesResponse, error)
 }
 
 func (c *AccountsContainersRulesListCall) Do() (*ListRulesResponse, error) {
@@ -2371,6 +2456,11 @@ func (c *AccountsContainersRulesUpdateCall) Fingerprint(fingerprint string) *Acc
 func (c *AccountsContainersRulesUpdateCall) Fields(s ...googleapi.Field) *AccountsContainersRulesUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// AccountsContainersRulesUpdateCallDoer makes it easy to provide your own testable version of Do.
+type AccountsContainersRulesUpdateCallDoer interface {
+	Do() (*Rule, error)
 }
 
 func (c *AccountsContainersRulesUpdateCall) Do() (*Rule, error) {
@@ -2486,6 +2576,11 @@ func (c *AccountsContainersTagsCreateCall) Fields(s ...googleapi.Field) *Account
 	return c
 }
 
+// AccountsContainersTagsCreateCallDoer makes it easy to provide your own testable version of Do.
+type AccountsContainersTagsCreateCallDoer interface {
+	Do() (*Tag, error)
+}
+
 func (c *AccountsContainersTagsCreateCall) Do() (*Tag, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.tag)
@@ -2583,6 +2678,11 @@ func (c *AccountsContainersTagsDeleteCall) Fields(s ...googleapi.Field) *Account
 	return c
 }
 
+// AccountsContainersTagsDeleteCallDoer makes it easy to provide your own testable version of Do.
+type AccountsContainersTagsDeleteCallDoer interface {
+	Do() error
+}
+
 func (c *AccountsContainersTagsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2670,6 +2770,11 @@ func (r *AccountsContainersTagsService) Get(accountId string, containerId string
 func (c *AccountsContainersTagsGetCall) Fields(s ...googleapi.Field) *AccountsContainersTagsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// AccountsContainersTagsGetCallDoer makes it easy to provide your own testable version of Do.
+type AccountsContainersTagsGetCallDoer interface {
+	Do() (*Tag, error)
 }
 
 func (c *AccountsContainersTagsGetCall) Do() (*Tag, error) {
@@ -2765,6 +2870,11 @@ func (r *AccountsContainersTagsService) List(accountId string, containerId strin
 func (c *AccountsContainersTagsListCall) Fields(s ...googleapi.Field) *AccountsContainersTagsListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// AccountsContainersTagsListCallDoer makes it easy to provide your own testable version of Do.
+type AccountsContainersTagsListCallDoer interface {
+	Do() (*ListTagsResponse, error)
 }
 
 func (c *AccountsContainersTagsListCall) Do() (*ListTagsResponse, error) {
@@ -2863,6 +2973,11 @@ func (c *AccountsContainersTagsUpdateCall) Fingerprint(fingerprint string) *Acco
 func (c *AccountsContainersTagsUpdateCall) Fields(s ...googleapi.Field) *AccountsContainersTagsUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// AccountsContainersTagsUpdateCallDoer makes it easy to provide your own testable version of Do.
+type AccountsContainersTagsUpdateCallDoer interface {
+	Do() (*Tag, error)
 }
 
 func (c *AccountsContainersTagsUpdateCall) Do() (*Tag, error) {
@@ -2978,6 +3093,11 @@ func (c *AccountsContainersTriggersCreateCall) Fields(s ...googleapi.Field) *Acc
 	return c
 }
 
+// AccountsContainersTriggersCreateCallDoer makes it easy to provide your own testable version of Do.
+type AccountsContainersTriggersCreateCallDoer interface {
+	Do() (*Trigger, error)
+}
+
 func (c *AccountsContainersTriggersCreateCall) Do() (*Trigger, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.trigger)
@@ -3075,6 +3195,11 @@ func (c *AccountsContainersTriggersDeleteCall) Fields(s ...googleapi.Field) *Acc
 	return c
 }
 
+// AccountsContainersTriggersDeleteCallDoer makes it easy to provide your own testable version of Do.
+type AccountsContainersTriggersDeleteCallDoer interface {
+	Do() error
+}
+
 func (c *AccountsContainersTriggersDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3162,6 +3287,11 @@ func (r *AccountsContainersTriggersService) Get(accountId string, containerId st
 func (c *AccountsContainersTriggersGetCall) Fields(s ...googleapi.Field) *AccountsContainersTriggersGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// AccountsContainersTriggersGetCallDoer makes it easy to provide your own testable version of Do.
+type AccountsContainersTriggersGetCallDoer interface {
+	Do() (*Trigger, error)
 }
 
 func (c *AccountsContainersTriggersGetCall) Do() (*Trigger, error) {
@@ -3257,6 +3387,11 @@ func (r *AccountsContainersTriggersService) List(accountId string, containerId s
 func (c *AccountsContainersTriggersListCall) Fields(s ...googleapi.Field) *AccountsContainersTriggersListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// AccountsContainersTriggersListCallDoer makes it easy to provide your own testable version of Do.
+type AccountsContainersTriggersListCallDoer interface {
+	Do() (*ListTriggersResponse, error)
 }
 
 func (c *AccountsContainersTriggersListCall) Do() (*ListTriggersResponse, error) {
@@ -3356,6 +3491,11 @@ func (c *AccountsContainersTriggersUpdateCall) Fingerprint(fingerprint string) *
 func (c *AccountsContainersTriggersUpdateCall) Fields(s ...googleapi.Field) *AccountsContainersTriggersUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// AccountsContainersTriggersUpdateCallDoer makes it easy to provide your own testable version of Do.
+type AccountsContainersTriggersUpdateCallDoer interface {
+	Do() (*Trigger, error)
 }
 
 func (c *AccountsContainersTriggersUpdateCall) Do() (*Trigger, error) {
@@ -3471,6 +3611,11 @@ func (c *AccountsContainersVariablesCreateCall) Fields(s ...googleapi.Field) *Ac
 	return c
 }
 
+// AccountsContainersVariablesCreateCallDoer makes it easy to provide your own testable version of Do.
+type AccountsContainersVariablesCreateCallDoer interface {
+	Do() (*Variable, error)
+}
+
 func (c *AccountsContainersVariablesCreateCall) Do() (*Variable, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.variable)
@@ -3568,6 +3713,11 @@ func (c *AccountsContainersVariablesDeleteCall) Fields(s ...googleapi.Field) *Ac
 	return c
 }
 
+// AccountsContainersVariablesDeleteCallDoer makes it easy to provide your own testable version of Do.
+type AccountsContainersVariablesDeleteCallDoer interface {
+	Do() error
+}
+
 func (c *AccountsContainersVariablesDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3655,6 +3805,11 @@ func (r *AccountsContainersVariablesService) Get(accountId string, containerId s
 func (c *AccountsContainersVariablesGetCall) Fields(s ...googleapi.Field) *AccountsContainersVariablesGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// AccountsContainersVariablesGetCallDoer makes it easy to provide your own testable version of Do.
+type AccountsContainersVariablesGetCallDoer interface {
+	Do() (*Variable, error)
 }
 
 func (c *AccountsContainersVariablesGetCall) Do() (*Variable, error) {
@@ -3750,6 +3905,11 @@ func (r *AccountsContainersVariablesService) List(accountId string, containerId 
 func (c *AccountsContainersVariablesListCall) Fields(s ...googleapi.Field) *AccountsContainersVariablesListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// AccountsContainersVariablesListCallDoer makes it easy to provide your own testable version of Do.
+type AccountsContainersVariablesListCallDoer interface {
+	Do() (*ListVariablesResponse, error)
 }
 
 func (c *AccountsContainersVariablesListCall) Do() (*ListVariablesResponse, error) {
@@ -3849,6 +4009,11 @@ func (c *AccountsContainersVariablesUpdateCall) Fingerprint(fingerprint string) 
 func (c *AccountsContainersVariablesUpdateCall) Fields(s ...googleapi.Field) *AccountsContainersVariablesUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// AccountsContainersVariablesUpdateCallDoer makes it easy to provide your own testable version of Do.
+type AccountsContainersVariablesUpdateCallDoer interface {
+	Do() (*Variable, error)
 }
 
 func (c *AccountsContainersVariablesUpdateCall) Do() (*Variable, error) {
@@ -3964,6 +4129,11 @@ func (c *AccountsContainersVersionsCreateCall) Fields(s ...googleapi.Field) *Acc
 	return c
 }
 
+// AccountsContainersVersionsCreateCallDoer makes it easy to provide your own testable version of Do.
+type AccountsContainersVersionsCreateCallDoer interface {
+	Do() (*CreateContainerVersionResponse, error)
+}
+
 func (c *AccountsContainersVersionsCreateCall) Do() (*CreateContainerVersionResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.createcontainerversionrequestversionoptions)
@@ -4061,6 +4231,11 @@ func (c *AccountsContainersVersionsDeleteCall) Fields(s ...googleapi.Field) *Acc
 	return c
 }
 
+// AccountsContainersVersionsDeleteCallDoer makes it easy to provide your own testable version of Do.
+type AccountsContainersVersionsDeleteCallDoer interface {
+	Do() error
+}
+
 func (c *AccountsContainersVersionsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4148,6 +4323,11 @@ func (r *AccountsContainersVersionsService) Get(accountId string, containerId st
 func (c *AccountsContainersVersionsGetCall) Fields(s ...googleapi.Field) *AccountsContainersVersionsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// AccountsContainersVersionsGetCallDoer makes it easy to provide your own testable version of Do.
+type AccountsContainersVersionsGetCallDoer interface {
+	Do() (*ContainerVersion, error)
 }
 
 func (c *AccountsContainersVersionsGetCall) Do() (*ContainerVersion, error) {
@@ -4251,6 +4431,11 @@ func (c *AccountsContainersVersionsListCall) Headers(headers bool) *AccountsCont
 func (c *AccountsContainersVersionsListCall) Fields(s ...googleapi.Field) *AccountsContainersVersionsListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// AccountsContainersVersionsListCallDoer makes it easy to provide your own testable version of Do.
+type AccountsContainersVersionsListCallDoer interface {
+	Do() (*ListContainerVersionsResponse, error)
 }
 
 func (c *AccountsContainersVersionsListCall) Do() (*ListContainerVersionsResponse, error) {
@@ -4360,6 +4545,11 @@ func (c *AccountsContainersVersionsPublishCall) Fields(s ...googleapi.Field) *Ac
 	return c
 }
 
+// AccountsContainersVersionsPublishCallDoer makes it easy to provide your own testable version of Do.
+type AccountsContainersVersionsPublishCallDoer interface {
+	Do() (*PublishContainerVersionResponse, error)
+}
+
 func (c *AccountsContainersVersionsPublishCall) Do() (*PublishContainerVersionResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4467,6 +4657,11 @@ func (c *AccountsContainersVersionsRestoreCall) Fields(s ...googleapi.Field) *Ac
 	return c
 }
 
+// AccountsContainersVersionsRestoreCallDoer makes it easy to provide your own testable version of Do.
+type AccountsContainersVersionsRestoreCallDoer interface {
+	Do() (*ContainerVersion, error)
+}
+
 func (c *AccountsContainersVersionsRestoreCall) Do() (*ContainerVersion, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4561,6 +4756,11 @@ func (r *AccountsContainersVersionsService) Undelete(accountId string, container
 func (c *AccountsContainersVersionsUndeleteCall) Fields(s ...googleapi.Field) *AccountsContainersVersionsUndeleteCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// AccountsContainersVersionsUndeleteCallDoer makes it easy to provide your own testable version of Do.
+type AccountsContainersVersionsUndeleteCallDoer interface {
+	Do() (*ContainerVersion, error)
 }
 
 func (c *AccountsContainersVersionsUndeleteCall) Do() (*ContainerVersion, error) {
@@ -4667,6 +4867,11 @@ func (c *AccountsContainersVersionsUpdateCall) Fingerprint(fingerprint string) *
 func (c *AccountsContainersVersionsUpdateCall) Fields(s ...googleapi.Field) *AccountsContainersVersionsUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// AccountsContainersVersionsUpdateCallDoer makes it easy to provide your own testable version of Do.
+type AccountsContainersVersionsUpdateCallDoer interface {
+	Do() (*ContainerVersion, error)
 }
 
 func (c *AccountsContainersVersionsUpdateCall) Do() (*ContainerVersion, error) {
@@ -4780,6 +4985,11 @@ func (c *AccountsPermissionsCreateCall) Fields(s ...googleapi.Field) *AccountsPe
 	return c
 }
 
+// AccountsPermissionsCreateCallDoer makes it easy to provide your own testable version of Do.
+type AccountsPermissionsCreateCallDoer interface {
+	Do() (*UserAccess, error)
+}
+
 func (c *AccountsPermissionsCreateCall) Do() (*UserAccess, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.useraccess)
@@ -4868,6 +5078,11 @@ func (c *AccountsPermissionsDeleteCall) Fields(s ...googleapi.Field) *AccountsPe
 	return c
 }
 
+// AccountsPermissionsDeleteCallDoer makes it easy to provide your own testable version of Do.
+type AccountsPermissionsDeleteCallDoer interface {
+	Do() error
+}
+
 func (c *AccountsPermissionsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4945,6 +5160,11 @@ func (r *AccountsPermissionsService) Get(accountId string, permissionId string) 
 func (c *AccountsPermissionsGetCall) Fields(s ...googleapi.Field) *AccountsPermissionsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// AccountsPermissionsGetCallDoer makes it easy to provide your own testable version of Do.
+type AccountsPermissionsGetCallDoer interface {
+	Do() (*UserAccess, error)
 }
 
 func (c *AccountsPermissionsGetCall) Do() (*UserAccess, error) {
@@ -5032,6 +5252,11 @@ func (c *AccountsPermissionsListCall) Fields(s ...googleapi.Field) *AccountsPerm
 	return c
 }
 
+// AccountsPermissionsListCallDoer makes it easy to provide your own testable version of Do.
+type AccountsPermissionsListCallDoer interface {
+	Do() (*ListAccountUsersResponse, error)
+}
+
 func (c *AccountsPermissionsListCall) Do() (*ListAccountUsersResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5112,6 +5337,11 @@ func (c *AccountsPermissionsUpdateCall) Fields(s ...googleapi.Field) *AccountsPe
 	return c
 }
 
+// AccountsPermissionsUpdateCallDoer makes it easy to provide your own testable version of Do.
+type AccountsPermissionsUpdateCallDoer interface {
+	Do() (*UserAccess, error)
+}
+
 func (c *AccountsPermissionsUpdateCall) Do() (*UserAccess, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.useraccess)
@@ -5180,4 +5410,11 @@ func (c *AccountsPermissionsUpdateCall) Do() (*UserAccess, error) {
 	//   ]
 	// }
 
+}
+
+// AccountsServicer makes it easy to provide your own testable versions of AccountsService.
+type AccountsServicer interface {
+	Get(accountId string) *AccountsGetCall
+	List() *AccountsListCall
+	Update(accountId string, account *Account) *AccountsUpdateCall
 }

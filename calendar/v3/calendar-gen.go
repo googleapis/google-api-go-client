@@ -1010,6 +1010,11 @@ func (c *AclDeleteCall) Fields(s ...googleapi.Field) *AclDeleteCall {
 	return c
 }
 
+// AclDeleteCallDoer makes it easy to provide your own testable version of Do.
+type AclDeleteCallDoer interface {
+	Do() error
+}
+
 func (c *AclDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1087,6 +1092,11 @@ func (r *AclService) Get(calendarId string, ruleId string) *AclGetCall {
 func (c *AclGetCall) Fields(s ...googleapi.Field) *AclGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// AclGetCallDoer makes it easy to provide your own testable version of Do.
+type AclGetCallDoer interface {
+	Do() (*AclRule, error)
 }
 
 func (c *AclGetCall) Do() (*AclRule, error) {
@@ -1174,6 +1184,11 @@ func (r *AclService) Insert(calendarId string, aclrule *AclRule) *AclInsertCall 
 func (c *AclInsertCall) Fields(s ...googleapi.Field) *AclInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// AclInsertCallDoer makes it easy to provide your own testable version of Do.
+type AclInsertCallDoer interface {
+	Do() (*AclRule, error)
 }
 
 func (c *AclInsertCall) Do() (*AclRule, error) {
@@ -1301,6 +1316,11 @@ func (c *AclListCall) Fields(s ...googleapi.Field) *AclListCall {
 	return c
 }
 
+// AclListCallDoer makes it easy to provide your own testable version of Do.
+type AclListCallDoer interface {
+	Do() (*Acl, error)
+}
+
 func (c *AclListCall) Do() (*Acl, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1417,6 +1437,11 @@ func (c *AclPatchCall) Fields(s ...googleapi.Field) *AclPatchCall {
 	return c
 }
 
+// AclPatchCallDoer makes it easy to provide your own testable version of Do.
+type AclPatchCallDoer interface {
+	Do() (*AclRule, error)
+}
+
 func (c *AclPatchCall) Do() (*AclRule, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.aclrule)
@@ -1512,6 +1537,11 @@ func (r *AclService) Update(calendarId string, ruleId string, aclrule *AclRule) 
 func (c *AclUpdateCall) Fields(s ...googleapi.Field) *AclUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// AclUpdateCallDoer makes it easy to provide your own testable version of Do.
+type AclUpdateCallDoer interface {
+	Do() (*AclRule, error)
 }
 
 func (c *AclUpdateCall) Do() (*AclRule, error) {
@@ -1649,6 +1679,11 @@ func (c *AclWatchCall) Fields(s ...googleapi.Field) *AclWatchCall {
 	return c
 }
 
+// AclWatchCallDoer makes it easy to provide your own testable version of Do.
+type AclWatchCallDoer interface {
+	Do() (*Channel, error)
+}
+
 func (c *AclWatchCall) Do() (*Channel, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channel)
@@ -1747,6 +1782,17 @@ func (c *AclWatchCall) Do() (*Channel, error) {
 
 }
 
+// AclServicer makes it easy to provide your own testable versions of AclService.
+type AclServicer interface {
+	Delete(calendarId string, ruleId string) AclDeleteCallDoer
+	Get(calendarId string, ruleId string) AclGetCallDoer
+	Insert(calendarId string, aclrule *AclRule) AclInsertCallDoer
+	List(calendarId string) AclListCallDoer
+	Patch(calendarId string, ruleId string, aclrule *AclRule) AclPatchCallDoer
+	Update(calendarId string, ruleId string, aclrule *AclRule) AclUpdateCallDoer
+	Watch(calendarId string, channel *Channel) AclWatchCallDoer
+}
+
 // method id "calendar.calendarList.delete":
 
 type CalendarListDeleteCall struct {
@@ -1768,6 +1814,11 @@ func (r *CalendarListService) Delete(calendarId string) *CalendarListDeleteCall 
 func (c *CalendarListDeleteCall) Fields(s ...googleapi.Field) *CalendarListDeleteCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// CalendarListDeleteCallDoer makes it easy to provide your own testable version of Do.
+type CalendarListDeleteCallDoer interface {
+	Do() error
 }
 
 func (c *CalendarListDeleteCall) Do() error {
@@ -1837,6 +1888,11 @@ func (r *CalendarListService) Get(calendarId string) *CalendarListGetCall {
 func (c *CalendarListGetCall) Fields(s ...googleapi.Field) *CalendarListGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// CalendarListGetCallDoer makes it easy to provide your own testable version of Do.
+type CalendarListGetCallDoer interface {
+	Do() (*CalendarListEntry, error)
 }
 
 func (c *CalendarListGetCall) Do() (*CalendarListEntry, error) {
@@ -1924,6 +1980,11 @@ func (c *CalendarListInsertCall) ColorRgbFormat(colorRgbFormat bool) *CalendarLi
 func (c *CalendarListInsertCall) Fields(s ...googleapi.Field) *CalendarListInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// CalendarListInsertCallDoer makes it easy to provide your own testable version of Do.
+type CalendarListInsertCallDoer interface {
+	Do() (*CalendarListEntry, error)
 }
 
 func (c *CalendarListInsertCall) Do() (*CalendarListEntry, error) {
@@ -2071,6 +2132,11 @@ func (c *CalendarListListCall) Fields(s ...googleapi.Field) *CalendarListListCal
 	return c
 }
 
+// CalendarListListCallDoer makes it easy to provide your own testable version of Do.
+type CalendarListListCallDoer interface {
+	Do() (*CalendarList, error)
+}
+
 func (c *CalendarListListCall) Do() (*CalendarList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2213,6 +2279,11 @@ func (c *CalendarListPatchCall) Fields(s ...googleapi.Field) *CalendarListPatchC
 	return c
 }
 
+// CalendarListPatchCallDoer makes it easy to provide your own testable version of Do.
+type CalendarListPatchCallDoer interface {
+	Do() (*CalendarListEntry, error)
+}
+
 func (c *CalendarListPatchCall) Do() (*CalendarListEntry, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.calendarlistentry)
@@ -2316,6 +2387,11 @@ func (c *CalendarListUpdateCall) ColorRgbFormat(colorRgbFormat bool) *CalendarLi
 func (c *CalendarListUpdateCall) Fields(s ...googleapi.Field) *CalendarListUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// CalendarListUpdateCallDoer makes it easy to provide your own testable version of Do.
+type CalendarListUpdateCallDoer interface {
+	Do() (*CalendarListEntry, error)
 }
 
 func (c *CalendarListUpdateCall) Do() (*CalendarListEntry, error) {
@@ -2476,6 +2552,11 @@ func (c *CalendarListWatchCall) Fields(s ...googleapi.Field) *CalendarListWatchC
 	return c
 }
 
+// CalendarListWatchCallDoer makes it easy to provide your own testable version of Do.
+type CalendarListWatchCallDoer interface {
+	Do() (*Channel, error)
+}
+
 func (c *CalendarListWatchCall) Do() (*Channel, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channel)
@@ -2592,6 +2673,17 @@ func (c *CalendarListWatchCall) Do() (*Channel, error) {
 
 }
 
+// CalendarListServicer makes it easy to provide your own testable versions of CalendarListService.
+type CalendarListServicer interface {
+	Delete(calendarId string) CalendarListDeleteCallDoer
+	Get(calendarId string) CalendarListGetCallDoer
+	Insert(calendarlistentry *CalendarListEntry) CalendarListInsertCallDoer
+	List() CalendarListListCallDoer
+	Patch(calendarId string, calendarlistentry *CalendarListEntry) CalendarListPatchCallDoer
+	Update(calendarId string, calendarlistentry *CalendarListEntry) CalendarListUpdateCallDoer
+	Watch(channel *Channel) CalendarListWatchCallDoer
+}
+
 // method id "calendar.calendars.clear":
 
 type CalendarsClearCall struct {
@@ -2614,6 +2706,11 @@ func (r *CalendarsService) Clear(calendarId string) *CalendarsClearCall {
 func (c *CalendarsClearCall) Fields(s ...googleapi.Field) *CalendarsClearCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// CalendarsClearCallDoer makes it easy to provide your own testable version of Do.
+type CalendarsClearCallDoer interface {
+	Do() error
 }
 
 func (c *CalendarsClearCall) Do() error {
@@ -2686,6 +2783,11 @@ func (c *CalendarsDeleteCall) Fields(s ...googleapi.Field) *CalendarsDeleteCall 
 	return c
 }
 
+// CalendarsDeleteCallDoer makes it easy to provide your own testable version of Do.
+type CalendarsDeleteCallDoer interface {
+	Do() error
+}
+
 func (c *CalendarsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2753,6 +2855,11 @@ func (r *CalendarsService) Get(calendarId string) *CalendarsGetCall {
 func (c *CalendarsGetCall) Fields(s ...googleapi.Field) *CalendarsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// CalendarsGetCallDoer makes it easy to provide your own testable version of Do.
+type CalendarsGetCallDoer interface {
+	Do() (*Calendar, error)
 }
 
 func (c *CalendarsGetCall) Do() (*Calendar, error) {
@@ -2832,6 +2939,11 @@ func (c *CalendarsInsertCall) Fields(s ...googleapi.Field) *CalendarsInsertCall 
 	return c
 }
 
+// CalendarsInsertCallDoer makes it easy to provide your own testable version of Do.
+type CalendarsInsertCallDoer interface {
+	Do() (*Calendar, error)
+}
+
 func (c *CalendarsInsertCall) Do() (*Calendar, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.calendar)
@@ -2905,6 +3017,11 @@ func (r *CalendarsService) Patch(calendarId string, calendar *Calendar) *Calenda
 func (c *CalendarsPatchCall) Fields(s ...googleapi.Field) *CalendarsPatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// CalendarsPatchCallDoer makes it easy to provide your own testable version of Do.
+type CalendarsPatchCallDoer interface {
+	Do() (*Calendar, error)
 }
 
 func (c *CalendarsPatchCall) Do() (*Calendar, error) {
@@ -2994,6 +3111,11 @@ func (c *CalendarsUpdateCall) Fields(s ...googleapi.Field) *CalendarsUpdateCall 
 	return c
 }
 
+// CalendarsUpdateCallDoer makes it easy to provide your own testable version of Do.
+type CalendarsUpdateCallDoer interface {
+	Do() (*Calendar, error)
+}
+
 func (c *CalendarsUpdateCall) Do() (*Calendar, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.calendar)
@@ -3056,6 +3178,16 @@ func (c *CalendarsUpdateCall) Do() (*Calendar, error) {
 
 }
 
+// CalendarsServicer makes it easy to provide your own testable versions of CalendarsService.
+type CalendarsServicer interface {
+	Clear(calendarId string) CalendarsClearCallDoer
+	Delete(calendarId string) CalendarsDeleteCallDoer
+	Get(calendarId string) CalendarsGetCallDoer
+	Insert(calendar *Calendar) CalendarsInsertCallDoer
+	Patch(calendarId string, calendar *Calendar) CalendarsPatchCallDoer
+	Update(calendarId string, calendar *Calendar) CalendarsUpdateCallDoer
+}
+
 // method id "calendar.channels.stop":
 
 type ChannelsStopCall struct {
@@ -3077,6 +3209,11 @@ func (r *ChannelsService) Stop(channel *Channel) *ChannelsStopCall {
 func (c *ChannelsStopCall) Fields(s ...googleapi.Field) *ChannelsStopCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ChannelsStopCallDoer makes it easy to provide your own testable version of Do.
+type ChannelsStopCallDoer interface {
+	Do() error
 }
 
 func (c *ChannelsStopCall) Do() error {
@@ -3123,6 +3260,11 @@ func (c *ChannelsStopCall) Do() error {
 
 }
 
+// ChannelsServicer makes it easy to provide your own testable versions of ChannelsService.
+type ChannelsServicer interface {
+	Stop(channel *Channel) ChannelsStopCallDoer
+}
+
 // method id "calendar.colors.get":
 
 type ColorsGetCall struct {
@@ -3142,6 +3284,11 @@ func (r *ColorsService) Get() *ColorsGetCall {
 func (c *ColorsGetCall) Fields(s ...googleapi.Field) *ColorsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ColorsGetCallDoer makes it easy to provide your own testable version of Do.
+type ColorsGetCallDoer interface {
+	Do() (*Colors, error)
 }
 
 func (c *ColorsGetCall) Do() (*Colors, error) {
@@ -3185,6 +3332,11 @@ func (c *ColorsGetCall) Do() (*Colors, error) {
 
 }
 
+// ColorsServicer makes it easy to provide your own testable versions of ColorsService.
+type ColorsServicer interface {
+	Get() ColorsGetCallDoer
+}
+
 // method id "calendar.events.delete":
 
 type EventsDeleteCall struct {
@@ -3216,6 +3368,11 @@ func (c *EventsDeleteCall) SendNotifications(sendNotifications bool) *EventsDele
 func (c *EventsDeleteCall) Fields(s ...googleapi.Field) *EventsDeleteCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// EventsDeleteCallDoer makes it easy to provide your own testable version of Do.
+type EventsDeleteCallDoer interface {
+	Do() error
 }
 
 func (c *EventsDeleteCall) Do() error {
@@ -3333,6 +3490,11 @@ func (c *EventsGetCall) Fields(s ...googleapi.Field) *EventsGetCall {
 	return c
 }
 
+// EventsGetCallDoer makes it easy to provide your own testable version of Do.
+type EventsGetCallDoer interface {
+	Do() (*Event, error)
+}
+
 func (c *EventsGetCall) Do() (*Event, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3447,6 +3609,11 @@ func (c *EventsImportCall) Fields(s ...googleapi.Field) *EventsImportCall {
 	return c
 }
 
+// EventsImportCallDoer makes it easy to provide your own testable version of Do.
+type EventsImportCallDoer interface {
+	Do() (*Event, error)
+}
+
 func (c *EventsImportCall) Do() (*Event, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.event)
@@ -3549,6 +3716,11 @@ func (c *EventsInsertCall) SendNotifications(sendNotifications bool) *EventsInse
 func (c *EventsInsertCall) Fields(s ...googleapi.Field) *EventsInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// EventsInsertCallDoer makes it easy to provide your own testable version of Do.
+type EventsInsertCallDoer interface {
+	Do() (*Event, error)
 }
 
 func (c *EventsInsertCall) Do() (*Event, error) {
@@ -3729,6 +3901,11 @@ func (c *EventsInstancesCall) TimeZone(timeZone string) *EventsInstancesCall {
 func (c *EventsInstancesCall) Fields(s ...googleapi.Field) *EventsInstancesCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// EventsInstancesCallDoer makes it easy to provide your own testable version of Do.
+type EventsInstancesCallDoer interface {
+	Do() (*Events, error)
 }
 
 func (c *EventsInstancesCall) Do() (*Events, error) {
@@ -4069,6 +4246,11 @@ func (c *EventsListCall) Fields(s ...googleapi.Field) *EventsListCall {
 	return c
 }
 
+// EventsListCallDoer makes it easy to provide your own testable version of Do.
+type EventsListCallDoer interface {
+	Do() (*Events, error)
+}
+
 func (c *EventsListCall) Do() (*Events, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4313,6 +4495,11 @@ func (c *EventsMoveCall) Fields(s ...googleapi.Field) *EventsMoveCall {
 	return c
 }
 
+// EventsMoveCallDoer makes it easy to provide your own testable version of Do.
+type EventsMoveCallDoer interface {
+	Do() (*Event, error)
+}
+
 func (c *EventsMoveCall) Do() (*Event, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4446,6 +4633,11 @@ func (c *EventsPatchCall) Fields(s ...googleapi.Field) *EventsPatchCall {
 	return c
 }
 
+// EventsPatchCallDoer makes it easy to provide your own testable version of Do.
+type EventsPatchCallDoer interface {
+	Do() (*Event, error)
+}
+
 func (c *EventsPatchCall) Do() (*Event, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.event)
@@ -4575,6 +4767,11 @@ func (c *EventsQuickAddCall) Fields(s ...googleapi.Field) *EventsQuickAddCall {
 	return c
 }
 
+// EventsQuickAddCallDoer makes it easy to provide your own testable version of Do.
+type EventsQuickAddCallDoer interface {
+	Do() (*Event, error)
+}
+
 func (c *EventsQuickAddCall) Do() (*Event, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4698,6 +4895,11 @@ func (c *EventsUpdateCall) SendNotifications(sendNotifications bool) *EventsUpda
 func (c *EventsUpdateCall) Fields(s ...googleapi.Field) *EventsUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// EventsUpdateCallDoer makes it easy to provide your own testable version of Do.
+type EventsUpdateCallDoer interface {
+	Do() (*Event, error)
 }
 
 func (c *EventsUpdateCall) Do() (*Event, error) {
@@ -4995,6 +5197,11 @@ func (c *EventsWatchCall) Fields(s ...googleapi.Field) *EventsWatchCall {
 	return c
 }
 
+// EventsWatchCallDoer makes it easy to provide your own testable version of Do.
+type EventsWatchCallDoer interface {
+	Do() (*Channel, error)
+}
+
 func (c *EventsWatchCall) Do() (*Channel, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channel)
@@ -5213,6 +5420,21 @@ func (c *EventsWatchCall) Do() (*Channel, error) {
 
 }
 
+// EventsServicer makes it easy to provide your own testable versions of EventsService.
+type EventsServicer interface {
+	Delete(calendarId string, eventId string) EventsDeleteCallDoer
+	Get(calendarId string, eventId string) EventsGetCallDoer
+	Import(calendarId string, event *Event) EventsImportCallDoer
+	Insert(calendarId string, event *Event) EventsInsertCallDoer
+	Instances(calendarId string, eventId string) EventsInstancesCallDoer
+	List(calendarId string) EventsListCallDoer
+	Move(calendarId string, eventId string, destinationid string) EventsMoveCallDoer
+	Patch(calendarId string, eventId string, event *Event) EventsPatchCallDoer
+	QuickAdd(calendarId string, text string) EventsQuickAddCallDoer
+	Update(calendarId string, eventId string, event *Event) EventsUpdateCallDoer
+	Watch(calendarId string, channel *Channel) EventsWatchCallDoer
+}
+
 // method id "calendar.freebusy.query":
 
 type FreebusyQueryCall struct {
@@ -5234,6 +5456,11 @@ func (r *FreebusyService) Query(freebusyrequest *FreeBusyRequest) *FreebusyQuery
 func (c *FreebusyQueryCall) Fields(s ...googleapi.Field) *FreebusyQueryCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// FreebusyQueryCallDoer makes it easy to provide your own testable version of Do.
+type FreebusyQueryCallDoer interface {
+	Do() (*FreeBusyResponse, error)
 }
 
 func (c *FreebusyQueryCall) Do() (*FreeBusyResponse, error) {
@@ -5286,6 +5513,11 @@ func (c *FreebusyQueryCall) Do() (*FreeBusyResponse, error) {
 
 }
 
+// FreebusyServicer makes it easy to provide your own testable versions of FreebusyService.
+type FreebusyServicer interface {
+	Query(freebusyrequest *FreeBusyRequest) FreebusyQueryCallDoer
+}
+
 // method id "calendar.settings.get":
 
 type SettingsGetCall struct {
@@ -5307,6 +5539,11 @@ func (r *SettingsService) Get(setting string) *SettingsGetCall {
 func (c *SettingsGetCall) Fields(s ...googleapi.Field) *SettingsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// SettingsGetCallDoer makes it easy to provide your own testable version of Do.
+type SettingsGetCallDoer interface {
+	Do() (*Setting, error)
 }
 
 func (c *SettingsGetCall) Do() (*Setting, error) {
@@ -5411,6 +5648,11 @@ func (c *SettingsListCall) SyncToken(syncToken string) *SettingsListCall {
 func (c *SettingsListCall) Fields(s ...googleapi.Field) *SettingsListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// SettingsListCallDoer makes it easy to provide your own testable version of Do.
+type SettingsListCallDoer interface {
+	Do() (*Settings, error)
 }
 
 func (c *SettingsListCall) Do() (*Settings, error) {
@@ -5535,6 +5777,11 @@ func (c *SettingsWatchCall) Fields(s ...googleapi.Field) *SettingsWatchCall {
 	return c
 }
 
+// SettingsWatchCallDoer makes it easy to provide your own testable version of Do.
+type SettingsWatchCallDoer interface {
+	Do() (*Channel, error)
+}
+
 func (c *SettingsWatchCall) Do() (*Channel, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channel)
@@ -5613,4 +5860,11 @@ func (c *SettingsWatchCall) Do() (*Channel, error) {
 	//   "supportsSubscription": true
 	// }
 
+}
+
+// SettingsServicer makes it easy to provide your own testable versions of SettingsService.
+type SettingsServicer interface {
+	Get(setting string) SettingsGetCallDoer
+	List() SettingsListCallDoer
+	Watch(channel *Channel) SettingsWatchCallDoer
 }

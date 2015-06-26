@@ -395,6 +395,11 @@ func (c *AutoscalersDeleteCall) Fields(s ...googleapi.Field) *AutoscalersDeleteC
 	return c
 }
 
+// AutoscalersDeleteCallDoer makes it easy to provide your own testable version of Do.
+type AutoscalersDeleteCallDoer interface {
+	Do() (*Operation, error)
+}
+
 func (c *AutoscalersDeleteCall) Do() (*Operation, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -489,6 +494,11 @@ func (r *AutoscalersService) Get(project string, zone string, autoscaler string)
 func (c *AutoscalersGetCall) Fields(s ...googleapi.Field) *AutoscalersGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// AutoscalersGetCallDoer makes it easy to provide your own testable version of Do.
+type AutoscalersGetCallDoer interface {
+	Do() (*Autoscaler, error)
 }
 
 func (c *AutoscalersGetCall) Do() (*Autoscaler, error) {
@@ -586,6 +596,11 @@ func (r *AutoscalersService) Insert(project string, zone string, autoscaler *Aut
 func (c *AutoscalersInsertCall) Fields(s ...googleapi.Field) *AutoscalersInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// AutoscalersInsertCallDoer makes it easy to provide your own testable version of Do.
+type AutoscalersInsertCallDoer interface {
+	Do() (*Operation, error)
 }
 
 func (c *AutoscalersInsertCall) Do() (*Operation, error) {
@@ -699,6 +714,11 @@ func (c *AutoscalersListCall) PageToken(pageToken string) *AutoscalersListCall {
 func (c *AutoscalersListCall) Fields(s ...googleapi.Field) *AutoscalersListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// AutoscalersListCallDoer makes it easy to provide your own testable version of Do.
+type AutoscalersListCallDoer interface {
+	Do() (*AutoscalerListResponse, error)
 }
 
 func (c *AutoscalersListCall) Do() (*AutoscalerListResponse, error) {
@@ -818,6 +838,11 @@ func (c *AutoscalersPatchCall) Fields(s ...googleapi.Field) *AutoscalersPatchCal
 	return c
 }
 
+// AutoscalersPatchCallDoer makes it easy to provide your own testable version of Do.
+type AutoscalersPatchCallDoer interface {
+	Do() (*Operation, error)
+}
+
 func (c *AutoscalersPatchCall) Do() (*Operation, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.autoscaler2)
@@ -925,6 +950,11 @@ func (c *AutoscalersUpdateCall) Fields(s ...googleapi.Field) *AutoscalersUpdateC
 	return c
 }
 
+// AutoscalersUpdateCallDoer makes it easy to provide your own testable version of Do.
+type AutoscalersUpdateCallDoer interface {
+	Do() (*Operation, error)
+}
+
 func (c *AutoscalersUpdateCall) Do() (*Operation, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.autoscaler2)
@@ -1003,6 +1033,16 @@ func (c *AutoscalersUpdateCall) Do() (*Operation, error) {
 
 }
 
+// AutoscalersServicer makes it easy to provide your own testable versions of AutoscalersService.
+type AutoscalersServicer interface {
+	Delete(project string, zone string, autoscaler string) AutoscalersDeleteCallDoer
+	Get(project string, zone string, autoscaler string) AutoscalersGetCallDoer
+	Insert(project string, zone string, autoscaler *Autoscaler) AutoscalersInsertCallDoer
+	List(project string, zone string) AutoscalersListCallDoer
+	Patch(project string, zone string, autoscaler string, autoscaler2 *Autoscaler) AutoscalersPatchCallDoer
+	Update(project string, zone string, autoscaler string, autoscaler2 *Autoscaler) AutoscalersUpdateCallDoer
+}
+
 // method id "autoscaler.zoneOperations.delete":
 
 type ZoneOperationsDeleteCall struct {
@@ -1028,6 +1068,11 @@ func (r *ZoneOperationsService) Delete(project string, zone string, operation st
 func (c *ZoneOperationsDeleteCall) Fields(s ...googleapi.Field) *ZoneOperationsDeleteCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ZoneOperationsDeleteCallDoer makes it easy to provide your own testable version of Do.
+type ZoneOperationsDeleteCallDoer interface {
+	Do() error
 }
 
 func (c *ZoneOperationsDeleteCall) Do() error {
@@ -1117,6 +1162,11 @@ func (r *ZoneOperationsService) Get(project string, zone string, operation strin
 func (c *ZoneOperationsGetCall) Fields(s ...googleapi.Field) *ZoneOperationsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ZoneOperationsGetCallDoer makes it easy to provide your own testable version of Do.
+type ZoneOperationsGetCallDoer interface {
+	Do() (*Operation, error)
 }
 
 func (c *ZoneOperationsGetCall) Do() (*Operation, error) {
@@ -1233,6 +1283,11 @@ func (c *ZoneOperationsListCall) Fields(s ...googleapi.Field) *ZoneOperationsLis
 	return c
 }
 
+// ZoneOperationsListCallDoer makes it easy to provide your own testable version of Do.
+type ZoneOperationsListCallDoer interface {
+	Do() (*OperationList, error)
+}
+
 func (c *ZoneOperationsListCall) Do() (*OperationList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1320,6 +1375,13 @@ func (c *ZoneOperationsListCall) Do() (*OperationList, error) {
 
 }
 
+// ZoneOperationsServicer makes it easy to provide your own testable versions of ZoneOperationsService.
+type ZoneOperationsServicer interface {
+	Delete(project string, zone string, operation string) ZoneOperationsDeleteCallDoer
+	Get(project string, zone string, operation string) ZoneOperationsGetCallDoer
+	List(project string, zone string) ZoneOperationsListCallDoer
+}
+
 // method id "autoscaler.zones.list":
 
 type ZonesListCall struct {
@@ -1359,6 +1421,11 @@ func (c *ZonesListCall) PageToken(pageToken string) *ZonesListCall {
 func (c *ZonesListCall) Fields(s ...googleapi.Field) *ZonesListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ZonesListCallDoer makes it easy to provide your own testable version of Do.
+type ZonesListCallDoer interface {
+	Do() (*ZoneList, error)
 }
 
 func (c *ZonesListCall) Do() (*ZoneList, error) {
@@ -1438,4 +1505,9 @@ func (c *ZonesListCall) Do() (*ZoneList, error) {
 	//   ]
 	// }
 
+}
+
+// ZonesServicer makes it easy to provide your own testable versions of ZonesService.
+type ZonesServicer interface {
+	List(project string) ZonesListCallDoer
 }

@@ -425,6 +425,11 @@ func (c *HostedmodelsPredictCall) Fields(s ...googleapi.Field) *HostedmodelsPred
 	return c
 }
 
+// HostedmodelsPredictCallDoer makes it easy to provide your own testable version of Do.
+type HostedmodelsPredictCallDoer interface {
+	Do() (*Output, error)
+}
+
 func (c *HostedmodelsPredictCall) Do() (*Output, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.input)
@@ -495,6 +500,11 @@ func (c *HostedmodelsPredictCall) Do() (*Output, error) {
 
 }
 
+// HostedmodelsServicer makes it easy to provide your own testable versions of HostedmodelsService.
+type HostedmodelsServicer interface {
+	Predict(project string, hostedModelName string, input *Input) HostedmodelsPredictCallDoer
+}
+
 // method id "prediction.trainedmodels.analyze":
 
 type TrainedmodelsAnalyzeCall struct {
@@ -519,6 +529,11 @@ func (r *TrainedmodelsService) Analyze(project string, id string) *Trainedmodels
 func (c *TrainedmodelsAnalyzeCall) Fields(s ...googleapi.Field) *TrainedmodelsAnalyzeCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// TrainedmodelsAnalyzeCallDoer makes it easy to provide your own testable version of Do.
+type TrainedmodelsAnalyzeCallDoer interface {
+	Do() (*Analyze, error)
 }
 
 func (c *TrainedmodelsAnalyzeCall) Do() (*Analyze, error) {
@@ -607,6 +622,11 @@ func (c *TrainedmodelsDeleteCall) Fields(s ...googleapi.Field) *TrainedmodelsDel
 	return c
 }
 
+// TrainedmodelsDeleteCallDoer makes it easy to provide your own testable version of Do.
+type TrainedmodelsDeleteCallDoer interface {
+	Do() error
+}
+
 func (c *TrainedmodelsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -684,6 +704,11 @@ func (r *TrainedmodelsService) Get(project string, id string) *TrainedmodelsGetC
 func (c *TrainedmodelsGetCall) Fields(s ...googleapi.Field) *TrainedmodelsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// TrainedmodelsGetCallDoer makes it easy to provide your own testable version of Do.
+type TrainedmodelsGetCallDoer interface {
+	Do() (*Insert2, error)
 }
 
 func (c *TrainedmodelsGetCall) Do() (*Insert2, error) {
@@ -770,6 +795,11 @@ func (r *TrainedmodelsService) Insert(project string, insert *Insert) *Trainedmo
 func (c *TrainedmodelsInsertCall) Fields(s ...googleapi.Field) *TrainedmodelsInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// TrainedmodelsInsertCallDoer makes it easy to provide your own testable version of Do.
+type TrainedmodelsInsertCallDoer interface {
+	Do() (*Insert2, error)
 }
 
 func (c *TrainedmodelsInsertCall) Do() (*Insert2, error) {
@@ -873,6 +903,11 @@ func (c *TrainedmodelsListCall) Fields(s ...googleapi.Field) *TrainedmodelsListC
 	return c
 }
 
+// TrainedmodelsListCallDoer makes it easy to provide your own testable version of Do.
+type TrainedmodelsListCallDoer interface {
+	Do() (*List, error)
+}
+
 func (c *TrainedmodelsListCall) Do() (*List, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -969,6 +1004,11 @@ func (r *TrainedmodelsService) Predict(project string, id string, input *Input) 
 func (c *TrainedmodelsPredictCall) Fields(s ...googleapi.Field) *TrainedmodelsPredictCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// TrainedmodelsPredictCallDoer makes it easy to provide your own testable version of Do.
+type TrainedmodelsPredictCallDoer interface {
+	Do() (*Output, error)
 }
 
 func (c *TrainedmodelsPredictCall) Do() (*Output, error) {
@@ -1068,6 +1108,11 @@ func (c *TrainedmodelsUpdateCall) Fields(s ...googleapi.Field) *TrainedmodelsUpd
 	return c
 }
 
+// TrainedmodelsUpdateCallDoer makes it easy to provide your own testable version of Do.
+type TrainedmodelsUpdateCallDoer interface {
+	Do() (*Insert2, error)
+}
+
 func (c *TrainedmodelsUpdateCall) Do() (*Insert2, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.update)
@@ -1136,4 +1181,15 @@ func (c *TrainedmodelsUpdateCall) Do() (*Insert2, error) {
 	//   ]
 	// }
 
+}
+
+// TrainedmodelsServicer makes it easy to provide your own testable versions of TrainedmodelsService.
+type TrainedmodelsServicer interface {
+	Analyze(project string, id string) TrainedmodelsAnalyzeCallDoer
+	Delete(project string, id string) TrainedmodelsDeleteCallDoer
+	Get(project string, id string) TrainedmodelsGetCallDoer
+	Insert(project string, insert *Insert) TrainedmodelsInsertCallDoer
+	List(project string) TrainedmodelsListCallDoer
+	Predict(project string, id string, input *Input) TrainedmodelsPredictCallDoer
+	Update(project string, id string, update *Update) TrainedmodelsUpdateCallDoer
 }

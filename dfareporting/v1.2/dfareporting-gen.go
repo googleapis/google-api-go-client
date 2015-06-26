@@ -830,6 +830,11 @@ func (c *DimensionValuesQueryCall) Fields(s ...googleapi.Field) *DimensionValues
 	return c
 }
 
+// DimensionValuesQueryCallDoer makes it easy to provide your own testable version of Do.
+type DimensionValuesQueryCallDoer interface {
+	Do() (*DimensionValueList, error)
+}
+
 func (c *DimensionValuesQueryCall) Do() (*DimensionValueList, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.dimensionvaluerequest)
@@ -912,6 +917,11 @@ func (c *DimensionValuesQueryCall) Do() (*DimensionValueList, error) {
 
 }
 
+// DimensionValuesServicer makes it easy to provide your own testable versions of DimensionValuesService.
+type DimensionValuesServicer interface {
+	Query(profileId int64, dimensionvaluerequest *DimensionValueRequest) DimensionValuesQueryCallDoer
+}
+
 // method id "dfareporting.files.get":
 
 type FilesGetCall struct {
@@ -935,6 +945,11 @@ func (r *FilesService) Get(reportId int64, fileId int64) *FilesGetCall {
 func (c *FilesGetCall) Fields(s ...googleapi.Field) *FilesGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// FilesGetCallDoer makes it easy to provide your own testable version of Do.
+type FilesGetCallDoer interface {
+	Do() (*File, error)
 }
 
 func (c *FilesGetCall) Do() (*File, error) {
@@ -1072,6 +1087,11 @@ func (c *FilesListCall) Fields(s ...googleapi.Field) *FilesListCall {
 	return c
 }
 
+// FilesListCallDoer makes it easy to provide your own testable version of Do.
+type FilesListCallDoer interface {
+	Do() (*FileList, error)
+}
+
 func (c *FilesListCall) Do() (*FileList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1198,6 +1218,12 @@ func (c *FilesListCall) Do() (*FileList, error) {
 
 }
 
+// FilesServicer makes it easy to provide your own testable versions of FilesService.
+type FilesServicer interface {
+	Get(reportId int64, fileId int64) FilesGetCallDoer
+	List(profileId int64) FilesListCallDoer
+}
+
 // method id "dfareporting.reports.delete":
 
 type ReportsDeleteCall struct {
@@ -1221,6 +1247,11 @@ func (r *ReportsService) Delete(profileId int64, reportId int64) *ReportsDeleteC
 func (c *ReportsDeleteCall) Fields(s ...googleapi.Field) *ReportsDeleteCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ReportsDeleteCallDoer makes it easy to provide your own testable version of Do.
+type ReportsDeleteCallDoer interface {
+	Do() error
 }
 
 func (c *ReportsDeleteCall) Do() error {
@@ -1302,6 +1333,11 @@ func (r *ReportsService) Get(profileId int64, reportId int64) *ReportsGetCall {
 func (c *ReportsGetCall) Fields(s ...googleapi.Field) *ReportsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ReportsGetCallDoer makes it easy to provide your own testable version of Do.
+type ReportsGetCallDoer interface {
+	Do() (*Report, error)
 }
 
 func (c *ReportsGetCall) Do() (*Report, error) {
@@ -1390,6 +1426,11 @@ func (r *ReportsService) Insert(profileId int64, report *Report) *ReportsInsertC
 func (c *ReportsInsertCall) Fields(s ...googleapi.Field) *ReportsInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ReportsInsertCallDoer makes it easy to provide your own testable version of Do.
+type ReportsInsertCallDoer interface {
+	Do() (*Report, error)
 }
 
 func (c *ReportsInsertCall) Do() (*Report, error) {
@@ -1524,6 +1565,11 @@ func (c *ReportsListCall) SortOrder(sortOrder string) *ReportsListCall {
 func (c *ReportsListCall) Fields(s ...googleapi.Field) *ReportsListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ReportsListCallDoer makes it easy to provide your own testable version of Do.
+type ReportsListCallDoer interface {
+	Do() (*ReportList, error)
 }
 
 func (c *ReportsListCall) Do() (*ReportList, error) {
@@ -1679,6 +1725,11 @@ func (c *ReportsPatchCall) Fields(s ...googleapi.Field) *ReportsPatchCall {
 	return c
 }
 
+// ReportsPatchCallDoer makes it easy to provide your own testable version of Do.
+type ReportsPatchCallDoer interface {
+	Do() (*Report, error)
+}
+
 func (c *ReportsPatchCall) Do() (*Report, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.report)
@@ -1783,6 +1834,11 @@ func (c *ReportsRunCall) Fields(s ...googleapi.Field) *ReportsRunCall {
 	return c
 }
 
+// ReportsRunCallDoer makes it easy to provide your own testable version of Do.
+type ReportsRunCallDoer interface {
+	Do() (*File, error)
+}
+
 func (c *ReportsRunCall) Do() (*File, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1879,6 +1935,11 @@ func (r *ReportsService) Update(profileId int64, reportId int64, report *Report)
 func (c *ReportsUpdateCall) Fields(s ...googleapi.Field) *ReportsUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ReportsUpdateCallDoer makes it easy to provide your own testable version of Do.
+type ReportsUpdateCallDoer interface {
+	Do() (*Report, error)
 }
 
 func (c *ReportsUpdateCall) Do() (*Report, error) {
@@ -1978,6 +2039,11 @@ func (r *ReportsFilesService) Get(profileId int64, reportId int64, fileId int64)
 func (c *ReportsFilesGetCall) Fields(s ...googleapi.Field) *ReportsFilesGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ReportsFilesGetCallDoer makes it easy to provide your own testable version of Do.
+type ReportsFilesGetCallDoer interface {
+	Do() (*File, error)
 }
 
 func (c *ReportsFilesGetCall) Do() (*File, error) {
@@ -2114,6 +2180,11 @@ func (c *ReportsFilesListCall) Fields(s ...googleapi.Field) *ReportsFilesListCal
 	return c
 }
 
+// ReportsFilesListCallDoer makes it easy to provide your own testable version of Do.
+type ReportsFilesListCallDoer interface {
+	Do() (*FileList, error)
+}
+
 func (c *ReportsFilesListCall) Do() (*FileList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2230,6 +2301,17 @@ func (c *ReportsFilesListCall) Do() (*FileList, error) {
 
 }
 
+// ReportsServicer makes it easy to provide your own testable versions of ReportsService.
+type ReportsServicer interface {
+	Delete(profileId int64, reportId int64) ReportsDeleteCallDoer
+	Get(profileId int64, reportId int64) ReportsGetCallDoer
+	Insert(profileId int64, report *Report) ReportsInsertCallDoer
+	List(profileId int64) ReportsListCallDoer
+	Patch(profileId int64, reportId int64, report *Report) ReportsPatchCallDoer
+	Run(profileId int64, reportId int64) ReportsRunCallDoer
+	Update(profileId int64, reportId int64, report *Report) ReportsUpdateCallDoer
+}
+
 // method id "dfareporting.userProfiles.get":
 
 type UserProfilesGetCall struct {
@@ -2251,6 +2333,11 @@ func (r *UserProfilesService) Get(profileId int64) *UserProfilesGetCall {
 func (c *UserProfilesGetCall) Fields(s ...googleapi.Field) *UserProfilesGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// UserProfilesGetCallDoer makes it easy to provide your own testable version of Do.
+type UserProfilesGetCallDoer interface {
+	Do() (*UserProfile, error)
 }
 
 func (c *UserProfilesGetCall) Do() (*UserProfile, error) {
@@ -2328,6 +2415,11 @@ func (c *UserProfilesListCall) Fields(s ...googleapi.Field) *UserProfilesListCal
 	return c
 }
 
+// UserProfilesListCallDoer makes it easy to provide your own testable version of Do.
+type UserProfilesListCallDoer interface {
+	Do() (*UserProfileList, error)
+}
+
 func (c *UserProfilesListCall) Do() (*UserProfileList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2366,4 +2458,10 @@ func (c *UserProfilesListCall) Do() (*UserProfileList, error) {
 	//   ]
 	// }
 
+}
+
+// UserProfilesServicer makes it easy to provide your own testable versions of UserProfilesService.
+type UserProfilesServicer interface {
+	Get(profileId int64) UserProfilesGetCallDoer
+	List() UserProfilesListCallDoer
 }

@@ -498,6 +498,12 @@ func (c *ProjectsSubscriptionsAcknowledgeCall) Fields(s ...googleapi.Field) *Pro
 	return c
 }
 
+// ProjectsSubscriptionsAcknowledgeCallDoer makes it easy to provide your own testable version of Do.
+type ProjectsSubscriptionsAcknowledgeCallDoer interface {
+	Do() (*Empty, error)
+	Fields(s ...googleapi.Field) ProjectsSubscriptionsAcknowledgeCallDoer
+}
+
 func (c *ProjectsSubscriptionsAcknowledgeCall) Do() (*Empty, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.acknowledgerequest)
@@ -592,6 +598,12 @@ func (c *ProjectsSubscriptionsCreateCall) Fields(s ...googleapi.Field) *Projects
 	return c
 }
 
+// ProjectsSubscriptionsCreateCallDoer makes it easy to provide your own testable version of Do.
+type ProjectsSubscriptionsCreateCallDoer interface {
+	Do() (*Subscription, error)
+	Fields(s ...googleapi.Field) ProjectsSubscriptionsCreateCallDoer
+}
+
 func (c *ProjectsSubscriptionsCreateCall) Do() (*Subscription, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.subscription)
@@ -684,6 +696,12 @@ func (c *ProjectsSubscriptionsDeleteCall) Fields(s ...googleapi.Field) *Projects
 	return c
 }
 
+// ProjectsSubscriptionsDeleteCallDoer makes it easy to provide your own testable version of Do.
+type ProjectsSubscriptionsDeleteCallDoer interface {
+	Do() (*Empty, error)
+	Fields(s ...googleapi.Field) ProjectsSubscriptionsDeleteCallDoer
+}
+
 func (c *ProjectsSubscriptionsDeleteCall) Do() (*Empty, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -760,6 +778,12 @@ func (r *ProjectsSubscriptionsService) Get(subscription string) *ProjectsSubscri
 func (c *ProjectsSubscriptionsGetCall) Fields(s ...googleapi.Field) *ProjectsSubscriptionsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ProjectsSubscriptionsGetCallDoer makes it easy to provide your own testable version of Do.
+type ProjectsSubscriptionsGetCallDoer interface {
+	Do() (*Subscription, error)
+	Fields(s ...googleapi.Field) ProjectsSubscriptionsGetCallDoer
 }
 
 func (c *ProjectsSubscriptionsGetCall) Do() (*Subscription, error) {
@@ -839,6 +863,12 @@ func (r *ProjectsSubscriptionsService) GetIamPolicy(resource string) *ProjectsSu
 func (c *ProjectsSubscriptionsGetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsSubscriptionsGetIamPolicyCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ProjectsSubscriptionsGetIamPolicyCallDoer makes it easy to provide your own testable version of Do.
+type ProjectsSubscriptionsGetIamPolicyCallDoer interface {
+	Do() (*Policy, error)
+	Fields(s ...googleapi.Field) ProjectsSubscriptionsGetIamPolicyCallDoer
 }
 
 func (c *ProjectsSubscriptionsGetIamPolicyCall) Do() (*Policy, error) {
@@ -933,6 +963,14 @@ func (c *ProjectsSubscriptionsListCall) PageToken(pageToken string) *ProjectsSub
 func (c *ProjectsSubscriptionsListCall) Fields(s ...googleapi.Field) *ProjectsSubscriptionsListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ProjectsSubscriptionsListCallDoer makes it easy to provide your own testable version of Do.
+type ProjectsSubscriptionsListCallDoer interface {
+	Do() (*ListSubscriptionsResponse, error)
+	PageSize(pageSize int64) ProjectsSubscriptionsListCallDoer
+	PageToken(pageToken string) ProjectsSubscriptionsListCallDoer
+	Fields(s ...googleapi.Field) ProjectsSubscriptionsListCallDoer
 }
 
 func (c *ProjectsSubscriptionsListCall) Do() (*ListSubscriptionsResponse, error) {
@@ -1035,6 +1073,12 @@ func (c *ProjectsSubscriptionsModifyAckDeadlineCall) Fields(s ...googleapi.Field
 	return c
 }
 
+// ProjectsSubscriptionsModifyAckDeadlineCallDoer makes it easy to provide your own testable version of Do.
+type ProjectsSubscriptionsModifyAckDeadlineCallDoer interface {
+	Do() (*Empty, error)
+	Fields(s ...googleapi.Field) ProjectsSubscriptionsModifyAckDeadlineCallDoer
+}
+
 func (c *ProjectsSubscriptionsModifyAckDeadlineCall) Do() (*Empty, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.modifyackdeadlinerequest)
@@ -1129,6 +1173,12 @@ func (c *ProjectsSubscriptionsModifyPushConfigCall) Fields(s ...googleapi.Field)
 	return c
 }
 
+// ProjectsSubscriptionsModifyPushConfigCallDoer makes it easy to provide your own testable version of Do.
+type ProjectsSubscriptionsModifyPushConfigCallDoer interface {
+	Do() (*Empty, error)
+	Fields(s ...googleapi.Field) ProjectsSubscriptionsModifyPushConfigCallDoer
+}
+
 func (c *ProjectsSubscriptionsModifyPushConfigCall) Do() (*Empty, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.modifypushconfigrequest)
@@ -1221,6 +1271,12 @@ func (c *ProjectsSubscriptionsPullCall) Fields(s ...googleapi.Field) *ProjectsSu
 	return c
 }
 
+// ProjectsSubscriptionsPullCallDoer makes it easy to provide your own testable version of Do.
+type ProjectsSubscriptionsPullCallDoer interface {
+	Do() (*PullResponse, error)
+	Fields(s ...googleapi.Field) ProjectsSubscriptionsPullCallDoer
+}
+
 func (c *ProjectsSubscriptionsPullCall) Do() (*PullResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.pullrequest)
@@ -1309,6 +1365,12 @@ func (r *ProjectsSubscriptionsService) SetIamPolicy(resource string, setiampolic
 func (c *ProjectsSubscriptionsSetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsSubscriptionsSetIamPolicyCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ProjectsSubscriptionsSetIamPolicyCallDoer makes it easy to provide your own testable version of Do.
+type ProjectsSubscriptionsSetIamPolicyCallDoer interface {
+	Do() (*Policy, error)
+	Fields(s ...googleapi.Field) ProjectsSubscriptionsSetIamPolicyCallDoer
 }
 
 func (c *ProjectsSubscriptionsSetIamPolicyCall) Do() (*Policy, error) {
@@ -1401,6 +1463,12 @@ func (c *ProjectsSubscriptionsTestIamPermissionsCall) Fields(s ...googleapi.Fiel
 	return c
 }
 
+// ProjectsSubscriptionsTestIamPermissionsCallDoer makes it easy to provide your own testable version of Do.
+type ProjectsSubscriptionsTestIamPermissionsCallDoer interface {
+	Do() (*TestIamPermissionsResponse, error)
+	Fields(s ...googleapi.Field) ProjectsSubscriptionsTestIamPermissionsCallDoer
+}
+
 func (c *ProjectsSubscriptionsTestIamPermissionsCall) Do() (*TestIamPermissionsResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.testiampermissionsrequest)
@@ -1488,6 +1556,12 @@ func (r *ProjectsTopicsService) Create(name string, topic *Topic) *ProjectsTopic
 func (c *ProjectsTopicsCreateCall) Fields(s ...googleapi.Field) *ProjectsTopicsCreateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ProjectsTopicsCreateCallDoer makes it easy to provide your own testable version of Do.
+type ProjectsTopicsCreateCallDoer interface {
+	Do() (*Topic, error)
+	Fields(s ...googleapi.Field) ProjectsTopicsCreateCallDoer
 }
 
 func (c *ProjectsTopicsCreateCall) Do() (*Topic, error) {
@@ -1581,6 +1655,12 @@ func (c *ProjectsTopicsDeleteCall) Fields(s ...googleapi.Field) *ProjectsTopicsD
 	return c
 }
 
+// ProjectsTopicsDeleteCallDoer makes it easy to provide your own testable version of Do.
+type ProjectsTopicsDeleteCallDoer interface {
+	Do() (*Empty, error)
+	Fields(s ...googleapi.Field) ProjectsTopicsDeleteCallDoer
+}
+
 func (c *ProjectsTopicsDeleteCall) Do() (*Empty, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1657,6 +1737,12 @@ func (r *ProjectsTopicsService) Get(topic string) *ProjectsTopicsGetCall {
 func (c *ProjectsTopicsGetCall) Fields(s ...googleapi.Field) *ProjectsTopicsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ProjectsTopicsGetCallDoer makes it easy to provide your own testable version of Do.
+type ProjectsTopicsGetCallDoer interface {
+	Do() (*Topic, error)
+	Fields(s ...googleapi.Field) ProjectsTopicsGetCallDoer
 }
 
 func (c *ProjectsTopicsGetCall) Do() (*Topic, error) {
@@ -1736,6 +1822,12 @@ func (r *ProjectsTopicsService) GetIamPolicy(resource string) *ProjectsTopicsGet
 func (c *ProjectsTopicsGetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsTopicsGetIamPolicyCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ProjectsTopicsGetIamPolicyCallDoer makes it easy to provide your own testable version of Do.
+type ProjectsTopicsGetIamPolicyCallDoer interface {
+	Do() (*Policy, error)
+	Fields(s ...googleapi.Field) ProjectsTopicsGetIamPolicyCallDoer
 }
 
 func (c *ProjectsTopicsGetIamPolicyCall) Do() (*Policy, error) {
@@ -1830,6 +1922,14 @@ func (c *ProjectsTopicsListCall) PageToken(pageToken string) *ProjectsTopicsList
 func (c *ProjectsTopicsListCall) Fields(s ...googleapi.Field) *ProjectsTopicsListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ProjectsTopicsListCallDoer makes it easy to provide your own testable version of Do.
+type ProjectsTopicsListCallDoer interface {
+	Do() (*ListTopicsResponse, error)
+	PageSize(pageSize int64) ProjectsTopicsListCallDoer
+	PageToken(pageToken string) ProjectsTopicsListCallDoer
+	Fields(s ...googleapi.Field) ProjectsTopicsListCallDoer
 }
 
 func (c *ProjectsTopicsListCall) Do() (*ListTopicsResponse, error) {
@@ -1930,6 +2030,12 @@ func (c *ProjectsTopicsPublishCall) Fields(s ...googleapi.Field) *ProjectsTopics
 	return c
 }
 
+// ProjectsTopicsPublishCallDoer makes it easy to provide your own testable version of Do.
+type ProjectsTopicsPublishCallDoer interface {
+	Do() (*PublishResponse, error)
+	Fields(s ...googleapi.Field) ProjectsTopicsPublishCallDoer
+}
+
 func (c *ProjectsTopicsPublishCall) Do() (*PublishResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.publishrequest)
@@ -2020,6 +2126,12 @@ func (c *ProjectsTopicsSetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsT
 	return c
 }
 
+// ProjectsTopicsSetIamPolicyCallDoer makes it easy to provide your own testable version of Do.
+type ProjectsTopicsSetIamPolicyCallDoer interface {
+	Do() (*Policy, error)
+	Fields(s ...googleapi.Field) ProjectsTopicsSetIamPolicyCallDoer
+}
+
 func (c *ProjectsTopicsSetIamPolicyCall) Do() (*Policy, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.setiampolicyrequest)
@@ -2108,6 +2220,12 @@ func (r *ProjectsTopicsService) TestIamPermissions(resource string, testiampermi
 func (c *ProjectsTopicsTestIamPermissionsCall) Fields(s ...googleapi.Field) *ProjectsTopicsTestIamPermissionsCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ProjectsTopicsTestIamPermissionsCallDoer makes it easy to provide your own testable version of Do.
+type ProjectsTopicsTestIamPermissionsCallDoer interface {
+	Do() (*TestIamPermissionsResponse, error)
+	Fields(s ...googleapi.Field) ProjectsTopicsTestIamPermissionsCallDoer
 }
 
 func (c *ProjectsTopicsTestIamPermissionsCall) Do() (*TestIamPermissionsResponse, error) {
@@ -2213,6 +2331,14 @@ func (c *ProjectsTopicsSubscriptionsListCall) Fields(s ...googleapi.Field) *Proj
 	return c
 }
 
+// ProjectsTopicsSubscriptionsListCallDoer makes it easy to provide your own testable version of Do.
+type ProjectsTopicsSubscriptionsListCallDoer interface {
+	Do() (*ListTopicSubscriptionsResponse, error)
+	PageSize(pageSize int64) ProjectsTopicsSubscriptionsListCallDoer
+	PageToken(pageToken string) ProjectsTopicsSubscriptionsListCallDoer
+	Fields(s ...googleapi.Field) ProjectsTopicsSubscriptionsListCallDoer
+}
+
 func (c *ProjectsTopicsSubscriptionsListCall) Do() (*ListTopicSubscriptionsResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2283,4 +2409,8 @@ func (c *ProjectsTopicsSubscriptionsListCall) Do() (*ListTopicSubscriptionsRespo
 	//   ]
 	// }
 
+}
+
+// ProjectsServicer makes it easy to provide your own testable versions of ProjectsService.
+type ProjectsServicer interface {
 }

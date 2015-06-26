@@ -10,6 +10,7 @@ import (
 	"testing/iotest"
 
 	"golang.org/x/net/context"
+	"google.golang.org/api/googleapi"
 	storage "google.golang.org/api/storage/v1"
 )
 
@@ -309,5 +310,38 @@ func TestUserAgent(t *testing.T) {
 	g := handler.r
 	if w, k := "google-api-go-client/0.5 myagent/1.0", "User-Agent"; len(g.Header[k]) != 1 || g.Header[k][0] != w {
 		t.Errorf("header %q = %#v; want %q", k, g.Header[k], w)
+	}
+}
+
+type doer struct{}
+
+func (d *doer) Do() (*storage.BucketAccessControl, error) {
+	return &storage.BucketAccessControl{}, nil
+}
+func (d *doer) Fields(s ...googleapi.Field) storage.BucketAccessControlsGetCallDoer { return d }
+
+type mock struct{}
+
+func (m *mock) Delete(bucket string, entity string) storage.BucketAccessControlsDeleteCallDoer {
+	return nil
+}
+func (m *mock) Get(bucket string, entity string) storage.BucketAccessControlsGetCallDoer {
+	return &doer{}
+}
+func (m *mock) Insert(bucket string, bucketaccesscontrol *storage.BucketAccessControl) storage.BucketAccessControlsInsertCallDoer {
+	return nil
+}
+func (m *mock) List(bucket string) storage.BucketAccessControlsListCallDoer { return nil }
+func (m *mock) Patch(bucket string, entity string, bucketaccesscontrol *storage.BucketAccessControl) storage.BucketAccessControlsPatchCallDoer {
+	return nil
+}
+func (m *mock) Update(bucket string, entity string, bucketaccesscontrol *storage.BucketAccessControl) storage.BucketAccessControlsUpdateCallDoer {
+	return nil
+}
+
+func TestTestingInterfaces(t *testing.T) {
+	m := &mock{}
+	if v, err := m.Get("bucket", "entity").Fields("myfield").Do(); v == nil || err != nil {
+		t.Errorf("Do = %#v,%v; want {},nil", v, err)
 	}
 }

@@ -227,6 +227,12 @@ func (c *GetCertForOpenIdConnectCall) Fields(s ...googleapi.Field) *GetCertForOp
 	return c
 }
 
+// GetCertForOpenIdConnectCallDoer makes it easy to provide your own testable version of Do.
+type GetCertForOpenIdConnectCallDoer interface {
+	Do() (*Jwk, error)
+	Fields(s ...googleapi.Field) GetCertForOpenIdConnectCallDoer
+}
+
 func (c *GetCertForOpenIdConnectCall) Do() (*Jwk, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -300,6 +306,15 @@ func (c *TokeninfoCall) TokenHandle(tokenHandle string) *TokeninfoCall {
 func (c *TokeninfoCall) Fields(s ...googleapi.Field) *TokeninfoCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// TokeninfoCallDoer makes it easy to provide your own testable version of Do.
+type TokeninfoCallDoer interface {
+	Do() (*Tokeninfo, error)
+	AccessToken(accessToken string) TokeninfoCallDoer
+	IdToken(idToken string) TokeninfoCallDoer
+	TokenHandle(tokenHandle string) TokeninfoCallDoer
+	Fields(s ...googleapi.Field) TokeninfoCallDoer
 }
 
 func (c *TokeninfoCall) Do() (*Tokeninfo, error) {
@@ -382,6 +397,12 @@ func (c *UserinfoGetCall) Fields(s ...googleapi.Field) *UserinfoGetCall {
 	return c
 }
 
+// UserinfoGetCallDoer makes it easy to provide your own testable version of Do.
+type UserinfoGetCallDoer interface {
+	Do() (*Userinfoplus, error)
+	Fields(s ...googleapi.Field) UserinfoGetCallDoer
+}
+
 func (c *UserinfoGetCall) Do() (*Userinfoplus, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -445,6 +466,12 @@ func (c *UserinfoV2MeGetCall) Fields(s ...googleapi.Field) *UserinfoV2MeGetCall 
 	return c
 }
 
+// UserinfoV2MeGetCallDoer makes it easy to provide your own testable version of Do.
+type UserinfoV2MeGetCallDoer interface {
+	Do() (*Userinfoplus, error)
+	Fields(s ...googleapi.Field) UserinfoV2MeGetCallDoer
+}
+
 func (c *UserinfoV2MeGetCall) Do() (*Userinfoplus, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -485,4 +512,9 @@ func (c *UserinfoV2MeGetCall) Do() (*Userinfoplus, error) {
 	//   ]
 	// }
 
+}
+
+// UserinfoServicer makes it easy to provide your own testable versions of UserinfoService.
+type UserinfoServicer interface {
+	Get() UserinfoGetCallDoer
 }

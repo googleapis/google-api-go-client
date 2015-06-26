@@ -910,6 +910,14 @@ func (c *ProjectsJobsCreateCall) Fields(s ...googleapi.Field) *ProjectsJobsCreat
 	return c
 }
 
+// ProjectsJobsCreateCallDoer makes it easy to provide your own testable version of Do.
+type ProjectsJobsCreateCallDoer interface {
+	Do() (*Job, error)
+	ReplaceJobId(replaceJobId string) ProjectsJobsCreateCallDoer
+	View(view string) ProjectsJobsCreateCallDoer
+	Fields(s ...googleapi.Field) ProjectsJobsCreateCallDoer
+}
+
 func (c *ProjectsJobsCreateCall) Do() (*Job, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.job)
@@ -1032,6 +1040,13 @@ func (c *ProjectsJobsGetCall) Fields(s ...googleapi.Field) *ProjectsJobsGetCall 
 	return c
 }
 
+// ProjectsJobsGetCallDoer makes it easy to provide your own testable version of Do.
+type ProjectsJobsGetCallDoer interface {
+	Do() (*Job, error)
+	View(view string) ProjectsJobsGetCallDoer
+	Fields(s ...googleapi.Field) ProjectsJobsGetCallDoer
+}
+
 func (c *ProjectsJobsGetCall) Do() (*Job, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1138,6 +1153,13 @@ func (c *ProjectsJobsGetMetricsCall) StartTime(startTime string) *ProjectsJobsGe
 func (c *ProjectsJobsGetMetricsCall) Fields(s ...googleapi.Field) *ProjectsJobsGetMetricsCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ProjectsJobsGetMetricsCallDoer makes it easy to provide your own testable version of Do.
+type ProjectsJobsGetMetricsCallDoer interface {
+	Do() (*JobMetrics, error)
+	StartTime(startTime string) ProjectsJobsGetMetricsCallDoer
+	Fields(s ...googleapi.Field) ProjectsJobsGetMetricsCallDoer
 }
 
 func (c *ProjectsJobsGetMetricsCall) Do() (*JobMetrics, error) {
@@ -1253,6 +1275,15 @@ func (c *ProjectsJobsListCall) Fields(s ...googleapi.Field) *ProjectsJobsListCal
 	return c
 }
 
+// ProjectsJobsListCallDoer makes it easy to provide your own testable version of Do.
+type ProjectsJobsListCallDoer interface {
+	Do() (*ListJobsResponse, error)
+	PageSize(pageSize int64) ProjectsJobsListCallDoer
+	PageToken(pageToken string) ProjectsJobsListCallDoer
+	View(view string) ProjectsJobsListCallDoer
+	Fields(s ...googleapi.Field) ProjectsJobsListCallDoer
+}
+
 func (c *ProjectsJobsListCall) Do() (*ListJobsResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1366,6 +1397,12 @@ func (c *ProjectsJobsPatchCall) Fields(s ...googleapi.Field) *ProjectsJobsPatchC
 	return c
 }
 
+// ProjectsJobsPatchCallDoer makes it easy to provide your own testable version of Do.
+type ProjectsJobsPatchCallDoer interface {
+	Do() (*Job, error)
+	Fields(s ...googleapi.Field) ProjectsJobsPatchCallDoer
+}
+
 func (c *ProjectsJobsPatchCall) Do() (*Job, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.job)
@@ -1460,6 +1497,12 @@ func (r *ProjectsJobsService) Update(projectId string, jobId string, job *Job) *
 func (c *ProjectsJobsUpdateCall) Fields(s ...googleapi.Field) *ProjectsJobsUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ProjectsJobsUpdateCallDoer makes it easy to provide your own testable version of Do.
+type ProjectsJobsUpdateCallDoer interface {
+	Do() (*Job, error)
+	Fields(s ...googleapi.Field) ProjectsJobsUpdateCallDoer
 }
 
 func (c *ProjectsJobsUpdateCall) Do() (*Job, error) {
@@ -1592,6 +1635,17 @@ func (c *ProjectsJobsMessagesListCall) StartTime(startTime string) *ProjectsJobs
 func (c *ProjectsJobsMessagesListCall) Fields(s ...googleapi.Field) *ProjectsJobsMessagesListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ProjectsJobsMessagesListCallDoer makes it easy to provide your own testable version of Do.
+type ProjectsJobsMessagesListCallDoer interface {
+	Do() (*ListJobMessagesResponse, error)
+	EndTime(endTime string) ProjectsJobsMessagesListCallDoer
+	MinimumImportance(minimumImportance string) ProjectsJobsMessagesListCallDoer
+	PageSize(pageSize int64) ProjectsJobsMessagesListCallDoer
+	PageToken(pageToken string) ProjectsJobsMessagesListCallDoer
+	StartTime(startTime string) ProjectsJobsMessagesListCallDoer
+	Fields(s ...googleapi.Field) ProjectsJobsMessagesListCallDoer
 }
 
 func (c *ProjectsJobsMessagesListCall) Do() (*ListJobMessagesResponse, error) {
@@ -1733,6 +1787,12 @@ func (c *ProjectsJobsWorkItemsLeaseCall) Fields(s ...googleapi.Field) *ProjectsJ
 	return c
 }
 
+// ProjectsJobsWorkItemsLeaseCallDoer makes it easy to provide your own testable version of Do.
+type ProjectsJobsWorkItemsLeaseCallDoer interface {
+	Do() (*LeaseWorkItemResponse, error)
+	Fields(s ...googleapi.Field) ProjectsJobsWorkItemsLeaseCallDoer
+}
+
 func (c *ProjectsJobsWorkItemsLeaseCall) Do() (*LeaseWorkItemResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.leaseworkitemrequest)
@@ -1830,6 +1890,12 @@ func (c *ProjectsJobsWorkItemsReportStatusCall) Fields(s ...googleapi.Field) *Pr
 	return c
 }
 
+// ProjectsJobsWorkItemsReportStatusCallDoer makes it easy to provide your own testable version of Do.
+type ProjectsJobsWorkItemsReportStatusCallDoer interface {
+	Do() (*ReportWorkItemStatusResponse, error)
+	Fields(s ...googleapi.Field) ProjectsJobsWorkItemsReportStatusCallDoer
+}
+
 func (c *ProjectsJobsWorkItemsReportStatusCall) Do() (*ReportWorkItemStatusResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.reportworkitemstatusrequest)
@@ -1897,4 +1963,8 @@ func (c *ProjectsJobsWorkItemsReportStatusCall) Do() (*ReportWorkItemStatusRespo
 	//   ]
 	// }
 
+}
+
+// ProjectsServicer makes it easy to provide your own testable versions of ProjectsService.
+type ProjectsServicer interface {
 }

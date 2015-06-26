@@ -243,6 +243,12 @@ func (c *TasklistsDeleteCall) Fields(s ...googleapi.Field) *TasklistsDeleteCall 
 	return c
 }
 
+// TasklistsDeleteCallDoer makes it easy to provide your own testable version of Do.
+type TasklistsDeleteCallDoer interface {
+	Do() error
+	Fields(s ...googleapi.Field) TasklistsDeleteCallDoer
+}
+
 func (c *TasklistsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -310,6 +316,12 @@ func (r *TasklistsService) Get(tasklistid string) *TasklistsGetCall {
 func (c *TasklistsGetCall) Fields(s ...googleapi.Field) *TasklistsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// TasklistsGetCallDoer makes it easy to provide your own testable version of Do.
+type TasklistsGetCallDoer interface {
+	Do() (*TaskList, error)
+	Fields(s ...googleapi.Field) TasklistsGetCallDoer
 }
 
 func (c *TasklistsGetCall) Do() (*TaskList, error) {
@@ -388,6 +400,12 @@ func (r *TasklistsService) Insert(tasklist *TaskList) *TasklistsInsertCall {
 func (c *TasklistsInsertCall) Fields(s ...googleapi.Field) *TasklistsInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// TasklistsInsertCallDoer makes it easy to provide your own testable version of Do.
+type TasklistsInsertCallDoer interface {
+	Do() (*TaskList, error)
+	Fields(s ...googleapi.Field) TasklistsInsertCallDoer
 }
 
 func (c *TasklistsInsertCall) Do() (*TaskList, error) {
@@ -474,6 +492,14 @@ func (c *TasklistsListCall) Fields(s ...googleapi.Field) *TasklistsListCall {
 	return c
 }
 
+// TasklistsListCallDoer makes it easy to provide your own testable version of Do.
+type TasklistsListCallDoer interface {
+	Do() (*TaskLists, error)
+	MaxResults(maxResults int64) TasklistsListCallDoer
+	PageToken(pageToken string) TasklistsListCallDoer
+	Fields(s ...googleapi.Field) TasklistsListCallDoer
+}
+
 func (c *TasklistsListCall) Do() (*TaskLists, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -558,6 +584,12 @@ func (r *TasklistsService) Patch(tasklistid string, tasklist *TaskList) *Tasklis
 func (c *TasklistsPatchCall) Fields(s ...googleapi.Field) *TasklistsPatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// TasklistsPatchCallDoer makes it easy to provide your own testable version of Do.
+type TasklistsPatchCallDoer interface {
+	Do() (*TaskList, error)
+	Fields(s ...googleapi.Field) TasklistsPatchCallDoer
 }
 
 func (c *TasklistsPatchCall) Do() (*TaskList, error) {
@@ -647,6 +679,12 @@ func (c *TasklistsUpdateCall) Fields(s ...googleapi.Field) *TasklistsUpdateCall 
 	return c
 }
 
+// TasklistsUpdateCallDoer makes it easy to provide your own testable version of Do.
+type TasklistsUpdateCallDoer interface {
+	Do() (*TaskList, error)
+	Fields(s ...googleapi.Field) TasklistsUpdateCallDoer
+}
+
 func (c *TasklistsUpdateCall) Do() (*TaskList, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.tasklist)
@@ -709,6 +747,16 @@ func (c *TasklistsUpdateCall) Do() (*TaskList, error) {
 
 }
 
+// TasklistsServicer makes it easy to provide your own testable versions of TasklistsService.
+type TasklistsServicer interface {
+	Delete(tasklistid string) TasklistsDeleteCallDoer
+	Get(tasklistid string) TasklistsGetCallDoer
+	Insert(tasklist *TaskList) TasklistsInsertCallDoer
+	List() TasklistsListCallDoer
+	Patch(tasklistid string, tasklist *TaskList) TasklistsPatchCallDoer
+	Update(tasklistid string, tasklist *TaskList) TasklistsUpdateCallDoer
+}
+
 // method id "tasks.tasks.clear":
 
 type TasksClearCall struct {
@@ -732,6 +780,12 @@ func (r *TasksService) Clear(tasklistid string) *TasksClearCall {
 func (c *TasksClearCall) Fields(s ...googleapi.Field) *TasksClearCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// TasksClearCallDoer makes it easy to provide your own testable version of Do.
+type TasksClearCallDoer interface {
+	Do() error
+	Fields(s ...googleapi.Field) TasksClearCallDoer
 }
 
 func (c *TasksClearCall) Do() error {
@@ -803,6 +857,12 @@ func (r *TasksService) Delete(tasklistid string, taskid string) *TasksDeleteCall
 func (c *TasksDeleteCall) Fields(s ...googleapi.Field) *TasksDeleteCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// TasksDeleteCallDoer makes it easy to provide your own testable version of Do.
+type TasksDeleteCallDoer interface {
+	Do() error
+	Fields(s ...googleapi.Field) TasksDeleteCallDoer
 }
 
 func (c *TasksDeleteCall) Do() error {
@@ -882,6 +942,12 @@ func (r *TasksService) Get(tasklistid string, taskid string) *TasksGetCall {
 func (c *TasksGetCall) Fields(s ...googleapi.Field) *TasksGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// TasksGetCallDoer makes it easy to provide your own testable version of Do.
+type TasksGetCallDoer interface {
+	Do() (*Task, error)
+	Fields(s ...googleapi.Field) TasksGetCallDoer
 }
 
 func (c *TasksGetCall) Do() (*Task, error) {
@@ -984,6 +1050,14 @@ func (c *TasksInsertCall) Previous(previous string) *TasksInsertCall {
 func (c *TasksInsertCall) Fields(s ...googleapi.Field) *TasksInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// TasksInsertCallDoer makes it easy to provide your own testable version of Do.
+type TasksInsertCallDoer interface {
+	Do() (*Task, error)
+	Parent(parent string) TasksInsertCallDoer
+	Previous(previous string) TasksInsertCallDoer
+	Fields(s ...googleapi.Field) TasksInsertCallDoer
 }
 
 func (c *TasksInsertCall) Do() (*Task, error) {
@@ -1165,6 +1239,22 @@ func (c *TasksListCall) Fields(s ...googleapi.Field) *TasksListCall {
 	return c
 }
 
+// TasksListCallDoer makes it easy to provide your own testable version of Do.
+type TasksListCallDoer interface {
+	Do() (*Tasks, error)
+	CompletedMax(completedMax string) TasksListCallDoer
+	CompletedMin(completedMin string) TasksListCallDoer
+	DueMax(dueMax string) TasksListCallDoer
+	DueMin(dueMin string) TasksListCallDoer
+	MaxResults(maxResults int64) TasksListCallDoer
+	PageToken(pageToken string) TasksListCallDoer
+	ShowCompleted(showCompleted bool) TasksListCallDoer
+	ShowDeleted(showDeleted bool) TasksListCallDoer
+	ShowHidden(showHidden bool) TasksListCallDoer
+	UpdatedMin(updatedMin string) TasksListCallDoer
+	Fields(s ...googleapi.Field) TasksListCallDoer
+}
+
 func (c *TasksListCall) Do() (*Tasks, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1343,6 +1433,14 @@ func (c *TasksMoveCall) Fields(s ...googleapi.Field) *TasksMoveCall {
 	return c
 }
 
+// TasksMoveCallDoer makes it easy to provide your own testable version of Do.
+type TasksMoveCallDoer interface {
+	Do() (*Task, error)
+	Parent(parent string) TasksMoveCallDoer
+	Previous(previous string) TasksMoveCallDoer
+	Fields(s ...googleapi.Field) TasksMoveCallDoer
+}
+
 func (c *TasksMoveCall) Do() (*Task, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1448,6 +1546,12 @@ func (c *TasksPatchCall) Fields(s ...googleapi.Field) *TasksPatchCall {
 	return c
 }
 
+// TasksPatchCallDoer makes it easy to provide your own testable version of Do.
+type TasksPatchCallDoer interface {
+	Do() (*Task, error)
+	Fields(s ...googleapi.Field) TasksPatchCallDoer
+}
+
 func (c *TasksPatchCall) Do() (*Task, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.task)
@@ -1545,6 +1649,12 @@ func (c *TasksUpdateCall) Fields(s ...googleapi.Field) *TasksUpdateCall {
 	return c
 }
 
+// TasksUpdateCallDoer makes it easy to provide your own testable version of Do.
+type TasksUpdateCallDoer interface {
+	Do() (*Task, error)
+	Fields(s ...googleapi.Field) TasksUpdateCallDoer
+}
+
 func (c *TasksUpdateCall) Do() (*Task, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.task)
@@ -1613,4 +1723,16 @@ func (c *TasksUpdateCall) Do() (*Task, error) {
 	//   ]
 	// }
 
+}
+
+// TasksServicer makes it easy to provide your own testable versions of TasksService.
+type TasksServicer interface {
+	Clear(tasklistid string) TasksClearCallDoer
+	Delete(tasklistid string, taskid string) TasksDeleteCallDoer
+	Get(tasklistid string, taskid string) TasksGetCallDoer
+	Insert(tasklistid string, task *Task) TasksInsertCallDoer
+	List(tasklistid string) TasksListCallDoer
+	Move(tasklistid string, taskid string) TasksMoveCallDoer
+	Patch(tasklistid string, taskid string, task *Task) TasksPatchCallDoer
+	Update(tasklistid string, taskid string, task *Task) TasksUpdateCallDoer
 }

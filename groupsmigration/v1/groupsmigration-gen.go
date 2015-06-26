@@ -144,6 +144,15 @@ func (c *ArchiveInsertCall) Fields(s ...googleapi.Field) *ArchiveInsertCall {
 	return c
 }
 
+// ArchiveInsertCallDoer makes it easy to provide your own testable version of Do.
+type ArchiveInsertCallDoer interface {
+	Do() (*Groups, error)
+	Media(r io.Reader) ArchiveInsertCallDoer
+	ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) ArchiveInsertCallDoer
+	ProgressUpdater(pu googleapi.ProgressUpdater) ArchiveInsertCallDoer
+	Fields(s ...googleapi.Field) ArchiveInsertCallDoer
+}
+
 func (c *ArchiveInsertCall) Do() (*Groups, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -258,4 +267,9 @@ func (c *ArchiveInsertCall) Do() (*Groups, error) {
 	//   "supportsMediaUpload": true
 	// }
 
+}
+
+// ArchiveServicer makes it easy to provide your own testable versions of ArchiveService.
+type ArchiveServicer interface {
+	Insert(groupId string) ArchiveInsertCallDoer
 }

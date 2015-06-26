@@ -240,6 +240,14 @@ func (c *FilesGetCall) Fields(s ...googleapi.Field) *FilesGetCall {
 	return c
 }
 
+// FilesGetCallDoer makes it easy to provide your own testable version of Do.
+type FilesGetCallDoer interface {
+	Do() (*File, error)
+	Projection(projection string) FilesGetCallDoer
+	UpdateViewedDate(updateViewedDate bool) FilesGetCallDoer
+	Fields(s ...googleapi.Field) FilesGetCallDoer
+}
+
 func (c *FilesGetCall) Do() (*File, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -373,6 +381,15 @@ func (c *FilesInsertCall) ProgressUpdater(pu googleapi.ProgressUpdater) *FilesIn
 func (c *FilesInsertCall) Fields(s ...googleapi.Field) *FilesInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// FilesInsertCallDoer makes it easy to provide your own testable version of Do.
+type FilesInsertCallDoer interface {
+	Do() (*File, error)
+	Media(r io.Reader) FilesInsertCallDoer
+	ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) FilesInsertCallDoer
+	ProgressUpdater(pu googleapi.ProgressUpdater) FilesInsertCallDoer
+	Fields(s ...googleapi.Field) FilesInsertCallDoer
 }
 
 func (c *FilesInsertCall) Do() (*File, error) {
@@ -538,6 +555,15 @@ func (c *FilesPatchCall) UpdateViewedDate(updateViewedDate bool) *FilesPatchCall
 func (c *FilesPatchCall) Fields(s ...googleapi.Field) *FilesPatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// FilesPatchCallDoer makes it easy to provide your own testable version of Do.
+type FilesPatchCallDoer interface {
+	Do() (*File, error)
+	NewRevision(newRevision bool) FilesPatchCallDoer
+	UpdateModifiedDate(updateModifiedDate bool) FilesPatchCallDoer
+	UpdateViewedDate(updateViewedDate bool) FilesPatchCallDoer
+	Fields(s ...googleapi.Field) FilesPatchCallDoer
 }
 
 func (c *FilesPatchCall) Do() (*File, error) {
@@ -717,6 +743,18 @@ func (c *FilesUpdateCall) Fields(s ...googleapi.Field) *FilesUpdateCall {
 	return c
 }
 
+// FilesUpdateCallDoer makes it easy to provide your own testable version of Do.
+type FilesUpdateCallDoer interface {
+	Do() (*File, error)
+	NewRevision(newRevision bool) FilesUpdateCallDoer
+	UpdateModifiedDate(updateModifiedDate bool) FilesUpdateCallDoer
+	UpdateViewedDate(updateViewedDate bool) FilesUpdateCallDoer
+	Media(r io.Reader) FilesUpdateCallDoer
+	ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) FilesUpdateCallDoer
+	ProgressUpdater(pu googleapi.ProgressUpdater) FilesUpdateCallDoer
+	Fields(s ...googleapi.Field) FilesUpdateCallDoer
+}
+
 func (c *FilesUpdateCall) Do() (*File, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.file)
@@ -864,4 +902,12 @@ func (c *FilesUpdateCall) Do() (*File, error) {
 	//   "supportsMediaUpload": true
 	// }
 
+}
+
+// FilesServicer makes it easy to provide your own testable versions of FilesService.
+type FilesServicer interface {
+	Get(id string) FilesGetCallDoer
+	Insert(file *File) FilesInsertCallDoer
+	Patch(id string, file *File) FilesPatchCallDoer
+	Update(id string, file *File) FilesUpdateCallDoer
 }

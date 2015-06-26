@@ -525,6 +525,12 @@ func (c *PoolsDeleteCall) Fields(s ...googleapi.Field) *PoolsDeleteCall {
 	return c
 }
 
+// PoolsDeleteCallDoer makes it easy to provide your own testable version of Do.
+type PoolsDeleteCallDoer interface {
+	Do() error
+	Fields(s ...googleapi.Field) PoolsDeleteCallDoer
+}
+
 func (c *PoolsDeleteCall) Do() error {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.poolsdeleterequest)
@@ -625,6 +631,12 @@ func (c *PoolsGetCall) Fields(s ...googleapi.Field) *PoolsGetCall {
 	return c
 }
 
+// PoolsGetCallDoer makes it easy to provide your own testable version of Do.
+type PoolsGetCallDoer interface {
+	Do() (*Pool, error)
+	Fields(s ...googleapi.Field) PoolsGetCallDoer
+}
+
 func (c *PoolsGetCall) Do() (*Pool, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -723,6 +735,12 @@ func (r *PoolsService) Insert(projectName string, zone string, pool *Pool) *Pool
 func (c *PoolsInsertCall) Fields(s ...googleapi.Field) *PoolsInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// PoolsInsertCallDoer makes it easy to provide your own testable version of Do.
+type PoolsInsertCallDoer interface {
+	Do() (*Pool, error)
+	Fields(s ...googleapi.Field) PoolsInsertCallDoer
 }
 
 func (c *PoolsInsertCall) Do() (*Pool, error) {
@@ -836,6 +854,14 @@ func (c *PoolsListCall) PageToken(pageToken string) *PoolsListCall {
 func (c *PoolsListCall) Fields(s ...googleapi.Field) *PoolsListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// PoolsListCallDoer makes it easy to provide your own testable version of Do.
+type PoolsListCallDoer interface {
+	Do() (*PoolsListResponse, error)
+	MaxResults(maxResults int64) PoolsListCallDoer
+	PageToken(pageToken string) PoolsListCallDoer
+	Fields(s ...googleapi.Field) PoolsListCallDoer
 }
 
 func (c *PoolsListCall) Do() (*PoolsListResponse, error) {
@@ -961,6 +987,13 @@ func (c *PoolsResizeCall) Fields(s ...googleapi.Field) *PoolsResizeCall {
 	return c
 }
 
+// PoolsResizeCallDoer makes it easy to provide your own testable version of Do.
+type PoolsResizeCallDoer interface {
+	Do() (*Pool, error)
+	NumReplicas(numReplicas int64) PoolsResizeCallDoer
+	Fields(s ...googleapi.Field) PoolsResizeCallDoer
+}
+
 func (c *PoolsResizeCall) Do() (*Pool, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1070,6 +1103,12 @@ func (c *PoolsUpdatetemplateCall) Fields(s ...googleapi.Field) *PoolsUpdatetempl
 	return c
 }
 
+// PoolsUpdatetemplateCallDoer makes it easy to provide your own testable version of Do.
+type PoolsUpdatetemplateCallDoer interface {
+	Do() error
+	Fields(s ...googleapi.Field) PoolsUpdatetemplateCallDoer
+}
+
 func (c *PoolsUpdatetemplateCall) Do() error {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.template)
@@ -1143,6 +1182,16 @@ func (c *PoolsUpdatetemplateCall) Do() error {
 
 }
 
+// PoolsServicer makes it easy to provide your own testable versions of PoolsService.
+type PoolsServicer interface {
+	Delete(projectName string, zone string, poolName string, poolsdeleterequest *PoolsDeleteRequest) PoolsDeleteCallDoer
+	Get(projectName string, zone string, poolName string) PoolsGetCallDoer
+	Insert(projectName string, zone string, pool *Pool) PoolsInsertCallDoer
+	List(projectName string, zone string) PoolsListCallDoer
+	Resize(projectName string, zone string, poolName string) PoolsResizeCallDoer
+	Updatetemplate(projectName string, zone string, poolName string, template *Template) PoolsUpdatetemplateCallDoer
+}
+
 // method id "replicapool.replicas.delete":
 
 type ReplicasDeleteCall struct {
@@ -1172,6 +1221,12 @@ func (r *ReplicasService) Delete(projectName string, zone string, poolName strin
 func (c *ReplicasDeleteCall) Fields(s ...googleapi.Field) *ReplicasDeleteCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ReplicasDeleteCallDoer makes it easy to provide your own testable version of Do.
+type ReplicasDeleteCallDoer interface {
+	Do() (*Replica, error)
+	Fields(s ...googleapi.Field) ReplicasDeleteCallDoer
 }
 
 func (c *ReplicasDeleteCall) Do() (*Replica, error) {
@@ -1289,6 +1344,12 @@ func (r *ReplicasService) Get(projectName string, zone string, poolName string, 
 func (c *ReplicasGetCall) Fields(s ...googleapi.Field) *ReplicasGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ReplicasGetCallDoer makes it easy to provide your own testable version of Do.
+type ReplicasGetCallDoer interface {
+	Do() (*Replica, error)
+	Fields(s ...googleapi.Field) ReplicasGetCallDoer
 }
 
 func (c *ReplicasGetCall) Do() (*Replica, error) {
@@ -1415,6 +1476,14 @@ func (c *ReplicasListCall) Fields(s ...googleapi.Field) *ReplicasListCall {
 	return c
 }
 
+// ReplicasListCallDoer makes it easy to provide your own testable version of Do.
+type ReplicasListCallDoer interface {
+	Do() (*ReplicasListResponse, error)
+	MaxResults(maxResults int64) ReplicasListCallDoer
+	PageToken(pageToken string) ReplicasListCallDoer
+	Fields(s ...googleapi.Field) ReplicasListCallDoer
+}
+
 func (c *ReplicasListCall) Do() (*ReplicasListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1537,6 +1606,12 @@ func (c *ReplicasRestartCall) Fields(s ...googleapi.Field) *ReplicasRestartCall 
 	return c
 }
 
+// ReplicasRestartCallDoer makes it easy to provide your own testable version of Do.
+type ReplicasRestartCallDoer interface {
+	Do() (*Replica, error)
+	Fields(s ...googleapi.Field) ReplicasRestartCallDoer
+}
+
 func (c *ReplicasRestartCall) Do() (*Replica, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1614,4 +1689,12 @@ func (c *ReplicasRestartCall) Do() (*Replica, error) {
 	//   ]
 	// }
 
+}
+
+// ReplicasServicer makes it easy to provide your own testable versions of ReplicasService.
+type ReplicasServicer interface {
+	Delete(projectName string, zone string, poolName string, replicaName string, replicasdeleterequest *ReplicasDeleteRequest) ReplicasDeleteCallDoer
+	Get(projectName string, zone string, poolName string, replicaName string) ReplicasGetCallDoer
+	List(projectName string, zone string, poolName string) ReplicasListCallDoer
+	Restart(projectName string, zone string, poolName string, replicaName string) ReplicasRestartCallDoer
 }

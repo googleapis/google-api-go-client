@@ -171,6 +171,12 @@ func (c *DetectionsListCall) Fields(s ...googleapi.Field) *DetectionsListCall {
 	return c
 }
 
+// DetectionsListCallDoer makes it easy to provide your own testable version of Do.
+type DetectionsListCallDoer interface {
+	Do() (*DetectionsListResponse, error)
+	Fields(s ...googleapi.Field) DetectionsListCallDoer
+}
+
 func (c *DetectionsListCall) Do() (*DetectionsListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -223,6 +229,11 @@ func (c *DetectionsListCall) Do() (*DetectionsListResponse, error) {
 
 }
 
+// DetectionsServicer makes it easy to provide your own testable versions of DetectionsService.
+type DetectionsServicer interface {
+	List(q []string) DetectionsListCallDoer
+}
+
 // method id "language.languages.list":
 
 type LanguagesListCall struct {
@@ -249,6 +260,13 @@ func (c *LanguagesListCall) Target(target string) *LanguagesListCall {
 func (c *LanguagesListCall) Fields(s ...googleapi.Field) *LanguagesListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// LanguagesListCallDoer makes it easy to provide your own testable version of Do.
+type LanguagesListCallDoer interface {
+	Do() (*LanguagesListResponse, error)
+	Target(target string) LanguagesListCallDoer
+	Fields(s ...googleapi.Field) LanguagesListCallDoer
 }
 
 func (c *LanguagesListCall) Do() (*LanguagesListResponse, error) {
@@ -298,6 +316,11 @@ func (c *LanguagesListCall) Do() (*LanguagesListResponse, error) {
 
 }
 
+// LanguagesServicer makes it easy to provide your own testable versions of LanguagesService.
+type LanguagesServicer interface {
+	List() LanguagesListCallDoer
+}
+
 // method id "language.translations.list":
 
 type TranslationsListCall struct {
@@ -345,6 +368,15 @@ func (c *TranslationsListCall) Source(source string) *TranslationsListCall {
 func (c *TranslationsListCall) Fields(s ...googleapi.Field) *TranslationsListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// TranslationsListCallDoer makes it easy to provide your own testable version of Do.
+type TranslationsListCallDoer interface {
+	Do() (*TranslationsListResponse, error)
+	Cid(cid string) TranslationsListCallDoer
+	Format(format string) TranslationsListCallDoer
+	Source(source string) TranslationsListCallDoer
+	Fields(s ...googleapi.Field) TranslationsListCallDoer
 }
 
 func (c *TranslationsListCall) Do() (*TranslationsListResponse, error) {
@@ -438,4 +470,9 @@ func (c *TranslationsListCall) Do() (*TranslationsListResponse, error) {
 	//   }
 	// }
 
+}
+
+// TranslationsServicer makes it easy to provide your own testable versions of TranslationsService.
+type TranslationsServicer interface {
+	List(q []string, target string) TranslationsListCallDoer
 }

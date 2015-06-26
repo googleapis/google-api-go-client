@@ -423,6 +423,12 @@ func (c *BucketAccessControlsDeleteCall) Fields(s ...googleapi.Field) *BucketAcc
 	return c
 }
 
+// BucketAccessControlsDeleteCallDoer makes it easy to provide your own testable version of Do.
+type BucketAccessControlsDeleteCallDoer interface {
+	Do() error
+	Fields(s ...googleapi.Field) BucketAccessControlsDeleteCallDoer
+}
+
 func (c *BucketAccessControlsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -501,6 +507,12 @@ func (r *BucketAccessControlsService) Get(bucket string, entity string) *BucketA
 func (c *BucketAccessControlsGetCall) Fields(s ...googleapi.Field) *BucketAccessControlsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// BucketAccessControlsGetCallDoer makes it easy to provide your own testable version of Do.
+type BucketAccessControlsGetCallDoer interface {
+	Do() (*BucketAccessControl, error)
+	Fields(s ...googleapi.Field) BucketAccessControlsGetCallDoer
 }
 
 func (c *BucketAccessControlsGetCall) Do() (*BucketAccessControl, error) {
@@ -589,6 +601,12 @@ func (c *BucketAccessControlsInsertCall) Fields(s ...googleapi.Field) *BucketAcc
 	return c
 }
 
+// BucketAccessControlsInsertCallDoer makes it easy to provide your own testable version of Do.
+type BucketAccessControlsInsertCallDoer interface {
+	Do() (*BucketAccessControl, error)
+	Fields(s ...googleapi.Field) BucketAccessControlsInsertCallDoer
+}
+
 func (c *BucketAccessControlsInsertCall) Do() (*BucketAccessControl, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.bucketaccesscontrol)
@@ -674,6 +692,12 @@ func (c *BucketAccessControlsListCall) Fields(s ...googleapi.Field) *BucketAcces
 	return c
 }
 
+// BucketAccessControlsListCallDoer makes it easy to provide your own testable version of Do.
+type BucketAccessControlsListCallDoer interface {
+	Do() (*BucketAccessControls, error)
+	Fields(s ...googleapi.Field) BucketAccessControlsListCallDoer
+}
+
 func (c *BucketAccessControlsListCall) Do() (*BucketAccessControls, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -753,6 +777,12 @@ func (r *BucketAccessControlsService) Patch(bucket string, entity string, bucket
 func (c *BucketAccessControlsPatchCall) Fields(s ...googleapi.Field) *BucketAccessControlsPatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// BucketAccessControlsPatchCallDoer makes it easy to provide your own testable version of Do.
+type BucketAccessControlsPatchCallDoer interface {
+	Do() (*BucketAccessControl, error)
+	Fields(s ...googleapi.Field) BucketAccessControlsPatchCallDoer
 }
 
 func (c *BucketAccessControlsPatchCall) Do() (*BucketAccessControl, error) {
@@ -852,6 +882,12 @@ func (c *BucketAccessControlsUpdateCall) Fields(s ...googleapi.Field) *BucketAcc
 	return c
 }
 
+// BucketAccessControlsUpdateCallDoer makes it easy to provide your own testable version of Do.
+type BucketAccessControlsUpdateCallDoer interface {
+	Do() (*BucketAccessControl, error)
+	Fields(s ...googleapi.Field) BucketAccessControlsUpdateCallDoer
+}
+
 func (c *BucketAccessControlsUpdateCall) Do() (*BucketAccessControl, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.bucketaccesscontrol)
@@ -922,6 +958,16 @@ func (c *BucketAccessControlsUpdateCall) Do() (*BucketAccessControl, error) {
 
 }
 
+// BucketAccessControlsServicer makes it easy to provide your own testable versions of BucketAccessControlsService.
+type BucketAccessControlsServicer interface {
+	Delete(bucket string, entity string) BucketAccessControlsDeleteCallDoer
+	Get(bucket string, entity string) BucketAccessControlsGetCallDoer
+	Insert(bucket string, bucketaccesscontrol *BucketAccessControl) BucketAccessControlsInsertCallDoer
+	List(bucket string) BucketAccessControlsListCallDoer
+	Patch(bucket string, entity string, bucketaccesscontrol *BucketAccessControl) BucketAccessControlsPatchCallDoer
+	Update(bucket string, entity string, bucketaccesscontrol *BucketAccessControl) BucketAccessControlsUpdateCallDoer
+}
+
 // method id "storage.buckets.delete":
 
 type BucketsDeleteCall struct {
@@ -943,6 +989,12 @@ func (r *BucketsService) Delete(bucket string) *BucketsDeleteCall {
 func (c *BucketsDeleteCall) Fields(s ...googleapi.Field) *BucketsDeleteCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// BucketsDeleteCallDoer makes it easy to provide your own testable version of Do.
+type BucketsDeleteCallDoer interface {
+	Do() error
+	Fields(s ...googleapi.Field) BucketsDeleteCallDoer
 }
 
 func (c *BucketsDeleteCall) Do() error {
@@ -1024,6 +1076,13 @@ func (c *BucketsGetCall) Projection(projection string) *BucketsGetCall {
 func (c *BucketsGetCall) Fields(s ...googleapi.Field) *BucketsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// BucketsGetCallDoer makes it easy to provide your own testable version of Do.
+type BucketsGetCallDoer interface {
+	Do() (*Bucket, error)
+	Projection(projection string) BucketsGetCallDoer
+	Fields(s ...googleapi.Field) BucketsGetCallDoer
 }
 
 func (c *BucketsGetCall) Do() (*Bucket, error) {
@@ -1131,6 +1190,13 @@ func (c *BucketsInsertCall) Projection(projection string) *BucketsInsertCall {
 func (c *BucketsInsertCall) Fields(s ...googleapi.Field) *BucketsInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// BucketsInsertCallDoer makes it easy to provide your own testable version of Do.
+type BucketsInsertCallDoer interface {
+	Do() (*Bucket, error)
+	Projection(projection string) BucketsInsertCallDoer
+	Fields(s ...googleapi.Field) BucketsInsertCallDoer
 }
 
 func (c *BucketsInsertCall) Do() (*Bucket, error) {
@@ -1248,6 +1314,15 @@ func (c *BucketsListCall) Projection(projection string) *BucketsListCall {
 func (c *BucketsListCall) Fields(s ...googleapi.Field) *BucketsListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// BucketsListCallDoer makes it easy to provide your own testable version of Do.
+type BucketsListCallDoer interface {
+	Do() (*Buckets, error)
+	MaxResults(maxResults int64) BucketsListCallDoer
+	PageToken(pageToken string) BucketsListCallDoer
+	Projection(projection string) BucketsListCallDoer
+	Fields(s ...googleapi.Field) BucketsListCallDoer
 }
 
 func (c *BucketsListCall) Do() (*Buckets, error) {
@@ -1375,6 +1450,13 @@ func (c *BucketsPatchCall) Fields(s ...googleapi.Field) *BucketsPatchCall {
 	return c
 }
 
+// BucketsPatchCallDoer makes it easy to provide your own testable version of Do.
+type BucketsPatchCallDoer interface {
+	Do() (*Bucket, error)
+	Projection(projection string) BucketsPatchCallDoer
+	Fields(s ...googleapi.Field) BucketsPatchCallDoer
+}
+
 func (c *BucketsPatchCall) Do() (*Bucket, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.bucket2)
@@ -1490,6 +1572,13 @@ func (c *BucketsUpdateCall) Fields(s ...googleapi.Field) *BucketsUpdateCall {
 	return c
 }
 
+// BucketsUpdateCallDoer makes it easy to provide your own testable version of Do.
+type BucketsUpdateCallDoer interface {
+	Do() (*Bucket, error)
+	Projection(projection string) BucketsUpdateCallDoer
+	Fields(s ...googleapi.Field) BucketsUpdateCallDoer
+}
+
 func (c *BucketsUpdateCall) Do() (*Bucket, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.bucket2)
@@ -1569,6 +1658,16 @@ func (c *BucketsUpdateCall) Do() (*Bucket, error) {
 
 }
 
+// BucketsServicer makes it easy to provide your own testable versions of BucketsService.
+type BucketsServicer interface {
+	Delete(bucket string) BucketsDeleteCallDoer
+	Get(bucket string) BucketsGetCallDoer
+	Insert(bucket *Bucket) BucketsInsertCallDoer
+	List(projectId uint64) BucketsListCallDoer
+	Patch(bucket string, bucket2 *Bucket) BucketsPatchCallDoer
+	Update(bucket string, bucket2 *Bucket) BucketsUpdateCallDoer
+}
+
 // method id "storage.objectAccessControls.delete":
 
 type ObjectAccessControlsDeleteCall struct {
@@ -1595,6 +1694,12 @@ func (r *ObjectAccessControlsService) Delete(bucket string, object string, entit
 func (c *ObjectAccessControlsDeleteCall) Fields(s ...googleapi.Field) *ObjectAccessControlsDeleteCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ObjectAccessControlsDeleteCallDoer makes it easy to provide your own testable version of Do.
+type ObjectAccessControlsDeleteCallDoer interface {
+	Do() error
+	Fields(s ...googleapi.Field) ObjectAccessControlsDeleteCallDoer
 }
 
 func (c *ObjectAccessControlsDeleteCall) Do() error {
@@ -1685,6 +1790,12 @@ func (r *ObjectAccessControlsService) Get(bucket string, object string, entity s
 func (c *ObjectAccessControlsGetCall) Fields(s ...googleapi.Field) *ObjectAccessControlsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ObjectAccessControlsGetCallDoer makes it easy to provide your own testable version of Do.
+type ObjectAccessControlsGetCallDoer interface {
+	Do() (*ObjectAccessControl, error)
+	Fields(s ...googleapi.Field) ObjectAccessControlsGetCallDoer
 }
 
 func (c *ObjectAccessControlsGetCall) Do() (*ObjectAccessControl, error) {
@@ -1783,6 +1894,12 @@ func (c *ObjectAccessControlsInsertCall) Fields(s ...googleapi.Field) *ObjectAcc
 	return c
 }
 
+// ObjectAccessControlsInsertCallDoer makes it easy to provide your own testable version of Do.
+type ObjectAccessControlsInsertCallDoer interface {
+	Do() (*ObjectAccessControl, error)
+	Fields(s ...googleapi.Field) ObjectAccessControlsInsertCallDoer
+}
+
 func (c *ObjectAccessControlsInsertCall) Do() (*ObjectAccessControl, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.objectaccesscontrol)
@@ -1878,6 +1995,12 @@ func (c *ObjectAccessControlsListCall) Fields(s ...googleapi.Field) *ObjectAcces
 	return c
 }
 
+// ObjectAccessControlsListCallDoer makes it easy to provide your own testable version of Do.
+type ObjectAccessControlsListCallDoer interface {
+	Do() (*ObjectAccessControls, error)
+	Fields(s ...googleapi.Field) ObjectAccessControlsListCallDoer
+}
+
 func (c *ObjectAccessControlsListCall) Do() (*ObjectAccessControls, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1967,6 +2090,12 @@ func (r *ObjectAccessControlsService) Patch(bucket string, object string, entity
 func (c *ObjectAccessControlsPatchCall) Fields(s ...googleapi.Field) *ObjectAccessControlsPatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ObjectAccessControlsPatchCallDoer makes it easy to provide your own testable version of Do.
+type ObjectAccessControlsPatchCallDoer interface {
+	Do() (*ObjectAccessControl, error)
+	Fields(s ...googleapi.Field) ObjectAccessControlsPatchCallDoer
 }
 
 func (c *ObjectAccessControlsPatchCall) Do() (*ObjectAccessControl, error) {
@@ -2076,6 +2205,12 @@ func (c *ObjectAccessControlsUpdateCall) Fields(s ...googleapi.Field) *ObjectAcc
 	return c
 }
 
+// ObjectAccessControlsUpdateCallDoer makes it easy to provide your own testable version of Do.
+type ObjectAccessControlsUpdateCallDoer interface {
+	Do() (*ObjectAccessControl, error)
+	Fields(s ...googleapi.Field) ObjectAccessControlsUpdateCallDoer
+}
+
 func (c *ObjectAccessControlsUpdateCall) Do() (*ObjectAccessControl, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.objectaccesscontrol)
@@ -2154,6 +2289,16 @@ func (c *ObjectAccessControlsUpdateCall) Do() (*ObjectAccessControl, error) {
 
 }
 
+// ObjectAccessControlsServicer makes it easy to provide your own testable versions of ObjectAccessControlsService.
+type ObjectAccessControlsServicer interface {
+	Delete(bucket string, object string, entity string) ObjectAccessControlsDeleteCallDoer
+	Get(bucket string, object string, entity string) ObjectAccessControlsGetCallDoer
+	Insert(bucket string, object string, objectaccesscontrol *ObjectAccessControl) ObjectAccessControlsInsertCallDoer
+	List(bucket string, object string) ObjectAccessControlsListCallDoer
+	Patch(bucket string, object string, entity string, objectaccesscontrol *ObjectAccessControl) ObjectAccessControlsPatchCallDoer
+	Update(bucket string, object string, entity string, objectaccesscontrol *ObjectAccessControl) ObjectAccessControlsUpdateCallDoer
+}
+
 // method id "storage.objects.delete":
 
 type ObjectsDeleteCall struct {
@@ -2177,6 +2322,12 @@ func (r *ObjectsService) Delete(bucket string, object string) *ObjectsDeleteCall
 func (c *ObjectsDeleteCall) Fields(s ...googleapi.Field) *ObjectsDeleteCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ObjectsDeleteCallDoer makes it easy to provide your own testable version of Do.
+type ObjectsDeleteCallDoer interface {
+	Do() error
+	Fields(s ...googleapi.Field) ObjectsDeleteCallDoer
 }
 
 func (c *ObjectsDeleteCall) Do() error {
@@ -2268,6 +2419,13 @@ func (c *ObjectsGetCall) Projection(projection string) *ObjectsGetCall {
 func (c *ObjectsGetCall) Fields(s ...googleapi.Field) *ObjectsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ObjectsGetCallDoer makes it easy to provide your own testable version of Do.
+type ObjectsGetCallDoer interface {
+	Do() (*Object, error)
+	Projection(projection string) ObjectsGetCallDoer
+	Fields(s ...googleapi.Field) ObjectsGetCallDoer
 }
 
 func (c *ObjectsGetCall) Do() (*Object, error) {
@@ -2426,6 +2584,17 @@ func (c *ObjectsInsertCall) ProgressUpdater(pu googleapi.ProgressUpdater) *Objec
 func (c *ObjectsInsertCall) Fields(s ...googleapi.Field) *ObjectsInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ObjectsInsertCallDoer makes it easy to provide your own testable version of Do.
+type ObjectsInsertCallDoer interface {
+	Do() (*Object, error)
+	Name(name string) ObjectsInsertCallDoer
+	Projection(projection string) ObjectsInsertCallDoer
+	Media(r io.Reader) ObjectsInsertCallDoer
+	ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) ObjectsInsertCallDoer
+	ProgressUpdater(pu googleapi.ProgressUpdater) ObjectsInsertCallDoer
+	Fields(s ...googleapi.Field) ObjectsInsertCallDoer
 }
 
 func (c *ObjectsInsertCall) Do() (*Object, error) {
@@ -2643,6 +2812,17 @@ func (c *ObjectsListCall) Fields(s ...googleapi.Field) *ObjectsListCall {
 	return c
 }
 
+// ObjectsListCallDoer makes it easy to provide your own testable version of Do.
+type ObjectsListCallDoer interface {
+	Do() (*Objects, error)
+	Delimiter(delimiter string) ObjectsListCallDoer
+	MaxResults(maxResults int64) ObjectsListCallDoer
+	PageToken(pageToken string) ObjectsListCallDoer
+	Prefix(prefix string) ObjectsListCallDoer
+	Projection(projection string) ObjectsListCallDoer
+	Fields(s ...googleapi.Field) ObjectsListCallDoer
+}
+
 func (c *ObjectsListCall) Do() (*Objects, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2788,6 +2968,13 @@ func (c *ObjectsPatchCall) Fields(s ...googleapi.Field) *ObjectsPatchCall {
 	return c
 }
 
+// ObjectsPatchCallDoer makes it easy to provide your own testable version of Do.
+type ObjectsPatchCallDoer interface {
+	Do() (*Object, error)
+	Projection(projection string) ObjectsPatchCallDoer
+	Fields(s ...googleapi.Field) ObjectsPatchCallDoer
+}
+
 func (c *ObjectsPatchCall) Do() (*Object, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.object2)
@@ -2913,6 +3100,13 @@ func (c *ObjectsUpdateCall) Fields(s ...googleapi.Field) *ObjectsUpdateCall {
 	return c
 }
 
+// ObjectsUpdateCallDoer makes it easy to provide your own testable version of Do.
+type ObjectsUpdateCallDoer interface {
+	Do() (*Object, error)
+	Projection(projection string) ObjectsUpdateCallDoer
+	Fields(s ...googleapi.Field) ObjectsUpdateCallDoer
+}
+
 func (c *ObjectsUpdateCall) Do() (*Object, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.object2)
@@ -2999,4 +3193,14 @@ func (c *ObjectsUpdateCall) Do() (*Object, error) {
 	//   "supportsMediaDownload": true
 	// }
 
+}
+
+// ObjectsServicer makes it easy to provide your own testable versions of ObjectsService.
+type ObjectsServicer interface {
+	Delete(bucket string, object string) ObjectsDeleteCallDoer
+	Get(bucket string, object string) ObjectsGetCallDoer
+	Insert(bucket string, object *Object) ObjectsInsertCallDoer
+	List(bucket string) ObjectsListCallDoer
+	Patch(bucket string, object string, object2 *Object) ObjectsPatchCallDoer
+	Update(bucket string, object string, object2 *Object) ObjectsUpdateCallDoer
 }

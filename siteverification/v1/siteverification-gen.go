@@ -170,6 +170,12 @@ func (c *WebResourceDeleteCall) Fields(s ...googleapi.Field) *WebResourceDeleteC
 	return c
 }
 
+// WebResourceDeleteCallDoer makes it easy to provide your own testable version of Do.
+type WebResourceDeleteCallDoer interface {
+	Do() error
+	Fields(s ...googleapi.Field) WebResourceDeleteCallDoer
+}
+
 func (c *WebResourceDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -237,6 +243,12 @@ func (r *WebResourceService) Get(id string) *WebResourceGetCall {
 func (c *WebResourceGetCall) Fields(s ...googleapi.Field) *WebResourceGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// WebResourceGetCallDoer makes it easy to provide your own testable version of Do.
+type WebResourceGetCallDoer interface {
+	Do() (*SiteVerificationWebResourceResource, error)
+	Fields(s ...googleapi.Field) WebResourceGetCallDoer
 }
 
 func (c *WebResourceGetCall) Do() (*SiteVerificationWebResourceResource, error) {
@@ -316,6 +328,12 @@ func (c *WebResourceGetTokenCall) Fields(s ...googleapi.Field) *WebResourceGetTo
 	return c
 }
 
+// WebResourceGetTokenCallDoer makes it easy to provide your own testable version of Do.
+type WebResourceGetTokenCallDoer interface {
+	Do() (*SiteVerificationWebResourceGettokenResponse, error)
+	Fields(s ...googleapi.Field) WebResourceGetTokenCallDoer
+}
+
 func (c *WebResourceGetTokenCall) Do() (*SiteVerificationWebResourceGettokenResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.siteverificationwebresourcegettokenrequest)
@@ -389,6 +407,12 @@ func (r *WebResourceService) Insert(verificationMethod string, siteverificationw
 func (c *WebResourceInsertCall) Fields(s ...googleapi.Field) *WebResourceInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// WebResourceInsertCallDoer makes it easy to provide your own testable version of Do.
+type WebResourceInsertCallDoer interface {
+	Do() (*SiteVerificationWebResourceResource, error)
+	Fields(s ...googleapi.Field) WebResourceInsertCallDoer
 }
 
 func (c *WebResourceInsertCall) Do() (*SiteVerificationWebResourceResource, error) {
@@ -474,6 +498,12 @@ func (c *WebResourceListCall) Fields(s ...googleapi.Field) *WebResourceListCall 
 	return c
 }
 
+// WebResourceListCallDoer makes it easy to provide your own testable version of Do.
+type WebResourceListCallDoer interface {
+	Do() (*SiteVerificationWebResourceListResponse, error)
+	Fields(s ...googleapi.Field) WebResourceListCallDoer
+}
+
 func (c *WebResourceListCall) Do() (*SiteVerificationWebResourceListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -538,6 +568,12 @@ func (r *WebResourceService) Patch(id string, siteverificationwebresourceresourc
 func (c *WebResourcePatchCall) Fields(s ...googleapi.Field) *WebResourcePatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// WebResourcePatchCallDoer makes it easy to provide your own testable version of Do.
+type WebResourcePatchCallDoer interface {
+	Do() (*SiteVerificationWebResourceResource, error)
+	Fields(s ...googleapi.Field) WebResourcePatchCallDoer
 }
 
 func (c *WebResourcePatchCall) Do() (*SiteVerificationWebResourceResource, error) {
@@ -627,6 +663,12 @@ func (c *WebResourceUpdateCall) Fields(s ...googleapi.Field) *WebResourceUpdateC
 	return c
 }
 
+// WebResourceUpdateCallDoer makes it easy to provide your own testable version of Do.
+type WebResourceUpdateCallDoer interface {
+	Do() (*SiteVerificationWebResourceResource, error)
+	Fields(s ...googleapi.Field) WebResourceUpdateCallDoer
+}
+
 func (c *WebResourceUpdateCall) Do() (*SiteVerificationWebResourceResource, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.siteverificationwebresourceresource)
@@ -687,4 +729,15 @@ func (c *WebResourceUpdateCall) Do() (*SiteVerificationWebResourceResource, erro
 	//   ]
 	// }
 
+}
+
+// WebResourceServicer makes it easy to provide your own testable versions of WebResourceService.
+type WebResourceServicer interface {
+	Delete(id string) WebResourceDeleteCallDoer
+	Get(id string) WebResourceGetCallDoer
+	GetToken(siteverificationwebresourcegettokenrequest *SiteVerificationWebResourceGettokenRequest) WebResourceGetTokenCallDoer
+	Insert(verificationMethod string, siteverificationwebresourceresource *SiteVerificationWebResourceResource) WebResourceInsertCallDoer
+	List() WebResourceListCallDoer
+	Patch(id string, siteverificationwebresourceresource *SiteVerificationWebResourceResource) WebResourcePatchCallDoer
+	Update(id string, siteverificationwebresourceresource *SiteVerificationWebResourceResource) WebResourceUpdateCallDoer
 }

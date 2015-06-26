@@ -303,6 +303,12 @@ func (c *AccountsGetCall) Fields(s ...googleapi.Field) *AccountsGetCall {
 	return c
 }
 
+// AccountsGetCallDoer makes it easy to provide your own testable version of Do.
+type AccountsGetCallDoer interface {
+	Do() (*Account, error)
+	Fields(s ...googleapi.Field) AccountsGetCallDoer
+}
+
 func (c *AccountsGetCall) Do() (*Account, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -378,6 +384,12 @@ func (c *AccountsListCall) Fields(s ...googleapi.Field) *AccountsListCall {
 	return c
 }
 
+// AccountsListCallDoer makes it easy to provide your own testable version of Do.
+type AccountsListCallDoer interface {
+	Do() (*AccountsList, error)
+	Fields(s ...googleapi.Field) AccountsListCallDoer
+}
+
 func (c *AccountsListCall) Do() (*AccountsList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -442,6 +454,12 @@ func (r *AccountsService) Patch(id int64, account *Account) *AccountsPatchCall {
 func (c *AccountsPatchCall) Fields(s ...googleapi.Field) *AccountsPatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// AccountsPatchCallDoer makes it easy to provide your own testable version of Do.
+type AccountsPatchCallDoer interface {
+	Do() (*Account, error)
+	Fields(s ...googleapi.Field) AccountsPatchCallDoer
 }
 
 func (c *AccountsPatchCall) Do() (*Account, error) {
@@ -532,6 +550,12 @@ func (c *AccountsUpdateCall) Fields(s ...googleapi.Field) *AccountsUpdateCall {
 	return c
 }
 
+// AccountsUpdateCallDoer makes it easy to provide your own testable version of Do.
+type AccountsUpdateCallDoer interface {
+	Do() (*Account, error)
+	Fields(s ...googleapi.Field) AccountsUpdateCallDoer
+}
+
 func (c *AccountsUpdateCall) Do() (*Account, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.account)
@@ -595,6 +619,14 @@ func (c *AccountsUpdateCall) Do() (*Account, error) {
 
 }
 
+// AccountsServicer makes it easy to provide your own testable versions of AccountsService.
+type AccountsServicer interface {
+	Get(id int64) AccountsGetCallDoer
+	List() AccountsListCallDoer
+	Patch(id int64, account *Account) AccountsPatchCallDoer
+	Update(id int64, account *Account) AccountsUpdateCallDoer
+}
+
 // method id "adexchangebuyer.creatives.get":
 
 type CreativesGetCall struct {
@@ -619,6 +651,12 @@ func (r *CreativesService) Get(accountId int64, buyerCreativeId string) *Creativ
 func (c *CreativesGetCall) Fields(s ...googleapi.Field) *CreativesGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// CreativesGetCallDoer makes it easy to provide your own testable version of Do.
+type CreativesGetCallDoer interface {
+	Do() (*Creative, error)
+	Fields(s ...googleapi.Field) CreativesGetCallDoer
 }
 
 func (c *CreativesGetCall) Do() (*Creative, error) {
@@ -704,6 +742,12 @@ func (r *CreativesService) Insert(creative *Creative) *CreativesInsertCall {
 func (c *CreativesInsertCall) Fields(s ...googleapi.Field) *CreativesInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// CreativesInsertCallDoer makes it easy to provide your own testable version of Do.
+type CreativesInsertCallDoer interface {
+	Do() (*Creative, error)
+	Fields(s ...googleapi.Field) CreativesInsertCallDoer
 }
 
 func (c *CreativesInsertCall) Do() (*Creative, error) {
@@ -806,6 +850,15 @@ func (c *CreativesListCall) Fields(s ...googleapi.Field) *CreativesListCall {
 	return c
 }
 
+// CreativesListCallDoer makes it easy to provide your own testable version of Do.
+type CreativesListCallDoer interface {
+	Do() (*CreativesList, error)
+	MaxResults(maxResults int64) CreativesListCallDoer
+	PageToken(pageToken string) CreativesListCallDoer
+	StatusFilter(statusFilter string) CreativesListCallDoer
+	Fields(s ...googleapi.Field) CreativesListCallDoer
+}
+
 func (c *CreativesListCall) Do() (*CreativesList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -883,4 +936,11 @@ func (c *CreativesListCall) Do() (*CreativesList, error) {
 	//   ]
 	// }
 
+}
+
+// CreativesServicer makes it easy to provide your own testable versions of CreativesService.
+type CreativesServicer interface {
+	Get(accountId int64, buyerCreativeId string) CreativesGetCallDoer
+	Insert(creative *Creative) CreativesInsertCallDoer
+	List() CreativesListCallDoer
 }

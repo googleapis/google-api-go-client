@@ -427,6 +427,12 @@ func (c *RollingUpdatesCancelCall) Fields(s ...googleapi.Field) *RollingUpdatesC
 	return c
 }
 
+// RollingUpdatesCancelCallDoer makes it easy to provide your own testable version of Do.
+type RollingUpdatesCancelCallDoer interface {
+	Do() (*Operation, error)
+	Fields(s ...googleapi.Field) RollingUpdatesCancelCallDoer
+}
+
 func (c *RollingUpdatesCancelCall) Do() (*Operation, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -524,6 +530,12 @@ func (r *RollingUpdatesService) Get(project string, zone string, rollingUpdate s
 func (c *RollingUpdatesGetCall) Fields(s ...googleapi.Field) *RollingUpdatesGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// RollingUpdatesGetCallDoer makes it easy to provide your own testable version of Do.
+type RollingUpdatesGetCallDoer interface {
+	Do() (*RollingUpdate, error)
+	Fields(s ...googleapi.Field) RollingUpdatesGetCallDoer
 }
 
 func (c *RollingUpdatesGetCall) Do() (*RollingUpdate, error) {
@@ -624,6 +636,12 @@ func (r *RollingUpdatesService) Insert(project string, zone string, rollingupdat
 func (c *RollingUpdatesInsertCall) Fields(s ...googleapi.Field) *RollingUpdatesInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// RollingUpdatesInsertCallDoer makes it easy to provide your own testable version of Do.
+type RollingUpdatesInsertCallDoer interface {
+	Do() (*Operation, error)
+	Fields(s ...googleapi.Field) RollingUpdatesInsertCallDoer
 }
 
 func (c *RollingUpdatesInsertCall) Do() (*Operation, error) {
@@ -755,6 +773,16 @@ func (c *RollingUpdatesListCall) PageToken(pageToken string) *RollingUpdatesList
 func (c *RollingUpdatesListCall) Fields(s ...googleapi.Field) *RollingUpdatesListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// RollingUpdatesListCallDoer makes it easy to provide your own testable version of Do.
+type RollingUpdatesListCallDoer interface {
+	Do() (*RollingUpdateList, error)
+	Filter(filter string) RollingUpdatesListCallDoer
+	InstanceGroupManager(instanceGroupManager string) RollingUpdatesListCallDoer
+	MaxResults(maxResults int64) RollingUpdatesListCallDoer
+	PageToken(pageToken string) RollingUpdatesListCallDoer
+	Fields(s ...googleapi.Field) RollingUpdatesListCallDoer
 }
 
 func (c *RollingUpdatesListCall) Do() (*RollingUpdateList, error) {
@@ -909,6 +937,15 @@ func (c *RollingUpdatesListInstanceUpdatesCall) Fields(s ...googleapi.Field) *Ro
 	return c
 }
 
+// RollingUpdatesListInstanceUpdatesCallDoer makes it easy to provide your own testable version of Do.
+type RollingUpdatesListInstanceUpdatesCallDoer interface {
+	Do() (*InstanceUpdateList, error)
+	Filter(filter string) RollingUpdatesListInstanceUpdatesCallDoer
+	MaxResults(maxResults int64) RollingUpdatesListInstanceUpdatesCallDoer
+	PageToken(pageToken string) RollingUpdatesListInstanceUpdatesCallDoer
+	Fields(s ...googleapi.Field) RollingUpdatesListInstanceUpdatesCallDoer
+}
+
 func (c *RollingUpdatesListInstanceUpdatesCall) Do() (*InstanceUpdateList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1039,6 +1076,12 @@ func (c *RollingUpdatesPauseCall) Fields(s ...googleapi.Field) *RollingUpdatesPa
 	return c
 }
 
+// RollingUpdatesPauseCallDoer makes it easy to provide your own testable version of Do.
+type RollingUpdatesPauseCallDoer interface {
+	Do() (*Operation, error)
+	Fields(s ...googleapi.Field) RollingUpdatesPauseCallDoer
+}
+
 func (c *RollingUpdatesPauseCall) Do() (*Operation, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1137,6 +1180,12 @@ func (r *RollingUpdatesService) Resume(project string, zone string, rollingUpdat
 func (c *RollingUpdatesResumeCall) Fields(s ...googleapi.Field) *RollingUpdatesResumeCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// RollingUpdatesResumeCallDoer makes it easy to provide your own testable version of Do.
+type RollingUpdatesResumeCallDoer interface {
+	Do() (*Operation, error)
+	Fields(s ...googleapi.Field) RollingUpdatesResumeCallDoer
 }
 
 func (c *RollingUpdatesResumeCall) Do() (*Operation, error) {
@@ -1240,6 +1289,12 @@ func (c *RollingUpdatesRollbackCall) Fields(s ...googleapi.Field) *RollingUpdate
 	return c
 }
 
+// RollingUpdatesRollbackCallDoer makes it easy to provide your own testable version of Do.
+type RollingUpdatesRollbackCallDoer interface {
+	Do() (*Operation, error)
+	Fields(s ...googleapi.Field) RollingUpdatesRollbackCallDoer
+}
+
 func (c *RollingUpdatesRollbackCall) Do() (*Operation, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1311,6 +1366,18 @@ func (c *RollingUpdatesRollbackCall) Do() (*Operation, error) {
 
 }
 
+// RollingUpdatesServicer makes it easy to provide your own testable versions of RollingUpdatesService.
+type RollingUpdatesServicer interface {
+	Cancel(project string, zone string, rollingUpdate string) RollingUpdatesCancelCallDoer
+	Get(project string, zone string, rollingUpdate string) RollingUpdatesGetCallDoer
+	Insert(project string, zone string, rollingupdate *RollingUpdate) RollingUpdatesInsertCallDoer
+	List(project string, zone string) RollingUpdatesListCallDoer
+	ListInstanceUpdates(project string, zone string, rollingUpdate string) RollingUpdatesListInstanceUpdatesCallDoer
+	Pause(project string, zone string, rollingUpdate string) RollingUpdatesPauseCallDoer
+	Resume(project string, zone string, rollingUpdate string) RollingUpdatesResumeCallDoer
+	Rollback(project string, zone string, rollingUpdate string) RollingUpdatesRollbackCallDoer
+}
+
 // method id "replicapoolupdater.zoneOperations.get":
 
 type ZoneOperationsGetCall struct {
@@ -1336,6 +1403,12 @@ func (r *ZoneOperationsService) Get(project string, zone string, operation strin
 func (c *ZoneOperationsGetCall) Fields(s ...googleapi.Field) *ZoneOperationsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ZoneOperationsGetCallDoer makes it easy to provide your own testable version of Do.
+type ZoneOperationsGetCallDoer interface {
+	Do() (*Operation, error)
+	Fields(s ...googleapi.Field) ZoneOperationsGetCallDoer
 }
 
 func (c *ZoneOperationsGetCall) Do() (*Operation, error) {
@@ -1407,4 +1480,9 @@ func (c *ZoneOperationsGetCall) Do() (*Operation, error) {
 	//   ]
 	// }
 
+}
+
+// ZoneOperationsServicer makes it easy to provide your own testable versions of ZoneOperationsService.
+type ZoneOperationsServicer interface {
+	Get(project string, zone string, operation string) ZoneOperationsGetCallDoer
 }

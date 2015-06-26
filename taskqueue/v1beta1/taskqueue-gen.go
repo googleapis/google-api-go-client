@@ -218,6 +218,13 @@ func (c *TaskqueuesGetCall) Fields(s ...googleapi.Field) *TaskqueuesGetCall {
 	return c
 }
 
+// TaskqueuesGetCallDoer makes it easy to provide your own testable version of Do.
+type TaskqueuesGetCallDoer interface {
+	Do() (*TaskQueue, error)
+	GetStats(getStats bool) TaskqueuesGetCallDoer
+	Fields(s ...googleapi.Field) TaskqueuesGetCallDoer
+}
+
 func (c *TaskqueuesGetCall) Do() (*TaskQueue, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -288,6 +295,11 @@ func (c *TaskqueuesGetCall) Do() (*TaskQueue, error) {
 
 }
 
+// TaskqueuesServicer makes it easy to provide your own testable versions of TaskqueuesService.
+type TaskqueuesServicer interface {
+	Get(project string, taskqueue string) TaskqueuesGetCallDoer
+}
+
 // method id "taskqueue.tasks.delete":
 
 type TasksDeleteCall struct {
@@ -313,6 +325,12 @@ func (r *TasksService) Delete(project string, taskqueue string, task string) *Ta
 func (c *TasksDeleteCall) Fields(s ...googleapi.Field) *TasksDeleteCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// TasksDeleteCallDoer makes it easy to provide your own testable version of Do.
+type TasksDeleteCallDoer interface {
+	Do() error
+	Fields(s ...googleapi.Field) TasksDeleteCallDoer
 }
 
 func (c *TasksDeleteCall) Do() error {
@@ -403,6 +421,12 @@ func (r *TasksService) Get(project string, taskqueue string, task string) *Tasks
 func (c *TasksGetCall) Fields(s ...googleapi.Field) *TasksGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// TasksGetCallDoer makes it easy to provide your own testable version of Do.
+type TasksGetCallDoer interface {
+	Do() (*Task, error)
+	Fields(s ...googleapi.Field) TasksGetCallDoer
 }
 
 func (c *TasksGetCall) Do() (*Task, error) {
@@ -502,6 +526,12 @@ func (r *TasksService) Lease(project string, taskqueue string, numTasks int64, l
 func (c *TasksLeaseCall) Fields(s ...googleapi.Field) *TasksLeaseCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// TasksLeaseCallDoer makes it easy to provide your own testable version of Do.
+type TasksLeaseCallDoer interface {
+	Do() (*Tasks, error)
+	Fields(s ...googleapi.Field) TasksLeaseCallDoer
 }
 
 func (c *TasksLeaseCall) Do() (*Tasks, error) {
@@ -609,6 +639,12 @@ func (c *TasksListCall) Fields(s ...googleapi.Field) *TasksListCall {
 	return c
 }
 
+// TasksListCallDoer makes it easy to provide your own testable version of Do.
+type TasksListCallDoer interface {
+	Do() (*Tasks2, error)
+	Fields(s ...googleapi.Field) TasksListCallDoer
+}
+
 func (c *TasksListCall) Do() (*Tasks2, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -669,4 +705,12 @@ func (c *TasksListCall) Do() (*Tasks2, error) {
 	//   ]
 	// }
 
+}
+
+// TasksServicer makes it easy to provide your own testable versions of TasksService.
+type TasksServicer interface {
+	Delete(project string, taskqueue string, task string) TasksDeleteCallDoer
+	Get(project string, taskqueue string, task string) TasksGetCallDoer
+	Lease(project string, taskqueue string, numTasks int64, leaseSecs int64) TasksLeaseCallDoer
+	List(project string, taskqueue string) TasksListCallDoer
 }

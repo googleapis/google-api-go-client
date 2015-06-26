@@ -270,6 +270,12 @@ func (c *HostedmodelsPredictCall) Fields(s ...googleapi.Field) *HostedmodelsPred
 	return c
 }
 
+// HostedmodelsPredictCallDoer makes it easy to provide your own testable version of Do.
+type HostedmodelsPredictCallDoer interface {
+	Do() (*Output, error)
+	Fields(s ...googleapi.Field) HostedmodelsPredictCallDoer
+}
+
 func (c *HostedmodelsPredictCall) Do() (*Output, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.input)
@@ -332,6 +338,11 @@ func (c *HostedmodelsPredictCall) Do() (*Output, error) {
 
 }
 
+// HostedmodelsServicer makes it easy to provide your own testable versions of HostedmodelsService.
+type HostedmodelsServicer interface {
+	Predict(hostedModelName string, input *Input) HostedmodelsPredictCallDoer
+}
+
 // method id "prediction.trainedmodels.delete":
 
 type TrainedmodelsDeleteCall struct {
@@ -353,6 +364,12 @@ func (r *TrainedmodelsService) Delete(id string) *TrainedmodelsDeleteCall {
 func (c *TrainedmodelsDeleteCall) Fields(s ...googleapi.Field) *TrainedmodelsDeleteCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// TrainedmodelsDeleteCallDoer makes it easy to provide your own testable version of Do.
+type TrainedmodelsDeleteCallDoer interface {
+	Do() error
+	Fields(s ...googleapi.Field) TrainedmodelsDeleteCallDoer
 }
 
 func (c *TrainedmodelsDeleteCall) Do() error {
@@ -422,6 +439,12 @@ func (r *TrainedmodelsService) Get(id string) *TrainedmodelsGetCall {
 func (c *TrainedmodelsGetCall) Fields(s ...googleapi.Field) *TrainedmodelsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// TrainedmodelsGetCallDoer makes it easy to provide your own testable version of Do.
+type TrainedmodelsGetCallDoer interface {
+	Do() (*Training, error)
+	Fields(s ...googleapi.Field) TrainedmodelsGetCallDoer
 }
 
 func (c *TrainedmodelsGetCall) Do() (*Training, error) {
@@ -500,6 +523,12 @@ func (c *TrainedmodelsInsertCall) Fields(s ...googleapi.Field) *TrainedmodelsIns
 	return c
 }
 
+// TrainedmodelsInsertCallDoer makes it easy to provide your own testable version of Do.
+type TrainedmodelsInsertCallDoer interface {
+	Do() (*Training, error)
+	Fields(s ...googleapi.Field) TrainedmodelsInsertCallDoer
+}
+
 func (c *TrainedmodelsInsertCall) Do() (*Training, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.training)
@@ -575,6 +604,12 @@ func (r *TrainedmodelsService) Predict(id string, input *Input) *TrainedmodelsPr
 func (c *TrainedmodelsPredictCall) Fields(s ...googleapi.Field) *TrainedmodelsPredictCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// TrainedmodelsPredictCallDoer makes it easy to provide your own testable version of Do.
+type TrainedmodelsPredictCallDoer interface {
+	Do() (*Output, error)
+	Fields(s ...googleapi.Field) TrainedmodelsPredictCallDoer
 }
 
 func (c *TrainedmodelsPredictCall) Do() (*Output, error) {
@@ -664,6 +699,12 @@ func (c *TrainedmodelsUpdateCall) Fields(s ...googleapi.Field) *TrainedmodelsUpd
 	return c
 }
 
+// TrainedmodelsUpdateCallDoer makes it easy to provide your own testable version of Do.
+type TrainedmodelsUpdateCallDoer interface {
+	Do() (*Training, error)
+	Fields(s ...googleapi.Field) TrainedmodelsUpdateCallDoer
+}
+
 func (c *TrainedmodelsUpdateCall) Do() (*Training, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.update)
@@ -724,4 +765,13 @@ func (c *TrainedmodelsUpdateCall) Do() (*Training, error) {
 	//   ]
 	// }
 
+}
+
+// TrainedmodelsServicer makes it easy to provide your own testable versions of TrainedmodelsService.
+type TrainedmodelsServicer interface {
+	Delete(id string) TrainedmodelsDeleteCallDoer
+	Get(id string) TrainedmodelsGetCallDoer
+	Insert(training *Training) TrainedmodelsInsertCallDoer
+	Predict(id string, input *Input) TrainedmodelsPredictCallDoer
+	Update(id string, update *Update) TrainedmodelsUpdateCallDoer
 }

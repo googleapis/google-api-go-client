@@ -193,6 +193,18 @@ func (c *ReconcileCall) Fields(s ...googleapi.Field) *ReconcileCall {
 	return c
 }
 
+// ReconcileCallDoer makes it easy to provide your own testable version of Do.
+type ReconcileCallDoer interface {
+	Do() (*ReconcileGet, error)
+	Confidence(confidence float64) ReconcileCallDoer
+	Kind(kind string) ReconcileCallDoer
+	Lang(lang string) ReconcileCallDoer
+	Limit(limit int64) ReconcileCallDoer
+	Name(name string) ReconcileCallDoer
+	Prop(prop string) ReconcileCallDoer
+	Fields(s ...googleapi.Field) ReconcileCallDoer
+}
+
 func (c *ReconcileCall) Do() (*ReconcileGet, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -504,6 +516,35 @@ func (c *SearchCall) Without(without string) *SearchCall {
 func (c *SearchCall) Fields(s ...googleapi.Field) *SearchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// SearchCallDoer makes it easy to provide your own testable version of Do.
+type SearchCallDoer interface {
+	Do() error
+	AsOfTime(asOfTime string) SearchCallDoer
+	Callback(callback string) SearchCallDoer
+	Cursor(cursor int64) SearchCallDoer
+	Domain(domain string) SearchCallDoer
+	Encode(encode string) SearchCallDoer
+	Exact(exact bool) SearchCallDoer
+	Filter(filter string) SearchCallDoer
+	Format(format string) SearchCallDoer
+	Help(help string) SearchCallDoer
+	Indent(indent bool) SearchCallDoer
+	Lang(lang string) SearchCallDoer
+	Limit(limit int64) SearchCallDoer
+	Mid(mid string) SearchCallDoer
+	MqlOutput(mqlOutput string) SearchCallDoer
+	Output(output string) SearchCallDoer
+	Prefixed(prefixed bool) SearchCallDoer
+	Query(query string) SearchCallDoer
+	Scoring(scoring string) SearchCallDoer
+	Spell(spell string) SearchCallDoer
+	Stemmed(stemmed bool) SearchCallDoer
+	Type(type_ string) SearchCallDoer
+	With(with string) SearchCallDoer
+	Without(without string) SearchCallDoer
+	Fields(s ...googleapi.Field) SearchCallDoer
 }
 
 func (c *SearchCall) Do() error {

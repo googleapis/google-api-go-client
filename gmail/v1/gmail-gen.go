@@ -518,6 +518,12 @@ func (c *UsersGetProfileCall) Fields(s ...googleapi.Field) *UsersGetProfileCall 
 	return c
 }
 
+// UsersGetProfileCallDoer makes it easy to provide your own testable version of Do.
+type UsersGetProfileCallDoer interface {
+	Do() (*Profile, error)
+	Fields(s ...googleapi.Field) UsersGetProfileCallDoer
+}
+
 func (c *UsersGetProfileCall) Do() (*Profile, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -598,6 +604,12 @@ func (c *UsersStopCall) Fields(s ...googleapi.Field) *UsersStopCall {
 	return c
 }
 
+// UsersStopCallDoer makes it easy to provide your own testable version of Do.
+type UsersStopCallDoer interface {
+	Do() error
+	Fields(s ...googleapi.Field) UsersStopCallDoer
+}
+
 func (c *UsersStopCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -671,6 +683,12 @@ func (r *UsersService) Watch(userId string, watchrequest *WatchRequest) *UsersWa
 func (c *UsersWatchCall) Fields(s ...googleapi.Field) *UsersWatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// UsersWatchCallDoer makes it easy to provide your own testable version of Do.
+type UsersWatchCallDoer interface {
+	Do() (*WatchResponse, error)
+	Fields(s ...googleapi.Field) UsersWatchCallDoer
 }
 
 func (c *UsersWatchCall) Do() (*WatchResponse, error) {
@@ -794,6 +812,15 @@ func (c *UsersDraftsCreateCall) ProgressUpdater(pu googleapi.ProgressUpdater) *U
 func (c *UsersDraftsCreateCall) Fields(s ...googleapi.Field) *UsersDraftsCreateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// UsersDraftsCreateCallDoer makes it easy to provide your own testable version of Do.
+type UsersDraftsCreateCallDoer interface {
+	Do() (*Draft, error)
+	Media(r io.Reader) UsersDraftsCreateCallDoer
+	ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) UsersDraftsCreateCallDoer
+	ProgressUpdater(pu googleapi.ProgressUpdater) UsersDraftsCreateCallDoer
+	Fields(s ...googleapi.Field) UsersDraftsCreateCallDoer
 }
 
 func (c *UsersDraftsCreateCall) Do() (*Draft, error) {
@@ -947,6 +974,12 @@ func (c *UsersDraftsDeleteCall) Fields(s ...googleapi.Field) *UsersDraftsDeleteC
 	return c
 }
 
+// UsersDraftsDeleteCallDoer makes it easy to provide your own testable version of Do.
+type UsersDraftsDeleteCallDoer interface {
+	Do() error
+	Fields(s ...googleapi.Field) UsersDraftsDeleteCallDoer
+}
+
 func (c *UsersDraftsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1040,6 +1073,13 @@ func (c *UsersDraftsGetCall) Format(format string) *UsersDraftsGetCall {
 func (c *UsersDraftsGetCall) Fields(s ...googleapi.Field) *UsersDraftsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// UsersDraftsGetCallDoer makes it easy to provide your own testable version of Do.
+type UsersDraftsGetCallDoer interface {
+	Do() (*Draft, error)
+	Format(format string) UsersDraftsGetCallDoer
+	Fields(s ...googleapi.Field) UsersDraftsGetCallDoer
 }
 
 func (c *UsersDraftsGetCall) Do() (*Draft, error) {
@@ -1163,6 +1203,14 @@ func (c *UsersDraftsListCall) PageToken(pageToken string) *UsersDraftsListCall {
 func (c *UsersDraftsListCall) Fields(s ...googleapi.Field) *UsersDraftsListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// UsersDraftsListCallDoer makes it easy to provide your own testable version of Do.
+type UsersDraftsListCallDoer interface {
+	Do() (*ListDraftsResponse, error)
+	MaxResults(maxResults int64) UsersDraftsListCallDoer
+	PageToken(pageToken string) UsersDraftsListCallDoer
+	Fields(s ...googleapi.Field) UsersDraftsListCallDoer
 }
 
 func (c *UsersDraftsListCall) Do() (*ListDraftsResponse, error) {
@@ -1297,6 +1345,15 @@ func (c *UsersDraftsSendCall) ProgressUpdater(pu googleapi.ProgressUpdater) *Use
 func (c *UsersDraftsSendCall) Fields(s ...googleapi.Field) *UsersDraftsSendCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// UsersDraftsSendCallDoer makes it easy to provide your own testable version of Do.
+type UsersDraftsSendCallDoer interface {
+	Do() (*Message, error)
+	Media(r io.Reader) UsersDraftsSendCallDoer
+	ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) UsersDraftsSendCallDoer
+	ProgressUpdater(pu googleapi.ProgressUpdater) UsersDraftsSendCallDoer
+	Fields(s ...googleapi.Field) UsersDraftsSendCallDoer
 }
 
 func (c *UsersDraftsSendCall) Do() (*Message, error) {
@@ -1482,6 +1539,15 @@ func (c *UsersDraftsUpdateCall) ProgressUpdater(pu googleapi.ProgressUpdater) *U
 func (c *UsersDraftsUpdateCall) Fields(s ...googleapi.Field) *UsersDraftsUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// UsersDraftsUpdateCallDoer makes it easy to provide your own testable version of Do.
+type UsersDraftsUpdateCallDoer interface {
+	Do() (*Draft, error)
+	Media(r io.Reader) UsersDraftsUpdateCallDoer
+	ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) UsersDraftsUpdateCallDoer
+	ProgressUpdater(pu googleapi.ProgressUpdater) UsersDraftsUpdateCallDoer
+	Fields(s ...googleapi.Field) UsersDraftsUpdateCallDoer
 }
 
 func (c *UsersDraftsUpdateCall) Do() (*Draft, error) {
@@ -1679,6 +1745,16 @@ func (c *UsersHistoryListCall) Fields(s ...googleapi.Field) *UsersHistoryListCal
 	return c
 }
 
+// UsersHistoryListCallDoer makes it easy to provide your own testable version of Do.
+type UsersHistoryListCallDoer interface {
+	Do() (*ListHistoryResponse, error)
+	LabelId(labelId string) UsersHistoryListCallDoer
+	MaxResults(maxResults int64) UsersHistoryListCallDoer
+	PageToken(pageToken string) UsersHistoryListCallDoer
+	StartHistoryId(startHistoryId uint64) UsersHistoryListCallDoer
+	Fields(s ...googleapi.Field) UsersHistoryListCallDoer
+}
+
 func (c *UsersHistoryListCall) Do() (*ListHistoryResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1795,6 +1871,12 @@ func (c *UsersLabelsCreateCall) Fields(s ...googleapi.Field) *UsersLabelsCreateC
 	return c
 }
 
+// UsersLabelsCreateCallDoer makes it easy to provide your own testable version of Do.
+type UsersLabelsCreateCallDoer interface {
+	Do() (*Label, error)
+	Fields(s ...googleapi.Field) UsersLabelsCreateCallDoer
+}
+
 func (c *UsersLabelsCreateCall) Do() (*Label, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.label)
@@ -1886,6 +1968,12 @@ func (c *UsersLabelsDeleteCall) Fields(s ...googleapi.Field) *UsersLabelsDeleteC
 	return c
 }
 
+// UsersLabelsDeleteCallDoer makes it easy to provide your own testable version of Do.
+type UsersLabelsDeleteCallDoer interface {
+	Do() error
+	Fields(s ...googleapi.Field) UsersLabelsDeleteCallDoer
+}
+
 func (c *UsersLabelsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1966,6 +2054,12 @@ func (r *UsersLabelsService) Get(userId string, id string) *UsersLabelsGetCall {
 func (c *UsersLabelsGetCall) Fields(s ...googleapi.Field) *UsersLabelsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// UsersLabelsGetCallDoer makes it easy to provide your own testable version of Do.
+type UsersLabelsGetCallDoer interface {
+	Do() (*Label, error)
+	Fields(s ...googleapi.Field) UsersLabelsGetCallDoer
 }
 
 func (c *UsersLabelsGetCall) Do() (*Label, error) {
@@ -2056,6 +2150,12 @@ func (c *UsersLabelsListCall) Fields(s ...googleapi.Field) *UsersLabelsListCall 
 	return c
 }
 
+// UsersLabelsListCallDoer makes it easy to provide your own testable version of Do.
+type UsersLabelsListCallDoer interface {
+	Do() (*ListLabelsResponse, error)
+	Fields(s ...googleapi.Field) UsersLabelsListCallDoer
+}
+
 func (c *UsersLabelsListCall) Do() (*ListLabelsResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2139,6 +2239,12 @@ func (r *UsersLabelsService) Patch(userId string, id string, label *Label) *User
 func (c *UsersLabelsPatchCall) Fields(s ...googleapi.Field) *UsersLabelsPatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// UsersLabelsPatchCallDoer makes it easy to provide your own testable version of Do.
+type UsersLabelsPatchCallDoer interface {
+	Do() (*Label, error)
+	Fields(s ...googleapi.Field) UsersLabelsPatchCallDoer
 }
 
 func (c *UsersLabelsPatchCall) Do() (*Label, error) {
@@ -2241,6 +2347,12 @@ func (c *UsersLabelsUpdateCall) Fields(s ...googleapi.Field) *UsersLabelsUpdateC
 	return c
 }
 
+// UsersLabelsUpdateCallDoer makes it easy to provide your own testable version of Do.
+type UsersLabelsUpdateCallDoer interface {
+	Do() (*Label, error)
+	Fields(s ...googleapi.Field) UsersLabelsUpdateCallDoer
+}
+
 func (c *UsersLabelsUpdateCall) Do() (*Label, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.label)
@@ -2338,6 +2450,12 @@ func (r *UsersMessagesService) Delete(userId string, id string) *UsersMessagesDe
 func (c *UsersMessagesDeleteCall) Fields(s ...googleapi.Field) *UsersMessagesDeleteCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// UsersMessagesDeleteCallDoer makes it easy to provide your own testable version of Do.
+type UsersMessagesDeleteCallDoer interface {
+	Do() error
+	Fields(s ...googleapi.Field) UsersMessagesDeleteCallDoer
 }
 
 func (c *UsersMessagesDeleteCall) Do() error {
@@ -2438,6 +2556,14 @@ func (c *UsersMessagesGetCall) MetadataHeaders(metadataHeaders string) *UsersMes
 func (c *UsersMessagesGetCall) Fields(s ...googleapi.Field) *UsersMessagesGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// UsersMessagesGetCallDoer makes it easy to provide your own testable version of Do.
+type UsersMessagesGetCallDoer interface {
+	Do() (*Message, error)
+	Format(format string) UsersMessagesGetCallDoer
+	MetadataHeaders(metadataHeaders string) UsersMessagesGetCallDoer
+	Fields(s ...googleapi.Field) UsersMessagesGetCallDoer
 }
 
 func (c *UsersMessagesGetCall) Do() (*Message, error) {
@@ -2628,6 +2754,19 @@ func (c *UsersMessagesImportCall) ProgressUpdater(pu googleapi.ProgressUpdater) 
 func (c *UsersMessagesImportCall) Fields(s ...googleapi.Field) *UsersMessagesImportCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// UsersMessagesImportCallDoer makes it easy to provide your own testable version of Do.
+type UsersMessagesImportCallDoer interface {
+	Do() (*Message, error)
+	Deleted(deleted bool) UsersMessagesImportCallDoer
+	InternalDateSource(internalDateSource string) UsersMessagesImportCallDoer
+	NeverMarkSpam(neverMarkSpam bool) UsersMessagesImportCallDoer
+	ProcessForCalendar(processForCalendar bool) UsersMessagesImportCallDoer
+	Media(r io.Reader) UsersMessagesImportCallDoer
+	ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) UsersMessagesImportCallDoer
+	ProgressUpdater(pu googleapi.ProgressUpdater) UsersMessagesImportCallDoer
+	Fields(s ...googleapi.Field) UsersMessagesImportCallDoer
 }
 
 func (c *UsersMessagesImportCall) Do() (*Message, error) {
@@ -2879,6 +3018,17 @@ func (c *UsersMessagesInsertCall) Fields(s ...googleapi.Field) *UsersMessagesIns
 	return c
 }
 
+// UsersMessagesInsertCallDoer makes it easy to provide your own testable version of Do.
+type UsersMessagesInsertCallDoer interface {
+	Do() (*Message, error)
+	Deleted(deleted bool) UsersMessagesInsertCallDoer
+	InternalDateSource(internalDateSource string) UsersMessagesInsertCallDoer
+	Media(r io.Reader) UsersMessagesInsertCallDoer
+	ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) UsersMessagesInsertCallDoer
+	ProgressUpdater(pu googleapi.ProgressUpdater) UsersMessagesInsertCallDoer
+	Fields(s ...googleapi.Field) UsersMessagesInsertCallDoer
+}
+
 func (c *UsersMessagesInsertCall) Do() (*Message, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.message)
@@ -3089,6 +3239,17 @@ func (c *UsersMessagesListCall) Fields(s ...googleapi.Field) *UsersMessagesListC
 	return c
 }
 
+// UsersMessagesListCallDoer makes it easy to provide your own testable version of Do.
+type UsersMessagesListCallDoer interface {
+	Do() (*ListMessagesResponse, error)
+	IncludeSpamTrash(includeSpamTrash bool) UsersMessagesListCallDoer
+	LabelIds(labelIds string) UsersMessagesListCallDoer
+	MaxResults(maxResults int64) UsersMessagesListCallDoer
+	PageToken(pageToken string) UsersMessagesListCallDoer
+	Q(q string) UsersMessagesListCallDoer
+	Fields(s ...googleapi.Field) UsersMessagesListCallDoer
+}
+
 func (c *UsersMessagesListCall) Do() (*ListMessagesResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3214,6 +3375,12 @@ func (r *UsersMessagesService) Modify(userId string, id string, modifymessagereq
 func (c *UsersMessagesModifyCall) Fields(s ...googleapi.Field) *UsersMessagesModifyCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// UsersMessagesModifyCallDoer makes it easy to provide your own testable version of Do.
+type UsersMessagesModifyCallDoer interface {
+	Do() (*Message, error)
+	Fields(s ...googleapi.Field) UsersMessagesModifyCallDoer
 }
 
 func (c *UsersMessagesModifyCall) Do() (*Message, error) {
@@ -3345,6 +3512,15 @@ func (c *UsersMessagesSendCall) ProgressUpdater(pu googleapi.ProgressUpdater) *U
 func (c *UsersMessagesSendCall) Fields(s ...googleapi.Field) *UsersMessagesSendCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// UsersMessagesSendCallDoer makes it easy to provide your own testable version of Do.
+type UsersMessagesSendCallDoer interface {
+	Do() (*Message, error)
+	Media(r io.Reader) UsersMessagesSendCallDoer
+	ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) UsersMessagesSendCallDoer
+	ProgressUpdater(pu googleapi.ProgressUpdater) UsersMessagesSendCallDoer
+	Fields(s ...googleapi.Field) UsersMessagesSendCallDoer
 }
 
 func (c *UsersMessagesSendCall) Do() (*Message, error) {
@@ -3497,6 +3673,12 @@ func (c *UsersMessagesTrashCall) Fields(s ...googleapi.Field) *UsersMessagesTras
 	return c
 }
 
+// UsersMessagesTrashCallDoer makes it easy to provide your own testable version of Do.
+type UsersMessagesTrashCallDoer interface {
+	Do() (*Message, error)
+	Fields(s ...googleapi.Field) UsersMessagesTrashCallDoer
+}
+
 func (c *UsersMessagesTrashCall) Do() (*Message, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3583,6 +3765,12 @@ func (r *UsersMessagesService) Untrash(userId string, id string) *UsersMessagesU
 func (c *UsersMessagesUntrashCall) Fields(s ...googleapi.Field) *UsersMessagesUntrashCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// UsersMessagesUntrashCallDoer makes it easy to provide your own testable version of Do.
+type UsersMessagesUntrashCallDoer interface {
+	Do() (*Message, error)
+	Fields(s ...googleapi.Field) UsersMessagesUntrashCallDoer
 }
 
 func (c *UsersMessagesUntrashCall) Do() (*Message, error) {
@@ -3673,6 +3861,12 @@ func (r *UsersMessagesAttachmentsService) Get(userId string, messageId string, i
 func (c *UsersMessagesAttachmentsGetCall) Fields(s ...googleapi.Field) *UsersMessagesAttachmentsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// UsersMessagesAttachmentsGetCallDoer makes it easy to provide your own testable version of Do.
+type UsersMessagesAttachmentsGetCallDoer interface {
+	Do() (*MessagePartBody, error)
+	Fields(s ...googleapi.Field) UsersMessagesAttachmentsGetCallDoer
 }
 
 func (c *UsersMessagesAttachmentsGetCall) Do() (*MessagePartBody, error) {
@@ -3773,6 +3967,12 @@ func (c *UsersThreadsDeleteCall) Fields(s ...googleapi.Field) *UsersThreadsDelet
 	return c
 }
 
+// UsersThreadsDeleteCallDoer makes it easy to provide your own testable version of Do.
+type UsersThreadsDeleteCallDoer interface {
+	Do() error
+	Fields(s ...googleapi.Field) UsersThreadsDeleteCallDoer
+}
+
 func (c *UsersThreadsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3870,6 +4070,14 @@ func (c *UsersThreadsGetCall) MetadataHeaders(metadataHeaders string) *UsersThre
 func (c *UsersThreadsGetCall) Fields(s ...googleapi.Field) *UsersThreadsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// UsersThreadsGetCallDoer makes it easy to provide your own testable version of Do.
+type UsersThreadsGetCallDoer interface {
+	Do() (*Thread, error)
+	Format(format string) UsersThreadsGetCallDoer
+	MetadataHeaders(metadataHeaders string) UsersThreadsGetCallDoer
+	Fields(s ...googleapi.Field) UsersThreadsGetCallDoer
 }
 
 func (c *UsersThreadsGetCall) Do() (*Thread, error) {
@@ -4023,6 +4231,17 @@ func (c *UsersThreadsListCall) Fields(s ...googleapi.Field) *UsersThreadsListCal
 	return c
 }
 
+// UsersThreadsListCallDoer makes it easy to provide your own testable version of Do.
+type UsersThreadsListCallDoer interface {
+	Do() (*ListThreadsResponse, error)
+	IncludeSpamTrash(includeSpamTrash bool) UsersThreadsListCallDoer
+	LabelIds(labelIds string) UsersThreadsListCallDoer
+	MaxResults(maxResults int64) UsersThreadsListCallDoer
+	PageToken(pageToken string) UsersThreadsListCallDoer
+	Q(q string) UsersThreadsListCallDoer
+	Fields(s ...googleapi.Field) UsersThreadsListCallDoer
+}
+
 func (c *UsersThreadsListCall) Do() (*ListThreadsResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4151,6 +4370,12 @@ func (c *UsersThreadsModifyCall) Fields(s ...googleapi.Field) *UsersThreadsModif
 	return c
 }
 
+// UsersThreadsModifyCallDoer makes it easy to provide your own testable version of Do.
+type UsersThreadsModifyCallDoer interface {
+	Do() (*Thread, error)
+	Fields(s ...googleapi.Field) UsersThreadsModifyCallDoer
+}
+
 func (c *UsersThreadsModifyCall) Do() (*Thread, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.modifythreadrequest)
@@ -4248,6 +4473,12 @@ func (c *UsersThreadsTrashCall) Fields(s ...googleapi.Field) *UsersThreadsTrashC
 	return c
 }
 
+// UsersThreadsTrashCallDoer makes it easy to provide your own testable version of Do.
+type UsersThreadsTrashCallDoer interface {
+	Do() (*Thread, error)
+	Fields(s ...googleapi.Field) UsersThreadsTrashCallDoer
+}
+
 func (c *UsersThreadsTrashCall) Do() (*Thread, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4336,6 +4567,12 @@ func (c *UsersThreadsUntrashCall) Fields(s ...googleapi.Field) *UsersThreadsUntr
 	return c
 }
 
+// UsersThreadsUntrashCallDoer makes it easy to provide your own testable version of Do.
+type UsersThreadsUntrashCallDoer interface {
+	Do() (*Thread, error)
+	Fields(s ...googleapi.Field) UsersThreadsUntrashCallDoer
+}
+
 func (c *UsersThreadsUntrashCall) Do() (*Thread, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4397,4 +4634,11 @@ func (c *UsersThreadsUntrashCall) Do() (*Thread, error) {
 	//   ]
 	// }
 
+}
+
+// UsersServicer makes it easy to provide your own testable versions of UsersService.
+type UsersServicer interface {
+	GetProfile(userId string) UsersGetProfileCallDoer
+	Stop(userId string) UsersStopCallDoer
+	Watch(userId string, watchrequest *WatchRequest) UsersWatchCallDoer
 }

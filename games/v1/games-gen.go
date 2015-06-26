@@ -2484,6 +2484,15 @@ func (c *AchievementDefinitionsListCall) Fields(s ...googleapi.Field) *Achieveme
 	return c
 }
 
+// AchievementDefinitionsListCallDoer makes it easy to provide your own testable version of Do.
+type AchievementDefinitionsListCallDoer interface {
+	Do() (*AchievementDefinitionsListResponse, error)
+	Language(language string) AchievementDefinitionsListCallDoer
+	MaxResults(maxResults int64) AchievementDefinitionsListCallDoer
+	PageToken(pageToken string) AchievementDefinitionsListCallDoer
+	Fields(s ...googleapi.Field) AchievementDefinitionsListCallDoer
+}
+
 func (c *AchievementDefinitionsListCall) Do() (*AchievementDefinitionsListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2554,6 +2563,11 @@ func (c *AchievementDefinitionsListCall) Do() (*AchievementDefinitionsListRespon
 
 }
 
+// AchievementDefinitionsServicer makes it easy to provide your own testable versions of AchievementDefinitionsService.
+type AchievementDefinitionsServicer interface {
+	List() AchievementDefinitionsListCallDoer
+}
+
 // method id "games.achievements.increment":
 
 type AchievementsIncrementCall struct {
@@ -2587,6 +2601,13 @@ func (c *AchievementsIncrementCall) RequestId(requestId int64) *AchievementsIncr
 func (c *AchievementsIncrementCall) Fields(s ...googleapi.Field) *AchievementsIncrementCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// AchievementsIncrementCallDoer makes it easy to provide your own testable version of Do.
+type AchievementsIncrementCallDoer interface {
+	Do() (*AchievementIncrementResponse, error)
+	RequestId(requestId int64) AchievementsIncrementCallDoer
+	Fields(s ...googleapi.Field) AchievementsIncrementCallDoer
 }
 
 func (c *AchievementsIncrementCall) Do() (*AchievementIncrementResponse, error) {
@@ -2723,6 +2744,16 @@ func (c *AchievementsListCall) Fields(s ...googleapi.Field) *AchievementsListCal
 	return c
 }
 
+// AchievementsListCallDoer makes it easy to provide your own testable version of Do.
+type AchievementsListCallDoer interface {
+	Do() (*PlayerAchievementListResponse, error)
+	Language(language string) AchievementsListCallDoer
+	MaxResults(maxResults int64) AchievementsListCallDoer
+	PageToken(pageToken string) AchievementsListCallDoer
+	State(state string) AchievementsListCallDoer
+	Fields(s ...googleapi.Field) AchievementsListCallDoer
+}
+
 func (c *AchievementsListCall) Do() (*PlayerAchievementListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2848,6 +2879,12 @@ func (c *AchievementsRevealCall) Fields(s ...googleapi.Field) *AchievementsRevea
 	return c
 }
 
+// AchievementsRevealCallDoer makes it easy to provide your own testable version of Do.
+type AchievementsRevealCallDoer interface {
+	Do() (*AchievementRevealResponse, error)
+	Fields(s ...googleapi.Field) AchievementsRevealCallDoer
+}
+
 func (c *AchievementsRevealCall) Do() (*AchievementRevealResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2928,6 +2965,12 @@ func (r *AchievementsService) SetStepsAtLeast(achievementId string, steps int64)
 func (c *AchievementsSetStepsAtLeastCall) Fields(s ...googleapi.Field) *AchievementsSetStepsAtLeastCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// AchievementsSetStepsAtLeastCallDoer makes it easy to provide your own testable version of Do.
+type AchievementsSetStepsAtLeastCallDoer interface {
+	Do() (*AchievementSetStepsAtLeastResponse, error)
+	Fields(s ...googleapi.Field) AchievementsSetStepsAtLeastCallDoer
 }
 
 func (c *AchievementsSetStepsAtLeastCall) Do() (*AchievementSetStepsAtLeastResponse, error) {
@@ -3018,6 +3061,12 @@ func (c *AchievementsUnlockCall) Fields(s ...googleapi.Field) *AchievementsUnloc
 	return c
 }
 
+// AchievementsUnlockCallDoer makes it easy to provide your own testable version of Do.
+type AchievementsUnlockCallDoer interface {
+	Do() (*AchievementUnlockResponse, error)
+	Fields(s ...googleapi.Field) AchievementsUnlockCallDoer
+}
+
 func (c *AchievementsUnlockCall) Do() (*AchievementUnlockResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3096,6 +3145,12 @@ func (c *AchievementsUpdateMultipleCall) Fields(s ...googleapi.Field) *Achieveme
 	return c
 }
 
+// AchievementsUpdateMultipleCallDoer makes it easy to provide your own testable version of Do.
+type AchievementsUpdateMultipleCallDoer interface {
+	Do() (*AchievementUpdateMultipleResponse, error)
+	Fields(s ...googleapi.Field) AchievementsUpdateMultipleCallDoer
+}
+
 func (c *AchievementsUpdateMultipleCall) Do() (*AchievementUpdateMultipleResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.achievementupdatemultiplerequest)
@@ -3146,6 +3201,16 @@ func (c *AchievementsUpdateMultipleCall) Do() (*AchievementUpdateMultipleRespons
 
 }
 
+// AchievementsServicer makes it easy to provide your own testable versions of AchievementsService.
+type AchievementsServicer interface {
+	Increment(achievementId string, stepsToIncrement int64) AchievementsIncrementCallDoer
+	List(playerId string) AchievementsListCallDoer
+	Reveal(achievementId string) AchievementsRevealCallDoer
+	SetStepsAtLeast(achievementId string, steps int64) AchievementsSetStepsAtLeastCallDoer
+	Unlock(achievementId string) AchievementsUnlockCallDoer
+	UpdateMultiple(achievementupdatemultiplerequest *AchievementUpdateMultipleRequest) AchievementsUpdateMultipleCallDoer
+}
+
 // method id "games.applications.get":
 
 type ApplicationsGetCall struct {
@@ -3190,6 +3255,14 @@ func (c *ApplicationsGetCall) PlatformType(platformType string) *ApplicationsGet
 func (c *ApplicationsGetCall) Fields(s ...googleapi.Field) *ApplicationsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ApplicationsGetCallDoer makes it easy to provide your own testable version of Do.
+type ApplicationsGetCallDoer interface {
+	Do() (*Application, error)
+	Language(language string) ApplicationsGetCallDoer
+	PlatformType(platformType string) ApplicationsGetCallDoer
+	Fields(s ...googleapi.Field) ApplicationsGetCallDoer
 }
 
 func (c *ApplicationsGetCall) Do() (*Application, error) {
@@ -3294,6 +3367,12 @@ func (c *ApplicationsPlayedCall) Fields(s ...googleapi.Field) *ApplicationsPlaye
 	return c
 }
 
+// ApplicationsPlayedCallDoer makes it easy to provide your own testable version of Do.
+type ApplicationsPlayedCallDoer interface {
+	Do() error
+	Fields(s ...googleapi.Field) ApplicationsPlayedCallDoer
+}
+
 func (c *ApplicationsPlayedCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3326,6 +3405,12 @@ func (c *ApplicationsPlayedCall) Do() error {
 	//   ]
 	// }
 
+}
+
+// ApplicationsServicer makes it easy to provide your own testable versions of ApplicationsService.
+type ApplicationsServicer interface {
+	Get(applicationId string) ApplicationsGetCallDoer
+	Played() ApplicationsPlayedCallDoer
 }
 
 // method id "games.events.listByPlayer":
@@ -3371,6 +3456,15 @@ func (c *EventsListByPlayerCall) PageToken(pageToken string) *EventsListByPlayer
 func (c *EventsListByPlayerCall) Fields(s ...googleapi.Field) *EventsListByPlayerCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// EventsListByPlayerCallDoer makes it easy to provide your own testable version of Do.
+type EventsListByPlayerCallDoer interface {
+	Do() (*PlayerEventListResponse, error)
+	Language(language string) EventsListByPlayerCallDoer
+	MaxResults(maxResults int64) EventsListByPlayerCallDoer
+	PageToken(pageToken string) EventsListByPlayerCallDoer
+	Fields(s ...googleapi.Field) EventsListByPlayerCallDoer
 }
 
 func (c *EventsListByPlayerCall) Do() (*PlayerEventListResponse, error) {
@@ -3488,6 +3582,15 @@ func (c *EventsListDefinitionsCall) Fields(s ...googleapi.Field) *EventsListDefi
 	return c
 }
 
+// EventsListDefinitionsCallDoer makes it easy to provide your own testable version of Do.
+type EventsListDefinitionsCallDoer interface {
+	Do() (*EventDefinitionListResponse, error)
+	Language(language string) EventsListDefinitionsCallDoer
+	MaxResults(maxResults int64) EventsListDefinitionsCallDoer
+	PageToken(pageToken string) EventsListDefinitionsCallDoer
+	Fields(s ...googleapi.Field) EventsListDefinitionsCallDoer
+}
+
 func (c *EventsListDefinitionsCall) Do() (*EventDefinitionListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3589,6 +3692,13 @@ func (c *EventsRecordCall) Fields(s ...googleapi.Field) *EventsRecordCall {
 	return c
 }
 
+// EventsRecordCallDoer makes it easy to provide your own testable version of Do.
+type EventsRecordCallDoer interface {
+	Do() (*EventUpdateResponse, error)
+	Language(language string) EventsRecordCallDoer
+	Fields(s ...googleapi.Field) EventsRecordCallDoer
+}
+
 func (c *EventsRecordCall) Do() (*EventUpdateResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.eventrecordrequest)
@@ -3649,6 +3759,13 @@ func (c *EventsRecordCall) Do() (*EventUpdateResponse, error) {
 
 }
 
+// EventsServicer makes it easy to provide your own testable versions of EventsService.
+type EventsServicer interface {
+	ListByPlayer() EventsListByPlayerCallDoer
+	ListDefinitions() EventsListDefinitionsCallDoer
+	Record(eventrecordrequest *EventRecordRequest) EventsRecordCallDoer
+}
+
 // method id "games.leaderboards.get":
 
 type LeaderboardsGetCall struct {
@@ -3677,6 +3794,13 @@ func (c *LeaderboardsGetCall) Language(language string) *LeaderboardsGetCall {
 func (c *LeaderboardsGetCall) Fields(s ...googleapi.Field) *LeaderboardsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// LeaderboardsGetCallDoer makes it easy to provide your own testable version of Do.
+type LeaderboardsGetCallDoer interface {
+	Do() (*Leaderboard, error)
+	Language(language string) LeaderboardsGetCallDoer
+	Fields(s ...googleapi.Field) LeaderboardsGetCallDoer
 }
 
 func (c *LeaderboardsGetCall) Do() (*Leaderboard, error) {
@@ -3785,6 +3909,15 @@ func (c *LeaderboardsListCall) Fields(s ...googleapi.Field) *LeaderboardsListCal
 	return c
 }
 
+// LeaderboardsListCallDoer makes it easy to provide your own testable version of Do.
+type LeaderboardsListCallDoer interface {
+	Do() (*LeaderboardListResponse, error)
+	Language(language string) LeaderboardsListCallDoer
+	MaxResults(maxResults int64) LeaderboardsListCallDoer
+	PageToken(pageToken string) LeaderboardsListCallDoer
+	Fields(s ...googleapi.Field) LeaderboardsListCallDoer
+}
+
 func (c *LeaderboardsListCall) Do() (*LeaderboardListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3855,6 +3988,12 @@ func (c *LeaderboardsListCall) Do() (*LeaderboardListResponse, error) {
 
 }
 
+// LeaderboardsServicer makes it easy to provide your own testable versions of LeaderboardsService.
+type LeaderboardsServicer interface {
+	Get(leaderboardId string) LeaderboardsGetCallDoer
+	List() LeaderboardsListCallDoer
+}
+
 // method id "games.metagame.getMetagameConfig":
 
 type MetagameGetMetagameConfigCall struct {
@@ -3875,6 +4014,12 @@ func (r *MetagameService) GetMetagameConfig() *MetagameGetMetagameConfigCall {
 func (c *MetagameGetMetagameConfigCall) Fields(s ...googleapi.Field) *MetagameGetMetagameConfigCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// MetagameGetMetagameConfigCallDoer makes it easy to provide your own testable version of Do.
+type MetagameGetMetagameConfigCallDoer interface {
+	Do() (*MetagameConfig, error)
+	Fields(s ...googleapi.Field) MetagameGetMetagameConfigCallDoer
 }
 
 func (c *MetagameGetMetagameConfigCall) Do() (*MetagameConfig, error) {
@@ -3965,6 +4110,15 @@ func (c *MetagameListCategoriesByPlayerCall) PageToken(pageToken string) *Metaga
 func (c *MetagameListCategoriesByPlayerCall) Fields(s ...googleapi.Field) *MetagameListCategoriesByPlayerCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// MetagameListCategoriesByPlayerCallDoer makes it easy to provide your own testable version of Do.
+type MetagameListCategoriesByPlayerCallDoer interface {
+	Do() (*CategoryListResponse, error)
+	Language(language string) MetagameListCategoriesByPlayerCallDoer
+	MaxResults(maxResults int64) MetagameListCategoriesByPlayerCallDoer
+	PageToken(pageToken string) MetagameListCategoriesByPlayerCallDoer
+	Fields(s ...googleapi.Field) MetagameListCategoriesByPlayerCallDoer
 }
 
 func (c *MetagameListCategoriesByPlayerCall) Do() (*CategoryListResponse, error) {
@@ -4062,6 +4216,12 @@ func (c *MetagameListCategoriesByPlayerCall) Do() (*CategoryListResponse, error)
 
 }
 
+// MetagameServicer makes it easy to provide your own testable versions of MetagameService.
+type MetagameServicer interface {
+	GetMetagameConfig() MetagameGetMetagameConfigCallDoer
+	ListCategoriesByPlayer(playerId string, collection string) MetagameListCategoriesByPlayerCallDoer
+}
+
 // method id "games.players.get":
 
 type PlayersGetCall struct {
@@ -4091,6 +4251,13 @@ func (c *PlayersGetCall) Language(language string) *PlayersGetCall {
 func (c *PlayersGetCall) Fields(s ...googleapi.Field) *PlayersGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// PlayersGetCallDoer makes it easy to provide your own testable version of Do.
+type PlayersGetCallDoer interface {
+	Do() (*Player, error)
+	Language(language string) PlayersGetCallDoer
+	Fields(s ...googleapi.Field) PlayersGetCallDoer
 }
 
 func (c *PlayersGetCall) Do() (*Player, error) {
@@ -4202,6 +4369,15 @@ func (c *PlayersListCall) Fields(s ...googleapi.Field) *PlayersListCall {
 	return c
 }
 
+// PlayersListCallDoer makes it easy to provide your own testable version of Do.
+type PlayersListCallDoer interface {
+	Do() (*PlayerListResponse, error)
+	Language(language string) PlayersListCallDoer
+	MaxResults(maxResults int64) PlayersListCallDoer
+	PageToken(pageToken string) PlayersListCallDoer
+	Fields(s ...googleapi.Field) PlayersListCallDoer
+}
+
 func (c *PlayersListCall) Do() (*PlayerListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4291,6 +4467,12 @@ func (c *PlayersListCall) Do() (*PlayerListResponse, error) {
 
 }
 
+// PlayersServicer makes it easy to provide your own testable versions of PlayersService.
+type PlayersServicer interface {
+	Get(playerId string) PlayersGetCallDoer
+	List(collection string) PlayersListCallDoer
+}
+
 // method id "games.pushtokens.remove":
 
 type PushtokensRemoveCall struct {
@@ -4313,6 +4495,12 @@ func (r *PushtokensService) Remove(pushtokenid *PushTokenId) *PushtokensRemoveCa
 func (c *PushtokensRemoveCall) Fields(s ...googleapi.Field) *PushtokensRemoveCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// PushtokensRemoveCallDoer makes it easy to provide your own testable version of Do.
+type PushtokensRemoveCallDoer interface {
+	Do() error
+	Fields(s ...googleapi.Field) PushtokensRemoveCallDoer
 }
 
 func (c *PushtokensRemoveCall) Do() error {
@@ -4381,6 +4569,12 @@ func (c *PushtokensUpdateCall) Fields(s ...googleapi.Field) *PushtokensUpdateCal
 	return c
 }
 
+// PushtokensUpdateCallDoer makes it easy to provide your own testable version of Do.
+type PushtokensUpdateCallDoer interface {
+	Do() error
+	Fields(s ...googleapi.Field) PushtokensUpdateCallDoer
+}
+
 func (c *PushtokensUpdateCall) Do() error {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.pushtoken)
@@ -4424,6 +4618,12 @@ func (c *PushtokensUpdateCall) Do() error {
 
 }
 
+// PushtokensServicer makes it easy to provide your own testable versions of PushtokensService.
+type PushtokensServicer interface {
+	Remove(pushtokenid *PushTokenId) PushtokensRemoveCallDoer
+	Update(pushtoken *PushToken) PushtokensUpdateCallDoer
+}
+
 // method id "games.questMilestones.claim":
 
 type QuestMilestonesClaimCall struct {
@@ -4451,6 +4651,12 @@ func (r *QuestMilestonesService) Claim(questId string, milestoneId string, reque
 func (c *QuestMilestonesClaimCall) Fields(s ...googleapi.Field) *QuestMilestonesClaimCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// QuestMilestonesClaimCallDoer makes it easy to provide your own testable version of Do.
+type QuestMilestonesClaimCallDoer interface {
+	Do() error
+	Fields(s ...googleapi.Field) QuestMilestonesClaimCallDoer
 }
 
 func (c *QuestMilestonesClaimCall) Do() error {
@@ -4517,6 +4723,11 @@ func (c *QuestMilestonesClaimCall) Do() error {
 
 }
 
+// QuestMilestonesServicer makes it easy to provide your own testable versions of QuestMilestonesService.
+type QuestMilestonesServicer interface {
+	Claim(questId string, milestoneId string, requestId int64) QuestMilestonesClaimCallDoer
+}
+
 // method id "games.quests.accept":
 
 type QuestsAcceptCall struct {
@@ -4546,6 +4757,13 @@ func (c *QuestsAcceptCall) Language(language string) *QuestsAcceptCall {
 func (c *QuestsAcceptCall) Fields(s ...googleapi.Field) *QuestsAcceptCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// QuestsAcceptCallDoer makes it easy to provide your own testable version of Do.
+type QuestsAcceptCallDoer interface {
+	Do() (*Quest, error)
+	Language(language string) QuestsAcceptCallDoer
+	Fields(s ...googleapi.Field) QuestsAcceptCallDoer
 }
 
 func (c *QuestsAcceptCall) Do() (*Quest, error) {
@@ -4658,6 +4876,15 @@ func (c *QuestsListCall) Fields(s ...googleapi.Field) *QuestsListCall {
 	return c
 }
 
+// QuestsListCallDoer makes it easy to provide your own testable version of Do.
+type QuestsListCallDoer interface {
+	Do() (*QuestListResponse, error)
+	Language(language string) QuestsListCallDoer
+	MaxResults(maxResults int64) QuestsListCallDoer
+	PageToken(pageToken string) QuestsListCallDoer
+	Fields(s ...googleapi.Field) QuestsListCallDoer
+}
+
 func (c *QuestsListCall) Do() (*QuestListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4739,6 +4966,12 @@ func (c *QuestsListCall) Do() (*QuestListResponse, error) {
 
 }
 
+// QuestsServicer makes it easy to provide your own testable versions of QuestsService.
+type QuestsServicer interface {
+	Accept(questId string) QuestsAcceptCallDoer
+	List(playerId string) QuestsListCallDoer
+}
+
 // method id "games.revisions.check":
 
 type RevisionsCheckCall struct {
@@ -4760,6 +4993,12 @@ func (r *RevisionsService) Check(clientRevision string) *RevisionsCheckCall {
 func (c *RevisionsCheckCall) Fields(s ...googleapi.Field) *RevisionsCheckCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// RevisionsCheckCallDoer makes it easy to provide your own testable version of Do.
+type RevisionsCheckCallDoer interface {
+	Do() (*RevisionCheckResponse, error)
+	Fields(s ...googleapi.Field) RevisionsCheckCallDoer
 }
 
 func (c *RevisionsCheckCall) Do() (*RevisionCheckResponse, error) {
@@ -4815,6 +5054,11 @@ func (c *RevisionsCheckCall) Do() (*RevisionCheckResponse, error) {
 
 }
 
+// RevisionsServicer makes it easy to provide your own testable versions of RevisionsService.
+type RevisionsServicer interface {
+	Check(clientRevision string) RevisionsCheckCallDoer
+}
+
 // method id "games.rooms.create":
 
 type RoomsCreateCall struct {
@@ -4844,6 +5088,13 @@ func (c *RoomsCreateCall) Language(language string) *RoomsCreateCall {
 func (c *RoomsCreateCall) Fields(s ...googleapi.Field) *RoomsCreateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// RoomsCreateCallDoer makes it easy to provide your own testable version of Do.
+type RoomsCreateCallDoer interface {
+	Do() (*Room, error)
+	Language(language string) RoomsCreateCallDoer
+	Fields(s ...googleapi.Field) RoomsCreateCallDoer
 }
 
 func (c *RoomsCreateCall) Do() (*Room, error) {
@@ -4937,6 +5188,13 @@ func (c *RoomsDeclineCall) Fields(s ...googleapi.Field) *RoomsDeclineCall {
 	return c
 }
 
+// RoomsDeclineCallDoer makes it easy to provide your own testable version of Do.
+type RoomsDeclineCallDoer interface {
+	Do() (*Room, error)
+	Language(language string) RoomsDeclineCallDoer
+	Fields(s ...googleapi.Field) RoomsDeclineCallDoer
+}
+
 func (c *RoomsDeclineCall) Do() (*Room, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5023,6 +5281,12 @@ func (c *RoomsDismissCall) Fields(s ...googleapi.Field) *RoomsDismissCall {
 	return c
 }
 
+// RoomsDismissCallDoer makes it easy to provide your own testable version of Do.
+type RoomsDismissCallDoer interface {
+	Do() error
+	Fields(s ...googleapi.Field) RoomsDismissCallDoer
+}
+
 func (c *RoomsDismissCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5098,6 +5362,13 @@ func (c *RoomsGetCall) Language(language string) *RoomsGetCall {
 func (c *RoomsGetCall) Fields(s ...googleapi.Field) *RoomsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// RoomsGetCallDoer makes it easy to provide your own testable version of Do.
+type RoomsGetCallDoer interface {
+	Do() (*Room, error)
+	Language(language string) RoomsGetCallDoer
+	Fields(s ...googleapi.Field) RoomsGetCallDoer
 }
 
 func (c *RoomsGetCall) Do() (*Room, error) {
@@ -5193,6 +5464,13 @@ func (c *RoomsJoinCall) Language(language string) *RoomsJoinCall {
 func (c *RoomsJoinCall) Fields(s ...googleapi.Field) *RoomsJoinCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// RoomsJoinCallDoer makes it easy to provide your own testable version of Do.
+type RoomsJoinCallDoer interface {
+	Do() (*Room, error)
+	Language(language string) RoomsJoinCallDoer
+	Fields(s ...googleapi.Field) RoomsJoinCallDoer
 }
 
 func (c *RoomsJoinCall) Do() (*Room, error) {
@@ -5297,6 +5575,13 @@ func (c *RoomsLeaveCall) Language(language string) *RoomsLeaveCall {
 func (c *RoomsLeaveCall) Fields(s ...googleapi.Field) *RoomsLeaveCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// RoomsLeaveCallDoer makes it easy to provide your own testable version of Do.
+type RoomsLeaveCallDoer interface {
+	Do() (*Room, error)
+	Language(language string) RoomsLeaveCallDoer
+	Fields(s ...googleapi.Field) RoomsLeaveCallDoer
 }
 
 func (c *RoomsLeaveCall) Do() (*Room, error) {
@@ -5414,6 +5699,15 @@ func (c *RoomsListCall) Fields(s ...googleapi.Field) *RoomsListCall {
 	return c
 }
 
+// RoomsListCallDoer makes it easy to provide your own testable version of Do.
+type RoomsListCallDoer interface {
+	Do() (*RoomList, error)
+	Language(language string) RoomsListCallDoer
+	MaxResults(maxResults int64) RoomsListCallDoer
+	PageToken(pageToken string) RoomsListCallDoer
+	Fields(s ...googleapi.Field) RoomsListCallDoer
+}
+
 func (c *RoomsListCall) Do() (*RoomList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5518,6 +5812,13 @@ func (c *RoomsReportStatusCall) Fields(s ...googleapi.Field) *RoomsReportStatusC
 	return c
 }
 
+// RoomsReportStatusCallDoer makes it easy to provide your own testable version of Do.
+type RoomsReportStatusCallDoer interface {
+	Do() (*RoomStatus, error)
+	Language(language string) RoomsReportStatusCallDoer
+	Fields(s ...googleapi.Field) RoomsReportStatusCallDoer
+}
+
 func (c *RoomsReportStatusCall) Do() (*RoomStatus, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.roomp2pstatuses)
@@ -5589,6 +5890,18 @@ func (c *RoomsReportStatusCall) Do() (*RoomStatus, error) {
 
 }
 
+// RoomsServicer makes it easy to provide your own testable versions of RoomsService.
+type RoomsServicer interface {
+	Create(roomcreaterequest *RoomCreateRequest) RoomsCreateCallDoer
+	Decline(roomId string) RoomsDeclineCallDoer
+	Dismiss(roomId string) RoomsDismissCallDoer
+	Get(roomId string) RoomsGetCallDoer
+	Join(roomId string, roomjoinrequest *RoomJoinRequest) RoomsJoinCallDoer
+	Leave(roomId string, roomleaverequest *RoomLeaveRequest) RoomsLeaveCallDoer
+	List() RoomsListCallDoer
+	ReportStatus(roomId string, roomp2pstatuses *RoomP2PStatuses) RoomsReportStatusCallDoer
+}
+
 // method id "games.scores.get":
 
 type ScoresGetCall struct {
@@ -5656,6 +5969,16 @@ func (c *ScoresGetCall) PageToken(pageToken string) *ScoresGetCall {
 func (c *ScoresGetCall) Fields(s ...googleapi.Field) *ScoresGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ScoresGetCallDoer makes it easy to provide your own testable version of Do.
+type ScoresGetCallDoer interface {
+	Do() (*PlayerLeaderboardScoreListResponse, error)
+	IncludeRankType(includeRankType string) ScoresGetCallDoer
+	Language(language string) ScoresGetCallDoer
+	MaxResults(maxResults int64) ScoresGetCallDoer
+	PageToken(pageToken string) ScoresGetCallDoer
+	Fields(s ...googleapi.Field) ScoresGetCallDoer
 }
 
 func (c *ScoresGetCall) Do() (*PlayerLeaderboardScoreListResponse, error) {
@@ -5833,6 +6156,15 @@ func (c *ScoresListCall) PageToken(pageToken string) *ScoresListCall {
 func (c *ScoresListCall) Fields(s ...googleapi.Field) *ScoresListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ScoresListCallDoer makes it easy to provide your own testable version of Do.
+type ScoresListCallDoer interface {
+	Do() (*LeaderboardScores, error)
+	Language(language string) ScoresListCallDoer
+	MaxResults(maxResults int64) ScoresListCallDoer
+	PageToken(pageToken string) ScoresListCallDoer
+	Fields(s ...googleapi.Field) ScoresListCallDoer
 }
 
 func (c *ScoresListCall) Do() (*LeaderboardScores, error) {
@@ -6019,6 +6351,17 @@ func (c *ScoresListWindowCall) Fields(s ...googleapi.Field) *ScoresListWindowCal
 	return c
 }
 
+// ScoresListWindowCallDoer makes it easy to provide your own testable version of Do.
+type ScoresListWindowCallDoer interface {
+	Do() (*LeaderboardScores, error)
+	Language(language string) ScoresListWindowCallDoer
+	MaxResults(maxResults int64) ScoresListWindowCallDoer
+	PageToken(pageToken string) ScoresListWindowCallDoer
+	ResultsAbove(resultsAbove int64) ScoresListWindowCallDoer
+	ReturnTopIfAbsent(returnTopIfAbsent bool) ScoresListWindowCallDoer
+	Fields(s ...googleapi.Field) ScoresListWindowCallDoer
+}
+
 func (c *ScoresListWindowCall) Do() (*LeaderboardScores, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -6192,6 +6535,14 @@ func (c *ScoresSubmitCall) Fields(s ...googleapi.Field) *ScoresSubmitCall {
 	return c
 }
 
+// ScoresSubmitCallDoer makes it easy to provide your own testable version of Do.
+type ScoresSubmitCallDoer interface {
+	Do() (*PlayerScoreResponse, error)
+	Language(language string) ScoresSubmitCallDoer
+	ScoreTag(scoreTag string) ScoresSubmitCallDoer
+	Fields(s ...googleapi.Field) ScoresSubmitCallDoer
+}
+
 func (c *ScoresSubmitCall) Do() (*PlayerScoreResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -6302,6 +6653,13 @@ func (c *ScoresSubmitMultipleCall) Fields(s ...googleapi.Field) *ScoresSubmitMul
 	return c
 }
 
+// ScoresSubmitMultipleCallDoer makes it easy to provide your own testable version of Do.
+type ScoresSubmitMultipleCallDoer interface {
+	Do() (*PlayerScoreListResponse, error)
+	Language(language string) ScoresSubmitMultipleCallDoer
+	Fields(s ...googleapi.Field) ScoresSubmitMultipleCallDoer
+}
+
 func (c *ScoresSubmitMultipleCall) Do() (*PlayerScoreListResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.playerscoresubmissionlist)
@@ -6362,6 +6720,15 @@ func (c *ScoresSubmitMultipleCall) Do() (*PlayerScoreListResponse, error) {
 
 }
 
+// ScoresServicer makes it easy to provide your own testable versions of ScoresService.
+type ScoresServicer interface {
+	Get(playerId string, leaderboardId string, timeSpan string) ScoresGetCallDoer
+	List(leaderboardId string, collection string, timeSpan string) ScoresListCallDoer
+	ListWindow(leaderboardId string, collection string, timeSpan string) ScoresListWindowCallDoer
+	Submit(leaderboardId string, score int64) ScoresSubmitCallDoer
+	SubmitMultiple(playerscoresubmissionlist *PlayerScoreSubmissionList) ScoresSubmitMultipleCallDoer
+}
+
 // method id "games.snapshots.get":
 
 type SnapshotsGetCall struct {
@@ -6390,6 +6757,13 @@ func (c *SnapshotsGetCall) Language(language string) *SnapshotsGetCall {
 func (c *SnapshotsGetCall) Fields(s ...googleapi.Field) *SnapshotsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// SnapshotsGetCallDoer makes it easy to provide your own testable version of Do.
+type SnapshotsGetCallDoer interface {
+	Do() (*Snapshot, error)
+	Language(language string) SnapshotsGetCallDoer
+	Fields(s ...googleapi.Field) SnapshotsGetCallDoer
 }
 
 func (c *SnapshotsGetCall) Do() (*Snapshot, error) {
@@ -6502,6 +6876,15 @@ func (c *SnapshotsListCall) Fields(s ...googleapi.Field) *SnapshotsListCall {
 	return c
 }
 
+// SnapshotsListCallDoer makes it easy to provide your own testable version of Do.
+type SnapshotsListCallDoer interface {
+	Do() (*SnapshotListResponse, error)
+	Language(language string) SnapshotsListCallDoer
+	MaxResults(maxResults int64) SnapshotsListCallDoer
+	PageToken(pageToken string) SnapshotsListCallDoer
+	Fields(s ...googleapi.Field) SnapshotsListCallDoer
+}
+
 func (c *SnapshotsListCall) Do() (*SnapshotListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -6584,6 +6967,12 @@ func (c *SnapshotsListCall) Do() (*SnapshotListResponse, error) {
 
 }
 
+// SnapshotsServicer makes it easy to provide your own testable versions of SnapshotsService.
+type SnapshotsServicer interface {
+	Get(snapshotId string) SnapshotsGetCallDoer
+	List(playerId string) SnapshotsListCallDoer
+}
+
 // method id "games.turnBasedMatches.cancel":
 
 type TurnBasedMatchesCancelCall struct {
@@ -6605,6 +6994,12 @@ func (r *TurnBasedMatchesService) Cancel(matchId string) *TurnBasedMatchesCancel
 func (c *TurnBasedMatchesCancelCall) Fields(s ...googleapi.Field) *TurnBasedMatchesCancelCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// TurnBasedMatchesCancelCallDoer makes it easy to provide your own testable version of Do.
+type TurnBasedMatchesCancelCallDoer interface {
+	Do() error
+	Fields(s ...googleapi.Field) TurnBasedMatchesCancelCallDoer
 }
 
 func (c *TurnBasedMatchesCancelCall) Do() error {
@@ -6682,6 +7077,13 @@ func (c *TurnBasedMatchesCreateCall) Language(language string) *TurnBasedMatches
 func (c *TurnBasedMatchesCreateCall) Fields(s ...googleapi.Field) *TurnBasedMatchesCreateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// TurnBasedMatchesCreateCallDoer makes it easy to provide your own testable version of Do.
+type TurnBasedMatchesCreateCallDoer interface {
+	Do() (*TurnBasedMatch, error)
+	Language(language string) TurnBasedMatchesCreateCallDoer
+	Fields(s ...googleapi.Field) TurnBasedMatchesCreateCallDoer
 }
 
 func (c *TurnBasedMatchesCreateCall) Do() (*TurnBasedMatch, error) {
@@ -6774,6 +7176,13 @@ func (c *TurnBasedMatchesDeclineCall) Fields(s ...googleapi.Field) *TurnBasedMat
 	return c
 }
 
+// TurnBasedMatchesDeclineCallDoer makes it easy to provide your own testable version of Do.
+type TurnBasedMatchesDeclineCallDoer interface {
+	Do() (*TurnBasedMatch, error)
+	Language(language string) TurnBasedMatchesDeclineCallDoer
+	Fields(s ...googleapi.Field) TurnBasedMatchesDeclineCallDoer
+}
+
 func (c *TurnBasedMatchesDeclineCall) Do() (*TurnBasedMatch, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -6861,6 +7270,12 @@ func (c *TurnBasedMatchesDismissCall) Fields(s ...googleapi.Field) *TurnBasedMat
 	return c
 }
 
+// TurnBasedMatchesDismissCallDoer makes it easy to provide your own testable version of Do.
+type TurnBasedMatchesDismissCallDoer interface {
+	Do() error
+	Fields(s ...googleapi.Field) TurnBasedMatchesDismissCallDoer
+}
+
 func (c *TurnBasedMatchesDismissCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -6940,6 +7355,13 @@ func (c *TurnBasedMatchesFinishCall) Language(language string) *TurnBasedMatches
 func (c *TurnBasedMatchesFinishCall) Fields(s ...googleapi.Field) *TurnBasedMatchesFinishCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// TurnBasedMatchesFinishCallDoer makes it easy to provide your own testable version of Do.
+type TurnBasedMatchesFinishCallDoer interface {
+	Do() (*TurnBasedMatch, error)
+	Language(language string) TurnBasedMatchesFinishCallDoer
+	Fields(s ...googleapi.Field) TurnBasedMatchesFinishCallDoer
 }
 
 func (c *TurnBasedMatchesFinishCall) Do() (*TurnBasedMatch, error) {
@@ -7050,6 +7472,14 @@ func (c *TurnBasedMatchesGetCall) Fields(s ...googleapi.Field) *TurnBasedMatches
 	return c
 }
 
+// TurnBasedMatchesGetCallDoer makes it easy to provide your own testable version of Do.
+type TurnBasedMatchesGetCallDoer interface {
+	Do() (*TurnBasedMatch, error)
+	IncludeMatchData(includeMatchData bool) TurnBasedMatchesGetCallDoer
+	Language(language string) TurnBasedMatchesGetCallDoer
+	Fields(s ...googleapi.Field) TurnBasedMatchesGetCallDoer
+}
+
 func (c *TurnBasedMatchesGetCall) Do() (*TurnBasedMatch, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -7150,6 +7580,13 @@ func (c *TurnBasedMatchesJoinCall) Fields(s ...googleapi.Field) *TurnBasedMatche
 	return c
 }
 
+// TurnBasedMatchesJoinCallDoer makes it easy to provide your own testable version of Do.
+type TurnBasedMatchesJoinCallDoer interface {
+	Do() (*TurnBasedMatch, error)
+	Language(language string) TurnBasedMatchesJoinCallDoer
+	Fields(s ...googleapi.Field) TurnBasedMatchesJoinCallDoer
+}
+
 func (c *TurnBasedMatchesJoinCall) Do() (*TurnBasedMatch, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -7241,6 +7678,13 @@ func (c *TurnBasedMatchesLeaveCall) Language(language string) *TurnBasedMatchesL
 func (c *TurnBasedMatchesLeaveCall) Fields(s ...googleapi.Field) *TurnBasedMatchesLeaveCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// TurnBasedMatchesLeaveCallDoer makes it easy to provide your own testable version of Do.
+type TurnBasedMatchesLeaveCallDoer interface {
+	Do() (*TurnBasedMatch, error)
+	Language(language string) TurnBasedMatchesLeaveCallDoer
+	Fields(s ...googleapi.Field) TurnBasedMatchesLeaveCallDoer
 }
 
 func (c *TurnBasedMatchesLeaveCall) Do() (*TurnBasedMatch, error) {
@@ -7346,6 +7790,14 @@ func (c *TurnBasedMatchesLeaveTurnCall) PendingParticipantId(pendingParticipantI
 func (c *TurnBasedMatchesLeaveTurnCall) Fields(s ...googleapi.Field) *TurnBasedMatchesLeaveTurnCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// TurnBasedMatchesLeaveTurnCallDoer makes it easy to provide your own testable version of Do.
+type TurnBasedMatchesLeaveTurnCallDoer interface {
+	Do() (*TurnBasedMatch, error)
+	Language(language string) TurnBasedMatchesLeaveTurnCallDoer
+	PendingParticipantId(pendingParticipantId string) TurnBasedMatchesLeaveTurnCallDoer
+	Fields(s ...googleapi.Field) TurnBasedMatchesLeaveTurnCallDoer
 }
 
 func (c *TurnBasedMatchesLeaveTurnCall) Do() (*TurnBasedMatch, error) {
@@ -7491,6 +7943,17 @@ func (c *TurnBasedMatchesListCall) Fields(s ...googleapi.Field) *TurnBasedMatche
 	return c
 }
 
+// TurnBasedMatchesListCallDoer makes it easy to provide your own testable version of Do.
+type TurnBasedMatchesListCallDoer interface {
+	Do() (*TurnBasedMatchList, error)
+	IncludeMatchData(includeMatchData bool) TurnBasedMatchesListCallDoer
+	Language(language string) TurnBasedMatchesListCallDoer
+	MaxCompletedMatches(maxCompletedMatches int64) TurnBasedMatchesListCallDoer
+	MaxResults(maxResults int64) TurnBasedMatchesListCallDoer
+	PageToken(pageToken string) TurnBasedMatchesListCallDoer
+	Fields(s ...googleapi.Field) TurnBasedMatchesListCallDoer
+}
+
 func (c *TurnBasedMatchesListCall) Do() (*TurnBasedMatchList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -7620,6 +8083,14 @@ func (c *TurnBasedMatchesRematchCall) RequestId(requestId int64) *TurnBasedMatch
 func (c *TurnBasedMatchesRematchCall) Fields(s ...googleapi.Field) *TurnBasedMatchesRematchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// TurnBasedMatchesRematchCallDoer makes it easy to provide your own testable version of Do.
+type TurnBasedMatchesRematchCallDoer interface {
+	Do() (*TurnBasedMatchRematch, error)
+	Language(language string) TurnBasedMatchesRematchCallDoer
+	RequestId(requestId int64) TurnBasedMatchesRematchCallDoer
+	Fields(s ...googleapi.Field) TurnBasedMatchesRematchCallDoer
 }
 
 func (c *TurnBasedMatchesRematchCall) Do() (*TurnBasedMatchRematch, error) {
@@ -7760,6 +8231,17 @@ func (c *TurnBasedMatchesSyncCall) Fields(s ...googleapi.Field) *TurnBasedMatche
 	return c
 }
 
+// TurnBasedMatchesSyncCallDoer makes it easy to provide your own testable version of Do.
+type TurnBasedMatchesSyncCallDoer interface {
+	Do() (*TurnBasedMatchSync, error)
+	IncludeMatchData(includeMatchData bool) TurnBasedMatchesSyncCallDoer
+	Language(language string) TurnBasedMatchesSyncCallDoer
+	MaxCompletedMatches(maxCompletedMatches int64) TurnBasedMatchesSyncCallDoer
+	MaxResults(maxResults int64) TurnBasedMatchesSyncCallDoer
+	PageToken(pageToken string) TurnBasedMatchesSyncCallDoer
+	Fields(s ...googleapi.Field) TurnBasedMatchesSyncCallDoer
+}
+
 func (c *TurnBasedMatchesSyncCall) Do() (*TurnBasedMatchSync, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -7881,6 +8363,13 @@ func (c *TurnBasedMatchesTakeTurnCall) Fields(s ...googleapi.Field) *TurnBasedMa
 	return c
 }
 
+// TurnBasedMatchesTakeTurnCallDoer makes it easy to provide your own testable version of Do.
+type TurnBasedMatchesTakeTurnCallDoer interface {
+	Do() (*TurnBasedMatch, error)
+	Language(language string) TurnBasedMatchesTakeTurnCallDoer
+	Fields(s ...googleapi.Field) TurnBasedMatchesTakeTurnCallDoer
+}
+
 func (c *TurnBasedMatchesTakeTurnCall) Do() (*TurnBasedMatch, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.turnbasedmatchturn)
@@ -7950,4 +8439,21 @@ func (c *TurnBasedMatchesTakeTurnCall) Do() (*TurnBasedMatch, error) {
 	//   ]
 	// }
 
+}
+
+// TurnBasedMatchesServicer makes it easy to provide your own testable versions of TurnBasedMatchesService.
+type TurnBasedMatchesServicer interface {
+	Cancel(matchId string) TurnBasedMatchesCancelCallDoer
+	Create(turnbasedmatchcreaterequest *TurnBasedMatchCreateRequest) TurnBasedMatchesCreateCallDoer
+	Decline(matchId string) TurnBasedMatchesDeclineCallDoer
+	Dismiss(matchId string) TurnBasedMatchesDismissCallDoer
+	Finish(matchId string, turnbasedmatchresults *TurnBasedMatchResults) TurnBasedMatchesFinishCallDoer
+	Get(matchId string) TurnBasedMatchesGetCallDoer
+	Join(matchId string) TurnBasedMatchesJoinCallDoer
+	Leave(matchId string) TurnBasedMatchesLeaveCallDoer
+	LeaveTurn(matchId string, matchVersion int64) TurnBasedMatchesLeaveTurnCallDoer
+	List() TurnBasedMatchesListCallDoer
+	Rematch(matchId string) TurnBasedMatchesRematchCallDoer
+	Sync() TurnBasedMatchesSyncCallDoer
+	TakeTurn(matchId string, turnbasedmatchturn *TurnBasedMatchTurn) TurnBasedMatchesTakeTurnCallDoer
 }

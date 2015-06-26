@@ -148,6 +148,12 @@ func (c *LicenseAssignmentsDeleteCall) Fields(s ...googleapi.Field) *LicenseAssi
 	return c
 }
 
+// LicenseAssignmentsDeleteCallDoer makes it easy to provide your own testable version of Do.
+type LicenseAssignmentsDeleteCallDoer interface {
+	Do() error
+	Fields(s ...googleapi.Field) LicenseAssignmentsDeleteCallDoer
+}
+
 func (c *LicenseAssignmentsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -236,6 +242,12 @@ func (r *LicenseAssignmentsService) Get(productId string, skuId string, userId s
 func (c *LicenseAssignmentsGetCall) Fields(s ...googleapi.Field) *LicenseAssignmentsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// LicenseAssignmentsGetCallDoer makes it easy to provide your own testable version of Do.
+type LicenseAssignmentsGetCallDoer interface {
+	Do() (*LicenseAssignment, error)
+	Fields(s ...googleapi.Field) LicenseAssignmentsGetCallDoer
 }
 
 func (c *LicenseAssignmentsGetCall) Do() (*LicenseAssignment, error) {
@@ -332,6 +344,12 @@ func (r *LicenseAssignmentsService) Insert(productId string, skuId string, licen
 func (c *LicenseAssignmentsInsertCall) Fields(s ...googleapi.Field) *LicenseAssignmentsInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// LicenseAssignmentsInsertCallDoer makes it easy to provide your own testable version of Do.
+type LicenseAssignmentsInsertCallDoer interface {
+	Do() (*LicenseAssignment, error)
+	Fields(s ...googleapi.Field) LicenseAssignmentsInsertCallDoer
 }
 
 func (c *LicenseAssignmentsInsertCall) Do() (*LicenseAssignment, error) {
@@ -443,6 +461,14 @@ func (c *LicenseAssignmentsListForProductCall) PageToken(pageToken string) *Lice
 func (c *LicenseAssignmentsListForProductCall) Fields(s ...googleapi.Field) *LicenseAssignmentsListForProductCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// LicenseAssignmentsListForProductCallDoer makes it easy to provide your own testable version of Do.
+type LicenseAssignmentsListForProductCallDoer interface {
+	Do() (*LicenseAssignmentList, error)
+	MaxResults(maxResults int64) LicenseAssignmentsListForProductCallDoer
+	PageToken(pageToken string) LicenseAssignmentsListForProductCallDoer
+	Fields(s ...googleapi.Field) LicenseAssignmentsListForProductCallDoer
 }
 
 func (c *LicenseAssignmentsListForProductCall) Do() (*LicenseAssignmentList, error) {
@@ -570,6 +596,14 @@ func (c *LicenseAssignmentsListForProductAndSkuCall) Fields(s ...googleapi.Field
 	return c
 }
 
+// LicenseAssignmentsListForProductAndSkuCallDoer makes it easy to provide your own testable version of Do.
+type LicenseAssignmentsListForProductAndSkuCallDoer interface {
+	Do() (*LicenseAssignmentList, error)
+	MaxResults(maxResults int64) LicenseAssignmentsListForProductAndSkuCallDoer
+	PageToken(pageToken string) LicenseAssignmentsListForProductAndSkuCallDoer
+	Fields(s ...googleapi.Field) LicenseAssignmentsListForProductAndSkuCallDoer
+}
+
 func (c *LicenseAssignmentsListForProductAndSkuCall) Do() (*LicenseAssignmentList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -689,6 +723,12 @@ func (c *LicenseAssignmentsPatchCall) Fields(s ...googleapi.Field) *LicenseAssig
 	return c
 }
 
+// LicenseAssignmentsPatchCallDoer makes it easy to provide your own testable version of Do.
+type LicenseAssignmentsPatchCallDoer interface {
+	Do() (*LicenseAssignment, error)
+	Fields(s ...googleapi.Field) LicenseAssignmentsPatchCallDoer
+}
+
 func (c *LicenseAssignmentsPatchCall) Do() (*LicenseAssignment, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.licenseassignment)
@@ -796,6 +836,12 @@ func (c *LicenseAssignmentsUpdateCall) Fields(s ...googleapi.Field) *LicenseAssi
 	return c
 }
 
+// LicenseAssignmentsUpdateCallDoer makes it easy to provide your own testable version of Do.
+type LicenseAssignmentsUpdateCallDoer interface {
+	Do() (*LicenseAssignment, error)
+	Fields(s ...googleapi.Field) LicenseAssignmentsUpdateCallDoer
+}
+
 func (c *LicenseAssignmentsUpdateCall) Do() (*LicenseAssignment, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.licenseassignment)
@@ -872,4 +918,15 @@ func (c *LicenseAssignmentsUpdateCall) Do() (*LicenseAssignment, error) {
 	//   ]
 	// }
 
+}
+
+// LicenseAssignmentsServicer makes it easy to provide your own testable versions of LicenseAssignmentsService.
+type LicenseAssignmentsServicer interface {
+	Delete(productId string, skuId string, userId string) LicenseAssignmentsDeleteCallDoer
+	Get(productId string, skuId string, userId string) LicenseAssignmentsGetCallDoer
+	Insert(productId string, skuId string, licenseassignmentinsert *LicenseAssignmentInsert) LicenseAssignmentsInsertCallDoer
+	ListForProduct(productId string, customerId string) LicenseAssignmentsListForProductCallDoer
+	ListForProductAndSku(productId string, skuId string, customerId string) LicenseAssignmentsListForProductAndSkuCallDoer
+	Patch(productId string, skuId string, userId string, licenseassignment *LicenseAssignment) LicenseAssignmentsPatchCallDoer
+	Update(productId string, skuId string, userId string, licenseassignment *LicenseAssignment) LicenseAssignmentsUpdateCallDoer
 }

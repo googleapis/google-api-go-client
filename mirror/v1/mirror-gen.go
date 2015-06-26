@@ -736,6 +736,12 @@ func (c *AccountsInsertCall) Fields(s ...googleapi.Field) *AccountsInsertCall {
 	return c
 }
 
+// AccountsInsertCallDoer makes it easy to provide your own testable version of Do.
+type AccountsInsertCallDoer interface {
+	Do() (*Account, error)
+	Fields(s ...googleapi.Field) AccountsInsertCallDoer
+}
+
 func (c *AccountsInsertCall) Do() (*Account, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.account)
@@ -811,6 +817,11 @@ func (c *AccountsInsertCall) Do() (*Account, error) {
 
 }
 
+// AccountsServicer makes it easy to provide your own testable versions of AccountsService.
+type AccountsServicer interface {
+	Insert(userToken string, accountType string, accountName string, account *Account) AccountsInsertCallDoer
+}
+
 // method id "mirror.contacts.delete":
 
 type ContactsDeleteCall struct {
@@ -832,6 +843,12 @@ func (r *ContactsService) Delete(id string) *ContactsDeleteCall {
 func (c *ContactsDeleteCall) Fields(s ...googleapi.Field) *ContactsDeleteCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ContactsDeleteCallDoer makes it easy to provide your own testable version of Do.
+type ContactsDeleteCallDoer interface {
+	Do() error
+	Fields(s ...googleapi.Field) ContactsDeleteCallDoer
 }
 
 func (c *ContactsDeleteCall) Do() error {
@@ -901,6 +918,12 @@ func (r *ContactsService) Get(id string) *ContactsGetCall {
 func (c *ContactsGetCall) Fields(s ...googleapi.Field) *ContactsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ContactsGetCallDoer makes it easy to provide your own testable version of Do.
+type ContactsGetCallDoer interface {
+	Do() (*Contact, error)
+	Fields(s ...googleapi.Field) ContactsGetCallDoer
 }
 
 func (c *ContactsGetCall) Do() (*Contact, error) {
@@ -979,6 +1002,12 @@ func (c *ContactsInsertCall) Fields(s ...googleapi.Field) *ContactsInsertCall {
 	return c
 }
 
+// ContactsInsertCallDoer makes it easy to provide your own testable version of Do.
+type ContactsInsertCallDoer interface {
+	Do() (*Contact, error)
+	Fields(s ...googleapi.Field) ContactsInsertCallDoer
+}
+
 func (c *ContactsInsertCall) Do() (*Contact, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.contact)
@@ -1049,6 +1078,12 @@ func (c *ContactsListCall) Fields(s ...googleapi.Field) *ContactsListCall {
 	return c
 }
 
+// ContactsListCallDoer makes it easy to provide your own testable version of Do.
+type ContactsListCallDoer interface {
+	Do() (*ContactsListResponse, error)
+	Fields(s ...googleapi.Field) ContactsListCallDoer
+}
+
 func (c *ContactsListCall) Do() (*ContactsListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1113,6 +1148,12 @@ func (r *ContactsService) Patch(id string, contact *Contact) *ContactsPatchCall 
 func (c *ContactsPatchCall) Fields(s ...googleapi.Field) *ContactsPatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ContactsPatchCallDoer makes it easy to provide your own testable version of Do.
+type ContactsPatchCallDoer interface {
+	Do() (*Contact, error)
+	Fields(s ...googleapi.Field) ContactsPatchCallDoer
 }
 
 func (c *ContactsPatchCall) Do() (*Contact, error) {
@@ -1202,6 +1243,12 @@ func (c *ContactsUpdateCall) Fields(s ...googleapi.Field) *ContactsUpdateCall {
 	return c
 }
 
+// ContactsUpdateCallDoer makes it easy to provide your own testable version of Do.
+type ContactsUpdateCallDoer interface {
+	Do() (*Contact, error)
+	Fields(s ...googleapi.Field) ContactsUpdateCallDoer
+}
+
 func (c *ContactsUpdateCall) Do() (*Contact, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.contact)
@@ -1264,6 +1311,16 @@ func (c *ContactsUpdateCall) Do() (*Contact, error) {
 
 }
 
+// ContactsServicer makes it easy to provide your own testable versions of ContactsService.
+type ContactsServicer interface {
+	Delete(id string) ContactsDeleteCallDoer
+	Get(id string) ContactsGetCallDoer
+	Insert(contact *Contact) ContactsInsertCallDoer
+	List() ContactsListCallDoer
+	Patch(id string, contact *Contact) ContactsPatchCallDoer
+	Update(id string, contact *Contact) ContactsUpdateCallDoer
+}
+
 // method id "mirror.locations.get":
 
 type LocationsGetCall struct {
@@ -1285,6 +1342,12 @@ func (r *LocationsService) Get(id string) *LocationsGetCall {
 func (c *LocationsGetCall) Fields(s ...googleapi.Field) *LocationsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// LocationsGetCallDoer makes it easy to provide your own testable version of Do.
+type LocationsGetCallDoer interface {
+	Do() (*Location, error)
+	Fields(s ...googleapi.Field) LocationsGetCallDoer
 }
 
 func (c *LocationsGetCall) Do() (*Location, error) {
@@ -1362,6 +1425,12 @@ func (c *LocationsListCall) Fields(s ...googleapi.Field) *LocationsListCall {
 	return c
 }
 
+// LocationsListCallDoer makes it easy to provide your own testable version of Do.
+type LocationsListCallDoer interface {
+	Do() (*LocationsListResponse, error)
+	Fields(s ...googleapi.Field) LocationsListCallDoer
+}
+
 func (c *LocationsListCall) Do() (*LocationsListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1403,6 +1472,12 @@ func (c *LocationsListCall) Do() (*LocationsListResponse, error) {
 
 }
 
+// LocationsServicer makes it easy to provide your own testable versions of LocationsService.
+type LocationsServicer interface {
+	Get(id string) LocationsGetCallDoer
+	List() LocationsListCallDoer
+}
+
 // method id "mirror.settings.get":
 
 type SettingsGetCall struct {
@@ -1424,6 +1499,12 @@ func (r *SettingsService) Get(id string) *SettingsGetCall {
 func (c *SettingsGetCall) Fields(s ...googleapi.Field) *SettingsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// SettingsGetCallDoer makes it easy to provide your own testable version of Do.
+type SettingsGetCallDoer interface {
+	Do() (*Setting, error)
+	Fields(s ...googleapi.Field) SettingsGetCallDoer
 }
 
 func (c *SettingsGetCall) Do() (*Setting, error) {
@@ -1479,6 +1560,11 @@ func (c *SettingsGetCall) Do() (*Setting, error) {
 
 }
 
+// SettingsServicer makes it easy to provide your own testable versions of SettingsService.
+type SettingsServicer interface {
+	Get(id string) SettingsGetCallDoer
+}
+
 // method id "mirror.subscriptions.delete":
 
 type SubscriptionsDeleteCall struct {
@@ -1500,6 +1586,12 @@ func (r *SubscriptionsService) Delete(id string) *SubscriptionsDeleteCall {
 func (c *SubscriptionsDeleteCall) Fields(s ...googleapi.Field) *SubscriptionsDeleteCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// SubscriptionsDeleteCallDoer makes it easy to provide your own testable version of Do.
+type SubscriptionsDeleteCallDoer interface {
+	Do() error
+	Fields(s ...googleapi.Field) SubscriptionsDeleteCallDoer
 }
 
 func (c *SubscriptionsDeleteCall) Do() error {
@@ -1569,6 +1661,12 @@ func (r *SubscriptionsService) Insert(subscription *Subscription) *Subscriptions
 func (c *SubscriptionsInsertCall) Fields(s ...googleapi.Field) *SubscriptionsInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// SubscriptionsInsertCallDoer makes it easy to provide your own testable version of Do.
+type SubscriptionsInsertCallDoer interface {
+	Do() (*Subscription, error)
+	Fields(s ...googleapi.Field) SubscriptionsInsertCallDoer
 }
 
 func (c *SubscriptionsInsertCall) Do() (*Subscription, error) {
@@ -1642,6 +1740,12 @@ func (c *SubscriptionsListCall) Fields(s ...googleapi.Field) *SubscriptionsListC
 	return c
 }
 
+// SubscriptionsListCallDoer makes it easy to provide your own testable version of Do.
+type SubscriptionsListCallDoer interface {
+	Do() (*SubscriptionsListResponse, error)
+	Fields(s ...googleapi.Field) SubscriptionsListCallDoer
+}
+
 func (c *SubscriptionsListCall) Do() (*SubscriptionsListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1707,6 +1811,12 @@ func (c *SubscriptionsUpdateCall) Fields(s ...googleapi.Field) *SubscriptionsUpd
 	return c
 }
 
+// SubscriptionsUpdateCallDoer makes it easy to provide your own testable version of Do.
+type SubscriptionsUpdateCallDoer interface {
+	Do() (*Subscription, error)
+	Fields(s ...googleapi.Field) SubscriptionsUpdateCallDoer
+}
+
 func (c *SubscriptionsUpdateCall) Do() (*Subscription, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.subscription)
@@ -1769,6 +1879,14 @@ func (c *SubscriptionsUpdateCall) Do() (*Subscription, error) {
 
 }
 
+// SubscriptionsServicer makes it easy to provide your own testable versions of SubscriptionsService.
+type SubscriptionsServicer interface {
+	Delete(id string) SubscriptionsDeleteCallDoer
+	Insert(subscription *Subscription) SubscriptionsInsertCallDoer
+	List() SubscriptionsListCallDoer
+	Update(id string, subscription *Subscription) SubscriptionsUpdateCallDoer
+}
+
 // method id "mirror.timeline.delete":
 
 type TimelineDeleteCall struct {
@@ -1790,6 +1908,12 @@ func (r *TimelineService) Delete(id string) *TimelineDeleteCall {
 func (c *TimelineDeleteCall) Fields(s ...googleapi.Field) *TimelineDeleteCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// TimelineDeleteCallDoer makes it easy to provide your own testable version of Do.
+type TimelineDeleteCallDoer interface {
+	Do() error
+	Fields(s ...googleapi.Field) TimelineDeleteCallDoer
 }
 
 func (c *TimelineDeleteCall) Do() error {
@@ -1860,6 +1984,12 @@ func (r *TimelineService) Get(id string) *TimelineGetCall {
 func (c *TimelineGetCall) Fields(s ...googleapi.Field) *TimelineGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// TimelineGetCallDoer makes it easy to provide your own testable version of Do.
+type TimelineGetCallDoer interface {
+	Do() (*TimelineItem, error)
+	Fields(s ...googleapi.Field) TimelineGetCallDoer
 }
 
 func (c *TimelineGetCall) Do() (*TimelineItem, error) {
@@ -1970,6 +2100,15 @@ func (c *TimelineInsertCall) ProgressUpdater(pu googleapi.ProgressUpdater) *Time
 func (c *TimelineInsertCall) Fields(s ...googleapi.Field) *TimelineInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// TimelineInsertCallDoer makes it easy to provide your own testable version of Do.
+type TimelineInsertCallDoer interface {
+	Do() (*TimelineItem, error)
+	Media(r io.Reader) TimelineInsertCallDoer
+	ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) TimelineInsertCallDoer
+	ProgressUpdater(pu googleapi.ProgressUpdater) TimelineInsertCallDoer
+	Fields(s ...googleapi.Field) TimelineInsertCallDoer
 }
 
 func (c *TimelineInsertCall) Do() (*TimelineItem, error) {
@@ -2160,6 +2299,19 @@ func (c *TimelineListCall) Fields(s ...googleapi.Field) *TimelineListCall {
 	return c
 }
 
+// TimelineListCallDoer makes it easy to provide your own testable version of Do.
+type TimelineListCallDoer interface {
+	Do() (*TimelineListResponse, error)
+	BundleId(bundleId string) TimelineListCallDoer
+	IncludeDeleted(includeDeleted bool) TimelineListCallDoer
+	MaxResults(maxResults int64) TimelineListCallDoer
+	OrderBy(orderBy string) TimelineListCallDoer
+	PageToken(pageToken string) TimelineListCallDoer
+	PinnedOnly(pinnedOnly bool) TimelineListCallDoer
+	SourceItemId(sourceItemId string) TimelineListCallDoer
+	Fields(s ...googleapi.Field) TimelineListCallDoer
+}
+
 func (c *TimelineListCall) Do() (*TimelineListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2294,6 +2446,12 @@ func (c *TimelinePatchCall) Fields(s ...googleapi.Field) *TimelinePatchCall {
 	return c
 }
 
+// TimelinePatchCallDoer makes it easy to provide your own testable version of Do.
+type TimelinePatchCallDoer interface {
+	Do() (*TimelineItem, error)
+	Fields(s ...googleapi.Field) TimelinePatchCallDoer
+}
+
 func (c *TimelinePatchCall) Do() (*TimelineItem, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.timelineitem)
@@ -2413,6 +2571,15 @@ func (c *TimelineUpdateCall) ProgressUpdater(pu googleapi.ProgressUpdater) *Time
 func (c *TimelineUpdateCall) Fields(s ...googleapi.Field) *TimelineUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// TimelineUpdateCallDoer makes it easy to provide your own testable version of Do.
+type TimelineUpdateCallDoer interface {
+	Do() (*TimelineItem, error)
+	Media(r io.Reader) TimelineUpdateCallDoer
+	ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) TimelineUpdateCallDoer
+	ProgressUpdater(pu googleapi.ProgressUpdater) TimelineUpdateCallDoer
+	Fields(s ...googleapi.Field) TimelineUpdateCallDoer
 }
 
 func (c *TimelineUpdateCall) Do() (*TimelineItem, error) {
@@ -2565,6 +2732,12 @@ func (c *TimelineAttachmentsDeleteCall) Fields(s ...googleapi.Field) *TimelineAt
 	return c
 }
 
+// TimelineAttachmentsDeleteCallDoer makes it easy to provide your own testable version of Do.
+type TimelineAttachmentsDeleteCallDoer interface {
+	Do() error
+	Fields(s ...googleapi.Field) TimelineAttachmentsDeleteCallDoer
+}
+
 func (c *TimelineAttachmentsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2643,6 +2816,12 @@ func (r *TimelineAttachmentsService) Get(itemId string, attachmentId string) *Ti
 func (c *TimelineAttachmentsGetCall) Fields(s ...googleapi.Field) *TimelineAttachmentsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// TimelineAttachmentsGetCallDoer makes it easy to provide your own testable version of Do.
+type TimelineAttachmentsGetCallDoer interface {
+	Do() (*Attachment, error)
+	Fields(s ...googleapi.Field) TimelineAttachmentsGetCallDoer
 }
 
 func (c *TimelineAttachmentsGetCall) Do() (*Attachment, error) {
@@ -2761,6 +2940,15 @@ func (c *TimelineAttachmentsInsertCall) ProgressUpdater(pu googleapi.ProgressUpd
 func (c *TimelineAttachmentsInsertCall) Fields(s ...googleapi.Field) *TimelineAttachmentsInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// TimelineAttachmentsInsertCallDoer makes it easy to provide your own testable version of Do.
+type TimelineAttachmentsInsertCallDoer interface {
+	Do() (*Attachment, error)
+	Media(r io.Reader) TimelineAttachmentsInsertCallDoer
+	ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) TimelineAttachmentsInsertCallDoer
+	ProgressUpdater(pu googleapi.ProgressUpdater) TimelineAttachmentsInsertCallDoer
+	Fields(s ...googleapi.Field) TimelineAttachmentsInsertCallDoer
 }
 
 func (c *TimelineAttachmentsInsertCall) Do() (*Attachment, error) {
@@ -2904,6 +3092,12 @@ func (c *TimelineAttachmentsListCall) Fields(s ...googleapi.Field) *TimelineAtta
 	return c
 }
 
+// TimelineAttachmentsListCallDoer makes it easy to provide your own testable version of Do.
+type TimelineAttachmentsListCallDoer interface {
+	Do() (*AttachmentsListResponse, error)
+	Fields(s ...googleapi.Field) TimelineAttachmentsListCallDoer
+}
+
 func (c *TimelineAttachmentsListCall) Do() (*AttachmentsListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2955,4 +3149,14 @@ func (c *TimelineAttachmentsListCall) Do() (*AttachmentsListResponse, error) {
 	//   ]
 	// }
 
+}
+
+// TimelineServicer makes it easy to provide your own testable versions of TimelineService.
+type TimelineServicer interface {
+	Delete(id string) TimelineDeleteCallDoer
+	Get(id string) TimelineGetCallDoer
+	Insert(timelineitem *TimelineItem) TimelineInsertCallDoer
+	List() TimelineListCallDoer
+	Patch(id string, timelineitem *TimelineItem) TimelinePatchCallDoer
+	Update(id string, timelineitem *TimelineItem) TimelineUpdateCallDoer
 }

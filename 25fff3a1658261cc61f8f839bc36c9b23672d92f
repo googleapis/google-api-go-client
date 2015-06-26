@@ -22,6 +22,30 @@
       "revId": "25fff3a1658261cc61f8f839bc36c9b23672d92f",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "33ebe964_e1f766c8",
+        "filename": "admin/directory_v1/admin-gen.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 1355,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-06-26T19:05:08Z",
+      "side": 1,
+      "message": "OK.  I\u0027ll move it up a level then.\nWouldn\u0027t the \"Do()\" in your example of:\n\n\"m.asps.Delete(m.userKey, val).Do();\"\n\nstill cause you problems?\nIn other words, do you need the higher level interfaces in *addition* to the Doer interface that I just made, or do you need it *instead of* the Doer interface?",
+      "parentUuid": "be731e93_0992d9aa",
+      "range": {
+        "startLine": 1349,
+        "startChar": 0,
+        "endLine": 1355,
+        "endChar": 1
+      },
+      "revId": "25fff3a1658261cc61f8f839bc36c9b23672d92f",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
     }
   ]
 }

@@ -406,6 +406,11 @@ func (c *ZoneOperationsGetCall) Fields(s ...googleapi.Field) *ZoneOperationsGetC
 	return c
 }
 
+// ZoneOperationsGetCallDoer makes it easy to provide your own testable version of Do.
+type ZoneOperationsGetCallDoer interface {
+	Do() (*Operation, error)
+}
+
 func (c *ZoneOperationsGetCall) Do() (*Operation, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -531,6 +536,11 @@ func (c *ZoneOperationsListCall) Fields(s ...googleapi.Field) *ZoneOperationsLis
 	return c
 }
 
+// ZoneOperationsListCallDoer makes it easy to provide your own testable version of Do.
+type ZoneOperationsListCallDoer interface {
+	Do() (*OperationList, error)
+}
+
 func (c *ZoneOperationsListCall) Do() (*OperationList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -626,6 +636,12 @@ func (c *ZoneOperationsListCall) Do() (*OperationList, error) {
 
 }
 
+// ZoneOperationsServicer makes it easy to provide your own testable versions of ZoneOperationsService.
+type ZoneOperationsServicer interface {
+	Get(project string, zone string, operation string) ZoneOperationsGetCallDoer
+	List(project string, zone string) ZoneOperationsListCallDoer
+}
+
 // method id "resourceviews.zoneViews.addResources":
 
 type ZoneViewsAddResourcesCall struct {
@@ -653,6 +669,11 @@ func (r *ZoneViewsService) AddResources(project string, zone string, resourceVie
 func (c *ZoneViewsAddResourcesCall) Fields(s ...googleapi.Field) *ZoneViewsAddResourcesCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ZoneViewsAddResourcesCallDoer makes it easy to provide your own testable version of Do.
+type ZoneViewsAddResourcesCallDoer interface {
+	Do() (*Operation, error)
 }
 
 func (c *ZoneViewsAddResourcesCall) Do() (*Operation, error) {
@@ -762,6 +783,11 @@ func (c *ZoneViewsDeleteCall) Fields(s ...googleapi.Field) *ZoneViewsDeleteCall 
 	return c
 }
 
+// ZoneViewsDeleteCallDoer makes it easy to provide your own testable version of Do.
+type ZoneViewsDeleteCallDoer interface {
+	Do() (*Operation, error)
+}
+
 func (c *ZoneViewsDeleteCall) Do() (*Operation, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -858,6 +884,11 @@ func (r *ZoneViewsService) Get(project string, zone string, resourceView string)
 func (c *ZoneViewsGetCall) Fields(s ...googleapi.Field) *ZoneViewsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ZoneViewsGetCallDoer makes it easy to provide your own testable version of Do.
+type ZoneViewsGetCallDoer interface {
+	Do() (*ResourceView, error)
 }
 
 func (c *ZoneViewsGetCall) Do() (*ResourceView, error) {
@@ -969,6 +1000,11 @@ func (c *ZoneViewsGetServiceCall) Fields(s ...googleapi.Field) *ZoneViewsGetServ
 	return c
 }
 
+// ZoneViewsGetServiceCallDoer makes it easy to provide your own testable version of Do.
+type ZoneViewsGetServiceCallDoer interface {
+	Do() (*ZoneViewsGetServiceResponse, error)
+}
+
 func (c *ZoneViewsGetServiceCall) Do() (*ZoneViewsGetServiceResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1073,6 +1109,11 @@ func (r *ZoneViewsService) Insert(project string, zone string, resourceview *Res
 func (c *ZoneViewsInsertCall) Fields(s ...googleapi.Field) *ZoneViewsInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ZoneViewsInsertCallDoer makes it easy to provide your own testable version of Do.
+type ZoneViewsInsertCallDoer interface {
+	Do() (*Operation, error)
 }
 
 func (c *ZoneViewsInsertCall) Do() (*Operation, error) {
@@ -1187,6 +1228,11 @@ func (c *ZoneViewsListCall) PageToken(pageToken string) *ZoneViewsListCall {
 func (c *ZoneViewsListCall) Fields(s ...googleapi.Field) *ZoneViewsListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ZoneViewsListCallDoer makes it easy to provide your own testable version of Do.
+type ZoneViewsListCallDoer interface {
+	Do() (*ZoneViewsList, error)
 }
 
 func (c *ZoneViewsListCall) Do() (*ZoneViewsList, error) {
@@ -1349,6 +1395,11 @@ func (c *ZoneViewsListResourcesCall) ServiceName(serviceName string) *ZoneViewsL
 func (c *ZoneViewsListResourcesCall) Fields(s ...googleapi.Field) *ZoneViewsListResourcesCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ZoneViewsListResourcesCallDoer makes it easy to provide your own testable version of Do.
+type ZoneViewsListResourcesCallDoer interface {
+	Do() (*ZoneViewsListResourcesResponse, error)
 }
 
 func (c *ZoneViewsListResourcesCall) Do() (*ZoneViewsListResourcesResponse, error) {
@@ -1516,6 +1567,11 @@ func (c *ZoneViewsRemoveResourcesCall) Fields(s ...googleapi.Field) *ZoneViewsRe
 	return c
 }
 
+// ZoneViewsRemoveResourcesCallDoer makes it easy to provide your own testable version of Do.
+type ZoneViewsRemoveResourcesCallDoer interface {
+	Do() (*Operation, error)
+}
+
 func (c *ZoneViewsRemoveResourcesCall) Do() (*Operation, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.zoneviewsremoveresourcesrequest)
@@ -1626,6 +1682,11 @@ func (c *ZoneViewsSetServiceCall) Fields(s ...googleapi.Field) *ZoneViewsSetServ
 	return c
 }
 
+// ZoneViewsSetServiceCallDoer makes it easy to provide your own testable version of Do.
+type ZoneViewsSetServiceCallDoer interface {
+	Do() (*Operation, error)
+}
+
 func (c *ZoneViewsSetServiceCall) Do() (*Operation, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.zoneviewssetservicerequest)
@@ -1704,4 +1765,17 @@ func (c *ZoneViewsSetServiceCall) Do() (*Operation, error) {
 	//   ]
 	// }
 
+}
+
+// ZoneViewsServicer makes it easy to provide your own testable versions of ZoneViewsService.
+type ZoneViewsServicer interface {
+	AddResources(project string, zone string, resourceView string, zoneviewsaddresourcesrequest *ZoneViewsAddResourcesRequest) ZoneViewsAddResourcesCallDoer
+	Delete(project string, zone string, resourceView string) ZoneViewsDeleteCallDoer
+	Get(project string, zone string, resourceView string) ZoneViewsGetCallDoer
+	GetService(project string, zone string, resourceView string) ZoneViewsGetServiceCallDoer
+	Insert(project string, zone string, resourceview *ResourceView) ZoneViewsInsertCallDoer
+	List(project string, zone string) ZoneViewsListCallDoer
+	ListResources(project string, zone string, resourceView string) ZoneViewsListResourcesCallDoer
+	RemoveResources(project string, zone string, resourceView string, zoneviewsremoveresourcesrequest *ZoneViewsRemoveResourcesRequest) ZoneViewsRemoveResourcesCallDoer
+	SetService(project string, zone string, resourceView string, zoneviewssetservicerequest *ZoneViewsSetServiceRequest) ZoneViewsSetServiceCallDoer
 }

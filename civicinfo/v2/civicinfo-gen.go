@@ -621,6 +621,11 @@ func (c *DivisionsSearchCall) Fields(s ...googleapi.Field) *DivisionsSearchCall 
 	return c
 }
 
+// DivisionsSearchCallDoer makes it easy to provide your own testable version of Do.
+type DivisionsSearchCallDoer interface {
+	Do() (*DivisionSearchResponse, error)
+}
+
 func (c *DivisionsSearchCall) Do() (*DivisionSearchResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -668,6 +673,11 @@ func (c *DivisionsSearchCall) Do() (*DivisionSearchResponse, error) {
 
 }
 
+// DivisionsServicer makes it easy to provide your own testable versions of DivisionsService.
+type DivisionsServicer interface {
+	Search() DivisionsSearchCallDoer
+}
+
 // method id "civicinfo.elections.electionQuery":
 
 type ElectionsElectionQueryCall struct {
@@ -687,6 +697,11 @@ func (r *ElectionsService) ElectionQuery() *ElectionsElectionQueryCall {
 func (c *ElectionsElectionQueryCall) Fields(s ...googleapi.Field) *ElectionsElectionQueryCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ElectionsElectionQueryCallDoer makes it easy to provide your own testable version of Do.
+type ElectionsElectionQueryCallDoer interface {
+	Do() (*ElectionsQueryResponse, error)
 }
 
 func (c *ElectionsElectionQueryCall) Do() (*ElectionsQueryResponse, error) {
@@ -765,6 +780,11 @@ func (c *ElectionsVoterInfoQueryCall) Fields(s ...googleapi.Field) *ElectionsVot
 	return c
 }
 
+// ElectionsVoterInfoQueryCallDoer makes it easy to provide your own testable version of Do.
+type ElectionsVoterInfoQueryCallDoer interface {
+	Do() (*VoterInfoResponse, error)
+}
+
 func (c *ElectionsVoterInfoQueryCall) Do() (*VoterInfoResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -831,6 +851,12 @@ func (c *ElectionsVoterInfoQueryCall) Do() (*VoterInfoResponse, error) {
 	//   }
 	// }
 
+}
+
+// ElectionsServicer makes it easy to provide your own testable versions of ElectionsService.
+type ElectionsServicer interface {
+	ElectionQuery() ElectionsElectionQueryCallDoer
+	VoterInfoQuery(address string) ElectionsVoterInfoQueryCallDoer
 }
 
 // method id "civicinfo.representatives.representativeInfoByAddress":
@@ -910,6 +936,11 @@ func (c *RepresentativesRepresentativeInfoByAddressCall) Roles(roles string) *Re
 func (c *RepresentativesRepresentativeInfoByAddressCall) Fields(s ...googleapi.Field) *RepresentativesRepresentativeInfoByAddressCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// RepresentativesRepresentativeInfoByAddressCallDoer makes it easy to provide your own testable version of Do.
+type RepresentativesRepresentativeInfoByAddressCallDoer interface {
+	Do() (*RepresentativeInfoResponse, error)
 }
 
 func (c *RepresentativesRepresentativeInfoByAddressCall) Do() (*RepresentativeInfoResponse, error) {
@@ -1110,6 +1141,11 @@ func (c *RepresentativesRepresentativeInfoByDivisionCall) Fields(s ...googleapi.
 	return c
 }
 
+// RepresentativesRepresentativeInfoByDivisionCallDoer makes it easy to provide your own testable version of Do.
+type RepresentativesRepresentativeInfoByDivisionCallDoer interface {
+	Do() (*RepresentativeInfoData, error)
+}
+
 func (c *RepresentativesRepresentativeInfoByDivisionCall) Do() (*RepresentativeInfoData, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1232,4 +1268,10 @@ func (c *RepresentativesRepresentativeInfoByDivisionCall) Do() (*RepresentativeI
 	//   }
 	// }
 
+}
+
+// RepresentativesServicer makes it easy to provide your own testable versions of RepresentativesService.
+type RepresentativesServicer interface {
+	RepresentativeInfoByAddress() RepresentativesRepresentativeInfoByAddressCallDoer
+	RepresentativeInfoByDivision(ocdId string) RepresentativesRepresentativeInfoByDivisionCallDoer
 }

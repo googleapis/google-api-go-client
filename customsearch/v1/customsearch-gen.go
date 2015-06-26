@@ -629,6 +629,11 @@ func (c *CseListCall) Fields(s ...googleapi.Field) *CseListCall {
 	return c
 }
 
+// CseListCallDoer makes it easy to provide your own testable version of Do.
+type CseListCallDoer interface {
+	Do() (*Search, error)
+}
+
 func (c *CseListCall) Do() (*Search, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1100,4 +1105,9 @@ func (c *CseListCall) Do() (*Search, error) {
 	//   }
 	// }
 
+}
+
+// CseServicer makes it easy to provide your own testable versions of CseService.
+type CseServicer interface {
+	List(q string) CseListCallDoer
 }

@@ -163,6 +163,11 @@ func (c *StatesClearCall) Fields(s ...googleapi.Field) *StatesClearCall {
 	return c
 }
 
+// StatesClearCallDoer makes it easy to provide your own testable version of Do.
+type StatesClearCallDoer interface {
+	Do() (*WriteResult, error)
+}
+
 func (c *StatesClearCall) Do() (*WriteResult, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -255,6 +260,11 @@ func (c *StatesDeleteCall) Fields(s ...googleapi.Field) *StatesDeleteCall {
 	return c
 }
 
+// StatesDeleteCallDoer makes it easy to provide your own testable version of Do.
+type StatesDeleteCallDoer interface {
+	Do() error
+}
+
 func (c *StatesDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -326,6 +336,11 @@ func (r *StatesService) Get(stateKey int64) *StatesGetCall {
 func (c *StatesGetCall) Fields(s ...googleapi.Field) *StatesGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// StatesGetCallDoer makes it easy to provide your own testable version of Do.
+type StatesGetCallDoer interface {
+	Do() (*GetResponse, error)
 }
 
 func (c *StatesGetCall) Do() (*GetResponse, error) {
@@ -410,6 +425,11 @@ func (c *StatesListCall) IncludeData(includeData bool) *StatesListCall {
 func (c *StatesListCall) Fields(s ...googleapi.Field) *StatesListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// StatesListCallDoer makes it easy to provide your own testable version of Do.
+type StatesListCallDoer interface {
+	Do() (*ListResponse, error)
 }
 
 func (c *StatesListCall) Do() (*ListResponse, error) {
@@ -502,6 +522,11 @@ func (c *StatesUpdateCall) Fields(s ...googleapi.Field) *StatesUpdateCall {
 	return c
 }
 
+// StatesUpdateCallDoer makes it easy to provide your own testable version of Do.
+type StatesUpdateCallDoer interface {
+	Do() (*WriteResult, error)
+}
+
 func (c *StatesUpdateCall) Do() (*WriteResult, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.updaterequest)
@@ -573,4 +598,13 @@ func (c *StatesUpdateCall) Do() (*WriteResult, error) {
 	//   ]
 	// }
 
+}
+
+// StatesServicer makes it easy to provide your own testable versions of StatesService.
+type StatesServicer interface {
+	Clear(stateKey int64) StatesClearCallDoer
+	Delete(stateKey int64) StatesDeleteCallDoer
+	Get(stateKey int64) StatesGetCallDoer
+	List() StatesListCallDoer
+	Update(stateKey int64, updaterequest *UpdateRequest) StatesUpdateCallDoer
 }

@@ -193,6 +193,11 @@ func (c *ReconcileCall) Fields(s ...googleapi.Field) *ReconcileCall {
 	return c
 }
 
+// ReconcileCallDoer makes it easy to provide your own testable version of Do.
+type ReconcileCallDoer interface {
+	Do() (*ReconcileGet, error)
+}
+
 func (c *ReconcileCall) Do() (*ReconcileGet, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -504,6 +509,11 @@ func (c *SearchCall) Without(without string) *SearchCall {
 func (c *SearchCall) Fields(s ...googleapi.Field) *SearchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// SearchCallDoer makes it easy to provide your own testable version of Do.
+type SearchCallDoer interface {
+	Do() error
 }
 
 func (c *SearchCall) Do() error {

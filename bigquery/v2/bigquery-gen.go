@@ -1308,6 +1308,11 @@ func (c *DatasetsDeleteCall) Fields(s ...googleapi.Field) *DatasetsDeleteCall {
 	return c
 }
 
+// DatasetsDeleteCallDoer makes it easy to provide your own testable version of Do.
+type DatasetsDeleteCallDoer interface {
+	Do() error
+}
+
 func (c *DatasetsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1396,6 +1401,11 @@ func (c *DatasetsGetCall) Fields(s ...googleapi.Field) *DatasetsGetCall {
 	return c
 }
 
+// DatasetsGetCallDoer makes it easy to provide your own testable version of Do.
+type DatasetsGetCallDoer interface {
+	Do() (*Dataset, error)
+}
+
 func (c *DatasetsGetCall) Do() (*Dataset, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1481,6 +1491,11 @@ func (r *DatasetsService) Insert(projectId string, dataset *Dataset) *DatasetsIn
 func (c *DatasetsInsertCall) Fields(s ...googleapi.Field) *DatasetsInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// DatasetsInsertCallDoer makes it easy to provide your own testable version of Do.
+type DatasetsInsertCallDoer interface {
+	Do() (*Dataset, error)
 }
 
 func (c *DatasetsInsertCall) Do() (*Dataset, error) {
@@ -1589,6 +1604,11 @@ func (c *DatasetsListCall) PageToken(pageToken string) *DatasetsListCall {
 func (c *DatasetsListCall) Fields(s ...googleapi.Field) *DatasetsListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// DatasetsListCallDoer makes it easy to provide your own testable version of Do.
+type DatasetsListCallDoer interface {
+	Do() (*DatasetList, error)
 }
 
 func (c *DatasetsListCall) Do() (*DatasetList, error) {
@@ -1700,6 +1720,11 @@ func (c *DatasetsPatchCall) Fields(s ...googleapi.Field) *DatasetsPatchCall {
 	return c
 }
 
+// DatasetsPatchCallDoer makes it easy to provide your own testable version of Do.
+type DatasetsPatchCallDoer interface {
+	Do() (*Dataset, error)
+}
+
 func (c *DatasetsPatchCall) Do() (*Dataset, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.dataset)
@@ -1800,6 +1825,11 @@ func (c *DatasetsUpdateCall) Fields(s ...googleapi.Field) *DatasetsUpdateCall {
 	return c
 }
 
+// DatasetsUpdateCallDoer makes it easy to provide your own testable version of Do.
+type DatasetsUpdateCallDoer interface {
+	Do() (*Dataset, error)
+}
+
 func (c *DatasetsUpdateCall) Do() (*Dataset, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.dataset)
@@ -1898,6 +1928,11 @@ func (c *JobsCancelCall) Fields(s ...googleapi.Field) *JobsCancelCall {
 	return c
 }
 
+// JobsCancelCallDoer makes it easy to provide your own testable version of Do.
+type JobsCancelCallDoer interface {
+	Do() (*JobCancelResponse, error)
+}
+
 func (c *JobsCancelCall) Do() (*JobCancelResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1985,6 +2020,11 @@ func (r *JobsService) Get(projectId string, jobId string) *JobsGetCall {
 func (c *JobsGetCall) Fields(s ...googleapi.Field) *JobsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// JobsGetCallDoer makes it easy to provide your own testable version of Do.
+type JobsGetCallDoer interface {
+	Do() (*Job, error)
 }
 
 func (c *JobsGetCall) Do() (*Job, error) {
@@ -2102,6 +2142,11 @@ func (c *JobsGetQueryResultsCall) TimeoutMs(timeoutMs int64) *JobsGetQueryResult
 func (c *JobsGetQueryResultsCall) Fields(s ...googleapi.Field) *JobsGetQueryResultsCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// JobsGetQueryResultsCallDoer makes it easy to provide your own testable version of Do.
+type JobsGetQueryResultsCallDoer interface {
+	Do() (*GetQueryResultsResponse, error)
 }
 
 func (c *JobsGetQueryResultsCall) Do() (*GetQueryResultsResponse, error) {
@@ -2258,6 +2303,11 @@ func (c *JobsInsertCall) ProgressUpdater(pu googleapi.ProgressUpdater) *JobsInse
 func (c *JobsInsertCall) Fields(s ...googleapi.Field) *JobsInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// JobsInsertCallDoer makes it easy to provide your own testable version of Do.
+type JobsInsertCallDoer interface {
+	Do() (*Job, error)
 }
 
 func (c *JobsInsertCall) Do() (*Job, error) {
@@ -2456,6 +2506,11 @@ func (c *JobsListCall) Fields(s ...googleapi.Field) *JobsListCall {
 	return c
 }
 
+// JobsListCallDoer makes it easy to provide your own testable version of Do.
+type JobsListCallDoer interface {
+	Do() (*JobList, error)
+}
+
 func (c *JobsListCall) Do() (*JobList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2596,6 +2651,11 @@ func (c *JobsQueryCall) Fields(s ...googleapi.Field) *JobsQueryCall {
 	return c
 }
 
+// JobsQueryCallDoer makes it easy to provide your own testable version of Do.
+type JobsQueryCallDoer interface {
+	Do() (*QueryResponse, error)
+}
+
 func (c *JobsQueryCall) Do() (*QueryResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.queryrequest)
@@ -2695,6 +2755,11 @@ func (c *ProjectsListCall) Fields(s ...googleapi.Field) *ProjectsListCall {
 	return c
 }
 
+// ProjectsListCallDoer makes it easy to provide your own testable version of Do.
+type ProjectsListCallDoer interface {
+	Do() (*ProjectList, error)
+}
+
 func (c *ProjectsListCall) Do() (*ProjectList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2783,6 +2848,11 @@ func (r *TabledataService) InsertAll(projectId string, datasetId string, tableId
 func (c *TabledataInsertAllCall) Fields(s ...googleapi.Field) *TabledataInsertAllCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// TabledataInsertAllCallDoer makes it easy to provide your own testable version of Do.
+type TabledataInsertAllCallDoer interface {
+	Do() (*TableDataInsertAllResponse, error)
 }
 
 func (c *TabledataInsertAllCall) Do() (*TableDataInsertAllResponse, error) {
@@ -2914,6 +2984,11 @@ func (c *TabledataListCall) Fields(s ...googleapi.Field) *TabledataListCall {
 	return c
 }
 
+// TabledataListCallDoer makes it easy to provide your own testable version of Do.
+type TabledataListCallDoer interface {
+	Do() (*TableDataList, error)
+}
+
 func (c *TabledataListCall) Do() (*TableDataList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3038,6 +3113,11 @@ func (c *TablesDeleteCall) Fields(s ...googleapi.Field) *TablesDeleteCall {
 	return c
 }
 
+// TablesDeleteCallDoer makes it easy to provide your own testable version of Do.
+type TablesDeleteCallDoer interface {
+	Do() error
+}
+
 func (c *TablesDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3128,6 +3208,11 @@ func (r *TablesService) Get(projectId string, datasetId string, tableId string) 
 func (c *TablesGetCall) Fields(s ...googleapi.Field) *TablesGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// TablesGetCallDoer makes it easy to provide your own testable version of Do.
+type TablesGetCallDoer interface {
+	Do() (*Table, error)
 }
 
 func (c *TablesGetCall) Do() (*Table, error) {
@@ -3225,6 +3310,11 @@ func (r *TablesService) Insert(projectId string, datasetId string, table *Table)
 func (c *TablesInsertCall) Fields(s ...googleapi.Field) *TablesInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// TablesInsertCallDoer makes it easy to provide your own testable version of Do.
+type TablesInsertCallDoer interface {
+	Do() (*Table, error)
 }
 
 func (c *TablesInsertCall) Do() (*Table, error) {
@@ -3338,6 +3428,11 @@ func (c *TablesListCall) Fields(s ...googleapi.Field) *TablesListCall {
 	return c
 }
 
+// TablesListCallDoer makes it easy to provide your own testable version of Do.
+type TablesListCallDoer interface {
+	Do() (*TableList, error)
+}
+
 func (c *TablesListCall) Do() (*TableList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3449,6 +3544,11 @@ func (c *TablesPatchCall) Fields(s ...googleapi.Field) *TablesPatchCall {
 	return c
 }
 
+// TablesPatchCallDoer makes it easy to provide your own testable version of Do.
+type TablesPatchCallDoer interface {
+	Do() (*Table, error)
+}
+
 func (c *TablesPatchCall) Do() (*Table, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.table)
@@ -3557,6 +3657,11 @@ func (r *TablesService) Update(projectId string, datasetId string, tableId strin
 func (c *TablesUpdateCall) Fields(s ...googleapi.Field) *TablesUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// TablesUpdateCallDoer makes it easy to provide your own testable version of Do.
+type TablesUpdateCallDoer interface {
+	Do() (*Table, error)
 }
 
 func (c *TablesUpdateCall) Do() (*Table, error) {

@@ -622,6 +622,11 @@ func (c *DeploymentsDeleteCall) Fields(s ...googleapi.Field) *DeploymentsDeleteC
 	return c
 }
 
+// DeploymentsDeleteCallDoer makes it easy to provide your own testable version of Do.
+type DeploymentsDeleteCallDoer interface {
+	Do() error
+}
+
 func (c *DeploymentsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -707,6 +712,11 @@ func (r *DeploymentsService) Get(projectId string, region string, deploymentName
 func (c *DeploymentsGetCall) Fields(s ...googleapi.Field) *DeploymentsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// DeploymentsGetCallDoer makes it easy to provide your own testable version of Do.
+type DeploymentsGetCallDoer interface {
+	Do() (*Deployment, error)
 }
 
 func (c *DeploymentsGetCall) Do() (*Deployment, error) {
@@ -802,6 +812,11 @@ func (r *DeploymentsService) Insert(projectId string, region string, deployment 
 func (c *DeploymentsInsertCall) Fields(s ...googleapi.Field) *DeploymentsInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// DeploymentsInsertCallDoer makes it easy to provide your own testable version of Do.
+type DeploymentsInsertCallDoer interface {
+	Do() (*Deployment, error)
 }
 
 func (c *DeploymentsInsertCall) Do() (*Deployment, error) {
@@ -918,6 +933,11 @@ func (c *DeploymentsListCall) Fields(s ...googleapi.Field) *DeploymentsListCall 
 	return c
 }
 
+// DeploymentsListCallDoer makes it easy to provide your own testable version of Do.
+type DeploymentsListCallDoer interface {
+	Do() (*DeploymentsListResponse, error)
+}
+
 func (c *DeploymentsListCall) Do() (*DeploymentsListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1024,6 +1044,11 @@ func (c *TemplatesDeleteCall) Fields(s ...googleapi.Field) *TemplatesDeleteCall 
 	return c
 }
 
+// TemplatesDeleteCallDoer makes it easy to provide your own testable version of Do.
+type TemplatesDeleteCallDoer interface {
+	Do() error
+}
+
 func (c *TemplatesDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1100,6 +1125,11 @@ func (r *TemplatesService) Get(projectId string, templateName string) *Templates
 func (c *TemplatesGetCall) Fields(s ...googleapi.Field) *TemplatesGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// TemplatesGetCallDoer makes it easy to provide your own testable version of Do.
+type TemplatesGetCallDoer interface {
+	Do() (*Template, error)
 }
 
 func (c *TemplatesGetCall) Do() (*Template, error) {
@@ -1186,6 +1216,11 @@ func (r *TemplatesService) Insert(projectId string, template *Template) *Templat
 func (c *TemplatesInsertCall) Fields(s ...googleapi.Field) *TemplatesInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// TemplatesInsertCallDoer makes it easy to provide your own testable version of Do.
+type TemplatesInsertCallDoer interface {
+	Do() (*Template, error)
 }
 
 func (c *TemplatesInsertCall) Do() (*Template, error) {
@@ -1288,6 +1323,11 @@ func (c *TemplatesListCall) PageToken(pageToken string) *TemplatesListCall {
 func (c *TemplatesListCall) Fields(s ...googleapi.Field) *TemplatesListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// TemplatesListCallDoer makes it easy to provide your own testable version of Do.
+type TemplatesListCallDoer interface {
+	Do() (*TemplatesListResponse, error)
 }
 
 func (c *TemplatesListCall) Do() (*TemplatesListResponse, error) {

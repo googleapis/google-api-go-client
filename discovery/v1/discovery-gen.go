@@ -489,6 +489,11 @@ func (c *ApisGetRestCall) Fields(s ...googleapi.Field) *ApisGetRestCall {
 	return c
 }
 
+// ApisGetRestCallDoer makes it easy to provide your own testable version of Do.
+type ApisGetRestCallDoer interface {
+	Do() (*RestDescription, error)
+}
+
 func (c *ApisGetRestCall) Do() (*RestDescription, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -580,6 +585,11 @@ func (c *ApisListCall) Preferred(preferred bool) *ApisListCall {
 func (c *ApisListCall) Fields(s ...googleapi.Field) *ApisListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ApisListCallDoer makes it easy to provide your own testable version of Do.
+type ApisListCallDoer interface {
+	Do() (*DirectoryList, error)
 }
 
 func (c *ApisListCall) Do() (*DirectoryList, error) {

@@ -1236,6 +1236,11 @@ func (c *ActivitiesGetCall) Fields(s ...googleapi.Field) *ActivitiesGetCall {
 	return c
 }
 
+// ActivitiesGetCallDoer makes it easy to provide your own testable version of Do.
+type ActivitiesGetCallDoer interface {
+	Do() (*Activity, error)
+}
+
 func (c *ActivitiesGetCall) Do() (*Activity, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1332,6 +1337,11 @@ func (c *ActivitiesListCall) PageToken(pageToken string) *ActivitiesListCall {
 func (c *ActivitiesListCall) Fields(s ...googleapi.Field) *ActivitiesListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ActivitiesListCallDoer makes it easy to provide your own testable version of Do.
+type ActivitiesListCallDoer interface {
+	Do() (*ActivityFeed, error)
 }
 
 func (c *ActivitiesListCall) Do() (*ActivityFeed, error) {
@@ -1485,6 +1495,11 @@ func (c *ActivitiesSearchCall) Fields(s ...googleapi.Field) *ActivitiesSearchCal
 	return c
 }
 
+// ActivitiesSearchCallDoer makes it easy to provide your own testable version of Do.
+type ActivitiesSearchCallDoer interface {
+	Do() (*ActivityFeed, error)
+}
+
 func (c *ActivitiesSearchCall) Do() (*ActivityFeed, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1607,6 +1622,11 @@ func (c *CommentsGetCall) Fields(s ...googleapi.Field) *CommentsGetCall {
 	return c
 }
 
+// CommentsGetCallDoer makes it easy to provide your own testable version of Do.
+type CommentsGetCallDoer interface {
+	Do() (*Comment, error)
+}
+
 func (c *CommentsGetCall) Do() (*Comment, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1711,6 +1731,11 @@ func (c *CommentsListCall) SortOrder(sortOrder string) *CommentsListCall {
 func (c *CommentsListCall) Fields(s ...googleapi.Field) *CommentsListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// CommentsListCallDoer makes it easy to provide your own testable version of Do.
+type CommentsListCallDoer interface {
+	Do() (*CommentFeed, error)
 }
 
 func (c *CommentsListCall) Do() (*CommentFeed, error) {
@@ -1837,6 +1862,11 @@ func (c *MomentsInsertCall) Debug(debug bool) *MomentsInsertCall {
 func (c *MomentsInsertCall) Fields(s ...googleapi.Field) *MomentsInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// MomentsInsertCallDoer makes it easy to provide your own testable version of Do.
+type MomentsInsertCallDoer interface {
+	Do() (*Moment, error)
 }
 
 func (c *MomentsInsertCall) Do() (*Moment, error) {
@@ -1981,6 +2011,11 @@ func (c *MomentsListCall) Fields(s ...googleapi.Field) *MomentsListCall {
 	return c
 }
 
+// MomentsListCallDoer makes it easy to provide your own testable version of Do.
+type MomentsListCallDoer interface {
+	Do() (*MomentsFeed, error)
+}
+
 func (c *MomentsListCall) Do() (*MomentsFeed, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2108,6 +2143,11 @@ func (c *MomentsRemoveCall) Fields(s ...googleapi.Field) *MomentsRemoveCall {
 	return c
 }
 
+// MomentsRemoveCallDoer makes it easy to provide your own testable version of Do.
+type MomentsRemoveCallDoer interface {
+	Do() error
+}
+
 func (c *MomentsRemoveCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2177,6 +2217,11 @@ func (r *PeopleService) Get(userId string) *PeopleGetCall {
 func (c *PeopleGetCall) Fields(s ...googleapi.Field) *PeopleGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// PeopleGetCallDoer makes it easy to provide your own testable version of Do.
+type PeopleGetCallDoer interface {
+	Do() (*Person, error)
 }
 
 func (c *PeopleGetCall) Do() (*Person, error) {
@@ -2287,6 +2332,11 @@ func (c *PeopleListCall) PageToken(pageToken string) *PeopleListCall {
 func (c *PeopleListCall) Fields(s ...googleapi.Field) *PeopleListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// PeopleListCallDoer makes it easy to provide your own testable version of Do.
+type PeopleListCallDoer interface {
+	Do() (*PeopleFeed, error)
 }
 
 func (c *PeopleListCall) Do() (*PeopleFeed, error) {
@@ -2439,6 +2489,11 @@ func (c *PeopleListByActivityCall) Fields(s ...googleapi.Field) *PeopleListByAct
 	return c
 }
 
+// PeopleListByActivityCallDoer makes it easy to provide your own testable version of Do.
+type PeopleListByActivityCallDoer interface {
+	Do() (*PeopleFeed, error)
+}
+
 func (c *PeopleListByActivityCall) Do() (*PeopleFeed, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2577,6 +2632,11 @@ func (c *PeopleSearchCall) PageToken(pageToken string) *PeopleSearchCall {
 func (c *PeopleSearchCall) Fields(s ...googleapi.Field) *PeopleSearchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// PeopleSearchCallDoer makes it easy to provide your own testable version of Do.
+type PeopleSearchCallDoer interface {
+	Do() (*PeopleFeed, error)
 }
 
 func (c *PeopleSearchCall) Do() (*PeopleFeed, error) {

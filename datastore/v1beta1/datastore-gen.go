@@ -563,6 +563,11 @@ func (c *DatasetsAllocateIdsCall) Fields(s ...googleapi.Field) *DatasetsAllocate
 	return c
 }
 
+// DatasetsAllocateIdsCallDoer makes it easy to provide your own testable version of Do.
+type DatasetsAllocateIdsCallDoer interface {
+	Do() (*AllocateIdsResponse, error)
+}
+
 func (c *DatasetsAllocateIdsCall) Do() (*AllocateIdsResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.allocateidsrequest)
@@ -650,6 +655,11 @@ func (r *DatasetsService) BeginTransaction(datasetId string, begintransactionreq
 func (c *DatasetsBeginTransactionCall) Fields(s ...googleapi.Field) *DatasetsBeginTransactionCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// DatasetsBeginTransactionCallDoer makes it easy to provide your own testable version of Do.
+type DatasetsBeginTransactionCallDoer interface {
+	Do() (*BeginTransactionResponse, error)
 }
 
 func (c *DatasetsBeginTransactionCall) Do() (*BeginTransactionResponse, error) {
@@ -742,6 +752,11 @@ func (c *DatasetsBlindWriteCall) Fields(s ...googleapi.Field) *DatasetsBlindWrit
 	return c
 }
 
+// DatasetsBlindWriteCallDoer makes it easy to provide your own testable version of Do.
+type DatasetsBlindWriteCallDoer interface {
+	Do() (*BlindWriteResponse, error)
+}
+
 func (c *DatasetsBlindWriteCall) Do() (*BlindWriteResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.blindwriterequest)
@@ -830,6 +845,11 @@ func (r *DatasetsService) Commit(datasetId string, commitrequest *CommitRequest)
 func (c *DatasetsCommitCall) Fields(s ...googleapi.Field) *DatasetsCommitCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// DatasetsCommitCallDoer makes it easy to provide your own testable version of Do.
+type DatasetsCommitCallDoer interface {
+	Do() (*CommitResponse, error)
 }
 
 func (c *DatasetsCommitCall) Do() (*CommitResponse, error) {
@@ -921,6 +941,11 @@ func (c *DatasetsLookupCall) Fields(s ...googleapi.Field) *DatasetsLookupCall {
 	return c
 }
 
+// DatasetsLookupCallDoer makes it easy to provide your own testable version of Do.
+type DatasetsLookupCallDoer interface {
+	Do() (*LookupResponse, error)
+}
+
 func (c *DatasetsLookupCall) Do() (*LookupResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.lookuprequest)
@@ -1010,6 +1035,11 @@ func (c *DatasetsRollbackCall) Fields(s ...googleapi.Field) *DatasetsRollbackCal
 	return c
 }
 
+// DatasetsRollbackCallDoer makes it easy to provide your own testable version of Do.
+type DatasetsRollbackCallDoer interface {
+	Do() (*RollbackResponse, error)
+}
+
 func (c *DatasetsRollbackCall) Do() (*RollbackResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.rollbackrequest)
@@ -1097,6 +1127,11 @@ func (r *DatasetsService) RunQuery(datasetId string, runqueryrequest *RunQueryRe
 func (c *DatasetsRunQueryCall) Fields(s ...googleapi.Field) *DatasetsRunQueryCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// DatasetsRunQueryCallDoer makes it easy to provide your own testable version of Do.
+type DatasetsRunQueryCallDoer interface {
+	Do() (*RunQueryResponse, error)
 }
 
 func (c *DatasetsRunQueryCall) Do() (*RunQueryResponse, error) {

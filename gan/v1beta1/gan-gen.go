@@ -874,6 +874,11 @@ func (c *AdvertisersGetCall) Fields(s ...googleapi.Field) *AdvertisersGetCall {
 	return c
 }
 
+// AdvertisersGetCallDoer makes it easy to provide your own testable version of Do.
+type AdvertisersGetCallDoer interface {
+	Do() (*Advertiser, error)
+}
+
 func (c *AdvertisersGetCall) Do() (*Advertiser, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1043,6 +1048,11 @@ func (c *AdvertisersListCall) RelationshipStatus(relationshipStatus string) *Adv
 func (c *AdvertisersListCall) Fields(s ...googleapi.Field) *AdvertisersListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// AdvertisersListCallDoer makes it easy to provide your own testable version of Do.
+type AdvertisersListCallDoer interface {
+	Do() (*Advertisers, error)
 }
 
 func (c *AdvertisersListCall) Do() (*Advertisers, error) {
@@ -1230,6 +1240,11 @@ func (c *CcOffersListCall) Projection(projection string) *CcOffersListCall {
 func (c *CcOffersListCall) Fields(s ...googleapi.Field) *CcOffersListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// CcOffersListCallDoer makes it easy to provide your own testable version of Do.
+type CcOffersListCallDoer interface {
+	Do() (*CcOffers, error)
 }
 
 func (c *CcOffersListCall) Do() (*CcOffers, error) {
@@ -1488,6 +1503,11 @@ func (c *EventsListCall) Type(type_ string) *EventsListCall {
 func (c *EventsListCall) Fields(s ...googleapi.Field) *EventsListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// EventsListCallDoer makes it easy to provide your own testable version of Do.
+type EventsListCallDoer interface {
+	Do() (*Events, error)
 }
 
 func (c *EventsListCall) Do() (*Events, error) {
@@ -1751,6 +1771,11 @@ func (c *LinksGetCall) Fields(s ...googleapi.Field) *LinksGetCall {
 	return c
 }
 
+// LinksGetCallDoer makes it easy to provide your own testable version of Do.
+type LinksGetCallDoer interface {
+	Do() (*Link, error)
+}
+
 func (c *LinksGetCall) Do() (*Link, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1851,6 +1876,11 @@ func (r *LinksService) Insert(role string, roleId string, link *Link) *LinksInse
 func (c *LinksInsertCall) Fields(s ...googleapi.Field) *LinksInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// LinksInsertCallDoer makes it easy to provide your own testable version of Do.
+type LinksInsertCallDoer interface {
+	Do() (*Link, error)
 }
 
 func (c *LinksInsertCall) Do() (*Link, error) {
@@ -2062,6 +2092,11 @@ func (c *LinksListCall) StartDateMin(startDateMin string) *LinksListCall {
 func (c *LinksListCall) Fields(s ...googleapi.Field) *LinksListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// LinksListCallDoer makes it easy to provide your own testable version of Do.
+type LinksListCallDoer interface {
+	Do() (*Links, error)
 }
 
 func (c *LinksListCall) Do() (*Links, error) {
@@ -2314,6 +2349,11 @@ func (c *PublishersGetCall) Fields(s ...googleapi.Field) *PublishersGetCall {
 	return c
 }
 
+// PublishersGetCallDoer makes it easy to provide your own testable version of Do.
+type PublishersGetCallDoer interface {
+	Do() (*Publisher, error)
+}
+
 func (c *PublishersGetCall) Do() (*Publisher, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2483,6 +2523,11 @@ func (c *PublishersListCall) RelationshipStatus(relationshipStatus string) *Publ
 func (c *PublishersListCall) Fields(s ...googleapi.Field) *PublishersListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// PublishersListCallDoer makes it easy to provide your own testable version of Do.
+type PublishersListCallDoer interface {
+	Do() (*Publishers, error)
 }
 
 func (c *PublishersListCall) Do() (*Publishers, error) {
@@ -2745,6 +2790,11 @@ func (c *ReportsGetCall) Status(status string) *ReportsGetCall {
 func (c *ReportsGetCall) Fields(s ...googleapi.Field) *ReportsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ReportsGetCallDoer makes it easy to provide your own testable version of Do.
+type ReportsGetCallDoer interface {
+	Do() (*Report, error)
 }
 
 func (c *ReportsGetCall) Do() (*Report, error) {

@@ -229,6 +229,11 @@ func (c *DataGetCall) Fields(s ...googleapi.Field) *DataGetCall {
 	return c
 }
 
+// DataGetCallDoer makes it easy to provide your own testable version of Do.
+type DataGetCallDoer interface {
+	Do() error
+}
+
 func (c *DataGetCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -393,6 +398,11 @@ func (c *ManagementAccountsListCall) Fields(s ...googleapi.Field) *ManagementAcc
 	return c
 }
 
+// ManagementAccountsListCallDoer makes it easy to provide your own testable version of Do.
+type ManagementAccountsListCallDoer interface {
+	Do() error
+}
+
 func (c *ManagementAccountsListCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -488,6 +498,11 @@ func (c *ManagementGoalsListCall) StartIndex(startIndex int64) *ManagementGoalsL
 func (c *ManagementGoalsListCall) Fields(s ...googleapi.Field) *ManagementGoalsListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ManagementGoalsListCallDoer makes it easy to provide your own testable version of Do.
+type ManagementGoalsListCallDoer interface {
+	Do() error
 }
 
 func (c *ManagementGoalsListCall) Do() error {
@@ -612,6 +627,11 @@ func (c *ManagementProfilesListCall) Fields(s ...googleapi.Field) *ManagementPro
 	return c
 }
 
+// ManagementProfilesListCallDoer makes it easy to provide your own testable version of Do.
+type ManagementProfilesListCallDoer interface {
+	Do() error
+}
+
 func (c *ManagementProfilesListCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -722,6 +742,11 @@ func (c *ManagementSegmentsListCall) Fields(s ...googleapi.Field) *ManagementSeg
 	return c
 }
 
+// ManagementSegmentsListCallDoer makes it easy to provide your own testable version of Do.
+type ManagementSegmentsListCallDoer interface {
+	Do() error
+}
+
 func (c *ManagementSegmentsListCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -813,6 +838,11 @@ func (c *ManagementWebpropertiesListCall) StartIndex(startIndex int64) *Manageme
 func (c *ManagementWebpropertiesListCall) Fields(s ...googleapi.Field) *ManagementWebpropertiesListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ManagementWebpropertiesListCallDoer makes it easy to provide your own testable version of Do.
+type ManagementWebpropertiesListCallDoer interface {
+	Do() error
 }
 
 func (c *ManagementWebpropertiesListCall) Do() error {

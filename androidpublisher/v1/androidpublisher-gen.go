@@ -126,6 +126,11 @@ func (c *PurchasesCancelCall) Fields(s ...googleapi.Field) *PurchasesCancelCall 
 	return c
 }
 
+// PurchasesCancelCallDoer makes it easy to provide your own testable version of Do.
+type PurchasesCancelCallDoer interface {
+	Do() error
+}
+
 func (c *PurchasesCancelCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -214,6 +219,11 @@ func (r *PurchasesService) Get(packageName string, subscriptionId string, token 
 func (c *PurchasesGetCall) Fields(s ...googleapi.Field) *PurchasesGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// PurchasesGetCallDoer makes it easy to provide your own testable version of Do.
+type PurchasesGetCallDoer interface {
+	Do() (*SubscriptionPurchase, error)
 }
 
 func (c *PurchasesGetCall) Do() (*SubscriptionPurchase, error) {

@@ -348,6 +348,11 @@ func (c *BatchReportDefinitionsListCall) Fields(s ...googleapi.Field) *BatchRepo
 	return c
 }
 
+// BatchReportDefinitionsListCallDoer makes it easy to provide your own testable version of Do.
+type BatchReportDefinitionsListCallDoer interface {
+	Do() (*BatchReportDefinitionList, error)
+}
+
 func (c *BatchReportDefinitionsListCall) Do() (*BatchReportDefinitionList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -424,6 +429,11 @@ func (r *BatchReportsService) List(batchReportDefinitionId string, onBehalfOfCon
 func (c *BatchReportsListCall) Fields(s ...googleapi.Field) *BatchReportsListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// BatchReportsListCallDoer makes it easy to provide your own testable version of Do.
+type BatchReportsListCallDoer interface {
+	Do() (*BatchReportList, error)
 }
 
 func (c *BatchReportsListCall) Do() (*BatchReportList, error) {
@@ -528,6 +538,11 @@ func (c *GroupItemsDeleteCall) Fields(s ...googleapi.Field) *GroupItemsDeleteCal
 	return c
 }
 
+// GroupItemsDeleteCallDoer makes it easy to provide your own testable version of Do.
+type GroupItemsDeleteCallDoer interface {
+	Do() error
+}
+
 func (c *GroupItemsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -621,6 +636,11 @@ func (c *GroupItemsInsertCall) OnBehalfOfContentOwner(onBehalfOfContentOwner str
 func (c *GroupItemsInsertCall) Fields(s ...googleapi.Field) *GroupItemsInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// GroupItemsInsertCallDoer makes it easy to provide your own testable version of Do.
+type GroupItemsInsertCallDoer interface {
+	Do() (*GroupItem, error)
 }
 
 func (c *GroupItemsInsertCall) Do() (*GroupItem, error) {
@@ -723,6 +743,11 @@ func (c *GroupItemsListCall) OnBehalfOfContentOwner(onBehalfOfContentOwner strin
 func (c *GroupItemsListCall) Fields(s ...googleapi.Field) *GroupItemsListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// GroupItemsListCallDoer makes it easy to provide your own testable version of Do.
+type GroupItemsListCallDoer interface {
+	Do() (*GroupItemListResponse, error)
 }
 
 func (c *GroupItemsListCall) Do() (*GroupItemListResponse, error) {
@@ -829,6 +854,11 @@ func (c *GroupsDeleteCall) Fields(s ...googleapi.Field) *GroupsDeleteCall {
 	return c
 }
 
+// GroupsDeleteCallDoer makes it easy to provide your own testable version of Do.
+type GroupsDeleteCallDoer interface {
+	Do() error
+}
+
 func (c *GroupsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -922,6 +952,11 @@ func (c *GroupsInsertCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string)
 func (c *GroupsInsertCall) Fields(s ...googleapi.Field) *GroupsInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// GroupsInsertCallDoer makes it easy to provide your own testable version of Do.
+type GroupsInsertCallDoer interface {
+	Do() (*Group, error)
 }
 
 func (c *GroupsInsertCall) Do() (*Group, error) {
@@ -1043,6 +1078,11 @@ func (c *GroupsListCall) Fields(s ...googleapi.Field) *GroupsListCall {
 	return c
 }
 
+// GroupsListCallDoer makes it easy to provide your own testable version of Do.
+type GroupsListCallDoer interface {
+	Do() (*GroupListResponse, error)
+}
+
 func (c *GroupsListCall) Do() (*GroupListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1152,6 +1192,11 @@ func (c *GroupsUpdateCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string)
 func (c *GroupsUpdateCall) Fields(s ...googleapi.Field) *GroupsUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// GroupsUpdateCallDoer makes it easy to provide your own testable version of Do.
+type GroupsUpdateCallDoer interface {
+	Do() (*Group, error)
 }
 
 func (c *GroupsUpdateCall) Do() (*Group, error) {
@@ -1301,6 +1346,11 @@ func (c *ReportsQueryCall) StartIndex(startIndex int64) *ReportsQueryCall {
 func (c *ReportsQueryCall) Fields(s ...googleapi.Field) *ReportsQueryCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ReportsQueryCallDoer makes it easy to provide your own testable version of Do.
+type ReportsQueryCallDoer interface {
+	Do() (*ResultTable, error)
 }
 
 func (c *ReportsQueryCall) Do() (*ResultTable, error) {

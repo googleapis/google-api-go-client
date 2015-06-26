@@ -141,6 +141,11 @@ func (c *StatscollectionUpdateaggregatedstatsCall) Fields(s ...googleapi.Field) 
 	return c
 }
 
+// StatscollectionUpdateaggregatedstatsCallDoer makes it easy to provide your own testable version of Do.
+type StatscollectionUpdateaggregatedstatsCallDoer interface {
+	Do() (*AggregatedStatsReply, error)
+}
+
 func (c *StatscollectionUpdateaggregatedstatsCall) Do() (*AggregatedStatsReply, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.aggregatedstats)
@@ -211,6 +216,11 @@ func (r *StatscollectionService) Updatestats(stats *Stats) *StatscollectionUpdat
 func (c *StatscollectionUpdatestatsCall) Fields(s ...googleapi.Field) *StatscollectionUpdatestatsCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// StatscollectionUpdatestatsCallDoer makes it easy to provide your own testable version of Do.
+type StatscollectionUpdatestatsCallDoer interface {
+	Do() (*StatsReply, error)
 }
 
 func (c *StatscollectionUpdatestatsCall) Do() (*StatsReply, error) {

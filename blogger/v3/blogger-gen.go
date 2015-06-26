@@ -718,6 +718,11 @@ func (c *BlogUserInfosGetCall) Fields(s ...googleapi.Field) *BlogUserInfosGetCal
 	return c
 }
 
+// BlogUserInfosGetCallDoer makes it easy to provide your own testable version of Do.
+type BlogUserInfosGetCallDoer interface {
+	Do() (*BlogUserInfo, error)
+}
+
 func (c *BlogUserInfosGetCall) Do() (*BlogUserInfo, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -829,6 +834,11 @@ func (c *BlogsGetCall) View(view string) *BlogsGetCall {
 func (c *BlogsGetCall) Fields(s ...googleapi.Field) *BlogsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// BlogsGetCallDoer makes it easy to provide your own testable version of Do.
+type BlogsGetCallDoer interface {
+	Do() (*Blog, error)
 }
 
 func (c *BlogsGetCall) Do() (*Blog, error) {
@@ -945,6 +955,11 @@ func (c *BlogsGetByUrlCall) View(view string) *BlogsGetByUrlCall {
 func (c *BlogsGetByUrlCall) Fields(s ...googleapi.Field) *BlogsGetByUrlCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// BlogsGetByUrlCallDoer makes it easy to provide your own testable version of Do.
+type BlogsGetByUrlCallDoer interface {
+	Do() (*Blog, error)
 }
 
 func (c *BlogsGetByUrlCall) Do() (*Blog, error) {
@@ -1087,6 +1102,11 @@ func (c *BlogsListByUserCall) View(view string) *BlogsListByUserCall {
 func (c *BlogsListByUserCall) Fields(s ...googleapi.Field) *BlogsListByUserCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// BlogsListByUserCallDoer makes it easy to provide your own testable version of Do.
+type BlogsListByUserCallDoer interface {
+	Do() (*BlogList, error)
 }
 
 func (c *BlogsListByUserCall) Do() (*BlogList, error) {
@@ -1233,6 +1253,11 @@ func (c *CommentsApproveCall) Fields(s ...googleapi.Field) *CommentsApproveCall 
 	return c
 }
 
+// CommentsApproveCallDoer makes it easy to provide your own testable version of Do.
+type CommentsApproveCallDoer interface {
+	Do() (*Comment, error)
+}
+
 func (c *CommentsApproveCall) Do() (*Comment, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1327,6 +1352,11 @@ func (r *CommentsService) Delete(blogId string, postId string, commentId string)
 func (c *CommentsDeleteCall) Fields(s ...googleapi.Field) *CommentsDeleteCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// CommentsDeleteCallDoer makes it easy to provide your own testable version of Do.
+type CommentsDeleteCallDoer interface {
+	Do() error
 }
 
 func (c *CommentsDeleteCall) Do() error {
@@ -1431,6 +1461,11 @@ func (c *CommentsGetCall) View(view string) *CommentsGetCall {
 func (c *CommentsGetCall) Fields(s ...googleapi.Field) *CommentsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// CommentsGetCallDoer makes it easy to provide your own testable version of Do.
+type CommentsGetCallDoer interface {
+	Do() (*Comment, error)
 }
 
 func (c *CommentsGetCall) Do() (*Comment, error) {
@@ -1604,6 +1639,11 @@ func (c *CommentsListCall) View(view string) *CommentsListCall {
 func (c *CommentsListCall) Fields(s ...googleapi.Field) *CommentsListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// CommentsListCallDoer makes it easy to provide your own testable version of Do.
+type CommentsListCallDoer interface {
+	Do() (*CommentList, error)
 }
 
 func (c *CommentsListCall) Do() (*CommentList, error) {
@@ -1820,6 +1860,11 @@ func (c *CommentsListByBlogCall) Fields(s ...googleapi.Field) *CommentsListByBlo
 	return c
 }
 
+// CommentsListByBlogCallDoer makes it easy to provide your own testable version of Do.
+type CommentsListByBlogCallDoer interface {
+	Do() (*CommentList, error)
+}
+
 func (c *CommentsListByBlogCall) Do() (*CommentList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1964,6 +2009,11 @@ func (c *CommentsMarkAsSpamCall) Fields(s ...googleapi.Field) *CommentsMarkAsSpa
 	return c
 }
 
+// CommentsMarkAsSpamCallDoer makes it easy to provide your own testable version of Do.
+type CommentsMarkAsSpamCallDoer interface {
+	Do() (*Comment, error)
+}
+
 func (c *CommentsMarkAsSpamCall) Do() (*Comment, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2058,6 +2108,11 @@ func (r *CommentsService) RemoveContent(blogId string, postId string, commentId 
 func (c *CommentsRemoveContentCall) Fields(s ...googleapi.Field) *CommentsRemoveContentCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// CommentsRemoveContentCallDoer makes it easy to provide your own testable version of Do.
+type CommentsRemoveContentCallDoer interface {
+	Do() (*Comment, error)
 }
 
 func (c *CommentsRemoveContentCall) Do() (*Comment, error) {
@@ -2163,6 +2218,11 @@ func (c *PageViewsGetCall) Fields(s ...googleapi.Field) *PageViewsGetCall {
 	return c
 }
 
+// PageViewsGetCallDoer makes it easy to provide your own testable version of Do.
+type PageViewsGetCallDoer interface {
+	Do() (*Pageviews, error)
+}
+
 func (c *PageViewsGetCall) Do() (*Pageviews, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2259,6 +2319,11 @@ func (c *PagesDeleteCall) Fields(s ...googleapi.Field) *PagesDeleteCall {
 	return c
 }
 
+// PagesDeleteCallDoer makes it easy to provide your own testable version of Do.
+type PagesDeleteCallDoer interface {
+	Do() error
+}
+
 func (c *PagesDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2347,6 +2412,11 @@ func (c *PagesGetCall) View(view string) *PagesGetCall {
 func (c *PagesGetCall) Fields(s ...googleapi.Field) *PagesGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// PagesGetCallDoer makes it easy to provide your own testable version of Do.
+type PagesGetCallDoer interface {
+	Do() (*Page, error)
 }
 
 func (c *PagesGetCall) Do() (*Page, error) {
@@ -2458,6 +2528,11 @@ func (c *PagesInsertCall) IsDraft(isDraft bool) *PagesInsertCall {
 func (c *PagesInsertCall) Fields(s ...googleapi.Field) *PagesInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// PagesInsertCallDoer makes it easy to provide your own testable version of Do.
+type PagesInsertCallDoer interface {
+	Do() (*Page, error)
 }
 
 func (c *PagesInsertCall) Do() (*Page, error) {
@@ -2596,6 +2671,11 @@ func (c *PagesListCall) View(view string) *PagesListCall {
 func (c *PagesListCall) Fields(s ...googleapi.Field) *PagesListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// PagesListCallDoer makes it easy to provide your own testable version of Do.
+type PagesListCallDoer interface {
+	Do() (*PageList, error)
 }
 
 func (c *PagesListCall) Do() (*PageList, error) {
@@ -2752,6 +2832,11 @@ func (c *PagesPatchCall) Fields(s ...googleapi.Field) *PagesPatchCall {
 	return c
 }
 
+// PagesPatchCallDoer makes it easy to provide your own testable version of Do.
+type PagesPatchCallDoer interface {
+	Do() (*Page, error)
+}
+
 func (c *PagesPatchCall) Do() (*Page, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.page)
@@ -2863,6 +2948,11 @@ func (c *PagesPublishCall) Fields(s ...googleapi.Field) *PagesPublishCall {
 	return c
 }
 
+// PagesPublishCallDoer makes it easy to provide your own testable version of Do.
+type PagesPublishCallDoer interface {
+	Do() (*Page, error)
+}
+
 func (c *PagesPublishCall) Do() (*Page, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2947,6 +3037,11 @@ func (r *PagesService) Revert(blogId string, pageId string) *PagesRevertCall {
 func (c *PagesRevertCall) Fields(s ...googleapi.Field) *PagesRevertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// PagesRevertCallDoer makes it easy to provide your own testable version of Do.
+type PagesRevertCallDoer interface {
+	Do() (*Page, error)
 }
 
 func (c *PagesRevertCall) Do() (*Page, error) {
@@ -3049,6 +3144,11 @@ func (c *PagesUpdateCall) Revert(revert bool) *PagesUpdateCall {
 func (c *PagesUpdateCall) Fields(s ...googleapi.Field) *PagesUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// PagesUpdateCallDoer makes it easy to provide your own testable version of Do.
+type PagesUpdateCallDoer interface {
+	Do() (*Page, error)
 }
 
 func (c *PagesUpdateCall) Do() (*Page, error) {
@@ -3171,6 +3271,11 @@ func (c *PostUserInfosGetCall) MaxComments(maxComments int64) *PostUserInfosGetC
 func (c *PostUserInfosGetCall) Fields(s ...googleapi.Field) *PostUserInfosGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// PostUserInfosGetCallDoer makes it easy to provide your own testable version of Do.
+type PostUserInfosGetCallDoer interface {
+	Do() (*PostUserInfo, error)
 }
 
 func (c *PostUserInfosGetCall) Do() (*PostUserInfo, error) {
@@ -3354,6 +3459,11 @@ func (c *PostUserInfosListCall) View(view string) *PostUserInfosListCall {
 func (c *PostUserInfosListCall) Fields(s ...googleapi.Field) *PostUserInfosListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// PostUserInfosListCallDoer makes it easy to provide your own testable version of Do.
+type PostUserInfosListCallDoer interface {
+	Do() (*PostUserInfosList, error)
 }
 
 func (c *PostUserInfosListCall) Do() (*PostUserInfosList, error) {
@@ -3548,6 +3658,11 @@ func (c *PostsDeleteCall) Fields(s ...googleapi.Field) *PostsDeleteCall {
 	return c
 }
 
+// PostsDeleteCallDoer makes it easy to provide your own testable version of Do.
+type PostsDeleteCallDoer interface {
+	Do() error
+}
+
 func (c *PostsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3661,6 +3776,11 @@ func (c *PostsGetCall) View(view string) *PostsGetCall {
 func (c *PostsGetCall) Fields(s ...googleapi.Field) *PostsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// PostsGetCallDoer makes it easy to provide your own testable version of Do.
+type PostsGetCallDoer interface {
+	Do() (*Post, error)
 }
 
 func (c *PostsGetCall) Do() (*Post, error) {
@@ -3814,6 +3934,11 @@ func (c *PostsGetByPathCall) Fields(s ...googleapi.Field) *PostsGetByPathCall {
 	return c
 }
 
+// PostsGetByPathCallDoer makes it easy to provide your own testable version of Do.
+type PostsGetByPathCallDoer interface {
+	Do() (*Post, error)
+}
+
 func (c *PostsGetByPathCall) Do() (*Post, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3948,6 +4073,11 @@ func (c *PostsInsertCall) IsDraft(isDraft bool) *PostsInsertCall {
 func (c *PostsInsertCall) Fields(s ...googleapi.Field) *PostsInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// PostsInsertCallDoer makes it easy to provide your own testable version of Do.
+type PostsInsertCallDoer interface {
+	Do() (*Post, error)
 }
 
 func (c *PostsInsertCall) Do() (*Post, error) {
@@ -4144,6 +4274,11 @@ func (c *PostsListCall) View(view string) *PostsListCall {
 func (c *PostsListCall) Fields(s ...googleapi.Field) *PostsListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// PostsListCallDoer makes it easy to provide your own testable version of Do.
+type PostsListCallDoer interface {
+	Do() (*PostList, error)
 }
 
 func (c *PostsListCall) Do() (*PostList, error) {
@@ -4377,6 +4512,11 @@ func (c *PostsPatchCall) Fields(s ...googleapi.Field) *PostsPatchCall {
 	return c
 }
 
+// PostsPatchCallDoer makes it easy to provide your own testable version of Do.
+type PostsPatchCallDoer interface {
+	Do() (*Post, error)
+}
+
 func (c *PostsPatchCall) Do() (*Post, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.post)
@@ -4525,6 +4665,11 @@ func (c *PostsPublishCall) Fields(s ...googleapi.Field) *PostsPublishCall {
 	return c
 }
 
+// PostsPublishCallDoer makes it easy to provide your own testable version of Do.
+type PostsPublishCallDoer interface {
+	Do() (*Post, error)
+}
+
 func (c *PostsPublishCall) Do() (*Post, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4618,6 +4763,11 @@ func (r *PostsService) Revert(blogId string, postId string) *PostsRevertCall {
 func (c *PostsRevertCall) Fields(s ...googleapi.Field) *PostsRevertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// PostsRevertCallDoer makes it easy to provide your own testable version of Do.
+type PostsRevertCallDoer interface {
+	Do() (*Post, error)
 }
 
 func (c *PostsRevertCall) Do() (*Post, error) {
@@ -4723,6 +4873,11 @@ func (c *PostsSearchCall) OrderBy(orderBy string) *PostsSearchCall {
 func (c *PostsSearchCall) Fields(s ...googleapi.Field) *PostsSearchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// PostsSearchCallDoer makes it easy to provide your own testable version of Do.
+type PostsSearchCallDoer interface {
+	Do() (*PostList, error)
 }
 
 func (c *PostsSearchCall) Do() (*PostList, error) {
@@ -4876,6 +5031,11 @@ func (c *PostsUpdateCall) Fields(s ...googleapi.Field) *PostsUpdateCall {
 	return c
 }
 
+// PostsUpdateCallDoer makes it easy to provide your own testable version of Do.
+type PostsUpdateCallDoer interface {
+	Do() (*Post, error)
+}
+
 func (c *PostsUpdateCall) Do() (*Post, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.post)
@@ -5009,6 +5169,11 @@ func (r *UsersService) Get(userId string) *UsersGetCall {
 func (c *UsersGetCall) Fields(s ...googleapi.Field) *UsersGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// UsersGetCallDoer makes it easy to provide your own testable version of Do.
+type UsersGetCallDoer interface {
+	Do() (*User, error)
 }
 
 func (c *UsersGetCall) Do() (*User, error) {

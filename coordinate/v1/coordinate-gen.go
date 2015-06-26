@@ -413,6 +413,11 @@ func (c *CustomFieldDefListCall) Fields(s ...googleapi.Field) *CustomFieldDefLis
 	return c
 }
 
+// CustomFieldDefListCallDoer makes it easy to provide your own testable version of Do.
+type CustomFieldDefListCallDoer interface {
+	Do() (*CustomFieldDefListResponse, error)
+}
+
 func (c *CustomFieldDefListCall) Do() (*CustomFieldDefListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -490,6 +495,11 @@ func (r *JobsService) Get(teamId string, jobId uint64) *JobsGetCall {
 func (c *JobsGetCall) Fields(s ...googleapi.Field) *JobsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// JobsGetCallDoer makes it easy to provide your own testable version of Do.
+type JobsGetCallDoer interface {
+	Do() (*Job, error)
 }
 
 func (c *JobsGetCall) Do() (*Job, error) {
@@ -627,6 +637,11 @@ func (c *JobsInsertCall) Note(note string) *JobsInsertCall {
 func (c *JobsInsertCall) Fields(s ...googleapi.Field) *JobsInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// JobsInsertCallDoer makes it easy to provide your own testable version of Do.
+type JobsInsertCallDoer interface {
+	Do() (*Job, error)
 }
 
 func (c *JobsInsertCall) Do() (*Job, error) {
@@ -808,6 +823,11 @@ func (c *JobsListCall) PageToken(pageToken string) *JobsListCall {
 func (c *JobsListCall) Fields(s ...googleapi.Field) *JobsListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// JobsListCallDoer makes it easy to provide your own testable version of Do.
+type JobsListCallDoer interface {
+	Do() (*JobListResponse, error)
 }
 
 func (c *JobsListCall) Do() (*JobListResponse, error) {
@@ -996,6 +1016,11 @@ func (c *JobsPatchCall) Title(title string) *JobsPatchCall {
 func (c *JobsPatchCall) Fields(s ...googleapi.Field) *JobsPatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// JobsPatchCallDoer makes it easy to provide your own testable version of Do.
+type JobsPatchCallDoer interface {
+	Do() (*Job, error)
 }
 
 func (c *JobsPatchCall) Do() (*Job, error) {
@@ -1274,6 +1299,11 @@ func (c *JobsUpdateCall) Fields(s ...googleapi.Field) *JobsUpdateCall {
 	return c
 }
 
+// JobsUpdateCallDoer makes it easy to provide your own testable version of Do.
+type JobsUpdateCallDoer interface {
+	Do() (*Job, error)
+}
+
 func (c *JobsUpdateCall) Do() (*Job, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.job)
@@ -1482,6 +1512,11 @@ func (c *LocationListCall) Fields(s ...googleapi.Field) *LocationListCall {
 	return c
 }
 
+// LocationListCallDoer makes it easy to provide your own testable version of Do.
+type LocationListCallDoer interface {
+	Do() (*LocationListResponse, error)
+}
+
 func (c *LocationListCall) Do() (*LocationListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1593,6 +1628,11 @@ func (r *ScheduleService) Get(teamId string, jobId uint64) *ScheduleGetCall {
 func (c *ScheduleGetCall) Fields(s ...googleapi.Field) *ScheduleGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ScheduleGetCallDoer makes it easy to provide your own testable version of Do.
+type ScheduleGetCallDoer interface {
+	Do() (*Schedule, error)
 }
 
 func (c *ScheduleGetCall) Do() (*Schedule, error) {
@@ -1713,6 +1753,11 @@ func (c *SchedulePatchCall) StartTime(startTime uint64) *SchedulePatchCall {
 func (c *SchedulePatchCall) Fields(s ...googleapi.Field) *SchedulePatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// SchedulePatchCallDoer makes it easy to provide your own testable version of Do.
+type SchedulePatchCallDoer interface {
+	Do() (*Schedule, error)
 }
 
 func (c *SchedulePatchCall) Do() (*Schedule, error) {
@@ -1877,6 +1922,11 @@ func (c *ScheduleUpdateCall) Fields(s ...googleapi.Field) *ScheduleUpdateCall {
 	return c
 }
 
+// ScheduleUpdateCallDoer makes it easy to provide your own testable version of Do.
+type ScheduleUpdateCallDoer interface {
+	Do() (*Schedule, error)
+}
+
 func (c *ScheduleUpdateCall) Do() (*Schedule, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.schedule)
@@ -2025,6 +2075,11 @@ func (c *TeamListCall) Fields(s ...googleapi.Field) *TeamListCall {
 	return c
 }
 
+// TeamListCallDoer makes it easy to provide your own testable version of Do.
+type TeamListCallDoer interface {
+	Do() (*TeamListResponse, error)
+}
+
 func (c *TeamListCall) Do() (*TeamListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2113,6 +2168,11 @@ func (r *WorkerService) List(teamId string) *WorkerListCall {
 func (c *WorkerListCall) Fields(s ...googleapi.Field) *WorkerListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// WorkerListCallDoer makes it easy to provide your own testable version of Do.
+type WorkerListCallDoer interface {
+	Do() (*WorkerListResponse, error)
 }
 
 func (c *WorkerListCall) Do() (*WorkerListResponse, error) {

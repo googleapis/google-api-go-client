@@ -391,6 +391,11 @@ func (c *AchievementsResetCall) Fields(s ...googleapi.Field) *AchievementsResetC
 	return c
 }
 
+// AchievementsResetCallDoer makes it easy to provide your own testable version of Do.
+type AchievementsResetCallDoer interface {
+	Do() (*AchievementResetResponse, error)
+}
+
 func (c *AchievementsResetCall) Do() (*AchievementResetResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -468,6 +473,11 @@ func (c *AchievementsResetAllCall) Fields(s ...googleapi.Field) *AchievementsRes
 	return c
 }
 
+// AchievementsResetAllCallDoer makes it easy to provide your own testable version of Do.
+type AchievementsResetAllCallDoer interface {
+	Do() (*AchievementResetAllResponse, error)
+}
+
 func (c *AchievementsResetAllCall) Do() (*AchievementResetAllResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -532,6 +542,11 @@ func (c *AchievementsResetAllForAllPlayersCall) Fields(s ...googleapi.Field) *Ac
 	return c
 }
 
+// AchievementsResetAllForAllPlayersCallDoer makes it easy to provide your own testable version of Do.
+type AchievementsResetAllForAllPlayersCallDoer interface {
+	Do() error
+}
+
 func (c *AchievementsResetAllForAllPlayersCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -589,6 +604,11 @@ func (r *AchievementsService) ResetForAllPlayers(achievementId string) *Achievem
 func (c *AchievementsResetForAllPlayersCall) Fields(s ...googleapi.Field) *AchievementsResetForAllPlayersCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// AchievementsResetForAllPlayersCallDoer makes it easy to provide your own testable version of Do.
+type AchievementsResetForAllPlayersCallDoer interface {
+	Do() error
 }
 
 func (c *AchievementsResetForAllPlayersCall) Do() error {
@@ -661,6 +681,11 @@ func (r *AchievementsService) ResetMultipleForAllPlayers(achievementresetmultipl
 func (c *AchievementsResetMultipleForAllPlayersCall) Fields(s ...googleapi.Field) *AchievementsResetMultipleForAllPlayersCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// AchievementsResetMultipleForAllPlayersCallDoer makes it easy to provide your own testable version of Do.
+type AchievementsResetMultipleForAllPlayersCallDoer interface {
+	Do() error
 }
 
 func (c *AchievementsResetMultipleForAllPlayersCall) Do() error {
@@ -745,6 +770,11 @@ func (c *ApplicationsListHiddenCall) PageToken(pageToken string) *ApplicationsLi
 func (c *ApplicationsListHiddenCall) Fields(s ...googleapi.Field) *ApplicationsListHiddenCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ApplicationsListHiddenCallDoer makes it easy to provide your own testable version of Do.
+type ApplicationsListHiddenCallDoer interface {
+	Do() (*HiddenPlayerList, error)
 }
 
 func (c *ApplicationsListHiddenCall) Do() (*HiddenPlayerList, error) {
@@ -846,6 +876,11 @@ func (c *EventsResetCall) Fields(s ...googleapi.Field) *EventsResetCall {
 	return c
 }
 
+// EventsResetCallDoer makes it easy to provide your own testable version of Do.
+type EventsResetCallDoer interface {
+	Do() error
+}
+
 func (c *EventsResetCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -917,6 +952,11 @@ func (c *EventsResetAllCall) Fields(s ...googleapi.Field) *EventsResetAllCall {
 	return c
 }
 
+// EventsResetAllCallDoer makes it easy to provide your own testable version of Do.
+type EventsResetAllCallDoer interface {
+	Do() error
+}
+
 func (c *EventsResetAllCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -972,6 +1012,11 @@ func (r *EventsService) ResetAllForAllPlayers() *EventsResetAllForAllPlayersCall
 func (c *EventsResetAllForAllPlayersCall) Fields(s ...googleapi.Field) *EventsResetAllForAllPlayersCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// EventsResetAllForAllPlayersCallDoer makes it easy to provide your own testable version of Do.
+type EventsResetAllForAllPlayersCallDoer interface {
+	Do() error
 }
 
 func (c *EventsResetAllForAllPlayersCall) Do() error {
@@ -1032,6 +1077,11 @@ func (r *EventsService) ResetForAllPlayers(eventId string) *EventsResetForAllPla
 func (c *EventsResetForAllPlayersCall) Fields(s ...googleapi.Field) *EventsResetForAllPlayersCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// EventsResetForAllPlayersCallDoer makes it easy to provide your own testable version of Do.
+type EventsResetForAllPlayersCallDoer interface {
+	Do() error
 }
 
 func (c *EventsResetForAllPlayersCall) Do() error {
@@ -1107,6 +1157,11 @@ func (c *EventsResetMultipleForAllPlayersCall) Fields(s ...googleapi.Field) *Eve
 	return c
 }
 
+// EventsResetMultipleForAllPlayersCallDoer makes it easy to provide your own testable version of Do.
+type EventsResetMultipleForAllPlayersCallDoer interface {
+	Do() error
+}
+
 func (c *EventsResetMultipleForAllPlayersCall) Do() error {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.eventsresetmultipleforallrequest)
@@ -1175,6 +1230,11 @@ func (r *PlayersService) Hide(applicationId string, playerId string) *PlayersHid
 func (c *PlayersHideCall) Fields(s ...googleapi.Field) *PlayersHideCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// PlayersHideCallDoer makes it easy to provide your own testable version of Do.
+type PlayersHideCallDoer interface {
+	Do() error
 }
 
 func (c *PlayersHideCall) Do() error {
@@ -1259,6 +1319,11 @@ func (c *PlayersUnhideCall) Fields(s ...googleapi.Field) *PlayersUnhideCall {
 	return c
 }
 
+// PlayersUnhideCallDoer makes it easy to provide your own testable version of Do.
+type PlayersUnhideCallDoer interface {
+	Do() error
+}
+
 func (c *PlayersUnhideCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1339,6 +1404,11 @@ func (c *QuestsResetCall) Fields(s ...googleapi.Field) *QuestsResetCall {
 	return c
 }
 
+// QuestsResetCallDoer makes it easy to provide your own testable version of Do.
+type QuestsResetCallDoer interface {
+	Do() error
+}
+
 func (c *QuestsResetCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1409,6 +1479,11 @@ func (c *QuestsResetAllCall) Fields(s ...googleapi.Field) *QuestsResetAllCall {
 	return c
 }
 
+// QuestsResetAllCallDoer makes it easy to provide your own testable version of Do.
+type QuestsResetAllCallDoer interface {
+	Do() error
+}
+
 func (c *QuestsResetAllCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1463,6 +1538,11 @@ func (r *QuestsService) ResetAllForAllPlayers() *QuestsResetAllForAllPlayersCall
 func (c *QuestsResetAllForAllPlayersCall) Fields(s ...googleapi.Field) *QuestsResetAllForAllPlayersCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// QuestsResetAllForAllPlayersCallDoer makes it easy to provide your own testable version of Do.
+type QuestsResetAllForAllPlayersCallDoer interface {
+	Do() error
 }
 
 func (c *QuestsResetAllForAllPlayersCall) Do() error {
@@ -1522,6 +1602,11 @@ func (r *QuestsService) ResetForAllPlayers(questId string) *QuestsResetForAllPla
 func (c *QuestsResetForAllPlayersCall) Fields(s ...googleapi.Field) *QuestsResetForAllPlayersCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// QuestsResetForAllPlayersCallDoer makes it easy to provide your own testable version of Do.
+type QuestsResetForAllPlayersCallDoer interface {
+	Do() error
 }
 
 func (c *QuestsResetForAllPlayersCall) Do() error {
@@ -1596,6 +1681,11 @@ func (c *QuestsResetMultipleForAllPlayersCall) Fields(s ...googleapi.Field) *Que
 	return c
 }
 
+// QuestsResetMultipleForAllPlayersCallDoer makes it easy to provide your own testable version of Do.
+type QuestsResetMultipleForAllPlayersCallDoer interface {
+	Do() error
+}
+
 func (c *QuestsResetMultipleForAllPlayersCall) Do() error {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.questsresetmultipleforallrequest)
@@ -1662,6 +1752,11 @@ func (c *RoomsResetCall) Fields(s ...googleapi.Field) *RoomsResetCall {
 	return c
 }
 
+// RoomsResetCallDoer makes it easy to provide your own testable version of Do.
+type RoomsResetCallDoer interface {
+	Do() error
+}
+
 func (c *RoomsResetCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1717,6 +1812,11 @@ func (r *RoomsService) ResetForAllPlayers() *RoomsResetForAllPlayersCall {
 func (c *RoomsResetForAllPlayersCall) Fields(s ...googleapi.Field) *RoomsResetForAllPlayersCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// RoomsResetForAllPlayersCallDoer makes it easy to provide your own testable version of Do.
+type RoomsResetForAllPlayersCallDoer interface {
+	Do() error
 }
 
 func (c *RoomsResetForAllPlayersCall) Do() error {
@@ -1776,6 +1876,11 @@ func (r *ScoresService) Reset(leaderboardId string) *ScoresResetCall {
 func (c *ScoresResetCall) Fields(s ...googleapi.Field) *ScoresResetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ScoresResetCallDoer makes it easy to provide your own testable version of Do.
+type ScoresResetCallDoer interface {
+	Do() (*PlayerScoreResetResponse, error)
 }
 
 func (c *ScoresResetCall) Do() (*PlayerScoreResetResponse, error) {
@@ -1855,6 +1960,11 @@ func (c *ScoresResetAllCall) Fields(s ...googleapi.Field) *ScoresResetAllCall {
 	return c
 }
 
+// ScoresResetAllCallDoer makes it easy to provide your own testable version of Do.
+type ScoresResetAllCallDoer interface {
+	Do() (*PlayerScoreResetAllResponse, error)
+}
+
 func (c *ScoresResetAllCall) Do() (*PlayerScoreResetAllResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1919,6 +2029,11 @@ func (c *ScoresResetAllForAllPlayersCall) Fields(s ...googleapi.Field) *ScoresRe
 	return c
 }
 
+// ScoresResetAllForAllPlayersCallDoer makes it easy to provide your own testable version of Do.
+type ScoresResetAllForAllPlayersCallDoer interface {
+	Do() error
+}
+
 func (c *ScoresResetAllForAllPlayersCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1976,6 +2091,11 @@ func (r *ScoresService) ResetForAllPlayers(leaderboardId string) *ScoresResetFor
 func (c *ScoresResetForAllPlayersCall) Fields(s ...googleapi.Field) *ScoresResetForAllPlayersCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ScoresResetForAllPlayersCallDoer makes it easy to provide your own testable version of Do.
+type ScoresResetForAllPlayersCallDoer interface {
+	Do() error
 }
 
 func (c *ScoresResetForAllPlayersCall) Do() error {
@@ -2051,6 +2171,11 @@ func (c *ScoresResetMultipleForAllPlayersCall) Fields(s ...googleapi.Field) *Sco
 	return c
 }
 
+// ScoresResetMultipleForAllPlayersCallDoer makes it easy to provide your own testable version of Do.
+type ScoresResetMultipleForAllPlayersCallDoer interface {
+	Do() error
+}
+
 func (c *ScoresResetMultipleForAllPlayersCall) Do() error {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.scoresresetmultipleforallrequest)
@@ -2116,6 +2241,11 @@ func (c *TurnBasedMatchesResetCall) Fields(s ...googleapi.Field) *TurnBasedMatch
 	return c
 }
 
+// TurnBasedMatchesResetCallDoer makes it easy to provide your own testable version of Do.
+type TurnBasedMatchesResetCallDoer interface {
+	Do() error
+}
+
 func (c *TurnBasedMatchesResetCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2172,6 +2302,11 @@ func (r *TurnBasedMatchesService) ResetForAllPlayers() *TurnBasedMatchesResetFor
 func (c *TurnBasedMatchesResetForAllPlayersCall) Fields(s ...googleapi.Field) *TurnBasedMatchesResetForAllPlayersCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// TurnBasedMatchesResetForAllPlayersCallDoer makes it easy to provide your own testable version of Do.
+type TurnBasedMatchesResetForAllPlayersCallDoer interface {
+	Do() error
 }
 
 func (c *TurnBasedMatchesResetForAllPlayersCall) Do() error {

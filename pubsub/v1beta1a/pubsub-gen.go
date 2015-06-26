@@ -355,6 +355,11 @@ func (c *SubscriptionsAcknowledgeCall) Fields(s ...googleapi.Field) *Subscriptio
 	return c
 }
 
+// SubscriptionsAcknowledgeCallDoer makes it easy to provide your own testable version of Do.
+type SubscriptionsAcknowledgeCallDoer interface {
+	Do() (*Empty, error)
+}
+
 func (c *SubscriptionsAcknowledgeCall) Do() (*Empty, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.acknowledgerequest)
@@ -433,6 +438,11 @@ func (c *SubscriptionsCreateCall) Fields(s ...googleapi.Field) *SubscriptionsCre
 	return c
 }
 
+// SubscriptionsCreateCallDoer makes it easy to provide your own testable version of Do.
+type SubscriptionsCreateCallDoer interface {
+	Do() (*Subscription, error)
+}
+
 func (c *SubscriptionsCreateCall) Do() (*Subscription, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.subscription)
@@ -506,6 +516,11 @@ func (r *SubscriptionsService) Delete(subscription string) *SubscriptionsDeleteC
 func (c *SubscriptionsDeleteCall) Fields(s ...googleapi.Field) *SubscriptionsDeleteCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// SubscriptionsDeleteCallDoer makes it easy to provide your own testable version of Do.
+type SubscriptionsDeleteCallDoer interface {
+	Do() (*Empty, error)
 }
 
 func (c *SubscriptionsDeleteCall) Do() (*Empty, error) {
@@ -584,6 +599,11 @@ func (r *SubscriptionsService) Get(subscription string) *SubscriptionsGetCall {
 func (c *SubscriptionsGetCall) Fields(s ...googleapi.Field) *SubscriptionsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// SubscriptionsGetCallDoer makes it easy to provide your own testable version of Do.
+type SubscriptionsGetCallDoer interface {
+	Do() (*Subscription, error)
 }
 
 func (c *SubscriptionsGetCall) Do() (*Subscription, error) {
@@ -683,6 +703,11 @@ func (c *SubscriptionsListCall) Fields(s ...googleapi.Field) *SubscriptionsListC
 	return c
 }
 
+// SubscriptionsListCallDoer makes it easy to provide your own testable version of Do.
+type SubscriptionsListCallDoer interface {
+	Do() (*ListSubscriptionsResponse, error)
+}
+
 func (c *SubscriptionsListCall) Do() (*ListSubscriptionsResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -775,6 +800,11 @@ func (c *SubscriptionsModifyAckDeadlineCall) Fields(s ...googleapi.Field) *Subsc
 	return c
 }
 
+// SubscriptionsModifyAckDeadlineCallDoer makes it easy to provide your own testable version of Do.
+type SubscriptionsModifyAckDeadlineCallDoer interface {
+	Do() (*Empty, error)
+}
+
 func (c *SubscriptionsModifyAckDeadlineCall) Do() (*Empty, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.modifyackdeadlinerequest)
@@ -850,6 +880,11 @@ func (r *SubscriptionsService) ModifyPushConfig(modifypushconfigrequest *ModifyP
 func (c *SubscriptionsModifyPushConfigCall) Fields(s ...googleapi.Field) *SubscriptionsModifyPushConfigCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// SubscriptionsModifyPushConfigCallDoer makes it easy to provide your own testable version of Do.
+type SubscriptionsModifyPushConfigCallDoer interface {
+	Do() (*Empty, error)
 }
 
 func (c *SubscriptionsModifyPushConfigCall) Do() (*Empty, error) {
@@ -929,6 +964,11 @@ func (c *SubscriptionsPullCall) Fields(s ...googleapi.Field) *SubscriptionsPullC
 	return c
 }
 
+// SubscriptionsPullCallDoer makes it easy to provide your own testable version of Do.
+type SubscriptionsPullCallDoer interface {
+	Do() (*PullResponse, error)
+}
+
 func (c *SubscriptionsPullCall) Do() (*PullResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.pullrequest)
@@ -1005,6 +1045,11 @@ func (c *SubscriptionsPullBatchCall) Fields(s ...googleapi.Field) *Subscriptions
 	return c
 }
 
+// SubscriptionsPullBatchCallDoer makes it easy to provide your own testable version of Do.
+type SubscriptionsPullBatchCallDoer interface {
+	Do() (*PullBatchResponse, error)
+}
+
 func (c *SubscriptionsPullBatchCall) Do() (*PullBatchResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.pullbatchrequest)
@@ -1076,6 +1121,11 @@ func (r *TopicsService) Create(topic *Topic) *TopicsCreateCall {
 func (c *TopicsCreateCall) Fields(s ...googleapi.Field) *TopicsCreateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// TopicsCreateCallDoer makes it easy to provide your own testable version of Do.
+type TopicsCreateCallDoer interface {
+	Do() (*Topic, error)
 }
 
 func (c *TopicsCreateCall) Do() (*Topic, error) {
@@ -1151,6 +1201,11 @@ func (r *TopicsService) Delete(topic string) *TopicsDeleteCall {
 func (c *TopicsDeleteCall) Fields(s ...googleapi.Field) *TopicsDeleteCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// TopicsDeleteCallDoer makes it easy to provide your own testable version of Do.
+type TopicsDeleteCallDoer interface {
+	Do() (*Empty, error)
 }
 
 func (c *TopicsDeleteCall) Do() (*Empty, error) {
@@ -1232,6 +1287,11 @@ func (r *TopicsService) Get(topic string) *TopicsGetCall {
 func (c *TopicsGetCall) Fields(s ...googleapi.Field) *TopicsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// TopicsGetCallDoer makes it easy to provide your own testable version of Do.
+type TopicsGetCallDoer interface {
+	Do() (*Topic, error)
 }
 
 func (c *TopicsGetCall) Do() (*Topic, error) {
@@ -1331,6 +1391,11 @@ func (c *TopicsListCall) Fields(s ...googleapi.Field) *TopicsListCall {
 	return c
 }
 
+// TopicsListCallDoer makes it easy to provide your own testable version of Do.
+type TopicsListCallDoer interface {
+	Do() (*ListTopicsResponse, error)
+}
+
 func (c *TopicsListCall) Do() (*ListTopicsResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1423,6 +1488,11 @@ func (c *TopicsPublishCall) Fields(s ...googleapi.Field) *TopicsPublishCall {
 	return c
 }
 
+// TopicsPublishCallDoer makes it easy to provide your own testable version of Do.
+type TopicsPublishCallDoer interface {
+	Do() (*Empty, error)
+}
+
 func (c *TopicsPublishCall) Do() (*Empty, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.publishrequest)
@@ -1495,6 +1565,11 @@ func (r *TopicsService) PublishBatch(publishbatchrequest *PublishBatchRequest) *
 func (c *TopicsPublishBatchCall) Fields(s ...googleapi.Field) *TopicsPublishBatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// TopicsPublishBatchCallDoer makes it easy to provide your own testable version of Do.
+type TopicsPublishBatchCallDoer interface {
+	Do() (*PublishBatchResponse, error)
 }
 
 func (c *TopicsPublishBatchCall) Do() (*PublishBatchResponse, error) {

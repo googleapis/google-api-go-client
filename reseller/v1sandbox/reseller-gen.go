@@ -317,6 +317,11 @@ func (c *CustomersGetCall) Fields(s ...googleapi.Field) *CustomersGetCall {
 	return c
 }
 
+// CustomersGetCallDoer makes it easy to provide your own testable version of Do.
+type CustomersGetCallDoer interface {
+	Do() (*Customer, error)
+}
+
 func (c *CustomersGetCall) Do() (*Customer, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -403,6 +408,11 @@ func (c *CustomersInsertCall) Fields(s ...googleapi.Field) *CustomersInsertCall 
 	return c
 }
 
+// CustomersInsertCallDoer makes it easy to provide your own testable version of Do.
+type CustomersInsertCallDoer interface {
+	Do() (*Customer, error)
+}
+
 func (c *CustomersInsertCall) Do() (*Customer, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.customer)
@@ -486,6 +496,11 @@ func (r *CustomersService) Patch(customerId string, customer *Customer) *Custome
 func (c *CustomersPatchCall) Fields(s ...googleapi.Field) *CustomersPatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// CustomersPatchCallDoer makes it easy to provide your own testable version of Do.
+type CustomersPatchCallDoer interface {
+	Do() (*Customer, error)
 }
 
 func (c *CustomersPatchCall) Do() (*Customer, error) {
@@ -576,6 +591,11 @@ func (c *CustomersUpdateCall) Fields(s ...googleapi.Field) *CustomersUpdateCall 
 	return c
 }
 
+// CustomersUpdateCallDoer makes it easy to provide your own testable version of Do.
+type CustomersUpdateCallDoer interface {
+	Do() (*Customer, error)
+}
+
 func (c *CustomersUpdateCall) Do() (*Customer, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.customer)
@@ -664,6 +684,11 @@ func (c *SubscriptionsActivateCall) Fields(s ...googleapi.Field) *SubscriptionsA
 	return c
 }
 
+// SubscriptionsActivateCallDoer makes it easy to provide your own testable version of Do.
+type SubscriptionsActivateCallDoer interface {
+	Do() (*Subscription, error)
+}
+
 func (c *SubscriptionsActivateCall) Do() (*Subscription, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -750,6 +775,11 @@ func (r *SubscriptionsService) ChangePlan(customerId string, subscriptionId stri
 func (c *SubscriptionsChangePlanCall) Fields(s ...googleapi.Field) *SubscriptionsChangePlanCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// SubscriptionsChangePlanCallDoer makes it easy to provide your own testable version of Do.
+type SubscriptionsChangePlanCallDoer interface {
+	Do() (*Subscription, error)
 }
 
 func (c *SubscriptionsChangePlanCall) Do() (*Subscription, error) {
@@ -849,6 +879,11 @@ func (c *SubscriptionsChangeRenewalSettingsCall) Fields(s ...googleapi.Field) *S
 	return c
 }
 
+// SubscriptionsChangeRenewalSettingsCallDoer makes it easy to provide your own testable version of Do.
+type SubscriptionsChangeRenewalSettingsCallDoer interface {
+	Do() (*Subscription, error)
+}
+
 func (c *SubscriptionsChangeRenewalSettingsCall) Do() (*Subscription, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.renewalsettings)
@@ -946,6 +981,11 @@ func (c *SubscriptionsChangeSeatsCall) Fields(s ...googleapi.Field) *Subscriptio
 	return c
 }
 
+// SubscriptionsChangeSeatsCallDoer makes it easy to provide your own testable version of Do.
+type SubscriptionsChangeSeatsCallDoer interface {
+	Do() (*Subscription, error)
+}
+
 func (c *SubscriptionsChangeSeatsCall) Do() (*Subscription, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.seats)
@@ -1041,6 +1081,11 @@ func (r *SubscriptionsService) Delete(customerId string, subscriptionId string, 
 func (c *SubscriptionsDeleteCall) Fields(s ...googleapi.Field) *SubscriptionsDeleteCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// SubscriptionsDeleteCallDoer makes it easy to provide your own testable version of Do.
+type SubscriptionsDeleteCallDoer interface {
+	Do() error
 }
 
 func (c *SubscriptionsDeleteCall) Do() error {
@@ -1142,6 +1187,11 @@ func (c *SubscriptionsGetCall) Fields(s ...googleapi.Field) *SubscriptionsGetCal
 	return c
 }
 
+// SubscriptionsGetCallDoer makes it easy to provide your own testable version of Do.
+type SubscriptionsGetCallDoer interface {
+	Do() (*Subscription, error)
+}
+
 func (c *SubscriptionsGetCall) Do() (*Subscription, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1235,6 +1285,11 @@ func (c *SubscriptionsInsertCall) CustomerAuthToken(customerAuthToken string) *S
 func (c *SubscriptionsInsertCall) Fields(s ...googleapi.Field) *SubscriptionsInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// SubscriptionsInsertCallDoer makes it easy to provide your own testable version of Do.
+type SubscriptionsInsertCallDoer interface {
+	Do() (*Subscription, error)
 }
 
 func (c *SubscriptionsInsertCall) Do() (*Subscription, error) {
@@ -1367,6 +1422,11 @@ func (c *SubscriptionsListCall) Fields(s ...googleapi.Field) *SubscriptionsListC
 	return c
 }
 
+// SubscriptionsListCallDoer makes it easy to provide your own testable version of Do.
+type SubscriptionsListCallDoer interface {
+	Do() (*Subscriptions, error)
+}
+
 func (c *SubscriptionsListCall) Do() (*Subscriptions, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1478,6 +1538,11 @@ func (c *SubscriptionsStartPaidServiceCall) Fields(s ...googleapi.Field) *Subscr
 	return c
 }
 
+// SubscriptionsStartPaidServiceCallDoer makes it easy to provide your own testable version of Do.
+type SubscriptionsStartPaidServiceCallDoer interface {
+	Do() (*Subscription, error)
+}
+
 func (c *SubscriptionsStartPaidServiceCall) Do() (*Subscription, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1562,6 +1627,11 @@ func (r *SubscriptionsService) Suspend(customerId string, subscriptionId string)
 func (c *SubscriptionsSuspendCall) Fields(s ...googleapi.Field) *SubscriptionsSuspendCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// SubscriptionsSuspendCallDoer makes it easy to provide your own testable version of Do.
+type SubscriptionsSuspendCallDoer interface {
+	Do() (*Subscription, error)
 }
 
 func (c *SubscriptionsSuspendCall) Do() (*Subscription, error) {

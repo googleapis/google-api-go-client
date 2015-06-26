@@ -351,6 +351,11 @@ func (c *PagespeedapiRunpagespeedCall) Fields(s ...googleapi.Field) *Pagespeedap
 	return c
 }
 
+// PagespeedapiRunpagespeedCallDoer makes it easy to provide your own testable version of Do.
+type PagespeedapiRunpagespeedCallDoer interface {
+	Do() (*Result, error)
+}
+
 func (c *PagespeedapiRunpagespeedCall) Do() (*Result, error) {
 	var body io.Reader = nil
 	params := make(url.Values)

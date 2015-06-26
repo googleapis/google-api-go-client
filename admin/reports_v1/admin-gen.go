@@ -430,6 +430,11 @@ func (c *ActivitiesListCall) Fields(s ...googleapi.Field) *ActivitiesListCall {
 	return c
 }
 
+// ActivitiesListCallDoer makes it easy to provide your own testable version of Do.
+type ActivitiesListCallDoer interface {
+	Do() (*Activities, error)
+}
+
 func (c *ActivitiesListCall) Do() (*Activities, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -649,6 +654,11 @@ func (c *ActivitiesWatchCall) Fields(s ...googleapi.Field) *ActivitiesWatchCall 
 	return c
 }
 
+// ActivitiesWatchCallDoer makes it easy to provide your own testable version of Do.
+type ActivitiesWatchCallDoer interface {
+	Do() (*Channel, error)
+}
+
 func (c *ActivitiesWatchCall) Do() (*Channel, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channel)
@@ -816,6 +826,11 @@ func (c *ChannelsStopCall) Fields(s ...googleapi.Field) *ChannelsStopCall {
 	return c
 }
 
+// ChannelsStopCallDoer makes it easy to provide your own testable version of Do.
+type ChannelsStopCallDoer interface {
+	Do() error
+}
+
 func (c *ChannelsStopCall) Do() error {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channel)
@@ -903,6 +918,11 @@ func (c *CustomerUsageReportsGetCall) Parameters(parameters string) *CustomerUsa
 func (c *CustomerUsageReportsGetCall) Fields(s ...googleapi.Field) *CustomerUsageReportsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// CustomerUsageReportsGetCallDoer makes it easy to provide your own testable version of Do.
+type CustomerUsageReportsGetCallDoer interface {
+	Do() (*UsageReports, error)
 }
 
 func (c *CustomerUsageReportsGetCall) Do() (*UsageReports, error) {
@@ -1045,6 +1065,11 @@ func (c *UserUsageReportGetCall) Parameters(parameters string) *UserUsageReportG
 func (c *UserUsageReportGetCall) Fields(s ...googleapi.Field) *UserUsageReportGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// UserUsageReportGetCallDoer makes it easy to provide your own testable version of Do.
+type UserUsageReportGetCallDoer interface {
+	Do() (*UsageReports, error)
 }
 
 func (c *UserUsageReportGetCall) Do() (*UsageReports, error) {

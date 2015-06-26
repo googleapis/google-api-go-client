@@ -303,6 +303,11 @@ func (c *AccountsGetCall) Fields(s ...googleapi.Field) *AccountsGetCall {
 	return c
 }
 
+// AccountsGetCallDoer makes it easy to provide your own testable version of Do.
+type AccountsGetCallDoer interface {
+	Do() (*Account, error)
+}
+
 func (c *AccountsGetCall) Do() (*Account, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -378,6 +383,11 @@ func (c *AccountsListCall) Fields(s ...googleapi.Field) *AccountsListCall {
 	return c
 }
 
+// AccountsListCallDoer makes it easy to provide your own testable version of Do.
+type AccountsListCallDoer interface {
+	Do() (*AccountsList, error)
+}
+
 func (c *AccountsListCall) Do() (*AccountsList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -442,6 +452,11 @@ func (r *AccountsService) Patch(id int64, account *Account) *AccountsPatchCall {
 func (c *AccountsPatchCall) Fields(s ...googleapi.Field) *AccountsPatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// AccountsPatchCallDoer makes it easy to provide your own testable version of Do.
+type AccountsPatchCallDoer interface {
+	Do() (*Account, error)
 }
 
 func (c *AccountsPatchCall) Do() (*Account, error) {
@@ -530,6 +545,11 @@ func (r *AccountsService) Update(id int64, account *Account) *AccountsUpdateCall
 func (c *AccountsUpdateCall) Fields(s ...googleapi.Field) *AccountsUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// AccountsUpdateCallDoer makes it easy to provide your own testable version of Do.
+type AccountsUpdateCallDoer interface {
+	Do() (*Account, error)
 }
 
 func (c *AccountsUpdateCall) Do() (*Account, error) {
@@ -621,6 +641,11 @@ func (c *CreativesGetCall) Fields(s ...googleapi.Field) *CreativesGetCall {
 	return c
 }
 
+// CreativesGetCallDoer makes it easy to provide your own testable version of Do.
+type CreativesGetCallDoer interface {
+	Do() (*Creative, error)
+}
+
 func (c *CreativesGetCall) Do() (*Creative, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -704,6 +729,11 @@ func (r *CreativesService) Insert(creative *Creative) *CreativesInsertCall {
 func (c *CreativesInsertCall) Fields(s ...googleapi.Field) *CreativesInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// CreativesInsertCallDoer makes it easy to provide your own testable version of Do.
+type CreativesInsertCallDoer interface {
+	Do() (*Creative, error)
 }
 
 func (c *CreativesInsertCall) Do() (*Creative, error) {
@@ -804,6 +834,11 @@ func (c *CreativesListCall) StatusFilter(statusFilter string) *CreativesListCall
 func (c *CreativesListCall) Fields(s ...googleapi.Field) *CreativesListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// CreativesListCallDoer makes it easy to provide your own testable version of Do.
+type CreativesListCallDoer interface {
+	Do() (*CreativesList, error)
 }
 
 func (c *CreativesListCall) Do() (*CreativesList, error) {

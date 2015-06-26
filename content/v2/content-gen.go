@@ -1770,6 +1770,11 @@ func (c *AccountsAuthinfoCall) Fields(s ...googleapi.Field) *AccountsAuthinfoCal
 	return c
 }
 
+// AccountsAuthinfoCallDoer makes it easy to provide your own testable version of Do.
+type AccountsAuthinfoCallDoer interface {
+	Do() (*AccountsAuthInfoResponse, error)
+}
+
 func (c *AccountsAuthinfoCall) Do() (*AccountsAuthInfoResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1832,6 +1837,11 @@ func (r *AccountsService) Custombatch(accountscustombatchrequest *AccountsCustom
 func (c *AccountsCustombatchCall) Fields(s ...googleapi.Field) *AccountsCustombatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// AccountsCustombatchCallDoer makes it easy to provide your own testable version of Do.
+type AccountsCustombatchCallDoer interface {
+	Do() (*AccountsCustomBatchResponse, error)
 }
 
 func (c *AccountsCustombatchCall) Do() (*AccountsCustomBatchResponse, error) {
@@ -1906,6 +1916,11 @@ func (r *AccountsService) Delete(merchantId uint64, accountId uint64) *AccountsD
 func (c *AccountsDeleteCall) Fields(s ...googleapi.Field) *AccountsDeleteCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// AccountsDeleteCallDoer makes it easy to provide your own testable version of Do.
+type AccountsDeleteCallDoer interface {
+	Do() error
 }
 
 func (c *AccountsDeleteCall) Do() error {
@@ -1987,6 +2002,11 @@ func (r *AccountsService) Get(merchantId uint64, accountId uint64) *AccountsGetC
 func (c *AccountsGetCall) Fields(s ...googleapi.Field) *AccountsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// AccountsGetCallDoer makes it easy to provide your own testable version of Do.
+type AccountsGetCallDoer interface {
+	Do() (*Account, error)
 }
 
 func (c *AccountsGetCall) Do() (*Account, error) {
@@ -2075,6 +2095,11 @@ func (r *AccountsService) Insert(merchantId uint64, account *Account) *AccountsI
 func (c *AccountsInsertCall) Fields(s ...googleapi.Field) *AccountsInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// AccountsInsertCallDoer makes it easy to provide your own testable version of Do.
+type AccountsInsertCallDoer interface {
+	Do() (*Account, error)
 }
 
 func (c *AccountsInsertCall) Do() (*Account, error) {
@@ -2177,6 +2202,11 @@ func (c *AccountsListCall) Fields(s ...googleapi.Field) *AccountsListCall {
 	return c
 }
 
+// AccountsListCallDoer makes it easy to provide your own testable version of Do.
+type AccountsListCallDoer interface {
+	Do() (*AccountsListResponse, error)
+}
+
 func (c *AccountsListCall) Do() (*AccountsListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2276,6 +2306,11 @@ func (c *AccountsPatchCall) Fields(s ...googleapi.Field) *AccountsPatchCall {
 	return c
 }
 
+// AccountsPatchCallDoer makes it easy to provide your own testable version of Do.
+type AccountsPatchCallDoer interface {
+	Do() (*Account, error)
+}
+
 func (c *AccountsPatchCall) Do() (*Account, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.account)
@@ -2373,6 +2408,11 @@ func (r *AccountsService) Update(merchantId uint64, accountId uint64, account *A
 func (c *AccountsUpdateCall) Fields(s ...googleapi.Field) *AccountsUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// AccountsUpdateCallDoer makes it easy to provide your own testable version of Do.
+type AccountsUpdateCallDoer interface {
+	Do() (*Account, error)
 }
 
 func (c *AccountsUpdateCall) Do() (*Account, error) {
@@ -2478,6 +2518,11 @@ func (c *AccountshippingCustombatchCall) Fields(s ...googleapi.Field) *Accountsh
 	return c
 }
 
+// AccountshippingCustombatchCallDoer makes it easy to provide your own testable version of Do.
+type AccountshippingCustombatchCallDoer interface {
+	Do() (*AccountshippingCustomBatchResponse, error)
+}
+
 func (c *AccountshippingCustombatchCall) Do() (*AccountshippingCustomBatchResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.accountshippingcustombatchrequest)
@@ -2560,6 +2605,11 @@ func (r *AccountshippingService) Get(merchantId uint64, accountId uint64) *Accou
 func (c *AccountshippingGetCall) Fields(s ...googleapi.Field) *AccountshippingGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// AccountshippingGetCallDoer makes it easy to provide your own testable version of Do.
+type AccountshippingGetCallDoer interface {
+	Do() (*AccountShipping, error)
 }
 
 func (c *AccountshippingGetCall) Do() (*AccountShipping, error) {
@@ -2662,6 +2712,11 @@ func (c *AccountshippingListCall) PageToken(pageToken string) *AccountshippingLi
 func (c *AccountshippingListCall) Fields(s ...googleapi.Field) *AccountshippingListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// AccountshippingListCallDoer makes it easy to provide your own testable version of Do.
+type AccountshippingListCallDoer interface {
+	Do() (*AccountshippingListResponse, error)
 }
 
 func (c *AccountshippingListCall) Do() (*AccountshippingListResponse, error) {
@@ -2768,6 +2823,11 @@ func (c *AccountshippingPatchCall) DryRun(dryRun bool) *AccountshippingPatchCall
 func (c *AccountshippingPatchCall) Fields(s ...googleapi.Field) *AccountshippingPatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// AccountshippingPatchCallDoer makes it easy to provide your own testable version of Do.
+type AccountshippingPatchCallDoer interface {
+	Do() (*AccountShipping, error)
 }
 
 func (c *AccountshippingPatchCall) Do() (*AccountShipping, error) {
@@ -2884,6 +2944,11 @@ func (c *AccountshippingUpdateCall) Fields(s ...googleapi.Field) *Accountshippin
 	return c
 }
 
+// AccountshippingUpdateCallDoer makes it easy to provide your own testable version of Do.
+type AccountshippingUpdateCallDoer interface {
+	Do() (*AccountShipping, error)
+}
+
 func (c *AccountshippingUpdateCall) Do() (*AccountShipping, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.accountshipping)
@@ -2987,6 +3052,11 @@ func (c *AccountstatusesCustombatchCall) Fields(s ...googleapi.Field) *Accountst
 	return c
 }
 
+// AccountstatusesCustombatchCallDoer makes it easy to provide your own testable version of Do.
+type AccountstatusesCustombatchCallDoer interface {
+	Do() (*AccountstatusesCustomBatchResponse, error)
+}
+
 func (c *AccountstatusesCustombatchCall) Do() (*AccountstatusesCustomBatchResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.accountstatusescustombatchrequest)
@@ -3058,6 +3128,11 @@ func (r *AccountstatusesService) Get(merchantId uint64, accountId uint64) *Accou
 func (c *AccountstatusesGetCall) Fields(s ...googleapi.Field) *AccountstatusesGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// AccountstatusesGetCallDoer makes it easy to provide your own testable version of Do.
+type AccountstatusesGetCallDoer interface {
+	Do() (*AccountStatus, error)
 }
 
 func (c *AccountstatusesGetCall) Do() (*AccountStatus, error) {
@@ -3162,6 +3237,11 @@ func (c *AccountstatusesListCall) Fields(s ...googleapi.Field) *AccountstatusesL
 	return c
 }
 
+// AccountstatusesListCallDoer makes it easy to provide your own testable version of Do.
+type AccountstatusesListCallDoer interface {
+	Do() (*AccountstatusesListResponse, error)
+}
+
 func (c *AccountstatusesListCall) Do() (*AccountstatusesListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3264,6 +3344,11 @@ func (c *AccounttaxCustombatchCall) Fields(s ...googleapi.Field) *AccounttaxCust
 	return c
 }
 
+// AccounttaxCustombatchCallDoer makes it easy to provide your own testable version of Do.
+type AccounttaxCustombatchCallDoer interface {
+	Do() (*AccounttaxCustomBatchResponse, error)
+}
+
 func (c *AccounttaxCustombatchCall) Do() (*AccounttaxCustomBatchResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.accounttaxcustombatchrequest)
@@ -3346,6 +3431,11 @@ func (r *AccounttaxService) Get(merchantId uint64, accountId uint64) *Accounttax
 func (c *AccounttaxGetCall) Fields(s ...googleapi.Field) *AccounttaxGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// AccounttaxGetCallDoer makes it easy to provide your own testable version of Do.
+type AccounttaxGetCallDoer interface {
+	Do() (*AccountTax, error)
 }
 
 func (c *AccounttaxGetCall) Do() (*AccountTax, error) {
@@ -3447,6 +3537,11 @@ func (c *AccounttaxListCall) PageToken(pageToken string) *AccounttaxListCall {
 func (c *AccounttaxListCall) Fields(s ...googleapi.Field) *AccounttaxListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// AccounttaxListCallDoer makes it easy to provide your own testable version of Do.
+type AccounttaxListCallDoer interface {
+	Do() (*AccounttaxListResponse, error)
 }
 
 func (c *AccounttaxListCall) Do() (*AccounttaxListResponse, error) {
@@ -3553,6 +3648,11 @@ func (c *AccounttaxPatchCall) DryRun(dryRun bool) *AccounttaxPatchCall {
 func (c *AccounttaxPatchCall) Fields(s ...googleapi.Field) *AccounttaxPatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// AccounttaxPatchCallDoer makes it easy to provide your own testable version of Do.
+type AccounttaxPatchCallDoer interface {
+	Do() (*AccountTax, error)
 }
 
 func (c *AccounttaxPatchCall) Do() (*AccountTax, error) {
@@ -3669,6 +3769,11 @@ func (c *AccounttaxUpdateCall) Fields(s ...googleapi.Field) *AccounttaxUpdateCal
 	return c
 }
 
+// AccounttaxUpdateCallDoer makes it easy to provide your own testable version of Do.
+type AccounttaxUpdateCallDoer interface {
+	Do() (*AccountTax, error)
+}
+
 func (c *AccounttaxUpdateCall) Do() (*AccountTax, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.accounttax)
@@ -3772,6 +3877,11 @@ func (c *DatafeedsCustombatchCall) Fields(s ...googleapi.Field) *DatafeedsCustom
 	return c
 }
 
+// DatafeedsCustombatchCallDoer makes it easy to provide your own testable version of Do.
+type DatafeedsCustombatchCallDoer interface {
+	Do() (*DatafeedsCustomBatchResponse, error)
+}
+
 func (c *DatafeedsCustombatchCall) Do() (*DatafeedsCustomBatchResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.datafeedscustombatchrequest)
@@ -3843,6 +3953,11 @@ func (r *DatafeedsService) Delete(merchantId uint64, datafeedId uint64) *Datafee
 func (c *DatafeedsDeleteCall) Fields(s ...googleapi.Field) *DatafeedsDeleteCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// DatafeedsDeleteCallDoer makes it easy to provide your own testable version of Do.
+type DatafeedsDeleteCallDoer interface {
+	Do() error
 }
 
 func (c *DatafeedsDeleteCall) Do() error {
@@ -3922,6 +4037,11 @@ func (r *DatafeedsService) Get(merchantId uint64, datafeedId uint64) *DatafeedsG
 func (c *DatafeedsGetCall) Fields(s ...googleapi.Field) *DatafeedsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// DatafeedsGetCallDoer makes it easy to provide your own testable version of Do.
+type DatafeedsGetCallDoer interface {
+	Do() (*Datafeed, error)
 }
 
 func (c *DatafeedsGetCall) Do() (*Datafeed, error) {
@@ -4008,6 +4128,11 @@ func (r *DatafeedsService) Insert(merchantId uint64, datafeed *Datafeed) *Datafe
 func (c *DatafeedsInsertCall) Fields(s ...googleapi.Field) *DatafeedsInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// DatafeedsInsertCallDoer makes it easy to provide your own testable version of Do.
+type DatafeedsInsertCallDoer interface {
+	Do() (*Datafeed, error)
 }
 
 func (c *DatafeedsInsertCall) Do() (*Datafeed, error) {
@@ -4109,6 +4234,11 @@ func (c *DatafeedsListCall) Fields(s ...googleapi.Field) *DatafeedsListCall {
 	return c
 }
 
+// DatafeedsListCallDoer makes it easy to provide your own testable version of Do.
+type DatafeedsListCallDoer interface {
+	Do() (*DatafeedsListResponse, error)
+}
+
 func (c *DatafeedsListCall) Do() (*DatafeedsListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4208,6 +4338,11 @@ func (c *DatafeedsPatchCall) Fields(s ...googleapi.Field) *DatafeedsPatchCall {
 	return c
 }
 
+// DatafeedsPatchCallDoer makes it easy to provide your own testable version of Do.
+type DatafeedsPatchCallDoer interface {
+	Do() (*Datafeed, error)
+}
+
 func (c *DatafeedsPatchCall) Do() (*Datafeed, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.datafeed)
@@ -4305,6 +4440,11 @@ func (c *DatafeedsUpdateCall) Fields(s ...googleapi.Field) *DatafeedsUpdateCall 
 	return c
 }
 
+// DatafeedsUpdateCallDoer makes it easy to provide your own testable version of Do.
+type DatafeedsUpdateCallDoer interface {
+	Do() (*Datafeed, error)
+}
+
 func (c *DatafeedsUpdateCall) Do() (*Datafeed, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.datafeed)
@@ -4398,6 +4538,11 @@ func (c *DatafeedstatusesCustombatchCall) Fields(s ...googleapi.Field) *Datafeed
 	return c
 }
 
+// DatafeedstatusesCustombatchCallDoer makes it easy to provide your own testable version of Do.
+type DatafeedstatusesCustombatchCallDoer interface {
+	Do() (*DatafeedstatusesCustomBatchResponse, error)
+}
+
 func (c *DatafeedstatusesCustombatchCall) Do() (*DatafeedstatusesCustomBatchResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.datafeedstatusescustombatchrequest)
@@ -4470,6 +4615,11 @@ func (r *DatafeedstatusesService) Get(merchantId uint64, datafeedId uint64) *Dat
 func (c *DatafeedstatusesGetCall) Fields(s ...googleapi.Field) *DatafeedstatusesGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// DatafeedstatusesGetCallDoer makes it easy to provide your own testable version of Do.
+type DatafeedstatusesGetCallDoer interface {
+	Do() (*DatafeedStatus, error)
 }
 
 func (c *DatafeedstatusesGetCall) Do() (*DatafeedStatus, error) {
@@ -4571,6 +4721,11 @@ func (c *DatafeedstatusesListCall) Fields(s ...googleapi.Field) *Datafeedstatuse
 	return c
 }
 
+// DatafeedstatusesListCallDoer makes it easy to provide your own testable version of Do.
+type DatafeedstatusesListCallDoer interface {
+	Do() (*DatafeedstatusesListResponse, error)
+}
+
 func (c *DatafeedstatusesListCall) Do() (*DatafeedstatusesListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4666,6 +4821,11 @@ func (c *InventoryCustombatchCall) Fields(s ...googleapi.Field) *InventoryCustom
 	return c
 }
 
+// InventoryCustombatchCallDoer makes it easy to provide your own testable version of Do.
+type InventoryCustombatchCallDoer interface {
+	Do() (*InventoryCustomBatchResponse, error)
+}
+
 func (c *InventoryCustombatchCall) Do() (*InventoryCustomBatchResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.inventorycustombatchrequest)
@@ -4743,6 +4903,11 @@ func (r *InventoryService) Set(merchantId uint64, storeCode string, productId st
 func (c *InventorySetCall) Fields(s ...googleapi.Field) *InventorySetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// InventorySetCallDoer makes it easy to provide your own testable version of Do.
+type InventorySetCallDoer interface {
+	Do() (*InventorySetResponse, error)
 }
 
 func (c *InventorySetCall) Do() (*InventorySetResponse, error) {
@@ -4855,6 +5020,11 @@ func (c *ProductsCustombatchCall) Fields(s ...googleapi.Field) *ProductsCustomba
 	return c
 }
 
+// ProductsCustombatchCallDoer makes it easy to provide your own testable version of Do.
+type ProductsCustombatchCallDoer interface {
+	Do() (*ProductsCustomBatchResponse, error)
+}
+
 func (c *ProductsCustombatchCall) Do() (*ProductsCustomBatchResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.productscustombatchrequest)
@@ -4946,6 +5116,11 @@ func (c *ProductsDeleteCall) Fields(s ...googleapi.Field) *ProductsDeleteCall {
 	return c
 }
 
+// ProductsDeleteCallDoer makes it easy to provide your own testable version of Do.
+type ProductsDeleteCallDoer interface {
+	Do() error
+}
+
 func (c *ProductsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5032,6 +5207,11 @@ func (r *ProductsService) Get(merchantId uint64, productId string) *ProductsGetC
 func (c *ProductsGetCall) Fields(s ...googleapi.Field) *ProductsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ProductsGetCallDoer makes it easy to provide your own testable version of Do.
+type ProductsGetCallDoer interface {
+	Do() (*Product, error)
 }
 
 func (c *ProductsGetCall) Do() (*Product, error) {
@@ -5126,6 +5306,11 @@ func (c *ProductsInsertCall) DryRun(dryRun bool) *ProductsInsertCall {
 func (c *ProductsInsertCall) Fields(s ...googleapi.Field) *ProductsInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ProductsInsertCallDoer makes it easy to provide your own testable version of Do.
+type ProductsInsertCallDoer interface {
+	Do() (*Product, error)
 }
 
 func (c *ProductsInsertCall) Do() (*Product, error) {
@@ -5236,6 +5421,11 @@ func (c *ProductsListCall) Fields(s ...googleapi.Field) *ProductsListCall {
 	return c
 }
 
+// ProductsListCallDoer makes it easy to provide your own testable version of Do.
+type ProductsListCallDoer interface {
+	Do() (*ProductsListResponse, error)
+}
+
 func (c *ProductsListCall) Do() (*ProductsListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5331,6 +5521,11 @@ func (c *ProductstatusesCustombatchCall) Fields(s ...googleapi.Field) *Productst
 	return c
 }
 
+// ProductstatusesCustombatchCallDoer makes it easy to provide your own testable version of Do.
+type ProductstatusesCustombatchCallDoer interface {
+	Do() (*ProductstatusesCustomBatchResponse, error)
+}
+
 func (c *ProductstatusesCustombatchCall) Do() (*ProductstatusesCustomBatchResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.productstatusescustombatchrequest)
@@ -5403,6 +5598,11 @@ func (r *ProductstatusesService) Get(merchantId uint64, productId string) *Produ
 func (c *ProductstatusesGetCall) Fields(s ...googleapi.Field) *ProductstatusesGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ProductstatusesGetCallDoer makes it easy to provide your own testable version of Do.
+type ProductstatusesGetCallDoer interface {
+	Do() (*ProductStatus, error)
 }
 
 func (c *ProductstatusesGetCall) Do() (*ProductStatus, error) {
@@ -5504,6 +5704,11 @@ func (c *ProductstatusesListCall) PageToken(pageToken string) *ProductstatusesLi
 func (c *ProductstatusesListCall) Fields(s ...googleapi.Field) *ProductstatusesListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ProductstatusesListCallDoer makes it easy to provide your own testable version of Do.
+type ProductstatusesListCallDoer interface {
+	Do() (*ProductstatusesListResponse, error)
 }
 
 func (c *ProductstatusesListCall) Do() (*ProductstatusesListResponse, error) {

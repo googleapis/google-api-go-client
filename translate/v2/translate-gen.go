@@ -171,6 +171,11 @@ func (c *DetectionsListCall) Fields(s ...googleapi.Field) *DetectionsListCall {
 	return c
 }
 
+// DetectionsListCallDoer makes it easy to provide your own testable version of Do.
+type DetectionsListCallDoer interface {
+	Do() (*DetectionsListResponse, error)
+}
+
 func (c *DetectionsListCall) Do() (*DetectionsListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -249,6 +254,11 @@ func (c *LanguagesListCall) Target(target string) *LanguagesListCall {
 func (c *LanguagesListCall) Fields(s ...googleapi.Field) *LanguagesListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// LanguagesListCallDoer makes it easy to provide your own testable version of Do.
+type LanguagesListCallDoer interface {
+	Do() (*LanguagesListResponse, error)
 }
 
 func (c *LanguagesListCall) Do() (*LanguagesListResponse, error) {
@@ -345,6 +355,11 @@ func (c *TranslationsListCall) Source(source string) *TranslationsListCall {
 func (c *TranslationsListCall) Fields(s ...googleapi.Field) *TranslationsListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// TranslationsListCallDoer makes it easy to provide your own testable version of Do.
+type TranslationsListCallDoer interface {
+	Do() (*TranslationsListResponse, error)
 }
 
 func (c *TranslationsListCall) Do() (*TranslationsListResponse, error) {

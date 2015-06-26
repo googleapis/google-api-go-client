@@ -240,6 +240,11 @@ func (c *FilesGetCall) Fields(s ...googleapi.Field) *FilesGetCall {
 	return c
 }
 
+// FilesGetCallDoer makes it easy to provide your own testable version of Do.
+type FilesGetCallDoer interface {
+	Do() (*File, error)
+}
+
 func (c *FilesGetCall) Do() (*File, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -373,6 +378,11 @@ func (c *FilesInsertCall) ProgressUpdater(pu googleapi.ProgressUpdater) *FilesIn
 func (c *FilesInsertCall) Fields(s ...googleapi.Field) *FilesInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// FilesInsertCallDoer makes it easy to provide your own testable version of Do.
+type FilesInsertCallDoer interface {
+	Do() (*File, error)
 }
 
 func (c *FilesInsertCall) Do() (*File, error) {
@@ -538,6 +548,11 @@ func (c *FilesPatchCall) UpdateViewedDate(updateViewedDate bool) *FilesPatchCall
 func (c *FilesPatchCall) Fields(s ...googleapi.Field) *FilesPatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// FilesPatchCallDoer makes it easy to provide your own testable version of Do.
+type FilesPatchCallDoer interface {
+	Do() (*File, error)
 }
 
 func (c *FilesPatchCall) Do() (*File, error) {
@@ -715,6 +730,11 @@ func (c *FilesUpdateCall) ProgressUpdater(pu googleapi.ProgressUpdater) *FilesUp
 func (c *FilesUpdateCall) Fields(s ...googleapi.Field) *FilesUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// FilesUpdateCallDoer makes it easy to provide your own testable version of Do.
+type FilesUpdateCallDoer interface {
+	Do() (*File, error)
 }
 
 func (c *FilesUpdateCall) Do() (*File, error) {

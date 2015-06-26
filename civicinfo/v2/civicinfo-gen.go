@@ -621,6 +621,11 @@ func (c *DivisionsSearchCall) Fields(s ...googleapi.Field) *DivisionsSearchCall 
 	return c
 }
 
+// DivisionsSearchCallDoer makes it easy to provide your own testable version of Do.
+type DivisionsSearchCallDoer interface {
+	Do() (*DivisionSearchResponse, error)
+}
+
 func (c *DivisionsSearchCall) Do() (*DivisionSearchResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -687,6 +692,11 @@ func (r *ElectionsService) ElectionQuery() *ElectionsElectionQueryCall {
 func (c *ElectionsElectionQueryCall) Fields(s ...googleapi.Field) *ElectionsElectionQueryCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ElectionsElectionQueryCallDoer makes it easy to provide your own testable version of Do.
+type ElectionsElectionQueryCallDoer interface {
+	Do() (*ElectionsQueryResponse, error)
 }
 
 func (c *ElectionsElectionQueryCall) Do() (*ElectionsQueryResponse, error) {
@@ -763,6 +773,11 @@ func (c *ElectionsVoterInfoQueryCall) OfficialOnly(officialOnly bool) *Elections
 func (c *ElectionsVoterInfoQueryCall) Fields(s ...googleapi.Field) *ElectionsVoterInfoQueryCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ElectionsVoterInfoQueryCallDoer makes it easy to provide your own testable version of Do.
+type ElectionsVoterInfoQueryCallDoer interface {
+	Do() (*VoterInfoResponse, error)
 }
 
 func (c *ElectionsVoterInfoQueryCall) Do() (*VoterInfoResponse, error) {
@@ -910,6 +925,11 @@ func (c *RepresentativesRepresentativeInfoByAddressCall) Roles(roles string) *Re
 func (c *RepresentativesRepresentativeInfoByAddressCall) Fields(s ...googleapi.Field) *RepresentativesRepresentativeInfoByAddressCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// RepresentativesRepresentativeInfoByAddressCallDoer makes it easy to provide your own testable version of Do.
+type RepresentativesRepresentativeInfoByAddressCallDoer interface {
+	Do() (*RepresentativeInfoResponse, error)
 }
 
 func (c *RepresentativesRepresentativeInfoByAddressCall) Do() (*RepresentativeInfoResponse, error) {
@@ -1108,6 +1128,11 @@ func (c *RepresentativesRepresentativeInfoByDivisionCall) Roles(roles string) *R
 func (c *RepresentativesRepresentativeInfoByDivisionCall) Fields(s ...googleapi.Field) *RepresentativesRepresentativeInfoByDivisionCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// RepresentativesRepresentativeInfoByDivisionCallDoer makes it easy to provide your own testable version of Do.
+type RepresentativesRepresentativeInfoByDivisionCallDoer interface {
+	Do() (*RepresentativeInfoData, error)
 }
 
 func (c *RepresentativesRepresentativeInfoByDivisionCall) Do() (*RepresentativeInfoData, error) {

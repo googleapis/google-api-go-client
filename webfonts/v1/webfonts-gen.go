@@ -146,6 +146,11 @@ func (c *WebfontsListCall) Fields(s ...googleapi.Field) *WebfontsListCall {
 	return c
 }
 
+// WebfontsListCallDoer makes it easy to provide your own testable version of Do.
+type WebfontsListCallDoer interface {
+	Do() (*WebfontList, error)
+}
+
 func (c *WebfontsListCall) Do() (*WebfontList, error) {
 	var body io.Reader = nil
 	params := make(url.Values)

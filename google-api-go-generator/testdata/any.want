@@ -426,6 +426,11 @@ func (c *ProjectsLogServicesListCall) Fields(s ...googleapi.Field) *ProjectsLogS
 	return c
 }
 
+// ProjectsLogServicesListCallDoer makes it easy to provide your own testable version of Do.
+type ProjectsLogServicesListCallDoer interface {
+	Do() (*ListLogServicesResponse, error)
+}
+
 func (c *ProjectsLogServicesListCall) Do() (*ListLogServicesResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -580,6 +585,11 @@ func (c *ProjectsLogServicesIndexesListCall) Fields(s ...googleapi.Field) *Proje
 	return c
 }
 
+// ProjectsLogServicesIndexesListCallDoer makes it easy to provide your own testable version of Do.
+type ProjectsLogServicesIndexesListCallDoer interface {
+	Do() (*ListLogServiceIndexesResponse, error)
+}
+
 func (c *ProjectsLogServicesIndexesListCall) Do() (*ListLogServiceIndexesResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -710,6 +720,11 @@ func (c *ProjectsLogServicesSinksCreateCall) Fields(s ...googleapi.Field) *Proje
 	return c
 }
 
+// ProjectsLogServicesSinksCreateCallDoer makes it easy to provide your own testable version of Do.
+type ProjectsLogServicesSinksCreateCallDoer interface {
+	Do() (*LogSink, error)
+}
+
 func (c *ProjectsLogServicesSinksCreateCall) Do() (*LogSink, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.logsink)
@@ -805,6 +820,11 @@ func (r *ProjectsLogServicesSinksService) Delete(projectsId string, logServicesI
 func (c *ProjectsLogServicesSinksDeleteCall) Fields(s ...googleapi.Field) *ProjectsLogServicesSinksDeleteCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ProjectsLogServicesSinksDeleteCallDoer makes it easy to provide your own testable version of Do.
+type ProjectsLogServicesSinksDeleteCallDoer interface {
+	Do() (*Empty, error)
 }
 
 func (c *ProjectsLogServicesSinksDeleteCall) Do() (*Empty, error) {
@@ -903,6 +923,11 @@ func (c *ProjectsLogServicesSinksGetCall) Fields(s ...googleapi.Field) *Projects
 	return c
 }
 
+// ProjectsLogServicesSinksGetCallDoer makes it easy to provide your own testable version of Do.
+type ProjectsLogServicesSinksGetCallDoer interface {
+	Do() (*LogSink, error)
+}
+
 func (c *ProjectsLogServicesSinksGetCall) Do() (*LogSink, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -997,6 +1022,11 @@ func (c *ProjectsLogServicesSinksListCall) Fields(s ...googleapi.Field) *Project
 	return c
 }
 
+// ProjectsLogServicesSinksListCallDoer makes it easy to provide your own testable version of Do.
+type ProjectsLogServicesSinksListCallDoer interface {
+	Do() (*ListLogServiceSinksResponse, error)
+}
+
 func (c *ProjectsLogServicesSinksListCall) Do() (*ListLogServiceSinksResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1085,6 +1115,11 @@ func (r *ProjectsLogServicesSinksService) Update(projectsId string, logServicesI
 func (c *ProjectsLogServicesSinksUpdateCall) Fields(s ...googleapi.Field) *ProjectsLogServicesSinksUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ProjectsLogServicesSinksUpdateCallDoer makes it easy to provide your own testable version of Do.
+type ProjectsLogServicesSinksUpdateCallDoer interface {
+	Do() (*LogSink, error)
 }
 
 func (c *ProjectsLogServicesSinksUpdateCall) Do() (*LogSink, error) {
@@ -1189,6 +1224,11 @@ func (r *ProjectsLogsService) Delete(projectsId string, logsId string) *Projects
 func (c *ProjectsLogsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLogsDeleteCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ProjectsLogsDeleteCallDoer makes it easy to provide your own testable version of Do.
+type ProjectsLogsDeleteCallDoer interface {
+	Do() (*Empty, error)
 }
 
 func (c *ProjectsLogsDeleteCall) Do() (*Empty, error) {
@@ -1316,6 +1356,11 @@ func (c *ProjectsLogsListCall) Fields(s ...googleapi.Field) *ProjectsLogsListCal
 	return c
 }
 
+// ProjectsLogsListCallDoer makes it easy to provide your own testable version of Do.
+type ProjectsLogsListCallDoer interface {
+	Do() (*ListLogsResponse, error)
+}
+
 func (c *ProjectsLogsListCall) Do() (*ListLogsResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1436,6 +1481,11 @@ func (c *ProjectsLogsEntriesWriteCall) Fields(s ...googleapi.Field) *ProjectsLog
 	return c
 }
 
+// ProjectsLogsEntriesWriteCallDoer makes it easy to provide your own testable version of Do.
+type ProjectsLogsEntriesWriteCallDoer interface {
+	Do() (*WriteLogEntriesResponse, error)
+}
+
 func (c *ProjectsLogsEntriesWriteCall) Do() (*WriteLogEntriesResponse, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.writelogentriesrequest)
@@ -1531,6 +1581,11 @@ func (r *ProjectsLogsSinksService) Create(projectsId string, logsId string, logs
 func (c *ProjectsLogsSinksCreateCall) Fields(s ...googleapi.Field) *ProjectsLogsSinksCreateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ProjectsLogsSinksCreateCallDoer makes it easy to provide your own testable version of Do.
+type ProjectsLogsSinksCreateCallDoer interface {
+	Do() (*LogSink, error)
 }
 
 func (c *ProjectsLogsSinksCreateCall) Do() (*LogSink, error) {
@@ -1630,6 +1685,11 @@ func (c *ProjectsLogsSinksDeleteCall) Fields(s ...googleapi.Field) *ProjectsLogs
 	return c
 }
 
+// ProjectsLogsSinksDeleteCallDoer makes it easy to provide your own testable version of Do.
+type ProjectsLogsSinksDeleteCallDoer interface {
+	Do() (*Empty, error)
+}
+
 func (c *ProjectsLogsSinksDeleteCall) Do() (*Empty, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1726,6 +1786,11 @@ func (c *ProjectsLogsSinksGetCall) Fields(s ...googleapi.Field) *ProjectsLogsSin
 	return c
 }
 
+// ProjectsLogsSinksGetCallDoer makes it easy to provide your own testable version of Do.
+type ProjectsLogsSinksGetCallDoer interface {
+	Do() (*LogSink, error)
+}
+
 func (c *ProjectsLogsSinksGetCall) Do() (*LogSink, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1820,6 +1885,11 @@ func (c *ProjectsLogsSinksListCall) Fields(s ...googleapi.Field) *ProjectsLogsSi
 	return c
 }
 
+// ProjectsLogsSinksListCallDoer makes it easy to provide your own testable version of Do.
+type ProjectsLogsSinksListCallDoer interface {
+	Do() (*ListLogSinksResponse, error)
+}
+
 func (c *ProjectsLogsSinksListCall) Do() (*ListLogSinksResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1908,6 +1978,11 @@ func (r *ProjectsLogsSinksService) Update(projectsId string, logsId string, sink
 func (c *ProjectsLogsSinksUpdateCall) Fields(s ...googleapi.Field) *ProjectsLogsSinksUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ProjectsLogsSinksUpdateCallDoer makes it easy to provide your own testable version of Do.
+type ProjectsLogsSinksUpdateCallDoer interface {
+	Do() (*LogSink, error)
 }
 
 func (c *ProjectsLogsSinksUpdateCall) Do() (*LogSink, error) {

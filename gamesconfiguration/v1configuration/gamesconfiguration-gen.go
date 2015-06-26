@@ -348,6 +348,11 @@ func (c *AchievementConfigurationsDeleteCall) Fields(s ...googleapi.Field) *Achi
 	return c
 }
 
+// AchievementConfigurationsDeleteCallDoer makes it easy to provide your own testable version of Do.
+type AchievementConfigurationsDeleteCallDoer interface {
+	Do() error
+}
+
 func (c *AchievementConfigurationsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -416,6 +421,11 @@ func (r *AchievementConfigurationsService) Get(achievementId string) *Achievemen
 func (c *AchievementConfigurationsGetCall) Fields(s ...googleapi.Field) *AchievementConfigurationsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// AchievementConfigurationsGetCallDoer makes it easy to provide your own testable version of Do.
+type AchievementConfigurationsGetCallDoer interface {
+	Do() (*AchievementConfiguration, error)
 }
 
 func (c *AchievementConfigurationsGetCall) Do() (*AchievementConfiguration, error) {
@@ -494,6 +504,11 @@ func (r *AchievementConfigurationsService) Insert(applicationId string, achievem
 func (c *AchievementConfigurationsInsertCall) Fields(s ...googleapi.Field) *AchievementConfigurationsInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// AchievementConfigurationsInsertCallDoer makes it easy to provide your own testable version of Do.
+type AchievementConfigurationsInsertCallDoer interface {
+	Do() (*AchievementConfiguration, error)
 }
 
 func (c *AchievementConfigurationsInsertCall) Do() (*AchievementConfiguration, error) {
@@ -598,6 +613,11 @@ func (c *AchievementConfigurationsListCall) Fields(s ...googleapi.Field) *Achiev
 	return c
 }
 
+// AchievementConfigurationsListCallDoer makes it easy to provide your own testable version of Do.
+type AchievementConfigurationsListCallDoer interface {
+	Do() (*AchievementConfigurationListResponse, error)
+}
+
 func (c *AchievementConfigurationsListCall) Do() (*AchievementConfigurationListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -696,6 +716,11 @@ func (c *AchievementConfigurationsPatchCall) Fields(s ...googleapi.Field) *Achie
 	return c
 }
 
+// AchievementConfigurationsPatchCallDoer makes it easy to provide your own testable version of Do.
+type AchievementConfigurationsPatchCallDoer interface {
+	Do() (*AchievementConfiguration, error)
+}
+
 func (c *AchievementConfigurationsPatchCall) Do() (*AchievementConfiguration, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.achievementconfiguration)
@@ -782,6 +807,11 @@ func (r *AchievementConfigurationsService) Update(achievementId string, achievem
 func (c *AchievementConfigurationsUpdateCall) Fields(s ...googleapi.Field) *AchievementConfigurationsUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// AchievementConfigurationsUpdateCallDoer makes it easy to provide your own testable version of Do.
+type AchievementConfigurationsUpdateCallDoer interface {
+	Do() (*AchievementConfiguration, error)
 }
 
 func (c *AchievementConfigurationsUpdateCall) Do() (*AchievementConfiguration, error) {
@@ -903,6 +933,11 @@ func (c *ImageConfigurationsUploadCall) ProgressUpdater(pu googleapi.ProgressUpd
 func (c *ImageConfigurationsUploadCall) Fields(s ...googleapi.Field) *ImageConfigurationsUploadCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ImageConfigurationsUploadCallDoer makes it easy to provide your own testable version of Do.
+type ImageConfigurationsUploadCallDoer interface {
+	Do() (*ImageConfiguration, error)
 }
 
 func (c *ImageConfigurationsUploadCall) Do() (*ImageConfiguration, error) {
@@ -1060,6 +1095,11 @@ func (c *LeaderboardConfigurationsDeleteCall) Fields(s ...googleapi.Field) *Lead
 	return c
 }
 
+// LeaderboardConfigurationsDeleteCallDoer makes it easy to provide your own testable version of Do.
+type LeaderboardConfigurationsDeleteCallDoer interface {
+	Do() error
+}
+
 func (c *LeaderboardConfigurationsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1128,6 +1168,11 @@ func (r *LeaderboardConfigurationsService) Get(leaderboardId string) *Leaderboar
 func (c *LeaderboardConfigurationsGetCall) Fields(s ...googleapi.Field) *LeaderboardConfigurationsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// LeaderboardConfigurationsGetCallDoer makes it easy to provide your own testable version of Do.
+type LeaderboardConfigurationsGetCallDoer interface {
+	Do() (*LeaderboardConfiguration, error)
 }
 
 func (c *LeaderboardConfigurationsGetCall) Do() (*LeaderboardConfiguration, error) {
@@ -1206,6 +1251,11 @@ func (r *LeaderboardConfigurationsService) Insert(applicationId string, leaderbo
 func (c *LeaderboardConfigurationsInsertCall) Fields(s ...googleapi.Field) *LeaderboardConfigurationsInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// LeaderboardConfigurationsInsertCallDoer makes it easy to provide your own testable version of Do.
+type LeaderboardConfigurationsInsertCallDoer interface {
+	Do() (*LeaderboardConfiguration, error)
 }
 
 func (c *LeaderboardConfigurationsInsertCall) Do() (*LeaderboardConfiguration, error) {
@@ -1310,6 +1360,11 @@ func (c *LeaderboardConfigurationsListCall) Fields(s ...googleapi.Field) *Leader
 	return c
 }
 
+// LeaderboardConfigurationsListCallDoer makes it easy to provide your own testable version of Do.
+type LeaderboardConfigurationsListCallDoer interface {
+	Do() (*LeaderboardConfigurationListResponse, error)
+}
+
 func (c *LeaderboardConfigurationsListCall) Do() (*LeaderboardConfigurationListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1408,6 +1463,11 @@ func (c *LeaderboardConfigurationsPatchCall) Fields(s ...googleapi.Field) *Leade
 	return c
 }
 
+// LeaderboardConfigurationsPatchCallDoer makes it easy to provide your own testable version of Do.
+type LeaderboardConfigurationsPatchCallDoer interface {
+	Do() (*LeaderboardConfiguration, error)
+}
+
 func (c *LeaderboardConfigurationsPatchCall) Do() (*LeaderboardConfiguration, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.leaderboardconfiguration)
@@ -1494,6 +1554,11 @@ func (r *LeaderboardConfigurationsService) Update(leaderboardId string, leaderbo
 func (c *LeaderboardConfigurationsUpdateCall) Fields(s ...googleapi.Field) *LeaderboardConfigurationsUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// LeaderboardConfigurationsUpdateCallDoer makes it easy to provide your own testable version of Do.
+type LeaderboardConfigurationsUpdateCallDoer interface {
+	Do() (*LeaderboardConfiguration, error)
 }
 
 func (c *LeaderboardConfigurationsUpdateCall) Do() (*LeaderboardConfiguration, error) {

@@ -1685,6 +1685,11 @@ func (c *BookshelvesGetCall) Fields(s ...googleapi.Field) *BookshelvesGetCall {
 	return c
 }
 
+// BookshelvesGetCallDoer makes it easy to provide your own testable version of Do.
+type BookshelvesGetCallDoer interface {
+	Do() (*Bookshelf, error)
+}
+
 func (c *BookshelvesGetCall) Do() (*Bookshelf, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1782,6 +1787,11 @@ func (c *BookshelvesListCall) Source(source string) *BookshelvesListCall {
 func (c *BookshelvesListCall) Fields(s ...googleapi.Field) *BookshelvesListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// BookshelvesListCallDoer makes it easy to provide your own testable version of Do.
+type BookshelvesListCallDoer interface {
+	Do() (*Bookshelves, error)
 }
 
 func (c *BookshelvesListCall) Do() (*Bookshelves, error) {
@@ -1897,6 +1907,11 @@ func (c *BookshelvesVolumesListCall) StartIndex(startIndex int64) *BookshelvesVo
 func (c *BookshelvesVolumesListCall) Fields(s ...googleapi.Field) *BookshelvesVolumesListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// BookshelvesVolumesListCallDoer makes it easy to provide your own testable version of Do.
+type BookshelvesVolumesListCallDoer interface {
+	Do() (*Volumes, error)
 }
 
 func (c *BookshelvesVolumesListCall) Do() (*Volumes, error) {
@@ -2044,6 +2059,11 @@ func (c *CloudloadingAddBookCall) Fields(s ...googleapi.Field) *CloudloadingAddB
 	return c
 }
 
+// CloudloadingAddBookCallDoer makes it easy to provide your own testable version of Do.
+type CloudloadingAddBookCallDoer interface {
+	Do() (*BooksCloudloadingResource, error)
+}
+
 func (c *CloudloadingAddBookCall) Do() (*BooksCloudloadingResource, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2140,6 +2160,11 @@ func (c *CloudloadingDeleteBookCall) Fields(s ...googleapi.Field) *CloudloadingD
 	return c
 }
 
+// CloudloadingDeleteBookCallDoer makes it easy to provide your own testable version of Do.
+type CloudloadingDeleteBookCallDoer interface {
+	Do() error
+}
+
 func (c *CloudloadingDeleteBookCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2206,6 +2231,11 @@ func (r *CloudloadingService) UpdateBook(bookscloudloadingresource *BooksCloudlo
 func (c *CloudloadingUpdateBookCall) Fields(s ...googleapi.Field) *CloudloadingUpdateBookCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// CloudloadingUpdateBookCallDoer makes it easy to provide your own testable version of Do.
+type CloudloadingUpdateBookCallDoer interface {
+	Do() (*BooksCloudloadingResource, error)
 }
 
 func (c *CloudloadingUpdateBookCall) Do() (*BooksCloudloadingResource, error) {
@@ -2279,6 +2309,11 @@ func (r *DictionaryService) ListOfflineMetadata(cpksver string) *DictionaryListO
 func (c *DictionaryListOfflineMetadataCall) Fields(s ...googleapi.Field) *DictionaryListOfflineMetadataCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// DictionaryListOfflineMetadataCallDoer makes it easy to provide your own testable version of Do.
+type DictionaryListOfflineMetadataCallDoer interface {
+	Do() (*Metadata, error)
 }
 
 func (c *DictionaryListOfflineMetadataCall) Do() (*Metadata, error) {
@@ -2370,6 +2405,11 @@ func (c *LayersGetCall) Source(source string) *LayersGetCall {
 func (c *LayersGetCall) Fields(s ...googleapi.Field) *LayersGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// LayersGetCallDoer makes it easy to provide your own testable version of Do.
+type LayersGetCallDoer interface {
+	Do() (*Layersummary, error)
 }
 
 func (c *LayersGetCall) Do() (*Layersummary, error) {
@@ -2498,6 +2538,11 @@ func (c *LayersListCall) Source(source string) *LayersListCall {
 func (c *LayersListCall) Fields(s ...googleapi.Field) *LayersListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// LayersListCallDoer makes it easy to provide your own testable version of Do.
+type LayersListCallDoer interface {
+	Do() (*Layersummaries, error)
 }
 
 func (c *LayersListCall) Do() (*Layersummaries, error) {
@@ -2659,6 +2704,11 @@ func (c *LayersAnnotationDataGetCall) W(w int64) *LayersAnnotationDataGetCall {
 func (c *LayersAnnotationDataGetCall) Fields(s ...googleapi.Field) *LayersAnnotationDataGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// LayersAnnotationDataGetCallDoer makes it easy to provide your own testable version of Do.
+type LayersAnnotationDataGetCallDoer interface {
+	Do() (*Annotationdata, error)
 }
 
 func (c *LayersAnnotationDataGetCall) Do() (*Annotationdata, error) {
@@ -2891,6 +2941,11 @@ func (c *LayersAnnotationDataListCall) Fields(s ...googleapi.Field) *LayersAnnot
 	return c
 }
 
+// LayersAnnotationDataListCallDoer makes it easy to provide your own testable version of Do.
+type LayersAnnotationDataListCallDoer interface {
+	Do() (*Annotationsdata, error)
+}
+
 func (c *LayersAnnotationDataListCall) Do() (*Annotationsdata, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3088,6 +3143,11 @@ func (c *LayersVolumeAnnotationsGetCall) Source(source string) *LayersVolumeAnno
 func (c *LayersVolumeAnnotationsGetCall) Fields(s ...googleapi.Field) *LayersVolumeAnnotationsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// LayersVolumeAnnotationsGetCallDoer makes it easy to provide your own testable version of Do.
+type LayersVolumeAnnotationsGetCallDoer interface {
+	Do() (*Volumeannotation, error)
 }
 
 func (c *LayersVolumeAnnotationsGetCall) Do() (*Volumeannotation, error) {
@@ -3291,6 +3351,11 @@ func (c *LayersVolumeAnnotationsListCall) Fields(s ...googleapi.Field) *LayersVo
 	return c
 }
 
+// LayersVolumeAnnotationsListCallDoer makes it easy to provide your own testable version of Do.
+type LayersVolumeAnnotationsListCallDoer interface {
+	Do() (*Volumeannotations, error)
+}
+
 func (c *LayersVolumeAnnotationsListCall) Do() (*Volumeannotations, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3480,6 +3545,11 @@ func (c *MyconfigGetUserSettingsCall) Fields(s ...googleapi.Field) *MyconfigGetU
 	return c
 }
 
+// MyconfigGetUserSettingsCallDoer makes it easy to provide your own testable version of Do.
+type MyconfigGetUserSettingsCallDoer interface {
+	Do() (*Usersettings, error)
+}
+
 func (c *MyconfigGetUserSettingsCall) Do() (*Usersettings, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3557,6 +3627,11 @@ func (c *MyconfigReleaseDownloadAccessCall) Source(source string) *MyconfigRelea
 func (c *MyconfigReleaseDownloadAccessCall) Fields(s ...googleapi.Field) *MyconfigReleaseDownloadAccessCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// MyconfigReleaseDownloadAccessCallDoer makes it easy to provide your own testable version of Do.
+type MyconfigReleaseDownloadAccessCallDoer interface {
+	Do() (*DownloadAccesses, error)
 }
 
 func (c *MyconfigReleaseDownloadAccessCall) Do() (*DownloadAccesses, error) {
@@ -3684,6 +3759,11 @@ func (c *MyconfigRequestAccessCall) Locale(locale string) *MyconfigRequestAccess
 func (c *MyconfigRequestAccessCall) Fields(s ...googleapi.Field) *MyconfigRequestAccessCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// MyconfigRequestAccessCallDoer makes it easy to provide your own testable version of Do.
+type MyconfigRequestAccessCallDoer interface {
+	Do() (*RequestAccess, error)
 }
 
 func (c *MyconfigRequestAccessCall) Do() (*RequestAccess, error) {
@@ -3847,6 +3927,11 @@ func (c *MyconfigSyncVolumeLicensesCall) Fields(s ...googleapi.Field) *MyconfigS
 	return c
 }
 
+// MyconfigSyncVolumeLicensesCallDoer makes it easy to provide your own testable version of Do.
+type MyconfigSyncVolumeLicensesCallDoer interface {
+	Do() (*Volumes, error)
+}
+
 func (c *MyconfigSyncVolumeLicensesCall) Do() (*Volumes, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3980,6 +4065,11 @@ func (c *MyconfigUpdateUserSettingsCall) Fields(s ...googleapi.Field) *MyconfigU
 	return c
 }
 
+// MyconfigUpdateUserSettingsCallDoer makes it easy to provide your own testable version of Do.
+type MyconfigUpdateUserSettingsCallDoer interface {
+	Do() (*Usersettings, error)
+}
+
 func (c *MyconfigUpdateUserSettingsCall) Do() (*Usersettings, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.usersettings)
@@ -4057,6 +4147,11 @@ func (c *MylibraryAnnotationsDeleteCall) Source(source string) *MylibraryAnnotat
 func (c *MylibraryAnnotationsDeleteCall) Fields(s ...googleapi.Field) *MylibraryAnnotationsDeleteCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// MylibraryAnnotationsDeleteCallDoer makes it easy to provide your own testable version of Do.
+type MylibraryAnnotationsDeleteCallDoer interface {
+	Do() error
 }
 
 func (c *MylibraryAnnotationsDeleteCall) Do() error {
@@ -4156,6 +4251,11 @@ func (c *MylibraryAnnotationsInsertCall) Source(source string) *MylibraryAnnotat
 func (c *MylibraryAnnotationsInsertCall) Fields(s ...googleapi.Field) *MylibraryAnnotationsInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// MylibraryAnnotationsInsertCallDoer makes it easy to provide your own testable version of Do.
+type MylibraryAnnotationsInsertCallDoer interface {
+	Do() (*Annotation, error)
 }
 
 func (c *MylibraryAnnotationsInsertCall) Do() (*Annotation, error) {
@@ -4327,6 +4427,11 @@ func (c *MylibraryAnnotationsListCall) Fields(s ...googleapi.Field) *MylibraryAn
 	return c
 }
 
+// MylibraryAnnotationsListCallDoer makes it easy to provide your own testable version of Do.
+type MylibraryAnnotationsListCallDoer interface {
+	Do() (*Annotations, error)
+}
+
 func (c *MylibraryAnnotationsListCall) Do() (*Annotations, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4478,6 +4583,11 @@ func (c *MylibraryAnnotationsSummaryCall) Fields(s ...googleapi.Field) *Mylibrar
 	return c
 }
 
+// MylibraryAnnotationsSummaryCallDoer makes it easy to provide your own testable version of Do.
+type MylibraryAnnotationsSummaryCallDoer interface {
+	Do() (*AnnotationsSummary, error)
+}
+
 func (c *MylibraryAnnotationsSummaryCall) Do() (*AnnotationsSummary, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4571,6 +4681,11 @@ func (c *MylibraryAnnotationsUpdateCall) Source(source string) *MylibraryAnnotat
 func (c *MylibraryAnnotationsUpdateCall) Fields(s ...googleapi.Field) *MylibraryAnnotationsUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// MylibraryAnnotationsUpdateCallDoer makes it easy to provide your own testable version of Do.
+type MylibraryAnnotationsUpdateCallDoer interface {
+	Do() (*Annotation, error)
 }
 
 func (c *MylibraryAnnotationsUpdateCall) Do() (*Annotation, error) {
@@ -4687,6 +4802,11 @@ func (c *MylibraryBookshelvesAddVolumeCall) Fields(s ...googleapi.Field) *Mylibr
 	return c
 }
 
+// MylibraryBookshelvesAddVolumeCallDoer makes it easy to provide your own testable version of Do.
+type MylibraryBookshelvesAddVolumeCallDoer interface {
+	Do() error
+}
+
 func (c *MylibraryBookshelvesAddVolumeCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4797,6 +4917,11 @@ func (c *MylibraryBookshelvesClearVolumesCall) Fields(s ...googleapi.Field) *Myl
 	return c
 }
 
+// MylibraryBookshelvesClearVolumesCallDoer makes it easy to provide your own testable version of Do.
+type MylibraryBookshelvesClearVolumesCallDoer interface {
+	Do() error
+}
+
 func (c *MylibraryBookshelvesClearVolumesCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4880,6 +5005,11 @@ func (c *MylibraryBookshelvesGetCall) Source(source string) *MylibraryBookshelve
 func (c *MylibraryBookshelvesGetCall) Fields(s ...googleapi.Field) *MylibraryBookshelvesGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// MylibraryBookshelvesGetCallDoer makes it easy to provide your own testable version of Do.
+type MylibraryBookshelvesGetCallDoer interface {
+	Do() (*Bookshelf, error)
 }
 
 func (c *MylibraryBookshelvesGetCall) Do() (*Bookshelf, error) {
@@ -4972,6 +5102,11 @@ func (c *MylibraryBookshelvesListCall) Fields(s ...googleapi.Field) *MylibraryBo
 	return c
 }
 
+// MylibraryBookshelvesListCallDoer makes it easy to provide your own testable version of Do.
+type MylibraryBookshelvesListCallDoer interface {
+	Do() (*Bookshelves, error)
+}
+
 func (c *MylibraryBookshelvesListCall) Do() (*Bookshelves, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5054,6 +5189,11 @@ func (c *MylibraryBookshelvesMoveVolumeCall) Source(source string) *MylibraryBoo
 func (c *MylibraryBookshelvesMoveVolumeCall) Fields(s ...googleapi.Field) *MylibraryBookshelvesMoveVolumeCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// MylibraryBookshelvesMoveVolumeCallDoer makes it easy to provide your own testable version of Do.
+type MylibraryBookshelvesMoveVolumeCallDoer interface {
+	Do() error
 }
 
 func (c *MylibraryBookshelvesMoveVolumeCall) Do() error {
@@ -5167,6 +5307,11 @@ func (c *MylibraryBookshelvesRemoveVolumeCall) Source(source string) *MylibraryB
 func (c *MylibraryBookshelvesRemoveVolumeCall) Fields(s ...googleapi.Field) *MylibraryBookshelvesRemoveVolumeCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// MylibraryBookshelvesRemoveVolumeCallDoer makes it easy to provide your own testable version of Do.
+type MylibraryBookshelvesRemoveVolumeCallDoer interface {
+	Do() error
 }
 
 func (c *MylibraryBookshelvesRemoveVolumeCall) Do() error {
@@ -5319,6 +5464,11 @@ func (c *MylibraryBookshelvesVolumesListCall) StartIndex(startIndex int64) *Myli
 func (c *MylibraryBookshelvesVolumesListCall) Fields(s ...googleapi.Field) *MylibraryBookshelvesVolumesListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// MylibraryBookshelvesVolumesListCallDoer makes it easy to provide your own testable version of Do.
+type MylibraryBookshelvesVolumesListCallDoer interface {
+	Do() (*Volumes, error)
 }
 
 func (c *MylibraryBookshelvesVolumesListCall) Do() (*Volumes, error) {
@@ -5479,6 +5629,11 @@ func (c *MylibraryReadingpositionsGetCall) Fields(s ...googleapi.Field) *Mylibra
 	return c
 }
 
+// MylibraryReadingpositionsGetCallDoer makes it easy to provide your own testable version of Do.
+type MylibraryReadingpositionsGetCallDoer interface {
+	Do() (*ReadingPosition, error)
+}
+
 func (c *MylibraryReadingpositionsGetCall) Do() (*ReadingPosition, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5609,6 +5764,11 @@ func (c *MylibraryReadingpositionsSetPositionCall) Source(source string) *Mylibr
 func (c *MylibraryReadingpositionsSetPositionCall) Fields(s ...googleapi.Field) *MylibraryReadingpositionsSetPositionCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// MylibraryReadingpositionsSetPositionCallDoer makes it easy to provide your own testable version of Do.
+type MylibraryReadingpositionsSetPositionCallDoer interface {
+	Do() error
 }
 
 func (c *MylibraryReadingpositionsSetPositionCall) Do() error {
@@ -5749,6 +5909,11 @@ func (c *OnboardingListCategoriesCall) Fields(s ...googleapi.Field) *OnboardingL
 	return c
 }
 
+// OnboardingListCategoriesCallDoer makes it easy to provide your own testable version of Do.
+type OnboardingListCategoriesCallDoer interface {
+	Do() (*Category, error)
+}
+
 func (c *OnboardingListCategoriesCall) Do() (*Category, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5860,6 +6025,11 @@ func (c *OnboardingListCategoryVolumesCall) PageToken(pageToken string) *Onboard
 func (c *OnboardingListCategoryVolumesCall) Fields(s ...googleapi.Field) *OnboardingListCategoryVolumesCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// OnboardingListCategoryVolumesCallDoer makes it easy to provide your own testable version of Do.
+type OnboardingListCategoryVolumesCallDoer interface {
+	Do() (*Volume2, error)
 }
 
 func (c *OnboardingListCategoryVolumesCall) Do() (*Volume2, error) {
@@ -6025,6 +6195,11 @@ func (c *PromoofferAcceptCall) Fields(s ...googleapi.Field) *PromoofferAcceptCal
 	return c
 }
 
+// PromoofferAcceptCallDoer makes it easy to provide your own testable version of Do.
+type PromoofferAcceptCallDoer interface {
+	Do() error
+}
+
 func (c *PromoofferAcceptCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -6187,6 +6362,11 @@ func (c *PromoofferDismissCall) Fields(s ...googleapi.Field) *PromoofferDismissC
 	return c
 }
 
+// PromoofferDismissCallDoer makes it easy to provide your own testable version of Do.
+type PromoofferDismissCallDoer interface {
+	Do() error
+}
+
 func (c *PromoofferDismissCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -6334,6 +6514,11 @@ func (c *PromoofferGetCall) Serial(serial string) *PromoofferGetCall {
 func (c *PromoofferGetCall) Fields(s ...googleapi.Field) *PromoofferGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// PromoofferGetCallDoer makes it easy to provide your own testable version of Do.
+type PromoofferGetCallDoer interface {
+	Do() (*Offers, error)
 }
 
 func (c *PromoofferGetCall) Do() (*Offers, error) {
@@ -6486,6 +6671,11 @@ func (c *VolumesGetCall) UserLibraryConsistentRead(userLibraryConsistentRead boo
 func (c *VolumesGetCall) Fields(s ...googleapi.Field) *VolumesGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// VolumesGetCallDoer makes it easy to provide your own testable version of Do.
+type VolumesGetCallDoer interface {
+	Do() (*Volume, error)
 }
 
 func (c *VolumesGetCall) Do() (*Volume, error) {
@@ -6718,6 +6908,11 @@ func (c *VolumesListCall) StartIndex(startIndex int64) *VolumesListCall {
 func (c *VolumesListCall) Fields(s ...googleapi.Field) *VolumesListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// VolumesListCallDoer makes it easy to provide your own testable version of Do.
+type VolumesListCallDoer interface {
+	Do() (*Volumes, error)
 }
 
 func (c *VolumesListCall) Do() (*Volumes, error) {
@@ -6990,6 +7185,11 @@ func (c *VolumesAssociatedListCall) Fields(s ...googleapi.Field) *VolumesAssocia
 	return c
 }
 
+// VolumesAssociatedListCallDoer makes it easy to provide your own testable version of Do.
+type VolumesAssociatedListCallDoer interface {
+	Do() (*Volumes, error)
+}
+
 func (c *VolumesAssociatedListCall) Do() (*Volumes, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -7172,6 +7372,11 @@ func (c *VolumesMybooksListCall) Fields(s ...googleapi.Field) *VolumesMybooksLis
 	return c
 }
 
+// VolumesMybooksListCallDoer makes it easy to provide your own testable version of Do.
+type VolumesMybooksListCallDoer interface {
+	Do() (*Volumes, error)
+}
+
 func (c *VolumesMybooksListCall) Do() (*Volumes, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -7346,6 +7551,11 @@ func (c *VolumesRecommendedListCall) Fields(s ...googleapi.Field) *VolumesRecomm
 	return c
 }
 
+// VolumesRecommendedListCallDoer makes it easy to provide your own testable version of Do.
+type VolumesRecommendedListCallDoer interface {
+	Do() (*Volumes, error)
+}
+
 func (c *VolumesRecommendedListCall) Do() (*Volumes, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -7458,6 +7668,11 @@ func (c *VolumesRecommendedRateCall) Source(source string) *VolumesRecommendedRa
 func (c *VolumesRecommendedRateCall) Fields(s ...googleapi.Field) *VolumesRecommendedRateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// VolumesRecommendedRateCallDoer makes it easy to provide your own testable version of Do.
+type VolumesRecommendedRateCallDoer interface {
+	Do() (*BooksVolumesRecommendedRateResponse, error)
 }
 
 func (c *VolumesRecommendedRateCall) Do() (*BooksVolumesRecommendedRateResponse, error) {
@@ -7612,6 +7827,11 @@ func (c *VolumesUseruploadedListCall) VolumeId(volumeId string) *VolumesUseruplo
 func (c *VolumesUseruploadedListCall) Fields(s ...googleapi.Field) *VolumesUseruploadedListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// VolumesUseruploadedListCallDoer makes it easy to provide your own testable version of Do.
+type VolumesUseruploadedListCallDoer interface {
+	Do() (*Volumes, error)
 }
 
 func (c *VolumesUseruploadedListCall) Do() (*Volumes, error) {

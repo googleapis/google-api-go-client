@@ -225,6 +225,11 @@ func (c *TaskqueuesGetCall) Fields(s ...googleapi.Field) *TaskqueuesGetCall {
 	return c
 }
 
+// TaskqueuesGetCallDoer makes it easy to provide your own testable version of Do.
+type TaskqueuesGetCallDoer interface {
+	Do() (*TaskQueue, error)
+}
+
 func (c *TaskqueuesGetCall) Do() (*TaskQueue, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -322,6 +327,11 @@ func (c *TasksDeleteCall) Fields(s ...googleapi.Field) *TasksDeleteCall {
 	return c
 }
 
+// TasksDeleteCallDoer makes it easy to provide your own testable version of Do.
+type TasksDeleteCallDoer interface {
+	Do() error
+}
+
 func (c *TasksDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -410,6 +420,11 @@ func (r *TasksService) Get(project string, taskqueue string, task string) *Tasks
 func (c *TasksGetCall) Fields(s ...googleapi.Field) *TasksGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// TasksGetCallDoer makes it easy to provide your own testable version of Do.
+type TasksGetCallDoer interface {
+	Do() (*Task, error)
 }
 
 func (c *TasksGetCall) Do() (*Task, error) {
@@ -507,6 +522,11 @@ func (r *TasksService) Insert(project string, taskqueue string, task *Task) *Tas
 func (c *TasksInsertCall) Fields(s ...googleapi.Field) *TasksInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// TasksInsertCallDoer makes it easy to provide your own testable version of Do.
+type TasksInsertCallDoer interface {
+	Do() (*Task, error)
 }
 
 func (c *TasksInsertCall) Do() (*Task, error) {
@@ -623,6 +643,11 @@ func (c *TasksLeaseCall) Tag(tag string) *TasksLeaseCall {
 func (c *TasksLeaseCall) Fields(s ...googleapi.Field) *TasksLeaseCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// TasksLeaseCallDoer makes it easy to provide your own testable version of Do.
+type TasksLeaseCallDoer interface {
+	Do() (*Tasks, error)
 }
 
 func (c *TasksLeaseCall) Do() (*Tasks, error) {
@@ -746,6 +771,11 @@ func (c *TasksListCall) Fields(s ...googleapi.Field) *TasksListCall {
 	return c
 }
 
+// TasksListCallDoer makes it easy to provide your own testable version of Do.
+type TasksListCallDoer interface {
+	Do() (*Tasks2, error)
+}
+
 func (c *TasksListCall) Do() (*Tasks2, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -838,6 +868,11 @@ func (r *TasksService) Patch(project string, taskqueue string, task string, newL
 func (c *TasksPatchCall) Fields(s ...googleapi.Field) *TasksPatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// TasksPatchCallDoer makes it easy to provide your own testable version of Do.
+type TasksPatchCallDoer interface {
+	Do() (*Task, error)
 }
 
 func (c *TasksPatchCall) Do() (*Task, error) {
@@ -955,6 +990,11 @@ func (r *TasksService) Update(project string, taskqueue string, task string, new
 func (c *TasksUpdateCall) Fields(s ...googleapi.Field) *TasksUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// TasksUpdateCallDoer makes it easy to provide your own testable version of Do.
+type TasksUpdateCallDoer interface {
+	Do() (*Task, error)
 }
 
 func (c *TasksUpdateCall) Do() (*Task, error) {

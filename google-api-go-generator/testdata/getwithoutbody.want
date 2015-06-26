@@ -135,6 +135,11 @@ func (c *MetricDescriptorsListCall) Fields(s ...googleapi.Field) *MetricDescript
 	return c
 }
 
+// MetricDescriptorsListCallDoer makes it easy to provide your own testable version of Do.
+type MetricDescriptorsListCallDoer interface {
+	Do() (*ListMetricResponse, error)
+}
+
 func (c *MetricDescriptorsListCall) Do() (*ListMetricResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)

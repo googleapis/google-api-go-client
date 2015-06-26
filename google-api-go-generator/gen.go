@@ -1436,6 +1436,11 @@ func (meth *Method) generateCode() {
 	pn("return c")
 	pn("}")
 
+	pn("\n// %sDoer makes it easy to provide your own testable version of Do.", callName)
+	pn("type %sDoer interface {", callName)
+	pn("Do() (%serror)", retTypeComma)
+	pn("}")
+
 	pn("\nfunc (c *%s) Do() (%serror) {", callName, retTypeComma)
 
 	nilRet := ""

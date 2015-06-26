@@ -652,6 +652,11 @@ func (c *CollectionsDeleteCall) Fields(s ...googleapi.Field) *CollectionsDeleteC
 	return c
 }
 
+// CollectionsDeleteCallDoer makes it easy to provide your own testable version of Do.
+type CollectionsDeleteCallDoer interface {
+	Do() error
+}
+
 func (c *CollectionsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -729,6 +734,11 @@ func (r *CollectionsService) Get(enterpriseId string, collectionId string) *Coll
 func (c *CollectionsGetCall) Fields(s ...googleapi.Field) *CollectionsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// CollectionsGetCallDoer makes it easy to provide your own testable version of Do.
+type CollectionsGetCallDoer interface {
+	Do() (*Collection, error)
 }
 
 func (c *CollectionsGetCall) Do() (*Collection, error) {
@@ -817,6 +827,11 @@ func (c *CollectionsInsertCall) Fields(s ...googleapi.Field) *CollectionsInsertC
 	return c
 }
 
+// CollectionsInsertCallDoer makes it easy to provide your own testable version of Do.
+type CollectionsInsertCallDoer interface {
+	Do() (*Collection, error)
+}
+
 func (c *CollectionsInsertCall) Do() (*Collection, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.collection)
@@ -902,6 +917,11 @@ func (c *CollectionsListCall) Fields(s ...googleapi.Field) *CollectionsListCall 
 	return c
 }
 
+// CollectionsListCallDoer makes it easy to provide your own testable version of Do.
+type CollectionsListCallDoer interface {
+	Do() (*CollectionsListResponse, error)
+}
+
 func (c *CollectionsListCall) Do() (*CollectionsListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -980,6 +1000,11 @@ func (r *CollectionsService) Patch(enterpriseId string, collectionId string, col
 func (c *CollectionsPatchCall) Fields(s ...googleapi.Field) *CollectionsPatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// CollectionsPatchCallDoer makes it easy to provide your own testable version of Do.
+type CollectionsPatchCallDoer interface {
+	Do() (*Collection, error)
 }
 
 func (c *CollectionsPatchCall) Do() (*Collection, error) {
@@ -1077,6 +1102,11 @@ func (r *CollectionsService) Update(enterpriseId string, collectionId string, co
 func (c *CollectionsUpdateCall) Fields(s ...googleapi.Field) *CollectionsUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// CollectionsUpdateCallDoer makes it easy to provide your own testable version of Do.
+type CollectionsUpdateCallDoer interface {
+	Do() (*Collection, error)
 }
 
 func (c *CollectionsUpdateCall) Do() (*Collection, error) {
@@ -1178,6 +1208,11 @@ func (c *CollectionviewersDeleteCall) Fields(s ...googleapi.Field) *Collectionvi
 	return c
 }
 
+// CollectionviewersDeleteCallDoer makes it easy to provide your own testable version of Do.
+type CollectionviewersDeleteCallDoer interface {
+	Do() error
+}
+
 func (c *CollectionviewersDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1267,6 +1302,11 @@ func (r *CollectionviewersService) Get(enterpriseId string, collectionId string,
 func (c *CollectionviewersGetCall) Fields(s ...googleapi.Field) *CollectionviewersGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// CollectionviewersGetCallDoer makes it easy to provide your own testable version of Do.
+type CollectionviewersGetCallDoer interface {
+	Do() (*User, error)
 }
 
 func (c *CollectionviewersGetCall) Do() (*User, error) {
@@ -1365,6 +1405,11 @@ func (c *CollectionviewersListCall) Fields(s ...googleapi.Field) *Collectionview
 	return c
 }
 
+// CollectionviewersListCallDoer makes it easy to provide your own testable version of Do.
+type CollectionviewersListCallDoer interface {
+	Do() (*CollectionViewersListResponse, error)
+}
+
 func (c *CollectionviewersListCall) Do() (*CollectionViewersListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1456,6 +1501,11 @@ func (r *CollectionviewersService) Patch(enterpriseId string, collectionId strin
 func (c *CollectionviewersPatchCall) Fields(s ...googleapi.Field) *CollectionviewersPatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// CollectionviewersPatchCallDoer makes it easy to provide your own testable version of Do.
+type CollectionviewersPatchCallDoer interface {
+	Do() (*User, error)
 }
 
 func (c *CollectionviewersPatchCall) Do() (*User, error) {
@@ -1567,6 +1617,11 @@ func (c *CollectionviewersUpdateCall) Fields(s ...googleapi.Field) *Collectionvi
 	return c
 }
 
+// CollectionviewersUpdateCallDoer makes it easy to provide your own testable version of Do.
+type CollectionviewersUpdateCallDoer interface {
+	Do() (*User, error)
+}
+
 func (c *CollectionviewersUpdateCall) Do() (*User, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.user)
@@ -1672,6 +1727,11 @@ func (c *DevicesGetCall) Fields(s ...googleapi.Field) *DevicesGetCall {
 	return c
 }
 
+// DevicesGetCallDoer makes it easy to provide your own testable version of Do.
+type DevicesGetCallDoer interface {
+	Do() (*Device, error)
+}
+
 func (c *DevicesGetCall) Do() (*Device, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1772,6 +1832,11 @@ func (c *DevicesGetStateCall) Fields(s ...googleapi.Field) *DevicesGetStateCall 
 	return c
 }
 
+// DevicesGetStateCallDoer makes it easy to provide your own testable version of Do.
+type DevicesGetStateCallDoer interface {
+	Do() (*DeviceState, error)
+}
+
 func (c *DevicesGetStateCall) Do() (*DeviceState, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1866,6 +1931,11 @@ func (c *DevicesListCall) Fields(s ...googleapi.Field) *DevicesListCall {
 	return c
 }
 
+// DevicesListCallDoer makes it easy to provide your own testable version of Do.
+type DevicesListCallDoer interface {
+	Do() (*DevicesListResponse, error)
+}
+
 func (c *DevicesListCall) Do() (*DevicesListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1958,6 +2028,11 @@ func (r *DevicesService) SetState(enterpriseId string, userId string, deviceId s
 func (c *DevicesSetStateCall) Fields(s ...googleapi.Field) *DevicesSetStateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// DevicesSetStateCallDoer makes it easy to provide your own testable version of Do.
+type DevicesSetStateCallDoer interface {
+	Do() (*DeviceState, error)
 }
 
 func (c *DevicesSetStateCall) Do() (*DeviceState, error) {
@@ -2064,6 +2139,11 @@ func (c *EnterprisesDeleteCall) Fields(s ...googleapi.Field) *EnterprisesDeleteC
 	return c
 }
 
+// EnterprisesDeleteCallDoer makes it easy to provide your own testable version of Do.
+type EnterprisesDeleteCallDoer interface {
+	Do() error
+}
+
 func (c *EnterprisesDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2133,6 +2213,11 @@ func (r *EnterprisesService) Enroll(token string, enterprise *Enterprise) *Enter
 func (c *EnterprisesEnrollCall) Fields(s ...googleapi.Field) *EnterprisesEnrollCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// EnterprisesEnrollCallDoer makes it easy to provide your own testable version of Do.
+type EnterprisesEnrollCallDoer interface {
+	Do() (*Enterprise, error)
 }
 
 func (c *EnterprisesEnrollCall) Do() (*Enterprise, error) {
@@ -2219,6 +2304,11 @@ func (c *EnterprisesGetCall) Fields(s ...googleapi.Field) *EnterprisesGetCall {
 	return c
 }
 
+// EnterprisesGetCallDoer makes it easy to provide your own testable version of Do.
+type EnterprisesGetCallDoer interface {
+	Do() (*Enterprise, error)
+}
+
 func (c *EnterprisesGetCall) Do() (*Enterprise, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2296,6 +2386,11 @@ func (r *EnterprisesService) Insert(token string, enterprise *Enterprise) *Enter
 func (c *EnterprisesInsertCall) Fields(s ...googleapi.Field) *EnterprisesInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// EnterprisesInsertCallDoer makes it easy to provide your own testable version of Do.
+type EnterprisesInsertCallDoer interface {
+	Do() (*Enterprise, error)
 }
 
 func (c *EnterprisesInsertCall) Do() (*Enterprise, error) {
@@ -2382,6 +2477,11 @@ func (c *EnterprisesListCall) Fields(s ...googleapi.Field) *EnterprisesListCall 
 	return c
 }
 
+// EnterprisesListCallDoer makes it easy to provide your own testable version of Do.
+type EnterprisesListCallDoer interface {
+	Do() (*EnterprisesListResponse, error)
+}
+
 func (c *EnterprisesListCall) Do() (*EnterprisesListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2458,6 +2558,11 @@ func (r *EnterprisesService) SetAccount(enterpriseId string, enterpriseaccount *
 func (c *EnterprisesSetAccountCall) Fields(s ...googleapi.Field) *EnterprisesSetAccountCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// EnterprisesSetAccountCallDoer makes it easy to provide your own testable version of Do.
+type EnterprisesSetAccountCallDoer interface {
+	Do() (*EnterpriseAccount, error)
 }
 
 func (c *EnterprisesSetAccountCall) Do() (*EnterpriseAccount, error) {
@@ -2545,6 +2650,11 @@ func (c *EnterprisesUnenrollCall) Fields(s ...googleapi.Field) *EnterprisesUnenr
 	return c
 }
 
+// EnterprisesUnenrollCallDoer makes it easy to provide your own testable version of Do.
+type EnterprisesUnenrollCallDoer interface {
+	Do() error
+}
+
 func (c *EnterprisesUnenrollCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2617,6 +2727,11 @@ func (r *EntitlementsService) Delete(enterpriseId string, userId string, entitle
 func (c *EntitlementsDeleteCall) Fields(s ...googleapi.Field) *EntitlementsDeleteCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// EntitlementsDeleteCallDoer makes it easy to provide your own testable version of Do.
+type EntitlementsDeleteCallDoer interface {
+	Do() error
 }
 
 func (c *EntitlementsDeleteCall) Do() error {
@@ -2706,6 +2821,11 @@ func (r *EntitlementsService) Get(enterpriseId string, userId string, entitlemen
 func (c *EntitlementsGetCall) Fields(s ...googleapi.Field) *EntitlementsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// EntitlementsGetCallDoer makes it easy to provide your own testable version of Do.
+type EntitlementsGetCallDoer interface {
+	Do() (*Entitlement, error)
 }
 
 func (c *EntitlementsGetCall) Do() (*Entitlement, error) {
@@ -2801,6 +2921,11 @@ func (r *EntitlementsService) List(enterpriseId string, userId string) *Entitlem
 func (c *EntitlementsListCall) Fields(s ...googleapi.Field) *EntitlementsListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// EntitlementsListCallDoer makes it easy to provide your own testable version of Do.
+type EntitlementsListCallDoer interface {
+	Do() (*EntitlementsListResponse, error)
 }
 
 func (c *EntitlementsListCall) Do() (*EntitlementsListResponse, error) {
@@ -2902,6 +3027,11 @@ func (c *EntitlementsPatchCall) Install(install bool) *EntitlementsPatchCall {
 func (c *EntitlementsPatchCall) Fields(s ...googleapi.Field) *EntitlementsPatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// EntitlementsPatchCallDoer makes it easy to provide your own testable version of Do.
+type EntitlementsPatchCallDoer interface {
+	Do() (*Entitlement, error)
 }
 
 func (c *EntitlementsPatchCall) Do() (*Entitlement, error) {
@@ -3029,6 +3159,11 @@ func (c *EntitlementsUpdateCall) Fields(s ...googleapi.Field) *EntitlementsUpdat
 	return c
 }
 
+// EntitlementsUpdateCallDoer makes it easy to provide your own testable version of Do.
+type EntitlementsUpdateCallDoer interface {
+	Do() (*Entitlement, error)
+}
+
 func (c *EntitlementsUpdateCall) Do() (*Entitlement, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.entitlement)
@@ -3141,6 +3276,11 @@ func (c *GrouplicensesGetCall) Fields(s ...googleapi.Field) *GrouplicensesGetCal
 	return c
 }
 
+// GrouplicensesGetCallDoer makes it easy to provide your own testable version of Do.
+type GrouplicensesGetCallDoer interface {
+	Do() (*GroupLicense, error)
+}
+
 func (c *GrouplicensesGetCall) Do() (*GroupLicense, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3226,6 +3366,11 @@ func (c *GrouplicensesListCall) Fields(s ...googleapi.Field) *GrouplicensesListC
 	return c
 }
 
+// GrouplicensesListCallDoer makes it easy to provide your own testable version of Do.
+type GrouplicensesListCallDoer interface {
+	Do() (*GroupLicensesListResponse, error)
+}
+
 func (c *GrouplicensesListCall) Do() (*GroupLicensesListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3303,6 +3448,11 @@ func (r *GrouplicenseusersService) List(enterpriseId string, groupLicenseId stri
 func (c *GrouplicenseusersListCall) Fields(s ...googleapi.Field) *GrouplicenseusersListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// GrouplicenseusersListCallDoer makes it easy to provide your own testable version of Do.
+type GrouplicenseusersListCallDoer interface {
+	Do() (*GroupLicenseUsersListResponse, error)
 }
 
 func (c *GrouplicenseusersListCall) Do() (*GroupLicenseUsersListResponse, error) {
@@ -3395,6 +3545,11 @@ func (r *InstallsService) Delete(enterpriseId string, userId string, deviceId st
 func (c *InstallsDeleteCall) Fields(s ...googleapi.Field) *InstallsDeleteCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// InstallsDeleteCallDoer makes it easy to provide your own testable version of Do.
+type InstallsDeleteCallDoer interface {
+	Do() error
 }
 
 func (c *InstallsDeleteCall) Do() error {
@@ -3494,6 +3649,11 @@ func (r *InstallsService) Get(enterpriseId string, userId string, deviceId strin
 func (c *InstallsGetCall) Fields(s ...googleapi.Field) *InstallsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// InstallsGetCallDoer makes it easy to provide your own testable version of Do.
+type InstallsGetCallDoer interface {
+	Do() (*Install, error)
 }
 
 func (c *InstallsGetCall) Do() (*Install, error) {
@@ -3601,6 +3761,11 @@ func (c *InstallsListCall) Fields(s ...googleapi.Field) *InstallsListCall {
 	return c
 }
 
+// InstallsListCallDoer makes it easy to provide your own testable version of Do.
+type InstallsListCallDoer interface {
+	Do() (*InstallsListResponse, error)
+}
+
 func (c *InstallsListCall) Do() (*InstallsListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3701,6 +3866,11 @@ func (r *InstallsService) Patch(enterpriseId string, userId string, deviceId str
 func (c *InstallsPatchCall) Fields(s ...googleapi.Field) *InstallsPatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// InstallsPatchCallDoer makes it easy to provide your own testable version of Do.
+type InstallsPatchCallDoer interface {
+	Do() (*Install, error)
 }
 
 func (c *InstallsPatchCall) Do() (*Install, error) {
@@ -3822,6 +3992,11 @@ func (c *InstallsUpdateCall) Fields(s ...googleapi.Field) *InstallsUpdateCall {
 	return c
 }
 
+// InstallsUpdateCallDoer makes it easy to provide your own testable version of Do.
+type InstallsUpdateCallDoer interface {
+	Do() (*Install, error)
+}
+
 func (c *InstallsUpdateCall) Do() (*Install, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.install)
@@ -3939,6 +4114,11 @@ func (c *PermissionsGetCall) Fields(s ...googleapi.Field) *PermissionsGetCall {
 	return c
 }
 
+// PermissionsGetCallDoer makes it easy to provide your own testable version of Do.
+type PermissionsGetCallDoer interface {
+	Do() (*Permission, error)
+}
+
 func (c *PermissionsGetCall) Do() (*Permission, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4026,6 +4206,11 @@ func (r *ProductsService) Approve(enterpriseId string, productId string, product
 func (c *ProductsApproveCall) Fields(s ...googleapi.Field) *ProductsApproveCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ProductsApproveCallDoer makes it easy to provide your own testable version of Do.
+type ProductsApproveCallDoer interface {
+	Do() error
 }
 
 func (c *ProductsApproveCall) Do() error {
@@ -4125,6 +4310,11 @@ func (c *ProductsGenerateApprovalUrlCall) LanguageCode(languageCode string) *Pro
 func (c *ProductsGenerateApprovalUrlCall) Fields(s ...googleapi.Field) *ProductsGenerateApprovalUrlCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ProductsGenerateApprovalUrlCallDoer makes it easy to provide your own testable version of Do.
+type ProductsGenerateApprovalUrlCallDoer interface {
+	Do() (*ProductsGenerateApprovalUrlResponse, error)
 }
 
 func (c *ProductsGenerateApprovalUrlCall) Do() (*ProductsGenerateApprovalUrlResponse, error) {
@@ -4227,6 +4417,11 @@ func (c *ProductsGetCall) Language(language string) *ProductsGetCall {
 func (c *ProductsGetCall) Fields(s ...googleapi.Field) *ProductsGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ProductsGetCallDoer makes it easy to provide your own testable version of Do.
+type ProductsGetCallDoer interface {
+	Do() (*Product, error)
 }
 
 func (c *ProductsGetCall) Do() (*Product, error) {
@@ -4332,6 +4527,11 @@ func (c *ProductsGetAppRestrictionsSchemaCall) Fields(s ...googleapi.Field) *Pro
 	return c
 }
 
+// ProductsGetAppRestrictionsSchemaCallDoer makes it easy to provide your own testable version of Do.
+type ProductsGetAppRestrictionsSchemaCallDoer interface {
+	Do() (*AppRestrictionsSchema, error)
+}
+
 func (c *ProductsGetAppRestrictionsSchemaCall) Do() (*AppRestrictionsSchema, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4427,6 +4627,11 @@ func (c *ProductsGetPermissionsCall) Fields(s ...googleapi.Field) *ProductsGetPe
 	return c
 }
 
+// ProductsGetPermissionsCallDoer makes it easy to provide your own testable version of Do.
+type ProductsGetPermissionsCallDoer interface {
+	Do() (*ProductPermissions, error)
+}
+
 func (c *ProductsGetPermissionsCall) Do() (*ProductPermissions, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4514,6 +4719,11 @@ func (r *ProductsService) UpdatePermissions(enterpriseId string, productId strin
 func (c *ProductsUpdatePermissionsCall) Fields(s ...googleapi.Field) *ProductsUpdatePermissionsCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ProductsUpdatePermissionsCallDoer makes it easy to provide your own testable version of Do.
+type ProductsUpdatePermissionsCallDoer interface {
+	Do() (*ProductPermissions, error)
 }
 
 func (c *ProductsUpdatePermissionsCall) Do() (*ProductPermissions, error) {
@@ -4613,6 +4823,11 @@ func (c *UsersGenerateTokenCall) Fields(s ...googleapi.Field) *UsersGenerateToke
 	return c
 }
 
+// UsersGenerateTokenCallDoer makes it easy to provide your own testable version of Do.
+type UsersGenerateTokenCallDoer interface {
+	Do() (*UserToken, error)
+}
+
 func (c *UsersGenerateTokenCall) Do() (*UserToken, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4697,6 +4912,11 @@ func (r *UsersService) Get(enterpriseId string, userId string) *UsersGetCall {
 func (c *UsersGetCall) Fields(s ...googleapi.Field) *UsersGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// UsersGetCallDoer makes it easy to provide your own testable version of Do.
+type UsersGetCallDoer interface {
+	Do() (*User, error)
 }
 
 func (c *UsersGetCall) Do() (*User, error) {
@@ -4785,6 +5005,11 @@ func (c *UsersListCall) Fields(s ...googleapi.Field) *UsersListCall {
 	return c
 }
 
+// UsersListCallDoer makes it easy to provide your own testable version of Do.
+type UsersListCallDoer interface {
+	Do() (*UsersListResponse, error)
+}
+
 func (c *UsersListCall) Do() (*UsersListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4870,6 +5095,11 @@ func (r *UsersService) RevokeToken(enterpriseId string, userId string) *UsersRev
 func (c *UsersRevokeTokenCall) Fields(s ...googleapi.Field) *UsersRevokeTokenCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// UsersRevokeTokenCallDoer makes it easy to provide your own testable version of Do.
+type UsersRevokeTokenCallDoer interface {
+	Do() error
 }
 
 func (c *UsersRevokeTokenCall) Do() error {

@@ -386,6 +386,11 @@ func (c *MetricDescriptorsCreateCall) Fields(s ...googleapi.Field) *MetricDescri
 	return c
 }
 
+// MetricDescriptorsCreateCallDoer makes it easy to provide your own testable version of Do.
+type MetricDescriptorsCreateCallDoer interface {
+	Do() (*MetricDescriptor, error)
+}
+
 func (c *MetricDescriptorsCreateCall) Do() (*MetricDescriptor, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.metricdescriptor)
@@ -471,6 +476,11 @@ func (r *MetricDescriptorsService) Delete(project string, metric string) *Metric
 func (c *MetricDescriptorsDeleteCall) Fields(s ...googleapi.Field) *MetricDescriptorsDeleteCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// MetricDescriptorsDeleteCallDoer makes it easy to provide your own testable version of Do.
+type MetricDescriptorsDeleteCallDoer interface {
+	Do() (*DeleteMetricDescriptorResponse, error)
 }
 
 func (c *MetricDescriptorsDeleteCall) Do() (*DeleteMetricDescriptorResponse, error) {
@@ -589,6 +599,11 @@ func (c *MetricDescriptorsListCall) Query(query string) *MetricDescriptorsListCa
 func (c *MetricDescriptorsListCall) Fields(s ...googleapi.Field) *MetricDescriptorsListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// MetricDescriptorsListCallDoer makes it easy to provide your own testable version of Do.
+type MetricDescriptorsListCallDoer interface {
+	Do() (*ListMetricDescriptorsResponse, error)
 }
 
 func (c *MetricDescriptorsListCall) Do() (*ListMetricDescriptorsResponse, error) {
@@ -795,6 +810,11 @@ func (c *TimeseriesListCall) Fields(s ...googleapi.Field) *TimeseriesListCall {
 	return c
 }
 
+// TimeseriesListCallDoer makes it easy to provide your own testable version of Do.
+type TimeseriesListCallDoer interface {
+	Do() (*ListTimeseriesResponse, error)
+}
+
 func (c *TimeseriesListCall) Do() (*ListTimeseriesResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -973,6 +993,11 @@ func (r *TimeseriesService) Write(project string, writetimeseriesrequest *WriteT
 func (c *TimeseriesWriteCall) Fields(s ...googleapi.Field) *TimeseriesWriteCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// TimeseriesWriteCallDoer makes it easy to provide your own testable version of Do.
+type TimeseriesWriteCallDoer interface {
+	Do() (*WriteTimeseriesResponse, error)
 }
 
 func (c *TimeseriesWriteCall) Do() (*WriteTimeseriesResponse, error) {
@@ -1156,6 +1181,11 @@ func (c *TimeseriesDescriptorsListCall) Window(window string) *TimeseriesDescrip
 func (c *TimeseriesDescriptorsListCall) Fields(s ...googleapi.Field) *TimeseriesDescriptorsListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// TimeseriesDescriptorsListCallDoer makes it easy to provide your own testable version of Do.
+type TimeseriesDescriptorsListCallDoer interface {
+	Do() (*ListTimeseriesDescriptorsResponse, error)
 }
 
 func (c *TimeseriesDescriptorsListCall) Do() (*ListTimeseriesDescriptorsResponse, error) {

@@ -525,6 +525,11 @@ func (c *PoolsDeleteCall) Fields(s ...googleapi.Field) *PoolsDeleteCall {
 	return c
 }
 
+// PoolsDeleteCallDoer makes it easy to provide your own testable version of Do.
+type PoolsDeleteCallDoer interface {
+	Do() error
+}
+
 func (c *PoolsDeleteCall) Do() error {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.poolsdeleterequest)
@@ -625,6 +630,11 @@ func (c *PoolsGetCall) Fields(s ...googleapi.Field) *PoolsGetCall {
 	return c
 }
 
+// PoolsGetCallDoer makes it easy to provide your own testable version of Do.
+type PoolsGetCallDoer interface {
+	Do() (*Pool, error)
+}
+
 func (c *PoolsGetCall) Do() (*Pool, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -723,6 +733,11 @@ func (r *PoolsService) Insert(projectName string, zone string, pool *Pool) *Pool
 func (c *PoolsInsertCall) Fields(s ...googleapi.Field) *PoolsInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// PoolsInsertCallDoer makes it easy to provide your own testable version of Do.
+type PoolsInsertCallDoer interface {
+	Do() (*Pool, error)
 }
 
 func (c *PoolsInsertCall) Do() (*Pool, error) {
@@ -836,6 +851,11 @@ func (c *PoolsListCall) PageToken(pageToken string) *PoolsListCall {
 func (c *PoolsListCall) Fields(s ...googleapi.Field) *PoolsListCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// PoolsListCallDoer makes it easy to provide your own testable version of Do.
+type PoolsListCallDoer interface {
+	Do() (*PoolsListResponse, error)
 }
 
 func (c *PoolsListCall) Do() (*PoolsListResponse, error) {
@@ -961,6 +981,11 @@ func (c *PoolsResizeCall) Fields(s ...googleapi.Field) *PoolsResizeCall {
 	return c
 }
 
+// PoolsResizeCallDoer makes it easy to provide your own testable version of Do.
+type PoolsResizeCallDoer interface {
+	Do() (*Pool, error)
+}
+
 func (c *PoolsResizeCall) Do() (*Pool, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1070,6 +1095,11 @@ func (c *PoolsUpdatetemplateCall) Fields(s ...googleapi.Field) *PoolsUpdatetempl
 	return c
 }
 
+// PoolsUpdatetemplateCallDoer makes it easy to provide your own testable version of Do.
+type PoolsUpdatetemplateCallDoer interface {
+	Do() error
+}
+
 func (c *PoolsUpdatetemplateCall) Do() error {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.template)
@@ -1172,6 +1202,11 @@ func (r *ReplicasService) Delete(projectName string, zone string, poolName strin
 func (c *ReplicasDeleteCall) Fields(s ...googleapi.Field) *ReplicasDeleteCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ReplicasDeleteCallDoer makes it easy to provide your own testable version of Do.
+type ReplicasDeleteCallDoer interface {
+	Do() (*Replica, error)
 }
 
 func (c *ReplicasDeleteCall) Do() (*Replica, error) {
@@ -1289,6 +1324,11 @@ func (r *ReplicasService) Get(projectName string, zone string, poolName string, 
 func (c *ReplicasGetCall) Fields(s ...googleapi.Field) *ReplicasGetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ReplicasGetCallDoer makes it easy to provide your own testable version of Do.
+type ReplicasGetCallDoer interface {
+	Do() (*Replica, error)
 }
 
 func (c *ReplicasGetCall) Do() (*Replica, error) {
@@ -1415,6 +1455,11 @@ func (c *ReplicasListCall) Fields(s ...googleapi.Field) *ReplicasListCall {
 	return c
 }
 
+// ReplicasListCallDoer makes it easy to provide your own testable version of Do.
+type ReplicasListCallDoer interface {
+	Do() (*ReplicasListResponse, error)
+}
+
 func (c *ReplicasListCall) Do() (*ReplicasListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1535,6 +1580,11 @@ func (r *ReplicasService) Restart(projectName string, zone string, poolName stri
 func (c *ReplicasRestartCall) Fields(s ...googleapi.Field) *ReplicasRestartCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// ReplicasRestartCallDoer makes it easy to provide your own testable version of Do.
+type ReplicasRestartCallDoer interface {
+	Do() (*Replica, error)
 }
 
 func (c *ReplicasRestartCall) Do() (*Replica, error) {

@@ -16,6 +16,24 @@
       "revId": "e5eda6b790e5869d7b71ca6ebf8574eec7a7db42",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "73a3a180_23330a81",
+        "filename": "adexchangeseller/v1.1/adexchangeseller-gen.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 1989,
+      "author": {
+        "id": 5295
+      },
+      "writtenOn": "2015-06-27T22:49:25Z",
+      "side": 1,
+      "message": "Done, using your suggested wording.",
+      "parentUuid": "c3f1d6a3_4ee8d3a6",
+      "revId": "e5eda6b790e5869d7b71ca6ebf8574eec7a7db42",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
     }
   ]
 }

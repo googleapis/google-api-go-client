@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93a1f560_919fa6e2",
+        "filename": "CONTRIBUTORS",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-06-29T19:40:01Z",
+      "side": 1,
+      "message": "weird, what is this hostname?",
+      "revId": "27942ea0759a544d1642f8d93c396207ca0ea033",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

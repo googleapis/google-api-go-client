@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "132185e2_a8ffbb2a",
+        "filename": "admin/directory_v1/admin-gen.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 1600,
+      "author": {
+        "id": 5915
+      },
+      "writtenOn": "2015-06-29T21:00:57Z",
+      "side": 1,
+      "message": "The return type of these interface methods should be interfaces for the Doers, otherwise we can\u0027t tie them together.\n\ne.g.\nDelete(userKey string, codeId int64) *AspsDeleteCallDoer\n\nThe business logic of the generated code can be the same, but the signature would have to change to return Doer interfaces.",
+      "range": {
+        "startLine": 1600,
+        "startChar": 39,
+        "endLine": 1600,
+        "endChar": 53
+      },
+      "revId": "7e75c9645012fc81aed0bfbf253f522c61874012",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

@@ -89,8 +89,6 @@ type File struct {
 	// Description: A short description of the file
 	Description string `json:"description,omitempty"`
 
-	// DownloadUrl: Short term download URL for the file. This will only be
-	// populated on files with content stored in Drive.
 	DownloadUrl string `json:"downloadUrl,omitempty"`
 
 	// Etag: ETag of the file.

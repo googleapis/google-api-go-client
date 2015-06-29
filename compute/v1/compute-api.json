@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/KR3ZwQmcUACaSsWyMOhFw8te6OA\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/zfEgIM85dgKQ1dAjVHrRpCmO0gk\"",
  "discoveryVersion": "v1",
  "id": "compute:v1",
  "name": "compute",
  "version": "v1",
- "revision": "20150305",
+ "revision": "20150617",
  "title": "Compute Engine API",
  "description": "API for the Google Compute Engine service.",
  "ownerDomain": "google.com",
@@ -4600,9 +4600,11 @@
       "NETWORK_ERROR",
       "NO_INCOMING_PACKETS",
       "PROVISIONING",
+      "REJECTED",
       "WAITING_FOR_FULL_CONFIG"
      ],
      "enumDescriptions": [
+      "",
       "",
       "",
       "",

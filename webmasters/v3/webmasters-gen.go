@@ -1,6 +1,6 @@
 // Package webmasters provides access to the Webmaster Tools API.
 //
-// See https://developers.google.com/webmaster-tools/v3/welcome
+// See https://developers.google.com/webmaster-tools/
 //
 // Usage example:
 //
@@ -55,6 +55,7 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client, BasePath: basePath}
+	s.Searchanalytics = NewSearchanalyticsService(s)
 	s.Sitemaps = NewSitemapsService(s)
 	s.Sites = NewSitesService(s)
 	s.Urlcrawlerrorscounts = NewUrlcrawlerrorscountsService(s)
@@ -66,6 +67,8 @@ type Service struct {
 	client    *http.Client
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
+
+	Searchanalytics *SearchanalyticsService
 
 	Sitemaps *SitemapsService
 
@@ -81,6 +84,15 @@ func (s *Service) userAgent() string {
 		return googleapi.UserAgent
 	}
 	return googleapi.UserAgent + " " + s.UserAgent
+}
+
+func NewSearchanalyticsService(s *Service) *SearchanalyticsService {
+	rs := &SearchanalyticsService{s: s}
+	return rs
+}
+
+type SearchanalyticsService struct {
+	s *Service
 }
 
 func NewSitemapsService(s *Service) *SitemapsService {
@@ -119,13 +131,98 @@ type UrlcrawlerrorssamplesService struct {
 	s *Service
 }
 
+type ApiDataRow struct {
+	Clicks float64 `json:"clicks,omitempty"`
+
+	Ctr float64 `json:"ctr,omitempty"`
+
+	Impressions float64 `json:"impressions,omitempty"`
+
+	Keys []string `json:"keys,omitempty"`
+
+	Position float64 `json:"position,omitempty"`
+}
+
+type ApiDimensionFilter struct {
+	Dimension string `json:"dimension,omitempty"`
+
+	Expression string `json:"expression,omitempty"`
+
+	Operator string `json:"operator,omitempty"`
+}
+
+type ApiDimensionFilterGroup struct {
+	Filters []*ApiDimensionFilter `json:"filters,omitempty"`
+
+	GroupType string `json:"groupType,omitempty"`
+}
+
+type SearchAnalyticsQueryRequest struct {
+	// AggregationType: [Optional; Default is AUTO] How data is aggregated.
+	// If aggregated by property, all data for the same property is
+	// aggregated; if aggregated by page, all data is aggregated by
+	// canonical URI. If you filter or group by page, choose AUTO; otherwise
+	// you can aggregate either by property or by page, depending on how you
+	// want your data calculated; see  the help documentation to learn how
+	// data is calculated differently by site versus by page.
+	//
+	// Note: If you group or filter by page, you cannot aggregate by
+	// property.
+	//
+	// If you specify any value other than AUTO, the aggregation type in the
+	// result will match the requested type, or if you request an invalid
+	// type, you will get an error. The API will never change your
+	// aggregation type if the requested type is invalid.
+	AggregationType string `json:"aggregationType,omitempty"`
+
+	// DimensionFilterGroups: [Optional] Zero or more filters to apply to
+	// the dimension grouping values; for example, 'Country CONTAINS
+	// "Guinea"' to see only data where the country contains the substring
+	// "Guinea". You can filter by a dimension without grouping by it.
+	DimensionFilterGroups []*ApiDimensionFilterGroup `json:"dimensionFilterGroups,omitempty"`
+
+	// Dimensions: [Optional] Zero or more dimensions to group results by.
+	// Dimensions are the group-by values in the Search Analytics page.
+	// Dimensions are combined to create a unique row key for each row.
+	// Results are grouped in the order that you supply these dimensions.
+	Dimensions []string `json:"dimensions,omitempty"`
+
+	// EndDate: [Required] End date of the requested date range, in
+	// YYYY-MM-DD format, in PST (UTC - 8:00). Must be greater than or equal
+	// to the start date. This value is included in the range.
+	EndDate string `json:"endDate,omitempty"`
+
+	// RowLimit: [Optional; Default is 1000] The maximum number of rows to
+	// return. Must be a number from 1 to 1,000 (inclusive).
+	RowLimit int64 `json:"rowLimit,omitempty"`
+
+	// SearchType: [Optional; Default is WEB] The search type to filter for.
+	SearchType string `json:"searchType,omitempty"`
+
+	// StartDate: [Required] Start date of the requested date range, in
+	// YYYY-MM-DD format, in PST time (UTC - 8:00). Must be less than or
+	// equal to the end date. This value is included in the range.
+	StartDate string `json:"startDate,omitempty"`
+}
+
+type SearchAnalyticsQueryResponse struct {
+	// ResponseAggregationType: How the results were aggregated.
+	ResponseAggregationType string `json:"responseAggregationType,omitempty"`
+
+	// Rows: A list of rows grouped by the key values in the order given in
+	// the query.
+	Rows []*ApiDataRow `json:"rows,omitempty"`
+}
+
 type SitemapsListResponse struct {
-	// Sitemap: Information about a sitemap entry.
+	// Sitemap: Contains detailed information about a specific URL submitted
+	// as a sitemap.
 	Sitemap []*WmxSitemap `json:"sitemap,omitempty"`
 }
 
 type SitesListResponse struct {
-	// SiteEntry: Access level information for a Webmaster Tools site.
+	// SiteEntry: Contains permission level information about a Webmaster
+	// Tools site. For more information, see Permissions in Webmaster Tools.
 	SiteEntry []*WmxSite `json:"siteEntry,omitempty"`
 }
 
@@ -133,8 +230,8 @@ type UrlCrawlErrorCount struct {
 	// Count: The error count at the given timestamp.
 	Count int64 `json:"count,omitempty,string"`
 
-	// Timestamp: The time (well, date) when errors were detected, in RFC
-	// 3339 format.
+	// Timestamp: The date and time when the crawl attempt took place, in
+	// RFC 3339 format.
 	Timestamp string `json:"timestamp,omitempty"`
 }
 
@@ -145,13 +242,14 @@ type UrlCrawlErrorCountsPerType struct {
 	// Entries: The error count entries time series.
 	Entries []*UrlCrawlErrorCount `json:"entries,omitempty"`
 
-	// Platform: Corresponding to the user agent that made the request.
+	// Platform: The general type of Googlebot that made the request (see
+	// list of Googlebot user-agents for the user-agents used).
 	Platform string `json:"platform,omitempty"`
 }
 
 type UrlCrawlErrorsCountsQueryResponse struct {
-	// CountPerTypes: The time series of the number of URL crawl errors for
-	// per error category and platform.
+	// CountPerTypes: The time series of the number of URL crawl errors per
+	// error category and platform.
 	CountPerTypes []*UrlCrawlErrorCountsPerType `json:"countPerTypes,omitempty"`
 }
 
@@ -201,8 +299,9 @@ type WmxSitemap struct {
 	// Contents: The various content types in the sitemap.
 	Contents []*WmxSitemapContent `json:"contents,omitempty"`
 
-	// Errors: Number of errors in the sitemap - issues with the sitemap
-	// itself, that needs to be fixed before it can be processed correctly.
+	// Errors: Number of errors in the sitemap. These are issues with the
+	// sitemap itself that need to be fixed before it can be processed
+	// correctly.
 	Errors int64 `json:"errors,omitempty,string"`
 
 	// IsPending: If true, the sitemap has not been processed.
@@ -222,11 +321,11 @@ type WmxSitemap struct {
 	// Path: The url of the sitemap.
 	Path string `json:"path,omitempty"`
 
-	// Type: The type of the sitemap (for example "sitemap").
+	// Type: The type of the sitemap. For example: rssFeed.
 	Type string `json:"type,omitempty"`
 
-	// Warnings: Number of warnings for the sitemap - issues with URLs in
-	// the sitemaps.
+	// Warnings: Number of warnings for the sitemap. These are generally
+	// non-critical issues with URLs in the sitemaps.
 	Warnings int64 `json:"warnings,omitempty,string"`
 }
 
@@ -238,9 +337,105 @@ type WmxSitemapContent struct {
 	// Submitted: The number of URLs in the sitemap (of the content type).
 	Submitted int64 `json:"submitted,omitempty,string"`
 
-	// Type: The specific type of content in this sitemap (for example
-	// "web", "images").
+	// Type: The specific type of content in this sitemap. For example: web.
 	Type string `json:"type,omitempty"`
+}
+
+// method id "webmasters.searchanalytics.query":
+
+type SearchanalyticsQueryCall struct {
+	s                           *Service
+	siteUrl                     string
+	searchanalyticsqueryrequest *SearchAnalyticsQueryRequest
+	opt_                        map[string]interface{}
+}
+
+// Query: [LIMITED ACCESS]
+//
+// Query your data with filters and parameters that you define. Returns
+// zero or more rows grouped by the row keys that you define. You must
+// define a date range of one or more days.
+//
+// When date is one of the group by values, any days without data are
+// omitted from the result list. If you need to know which days have
+// data, issue a broad date range query grouped by date for any metric,
+// and see which day rows are returned.
+func (r *SearchanalyticsService) Query(siteUrl string, searchanalyticsqueryrequest *SearchAnalyticsQueryRequest) *SearchanalyticsQueryCall {
+	c := &SearchanalyticsQueryCall{s: r.s, opt_: make(map[string]interface{})}
+	c.siteUrl = siteUrl
+	c.searchanalyticsqueryrequest = searchanalyticsqueryrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SearchanalyticsQueryCall) Fields(s ...googleapi.Field) *SearchanalyticsQueryCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *SearchanalyticsQueryCall) Do() (*SearchAnalyticsQueryResponse, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.searchanalyticsqueryrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "sites/{siteUrl}/searchAnalytics/query")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"siteUrl": c.siteUrl,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *SearchAnalyticsQueryResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "[LIMITED ACCESS]\n\nQuery your data with filters and parameters that you define. Returns zero or more rows grouped by the row keys that you define. You must define a date range of one or more days.\n\nWhen date is one of the group by values, any days without data are omitted from the result list. If you need to know which days have data, issue a broad date range query grouped by date for any metric, and see which day rows are returned.",
+	//   "httpMethod": "POST",
+	//   "id": "webmasters.searchanalytics.query",
+	//   "parameterOrder": [
+	//     "siteUrl"
+	//   ],
+	//   "parameters": {
+	//     "siteUrl": {
+	//       "description": "The site's URL, including protocol. For example: http://www.example.com/",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "sites/{siteUrl}/searchAnalytics/query",
+	//   "request": {
+	//     "$ref": "SearchAnalyticsQueryRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "SearchAnalyticsQueryResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/webmasters",
+	//     "https://www.googleapis.com/auth/webmasters.readonly"
+	//   ]
+	// }
+
 }
 
 // method id "webmasters.sitemaps.delete":
@@ -302,13 +497,13 @@ func (c *SitemapsDeleteCall) Do() error {
 	//   ],
 	//   "parameters": {
 	//     "feedpath": {
-	//       "description": "The URL of the actual sitemap (for example http://www.example.com/sitemap.xml).",
+	//       "description": "The URL of the actual sitemap. For example: http://www.example.com/sitemap.xml",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "siteUrl": {
-	//       "description": "The site's URL, including protocol, for example 'http://www.example.com/'",
+	//       "description": "The site's URL, including protocol. For example: http://www.example.com/",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -385,13 +580,13 @@ func (c *SitemapsGetCall) Do() (*WmxSitemap, error) {
 	//   ],
 	//   "parameters": {
 	//     "feedpath": {
-	//       "description": "The URL of the actual sitemap (for example http://www.example.com/sitemap.xml).",
+	//       "description": "The URL of the actual sitemap. For example: http://www.example.com/sitemap.xml",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "siteUrl": {
-	//       "description": "The site's URL, including protocol, for example 'http://www.example.com/'",
+	//       "description": "The site's URL, including protocol. For example: http://www.example.com/",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -417,7 +612,9 @@ type SitemapsListCall struct {
 	opt_    map[string]interface{}
 }
 
-// List: Lists sitemaps uploaded to the site.
+// List: Lists the sitemaps-entries submitted for this site, or included
+// in the sitemap index file (if sitemapIndex is specified in the
+// request).
 func (r *SitemapsService) List(siteUrl string) *SitemapsListCall {
 	c := &SitemapsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.siteUrl = siteUrl
@@ -425,7 +622,8 @@ func (r *SitemapsService) List(siteUrl string) *SitemapsListCall {
 }
 
 // SitemapIndex sets the optional parameter "sitemapIndex": A URL of a
-// site's sitemap index.
+// site's sitemap index. For example:
+// http://www.example.com/sitemapindex.xml
 func (c *SitemapsListCall) SitemapIndex(sitemapIndex string) *SitemapsListCall {
 	c.opt_["sitemapIndex"] = sitemapIndex
 	return c
@@ -470,7 +668,7 @@ func (c *SitemapsListCall) Do() (*SitemapsListResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists sitemaps uploaded to the site.",
+	//   "description": "Lists the sitemaps-entries submitted for this site, or included in the sitemap index file (if sitemapIndex is specified in the request).",
 	//   "httpMethod": "GET",
 	//   "id": "webmasters.sitemaps.list",
 	//   "parameterOrder": [
@@ -478,13 +676,13 @@ func (c *SitemapsListCall) Do() (*SitemapsListResponse, error) {
 	//   ],
 	//   "parameters": {
 	//     "siteUrl": {
-	//       "description": "The site's URL, including protocol, for example 'http://www.example.com/'",
+	//       "description": "The site's URL, including protocol. For example: http://www.example.com/",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "sitemapIndex": {
-	//       "description": "A URL of a site's sitemap index.",
+	//       "description": "A URL of a site's sitemap index. For example: http://www.example.com/sitemapindex.xml",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -560,13 +758,13 @@ func (c *SitemapsSubmitCall) Do() error {
 	//   ],
 	//   "parameters": {
 	//     "feedpath": {
-	//       "description": "The URL of the sitemap to add.",
+	//       "description": "The URL of the sitemap to add. For example: http://www.example.com/sitemap.xml",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "siteUrl": {
-	//       "description": "The site's URL, including protocol, for example 'http://www.example.com/'",
+	//       "description": "The site's URL, including protocol. For example: http://www.example.com/",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -705,7 +903,7 @@ func (c *SitesDeleteCall) Do() error {
 	//   ],
 	//   "parameters": {
 	//     "siteUrl": {
-	//       "description": "The site's URL, including protocol, for example 'http://www.example.com/'",
+	//       "description": "The URI of the property as defined in Search Console. Examples: http://www.example.com/ or android-app://com.example/",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -778,7 +976,7 @@ func (c *SitesGetCall) Do() (*WmxSite, error) {
 	//   ],
 	//   "parameters": {
 	//     "siteUrl": {
-	//       "description": "The site's URL, including protocol, for example 'http://www.example.com/'",
+	//       "description": "The URI of the property as defined in Search Console. Examples: http://www.example.com/ or android-app://com.example/",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -803,7 +1001,7 @@ type SitesListCall struct {
 	opt_ map[string]interface{}
 }
 
-// List: Lists your Webmaster Tools sites.
+// List: Lists the user's Webmaster Tools sites.
 func (r *SitesService) List() *SitesListCall {
 	c := &SitesListCall{s: r.s, opt_: make(map[string]interface{})}
 	return c
@@ -843,7 +1041,7 @@ func (c *SitesListCall) Do() (*SitesListResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists your Webmaster Tools sites.",
+	//   "description": "Lists the user's Webmaster Tools sites.",
 	//   "httpMethod": "GET",
 	//   "id": "webmasters.sites.list",
 	//   "path": "sites",
@@ -875,8 +1073,8 @@ func (r *UrlcrawlerrorscountsService) Query(siteUrl string) *Urlcrawlerrorscount
 }
 
 // Category sets the optional parameter "category": The crawl error
-// category, for example 'serverError'. If not specified, we return
-// results for all categories.
+// category. For example: serverError. If not specified, returns results
+// for all categories.
 //
 // Possible values:
 //   "authPermissions"
@@ -900,8 +1098,8 @@ func (c *UrlcrawlerrorscountsQueryCall) LatestCountsOnly(latestCountsOnly bool) 
 }
 
 // Platform sets the optional parameter "platform": The user agent type
-// (platform) that made the request, for example 'web'. If not
-// specified, we return results for all platforms.
+// (platform) that made the request. For example: web. If not specified,
+// returns results for all platforms.
 //
 // Possible values:
 //   "mobile"
@@ -965,7 +1163,7 @@ func (c *UrlcrawlerrorscountsQueryCall) Do() (*UrlCrawlErrorsCountsQueryResponse
 	//   ],
 	//   "parameters": {
 	//     "category": {
-	//       "description": "The crawl error category, for example 'serverError'. If not specified, we return results for all categories.",
+	//       "description": "The crawl error category. For example: serverError. If not specified, returns results for all categories.",
 	//       "enum": [
 	//         "authPermissions",
 	//         "manyToOneRedirect",
@@ -996,7 +1194,7 @@ func (c *UrlcrawlerrorscountsQueryCall) Do() (*UrlCrawlErrorsCountsQueryResponse
 	//       "type": "boolean"
 	//     },
 	//     "platform": {
-	//       "description": "The user agent type (platform) that made the request, for example 'web'. If not specified, we return results for all platforms.",
+	//       "description": "The user agent type (platform) that made the request. For example: web. If not specified, returns results for all platforms.",
 	//       "enum": [
 	//         "mobile",
 	//         "smartphoneOnly",
@@ -1011,7 +1209,7 @@ func (c *UrlcrawlerrorscountsQueryCall) Do() (*UrlCrawlErrorsCountsQueryResponse
 	//       "type": "string"
 	//     },
 	//     "siteUrl": {
-	//       "description": "The site's URL, including protocol, for example 'http://www.example.com/'",
+	//       "description": "The site's URL, including protocol. For example: http://www.example.com/",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1100,7 +1298,7 @@ func (c *UrlcrawlerrorssamplesGetCall) Do() (*UrlCrawlErrorsSample, error) {
 	//   ],
 	//   "parameters": {
 	//     "category": {
-	//       "description": "The crawl error category, for example 'authPermissions'",
+	//       "description": "The crawl error category. For example: authPermissions",
 	//       "enum": [
 	//         "authPermissions",
 	//         "manyToOneRedirect",
@@ -1126,7 +1324,7 @@ func (c *UrlcrawlerrorssamplesGetCall) Do() (*UrlCrawlErrorsSample, error) {
 	//       "type": "string"
 	//     },
 	//     "platform": {
-	//       "description": "The user agent type (platform) that made the request, for example 'web'",
+	//       "description": "The user agent type (platform) that made the request. For example: web",
 	//       "enum": [
 	//         "mobile",
 	//         "smartphoneOnly",
@@ -1142,13 +1340,13 @@ func (c *UrlcrawlerrorssamplesGetCall) Do() (*UrlCrawlErrorsSample, error) {
 	//       "type": "string"
 	//     },
 	//     "siteUrl": {
-	//       "description": "The site's URL, including protocol, for example 'http://www.example.com/'",
+	//       "description": "The site's URL, including protocol. For example: http://www.example.com/",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "url": {
-	//       "description": "The relative path (without the site) of the sample URL; must be one of the URLs returned by list",
+	//       "description": "The relative path (without the site) of the sample URL. It must be one of the URLs returned by list(). For example, for the URL https://www.example.com/pagename on the site https://www.example.com/, the url value is pagename",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1234,7 +1432,7 @@ func (c *UrlcrawlerrorssamplesListCall) Do() (*UrlCrawlErrorsSamplesListResponse
 	//   ],
 	//   "parameters": {
 	//     "category": {
-	//       "description": "The crawl error category, for example 'authPermissions'",
+	//       "description": "The crawl error category. For example: authPermissions",
 	//       "enum": [
 	//         "authPermissions",
 	//         "manyToOneRedirect",
@@ -1260,7 +1458,7 @@ func (c *UrlcrawlerrorssamplesListCall) Do() (*UrlCrawlErrorsSamplesListResponse
 	//       "type": "string"
 	//     },
 	//     "platform": {
-	//       "description": "The user agent type (platform) that made the request, for example 'web'",
+	//       "description": "The user agent type (platform) that made the request. For example: web",
 	//       "enum": [
 	//         "mobile",
 	//         "smartphoneOnly",
@@ -1276,7 +1474,7 @@ func (c *UrlcrawlerrorssamplesListCall) Do() (*UrlCrawlErrorsSamplesListResponse
 	//       "type": "string"
 	//     },
 	//     "siteUrl": {
-	//       "description": "The site's URL, including protocol, for example 'http://www.example.com/'",
+	//       "description": "The site's URL, including protocol. For example: http://www.example.com/",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1362,7 +1560,7 @@ func (c *UrlcrawlerrorssamplesMarkAsFixedCall) Do() error {
 	//   ],
 	//   "parameters": {
 	//     "category": {
-	//       "description": "The crawl error category, for example 'authPermissions'",
+	//       "description": "The crawl error category. For example: authPermissions",
 	//       "enum": [
 	//         "authPermissions",
 	//         "manyToOneRedirect",
@@ -1388,7 +1586,7 @@ func (c *UrlcrawlerrorssamplesMarkAsFixedCall) Do() error {
 	//       "type": "string"
 	//     },
 	//     "platform": {
-	//       "description": "The user agent type (platform) that made the request, for example 'web'",
+	//       "description": "The user agent type (platform) that made the request. For example: web",
 	//       "enum": [
 	//         "mobile",
 	//         "smartphoneOnly",
@@ -1404,13 +1602,13 @@ func (c *UrlcrawlerrorssamplesMarkAsFixedCall) Do() error {
 	//       "type": "string"
 	//     },
 	//     "siteUrl": {
-	//       "description": "The site's URL, including protocol, for example 'http://www.example.com/'",
+	//       "description": "The site's URL, including protocol. For example: http://www.example.com/",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "url": {
-	//       "description": "The relative path (without the site) of the sample URL; must be one of the URLs returned by list",
+	//       "description": "The relative path (without the site) of the sample URL. It must be one of the URLs returned by list(). For example, for the URL https://www.example.com/pagename on the site https://www.example.com/, the url value is pagename",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"

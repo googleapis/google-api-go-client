@@ -1,14 +1,14 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/E7cd_p6Q6F5Fnwd8jt7TC5Xxeg8\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/DGefIN76FNyNAfmkSh_oOSYqW-g\"",
  "discoveryVersion": "v1",
- "id": "computeaccounts:alpha",
- "name": "computeaccounts",
- "canonicalName": "Compute Accounts",
- "version": "alpha",
+ "id": "clouduseraccounts:vm_alpha",
+ "name": "clouduseraccounts",
+ "canonicalName": "Cloud User Accounts",
+ "version": "vm_alpha",
  "revision": "20150622",
- "title": "Compute Accounts API",
- "description": "API for the Google Compute Accounts service.",
+ "title": "Cloud User Accounts API",
+ "description": "API for the Google Cloud User Accounts service.",
  "ownerDomain": "google.com",
  "ownerName": "Google",
  "icons": {
@@ -17,10 +17,10 @@
  },
  "documentationLink": "https://cloud.google.com/compute/docs/access/user-accounts/api/latest/",
  "protocol": "rest",
- "baseUrl": "https://www.googleapis.com/computeaccounts/alpha/projects/",
- "basePath": "/computeaccounts/alpha/projects/",
+ "baseUrl": "https://www.googleapis.com/clouduseraccounts/vm_alpha/projects/",
+ "basePath": "/clouduseraccounts/vm_alpha/projects/",
  "rootUrl": "https://www.googleapis.com/",
- "servicePath": "computeaccounts/alpha/projects/",
+ "servicePath": "clouduseraccounts/vm_alpha/projects/",
  "batchPath": "batch",
  "parameters": {
   "alt": {
@@ -124,7 +124,7 @@
     "kind": {
      "type": "string",
      "description": "[Output Only] Type of the resource. Always clouduseraccounts#group for groups.",
-     "default": "computeaccounts#group"
+     "default": "clouduseraccounts#group"
     },
     "members": {
      "type": "array",
@@ -136,7 +136,12 @@
     "name": {
      "type": "string",
      "description": "Name of the resource; provided by the client when the resource is created.",
-     "pattern": "[a-z][-a-z0-9_]{0,31}"
+     "pattern": "[a-z][-a-z0-9_]{0,31}",
+     "annotations": {
+      "required": [
+       "clouduseraccounts.groups.insert"
+      ]
+     }
     },
     "selfLink": {
      "type": "string",
@@ -162,7 +167,7 @@
     "kind": {
      "type": "string",
      "description": "[Output Only] Type of resource. Always clouduseraccounts#groupList for lists of groups.",
-     "default": "computeaccounts#groupList"
+     "default": "clouduseraccounts#groupList"
     },
     "nextPageToken": {
      "type": "string",
@@ -215,7 +220,7 @@
     "kind": {
      "type": "string",
      "description": "[Output Only] Type of the resource. Always clouduseraccounts#linuxAccountViews for Linux resources.",
-     "default": "computeaccounts#linuxAccountViews"
+     "default": "clouduseraccounts#linuxAccountViews"
     },
     "userViews": {
      "type": "array",
@@ -367,7 +372,7 @@
     "kind": {
      "type": "string",
      "description": "[Output Only] Type of the resource. Always compute#Operation for Operation resources.",
-     "default": "computeaccounts#operation"
+     "default": "clouduseraccounts#operation"
     },
     "name": {
      "type": "string",
@@ -516,7 +521,7 @@
     "kind": {
      "type": "string",
      "description": "[Output Only] Type of resource. Always compute#operations for Operations resource.",
-     "default": "computeaccounts#operationList"
+     "default": "clouduseraccounts#operationList"
     },
     "nextPageToken": {
      "type": "string",
@@ -583,16 +588,26 @@
     "kind": {
      "type": "string",
      "description": "[Output Only] Type of the resource. Always clouduseraccounts#user for users.",
-     "default": "computeaccounts#user"
+     "default": "clouduseraccounts#user"
     },
     "name": {
      "type": "string",
      "description": "Name of the resource; provided by the client when the resource is created.",
-     "pattern": "[a-z][-a-z0-9_]{0,31}"
+     "pattern": "[a-z][-a-z0-9_]{0,31}",
+     "annotations": {
+      "required": [
+       "clouduseraccounts.users.insert"
+      ]
+     }
     },
     "owner": {
      "type": "string",
-     "description": "Email address of account's owner. This account will be validated to make sure it exists. The email can belong to any domain, but it must be tied to a Google account."
+     "description": "Email address of account's owner. This account will be validated to make sure it exists. The email can belong to any domain, but it must be tied to a Google account.",
+     "annotations": {
+      "required": [
+       "clouduseraccounts.users.insert"
+      ]
+     }
     },
     "publicKeys": {
      "type": "array",
@@ -625,7 +640,7 @@
     "kind": {
      "type": "string",
      "description": "[Output Only] Type of resource. Always clouduseraccounts#userList for lists of users.",
-     "default": "computeaccounts#userList"
+     "default": "clouduseraccounts#userList"
     },
     "nextPageToken": {
      "type": "string",
@@ -642,7 +657,7 @@
   "globalAccountsOperations": {
    "methods": {
     "delete": {
-     "id": "computeaccounts.globalAccountsOperations.delete",
+     "id": "clouduseraccounts.globalAccountsOperations.delete",
      "path": "{project}/global/operations/{operation}",
      "httpMethod": "DELETE",
      "description": "Deletes the specified operation resource.",
@@ -673,7 +688,7 @@
      ]
     },
     "get": {
-     "id": "computeaccounts.globalAccountsOperations.get",
+     "id": "clouduseraccounts.globalAccountsOperations.get",
      "path": "{project}/global/operations/{operation}",
      "httpMethod": "GET",
      "description": "Retrieves the specified operation resource.",
@@ -709,7 +724,7 @@
      ]
     },
     "list": {
-     "id": "computeaccounts.globalAccountsOperations.list",
+     "id": "clouduseraccounts.globalAccountsOperations.list",
      "path": "{project}/global/operations",
      "httpMethod": "GET",
      "description": "Retrieves the list of operation resources contained within the specified project.",
@@ -765,7 +780,7 @@
   "groups": {
    "methods": {
     "addMember": {
-     "id": "computeaccounts.groups.addMember",
+     "id": "clouduseraccounts.groups.addMember",
      "path": "{project}/global/groups/{groupName}/addMember",
      "httpMethod": "POST",
      "description": "Adds users to the specified group.",
@@ -802,7 +817,7 @@
      ]
     },
     "delete": {
-     "id": "computeaccounts.groups.delete",
+     "id": "clouduseraccounts.groups.delete",
      "path": "{project}/global/groups/{groupName}",
      "httpMethod": "DELETE",
      "description": "Deletes the specified Group resource.",
@@ -836,7 +851,7 @@
      ]
     },
     "get": {
-     "id": "computeaccounts.groups.get",
+     "id": "clouduseraccounts.groups.get",
      "path": "{project}/global/groups/{groupName}",
      "httpMethod": "GET",
      "description": "Returns the specified Group resource.",
@@ -872,7 +887,7 @@
      ]
     },
     "insert": {
-     "id": "computeaccounts.groups.insert",
+     "id": "clouduseraccounts.groups.insert",
      "path": "{project}/global/groups",
      "httpMethod": "POST",
      "description": "Creates a Group resource in the specified project using the data included in the request.",
@@ -901,7 +916,7 @@
      ]
     },
     "list": {
-     "id": "computeaccounts.groups.list",
+     "id": "clouduseraccounts.groups.list",
      "path": "{project}/global/groups",
      "httpMethod": "GET",
      "description": "Retrieves the list of groups contained within the specified project.",
@@ -953,7 +968,7 @@
      ]
     },
     "removeMember": {
-     "id": "computeaccounts.groups.removeMember",
+     "id": "clouduseraccounts.groups.removeMember",
      "path": "{project}/global/groups/{groupName}/removeMember",
      "httpMethod": "POST",
      "description": "Removes users from the specified group.",
@@ -994,7 +1009,7 @@
   "linux": {
    "methods": {
     "getAuthorizedKeysView": {
-     "id": "computeaccounts.linux.getAuthorizedKeysView",
+     "id": "clouduseraccounts.linux.getAuthorizedKeysView",
      "path": "{project}/zones/{zone}/authorizedKeysView/{user}",
      "httpMethod": "POST",
      "description": "Returns a list of authorized public keys for a specific user account.",
@@ -1045,7 +1060,7 @@
      ]
     },
     "getLinuxAccountViews": {
-     "id": "computeaccounts.linux.getLinuxAccountViews",
+     "id": "clouduseraccounts.linux.getLinuxAccountViews",
      "path": "{project}/zones/{zone}/linuxAccountViews",
      "httpMethod": "POST",
      "description": "Retrieves a list of user accounts for an instance within a specific project.",
@@ -1122,7 +1137,7 @@
   "users": {
    "methods": {
     "addPublicKey": {
-     "id": "computeaccounts.users.addPublicKey",
+     "id": "clouduseraccounts.users.addPublicKey",
      "path": "{project}/global/users/{user}/addPublicKey",
      "httpMethod": "POST",
      "description": "Adds a public key to the specified User resource with the data included in the request.",
@@ -1159,7 +1174,7 @@
      ]
     },
     "delete": {
-     "id": "computeaccounts.users.delete",
+     "id": "clouduseraccounts.users.delete",
      "path": "{project}/global/users/{user}",
      "httpMethod": "DELETE",
      "description": "Deletes the specified User resource.",
@@ -1193,7 +1208,7 @@
      ]
     },
     "get": {
-     "id": "computeaccounts.users.get",
+     "id": "clouduseraccounts.users.get",
      "path": "{project}/global/users/{user}",
      "httpMethod": "GET",
      "description": "Returns the specified User resource.",
@@ -1229,7 +1244,7 @@
      ]
     },
     "insert": {
-     "id": "computeaccounts.users.insert",
+     "id": "clouduseraccounts.users.insert",
      "path": "{project}/global/users",
      "httpMethod": "POST",
      "description": "Creates a User resource in the specified project using the data included in the request.",
@@ -1258,7 +1273,7 @@
      ]
     },
     "list": {
-     "id": "computeaccounts.users.list",
+     "id": "clouduseraccounts.users.list",
      "path": "{project}/global/users",
      "httpMethod": "GET",
      "description": "Retrieves a list of users contained within the specified project.",
@@ -1310,7 +1325,7 @@
      ]
     },
     "removePublicKey": {
-     "id": "computeaccounts.users.removePublicKey",
+     "id": "clouduseraccounts.users.removePublicKey",
      "path": "{project}/global/users/{user}/removePublicKey",
      "httpMethod": "POST",
      "description": "Removes the specified public key from the user.",

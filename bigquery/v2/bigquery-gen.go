@@ -1085,6 +1085,9 @@ type Table struct {
 	// modified, in milliseconds since the epoch.
 	LastModifiedTime uint64 `json:"lastModifiedTime,omitempty,string"`
 
+	// Location: [Optional] The backing storage location.
+	Location string `json:"location,omitempty"`
+
 	// NumBytes: [Output-only] The size of the table in bytes. This property
 	// is unavailable for tables that are actively receiving streaming
 	// inserts.

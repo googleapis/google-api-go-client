@@ -515,6 +515,10 @@ type CoverageBucket struct {
 }
 
 type Dataset struct {
+	// CreateTime: The time this dataset was created, in seconds from the
+	// epoch.
+	CreateTime int64 `json:"createTime,omitempty,string"`
+
 	// Id: The Google generated ID of the dataset, immutable.
 	Id string `json:"id,omitempty"`
 
@@ -3648,8 +3652,8 @@ func (c *DatasetsListCall) PageToken(pageToken string) *DatasetsListCall {
 	return c
 }
 
-// ProjectNumber sets the optional parameter "projectNumber": The
-// project to list datasets for.
+// ProjectNumber sets the optional parameter "projectNumber": Required.
+// The project to list datasets for.
 func (c *DatasetsListCall) ProjectNumber(projectNumber int64) *DatasetsListCall {
 	c.opt_["projectNumber"] = projectNumber
 	return c
@@ -3714,7 +3718,7 @@ func (c *DatasetsListCall) Do() (*ListDatasetsResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "projectNumber": {
-	//       "description": "The project to list datasets for.",
+	//       "description": "Required. The project to list datasets for.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"

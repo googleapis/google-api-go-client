@@ -335,6 +335,14 @@ type Message struct {
 	// Id: The immutable ID of the message.
 	Id string `json:"id,omitempty"`
 
+	// InternalDate: The internal message creation timestamp (epoch ms),
+	// which determines ordering in the inbox. For normal SMTP-received
+	// email, this represents the time the message was originally accepted
+	// by Google, which is more reliable than the Date header. However, for
+	// API-migrated mail, it can be configured by client to be based on the
+	// Date header.
+	InternalDate int64 `json:"internalDate,omitempty,string"`
+
 	// LabelIds: List of IDs of labels applied to this message.
 	LabelIds []string `json:"labelIds,omitempty"`
 
@@ -475,20 +483,22 @@ type WatchRequest struct {
 	// generated.
 	LabelIds []string `json:"labelIds,omitempty"`
 
-	// TopicName: Fully qualified Cloud PubSub API topic name to publish
-	// events to. This topic name should already exist in Cloud PubSub and
-	// you should have already granted gmail "publish" privileges on it. For
-	// example, "projects/my-project-identifier/topics/my-topic-name" (using
-	// the new Cloud PubSub "v1beta2" topic naming format).
+	// TopicName: A fully qualified Google Cloud Pub/Sub API topic name to
+	// publish the events to. This topic name **must** already exist in
+	// Cloud Pub/Sub and you **must** have already granted gmail "publish"
+	// permission on it. For example,
+	// "projects/my-project-identifier/topics/my-topic-name" (using the new
+	// Cloud Pub/Sub "v1beta2" topic naming format).
 	//
 	// Note that the "my-project-identifier" portion must exactly match your
-	// developer console project id (the one executing this watch request).
+	// Google developer project id (the one executing this watch request).
 	TopicName string `json:"topicName,omitempty"`
 }
 
 type WatchResponse struct {
 	// Expiration: When Gmail will stop sending notifications for mailbox
-	// updates. Call watch again before this time to renew the subscription.
+	// updates (epoch millis). Call watch again before this time to renew
+	// the watch.
 	Expiration int64 `json:"expiration,omitempty,string"`
 
 	// HistoryId: The ID of the mailbox's current history record.
@@ -1661,11 +1671,11 @@ func (c *UsersHistoryListCall) PageToken(pageToken string) *UsersHistoryListCall
 // chronologically but are not contiguous with random gaps in between
 // valid IDs. Supplying an invalid or out of date startHistoryId
 // typically returns an HTTP 404 error code. A historyId is typically
-// valid for at least a week, but in some circumstances may be valid for
-// only a few hours. If you receive an HTTP 404 error response, your
-// application should perform a full sync. If you receive no
-// nextPageToken in the response, there are no updates to retrieve and
-// you can store the returned historyId for a future request.
+// valid for at least a week, but in some rare circumstances may be
+// valid for only a few hours. If you receive an HTTP 404 error
+// response, your application should perform a full sync. If you receive
+// no nextPageToken in the response, there are no updates to retrieve
+// and you can store the returned historyId for a future request.
 func (c *UsersHistoryListCall) StartHistoryId(startHistoryId uint64) *UsersHistoryListCall {
 	c.opt_["startHistoryId"] = startHistoryId
 	return c
@@ -1744,7 +1754,7 @@ func (c *UsersHistoryListCall) Do() (*ListHistoryResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "startHistoryId": {
-	//       "description": "Required. Returns history records after the specified startHistoryId. The supplied startHistoryId should be obtained from the historyId of a message, thread, or previous list response. History IDs increase chronologically but are not contiguous with random gaps in between valid IDs. Supplying an invalid or out of date startHistoryId typically returns an HTTP 404 error code. A historyId is typically valid for at least a week, but in some circumstances may be valid for only a few hours. If you receive an HTTP 404 error response, your application should perform a full sync. If you receive no nextPageToken in the response, there are no updates to retrieve and you can store the returned historyId for a future request.",
+	//       "description": "Required. Returns history records after the specified startHistoryId. The supplied startHistoryId should be obtained from the historyId of a message, thread, or previous list response. History IDs increase chronologically but are not contiguous with random gaps in between valid IDs. Supplying an invalid or out of date startHistoryId typically returns an HTTP 404 error code. A historyId is typically valid for at least a week, but in some rare circumstances may be valid for only a few hours. If you receive an HTTP 404 error response, your application should perform a full sync. If you receive no nextPageToken in the response, there are no updates to retrieve and you can store the returned historyId for a future request.",
 	//       "format": "uint64",
 	//       "location": "query",
 	//       "type": "string"

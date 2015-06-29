@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/KEeW0PsH1Koyy8hFKaOTlOvpjfI\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/2GklHAwx5ffZUxuQnPgLyVNUl4I\"",
  "discoveryVersion": "v1",
  "id": "drive:v2",
  "name": "drive",
  "version": "v2",
- "revision": "20150305",
+ "revision": "20150618",
  "title": "Drive API",
  "description": "The API to interact with Drive.",
  "ownerDomain": "google.com",
@@ -891,6 +891,10 @@
      "type": "boolean",
      "description": "Whether this file is in the Application Data folder."
     },
+    "canComment": {
+     "type": "boolean",
+     "description": "Whether the current user can comment on the file."
+    },
     "copyable": {
      "type": "boolean",
      "description": "Whether the file can be copied by the current user."
@@ -909,8 +913,7 @@
      "description": "A short description of the file."
     },
     "downloadUrl": {
-     "type": "string",
-     "description": "Short lived download URL for the file. This is only populated for files with content stored in Drive."
+     "type": "string"
     },
     "editable": {
      "type": "boolean",
@@ -926,7 +929,7 @@
     },
     "explicitlyTrashed": {
      "type": "boolean",
-     "description": "Whether this file has been explicitly trashed, as opposed to recursively trashed. This will only be populated if the file is trashed."
+     "description": "Whether this file has been explicitly trashed, as opposed to recursively trashed."
     },
     "exportLinks": {
      "type": "object",
@@ -1166,6 +1169,10 @@
      "type": "string",
      "description": "The original filename if the file was uploaded manually, or the original title if the file was inserted through the API. Note that renames of the title will not change the original filename. This will only be populated on files with content stored in Drive."
     },
+    "ownedByMe": {
+     "type": "boolean",
+     "description": "Whether the file is owned by the current user."
+    },
     "ownerNames": {
      "type": "array",
      "description": "Name(s) of the owner(s) of this file.",
@@ -1209,6 +1216,10 @@
     "selfLink": {
      "type": "string",
      "description": "A link back to this file."
+    },
+    "shareable": {
+     "type": "boolean",
+     "description": "Whether the file's sharing settings can be modified by the current user."
     },
     "shared": {
      "type": "boolean",

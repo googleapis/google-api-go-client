@@ -479,6 +479,38 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "clouduseraccounts:alpha",
+   "name": "clouduseraccounts",
+   "version": "alpha",
+   "title": "Cloud User Accounts API",
+   "description": "API for the Google Cloud User Accounts service.",
+   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/clouduseraccounts/alpha/rest",
+   "discoveryLink": "./apis/clouduseraccounts/alpha/rest",
+   "icons": {
+    "x16": "https://www.google.com/images/icons/product/compute_engine-16.png",
+    "x32": "https://www.google.com/images/icons/product/compute_engine-32.png"
+   },
+   "documentationLink": "https://cloud.google.com/compute/docs/access/user-accounts/api/latest/",
+   "preferred": false
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "clouduseraccounts:vm_alpha",
+   "name": "clouduseraccounts",
+   "version": "vm_alpha",
+   "title": "Cloud User Accounts API",
+   "description": "API for the Google Cloud User Accounts service.",
+   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/clouduseraccounts/vm_alpha/rest",
+   "discoveryLink": "./apis/clouduseraccounts/vm_alpha/rest",
+   "icons": {
+    "x16": "https://www.google.com/images/icons/product/compute_engine-16.png",
+    "x32": "https://www.google.com/images/icons/product/compute_engine-32.png"
+   },
+   "documentationLink": "https://cloud.google.com/compute/docs/access/user-accounts/api/latest/",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "compute:v1",
    "name": "compute",
    "version": "v1",
@@ -1093,6 +1125,38 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "classroom:v1",
+   "name": "classroom",
+   "version": "v1",
+   "title": "Google Classroom API",
+   "description": "Google Classroom API",
+   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/classroom/v1/rest",
+   "discoveryLink": "./apis/classroom/v1/rest",
+   "icons": {
+    "x16": "http://www.google.com/images/icons/product/search-16.gif",
+    "x32": "http://www.google.com/images/icons/product/search-32.gif"
+   },
+   "documentationLink": "",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "classroom:v1beta1",
+   "name": "classroom",
+   "version": "v1beta1",
+   "title": "Google Classroom API",
+   "description": "Google Classroom API",
+   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/classroom/v1beta1/rest",
+   "discoveryLink": "./apis/classroom/v1beta1/rest",
+   "icons": {
+    "x16": "http://www.google.com/images/icons/product/search-16.gif",
+    "x32": "http://www.google.com/images/icons/product/search-32.gif"
+   },
+   "documentationLink": "",
+   "preferred": false
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "cloudresourcemanager:v1beta1",
    "name": "cloudresourcemanager",
    "version": "v1beta1",
@@ -1105,6 +1169,22 @@
     "x32": "http://www.google.com/images/icons/product/search-32.gif"
    },
    "documentationLink": "https://cloud.google.com/resource-manager",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "container:v1",
+   "name": "container",
+   "version": "v1",
+   "title": "Google Container Engine API",
+   "description": "The Google Container Engine API is used for building and managing container based applications, powered by the open source Kubernetes technology.",
+   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/container/v1/rest",
+   "discoveryLink": "./apis/container/v1/rest",
+   "icons": {
+    "x16": "http://www.google.com/images/icons/product/search-16.gif",
+    "x32": "http://www.google.com/images/icons/product/search-32.gif"
+   },
+   "documentationLink": "https://cloud.google.com/container-engine/",
    "preferred": true
   },
   {
@@ -1141,6 +1221,22 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "playmoviespartner:v1",
+   "name": "playmoviespartner",
+   "version": "v1",
+   "title": "Google Play Movies Partner API",
+   "description": "An API providing Google Play Movies Partners a way to get the delivery status of their titles.",
+   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/playmoviespartner/v1/rest",
+   "discoveryLink": "./apis/playmoviespartner/v1/rest",
+   "icons": {
+    "x16": "http://www.google.com/images/icons/product/search-16.gif",
+    "x32": "http://www.google.com/images/icons/product/search-32.gif"
+   },
+   "documentationLink": "",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "pubsub:v1beta1a",
    "name": "pubsub",
    "version": "v1beta1a",
@@ -1157,6 +1253,22 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "pubsub:v1",
+   "name": "pubsub",
+   "version": "v1",
+   "title": "Google Cloud Pub/Sub API",
+   "description": "Provides reliable, many-to-many, asynchronous messaging between applications.",
+   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/pubsub/v1/rest",
+   "discoveryLink": "./apis/pubsub/v1/rest",
+   "icons": {
+    "x16": "http://www.google.com/images/icons/product/search-16.gif",
+    "x32": "http://www.google.com/images/icons/product/search-32.gif"
+   },
+   "documentationLink": "https://cloud.google.com/pubsub/docs",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "pubsub:v1beta2",
    "name": "pubsub",
    "version": "v1beta2",
@@ -1169,7 +1281,7 @@
     "x32": "http://www.google.com/images/icons/product/search-32.gif"
    },
    "documentationLink": "https://cloud.google.com/pubsub/docs",
-   "preferred": true
+   "preferred": false
   },
   {
    "kind": "discovery#directoryItem",
@@ -1863,7 +1975,7 @@
     "x16": "https://www.google.com/images/icons/product/webmaster_tools-16.png",
     "x32": "https://www.google.com/images/icons/product/webmaster_tools-32.png"
    },
-   "documentationLink": "https://developers.google.com/webmaster-tools/v3/welcome",
+   "documentationLink": "https://developers.google.com/webmaster-tools/",
    "preferred": true
   },
   {

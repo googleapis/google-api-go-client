@@ -1,10 +1,10 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/jJarxdUjZcANpaMjt3kLHFRtpJA\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/F1vIM9_nzXQ1BplBLCybxPPoi7w\"",
  "discoveryVersion": "v1",
- "id": "pubsub:v1beta2",
+ "id": "pubsub:v1",
  "name": "pubsub",
- "version": "v1beta2",
+ "version": "v1",
  "revision": "20150604",
  "title": "Google Cloud Pub/Sub API",
  "description": "Provides reliable, many-to-many, asynchronous messaging between applications.",
@@ -524,10 +524,6 @@
    "type": "object",
    "description": "Request for the ModifyAckDeadline method.",
    "properties": {
-    "ackId": {
-     "type": "string",
-     "description": "The acknowledgment ID. Either this or ack_ids must be populated, but not both."
-    },
     "ackIds": {
      "type": "array",
      "description": "List of acknowledgment IDs.",
@@ -620,7 +616,7 @@
      "methods": {
       "setIamPolicy": {
        "id": "pubsub.projects.topics.setIamPolicy",
-       "path": "v1beta2/{+resource}:setIamPolicy",
+       "path": "v1/{+resource}:setIamPolicy",
        "httpMethod": "POST",
        "description": "Sets the access control policy on the specified resource. Replaces any existing policy.",
        "parameters": {
@@ -648,7 +644,7 @@
       },
       "getIamPolicy": {
        "id": "pubsub.projects.topics.getIamPolicy",
-       "path": "v1beta2/{+resource}:getIamPolicy",
+       "path": "v1/{+resource}:getIamPolicy",
        "httpMethod": "GET",
        "description": "Gets the access control policy for a resource. Is empty if the policy or the resource does not exist.",
        "parameters": {
@@ -673,7 +669,7 @@
       },
       "testIamPermissions": {
        "id": "pubsub.projects.topics.testIamPermissions",
-       "path": "v1beta2/{+resource}:testIamPermissions",
+       "path": "v1/{+resource}:testIamPermissions",
        "httpMethod": "POST",
        "description": "Returns permissions that a caller has on the specified resource.",
        "parameters": {
@@ -701,7 +697,7 @@
       },
       "create": {
        "id": "pubsub.projects.topics.create",
-       "path": "v1beta2/{+name}",
+       "path": "v1/{+name}",
        "httpMethod": "PUT",
        "description": "Creates the given topic with the given name.",
        "parameters": {
@@ -729,7 +725,7 @@
       },
       "publish": {
        "id": "pubsub.projects.topics.publish",
-       "path": "v1beta2/{+topic}:publish",
+       "path": "v1/{+topic}:publish",
        "httpMethod": "POST",
        "description": "Adds one or more messages to the topic. Returns NOT_FOUND if the topic does not exist.",
        "parameters": {
@@ -757,7 +753,7 @@
       },
       "get": {
        "id": "pubsub.projects.topics.get",
-       "path": "v1beta2/{+topic}",
+       "path": "v1/{+topic}",
        "httpMethod": "GET",
        "description": "Gets the configuration of a topic.",
        "parameters": {
@@ -782,7 +778,7 @@
       },
       "list": {
        "id": "pubsub.projects.topics.list",
-       "path": "v1beta2/{+project}/topics",
+       "path": "v1/{+project}/topics",
        "httpMethod": "GET",
        "description": "Lists matching topics.",
        "parameters": {
@@ -818,7 +814,7 @@
       },
       "delete": {
        "id": "pubsub.projects.topics.delete",
-       "path": "v1beta2/{+topic}",
+       "path": "v1/{+topic}",
        "httpMethod": "DELETE",
        "description": "Deletes the topic with the given name. Returns NOT_FOUND if the topic does not exist. After a topic is deleted, a new topic may be created with the same name; this is an entirely new topic with none of the old configuration or subscriptions. Existing subscriptions to this topic are not deleted, but their `topic` field is set to `_deleted-topic_`.",
        "parameters": {
@@ -847,7 +843,7 @@
        "methods": {
         "list": {
          "id": "pubsub.projects.topics.subscriptions.list",
-         "path": "v1beta2/{+topic}/subscriptions",
+         "path": "v1/{+topic}/subscriptions",
          "httpMethod": "GET",
          "description": "Lists the name of the subscriptions for this topic.",
          "parameters": {
@@ -889,7 +885,7 @@
      "methods": {
       "setIamPolicy": {
        "id": "pubsub.projects.subscriptions.setIamPolicy",
-       "path": "v1beta2/{+resource}:setIamPolicy",
+       "path": "v1/{+resource}:setIamPolicy",
        "httpMethod": "POST",
        "description": "Sets the access control policy on the specified resource. Replaces any existing policy.",
        "parameters": {
@@ -917,7 +913,7 @@
       },
       "getIamPolicy": {
        "id": "pubsub.projects.subscriptions.getIamPolicy",
-       "path": "v1beta2/{+resource}:getIamPolicy",
+       "path": "v1/{+resource}:getIamPolicy",
        "httpMethod": "GET",
        "description": "Gets the access control policy for a resource. Is empty if the policy or the resource does not exist.",
        "parameters": {
@@ -942,7 +938,7 @@
       },
       "testIamPermissions": {
        "id": "pubsub.projects.subscriptions.testIamPermissions",
-       "path": "v1beta2/{+resource}:testIamPermissions",
+       "path": "v1/{+resource}:testIamPermissions",
        "httpMethod": "POST",
        "description": "Returns permissions that a caller has on the specified resource.",
        "parameters": {
@@ -970,7 +966,7 @@
       },
       "create": {
        "id": "pubsub.projects.subscriptions.create",
-       "path": "v1beta2/{+name}",
+       "path": "v1/{+name}",
        "httpMethod": "PUT",
        "description": "Creates a subscription to a given topic for a given subscriber. If the subscription already exists, returns ALREADY_EXISTS. If the corresponding topic doesn't exist, returns NOT_FOUND. If the name is not provided in the request, the server will assign a random name for this subscription on the same project as the topic.",
        "parameters": {
@@ -998,7 +994,7 @@
       },
       "get": {
        "id": "pubsub.projects.subscriptions.get",
-       "path": "v1beta2/{+subscription}",
+       "path": "v1/{+subscription}",
        "httpMethod": "GET",
        "description": "Gets the configuration details of a subscription.",
        "parameters": {
@@ -1023,7 +1019,7 @@
       },
       "list": {
        "id": "pubsub.projects.subscriptions.list",
-       "path": "v1beta2/{+project}/subscriptions",
+       "path": "v1/{+project}/subscriptions",
        "httpMethod": "GET",
        "description": "Lists matching subscriptions.",
        "parameters": {
@@ -1059,7 +1055,7 @@
       },
       "delete": {
        "id": "pubsub.projects.subscriptions.delete",
-       "path": "v1beta2/{+subscription}",
+       "path": "v1/{+subscription}",
        "httpMethod": "DELETE",
        "description": "Deletes an existing subscription. All pending messages in the subscription are immediately dropped. Calls to Pull after deletion will return NOT_FOUND. After a subscription is deleted, a new one may be created with the same name, but the new one has no association with the old subscription, or its topic unless the same topic is specified.",
        "parameters": {
@@ -1084,7 +1080,7 @@
       },
       "modifyAckDeadline": {
        "id": "pubsub.projects.subscriptions.modifyAckDeadline",
-       "path": "v1beta2/{+subscription}:modifyAckDeadline",
+       "path": "v1/{+subscription}:modifyAckDeadline",
        "httpMethod": "POST",
        "description": "Modifies the ack deadline for a specific message. This method is useful to indicate that more time is needed to process a message by the subscriber, or to make the message available for redelivery if the processing was interrupted.",
        "parameters": {
@@ -1112,7 +1108,7 @@
       },
       "acknowledge": {
        "id": "pubsub.projects.subscriptions.acknowledge",
-       "path": "v1beta2/{+subscription}:acknowledge",
+       "path": "v1/{+subscription}:acknowledge",
        "httpMethod": "POST",
        "description": "Acknowledges the messages associated with the ack tokens in the AcknowledgeRequest. The Pub/Sub system can remove the relevant messages from the subscription. Acknowledging a message whose ack deadline has expired may succeed, but such a message may be redelivered later. Acknowledging a message more than once will not result in an error.",
        "parameters": {
@@ -1140,7 +1136,7 @@
       },
       "pull": {
        "id": "pubsub.projects.subscriptions.pull",
-       "path": "v1beta2/{+subscription}:pull",
+       "path": "v1/{+subscription}:pull",
        "httpMethod": "POST",
        "description": "Pulls messages from the server. Returns an empty list if there are no messages available in the backlog. The server may return UNAVAILABLE if there are too many concurrent pull requests pending for the given subscription.",
        "parameters": {
@@ -1168,7 +1164,7 @@
       },
       "modifyPushConfig": {
        "id": "pubsub.projects.subscriptions.modifyPushConfig",
-       "path": "v1beta2/{+subscription}:modifyPushConfig",
+       "path": "v1/{+subscription}:modifyPushConfig",
        "httpMethod": "POST",
        "description": "Modifies the PushConfig for a specified subscription. This may be used to change a push subscription to a pull one (signified by an empty PushConfig) or vice versa, or change the endpoint URL and other attributes of a push subscription. Messages will accumulate for delivery continuously through the call regardless of changes to the PushConfig.",
        "parameters": {

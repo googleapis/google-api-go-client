@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/rHeHaCJcqlwUUgfESgXN1mNQacA\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/yTdDeTQGX0QbumSXoV_ilLcKyf0\"",
  "discoveryVersion": "v1",
  "id": "drive:v1",
  "name": "drive",
  "version": "v1",
- "revision": "20150305",
+ "revision": "20150618",
  "title": "Drive API",
  "description": "The API to interact with Drive.",
  "ownerDomain": "google.com",
@@ -91,8 +91,7 @@
      "description": "A short description of the file"
     },
     "downloadUrl": {
-     "type": "string",
-     "description": "Short term download URL for the file. This will only be populated on files with content stored in Drive."
+     "type": "string"
     },
     "etag": {
      "type": "string",

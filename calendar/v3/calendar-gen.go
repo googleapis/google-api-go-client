@@ -478,6 +478,13 @@ type Event struct {
 	// Optional. The default is False.
 	AnyoneCanAddSelf bool `json:"anyoneCanAddSelf,omitempty"`
 
+	// Attachments: File attachments for the event. Currently only Google
+	// Drive attachments are supported.
+	// In order to modify attachments the supportsAttachments request
+	// parameter should be set to true.
+	// There can be at most 25 attachments per event,
+	Attachments []*EventAttachment `json:"attachments,omitempty"`
+
 	// Attendees: The attendees of the event.
 	Attendees []*EventAttendee `json:"attendees,omitempty"`
 
@@ -742,6 +749,19 @@ type EventSource struct {
 }
 
 type EventAttachment struct {
+	// FileUrl: URL link to the attachment.
+	// For adding Google Drive file attachments use the same format as in
+	// alternateLink property of the Files resource in the Drive API.
+	FileUrl string `json:"fileUrl,omitempty"`
+
+	// IconLink: URL link to the attachment's icon. Read-only.
+	IconLink string `json:"iconLink,omitempty"`
+
+	// MimeType: Internet media type (MIME type) of the attachment.
+	MimeType string `json:"mimeType,omitempty"`
+
+	// Title: Attachment title.
+	Title string `json:"title,omitempty"`
 }
 
 type EventAttendee struct {
@@ -3439,6 +3459,14 @@ func (r *EventsService) Import(calendarId string, event *Event) *EventsImportCal
 	return c
 }
 
+// SupportsAttachments sets the optional parameter
+// "supportsAttachments": Whether API client performing operation
+// supports event attachments.  The default is False.
+func (c *EventsImportCall) SupportsAttachments(supportsAttachments bool) *EventsImportCall {
+	c.opt_["supportsAttachments"] = supportsAttachments
+	return c
+}
+
 // Fields allows partial responses to be retrieved.
 // See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3456,6 +3484,9 @@ func (c *EventsImportCall) Do() (*Event, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["supportsAttachments"]; ok {
+		params.Set("supportsAttachments", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -3493,6 +3524,11 @@ func (c *EventsImportCall) Do() (*Event, error) {
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "supportsAttachments": {
+	//       "description": "Whether API client performing operation supports event attachments. Optional. The default is False.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     }
 	//   },
 	//   "path": "calendars/{calendarId}/events/import",
@@ -3543,6 +3579,14 @@ func (c *EventsInsertCall) SendNotifications(sendNotifications bool) *EventsInse
 	return c
 }
 
+// SupportsAttachments sets the optional parameter
+// "supportsAttachments": Whether API client performing operation
+// supports event attachments.  The default is False.
+func (c *EventsInsertCall) SupportsAttachments(supportsAttachments bool) *EventsInsertCall {
+	c.opt_["supportsAttachments"] = supportsAttachments
+	return c
+}
+
 // Fields allows partial responses to be retrieved.
 // See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3565,6 +3609,9 @@ func (c *EventsInsertCall) Do() (*Event, error) {
 	}
 	if v, ok := c.opt_["sendNotifications"]; ok {
 		params.Set("sendNotifications", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["supportsAttachments"]; ok {
+		params.Set("supportsAttachments", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
@@ -3613,6 +3660,11 @@ func (c *EventsInsertCall) Do() (*Event, error) {
 	//     },
 	//     "sendNotifications": {
 	//       "description": "Whether to send notifications about the creation of the new event. Optional. The default is False.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "supportsAttachments": {
+	//       "description": "Whether API client performing operation supports event attachments. Optional. The default is False.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -4438,6 +4490,14 @@ func (c *EventsPatchCall) SendNotifications(sendNotifications bool) *EventsPatch
 	return c
 }
 
+// SupportsAttachments sets the optional parameter
+// "supportsAttachments": Whether API client performing operation
+// supports event attachments.  The default is False.
+func (c *EventsPatchCall) SupportsAttachments(supportsAttachments bool) *EventsPatchCall {
+	c.opt_["supportsAttachments"] = supportsAttachments
+	return c
+}
+
 // Fields allows partial responses to be retrieved.
 // See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -4463,6 +4523,9 @@ func (c *EventsPatchCall) Do() (*Event, error) {
 	}
 	if v, ok := c.opt_["sendNotifications"]; ok {
 		params.Set("sendNotifications", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["supportsAttachments"]; ok {
+		params.Set("supportsAttachments", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
@@ -4524,6 +4587,11 @@ func (c *EventsPatchCall) Do() (*Event, error) {
 	//     },
 	//     "sendNotifications": {
 	//       "description": "Whether to send notifications about the event update (e.g. attendee's responses, title changes, etc.). Optional. The default is False.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "supportsAttachments": {
+	//       "description": "Whether API client performing operation supports event attachments. Optional. The default is False.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -4692,6 +4760,14 @@ func (c *EventsUpdateCall) SendNotifications(sendNotifications bool) *EventsUpda
 	return c
 }
 
+// SupportsAttachments sets the optional parameter
+// "supportsAttachments": Whether API client performing operation
+// supports event attachments.  The default is False.
+func (c *EventsUpdateCall) SupportsAttachments(supportsAttachments bool) *EventsUpdateCall {
+	c.opt_["supportsAttachments"] = supportsAttachments
+	return c
+}
+
 // Fields allows partial responses to be retrieved.
 // See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -4717,6 +4793,9 @@ func (c *EventsUpdateCall) Do() (*Event, error) {
 	}
 	if v, ok := c.opt_["sendNotifications"]; ok {
 		params.Set("sendNotifications", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["supportsAttachments"]; ok {
+		params.Set("supportsAttachments", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
@@ -4778,6 +4857,11 @@ func (c *EventsUpdateCall) Do() (*Event, error) {
 	//     },
 	//     "sendNotifications": {
 	//       "description": "Whether to send notifications about the event update (e.g. attendee's responses, title changes, etc.). Optional. The default is False.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "supportsAttachments": {
+	//       "description": "Whether API client performing operation supports event attachments. Optional. The default is False.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }

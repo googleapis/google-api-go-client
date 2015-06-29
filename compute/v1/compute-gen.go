@@ -3667,6 +3667,7 @@ type VpnTunnel struct {
 	//   "NETWORK_ERROR"
 	//   "NO_INCOMING_PACKETS"
 	//   "PROVISIONING"
+	//   "REJECTED"
 	//   "WAITING_FOR_FULL_CONFIG"
 	Status string `json:"status,omitempty"`
 

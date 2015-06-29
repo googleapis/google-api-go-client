@@ -1,13 +1,13 @@
-// Package computeaccounts provides access to the Compute Accounts API.
+// Package clouduseraccounts provides access to the Cloud User Accounts API.
 //
 // See https://cloud.google.com/compute/docs/access/user-accounts/api/latest/
 //
 // Usage example:
 //
-//   import "google.golang.org/api/computeaccounts/v0.alpha"
+//   import "google.golang.org/api/clouduseraccounts/v0.alpha"
 //   ...
-//   computeaccountsService, err := computeaccounts.New(oauthHttpClient)
-package computeaccounts
+//   clouduseraccountsService, err := clouduseraccounts.New(oauthHttpClient)
+package clouduseraccounts
 
 import (
 	"bytes"
@@ -36,10 +36,10 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Background
 
-const apiId = "computeaccounts:alpha"
-const apiName = "computeaccounts"
+const apiId = "clouduseraccounts:alpha"
+const apiName = "clouduseraccounts"
 const apiVersion = "alpha"
-const basePath = "https://www.googleapis.com/computeaccounts/alpha/projects/"
+const basePath = "https://www.googleapis.com/clouduseraccounts/alpha/projects/"
 
 // OAuth2 scopes used by this API.
 const (
@@ -498,7 +498,7 @@ type UserList struct {
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
-// method id "computeaccounts.globalAccountsOperations.delete":
+// method id "clouduseraccounts.globalAccountsOperations.delete":
 
 type GlobalAccountsOperationsDeleteCall struct {
 	s         *Service
@@ -550,7 +550,7 @@ func (c *GlobalAccountsOperationsDeleteCall) Do() error {
 	// {
 	//   "description": "Deletes the specified operation resource.",
 	//   "httpMethod": "DELETE",
-	//   "id": "computeaccounts.globalAccountsOperations.delete",
+	//   "id": "clouduseraccounts.globalAccountsOperations.delete",
 	//   "parameterOrder": [
 	//     "project",
 	//     "operation"
@@ -581,7 +581,7 @@ func (c *GlobalAccountsOperationsDeleteCall) Do() error {
 
 }
 
-// method id "computeaccounts.globalAccountsOperations.get":
+// method id "clouduseraccounts.globalAccountsOperations.get":
 
 type GlobalAccountsOperationsGetCall struct {
 	s         *Service
@@ -637,7 +637,7 @@ func (c *GlobalAccountsOperationsGetCall) Do() (*Operation, error) {
 	// {
 	//   "description": "Retrieves the specified operation resource.",
 	//   "httpMethod": "GET",
-	//   "id": "computeaccounts.globalAccountsOperations.get",
+	//   "id": "clouduseraccounts.globalAccountsOperations.get",
 	//   "parameterOrder": [
 	//     "project",
 	//     "operation"
@@ -673,7 +673,7 @@ func (c *GlobalAccountsOperationsGetCall) Do() (*Operation, error) {
 
 }
 
-// method id "computeaccounts.globalAccountsOperations.list":
+// method id "clouduseraccounts.globalAccountsOperations.list":
 
 type GlobalAccountsOperationsListCall struct {
 	s       *Service
@@ -798,7 +798,7 @@ func (c *GlobalAccountsOperationsListCall) Do() (*OperationList, error) {
 	// {
 	//   "description": "Retrieves the list of operation resources contained within the specified project.",
 	//   "httpMethod": "GET",
-	//   "id": "computeaccounts.globalAccountsOperations.list",
+	//   "id": "clouduseraccounts.globalAccountsOperations.list",
 	//   "parameterOrder": [
 	//     "project"
 	//   ],
@@ -850,7 +850,7 @@ func (c *GlobalAccountsOperationsListCall) Do() (*OperationList, error) {
 
 }
 
-// method id "computeaccounts.groups.addMember":
+// method id "clouduseraccounts.groups.addMember":
 
 type GroupsAddMemberCall struct {
 	s                      *Service
@@ -914,7 +914,7 @@ func (c *GroupsAddMemberCall) Do() (*Operation, error) {
 	// {
 	//   "description": "Adds users to the specified group.",
 	//   "httpMethod": "POST",
-	//   "id": "computeaccounts.groups.addMember",
+	//   "id": "clouduseraccounts.groups.addMember",
 	//   "parameterOrder": [
 	//     "project",
 	//     "groupName"
@@ -951,7 +951,7 @@ func (c *GroupsAddMemberCall) Do() (*Operation, error) {
 
 }
 
-// method id "computeaccounts.groups.delete":
+// method id "clouduseraccounts.groups.delete":
 
 type GroupsDeleteCall struct {
 	s         *Service
@@ -1007,7 +1007,7 @@ func (c *GroupsDeleteCall) Do() (*Operation, error) {
 	// {
 	//   "description": "Deletes the specified Group resource.",
 	//   "httpMethod": "DELETE",
-	//   "id": "computeaccounts.groups.delete",
+	//   "id": "clouduseraccounts.groups.delete",
 	//   "parameterOrder": [
 	//     "project",
 	//     "groupName"
@@ -1041,7 +1041,7 @@ func (c *GroupsDeleteCall) Do() (*Operation, error) {
 
 }
 
-// method id "computeaccounts.groups.get":
+// method id "clouduseraccounts.groups.get":
 
 type GroupsGetCall struct {
 	s         *Service
@@ -1097,7 +1097,7 @@ func (c *GroupsGetCall) Do() (*Group, error) {
 	// {
 	//   "description": "Returns the specified Group resource.",
 	//   "httpMethod": "GET",
-	//   "id": "computeaccounts.groups.get",
+	//   "id": "clouduseraccounts.groups.get",
 	//   "parameterOrder": [
 	//     "project",
 	//     "groupName"
@@ -1133,7 +1133,7 @@ func (c *GroupsGetCall) Do() (*Group, error) {
 
 }
 
-// method id "computeaccounts.groups.insert":
+// method id "clouduseraccounts.groups.insert":
 
 type GroupsInsertCall struct {
 	s       *Service
@@ -1195,7 +1195,7 @@ func (c *GroupsInsertCall) Do() (*Operation, error) {
 	// {
 	//   "description": "Creates a Group resource in the specified project using the data included in the request.",
 	//   "httpMethod": "POST",
-	//   "id": "computeaccounts.groups.insert",
+	//   "id": "clouduseraccounts.groups.insert",
 	//   "parameterOrder": [
 	//     "project"
 	//   ],
@@ -1224,7 +1224,7 @@ func (c *GroupsInsertCall) Do() (*Operation, error) {
 
 }
 
-// method id "computeaccounts.groups.list":
+// method id "clouduseraccounts.groups.list":
 
 type GroupsListCall struct {
 	s       *Service
@@ -1349,7 +1349,7 @@ func (c *GroupsListCall) Do() (*GroupList, error) {
 	// {
 	//   "description": "Retrieves the list of groups contained within the specified project.",
 	//   "httpMethod": "GET",
-	//   "id": "computeaccounts.groups.list",
+	//   "id": "clouduseraccounts.groups.list",
 	//   "parameterOrder": [
 	//     "project"
 	//   ],
@@ -1401,7 +1401,7 @@ func (c *GroupsListCall) Do() (*GroupList, error) {
 
 }
 
-// method id "computeaccounts.groups.removeMember":
+// method id "clouduseraccounts.groups.removeMember":
 
 type GroupsRemoveMemberCall struct {
 	s                         *Service
@@ -1465,7 +1465,7 @@ func (c *GroupsRemoveMemberCall) Do() (*Operation, error) {
 	// {
 	//   "description": "Removes users from the specified group.",
 	//   "httpMethod": "POST",
-	//   "id": "computeaccounts.groups.removeMember",
+	//   "id": "clouduseraccounts.groups.removeMember",
 	//   "parameterOrder": [
 	//     "project",
 	//     "groupName"
@@ -1502,7 +1502,7 @@ func (c *GroupsRemoveMemberCall) Do() (*Operation, error) {
 
 }
 
-// method id "computeaccounts.linux.getAuthorizedKeysView":
+// method id "clouduseraccounts.linux.getAuthorizedKeysView":
 
 type LinuxGetAuthorizedKeysViewCall struct {
 	s        *Service
@@ -1565,7 +1565,7 @@ func (c *LinuxGetAuthorizedKeysViewCall) Do() (*LinuxGetAuthorizedKeysViewRespon
 	// {
 	//   "description": "Returns a list of authorized public keys for a specific user account.",
 	//   "httpMethod": "POST",
-	//   "id": "computeaccounts.linux.getAuthorizedKeysView",
+	//   "id": "clouduseraccounts.linux.getAuthorizedKeysView",
 	//   "parameterOrder": [
 	//     "project",
 	//     "zone",
@@ -1616,7 +1616,7 @@ func (c *LinuxGetAuthorizedKeysViewCall) Do() (*LinuxGetAuthorizedKeysViewRespon
 
 }
 
-// method id "computeaccounts.linux.getLinuxAccountViews":
+// method id "clouduseraccounts.linux.getLinuxAccountViews":
 
 type LinuxGetLinuxAccountViewsCall struct {
 	s        *Service
@@ -1758,7 +1758,7 @@ func (c *LinuxGetLinuxAccountViewsCall) Do() (*LinuxGetLinuxAccountViewsResponse
 	// {
 	//   "description": "Retrieves a list of user accounts for an instance within a specific project.",
 	//   "httpMethod": "POST",
-	//   "id": "computeaccounts.linux.getLinuxAccountViews",
+	//   "id": "clouduseraccounts.linux.getLinuxAccountViews",
 	//   "parameterOrder": [
 	//     "project",
 	//     "zone",
@@ -1831,7 +1831,7 @@ func (c *LinuxGetLinuxAccountViewsCall) Do() (*LinuxGetLinuxAccountViewsResponse
 
 }
 
-// method id "computeaccounts.users.addPublicKey":
+// method id "clouduseraccounts.users.addPublicKey":
 
 type UsersAddPublicKeyCall struct {
 	s         *Service
@@ -1896,7 +1896,7 @@ func (c *UsersAddPublicKeyCall) Do() (*Operation, error) {
 	// {
 	//   "description": "Adds a public key to the specified User resource with the data included in the request.",
 	//   "httpMethod": "POST",
-	//   "id": "computeaccounts.users.addPublicKey",
+	//   "id": "clouduseraccounts.users.addPublicKey",
 	//   "parameterOrder": [
 	//     "project",
 	//     "user"
@@ -1933,7 +1933,7 @@ func (c *UsersAddPublicKeyCall) Do() (*Operation, error) {
 
 }
 
-// method id "computeaccounts.users.delete":
+// method id "clouduseraccounts.users.delete":
 
 type UsersDeleteCall struct {
 	s       *Service
@@ -1989,7 +1989,7 @@ func (c *UsersDeleteCall) Do() (*Operation, error) {
 	// {
 	//   "description": "Deletes the specified User resource.",
 	//   "httpMethod": "DELETE",
-	//   "id": "computeaccounts.users.delete",
+	//   "id": "clouduseraccounts.users.delete",
 	//   "parameterOrder": [
 	//     "project",
 	//     "user"
@@ -2023,7 +2023,7 @@ func (c *UsersDeleteCall) Do() (*Operation, error) {
 
 }
 
-// method id "computeaccounts.users.get":
+// method id "clouduseraccounts.users.get":
 
 type UsersGetCall struct {
 	s       *Service
@@ -2079,7 +2079,7 @@ func (c *UsersGetCall) Do() (*User, error) {
 	// {
 	//   "description": "Returns the specified User resource.",
 	//   "httpMethod": "GET",
-	//   "id": "computeaccounts.users.get",
+	//   "id": "clouduseraccounts.users.get",
 	//   "parameterOrder": [
 	//     "project",
 	//     "user"
@@ -2115,7 +2115,7 @@ func (c *UsersGetCall) Do() (*User, error) {
 
 }
 
-// method id "computeaccounts.users.insert":
+// method id "clouduseraccounts.users.insert":
 
 type UsersInsertCall struct {
 	s       *Service
@@ -2177,7 +2177,7 @@ func (c *UsersInsertCall) Do() (*Operation, error) {
 	// {
 	//   "description": "Creates a User resource in the specified project using the data included in the request.",
 	//   "httpMethod": "POST",
-	//   "id": "computeaccounts.users.insert",
+	//   "id": "clouduseraccounts.users.insert",
 	//   "parameterOrder": [
 	//     "project"
 	//   ],
@@ -2206,7 +2206,7 @@ func (c *UsersInsertCall) Do() (*Operation, error) {
 
 }
 
-// method id "computeaccounts.users.list":
+// method id "clouduseraccounts.users.list":
 
 type UsersListCall struct {
 	s       *Service
@@ -2331,7 +2331,7 @@ func (c *UsersListCall) Do() (*UserList, error) {
 	// {
 	//   "description": "Retrieves a list of users contained within the specified project.",
 	//   "httpMethod": "GET",
-	//   "id": "computeaccounts.users.list",
+	//   "id": "clouduseraccounts.users.list",
 	//   "parameterOrder": [
 	//     "project"
 	//   ],
@@ -2383,7 +2383,7 @@ func (c *UsersListCall) Do() (*UserList, error) {
 
 }
 
-// method id "computeaccounts.users.removePublicKey":
+// method id "clouduseraccounts.users.removePublicKey":
 
 type UsersRemovePublicKeyCall struct {
 	s           *Service
@@ -2442,7 +2442,7 @@ func (c *UsersRemovePublicKeyCall) Do() (*Operation, error) {
 	// {
 	//   "description": "Removes the specified public key from the user.",
 	//   "httpMethod": "POST",
-	//   "id": "computeaccounts.users.removePublicKey",
+	//   "id": "clouduseraccounts.users.removePublicKey",
 	//   "parameterOrder": [
 	//     "project",
 	//     "user",

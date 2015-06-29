@@ -393,6 +393,18 @@ type OperationList struct {
 }
 
 type ReplicaPoolAutoHealingPolicy struct {
+	// ActionType: The action to perform when an instance becomes unhealthy.
+	// Possible values are RECREATE or REBOOT. RECREATE replaces an
+	// unhealthy instance with a new instance that is based on the instance
+	// template for this managed instance group. REBOOT performs a soft
+	// reboot on an instance. If the instance cannot reboot, the instance
+	// performs a hard restart.
+	//
+	// Possible values:
+	//   "REBOOT"
+	//   "RECREATE"
+	ActionType string `json:"actionType,omitempty"`
+
 	// HealthCheck: The URL for the HealthCheck that signals autohealing.
 	HealthCheck string `json:"healthCheck,omitempty"`
 }

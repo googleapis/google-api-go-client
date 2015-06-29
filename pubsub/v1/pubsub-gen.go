@@ -4,7 +4,7 @@
 //
 // Usage example:
 //
-//   import "google.golang.org/api/pubsub/v1beta2"
+//   import "google.golang.org/api/pubsub/v1"
 //   ...
 //   pubsubService, err := pubsub.New(oauthHttpClient)
 package pubsub
@@ -36,9 +36,9 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Background
 
-const apiId = "pubsub:v1beta2"
+const apiId = "pubsub:v1"
 const apiName = "pubsub"
-const apiVersion = "v1beta2"
+const apiVersion = "v1"
 const basePath = "https://pubsub.googleapis.com/"
 
 // OAuth2 scopes used by this API.
@@ -250,10 +250,6 @@ type ModifyAckDeadlineRequest struct {
 	// seconds after the ModifyAckDeadline call was made. Specifying zero
 	// may immediately make the message available for another pull request.
 	AckDeadlineSeconds int64 `json:"ackDeadlineSeconds,omitempty"`
-
-	// AckId: The acknowledgment ID. Either this or ack_ids must be
-	// populated, but not both.
-	AckId string `json:"ackId,omitempty"`
 
 	// AckIds: List of acknowledgment IDs.
 	AckIds []string `json:"ackIds,omitempty"`
@@ -512,7 +508,7 @@ func (c *ProjectsSubscriptionsAcknowledgeCall) Do() (*Empty, error) {
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta2/{+subscription}:acknowledge")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+subscription}:acknowledge")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
@@ -549,7 +545,7 @@ func (c *ProjectsSubscriptionsAcknowledgeCall) Do() (*Empty, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1beta2/{+subscription}:acknowledge",
+	//   "path": "v1/{+subscription}:acknowledge",
 	//   "request": {
 	//     "$ref": "AcknowledgeRequest"
 	//   },
@@ -606,7 +602,7 @@ func (c *ProjectsSubscriptionsCreateCall) Do() (*Subscription, error) {
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta2/{+name}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
@@ -643,7 +639,7 @@ func (c *ProjectsSubscriptionsCreateCall) Do() (*Subscription, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1beta2/{+name}",
+	//   "path": "v1/{+name}",
 	//   "request": {
 	//     "$ref": "Subscription"
 	//   },
@@ -693,7 +689,7 @@ func (c *ProjectsSubscriptionsDeleteCall) Do() (*Empty, error) {
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta2/{+subscription}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+subscription}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
@@ -729,7 +725,7 @@ func (c *ProjectsSubscriptionsDeleteCall) Do() (*Empty, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1beta2/{+subscription}",
+	//   "path": "v1/{+subscription}",
 	//   "response": {
 	//     "$ref": "Empty"
 	//   },
@@ -771,7 +767,7 @@ func (c *ProjectsSubscriptionsGetCall) Do() (*Subscription, error) {
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta2/{+subscription}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+subscription}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
@@ -807,7 +803,7 @@ func (c *ProjectsSubscriptionsGetCall) Do() (*Subscription, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1beta2/{+subscription}",
+	//   "path": "v1/{+subscription}",
 	//   "response": {
 	//     "$ref": "Subscription"
 	//   },
@@ -850,7 +846,7 @@ func (c *ProjectsSubscriptionsGetIamPolicyCall) Do() (*Policy, error) {
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta2/{+resource}:getIamPolicy")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:getIamPolicy")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
@@ -886,7 +882,7 @@ func (c *ProjectsSubscriptionsGetIamPolicyCall) Do() (*Policy, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1beta2/{+resource}:getIamPolicy",
+	//   "path": "v1/{+resource}:getIamPolicy",
 	//   "response": {
 	//     "$ref": "Policy"
 	//   },
@@ -950,7 +946,7 @@ func (c *ProjectsSubscriptionsListCall) Do() (*ListSubscriptionsResponse, error)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta2/{+project}/subscriptions")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+project}/subscriptions")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
@@ -997,7 +993,7 @@ func (c *ProjectsSubscriptionsListCall) Do() (*ListSubscriptionsResponse, error)
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1beta2/{+project}/subscriptions",
+	//   "path": "v1/{+project}/subscriptions",
 	//   "response": {
 	//     "$ref": "ListSubscriptionsResponse"
 	//   },
@@ -1049,7 +1045,7 @@ func (c *ProjectsSubscriptionsModifyAckDeadlineCall) Do() (*Empty, error) {
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta2/{+subscription}:modifyAckDeadline")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+subscription}:modifyAckDeadline")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
@@ -1086,7 +1082,7 @@ func (c *ProjectsSubscriptionsModifyAckDeadlineCall) Do() (*Empty, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1beta2/{+subscription}:modifyAckDeadline",
+	//   "path": "v1/{+subscription}:modifyAckDeadline",
 	//   "request": {
 	//     "$ref": "ModifyAckDeadlineRequest"
 	//   },
@@ -1143,7 +1139,7 @@ func (c *ProjectsSubscriptionsModifyPushConfigCall) Do() (*Empty, error) {
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta2/{+subscription}:modifyPushConfig")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+subscription}:modifyPushConfig")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
@@ -1180,7 +1176,7 @@ func (c *ProjectsSubscriptionsModifyPushConfigCall) Do() (*Empty, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1beta2/{+subscription}:modifyPushConfig",
+	//   "path": "v1/{+subscription}:modifyPushConfig",
 	//   "request": {
 	//     "$ref": "ModifyPushConfigRequest"
 	//   },
@@ -1235,7 +1231,7 @@ func (c *ProjectsSubscriptionsPullCall) Do() (*PullResponse, error) {
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta2/{+subscription}:pull")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+subscription}:pull")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
@@ -1272,7 +1268,7 @@ func (c *ProjectsSubscriptionsPullCall) Do() (*PullResponse, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1beta2/{+subscription}:pull",
+	//   "path": "v1/{+subscription}:pull",
 	//   "request": {
 	//     "$ref": "PullRequest"
 	//   },
@@ -1325,7 +1321,7 @@ func (c *ProjectsSubscriptionsSetIamPolicyCall) Do() (*Policy, error) {
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta2/{+resource}:setIamPolicy")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:setIamPolicy")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
@@ -1362,7 +1358,7 @@ func (c *ProjectsSubscriptionsSetIamPolicyCall) Do() (*Policy, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1beta2/{+resource}:setIamPolicy",
+	//   "path": "v1/{+resource}:setIamPolicy",
 	//   "request": {
 	//     "$ref": "SetIamPolicyRequest"
 	//   },
@@ -1415,7 +1411,7 @@ func (c *ProjectsSubscriptionsTestIamPermissionsCall) Do() (*TestIamPermissionsR
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta2/{+resource}:testIamPermissions")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:testIamPermissions")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
@@ -1452,7 +1448,7 @@ func (c *ProjectsSubscriptionsTestIamPermissionsCall) Do() (*TestIamPermissionsR
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1beta2/{+resource}:testIamPermissions",
+	//   "path": "v1/{+resource}:testIamPermissions",
 	//   "request": {
 	//     "$ref": "TestIamPermissionsRequest"
 	//   },
@@ -1504,7 +1500,7 @@ func (c *ProjectsTopicsCreateCall) Do() (*Topic, error) {
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta2/{+name}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
@@ -1541,7 +1537,7 @@ func (c *ProjectsTopicsCreateCall) Do() (*Topic, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1beta2/{+name}",
+	//   "path": "v1/{+name}",
 	//   "request": {
 	//     "$ref": "Topic"
 	//   },
@@ -1591,7 +1587,7 @@ func (c *ProjectsTopicsDeleteCall) Do() (*Empty, error) {
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta2/{+topic}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+topic}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
@@ -1627,7 +1623,7 @@ func (c *ProjectsTopicsDeleteCall) Do() (*Empty, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1beta2/{+topic}",
+	//   "path": "v1/{+topic}",
 	//   "response": {
 	//     "$ref": "Empty"
 	//   },
@@ -1669,7 +1665,7 @@ func (c *ProjectsTopicsGetCall) Do() (*Topic, error) {
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta2/{+topic}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+topic}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
@@ -1705,7 +1701,7 @@ func (c *ProjectsTopicsGetCall) Do() (*Topic, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1beta2/{+topic}",
+	//   "path": "v1/{+topic}",
 	//   "response": {
 	//     "$ref": "Topic"
 	//   },
@@ -1748,7 +1744,7 @@ func (c *ProjectsTopicsGetIamPolicyCall) Do() (*Policy, error) {
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta2/{+resource}:getIamPolicy")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:getIamPolicy")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
@@ -1784,7 +1780,7 @@ func (c *ProjectsTopicsGetIamPolicyCall) Do() (*Policy, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1beta2/{+resource}:getIamPolicy",
+	//   "path": "v1/{+resource}:getIamPolicy",
 	//   "response": {
 	//     "$ref": "Policy"
 	//   },
@@ -1848,7 +1844,7 @@ func (c *ProjectsTopicsListCall) Do() (*ListTopicsResponse, error) {
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta2/{+project}/topics")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+project}/topics")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
@@ -1895,7 +1891,7 @@ func (c *ProjectsTopicsListCall) Do() (*ListTopicsResponse, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1beta2/{+project}/topics",
+	//   "path": "v1/{+project}/topics",
 	//   "response": {
 	//     "$ref": "ListTopicsResponse"
 	//   },
@@ -1945,7 +1941,7 @@ func (c *ProjectsTopicsPublishCall) Do() (*PublishResponse, error) {
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta2/{+topic}:publish")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+topic}:publish")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
@@ -1982,7 +1978,7 @@ func (c *ProjectsTopicsPublishCall) Do() (*PublishResponse, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1beta2/{+topic}:publish",
+	//   "path": "v1/{+topic}:publish",
 	//   "request": {
 	//     "$ref": "PublishRequest"
 	//   },
@@ -2035,7 +2031,7 @@ func (c *ProjectsTopicsSetIamPolicyCall) Do() (*Policy, error) {
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta2/{+resource}:setIamPolicy")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:setIamPolicy")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
@@ -2072,7 +2068,7 @@ func (c *ProjectsTopicsSetIamPolicyCall) Do() (*Policy, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1beta2/{+resource}:setIamPolicy",
+	//   "path": "v1/{+resource}:setIamPolicy",
 	//   "request": {
 	//     "$ref": "SetIamPolicyRequest"
 	//   },
@@ -2125,7 +2121,7 @@ func (c *ProjectsTopicsTestIamPermissionsCall) Do() (*TestIamPermissionsResponse
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta2/{+resource}:testIamPermissions")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:testIamPermissions")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
@@ -2162,7 +2158,7 @@ func (c *ProjectsTopicsTestIamPermissionsCall) Do() (*TestIamPermissionsResponse
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1beta2/{+resource}:testIamPermissions",
+	//   "path": "v1/{+resource}:testIamPermissions",
 	//   "request": {
 	//     "$ref": "TestIamPermissionsRequest"
 	//   },
@@ -2229,7 +2225,7 @@ func (c *ProjectsTopicsSubscriptionsListCall) Do() (*ListTopicSubscriptionsRespo
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta2/{+topic}/subscriptions")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+topic}/subscriptions")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
@@ -2276,7 +2272,7 @@ func (c *ProjectsTopicsSubscriptionsListCall) Do() (*ListTopicSubscriptionsRespo
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1beta2/{+topic}/subscriptions",
+	//   "path": "v1/{+topic}/subscriptions",
 	//   "response": {
 	//     "$ref": "ListTopicSubscriptionsResponse"
 	//   },

@@ -780,6 +780,9 @@ type File struct {
 	// AppDataContents: Whether this file is in the Application Data folder.
 	AppDataContents bool `json:"appDataContents,omitempty"`
 
+	// CanComment: Whether the current user can comment on the file.
+	CanComment bool `json:"canComment,omitempty"`
+
 	// Copyable: Whether the file can be copied by the current user.
 	Copyable bool `json:"copyable,omitempty"`
 
@@ -795,8 +798,6 @@ type File struct {
 	// Description: A short description of the file.
 	Description string `json:"description,omitempty"`
 
-	// DownloadUrl: Short lived download URL for the file. This is only
-	// populated for files with content stored in Drive.
 	DownloadUrl string `json:"downloadUrl,omitempty"`
 
 	// Editable: Whether the file can be edited by the current user.
@@ -809,8 +810,7 @@ type File struct {
 	Etag string `json:"etag,omitempty"`
 
 	// ExplicitlyTrashed: Whether this file has been explicitly trashed, as
-	// opposed to recursively trashed. This will only be populated if the
-	// file is trashed.
+	// opposed to recursively trashed.
 	ExplicitlyTrashed bool `json:"explicitlyTrashed,omitempty"`
 
 	// ExportLinks: Links for exporting Google Docs to specific formats.
@@ -903,6 +903,9 @@ type File struct {
 	// Drive.
 	OriginalFilename string `json:"originalFilename,omitempty"`
 
+	// OwnedByMe: Whether the file is owned by the current user.
+	OwnedByMe bool `json:"ownedByMe,omitempty"`
+
 	// OwnerNames: Name(s) of the owner(s) of this file.
 	OwnerNames []string `json:"ownerNames,omitempty"`
 
@@ -928,6 +931,10 @@ type File struct {
 
 	// SelfLink: A link back to this file.
 	SelfLink string `json:"selfLink,omitempty"`
+
+	// Shareable: Whether the file's sharing settings can be modified by the
+	// current user.
+	Shareable bool `json:"shareable,omitempty"`
 
 	// Shared: Whether the file has been shared.
 	Shared bool `json:"shared,omitempty"`

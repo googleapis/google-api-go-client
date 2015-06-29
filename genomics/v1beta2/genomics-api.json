@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/hWWfDBzE6hY4cts5LsQuX-KpHHs\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/9CX5rNs-BH9GIzKqRiU8Cj-26Mc\"",
  "discoveryVersion": "v1",
  "id": "genomics:v1beta2",
  "name": "genomics",
  "version": "v1beta2",
- "revision": "20150526",
+ "revision": "20150623",
  "title": "Genomics API",
  "description": "Provides access to Genomics data.",
  "ownerDomain": "google.com",
@@ -482,6 +482,11 @@
    "type": "object",
    "description": "A Dataset is a collection of genomic data.",
    "properties": {
+    "createTime": {
+     "type": "string",
+     "description": "The time this dataset was created, in seconds from the epoch.",
+     "format": "int64"
+    },
     "id": {
      "type": "string",
      "description": "The Google generated ID of the dataset, immutable."
@@ -2920,7 +2925,7 @@
       },
       "projectNumber": {
        "type": "string",
-       "description": "The project to list datasets for.",
+       "description": "Required. The project to list datasets for.",
        "format": "int64",
        "location": "query"
       }

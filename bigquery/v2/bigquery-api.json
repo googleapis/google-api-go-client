@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/dfyqUMrFd-mvh1ZHmWj5OJLDhTI\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/6_j3-L3xDTpJRP-qmfT7ZpU_5Bg\"",
  "discoveryVersion": "v1",
  "id": "bigquery:v2",
  "name": "bigquery",
  "version": "v2",
- "revision": "20150526",
+ "revision": "20150626",
  "title": "BigQuery API",
  "description": "A data platform for customers to create, manage, share and query data.",
  "ownerDomain": "google.com",
@@ -1127,6 +1127,10 @@
      "type": "string",
      "description": "[Output-only] The time when this table was last modified, in milliseconds since the epoch.",
      "format": "uint64"
+    },
+    "location": {
+     "type": "string",
+     "description": "[Optional] The backing storage location."
     },
     "numBytes": {
      "type": "string",

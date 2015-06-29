@@ -22,6 +22,30 @@
       "revId": "7e75c9645012fc81aed0bfbf253f522c61874012",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "73a3a180_893f7d91",
+        "filename": "admin/directory_v1/admin-gen.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 1600,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-06-29T22:55:10Z",
+      "side": 1,
+      "message": "Ah, I gotcha.  And if I understand interfaces correctly, then I will not want to return a pointer to an interface, but just the interface itself... i.e.:\nDelete(userKey string, codeId int64) AspsDeleteCallDoer\n\nI\u0027ll try that out and send you the next patch to try out.\nThanks, Luis!",
+      "parentUuid": "132185e2_a8ffbb2a",
+      "range": {
+        "startLine": 1600,
+        "startChar": 39,
+        "endLine": 1600,
+        "endChar": 53
+      },
+      "revId": "7e75c9645012fc81aed0bfbf253f522c61874012",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
     }
   ]
 }

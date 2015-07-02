@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73f801fb_7b785fa1",
+        "filename": "adexchangebuyer/v1.2/adexchangebuyer-gen.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-07-02T00:20:27Z",
+      "side": 1,
+      "message": "I wouldn\u0027t use the phrase \"round-trip\".\n\nCan we make it say something like:\n\n// Do executes the \"adexchange.acccounts.get\" call.\n// Exactly one of the return values is non-nil.",
+      "revId": "2b4621e39956a98d69277ba69f01923a226d9164",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "73f801fb_5b75a3a5",
+        "filename": "adexchangebuyer/v1.2/adexchangebuyer-gen.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-07-02T00:20:27Z",
+      "side": 1,
+      "message": "I wouldn\u0027t name the return parameters for this one.",
+      "revId": "2b4621e39956a98d69277ba69f01923a226d9164",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "73f801fb_bbfca783",
+        "filename": "adexchangebuyer/v1.2/adexchangebuyer-gen.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-07-02T00:20:27Z",
+      "side": 1,
+      "message": "how does one even see StatusNotModified? That\u0027s in the *http.Response, not the http.Header. Should we return the *http.Response instead?\n\nOr, instead of DoHeader, can we shove the *http.Response (which contains the http.Header) inside the *Account resource? (or whatever resource it is?)",
+      "revId": "2b4621e39956a98d69277ba69f01923a226d9164",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58987a8f_82101a58",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 1526,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-07-13T21:00:37Z",
+      "side": 1,
+      "message": "include the charset with utf-8 too. Go tries to be pretty strict about this, even if it\u0027s less important for application/json in particular.\n\n    \"application/json; charset\u003dutf-8\"",
+      "revId": "103b39ce0ff6995c02286765a99e7134b4c54258",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

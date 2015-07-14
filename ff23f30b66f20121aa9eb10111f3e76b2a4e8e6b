@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58987a8f_d694a4c6",
+        "filename": "admin/email_migration_v2/admin-gen.go",
+        "patchSetId": 7
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-07-14T20:39:53Z",
+      "side": 1,
+      "message": "Let\u0027s collapse all 4 of these parameters down into one, so we have two total:\n\n   ResumableMedia(ctx context.Context, r googleapi.Reader)\n\nThen in package googleapi, we can have:\n\n\n   package googleapi\n\n   // Reader the type accepted by ResumableMedia uploads.\n   // It can be any io.Reader, or as a special case for extra configuration\n   // it may be a *UploadParameters.\n   type Reader interface {\n         io.Reader\n   }\n\n    type UploadParameters struct {\n            // Reader is the source to read from.\n            // It is the only required field.\n            io.Reader\n\n            // Size optionally lists the size of Reader.\n            // It may be set to 0 if unknown.\n            Size int64\n\n           // ChunkSize optionally specifies blah blah.\n           // If zero, blah blah.\n           ChunkSize int64\n\n           // MediaType optionally specifies ...\n           // If empty, it is auto-detected using http.DetectContentType\n           MediaType string\n    }\n\n\nThen most users can just pass any io.Reader to ResumableMedia, and only users who really want to do something special can use UploadParameters.\n\nAnd it gives us a place to put other future stuff without breaking the API.\n\nI\u0027m open to naming alternatives.",
+      "revId": "ff23f30b66f20121aa9eb10111f3e76b2a4e8e6b",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

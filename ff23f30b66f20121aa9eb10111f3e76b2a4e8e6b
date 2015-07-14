@@ -16,6 +16,24 @@
       "revId": "ff23f30b66f20121aa9eb10111f3e76b2a4e8e6b",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "58987a8f_f6ac48fc",
+        "filename": "admin/email_migration_v2/admin-gen.go",
+        "patchSetId": 7
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 5815
+      },
+      "writtenOn": "2015-07-14T21:18:09Z",
+      "side": 1,
+      "message": "I really like this idea, thanks!",
+      "parentUuid": "58987a8f_d694a4c6",
+      "revId": "ff23f30b66f20121aa9eb10111f3e76b2a4e8e6b",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
     }
   ]
 }

@@ -68,6 +68,7 @@ func New(client *http.Client) (*Service, error) {
 	}
 	s := &Service{client: client, BasePath: basePath}
 	s.Addresses = NewAddressesService(s)
+	s.Autoscalers = NewAutoscalersService(s)
 	s.BackendServices = NewBackendServicesService(s)
 	s.DiskTypes = NewDiskTypesService(s)
 	s.Disks = NewDisksService(s)
@@ -78,6 +79,8 @@ func New(client *http.Client) (*Service, error) {
 	s.GlobalOperations = NewGlobalOperationsService(s)
 	s.HttpHealthChecks = NewHttpHealthChecksService(s)
 	s.Images = NewImagesService(s)
+	s.InstanceGroupManagers = NewInstanceGroupManagersService(s)
+	s.InstanceGroups = NewInstanceGroupsService(s)
 	s.InstanceTemplates = NewInstanceTemplatesService(s)
 	s.Instances = NewInstancesService(s)
 	s.Licenses = NewLicensesService(s)
@@ -106,6 +109,8 @@ type Service struct {
 
 	Addresses *AddressesService
 
+	Autoscalers *AutoscalersService
+
 	BackendServices *BackendServicesService
 
 	DiskTypes *DiskTypesService
@@ -125,6 +130,10 @@ type Service struct {
 	HttpHealthChecks *HttpHealthChecksService
 
 	Images *ImagesService
+
+	InstanceGroupManagers *InstanceGroupManagersService
+
+	InstanceGroups *InstanceGroupsService
 
 	InstanceTemplates *InstanceTemplatesService
 
@@ -176,6 +185,15 @@ func NewAddressesService(s *Service) *AddressesService {
 }
 
 type AddressesService struct {
+	s *Service
+}
+
+func NewAutoscalersService(s *Service) *AutoscalersService {
+	rs := &AutoscalersService{s: s}
+	return rs
+}
+
+type AutoscalersService struct {
 	s *Service
 }
 
@@ -266,6 +284,24 @@ func NewImagesService(s *Service) *ImagesService {
 }
 
 type ImagesService struct {
+	s *Service
+}
+
+func NewInstanceGroupManagersService(s *Service) *InstanceGroupManagersService {
+	rs := &InstanceGroupManagersService{s: s}
+	return rs
+}
+
+type InstanceGroupManagersService struct {
+	s *Service
+}
+
+func NewInstanceGroupsService(s *Service) *InstanceGroupsService {
+	rs := &InstanceGroupsService{s: s}
+	return rs
+}
+
+type InstanceGroupsService struct {
 	s *Service
 }
 
@@ -706,52 +742,9 @@ type AttachedDiskInitializeParams struct {
 	SourceImage string `json:"sourceImage,omitempty"`
 }
 
-type Backend struct {
-	// BalancingMode: The balancing mode of this backend, default is
-	// UTILIZATION.
-	//
-	// Possible values:
-	//   "RATE"
-	//   "UTILIZATION"
-	BalancingMode string `json:"balancingMode,omitempty"`
-
-	// CapacityScaler: The multiplier (a value between 0.0 and 1.0) of the
-	// max capacity (CPU or RPS, depending on 'balancingMode') the group
-	// should serve up to. 0 means the group is totally drained. Default
-	// value is 1. Valid range is [0.0, 1.0].
-	CapacityScaler float64 `json:"capacityScaler,omitempty"`
-
-	// Description: An optional textual description of the resource, which
-	// is provided by the client when the resource is created.
-	Description string `json:"description,omitempty"`
-
-	// Group: URL of a zonal Cloud Resource View resource. This resource
-	// view defines the list of instances that serve traffic. Member virtual
-	// machine instances from each resource view must live in the same zone
-	// as the resource view itself. No two backends in a backend service are
-	// allowed to use same Resource View resource.
-	Group string `json:"group,omitempty"`
-
-	// MaxRate: The max RPS of the group. Can be used with either balancing
-	// mode, but required if RATE mode. For RATE mode, either maxRate or
-	// maxRatePerInstance must be set.
-	MaxRate int64 `json:"maxRate,omitempty"`
-
-	// MaxRatePerInstance: The max RPS that a single backed instance can
-	// handle. This is used to calculate the capacity of the group. Can be
-	// used in either balancing mode. For RATE mode, either maxRate or
-	// maxRatePerInstance must be set.
-	MaxRatePerInstance float64 `json:"maxRatePerInstance,omitempty"`
-
-	// MaxUtilization: Used when 'balancingMode' is UTILIZATION. This ratio
-	// defines the CPU utilization target for the group. The default is 0.8.
-	// Valid range is [0, 1].
-	MaxUtilization float64 `json:"maxUtilization,omitempty"`
-}
-
-type BackendService struct {
-	// Backends: The list of backends that serve this BackendService.
-	Backends []*Backend `json:"backends,omitempty"`
+type Autoscaler struct {
+	// AutoscalingPolicy: Autoscaling configuration.
+	AutoscalingPolicy *AutoscalingPolicy `json:"autoscalingPolicy,omitempty"`
 
 	// CreationTimestamp: Creation timestamp in RFC3339 text format (output
 	// only).
@@ -760,17 +753,6 @@ type BackendService struct {
 	// Description: An optional textual description of the resource;
 	// provided by the client when the resource is created.
 	Description string `json:"description,omitempty"`
-
-	// Fingerprint: Fingerprint of this resource. A hash of the contents
-	// stored in this object. This field is used in optimistic locking. This
-	// field will be ignored when inserting a BackendService. An up-to-date
-	// fingerprint must be provided in order to update the BackendService.
-	Fingerprint string `json:"fingerprint,omitempty"`
-
-	// HealthChecks: The list of URLs to the HttpHealthCheck resource for
-	// health checking this BackendService. Currently at most one health
-	// check can be specified, and a health check is required.
-	HealthChecks []string `json:"healthChecks,omitempty"`
 
 	// Id: Unique identifier for the resource; defined by the server (output
 	// only).
@@ -784,7 +766,268 @@ type BackendService struct {
 	// RFC1035.
 	Name string `json:"name,omitempty"`
 
-	// Port: Deprecated in favor of port_name. The TCP port to connect on
+	// SelfLink: Server defined URL for the resource (output only).
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// Target: URL of Instance Group Manager or Replica Pool which will be
+	// controlled by Autoscaler.
+	Target string `json:"target,omitempty"`
+
+	// Zone: URL of the zone where the instance group resides (output only).
+	Zone string `json:"zone,omitempty"`
+}
+
+type AutoscalerAggregatedList struct {
+	// Id: Unique identifier for the resource; defined by the server (output
+	// only).
+	Id string `json:"id,omitempty"`
+
+	// Items: A map of scoped autoscaler lists.
+	Items map[string]AutoscalersScopedList `json:"items,omitempty"`
+
+	// Kind: Type of resource.
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: A token used to continue a truncated list request
+	// (output only).
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SelfLink: Server defined URL for this resource (output only).
+	SelfLink string `json:"selfLink,omitempty"`
+}
+
+type AutoscalerList struct {
+	// Id: Unique identifier for the resource; defined by the server (output
+	// only).
+	Id string `json:"id,omitempty"`
+
+	// Items: A list of Autoscaler resources.
+	Items []*Autoscaler `json:"items,omitempty"`
+
+	// Kind: Type of resource.
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: A token used to continue a truncated list request
+	// (output only).
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SelfLink: Server defined URL for this resource (output only).
+	SelfLink string `json:"selfLink,omitempty"`
+}
+
+type AutoscalersScopedList struct {
+	// Autoscalers: List of autoscalers contained in this scope.
+	Autoscalers []*Autoscaler `json:"autoscalers,omitempty"`
+
+	// Warning: Informational warning which replaces the list of autoscalers
+	// when the list is empty.
+	Warning *AutoscalersScopedListWarning `json:"warning,omitempty"`
+}
+
+type AutoscalersScopedListWarning struct {
+	// Code: [Output Only] The warning type identifier for this warning.
+	//
+	// Possible values:
+	//   "DEPRECATED_RESOURCE_USED"
+	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "INJECTED_KERNELS_DEPRECATED"
+	//   "NEXT_HOP_ADDRESS_NOT_ASSIGNED"
+	//   "NEXT_HOP_CANNOT_IP_FORWARD"
+	//   "NEXT_HOP_INSTANCE_NOT_FOUND"
+	//   "NEXT_HOP_INSTANCE_NOT_ON_NETWORK"
+	//   "NEXT_HOP_NOT_RUNNING"
+	//   "NOT_CRITICAL_ERROR"
+	//   "NO_RESULTS_ON_PAGE"
+	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_NOT_DELETED"
+	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
+	//   "UNREACHABLE"
+	Code string `json:"code,omitempty"`
+
+	// Data: [Output Only] Metadata for this warning in key: value format.
+	Data []*AutoscalersScopedListWarningData `json:"data,omitempty"`
+
+	// Message: [Output Only] Optional human-readable details for this
+	// warning.
+	Message string `json:"message,omitempty"`
+}
+
+type AutoscalersScopedListWarningData struct {
+	// Key: [Output Only] A key for the warning data.
+	Key string `json:"key,omitempty"`
+
+	// Value: [Output Only] A warning data value corresponding to the key.
+	Value string `json:"value,omitempty"`
+}
+
+type AutoscalingPolicy struct {
+	// CoolDownPeriodSec: The number of seconds that the Autoscaler should
+	// wait between two succeeding changes to the number of virtual
+	// machines. You should define an interval that is at least as long as
+	// the initialization time of a virtual machine and the time it may take
+	// for replica pool to create the virtual machine. The default is 60
+	// seconds.
+	CoolDownPeriodSec int64 `json:"coolDownPeriodSec,omitempty"`
+
+	// CpuUtilization: TODO(jbartosik): Add support for scaling based on
+	// muliple utilization metrics (take max recommendation). Exactly one
+	// utilization policy should be provided. Configuration parameters of
+	// CPU based autoscaling policy.
+	CpuUtilization *AutoscalingPolicyCpuUtilization `json:"cpuUtilization,omitempty"`
+
+	// CustomMetricUtilizations: Configuration parameters of autoscaling
+	// based on custom metric.
+	CustomMetricUtilizations []*AutoscalingPolicyCustomMetricUtilization `json:"customMetricUtilizations,omitempty"`
+
+	// LoadBalancingUtilization: Configuration parameters of autoscaling
+	// based on load balancer.
+	LoadBalancingUtilization *AutoscalingPolicyLoadBalancingUtilization `json:"loadBalancingUtilization,omitempty"`
+
+	// MaxNumReplicas: The maximum number of replicas that the Autoscaler
+	// can scale up to. This field is required for config to be effective.
+	// Maximum number of replicas should be not lower than minimal number of
+	// replicas. Absolute limit for this value is defined in Autoscaler
+	// backend.
+	MaxNumReplicas int64 `json:"maxNumReplicas,omitempty"`
+
+	// MinNumReplicas: The minimum number of replicas that the Autoscaler
+	// can scale down to. Can't be less than 0. If not provided Autoscaler
+	// will choose default value depending on maximal number of replicas.
+	MinNumReplicas int64 `json:"minNumReplicas,omitempty"`
+}
+
+type AutoscalingPolicyCpuUtilization struct {
+	// UtilizationTarget: The target utilization that the Autoscaler should
+	// maintain. It is represented as a fraction of used cores. For example:
+	// 6 cores used in 8-core VM are represented here as 0.75. Must be a
+	// float value between (0, 1]. If not defined, the default is 0.8.
+	UtilizationTarget float64 `json:"utilizationTarget,omitempty"`
+}
+
+type AutoscalingPolicyCustomMetricUtilization struct {
+	// Metric: Identifier of the metric. It should be a Cloud Monitoring
+	// metric. The metric can not have negative values. The metric should be
+	// an utilization metric (increasing number of VMs handling requests x
+	// times should reduce average value of the metric roughly x times). For
+	// example you could use:
+	// compute.googleapis.com/instance/network/received_bytes_count.
+	Metric string `json:"metric,omitempty"`
+
+	// UtilizationTarget: Target value of the metric which Autoscaler should
+	// maintain. Must be a positive value.
+	UtilizationTarget float64 `json:"utilizationTarget,omitempty"`
+
+	// UtilizationTargetType: Defines type in which utilization_target is
+	// expressed.
+	//
+	// Possible values:
+	//   "DELTA_PER_MINUTE"
+	//   "DELTA_PER_SECOND"
+	//   "GAUGE"
+	UtilizationTargetType string `json:"utilizationTargetType,omitempty"`
+}
+
+type AutoscalingPolicyLoadBalancingUtilization struct {
+	// UtilizationTarget: Fraction of backend capacity utilization (set in
+	// HTTP load balancing configuration) that Autoscaler should maintain.
+	// Must be a positive float value. If not defined, the default is 0.8.
+	// For example if your maxRatePerInstance capacity (in HTTP Load
+	// Balancing configuration) is set at 10 and you would like to keep
+	// number of instances such that each instance receives 7 QPS on
+	// average, set this to 0.7.
+	UtilizationTarget float64 `json:"utilizationTarget,omitempty"`
+}
+
+type Backend struct {
+	// BalancingMode: Specifies the balancing mode for this backend. The
+	// default is UTILIZATION but available values are UTILIZATION and RATE.
+	//
+	// Possible values:
+	//   "RATE"
+	//   "UTILIZATION"
+	BalancingMode string `json:"balancingMode,omitempty"`
+
+	// CapacityScaler: A multiplier applied to the group's maximum servicing
+	// capacity (either UTILIZATION or RATE). Default value is 1, which
+	// means the group will serve up to 100% of its configured CPU or RPS
+	// (depending on balancingMode). A setting of 0 means the group is
+	// completely drained, offering 0% of its available CPU or RPS. Valid
+	// range is [0.0,1.0].
+	CapacityScaler float64 `json:"capacityScaler,omitempty"`
+
+	// Description: An optional textual description of the resource.
+	// Provided by the client when the resource is created.
+	Description string `json:"description,omitempty"`
+
+	// Group: The fully-qualified URL of a zonal Instance Group resource.
+	// This instance group defines the list of instances that serve traffic.
+	// Member virtual machine instances from each instance group must live
+	// in the same zone as the instance group itself. No two backends in a
+	// backend service are allowed to use same Instance Group
+	// resource.
+	//
+	// Note that you must specify an Instance Group resource using the
+	// fully-qualified URL, rather than a partial URL.
+	Group string `json:"group,omitempty"`
+
+	// MaxRate: The max RPS of the group. Can be used with either balancing
+	// mode, but required if RATE mode. For RATE mode, either maxRate or
+	// maxRatePerInstance must be set.
+	MaxRate int64 `json:"maxRate,omitempty"`
+
+	// MaxRatePerInstance: The max RPS that a single backed instance can
+	// handle. This is used to calculate the capacity of the group. Can be
+	// used in either balancing mode. For RATE mode, either maxRate or
+	// maxRatePerInstance must be set.
+	MaxRatePerInstance float64 `json:"maxRatePerInstance,omitempty"`
+
+	// MaxUtilization: Used when balancingMode is UTILIZATION. This ratio
+	// defines the CPU utilization target for the group. The default is 0.8.
+	// Valid range is [0.0, 1.0].
+	MaxUtilization float64 `json:"maxUtilization,omitempty"`
+}
+
+type BackendService struct {
+	// Backends: The list of backends that serve this BackendService.
+	Backends []*Backend `json:"backends,omitempty"`
+
+	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
+	// format.
+	CreationTimestamp string `json:"creationTimestamp,omitempty"`
+
+	// Description: An optional textual description of the resource.
+	// Provided by the client when the resource is created.
+	Description string `json:"description,omitempty"`
+
+	// Fingerprint: Fingerprint of this resource. A hash of the contents
+	// stored in this object. This field is used in optimistic locking. This
+	// field will be ignored when inserting a BackendService. An up-to-date
+	// fingerprint must be provided in order to update the BackendService.
+	Fingerprint string `json:"fingerprint,omitempty"`
+
+	// HealthChecks: The list of URLs to the HttpHealthCheck resource for
+	// health checking this BackendService. Currently at most one health
+	// check can be specified, and a health check is required.
+	HealthChecks []string `json:"healthChecks,omitempty"`
+
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
+	Id uint64 `json:"id,omitempty,string"`
+
+	// Kind: [Output Only] Type of resource. Always compute#backendService
+	// for backend services.
+	Kind string `json:"kind,omitempty"`
+
+	// Name: Name of the resource. Provided by the client when the resource
+	// is created. The name must be 1-63 characters long, and comply with
+	// RFC1035. Specifically, the name must be 1-63 characters long and
+	// match the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means
+	// the first character must be a lowercase letter, and all following
+	// characters must be a dash, lowercase letter, or digit, except the
+	// last character, which cannot be a dash.
+	Name string `json:"name,omitempty"`
+
+	// Port: Deprecated in favor of port name. The TCP port to connect on
 	// the backend. The default value is 80.
 	Port int64 `json:"port,omitempty"`
 
@@ -796,7 +1039,7 @@ type BackendService struct {
 	//   "HTTP"
 	Protocol string `json:"protocol,omitempty"`
 
-	// SelfLink: Server defined URL for the resource (output only).
+	// SelfLink: [Output Only] Server defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// TimeoutSec: How many seconds to wait for the backend before
@@ -807,26 +1050,28 @@ type BackendService struct {
 type BackendServiceGroupHealth struct {
 	HealthStatus []*HealthStatus `json:"healthStatus,omitempty"`
 
-	// Kind: Type of resource.
+	// Kind: [Output Only] Type of resource. Always
+	// compute#backendServiceGroupHealth for the health of backend services.
 	Kind string `json:"kind,omitempty"`
 }
 
 type BackendServiceList struct {
-	// Id: Unique identifier for the resource; defined by the server (output
-	// only).
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
 	Id string `json:"id,omitempty"`
 
 	// Items: A list of BackendService resources.
 	Items []*BackendService `json:"items,omitempty"`
 
-	// Kind: Type of resource.
+	// Kind: [Output Only] Type of resource. Always
+	// compute#backendServiceList for lists of backend services.
 	Kind string `json:"kind,omitempty"`
 
-	// NextPageToken: A token used to continue a truncated list request
-	// (output only).
+	// NextPageToken: [Output Only] A token used to continue a truncated
+	// list request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: Server defined URL for this resource (output only).
+	// SelfLink: [Output Only] Server-defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
@@ -1221,7 +1466,7 @@ type Firewall struct {
 	// connection.
 	Allowed []*FirewallAllowed `json:"allowed,omitempty"`
 
-	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339text
+	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
 	// format.
 	CreationTimestamp string `json:"creationTimestamp,omitempty"`
 
@@ -1269,8 +1514,8 @@ type Firewall struct {
 	// may be set.
 	//
 	// If both properties are set, an inbound connection is allowed if the
-	// range or the tag of the source matches the sourceRanges OR matches
-	// the sourceTags property; the connection does not need to match both
+	// range matches the sourceRanges OR the tag of the source matches the
+	// sourceTags property. The connection does not need to match both
 	// properties.
 	SourceRanges []string `json:"sourceRanges,omitempty"`
 
@@ -1278,15 +1523,15 @@ type Firewall struct {
 	// or both of sourceRanges and sourceTags may be set.
 	//
 	// If both properties are set, an inbound connection is allowed if the
-	// range or the tag of the source matches the sourceRanges OR matches
-	// the sourceTags property; the connection does not need to match both
+	// range matches the sourceRanges OR the tag of the source matches the
+	// sourceTags property. The connection does not need to match both
 	// properties.
 	SourceTags []string `json:"sourceTags,omitempty"`
 
 	// TargetTags: A list of instance tags indicating sets of instances
-	// located on network which may make network connections as specified in
-	// allowed[]. If no targetTags are specified, the firewall rule applies
-	// to all instances on the specified network.
+	// located in the network that may make network connections as specified
+	// in allowed[]. If no targetTags are specified, the firewall rule
+	// applies to all instances on the specified network.
 	TargetTags []string `json:"targetTags,omitempty"`
 }
 
@@ -1336,7 +1581,7 @@ type ForwardingRule struct {
 	IPAddress string `json:"IPAddress,omitempty"`
 
 	// IPProtocol: The IP protocol to which this rule applies, valid options
-	// are 'TCP', 'UDP', 'ESP', 'AH' or 'SCTP'.
+	// are TCP, UDP, ESP, AH or SCTP.
 	//
 	// Possible values:
 	//   "AH"
@@ -1346,16 +1591,16 @@ type ForwardingRule struct {
 	//   "UDP"
 	IPProtocol string `json:"IPProtocol,omitempty"`
 
-	// CreationTimestamp: Creation timestamp in RFC3339 text format (output
-	// only).
+	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
+	// format.
 	CreationTimestamp string `json:"creationTimestamp,omitempty"`
 
 	// Description: An optional textual description of the resource;
 	// provided by the client when the resource is created.
 	Description string `json:"description,omitempty"`
 
-	// Id: Unique identifier for the resource; defined by the server (output
-	// only).
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
 	Id uint64 `json:"id,omitempty,string"`
 
 	// Kind: Type of the resource.
@@ -1363,34 +1608,38 @@ type ForwardingRule struct {
 
 	// Name: Name of the resource; provided by the client when the resource
 	// is created. The name must be 1-63 characters long, and comply with
-	// RFC1035.
+	// RFC1035. Specifically, the name must be 1-63 characters long and
+	// match the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means
+	// the first character must be a lowercase letter, and all following
+	// characters must be a dash, lowercase letter, or digit, except the
+	// last character, which cannot be a dash.
 	Name string `json:"name,omitempty"`
 
-	// PortRange: Applicable only when 'IPProtocol' is 'TCP', 'UDP' or
-	// 'SCTP', only packets addressed to ports in the specified range will
-	// be forwarded to 'target'. If 'portRange' is left empty (default
-	// value), all ports are forwarded. Forwarding rules with the same
-	// [IPAddress, IPProtocol] pair must have disjoint port ranges.
+	// PortRange: Applicable only when `IPProtocol` is TCP, UDP, or SCTP,
+	// only packets addressed to ports in the specified range will be
+	// forwarded to target. If portRange is left empty (default value), all
+	// ports are forwarded. Forwarding rules with the same `[IPAddress,
+	// IPProtocol]` pair must have disjoint port ranges.
 	PortRange string `json:"portRange,omitempty"`
 
-	// Region: URL of the region where the regional forwarding rule resides
-	// (output only). This field is not applicable to global forwarding
+	// Region: [Output Only] URL of the region where the regional forwarding
+	// rule resides. This field is not applicable to global forwarding
 	// rules.
 	Region string `json:"region,omitempty"`
 
-	// SelfLink: Server defined URL for the resource (output only).
+	// SelfLink: [Output Only] Server-defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// Target: The URL of the target resource to receive the matched
 	// traffic. For regional forwarding rules, this target must live in the
 	// same region as the forwarding rule. For global forwarding rules, this
-	// target must be a global TargetHttpProxy resource.
+	// target must be a global TargetHttpProxy or TargetHttpsProxy resource.
 	Target string `json:"target,omitempty"`
 }
 
 type ForwardingRuleAggregatedList struct {
-	// Id: Unique identifier for the resource; defined by the server (output
-	// only).
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
 	Id string `json:"id,omitempty"`
 
 	// Items: A map of scoped forwarding rule lists.
@@ -1399,17 +1648,17 @@ type ForwardingRuleAggregatedList struct {
 	// Kind: Type of resource.
 	Kind string `json:"kind,omitempty"`
 
-	// NextPageToken: A token used to continue a truncated list request
-	// (output only).
+	// NextPageToken: [Output Only] A token used to continue a truncated
+	// list request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: Server defined URL for this resource (output only).
+	// SelfLink: [Output Only] Server defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
 type ForwardingRuleList struct {
-	// Id: Unique identifier for the resource; defined by the server (output
-	// only).
+	// Id: [Output Only] Unique identifier for the resource. Set by the
+	// server.
 	Id string `json:"id,omitempty"`
 
 	// Items: A list of ForwardingRule resources.
@@ -1418,11 +1667,11 @@ type ForwardingRuleList struct {
 	// Kind: Type of resource.
 	Kind string `json:"kind,omitempty"`
 
-	// NextPageToken: A token used to continue a truncated list request
-	// (output only).
+	// NextPageToken: [Output Only] A token used to continue a truncated
+	// list request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: Server defined URL for this resource (output only).
+	// SelfLink: [Output Only] Server defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
@@ -1494,6 +1743,7 @@ type HealthStatus struct {
 }
 
 type HostRule struct {
+	// Description: An optional textual description.
 	Description string `json:"description,omitempty"`
 
 	// Hosts: The list of host patterns to match. They must be valid
@@ -1503,7 +1753,7 @@ type HostRule struct {
 	Hosts []string `json:"hosts,omitempty"`
 
 	// PathMatcher: The name of the PathMatcher to match the path portion of
-	// the URL, if the this HostRule matches the URL's host portion.
+	// the URL, if the this hostRule matches the URL's host portion.
 	PathMatcher string `json:"pathMatcher,omitempty"`
 }
 
@@ -1821,6 +2071,441 @@ type InstanceAggregatedList struct {
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
+type InstanceGroup struct {
+	// CreationTimestamp: [Output Only] The creation timestamp for this
+	// instance group in RFC3339 text format.
+	CreationTimestamp string `json:"creationTimestamp,omitempty"`
+
+	// Description: An optional text description for the instance group.
+	Description string `json:"description,omitempty"`
+
+	// Fingerprint: [Output Only] The fingerprint of the named ports
+	// information. The system uses this fingerprint to detect conflicts
+	// when multiple users change the named ports information concurrently.
+	Fingerprint string `json:"fingerprint,omitempty"`
+
+	// Id: [Output Only] A unique identifier for this instance group. The
+	// server defines this identifier.
+	Id uint64 `json:"id,omitempty,string"`
+
+	// Kind: [Output Only] The resource type, which is always
+	// compute#instanceGroup for instance groups.
+	Kind string `json:"kind,omitempty"`
+
+	// Name: The name of the instance group. The name must be 1-63
+	// characters long, and comply with RFC1035.
+	Name string `json:"name,omitempty"`
+
+	// NamedPorts: Assigns a name to a port number. For example: {name:
+	// ?http?, port: 80} This allows the system to reference ports by the
+	// assigned name instead of a port number. Named ports can also contain
+	// multiple ports. For example: [{name: ?http?, port: 80},{name: "http",
+	// port: 8080}] Named ports apply to all instances in this instance
+	// group.
+	NamedPorts []*NamedPort `json:"namedPorts,omitempty"`
+
+	// Network: The URL of the network to which all instances in the
+	// instance group belong.
+	Network string `json:"network,omitempty"`
+
+	// SelfLink: [Output Only] The URL for this instance group. The server
+	// defines this URL.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// Size: [Output Only] The total number of instances in the instance
+	// group.
+	Size int64 `json:"size,omitempty"`
+
+	// Zone: The URL of the zone where the instance group is located.
+	Zone string `json:"zone,omitempty"`
+}
+
+type InstanceGroupAggregatedList struct {
+	// Id: [Output Only] A unique identifier for this aggregated list of
+	// instance groups. The server defines this identifier.
+	Id string `json:"id,omitempty"`
+
+	// Items: A map of scoped instance group lists.
+	Items map[string]InstanceGroupsScopedList `json:"items,omitempty"`
+
+	// Kind: [Output Only] The resource type, which is always
+	// compute#instanceGroupAggregatedList for aggregated lists of instance
+	// groups.
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: [Output Only] A token that is used to continue a
+	// truncated list request.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SelfLink: [Output Only] A unique identifier for this aggregated list
+	// of instance groups. The server defines this identifier.
+	SelfLink string `json:"selfLink,omitempty"`
+}
+
+type InstanceGroupList struct {
+	// Id: [Output Only] A unique identifier for this list of instance
+	// groups. The server defines this identifier.
+	Id string `json:"id,omitempty"`
+
+	// Items: A list of InstanceGroup resources.
+	Items []*InstanceGroup `json:"items,omitempty"`
+
+	// Kind: [Output Only] The resource type, which is always
+	// compute#instanceGroupList for instance group lists.
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: [Output Only] A token that is used to continue a
+	// truncated list request.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SelfLink: [Output Only] The URL for this instance group. The server
+	// defines this URL.
+	SelfLink string `json:"selfLink,omitempty"`
+}
+
+type InstanceGroupManager struct {
+	// AutoHealingPolicies: The autohealing policy for this managed instance
+	// group. You can specify only one value.
+	AutoHealingPolicies []*InstanceGroupManagerAutoHealingPolicy `json:"autoHealingPolicies,omitempty"`
+
+	// BaseInstanceName: The base instance name to use for instances in this
+	// group. The value must be 1-58 characters long. Instances are named by
+	// appending a hyphen and a random four-character string to the base
+	// instance name. The base instance name must comply with RFC1035.
+	BaseInstanceName string `json:"baseInstanceName,omitempty"`
+
+	// CreationTimestamp: [Output Only] The creation timestamp for this
+	// managed instance group in RFC3339 text format.
+	CreationTimestamp string `json:"creationTimestamp,omitempty"`
+
+	// CurrentActions: [Output Only] The list of instance actions and the
+	// number of instances in this managed instance group that are scheduled
+	// for those actions.
+	CurrentActions *InstanceGroupManagerActionsSummary `json:"currentActions,omitempty"`
+
+	// Description: An optional text description for the managed instance
+	// group.
+	Description string `json:"description,omitempty"`
+
+	// Fingerprint: [Output Only] The fingerprint of the target pools
+	// information, which is a hash of the contents. This field is used for
+	// optimistic locking when updating the target pool entries.
+	Fingerprint string `json:"fingerprint,omitempty"`
+
+	// Id: [Output Only] A unique identifier for this managed instance
+	// group. The server defines this identifier.
+	Id uint64 `json:"id,omitempty,string"`
+
+	// InstanceGroup: [Output Only] The URL of the InstanceGroup resource.
+	InstanceGroup string `json:"instanceGroup,omitempty"`
+
+	// InstanceTemplate: The URL of the instance template that is specified
+	// for this managed instance group. The group uses this template to
+	// create all new instances in the managed instance group.
+	InstanceTemplate string `json:"instanceTemplate,omitempty"`
+
+	// Kind: [Output Only] The resource type, which is always
+	// compute#instanceGroupManager for managed instance groups.
+	Kind string `json:"kind,omitempty"`
+
+	// Name: The name of the managed instance group. The name must be 1-63
+	// characters long, and comply with RFC1035.
+	Name string `json:"name,omitempty"`
+
+	// SelfLink: [Output Only] Server defined URL for this managed instance
+	// group.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// TargetPools: The URL of all TargetPool resources to which new
+	// instances in the instanceGroup field are added. Updating the target
+	// pool values does not affect existing instances.
+	TargetPools []string `json:"targetPools,omitempty"`
+
+	// TargetSize: The target number of running instances for this managed
+	// instance group. Deleting or abandoning instances reduces this number.
+	// Resizing the group changes this number.
+	TargetSize int64 `json:"targetSize,omitempty"`
+
+	// Zone: The URL of the zone where the managed instance group is
+	// located.
+	Zone string `json:"zone,omitempty"`
+}
+
+type InstanceGroupManagerActionsSummary struct {
+	Abandoning int64 `json:"abandoning,omitempty"`
+
+	Creating int64 `json:"creating,omitempty"`
+
+	Deleting int64 `json:"deleting,omitempty"`
+
+	None int64 `json:"none,omitempty"`
+
+	Recreating int64 `json:"recreating,omitempty"`
+
+	Refreshing int64 `json:"refreshing,omitempty"`
+
+	Restarting int64 `json:"restarting,omitempty"`
+}
+
+type InstanceGroupManagerAggregatedList struct {
+	// Id: [Output Only] A unique identifier for this aggregated list of
+	// managed instance groups. The server defines this identifier.
+	Id string `json:"id,omitempty"`
+
+	// Items: A map of filtered managed instance group lists.
+	Items map[string]InstanceGroupManagersScopedList `json:"items,omitempty"`
+
+	// Kind: [Output Only] Type of the resource. Always
+	// compute#instanceGroupManagerAggregatedList for an aggregated list of
+	// managed instance groups.
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: [Output Only] A token that is used to continue a
+	// truncated list request.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SelfLink: [Output Only] The URL for this aggregated list of managed
+	// instance groups. The server defines this URL.
+	SelfLink string `json:"selfLink,omitempty"`
+}
+
+type InstanceGroupManagerAutoHealingPolicy struct {
+	// ActionType: The action to perform when an instance becomes unhealthy.
+	// Possible values are RECREATE or RESTART. RECREATE replaces an
+	// unhealthy instance with a new instance that is based on the instance
+	// template for this managed instance group. RESTART performs a soft
+	// restart on an instance. If the instance cannot restart softly, the
+	// instance performs a hard restart.
+	//
+	// Possible values:
+	//   "RECREATE"
+	//   "RESTART"
+	ActionType string `json:"actionType,omitempty"`
+
+	// HealthCheck: The URL for the HealthCheck that signals autohealing.
+	HealthCheck string `json:"healthCheck,omitempty"`
+}
+
+type InstanceGroupManagerList struct {
+	// Id: [Output Only] A unique identifier for this managed instance
+	// group. The server defines this identifier.
+	Id string `json:"id,omitempty"`
+
+	// Items: [Output Only] A list of managed instance group resources.
+	Items []*InstanceGroupManager `json:"items,omitempty"`
+
+	// Kind: [Output Only] Type of the resource. Always
+	// compute#instanceGroupManagerList for a list of managed instance group
+	// resources.
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: [Output Only] A token that is used to continue a
+	// truncated list request.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SelfLink: [Output Only] The URL for this managed instance group. The
+	// server defines this URL.
+	SelfLink string `json:"selfLink,omitempty"`
+}
+
+type InstanceGroupManagersAbandonInstancesRequest struct {
+	// Instances: The names of instances to abandon from the managed
+	// instance group.
+	Instances []string `json:"instances,omitempty"`
+}
+
+type InstanceGroupManagersDeleteInstancesRequest struct {
+	// Instances: The names of one or more instances to delete.
+	Instances []string `json:"instances,omitempty"`
+}
+
+type InstanceGroupManagersListManagedInstancesResponse struct {
+	// ManagedInstances: List of managed instances. If empty - all instances
+	// are listed.
+	ManagedInstances []*ManagedInstance `json:"managedInstances,omitempty"`
+}
+
+type InstanceGroupManagersRecreateInstancesRequest struct {
+	// Instances: The names of one or more instances to recreate.
+	Instances []string `json:"instances,omitempty"`
+}
+
+type InstanceGroupManagersScopedList struct {
+	// InstanceGroupManagers: [Output Only] The list of managed instance
+	// groups that are contained in the specified project and zone.
+	InstanceGroupManagers []*InstanceGroupManager `json:"instanceGroupManagers,omitempty"`
+
+	// Warning: [Output Only] The warning that replaces the list of managed
+	// instance groups when the list is empty.
+	Warning *InstanceGroupManagersScopedListWarning `json:"warning,omitempty"`
+}
+
+type InstanceGroupManagersScopedListWarning struct {
+	// Code: [Output Only] The warning type identifier for this warning.
+	//
+	// Possible values:
+	//   "DEPRECATED_RESOURCE_USED"
+	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "INJECTED_KERNELS_DEPRECATED"
+	//   "NEXT_HOP_ADDRESS_NOT_ASSIGNED"
+	//   "NEXT_HOP_CANNOT_IP_FORWARD"
+	//   "NEXT_HOP_INSTANCE_NOT_FOUND"
+	//   "NEXT_HOP_INSTANCE_NOT_ON_NETWORK"
+	//   "NEXT_HOP_NOT_RUNNING"
+	//   "NOT_CRITICAL_ERROR"
+	//   "NO_RESULTS_ON_PAGE"
+	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_NOT_DELETED"
+	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
+	//   "UNREACHABLE"
+	Code string `json:"code,omitempty"`
+
+	// Data: [Output Only] Metadata for this warning in key: value format.
+	Data []*InstanceGroupManagersScopedListWarningData `json:"data,omitempty"`
+
+	// Message: [Output Only] Optional human-readable details for this
+	// warning.
+	Message string `json:"message,omitempty"`
+}
+
+type InstanceGroupManagersScopedListWarningData struct {
+	// Key: [Output Only] A key for the warning data.
+	Key string `json:"key,omitempty"`
+
+	// Value: [Output Only] A warning data value corresponding to the key.
+	Value string `json:"value,omitempty"`
+}
+
+type InstanceGroupManagersSetInstanceTemplateRequest struct {
+	// InstanceTemplate: The URL of the instance template that is specified
+	// for this managed instance group. The group uses this template to
+	// create all new instances in the managed instance group.
+	InstanceTemplate string `json:"instanceTemplate,omitempty"`
+}
+
+type InstanceGroupManagersSetTargetPoolsRequest struct {
+	// Fingerprint: The fingerprint of the target pools information, which
+	// is a hash of the contents. This field is used for optimistic locking
+	// when updating the target pool entries.
+	Fingerprint string `json:"fingerprint,omitempty"`
+
+	// TargetPools: The list of target pool URLs that instances in this
+	// managed instance group belong to. When the managed instance group
+	// creates new instances, the group automatically adds those instances
+	// to the target pools that are specified in this parameter. Changing
+	// the value of this parameter does not change the target pools of
+	// existing instances in this managed instance group.
+	TargetPools []string `json:"targetPools,omitempty"`
+}
+
+type InstanceGroupsAddInstancesRequest struct {
+	// Instances: The instances to add to the instance group.
+	Instances []*InstanceReference `json:"instances,omitempty"`
+}
+
+type InstanceGroupsListInstances struct {
+	// Id: [Output Only] A unique identifier for this list of instance
+	// groups. The server defines this identifier.
+	Id string `json:"id,omitempty"`
+
+	// Items: A list of InstanceWithNamedPorts resources, which contains all
+	// named ports for the given instance.
+	Items []*InstanceWithNamedPorts `json:"items,omitempty"`
+
+	// Kind: [Output Only] The resource type, which is always
+	// compute#instanceGroupsListInstances for lists of instance groups.
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: [Output Only] A token that is used to continue a
+	// truncated list request.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SelfLink: [Output Only] The URL for this list of instance groups. The
+	// server defines this URL.
+	SelfLink string `json:"selfLink,omitempty"`
+}
+
+type InstanceGroupsListInstancesRequest struct {
+	// InstanceState: A filter for the state of the instances in the
+	// instance group. Valid options are ALL or RUNNING. If you do not
+	// specify this parameter the list includes all instances regardless of
+	// their state.
+	//
+	// Possible values:
+	//   "ALL"
+	//   "RUNNING"
+	InstanceState string `json:"instanceState,omitempty"`
+
+	// PortName: A filter for the named ports that are associated with
+	// instances in the instance group. If you specify this parameter, the
+	// generated list includes only instances that are associated with the
+	// specified named ports. If you do not specify this parameter, the
+	// generated list includes all instances regardless of their named
+	// ports.
+	PortName string `json:"portName,omitempty"`
+}
+
+type InstanceGroupsRemoveInstancesRequest struct {
+	// Instances: The instances to remove from the instance group.
+	Instances []*InstanceReference `json:"instances,omitempty"`
+}
+
+type InstanceGroupsScopedList struct {
+	// InstanceGroups: [Output Only] The list of instance groups that are
+	// contained in this scope.
+	InstanceGroups []*InstanceGroup `json:"instanceGroups,omitempty"`
+
+	// Warning: [Output Only] An informational warning that replaces the
+	// list of instance groups when the list is empty.
+	Warning *InstanceGroupsScopedListWarning `json:"warning,omitempty"`
+}
+
+type InstanceGroupsScopedListWarning struct {
+	// Code: [Output Only] The warning type identifier for this warning.
+	//
+	// Possible values:
+	//   "DEPRECATED_RESOURCE_USED"
+	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "INJECTED_KERNELS_DEPRECATED"
+	//   "NEXT_HOP_ADDRESS_NOT_ASSIGNED"
+	//   "NEXT_HOP_CANNOT_IP_FORWARD"
+	//   "NEXT_HOP_INSTANCE_NOT_FOUND"
+	//   "NEXT_HOP_INSTANCE_NOT_ON_NETWORK"
+	//   "NEXT_HOP_NOT_RUNNING"
+	//   "NOT_CRITICAL_ERROR"
+	//   "NO_RESULTS_ON_PAGE"
+	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_NOT_DELETED"
+	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
+	//   "UNREACHABLE"
+	Code string `json:"code,omitempty"`
+
+	// Data: [Output Only] Metadata for this warning in key: value format.
+	Data []*InstanceGroupsScopedListWarningData `json:"data,omitempty"`
+
+	// Message: [Output Only] Optional human-readable details for this
+	// warning.
+	Message string `json:"message,omitempty"`
+}
+
+type InstanceGroupsScopedListWarningData struct {
+	// Key: [Output Only] A key for the warning data.
+	Key string `json:"key,omitempty"`
+
+	// Value: [Output Only] A warning data value corresponding to the key.
+	Value string `json:"value,omitempty"`
+}
+
+type InstanceGroupsSetNamedPortsRequest struct {
+	// Fingerprint: The fingerprint of the named ports information, which is
+	// a hash of the contents. Use this field for optimistic locking when
+	// you update the named ports entries.
+	Fingerprint string `json:"fingerprint,omitempty"`
+
+	// NamedPorts: The list of named ports to set for this instance group.
+	NamedPorts []*NamedPort `json:"namedPorts,omitempty"`
+}
+
 type InstanceList struct {
 	// Id: [Output Only] Unique identifier for the resource; defined by the
 	// server.
@@ -1966,6 +2651,27 @@ type InstanceTemplateList struct {
 	// SelfLink: [Output Only] The URL for this instance template list. The
 	// server defines this URL.
 	SelfLink string `json:"selfLink,omitempty"`
+}
+
+type InstanceWithNamedPorts struct {
+	// Instance: The URL of the instance.
+	Instance string `json:"instance,omitempty"`
+
+	// NamedPorts: The named ports that belong to this instance group.
+	NamedPorts []*NamedPort `json:"namedPorts,omitempty"`
+
+	// Status: The status of the instance.
+	//
+	// Possible values:
+	//   "PROVISIONING"
+	//   "RUNNING"
+	//   "STAGING"
+	//   "STOPPED"
+	//   "STOPPING"
+	//   "SUSPENDED"
+	//   "SUSPENDING"
+	//   "TERMINATED"
+	Status string `json:"status,omitempty"`
 }
 
 type InstancesScopedList struct {
@@ -2176,6 +2882,71 @@ type MachineTypesScopedListWarningData struct {
 	Value string `json:"value,omitempty"`
 }
 
+type ManagedInstance struct {
+	// CurrentAction: The current action that the managed instance group has
+	// scheduled for the instance.
+	//
+	// Possible values:
+	//   "ABANDONING"
+	//   "CREATING"
+	//   "DELETING"
+	//   "NONE"
+	//   "RECREATING"
+	//   "REFRESHING"
+	//   "RESTARTING"
+	CurrentAction string `json:"currentAction,omitempty"`
+
+	// Id: The unique identifier for this resource (empty when instance does
+	// not exist).
+	Id uint64 `json:"id,omitempty,string"`
+
+	// Instance: The URL of the instance (set even though instance does not
+	// exist yet).
+	Instance string `json:"instance,omitempty"`
+
+	// InstanceStatus: The status of the instance (empty when instance does
+	// not exist).
+	//
+	// Possible values:
+	//   "PROVISIONING"
+	//   "RUNNING"
+	//   "STAGING"
+	//   "STOPPED"
+	//   "STOPPING"
+	//   "SUSPENDED"
+	//   "SUSPENDING"
+	//   "TERMINATED"
+	InstanceStatus string `json:"instanceStatus,omitempty"`
+
+	// LastAttempt: Information about the last attempt to create or delete
+	// the instance.
+	LastAttempt *ManagedInstanceLastAttempt `json:"lastAttempt,omitempty"`
+}
+
+type ManagedInstanceLastAttempt struct {
+	// Errors: Encountered errors during the last attempt to create or
+	// delete the instance.
+	Errors *ManagedInstanceLastAttemptErrors `json:"errors,omitempty"`
+}
+
+type ManagedInstanceLastAttemptErrors struct {
+	// Errors: [Output Only] The array of errors encountered while
+	// processing this operation.
+	Errors []*ManagedInstanceLastAttemptErrorsErrors `json:"errors,omitempty"`
+}
+
+type ManagedInstanceLastAttemptErrorsErrors struct {
+	// Code: [Output Only] The error type identifier for this error.
+	Code string `json:"code,omitempty"`
+
+	// Location: [Output Only] Indicates the field in the request which
+	// caused the error. This property is optional.
+	Location string `json:"location,omitempty"`
+
+	// Message: [Output Only] An optional, human-readable error message.
+	Message string `json:"message,omitempty"`
+}
+
 type Metadata struct {
 	// Fingerprint: Specifies a fingerprint for this request, which is
 	// essentially a hash of the metadata's contents and used for optimistic
@@ -2209,6 +2980,14 @@ type MetadataItems struct {
 	Value string `json:"value,omitempty"`
 }
 
+type NamedPort struct {
+	// Name: The name for this NamedPort.
+	Name string `json:"name,omitempty"`
+
+	// Port: The port number, which can be a value between 1 and 65535.
+	Port int64 `json:"port,omitempty"`
+}
+
 type Network struct {
 	// IPv4Range: The range of internal addresses that are legal on this
 	// network. This range is a CIDR specification, for example:
@@ -2219,8 +2998,8 @@ type Network struct {
 	// format.
 	CreationTimestamp string `json:"creationTimestamp,omitempty"`
 
-	// Description: An optional textual description of the resource;
-	// provided by the client when the resource is created.
+	// Description: An optional textual description of the resource.
+	// Provided by the client when the resource is created.
 	Description string `json:"description,omitempty"`
 
 	// GatewayIPv4: A gateway address for default routing to other networks.
@@ -2228,7 +3007,7 @@ type Network struct {
 	// typically as the first usable address in the IPv4Range.
 	GatewayIPv4 string `json:"gatewayIPv4,omitempty"`
 
-	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// Id: [Output Only] Unique identifier for the resource. Defined by the
 	// server.
 	Id uint64 `json:"id,omitempty,string"`
 
@@ -2236,7 +3015,7 @@ type Network struct {
 	// networks.
 	Kind string `json:"kind,omitempty"`
 
-	// Name: Name of the resource; provided by the client when the resource
+	// Name: Name of the resource. Provided by the client when the resource
 	// is created. The name must be 1-63 characters long, and comply with
 	// RFC1035. Specifically, the name must be 1-63 characters long and
 	// match the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means
@@ -2282,7 +3061,7 @@ type NetworkInterface struct {
 }
 
 type NetworkList struct {
-	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// Id: [Output Only] Unique identifier for the resource. Defined by the
 	// server.
 	Id string `json:"id,omitempty"`
 
@@ -2304,7 +3083,7 @@ type NetworkList struct {
 type Operation struct {
 	// ClientOperationId: [Output Only] An optional identifier specified by
 	// the client when the mutation was initiated. Must be unique for all
-	// operation resources in the project.
+	// Operation resources in the project.
 	ClientOperationId string `json:"clientOperationId,omitempty"`
 
 	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
@@ -2476,7 +3255,7 @@ type OperationList struct {
 	// server.
 	Id string `json:"id,omitempty"`
 
-	// Items: [Output Only] The operation resources.
+	// Items: [Output Only] The Operation resources.
 	Items []*Operation `json:"items,omitempty"`
 
 	// Kind: [Output Only] Type of resource. Always compute#operations for
@@ -2541,6 +3320,7 @@ type PathMatcher struct {
 	// the URL's path portion.
 	DefaultService string `json:"defaultService,omitempty"`
 
+	// Description: An optional textual description of the resource.
 	Description string `json:"description,omitempty"`
 
 	// Name: The name to which this PathMatcher is referred by the HostRule.
@@ -2612,6 +3392,8 @@ type Quota struct {
 	//   "HEALTH_CHECKS"
 	//   "IMAGES"
 	//   "INSTANCES"
+	//   "INSTANCE_GROUPS"
+	//   "INSTANCE_GROUP_MANAGERS"
 	//   "INSTANCE_TEMPLATES"
 	//   "IN_USE_ADDRESSES"
 	//   "LOCAL_SSD_TOTAL_GB"
@@ -2700,39 +3482,49 @@ type ResourceGroupReference struct {
 }
 
 type Route struct {
-	// CreationTimestamp: Creation timestamp in RFC3339 text format (output
-	// only).
+	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
+	// format.
 	CreationTimestamp string `json:"creationTimestamp,omitempty"`
 
-	// Description: An optional textual description of the resource;
-	// provided by the client when the resource is created.
+	// Description: An optional textual description of the resource.
+	// Provided by the client when the resource is created.
 	Description string `json:"description,omitempty"`
 
-	// DestRange: Which packets does this route apply to?
+	// DestRange: The destination range of outgoing packets that this route
+	// applies to.
 	DestRange string `json:"destRange,omitempty"`
 
-	// Id: Unique identifier for the resource; defined by the server (output
-	// only).
+	// Id: [Output Only] Unique identifier for the resource. Defined by the
+	// server.
 	Id uint64 `json:"id,omitempty,string"`
 
-	// Kind: Type of the resource.
+	// Kind: [Output Only] Type of this resource. Always compute#routes for
+	// Route resources.
 	Kind string `json:"kind,omitempty"`
 
 	// Name: Name of the resource; provided by the client when the resource
 	// is created. The name must be 1-63 characters long, and comply with
-	// RFC1035.
+	// RFC1035. Specifically, the name must be 1-63 characters long and
+	// match the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means
+	// the first character must be a lowercase letter, and all following
+	// characters must be a dash, lowercase letter, or digit, except the
+	// last character, which cannot be a dash.
 	Name string `json:"name,omitempty"`
 
-	// Network: URL of the network to which this route is applied; provided
-	// by the client when the route is created.
+	// Network: Fully-qualified URL of the network that this route applies
+	// to.
 	Network string `json:"network,omitempty"`
 
 	// NextHopGateway: The URL to a gateway that should handle matching
-	// packets.
+	// packets. Currently, this is only the internet gateway:
+	// projects/<project-id>/global/gateways/default-internet-gateway
 	NextHopGateway string `json:"nextHopGateway,omitempty"`
 
-	// NextHopInstance: The URL to an instance that should handle matching
-	// packets.
+	// NextHopInstance: The fully-qualified URL to an instance that should
+	// handle matching packets. For
+	// example:
+	// https://www.googleapis.com/compute/v1/projects/project/zones/
+	// zone/instances/
 	NextHopInstance string `json:"nextHopInstance,omitempty"`
 
 	// NextHopIp: The network IP address of an instance that should handle
@@ -2752,14 +3544,15 @@ type Route struct {
 	// Default value is 1000. A valid range is between 0 and 65535.
 	Priority int64 `json:"priority,omitempty"`
 
-	// SelfLink: Server defined URL for the resource (output only).
+	// SelfLink: [Output Only] Server-defined fully-qualified URL for this
+	// resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// Tags: A list of instance tags to which this route applies.
 	Tags []string `json:"tags,omitempty"`
 
-	// Warnings: If potential misconfigurations are detected for this route,
-	// this field will be populated with warning messages.
+	// Warnings: [Output Only] If potential misconfigurations are detected
+	// for this route, this field will be populated with warning messages.
 	Warnings []*RouteWarnings `json:"warnings,omitempty"`
 }
 
@@ -2800,8 +3593,8 @@ type RouteWarningsData struct {
 }
 
 type RouteList struct {
-	// Id: Unique identifier for the resource; defined by the server (output
-	// only).
+	// Id: [Output Only] Unique identifier for the resource. Defined by the
+	// server.
 	Id string `json:"id,omitempty"`
 
 	// Items: A list of Route resources.
@@ -2810,11 +3603,11 @@ type RouteList struct {
 	// Kind: Type of resource.
 	Kind string `json:"kind,omitempty"`
 
-	// NextPageToken: A token used to continue a truncated list request
-	// (output only).
+	// NextPageToken: [Output Only] A token used to continue a truncated
+	// list request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: Server defined URL for this resource (output only).
+	// SelfLink: [Output Only] Server defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
@@ -2859,23 +3652,23 @@ type ServiceAccount struct {
 }
 
 type Snapshot struct {
-	// CreationTimestamp: Creation timestamp in RFC3339 text format (output
-	// only).
+	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
+	// format.
 	CreationTimestamp string `json:"creationTimestamp,omitempty"`
 
 	// Description: An optional textual description of the resource;
 	// provided by the client when the resource is created.
 	Description string `json:"description,omitempty"`
 
-	// DiskSizeGb: Size of the persistent disk snapshot, specified in GB
-	// (output only).
+	// DiskSizeGb: [Output Only] Size of the snapshot, specified in GB.
 	DiskSizeGb int64 `json:"diskSizeGb,omitempty,string"`
 
-	// Id: Unique identifier for the resource; defined by the server (output
-	// only).
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
 	Id uint64 `json:"id,omitempty,string"`
 
-	// Kind: Type of the resource.
+	// Kind: [Output Only] Type of the resource. Always compute#snapshot for
+	// Snapshot resources.
 	Kind string `json:"kind,omitempty"`
 
 	// Licenses: Public visible licenses.
@@ -2883,22 +3676,26 @@ type Snapshot struct {
 
 	// Name: Name of the resource; provided by the client when the resource
 	// is created. The name must be 1-63 characters long, and comply with
-	// RFC1035.
+	// RFC1035. Specifically, the name must be 1-63 characters long and
+	// match the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means
+	// the first character must be a lowercase letter, and all following
+	// characters must be a dash, lowercase letter, or digit, except the
+	// last character, which cannot be a dash.
 	Name string `json:"name,omitempty"`
 
-	// SelfLink: Server defined URL for the resource (output only).
+	// SelfLink: [Output Only] Server-defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// SourceDisk: The source disk used to create this snapshot.
 	SourceDisk string `json:"sourceDisk,omitempty"`
 
-	// SourceDiskId: The 'id' value of the disk used to create this
-	// snapshot. This value may be used to determine whether the snapshot
-	// was taken from the current or a previous instance of a given disk
-	// name.
+	// SourceDiskId: [Output Only] The ID value of the disk used to create
+	// this snapshot. This value may be used to determine whether the
+	// snapshot was taken from the current or a previous instance of a given
+	// disk name.
 	SourceDiskId string `json:"sourceDiskId,omitempty"`
 
-	// Status: The status of the persistent disk snapshot (output only).
+	// Status: [Output Only] The status of the snapshot.
 	//
 	// Possible values:
 	//   "CREATING"
@@ -2908,14 +3705,14 @@ type Snapshot struct {
 	//   "UPLOADING"
 	Status string `json:"status,omitempty"`
 
-	// StorageBytes: A size of the the storage used by the snapshot. As
-	// snapshots share storage this number is expected to change with
-	// snapshot creation/deletion.
+	// StorageBytes: [Output Only] A size of the the storage used by the
+	// snapshot. As snapshots share storage, this number is expected to
+	// change with snapshot creation/deletion.
 	StorageBytes int64 `json:"storageBytes,omitempty,string"`
 
-	// StorageBytesStatus: An indicator whether storageBytes is in a stable
-	// state, or it is being adjusted as a result of shared storage
-	// reallocation.
+	// StorageBytesStatus: [Output Only] An indicator whether storageBytes
+	// is in a stable state or it is being adjusted as a result of shared
+	// storage reallocation.
 	//
 	// Possible values:
 	//   "UPDATING"
@@ -2959,27 +3756,32 @@ type Tags struct {
 }
 
 type TargetHttpProxy struct {
-	// CreationTimestamp: Creation timestamp in RFC3339 text format (output
-	// only).
+	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
+	// format.
 	CreationTimestamp string `json:"creationTimestamp,omitempty"`
 
 	// Description: An optional textual description of the resource;
 	// provided by the client when the resource is created.
 	Description string `json:"description,omitempty"`
 
-	// Id: Unique identifier for the resource; defined by the server (output
-	// only).
+	// Id: [Output Only] Unique identifier for the resource. Defined by the
+	// server.
 	Id uint64 `json:"id,omitempty,string"`
 
-	// Kind: Type of the resource.
+	// Kind: [Output Only] Type of resource. Always compute#Operation for
+	// Operation resources.
 	Kind string `json:"kind,omitempty"`
 
 	// Name: Name of the resource; provided by the client when the resource
 	// is created. The name must be 1-63 characters long, and comply with
-	// RFC1035.
+	// RFC1035. Specifically, the name must be 1-63 characters long and
+	// match the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means
+	// the first character must be a lowercase letter, and all following
+	// characters must be a dash, lowercase letter, or digit, except the
+	// last character, which cannot be a dash.
 	Name string `json:"name,omitempty"`
 
-	// SelfLink: Server defined URL for the resource (output only).
+	// SelfLink: [Output Only] Server defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// UrlMap: URL to the UrlMap resource that defines the mapping from URL
@@ -2988,21 +3790,22 @@ type TargetHttpProxy struct {
 }
 
 type TargetHttpProxyList struct {
-	// Id: Unique identifier for the resource; defined by the server (output
-	// only).
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
 	Id string `json:"id,omitempty"`
 
 	// Items: A list of TargetHttpProxy resources.
 	Items []*TargetHttpProxy `json:"items,omitempty"`
 
-	// Kind: Type of resource.
+	// Kind: Type of resource. Always compute#targetHttpProxyList for lists
+	// of Target HTTP proxies.
 	Kind string `json:"kind,omitempty"`
 
-	// NextPageToken: A token used to continue a truncated list request
-	// (output only).
+	// NextPageToken: [Output Only] A token used to continue a truncated
+	// list request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: Server defined URL for this resource (output only).
+	// SelfLink: [Output Only] Server-defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
@@ -3353,9 +4156,13 @@ type TargetVpnGateway struct {
 	// for target VPN gateways.
 	Kind string `json:"kind,omitempty"`
 
-	// Name: Name of the resource. Provided by the client when the resource
-	// is created. The name must be 1-63 characters long and comply with
-	// RFC1035.
+	// Name: Name of the resource; provided by the client when the resource
+	// is created. The name must be 1-63 characters long, and comply with
+	// RFC1035. Specifically, the name must be 1-63 characters long and
+	// match the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means
+	// the first character must be a lowercase letter, and all following
+	// characters must be a dash, lowercase letter, or digit, except the
+	// last character, which cannot be a dash.
 	Name string `json:"name,omitempty"`
 
 	// Network: URL of the network to which this VPN gateway is attached.
@@ -3481,16 +4288,16 @@ type TestFailure struct {
 }
 
 type UrlMap struct {
-	// CreationTimestamp: Creation timestamp in RFC3339 text format (output
-	// only).
+	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
+	// format.
 	CreationTimestamp string `json:"creationTimestamp,omitempty"`
 
 	// DefaultService: The URL of the BackendService resource if none of the
 	// hostRules match.
 	DefaultService string `json:"defaultService,omitempty"`
 
-	// Description: An optional textual description of the resource;
-	// provided by the client when the resource is created.
+	// Description: An optional textual description of the resource.
+	// Provided by the client when the resource is created.
 	Description string `json:"description,omitempty"`
 
 	// Fingerprint: Fingerprint of this resource. A hash of the contents
@@ -3502,22 +4309,26 @@ type UrlMap struct {
 	// HostRules: The list of HostRules to use against the URL.
 	HostRules []*HostRule `json:"hostRules,omitempty"`
 
-	// Id: Unique identifier for the resource; defined by the server (output
-	// only).
+	// Id: [Output Only] Unique identifier for the resource. Set by the
+	// server.
 	Id uint64 `json:"id,omitempty,string"`
 
 	// Kind: Type of the resource.
 	Kind string `json:"kind,omitempty"`
 
-	// Name: Name of the resource; provided by the client when the resource
+	// Name: Name of the resource. Provided by the client when the resource
 	// is created. The name must be 1-63 characters long, and comply with
-	// RFC1035.
+	// RFC1035. Specifically, the name must be 1-63 characters long and
+	// match the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means
+	// the first character must be a lowercase letter, and all following
+	// characters must be a dash, lowercase letter, or digit, except the
+	// last character, which cannot be a dash.
 	Name string `json:"name,omitempty"`
 
 	// PathMatchers: The list of named PathMatchers to use against the URL.
 	PathMatchers []*PathMatcher `json:"pathMatchers,omitempty"`
 
-	// SelfLink: Server defined URL for the resource (output only).
+	// SelfLink: [Output Only] Server defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// Tests: The list of expected URL mappings. Request to update this
@@ -3526,8 +4337,8 @@ type UrlMap struct {
 }
 
 type UrlMapList struct {
-	// Id: Unique identifier for the resource; defined by the server (output
-	// only).
+	// Id: [Output Only] Unique identifier for the resource. Set by the
+	// server.
 	Id string `json:"id,omitempty"`
 
 	// Items: A list of UrlMap resources.
@@ -3536,11 +4347,11 @@ type UrlMapList struct {
 	// Kind: Type of resource.
 	Kind string `json:"kind,omitempty"`
 
-	// NextPageToken: A token used to continue a truncated list request
-	// (output only).
+	// NextPageToken: [Output Only] A token used to continue a truncated
+	// list request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: Server defined URL for this resource (output only).
+	// SelfLink: [Output Only] Server defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
@@ -3634,9 +4445,13 @@ type VpnTunnel struct {
 	// VPN tunnels.
 	Kind string `json:"kind,omitempty"`
 
-	// Name: Name of the resource. Provided by the client when the resource
-	// is created. The name must be 1-63 characters long and comply with
-	// RFC1035.
+	// Name: Name of the resource; provided by the client when the resource
+	// is created. The name must be 1-63 characters long, and comply with
+	// RFC1035. Specifically, the name must be 1-63 characters long and
+	// match the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means
+	// the first character must be a lowercase letter, and all following
+	// characters must be a dash, lowercase letter, or digit, except the
+	// last character, which cannot be a dash.
 	Name string `json:"name,omitempty"`
 
 	// PeerIp: IP address of the peer VPN gateway.
@@ -3856,8 +4671,27 @@ func (r *AddressesService) AggregatedList(project string) *AddressesAggregatedLi
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter expression for
-// filtering listed resources.
+// Filter sets the optional parameter "filter": Sets a filter expression
+// for filtering listed resources, in the form filter={expression}. Your
+// {expression} must contain the following:
+// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+//
+// - FIELD_NAME: The name of the field you want to compare. The field
+// name must be valid for the type of resource being filtered. Only
+// atomic field types are supported (string, number, boolean). Array and
+// object fields are not currently supported.
+// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
+// (not equals).
+// - LITERAL_STRING: The literal string value to filter to. The literal
+// value must be valid for the type of field (string, number, boolean).
+// For string fields, the literal value is interpreted as a regular
+// expression using RE2 syntax. The literal value must match the entire
+// field.  For example, you can filter by the name of a
+// resource:
+// filter=name ne example-instance
+// The above filter returns only results whose name field does not equal
+// example-instance. You can also enclose your literal string in single,
+// double, or no quotes.
 func (c *AddressesAggregatedListCall) Filter(filter string) *AddressesAggregatedListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -3870,9 +4704,10 @@ func (c *AddressesAggregatedListCall) MaxResults(maxResults int64) *AddressesAgg
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request when that list was truncated to maxResults.
-// Used to continue a previous list request.
+// PageToken sets the optional parameter "pageToken": Specifies a page
+// token to use. Use this parameter if you want to list the next page of
+// results. Set pageToken to the nextPageToken returned by a previous
+// list request.
 func (c *AddressesAggregatedListCall) PageToken(pageToken string) *AddressesAggregatedListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -3931,7 +4766,7 @@ func (c *AddressesAggregatedListCall) Do() (*AddressAggregatedList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filter expression for filtering listed resources.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3945,7 +4780,7 @@ func (c *AddressesAggregatedListCall) Do() (*AddressAggregatedList, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
+	//       "description": "Specifies a page token to use. Use this parameter if you want to list the next page of results. Set pageToken to the nextPageToken returned by a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4294,8 +5129,27 @@ func (r *AddressesService) List(project string, region string) *AddressesListCal
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter expression for
-// filtering listed resources.
+// Filter sets the optional parameter "filter": Sets a filter expression
+// for filtering listed resources, in the form filter={expression}. Your
+// {expression} must contain the following:
+// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+//
+// - FIELD_NAME: The name of the field you want to compare. The field
+// name must be valid for the type of resource being filtered. Only
+// atomic field types are supported (string, number, boolean). Array and
+// object fields are not currently supported.
+// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
+// (not equals).
+// - LITERAL_STRING: The literal string value to filter to. The literal
+// value must be valid for the type of field (string, number, boolean).
+// For string fields, the literal value is interpreted as a regular
+// expression using RE2 syntax. The literal value must match the entire
+// field.  For example, you can filter by the name of a
+// resource:
+// filter=name ne example-instance
+// The above filter returns only results whose name field does not equal
+// example-instance. You can also enclose your literal string in single,
+// double, or no quotes.
 func (c *AddressesListCall) Filter(filter string) *AddressesListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -4308,9 +5162,10 @@ func (c *AddressesListCall) MaxResults(maxResults int64) *AddressesListCall {
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request when that list was truncated to maxResults.
-// Used to continue a previous list request.
+// PageToken sets the optional parameter "pageToken": Specifies a page
+// token to use. Use this parameter if you want to list the next page of
+// results. Set pageToken to the nextPageToken returned by a previous
+// list request.
 func (c *AddressesListCall) PageToken(pageToken string) *AddressesListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -4371,7 +5226,7 @@ func (c *AddressesListCall) Do() (*AddressList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filter expression for filtering listed resources.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4385,7 +5240,7 @@ func (c *AddressesListCall) Do() (*AddressList, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
+	//       "description": "Specifies a page token to use. Use this parameter if you want to list the next page of results. Set pageToken to the nextPageToken returned by a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4412,6 +5267,848 @@ func (c *AddressesListCall) Do() (*AddressList, error) {
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.autoscalers.aggregatedList":
+
+type AutoscalersAggregatedListCall struct {
+	s       *Service
+	project string
+	opt_    map[string]interface{}
+}
+
+// AggregatedList: Retrieves the list of autoscalers grouped by scope.
+func (r *AutoscalersService) AggregatedList(project string) *AutoscalersAggregatedListCall {
+	c := &AutoscalersAggregatedListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	return c
+}
+
+// Filter sets the optional parameter "filter": Sets a filter expression
+// for filtering listed resources, in the form filter={expression}. Your
+// {expression} must contain the following:
+// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+//
+// - FIELD_NAME: The name of the field you want to compare. The field
+// name must be valid for the type of resource being filtered. Only
+// atomic field types are supported (string, number, boolean). Array and
+// object fields are not currently supported.
+// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
+// (not equals).
+// - LITERAL_STRING: The literal string value to filter to. The literal
+// value must be valid for the type of field (string, number, boolean).
+// For string fields, the literal value is interpreted as a regular
+// expression using RE2 syntax. The literal value must match the entire
+// field.  For example, you can filter by the name of a
+// resource:
+// filter=name ne example-instance
+// The above filter returns only results whose name field does not equal
+// example-instance. You can also enclose your literal string in single,
+// double, or no quotes.
+func (c *AutoscalersAggregatedListCall) Filter(filter string) *AutoscalersAggregatedListCall {
+	c.opt_["filter"] = filter
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Maximum count of
+// results to be returned.
+func (c *AutoscalersAggregatedListCall) MaxResults(maxResults int64) *AutoscalersAggregatedListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Specifies a page
+// token to use. Use this parameter if you want to list the next page of
+// results. Set pageToken to the nextPageToken returned by a previous
+// list request.
+func (c *AutoscalersAggregatedListCall) PageToken(pageToken string) *AutoscalersAggregatedListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AutoscalersAggregatedListCall) Fields(s ...googleapi.Field) *AutoscalersAggregatedListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *AutoscalersAggregatedListCall) Do() (*AutoscalerAggregatedList, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["filter"]; ok {
+		params.Set("filter", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/aggregated/autoscalers")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *AutoscalerAggregatedList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the list of autoscalers grouped by scope.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.autoscalers.aggregatedList",
+	//   "parameterOrder": [
+	//     "project"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "default": "500",
+	//       "description": "Maximum count of results to be returned.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "maximum": "500",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Specifies a page token to use. Use this parameter if you want to list the next page of results. Set pageToken to the nextPageToken returned by a previous list request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/aggregated/autoscalers",
+	//   "response": {
+	//     "$ref": "AutoscalerAggregatedList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.autoscalers.delete":
+
+type AutoscalersDeleteCall struct {
+	s          *Service
+	project    string
+	zone       string
+	autoscaler string
+	opt_       map[string]interface{}
+}
+
+// Delete: Deletes the specified autoscaler resource.
+func (r *AutoscalersService) Delete(project string, zone string, autoscaler string) *AutoscalersDeleteCall {
+	c := &AutoscalersDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.zone = zone
+	c.autoscaler = autoscaler
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AutoscalersDeleteCall) Fields(s ...googleapi.Field) *AutoscalersDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *AutoscalersDeleteCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/autoscalers/{autoscaler}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project":    c.project,
+		"zone":       c.zone,
+		"autoscaler": c.autoscaler,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes the specified autoscaler resource.",
+	//   "httpMethod": "DELETE",
+	//   "id": "compute.autoscalers.delete",
+	//   "parameterOrder": [
+	//     "project",
+	//     "zone",
+	//     "autoscaler"
+	//   ],
+	//   "parameters": {
+	//     "autoscaler": {
+	//       "description": "Name of the persistent autoscaler resource to delete.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "Name of the zone scoping this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/zones/{zone}/autoscalers/{autoscaler}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.autoscalers.get":
+
+type AutoscalersGetCall struct {
+	s          *Service
+	project    string
+	zone       string
+	autoscaler string
+	opt_       map[string]interface{}
+}
+
+// Get: Returns the specified autoscaler resource.
+func (r *AutoscalersService) Get(project string, zone string, autoscaler string) *AutoscalersGetCall {
+	c := &AutoscalersGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.zone = zone
+	c.autoscaler = autoscaler
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AutoscalersGetCall) Fields(s ...googleapi.Field) *AutoscalersGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *AutoscalersGetCall) Do() (*Autoscaler, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/autoscalers/{autoscaler}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project":    c.project,
+		"zone":       c.zone,
+		"autoscaler": c.autoscaler,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Autoscaler
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns the specified autoscaler resource.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.autoscalers.get",
+	//   "parameterOrder": [
+	//     "project",
+	//     "zone",
+	//     "autoscaler"
+	//   ],
+	//   "parameters": {
+	//     "autoscaler": {
+	//       "description": "Name of the persistent autoscaler resource to return.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "Name of the zone scoping this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/zones/{zone}/autoscalers/{autoscaler}",
+	//   "response": {
+	//     "$ref": "Autoscaler"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.autoscalers.insert":
+
+type AutoscalersInsertCall struct {
+	s          *Service
+	project    string
+	zone       string
+	autoscaler *Autoscaler
+	opt_       map[string]interface{}
+}
+
+// Insert: Creates an autoscaler resource in the specified project using
+// the data included in the request.
+func (r *AutoscalersService) Insert(project string, zone string, autoscaler *Autoscaler) *AutoscalersInsertCall {
+	c := &AutoscalersInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.zone = zone
+	c.autoscaler = autoscaler
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AutoscalersInsertCall) Fields(s ...googleapi.Field) *AutoscalersInsertCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *AutoscalersInsertCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.autoscaler)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/autoscalers")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+		"zone":    c.zone,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates an autoscaler resource in the specified project using the data included in the request.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.autoscalers.insert",
+	//   "parameterOrder": [
+	//     "project",
+	//     "zone"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "Name of the zone scoping this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/zones/{zone}/autoscalers",
+	//   "request": {
+	//     "$ref": "Autoscaler"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.autoscalers.list":
+
+type AutoscalersListCall struct {
+	s       *Service
+	project string
+	zone    string
+	opt_    map[string]interface{}
+}
+
+// List: Retrieves the list of autoscaler resources contained within the
+// specified zone.
+func (r *AutoscalersService) List(project string, zone string) *AutoscalersListCall {
+	c := &AutoscalersListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.zone = zone
+	return c
+}
+
+// Filter sets the optional parameter "filter": Sets a filter expression
+// for filtering listed resources, in the form filter={expression}. Your
+// {expression} must contain the following:
+// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+//
+// - FIELD_NAME: The name of the field you want to compare. The field
+// name must be valid for the type of resource being filtered. Only
+// atomic field types are supported (string, number, boolean). Array and
+// object fields are not currently supported.
+// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
+// (not equals).
+// - LITERAL_STRING: The literal string value to filter to. The literal
+// value must be valid for the type of field (string, number, boolean).
+// For string fields, the literal value is interpreted as a regular
+// expression using RE2 syntax. The literal value must match the entire
+// field.  For example, you can filter by the name of a
+// resource:
+// filter=name ne example-instance
+// The above filter returns only results whose name field does not equal
+// example-instance. You can also enclose your literal string in single,
+// double, or no quotes.
+func (c *AutoscalersListCall) Filter(filter string) *AutoscalersListCall {
+	c.opt_["filter"] = filter
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Maximum count of
+// results to be returned.
+func (c *AutoscalersListCall) MaxResults(maxResults int64) *AutoscalersListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Specifies a page
+// token to use. Use this parameter if you want to list the next page of
+// results. Set pageToken to the nextPageToken returned by a previous
+// list request.
+func (c *AutoscalersListCall) PageToken(pageToken string) *AutoscalersListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AutoscalersListCall) Fields(s ...googleapi.Field) *AutoscalersListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *AutoscalersListCall) Do() (*AutoscalerList, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["filter"]; ok {
+		params.Set("filter", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/autoscalers")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+		"zone":    c.zone,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *AutoscalerList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the list of autoscaler resources contained within the specified zone.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.autoscalers.list",
+	//   "parameterOrder": [
+	//     "project",
+	//     "zone"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "default": "500",
+	//       "description": "Maximum count of results to be returned.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "maximum": "500",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Specifies a page token to use. Use this parameter if you want to list the next page of results. Set pageToken to the nextPageToken returned by a previous list request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "Name of the zone scoping this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/zones/{zone}/autoscalers",
+	//   "response": {
+	//     "$ref": "AutoscalerList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.autoscalers.patch":
+
+type AutoscalersPatchCall struct {
+	s           *Service
+	project     string
+	zone        string
+	autoscaler  string
+	autoscaler2 *Autoscaler
+	opt_        map[string]interface{}
+}
+
+// Patch: Updates an autoscaler resource in the specified project using
+// the data included in the request. This method supports patch
+// semantics.
+func (r *AutoscalersService) Patch(project string, zone string, autoscaler string, autoscaler2 *Autoscaler) *AutoscalersPatchCall {
+	c := &AutoscalersPatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.zone = zone
+	c.autoscaler = autoscaler
+	c.autoscaler2 = autoscaler2
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AutoscalersPatchCall) Fields(s ...googleapi.Field) *AutoscalersPatchCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *AutoscalersPatchCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.autoscaler2)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	params.Set("autoscaler", fmt.Sprintf("%v", c.autoscaler))
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/autoscalers")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+		"zone":    c.zone,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an autoscaler resource in the specified project using the data included in the request. This method supports patch semantics.",
+	//   "httpMethod": "PATCH",
+	//   "id": "compute.autoscalers.patch",
+	//   "parameterOrder": [
+	//     "project",
+	//     "zone",
+	//     "autoscaler"
+	//   ],
+	//   "parameters": {
+	//     "autoscaler": {
+	//       "description": "Name of the autoscaler resource to update.",
+	//       "location": "query",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "Name of the zone scoping this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/zones/{zone}/autoscalers",
+	//   "request": {
+	//     "$ref": "Autoscaler"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.autoscalers.update":
+
+type AutoscalersUpdateCall struct {
+	s          *Service
+	project    string
+	zone       string
+	autoscaler *Autoscaler
+	opt_       map[string]interface{}
+}
+
+// Update: Updates an autoscaler resource in the specified project using
+// the data included in the request.
+func (r *AutoscalersService) Update(project string, zone string, autoscaler *Autoscaler) *AutoscalersUpdateCall {
+	c := &AutoscalersUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.zone = zone
+	c.autoscaler = autoscaler
+	return c
+}
+
+// Autoscaler sets the optional parameter "autoscaler": Name of the
+// autoscaler resource to update.
+func (c *AutoscalersUpdateCall) Autoscaler(autoscaler string) *AutoscalersUpdateCall {
+	c.opt_["autoscaler"] = autoscaler
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AutoscalersUpdateCall) Fields(s ...googleapi.Field) *AutoscalersUpdateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *AutoscalersUpdateCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.autoscaler)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["autoscaler"]; ok {
+		params.Set("autoscaler", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/autoscalers")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+		"zone":    c.zone,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an autoscaler resource in the specified project using the data included in the request.",
+	//   "httpMethod": "PUT",
+	//   "id": "compute.autoscalers.update",
+	//   "parameterOrder": [
+	//     "project",
+	//     "zone"
+	//   ],
+	//   "parameters": {
+	//     "autoscaler": {
+	//       "description": "Name of the autoscaler resource to update.",
+	//       "location": "query",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "Name of the zone scoping this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/zones/{zone}/autoscalers",
+	//   "request": {
+	//     "$ref": "Autoscaler"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
 
@@ -4808,8 +6505,27 @@ func (r *BackendServicesService) List(project string) *BackendServicesListCall {
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter expression for
-// filtering listed resources.
+// Filter sets the optional parameter "filter": Sets a filter expression
+// for filtering listed resources, in the form filter={expression}. Your
+// {expression} must contain the following:
+// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+//
+// - FIELD_NAME: The name of the field you want to compare. The field
+// name must be valid for the type of resource being filtered. Only
+// atomic field types are supported (string, number, boolean). Array and
+// object fields are not currently supported.
+// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
+// (not equals).
+// - LITERAL_STRING: The literal string value to filter to. The literal
+// value must be valid for the type of field (string, number, boolean).
+// For string fields, the literal value is interpreted as a regular
+// expression using RE2 syntax. The literal value must match the entire
+// field.  For example, you can filter by the name of a
+// resource:
+// filter=name ne example-instance
+// The above filter returns only results whose name field does not equal
+// example-instance. You can also enclose your literal string in single,
+// double, or no quotes.
 func (c *BackendServicesListCall) Filter(filter string) *BackendServicesListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -4822,9 +6538,10 @@ func (c *BackendServicesListCall) MaxResults(maxResults int64) *BackendServicesL
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request when that list was truncated to maxResults.
-// Used to continue a previous list request.
+// PageToken sets the optional parameter "pageToken": Specifies a page
+// token to use. Use this parameter if you want to list the next page of
+// results. Set pageToken to the nextPageToken returned by a previous
+// list request.
 func (c *BackendServicesListCall) PageToken(pageToken string) *BackendServicesListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -4883,7 +6600,7 @@ func (c *BackendServicesListCall) Do() (*BackendServiceList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filter expression for filtering listed resources.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4897,7 +6614,7 @@ func (c *BackendServicesListCall) Do() (*BackendServiceList, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
+	//       "description": "Specifies a page token to use. Use this parameter if you want to list the next page of results. Set pageToken to the nextPageToken returned by a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5142,8 +6859,27 @@ func (r *DiskTypesService) AggregatedList(project string) *DiskTypesAggregatedLi
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter expression for
-// filtering listed resources.
+// Filter sets the optional parameter "filter": Sets a filter expression
+// for filtering listed resources, in the form filter={expression}. Your
+// {expression} must contain the following:
+// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+//
+// - FIELD_NAME: The name of the field you want to compare. The field
+// name must be valid for the type of resource being filtered. Only
+// atomic field types are supported (string, number, boolean). Array and
+// object fields are not currently supported.
+// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
+// (not equals).
+// - LITERAL_STRING: The literal string value to filter to. The literal
+// value must be valid for the type of field (string, number, boolean).
+// For string fields, the literal value is interpreted as a regular
+// expression using RE2 syntax. The literal value must match the entire
+// field.  For example, you can filter by the name of a
+// resource:
+// filter=name ne example-instance
+// The above filter returns only results whose name field does not equal
+// example-instance. You can also enclose your literal string in single,
+// double, or no quotes.
 func (c *DiskTypesAggregatedListCall) Filter(filter string) *DiskTypesAggregatedListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -5156,9 +6892,10 @@ func (c *DiskTypesAggregatedListCall) MaxResults(maxResults int64) *DiskTypesAgg
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request when that list was truncated to maxResults.
-// Used to continue a previous list request.
+// PageToken sets the optional parameter "pageToken": Specifies a page
+// token to use. Use this parameter if you want to list the next page of
+// results. Set pageToken to the nextPageToken returned by a previous
+// list request.
 func (c *DiskTypesAggregatedListCall) PageToken(pageToken string) *DiskTypesAggregatedListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -5217,7 +6954,7 @@ func (c *DiskTypesAggregatedListCall) Do() (*DiskTypeAggregatedList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filter expression for filtering listed resources.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5231,7 +6968,7 @@ func (c *DiskTypesAggregatedListCall) Do() (*DiskTypeAggregatedList, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
+	//       "description": "Specifies a page token to use. Use this parameter if you want to list the next page of results. Set pageToken to the nextPageToken returned by a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5377,8 +7114,27 @@ func (r *DiskTypesService) List(project string, zone string) *DiskTypesListCall 
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter expression for
-// filtering listed resources.
+// Filter sets the optional parameter "filter": Sets a filter expression
+// for filtering listed resources, in the form filter={expression}. Your
+// {expression} must contain the following:
+// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+//
+// - FIELD_NAME: The name of the field you want to compare. The field
+// name must be valid for the type of resource being filtered. Only
+// atomic field types are supported (string, number, boolean). Array and
+// object fields are not currently supported.
+// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
+// (not equals).
+// - LITERAL_STRING: The literal string value to filter to. The literal
+// value must be valid for the type of field (string, number, boolean).
+// For string fields, the literal value is interpreted as a regular
+// expression using RE2 syntax. The literal value must match the entire
+// field.  For example, you can filter by the name of a
+// resource:
+// filter=name ne example-instance
+// The above filter returns only results whose name field does not equal
+// example-instance. You can also enclose your literal string in single,
+// double, or no quotes.
 func (c *DiskTypesListCall) Filter(filter string) *DiskTypesListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -5391,9 +7147,10 @@ func (c *DiskTypesListCall) MaxResults(maxResults int64) *DiskTypesListCall {
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request when that list was truncated to maxResults.
-// Used to continue a previous list request.
+// PageToken sets the optional parameter "pageToken": Specifies a page
+// token to use. Use this parameter if you want to list the next page of
+// results. Set pageToken to the nextPageToken returned by a previous
+// list request.
 func (c *DiskTypesListCall) PageToken(pageToken string) *DiskTypesListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -5454,7 +7211,7 @@ func (c *DiskTypesListCall) Do() (*DiskTypeList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filter expression for filtering listed resources.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5468,7 +7225,7 @@ func (c *DiskTypesListCall) Do() (*DiskTypeList, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
+	//       "description": "Specifies a page token to use. Use this parameter if you want to list the next page of results. Set pageToken to the nextPageToken returned by a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5516,8 +7273,27 @@ func (r *DisksService) AggregatedList(project string) *DisksAggregatedListCall {
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter expression for
-// filtering listed resources.
+// Filter sets the optional parameter "filter": Sets a filter expression
+// for filtering listed resources, in the form filter={expression}. Your
+// {expression} must contain the following:
+// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+//
+// - FIELD_NAME: The name of the field you want to compare. The field
+// name must be valid for the type of resource being filtered. Only
+// atomic field types are supported (string, number, boolean). Array and
+// object fields are not currently supported.
+// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
+// (not equals).
+// - LITERAL_STRING: The literal string value to filter to. The literal
+// value must be valid for the type of field (string, number, boolean).
+// For string fields, the literal value is interpreted as a regular
+// expression using RE2 syntax. The literal value must match the entire
+// field.  For example, you can filter by the name of a
+// resource:
+// filter=name ne example-instance
+// The above filter returns only results whose name field does not equal
+// example-instance. You can also enclose your literal string in single,
+// double, or no quotes.
 func (c *DisksAggregatedListCall) Filter(filter string) *DisksAggregatedListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -5530,9 +7306,10 @@ func (c *DisksAggregatedListCall) MaxResults(maxResults int64) *DisksAggregatedL
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request when that list was truncated to maxResults.
-// Used to continue a previous list request.
+// PageToken sets the optional parameter "pageToken": Specifies a page
+// token to use. Use this parameter if you want to list the next page of
+// results. Set pageToken to the nextPageToken returned by a previous
+// list request.
 func (c *DisksAggregatedListCall) PageToken(pageToken string) *DisksAggregatedListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -5591,7 +7368,7 @@ func (c *DisksAggregatedListCall) Do() (*DiskAggregatedList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filter expression for filtering listed resources.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5605,7 +7382,7 @@ func (c *DisksAggregatedListCall) Do() (*DiskAggregatedList, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
+	//       "description": "Specifies a page token to use. Use this parameter if you want to list the next page of results. Set pageToken to the nextPageToken returned by a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5752,7 +7529,10 @@ type DisksDeleteCall struct {
 	opt_    map[string]interface{}
 }
 
-// Delete: Deletes the specified persistent disk.
+// Delete: Deletes the specified persistent disk. Deleting a disk
+// removes its data permanently and is irreversible. However, deleting a
+// disk does not delete any snapshots previously made from the disk. You
+// must separately delete snapshots.
 // For details, see https://cloud.google.com/compute/docs/reference/latest/disks/delete
 func (r *DisksService) Delete(project string, zone string, disk string) *DisksDeleteCall {
 	c := &DisksDeleteCall{s: r.s, opt_: make(map[string]interface{})}
@@ -5800,7 +7580,7 @@ func (c *DisksDeleteCall) Do() (*Operation, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes the specified persistent disk.",
+	//   "description": "Deletes the specified persistent disk. Deleting a disk removes its data permanently and is irreversible. However, deleting a disk does not delete any snapshots previously made from the disk. You must separately delete snapshots.",
 	//   "httpMethod": "DELETE",
 	//   "id": "compute.disks.delete",
 	//   "parameterOrder": [
@@ -6081,8 +7861,27 @@ func (r *DisksService) List(project string, zone string) *DisksListCall {
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter expression for
-// filtering listed resources.
+// Filter sets the optional parameter "filter": Sets a filter expression
+// for filtering listed resources, in the form filter={expression}. Your
+// {expression} must contain the following:
+// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+//
+// - FIELD_NAME: The name of the field you want to compare. The field
+// name must be valid for the type of resource being filtered. Only
+// atomic field types are supported (string, number, boolean). Array and
+// object fields are not currently supported.
+// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
+// (not equals).
+// - LITERAL_STRING: The literal string value to filter to. The literal
+// value must be valid for the type of field (string, number, boolean).
+// For string fields, the literal value is interpreted as a regular
+// expression using RE2 syntax. The literal value must match the entire
+// field.  For example, you can filter by the name of a
+// resource:
+// filter=name ne example-instance
+// The above filter returns only results whose name field does not equal
+// example-instance. You can also enclose your literal string in single,
+// double, or no quotes.
 func (c *DisksListCall) Filter(filter string) *DisksListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -6095,9 +7894,10 @@ func (c *DisksListCall) MaxResults(maxResults int64) *DisksListCall {
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request when that list was truncated to maxResults.
-// Used to continue a previous list request.
+// PageToken sets the optional parameter "pageToken": Specifies a page
+// token to use. Use this parameter if you want to list the next page of
+// results. Set pageToken to the nextPageToken returned by a previous
+// list request.
 func (c *DisksListCall) PageToken(pageToken string) *DisksListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -6158,7 +7958,7 @@ func (c *DisksListCall) Do() (*DiskList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filter expression for filtering listed resources.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6172,7 +7972,7 @@ func (c *DisksListCall) Do() (*DiskList, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
+	//       "description": "Specifies a page token to use. Use this parameter if you want to list the next page of results. Set pageToken to the nextPageToken returned by a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6493,8 +8293,27 @@ func (r *FirewallsService) List(project string) *FirewallsListCall {
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter expression for
-// filtering listed resources.
+// Filter sets the optional parameter "filter": Sets a filter expression
+// for filtering listed resources, in the form filter={expression}. Your
+// {expression} must contain the following:
+// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+//
+// - FIELD_NAME: The name of the field you want to compare. The field
+// name must be valid for the type of resource being filtered. Only
+// atomic field types are supported (string, number, boolean). Array and
+// object fields are not currently supported.
+// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
+// (not equals).
+// - LITERAL_STRING: The literal string value to filter to. The literal
+// value must be valid for the type of field (string, number, boolean).
+// For string fields, the literal value is interpreted as a regular
+// expression using RE2 syntax. The literal value must match the entire
+// field.  For example, you can filter by the name of a
+// resource:
+// filter=name ne example-instance
+// The above filter returns only results whose name field does not equal
+// example-instance. You can also enclose your literal string in single,
+// double, or no quotes.
 func (c *FirewallsListCall) Filter(filter string) *FirewallsListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -6507,9 +8326,10 @@ func (c *FirewallsListCall) MaxResults(maxResults int64) *FirewallsListCall {
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request when that list was truncated to maxResults.
-// Used to continue a previous list request.
+// PageToken sets the optional parameter "pageToken": Specifies a page
+// token to use. Use this parameter if you want to list the next page of
+// results. Set pageToken to the nextPageToken returned by a previous
+// list request.
 func (c *FirewallsListCall) PageToken(pageToken string) *FirewallsListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -6568,7 +8388,7 @@ func (c *FirewallsListCall) Do() (*FirewallList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filter expression for filtering listed resources.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6582,7 +8402,7 @@ func (c *FirewallsListCall) Do() (*FirewallList, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
+	//       "description": "Specifies a page token to use. Use this parameter if you want to list the next page of results. Set pageToken to the nextPageToken returned by a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6828,8 +8648,27 @@ func (r *ForwardingRulesService) AggregatedList(project string) *ForwardingRules
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter expression for
-// filtering listed resources.
+// Filter sets the optional parameter "filter": Sets a filter expression
+// for filtering listed resources, in the form filter={expression}. Your
+// {expression} must contain the following:
+// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+//
+// - FIELD_NAME: The name of the field you want to compare. The field
+// name must be valid for the type of resource being filtered. Only
+// atomic field types are supported (string, number, boolean). Array and
+// object fields are not currently supported.
+// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
+// (not equals).
+// - LITERAL_STRING: The literal string value to filter to. The literal
+// value must be valid for the type of field (string, number, boolean).
+// For string fields, the literal value is interpreted as a regular
+// expression using RE2 syntax. The literal value must match the entire
+// field.  For example, you can filter by the name of a
+// resource:
+// filter=name ne example-instance
+// The above filter returns only results whose name field does not equal
+// example-instance. You can also enclose your literal string in single,
+// double, or no quotes.
 func (c *ForwardingRulesAggregatedListCall) Filter(filter string) *ForwardingRulesAggregatedListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -6842,9 +8681,10 @@ func (c *ForwardingRulesAggregatedListCall) MaxResults(maxResults int64) *Forwar
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request when that list was truncated to maxResults.
-// Used to continue a previous list request.
+// PageToken sets the optional parameter "pageToken": Specifies a page
+// token to use. Use this parameter if you want to list the next page of
+// results. Set pageToken to the nextPageToken returned by a previous
+// list request.
 func (c *ForwardingRulesAggregatedListCall) PageToken(pageToken string) *ForwardingRulesAggregatedListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -6903,7 +8743,7 @@ func (c *ForwardingRulesAggregatedListCall) Do() (*ForwardingRuleAggregatedList,
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filter expression for filtering listed resources.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6917,7 +8757,7 @@ func (c *ForwardingRulesAggregatedListCall) Do() (*ForwardingRuleAggregatedList,
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
+	//       "description": "Specifies a page token to use. Use this parameter if you want to list the next page of results. Set pageToken to the nextPageToken returned by a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7266,8 +9106,27 @@ func (r *ForwardingRulesService) List(project string, region string) *Forwarding
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter expression for
-// filtering listed resources.
+// Filter sets the optional parameter "filter": Sets a filter expression
+// for filtering listed resources, in the form filter={expression}. Your
+// {expression} must contain the following:
+// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+//
+// - FIELD_NAME: The name of the field you want to compare. The field
+// name must be valid for the type of resource being filtered. Only
+// atomic field types are supported (string, number, boolean). Array and
+// object fields are not currently supported.
+// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
+// (not equals).
+// - LITERAL_STRING: The literal string value to filter to. The literal
+// value must be valid for the type of field (string, number, boolean).
+// For string fields, the literal value is interpreted as a regular
+// expression using RE2 syntax. The literal value must match the entire
+// field.  For example, you can filter by the name of a
+// resource:
+// filter=name ne example-instance
+// The above filter returns only results whose name field does not equal
+// example-instance. You can also enclose your literal string in single,
+// double, or no quotes.
 func (c *ForwardingRulesListCall) Filter(filter string) *ForwardingRulesListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -7280,9 +9139,10 @@ func (c *ForwardingRulesListCall) MaxResults(maxResults int64) *ForwardingRulesL
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request when that list was truncated to maxResults.
-// Used to continue a previous list request.
+// PageToken sets the optional parameter "pageToken": Specifies a page
+// token to use. Use this parameter if you want to list the next page of
+// results. Set pageToken to the nextPageToken returned by a previous
+// list request.
 func (c *ForwardingRulesListCall) PageToken(pageToken string) *ForwardingRulesListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -7343,7 +9203,7 @@ func (c *ForwardingRulesListCall) Do() (*ForwardingRuleList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filter expression for filtering listed resources.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7357,7 +9217,7 @@ func (c *ForwardingRulesListCall) Do() (*ForwardingRuleList, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
+	//       "description": "Specifies a page token to use. Use this parameter if you want to list the next page of results. Set pageToken to the nextPageToken returned by a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7789,8 +9649,27 @@ func (r *GlobalAddressesService) List(project string) *GlobalAddressesListCall {
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter expression for
-// filtering listed resources.
+// Filter sets the optional parameter "filter": Sets a filter expression
+// for filtering listed resources, in the form filter={expression}. Your
+// {expression} must contain the following:
+// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+//
+// - FIELD_NAME: The name of the field you want to compare. The field
+// name must be valid for the type of resource being filtered. Only
+// atomic field types are supported (string, number, boolean). Array and
+// object fields are not currently supported.
+// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
+// (not equals).
+// - LITERAL_STRING: The literal string value to filter to. The literal
+// value must be valid for the type of field (string, number, boolean).
+// For string fields, the literal value is interpreted as a regular
+// expression using RE2 syntax. The literal value must match the entire
+// field.  For example, you can filter by the name of a
+// resource:
+// filter=name ne example-instance
+// The above filter returns only results whose name field does not equal
+// example-instance. You can also enclose your literal string in single,
+// double, or no quotes.
 func (c *GlobalAddressesListCall) Filter(filter string) *GlobalAddressesListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -7803,9 +9682,10 @@ func (c *GlobalAddressesListCall) MaxResults(maxResults int64) *GlobalAddressesL
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request when that list was truncated to maxResults.
-// Used to continue a previous list request.
+// PageToken sets the optional parameter "pageToken": Specifies a page
+// token to use. Use this parameter if you want to list the next page of
+// results. Set pageToken to the nextPageToken returned by a previous
+// list request.
 func (c *GlobalAddressesListCall) PageToken(pageToken string) *GlobalAddressesListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -7864,7 +9744,7 @@ func (c *GlobalAddressesListCall) Do() (*AddressList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filter expression for filtering listed resources.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7878,7 +9758,7 @@ func (c *GlobalAddressesListCall) Do() (*AddressList, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
+	//       "description": "Specifies a page token to use. Use this parameter if you want to list the next page of results. Set pageToken to the nextPageToken returned by a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8192,8 +10072,27 @@ func (r *GlobalForwardingRulesService) List(project string) *GlobalForwardingRul
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter expression for
-// filtering listed resources.
+// Filter sets the optional parameter "filter": Sets a filter expression
+// for filtering listed resources, in the form filter={expression}. Your
+// {expression} must contain the following:
+// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+//
+// - FIELD_NAME: The name of the field you want to compare. The field
+// name must be valid for the type of resource being filtered. Only
+// atomic field types are supported (string, number, boolean). Array and
+// object fields are not currently supported.
+// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
+// (not equals).
+// - LITERAL_STRING: The literal string value to filter to. The literal
+// value must be valid for the type of field (string, number, boolean).
+// For string fields, the literal value is interpreted as a regular
+// expression using RE2 syntax. The literal value must match the entire
+// field.  For example, you can filter by the name of a
+// resource:
+// filter=name ne example-instance
+// The above filter returns only results whose name field does not equal
+// example-instance. You can also enclose your literal string in single,
+// double, or no quotes.
 func (c *GlobalForwardingRulesListCall) Filter(filter string) *GlobalForwardingRulesListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -8206,9 +10105,10 @@ func (c *GlobalForwardingRulesListCall) MaxResults(maxResults int64) *GlobalForw
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request when that list was truncated to maxResults.
-// Used to continue a previous list request.
+// PageToken sets the optional parameter "pageToken": Specifies a page
+// token to use. Use this parameter if you want to list the next page of
+// results. Set pageToken to the nextPageToken returned by a previous
+// list request.
 func (c *GlobalForwardingRulesListCall) PageToken(pageToken string) *GlobalForwardingRulesListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -8267,7 +10167,7 @@ func (c *GlobalForwardingRulesListCall) Do() (*ForwardingRuleList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filter expression for filtering listed resources.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8281,7 +10181,7 @@ func (c *GlobalForwardingRulesListCall) Do() (*ForwardingRuleList, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
+	//       "description": "Specifies a page token to use. Use this parameter if you want to list the next page of results. Set pageToken to the nextPageToken returned by a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8424,8 +10324,27 @@ func (r *GlobalOperationsService) AggregatedList(project string) *GlobalOperatio
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter expression for
-// filtering listed resources.
+// Filter sets the optional parameter "filter": Sets a filter expression
+// for filtering listed resources, in the form filter={expression}. Your
+// {expression} must contain the following:
+// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+//
+// - FIELD_NAME: The name of the field you want to compare. The field
+// name must be valid for the type of resource being filtered. Only
+// atomic field types are supported (string, number, boolean). Array and
+// object fields are not currently supported.
+// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
+// (not equals).
+// - LITERAL_STRING: The literal string value to filter to. The literal
+// value must be valid for the type of field (string, number, boolean).
+// For string fields, the literal value is interpreted as a regular
+// expression using RE2 syntax. The literal value must match the entire
+// field.  For example, you can filter by the name of a
+// resource:
+// filter=name ne example-instance
+// The above filter returns only results whose name field does not equal
+// example-instance. You can also enclose your literal string in single,
+// double, or no quotes.
 func (c *GlobalOperationsAggregatedListCall) Filter(filter string) *GlobalOperationsAggregatedListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -8438,9 +10357,10 @@ func (c *GlobalOperationsAggregatedListCall) MaxResults(maxResults int64) *Globa
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request when that list was truncated to maxResults.
-// Used to continue a previous list request.
+// PageToken sets the optional parameter "pageToken": Specifies a page
+// token to use. Use this parameter if you want to list the next page of
+// results. Set pageToken to the nextPageToken returned by a previous
+// list request.
 func (c *GlobalOperationsAggregatedListCall) PageToken(pageToken string) *GlobalOperationsAggregatedListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -8499,7 +10419,7 @@ func (c *GlobalOperationsAggregatedListCall) Do() (*OperationAggregatedList, err
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filter expression for filtering listed resources.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8513,7 +10433,7 @@ func (c *GlobalOperationsAggregatedListCall) Do() (*OperationAggregatedList, err
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
+	//       "description": "Specifies a page token to use. Use this parameter if you want to list the next page of results. Set pageToken to the nextPageToken returned by a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8547,7 +10467,7 @@ type GlobalOperationsDeleteCall struct {
 	opt_      map[string]interface{}
 }
 
-// Delete: Deletes the specified operation resource.
+// Delete: Deletes the specified Operations resource.
 // For details, see https://cloud.google.com/compute/docs/reference/latest/globalOperations/delete
 func (r *GlobalOperationsService) Delete(project string, operation string) *GlobalOperationsDeleteCall {
 	c := &GlobalOperationsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
@@ -8589,7 +10509,7 @@ func (c *GlobalOperationsDeleteCall) Do() error {
 	}
 	return nil
 	// {
-	//   "description": "Deletes the specified operation resource.",
+	//   "description": "Deletes the specified Operations resource.",
 	//   "httpMethod": "DELETE",
 	//   "id": "compute.globalOperations.delete",
 	//   "parameterOrder": [
@@ -8598,7 +10518,7 @@ func (c *GlobalOperationsDeleteCall) Do() error {
 	//   ],
 	//   "parameters": {
 	//     "operation": {
-	//       "description": "Name of the operation resource to delete.",
+	//       "description": "Name of the Operations resource to delete.",
 	//       "location": "path",
 	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
@@ -8630,7 +10550,7 @@ type GlobalOperationsGetCall struct {
 	opt_      map[string]interface{}
 }
 
-// Get: Retrieves the specified operation resource.
+// Get: Retrieves the specified Operations resource.
 // For details, see https://cloud.google.com/compute/docs/reference/latest/globalOperations/get
 func (r *GlobalOperationsService) Get(project string, operation string) *GlobalOperationsGetCall {
 	c := &GlobalOperationsGetCall{s: r.s, opt_: make(map[string]interface{})}
@@ -8676,7 +10596,7 @@ func (c *GlobalOperationsGetCall) Do() (*Operation, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves the specified operation resource.",
+	//   "description": "Retrieves the specified Operations resource.",
 	//   "httpMethod": "GET",
 	//   "id": "compute.globalOperations.get",
 	//   "parameterOrder": [
@@ -8685,7 +10605,7 @@ func (c *GlobalOperationsGetCall) Do() (*Operation, error) {
 	//   ],
 	//   "parameters": {
 	//     "operation": {
-	//       "description": "Name of the operation resource to return.",
+	//       "description": "Name of the Operations resource to return.",
 	//       "location": "path",
 	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
@@ -8720,7 +10640,7 @@ type GlobalOperationsListCall struct {
 	opt_    map[string]interface{}
 }
 
-// List: Retrieves the list of operation resources contained within the
+// List: Retrieves the list of Operation resources contained within the
 // specified project.
 // For details, see https://cloud.google.com/compute/docs/reference/latest/globalOperations/list
 func (r *GlobalOperationsService) List(project string) *GlobalOperationsListCall {
@@ -8729,8 +10649,27 @@ func (r *GlobalOperationsService) List(project string) *GlobalOperationsListCall
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter expression for
-// filtering listed resources.
+// Filter sets the optional parameter "filter": Sets a filter expression
+// for filtering listed resources, in the form filter={expression}. Your
+// {expression} must contain the following:
+// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+//
+// - FIELD_NAME: The name of the field you want to compare. The field
+// name must be valid for the type of resource being filtered. Only
+// atomic field types are supported (string, number, boolean). Array and
+// object fields are not currently supported.
+// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
+// (not equals).
+// - LITERAL_STRING: The literal string value to filter to. The literal
+// value must be valid for the type of field (string, number, boolean).
+// For string fields, the literal value is interpreted as a regular
+// expression using RE2 syntax. The literal value must match the entire
+// field.  For example, you can filter by the name of a
+// resource:
+// filter=name ne example-instance
+// The above filter returns only results whose name field does not equal
+// example-instance. You can also enclose your literal string in single,
+// double, or no quotes.
 func (c *GlobalOperationsListCall) Filter(filter string) *GlobalOperationsListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -8743,9 +10682,10 @@ func (c *GlobalOperationsListCall) MaxResults(maxResults int64) *GlobalOperation
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request when that list was truncated to maxResults.
-// Used to continue a previous list request.
+// PageToken sets the optional parameter "pageToken": Specifies a page
+// token to use. Use this parameter if you want to list the next page of
+// results. Set pageToken to the nextPageToken returned by a previous
+// list request.
 func (c *GlobalOperationsListCall) PageToken(pageToken string) *GlobalOperationsListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -8796,7 +10736,7 @@ func (c *GlobalOperationsListCall) Do() (*OperationList, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves the list of operation resources contained within the specified project.",
+	//   "description": "Retrieves the list of Operation resources contained within the specified project.",
 	//   "httpMethod": "GET",
 	//   "id": "compute.globalOperations.list",
 	//   "parameterOrder": [
@@ -8804,7 +10744,7 @@ func (c *GlobalOperationsListCall) Do() (*OperationList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filter expression for filtering listed resources.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8818,7 +10758,7 @@ func (c *GlobalOperationsListCall) Do() (*OperationList, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
+	//       "description": "Specifies a page token to use. Use this parameter if you want to list the next page of results. Set pageToken to the nextPageToken returned by a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -9132,8 +11072,27 @@ func (r *HttpHealthChecksService) List(project string) *HttpHealthChecksListCall
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter expression for
-// filtering listed resources.
+// Filter sets the optional parameter "filter": Sets a filter expression
+// for filtering listed resources, in the form filter={expression}. Your
+// {expression} must contain the following:
+// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+//
+// - FIELD_NAME: The name of the field you want to compare. The field
+// name must be valid for the type of resource being filtered. Only
+// atomic field types are supported (string, number, boolean). Array and
+// object fields are not currently supported.
+// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
+// (not equals).
+// - LITERAL_STRING: The literal string value to filter to. The literal
+// value must be valid for the type of field (string, number, boolean).
+// For string fields, the literal value is interpreted as a regular
+// expression using RE2 syntax. The literal value must match the entire
+// field.  For example, you can filter by the name of a
+// resource:
+// filter=name ne example-instance
+// The above filter returns only results whose name field does not equal
+// example-instance. You can also enclose your literal string in single,
+// double, or no quotes.
 func (c *HttpHealthChecksListCall) Filter(filter string) *HttpHealthChecksListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -9146,9 +11105,10 @@ func (c *HttpHealthChecksListCall) MaxResults(maxResults int64) *HttpHealthCheck
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request when that list was truncated to maxResults.
-// Used to continue a previous list request.
+// PageToken sets the optional parameter "pageToken": Specifies a page
+// token to use. Use this parameter if you want to list the next page of
+// results. Set pageToken to the nextPageToken returned by a previous
+// list request.
 func (c *HttpHealthChecksListCall) PageToken(pageToken string) *HttpHealthChecksListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -9207,7 +11167,7 @@ func (c *HttpHealthChecksListCall) Do() (*HttpHealthCheckList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filter expression for filtering listed resources.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -9221,7 +11181,7 @@ func (c *HttpHealthChecksListCall) Do() (*HttpHealthCheckList, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
+	//       "description": "Specifies a page token to use. Use this parameter if you want to list the next page of results. Set pageToken to the nextPageToken returned by a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -9847,8 +11807,27 @@ func (r *ImagesService) List(project string) *ImagesListCall {
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter expression for
-// filtering listed resources.
+// Filter sets the optional parameter "filter": Sets a filter expression
+// for filtering listed resources, in the form filter={expression}. Your
+// {expression} must contain the following:
+// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+//
+// - FIELD_NAME: The name of the field you want to compare. The field
+// name must be valid for the type of resource being filtered. Only
+// atomic field types are supported (string, number, boolean). Array and
+// object fields are not currently supported.
+// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
+// (not equals).
+// - LITERAL_STRING: The literal string value to filter to. The literal
+// value must be valid for the type of field (string, number, boolean).
+// For string fields, the literal value is interpreted as a regular
+// expression using RE2 syntax. The literal value must match the entire
+// field.  For example, you can filter by the name of a
+// resource:
+// filter=name ne example-instance
+// The above filter returns only results whose name field does not equal
+// example-instance. You can also enclose your literal string in single,
+// double, or no quotes.
 func (c *ImagesListCall) Filter(filter string) *ImagesListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -9861,9 +11840,10 @@ func (c *ImagesListCall) MaxResults(maxResults int64) *ImagesListCall {
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request when that list was truncated to maxResults.
-// Used to continue a previous list request.
+// PageToken sets the optional parameter "pageToken": Specifies a page
+// token to use. Use this parameter if you want to list the next page of
+// results. Set pageToken to the nextPageToken returned by a previous
+// list request.
 func (c *ImagesListCall) PageToken(pageToken string) *ImagesListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -9922,7 +11902,7 @@ func (c *ImagesListCall) Do() (*ImageList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filter expression for filtering listed resources.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -9936,7 +11916,7 @@ func (c *ImagesListCall) Do() (*ImageList, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
+	//       "description": "Specifies a page token to use. Use this parameter if you want to list the next page of results. Set pageToken to the nextPageToken returned by a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -9956,6 +11936,2500 @@ func (c *ImagesListCall) Do() (*ImageList, error) {
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.instanceGroupManagers.abandonInstances":
+
+type InstanceGroupManagersAbandonInstancesCall struct {
+	s                                            *Service
+	project                                      string
+	zone                                         string
+	instanceGroupManager                         string
+	instancegroupmanagersabandoninstancesrequest *InstanceGroupManagersAbandonInstancesRequest
+	opt_                                         map[string]interface{}
+}
+
+// AbandonInstances: Removes the specified instances from the managed
+// instance group, and from any target pools where they are a member.
+// The instances are not deleted. The managed instance group
+// automatically reduces its targetSize value by the number of instances
+// that you abandon from the group.
+func (r *InstanceGroupManagersService) AbandonInstances(project string, zone string, instanceGroupManager string, instancegroupmanagersabandoninstancesrequest *InstanceGroupManagersAbandonInstancesRequest) *InstanceGroupManagersAbandonInstancesCall {
+	c := &InstanceGroupManagersAbandonInstancesCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.zone = zone
+	c.instanceGroupManager = instanceGroupManager
+	c.instancegroupmanagersabandoninstancesrequest = instancegroupmanagersabandoninstancesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InstanceGroupManagersAbandonInstancesCall) Fields(s ...googleapi.Field) *InstanceGroupManagersAbandonInstancesCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *InstanceGroupManagersAbandonInstancesCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.instancegroupmanagersabandoninstancesrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}/abandonInstances")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project":              c.project,
+		"zone":                 c.zone,
+		"instanceGroupManager": c.instanceGroupManager,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Removes the specified instances from the managed instance group, and from any target pools where they are a member. The instances are not deleted. The managed instance group automatically reduces its targetSize value by the number of instances that you abandon from the group.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.instanceGroupManagers.abandonInstances",
+	//   "parameterOrder": [
+	//     "project",
+	//     "zone",
+	//     "instanceGroupManager"
+	//   ],
+	//   "parameters": {
+	//     "instanceGroupManager": {
+	//       "description": "The name of the instance group manager.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "The project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "The URL of the zone where the managed instance group is located.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}/abandonInstances",
+	//   "request": {
+	//     "$ref": "InstanceGroupManagersAbandonInstancesRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.instanceGroupManagers.aggregatedList":
+
+type InstanceGroupManagersAggregatedListCall struct {
+	s       *Service
+	project string
+	opt_    map[string]interface{}
+}
+
+// AggregatedList: Retrieves the list of managed instance groups, and
+// groups them by project and zone.
+func (r *InstanceGroupManagersService) AggregatedList(project string) *InstanceGroupManagersAggregatedListCall {
+	c := &InstanceGroupManagersAggregatedListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	return c
+}
+
+// Filter sets the optional parameter "filter": Sets a filter expression
+// for filtering listed resources, in the form filter={expression}. Your
+// {expression} must contain the following:
+// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+//
+// - FIELD_NAME: The name of the field you want to compare. The field
+// name must be valid for the type of resource being filtered. Only
+// atomic field types are supported (string, number, boolean). Array and
+// object fields are not currently supported.
+// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
+// (not equals).
+// - LITERAL_STRING: The literal string value to filter to. The literal
+// value must be valid for the type of field (string, number, boolean).
+// For string fields, the literal value is interpreted as a regular
+// expression using RE2 syntax. The literal value must match the entire
+// field.  For example, you can filter by the name of a
+// resource:
+// filter=name ne example-instance
+// The above filter returns only results whose name field does not equal
+// example-instance. You can also enclose your literal string in single,
+// double, or no quotes.
+func (c *InstanceGroupManagersAggregatedListCall) Filter(filter string) *InstanceGroupManagersAggregatedListCall {
+	c.opt_["filter"] = filter
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Maximum count of
+// results to be returned.
+func (c *InstanceGroupManagersAggregatedListCall) MaxResults(maxResults int64) *InstanceGroupManagersAggregatedListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Specifies a page
+// token to use. Use this parameter if you want to list the next page of
+// results. Set pageToken to the nextPageToken returned by a previous
+// list request.
+func (c *InstanceGroupManagersAggregatedListCall) PageToken(pageToken string) *InstanceGroupManagersAggregatedListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InstanceGroupManagersAggregatedListCall) Fields(s ...googleapi.Field) *InstanceGroupManagersAggregatedListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *InstanceGroupManagersAggregatedListCall) Do() (*InstanceGroupManagerAggregatedList, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["filter"]; ok {
+		params.Set("filter", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/aggregated/instanceGroupManagers")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *InstanceGroupManagerAggregatedList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the list of managed instance groups, and groups them by project and zone.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.instanceGroupManagers.aggregatedList",
+	//   "parameterOrder": [
+	//     "project"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "default": "500",
+	//       "description": "Maximum count of results to be returned.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "maximum": "500",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Specifies a page token to use. Use this parameter if you want to list the next page of results. Set pageToken to the nextPageToken returned by a previous list request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "The project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/aggregated/instanceGroupManagers",
+	//   "response": {
+	//     "$ref": "InstanceGroupManagerAggregatedList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.instanceGroupManagers.delete":
+
+type InstanceGroupManagersDeleteCall struct {
+	s                    *Service
+	project              string
+	zone                 string
+	instanceGroupManager string
+	opt_                 map[string]interface{}
+}
+
+// Delete: Deletes the specified managed instance group resource.
+func (r *InstanceGroupManagersService) Delete(project string, zone string, instanceGroupManager string) *InstanceGroupManagersDeleteCall {
+	c := &InstanceGroupManagersDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.zone = zone
+	c.instanceGroupManager = instanceGroupManager
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InstanceGroupManagersDeleteCall) Fields(s ...googleapi.Field) *InstanceGroupManagersDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *InstanceGroupManagersDeleteCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project":              c.project,
+		"zone":                 c.zone,
+		"instanceGroupManager": c.instanceGroupManager,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes the specified managed instance group resource.",
+	//   "httpMethod": "DELETE",
+	//   "id": "compute.instanceGroupManagers.delete",
+	//   "parameterOrder": [
+	//     "project",
+	//     "zone",
+	//     "instanceGroupManager"
+	//   ],
+	//   "parameters": {
+	//     "instanceGroupManager": {
+	//       "description": "The name of the instance group manager to delete.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "The project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "The URL of the zone where the managed instance group is located.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.instanceGroupManagers.deleteInstances":
+
+type InstanceGroupManagersDeleteInstancesCall struct {
+	s                                           *Service
+	project                                     string
+	zone                                        string
+	instanceGroupManager                        string
+	instancegroupmanagersdeleteinstancesrequest *InstanceGroupManagersDeleteInstancesRequest
+	opt_                                        map[string]interface{}
+}
+
+// DeleteInstances: Deletes the specified instances. The instances are
+// deleted and removed from the instance group and any target pools
+// where they are a member. The managed instance group automatically
+// reduces its targetSize value by the number of instances that you
+// delete.
+func (r *InstanceGroupManagersService) DeleteInstances(project string, zone string, instanceGroupManager string, instancegroupmanagersdeleteinstancesrequest *InstanceGroupManagersDeleteInstancesRequest) *InstanceGroupManagersDeleteInstancesCall {
+	c := &InstanceGroupManagersDeleteInstancesCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.zone = zone
+	c.instanceGroupManager = instanceGroupManager
+	c.instancegroupmanagersdeleteinstancesrequest = instancegroupmanagersdeleteinstancesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InstanceGroupManagersDeleteInstancesCall) Fields(s ...googleapi.Field) *InstanceGroupManagersDeleteInstancesCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *InstanceGroupManagersDeleteInstancesCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.instancegroupmanagersdeleteinstancesrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}/deleteInstances")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project":              c.project,
+		"zone":                 c.zone,
+		"instanceGroupManager": c.instanceGroupManager,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes the specified instances. The instances are deleted and removed from the instance group and any target pools where they are a member. The managed instance group automatically reduces its targetSize value by the number of instances that you delete.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.instanceGroupManagers.deleteInstances",
+	//   "parameterOrder": [
+	//     "project",
+	//     "zone",
+	//     "instanceGroupManager"
+	//   ],
+	//   "parameters": {
+	//     "instanceGroupManager": {
+	//       "description": "The name of the instance group manager.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "The project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "The URL of the zone where the managed instance group is located.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}/deleteInstances",
+	//   "request": {
+	//     "$ref": "InstanceGroupManagersDeleteInstancesRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.instanceGroupManagers.get":
+
+type InstanceGroupManagersGetCall struct {
+	s                    *Service
+	project              string
+	zone                 string
+	instanceGroupManager string
+	opt_                 map[string]interface{}
+}
+
+// Get: Returns the specified managed instance group resource.
+func (r *InstanceGroupManagersService) Get(project string, zone string, instanceGroupManager string) *InstanceGroupManagersGetCall {
+	c := &InstanceGroupManagersGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.zone = zone
+	c.instanceGroupManager = instanceGroupManager
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InstanceGroupManagersGetCall) Fields(s ...googleapi.Field) *InstanceGroupManagersGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *InstanceGroupManagersGetCall) Do() (*InstanceGroupManager, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project":              c.project,
+		"zone":                 c.zone,
+		"instanceGroupManager": c.instanceGroupManager,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *InstanceGroupManager
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns the specified managed instance group resource.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.instanceGroupManagers.get",
+	//   "parameterOrder": [
+	//     "project",
+	//     "zone",
+	//     "instanceGroupManager"
+	//   ],
+	//   "parameters": {
+	//     "instanceGroupManager": {
+	//       "description": "The name of the instance group manager resource.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "The project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "The URL of the zone where the managed instance group is located.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}",
+	//   "response": {
+	//     "$ref": "InstanceGroupManager"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.instanceGroupManagers.insert":
+
+type InstanceGroupManagersInsertCall struct {
+	s                    *Service
+	project              string
+	zone                 string
+	instancegroupmanager *InstanceGroupManager
+	opt_                 map[string]interface{}
+}
+
+// Insert: Creates a managed instance group resource in the specified
+// project using the data that is included in the request.
+func (r *InstanceGroupManagersService) Insert(project string, zone string, instancegroupmanager *InstanceGroupManager) *InstanceGroupManagersInsertCall {
+	c := &InstanceGroupManagersInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.zone = zone
+	c.instancegroupmanager = instancegroupmanager
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InstanceGroupManagersInsertCall) Fields(s ...googleapi.Field) *InstanceGroupManagersInsertCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *InstanceGroupManagersInsertCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.instancegroupmanager)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/instanceGroupManagers")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+		"zone":    c.zone,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a managed instance group resource in the specified project using the data that is included in the request.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.instanceGroupManagers.insert",
+	//   "parameterOrder": [
+	//     "project",
+	//     "zone"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "The project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "The URL of the zone where the managed instance group is located.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/zones/{zone}/instanceGroupManagers",
+	//   "request": {
+	//     "$ref": "InstanceGroupManager"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.instanceGroupManagers.list":
+
+type InstanceGroupManagersListCall struct {
+	s       *Service
+	project string
+	zone    string
+	opt_    map[string]interface{}
+}
+
+// List: Retrieves a list of managed instance groups that are contained
+// within the specified project and zone.
+func (r *InstanceGroupManagersService) List(project string, zone string) *InstanceGroupManagersListCall {
+	c := &InstanceGroupManagersListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.zone = zone
+	return c
+}
+
+// Filter sets the optional parameter "filter": Sets a filter expression
+// for filtering listed resources, in the form filter={expression}. Your
+// {expression} must contain the following:
+// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+//
+// - FIELD_NAME: The name of the field you want to compare. The field
+// name must be valid for the type of resource being filtered. Only
+// atomic field types are supported (string, number, boolean). Array and
+// object fields are not currently supported.
+// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
+// (not equals).
+// - LITERAL_STRING: The literal string value to filter to. The literal
+// value must be valid for the type of field (string, number, boolean).
+// For string fields, the literal value is interpreted as a regular
+// expression using RE2 syntax. The literal value must match the entire
+// field.  For example, you can filter by the name of a
+// resource:
+// filter=name ne example-instance
+// The above filter returns only results whose name field does not equal
+// example-instance. You can also enclose your literal string in single,
+// double, or no quotes.
+func (c *InstanceGroupManagersListCall) Filter(filter string) *InstanceGroupManagersListCall {
+	c.opt_["filter"] = filter
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Maximum count of
+// results to be returned.
+func (c *InstanceGroupManagersListCall) MaxResults(maxResults int64) *InstanceGroupManagersListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Specifies a page
+// token to use. Use this parameter if you want to list the next page of
+// results. Set pageToken to the nextPageToken returned by a previous
+// list request.
+func (c *InstanceGroupManagersListCall) PageToken(pageToken string) *InstanceGroupManagersListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InstanceGroupManagersListCall) Fields(s ...googleapi.Field) *InstanceGroupManagersListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *InstanceGroupManagersListCall) Do() (*InstanceGroupManagerList, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["filter"]; ok {
+		params.Set("filter", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/instanceGroupManagers")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+		"zone":    c.zone,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *InstanceGroupManagerList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves a list of managed instance groups that are contained within the specified project and zone.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.instanceGroupManagers.list",
+	//   "parameterOrder": [
+	//     "project",
+	//     "zone"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "default": "500",
+	//       "description": "Maximum count of results to be returned.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "maximum": "500",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Specifies a page token to use. Use this parameter if you want to list the next page of results. Set pageToken to the nextPageToken returned by a previous list request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "The project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "The URL of the zone where the managed instance group is located.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/zones/{zone}/instanceGroupManagers",
+	//   "response": {
+	//     "$ref": "InstanceGroupManagerList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.instanceGroupManagers.listManagedInstances":
+
+type InstanceGroupManagersListManagedInstancesCall struct {
+	s                    *Service
+	project              string
+	zone                 string
+	instanceGroupManager string
+	opt_                 map[string]interface{}
+}
+
+// ListManagedInstances: Lists managed instances.
+func (r *InstanceGroupManagersService) ListManagedInstances(project string, zone string, instanceGroupManager string) *InstanceGroupManagersListManagedInstancesCall {
+	c := &InstanceGroupManagersListManagedInstancesCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.zone = zone
+	c.instanceGroupManager = instanceGroupManager
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InstanceGroupManagersListManagedInstancesCall) Fields(s ...googleapi.Field) *InstanceGroupManagersListManagedInstancesCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *InstanceGroupManagersListManagedInstancesCall) Do() (*InstanceGroupManagersListManagedInstancesResponse, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}/listManagedInstances")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project":              c.project,
+		"zone":                 c.zone,
+		"instanceGroupManager": c.instanceGroupManager,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *InstanceGroupManagersListManagedInstancesResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists managed instances.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.instanceGroupManagers.listManagedInstances",
+	//   "parameterOrder": [
+	//     "project",
+	//     "zone",
+	//     "instanceGroupManager"
+	//   ],
+	//   "parameters": {
+	//     "instanceGroupManager": {
+	//       "description": "The name of the managed instance group.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "The project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "The URL of the zone where the managed instance group is located.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}/listManagedInstances",
+	//   "response": {
+	//     "$ref": "InstanceGroupManagersListManagedInstancesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.instanceGroupManagers.recreateInstances":
+
+type InstanceGroupManagersRecreateInstancesCall struct {
+	s                                             *Service
+	project                                       string
+	zone                                          string
+	instanceGroupManager                          string
+	instancegroupmanagersrecreateinstancesrequest *InstanceGroupManagersRecreateInstancesRequest
+	opt_                                          map[string]interface{}
+}
+
+// RecreateInstances: Recreates the specified instances. The instances
+// are deleted, then recreated using the managed instance group's
+// current instance template.
+func (r *InstanceGroupManagersService) RecreateInstances(project string, zone string, instanceGroupManager string, instancegroupmanagersrecreateinstancesrequest *InstanceGroupManagersRecreateInstancesRequest) *InstanceGroupManagersRecreateInstancesCall {
+	c := &InstanceGroupManagersRecreateInstancesCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.zone = zone
+	c.instanceGroupManager = instanceGroupManager
+	c.instancegroupmanagersrecreateinstancesrequest = instancegroupmanagersrecreateinstancesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InstanceGroupManagersRecreateInstancesCall) Fields(s ...googleapi.Field) *InstanceGroupManagersRecreateInstancesCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *InstanceGroupManagersRecreateInstancesCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.instancegroupmanagersrecreateinstancesrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}/recreateInstances")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project":              c.project,
+		"zone":                 c.zone,
+		"instanceGroupManager": c.instanceGroupManager,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Recreates the specified instances. The instances are deleted, then recreated using the managed instance group's current instance template.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.instanceGroupManagers.recreateInstances",
+	//   "parameterOrder": [
+	//     "project",
+	//     "zone",
+	//     "instanceGroupManager"
+	//   ],
+	//   "parameters": {
+	//     "instanceGroupManager": {
+	//       "description": "The name of the instance group manager.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "The project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "The URL of the zone where the managed instance group is located.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}/recreateInstances",
+	//   "request": {
+	//     "$ref": "InstanceGroupManagersRecreateInstancesRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.instanceGroupManagers.resize":
+
+type InstanceGroupManagersResizeCall struct {
+	s                    *Service
+	project              string
+	zone                 string
+	instanceGroupManager string
+	size                 int64
+	opt_                 map[string]interface{}
+}
+
+// Resize: Resizes the managed instance group. If you increase the size,
+// the group creates new instances using the current instance template.
+// If you decrease the size, the group removes instances in the order
+// that is outlined in Resizing a managed instance group.
+func (r *InstanceGroupManagersService) Resize(project string, zone string, instanceGroupManager string, size int64) *InstanceGroupManagersResizeCall {
+	c := &InstanceGroupManagersResizeCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.zone = zone
+	c.instanceGroupManager = instanceGroupManager
+	c.size = size
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InstanceGroupManagersResizeCall) Fields(s ...googleapi.Field) *InstanceGroupManagersResizeCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *InstanceGroupManagersResizeCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	params.Set("size", fmt.Sprintf("%v", c.size))
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}/resize")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project":              c.project,
+		"zone":                 c.zone,
+		"instanceGroupManager": c.instanceGroupManager,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Resizes the managed instance group. If you increase the size, the group creates new instances using the current instance template. If you decrease the size, the group removes instances in the order that is outlined in Resizing a managed instance group.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.instanceGroupManagers.resize",
+	//   "parameterOrder": [
+	//     "project",
+	//     "zone",
+	//     "instanceGroupManager",
+	//     "size"
+	//   ],
+	//   "parameters": {
+	//     "instanceGroupManager": {
+	//       "description": "The name of the instance group manager.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "The project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "size": {
+	//       "description": "The number of running instances that the managed instance group should maintain at any given time. The group automatically adds or removes instances to maintain the number of instances specified by this parameter.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "integer"
+	//     },
+	//     "zone": {
+	//       "description": "The URL of the zone where the managed instance group is located.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}/resize",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.instanceGroupManagers.setInstanceTemplate":
+
+type InstanceGroupManagersSetInstanceTemplateCall struct {
+	s                                               *Service
+	project                                         string
+	zone                                            string
+	instanceGroupManager                            string
+	instancegroupmanagerssetinstancetemplaterequest *InstanceGroupManagersSetInstanceTemplateRequest
+	opt_                                            map[string]interface{}
+}
+
+// SetInstanceTemplate: Specifies the instance template to use when
+// creating new instances in this group. The templates for existing
+// instances in the group do not change unless you recreate them.
+func (r *InstanceGroupManagersService) SetInstanceTemplate(project string, zone string, instanceGroupManager string, instancegroupmanagerssetinstancetemplaterequest *InstanceGroupManagersSetInstanceTemplateRequest) *InstanceGroupManagersSetInstanceTemplateCall {
+	c := &InstanceGroupManagersSetInstanceTemplateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.zone = zone
+	c.instanceGroupManager = instanceGroupManager
+	c.instancegroupmanagerssetinstancetemplaterequest = instancegroupmanagerssetinstancetemplaterequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InstanceGroupManagersSetInstanceTemplateCall) Fields(s ...googleapi.Field) *InstanceGroupManagersSetInstanceTemplateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *InstanceGroupManagersSetInstanceTemplateCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.instancegroupmanagerssetinstancetemplaterequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}/setInstanceTemplate")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project":              c.project,
+		"zone":                 c.zone,
+		"instanceGroupManager": c.instanceGroupManager,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Specifies the instance template to use when creating new instances in this group. The templates for existing instances in the group do not change unless you recreate them.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.instanceGroupManagers.setInstanceTemplate",
+	//   "parameterOrder": [
+	//     "project",
+	//     "zone",
+	//     "instanceGroupManager"
+	//   ],
+	//   "parameters": {
+	//     "instanceGroupManager": {
+	//       "description": "The name of the instance group manager.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "The project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "The URL of the zone where the managed instance group is located.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}/setInstanceTemplate",
+	//   "request": {
+	//     "$ref": "InstanceGroupManagersSetInstanceTemplateRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.instanceGroupManagers.setTargetPools":
+
+type InstanceGroupManagersSetTargetPoolsCall struct {
+	s                                          *Service
+	project                                    string
+	zone                                       string
+	instanceGroupManager                       string
+	instancegroupmanagerssettargetpoolsrequest *InstanceGroupManagersSetTargetPoolsRequest
+	opt_                                       map[string]interface{}
+}
+
+// SetTargetPools: Modifies the target pools to which all new instances
+// in this group are assigned. The target pools for existing instances
+// in the group do not change unless you recreate them.
+func (r *InstanceGroupManagersService) SetTargetPools(project string, zone string, instanceGroupManager string, instancegroupmanagerssettargetpoolsrequest *InstanceGroupManagersSetTargetPoolsRequest) *InstanceGroupManagersSetTargetPoolsCall {
+	c := &InstanceGroupManagersSetTargetPoolsCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.zone = zone
+	c.instanceGroupManager = instanceGroupManager
+	c.instancegroupmanagerssettargetpoolsrequest = instancegroupmanagerssettargetpoolsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InstanceGroupManagersSetTargetPoolsCall) Fields(s ...googleapi.Field) *InstanceGroupManagersSetTargetPoolsCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *InstanceGroupManagersSetTargetPoolsCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.instancegroupmanagerssettargetpoolsrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}/setTargetPools")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project":              c.project,
+		"zone":                 c.zone,
+		"instanceGroupManager": c.instanceGroupManager,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Modifies the target pools to which all new instances in this group are assigned. The target pools for existing instances in the group do not change unless you recreate them.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.instanceGroupManagers.setTargetPools",
+	//   "parameterOrder": [
+	//     "project",
+	//     "zone",
+	//     "instanceGroupManager"
+	//   ],
+	//   "parameters": {
+	//     "instanceGroupManager": {
+	//       "description": "The name of the instance group manager.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "The project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "The URL of the zone where the managed instance group is located.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}/setTargetPools",
+	//   "request": {
+	//     "$ref": "InstanceGroupManagersSetTargetPoolsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.instanceGroups.addInstances":
+
+type InstanceGroupsAddInstancesCall struct {
+	s                                 *Service
+	project                           string
+	zone                              string
+	instanceGroup                     string
+	instancegroupsaddinstancesrequest *InstanceGroupsAddInstancesRequest
+	opt_                              map[string]interface{}
+}
+
+// AddInstances: Adds a list of instances to an instance group. All of
+// the instances in the instance group must be in the same network.
+func (r *InstanceGroupsService) AddInstances(project string, zone string, instanceGroup string, instancegroupsaddinstancesrequest *InstanceGroupsAddInstancesRequest) *InstanceGroupsAddInstancesCall {
+	c := &InstanceGroupsAddInstancesCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.zone = zone
+	c.instanceGroup = instanceGroup
+	c.instancegroupsaddinstancesrequest = instancegroupsaddinstancesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InstanceGroupsAddInstancesCall) Fields(s ...googleapi.Field) *InstanceGroupsAddInstancesCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *InstanceGroupsAddInstancesCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.instancegroupsaddinstancesrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/instanceGroups/{instanceGroup}/addInstances")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project":       c.project,
+		"zone":          c.zone,
+		"instanceGroup": c.instanceGroup,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Adds a list of instances to an instance group. All of the instances in the instance group must be in the same network.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.instanceGroups.addInstances",
+	//   "parameterOrder": [
+	//     "project",
+	//     "zone",
+	//     "instanceGroup"
+	//   ],
+	//   "parameters": {
+	//     "instanceGroup": {
+	//       "description": "The name of the instance group where you are adding instances.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "The project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "The URL of the zone where the instance group is located.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/zones/{zone}/instanceGroups/{instanceGroup}/addInstances",
+	//   "request": {
+	//     "$ref": "InstanceGroupsAddInstancesRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.instanceGroups.aggregatedList":
+
+type InstanceGroupsAggregatedListCall struct {
+	s       *Service
+	project string
+	opt_    map[string]interface{}
+}
+
+// AggregatedList: Retrieves the list of instance groups, and sorts them
+// by zone.
+func (r *InstanceGroupsService) AggregatedList(project string) *InstanceGroupsAggregatedListCall {
+	c := &InstanceGroupsAggregatedListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	return c
+}
+
+// Filter sets the optional parameter "filter": Sets a filter expression
+// for filtering listed resources, in the form filter={expression}. Your
+// {expression} must contain the following:
+// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+//
+// - FIELD_NAME: The name of the field you want to compare. The field
+// name must be valid for the type of resource being filtered. Only
+// atomic field types are supported (string, number, boolean). Array and
+// object fields are not currently supported.
+// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
+// (not equals).
+// - LITERAL_STRING: The literal string value to filter to. The literal
+// value must be valid for the type of field (string, number, boolean).
+// For string fields, the literal value is interpreted as a regular
+// expression using RE2 syntax. The literal value must match the entire
+// field.  For example, you can filter by the name of a
+// resource:
+// filter=name ne example-instance
+// The above filter returns only results whose name field does not equal
+// example-instance. You can also enclose your literal string in single,
+// double, or no quotes.
+func (c *InstanceGroupsAggregatedListCall) Filter(filter string) *InstanceGroupsAggregatedListCall {
+	c.opt_["filter"] = filter
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Maximum count of
+// results to be returned.
+func (c *InstanceGroupsAggregatedListCall) MaxResults(maxResults int64) *InstanceGroupsAggregatedListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Specifies a page
+// token to use. Use this parameter if you want to list the next page of
+// results. Set pageToken to the nextPageToken returned by a previous
+// list request.
+func (c *InstanceGroupsAggregatedListCall) PageToken(pageToken string) *InstanceGroupsAggregatedListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InstanceGroupsAggregatedListCall) Fields(s ...googleapi.Field) *InstanceGroupsAggregatedListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *InstanceGroupsAggregatedListCall) Do() (*InstanceGroupAggregatedList, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["filter"]; ok {
+		params.Set("filter", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/aggregated/instanceGroups")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *InstanceGroupAggregatedList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the list of instance groups, and sorts them by zone.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.instanceGroups.aggregatedList",
+	//   "parameterOrder": [
+	//     "project"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "default": "500",
+	//       "description": "Maximum count of results to be returned.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "maximum": "500",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Specifies a page token to use. Use this parameter if you want to list the next page of results. Set pageToken to the nextPageToken returned by a previous list request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "The project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/aggregated/instanceGroups",
+	//   "response": {
+	//     "$ref": "InstanceGroupAggregatedList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.instanceGroups.delete":
+
+type InstanceGroupsDeleteCall struct {
+	s             *Service
+	project       string
+	zone          string
+	instanceGroup string
+	opt_          map[string]interface{}
+}
+
+// Delete: Deletes the specified instance group.
+func (r *InstanceGroupsService) Delete(project string, zone string, instanceGroup string) *InstanceGroupsDeleteCall {
+	c := &InstanceGroupsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.zone = zone
+	c.instanceGroup = instanceGroup
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InstanceGroupsDeleteCall) Fields(s ...googleapi.Field) *InstanceGroupsDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *InstanceGroupsDeleteCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/instanceGroups/{instanceGroup}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project":       c.project,
+		"zone":          c.zone,
+		"instanceGroup": c.instanceGroup,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes the specified instance group.",
+	//   "httpMethod": "DELETE",
+	//   "id": "compute.instanceGroups.delete",
+	//   "parameterOrder": [
+	//     "project",
+	//     "zone",
+	//     "instanceGroup"
+	//   ],
+	//   "parameters": {
+	//     "instanceGroup": {
+	//       "description": "The name of the instance group to delete.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "The project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "The URL of the zone where the instance group is located.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/zones/{zone}/instanceGroups/{instanceGroup}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.instanceGroups.get":
+
+type InstanceGroupsGetCall struct {
+	s             *Service
+	project       string
+	zone          string
+	instanceGroup string
+	opt_          map[string]interface{}
+}
+
+// Get: Returns the specified instance group resource.
+func (r *InstanceGroupsService) Get(project string, zone string, instanceGroup string) *InstanceGroupsGetCall {
+	c := &InstanceGroupsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.zone = zone
+	c.instanceGroup = instanceGroup
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InstanceGroupsGetCall) Fields(s ...googleapi.Field) *InstanceGroupsGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *InstanceGroupsGetCall) Do() (*InstanceGroup, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/instanceGroups/{instanceGroup}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project":       c.project,
+		"zone":          c.zone,
+		"instanceGroup": c.instanceGroup,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *InstanceGroup
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns the specified instance group resource.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.instanceGroups.get",
+	//   "parameterOrder": [
+	//     "project",
+	//     "zone",
+	//     "instanceGroup"
+	//   ],
+	//   "parameters": {
+	//     "instanceGroup": {
+	//       "description": "The name of the instance group.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "The project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "The URL of the zone where the instance group is located.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/zones/{zone}/instanceGroups/{instanceGroup}",
+	//   "response": {
+	//     "$ref": "InstanceGroup"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.instanceGroups.insert":
+
+type InstanceGroupsInsertCall struct {
+	s             *Service
+	project       string
+	zone          string
+	instancegroup *InstanceGroup
+	opt_          map[string]interface{}
+}
+
+// Insert: Creates an instance group in the specified project using the
+// parameters that are included in the request.
+func (r *InstanceGroupsService) Insert(project string, zone string, instancegroup *InstanceGroup) *InstanceGroupsInsertCall {
+	c := &InstanceGroupsInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.zone = zone
+	c.instancegroup = instancegroup
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InstanceGroupsInsertCall) Fields(s ...googleapi.Field) *InstanceGroupsInsertCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *InstanceGroupsInsertCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.instancegroup)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/instanceGroups")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+		"zone":    c.zone,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates an instance group in the specified project using the parameters that are included in the request.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.instanceGroups.insert",
+	//   "parameterOrder": [
+	//     "project",
+	//     "zone"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "The project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "The URL of the zone where the instance group is located.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/zones/{zone}/instanceGroups",
+	//   "request": {
+	//     "$ref": "InstanceGroup"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.instanceGroups.list":
+
+type InstanceGroupsListCall struct {
+	s       *Service
+	project string
+	zone    string
+	opt_    map[string]interface{}
+}
+
+// List: Retrieves the list of instance groups that are located in the
+// specified project and zone.
+func (r *InstanceGroupsService) List(project string, zone string) *InstanceGroupsListCall {
+	c := &InstanceGroupsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.zone = zone
+	return c
+}
+
+// Filter sets the optional parameter "filter": Sets a filter expression
+// for filtering listed resources, in the form filter={expression}. Your
+// {expression} must contain the following:
+// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+//
+// - FIELD_NAME: The name of the field you want to compare. The field
+// name must be valid for the type of resource being filtered. Only
+// atomic field types are supported (string, number, boolean). Array and
+// object fields are not currently supported.
+// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
+// (not equals).
+// - LITERAL_STRING: The literal string value to filter to. The literal
+// value must be valid for the type of field (string, number, boolean).
+// For string fields, the literal value is interpreted as a regular
+// expression using RE2 syntax. The literal value must match the entire
+// field.  For example, you can filter by the name of a
+// resource:
+// filter=name ne example-instance
+// The above filter returns only results whose name field does not equal
+// example-instance. You can also enclose your literal string in single,
+// double, or no quotes.
+func (c *InstanceGroupsListCall) Filter(filter string) *InstanceGroupsListCall {
+	c.opt_["filter"] = filter
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Maximum count of
+// results to be returned.
+func (c *InstanceGroupsListCall) MaxResults(maxResults int64) *InstanceGroupsListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Specifies a page
+// token to use. Use this parameter if you want to list the next page of
+// results. Set pageToken to the nextPageToken returned by a previous
+// list request.
+func (c *InstanceGroupsListCall) PageToken(pageToken string) *InstanceGroupsListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InstanceGroupsListCall) Fields(s ...googleapi.Field) *InstanceGroupsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *InstanceGroupsListCall) Do() (*InstanceGroupList, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["filter"]; ok {
+		params.Set("filter", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/instanceGroups")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+		"zone":    c.zone,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *InstanceGroupList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the list of instance groups that are located in the specified project and zone.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.instanceGroups.list",
+	//   "parameterOrder": [
+	//     "project",
+	//     "zone"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "default": "500",
+	//       "description": "Maximum count of results to be returned.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "maximum": "500",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Specifies a page token to use. Use this parameter if you want to list the next page of results. Set pageToken to the nextPageToken returned by a previous list request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "The project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "The URL of the zone where the instance group is located.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/zones/{zone}/instanceGroups",
+	//   "response": {
+	//     "$ref": "InstanceGroupList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.instanceGroups.listInstances":
+
+type InstanceGroupsListInstancesCall struct {
+	s                                  *Service
+	project                            string
+	zone                               string
+	instanceGroup                      string
+	instancegroupslistinstancesrequest *InstanceGroupsListInstancesRequest
+	opt_                               map[string]interface{}
+}
+
+// ListInstances: Lists instances in an instance group. The parameters
+// for this method specify whether the list filters instances by state
+// and named ports information.
+func (r *InstanceGroupsService) ListInstances(project string, zone string, instanceGroup string, instancegroupslistinstancesrequest *InstanceGroupsListInstancesRequest) *InstanceGroupsListInstancesCall {
+	c := &InstanceGroupsListInstancesCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.zone = zone
+	c.instanceGroup = instanceGroup
+	c.instancegroupslistinstancesrequest = instancegroupslistinstancesrequest
+	return c
+}
+
+// Filter sets the optional parameter "filter": Sets a filter expression
+// for filtering listed resources, in the form filter={expression}. Your
+// {expression} must contain the following:
+// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+//
+// - FIELD_NAME: The name of the field you want to compare. The field
+// name must be valid for the type of resource being filtered. Only
+// atomic field types are supported (string, number, boolean). Array and
+// object fields are not currently supported.
+// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
+// (not equals).
+// - LITERAL_STRING: The literal string value to filter to. The literal
+// value must be valid for the type of field (string, number, boolean).
+// For string fields, the literal value is interpreted as a regular
+// expression using RE2 syntax. The literal value must match the entire
+// field.  For example, you can filter by the name of a
+// resource:
+// filter=name ne example-instance
+// The above filter returns only results whose name field does not equal
+// example-instance. You can also enclose your literal string in single,
+// double, or no quotes.
+func (c *InstanceGroupsListInstancesCall) Filter(filter string) *InstanceGroupsListInstancesCall {
+	c.opt_["filter"] = filter
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Maximum count of
+// results to be returned.
+func (c *InstanceGroupsListInstancesCall) MaxResults(maxResults int64) *InstanceGroupsListInstancesCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Specifies a page
+// token to use. Use this parameter if you want to list the next page of
+// results. Set pageToken to the nextPageToken returned by a previous
+// list request.
+func (c *InstanceGroupsListInstancesCall) PageToken(pageToken string) *InstanceGroupsListInstancesCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InstanceGroupsListInstancesCall) Fields(s ...googleapi.Field) *InstanceGroupsListInstancesCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *InstanceGroupsListInstancesCall) Do() (*InstanceGroupsListInstances, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.instancegroupslistinstancesrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["filter"]; ok {
+		params.Set("filter", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/instanceGroups/{instanceGroup}/listInstances")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project":       c.project,
+		"zone":          c.zone,
+		"instanceGroup": c.instanceGroup,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *InstanceGroupsListInstances
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists instances in an instance group. The parameters for this method specify whether the list filters instances by state and named ports information.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.instanceGroups.listInstances",
+	//   "parameterOrder": [
+	//     "project",
+	//     "zone",
+	//     "instanceGroup"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "instanceGroup": {
+	//       "description": "The name of the instance group from which you want to generate a list of included instances.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "default": "500",
+	//       "description": "Maximum count of results to be returned.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "maximum": "500",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Specifies a page token to use. Use this parameter if you want to list the next page of results. Set pageToken to the nextPageToken returned by a previous list request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "The project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "The URL of the zone where the instance group is located.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/zones/{zone}/instanceGroups/{instanceGroup}/listInstances",
+	//   "request": {
+	//     "$ref": "InstanceGroupsListInstancesRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "InstanceGroupsListInstances"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.instanceGroups.removeInstances":
+
+type InstanceGroupsRemoveInstancesCall struct {
+	s                                    *Service
+	project                              string
+	zone                                 string
+	instanceGroup                        string
+	instancegroupsremoveinstancesrequest *InstanceGroupsRemoveInstancesRequest
+	opt_                                 map[string]interface{}
+}
+
+// RemoveInstances: Removes a list of instances from an instance group.
+func (r *InstanceGroupsService) RemoveInstances(project string, zone string, instanceGroup string, instancegroupsremoveinstancesrequest *InstanceGroupsRemoveInstancesRequest) *InstanceGroupsRemoveInstancesCall {
+	c := &InstanceGroupsRemoveInstancesCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.zone = zone
+	c.instanceGroup = instanceGroup
+	c.instancegroupsremoveinstancesrequest = instancegroupsremoveinstancesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InstanceGroupsRemoveInstancesCall) Fields(s ...googleapi.Field) *InstanceGroupsRemoveInstancesCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *InstanceGroupsRemoveInstancesCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.instancegroupsremoveinstancesrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/instanceGroups/{instanceGroup}/removeInstances")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project":       c.project,
+		"zone":          c.zone,
+		"instanceGroup": c.instanceGroup,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Removes a list of instances from an instance group.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.instanceGroups.removeInstances",
+	//   "parameterOrder": [
+	//     "project",
+	//     "zone",
+	//     "instanceGroup"
+	//   ],
+	//   "parameters": {
+	//     "instanceGroup": {
+	//       "description": "The name of the instance group where the specified instances will be removed.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "The project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "The URL of the zone where the instance group is located.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/zones/{zone}/instanceGroups/{instanceGroup}/removeInstances",
+	//   "request": {
+	//     "$ref": "InstanceGroupsRemoveInstancesRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.instanceGroups.setNamedPorts":
+
+type InstanceGroupsSetNamedPortsCall struct {
+	s                                  *Service
+	project                            string
+	zone                               string
+	instanceGroup                      string
+	instancegroupssetnamedportsrequest *InstanceGroupsSetNamedPortsRequest
+	opt_                               map[string]interface{}
+}
+
+// SetNamedPorts: Sets the named ports in an instance group.
+func (r *InstanceGroupsService) SetNamedPorts(project string, zone string, instanceGroup string, instancegroupssetnamedportsrequest *InstanceGroupsSetNamedPortsRequest) *InstanceGroupsSetNamedPortsCall {
+	c := &InstanceGroupsSetNamedPortsCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.zone = zone
+	c.instanceGroup = instanceGroup
+	c.instancegroupssetnamedportsrequest = instancegroupssetnamedportsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InstanceGroupsSetNamedPortsCall) Fields(s ...googleapi.Field) *InstanceGroupsSetNamedPortsCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *InstanceGroupsSetNamedPortsCall) Do() (*Operation, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.instancegroupssetnamedportsrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/instanceGroups/{instanceGroup}/setNamedPorts")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project":       c.project,
+		"zone":          c.zone,
+		"instanceGroup": c.instanceGroup,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Sets the named ports in an instance group.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.instanceGroups.setNamedPorts",
+	//   "parameterOrder": [
+	//     "project",
+	//     "zone",
+	//     "instanceGroup"
+	//   ],
+	//   "parameters": {
+	//     "instanceGroup": {
+	//       "description": "The name of the instance group where the named ports are updated.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "The project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "The URL of the zone where the instance group is located.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/zones/{zone}/instanceGroups/{instanceGroup}/setNamedPorts",
+	//   "request": {
+	//     "$ref": "InstanceGroupsSetNamedPortsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
 	//   ]
 	// }
 
@@ -10250,8 +14724,27 @@ func (r *InstanceTemplatesService) List(project string) *InstanceTemplatesListCa
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter expression for
-// filtering listed resources.
+// Filter sets the optional parameter "filter": Sets a filter expression
+// for filtering listed resources, in the form filter={expression}. Your
+// {expression} must contain the following:
+// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+//
+// - FIELD_NAME: The name of the field you want to compare. The field
+// name must be valid for the type of resource being filtered. Only
+// atomic field types are supported (string, number, boolean). Array and
+// object fields are not currently supported.
+// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
+// (not equals).
+// - LITERAL_STRING: The literal string value to filter to. The literal
+// value must be valid for the type of field (string, number, boolean).
+// For string fields, the literal value is interpreted as a regular
+// expression using RE2 syntax. The literal value must match the entire
+// field.  For example, you can filter by the name of a
+// resource:
+// filter=name ne example-instance
+// The above filter returns only results whose name field does not equal
+// example-instance. You can also enclose your literal string in single,
+// double, or no quotes.
 func (c *InstanceTemplatesListCall) Filter(filter string) *InstanceTemplatesListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -10264,9 +14757,10 @@ func (c *InstanceTemplatesListCall) MaxResults(maxResults int64) *InstanceTempla
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request when that list was truncated to maxResults.
-// Used to continue a previous list request.
+// PageToken sets the optional parameter "pageToken": Specifies a page
+// token to use. Use this parameter if you want to list the next page of
+// results. Set pageToken to the nextPageToken returned by a previous
+// list request.
 func (c *InstanceTemplatesListCall) PageToken(pageToken string) *InstanceTemplatesListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -10325,7 +14819,7 @@ func (c *InstanceTemplatesListCall) Do() (*InstanceTemplateList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filter expression for filtering listed resources.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -10339,7 +14833,7 @@ func (c *InstanceTemplatesListCall) Do() (*InstanceTemplateList, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
+	//       "description": "Specifies a page token to use. Use this parameter if you want to list the next page of results. Set pageToken to the nextPageToken returned by a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -10503,8 +14997,27 @@ func (r *InstancesService) AggregatedList(project string) *InstancesAggregatedLi
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter expression for
-// filtering listed resources.
+// Filter sets the optional parameter "filter": Sets a filter expression
+// for filtering listed resources, in the form filter={expression}. Your
+// {expression} must contain the following:
+// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+//
+// - FIELD_NAME: The name of the field you want to compare. The field
+// name must be valid for the type of resource being filtered. Only
+// atomic field types are supported (string, number, boolean). Array and
+// object fields are not currently supported.
+// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
+// (not equals).
+// - LITERAL_STRING: The literal string value to filter to. The literal
+// value must be valid for the type of field (string, number, boolean).
+// For string fields, the literal value is interpreted as a regular
+// expression using RE2 syntax. The literal value must match the entire
+// field.  For example, you can filter by the name of a
+// resource:
+// filter=name ne example-instance
+// The above filter returns only results whose name field does not equal
+// example-instance. You can also enclose your literal string in single,
+// double, or no quotes.
 func (c *InstancesAggregatedListCall) Filter(filter string) *InstancesAggregatedListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -10517,9 +15030,10 @@ func (c *InstancesAggregatedListCall) MaxResults(maxResults int64) *InstancesAgg
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request when that list was truncated to maxResults.
-// Used to continue a previous list request.
+// PageToken sets the optional parameter "pageToken": Specifies a page
+// token to use. Use this parameter if you want to list the next page of
+// results. Set pageToken to the nextPageToken returned by a previous
+// list request.
 func (c *InstancesAggregatedListCall) PageToken(pageToken string) *InstancesAggregatedListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -10577,7 +15091,7 @@ func (c *InstancesAggregatedListCall) Do() (*InstanceAggregatedList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filter expression for filtering listed resources.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -10591,7 +15105,7 @@ func (c *InstancesAggregatedListCall) Do() (*InstanceAggregatedList, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
+	//       "description": "Specifies a page token to use. Use this parameter if you want to list the next page of results. Set pageToken to the nextPageToken returned by a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -11187,8 +15701,8 @@ func (r *InstancesService) GetSerialPortOutput(project string, zone string, inst
 	return c
 }
 
-// Port sets the optional parameter "port": Which COM port to retrieve
-// data from.
+// Port sets the optional parameter "port": Specifies which COM or
+// serial port to retrieve data from.
 func (c *InstancesGetSerialPortOutputCall) Port(port int64) *InstancesGetSerialPortOutputCall {
 	c.opt_["port"] = port
 	return c
@@ -11253,7 +15767,7 @@ func (c *InstancesGetSerialPortOutputCall) Do() (*SerialPortOutput, error) {
 	//     },
 	//     "port": {
 	//       "default": "1",
-	//       "description": "Which COM port to retrieve data from.",
+	//       "description": "Specifies which COM or serial port to retrieve data from.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "maximum": "4",
@@ -11409,8 +15923,27 @@ func (r *InstancesService) List(project string, zone string) *InstancesListCall 
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter expression for
-// filtering listed resources.
+// Filter sets the optional parameter "filter": Sets a filter expression
+// for filtering listed resources, in the form filter={expression}. Your
+// {expression} must contain the following:
+// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+//
+// - FIELD_NAME: The name of the field you want to compare. The field
+// name must be valid for the type of resource being filtered. Only
+// atomic field types are supported (string, number, boolean). Array and
+// object fields are not currently supported.
+// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
+// (not equals).
+// - LITERAL_STRING: The literal string value to filter to. The literal
+// value must be valid for the type of field (string, number, boolean).
+// For string fields, the literal value is interpreted as a regular
+// expression using RE2 syntax. The literal value must match the entire
+// field.  For example, you can filter by the name of a
+// resource:
+// filter=name ne example-instance
+// The above filter returns only results whose name field does not equal
+// example-instance. You can also enclose your literal string in single,
+// double, or no quotes.
 func (c *InstancesListCall) Filter(filter string) *InstancesListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -11423,9 +15956,10 @@ func (c *InstancesListCall) MaxResults(maxResults int64) *InstancesListCall {
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request when that list was truncated to maxResults.
-// Used to continue a previous list request.
+// PageToken sets the optional parameter "pageToken": Specifies a page
+// token to use. Use this parameter if you want to list the next page of
+// results. Set pageToken to the nextPageToken returned by a previous
+// list request.
 func (c *InstancesListCall) PageToken(pageToken string) *InstancesListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -11486,7 +16020,7 @@ func (c *InstancesListCall) Do() (*InstanceList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filter expression for filtering listed resources.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -11500,7 +16034,7 @@ func (c *InstancesListCall) Do() (*InstanceList, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
+	//       "description": "Specifies a page token to use. Use this parameter if you want to list the next page of results. Set pageToken to the nextPageToken returned by a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -12412,8 +16946,27 @@ func (r *MachineTypesService) AggregatedList(project string) *MachineTypesAggreg
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter expression for
-// filtering listed resources.
+// Filter sets the optional parameter "filter": Sets a filter expression
+// for filtering listed resources, in the form filter={expression}. Your
+// {expression} must contain the following:
+// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+//
+// - FIELD_NAME: The name of the field you want to compare. The field
+// name must be valid for the type of resource being filtered. Only
+// atomic field types are supported (string, number, boolean). Array and
+// object fields are not currently supported.
+// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
+// (not equals).
+// - LITERAL_STRING: The literal string value to filter to. The literal
+// value must be valid for the type of field (string, number, boolean).
+// For string fields, the literal value is interpreted as a regular
+// expression using RE2 syntax. The literal value must match the entire
+// field.  For example, you can filter by the name of a
+// resource:
+// filter=name ne example-instance
+// The above filter returns only results whose name field does not equal
+// example-instance. You can also enclose your literal string in single,
+// double, or no quotes.
 func (c *MachineTypesAggregatedListCall) Filter(filter string) *MachineTypesAggregatedListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -12426,9 +16979,10 @@ func (c *MachineTypesAggregatedListCall) MaxResults(maxResults int64) *MachineTy
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request when that list was truncated to maxResults.
-// Used to continue a previous list request.
+// PageToken sets the optional parameter "pageToken": Specifies a page
+// token to use. Use this parameter if you want to list the next page of
+// results. Set pageToken to the nextPageToken returned by a previous
+// list request.
 func (c *MachineTypesAggregatedListCall) PageToken(pageToken string) *MachineTypesAggregatedListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -12487,7 +17041,7 @@ func (c *MachineTypesAggregatedListCall) Do() (*MachineTypeAggregatedList, error
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filter expression for filtering listed resources.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -12501,7 +17055,7 @@ func (c *MachineTypesAggregatedListCall) Do() (*MachineTypeAggregatedList, error
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
+	//       "description": "Specifies a page token to use. Use this parameter if you want to list the next page of results. Set pageToken to the nextPageToken returned by a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -12647,8 +17201,27 @@ func (r *MachineTypesService) List(project string, zone string) *MachineTypesLis
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter expression for
-// filtering listed resources.
+// Filter sets the optional parameter "filter": Sets a filter expression
+// for filtering listed resources, in the form filter={expression}. Your
+// {expression} must contain the following:
+// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+//
+// - FIELD_NAME: The name of the field you want to compare. The field
+// name must be valid for the type of resource being filtered. Only
+// atomic field types are supported (string, number, boolean). Array and
+// object fields are not currently supported.
+// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
+// (not equals).
+// - LITERAL_STRING: The literal string value to filter to. The literal
+// value must be valid for the type of field (string, number, boolean).
+// For string fields, the literal value is interpreted as a regular
+// expression using RE2 syntax. The literal value must match the entire
+// field.  For example, you can filter by the name of a
+// resource:
+// filter=name ne example-instance
+// The above filter returns only results whose name field does not equal
+// example-instance. You can also enclose your literal string in single,
+// double, or no quotes.
 func (c *MachineTypesListCall) Filter(filter string) *MachineTypesListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -12661,9 +17234,10 @@ func (c *MachineTypesListCall) MaxResults(maxResults int64) *MachineTypesListCal
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request when that list was truncated to maxResults.
-// Used to continue a previous list request.
+// PageToken sets the optional parameter "pageToken": Specifies a page
+// token to use. Use this parameter if you want to list the next page of
+// results. Set pageToken to the nextPageToken returned by a previous
+// list request.
 func (c *MachineTypesListCall) PageToken(pageToken string) *MachineTypesListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -12724,7 +17298,7 @@ func (c *MachineTypesListCall) Do() (*MachineTypeList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filter expression for filtering listed resources.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -12738,7 +17312,7 @@ func (c *MachineTypesListCall) Do() (*MachineTypeList, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
+	//       "description": "Specifies a page token to use. Use this parameter if you want to list the next page of results. Set pageToken to the nextPageToken returned by a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -13059,8 +17633,27 @@ func (r *NetworksService) List(project string) *NetworksListCall {
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter expression for
-// filtering listed resources.
+// Filter sets the optional parameter "filter": Sets a filter expression
+// for filtering listed resources, in the form filter={expression}. Your
+// {expression} must contain the following:
+// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+//
+// - FIELD_NAME: The name of the field you want to compare. The field
+// name must be valid for the type of resource being filtered. Only
+// atomic field types are supported (string, number, boolean). Array and
+// object fields are not currently supported.
+// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
+// (not equals).
+// - LITERAL_STRING: The literal string value to filter to. The literal
+// value must be valid for the type of field (string, number, boolean).
+// For string fields, the literal value is interpreted as a regular
+// expression using RE2 syntax. The literal value must match the entire
+// field.  For example, you can filter by the name of a
+// resource:
+// filter=name ne example-instance
+// The above filter returns only results whose name field does not equal
+// example-instance. You can also enclose your literal string in single,
+// double, or no quotes.
 func (c *NetworksListCall) Filter(filter string) *NetworksListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -13073,9 +17666,10 @@ func (c *NetworksListCall) MaxResults(maxResults int64) *NetworksListCall {
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request when that list was truncated to maxResults.
-// Used to continue a previous list request.
+// PageToken sets the optional parameter "pageToken": Specifies a page
+// token to use. Use this parameter if you want to list the next page of
+// results. Set pageToken to the nextPageToken returned by a previous
+// list request.
 func (c *NetworksListCall) PageToken(pageToken string) *NetworksListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -13134,7 +17728,7 @@ func (c *NetworksListCall) Do() (*NetworkList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filter expression for filtering listed resources.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -13148,7 +17742,7 @@ func (c *NetworksListCall) Do() (*NetworkList, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
+	//       "description": "Specifies a page token to use. Use this parameter if you want to list the next page of results. Set pageToken to the nextPageToken returned by a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -13629,7 +18223,7 @@ type RegionOperationsDeleteCall struct {
 	opt_      map[string]interface{}
 }
 
-// Delete: Deletes the specified region-specific operation resource.
+// Delete: Deletes the specified region-specific Operations resource.
 // For details, see https://cloud.google.com/compute/docs/reference/latest/regionOperations/delete
 func (r *RegionOperationsService) Delete(project string, region string, operation string) *RegionOperationsDeleteCall {
 	c := &RegionOperationsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
@@ -13673,7 +18267,7 @@ func (c *RegionOperationsDeleteCall) Do() error {
 	}
 	return nil
 	// {
-	//   "description": "Deletes the specified region-specific operation resource.",
+	//   "description": "Deletes the specified region-specific Operations resource.",
 	//   "httpMethod": "DELETE",
 	//   "id": "compute.regionOperations.delete",
 	//   "parameterOrder": [
@@ -13683,7 +18277,7 @@ func (c *RegionOperationsDeleteCall) Do() error {
 	//   ],
 	//   "parameters": {
 	//     "operation": {
-	//       "description": "Name of the operation resource to delete.",
+	//       "description": "Name of the Operations resource to delete.",
 	//       "location": "path",
 	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
@@ -13723,7 +18317,7 @@ type RegionOperationsGetCall struct {
 	opt_      map[string]interface{}
 }
 
-// Get: Retrieves the specified region-specific operation resource.
+// Get: Retrieves the specified region-specific Operations resource.
 // For details, see https://cloud.google.com/compute/docs/reference/latest/regionOperations/get
 func (r *RegionOperationsService) Get(project string, region string, operation string) *RegionOperationsGetCall {
 	c := &RegionOperationsGetCall{s: r.s, opt_: make(map[string]interface{})}
@@ -13771,7 +18365,7 @@ func (c *RegionOperationsGetCall) Do() (*Operation, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves the specified region-specific operation resource.",
+	//   "description": "Retrieves the specified region-specific Operations resource.",
 	//   "httpMethod": "GET",
 	//   "id": "compute.regionOperations.get",
 	//   "parameterOrder": [
@@ -13781,7 +18375,7 @@ func (c *RegionOperationsGetCall) Do() (*Operation, error) {
 	//   ],
 	//   "parameters": {
 	//     "operation": {
-	//       "description": "Name of the operation resource to return.",
+	//       "description": "Name of the Operations resource to return.",
 	//       "location": "path",
 	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
@@ -13824,7 +18418,7 @@ type RegionOperationsListCall struct {
 	opt_    map[string]interface{}
 }
 
-// List: Retrieves the list of operation resources contained within the
+// List: Retrieves the list of Operation resources contained within the
 // specified region.
 // For details, see https://cloud.google.com/compute/docs/reference/latest/regionOperations/list
 func (r *RegionOperationsService) List(project string, region string) *RegionOperationsListCall {
@@ -13834,8 +18428,27 @@ func (r *RegionOperationsService) List(project string, region string) *RegionOpe
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter expression for
-// filtering listed resources.
+// Filter sets the optional parameter "filter": Sets a filter expression
+// for filtering listed resources, in the form filter={expression}. Your
+// {expression} must contain the following:
+// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+//
+// - FIELD_NAME: The name of the field you want to compare. The field
+// name must be valid for the type of resource being filtered. Only
+// atomic field types are supported (string, number, boolean). Array and
+// object fields are not currently supported.
+// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
+// (not equals).
+// - LITERAL_STRING: The literal string value to filter to. The literal
+// value must be valid for the type of field (string, number, boolean).
+// For string fields, the literal value is interpreted as a regular
+// expression using RE2 syntax. The literal value must match the entire
+// field.  For example, you can filter by the name of a
+// resource:
+// filter=name ne example-instance
+// The above filter returns only results whose name field does not equal
+// example-instance. You can also enclose your literal string in single,
+// double, or no quotes.
 func (c *RegionOperationsListCall) Filter(filter string) *RegionOperationsListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -13848,9 +18461,10 @@ func (c *RegionOperationsListCall) MaxResults(maxResults int64) *RegionOperation
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request when that list was truncated to maxResults.
-// Used to continue a previous list request.
+// PageToken sets the optional parameter "pageToken": Specifies a page
+// token to use. Use this parameter if you want to list the next page of
+// results. Set pageToken to the nextPageToken returned by a previous
+// list request.
 func (c *RegionOperationsListCall) PageToken(pageToken string) *RegionOperationsListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -13902,7 +18516,7 @@ func (c *RegionOperationsListCall) Do() (*OperationList, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves the list of operation resources contained within the specified region.",
+	//   "description": "Retrieves the list of Operation resources contained within the specified region.",
 	//   "httpMethod": "GET",
 	//   "id": "compute.regionOperations.list",
 	//   "parameterOrder": [
@@ -13911,7 +18525,7 @@ func (c *RegionOperationsListCall) Do() (*OperationList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filter expression for filtering listed resources.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -13925,7 +18539,7 @@ func (c *RegionOperationsListCall) Do() (*OperationList, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
+	//       "description": "Specifies a page token to use. Use this parameter if you want to list the next page of results. Set pageToken to the nextPageToken returned by a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -14065,8 +18679,27 @@ func (r *RegionsService) List(project string) *RegionsListCall {
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter expression for
-// filtering listed resources.
+// Filter sets the optional parameter "filter": Sets a filter expression
+// for filtering listed resources, in the form filter={expression}. Your
+// {expression} must contain the following:
+// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+//
+// - FIELD_NAME: The name of the field you want to compare. The field
+// name must be valid for the type of resource being filtered. Only
+// atomic field types are supported (string, number, boolean). Array and
+// object fields are not currently supported.
+// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
+// (not equals).
+// - LITERAL_STRING: The literal string value to filter to. The literal
+// value must be valid for the type of field (string, number, boolean).
+// For string fields, the literal value is interpreted as a regular
+// expression using RE2 syntax. The literal value must match the entire
+// field.  For example, you can filter by the name of a
+// resource:
+// filter=name ne example-instance
+// The above filter returns only results whose name field does not equal
+// example-instance. You can also enclose your literal string in single,
+// double, or no quotes.
 func (c *RegionsListCall) Filter(filter string) *RegionsListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -14079,9 +18712,10 @@ func (c *RegionsListCall) MaxResults(maxResults int64) *RegionsListCall {
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request when that list was truncated to maxResults.
-// Used to continue a previous list request.
+// PageToken sets the optional parameter "pageToken": Specifies a page
+// token to use. Use this parameter if you want to list the next page of
+// results. Set pageToken to the nextPageToken returned by a previous
+// list request.
 func (c *RegionsListCall) PageToken(pageToken string) *RegionsListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -14140,7 +18774,7 @@ func (c *RegionsListCall) Do() (*RegionList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filter expression for filtering listed resources.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -14154,7 +18788,7 @@ func (c *RegionsListCall) Do() (*RegionList, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
+	//       "description": "Specifies a page token to use. Use this parameter if you want to list the next page of results. Set pageToken to the nextPageToken returned by a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -14468,8 +19102,27 @@ func (r *RoutesService) List(project string) *RoutesListCall {
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter expression for
-// filtering listed resources.
+// Filter sets the optional parameter "filter": Sets a filter expression
+// for filtering listed resources, in the form filter={expression}. Your
+// {expression} must contain the following:
+// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+//
+// - FIELD_NAME: The name of the field you want to compare. The field
+// name must be valid for the type of resource being filtered. Only
+// atomic field types are supported (string, number, boolean). Array and
+// object fields are not currently supported.
+// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
+// (not equals).
+// - LITERAL_STRING: The literal string value to filter to. The literal
+// value must be valid for the type of field (string, number, boolean).
+// For string fields, the literal value is interpreted as a regular
+// expression using RE2 syntax. The literal value must match the entire
+// field.  For example, you can filter by the name of a
+// resource:
+// filter=name ne example-instance
+// The above filter returns only results whose name field does not equal
+// example-instance. You can also enclose your literal string in single,
+// double, or no quotes.
 func (c *RoutesListCall) Filter(filter string) *RoutesListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -14482,9 +19135,10 @@ func (c *RoutesListCall) MaxResults(maxResults int64) *RoutesListCall {
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request when that list was truncated to maxResults.
-// Used to continue a previous list request.
+// PageToken sets the optional parameter "pageToken": Specifies a page
+// token to use. Use this parameter if you want to list the next page of
+// results. Set pageToken to the nextPageToken returned by a previous
+// list request.
 func (c *RoutesListCall) PageToken(pageToken string) *RoutesListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -14543,7 +19197,7 @@ func (c *RoutesListCall) Do() (*RouteList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filter expression for filtering listed resources.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -14557,7 +19211,7 @@ func (c *RoutesListCall) Do() (*RouteList, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
+	//       "description": "Specifies a page token to use. Use this parameter if you want to list the next page of results. Set pageToken to the nextPageToken returned by a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -14591,7 +19245,13 @@ type SnapshotsDeleteCall struct {
 	opt_     map[string]interface{}
 }
 
-// Delete: Deletes the specified persistent disk snapshot resource.
+// Delete: Deletes the specified Snapshot resource. Keep in mind that
+// deleting a single snapshot might not necessarily delete all the data
+// on that snapshot. If any data on the snapshot that is marked for
+// deletion is needed for subsequent snapshots, the data will be moved
+// to the next corresponding snapshot.
+//
+// For more information, see Deleting snaphots.
 // For details, see https://cloud.google.com/compute/docs/reference/latest/snapshots/delete
 func (r *SnapshotsService) Delete(project string, snapshot string) *SnapshotsDeleteCall {
 	c := &SnapshotsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
@@ -14637,7 +19297,7 @@ func (c *SnapshotsDeleteCall) Do() (*Operation, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes the specified persistent disk snapshot resource.",
+	//   "description": "Deletes the specified Snapshot resource. Keep in mind that deleting a single snapshot might not necessarily delete all the data on that snapshot. If any data on the snapshot that is marked for deletion is needed for subsequent snapshots, the data will be moved to the next corresponding snapshot.\n\nFor more information, see Deleting snaphots.",
 	//   "httpMethod": "DELETE",
 	//   "id": "compute.snapshots.delete",
 	//   "parameterOrder": [
@@ -14653,7 +19313,7 @@ func (c *SnapshotsDeleteCall) Do() (*Operation, error) {
 	//       "type": "string"
 	//     },
 	//     "snapshot": {
-	//       "description": "Name of the persistent disk snapshot resource to delete.",
+	//       "description": "Name of the Snapshot resource to delete.",
 	//       "location": "path",
 	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
@@ -14681,7 +19341,7 @@ type SnapshotsGetCall struct {
 	opt_     map[string]interface{}
 }
 
-// Get: Returns the specified persistent disk snapshot resource.
+// Get: Returns the specified Snapshot resource.
 // For details, see https://cloud.google.com/compute/docs/reference/latest/snapshots/get
 func (r *SnapshotsService) Get(project string, snapshot string) *SnapshotsGetCall {
 	c := &SnapshotsGetCall{s: r.s, opt_: make(map[string]interface{})}
@@ -14727,7 +19387,7 @@ func (c *SnapshotsGetCall) Do() (*Snapshot, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns the specified persistent disk snapshot resource.",
+	//   "description": "Returns the specified Snapshot resource.",
 	//   "httpMethod": "GET",
 	//   "id": "compute.snapshots.get",
 	//   "parameterOrder": [
@@ -14743,7 +19403,7 @@ func (c *SnapshotsGetCall) Do() (*Snapshot, error) {
 	//       "type": "string"
 	//     },
 	//     "snapshot": {
-	//       "description": "Name of the persistent disk snapshot resource to return.",
+	//       "description": "Name of the Snapshot resource to return.",
 	//       "location": "path",
 	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
@@ -14771,8 +19431,8 @@ type SnapshotsListCall struct {
 	opt_    map[string]interface{}
 }
 
-// List: Retrieves the list of persistent disk snapshot resources
-// contained within the specified project.
+// List: Retrieves the list of Snapshot resources contained within the
+// specified project.
 // For details, see https://cloud.google.com/compute/docs/reference/latest/snapshots/list
 func (r *SnapshotsService) List(project string) *SnapshotsListCall {
 	c := &SnapshotsListCall{s: r.s, opt_: make(map[string]interface{})}
@@ -14780,8 +19440,27 @@ func (r *SnapshotsService) List(project string) *SnapshotsListCall {
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter expression for
-// filtering listed resources.
+// Filter sets the optional parameter "filter": Sets a filter expression
+// for filtering listed resources, in the form filter={expression}. Your
+// {expression} must contain the following:
+// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+//
+// - FIELD_NAME: The name of the field you want to compare. The field
+// name must be valid for the type of resource being filtered. Only
+// atomic field types are supported (string, number, boolean). Array and
+// object fields are not currently supported.
+// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
+// (not equals).
+// - LITERAL_STRING: The literal string value to filter to. The literal
+// value must be valid for the type of field (string, number, boolean).
+// For string fields, the literal value is interpreted as a regular
+// expression using RE2 syntax. The literal value must match the entire
+// field.  For example, you can filter by the name of a
+// resource:
+// filter=name ne example-instance
+// The above filter returns only results whose name field does not equal
+// example-instance. You can also enclose your literal string in single,
+// double, or no quotes.
 func (c *SnapshotsListCall) Filter(filter string) *SnapshotsListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -14794,9 +19473,10 @@ func (c *SnapshotsListCall) MaxResults(maxResults int64) *SnapshotsListCall {
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request when that list was truncated to maxResults.
-// Used to continue a previous list request.
+// PageToken sets the optional parameter "pageToken": Specifies a page
+// token to use. Use this parameter if you want to list the next page of
+// results. Set pageToken to the nextPageToken returned by a previous
+// list request.
 func (c *SnapshotsListCall) PageToken(pageToken string) *SnapshotsListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -14847,7 +19527,7 @@ func (c *SnapshotsListCall) Do() (*SnapshotList, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves the list of persistent disk snapshot resources contained within the specified project.",
+	//   "description": "Retrieves the list of Snapshot resources contained within the specified project.",
 	//   "httpMethod": "GET",
 	//   "id": "compute.snapshots.list",
 	//   "parameterOrder": [
@@ -14855,7 +19535,7 @@ func (c *SnapshotsListCall) Do() (*SnapshotList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filter expression for filtering listed resources.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -14869,7 +19549,7 @@ func (c *SnapshotsListCall) Do() (*SnapshotList, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
+	//       "description": "Specifies a page token to use. Use this parameter if you want to list the next page of results. Set pageToken to the nextPageToken returned by a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -15183,8 +19863,27 @@ func (r *TargetHttpProxiesService) List(project string) *TargetHttpProxiesListCa
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter expression for
-// filtering listed resources.
+// Filter sets the optional parameter "filter": Sets a filter expression
+// for filtering listed resources, in the form filter={expression}. Your
+// {expression} must contain the following:
+// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+//
+// - FIELD_NAME: The name of the field you want to compare. The field
+// name must be valid for the type of resource being filtered. Only
+// atomic field types are supported (string, number, boolean). Array and
+// object fields are not currently supported.
+// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
+// (not equals).
+// - LITERAL_STRING: The literal string value to filter to. The literal
+// value must be valid for the type of field (string, number, boolean).
+// For string fields, the literal value is interpreted as a regular
+// expression using RE2 syntax. The literal value must match the entire
+// field.  For example, you can filter by the name of a
+// resource:
+// filter=name ne example-instance
+// The above filter returns only results whose name field does not equal
+// example-instance. You can also enclose your literal string in single,
+// double, or no quotes.
 func (c *TargetHttpProxiesListCall) Filter(filter string) *TargetHttpProxiesListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -15197,9 +19896,10 @@ func (c *TargetHttpProxiesListCall) MaxResults(maxResults int64) *TargetHttpProx
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request when that list was truncated to maxResults.
-// Used to continue a previous list request.
+// PageToken sets the optional parameter "pageToken": Specifies a page
+// token to use. Use this parameter if you want to list the next page of
+// results. Set pageToken to the nextPageToken returned by a previous
+// list request.
 func (c *TargetHttpProxiesListCall) PageToken(pageToken string) *TargetHttpProxiesListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -15258,7 +19958,7 @@ func (c *TargetHttpProxiesListCall) Do() (*TargetHttpProxyList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filter expression for filtering listed resources.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -15272,7 +19972,7 @@ func (c *TargetHttpProxiesListCall) Do() (*TargetHttpProxyList, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
+	//       "description": "Specifies a page token to use. Use this parameter if you want to list the next page of results. Set pageToken to the nextPageToken returned by a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -15415,8 +20115,27 @@ func (r *TargetInstancesService) AggregatedList(project string) *TargetInstances
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter expression for
-// filtering listed resources.
+// Filter sets the optional parameter "filter": Sets a filter expression
+// for filtering listed resources, in the form filter={expression}. Your
+// {expression} must contain the following:
+// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+//
+// - FIELD_NAME: The name of the field you want to compare. The field
+// name must be valid for the type of resource being filtered. Only
+// atomic field types are supported (string, number, boolean). Array and
+// object fields are not currently supported.
+// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
+// (not equals).
+// - LITERAL_STRING: The literal string value to filter to. The literal
+// value must be valid for the type of field (string, number, boolean).
+// For string fields, the literal value is interpreted as a regular
+// expression using RE2 syntax. The literal value must match the entire
+// field.  For example, you can filter by the name of a
+// resource:
+// filter=name ne example-instance
+// The above filter returns only results whose name field does not equal
+// example-instance. You can also enclose your literal string in single,
+// double, or no quotes.
 func (c *TargetInstancesAggregatedListCall) Filter(filter string) *TargetInstancesAggregatedListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -15429,9 +20148,10 @@ func (c *TargetInstancesAggregatedListCall) MaxResults(maxResults int64) *Target
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request when that list was truncated to maxResults.
-// Used to continue a previous list request.
+// PageToken sets the optional parameter "pageToken": Specifies a page
+// token to use. Use this parameter if you want to list the next page of
+// results. Set pageToken to the nextPageToken returned by a previous
+// list request.
 func (c *TargetInstancesAggregatedListCall) PageToken(pageToken string) *TargetInstancesAggregatedListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -15490,7 +20210,7 @@ func (c *TargetInstancesAggregatedListCall) Do() (*TargetInstanceAggregatedList,
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filter expression for filtering listed resources.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -15504,7 +20224,7 @@ func (c *TargetInstancesAggregatedListCall) Do() (*TargetInstanceAggregatedList,
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
+	//       "description": "Specifies a page token to use. Use this parameter if you want to list the next page of results. Set pageToken to the nextPageToken returned by a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -15853,8 +20573,27 @@ func (r *TargetInstancesService) List(project string, zone string) *TargetInstan
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter expression for
-// filtering listed resources.
+// Filter sets the optional parameter "filter": Sets a filter expression
+// for filtering listed resources, in the form filter={expression}. Your
+// {expression} must contain the following:
+// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+//
+// - FIELD_NAME: The name of the field you want to compare. The field
+// name must be valid for the type of resource being filtered. Only
+// atomic field types are supported (string, number, boolean). Array and
+// object fields are not currently supported.
+// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
+// (not equals).
+// - LITERAL_STRING: The literal string value to filter to. The literal
+// value must be valid for the type of field (string, number, boolean).
+// For string fields, the literal value is interpreted as a regular
+// expression using RE2 syntax. The literal value must match the entire
+// field.  For example, you can filter by the name of a
+// resource:
+// filter=name ne example-instance
+// The above filter returns only results whose name field does not equal
+// example-instance. You can also enclose your literal string in single,
+// double, or no quotes.
 func (c *TargetInstancesListCall) Filter(filter string) *TargetInstancesListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -15867,9 +20606,10 @@ func (c *TargetInstancesListCall) MaxResults(maxResults int64) *TargetInstancesL
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request when that list was truncated to maxResults.
-// Used to continue a previous list request.
+// PageToken sets the optional parameter "pageToken": Specifies a page
+// token to use. Use this parameter if you want to list the next page of
+// results. Set pageToken to the nextPageToken returned by a previous
+// list request.
 func (c *TargetInstancesListCall) PageToken(pageToken string) *TargetInstancesListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -15930,7 +20670,7 @@ func (c *TargetInstancesListCall) Do() (*TargetInstanceList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filter expression for filtering listed resources.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -15944,7 +20684,7 @@ func (c *TargetInstancesListCall) Do() (*TargetInstanceList, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
+	//       "description": "Specifies a page token to use. Use this parameter if you want to list the next page of results. Set pageToken to the nextPageToken returned by a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -16214,8 +20954,27 @@ func (r *TargetPoolsService) AggregatedList(project string) *TargetPoolsAggregat
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter expression for
-// filtering listed resources.
+// Filter sets the optional parameter "filter": Sets a filter expression
+// for filtering listed resources, in the form filter={expression}. Your
+// {expression} must contain the following:
+// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+//
+// - FIELD_NAME: The name of the field you want to compare. The field
+// name must be valid for the type of resource being filtered. Only
+// atomic field types are supported (string, number, boolean). Array and
+// object fields are not currently supported.
+// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
+// (not equals).
+// - LITERAL_STRING: The literal string value to filter to. The literal
+// value must be valid for the type of field (string, number, boolean).
+// For string fields, the literal value is interpreted as a regular
+// expression using RE2 syntax. The literal value must match the entire
+// field.  For example, you can filter by the name of a
+// resource:
+// filter=name ne example-instance
+// The above filter returns only results whose name field does not equal
+// example-instance. You can also enclose your literal string in single,
+// double, or no quotes.
 func (c *TargetPoolsAggregatedListCall) Filter(filter string) *TargetPoolsAggregatedListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -16228,9 +20987,10 @@ func (c *TargetPoolsAggregatedListCall) MaxResults(maxResults int64) *TargetPool
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request when that list was truncated to maxResults.
-// Used to continue a previous list request.
+// PageToken sets the optional parameter "pageToken": Specifies a page
+// token to use. Use this parameter if you want to list the next page of
+// results. Set pageToken to the nextPageToken returned by a previous
+// list request.
 func (c *TargetPoolsAggregatedListCall) PageToken(pageToken string) *TargetPoolsAggregatedListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -16289,7 +21049,7 @@ func (c *TargetPoolsAggregatedListCall) Do() (*TargetPoolAggregatedList, error) 
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filter expression for filtering listed resources.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -16303,7 +21063,7 @@ func (c *TargetPoolsAggregatedListCall) Do() (*TargetPoolAggregatedList, error) 
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
+	//       "description": "Specifies a page token to use. Use this parameter if you want to list the next page of results. Set pageToken to the nextPageToken returned by a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -16765,8 +21525,27 @@ func (r *TargetPoolsService) List(project string, region string) *TargetPoolsLis
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter expression for
-// filtering listed resources.
+// Filter sets the optional parameter "filter": Sets a filter expression
+// for filtering listed resources, in the form filter={expression}. Your
+// {expression} must contain the following:
+// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+//
+// - FIELD_NAME: The name of the field you want to compare. The field
+// name must be valid for the type of resource being filtered. Only
+// atomic field types are supported (string, number, boolean). Array and
+// object fields are not currently supported.
+// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
+// (not equals).
+// - LITERAL_STRING: The literal string value to filter to. The literal
+// value must be valid for the type of field (string, number, boolean).
+// For string fields, the literal value is interpreted as a regular
+// expression using RE2 syntax. The literal value must match the entire
+// field.  For example, you can filter by the name of a
+// resource:
+// filter=name ne example-instance
+// The above filter returns only results whose name field does not equal
+// example-instance. You can also enclose your literal string in single,
+// double, or no quotes.
 func (c *TargetPoolsListCall) Filter(filter string) *TargetPoolsListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -16779,9 +21558,10 @@ func (c *TargetPoolsListCall) MaxResults(maxResults int64) *TargetPoolsListCall 
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request when that list was truncated to maxResults.
-// Used to continue a previous list request.
+// PageToken sets the optional parameter "pageToken": Specifies a page
+// token to use. Use this parameter if you want to list the next page of
+// results. Set pageToken to the nextPageToken returned by a previous
+// list request.
 func (c *TargetPoolsListCall) PageToken(pageToken string) *TargetPoolsListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -16842,7 +21622,7 @@ func (c *TargetPoolsListCall) Do() (*TargetPoolList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filter expression for filtering listed resources.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -16856,7 +21636,7 @@ func (c *TargetPoolsListCall) Do() (*TargetPoolList, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
+	//       "description": "Specifies a page token to use. Use this parameter if you want to list the next page of results. Set pageToken to the nextPageToken returned by a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -17254,8 +22034,27 @@ func (r *TargetVpnGatewaysService) AggregatedList(project string) *TargetVpnGate
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter expression for
-// filtering listed resources.
+// Filter sets the optional parameter "filter": Sets a filter expression
+// for filtering listed resources, in the form filter={expression}. Your
+// {expression} must contain the following:
+// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+//
+// - FIELD_NAME: The name of the field you want to compare. The field
+// name must be valid for the type of resource being filtered. Only
+// atomic field types are supported (string, number, boolean). Array and
+// object fields are not currently supported.
+// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
+// (not equals).
+// - LITERAL_STRING: The literal string value to filter to. The literal
+// value must be valid for the type of field (string, number, boolean).
+// For string fields, the literal value is interpreted as a regular
+// expression using RE2 syntax. The literal value must match the entire
+// field.  For example, you can filter by the name of a
+// resource:
+// filter=name ne example-instance
+// The above filter returns only results whose name field does not equal
+// example-instance. You can also enclose your literal string in single,
+// double, or no quotes.
 func (c *TargetVpnGatewaysAggregatedListCall) Filter(filter string) *TargetVpnGatewaysAggregatedListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -17268,9 +22067,10 @@ func (c *TargetVpnGatewaysAggregatedListCall) MaxResults(maxResults int64) *Targ
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request when that list was truncated to maxResults.
-// Used to continue a previous list request.
+// PageToken sets the optional parameter "pageToken": Specifies a page
+// token to use. Use this parameter if you want to list the next page of
+// results. Set pageToken to the nextPageToken returned by a previous
+// list request.
 func (c *TargetVpnGatewaysAggregatedListCall) PageToken(pageToken string) *TargetVpnGatewaysAggregatedListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -17329,7 +22129,7 @@ func (c *TargetVpnGatewaysAggregatedListCall) Do() (*TargetVpnGatewayAggregatedL
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filter expression for filtering listed resources.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -17343,7 +22143,7 @@ func (c *TargetVpnGatewaysAggregatedListCall) Do() (*TargetVpnGatewayAggregatedL
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
+	//       "description": "Specifies a page token to use. Use this parameter if you want to list the next page of results. Set pageToken to the nextPageToken returned by a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -17688,8 +22488,27 @@ func (r *TargetVpnGatewaysService) List(project string, region string) *TargetVp
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter expression for
-// filtering listed resources.
+// Filter sets the optional parameter "filter": Sets a filter expression
+// for filtering listed resources, in the form filter={expression}. Your
+// {expression} must contain the following:
+// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+//
+// - FIELD_NAME: The name of the field you want to compare. The field
+// name must be valid for the type of resource being filtered. Only
+// atomic field types are supported (string, number, boolean). Array and
+// object fields are not currently supported.
+// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
+// (not equals).
+// - LITERAL_STRING: The literal string value to filter to. The literal
+// value must be valid for the type of field (string, number, boolean).
+// For string fields, the literal value is interpreted as a regular
+// expression using RE2 syntax. The literal value must match the entire
+// field.  For example, you can filter by the name of a
+// resource:
+// filter=name ne example-instance
+// The above filter returns only results whose name field does not equal
+// example-instance. You can also enclose your literal string in single,
+// double, or no quotes.
 func (c *TargetVpnGatewaysListCall) Filter(filter string) *TargetVpnGatewaysListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -17702,9 +22521,10 @@ func (c *TargetVpnGatewaysListCall) MaxResults(maxResults int64) *TargetVpnGatew
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request when that list was truncated to maxResults.
-// Used to continue a previous list request.
+// PageToken sets the optional parameter "pageToken": Specifies a page
+// token to use. Use this parameter if you want to list the next page of
+// results. Set pageToken to the nextPageToken returned by a previous
+// list request.
 func (c *TargetVpnGatewaysListCall) PageToken(pageToken string) *TargetVpnGatewaysListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -17765,7 +22585,7 @@ func (c *TargetVpnGatewaysListCall) Do() (*TargetVpnGatewayList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filter expression for filtering listed resources.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -17779,7 +22599,7 @@ func (c *TargetVpnGatewaysListCall) Do() (*TargetVpnGatewayList, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
+	//       "description": "Specifies a page token to use. Use this parameter if you want to list the next page of results. Set pageToken to the nextPageToken returned by a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -18100,8 +22920,27 @@ func (r *UrlMapsService) List(project string) *UrlMapsListCall {
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter expression for
-// filtering listed resources.
+// Filter sets the optional parameter "filter": Sets a filter expression
+// for filtering listed resources, in the form filter={expression}. Your
+// {expression} must contain the following:
+// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+//
+// - FIELD_NAME: The name of the field you want to compare. The field
+// name must be valid for the type of resource being filtered. Only
+// atomic field types are supported (string, number, boolean). Array and
+// object fields are not currently supported.
+// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
+// (not equals).
+// - LITERAL_STRING: The literal string value to filter to. The literal
+// value must be valid for the type of field (string, number, boolean).
+// For string fields, the literal value is interpreted as a regular
+// expression using RE2 syntax. The literal value must match the entire
+// field.  For example, you can filter by the name of a
+// resource:
+// filter=name ne example-instance
+// The above filter returns only results whose name field does not equal
+// example-instance. You can also enclose your literal string in single,
+// double, or no quotes.
 func (c *UrlMapsListCall) Filter(filter string) *UrlMapsListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -18114,9 +22953,10 @@ func (c *UrlMapsListCall) MaxResults(maxResults int64) *UrlMapsListCall {
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request when that list was truncated to maxResults.
-// Used to continue a previous list request.
+// PageToken sets the optional parameter "pageToken": Specifies a page
+// token to use. Use this parameter if you want to list the next page of
+// results. Set pageToken to the nextPageToken returned by a previous
+// list request.
 func (c *UrlMapsListCall) PageToken(pageToken string) *UrlMapsListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -18175,7 +23015,7 @@ func (c *UrlMapsListCall) Do() (*UrlMapList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filter expression for filtering listed resources.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -18189,7 +23029,7 @@ func (c *UrlMapsListCall) Do() (*UrlMapList, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
+	//       "description": "Specifies a page token to use. Use this parameter if you want to list the next page of results. Set pageToken to the nextPageToken returned by a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -18535,8 +23375,27 @@ func (r *VpnTunnelsService) AggregatedList(project string) *VpnTunnelsAggregated
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter expression for
-// filtering listed resources.
+// Filter sets the optional parameter "filter": Sets a filter expression
+// for filtering listed resources, in the form filter={expression}. Your
+// {expression} must contain the following:
+// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+//
+// - FIELD_NAME: The name of the field you want to compare. The field
+// name must be valid for the type of resource being filtered. Only
+// atomic field types are supported (string, number, boolean). Array and
+// object fields are not currently supported.
+// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
+// (not equals).
+// - LITERAL_STRING: The literal string value to filter to. The literal
+// value must be valid for the type of field (string, number, boolean).
+// For string fields, the literal value is interpreted as a regular
+// expression using RE2 syntax. The literal value must match the entire
+// field.  For example, you can filter by the name of a
+// resource:
+// filter=name ne example-instance
+// The above filter returns only results whose name field does not equal
+// example-instance. You can also enclose your literal string in single,
+// double, or no quotes.
 func (c *VpnTunnelsAggregatedListCall) Filter(filter string) *VpnTunnelsAggregatedListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -18549,9 +23408,10 @@ func (c *VpnTunnelsAggregatedListCall) MaxResults(maxResults int64) *VpnTunnelsA
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request when that list was truncated to maxResults.
-// Used to continue a previous list request.
+// PageToken sets the optional parameter "pageToken": Specifies a page
+// token to use. Use this parameter if you want to list the next page of
+// results. Set pageToken to the nextPageToken returned by a previous
+// list request.
 func (c *VpnTunnelsAggregatedListCall) PageToken(pageToken string) *VpnTunnelsAggregatedListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -18610,7 +23470,7 @@ func (c *VpnTunnelsAggregatedListCall) Do() (*VpnTunnelAggregatedList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filter expression for filtering listed resources.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -18624,7 +23484,7 @@ func (c *VpnTunnelsAggregatedListCall) Do() (*VpnTunnelAggregatedList, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
+	//       "description": "Specifies a page token to use. Use this parameter if you want to list the next page of results. Set pageToken to the nextPageToken returned by a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -18969,8 +23829,27 @@ func (r *VpnTunnelsService) List(project string, region string) *VpnTunnelsListC
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter expression for
-// filtering listed resources.
+// Filter sets the optional parameter "filter": Sets a filter expression
+// for filtering listed resources, in the form filter={expression}. Your
+// {expression} must contain the following:
+// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+//
+// - FIELD_NAME: The name of the field you want to compare. The field
+// name must be valid for the type of resource being filtered. Only
+// atomic field types are supported (string, number, boolean). Array and
+// object fields are not currently supported.
+// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
+// (not equals).
+// - LITERAL_STRING: The literal string value to filter to. The literal
+// value must be valid for the type of field (string, number, boolean).
+// For string fields, the literal value is interpreted as a regular
+// expression using RE2 syntax. The literal value must match the entire
+// field.  For example, you can filter by the name of a
+// resource:
+// filter=name ne example-instance
+// The above filter returns only results whose name field does not equal
+// example-instance. You can also enclose your literal string in single,
+// double, or no quotes.
 func (c *VpnTunnelsListCall) Filter(filter string) *VpnTunnelsListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -18983,9 +23862,10 @@ func (c *VpnTunnelsListCall) MaxResults(maxResults int64) *VpnTunnelsListCall {
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request when that list was truncated to maxResults.
-// Used to continue a previous list request.
+// PageToken sets the optional parameter "pageToken": Specifies a page
+// token to use. Use this parameter if you want to list the next page of
+// results. Set pageToken to the nextPageToken returned by a previous
+// list request.
 func (c *VpnTunnelsListCall) PageToken(pageToken string) *VpnTunnelsListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -19046,7 +23926,7 @@ func (c *VpnTunnelsListCall) Do() (*VpnTunnelList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filter expression for filtering listed resources.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -19060,7 +23940,7 @@ func (c *VpnTunnelsListCall) Do() (*VpnTunnelList, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
+	//       "description": "Specifies a page token to use. Use this parameter if you want to list the next page of results. Set pageToken to the nextPageToken returned by a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -19102,7 +23982,7 @@ type ZoneOperationsDeleteCall struct {
 	opt_      map[string]interface{}
 }
 
-// Delete: Deletes the specified zone-specific operation resource.
+// Delete: Deletes the specified zone-specific Operations resource.
 // For details, see https://cloud.google.com/compute/docs/reference/latest/zoneOperations/delete
 func (r *ZoneOperationsService) Delete(project string, zone string, operation string) *ZoneOperationsDeleteCall {
 	c := &ZoneOperationsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
@@ -19146,7 +24026,7 @@ func (c *ZoneOperationsDeleteCall) Do() error {
 	}
 	return nil
 	// {
-	//   "description": "Deletes the specified zone-specific operation resource.",
+	//   "description": "Deletes the specified zone-specific Operations resource.",
 	//   "httpMethod": "DELETE",
 	//   "id": "compute.zoneOperations.delete",
 	//   "parameterOrder": [
@@ -19156,7 +24036,7 @@ func (c *ZoneOperationsDeleteCall) Do() error {
 	//   ],
 	//   "parameters": {
 	//     "operation": {
-	//       "description": "Name of the operation resource to delete.",
+	//       "description": "Name of the Operations resource to delete.",
 	//       "location": "path",
 	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
@@ -19196,7 +24076,7 @@ type ZoneOperationsGetCall struct {
 	opt_      map[string]interface{}
 }
 
-// Get: Retrieves the specified zone-specific operation resource.
+// Get: Retrieves the specified zone-specific Operations resource.
 // For details, see https://cloud.google.com/compute/docs/reference/latest/zoneOperations/get
 func (r *ZoneOperationsService) Get(project string, zone string, operation string) *ZoneOperationsGetCall {
 	c := &ZoneOperationsGetCall{s: r.s, opt_: make(map[string]interface{})}
@@ -19244,7 +24124,7 @@ func (c *ZoneOperationsGetCall) Do() (*Operation, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves the specified zone-specific operation resource.",
+	//   "description": "Retrieves the specified zone-specific Operations resource.",
 	//   "httpMethod": "GET",
 	//   "id": "compute.zoneOperations.get",
 	//   "parameterOrder": [
@@ -19254,7 +24134,7 @@ func (c *ZoneOperationsGetCall) Do() (*Operation, error) {
 	//   ],
 	//   "parameters": {
 	//     "operation": {
-	//       "description": "Name of the operation resource to return.",
+	//       "description": "Name of the Operations resource to return.",
 	//       "location": "path",
 	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
@@ -19297,7 +24177,7 @@ type ZoneOperationsListCall struct {
 	opt_    map[string]interface{}
 }
 
-// List: Retrieves the list of operation resources contained within the
+// List: Retrieves the list of Operation resources contained within the
 // specified zone.
 // For details, see https://cloud.google.com/compute/docs/reference/latest/zoneOperations/list
 func (r *ZoneOperationsService) List(project string, zone string) *ZoneOperationsListCall {
@@ -19307,8 +24187,27 @@ func (r *ZoneOperationsService) List(project string, zone string) *ZoneOperation
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter expression for
-// filtering listed resources.
+// Filter sets the optional parameter "filter": Sets a filter expression
+// for filtering listed resources, in the form filter={expression}. Your
+// {expression} must contain the following:
+// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+//
+// - FIELD_NAME: The name of the field you want to compare. The field
+// name must be valid for the type of resource being filtered. Only
+// atomic field types are supported (string, number, boolean). Array and
+// object fields are not currently supported.
+// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
+// (not equals).
+// - LITERAL_STRING: The literal string value to filter to. The literal
+// value must be valid for the type of field (string, number, boolean).
+// For string fields, the literal value is interpreted as a regular
+// expression using RE2 syntax. The literal value must match the entire
+// field.  For example, you can filter by the name of a
+// resource:
+// filter=name ne example-instance
+// The above filter returns only results whose name field does not equal
+// example-instance. You can also enclose your literal string in single,
+// double, or no quotes.
 func (c *ZoneOperationsListCall) Filter(filter string) *ZoneOperationsListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -19321,9 +24220,10 @@ func (c *ZoneOperationsListCall) MaxResults(maxResults int64) *ZoneOperationsLis
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request when that list was truncated to maxResults.
-// Used to continue a previous list request.
+// PageToken sets the optional parameter "pageToken": Specifies a page
+// token to use. Use this parameter if you want to list the next page of
+// results. Set pageToken to the nextPageToken returned by a previous
+// list request.
 func (c *ZoneOperationsListCall) PageToken(pageToken string) *ZoneOperationsListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -19375,7 +24275,7 @@ func (c *ZoneOperationsListCall) Do() (*OperationList, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves the list of operation resources contained within the specified zone.",
+	//   "description": "Retrieves the list of Operation resources contained within the specified zone.",
 	//   "httpMethod": "GET",
 	//   "id": "compute.zoneOperations.list",
 	//   "parameterOrder": [
@@ -19384,7 +24284,7 @@ func (c *ZoneOperationsListCall) Do() (*OperationList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filter expression for filtering listed resources.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -19398,7 +24298,7 @@ func (c *ZoneOperationsListCall) Do() (*OperationList, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
+	//       "description": "Specifies a page token to use. Use this parameter if you want to list the next page of results. Set pageToken to the nextPageToken returned by a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -19538,8 +24438,27 @@ func (r *ZonesService) List(project string) *ZonesListCall {
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter expression for
-// filtering listed resources.
+// Filter sets the optional parameter "filter": Sets a filter expression
+// for filtering listed resources, in the form filter={expression}. Your
+// {expression} must contain the following:
+// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+//
+// - FIELD_NAME: The name of the field you want to compare. The field
+// name must be valid for the type of resource being filtered. Only
+// atomic field types are supported (string, number, boolean). Array and
+// object fields are not currently supported.
+// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
+// (not equals).
+// - LITERAL_STRING: The literal string value to filter to. The literal
+// value must be valid for the type of field (string, number, boolean).
+// For string fields, the literal value is interpreted as a regular
+// expression using RE2 syntax. The literal value must match the entire
+// field.  For example, you can filter by the name of a
+// resource:
+// filter=name ne example-instance
+// The above filter returns only results whose name field does not equal
+// example-instance. You can also enclose your literal string in single,
+// double, or no quotes.
 func (c *ZonesListCall) Filter(filter string) *ZonesListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -19552,9 +24471,10 @@ func (c *ZonesListCall) MaxResults(maxResults int64) *ZonesListCall {
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Tag returned by a
-// previous list request when that list was truncated to maxResults.
-// Used to continue a previous list request.
+// PageToken sets the optional parameter "pageToken": Specifies a page
+// token to use. Use this parameter if you want to list the next page of
+// results. Set pageToken to the nextPageToken returned by a previous
+// list request.
 func (c *ZonesListCall) PageToken(pageToken string) *ZonesListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -19613,7 +24533,7 @@ func (c *ZonesListCall) Do() (*ZoneList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filter expression for filtering listed resources.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -19627,7 +24547,7 @@ func (c *ZonesListCall) Do() (*ZoneList, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Tag returned by a previous list request when that list was truncated to maxResults. Used to continue a previous list request.",
+	//       "description": "Specifies a page token to use. Use this parameter if you want to list the next page of results. Set pageToken to the nextPageToken returned by a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

@@ -738,6 +738,10 @@ type JobConfigurationQuery struct {
 	// Default: true
 	UseQueryCache *bool `json:"useQueryCache,omitempty"`
 
+	// UserDefinedFunctionResources: [Experimental] Describes user-defined
+	// function resources used in the query.
+	UserDefinedFunctionResources []*UserDefinedFunctionResource `json:"userDefinedFunctionResources,omitempty"`
+
 	// WriteDisposition: [Optional] Specifies the action that occurs if the
 	// destination table already exists. The following values are supported:
 	// WRITE_TRUNCATE: If the table already exists, BigQuery overwrites the
@@ -1267,6 +1271,17 @@ type TableRow struct {
 type TableSchema struct {
 	// Fields: Describes the fields in a table.
 	Fields []*TableFieldSchema `json:"fields,omitempty"`
+}
+
+type UserDefinedFunctionResource struct {
+	// InlineCode: [Pick one] An inline resource that contains code for a
+	// user-defined function (UDF). Providing a inline code resource is
+	// equivalent to providing a URI for a file containing the same code.
+	InlineCode string `json:"inlineCode,omitempty"`
+
+	// ResourceUri: [Pick one] A code resource to load from a Google Cloud
+	// Storage URI (gs://bucket/path).
+	ResourceUri string `json:"resourceUri,omitempty"`
 }
 
 type ViewDefinition struct {
@@ -2092,8 +2107,8 @@ func (c *JobsGetQueryResultsCall) StartIndex(startIndex uint64) *JobsGetQueryRes
 
 // TimeoutMs sets the optional parameter "timeoutMs": How long to wait
 // for the query to complete, in milliseconds, before returning. Default
-// is to return immediately. If the timeout passes before the job
-// completes, the request will fail with a TIMEOUT error
+// is 10 seconds. If the timeout passes before the job completes, the
+// 'jobComplete' field in the response will be false
 func (c *JobsGetQueryResultsCall) TimeoutMs(timeoutMs int64) *JobsGetQueryResultsCall {
 	c.opt_["timeoutMs"] = timeoutMs
 	return c
@@ -2186,7 +2201,7 @@ func (c *JobsGetQueryResultsCall) Do() (*GetQueryResultsResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "timeoutMs": {
-	//       "description": "How long to wait for the query to complete, in milliseconds, before returning. Default is to return immediately. If the timeout passes before the job completes, the request will fail with a TIMEOUT error",
+	//       "description": "How long to wait for the query to complete, in milliseconds, before returning. Default is 10 seconds. If the timeout passes before the job completes, the 'jobComplete' field in the response will be false",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "type": "integer"

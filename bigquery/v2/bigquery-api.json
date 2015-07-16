@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/6_j3-L3xDTpJRP-qmfT7ZpU_5Bg\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/NtZ5jtkXTc_PcGwBbw5OcARIHbE\"",
  "discoveryVersion": "v1",
  "id": "bigquery:v2",
  "name": "bigquery",
  "version": "v2",
- "revision": "20150626",
+ "revision": "20150710",
  "title": "BigQuery API",
  "description": "A data platform for customers to create, manage, share and query data.",
  "ownerDomain": "google.com",
@@ -677,6 +677,13 @@
      "type": "boolean",
      "description": "[Optional] Whether to look for the result in the query cache. The query cache is a best-effort cache that will be flushed whenever tables in the query are modified. Moreover, the query cache is only available when a query does not have a destination table specified. The default value is true.",
      "default": "true"
+    },
+    "userDefinedFunctionResources": {
+     "type": "array",
+     "description": "[Experimental] Describes user-defined function resources used in the query.",
+     "items": {
+      "$ref": "UserDefinedFunctionResource"
+     }
     },
     "writeDisposition": {
      "type": "string",
@@ -1414,6 +1421,20 @@
     }
    }
   },
+  "UserDefinedFunctionResource": {
+   "id": "UserDefinedFunctionResource",
+   "type": "object",
+   "properties": {
+    "inlineCode": {
+     "type": "string",
+     "description": "[Pick one] An inline resource that contains code for a user-defined function (UDF). Providing a inline code resource is equivalent to providing a URI for a file containing the same code."
+    },
+    "resourceUri": {
+     "type": "string",
+     "description": "[Pick one] A code resource to load from a Google Cloud Storage URI (gs://bucket/path)."
+    }
+   }
+  },
   "ViewDefinition": {
    "id": "ViewDefinition",
    "type": "object",
@@ -1730,7 +1751,7 @@
       },
       "timeoutMs": {
        "type": "integer",
-       "description": "How long to wait for the query to complete, in milliseconds, before returning. Default is to return immediately. If the timeout passes before the job completes, the request will fail with a TIMEOUT error",
+       "description": "How long to wait for the query to complete, in milliseconds, before returning. Default is 10 seconds. If the timeout passes before the job completes, the 'jobComplete' field in the response will be false",
        "format": "uint32",
        "location": "query"
       }

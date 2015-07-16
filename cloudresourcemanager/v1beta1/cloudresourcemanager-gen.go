@@ -105,13 +105,12 @@ type Project struct {
 
 	// Labels: The labels associated with this project. Label keys must be
 	// between 1 and 63 characters long and must conform to the following
-	// regular expression: [a-z]([-a-z0-9]*[a-z0-9])?. Label values must be
-	// between 0 and 63 characters long and must conform to the regular
-	// expression ([a-z]([-a-z0-9]*[a-z0-9])?)?. No more than 256 labels can
-	// be associated with a given resource. Note that additional character
-	// may be included in labels in the future. Clients should store labels
-	// in a representation such as JSON that does not depend on specific
-	// characters being disallowed. Example: "environment" : "dev"
+	// regular expression: \[a-z\](\[-a-z0-9\]*\[a-z0-9\])?. Label values
+	// must be between 0 and 63 characters long and must conform to the
+	// regular expression (\[a-z\](\[-a-z0-9\]*\[a-z0-9\])?)?. No more than
+	// 256 labels can be associated with a given resource. Clients should
+	// store labels in a representation such as JSON that does not depend on
+	// specific characters being disallowed. Example: "environment" : "dev"
 	// Read-write.
 	Labels map[string]string `json:"labels,omitempty"`
 
@@ -125,19 +124,19 @@ type Project struct {
 	LifecycleState string `json:"lifecycleState,omitempty"`
 
 	// Name: The user-assigned name of the project. This field is optional
-	// and can remain unset. Allowed characters are: lower- and upper-case
-	// letters, numbers, hyphen, single-quote, double-quotes, space, and
-	// exclamation point. Example: "My Project" Read-write.
+	// and can remain unset. Allowed characters are: lowercase and uppercase
+	// letters, numbers, hyphen, single-quote, double-quote, space, and
+	// exclamation point. Example: My Project Read-write.
 	Name string `json:"name,omitempty"`
 
-	// ProjectId: The unique, user-assigned id of the project. It must be 6
+	// ProjectId: The unique, user-assigned ID of the project. It must be 6
 	// to 30 lowercase letters, digits, or hyphens. It must start with a
-	// letter. Trailing hyphens are prohibited. Example: "tokyo-rain-123"
+	// letter. Trailing hyphens are prohibited. Example: tokyo-rain-123
 	// Read-only after creation.
 	ProjectId string `json:"projectId,omitempty"`
 
 	// ProjectNumber: The number uniquely identifying the project. Example:
-	// 415104041262. Read-only.
+	// 415104041262 Read-only.
 	ProjectNumber int64 `json:"projectNumber,omitempty,string"`
 }
 
@@ -227,28 +226,29 @@ type ProjectsDeleteCall struct {
 
 // Delete: Marks the project identified by the specified `project_id`
 // (for example, `my-project-123`) for deletion. This method will only
-// affect the project if it has a lifecycle state of
-// [ACTIVE][cloudresourcemanager.projects.v1beta2.LifecycleState.ACTIVE]
-// when this method is called. Otherwise this method does nothing (since
-// all other states are phases of deletion). This method changes the
-// project's lifecycle state from
-// [ACTIVE][cloudresourcemanager.projects.v1beta2.LifecycleState.ACTIVE]
-// to [DELETE_REQUESTED]
-// [cloudresourcemanager.projects.v1beta2.LifecycleState.DELETE_REQUESTED
-// ]. The deletion starts at an unspecified time, at which point the
-// lifecycle state changes to [DELETE_IN_PROGRESS]
-// [cloudresourcemanager.projects.v1beta2.LifecycleState.DELETE_IN_PROGRE
-// SS]. Until the deletion completes, you can check the lifecycle state
-// checked by retrieving the project with [GetProject]
-// [cloudresourcemanager.projects.v1beta2.Projects.GetProject], and the
-// project remains visible to [ListProjects]
-// [cloudresourcemanager.projects.v1beta2.Projects.ListProjects].
-// However, you cannot update the project. After the deletion completes,
-// the project is not retrievable by the [GetProject]
-// [cloudresourcemanager.projects.v1beta2.Projects.GetProject] and
-// [ListProjects]
-// [cloudresourcemanager.projects.v1beta2.Projects.ListProjects]
-// methods. The caller must have modify permissions for this project.
+// affect the project if the following criteria are met: + The project
+// does not have a billing account associated with it. + The project has
+// a lifecycle state of
+// [ACTIVE][google.cloudresourcemanager.projects.v1beta1.LifecycleState.A
+// CTIVE]. This method changes the project's lifecycle state from
+// [ACTIVE][google.cloudresourcemanager.projects.v1beta1.LifecycleState.A
+// CTIVE] to [DELETE_REQUESTED]
+// [google.cloudresourcemanager.projects.v1beta1.LifecycleState.DELETE_RE
+// QUESTED]. The deletion starts at an unspecified time, at which point
+// the lifecycle state changes to [DELETE_IN_PROGRESS]
+// [google.cloudresourcemanager.projects.v1beta1.LifecycleState.DELETE_IN
+// _PROGRESS]. Until the deletion completes, you can check the lifecycle
+// state checked by retrieving the project with [GetProject]
+// [google.cloudresourcemanager.projects.v1beta1.DeveloperProjects.GetPro
+// ject], and the project remains visible to [ListProjects]
+// [google.cloudresourcemanager.projects.v1beta1.DeveloperProjects.ListPr
+// ojects]. However, you cannot update the project. After the deletion
+// completes, the project is not retrievable by the [GetProject]
+// [google.cloudresourcemanager.projects.v1beta1.DeveloperProjects.GetPro
+// ject] and [ListProjects]
+// [google.cloudresourcemanager.projects.v1beta1.DeveloperProjects.ListPr
+// ojects] methods. The caller must have modify permissions for this
+// project.
 func (r *ProjectsService) Delete(projectId string) *ProjectsDeleteCall {
 	c := &ProjectsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectId = projectId
@@ -291,7 +291,7 @@ func (c *ProjectsDeleteCall) Do() (*Empty, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Marks the project identified by the specified `project_id` (for example, `my-project-123`) for deletion. This method will only affect the project if it has a lifecycle state of [ACTIVE][cloudresourcemanager.projects.v1beta2.LifecycleState.ACTIVE] when this method is called. Otherwise this method does nothing (since all other states are phases of deletion). This method changes the project's lifecycle state from [ACTIVE][cloudresourcemanager.projects.v1beta2.LifecycleState.ACTIVE] to [DELETE_REQUESTED] [cloudresourcemanager.projects.v1beta2.LifecycleState.DELETE_REQUESTED]. The deletion starts at an unspecified time, at which point the lifecycle state changes to [DELETE_IN_PROGRESS] [cloudresourcemanager.projects.v1beta2.LifecycleState.DELETE_IN_PROGRESS]. Until the deletion completes, you can check the lifecycle state checked by retrieving the project with [GetProject] [cloudresourcemanager.projects.v1beta2.Projects.GetProject], and the project remains visible to [ListProjects] [cloudresourcemanager.projects.v1beta2.Projects.ListProjects]. However, you cannot update the project. After the deletion completes, the project is not retrievable by the [GetProject] [cloudresourcemanager.projects.v1beta2.Projects.GetProject] and [ListProjects] [cloudresourcemanager.projects.v1beta2.Projects.ListProjects] methods. The caller must have modify permissions for this project.",
+	//   "description": "Marks the project identified by the specified `project_id` (for example, `my-project-123`) for deletion. This method will only affect the project if the following criteria are met: + The project does not have a billing account associated with it. + The project has a lifecycle state of [ACTIVE][google.cloudresourcemanager.projects.v1beta1.LifecycleState.ACTIVE]. This method changes the project's lifecycle state from [ACTIVE][google.cloudresourcemanager.projects.v1beta1.LifecycleState.ACTIVE] to [DELETE_REQUESTED] [google.cloudresourcemanager.projects.v1beta1.LifecycleState.DELETE_REQUESTED]. The deletion starts at an unspecified time, at which point the lifecycle state changes to [DELETE_IN_PROGRESS] [google.cloudresourcemanager.projects.v1beta1.LifecycleState.DELETE_IN_PROGRESS]. Until the deletion completes, you can check the lifecycle state checked by retrieving the project with [GetProject] [google.cloudresourcemanager.projects.v1beta1.DeveloperProjects.GetProject], and the project remains visible to [ListProjects] [google.cloudresourcemanager.projects.v1beta1.DeveloperProjects.ListProjects]. However, you cannot update the project. After the deletion completes, the project is not retrievable by the [GetProject] [google.cloudresourcemanager.projects.v1beta1.DeveloperProjects.GetProject] and [ListProjects] [google.cloudresourcemanager.projects.v1beta1.DeveloperProjects.ListProjects] methods. The caller must have modify permissions for this project.",
 	//   "httpMethod": "DELETE",
 	//   "id": "cloudresourcemanager.projects.delete",
 	//   "parameterOrder": [
@@ -411,13 +411,14 @@ func (r *ProjectsService) List() *ProjectsListCall {
 
 // Filter sets the optional parameter "filter": An expression for
 // filtering the results of the request. Filter rules are case
-// insensitive. The fields eligible for filtering are: name id labels.
-// where  is a the name of a label Examples: name:* ==> The project has
-// a name. name:Howl ==> The project’s name is `Howl` or 'howl'.
-// name:HOWL ==> Equivalent to above. NAME:howl ==> Equivalent to above.
-// labels.color:* ==> The project has the label "color".
-// labels.color:red ==> The project’s label `color` has the value
-// `red`. labels.color:red label.size:big ==> The project's label
+// insensitive. The fields eligible for filtering are: + `name` + `id` +
+// labels.key where *key* is the name of a label Some examples of using
+// labels as filters: |Filter|Description| |------|-----------|
+// |name:*|The project has a name.| |name:Howl|The project's name is
+// `Howl` or `howl`.| |name:HOWL|Equivalent to above.|
+// |NAME:howl|Equivalent to above.| |labels.color:*|The project has the
+// label `color`.| |labels.color:red|The project's label `color` has the
+// value `red`.| |labels.color:red label.size:big|The project's label
 // `color` has the value `red` and its label `size` has the value `big`.
 func (c *ProjectsListCall) Filter(filter string) *ProjectsListCall {
 	c.opt_["filter"] = filter
@@ -491,7 +492,7 @@ func (c *ProjectsListCall) Do() (*ListProjectsResponse, error) {
 	//   "id": "cloudresourcemanager.projects.list",
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "An expression for filtering the results of the request. Filter rules are case insensitive. The fields eligible for filtering are: name id labels. where  is a the name of a label Examples: name:* ==\u003e The project has a name. name:Howl ==\u003e The project’s name is `Howl` or 'howl'. name:HOWL ==\u003e Equivalent to above. NAME:howl ==\u003e Equivalent to above. labels.color:* ==\u003e The project has the label \"color\". labels.color:red ==\u003e The project’s label `color` has the value `red`. labels.color:red label.size:big ==\u003e The project's label `color` has the value `red` and its label `size` has the value `big`. Optional.",
+	//       "description": "An expression for filtering the results of the request. Filter rules are case insensitive. The fields eligible for filtering are: + `name` + `id` + labels.key where *key* is the name of a label Some examples of using labels as filters: |Filter|Description| |------|-----------| |name:*|The project has a name.| |name:Howl|The project's name is `Howl` or `howl`.| |name:HOWL|Equivalent to above.| |NAME:howl|Equivalent to above.| |labels.color:*|The project has the label `color`.| |labels.color:red|The project's label `color` has the value `red`.| |labels.color:red label.size:big|The project's label `color` has the value `red` and its label `size` has the value `big`. Optional.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -529,12 +530,12 @@ type ProjectsUndeleteCall struct {
 // Undelete: Restores the project identified by the specified
 // `project_id` (for example, `my-project-123`). You can only use this
 // method for a project that has a lifecycle state of [DELETE_REQUESTED]
-// [cloudresourcemanager.projects.v1beta2.LifecycleState.DELETE_REQUESTED
-// ]. After deletion starts, as indicated by a lifecycle state of
+// [google.cloudresourcemanager.projects.v1beta1.LifecycleState.DELETE_RE
+// QUESTED]. After deletion starts, as indicated by a lifecycle state of
 // [DELETE_IN_PROGRESS]
-// [cloudresourcemanager.projects.v1beta2.LifecycleState.DELETE_IN_PROGRE
-// SS], the project cannot be restored. The caller must have modify
-// permissions for this project.
+// [google.cloudresourcemanager.projects.v1beta1.LifecycleState.DELETE_IN
+// _PROGRESS], the project cannot be restored. The caller must have
+// modify permissions for this project.
 func (r *ProjectsService) Undelete(projectId string) *ProjectsUndeleteCall {
 	c := &ProjectsUndeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectId = projectId
@@ -577,7 +578,7 @@ func (c *ProjectsUndeleteCall) Do() (*Empty, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Restores the project identified by the specified `project_id` (for example, `my-project-123`). You can only use this method for a project that has a lifecycle state of [DELETE_REQUESTED] [cloudresourcemanager.projects.v1beta2.LifecycleState.DELETE_REQUESTED]. After deletion starts, as indicated by a lifecycle state of [DELETE_IN_PROGRESS] [cloudresourcemanager.projects.v1beta2.LifecycleState.DELETE_IN_PROGRESS], the project cannot be restored. The caller must have modify permissions for this project.",
+	//   "description": "Restores the project identified by the specified `project_id` (for example, `my-project-123`). You can only use this method for a project that has a lifecycle state of [DELETE_REQUESTED] [google.cloudresourcemanager.projects.v1beta1.LifecycleState.DELETE_REQUESTED]. After deletion starts, as indicated by a lifecycle state of [DELETE_IN_PROGRESS] [google.cloudresourcemanager.projects.v1beta1.LifecycleState.DELETE_IN_PROGRESS], the project cannot be restored. The caller must have modify permissions for this project.",
 	//   "httpMethod": "POST",
 	//   "id": "cloudresourcemanager.projects.undelete",
 	//   "parameterOrder": [

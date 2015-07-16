@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/Lk2G3wqb0mjcAChQC6sL6CdXNgs\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/zePdcB9UZrt3TRiL6gFnZKOSeZ0\"",
  "discoveryVersion": "v1",
  "id": "games:v1",
  "name": "games",
  "canonicalName": "Games",
  "version": "v1",
- "revision": "20150119",
+ "revision": "20150707",
  "title": "Google Play Game Services API",
  "description": "The API for Google Play Game Services.",
  "ownerDomain": "google.com",
@@ -3558,7 +3558,7 @@
        "description": "The maximum number of player resources to return in the response, used for paging. For any response, the actual number of player resources returned may be less than the specified maxResults.",
        "format": "int32",
        "minimum": "1",
-       "maximum": "15",
+       "maximum": "50",
        "location": "query"
       },
       "pageToken": {

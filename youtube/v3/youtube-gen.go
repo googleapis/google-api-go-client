@@ -1892,6 +1892,9 @@ type ContentRating struct {
 	// LsfRating: Rating system for Indonesia - Lembaga Sensor Film
 	//
 	// Possible values:
+	//   "lsf13"
+	//   "lsf17"
+	//   "lsf21"
 	//   "lsfA"
 	//   "lsfBo"
 	//   "lsfD"
@@ -2890,25 +2893,25 @@ type LiveStreamConfigurationIssue struct {
 	// Type: The kind of error happening.
 	//
 	// Possible values:
-	//   "audioBitrate"
 	//   "audioBitrateHigh"
 	//   "audioBitrateLow"
+	//   "audioBitrateMismatch"
 	//   "audioCodec"
 	//   "audioCodecMismatch"
 	//   "audioSampleRate"
 	//   "audioSampleRateMismatch"
 	//   "audioStereoMismatch"
-	//   "audioTooManyChannel"
+	//   "audioTooManyChannels"
 	//   "badContainer"
 	//   "bitrateHigh"
 	//   "bitrateLow"
-	//   "framerateHigh"
+	//   "frameRateHigh"
 	//   "framerateMismatch"
 	//   "gopMismatch"
 	//   "gopSizeLong"
 	//   "gopSizeOver"
 	//   "gopSizeShort"
-	//   "interlaceVideo"
+	//   "interlacedVideo"
 	//   "multipleAudioStreams"
 	//   "multipleVideoStreams"
 	//   "noAudioStream"
@@ -2953,8 +2956,9 @@ type LiveStreamHealthStatus struct {
 	// ConfigurationIssues: The configurations issues on this stream
 	ConfigurationIssues []*LiveStreamConfigurationIssue `json:"configurationIssues,omitempty"`
 
-	// LastUpdateTimeS: The last time this status was updated (in seconds)
-	LastUpdateTimeS uint64 `json:"lastUpdateTimeS,omitempty,string"`
+	// LastUpdateTimeSeconds: The last time this status was updated (in
+	// seconds)
+	LastUpdateTimeSeconds uint64 `json:"lastUpdateTimeSeconds,omitempty,string"`
 
 	// Status: The status code of this stream
 	//
@@ -8576,6 +8580,172 @@ func (c *LiveBroadcastsBindCall) Do() (*LiveBroadcast, error) {
 	//     }
 	//   },
 	//   "path": "liveBroadcasts/bind",
+	//   "response": {
+	//     "$ref": "LiveBroadcast"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.force-ssl"
+	//   ]
+	// }
+
+}
+
+// method id "youtube.liveBroadcasts.bind_direct":
+
+type LiveBroadcastsBindDirectCall struct {
+	s    *Service
+	id   string
+	part string
+	opt_ map[string]interface{}
+}
+
+// BindDirect: Binds a YouTube broadcast to a stream or removes an
+// existing binding between a broadcast and a stream. A broadcast can
+// only be bound to one video stream, though a video stream may be bound
+// to more than one broadcast.
+func (r *LiveBroadcastsService) BindDirect(id string, part string) *LiveBroadcastsBindDirectCall {
+	c := &LiveBroadcastsBindDirectCall{s: r.s, opt_: make(map[string]interface{})}
+	c.id = id
+	c.part = part
+	return c
+}
+
+// OnBehalfOfContentOwner sets the optional parameter
+// "onBehalfOfContentOwner": Note: This parameter is intended
+// exclusively for YouTube content partners.
+//
+// The onBehalfOfContentOwner parameter indicates that the request's
+// authorization credentials identify a YouTube CMS user who is acting
+// on behalf of the content owner specified in the parameter value. This
+// parameter is intended for YouTube content partners that own and
+// manage many different YouTube channels. It allows content owners to
+// authenticate once and get access to all their video and channel data,
+// without having to provide authentication credentials for each
+// individual channel. The CMS account that the user authenticates with
+// must be linked to the specified YouTube content owner.
+func (c *LiveBroadcastsBindDirectCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *LiveBroadcastsBindDirectCall {
+	c.opt_["onBehalfOfContentOwner"] = onBehalfOfContentOwner
+	return c
+}
+
+// OnBehalfOfContentOwnerChannel sets the optional parameter
+// "onBehalfOfContentOwnerChannel": This parameter can only be used in a
+// properly authorized request. Note: This parameter is intended
+// exclusively for YouTube content partners.
+//
+// The onBehalfOfContentOwnerChannel parameter specifies the YouTube
+// channel ID of the channel to which a video is being added. This
+// parameter is required when a request specifies a value for the
+// onBehalfOfContentOwner parameter, and it can only be used in
+// conjunction with that parameter. In addition, the request must be
+// authorized using a CMS account that is linked to the content owner
+// that the onBehalfOfContentOwner parameter specifies. Finally, the
+// channel that the onBehalfOfContentOwnerChannel parameter value
+// specifies must be linked to the content owner that the
+// onBehalfOfContentOwner parameter specifies.
+//
+// This parameter is intended for YouTube content partners that own and
+// manage many different YouTube channels. It allows content owners to
+// authenticate once and perform actions on behalf of the channel
+// specified in the parameter value, without having to provide
+// authentication credentials for each separate channel.
+func (c *LiveBroadcastsBindDirectCall) OnBehalfOfContentOwnerChannel(onBehalfOfContentOwnerChannel string) *LiveBroadcastsBindDirectCall {
+	c.opt_["onBehalfOfContentOwnerChannel"] = onBehalfOfContentOwnerChannel
+	return c
+}
+
+// StreamId sets the optional parameter "streamId": The streamId
+// parameter specifies the unique ID of the video stream that is being
+// bound to a broadcast. If this parameter is omitted, the API will
+// remove any existing binding between the broadcast and a video stream.
+func (c *LiveBroadcastsBindDirectCall) StreamId(streamId string) *LiveBroadcastsBindDirectCall {
+	c.opt_["streamId"] = streamId
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LiveBroadcastsBindDirectCall) Fields(s ...googleapi.Field) *LiveBroadcastsBindDirectCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *LiveBroadcastsBindDirectCall) Do() (*LiveBroadcast, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	params.Set("id", fmt.Sprintf("%v", c.id))
+	params.Set("part", fmt.Sprintf("%v", c.part))
+	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
+		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["onBehalfOfContentOwnerChannel"]; ok {
+		params.Set("onBehalfOfContentOwnerChannel", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["streamId"]; ok {
+		params.Set("streamId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "liveBroadcasts/bind/direct")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *LiveBroadcast
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Binds a YouTube broadcast to a stream or removes an existing binding between a broadcast and a stream. A broadcast can only be bound to one video stream, though a video stream may be bound to more than one broadcast.",
+	//   "httpMethod": "POST",
+	//   "id": "youtube.liveBroadcasts.bind_direct",
+	//   "parameterOrder": [
+	//     "id",
+	//     "part"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The id parameter specifies the unique ID of the broadcast that is being bound to a video stream.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "onBehalfOfContentOwner": {
+	//       "description": "Note: This parameter is intended exclusively for YouTube content partners.\n\nThe onBehalfOfContentOwner parameter indicates that the request's authorization credentials identify a YouTube CMS user who is acting on behalf of the content owner specified in the parameter value. This parameter is intended for YouTube content partners that own and manage many different YouTube channels. It allows content owners to authenticate once and get access to all their video and channel data, without having to provide authentication credentials for each individual channel. The CMS account that the user authenticates with must be linked to the specified YouTube content owner.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "onBehalfOfContentOwnerChannel": {
+	//       "description": "This parameter can only be used in a properly authorized request. Note: This parameter is intended exclusively for YouTube content partners.\n\nThe onBehalfOfContentOwnerChannel parameter specifies the YouTube channel ID of the channel to which a video is being added. This parameter is required when a request specifies a value for the onBehalfOfContentOwner parameter, and it can only be used in conjunction with that parameter. In addition, the request must be authorized using a CMS account that is linked to the content owner that the onBehalfOfContentOwner parameter specifies. Finally, the channel that the onBehalfOfContentOwnerChannel parameter value specifies must be linked to the content owner that the onBehalfOfContentOwner parameter specifies.\n\nThis parameter is intended for YouTube content partners that own and manage many different YouTube channels. It allows content owners to authenticate once and perform actions on behalf of the channel specified in the parameter value, without having to provide authentication credentials for each separate channel.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "part": {
+	//       "description": "The part parameter specifies a comma-separated list of one or more liveBroadcast resource properties that the API response will include. The part names that you can include in the parameter value are id, snippet, contentDetails, and status.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "streamId": {
+	//       "description": "The streamId parameter specifies the unique ID of the video stream that is being bound to a broadcast. If this parameter is omitted, the API will remove any existing binding between the broadcast and a video stream.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "liveBroadcasts/bind/direct",
 	//   "response": {
 	//     "$ref": "LiveBroadcast"
 	//   },

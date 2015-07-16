@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/G-ZyOp5RRHFr1ENfVUNl9TTyO6w\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/ZkR-AOQeuSbCQ7gjAz0_-RpvTqg\"",
  "discoveryVersion": "v1",
  "id": "content:v2",
  "name": "content",
  "canonicalName": "Shopping Content",
  "version": "v2",
- "revision": "20150424",
+ "revision": "20150710",
  "title": "Content API for Shopping",
  "description": "Manage product items, inventory, and Merchant Center accounts for Google Shopping.",
  "ownerDomain": "google.com",
@@ -2703,6 +2703,13 @@
      "path": "accounts/batch",
      "httpMethod": "POST",
      "description": "Retrieves, inserts, updates, and deletes multiple Merchant Center (sub-)accounts in a single request.",
+     "parameters": {
+      "dryRun": {
+       "type": "boolean",
+       "description": "Flag to run the request in dry-run mode.",
+       "location": "query"
+      }
+     },
      "request": {
       "$ref": "AccountsCustomBatchRequest"
      },
@@ -2725,6 +2732,11 @@
        "required": true,
        "format": "uint64",
        "location": "path"
+      },
+      "dryRun": {
+       "type": "boolean",
+       "description": "Flag to run the request in dry-run mode.",
+       "location": "query"
       },
       "merchantId": {
        "type": "string",
@@ -2780,6 +2792,11 @@
      "httpMethod": "POST",
      "description": "Creates a Merchant Center sub-account.",
      "parameters": {
+      "dryRun": {
+       "type": "boolean",
+       "description": "Flag to run the request in dry-run mode.",
+       "location": "query"
+      },
       "merchantId": {
        "type": "string",
        "description": "The ID of the managing account.",
@@ -2849,6 +2866,11 @@
        "format": "uint64",
        "location": "path"
       },
+      "dryRun": {
+       "type": "boolean",
+       "description": "Flag to run the request in dry-run mode.",
+       "location": "query"
+      },
       "merchantId": {
        "type": "string",
        "description": "The ID of the managing account.",
@@ -2883,6 +2905,11 @@
        "required": true,
        "format": "uint64",
        "location": "path"
+      },
+      "dryRun": {
+       "type": "boolean",
+       "description": "Flag to run the request in dry-run mode.",
+       "location": "query"
       },
       "merchantId": {
        "type": "string",
@@ -3345,6 +3372,13 @@
      "id": "content.datafeeds.custombatch",
      "path": "datafeeds/batch",
      "httpMethod": "POST",
+     "parameters": {
+      "dryRun": {
+       "type": "boolean",
+       "description": "Flag to run the request in dry-run mode.",
+       "location": "query"
+      }
+     },
      "request": {
       "$ref": "DatafeedsCustomBatchRequest"
      },
@@ -3366,6 +3400,11 @@
        "required": true,
        "format": "uint64",
        "location": "path"
+      },
+      "dryRun": {
+       "type": "boolean",
+       "description": "Flag to run the request in dry-run mode.",
+       "location": "query"
       },
       "merchantId": {
        "type": "string",
@@ -3418,6 +3457,11 @@
      "httpMethod": "POST",
      "description": "Registers a datafeed with your Merchant Center account.",
      "parameters": {
+      "dryRun": {
+       "type": "boolean",
+       "description": "Flag to run the request in dry-run mode.",
+       "location": "query"
+      },
       "merchantId": {
        "type": "string",
        "required": true,
@@ -3485,6 +3529,11 @@
        "format": "uint64",
        "location": "path"
       },
+      "dryRun": {
+       "type": "boolean",
+       "description": "Flag to run the request in dry-run mode.",
+       "location": "query"
+      },
       "merchantId": {
        "type": "string",
        "required": true,
@@ -3517,6 +3566,11 @@
        "required": true,
        "format": "uint64",
        "location": "path"
+      },
+      "dryRun": {
+       "type": "boolean",
+       "description": "Flag to run the request in dry-run mode.",
+       "location": "query"
       },
       "merchantId": {
        "type": "string",
@@ -3631,6 +3685,13 @@
      "path": "inventory/batch",
      "httpMethod": "POST",
      "description": "Updates price and availability for multiple products or stores in a single request.",
+     "parameters": {
+      "dryRun": {
+       "type": "boolean",
+       "description": "Flag to run the request in dry-run mode.",
+       "location": "query"
+      }
+     },
      "request": {
       "$ref": "InventoryCustomBatchRequest"
      },
@@ -3647,6 +3708,11 @@
      "httpMethod": "POST",
      "description": "Updates price and availability of a product in your Merchant Center account.",
      "parameters": {
+      "dryRun": {
+       "type": "boolean",
+       "description": "Flag to run the request in dry-run mode.",
+       "location": "query"
+      },
       "merchantId": {
        "type": "string",
        "description": "The ID of the managing account.",

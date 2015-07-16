@@ -1695,14 +1695,6 @@ func (c *LinuxGetLinuxAccountViewsCall) PageToken(pageToken string) *LinuxGetLin
 	return c
 }
 
-// User sets the optional parameter "user": If provided, the user
-// requesting the views. If left blank, the system is requesting the
-// views, instead of a particular user.
-func (c *LinuxGetLinuxAccountViewsCall) User(user string) *LinuxGetLinuxAccountViewsCall {
-	c.opt_["user"] = user
-	return c
-}
-
 // Fields allows partial responses to be retrieved.
 // See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1727,9 +1719,6 @@ func (c *LinuxGetLinuxAccountViewsCall) Do() (*LinuxGetLinuxAccountViewsResponse
 	}
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["user"]; ok {
-		params.Set("user", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
@@ -1800,12 +1789,6 @@ func (c *LinuxGetLinuxAccountViewsCall) Do() (*LinuxGetLinuxAccountViewsResponse
 	//       "location": "path",
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "user": {
-	//       "description": "If provided, the user requesting the views. If left blank, the system is requesting the views, instead of a particular user.",
-	//       "location": "query",
-	//       "pattern": "[a-z][-a-z0-9_]{0,31}",
 	//       "type": "string"
 	//     },
 	//     "zone": {

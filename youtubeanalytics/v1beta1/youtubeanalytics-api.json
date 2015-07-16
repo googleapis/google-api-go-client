@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/ID2nf7n7eRyIPf4mFz5QF1inEVE\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/wzHkxHWEX9PcW7ZnULAilfkQsbM\"",
  "discoveryVersion": "v1",
  "id": "youtubeAnalytics:v1beta1",
  "name": "youtubeAnalytics",
@@ -85,7 +85,7 @@
      "description": "View and manage your assets and associated content on YouTube"
     },
     "https://www.googleapis.com/auth/yt-analytics-monetary.readonly": {
-     "description": "View YouTube Analytics monetary reports for your YouTube content"
+     "description": "View monetary and non-monetary YouTube Analytics reports for your YouTube content"
     },
     "https://www.googleapis.com/auth/yt-analytics.readonly": {
      "description": "View YouTube Analytics reports for your YouTube content"

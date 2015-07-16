@@ -1826,6 +1826,13 @@ func (r *AccountsService) Custombatch(accountscustombatchrequest *AccountsCustom
 	return c
 }
 
+// DryRun sets the optional parameter "dryRun": Flag to run the request
+// in dry-run mode.
+func (c *AccountsCustombatchCall) DryRun(dryRun bool) *AccountsCustombatchCall {
+	c.opt_["dryRun"] = dryRun
+	return c
+}
+
 // Fields allows partial responses to be retrieved.
 // See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1843,6 +1850,9 @@ func (c *AccountsCustombatchCall) Do() (*AccountsCustomBatchResponse, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["dryRun"]; ok {
+		params.Set("dryRun", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1869,6 +1879,13 @@ func (c *AccountsCustombatchCall) Do() (*AccountsCustomBatchResponse, error) {
 	//   "description": "Retrieves, inserts, updates, and deletes multiple Merchant Center (sub-)accounts in a single request.",
 	//   "httpMethod": "POST",
 	//   "id": "content.accounts.custombatch",
+	//   "parameters": {
+	//     "dryRun": {
+	//       "description": "Flag to run the request in dry-run mode.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
 	//   "path": "accounts/batch",
 	//   "request": {
 	//     "$ref": "AccountsCustomBatchRequest"
@@ -1900,6 +1917,13 @@ func (r *AccountsService) Delete(merchantId uint64, accountId uint64) *AccountsD
 	return c
 }
 
+// DryRun sets the optional parameter "dryRun": Flag to run the request
+// in dry-run mode.
+func (c *AccountsDeleteCall) DryRun(dryRun bool) *AccountsDeleteCall {
+	c.opt_["dryRun"] = dryRun
+	return c
+}
+
 // Fields allows partial responses to be retrieved.
 // See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1912,6 +1936,9 @@ func (c *AccountsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["dryRun"]; ok {
+		params.Set("dryRun", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1947,6 +1974,11 @@ func (c *AccountsDeleteCall) Do() error {
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "dryRun": {
+	//       "description": "Flag to run the request in dry-run mode.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     },
 	//     "merchantId": {
 	//       "description": "The ID of the managing account.",
@@ -2069,6 +2101,13 @@ func (r *AccountsService) Insert(merchantId uint64, account *Account) *AccountsI
 	return c
 }
 
+// DryRun sets the optional parameter "dryRun": Flag to run the request
+// in dry-run mode.
+func (c *AccountsInsertCall) DryRun(dryRun bool) *AccountsInsertCall {
+	c.opt_["dryRun"] = dryRun
+	return c
+}
+
 // Fields allows partial responses to be retrieved.
 // See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2086,6 +2125,9 @@ func (c *AccountsInsertCall) Do() (*Account, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["dryRun"]; ok {
+		params.Set("dryRun", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -2118,6 +2160,11 @@ func (c *AccountsInsertCall) Do() (*Account, error) {
 	//     "merchantId"
 	//   ],
 	//   "parameters": {
+	//     "dryRun": {
+	//       "description": "Flag to run the request in dry-run mode.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "merchantId": {
 	//       "description": "The ID of the managing account.",
 	//       "format": "uint64",
@@ -2268,6 +2315,13 @@ func (r *AccountsService) Patch(merchantId uint64, accountId uint64, account *Ac
 	return c
 }
 
+// DryRun sets the optional parameter "dryRun": Flag to run the request
+// in dry-run mode.
+func (c *AccountsPatchCall) DryRun(dryRun bool) *AccountsPatchCall {
+	c.opt_["dryRun"] = dryRun
+	return c
+}
+
 // Fields allows partial responses to be retrieved.
 // See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2285,6 +2339,9 @@ func (c *AccountsPatchCall) Do() (*Account, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["dryRun"]; ok {
+		params.Set("dryRun", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -2325,6 +2382,11 @@ func (c *AccountsPatchCall) Do() (*Account, error) {
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "dryRun": {
+	//       "description": "Flag to run the request in dry-run mode.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     },
 	//     "merchantId": {
 	//       "description": "The ID of the managing account.",
@@ -2367,6 +2429,13 @@ func (r *AccountsService) Update(merchantId uint64, accountId uint64, account *A
 	return c
 }
 
+// DryRun sets the optional parameter "dryRun": Flag to run the request
+// in dry-run mode.
+func (c *AccountsUpdateCall) DryRun(dryRun bool) *AccountsUpdateCall {
+	c.opt_["dryRun"] = dryRun
+	return c
+}
+
 // Fields allows partial responses to be retrieved.
 // See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2384,6 +2453,9 @@ func (c *AccountsUpdateCall) Do() (*Account, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["dryRun"]; ok {
+		params.Set("dryRun", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -2424,6 +2496,11 @@ func (c *AccountsUpdateCall) Do() (*Account, error) {
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "dryRun": {
+	//       "description": "Flag to run the request in dry-run mode.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     },
 	//     "merchantId": {
 	//       "description": "The ID of the managing account.",
@@ -3764,6 +3841,13 @@ func (r *DatafeedsService) Custombatch(datafeedscustombatchrequest *DatafeedsCus
 	return c
 }
 
+// DryRun sets the optional parameter "dryRun": Flag to run the request
+// in dry-run mode.
+func (c *DatafeedsCustombatchCall) DryRun(dryRun bool) *DatafeedsCustombatchCall {
+	c.opt_["dryRun"] = dryRun
+	return c
+}
+
 // Fields allows partial responses to be retrieved.
 // See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3781,6 +3865,9 @@ func (c *DatafeedsCustombatchCall) Do() (*DatafeedsCustomBatchResponse, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["dryRun"]; ok {
+		params.Set("dryRun", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -3806,6 +3893,13 @@ func (c *DatafeedsCustombatchCall) Do() (*DatafeedsCustomBatchResponse, error) {
 	// {
 	//   "httpMethod": "POST",
 	//   "id": "content.datafeeds.custombatch",
+	//   "parameters": {
+	//     "dryRun": {
+	//       "description": "Flag to run the request in dry-run mode.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
 	//   "path": "datafeeds/batch",
 	//   "request": {
 	//     "$ref": "DatafeedsCustomBatchRequest"
@@ -3837,6 +3931,13 @@ func (r *DatafeedsService) Delete(merchantId uint64, datafeedId uint64) *Datafee
 	return c
 }
 
+// DryRun sets the optional parameter "dryRun": Flag to run the request
+// in dry-run mode.
+func (c *DatafeedsDeleteCall) DryRun(dryRun bool) *DatafeedsDeleteCall {
+	c.opt_["dryRun"] = dryRun
+	return c
+}
+
 // Fields allows partial responses to be retrieved.
 // See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3849,6 +3950,9 @@ func (c *DatafeedsDeleteCall) Do() error {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["dryRun"]; ok {
+		params.Set("dryRun", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -3883,6 +3987,11 @@ func (c *DatafeedsDeleteCall) Do() error {
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "dryRun": {
+	//       "description": "Flag to run the request in dry-run mode.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     },
 	//     "merchantId": {
 	//       "format": "uint64",
@@ -4002,6 +4111,13 @@ func (r *DatafeedsService) Insert(merchantId uint64, datafeed *Datafeed) *Datafe
 	return c
 }
 
+// DryRun sets the optional parameter "dryRun": Flag to run the request
+// in dry-run mode.
+func (c *DatafeedsInsertCall) DryRun(dryRun bool) *DatafeedsInsertCall {
+	c.opt_["dryRun"] = dryRun
+	return c
+}
+
 // Fields allows partial responses to be retrieved.
 // See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -4019,6 +4135,9 @@ func (c *DatafeedsInsertCall) Do() (*Datafeed, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["dryRun"]; ok {
+		params.Set("dryRun", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -4051,6 +4170,11 @@ func (c *DatafeedsInsertCall) Do() (*Datafeed, error) {
 	//     "merchantId"
 	//   ],
 	//   "parameters": {
+	//     "dryRun": {
+	//       "description": "Flag to run the request in dry-run mode.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "merchantId": {
 	//       "format": "uint64",
 	//       "location": "path",
@@ -4200,6 +4324,13 @@ func (r *DatafeedsService) Patch(merchantId uint64, datafeedId uint64, datafeed 
 	return c
 }
 
+// DryRun sets the optional parameter "dryRun": Flag to run the request
+// in dry-run mode.
+func (c *DatafeedsPatchCall) DryRun(dryRun bool) *DatafeedsPatchCall {
+	c.opt_["dryRun"] = dryRun
+	return c
+}
+
 // Fields allows partial responses to be retrieved.
 // See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -4217,6 +4348,9 @@ func (c *DatafeedsPatchCall) Do() (*Datafeed, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["dryRun"]; ok {
+		params.Set("dryRun", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -4256,6 +4390,11 @@ func (c *DatafeedsPatchCall) Do() (*Datafeed, error) {
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "dryRun": {
+	//       "description": "Flag to run the request in dry-run mode.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     },
 	//     "merchantId": {
 	//       "format": "uint64",
@@ -4297,6 +4436,13 @@ func (r *DatafeedsService) Update(merchantId uint64, datafeedId uint64, datafeed
 	return c
 }
 
+// DryRun sets the optional parameter "dryRun": Flag to run the request
+// in dry-run mode.
+func (c *DatafeedsUpdateCall) DryRun(dryRun bool) *DatafeedsUpdateCall {
+	c.opt_["dryRun"] = dryRun
+	return c
+}
+
 // Fields allows partial responses to be retrieved.
 // See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -4314,6 +4460,9 @@ func (c *DatafeedsUpdateCall) Do() (*Datafeed, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["dryRun"]; ok {
+		params.Set("dryRun", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -4353,6 +4502,11 @@ func (c *DatafeedsUpdateCall) Do() (*Datafeed, error) {
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "dryRun": {
+	//       "description": "Flag to run the request in dry-run mode.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     },
 	//     "merchantId": {
 	//       "format": "uint64",
@@ -4658,6 +4812,13 @@ func (r *InventoryService) Custombatch(inventorycustombatchrequest *InventoryCus
 	return c
 }
 
+// DryRun sets the optional parameter "dryRun": Flag to run the request
+// in dry-run mode.
+func (c *InventoryCustombatchCall) DryRun(dryRun bool) *InventoryCustombatchCall {
+	c.opt_["dryRun"] = dryRun
+	return c
+}
+
 // Fields allows partial responses to be retrieved.
 // See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -4675,6 +4836,9 @@ func (c *InventoryCustombatchCall) Do() (*InventoryCustomBatchResponse, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["dryRun"]; ok {
+		params.Set("dryRun", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -4701,6 +4865,13 @@ func (c *InventoryCustombatchCall) Do() (*InventoryCustomBatchResponse, error) {
 	//   "description": "Updates price and availability for multiple products or stores in a single request.",
 	//   "httpMethod": "POST",
 	//   "id": "content.inventory.custombatch",
+	//   "parameters": {
+	//     "dryRun": {
+	//       "description": "Flag to run the request in dry-run mode.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
 	//   "path": "inventory/batch",
 	//   "request": {
 	//     "$ref": "InventoryCustomBatchRequest"
@@ -4737,6 +4908,13 @@ func (r *InventoryService) Set(merchantId uint64, storeCode string, productId st
 	return c
 }
 
+// DryRun sets the optional parameter "dryRun": Flag to run the request
+// in dry-run mode.
+func (c *InventorySetCall) DryRun(dryRun bool) *InventorySetCall {
+	c.opt_["dryRun"] = dryRun
+	return c
+}
+
 // Fields allows partial responses to be retrieved.
 // See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -4754,6 +4932,9 @@ func (c *InventorySetCall) Do() (*InventorySetResponse, error) {
 	ctype := "application/json"
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["dryRun"]; ok {
+		params.Set("dryRun", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -4790,6 +4971,11 @@ func (c *InventorySetCall) Do() (*InventorySetResponse, error) {
 	//     "productId"
 	//   ],
 	//   "parameters": {
+	//     "dryRun": {
+	//       "description": "Flag to run the request in dry-run mode.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "merchantId": {
 	//       "description": "The ID of the managing account.",
 	//       "format": "uint64",

@@ -946,6 +946,13 @@ func (r *ManagedZonesService) List(project string) *ManagedZonesListCall {
 	return c
 }
 
+// DnsName sets the optional parameter "dnsName": Restricts the list to
+// return only zones with this domain name.
+func (c *ManagedZonesListCall) DnsName(dnsName string) *ManagedZonesListCall {
+	c.opt_["dnsName"] = dnsName
+	return c
+}
+
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of results to be returned. If unspecified, the server will decide how
 // many results to return.
@@ -974,6 +981,9 @@ func (c *ManagedZonesListCall) Do() (*ManagedZonesListResponse, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", "json")
+	if v, ok := c.opt_["dnsName"]; ok {
+		params.Set("dnsName", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
@@ -1011,6 +1021,11 @@ func (c *ManagedZonesListCall) Do() (*ManagedZonesListResponse, error) {
 	//     "project"
 	//   ],
 	//   "parameters": {
+	//     "dnsName": {
+	//       "description": "Restricts the list to return only zones with this domain name.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "maxResults": {
 	//       "description": "Optional. Maximum number of results to be returned. If unspecified, the server will decide how many results to return.",
 	//       "format": "int32",

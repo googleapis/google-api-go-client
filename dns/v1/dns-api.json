@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/CZ8yv2Lu-gQSA--NRFSPzzXCW7A\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/-U4jrXk6-vTBoDv0IALjnOwY9tw\"",
  "discoveryVersion": "v1",
  "id": "dns:v1",
  "name": "dns",
  "version": "v1",
- "revision": "20150218",
+ "revision": "20150624",
  "title": "Google Cloud DNS API",
  "description": "The Google Cloud DNS API provides services for configuring and serving authoritative DNS records.",
  "ownerDomain": "google.com",
@@ -572,6 +572,11 @@
      "httpMethod": "GET",
      "description": "Enumerate ManagedZones that have been created but not yet deleted.",
      "parameters": {
+      "dnsName": {
+       "type": "string",
+       "description": "Restricts the list to return only zones with this domain name.",
+       "location": "query"
+      },
       "maxResults": {
        "type": "integer",
        "description": "Optional. Maximum number of results to be returned. If unspecified, the server will decide how many results to return.",

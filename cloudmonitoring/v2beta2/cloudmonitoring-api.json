@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/ohXSSrYD9FZjeoH2DkcOPP70lbc\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/avMl03W4ktR_Q7PS4O3ogtyT8Dc\"",
  "discoveryVersion": "v1",
  "id": "cloudmonitoring:v2beta2",
  "name": "cloudmonitoring",
  "canonicalName": "Cloud Monitoring",
  "version": "v2beta2",
- "revision": "20150305",
+ "revision": "20150713",
  "title": "Cloud Monitoring API",
  "description": "API for accessing Google Cloud and API monitoring data.",
  "ownerDomain": "google.com",
@@ -70,6 +70,9 @@
  "auth": {
   "oauth2": {
    "scopes": {
+    "https://www.googleapis.com/auth/cloud-platform": {
+     "description": "View and manage your data across Google Cloud Platform services"
+    },
     "https://www.googleapis.com/auth/monitoring": {
      "description": "View and write monitoring data for all of your Google and third-party Cloud and API projects"
     }
@@ -522,6 +525,7 @@
       "$ref": "MetricDescriptor"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/monitoring"
      ]
     },
@@ -552,6 +556,7 @@
       "$ref": "DeleteMetricDescriptorResponse"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/monitoring"
      ]
     },
@@ -597,6 +602,7 @@
       "$ref": "ListMetricDescriptorsResponse"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/monitoring"
      ]
     }
@@ -696,6 +702,7 @@
       "$ref": "ListTimeseriesResponse"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/monitoring"
      ]
     },
@@ -722,6 +729,7 @@
       "$ref": "WriteTimeseriesResponse"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/monitoring"
      ]
     }
@@ -821,6 +829,7 @@
       "$ref": "ListTimeseriesDescriptorsResponse"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/monitoring"
      ]
     }

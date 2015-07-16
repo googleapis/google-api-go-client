@@ -43,6 +43,9 @@ const basePath = "https://www.googleapis.com/cloudmonitoring/v2beta2/projects/"
 
 // OAuth2 scopes used by this API.
 const (
+	// View and manage your data across Google Cloud Platform services
+	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
+
 	// View and write monitoring data for all of your Google and third-party
 	// Cloud and API projects
 	MonitoringScope = "https://www.googleapis.com/auth/monitoring"
@@ -442,6 +445,7 @@ func (c *MetricDescriptorsCreateCall) Do() (*MetricDescriptor, error) {
 	//     "$ref": "MetricDescriptor"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/monitoring"
 	//   ]
 	// }
@@ -528,6 +532,7 @@ func (c *MetricDescriptorsDeleteCall) Do() (*DeleteMetricDescriptorResponse, err
 	//     "$ref": "DeleteMetricDescriptorResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/monitoring"
 	//   ]
 	// }
@@ -669,6 +674,7 @@ func (c *MetricDescriptorsListCall) Do() (*ListMetricDescriptorsResponse, error)
 	//     "$ref": "ListMetricDescriptorsResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/monitoring"
 	//   ]
 	// }
@@ -937,6 +943,7 @@ func (c *TimeseriesListCall) Do() (*ListTimeseriesResponse, error) {
 	//     "$ref": "ListTimeseriesResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/monitoring"
 	//   ]
 	// }
@@ -1031,6 +1038,7 @@ func (c *TimeseriesWriteCall) Do() (*WriteTimeseriesResponse, error) {
 	//     "$ref": "WriteTimeseriesResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/monitoring"
 	//   ]
 	// }
@@ -1300,6 +1308,7 @@ func (c *TimeseriesDescriptorsListCall) Do() (*ListTimeseriesDescriptorsResponse
 	//     "$ref": "ListTimeseriesDescriptorsResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/monitoring"
 	//   ]
 	// }

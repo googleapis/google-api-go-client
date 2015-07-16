@@ -113,6 +113,24 @@ type UserinfoV2MeService struct {
 	s *Service
 }
 
+type Jwk struct {
+	Keys []*JwkKeys `json:"keys,omitempty"`
+}
+
+type JwkKeys struct {
+	Alg string `json:"alg,omitempty"`
+
+	E string `json:"e,omitempty"`
+
+	Kid string `json:"kid,omitempty"`
+
+	Kty string `json:"kty,omitempty"`
+
+	N string `json:"n,omitempty"`
+
+	Use string `json:"use,omitempty"`
+}
+
 type Raw struct {
 	Keyvalues []*RawKeyvalues `json:"keyvalues,omitempty"`
 }
@@ -321,6 +339,78 @@ func (c *GetCertForOpenIdConnectRawCall) Do() (*Raw, error) {
 	//   "path": "oauth2/v1/raw_public_keys",
 	//   "response": {
 	//     "$ref": "Raw"
+	//   }
+	// }
+
+}
+
+// method id "oauth2.getRobotJwk":
+
+type GetRobotJwkCall struct {
+	s          *Service
+	robotEmail string
+	opt_       map[string]interface{}
+}
+
+// GetRobotJwk:
+func (s *Service) GetRobotJwk(robotEmail string) *GetRobotJwkCall {
+	c := &GetRobotJwkCall{s: s, opt_: make(map[string]interface{})}
+	c.robotEmail = robotEmail
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *GetRobotJwkCall) Fields(s ...googleapi.Field) *GetRobotJwkCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *GetRobotJwkCall) Do() (*Jwk, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "service_accounts/v1/jwk/{robotEmail}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"robotEmail": c.robotEmail,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Jwk
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "httpMethod": "GET",
+	//   "id": "oauth2.getRobotJwk",
+	//   "parameterOrder": [
+	//     "robotEmail"
+	//   ],
+	//   "parameters": {
+	//     "robotEmail": {
+	//       "description": "The email of robot account.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "service_accounts/v1/jwk/{robotEmail}",
+	//   "response": {
+	//     "$ref": "Jwk"
 	//   }
 	// }
 

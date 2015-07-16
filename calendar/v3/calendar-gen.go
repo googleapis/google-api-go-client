@@ -749,6 +749,11 @@ type EventSource struct {
 }
 
 type EventAttachment struct {
+	// FileId: ID of the attached file. Read-only.
+	// E.g. for Google Drive files this is the ID of the corresponding Files
+	// resource entry in the Drive API.
+	FileId string `json:"fileId,omitempty"`
+
 	// FileUrl: URL link to the attachment.
 	// For adding Google Drive file attachments use the same format as in
 	// alternateLink property of the Files resource in the Drive API.

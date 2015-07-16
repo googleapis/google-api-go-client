@@ -1,5 +1,7 @@
 // Package androidenterprise provides access to the Google Play EMM API.
 //
+// See https://developers.google.com/play/enterprise
+//
 // Usage example:
 //
 //   import "google.golang.org/api/androidenterprise/v1"
@@ -252,12 +254,12 @@ type AppRestrictionsSchemaRestrictionRestrictionValue struct {
 }
 
 type AppVersion struct {
-	// VersionCode: Unique increasing identifier for the apk version.
+	// VersionCode: Unique increasing identifier for the app version.
 	VersionCode int64 `json:"versionCode,omitempty"`
 
 	// VersionString: The string used in the Play Store by the app developer
-	// to identify a version of an app. The string is not necessarily unique
-	// or localized (e.g. "1.4").
+	// to identify the version. The string is not necessarily unique or
+	// localized (for example, the string could be "1.4").
 	VersionString string `json:"versionString,omitempty"`
 }
 
@@ -516,9 +518,9 @@ type Permission struct {
 }
 
 type Product struct {
-	// AppVersion: List of app versions available for this product. The
-	// returned list contains only public versions. E.g. alpha, beta or
-	// canary versions will not be included.
+	// AppVersion: App versions currently available for this product. The
+	// returned list contains only public versions. Alpha and beta versions
+	// are not included.
 	AppVersion []*AppVersion `json:"appVersion,omitempty"`
 
 	// AuthorName: The name of the author of the product (e.g. the app
@@ -530,6 +532,12 @@ type Product struct {
 	DetailsUrl string `json:"detailsUrl,omitempty"`
 
 	// DistributionChannel: How and to whom the package is made available.
+	// The value publicGoogleHosted means that the package is available
+	// through the Play Store and not restricted to a specific enterprise.
+	// The value privateGoogleHosted means that the package is a private app
+	// (restricted to an enterprise) but hosted by Google. The value
+	// privateSelfHosted means that the package is a private app (restricted
+	// to an enterprise) and is privately hosted.
 	DistributionChannel string `json:"distributionChannel,omitempty"`
 
 	// IconUrl: A link to an image that can be used as an icon for the
@@ -540,8 +548,8 @@ type Product struct {
 	// string "androidenterprise#product".
 	Kind string `json:"kind,omitempty"`
 
-	// ProductId: A string of the form "app:
-	// " - e.g. "app:com.google.android.gm" represents the GMail app.
+	// ProductId: A string of the form app:
+	// . For example, app:com.google.android.gm represents the Gmail app.
 	ProductId string `json:"productId,omitempty"`
 
 	// RequiresContainerApp: Whether this app can only be installed on
@@ -578,17 +586,25 @@ type ProductPermissions struct {
 }
 
 type ProductsApproveRequest struct {
+	// ApprovalUrlInfo: The approval URL that was shown to the user. Only
+	// the permissions shown to the user with that URL will be accepted,
+	// which may not be the product's entire set of permissions. For
+	// example, the URL may only display new permissions from an update
+	// after the product was approved, or not include new permissions if the
+	// product was updated since the URL was generated.
 	ApprovalUrlInfo *ApprovalUrlInfo `json:"approvalUrlInfo,omitempty"`
 }
 
 type ProductsGenerateApprovalUrlResponse struct {
-	// Url: A iframe-able URL that displays a product's permissions (if
-	// any). This URL can be used to approve the product only once and for a
-	// limited time (1 hour), using the Products.approve call. If the
-	// product is not currently approved and has no permissions, this URL
-	// will point to an empty page. If the product is currently approved and
-	// all of its permissions (if any) are also approved, this field will
-	// not be populated.
+	// Url: A URL that can be rendered in an iframe to display the
+	// permissions (if any) of a product. This URL can be used to approve
+	// the product only once and only within 24 hours of being generated,
+	// using the Products.approve call. If the product is currently
+	// unapproved and has no permissions, this URL will point to an empty
+	// page. If the product is currently approved, a URL will only be
+	// generated if that product has added permissions since it was last
+	// approved, and the URL will only display those new permissions that
+	// have not yet been accepted.
 	Url string `json:"url,omitempty"`
 }
 
@@ -4100,10 +4116,17 @@ type ProductsGenerateApprovalUrlCall struct {
 	opt_         map[string]interface{}
 }
 
-// GenerateApprovalUrl: Generates a URL that can be used to display an
-// iframe to view the product's permissions (if any) and approve the
-// product. This URL can be used to approve the product for a limited
-// time (currently 1 hour) using the Products.approve call.
+// GenerateApprovalUrl: Generates a URL that can be rendered in an
+// iframe to display the permissions (if any) of a product. An
+// enterprise admin must view these permissions and accept them on
+// behalf of their organization in order to approve that
+// product.
+//
+// Admins should accept the displayed permissions by interacting with a
+// separate UI element in the EMM console, which in turn should trigger
+// the use of this URL as the approvalUrlInfo.approvalUrl property in a
+// Products.approve call to approve the product. This URL can only be
+// used to display permissions for up to 1 day.
 func (r *ProductsService) GenerateApprovalUrl(enterpriseId string, productId string) *ProductsGenerateApprovalUrlCall {
 	c := &ProductsGenerateApprovalUrlCall{s: r.s, opt_: make(map[string]interface{})}
 	c.enterpriseId = enterpriseId
@@ -4111,9 +4134,9 @@ func (r *ProductsService) GenerateApprovalUrl(enterpriseId string, productId str
 	return c
 }
 
-// LanguageCode sets the optional parameter "languageCode": The language
-// code that will be used for permission names and descriptions in the
-// returned iframe.
+// LanguageCode sets the optional parameter "languageCode": The BCP 47
+// language code used for permission names and descriptions in the
+// returned iframe, for instance "en-US".
 func (c *ProductsGenerateApprovalUrlCall) LanguageCode(languageCode string) *ProductsGenerateApprovalUrlCall {
 	c.opt_["languageCode"] = languageCode
 	return c
@@ -4159,7 +4182,7 @@ func (c *ProductsGenerateApprovalUrlCall) Do() (*ProductsGenerateApprovalUrlResp
 	}
 	return ret, nil
 	// {
-	//   "description": "Generates a URL that can be used to display an iframe to view the product's permissions (if any) and approve the product. This URL can be used to approve the product for a limited time (currently 1 hour) using the Products.approve call.",
+	//   "description": "Generates a URL that can be rendered in an iframe to display the permissions (if any) of a product. An enterprise admin must view these permissions and accept them on behalf of their organization in order to approve that product.\n\nAdmins should accept the displayed permissions by interacting with a separate UI element in the EMM console, which in turn should trigger the use of this URL as the approvalUrlInfo.approvalUrl property in a Products.approve call to approve the product. This URL can only be used to display permissions for up to 1 day.",
 	//   "httpMethod": "POST",
 	//   "id": "androidenterprise.products.generateApprovalUrl",
 	//   "parameterOrder": [
@@ -4174,7 +4197,7 @@ func (c *ProductsGenerateApprovalUrlCall) Do() (*ProductsGenerateApprovalUrlResp
 	//       "type": "string"
 	//     },
 	//     "languageCode": {
-	//       "description": "The language code that will be used for permission names and descriptions in the returned iframe.",
+	//       "description": "The BCP 47 language code used for permission names and descriptions in the returned iframe, for instance \"en-US\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

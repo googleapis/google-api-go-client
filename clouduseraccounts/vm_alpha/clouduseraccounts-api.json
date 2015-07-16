@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/DGefIN76FNyNAfmkSh_oOSYqW-g\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/BpR07_0y6yfGK4qx0cJgXMHUdjo\"",
  "discoveryVersion": "v1",
  "id": "clouduseraccounts:vm_alpha",
  "name": "clouduseraccounts",
  "canonicalName": "Cloud User Accounts",
  "version": "vm_alpha",
- "revision": "20150622",
+ "revision": "20150714",
  "title": "Cloud User Accounts API",
  "description": "API for the Google Cloud User Accounts service.",
  "ownerDomain": "google.com",
@@ -1101,12 +1101,6 @@
        "required": true,
        "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
        "location": "path"
-      },
-      "user": {
-       "type": "string",
-       "description": "If provided, the user requesting the views. If left blank, the system is requesting the views, instead of a particular user.",
-       "pattern": "[a-z][-a-z0-9_]{0,31}",
-       "location": "query"
       },
       "zone": {
        "type": "string",

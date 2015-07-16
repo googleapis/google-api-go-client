@@ -505,12 +505,29 @@ type Session struct {
 }
 
 type Value struct {
-	// FpVal: Floating point value. When this is set, intVal must not be
-	// set.
+	// FpVal: Floating point value. When this is set, other values must not
+	// be set.
 	FpVal float64 `json:"fpVal,omitempty"`
 
-	// IntVal: Integer value. When this is set, fpVal must not be set.
+	// IntVal: Integer value. When this is set, other values must not be
+	// set.
 	IntVal int64 `json:"intVal,omitempty"`
+
+	// MapVal: Map value. The valid key space and units for the
+	// corresponding value of each entry should be documented as part of the
+	// data type definition. Keys should be kept small whenever possible.
+	// Data streams with large keys and high data frequency may be down
+	// sampled.
+	MapVal []*ValueMapValEntry `json:"mapVal,omitempty"`
+
+	// StringVal: String value. When this is set, other values must not be
+	// set. Strings should be kept small whenever possible. Data streams
+	// with large string values and high data frequency may be down sampled.
+	StringVal string `json:"stringVal,omitempty"`
+}
+
+type ValueMapValEntry struct {
+	Key string `json:"key,omitempty"`
 }
 
 // method id "fitness.users.dataSources.create":

@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/lTxRjj5-AURGfd9glUYk42wgbOA\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/ALzt_o9hBNBIakQJmeXCNhSU8II\"",
  "discoveryVersion": "v1",
  "id": "storage:v1",
  "name": "storage",
  "version": "v1",
- "revision": "20150326",
+ "revision": "20150630",
  "title": "Cloud Storage API",
  "description": "Lets you store and retrieve potentially-large, immutable data objects.",
  "ownerDomain": "google.com",
@@ -569,13 +569,14 @@
      "description": "Content-Type of the object data.",
      "annotations": {
       "required": [
+       "storage.objects.insert",
        "storage.objects.update"
       ]
      }
     },
     "crc32c": {
      "type": "string",
-     "description": "CRC32c checksum, as described in RFC 4960, Appendix B; encoded using base64 in big-endian byte order."
+     "description": "CRC32c checksum, as described in RFC 4960, Appendix B; encoded using base64 in big-endian byte order. For more information about using the CRC32c checksum, see Hashes and ETags: Best Practices."
     },
     "etag": {
      "type": "string",
@@ -597,7 +598,7 @@
     },
     "md5Hash": {
      "type": "string",
-     "description": "MD5 hash of the data; encoded using base64."
+     "description": "MD5 hash of the data; encoded using base64. For more information about using the MD5 hash, see Hashes and ETags: Best Practices."
     },
     "mediaLink": {
      "type": "string",

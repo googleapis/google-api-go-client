@@ -254,9 +254,46 @@ type Contest struct {
 	// it is for.
 	PrimaryParty string `json:"primaryParty,omitempty"`
 
+	// ReferendumBallotResponses: The set of ballot responses for the
+	// referendum. A ballot response represents a line on the ballot. Common
+	// examples might include "yes" or "no" for referenda, or a judge's name
+	// for a retention contest. This field is only populated for contests of
+	// type 'Referendum'.
+	ReferendumBallotResponses []string `json:"referendumBallotResponses,omitempty"`
+
+	// ReferendumBrief: Specifies a short summary of the referendum that is
+	// on the ballot below the title but above the text. This field is only
+	// populated for contests of type 'Referendum'.
+	ReferendumBrief string `json:"referendumBrief,omitempty"`
+
+	// ReferendumConStatement: A statement in opposition to the referendum.
+	// It does not necessarily appear on the ballot. This field is only
+	// populated for contests of type 'Referendum'.
+	ReferendumConStatement string `json:"referendumConStatement,omitempty"`
+
+	// ReferendumEffectOfAbstain: Specifies what effect abstaining (not
+	// voting) on the proposition will have (i.e. whether abstaining is
+	// considered a vote against it). This field is only populated for
+	// contests of type 'Referendum'.
+	ReferendumEffectOfAbstain string `json:"referendumEffectOfAbstain,omitempty"`
+
+	// ReferendumPassageThreshold: The threshold of votes that the
+	// referendum needs in order to pass, e.g. "two-thirds". This field is
+	// only populated for contests of type 'Referendum'.
+	ReferendumPassageThreshold string `json:"referendumPassageThreshold,omitempty"`
+
+	// ReferendumProStatement: A statement in favor of the referendum. It
+	// does not necessarily appear on the ballot. This field is only
+	// populated for contests of type 'Referendum'.
+	ReferendumProStatement string `json:"referendumProStatement,omitempty"`
+
 	// ReferendumSubtitle: A brief description of the referendum. This field
 	// is only populated for contests of type 'Referendum'.
 	ReferendumSubtitle string `json:"referendumSubtitle,omitempty"`
+
+	// ReferendumText: The full text of the referendum. This field is only
+	// populated for contests of type 'Referendum'.
+	ReferendumText string `json:"referendumText,omitempty"`
 
 	// ReferendumTitle: The title of the referendum (e.g. 'Proposition 42').
 	// This field is only populated for contests of type 'Referendum'.
@@ -568,6 +605,11 @@ type VoterInfoResponse struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "civicinfo#voterInfoResponse".
 	Kind string `json:"kind,omitempty"`
+
+	// MailOnly: Specifies whether voters in the precinct vote only by
+	// mailing their ballots (with the possible option of dropping off their
+	// ballots as well).
+	MailOnly bool `json:"mailOnly,omitempty"`
 
 	// NormalizedInput: The normalized version of the requested address
 	NormalizedInput *SimpleAddressType `json:"normalizedInput,omitempty"`

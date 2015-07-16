@@ -798,7 +798,7 @@ func (c *ApplicationsListHiddenCall) Do() (*HiddenPlayerList, error) {
 	//       "description": "The maximum number of player resources to return in the response, used for paging. For any response, the actual number of player resources returned may be less than the specified maxResults.",
 	//       "format": "int32",
 	//       "location": "query",
-	//       "maximum": "15",
+	//       "maximum": "50",
 	//       "minimum": "1",
 	//       "type": "integer"
 	//     },

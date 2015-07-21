@@ -215,7 +215,7 @@ type CallSet struct {
 	// epoch.
 	Created int64 `json:"created,omitempty,string"`
 
-	// Id: The Google generated ID of the call set, immutable.
+	// Id: The server-generated call set ID, unique across all call sets.
 	Id string `json:"id,omitempty"`
 
 	// Info: A map of additional call set information. This must be of the
@@ -277,7 +277,7 @@ type Dataset struct {
 	// epoch.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// Id: The server-assigned dataset ID, immutable.
+	// Id: The server-generated dataset ID, unique across all datasets.
 	Id string `json:"id,omitempty"`
 
 	// Name: The dataset name.
@@ -382,6 +382,11 @@ type ImportReadGroupSetsRequest struct {
 	SourceUris []string `json:"sourceUris,omitempty"`
 }
 
+type ImportReadGroupSetsResponse struct {
+	// ReadGroupSetIds: IDs of the read group sets that were created.
+	ReadGroupSetIds []string `json:"readGroupSetIds,omitempty"`
+}
+
 type ImportVariantsRequest struct {
 	// Format: The format of the variant data being imported. If
 	// unspecified, defaults to to `VCF`.
@@ -410,6 +415,11 @@ type ImportVariantsRequest struct {
 	// VariantSetId: Required. The variant set to which variant data should
 	// be imported.
 	VariantSetId string `json:"variantSetId,omitempty"`
+}
+
+type ImportVariantsResponse struct {
+	// CallSetIds: IDs of the call sets that were created.
+	CallSetIds []string `json:"callSetIds,omitempty"`
 }
 
 type LinearAlignment struct {
@@ -476,7 +486,7 @@ type ListOperationsResponse struct {
 	// NextPageToken: The standard List next-page token.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// Operations: A list of operations that match the specified filter in
+	// Operations: A list of operations that matches the specified filter in
 	// the request.
 	Operations []*Operation `json:"operations,omitempty"`
 }
@@ -490,7 +500,7 @@ type MergeVariantsRequest struct {
 }
 
 type Operation struct {
-	// Done: If the value is false, it means the operation is still in
+	// Done: If the value is `false`, it means the operation is still in
 	// progress. If true, the operation is completed and the `result` is
 	// available.
 	Done bool `json:"done,omitempty"`
@@ -522,6 +532,33 @@ type Operation struct {
 type OperationMetadata interface{}
 
 type OperationResponse interface{}
+
+type OperationEvent struct {
+	// Description: Required description of event.
+	Description string `json:"description,omitempty"`
+}
+
+type OperationMetadata1 struct {
+	// CreateTime: The time at which the job was submitted to the Genomics
+	// service.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Events: Optional event messages that were generated during the job's
+	// execution. This also contains any warnings that were generated during
+	// import or export.
+	Events []*OperationEvent `json:"events,omitempty"`
+
+	// ProjectId: The Google Cloud Project in which the job is scoped.
+	ProjectId string `json:"projectId,omitempty"`
+
+	// Request: The original request that started the operation. Note that
+	// this will be in current version of the API. If the operation was
+	// started with v1beta2 API and a GetOperation is performed on v1 API, a
+	// v1 request will be returned.
+	Request OperationMetadataRequest `json:"request,omitempty"`
+}
+
+type OperationMetadataRequest interface{}
 
 type Position struct {
 	// Position: The 0-based offset from the start of the forward strand for
@@ -607,8 +644,8 @@ type Read struct {
 	// name) in SAM.
 	FragmentName string `json:"fragmentName,omitempty"`
 
-	// Id: The unique ID for this read. This is a generated unique ID, not
-	// to be confused with fragmentName.
+	// Id: The server-generated read ID, unique across all reads. This is
+	// different from the `fragmentName`.
 	Id string `json:"id,omitempty"`
 
 	// Info: A map of additional read alignment information. This must be of
@@ -677,9 +714,9 @@ type ReadGroup struct {
 	// Experiment: The experiment used to generate this read group.
 	Experiment *Experiment `json:"experiment,omitempty"`
 
-	// Id: The generated unique read group ID. Note: This is different than
-	// the @RG ID field in the SAM spec. For that value, see the `name`
-	// field.
+	// Id: The server-generated read group ID, unique for all read groups.
+	// Note: This is different than the `@RG ID` field in the SAM spec. For
+	// that value, see the `name` field.
 	Id string `json:"id,omitempty"`
 
 	// Info: A map of additional read group information. This must be of the
@@ -723,7 +760,8 @@ type ReadGroupSet struct {
 	// group set, if any.
 	Filename string `json:"filename,omitempty"`
 
-	// Id: The read group set ID.
+	// Id: The server-generated read group set ID, unique for all read group
+	// sets.
 	Id string `json:"id,omitempty"`
 
 	// Info: A map of additional read group set information.
@@ -746,7 +784,7 @@ type ReadGroupSetInfo struct {
 }
 
 type Reference struct {
-	// Id: The Google generated immutable ID of the reference.
+	// Id: The server-generated reference ID, unique across all references.
 	Id string `json:"id,omitempty"`
 
 	// Length: The length of this reference's sequence.
@@ -790,7 +828,8 @@ type ReferenceSet struct {
 	// Description: Free text description of this reference set.
 	Description string `json:"description,omitempty"`
 
-	// Id: The Google generated immutable ID of the reference set.
+	// Id: The server-generated reference set ID, unique across all
+	// reference sets.
 	Id string `json:"id,omitempty"`
 
 	// Md5checksum: Order-independent MD5 checksum which identifies this
@@ -1132,7 +1171,7 @@ type Variant struct {
 	// failed. `PASS` indicates this variant has passed all filters.
 	Filter []string `json:"filter,omitempty"`
 
-	// Id: The Google generated ID of the variant, immutable.
+	// Id: The server-generated variant ID, unique across all variants.
 	Id string `json:"id,omitempty"`
 
 	// Info: A map of additional variant information. This must be of the
@@ -1212,7 +1251,8 @@ type VariantSet struct {
 	// DatasetId: The dataset to which this variant set belongs.
 	DatasetId string `json:"datasetId,omitempty"`
 
-	// Id: The Google-generated ID of the variant set.
+	// Id: The server-generated variant set ID, unique across all variant
+	// sets.
 	Id string `json:"id,omitempty"`
 
 	// Metadata: The metadata associated with this variant set.
@@ -1604,8 +1644,8 @@ type CallsetsSearchCall struct {
 }
 
 // Search: Gets a list of call sets matching the criteria. Implements
-// [GlobalAllianceApi.searchCallSets](http://ga4gh.org/documentation/api/
-// v0.5.1/ga4gh_api.html#/schema/org.ga4gh.searchCallSets).
+// [GlobalAllianceApi.searchCallSets](https://github.com/ga4gh/schemas/bl
+// ob/v0.5.1/src/main/resources/avro/variantmethods.avdl#L178).
 func (r *CallsetsService) Search(searchcallsetsrequest *SearchCallSetsRequest) *CallsetsSearchCall {
 	c := &CallsetsSearchCall{s: r.s, opt_: make(map[string]interface{})}
 	c.searchcallsetsrequest = searchcallsetsrequest
@@ -1652,7 +1692,7 @@ func (c *CallsetsSearchCall) Do() (*SearchCallSetsResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a list of call sets matching the criteria. Implements [GlobalAllianceApi.searchCallSets](http://ga4gh.org/documentation/api/v0.5.1/ga4gh_api.html#/schema/org.ga4gh.searchCallSets).",
+	//   "description": "Gets a list of call sets matching the criteria. Implements [GlobalAllianceApi.searchCallSets](https://github.com/ga4gh/schemas/blob/v0.5.1/src/main/resources/avro/variantmethods.avdl#L178).",
 	//   "httpMethod": "POST",
 	//   "id": "genomics.callsets.search",
 	//   "path": "v1/callsets/search",
@@ -2393,7 +2433,7 @@ type OperationsGetCall struct {
 	opt_ map[string]interface{}
 }
 
-// Get: Gets the latest state of a long-running operation. Clients may
+// Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
 func (r *OperationsService) Get(name string) *OperationsGetCall {
@@ -2438,7 +2478,7 @@ func (c *OperationsGetCall) Do() (*Operation, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the latest state of a long-running operation. Clients may use this method to poll the operation result at intervals as recommended by the API service.",
+	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
 	//   "httpMethod": "GET",
 	//   "id": "genomics.operations.get",
 	//   "parameterOrder": [
@@ -3042,8 +3082,8 @@ type ReadgroupsetsSearchCall struct {
 
 // Search: Searches for read group sets matching the criteria.
 // Implements
-// [GlobalAllianceApi.searchReadGroupSets](http://ga4gh.org/documentation
-// /api/v0.5.1/ga4gh_api.html#/schema/org.ga4gh.searchReadGroupSets).
+// [GlobalAllianceApi.searchReadGroupSets](https://github.com/ga4gh/schem
+// as/blob/v0.5.1/src/main/resources/avro/readmethods.avdl#L135).
 func (r *ReadgroupsetsService) Search(searchreadgroupsetsrequest *SearchReadGroupSetsRequest) *ReadgroupsetsSearchCall {
 	c := &ReadgroupsetsSearchCall{s: r.s, opt_: make(map[string]interface{})}
 	c.searchreadgroupsetsrequest = searchreadgroupsetsrequest
@@ -3090,7 +3130,7 @@ func (c *ReadgroupsetsSearchCall) Do() (*SearchReadGroupSetsResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Searches for read group sets matching the criteria. Implements [GlobalAllianceApi.searchReadGroupSets](http://ga4gh.org/documentation/api/v0.5.1/ga4gh_api.html#/schema/org.ga4gh.searchReadGroupSets).",
+	//   "description": "Searches for read group sets matching the criteria. Implements [GlobalAllianceApi.searchReadGroupSets](https://github.com/ga4gh/schemas/blob/v0.5.1/src/main/resources/avro/readmethods.avdl#L135).",
 	//   "httpMethod": "POST",
 	//   "id": "genomics.readgroupsets.search",
 	//   "path": "v1/readgroupsets/search",
@@ -3320,8 +3360,8 @@ type ReadsSearchCall struct {
 // pages) are ordered by genomic coordinate (reference sequence &
 // position). Reads with equivalent genomic coordinates are returned in
 // a deterministic order. Implements
-// [GlobalAllianceApi.searchReads](http://ga4gh.org/documentation/api/v0.
-// 5.1/ga4gh_api.html#/schema/org.ga4gh.searchReads).
+// [GlobalAllianceApi.searchReads](https://github.com/ga4gh/schemas/blob/
+// v0.5.1/src/main/resources/avro/readmethods.avdl#L85).
 func (r *ReadsService) Search(searchreadsrequest *SearchReadsRequest) *ReadsSearchCall {
 	c := &ReadsSearchCall{s: r.s, opt_: make(map[string]interface{})}
 	c.searchreadsrequest = searchreadsrequest
@@ -3368,7 +3408,7 @@ func (c *ReadsSearchCall) Do() (*SearchReadsResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a list of reads for one or more read group sets. Reads search operates over a genomic coordinate space of reference sequence \u0026 position defined over the reference sequences to which the requested read group sets are aligned. If a target positional range is specified, search returns all reads whose alignment to the reference genome overlap the range. A query which specifies only read group set IDs yields all reads in those read group sets, including unmapped reads. All reads returned (including reads on subsequent pages) are ordered by genomic coordinate (reference sequence \u0026 position). Reads with equivalent genomic coordinates are returned in a deterministic order. Implements [GlobalAllianceApi.searchReads](http://ga4gh.org/documentation/api/v0.5.1/ga4gh_api.html#/schema/org.ga4gh.searchReads).",
+	//   "description": "Gets a list of reads for one or more read group sets. Reads search operates over a genomic coordinate space of reference sequence \u0026 position defined over the reference sequences to which the requested read group sets are aligned. If a target positional range is specified, search returns all reads whose alignment to the reference genome overlap the range. A query which specifies only read group set IDs yields all reads in those read group sets, including unmapped reads. All reads returned (including reads on subsequent pages) are ordered by genomic coordinate (reference sequence \u0026 position). Reads with equivalent genomic coordinates are returned in a deterministic order. Implements [GlobalAllianceApi.searchReads](https://github.com/ga4gh/schemas/blob/v0.5.1/src/main/resources/avro/readmethods.avdl#L85).",
 	//   "httpMethod": "POST",
 	//   "id": "genomics.reads.search",
 	//   "path": "v1/reads/search",
@@ -3396,8 +3436,8 @@ type ReferencesGetCall struct {
 }
 
 // Get: Gets a reference. Implements
-// [GlobalAllianceApi.getReference](http://ga4gh.org/documentation/api/v0
-// .5.1/ga4gh_api.html#/schema/org.ga4gh.getReference).
+// [GlobalAllianceApi.getReference](https://github.com/ga4gh/schemas/blob
+// /v0.5.1/src/main/resources/avro/referencemethods.avdl#L158).
 func (r *ReferencesService) Get(referenceId string) *ReferencesGetCall {
 	c := &ReferencesGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.referenceId = referenceId
@@ -3440,7 +3480,7 @@ func (c *ReferencesGetCall) Do() (*Reference, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a reference. Implements [GlobalAllianceApi.getReference](http://ga4gh.org/documentation/api/v0.5.1/ga4gh_api.html#/schema/org.ga4gh.getReference).",
+	//   "description": "Gets a reference. Implements [GlobalAllianceApi.getReference](https://github.com/ga4gh/schemas/blob/v0.5.1/src/main/resources/avro/referencemethods.avdl#L158).",
 	//   "httpMethod": "GET",
 	//   "id": "genomics.references.get",
 	//   "parameterOrder": [
@@ -3477,8 +3517,8 @@ type ReferencesSearchCall struct {
 
 // Search: Searches for references which match the given criteria.
 // Implements
-// [GlobalAllianceApi.searchReferences](http://ga4gh.org/documentation/ap
-// i/v0.5.1/ga4gh_api.html#/schema/org.ga4gh.searchReferences).
+// [GlobalAllianceApi.searchReferences](https://github.com/ga4gh/schemas/
+// blob/v0.5.1/src/main/resources/avro/referencemethods.avdl#L146).
 func (r *ReferencesService) Search(searchreferencesrequest *SearchReferencesRequest) *ReferencesSearchCall {
 	c := &ReferencesSearchCall{s: r.s, opt_: make(map[string]interface{})}
 	c.searchreferencesrequest = searchreferencesrequest
@@ -3525,7 +3565,7 @@ func (c *ReferencesSearchCall) Do() (*SearchReferencesResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Searches for references which match the given criteria. Implements [GlobalAllianceApi.searchReferences](http://ga4gh.org/documentation/api/v0.5.1/ga4gh_api.html#/schema/org.ga4gh.searchReferences).",
+	//   "description": "Searches for references which match the given criteria. Implements [GlobalAllianceApi.searchReferences](https://github.com/ga4gh/schemas/blob/v0.5.1/src/main/resources/avro/referencemethods.avdl#L146).",
 	//   "httpMethod": "POST",
 	//   "id": "genomics.references.search",
 	//   "path": "v1/references/search",
@@ -3554,8 +3594,8 @@ type ReferencesBasesListCall struct {
 
 // List: Lists the bases in a reference, optionally restricted to a
 // range. Implements
-// [GlobalAllianceApi.getReferenceBases](http://ga4gh.org/documentation/a
-// pi/v0.5.1/ga4gh_api.html#/schema/org.ga4gh.getReferenceBases).
+// [GlobalAllianceApi.getReferenceBases](https://github.com/ga4gh/schemas
+// /blob/v0.5.1/src/main/resources/avro/referencemethods.avdl#L221).
 func (r *ReferencesBasesService) List(referenceId string) *ReferencesBasesListCall {
 	c := &ReferencesBasesListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.referenceId = referenceId
@@ -3640,7 +3680,7 @@ func (c *ReferencesBasesListCall) Do() (*ListBasesResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the bases in a reference, optionally restricted to a range. Implements [GlobalAllianceApi.getReferenceBases](http://ga4gh.org/documentation/api/v0.5.1/ga4gh_api.html#/schema/org.ga4gh.getReferenceBases).",
+	//   "description": "Lists the bases in a reference, optionally restricted to a range. Implements [GlobalAllianceApi.getReferenceBases](https://github.com/ga4gh/schemas/blob/v0.5.1/src/main/resources/avro/referencemethods.avdl#L221).",
 	//   "httpMethod": "GET",
 	//   "id": "genomics.references.bases.list",
 	//   "parameterOrder": [
@@ -3699,8 +3739,8 @@ type ReferencesetsGetCall struct {
 }
 
 // Get: Gets a reference set. Implements
-// [GlobalAllianceApi.getReferenceSet](http://ga4gh.org/documentation/api
-// /v0.5.1/ga4gh_api.html#/schema/org.ga4gh.getReferenceSet").
+// [GlobalAllianceApi.getReferenceSet](https://github.com/ga4gh/schemas/b
+// lob/v0.5.1/src/main/resources/avro/referencemethods.avdl#L83).
 func (r *ReferencesetsService) Get(referenceSetId string) *ReferencesetsGetCall {
 	c := &ReferencesetsGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.referenceSetId = referenceSetId
@@ -3743,7 +3783,7 @@ func (c *ReferencesetsGetCall) Do() (*ReferenceSet, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a reference set. Implements [GlobalAllianceApi.getReferenceSet](http://ga4gh.org/documentation/api/v0.5.1/ga4gh_api.html#/schema/org.ga4gh.getReferenceSet\").",
+	//   "description": "Gets a reference set. Implements [GlobalAllianceApi.getReferenceSet](https://github.com/ga4gh/schemas/blob/v0.5.1/src/main/resources/avro/referencemethods.avdl#L83).",
 	//   "httpMethod": "GET",
 	//   "id": "genomics.referencesets.get",
 	//   "parameterOrder": [
@@ -3781,7 +3821,7 @@ type ReferencesetsSearchCall struct {
 // Search: Searches for reference sets which match the given criteria.
 // Implements
 // [GlobalAllianceApi.searchReferenceSets](http://ga4gh.org/documentation
-// /api/v0.5.1/ga4gh_api.html#/schema/org.ga4gh.searchReferenceSets)
+// /api/v0.5.1/ga4gh_api.html#/schema/org.ga4gh.searchReferenceSets).
 func (r *ReferencesetsService) Search(searchreferencesetsrequest *SearchReferenceSetsRequest) *ReferencesetsSearchCall {
 	c := &ReferencesetsSearchCall{s: r.s, opt_: make(map[string]interface{})}
 	c.searchreferencesetsrequest = searchreferencesetsrequest
@@ -3828,7 +3868,7 @@ func (c *ReferencesetsSearchCall) Do() (*SearchReferenceSetsResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Searches for reference sets which match the given criteria. Implements [GlobalAllianceApi.searchReferenceSets](http://ga4gh.org/documentation/api/v0.5.1/ga4gh_api.html#/schema/org.ga4gh.searchReferenceSets)",
+	//   "description": "Searches for reference sets which match the given criteria. Implements [GlobalAllianceApi.searchReferenceSets](http://ga4gh.org/documentation/api/v0.5.1/ga4gh_api.html#/schema/org.ga4gh.searchReferenceSets).",
 	//   "httpMethod": "POST",
 	//   "id": "genomics.referencesets.search",
 	//   "path": "v1/referencesets/search",
@@ -4353,8 +4393,8 @@ type VariantsSearchCall struct {
 }
 
 // Search: Gets a list of variants matching the criteria. Implements
-// [GlobalAllianceApi.searchVariants](http://ga4gh.org/documentation/api/
-// v0.5.1/ga4gh_api.html#/schema/org.ga4gh.searchVariants).
+// [GlobalAllianceApi.searchVariants](https://github.com/ga4gh/schemas/bl
+// ob/v0.5.1/src/main/resources/avro/variantmethods.avdl#L126).
 func (r *VariantsService) Search(searchvariantsrequest *SearchVariantsRequest) *VariantsSearchCall {
 	c := &VariantsSearchCall{s: r.s, opt_: make(map[string]interface{})}
 	c.searchvariantsrequest = searchvariantsrequest
@@ -4401,7 +4441,7 @@ func (c *VariantsSearchCall) Do() (*SearchVariantsResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a list of variants matching the criteria. Implements [GlobalAllianceApi.searchVariants](http://ga4gh.org/documentation/api/v0.5.1/ga4gh_api.html#/schema/org.ga4gh.searchVariants).",
+	//   "description": "Gets a list of variants matching the criteria. Implements [GlobalAllianceApi.searchVariants](https://github.com/ga4gh/schemas/blob/v0.5.1/src/main/resources/avro/variantmethods.avdl#L126).",
 	//   "httpMethod": "POST",
 	//   "id": "genomics.variants.search",
 	//   "path": "v1/variants/search",
@@ -4854,8 +4894,8 @@ type VariantsetsSearchCall struct {
 
 // Search: Returns a list of all variant sets matching search criteria.
 // Implements
-// [GlobalAllianceApi.searchVariantSets](http://ga4gh.org/documentation/a
-// pi/v0.5.1/ga4gh_api.html#/schema/org.ga4gh.searchVariantSets).
+// [GlobalAllianceApi.searchVariantSets](https://github.com/ga4gh/schemas
+// /blob/v0.5.1/src/main/resources/avro/variantmethods.avdl#L49).
 func (r *VariantsetsService) Search(searchvariantsetsrequest *SearchVariantSetsRequest) *VariantsetsSearchCall {
 	c := &VariantsetsSearchCall{s: r.s, opt_: make(map[string]interface{})}
 	c.searchvariantsetsrequest = searchvariantsetsrequest
@@ -4902,7 +4942,7 @@ func (c *VariantsetsSearchCall) Do() (*SearchVariantSetsResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns a list of all variant sets matching search criteria. Implements [GlobalAllianceApi.searchVariantSets](http://ga4gh.org/documentation/api/v0.5.1/ga4gh_api.html#/schema/org.ga4gh.searchVariantSets).",
+	//   "description": "Returns a list of all variant sets matching search criteria. Implements [GlobalAllianceApi.searchVariantSets](https://github.com/ga4gh/schemas/blob/v0.5.1/src/main/resources/avro/variantmethods.avdl#L49).",
 	//   "httpMethod": "POST",
 	//   "id": "genomics.variantsets.search",
 	//   "path": "v1/variantsets/search",

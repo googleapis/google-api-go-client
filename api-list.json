@@ -32,6 +32,22 @@
     "x32": "https://www.google.com/images/icons/product/doubleclick-32.gif"
    },
    "documentationLink": "https://developers.google.com/ad-exchange/buyer-rest",
+   "preferred": false
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "adexchangebuyer:v1.4",
+   "name": "adexchangebuyer",
+   "version": "v1.4",
+   "title": "Ad Exchange Buyer API",
+   "description": "Accesses your bidding-account information, submits creatives for validation, finds available direct deals, and retrieves performance reports.",
+   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/adexchangebuyer/v1.4/rest",
+   "discoveryLink": "./apis/adexchangebuyer/v1.4/rest",
+   "icons": {
+    "x16": "https://www.google.com/images/icons/product/doubleclick-16.gif",
+    "x32": "https://www.google.com/images/icons/product/doubleclick-32.gif"
+   },
+   "documentationLink": "https://developers.google.com/ad-exchange/buyer-rest",
    "preferred": true
   },
   {
@@ -1171,6 +1187,22 @@
    },
    "documentationLink": "",
    "preferred": false
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "clouddebugger:v2",
+   "name": "clouddebugger",
+   "version": "v2",
+   "title": "Google Cloud Debugger API",
+   "description": "",
+   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/clouddebugger/v2/rest",
+   "discoveryLink": "./apis/clouddebugger/v2/rest",
+   "icons": {
+    "x16": "http://www.google.com/images/icons/product/search-16.gif",
+    "x32": "http://www.google.com/images/icons/product/search-32.gif"
+   },
+   "documentationLink": "https://cloud.google.com/tools/cloud-debugger",
+   "preferred": true
   },
   {
    "kind": "discovery#directoryItem",

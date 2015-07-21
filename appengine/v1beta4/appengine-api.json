@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/62qeP6JNrNNbKIoC3qXHjPCCN2Q\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/5-TWXZdLOUBo15RKT-gc4uxrObI\"",
  "discoveryVersion": "v1",
  "id": "appengine:v1beta4",
  "name": "appengine",
  "version": "v1beta4",
- "revision": "20150602",
+ "revision": "20150720",
  "title": "Google App Engine Admin API",
  "description": "The App Engine Admin API enables developers to provision and manage their App Engine applications.",
  "ownerDomain": "google.com",
@@ -1127,15 +1127,14 @@
    "methods": {
     "get": {
      "id": "appengine.apps.get",
-     "path": "v1beta4/{+name}",
+     "path": "v1beta4/apps/{appsId}",
      "httpMethod": "GET",
      "description": "Gets information about an application.",
      "parameters": {
-      "name": {
+      "appsId": {
        "type": "string",
-       "description": "Name of the application to get. For example: \"apps/myapp\".",
+       "description": "Part of `name`. Name of the application to get. For example: \"apps/myapp\".",
        "required": true,
-       "pattern": "^apps/[^/]*$",
        "location": "path"
       },
       "ensureResourcesExist": {
@@ -1145,7 +1144,7 @@
       }
      },
      "parameterOrder": [
-      "name"
+      "appsId"
      ],
      "response": {
       "$ref": "Application"
@@ -1160,20 +1159,26 @@
      "methods": {
       "delete": {
        "id": "appengine.apps.modules.delete",
-       "path": "v1beta4/{+name}",
+       "path": "v1beta4/apps/{appsId}/modules/{modulesId}",
        "httpMethod": "DELETE",
        "description": "Deletes a module and all enclosed versions.",
        "parameters": {
-        "name": {
+        "appsId": {
          "type": "string",
-         "description": "Name of the resource requested. For example: \"apps/myapp/modules/default\".",
+         "description": "Part of `name`. Name of the resource requested. For example: \"apps/myapp/modules/default\".",
          "required": true,
-         "pattern": "^apps/[^/]*/modules/[^/]*$",
+         "location": "path"
+        },
+        "modulesId": {
+         "type": "string",
+         "description": "Part of `name`. See documentation of `appsId`.",
+         "required": true,
          "location": "path"
         }
        },
        "parameterOrder": [
-        "name"
+        "appsId",
+        "modulesId"
        ],
        "response": {
         "$ref": "Operation"
@@ -1184,20 +1189,26 @@
       },
       "get": {
        "id": "appengine.apps.modules.get",
-       "path": "v1beta4/{+name}",
+       "path": "v1beta4/apps/{appsId}/modules/{modulesId}",
        "httpMethod": "GET",
        "description": "Gets the current configuration of the module.",
        "parameters": {
-        "name": {
+        "appsId": {
          "type": "string",
-         "description": "Name of the resource requested. For example: \"/apps/myapp/modules/default\".",
+         "description": "Part of `name`. Name of the resource requested. For example: \"/apps/myapp/modules/default\".",
          "required": true,
-         "pattern": "^apps/[^/]*/modules/[^/]*$",
+         "location": "path"
+        },
+        "modulesId": {
+         "type": "string",
+         "description": "Part of `name`. See documentation of `appsId`.",
+         "required": true,
          "location": "path"
         }
        },
        "parameterOrder": [
-        "name"
+        "appsId",
+        "modulesId"
        ],
        "response": {
         "$ref": "Module"
@@ -1208,15 +1219,14 @@
       },
       "list": {
        "id": "appengine.apps.modules.list",
-       "path": "v1beta4/{+name}/modules",
+       "path": "v1beta4/apps/{appsId}/modules",
        "httpMethod": "GET",
        "description": "Lists all the modules in the application.",
        "parameters": {
-        "name": {
+        "appsId": {
          "type": "string",
-         "description": "Name of the resource requested. For example: \"/apps/myapp\".",
+         "description": "Part of `name`. Name of the resource requested. For example: \"/apps/myapp\".",
          "required": true,
-         "pattern": "^apps/[^/]*$",
          "location": "path"
         },
         "pageSize": {
@@ -1232,7 +1242,7 @@
         }
        },
        "parameterOrder": [
-        "name"
+        "appsId"
        ],
        "response": {
         "$ref": "ListModulesResponse"
@@ -1243,15 +1253,20 @@
       },
       "patch": {
        "id": "appengine.apps.modules.patch",
-       "path": "v1beta4/{+name}",
+       "path": "v1beta4/apps/{appsId}/modules/{modulesId}",
        "httpMethod": "PATCH",
        "description": "Updates the configuration of the specified module.",
        "parameters": {
-        "name": {
+        "appsId": {
          "type": "string",
-         "description": "Name of the resource to update. For example: \"apps/myapp/modules/default\".",
+         "description": "Part of `name`. Name of the resource to update. For example: \"apps/myapp/modules/default\".",
          "required": true,
-         "pattern": "^apps/[^/]*/modules/[^/]*$",
+         "location": "path"
+        },
+        "modulesId": {
+         "type": "string",
+         "description": "Part of `name`. See documentation of `appsId`.",
+         "required": true,
          "location": "path"
         },
         "mask": {
@@ -1266,7 +1281,8 @@
         }
        },
        "parameterOrder": [
-        "name"
+        "appsId",
+        "modulesId"
        ],
        "request": {
         "$ref": "Module"
@@ -1284,20 +1300,26 @@
        "methods": {
         "create": {
          "id": "appengine.apps.modules.versions.create",
-         "path": "v1beta4/{+name}/versions",
+         "path": "v1beta4/apps/{appsId}/modules/{modulesId}/versions",
          "httpMethod": "POST",
          "description": "Deploys new code and resource files to a version.",
          "parameters": {
-          "name": {
+          "appsId": {
            "type": "string",
-           "description": "Name of the resource to update. For example: \"apps/myapp/modules/default\".",
+           "description": "Part of `name`. Name of the resource to update. For example: \"apps/myapp/modules/default\".",
            "required": true,
-           "pattern": "^apps/[^/]*/modules/[^/]*$",
+           "location": "path"
+          },
+          "modulesId": {
+           "type": "string",
+           "description": "Part of `name`. See documentation of `appsId`.",
+           "required": true,
            "location": "path"
           }
          },
          "parameterOrder": [
-          "name"
+          "appsId",
+          "modulesId"
          ],
          "request": {
           "$ref": "Version"
@@ -1311,20 +1333,33 @@
         },
         "delete": {
          "id": "appengine.apps.modules.versions.delete",
-         "path": "v1beta4/{+name}",
+         "path": "v1beta4/apps/{appsId}/modules/{modulesId}/versions/{versionsId}",
          "httpMethod": "DELETE",
          "description": "Deletes an existing version.",
          "parameters": {
-          "name": {
+          "appsId": {
            "type": "string",
-           "description": "Name of the resource requested. For example: \"apps/myapp/modules/default/versions/v1\".",
+           "description": "Part of `name`. Name of the resource requested. For example: \"apps/myapp/modules/default/versions/v1\".",
            "required": true,
-           "pattern": "^apps/[^/]*/modules/[^/]*/versions/[^/]*$",
+           "location": "path"
+          },
+          "modulesId": {
+           "type": "string",
+           "description": "Part of `name`. See documentation of `appsId`.",
+           "required": true,
+           "location": "path"
+          },
+          "versionsId": {
+           "type": "string",
+           "description": "Part of `name`. See documentation of `appsId`.",
+           "required": true,
            "location": "path"
           }
          },
          "parameterOrder": [
-          "name"
+          "appsId",
+          "modulesId",
+          "versionsId"
          ],
          "response": {
           "$ref": "Operation"
@@ -1335,15 +1370,26 @@
         },
         "get": {
          "id": "appengine.apps.modules.versions.get",
-         "path": "v1beta4/{+name}",
+         "path": "v1beta4/apps/{appsId}/modules/{modulesId}/versions/{versionsId}",
          "httpMethod": "GET",
          "description": "Gets application deployment information.",
          "parameters": {
-          "name": {
+          "appsId": {
            "type": "string",
-           "description": "Name of the resource requested. For example: \"apps/myapp/modules/default/versions/v1\".",
+           "description": "Part of `name`. Name of the resource requested. For example: \"apps/myapp/modules/default/versions/v1\".",
            "required": true,
-           "pattern": "^apps/[^/]*/modules/[^/]*/versions/[^/]*$",
+           "location": "path"
+          },
+          "modulesId": {
+           "type": "string",
+           "description": "Part of `name`. See documentation of `appsId`.",
+           "required": true,
+           "location": "path"
+          },
+          "versionsId": {
+           "type": "string",
+           "description": "Part of `name`. See documentation of `appsId`.",
+           "required": true,
            "location": "path"
           },
           "view": {
@@ -1357,7 +1403,9 @@
           }
          },
          "parameterOrder": [
-          "name"
+          "appsId",
+          "modulesId",
+          "versionsId"
          ],
          "response": {
           "$ref": "Version"
@@ -1368,15 +1416,20 @@
         },
         "list": {
          "id": "appengine.apps.modules.versions.list",
-         "path": "v1beta4/{+name}/versions",
+         "path": "v1beta4/apps/{appsId}/modules/{modulesId}/versions",
          "httpMethod": "GET",
          "description": "Lists the versions of a module.",
          "parameters": {
-          "name": {
+          "appsId": {
            "type": "string",
-           "description": "Name of the resource requested. For example: \"apps/myapp/modules/default\".",
+           "description": "Part of `name`. Name of the resource requested. For example: \"apps/myapp/modules/default\".",
            "required": true,
-           "pattern": "^apps/[^/]*/modules/[^/]*$",
+           "location": "path"
+          },
+          "modulesId": {
+           "type": "string",
+           "description": "Part of `name`. See documentation of `appsId`.",
+           "required": true,
            "location": "path"
           },
           "view": {
@@ -1401,7 +1454,8 @@
           }
          },
          "parameterOrder": [
-          "name"
+          "appsId",
+          "modulesId"
          ],
          "response": {
           "$ref": "ListVersionsResponse"
@@ -1418,20 +1472,26 @@
      "methods": {
       "get": {
        "id": "appengine.apps.operations.get",
-       "path": "v1beta4/{+name}",
+       "path": "v1beta4/apps/{appsId}/operations/{operationsId}",
        "httpMethod": "GET",
        "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
        "parameters": {
-        "name": {
+        "appsId": {
          "type": "string",
-         "description": "The name of the operation resource.",
+         "description": "Part of `name`. The name of the operation resource.",
          "required": true,
-         "pattern": "^apps/[^/]*/operations/[^/]*$",
+         "location": "path"
+        },
+        "operationsId": {
+         "type": "string",
+         "description": "Part of `name`. See documentation of `appsId`.",
+         "required": true,
          "location": "path"
         }
        },
        "parameterOrder": [
-        "name"
+        "appsId",
+        "operationsId"
        ],
        "response": {
         "$ref": "Operation"
@@ -1442,15 +1502,14 @@
       },
       "list": {
        "id": "appengine.apps.operations.list",
-       "path": "v1beta4/{+name}/operations",
+       "path": "v1beta4/apps/{appsId}/operations",
        "httpMethod": "GET",
        "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding below allows API services to override the binding to use different resource name schemes, such as `users/*/operations`.",
        "parameters": {
-        "name": {
+        "appsId": {
          "type": "string",
-         "description": "The name of the operation collection.",
+         "description": "Part of `name`. The name of the operation collection.",
          "required": true,
-         "pattern": "^apps/[^/]*$",
          "location": "path"
         },
         "filter": {
@@ -1471,7 +1530,7 @@
         }
        },
        "parameterOrder": [
-        "name"
+        "appsId"
        ],
        "response": {
         "$ref": "ListOperationsResponse"

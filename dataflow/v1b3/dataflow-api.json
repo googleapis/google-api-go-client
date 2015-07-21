@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/0aH3PsMrpC4Dqa5K4gjLDjAQxF8\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/zns4Y3D5E2S2gwCEbkUlMZNgyY0\"",
  "discoveryVersion": "v1",
  "id": "dataflow:v1b3",
  "name": "dataflow",
  "version": "v1b3",
- "revision": "20150303",
+ "revision": "20150322",
  "title": "Google Dataflow API",
  "description": "Google Dataflow API.",
  "ownerDomain": "google.com",
@@ -142,6 +142,21 @@
      "items": {
       "$ref": "StreamLocation"
      }
+    },
+    "systemStageName": {
+     "type": "string"
+    },
+    "userStageName": {
+     "type": "string"
+    }
+   }
+  },
+  "CustomSourceLocation": {
+   "id": "CustomSourceLocation",
+   "type": "object",
+   "properties": {
+    "stateful": {
+     "type": "boolean"
     }
    }
   },
@@ -226,6 +241,12 @@
      "type": "array",
      "items": {
       "type": "string"
+     }
+    },
+    "internalExperiments": {
+     "type": "object",
+     "additionalProperties": {
+      "type": "any"
      }
     },
     "sdkPipelineOptions": {
@@ -320,9 +341,11 @@
       "JOB_STATE_FAILED",
       "JOB_STATE_RUNNING",
       "JOB_STATE_STOPPED",
-      "JOB_STATE_UNKNOWN"
+      "JOB_STATE_UNKNOWN",
+      "JOB_STATE_UPDATED"
      ],
      "enumDescriptions": [
+      "",
       "",
       "",
       "",
@@ -352,6 +375,9 @@
     "replaceJobId": {
      "type": "string"
     },
+    "replacedByJobId": {
+     "type": "string"
+    },
     "requestedState": {
      "type": "string",
      "enum": [
@@ -360,9 +386,11 @@
       "JOB_STATE_FAILED",
       "JOB_STATE_RUNNING",
       "JOB_STATE_STOPPED",
-      "JOB_STATE_UNKNOWN"
+      "JOB_STATE_UNKNOWN",
+      "JOB_STATE_UPDATED"
      ],
      "enumDescriptions": [
+      "",
       "",
       "",
       "",
@@ -1177,6 +1205,9 @@
    "id": "StreamLocation",
    "type": "object",
    "properties": {
+    "customSourceLocation": {
+     "$ref": "CustomSourceLocation"
+    },
     "pubsubLocation": {
      "$ref": "PubsubLocation"
     },
@@ -1349,6 +1380,12 @@
      "type": "array",
      "items": {
       "$ref": "DataDiskAssignment"
+     }
+    },
+    "userStageToComputationNameMap": {
+     "type": "object",
+     "additionalProperties": {
+      "type": "string"
      }
     }
    }

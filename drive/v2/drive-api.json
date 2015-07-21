@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/2GklHAwx5ffZUxuQnPgLyVNUl4I\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/q8uch3ImrfylJzc7hmtPqukUei0\"",
  "discoveryVersion": "v1",
  "id": "drive:v2",
  "name": "drive",
  "version": "v2",
- "revision": "20150618",
+ "revision": "20150709",
  "title": "Drive API",
  "description": "The API to interact with Drive.",
  "ownerDomain": "google.com",
@@ -2724,6 +2724,27 @@
        "required": true,
        "location": "path"
       },
+      "modifiedDateBehavior": {
+       "type": "string",
+       "description": "How the modifiedDate field should be updated. This overrides setModifiedDate.",
+       "enum": [
+        "fromBody",
+        "fromBodyIfNeeded",
+        "fromBodyOrNow",
+        "noChange",
+        "now",
+        "nowIfNeeded"
+       ],
+       "enumDescriptions": [
+        "Set modifiedDate to the value provided in the body of the request. No change if no value was provided.",
+        "Set modifiedDate to the value provided in the body of the request depending on other contents of the update.",
+        "Set modifiedDate to the value provided in the body of the request, or to the current time if no value was provided.",
+        "Maintain the previous value of modifiedDate.",
+        "Set modifiedDate to the current time.",
+        "Set modifiedDate to the current time depending on contents of the update."
+       ],
+       "location": "query"
+      },
       "newRevision": {
        "type": "boolean",
        "description": "Whether a blob upload should create a new revision. If false, the blob data in the current head revision is replaced. If true or not set, a new blob is created as head revision, and previous unpinned revisions are preserved for a short period of time. Pinned revisions are stored indefinitely, using additional storage quota, up to a maximum of 200 revisions.",
@@ -2900,6 +2921,27 @@
        "description": "The ID of the file to update.",
        "required": true,
        "location": "path"
+      },
+      "modifiedDateBehavior": {
+       "type": "string",
+       "description": "How the modifiedDate field should be updated. This overrides setModifiedDate.",
+       "enum": [
+        "fromBody",
+        "fromBodyIfNeeded",
+        "fromBodyOrNow",
+        "noChange",
+        "now",
+        "nowIfNeeded"
+       ],
+       "enumDescriptions": [
+        "Set modifiedDate to the value provided in the body of the request. No change if no value was provided.",
+        "Set modifiedDate to the value provided in the body of the request depending on other contents of the update.",
+        "Set modifiedDate to the value provided in the body of the request, or to the current time if no value was provided.",
+        "Maintain the previous value of modifiedDate.",
+        "Set modifiedDate to the current time.",
+        "Set modifiedDate to the current time depending on contents of the update."
+       ],
+       "location": "query"
       },
       "newRevision": {
        "type": "boolean",

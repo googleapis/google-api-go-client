@@ -4254,6 +4254,26 @@ func (c *FilesPatchCall) Convert(convert bool) *FilesPatchCall {
 	return c
 }
 
+// ModifiedDateBehavior sets the optional parameter
+// "modifiedDateBehavior": How the modifiedDate field should be updated.
+// This overrides setModifiedDate.
+//
+// Possible values:
+//   "fromBody" - Set modifiedDate to the value provided in the body of
+// the request. No change if no value was provided.
+//   "fromBodyIfNeeded" - Set modifiedDate to the value provided in the
+// body of the request depending on other contents of the update.
+//   "fromBodyOrNow" - Set modifiedDate to the value provided in the
+// body of the request, or to the current time if no value was provided.
+//   "noChange" - Maintain the previous value of modifiedDate.
+//   "now" - Set modifiedDate to the current time.
+//   "nowIfNeeded" - Set modifiedDate to the current time depending on
+// contents of the update.
+func (c *FilesPatchCall) ModifiedDateBehavior(modifiedDateBehavior string) *FilesPatchCall {
+	c.opt_["modifiedDateBehavior"] = modifiedDateBehavior
+	return c
+}
+
 // NewRevision sets the optional parameter "newRevision": Whether a blob
 // upload should create a new revision. If false, the blob data in the
 // current head revision is replaced. If true or not set, a new blob is
@@ -4353,6 +4373,9 @@ func (c *FilesPatchCall) Do() (*File, error) {
 	if v, ok := c.opt_["convert"]; ok {
 		params.Set("convert", fmt.Sprintf("%v", v))
 	}
+	if v, ok := c.opt_["modifiedDateBehavior"]; ok {
+		params.Set("modifiedDateBehavior", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["newRevision"]; ok {
 		params.Set("newRevision", fmt.Sprintf("%v", v))
 	}
@@ -4430,6 +4453,27 @@ func (c *FilesPatchCall) Do() (*File, error) {
 	//       "description": "The ID of the file to update.",
 	//       "location": "path",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "modifiedDateBehavior": {
+	//       "description": "How the modifiedDate field should be updated. This overrides setModifiedDate.",
+	//       "enum": [
+	//         "fromBody",
+	//         "fromBodyIfNeeded",
+	//         "fromBodyOrNow",
+	//         "noChange",
+	//         "now",
+	//         "nowIfNeeded"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Set modifiedDate to the value provided in the body of the request. No change if no value was provided.",
+	//         "Set modifiedDate to the value provided in the body of the request depending on other contents of the update.",
+	//         "Set modifiedDate to the value provided in the body of the request, or to the current time if no value was provided.",
+	//         "Maintain the previous value of modifiedDate.",
+	//         "Set modifiedDate to the current time.",
+	//         "Set modifiedDate to the current time depending on contents of the update."
+	//       ],
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "newRevision": {
@@ -4782,6 +4826,26 @@ func (c *FilesUpdateCall) Convert(convert bool) *FilesUpdateCall {
 	return c
 }
 
+// ModifiedDateBehavior sets the optional parameter
+// "modifiedDateBehavior": How the modifiedDate field should be updated.
+// This overrides setModifiedDate.
+//
+// Possible values:
+//   "fromBody" - Set modifiedDate to the value provided in the body of
+// the request. No change if no value was provided.
+//   "fromBodyIfNeeded" - Set modifiedDate to the value provided in the
+// body of the request depending on other contents of the update.
+//   "fromBodyOrNow" - Set modifiedDate to the value provided in the
+// body of the request, or to the current time if no value was provided.
+//   "noChange" - Maintain the previous value of modifiedDate.
+//   "now" - Set modifiedDate to the current time.
+//   "nowIfNeeded" - Set modifiedDate to the current time depending on
+// contents of the update.
+func (c *FilesUpdateCall) ModifiedDateBehavior(modifiedDateBehavior string) *FilesUpdateCall {
+	c.opt_["modifiedDateBehavior"] = modifiedDateBehavior
+	return c
+}
+
 // NewRevision sets the optional parameter "newRevision": Whether a blob
 // upload should create a new revision. If false, the blob data in the
 // current head revision is replaced. If true or not set, a new blob is
@@ -4908,6 +4972,9 @@ func (c *FilesUpdateCall) Do() (*File, error) {
 	}
 	if v, ok := c.opt_["convert"]; ok {
 		params.Set("convert", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["modifiedDateBehavior"]; ok {
+		params.Set("modifiedDateBehavior", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["newRevision"]; ok {
 		params.Set("newRevision", fmt.Sprintf("%v", v))
@@ -5044,6 +5111,27 @@ func (c *FilesUpdateCall) Do() (*File, error) {
 	//       "description": "The ID of the file to update.",
 	//       "location": "path",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "modifiedDateBehavior": {
+	//       "description": "How the modifiedDate field should be updated. This overrides setModifiedDate.",
+	//       "enum": [
+	//         "fromBody",
+	//         "fromBodyIfNeeded",
+	//         "fromBodyOrNow",
+	//         "noChange",
+	//         "now",
+	//         "nowIfNeeded"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Set modifiedDate to the value provided in the body of the request. No change if no value was provided.",
+	//         "Set modifiedDate to the value provided in the body of the request depending on other contents of the update.",
+	//         "Set modifiedDate to the value provided in the body of the request, or to the current time if no value was provided.",
+	//         "Maintain the previous value of modifiedDate.",
+	//         "Set modifiedDate to the current time.",
+	//         "Set modifiedDate to the current time depending on contents of the update."
+	//       ],
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "newRevision": {

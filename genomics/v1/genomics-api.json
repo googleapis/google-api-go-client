@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/6T02iZtL4UiPkkk0cgUgafyvtLM\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/FV8wyJgOhzZ7rpR6g2FmI8jROkE\"",
  "discoveryVersion": "v1",
  "id": "genomics:v1",
  "name": "genomics",
  "version": "v1",
- "revision": "20150707",
+ "revision": "20150716",
  "title": "Genomics API",
  "description": "An API to store, process, explore, and share DNA sequence reads, reference-based alignments, and variant calls.",
  "ownerDomain": "google.com",
@@ -147,7 +147,7 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "The server-assigned dataset ID, immutable."
+     "description": "The server-generated dataset ID, unique across all datasets."
     },
     "projectId": {
      "type": "string",
@@ -191,7 +191,7 @@
     },
     "done": {
      "type": "boolean",
-     "description": "If the value is false, it means the operation is still in progress. If true, the operation is completed and the `result` is available."
+     "description": "If the value is `false`, it means the operation is still in progress. If true, the operation is completed and the `result` is available."
     },
     "error": {
      "$ref": "Status",
@@ -241,7 +241,7 @@
    "properties": {
     "operations": {
      "type": "array",
-     "description": "A list of operations that match the specified filter in the request.",
+     "description": "A list of operations that matches the specified filter in the request.",
      "items": {
       "$ref": "Operation"
      }
@@ -362,7 +362,7 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "The read group set ID."
+     "description": "The server-generated read group set ID, unique for all read group sets."
     },
     "datasetId": {
      "type": "string",
@@ -406,7 +406,7 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "The generated unique read group ID. Note: This is different than the @RG ID field in the SAM spec. For that value, see the `name` field."
+     "description": "The server-generated read group ID, unique for all read groups. Note: This is different than the `@RG ID` field in the SAM spec. For that value, see the `name` field."
     },
     "datasetId": {
      "type": "string",
@@ -632,7 +632,7 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "The unique ID for this read. This is a generated unique ID, not to be confused with fragmentName."
+     "description": "The server-generated read ID, unique across all reads. This is different from the `fragmentName`."
     },
     "readGroupId": {
      "type": "string",
@@ -844,7 +844,7 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "The Google generated immutable ID of the reference set."
+     "description": "The server-generated reference set ID, unique across all reference sets."
     },
     "referenceIds": {
      "type": "array",
@@ -940,7 +940,7 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "The Google generated immutable ID of the reference."
+     "description": "The server-generated reference ID, unique across all references."
     },
     "length": {
      "type": "string",
@@ -1034,7 +1034,7 @@
     },
     "id": {
      "type": "string",
-     "description": "The Google-generated ID of the variant set."
+     "description": "The server-generated variant set ID, unique across all variant sets."
     },
     "referenceBounds": {
      "type": "array",
@@ -1275,7 +1275,7 @@
     },
     "id": {
      "type": "string",
-     "description": "The Google generated ID of the variant, immutable."
+     "description": "The server-generated variant ID, unique across all variants."
     },
     "names": {
      "type": "array",
@@ -1459,7 +1459,7 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "The Google generated ID of the call set, immutable."
+     "description": "The server-generated call set ID, unique across all call sets."
     },
     "name": {
      "type": "string",
@@ -1490,6 +1490,75 @@
        "type": "any"
       }
      }
+    }
+   }
+  },
+  "ImportReadGroupSetsResponse": {
+   "id": "ImportReadGroupSetsResponse",
+   "type": "object",
+   "description": "The read group set import response.",
+   "properties": {
+    "readGroupSetIds": {
+     "type": "array",
+     "description": "IDs of the read group sets that were created.",
+     "items": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  "ImportVariantsResponse": {
+   "id": "ImportVariantsResponse",
+   "type": "object",
+   "description": "The variant data import response.",
+   "properties": {
+    "callSetIds": {
+     "type": "array",
+     "description": "IDs of the call sets that were created.",
+     "items": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  "OperationMetadata": {
+   "id": "OperationMetadata",
+   "type": "object",
+   "description": "Metadata describing an [Operation][google.longrunning.Operation].",
+   "properties": {
+    "projectId": {
+     "type": "string",
+     "description": "The Google Cloud Project in which the job is scoped."
+    },
+    "createTime": {
+     "type": "string",
+     "description": "The time at which the job was submitted to the Genomics service."
+    },
+    "request": {
+     "type": "object",
+     "description": "The original request that started the operation. Note that this will be in current version of the API. If the operation was started with v1beta2 API and a GetOperation is performed on v1 API, a v1 request will be returned.",
+     "additionalProperties": {
+      "type": "any",
+      "description": "Properties of the object. Contains field @ype with type URL."
+     }
+    },
+    "events": {
+     "type": "array",
+     "description": "Optional event messages that were generated during the job's execution. This also contains any warnings that were generated during import or export.",
+     "items": {
+      "$ref": "OperationEvent"
+     }
+    }
+   }
+  },
+  "OperationEvent": {
+   "id": "OperationEvent",
+   "type": "object",
+   "description": "An event that occurred during an [Operation][google.longrunning.Operation].",
+   "properties": {
+    "description": {
+     "type": "string",
+     "description": "Required description of event."
     }
    }
   }
@@ -1661,7 +1730,7 @@
      "id": "genomics.operations.get",
      "path": "v1/{+name}",
      "httpMethod": "GET",
-     "description": "Gets the latest state of a long-running operation. Clients may use this method to poll the operation result at intervals as recommended by the API service.",
+     "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
      "parameters": {
       "name": {
        "type": "string",
@@ -1829,7 +1898,7 @@
      "id": "genomics.readgroupsets.search",
      "path": "v1/readgroupsets/search",
      "httpMethod": "POST",
-     "description": "Searches for read group sets matching the criteria. Implements [GlobalAllianceApi.searchReadGroupSets](http://ga4gh.org/documentation/api/v0.5.1/ga4gh_api.html#/schema/org.ga4gh.searchReadGroupSets).",
+     "description": "Searches for read group sets matching the criteria. Implements [GlobalAllianceApi.searchReadGroupSets](https://github.com/ga4gh/schemas/blob/v0.5.1/src/main/resources/avro/readmethods.avdl#L135).",
      "request": {
       "$ref": "SearchReadGroupSetsRequest"
      },
@@ -1996,7 +2065,7 @@
      "id": "genomics.reads.search",
      "path": "v1/reads/search",
      "httpMethod": "POST",
-     "description": "Gets a list of reads for one or more read group sets. Reads search operates over a genomic coordinate space of reference sequence & position defined over the reference sequences to which the requested read group sets are aligned. If a target positional range is specified, search returns all reads whose alignment to the reference genome overlap the range. A query which specifies only read group set IDs yields all reads in those read group sets, including unmapped reads. All reads returned (including reads on subsequent pages) are ordered by genomic coordinate (reference sequence & position). Reads with equivalent genomic coordinates are returned in a deterministic order. Implements [GlobalAllianceApi.searchReads](http://ga4gh.org/documentation/api/v0.5.1/ga4gh_api.html#/schema/org.ga4gh.searchReads).",
+     "description": "Gets a list of reads for one or more read group sets. Reads search operates over a genomic coordinate space of reference sequence & position defined over the reference sequences to which the requested read group sets are aligned. If a target positional range is specified, search returns all reads whose alignment to the reference genome overlap the range. A query which specifies only read group set IDs yields all reads in those read group sets, including unmapped reads. All reads returned (including reads on subsequent pages) are ordered by genomic coordinate (reference sequence & position). Reads with equivalent genomic coordinates are returned in a deterministic order. Implements [GlobalAllianceApi.searchReads](https://github.com/ga4gh/schemas/blob/v0.5.1/src/main/resources/avro/readmethods.avdl#L85).",
      "request": {
       "$ref": "SearchReadsRequest"
      },
@@ -2017,7 +2086,7 @@
      "id": "genomics.referencesets.search",
      "path": "v1/referencesets/search",
      "httpMethod": "POST",
-     "description": "Searches for reference sets which match the given criteria. Implements [GlobalAllianceApi.searchReferenceSets](http://ga4gh.org/documentation/api/v0.5.1/ga4gh_api.html#/schema/org.ga4gh.searchReferenceSets)",
+     "description": "Searches for reference sets which match the given criteria. Implements [GlobalAllianceApi.searchReferenceSets](http://ga4gh.org/documentation/api/v0.5.1/ga4gh_api.html#/schema/org.ga4gh.searchReferenceSets).",
      "request": {
       "$ref": "SearchReferenceSetsRequest"
      },
@@ -2034,7 +2103,7 @@
      "id": "genomics.referencesets.get",
      "path": "v1/referencesets/{referenceSetId}",
      "httpMethod": "GET",
-     "description": "Gets a reference set. Implements [GlobalAllianceApi.getReferenceSet](http://ga4gh.org/documentation/api/v0.5.1/ga4gh_api.html#/schema/org.ga4gh.getReferenceSet\").",
+     "description": "Gets a reference set. Implements [GlobalAllianceApi.getReferenceSet](https://github.com/ga4gh/schemas/blob/v0.5.1/src/main/resources/avro/referencemethods.avdl#L83).",
      "parameters": {
       "referenceSetId": {
        "type": "string",
@@ -2063,7 +2132,7 @@
      "id": "genomics.references.search",
      "path": "v1/references/search",
      "httpMethod": "POST",
-     "description": "Searches for references which match the given criteria. Implements [GlobalAllianceApi.searchReferences](http://ga4gh.org/documentation/api/v0.5.1/ga4gh_api.html#/schema/org.ga4gh.searchReferences).",
+     "description": "Searches for references which match the given criteria. Implements [GlobalAllianceApi.searchReferences](https://github.com/ga4gh/schemas/blob/v0.5.1/src/main/resources/avro/referencemethods.avdl#L146).",
      "request": {
       "$ref": "SearchReferencesRequest"
      },
@@ -2080,7 +2149,7 @@
      "id": "genomics.references.get",
      "path": "v1/references/{referenceId}",
      "httpMethod": "GET",
-     "description": "Gets a reference. Implements [GlobalAllianceApi.getReference](http://ga4gh.org/documentation/api/v0.5.1/ga4gh_api.html#/schema/org.ga4gh.getReference).",
+     "description": "Gets a reference. Implements [GlobalAllianceApi.getReference](https://github.com/ga4gh/schemas/blob/v0.5.1/src/main/resources/avro/referencemethods.avdl#L158).",
      "parameters": {
       "referenceId": {
        "type": "string",
@@ -2109,7 +2178,7 @@
        "id": "genomics.references.bases.list",
        "path": "v1/references/{referenceId}/bases",
        "httpMethod": "GET",
-       "description": "Lists the bases in a reference, optionally restricted to a range. Implements [GlobalAllianceApi.getReferenceBases](http://ga4gh.org/documentation/api/v0.5.1/ga4gh_api.html#/schema/org.ga4gh.getReferenceBases).",
+       "description": "Lists the bases in a reference, optionally restricted to a range. Implements [GlobalAllianceApi.getReferenceBases](https://github.com/ga4gh/schemas/blob/v0.5.1/src/main/resources/avro/referencemethods.avdl#L221).",
        "parameters": {
         "referenceId": {
          "type": "string",
@@ -2180,7 +2249,7 @@
      "id": "genomics.variants.search",
      "path": "v1/variants/search",
      "httpMethod": "POST",
-     "description": "Gets a list of variants matching the criteria. Implements [GlobalAllianceApi.searchVariants](http://ga4gh.org/documentation/api/v0.5.1/ga4gh_api.html#/schema/org.ga4gh.searchVariants).",
+     "description": "Gets a list of variants matching the criteria. Implements [GlobalAllianceApi.searchVariants](https://github.com/ga4gh/schemas/blob/v0.5.1/src/main/resources/avro/variantmethods.avdl#L126).",
      "request": {
       "$ref": "SearchVariantsRequest"
      },
@@ -2383,7 +2452,7 @@
      "id": "genomics.variantsets.search",
      "path": "v1/variantsets/search",
      "httpMethod": "POST",
-     "description": "Returns a list of all variant sets matching search criteria. Implements [GlobalAllianceApi.searchVariantSets](http://ga4gh.org/documentation/api/v0.5.1/ga4gh_api.html#/schema/org.ga4gh.searchVariantSets).",
+     "description": "Returns a list of all variant sets matching search criteria. Implements [GlobalAllianceApi.searchVariantSets](https://github.com/ga4gh/schemas/blob/v0.5.1/src/main/resources/avro/variantmethods.avdl#L49).",
      "request": {
       "$ref": "SearchVariantSetsRequest"
      },
@@ -2460,7 +2529,7 @@
      "id": "genomics.callsets.search",
      "path": "v1/callsets/search",
      "httpMethod": "POST",
-     "description": "Gets a list of call sets matching the criteria. Implements [GlobalAllianceApi.searchCallSets](http://ga4gh.org/documentation/api/v0.5.1/ga4gh_api.html#/schema/org.ga4gh.searchCallSets).",
+     "description": "Gets a list of call sets matching the criteria. Implements [GlobalAllianceApi.searchCallSets](https://github.com/ga4gh/schemas/blob/v0.5.1/src/main/resources/avro/variantmethods.avdl#L178).",
      "request": {
       "$ref": "SearchCallSetsRequest"
      },

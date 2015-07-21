@@ -372,7 +372,9 @@ type CalendarNotification struct {
 	// are:
 	// - "email" - Reminders are sent via email.
 	// - "sms" - Reminders are sent via SMS. This value is read-only and is
-	// ignored on inserts and updates.
+	// ignored on inserts and updates. Furthermore, SMS reminders are only
+	// available for Google Apps for Work, Education, and Government
+	// customers.
 	Method string `json:"method,omitempty"`
 
 	// Type: The type of notification. Possible values are:
@@ -835,7 +837,9 @@ type EventDateTime struct {
 type EventReminder struct {
 	// Method: The method used by this reminder. Possible values are:
 	// - "email" - Reminders are sent via email.
-	// - "sms" - Reminders are sent via SMS.
+	// - "sms" - Reminders are sent via SMS. They are only available for
+	// Google Apps for Work, Education, and Government customers. Requests
+	// to set SMS reminders for the other accounts will be ignored.
 	// - "popup" - Reminders are sent via a UI popup.
 	Method string `json:"method,omitempty"`
 

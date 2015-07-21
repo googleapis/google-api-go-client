@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/rJ-Wlqqs_yJDjtCFAIylPtmqXPY\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/jn2m36Cyj5Ei-KQXTI8Znl-wUic\"",
  "discoveryVersion": "v1",
  "id": "discovery:v1",
  "name": "discovery",
@@ -343,6 +343,10 @@
      "type": "string",
      "description": "The ETag for this response.",
      "readOnly": true
+    },
+    "exponentialBackoffDefault": {
+     "type": "boolean",
+     "description": "Enable exponential backoff for suitable methods in the generated clients."
     },
     "features": {
      "type": "array",

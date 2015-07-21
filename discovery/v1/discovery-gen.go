@@ -264,6 +264,10 @@ type RestDescription struct {
 	// Etag: The ETag for this response.
 	Etag string `json:"etag,omitempty"`
 
+	// ExponentialBackoffDefault: Enable exponential backoff for suitable
+	// methods in the generated clients.
+	ExponentialBackoffDefault bool `json:"exponentialBackoffDefault,omitempty"`
+
 	// Features: A list of supported features for this API.
 	Features []string `json:"features,omitempty"`
 

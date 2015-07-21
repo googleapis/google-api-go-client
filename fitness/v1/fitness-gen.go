@@ -144,18 +144,22 @@ type UsersSessionsService struct {
 }
 
 type AggregateBucket struct {
-	// Activity: available for Bucket.Type.ACTIVITY_TYPE,
+	// Activity: Available for Bucket.Type.ACTIVITY_TYPE,
 	// Bucket.Type.ACTIVITY_SEGMENT
 	Activity int64 `json:"activity,omitempty"`
 
-	// Dataset: There will be one dataset per datatype/datasource
+	// Dataset: There will be one dataset per AggregateBy in the request.
 	Dataset []*Dataset `json:"dataset,omitempty"`
 
+	// EndTimeMillis: The end time for the aggregated data, in milliseconds
+	// since epoch, inclusive.
 	EndTimeMillis int64 `json:"endTimeMillis,omitempty,string"`
 
-	// Session: available for Bucket.Type.SESSION
+	// Session: Available for Bucket.Type.SESSION
 	Session *Session `json:"session,omitempty"`
 
+	// StartTimeMillis: The start time for the aggregated data, in
+	// milliseconds since epoch, inclusive.
 	StartTimeMillis int64 `json:"startTimeMillis,omitempty,string"`
 
 	// Type: The type of a bucket signifies how the data aggregation is
@@ -171,35 +175,65 @@ type AggregateBucket struct {
 }
 
 type AggregateBy struct {
+	// DataSourceId: A data source ID to aggregate. Mutually exclusive of
+	// dataTypeName. Only data from the specified data source ID will be
+	// included in the aggregation. The dataset in the response will have
+	// the same data source ID.
 	DataSourceId string `json:"dataSourceId,omitempty"`
 
-	// DataTypeName: by dataype or by datasource
+	// DataTypeName: The data type to aggregate. All data sources providing
+	// this data type will contribute data to the aggregation. The response
+	// will contain a single dataset for this data type name. The dataset
+	// will have a data source ID of
+	// derived:com.google.:com.google.android.gms:aggregated
 	DataTypeName string `json:"dataTypeName,omitempty"`
-
-	OutputDataSourceId string `json:"outputDataSourceId,omitempty"`
-
-	OutputDataTypeName string `json:"outputDataTypeName,omitempty"`
 }
 
 type AggregateRequest struct {
+	// AggregateBy: The specification of data to be aggregated. At least one
+	// aggregateBy spec must be provided. All data that is specified will be
+	// aggregated using the same bucketing criteria. There will be one
+	// dataset in the response for every aggregateBy spec.
 	AggregateBy []*AggregateBy `json:"aggregateBy,omitempty"`
 
+	// BucketByActivitySegment: Specifies that data be aggregated each
+	// activity segment recored for a user. Similar to
+	// bucketByActivitySegment, but bucketing is done for each activity
+	// segment rather than all segments of the same type. Mutually exclusive
+	// of other bucketing specifications.
 	BucketByActivitySegment *BucketByActivity `json:"bucketByActivitySegment,omitempty"`
 
+	// BucketByActivityType: Specifies that data be aggregated by the type
+	// of activity being performed when the data was recorded. All data that
+	// was recorded during a certain activity type (for the given time
+	// range) will be aggregated into the same bucket. Data that was
+	// recorded while the user was not active will not be included in the
+	// response. Mutually exclusive of other bucketing specifications.
 	BucketByActivityType *BucketByActivity `json:"bucketByActivityType,omitempty"`
 
+	// BucketBySession: Specifies that data be aggregated by user sessions.
+	// Data that does not fall within the time range of a session will not
+	// be included in the response. Mutually exclusive of other bucketing
+	// specifications.
 	BucketBySession *BucketBySession `json:"bucketBySession,omitempty"`
 
-	// BucketByTime: apparently oneof is not supported by reduced_nano_proto
+	// BucketByTime: Specifies that data be aggregated by a single time
+	// interval. Mutually exclusive of other bucketing specifications.
 	BucketByTime *BucketByTime `json:"bucketByTime,omitempty"`
 
+	// EndTimeMillis: The end of a window of time. Data that intersects with
+	// this time window will be aggregated. The time is in milliseconds
+	// since epoch, inclusive.
 	EndTimeMillis int64 `json:"endTimeMillis,omitempty,string"`
 
-	// StartTimeMillis: required time range
+	// StartTimeMillis: The start of a window of time. Data that intersects
+	// with this time window will be aggregated. The time is in milliseconds
+	// since epoch, inclusive.
 	StartTimeMillis int64 `json:"startTimeMillis,omitempty,string"`
 }
 
 type AggregateResponse struct {
+	// Bucket: A list of buckets containing the aggregated data.
 	Bucket []*AggregateBucket `json:"bucket,omitempty"`
 }
 
@@ -228,21 +262,27 @@ type Application struct {
 }
 
 type BucketByActivity struct {
-	// ActivityDataSourceId: default activity stream will be used if not
-	// specified
+	// ActivityDataSourceId: The default activity stream will be used if a
+	// specific activityDataSourceId is not specified.
 	ActivityDataSourceId string `json:"activityDataSourceId,omitempty"`
 
-	// MinDurationMillis: Only activity segments of duration longer than
-	// this is used
+	// MinDurationMillis: Specifies that only activity segments of duration
+	// longer than minDurationMillis are considered and used as a container
+	// for aggregated data.
 	MinDurationMillis int64 `json:"minDurationMillis,omitempty,string"`
 }
 
 type BucketBySession struct {
-	// MinDurationMillis: Only sessions of duration longer than this is used
+	// MinDurationMillis: Specifies that only sessions of duration longer
+	// than minDurationMillis are considered and used as a container for
+	// aggregated data.
 	MinDurationMillis int64 `json:"minDurationMillis,omitempty,string"`
 }
 
 type BucketByTime struct {
+	// DurationMillis: Specifies that result buckets aggregate data by
+	// exactly durationMillis time frames. Time frames that contain no data
+	// will be included in the response with an empty dataset.
 	DurationMillis int64 `json:"durationMillis,omitempty,string"`
 }
 
@@ -468,6 +508,11 @@ type ListSessionsResponse struct {
 	Session []*Session `json:"session,omitempty"`
 }
 
+type MapValue struct {
+	// FpVal: Floating point value.
+	FpVal float64 `json:"fpVal,omitempty"`
+}
+
 type Session struct {
 	// ActiveTimeMillis: Session active time. While start_time_millis and
 	// end_time_millis define the full session time, the active time can be
@@ -528,6 +573,8 @@ type Value struct {
 
 type ValueMapValEntry struct {
 	Key string `json:"key,omitempty"`
+
+	Value *MapValue `json:"value,omitempty"`
 }
 
 // method id "fitness.users.dataSources.create":
@@ -1530,7 +1577,10 @@ type UsersDatasetAggregateCall struct {
 	opt_             map[string]interface{}
 }
 
-// Aggregate:
+// Aggregate: Aggregates data of a certain type or stream into buckets
+// divided by a given type of boundary. Multiple data sets of multiple
+// types and from multiple sources can be aggreated into exactly one
+// bucket type per request.
 func (r *UsersDatasetService) Aggregate(userId string, aggregaterequest *AggregateRequest) *UsersDatasetAggregateCall {
 	c := &UsersDatasetAggregateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.userId = userId
@@ -1580,6 +1630,7 @@ func (c *UsersDatasetAggregateCall) Do() (*AggregateResponse, error) {
 	}
 	return ret, nil
 	// {
+	//   "description": "Aggregates data of a certain type or stream into buckets divided by a given type of boundary. Multiple data sets of multiple types and from multiple sources can be aggreated into exactly one bucket type per request.",
 	//   "httpMethod": "POST",
 	//   "id": "fitness.users.dataset.aggregate",
 	//   "parameterOrder": [
@@ -1587,6 +1638,7 @@ func (c *UsersDatasetAggregateCall) Do() (*AggregateResponse, error) {
 	//   ],
 	//   "parameters": {
 	//     "userId": {
+	//       "description": "Aggregate data for the person identified. Use me to indicate the authenticated user. Only me is supported at this time.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1598,7 +1650,12 @@ func (c *UsersDatasetAggregateCall) Do() (*AggregateResponse, error) {
 	//   },
 	//   "response": {
 	//     "$ref": "AggregateResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/fitness.activity.write",
+	//     "https://www.googleapis.com/auth/fitness.body.write",
+	//     "https://www.googleapis.com/auth/fitness.location.write"
+	//   ]
 	// }
 
 }

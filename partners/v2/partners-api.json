@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/1Ga4VljpBO1qvW0HZr8thYTjtTw\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/w6GoLmZrAsuJCEWtpTx8GQU_AuA\"",
  "discoveryVersion": "v1",
  "id": "partners:v2",
  "name": "partners",
  "version": "v2",
- "revision": "20150712",
+ "revision": "20150715",
  "title": "Google Partners API",
  "description": "Lets advertisers search certified companies and create contact leads with them, and also audits the usage of clients.",
  "ownerDomain": "google.com",
@@ -247,7 +247,22 @@
       "AGENCY_FAILED_COMPANY_VERIFICATION",
       "VISITED_LANDING",
       "VISITED_GPS",
-      "VISITED_AGENCY_PORTAL"
+      "VISITED_AGENCY_PORTAL",
+      "CANCELLED_INDIVIDUAL_SIGN_UP",
+      "CANCELLED_COMPANY_SIGN_UP",
+      "AGENCY_CLICKED_SIGN_IN_BUTTON_TOP",
+      "AGENCY_CLICKED_SAVE_AND_CONTINUE_AT_BOT_OF_INCOMPLETE_PROFILE",
+      "AGENCY_UNSELECTED_OPT_IN_NEWS_INVITATIONS_AND_PROMOS",
+      "AGENCY_UNSELECTED_OPT_IN_BETA_TESTS_AND_MKT_RESEARCH",
+      "AGENCY_UNSELECTED_OPT_IN_PERFORMANCE_SUGGESTIONS",
+      "AGENCY_SELECTED_OPT_OUT_UNSELECT_ALL_EMAIL_NOTIFICATIONS",
+      "AGENCY_LINKED_INDIVIDUAL_MCC",
+      "AGENCY_SUGGESTED_TO_USER",
+      "AGENCY_IGNORED_SUGGESTED_AGENCIES_AND_SEARCHED",
+      "AGENCY_PICKED_SUGGESTED_AGENCY",
+      "AGENCY_SEARCHED_FOR_AGENCIES",
+      "AGENCY_PICKED_SEARCHED_AGENCY",
+      "AGENCY_DISMISSED_AFFILIATION_WIDGET"
      ]
     },
     "eventCategory": {

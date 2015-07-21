@@ -143,6 +143,14 @@ type ComputationTopology struct {
 	KeyRanges []*KeyRangeLocation `json:"keyRanges,omitempty"`
 
 	Outputs []*StreamLocation `json:"outputs,omitempty"`
+
+	SystemStageName string `json:"systemStageName,omitempty"`
+
+	UserStageName string `json:"userStageName,omitempty"`
+}
+
+type CustomSourceLocation struct {
+	Stateful bool `json:"stateful,omitempty"`
 }
 
 type DataDiskAssignment struct {
@@ -183,6 +191,8 @@ type Environment struct {
 
 	Experiments []string `json:"experiments,omitempty"`
 
+	InternalExperiments EnvironmentInternalExperiments `json:"internalExperiments,omitempty"`
+
 	SdkPipelineOptions EnvironmentSdkPipelineOptions `json:"sdkPipelineOptions,omitempty"`
 
 	TempStoragePrefix string `json:"tempStoragePrefix,omitempty"`
@@ -193,6 +203,8 @@ type Environment struct {
 
 	WorkerPools []*WorkerPool `json:"workerPools,omitempty"`
 }
+
+type EnvironmentInternalExperiments interface{}
 
 type EnvironmentSdkPipelineOptions interface{}
 
@@ -232,6 +244,7 @@ type Job struct {
 	//   "JOB_STATE_RUNNING"
 	//   "JOB_STATE_STOPPED"
 	//   "JOB_STATE_UNKNOWN"
+	//   "JOB_STATE_UPDATED"
 	CurrentState string `json:"currentState,omitempty"`
 
 	CurrentStateTime string `json:"currentStateTime,omitempty"`
@@ -248,6 +261,8 @@ type Job struct {
 
 	ReplaceJobId string `json:"replaceJobId,omitempty"`
 
+	ReplacedByJobId string `json:"replacedByJobId,omitempty"`
+
 	// Possible values:
 	//   "JOB_STATE_CANCELLED"
 	//   "JOB_STATE_DONE"
@@ -255,6 +270,7 @@ type Job struct {
 	//   "JOB_STATE_RUNNING"
 	//   "JOB_STATE_STOPPED"
 	//   "JOB_STATE_UNKNOWN"
+	//   "JOB_STATE_UPDATED"
 	RequestedState string `json:"requestedState,omitempty"`
 
 	Steps []*Step `json:"steps,omitempty"`
@@ -643,6 +659,8 @@ type Step struct {
 type StepProperties interface{}
 
 type StreamLocation struct {
+	CustomSourceLocation *CustomSourceLocation `json:"customSourceLocation,omitempty"`
+
 	PubsubLocation *PubsubLocation `json:"pubsubLocation,omitempty"`
 
 	SideInputLocation *StreamingSideInputLocation `json:"sideInputLocation,omitempty"`
@@ -728,6 +746,8 @@ type TopologyConfig struct {
 	Computations []*ComputationTopology `json:"computations,omitempty"`
 
 	DataDiskAssignments []*DataDiskAssignment `json:"dataDiskAssignments,omitempty"`
+
+	UserStageToComputationNameMap map[string]string `json:"userStageToComputationNameMap,omitempty"`
 }
 
 type WorkItem struct {

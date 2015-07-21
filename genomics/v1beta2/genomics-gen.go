@@ -6133,6 +6133,75 @@ func (c *VariantsUpdateCall) Do() (*Variant, error) {
 
 }
 
+// method id "genomics.variantsets.create":
+
+type VariantsetsCreateCall struct {
+	s          *Service
+	variantset *VariantSet
+	opt_       map[string]interface{}
+}
+
+// Create: Creates a new variant set (only necessary in v1).
+func (r *VariantsetsService) Create(variantset *VariantSet) *VariantsetsCreateCall {
+	c := &VariantsetsCreateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.variantset = variantset
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *VariantsetsCreateCall) Fields(s ...googleapi.Field) *VariantsetsCreateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *VariantsetsCreateCall) Do() (*VariantSet, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.variantset)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", "json")
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "variantsets")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	res, err := c.s.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *VariantSet
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new variant set (only necessary in v1).",
+	//   "httpMethod": "POST",
+	//   "id": "genomics.variantsets.create",
+	//   "path": "variantsets",
+	//   "request": {
+	//     "$ref": "VariantSet"
+	//   },
+	//   "response": {
+	//     "$ref": "VariantSet"
+	//   }
+	// }
+
+}
+
 // method id "genomics.variantsets.delete":
 
 type VariantsetsDeleteCall struct {

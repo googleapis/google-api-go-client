@@ -901,15 +901,15 @@ type Version struct {
 // method id "appengine.apps.get":
 
 type AppsGetCall struct {
-	s    *Service
-	name string
-	opt_ map[string]interface{}
+	s      *Service
+	appsId string
+	opt_   map[string]interface{}
 }
 
 // Get: Gets information about an application.
-func (r *AppsService) Get(name string) *AppsGetCall {
+func (r *AppsService) Get(appsId string) *AppsGetCall {
 	c := &AppsGetCall{s: r.s, opt_: make(map[string]interface{})}
-	c.name = name
+	c.appsId = appsId
 	return c
 }
 
@@ -942,11 +942,11 @@ func (c *AppsGetCall) Do() (*Application, error) {
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta4/{+name}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta4/apps/{appsId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
+		"appsId": c.appsId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
@@ -967,23 +967,22 @@ func (c *AppsGetCall) Do() (*Application, error) {
 	//   "httpMethod": "GET",
 	//   "id": "appengine.apps.get",
 	//   "parameterOrder": [
-	//     "name"
+	//     "appsId"
 	//   ],
 	//   "parameters": {
+	//     "appsId": {
+	//       "description": "Part of `name`. Name of the application to get. For example: \"apps/myapp\".",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
 	//     "ensureResourcesExist": {
 	//       "description": "Certain resources associated with an application are created on-demand. Controls whether these resources should be created when performing the `GET` operation. If specified and any resources cloud not be created, the request will fail with an error code.",
 	//       "location": "query",
 	//       "type": "boolean"
-	//     },
-	//     "name": {
-	//       "description": "Name of the application to get. For example: \"apps/myapp\".",
-	//       "location": "path",
-	//       "pattern": "^apps/[^/]*$",
-	//       "required": true,
-	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1beta4/{+name}",
+	//   "path": "v1beta4/apps/{appsId}",
 	//   "response": {
 	//     "$ref": "Application"
 	//   },
@@ -997,15 +996,17 @@ func (c *AppsGetCall) Do() (*Application, error) {
 // method id "appengine.apps.modules.delete":
 
 type AppsModulesDeleteCall struct {
-	s    *Service
-	name string
-	opt_ map[string]interface{}
+	s         *Service
+	appsId    string
+	modulesId string
+	opt_      map[string]interface{}
 }
 
 // Delete: Deletes a module and all enclosed versions.
-func (r *AppsModulesService) Delete(name string) *AppsModulesDeleteCall {
+func (r *AppsModulesService) Delete(appsId string, modulesId string) *AppsModulesDeleteCall {
 	c := &AppsModulesDeleteCall{s: r.s, opt_: make(map[string]interface{})}
-	c.name = name
+	c.appsId = appsId
+	c.modulesId = modulesId
 	return c
 }
 
@@ -1024,11 +1025,12 @@ func (c *AppsModulesDeleteCall) Do() (*Operation, error) {
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta4/{+name}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta4/apps/{appsId}/modules/{modulesId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
+		"appsId":    c.appsId,
+		"modulesId": c.modulesId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
@@ -1049,18 +1051,24 @@ func (c *AppsModulesDeleteCall) Do() (*Operation, error) {
 	//   "httpMethod": "DELETE",
 	//   "id": "appengine.apps.modules.delete",
 	//   "parameterOrder": [
-	//     "name"
+	//     "appsId",
+	//     "modulesId"
 	//   ],
 	//   "parameters": {
-	//     "name": {
-	//       "description": "Name of the resource requested. For example: \"apps/myapp/modules/default\".",
+	//     "appsId": {
+	//       "description": "Part of `name`. Name of the resource requested. For example: \"apps/myapp/modules/default\".",
 	//       "location": "path",
-	//       "pattern": "^apps/[^/]*/modules/[^/]*$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "modulesId": {
+	//       "description": "Part of `name`. See documentation of `appsId`.",
+	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1beta4/{+name}",
+	//   "path": "v1beta4/apps/{appsId}/modules/{modulesId}",
 	//   "response": {
 	//     "$ref": "Operation"
 	//   },
@@ -1074,15 +1082,17 @@ func (c *AppsModulesDeleteCall) Do() (*Operation, error) {
 // method id "appengine.apps.modules.get":
 
 type AppsModulesGetCall struct {
-	s    *Service
-	name string
-	opt_ map[string]interface{}
+	s         *Service
+	appsId    string
+	modulesId string
+	opt_      map[string]interface{}
 }
 
 // Get: Gets the current configuration of the module.
-func (r *AppsModulesService) Get(name string) *AppsModulesGetCall {
+func (r *AppsModulesService) Get(appsId string, modulesId string) *AppsModulesGetCall {
 	c := &AppsModulesGetCall{s: r.s, opt_: make(map[string]interface{})}
-	c.name = name
+	c.appsId = appsId
+	c.modulesId = modulesId
 	return c
 }
 
@@ -1101,11 +1111,12 @@ func (c *AppsModulesGetCall) Do() (*Module, error) {
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta4/{+name}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta4/apps/{appsId}/modules/{modulesId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
+		"appsId":    c.appsId,
+		"modulesId": c.modulesId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
@@ -1126,18 +1137,24 @@ func (c *AppsModulesGetCall) Do() (*Module, error) {
 	//   "httpMethod": "GET",
 	//   "id": "appengine.apps.modules.get",
 	//   "parameterOrder": [
-	//     "name"
+	//     "appsId",
+	//     "modulesId"
 	//   ],
 	//   "parameters": {
-	//     "name": {
-	//       "description": "Name of the resource requested. For example: \"/apps/myapp/modules/default\".",
+	//     "appsId": {
+	//       "description": "Part of `name`. Name of the resource requested. For example: \"/apps/myapp/modules/default\".",
 	//       "location": "path",
-	//       "pattern": "^apps/[^/]*/modules/[^/]*$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "modulesId": {
+	//       "description": "Part of `name`. See documentation of `appsId`.",
+	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1beta4/{+name}",
+	//   "path": "v1beta4/apps/{appsId}/modules/{modulesId}",
 	//   "response": {
 	//     "$ref": "Module"
 	//   },
@@ -1151,15 +1168,15 @@ func (c *AppsModulesGetCall) Do() (*Module, error) {
 // method id "appengine.apps.modules.list":
 
 type AppsModulesListCall struct {
-	s    *Service
-	name string
-	opt_ map[string]interface{}
+	s      *Service
+	appsId string
+	opt_   map[string]interface{}
 }
 
 // List: Lists all the modules in the application.
-func (r *AppsModulesService) List(name string) *AppsModulesListCall {
+func (r *AppsModulesService) List(appsId string) *AppsModulesListCall {
 	c := &AppsModulesListCall{s: r.s, opt_: make(map[string]interface{})}
-	c.name = name
+	c.appsId = appsId
 	return c
 }
 
@@ -1198,11 +1215,11 @@ func (c *AppsModulesListCall) Do() (*ListModulesResponse, error) {
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta4/{+name}/modules")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta4/apps/{appsId}/modules")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
+		"appsId": c.appsId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
@@ -1223,13 +1240,12 @@ func (c *AppsModulesListCall) Do() (*ListModulesResponse, error) {
 	//   "httpMethod": "GET",
 	//   "id": "appengine.apps.modules.list",
 	//   "parameterOrder": [
-	//     "name"
+	//     "appsId"
 	//   ],
 	//   "parameters": {
-	//     "name": {
-	//       "description": "Name of the resource requested. For example: \"/apps/myapp\".",
+	//     "appsId": {
+	//       "description": "Part of `name`. Name of the resource requested. For example: \"/apps/myapp\".",
 	//       "location": "path",
-	//       "pattern": "^apps/[^/]*$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
@@ -1245,7 +1261,7 @@ func (c *AppsModulesListCall) Do() (*ListModulesResponse, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1beta4/{+name}/modules",
+	//   "path": "v1beta4/apps/{appsId}/modules",
 	//   "response": {
 	//     "$ref": "ListModulesResponse"
 	//   },
@@ -1259,16 +1275,18 @@ func (c *AppsModulesListCall) Do() (*ListModulesResponse, error) {
 // method id "appengine.apps.modules.patch":
 
 type AppsModulesPatchCall struct {
-	s      *Service
-	name   string
-	module *Module
-	opt_   map[string]interface{}
+	s         *Service
+	appsId    string
+	modulesId string
+	module    *Module
+	opt_      map[string]interface{}
 }
 
 // Patch: Updates the configuration of the specified module.
-func (r *AppsModulesService) Patch(name string, module *Module) *AppsModulesPatchCall {
+func (r *AppsModulesService) Patch(appsId string, modulesId string, module *Module) *AppsModulesPatchCall {
 	c := &AppsModulesPatchCall{s: r.s, opt_: make(map[string]interface{})}
-	c.name = name
+	c.appsId = appsId
+	c.modulesId = modulesId
 	c.module = module
 	return c
 }
@@ -1314,11 +1332,12 @@ func (c *AppsModulesPatchCall) Do() (*Operation, error) {
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta4/{+name}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta4/apps/{appsId}/modules/{modulesId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
+		"appsId":    c.appsId,
+		"modulesId": c.modulesId,
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
@@ -1340,9 +1359,16 @@ func (c *AppsModulesPatchCall) Do() (*Operation, error) {
 	//   "httpMethod": "PATCH",
 	//   "id": "appengine.apps.modules.patch",
 	//   "parameterOrder": [
-	//     "name"
+	//     "appsId",
+	//     "modulesId"
 	//   ],
 	//   "parameters": {
+	//     "appsId": {
+	//       "description": "Part of `name`. Name of the resource to update. For example: \"apps/myapp/modules/default\".",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
 	//     "mask": {
 	//       "description": "Standard field mask for the set of fields to be updated.",
 	//       "location": "query",
@@ -1353,15 +1379,14 @@ func (c *AppsModulesPatchCall) Do() (*Operation, error) {
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
-	//     "name": {
-	//       "description": "Name of the resource to update. For example: \"apps/myapp/modules/default\".",
+	//     "modulesId": {
+	//       "description": "Part of `name`. See documentation of `appsId`.",
 	//       "location": "path",
-	//       "pattern": "^apps/[^/]*/modules/[^/]*$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1beta4/{+name}",
+	//   "path": "v1beta4/apps/{appsId}/modules/{modulesId}",
 	//   "request": {
 	//     "$ref": "Module"
 	//   },
@@ -1378,16 +1403,18 @@ func (c *AppsModulesPatchCall) Do() (*Operation, error) {
 // method id "appengine.apps.modules.versions.create":
 
 type AppsModulesVersionsCreateCall struct {
-	s       *Service
-	name    string
-	version *Version
-	opt_    map[string]interface{}
+	s         *Service
+	appsId    string
+	modulesId string
+	version   *Version
+	opt_      map[string]interface{}
 }
 
 // Create: Deploys new code and resource files to a version.
-func (r *AppsModulesVersionsService) Create(name string, version *Version) *AppsModulesVersionsCreateCall {
+func (r *AppsModulesVersionsService) Create(appsId string, modulesId string, version *Version) *AppsModulesVersionsCreateCall {
 	c := &AppsModulesVersionsCreateCall{s: r.s, opt_: make(map[string]interface{})}
-	c.name = name
+	c.appsId = appsId
+	c.modulesId = modulesId
 	c.version = version
 	return c
 }
@@ -1412,11 +1439,12 @@ func (c *AppsModulesVersionsCreateCall) Do() (*Operation, error) {
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta4/{+name}/versions")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta4/apps/{appsId}/modules/{modulesId}/versions")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
+		"appsId":    c.appsId,
+		"modulesId": c.modulesId,
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
@@ -1438,18 +1466,24 @@ func (c *AppsModulesVersionsCreateCall) Do() (*Operation, error) {
 	//   "httpMethod": "POST",
 	//   "id": "appengine.apps.modules.versions.create",
 	//   "parameterOrder": [
-	//     "name"
+	//     "appsId",
+	//     "modulesId"
 	//   ],
 	//   "parameters": {
-	//     "name": {
-	//       "description": "Name of the resource to update. For example: \"apps/myapp/modules/default\".",
+	//     "appsId": {
+	//       "description": "Part of `name`. Name of the resource to update. For example: \"apps/myapp/modules/default\".",
 	//       "location": "path",
-	//       "pattern": "^apps/[^/]*/modules/[^/]*$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "modulesId": {
+	//       "description": "Part of `name`. See documentation of `appsId`.",
+	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1beta4/{+name}/versions",
+	//   "path": "v1beta4/apps/{appsId}/modules/{modulesId}/versions",
 	//   "request": {
 	//     "$ref": "Version"
 	//   },
@@ -1466,15 +1500,19 @@ func (c *AppsModulesVersionsCreateCall) Do() (*Operation, error) {
 // method id "appengine.apps.modules.versions.delete":
 
 type AppsModulesVersionsDeleteCall struct {
-	s    *Service
-	name string
-	opt_ map[string]interface{}
+	s          *Service
+	appsId     string
+	modulesId  string
+	versionsId string
+	opt_       map[string]interface{}
 }
 
 // Delete: Deletes an existing version.
-func (r *AppsModulesVersionsService) Delete(name string) *AppsModulesVersionsDeleteCall {
+func (r *AppsModulesVersionsService) Delete(appsId string, modulesId string, versionsId string) *AppsModulesVersionsDeleteCall {
 	c := &AppsModulesVersionsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
-	c.name = name
+	c.appsId = appsId
+	c.modulesId = modulesId
+	c.versionsId = versionsId
 	return c
 }
 
@@ -1493,11 +1531,13 @@ func (c *AppsModulesVersionsDeleteCall) Do() (*Operation, error) {
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta4/{+name}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta4/apps/{appsId}/modules/{modulesId}/versions/{versionsId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
+		"appsId":     c.appsId,
+		"modulesId":  c.modulesId,
+		"versionsId": c.versionsId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
@@ -1518,18 +1558,31 @@ func (c *AppsModulesVersionsDeleteCall) Do() (*Operation, error) {
 	//   "httpMethod": "DELETE",
 	//   "id": "appengine.apps.modules.versions.delete",
 	//   "parameterOrder": [
-	//     "name"
+	//     "appsId",
+	//     "modulesId",
+	//     "versionsId"
 	//   ],
 	//   "parameters": {
-	//     "name": {
-	//       "description": "Name of the resource requested. For example: \"apps/myapp/modules/default/versions/v1\".",
+	//     "appsId": {
+	//       "description": "Part of `name`. Name of the resource requested. For example: \"apps/myapp/modules/default/versions/v1\".",
 	//       "location": "path",
-	//       "pattern": "^apps/[^/]*/modules/[^/]*/versions/[^/]*$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "modulesId": {
+	//       "description": "Part of `name`. See documentation of `appsId`.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "versionsId": {
+	//       "description": "Part of `name`. See documentation of `appsId`.",
+	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1beta4/{+name}",
+	//   "path": "v1beta4/apps/{appsId}/modules/{modulesId}/versions/{versionsId}",
 	//   "response": {
 	//     "$ref": "Operation"
 	//   },
@@ -1543,15 +1596,19 @@ func (c *AppsModulesVersionsDeleteCall) Do() (*Operation, error) {
 // method id "appengine.apps.modules.versions.get":
 
 type AppsModulesVersionsGetCall struct {
-	s    *Service
-	name string
-	opt_ map[string]interface{}
+	s          *Service
+	appsId     string
+	modulesId  string
+	versionsId string
+	opt_       map[string]interface{}
 }
 
 // Get: Gets application deployment information.
-func (r *AppsModulesVersionsService) Get(name string) *AppsModulesVersionsGetCall {
+func (r *AppsModulesVersionsService) Get(appsId string, modulesId string, versionsId string) *AppsModulesVersionsGetCall {
 	c := &AppsModulesVersionsGetCall{s: r.s, opt_: make(map[string]interface{})}
-	c.name = name
+	c.appsId = appsId
+	c.modulesId = modulesId
+	c.versionsId = versionsId
 	return c
 }
 
@@ -1584,11 +1641,13 @@ func (c *AppsModulesVersionsGetCall) Do() (*Version, error) {
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta4/{+name}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta4/apps/{appsId}/modules/{modulesId}/versions/{versionsId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
+		"appsId":     c.appsId,
+		"modulesId":  c.modulesId,
+		"versionsId": c.versionsId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
@@ -1609,13 +1668,26 @@ func (c *AppsModulesVersionsGetCall) Do() (*Version, error) {
 	//   "httpMethod": "GET",
 	//   "id": "appengine.apps.modules.versions.get",
 	//   "parameterOrder": [
-	//     "name"
+	//     "appsId",
+	//     "modulesId",
+	//     "versionsId"
 	//   ],
 	//   "parameters": {
-	//     "name": {
-	//       "description": "Name of the resource requested. For example: \"apps/myapp/modules/default/versions/v1\".",
+	//     "appsId": {
+	//       "description": "Part of `name`. Name of the resource requested. For example: \"apps/myapp/modules/default/versions/v1\".",
 	//       "location": "path",
-	//       "pattern": "^apps/[^/]*/modules/[^/]*/versions/[^/]*$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "modulesId": {
+	//       "description": "Part of `name`. See documentation of `appsId`.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "versionsId": {
+	//       "description": "Part of `name`. See documentation of `appsId`.",
+	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
@@ -1629,7 +1701,7 @@ func (c *AppsModulesVersionsGetCall) Do() (*Version, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1beta4/{+name}",
+	//   "path": "v1beta4/apps/{appsId}/modules/{modulesId}/versions/{versionsId}",
 	//   "response": {
 	//     "$ref": "Version"
 	//   },
@@ -1643,15 +1715,17 @@ func (c *AppsModulesVersionsGetCall) Do() (*Version, error) {
 // method id "appengine.apps.modules.versions.list":
 
 type AppsModulesVersionsListCall struct {
-	s    *Service
-	name string
-	opt_ map[string]interface{}
+	s         *Service
+	appsId    string
+	modulesId string
+	opt_      map[string]interface{}
 }
 
 // List: Lists the versions of a module.
-func (r *AppsModulesVersionsService) List(name string) *AppsModulesVersionsListCall {
+func (r *AppsModulesVersionsService) List(appsId string, modulesId string) *AppsModulesVersionsListCall {
 	c := &AppsModulesVersionsListCall{s: r.s, opt_: make(map[string]interface{})}
-	c.name = name
+	c.appsId = appsId
+	c.modulesId = modulesId
 	return c
 }
 
@@ -1704,11 +1778,12 @@ func (c *AppsModulesVersionsListCall) Do() (*ListVersionsResponse, error) {
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta4/{+name}/versions")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta4/apps/{appsId}/modules/{modulesId}/versions")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
+		"appsId":    c.appsId,
+		"modulesId": c.modulesId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
@@ -1729,13 +1804,19 @@ func (c *AppsModulesVersionsListCall) Do() (*ListVersionsResponse, error) {
 	//   "httpMethod": "GET",
 	//   "id": "appengine.apps.modules.versions.list",
 	//   "parameterOrder": [
-	//     "name"
+	//     "appsId",
+	//     "modulesId"
 	//   ],
 	//   "parameters": {
-	//     "name": {
-	//       "description": "Name of the resource requested. For example: \"apps/myapp/modules/default\".",
+	//     "appsId": {
+	//       "description": "Part of `name`. Name of the resource requested. For example: \"apps/myapp/modules/default\".",
 	//       "location": "path",
-	//       "pattern": "^apps/[^/]*/modules/[^/]*$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "modulesId": {
+	//       "description": "Part of `name`. See documentation of `appsId`.",
+	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
@@ -1760,7 +1841,7 @@ func (c *AppsModulesVersionsListCall) Do() (*ListVersionsResponse, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1beta4/{+name}/versions",
+	//   "path": "v1beta4/apps/{appsId}/modules/{modulesId}/versions",
 	//   "response": {
 	//     "$ref": "ListVersionsResponse"
 	//   },
@@ -1774,17 +1855,19 @@ func (c *AppsModulesVersionsListCall) Do() (*ListVersionsResponse, error) {
 // method id "appengine.apps.operations.get":
 
 type AppsOperationsGetCall struct {
-	s    *Service
-	name string
-	opt_ map[string]interface{}
+	s            *Service
+	appsId       string
+	operationsId string
+	opt_         map[string]interface{}
 }
 
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
-func (r *AppsOperationsService) Get(name string) *AppsOperationsGetCall {
+func (r *AppsOperationsService) Get(appsId string, operationsId string) *AppsOperationsGetCall {
 	c := &AppsOperationsGetCall{s: r.s, opt_: make(map[string]interface{})}
-	c.name = name
+	c.appsId = appsId
+	c.operationsId = operationsId
 	return c
 }
 
@@ -1803,11 +1886,12 @@ func (c *AppsOperationsGetCall) Do() (*Operation, error) {
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta4/{+name}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta4/apps/{appsId}/operations/{operationsId}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
+		"appsId":       c.appsId,
+		"operationsId": c.operationsId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
@@ -1828,18 +1912,24 @@ func (c *AppsOperationsGetCall) Do() (*Operation, error) {
 	//   "httpMethod": "GET",
 	//   "id": "appengine.apps.operations.get",
 	//   "parameterOrder": [
-	//     "name"
+	//     "appsId",
+	//     "operationsId"
 	//   ],
 	//   "parameters": {
-	//     "name": {
-	//       "description": "The name of the operation resource.",
+	//     "appsId": {
+	//       "description": "Part of `name`. The name of the operation resource.",
 	//       "location": "path",
-	//       "pattern": "^apps/[^/]*/operations/[^/]*$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "operationsId": {
+	//       "description": "Part of `name`. See documentation of `appsId`.",
+	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1beta4/{+name}",
+	//   "path": "v1beta4/apps/{appsId}/operations/{operationsId}",
 	//   "response": {
 	//     "$ref": "Operation"
 	//   },
@@ -1853,9 +1943,9 @@ func (c *AppsOperationsGetCall) Do() (*Operation, error) {
 // method id "appengine.apps.operations.list":
 
 type AppsOperationsListCall struct {
-	s    *Service
-	name string
-	opt_ map[string]interface{}
+	s      *Service
+	appsId string
+	opt_   map[string]interface{}
 }
 
 // List: Lists operations that match the specified filter in the
@@ -1863,9 +1953,9 @@ type AppsOperationsListCall struct {
 // `UNIMPLEMENTED`. NOTE: the `name` binding below allows API services
 // to override the binding to use different resource name schemes, such
 // as `users/*/operations`.
-func (r *AppsOperationsService) List(name string) *AppsOperationsListCall {
+func (r *AppsOperationsService) List(appsId string) *AppsOperationsListCall {
 	c := &AppsOperationsListCall{s: r.s, opt_: make(map[string]interface{})}
-	c.name = name
+	c.appsId = appsId
 	return c
 }
 
@@ -1914,11 +2004,11 @@ func (c *AppsOperationsListCall) Do() (*ListOperationsResponse, error) {
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta4/{+name}/operations")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta4/apps/{appsId}/operations")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
+		"appsId": c.appsId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
 	res, err := c.s.client.Do(req)
@@ -1939,19 +2029,18 @@ func (c *AppsOperationsListCall) Do() (*ListOperationsResponse, error) {
 	//   "httpMethod": "GET",
 	//   "id": "appengine.apps.operations.list",
 	//   "parameterOrder": [
-	//     "name"
+	//     "appsId"
 	//   ],
 	//   "parameters": {
+	//     "appsId": {
+	//       "description": "Part of `name`. The name of the operation collection.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
 	//     "filter": {
 	//       "description": "The standard List filter.",
 	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "name": {
-	//       "description": "The name of the operation collection.",
-	//       "location": "path",
-	//       "pattern": "^apps/[^/]*$",
-	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
@@ -1966,7 +2055,7 @@ func (c *AppsOperationsListCall) Do() (*ListOperationsResponse, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1beta4/{+name}/operations",
+	//   "path": "v1beta4/apps/{appsId}/operations",
 	//   "response": {
 	//     "$ref": "ListOperationsResponse"
 	//   },

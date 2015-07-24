@@ -5,6 +5,9 @@
 
 These are auto-generated Go libraries from the Google Discovery Service's JSON description files of the available "new style" Google APIs.
 
+Due to the auto-generated nature of this collection of libraries, complete APIs or specific versions can appear or go away without notice.
+As a result, you should always locally vendor any API(s) that your code relies upon.
+
 Announcement email:
 http://groups.google.com/group/golang-nuts/browse_thread/thread/6c7281450be9a21e
 

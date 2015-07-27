@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0da7a2c0_7e3d5de9",
+        "filename": "gmail/v1/gmail-gen.go",
+        "patchSetId": 10
+      },
+      "lineNbr": 781,
+      "author": {
+        "id": 5815
+      },
+      "writtenOn": "2015-07-27T18:14:52Z",
+      "side": 1,
+      "message": "Got it. I\u0027ve modified it per your suggestion. This provides HTML link from ResumableMedia to googleapi.Reader, but user still has to scroll through the googleapi godoc to find documentation for UploadParameters. Would it make sense to rename Reader and/or UploadParameters so they show up next to each other in the godoc? Perhaps UploadReader and UploadParameters?",
+      "parentUuid": "adb5b6f9_3c5cd1c5",
+      "revId": "5ad9b77e8a034f04d65d18cbd8e73db52b8728dd",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0da5e2c6_dfb95b69",
         "filename": "googleapi/googleapi.go",
         "patchSetId": 10
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "0da7a2c0_7e8b9d28",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 10
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 5815
+      },
+      "writtenOn": "2015-07-27T18:14:52Z",
+      "side": 1,
+      "message": "Yes, all of FakeReader stuff is very much internal implementation detail. I\u0027ve had it public initially because it was used from generated code, but I was able to hide it all now since I introduced ResumableUpload.Configure method.\n\nThat said, the entire ResumableUpload struct and its methods are all implementation details, and so is much other code in this package. The core issue is that the implementation is split between generated code and the googleapi package. I suspect new google.golang.org/api/internal package needs to be introduced, and bunch of public stuff from googleapi moved there.",
+      "parentUuid": "0da5e2c6_dfb95b69",
+      "revId": "5ad9b77e8a034f04d65d18cbd8e73db52b8728dd",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "adb5b6f9_5c5f9dbc",
         "filename": "googleapi/googleapi.go",
         "patchSetId": 10
@@ -47,6 +83,24 @@
       "writtenOn": "2015-07-27T03:35:34Z",
       "side": 1,
       "message": "We only use shifts of 10, 20, 30 (KB, MB, GB), so this would be:\n\n256 \u003c\u003c 10\n\nAnd you can drop the comment then.",
+      "revId": "5ad9b77e8a034f04d65d18cbd8e73db52b8728dd",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0da7a2c0_1efb718a",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 10
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 5815
+      },
+      "writtenOn": "2015-07-27T18:14:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "adb5b6f9_5c5f9dbc",
       "revId": "5ad9b77e8a034f04d65d18cbd8e73db52b8728dd",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false

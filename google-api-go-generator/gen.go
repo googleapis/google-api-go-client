@@ -643,11 +643,26 @@ func (p *Property) Enum() ([]string, bool) {
 	if enums := jstrlist(p.m, "enum"); enums != nil {
 		return enums, true
 	}
+	// Check if this has an array of string enums.
+	if items := jobj(p.m, "items"); items != nil {
+		if enums := jstrlist(items, "enum"); enums != nil && jstr(items, "type") == "string" {
+			return enums, true
+		}
+	}
 	return nil, false
 }
 
 func (p *Property) EnumDescriptions() []string {
-	return jstrlist(p.m, "enumDescriptions")
+	if desc := jstrlist(p.m, "enumDescriptions"); desc != nil {
+		return desc
+	}
+	// Check if this has an array of string enum descriptions.
+	if items := jobj(p.m, "items"); items != nil {
+		if desc := jstrlist(items, "enumDescriptions"); desc != nil {
+			return desc
+		}
+	}
+	return nil
 }
 
 func (p *Property) Pattern() (string, bool) {
@@ -1119,13 +1134,21 @@ func (s *Schema) writeVariant(api *API, v map[string]interface{}) {
 	}
 }
 
+func (s *Schema) Description() string {
+	return jstr(s.m, "description")
+}
+
 func (s *Schema) writeSchemaStruct(api *API) {
 	if v := jobj(s.m, "variant"); v != nil {
 		s.writeVariant(api, v)
 		return
 	}
-	// TODO: description
-	s.api.p("\ntype %s struct {\n", s.GoName())
+	s.api.p("\n")
+	des := s.Description()
+	if des != "" {
+		s.api.p("%s", asComment("", fmt.Sprintf("%s: %s", s.GoName(), des)))
+	}
+	s.api.p("type %s struct {\n", s.GoName())
 	for i, p := range s.properties() {
 		if i > 0 {
 			s.api.p("\n")

@@ -119,6 +119,7 @@ type UserUsageReportService struct {
 	s *Service
 }
 
+// Activities: JSON template for a collection of activites.
 type Activities struct {
 	// Etag: ETag of the resource.
 	Etag string `json:"etag,omitempty"`
@@ -133,6 +134,7 @@ type Activities struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// Activity: JSON template for the activity resource.
 type Activity struct {
 	// Actor: User doing the action.
 	Actor *ActivityActor `json:"actor,omitempty"`
@@ -156,6 +158,7 @@ type Activity struct {
 	OwnerDomain string `json:"ownerDomain,omitempty"`
 }
 
+// ActivityActor: User doing the action.
 type ActivityActor struct {
 	// CallerType: User or OAuth 2LO request.
 	CallerType string `json:"callerType,omitempty"`
@@ -201,6 +204,7 @@ type ActivityEventsParameters struct {
 	Value string `json:"value,omitempty"`
 }
 
+// ActivityId: Unique identifier for each activity record.
 type ActivityId struct {
 	// ApplicationName: Application name to which the event belongs.
 	ApplicationName string `json:"applicationName,omitempty"`
@@ -216,6 +220,7 @@ type ActivityId struct {
 	UniqueQualifier int64 `json:"uniqueQualifier,omitempty,string"`
 }
 
+// Channel: An notification channel used to watch for resource changes.
 type Channel struct {
 	// Address: The address where notifications are delivered for this
 	// channel.
@@ -255,6 +260,7 @@ type Channel struct {
 	Type string `json:"type,omitempty"`
 }
 
+// UsageReport: JSON template for a usage report.
 type UsageReport struct {
 	// Date: The date to which the record belongs.
 	Date string `json:"date,omitempty"`
@@ -272,6 +278,7 @@ type UsageReport struct {
 	Parameters []*UsageReportParameters `json:"parameters,omitempty"`
 }
 
+// UsageReportEntity: Information about the type of the item.
 type UsageReportEntity struct {
 	// CustomerId: Obfuscated customer id for the record.
 	CustomerId string `json:"customerId,omitempty"`
@@ -308,6 +315,7 @@ type UsageReportParameters struct {
 
 type UsageReportParametersMsgValue interface{}
 
+// UsageReports: JSON template for a collection of usage reports.
 type UsageReports struct {
 	// Etag: ETag of the resource.
 	Etag string `json:"etag,omitempty"`

@@ -92,6 +92,9 @@ type ActivitiesService struct {
 	s *Service
 }
 
+// Activity: An Activity resource is a combined view of multiple events.
+// An activity has a list of individual events and a combined view of
+// the common fields among all events.
 type Activity struct {
 	// CombinedEvent: The fields common to all of the singleEvents that make
 	// up the Activity.
@@ -101,11 +104,26 @@ type Activity struct {
 	SingleEvents []*Event `json:"singleEvents,omitempty"`
 }
 
+// Event: Represents the changes associated with an action taken by a
+// user.
 type Event struct {
 	// AdditionalEventTypes: Additional event types. Some events may have
 	// multiple types when multiple actions are part of a single event. For
 	// example, creating a document, renaming it, and sharing it may be part
 	// of a single file-creation event.
+	//
+	// Possible values:
+	//   "comment"
+	//   "create"
+	//   "edit"
+	//   "emptyTrash"
+	//   "move"
+	//   "permissionChange"
+	//   "rename"
+	//   "trash"
+	//   "unknown"
+	//   "untrash"
+	//   "upload"
 	AdditionalEventTypes []string `json:"additionalEventTypes,omitempty"`
 
 	// EventTimeMillis: The time at which the event occurred formatted as
@@ -152,6 +170,9 @@ type Event struct {
 	User *User `json:"user,omitempty"`
 }
 
+// ListActivitiesResponse: The response from the list request. Contains
+// a list of activities and a token to retrieve the next page of
+// results.
 type ListActivitiesResponse struct {
 	// Activities: List of activities.
 	Activities []*Activity `json:"activities,omitempty"`
@@ -160,6 +181,8 @@ type ListActivitiesResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// Move: Contains information about changes in an object's parents as a
+// result of a move type event.
 type Move struct {
 	// AddedParents: The added parent(s).
 	AddedParents []*Parent `json:"addedParents,omitempty"`
@@ -168,6 +191,8 @@ type Move struct {
 	RemovedParents []*Parent `json:"removedParents,omitempty"`
 }
 
+// Parent: Contains information about a parent object. For example, a
+// folder in Drive is a parent for all files within it.
 type Parent struct {
 	// Id: The parent's ID.
 	Id string `json:"id,omitempty"`
@@ -179,6 +204,10 @@ type Parent struct {
 	Title string `json:"title,omitempty"`
 }
 
+// Permission: Contains information about the permissions and type of
+// access allowed with regards to a Google Drive object. This is a
+// subset of the fields contained in a corresponding Drive Permissions
+// object.
 type Permission struct {
 	// Name: The name of the user or group the permission applies to.
 	Name string `json:"name,omitempty"`
@@ -214,6 +243,9 @@ type Permission struct {
 	WithLink bool `json:"withLink,omitempty"`
 }
 
+// PermissionChange: Contains information about a Drive object's
+// permissions that changed as a result of a permissionChange type
+// event.
 type PermissionChange struct {
 	// AddedPermissions: Lists all Permission objects added.
 	AddedPermissions []*Permission `json:"addedPermissions,omitempty"`
@@ -222,11 +254,13 @@ type PermissionChange struct {
 	RemovedPermissions []*Permission `json:"removedPermissions,omitempty"`
 }
 
+// Photo: Photo information for a user.
 type Photo struct {
 	// Url: The URL of the photo.
 	Url string `json:"url,omitempty"`
 }
 
+// Rename: Contains information about a renametype event.
 type Rename struct {
 	// NewTitle: The new title.
 	NewTitle string `json:"newTitle,omitempty"`
@@ -235,6 +269,7 @@ type Rename struct {
 	OldTitle string `json:"oldTitle,omitempty"`
 }
 
+// Target: Information about the object modified by the event.
 type Target struct {
 	// Id: The ID of the target. For example, in Google Drive, this is the
 	// file or folder ID.
@@ -248,6 +283,7 @@ type Target struct {
 	Name string `json:"name,omitempty"`
 }
 
+// User: A representation of a user.
 type User struct {
 	// Name: The displayable name of the user.
 	Name string `json:"name,omitempty"`

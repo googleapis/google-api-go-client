@@ -60,6 +60,7 @@ func (s *Service) userAgent() string {
 	return googleapi.UserAgent + " " + s.UserAgent
 }
 
+// Thing: don't care
 type Thing struct {
 	// Oneline: First sentence. Second sentence. Description is long enough
 	// to be wrapped.

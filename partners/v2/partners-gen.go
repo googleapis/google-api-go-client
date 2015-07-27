@@ -122,6 +122,8 @@ type UserStatesService struct {
 	s *Service
 }
 
+// CertificationExamStatus: Status for a Google Partners certification
+// exam.
 type CertificationExamStatus struct {
 	// NumberUsersPass: The number of people who have passed the
 	// certification exam.
@@ -141,6 +143,7 @@ type CertificationExamStatus struct {
 	Type string `json:"type,omitempty"`
 }
 
+// CertificationStatus: Google Partners certification status.
 type CertificationStatus struct {
 	// ExamStatuses: List of certification exam statuses.
 	ExamStatuses []*CertificationExamStatus `json:"examStatuses,omitempty"`
@@ -162,6 +165,8 @@ type CertificationStatus struct {
 	Type string `json:"type,omitempty"`
 }
 
+// Company: A company resource in the Google Partners API. Once
+// certified, it qualifies for being searched by advertisers.
 type Company struct {
 	// CertificationStatuses: The list of Google Partners certification
 	// statuses for the company.
@@ -176,6 +181,19 @@ type Company struct {
 	Id string `json:"id,omitempty"`
 
 	// Industries: Industries the company can help with.
+	//
+	// Possible values:
+	//   "INDUSTRY_UNSPECIFIED" - Unchosen.
+	//   "I_AUTOMOTIVE" - The automotive industry.
+	//   "I_BUSINESS_TO_BUSINESS" - The business-to-business industry.
+	//   "I_CONSUMER_PACKAGED_GOODS" - The consumer packaged goods industry.
+	//   "I_EDUCATION" - The education industry.
+	//   "I_FINANCE" - The finance industry.
+	//   "I_HEALTHCARE" - The healthcare industry.
+	//   "I_MEDIA_AND_ENTERTAINMENT" - The media and entertainment industry.
+	//   "I_RETAIL" - The retail industry.
+	//   "I_TECHNOLOGY" - The technology industry.
+	//   "I_TRAVEL" - The travel industry.
 	Industries []string `json:"industries,omitempty"`
 
 	// LocalizedInfos: The list of localized info for the company.
@@ -199,12 +217,22 @@ type Company struct {
 	Ranks []*Rank `json:"ranks,omitempty"`
 
 	// Services: Services the company can help with.
+	//
+	// Possible values:
+	//   "SERVICE_UNSPECIFIED" - Unchosen.
+	//   "S_ADVANCED_ADWORDS_SUPPORT" - Help with advanced AdWords support.
+	//   "S_ADVERTISING_ON_GOOGLE" - Help with advertising on Google.
+	//   "S_AN_ENHANCED_WEBSITE" - Help with an enhanced website.
+	//   "S_AN_ONLINE_MARKETING_PLAN" - Help with an online marketing plan.
+	//   "S_MOBILE_AND_VIDEO_ADS" - Help with mobile and video ads.
 	Services []string `json:"services,omitempty"`
 
 	// WebsiteUrl: URL of the company's website.
 	WebsiteUrl string `json:"websiteUrl,omitempty"`
 }
 
+// CreateLeadRequest: Request message for
+// [CreateLead][google.partners.v2.Partner.CreateLead].
 type CreateLeadRequest struct {
 	// Lead: The lead resource. The `LeadType` must not be
 	// `LEAD_TYPE_UNSPECIFIED` and either `email` or `phone_number` must be
@@ -218,6 +246,9 @@ type CreateLeadRequest struct {
 	RequestMetadata *RequestMetadata `json:"requestMetadata,omitempty"`
 }
 
+// CreateLeadResponse: Response message for
+// [CreateLead][google.partners.v2.Partner.CreateLead]. Debug
+// information about this request.
 type CreateLeadResponse struct {
 	// Lead: Lead that was created depending on the outcome of reCaptcha
 	// validation.
@@ -236,9 +267,11 @@ type CreateLeadResponse struct {
 	ResponseMetadata *ResponseMetadata `json:"responseMetadata,omitempty"`
 }
 
+// DebugInfo: Debug information about this request.
 type DebugInfo struct {
 }
 
+// EventData: Key value data pair for an event.
 type EventData struct {
 	// Key: Data type.
 	//
@@ -286,6 +319,8 @@ type EventData struct {
 	Values []string `json:"values,omitempty"`
 }
 
+// GetCompanyResponse: Response message for
+// [GetCompany][google.partners.v2.Partner.GetCompany].
 type GetCompanyResponse struct {
 	// Company: The company.
 	Company *Company `json:"company,omitempty"`
@@ -294,6 +329,10 @@ type GetCompanyResponse struct {
 	ResponseMetadata *ResponseMetadata `json:"responseMetadata,omitempty"`
 }
 
+// LatLng: An object representing a latitude/longitude pair. This is
+// expressed as a pair of doubles representing degrees latitude and
+// degrees longitude. Unless specified otherwise, this must conform to
+// the WGS84 standard. Values must be within normalized ranges.
 type LatLng struct {
 	// Latitude: The latitude in degrees. It must be in the range [-90.0,
 	// +90.0].
@@ -304,6 +343,9 @@ type LatLng struct {
 	Longitude float64 `json:"longitude,omitempty"`
 }
 
+// Lead: A lead resource that represents an advertiser contact for a
+// `Company`. These are usually generated via Google Partner Search (the
+// advertiser portal).
 type Lead struct {
 	// Comments: Comments lead source gave.
 	Comments string `json:"comments,omitempty"`
@@ -319,6 +361,14 @@ type Lead struct {
 
 	// GpsMotivations: List of reasons for using Google Partner Search and
 	// creating a lead.
+	//
+	// Possible values:
+	//   "GPS_MOTIVATION_UNSPECIFIED" - Unchosen.
+	//   "GPSM_HELP_WITH_ADVERTISING" - Advertiser needs help with their
+	// advertising.
+	//   "GPSM_HELP_WITH_WEBSITE" - Advertiser needs help with their
+	// website.
+	//   "GPSM_NO_WEBSITE" - Advertiser does not have a website.
 	GpsMotivations []string `json:"gpsMotivations,omitempty"`
 
 	// Id: ID of the lead.
@@ -342,6 +392,8 @@ type Lead struct {
 	WebsiteUrl string `json:"websiteUrl,omitempty"`
 }
 
+// ListCompaniesResponse: Response message for
+// [ListCompanies][google.partners.v2.Partner.ListCompanies].
 type ListCompaniesResponse struct {
 	// Companies: The list of companies.
 	Companies []*Company `json:"companies,omitempty"`
@@ -357,14 +409,22 @@ type ListCompaniesResponse struct {
 	ResponseMetadata *ResponseMetadata `json:"responseMetadata,omitempty"`
 }
 
+// ListUserStatesResponse: Response message for
+// [ListUserStates][google.partners.v2.ClientAuditor.ListUserStates].
 type ListUserStatesResponse struct {
 	// ResponseMetadata: Current response metadata.
 	ResponseMetadata *ResponseMetadata `json:"responseMetadata,omitempty"`
 
 	// UserStates: User's states.
+	//
+	// Possible values:
+	//   "USER_STATE_UNSPECIFIED" - Unchosen.
+	//   "US_REQUIRES_RECAPTCHA_FOR_GPS_CONTACT" - User must pass reCaptcha
+	// to contact a Partner via Google Partner Search.
 	UserStates []string `json:"userStates,omitempty"`
 }
 
+// LocalizedCompanyInfo: The localized company information.
 type LocalizedCompanyInfo struct {
 	// CountryCodes: List of country codes for the localized company info.
 	CountryCodes []string `json:"countryCodes,omitempty"`
@@ -381,6 +441,7 @@ type LocalizedCompanyInfo struct {
 	Overview string `json:"overview,omitempty"`
 }
 
+// Location: A location with address and geographic coordinates.
 type Location struct {
 	// Address: The complete address of the location.
 	Address string `json:"address,omitempty"`
@@ -389,6 +450,8 @@ type Location struct {
 	LatLng *LatLng `json:"latLng,omitempty"`
 }
 
+// LogMessageRequest: Request message for
+// [LogClientMessage][google.partners.v2.ClientAuditor.LogClientMessage].
 type LogMessageRequest struct {
 	// ClientInfo: Map of client info, such as URL, browser navigator,
 	// browser platform, etc.
@@ -411,11 +474,15 @@ type LogMessageRequest struct {
 	RequestMetadata *RequestMetadata `json:"requestMetadata,omitempty"`
 }
 
+// LogMessageResponse: Response message for
+// [LogClientMessage][google.partners.v2.ClientAuditor.LogClientMessage].
 type LogMessageResponse struct {
 	// ResponseMetadata: Current response metadata.
 	ResponseMetadata *ResponseMetadata `json:"responseMetadata,omitempty"`
 }
 
+// LogUserEventRequest: Request message for
+// [LogUserEvent][google.partners.v2.ClientAuditor.LogUserEvent].
 type LogUserEventRequest struct {
 	// EventAction: The action that occurred.
 	//
@@ -615,11 +682,14 @@ type LogUserEventRequest struct {
 	Url string `json:"url,omitempty"`
 }
 
+// LogUserEventResponse: Response message for
+// [LogUserEvent][google.partners.v2.ClientAuditor.LogUserEvent].
 type LogUserEventResponse struct {
 	// ResponseMetadata: Current response metadata.
 	ResponseMetadata *ResponseMetadata `json:"responseMetadata,omitempty"`
 }
 
+// Money: Represents an amount of money with its currency type.
 type Money struct {
 	// CurrencyCode: The 3-letter currency code defined in ISO 4217.
 	CurrencyCode string `json:"currencyCode,omitempty"`
@@ -637,6 +707,7 @@ type Money struct {
 	Units int64 `json:"units,omitempty,string"`
 }
 
+// PublicProfile: Basic information from a public profile.
 type PublicProfile struct {
 	// DisplayImageUrl: The URL to the main display image of the public
 	// profile.
@@ -653,6 +724,7 @@ type PublicProfile struct {
 	Url string `json:"url,omitempty"`
 }
 
+// Rank: Information related to ranking of results.
 type Rank struct {
 	// Type: The type of rank.
 	//
@@ -665,6 +737,7 @@ type Rank struct {
 	Value float64 `json:"value,omitempty"`
 }
 
+// RecaptchaChallenge: reCaptcha challenge info.
 type RecaptchaChallenge struct {
 	// Id: The ID of the reCaptcha challenge.
 	Id string `json:"id,omitempty"`
@@ -673,6 +746,7 @@ type RecaptchaChallenge struct {
 	Response string `json:"response,omitempty"`
 }
 
+// RequestMetadata: Common data that is in each API request.
 type RequestMetadata struct {
 	// ExperimentIds: Experiment IDs the current request belongs to.
 	ExperimentIds []string `json:"experimentIds,omitempty"`
@@ -684,6 +758,7 @@ type RequestMetadata struct {
 	PartnersSessionId string `json:"partnersSessionId,omitempty"`
 }
 
+// ResponseMetadata: Common data that is in each API response.
 type ResponseMetadata struct {
 	// DebugInfo: Debug information about this request.
 	DebugInfo *DebugInfo `json:"debugInfo,omitempty"`

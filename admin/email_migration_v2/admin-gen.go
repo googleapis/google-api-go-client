@@ -80,6 +80,7 @@ type MailService struct {
 	s *Service
 }
 
+// MailItem: JSON template for MailItem object in Email Migration API.
 type MailItem struct {
 	// IsDeleted: Boolean indicating if the mail is deleted (used in Vault)
 	IsDeleted bool `json:"isDeleted,omitempty"`

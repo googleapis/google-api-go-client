@@ -74,6 +74,7 @@ type TripsService struct {
 	s *Service
 }
 
+// AircraftData: The make, model, and type of an aircraft.
 type AircraftData struct {
 	// Code: The aircraft code. For example, for a Boeing 777 the code would
 	// be 777.
@@ -87,6 +88,7 @@ type AircraftData struct {
 	Name string `json:"name,omitempty"`
 }
 
+// AirportData: An airport.
 type AirportData struct {
 	// City: The city code an airport is located in. For example, for JFK
 	// airport, this is NYC.
@@ -105,6 +107,7 @@ type AirportData struct {
 	Name string `json:"name,omitempty"`
 }
 
+// BagDescriptor: Information about an item of baggage.
 type BagDescriptor struct {
 	// CommercialName: Provides the commercial name for an optional service.
 	CommercialName string `json:"commercialName,omitempty"`
@@ -124,6 +127,8 @@ type BagDescriptor struct {
 	Subcode string `json:"subcode,omitempty"`
 }
 
+// CarrierData: Information about a carrier (ie. an airline, bus line,
+// railroad, etc) that might be useful to display to an end-user.
 type CarrierData struct {
 	// Code: The IATA designator of a carrier (airline, etc). For example,
 	// for American Airlines, the code is AA.
@@ -138,6 +143,8 @@ type CarrierData struct {
 	Name string `json:"name,omitempty"`
 }
 
+// CityData: Information about a city that might be useful to an
+// end-user; typically the city of an airport.
 type CityData struct {
 	// Code: The IATA character ID of a city. For example, for Boston this
 	// is BOS.
@@ -155,6 +162,9 @@ type CityData struct {
 	Name string `json:"name,omitempty"`
 }
 
+// Data: Detailed information about components found in the solutions of
+// this response, including a trip's airport, city, taxes, airline, and
+// aircraft.
 type Data struct {
 	// Aircraft: The aircraft that is flying between an origin and
 	// destination.
@@ -180,6 +190,12 @@ type Data struct {
 	Tax []*TaxData `json:"tax,omitempty"`
 }
 
+// FareInfo: Complete information about a fare used in the solution to a
+// low-fare search query. In the airline industry a fare is a price an
+// airline charges for one-way travel between two points. A fare
+// typically contains a carrier code, two city codes, a price, and a
+// fare basis. (A fare basis is a one-to-eight character alphanumeric
+// code used to identify a fare.)
 type FareInfo struct {
 	BasisCode string `json:"basisCode,omitempty"`
 
@@ -205,6 +221,14 @@ type FareInfo struct {
 	Private bool `json:"private,omitempty"`
 }
 
+// FlightInfo: A flight is a sequence of legs with the same airline
+// carrier and flight number. (A leg is the smallest unit of travel, in
+// the case of a flight a takeoff immediately followed by a landing at
+// two set points on a particular carrier with a particular flight
+// number.) The naive view is that a flight is scheduled travel of an
+// aircraft between two points, with possibly intermediate stops, but
+// carriers will frequently list flights that require a change of
+// aircraft between legs.
 type FlightInfo struct {
 	Carrier string `json:"carrier,omitempty"`
 
@@ -212,6 +236,8 @@ type FlightInfo struct {
 	Number string `json:"number,omitempty"`
 }
 
+// FreeBaggageAllowance: Information about free baggage allowed on one
+// segment of a trip.
 type FreeBaggageAllowance struct {
 	// BagDescriptor: A representation of a type of bag, such as an ATPCo
 	// subcode, Commercial Name, or other description.
@@ -236,6 +262,10 @@ type FreeBaggageAllowance struct {
 	Pounds int64 `json:"pounds,omitempty"`
 }
 
+// LegInfo: Information about a leg. (A leg is the smallest unit of
+// travel, in the case of a flight a takeoff immediately followed by a
+// landing at two set points on a particular carrier with a particular
+// flight number.)
 type LegInfo struct {
 	// Aircraft: The aircraft (or bus, ferry, railcar, etc) travelling
 	// between the two points of this leg.
@@ -307,6 +337,9 @@ type LegInfo struct {
 	Secure bool `json:"secure,omitempty"`
 }
 
+// PassengerCounts: The number and type of passengers. Unfortunately the
+// definition of an infant, child, adult, and senior citizen varies
+// across carriers and reservation systems.
 type PassengerCounts struct {
 	// AdultCount: The number of passengers that are adults.
 	AdultCount int64 `json:"adultCount,omitempty"`
@@ -331,6 +364,10 @@ type PassengerCounts struct {
 	SeniorCount int64 `json:"seniorCount,omitempty"`
 }
 
+// PricingInfo: The price of one or more travel segments. The currency
+// used to purchase tickets is usually determined by the sale/ticketing
+// city or the sale/ticketing country, unless none are specified, in
+// which case it defaults to that of the journey origin country.
 type PricingInfo struct {
 	// BaseFareTotal: The total fare in the base fare currency (the currency
 	// of the country of origin). This element is only present when the
@@ -385,6 +422,11 @@ type PricingInfo struct {
 	Tax []*TaxInfo `json:"tax,omitempty"`
 }
 
+// SegmentInfo: Details of a segment of a flight; a segment is one or
+// more consecutive legs on the same flight. For example a hypothetical
+// flight ZZ001, from DFW to OGG, would have one segment with two legs:
+// DFW to HNL (leg 1), HNL to OGG (leg 2), and DFW to OGG (legs 1 and
+// 2).
 type SegmentInfo struct {
 	// BookingCode: The booking code or class for this segment.
 	BookingCode string `json:"bookingCode,omitempty"`
@@ -436,6 +478,7 @@ type SegmentInfo struct {
 	SubjectToGovernmentApproval bool `json:"subjectToGovernmentApproval,omitempty"`
 }
 
+// SegmentPricing: The price of this segment.
 type SegmentPricing struct {
 	// FareId: A segment identifier unique within a single solution. It is
 	// used to refer to different parts of the same solution.
@@ -454,6 +497,15 @@ type SegmentPricing struct {
 	SegmentId string `json:"segmentId,omitempty"`
 }
 
+// SliceInfo: Information about a slice. A slice represents a
+// traveller's intent, the portion of a low-fare search corresponding to
+// a traveler's request to get between two points. One-way journeys are
+// generally expressed using 1 slice, round-trips using 2. For example,
+// if a traveler specifies the following trip in a user interface:
+// | Origin | Destination | Departure Date | | BOS | LAX | March 10,
+// 2007 | | LAX | SYD | March 17, 2007 | | SYD | BOS | March 22, 2007
+// |
+// then this is a three slice trip.
 type SliceInfo struct {
 	// Duration: The duration of the slice in minutes.
 	Duration int64 `json:"duration,omitempty"`
@@ -469,6 +521,7 @@ type SliceInfo struct {
 	Segment []*SegmentInfo `json:"segment,omitempty"`
 }
 
+// SliceInput: Criteria a desired slice must satisfy.
 type SliceInput struct {
 	// Alliance: Slices with only the carriers in this alliance should be
 	// returned; do not use this field with permittedCarrier. Allowed values
@@ -514,6 +567,7 @@ type SliceInput struct {
 	ProhibitedCarrier []string `json:"prohibitedCarrier,omitempty"`
 }
 
+// TaxData: Tax data.
 type TaxData struct {
 	// Id: An identifier uniquely identifying a tax in a response.
 	Id string `json:"id,omitempty"`
@@ -526,6 +580,7 @@ type TaxData struct {
 	Name string `json:"name,omitempty"`
 }
 
+// TaxInfo: Tax information.
 type TaxInfo struct {
 	// ChargeType: Whether this is a government charge or a carrier
 	// surcharge.
@@ -549,6 +604,7 @@ type TaxInfo struct {
 	SalePrice string `json:"salePrice,omitempty"`
 }
 
+// TimeOfDayRange: Two times in a single day defining a time range.
 type TimeOfDayRange struct {
 	// EarliestTime: The earliest time of day in HH:MM format.
 	EarliestTime string `json:"earliestTime,omitempty"`
@@ -562,6 +618,7 @@ type TimeOfDayRange struct {
 	LatestTime string `json:"latestTime,omitempty"`
 }
 
+// TripOption: Trip information.
 type TripOption struct {
 	// Id: Identifier uniquely identifying this trip in a response.
 	Id string `json:"id,omitempty"`
@@ -581,6 +638,8 @@ type TripOption struct {
 	Slice []*SliceInfo `json:"slice,omitempty"`
 }
 
+// TripOptionsRequest: A QPX Express search request, which will yield
+// one or more solutions.
 type TripOptionsRequest struct {
 	// MaxPrice: Do not return solutions that cost more than this price. The
 	// alphabetical part of the price is in ISO 4217. The format, in regex,
@@ -610,6 +669,7 @@ type TripOptionsRequest struct {
 	Solutions int64 `json:"solutions,omitempty"`
 }
 
+// TripOptionsResponse: A QPX Express search response.
 type TripOptionsResponse struct {
 	// Data: Informational data global to list of solutions.
 	Data *Data `json:"data,omitempty"`
@@ -627,12 +687,14 @@ type TripOptionsResponse struct {
 	TripOption []*TripOption `json:"tripOption,omitempty"`
 }
 
+// TripsSearchRequest: A QPX Express search request.
 type TripsSearchRequest struct {
 	// Request: A QPX Express search request. Required values are at least
 	// one adult or senior passenger, an origin, a destination, and a date.
 	Request *TripOptionsRequest `json:"request,omitempty"`
 }
 
+// TripsSearchResponse: A QPX Express search response.
 type TripsSearchResponse struct {
 	// Kind: Identifies this as a QPX Express API search response resource.
 	// Value: the fixed string qpxExpress#tripsSearch.

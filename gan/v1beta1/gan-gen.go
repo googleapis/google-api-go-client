@@ -134,6 +134,7 @@ type ReportsService struct {
 	s *Service
 }
 
+// Advertiser: An AdvertiserResource.
 type Advertiser struct {
 	// AllowPublisherCreatedLinks: True if the advertiser allows publisher
 	// created links, otherwise false.
@@ -229,6 +230,12 @@ type Advertisers struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// CcOffer: A credit card offer. There are many possible result fields.
+// We provide two different views of the data, or "projections." The
+// "full" projection includes every result field. And the "summary"
+// projection, which is the default, includes a smaller subset of the
+// fields. The fields included in the summary projection are marked as
+// such in their descriptions.
 type CcOffer struct {
 	// AdditionalCardBenefits: More marketing copy about the card's
 	// benefits. A summary field.
@@ -529,6 +536,7 @@ type CcOffers struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// Event: An EventResource.
 type Event struct {
 	// AdvertiserId: The ID of advertiser for this event.
 	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
@@ -638,6 +646,7 @@ type Events struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// Link: A LinkResource.
 type Link struct {
 	// AdvertiserId: The advertiser id for the advertiser who owns this
 	// link.
@@ -708,6 +717,7 @@ type Link struct {
 	StartDate string `json:"startDate,omitempty"`
 }
 
+// LinkSpecialOffers: Special offers on the link.
 type LinkSpecialOffers struct {
 	// FreeGift: Whether there is a free gift
 	FreeGift bool `json:"freeGift,omitempty"`
@@ -745,6 +755,7 @@ type Links struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// Money: An ApiMoneyProto.
 type Money struct {
 	// Amount: The amount of money.
 	Amount float64 `json:"amount,omitempty"`
@@ -753,6 +764,7 @@ type Money struct {
 	CurrencyCode string `json:"currencyCode,omitempty"`
 }
 
+// Publisher: A PublisherResource.
 type Publisher struct {
 	// Classification: Classification that this publisher belongs to. See
 	// this link for all publisher classifications:
@@ -812,6 +824,8 @@ type Publishers struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// Report: A ReportResource representing a report of a certain type
+// either for an advertiser or publisher.
 type Report struct {
 	// ColumnNames: The column names for the report
 	ColumnNames []string `json:"column_names,omitempty"`

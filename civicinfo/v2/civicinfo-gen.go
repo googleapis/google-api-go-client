@@ -98,6 +98,8 @@ type RepresentativesService struct {
 	s *Service
 }
 
+// AdministrationRegion: Describes information about a regional election
+// administrative area.
 type AdministrationRegion struct {
 	// ElectionAdministrationBody: The election administration body for this
 	// area.
@@ -121,6 +123,8 @@ type AdministrationRegion struct {
 	Sources []*Source `json:"sources,omitempty"`
 }
 
+// AdministrativeBody: Information about an election administrative body
+// (e.g. County Board of Elections).
 type AdministrativeBody struct {
 	// AbsenteeVotingInfoUrl: A URL provided by this administrative body for
 	// information on absentee voting.
@@ -174,6 +178,7 @@ type AdministrativeBody struct {
 	VotingLocationFinderUrl string `json:"votingLocationFinderUrl,omitempty"`
 }
 
+// Candidate: Information about a candidate running for elected office.
 type Candidate struct {
 	// CandidateUrl: The URL for the candidate's campaign web site.
 	CandidateUrl string `json:"candidateUrl,omitempty"`
@@ -201,6 +206,7 @@ type Candidate struct {
 	PhotoUrl string `json:"photoUrl,omitempty"`
 }
 
+// Channel: A social media or web channel for a candidate.
 type Channel struct {
 	// Id: The unique public identifier for the candidate's channel.
 	Id string `json:"id,omitempty"`
@@ -211,6 +217,8 @@ type Channel struct {
 	Type string `json:"type,omitempty"`
 }
 
+// Contest: Information about a contest that appears on a voter's
+// ballot.
 type Contest struct {
 	// BallotPlacement: A number specifying the position of this contest on
 	// the voter's ballot.
@@ -320,6 +328,7 @@ type Contest struct {
 	Type string `json:"type,omitempty"`
 }
 
+// DivisionSearchResponse: The result of a division search query.
 type DivisionSearchResponse struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "civicinfo#divisionSearchResponse".
@@ -328,6 +337,8 @@ type DivisionSearchResponse struct {
 	Results []*DivisionSearchResult `json:"results,omitempty"`
 }
 
+// DivisionSearchResult: Represents a political geographic division that
+// matches the requested query.
 type DivisionSearchResult struct {
 	// Aliases: Other Open Civic Data identifiers that refer to the same
 	// division -- for example, those that refer to other political
@@ -344,6 +355,7 @@ type DivisionSearchResult struct {
 	OcdId string `json:"ocdId,omitempty"`
 }
 
+// Election: Information about the election that was queried.
 type Election struct {
 	// ElectionDay: Day of the election in YYYY-MM-DD format.
 	ElectionDay string `json:"electionDay,omitempty"`
@@ -355,6 +367,7 @@ type Election struct {
 	Name string `json:"name,omitempty"`
 }
 
+// ElectionOfficial: Information about individual election officials.
 type ElectionOfficial struct {
 	// EmailAddress: The email address of the election official.
 	EmailAddress string `json:"emailAddress,omitempty"`
@@ -372,6 +385,8 @@ type ElectionOfficial struct {
 	Title string `json:"title,omitempty"`
 }
 
+// ElectionsQueryResponse: The list of elections available for this
+// version of the API.
 type ElectionsQueryResponse struct {
 	// Elections: A list of available elections
 	Elections []*Election `json:"elections,omitempty"`
@@ -381,6 +396,7 @@ type ElectionsQueryResponse struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// ElectoralDistrict: Describes the geographic scope of a contest.
 type ElectoralDistrict struct {
 	// Id: An identifier for this district, relative to its scope. For
 	// example, the 34th State Senate district would have id "34" and a
@@ -398,6 +414,7 @@ type ElectoralDistrict struct {
 	Scope string `json:"scope,omitempty"`
 }
 
+// GeographicDivision: Describes a political geography.
 type GeographicDivision struct {
 	// AlsoKnownAs: Any other valid OCD IDs that refer to the same
 	// division.
@@ -423,6 +440,7 @@ type GeographicDivision struct {
 	OfficeIndices []int64 `json:"officeIndices,omitempty"`
 }
 
+// Office: Information about an Office held by one or more Officials.
 type Office struct {
 	// DivisionId: The OCD ID of the division with which this office is
 	// associated.
@@ -454,6 +472,7 @@ type Office struct {
 	Sources []*Source `json:"sources,omitempty"`
 }
 
+// Official: Information about a person holding an elected office.
 type Official struct {
 	// Address: Addresses at which to contact the official.
 	Address []*SimpleAddressType `json:"address,omitempty"`
@@ -480,6 +499,9 @@ type Official struct {
 	Urls []string `json:"urls,omitempty"`
 }
 
+// PollingLocation: A location where a voter can vote. This may be an
+// early vote site, an election day voting location, or a drop off
+// location for a completed ballot.
 type PollingLocation struct {
 	// Address: The address of the location.
 	Address *SimpleAddressType `json:"address,omitempty"`
@@ -532,6 +554,8 @@ type RepresentativeInfoData struct {
 	Officials []*Official `json:"officials,omitempty"`
 }
 
+// RepresentativeInfoResponse: The result of a representative info
+// lookup query.
 type RepresentativeInfoResponse struct {
 	// Divisions: Political geographic divisions that contain the requested
 	// address.
@@ -553,6 +577,7 @@ type RepresentativeInfoResponse struct {
 	Officials []*Official `json:"officials,omitempty"`
 }
 
+// SimpleAddressType: A simple representation of an address.
 type SimpleAddressType struct {
 	// City: The city or town for the address.
 	City string `json:"city,omitempty"`
@@ -576,6 +601,8 @@ type SimpleAddressType struct {
 	Zip string `json:"zip,omitempty"`
 }
 
+// Source: Contains information about the data source for the element
+// containing it.
 type Source struct {
 	// Name: The name of the data source.
 	Name string `json:"name,omitempty"`
@@ -584,6 +611,7 @@ type Source struct {
 	Official bool `json:"official,omitempty"`
 }
 
+// VoterInfoResponse: The result of a voter info lookup query.
 type VoterInfoResponse struct {
 	// Contests: Contests that will appear on the voter's ballot.
 	Contests []*Contest `json:"contests,omitempty"`

@@ -116,6 +116,7 @@ type AppsOperationsService struct {
 	s *Service
 }
 
+// ApiConfigHandler: API Serving configuration for Cloud Endpoints.
 type ApiConfigHandler struct {
 	// AuthFailAction: For users not logged in, how to handle access to
 	// resources with required login. Defaults to "redirect".
@@ -155,12 +156,15 @@ type ApiConfigHandler struct {
 	Url string `json:"url,omitempty"`
 }
 
+// ApiEndpointHandler: Use Google Cloud Endpoints to handle requests.
 type ApiEndpointHandler struct {
 	// ScriptPath: Specifies the path to the script from the application
 	// root directory.
 	ScriptPath string `json:"scriptPath,omitempty"`
 }
 
+// Application: An Application contains the top-level configuration of
+// an App Engine application.
 type Application struct {
 	// CodeBucket: A Google Cloud Storage bucket which can be used for
 	// storing files associated with an application. This bucket is
@@ -189,6 +193,9 @@ type Application struct {
 	Name string `json:"name,omitempty"`
 }
 
+// AutomaticScaling: Automatic scaling is the scaling policy that App
+// Engine has used since its inception. It is based on request rate,
+// response latencies, and other application metrics.
 type AutomaticScaling struct {
 	// CoolDownPeriod: The amount of time that the
 	// [Autoscaler](https://cloud.google.com/compute/docs/autoscaler/)
@@ -233,6 +240,10 @@ type AutomaticScaling struct {
 	MinTotalInstances int64 `json:"minTotalInstances,omitempty"`
 }
 
+// BasicScaling: A module with basic scaling will create an instance
+// when the application receives a request. The instance will be turned
+// down when the app becomes idle. Basic scaling is ideal for work that
+// is intermittent or driven by user activity.
 type BasicScaling struct {
 	// IdleTimeout: The instance will be shut down this amount of time after
 	// receiving its last request.
@@ -243,6 +254,8 @@ type BasicScaling struct {
 	MaxInstances int64 `json:"maxInstances,omitempty"`
 }
 
+// ContainerInfo: A Docker (container) image which should be used to
+// start the application.
 type ContainerInfo struct {
 	// Image: Reference to a hosted container image. Must be a URI to a
 	// resource in a Docker repository. Must be fully qualified, including
@@ -254,6 +267,7 @@ type ContainerInfo struct {
 	Sha256 string `json:"sha256,omitempty"`
 }
 
+// CpuUtilization: Target scaling by CPU usage.
 type CpuUtilization struct {
 	// AggregationWindowLength: The period of time over which CPU
 	// utilization is calculated.
@@ -264,6 +278,8 @@ type CpuUtilization struct {
 	TargetUtilization float64 `json:"targetUtilization,omitempty"`
 }
 
+// Deployment: Code and application artifacts used to deploy a version
+// to App Engine.
 type Deployment struct {
 	// Container: If supplied, a docker (container) image which should be
 	// used to start the application. Only applicable to the 'vm' runtime.
@@ -280,6 +296,8 @@ type Deployment struct {
 	SourceReferences []*SourceReference `json:"sourceReferences,omitempty"`
 }
 
+// ErrorHandler: A custom static error page to be served when an error
+// occurs.
 type ErrorHandler struct {
 	// ErrorCode: The error condition this handler applies to.
 	//
@@ -298,6 +316,7 @@ type ErrorHandler struct {
 	StaticFile string `json:"staticFile,omitempty"`
 }
 
+// Field: Field represents a single field of a message type.
 type Field struct {
 	// Cardinality: The field cardinality, i.e. optional/required/repeated.
 	//
@@ -356,6 +375,8 @@ type Field struct {
 	TypeUrl string `json:"typeUrl,omitempty"`
 }
 
+// FileInfo: A single source file which is part of the application to be
+// deployed.
 type FileInfo struct {
 	// MimeType: The MIME type of the file; if unspecified, the value from
 	// Google Cloud Storage will be used.
@@ -369,6 +390,9 @@ type FileInfo struct {
 	SourceUrl string `json:"sourceUrl,omitempty"`
 }
 
+// HealthCheck: Configure health checking for the VM instances.
+// Unhealthy VM instances will be killed and replaced with new
+// instances.
 type HealthCheck struct {
 	// CheckInterval: The interval between health checks.
 	CheckInterval string `json:"checkInterval,omitempty"`
@@ -398,6 +422,8 @@ type HealthCheck struct {
 	UnhealthyThreshold int64 `json:"unhealthyThreshold,omitempty"`
 }
 
+// Library: A Python runtime third-party library required by the
+// application.
 type Library struct {
 	// Name: The name of the library, e.g. "PIL" or "django".
 	Name string `json:"name,omitempty"`
@@ -406,6 +432,7 @@ type Library struct {
 	Version string `json:"version,omitempty"`
 }
 
+// ListModulesResponse: Response message for `Modules.ListModules`.
 type ListModulesResponse struct {
 	// Modules: The modules belonging to the requested application.
 	Modules []*Module `json:"modules,omitempty"`
@@ -415,6 +442,9 @@ type ListModulesResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// ListOperationsResponse: The response message for
+// [Operations.ListOperations][google.longrunning.Operations.ListOperatio
+// ns].
 type ListOperationsResponse struct {
 	// NextPageToken: The standard List next-page token.
 	NextPageToken string `json:"nextPageToken,omitempty"`
@@ -424,6 +454,7 @@ type ListOperationsResponse struct {
 	Operations []*Operation `json:"operations,omitempty"`
 }
 
+// ListVersionsResponse: Response message for `Versions.ListVersions`.
 type ListVersionsResponse struct {
 	// NextPageToken: Continuation token for fetching the next page of
 	// results.
@@ -433,6 +464,9 @@ type ListVersionsResponse struct {
 	Versions []*Version `json:"versions,omitempty"`
 }
 
+// ManualScaling: A module with manual scaling runs continuously,
+// allowing you to perform complex initialization and rely on the state
+// of its memory over time.
 type ManualScaling struct {
 	// Instances: The number of instances to assign to the module at the
 	// start. This number can later be altered by using the [Modules
@@ -441,6 +475,10 @@ type ManualScaling struct {
 	Instances int64 `json:"instances,omitempty"`
 }
 
+// Module: A module is a component of an application that provides a
+// single service or configuration. A module has a collection of
+// versions that define a specific set of code used to implement the
+// functionality of that module.
 type Module struct {
 	// Id: The relative name/path of the module within the application.
 	// Example: "default" @OutputOnly
@@ -455,6 +493,8 @@ type Module struct {
 	Split *TrafficSplit `json:"split,omitempty"`
 }
 
+// Network: Used to specify extra network settings (for VM runtimes
+// only).
 type Network struct {
 	// ForwardedPorts: A list of ports (or port pairs) to forward from the
 	// VM into the app container.
@@ -469,6 +509,8 @@ type Network struct {
 	Name string `json:"name,omitempty"`
 }
 
+// Operation: This resource represents a long-running operation that is
+// the result of a network API call.
 type Operation struct {
 	// Done: If the value is `false`, it means the operation is still in
 	// progress. If true, the operation is completed and the `result` is
@@ -506,6 +548,8 @@ type OperationMetadata interface{}
 
 type OperationResponse interface{}
 
+// OperationMetadata1: Metadata for the given
+// [google.longrunning.Operation][google.longrunning.Operation].
 type OperationMetadata1 struct {
 	// EndTime: Timestamp that this operation was completed. (Not present if
 	// the operation is still in progress.) @OutputOnly
@@ -522,6 +566,7 @@ type OperationMetadata1 struct {
 	User string `json:"user,omitempty"`
 }
 
+// Option: Proto option attached to messages/fields/enums etc.
 type Option struct {
 	// Name: Proto option name.
 	Name string `json:"name,omitempty"`
@@ -532,6 +577,8 @@ type Option struct {
 
 type OptionValue interface{}
 
+// Resources: Used to specify how many machine resources an app version
+// needs.
 type Resources struct {
 	// Cpu: How many CPU cores an app version needs.
 	Cpu float64 `json:"cpu,omitempty"`
@@ -543,12 +590,16 @@ type Resources struct {
 	MemoryGb float64 `json:"memoryGb,omitempty"`
 }
 
+// ScriptHandler: Executes a script to handle the request that matches
+// the URL pattern.
 type ScriptHandler struct {
 	// ScriptPath: Specifies the path to the script from the application
 	// root directory.
 	ScriptPath string `json:"scriptPath,omitempty"`
 }
 
+// SourceContext: `SourceContext` represents information about the
+// source of a protobuf element, like the file in which it is defined.
 type SourceContext struct {
 	// FileName: The path-qualified name of the .proto file that contained
 	// the associated protobuf element. For example:
@@ -556,6 +607,8 @@ type SourceContext struct {
 	FileName string `json:"fileName,omitempty"`
 }
 
+// SourceReference: A reference to a particular snapshot of the source
+// tree used to build and deploy the application.
 type SourceReference struct {
 	// Repository: Optional. A URI string identifying the repository.
 	// Example: "https://source.developers.google.com/p/app-123/r/default"
@@ -568,6 +621,10 @@ type SourceReference struct {
 	RevisionId string `json:"revisionId,omitempty"`
 }
 
+// StaticDirectoryHandler: Files served directly to the user for a given
+// URL, such as images, CSS stylesheets, or JavaScript source files.
+// Static directory handlers make it easy to serve the entire contents
+// of a directory as static files.
 type StaticDirectoryHandler struct {
 	// ApplicationReadable: By default, files declared in static file
 	// handlers are uploaded as static data and are only served to end
@@ -602,6 +659,10 @@ type StaticDirectoryHandler struct {
 	RequireMatchingFile bool `json:"requireMatchingFile,omitempty"`
 }
 
+// StaticFilesHandler: Files served directly to the user for a given
+// URL, such as images, CSS stylesheets, or JavaScript source files.
+// Static file handlers describe which files in the application
+// directory are static files, and which URLs serve them.
 type StaticFilesHandler struct {
 	// ApplicationReadable: By default, files declared in static file
 	// handlers are uploaded as static data and are only served to end
@@ -641,6 +702,43 @@ type StaticFilesHandler struct {
 	UploadPathRegex string `json:"uploadPathRegex,omitempty"`
 }
 
+// Status: The `Status` defines a logical error model that is suitable
+// for different programming environments, including REST APIs and RPC
+// APIs. It is used by [gRPC](https://github.com/grpc). The error model
+// is designed to be: - Simple to use and understand for most users. -
+// Flexible enough to meet unexpected needs. # Overview The `Status`
+// message contains 3 pieces of data: error code, error message, and
+// error details. The error code should be an enum value of
+// [google.rpc.Code][google.rpc.Code], but it may accept additional
+// error codes if needed. The error message should be a developer-facing
+// English message that helps developers *understand* and *resolve* the
+// error. If a localized user-facing error message is needed, it can be
+// sent in the error details or localized by the client. The optional
+// error details may contain arbitrary information about the error.
+// There is a predefined set of error detail types in the package
+// `google.rpc` which can be used for common error conditions. #
+// Language mapping The `Status` message is the logical representation
+// of the error model, but it is not necessarily the actual wire format.
+// When the `Status` message is exposed in different client libraries
+// and different wire protocols, it can be mapped differently. For
+// example, it will likely be mapped to some exceptions in Java, but
+// more likely mapped to some error codes in C. # Other uses The error
+// model and the `Status` message can be used in a variety of
+// environments - either with or without APIs - to provide consistent
+// developer experience across different environments. Example uses of
+// this error model include: - Partial errors. If a service needs to
+// return partial errors to the client, it may embed the `Status` in the
+// normal response to indicate the partial errors. - Workflow errors. A
+// typical workflow has multiple steps. Each step may have a `Status`
+// message for error reporting purpose. - Batch operations. If a client
+// uses batch request and batch response, the `Status` message should be
+// used directly inside batch response, one for each error sub-response.
+// - Asynchronous operations. If an API call embeds asynchronous
+// operation results in its response, the status of those operations
+// should be represented directly using the `Status` message. - Logging.
+// If some API errors are stored in logs, the message `Status` could be
+// used directly after any stripping needed for security/privacy
+// reasons.
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// [google.rpc.Code][google.rpc.Code].
@@ -659,6 +757,10 @@ type Status struct {
 
 type StatusDetails interface{}
 
+// TrafficSplit: Configuration for traffic splitting for versions within
+// a single module. Traffic splitting allows traffic directed to the
+// module to be assigned to one of several versions in a fractional way,
+// enabling experiments and canarying new builds, for example.
 type TrafficSplit struct {
 	// Allocations: Mapping from module version IDs within the module to
 	// fractional (0.000, 1] allocations of traffic for that version. Each
@@ -681,9 +783,18 @@ type TrafficSplit struct {
 	ShardBy string `json:"shardBy,omitempty"`
 }
 
+// TrafficSplitAllocations: Mapping from module version IDs within the
+// module to fractional (0.000, 1] allocations of traffic for that
+// version. Each version may only be specified once, but some versions
+// in the module may not have any traffic allocation. Modules that have
+// traffic allocated in this field may not be deleted until the module
+// is deleted, or their traffic allocation is removed. Allocations must
+// sum to 1. Supports precision up to two decimal places for IP-based
+// splits and up to three decimal places for cookie-based splits.
 type TrafficSplitAllocations struct {
 }
 
+// Type: A light-weight descriptor for a proto message type.
 type Type struct {
 	// Fields: The list of fields.
 	Fields []*Field `json:"fields,omitempty"`
@@ -709,6 +820,8 @@ type Type struct {
 	Syntax string `json:"syntax,omitempty"`
 }
 
+// UrlDispatchRule: Rules to match an HTTP request and dispatch that
+// request to a module.
 type UrlDispatchRule struct {
 	// Domain: The domain name to match on. Supports '*' (glob) wildcarding
 	// on the left-hand side of a '.'. If empty, all domains will be matched
@@ -726,6 +839,10 @@ type UrlDispatchRule struct {
 	Path string `json:"path,omitempty"`
 }
 
+// UrlMap: A URL pattern and description of how it should be handled.
+// App Engine can handle URLs by executing application code, or by
+// serving static files uploaded with the code, such as images, CSS or
+// JavaScript.
 type UrlMap struct {
 	// ApiEndpoint: Use API Endpoints to handle requests.
 	ApiEndpoint *ApiEndpointHandler `json:"apiEndpoint,omitempty"`
@@ -791,6 +908,8 @@ type UrlMap struct {
 	UrlRegex string `json:"urlRegex,omitempty"`
 }
 
+// Version: A Version is a specific set of source code and configuration
+// files deployed to a module.
 type Version struct {
 	// ApiConfig: Serving configuration for Google Cloud Endpoints. Only
 	// returned in `GET` requests if `view=FULL` is set. May only be set on
@@ -853,6 +972,23 @@ type Version struct {
 
 	// InboundServices: Before an application can receive email or XMPP
 	// messages, the application must be configured to enable the service.
+	//
+	// Possible values:
+	//   "INBOUND_SERVICE_UNSPECIFIED" - Not specified.
+	//   "INBOUND_SERVICE_MAIL" - Allows an application to receive mail.
+	//   "INBOUND_SERVICE_MAIL_BOUNCE" - Allows an application receive email
+	// bound notifications.
+	//   "INBOUND_SERVICE_XMPP_ERROR" - Allows an application to receive
+	// error stanzas.
+	//   "INBOUND_SERVICE_XMPP_MESSAGE" - Allows an application to receive
+	// instant messages.
+	//   "INBOUND_SERVICE_XMPP_SUBSCRIBE" - Allows an application to receive
+	// user subscription POSTs.
+	//   "INBOUND_SERVICE_XMPP_PRESENCE" - Allows an application to receive
+	// a user's chat presence.
+	//   "INBOUND_SERVICE_CHANNEL_PRESENCE" - Registers an application for
+	// notifications when a client connects or disconnects from a channel.
+	//   "INBOUND_SERVICE_WARMUP" - Enables warmup requests.
 	InboundServices []string `json:"inboundServices,omitempty"`
 
 	// InstanceClass: The frontend instance class to use to run this app.

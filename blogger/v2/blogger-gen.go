@@ -176,6 +176,7 @@ type Blog struct {
 	Url string `json:"url,omitempty"`
 }
 
+// BlogLocale: The locale this Blog is set to.
 type BlogLocale struct {
 	// Country: The country this blog's locale is set to.
 	Country string `json:"country,omitempty"`
@@ -187,6 +188,7 @@ type BlogLocale struct {
 	Variant string `json:"variant,omitempty"`
 }
 
+// BlogPages: The container of pages in this blog.
 type BlogPages struct {
 	// SelfLink: The URL of the container for pages in this blog.
 	SelfLink string `json:"selfLink,omitempty"`
@@ -195,6 +197,7 @@ type BlogPages struct {
 	TotalItems int64 `json:"totalItems,omitempty"`
 }
 
+// BlogPosts: The container of posts in this blog.
 type BlogPosts struct {
 	// SelfLink: The URL of the container for posts in this blog.
 	SelfLink string `json:"selfLink,omitempty"`
@@ -244,6 +247,7 @@ type Comment struct {
 	Updated string `json:"updated,omitempty"`
 }
 
+// CommentAuthor: The author of this Comment.
 type CommentAuthor struct {
 	// DisplayName: The display name.
 	DisplayName string `json:"displayName,omitempty"`
@@ -258,21 +262,25 @@ type CommentAuthor struct {
 	Url string `json:"url,omitempty"`
 }
 
+// CommentAuthorImage: The comment creator's avatar.
 type CommentAuthorImage struct {
 	// Url: The comment creator's avatar URL.
 	Url string `json:"url,omitempty"`
 }
 
+// CommentBlog: Data about the blog containing this comment.
 type CommentBlog struct {
 	// Id: The identifier of the blog containing this comment.
 	Id int64 `json:"id,omitempty,string"`
 }
 
+// CommentInReplyTo: Data about the comment this is in reply to.
 type CommentInReplyTo struct {
 	// Id: The identified of the parent of this comment.
 	Id int64 `json:"id,omitempty,string"`
 }
 
+// CommentPost: Data about the post containing this comment.
 type CommentPost struct {
 	// Id: The identifier of the post containing this comment.
 	Id int64 `json:"id,omitempty,string"`
@@ -327,6 +335,7 @@ type Page struct {
 	Url string `json:"url,omitempty"`
 }
 
+// PageAuthor: The author of this Page.
 type PageAuthor struct {
 	// DisplayName: The display name.
 	DisplayName string `json:"displayName,omitempty"`
@@ -341,11 +350,13 @@ type PageAuthor struct {
 	Url string `json:"url,omitempty"`
 }
 
+// PageAuthorImage: The page author's avatar.
 type PageAuthorImage struct {
 	// Url: The page author's avatar URL.
 	Url string `json:"url,omitempty"`
 }
 
+// PageBlog: Data about the blog containing this Page.
 type PageBlog struct {
 	// Id: The identifier of the blog containing this page.
 	Id int64 `json:"id,omitempty,string"`
@@ -397,6 +408,7 @@ type Post struct {
 	Url string `json:"url,omitempty"`
 }
 
+// PostAuthor: The author of this Post.
 type PostAuthor struct {
 	// DisplayName: The display name.
 	DisplayName string `json:"displayName,omitempty"`
@@ -411,16 +423,19 @@ type PostAuthor struct {
 	Url string `json:"url,omitempty"`
 }
 
+// PostAuthorImage: The Post author's avatar.
 type PostAuthorImage struct {
 	// Url: The Post author's avatar URL.
 	Url string `json:"url,omitempty"`
 }
 
+// PostBlog: Data about the blog containing this Post.
 type PostBlog struct {
 	// Id: The identifier of the Blog that contains this Post.
 	Id int64 `json:"id,omitempty,string"`
 }
 
+// PostReplies: The container of comments on this Post.
 type PostReplies struct {
 	// SelfLink: The URL of the comments on this post.
 	SelfLink string `json:"selfLink,omitempty"`
@@ -475,11 +490,13 @@ type User struct {
 	Url string `json:"url,omitempty"`
 }
 
+// UserBlogs: The container of blogs for this user.
 type UserBlogs struct {
 	// SelfLink: The URL of the Blogs for this user.
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
+// UserLocale: This user's locale
 type UserLocale struct {
 	// Country: The user's country setting.
 	Country string `json:"country,omitempty"`

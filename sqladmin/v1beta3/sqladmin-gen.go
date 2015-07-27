@@ -143,6 +143,7 @@ type TiersService struct {
 	s *Service
 }
 
+// BackupConfiguration: Database instance backup configuration.
 type BackupConfiguration struct {
 	// BinaryLogEnabled: Whether binary log is enabled. If backup
 	// configuration is disabled, binary log must be disabled as well.
@@ -163,6 +164,7 @@ type BackupConfiguration struct {
 	StartTime string `json:"startTime,omitempty"`
 }
 
+// BackupRun: A database instance backup run resource.
 type BackupRun struct {
 	// BackupConfiguration: Backup Configuration identifier.
 	BackupConfiguration string `json:"backupConfiguration,omitempty"`
@@ -197,6 +199,7 @@ type BackupRun struct {
 	Status string `json:"status,omitempty"`
 }
 
+// BackupRunsListResponse: Backup run list results.
 type BackupRunsListResponse struct {
 	// Items: A list of backup runs in reverse chronological order of the
 	// enqueued time.
@@ -211,6 +214,7 @@ type BackupRunsListResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// BinLogCoordinates: Binary log coordinates.
 type BinLogCoordinates struct {
 	// BinLogFileName: Name of the binary log file for a Cloud SQL instance.
 	BinLogFileName string `json:"binLogFileName,omitempty"`
@@ -222,6 +226,7 @@ type BinLogCoordinates struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// CloneContext: Database instance clone context.
 type CloneContext struct {
 	// BinLogCoordinates: Binary log coordinates, if specified, indentify
 	// the position up to which the source instance should be cloned. If not
@@ -240,6 +245,7 @@ type CloneContext struct {
 	SourceInstanceName string `json:"sourceInstanceName,omitempty"`
 }
 
+// DatabaseFlags: MySQL flags for Cloud SQL instances.
 type DatabaseFlags struct {
 	// Name: The name of the flag. These flags are passed at instance
 	// startup, so include both MySQL server options and MySQL system
@@ -255,6 +261,7 @@ type DatabaseFlags struct {
 	Value string `json:"value,omitempty"`
 }
 
+// DatabaseInstance: A Cloud SQL instance resource.
 type DatabaseInstance struct {
 	// CurrentDiskSize: The current disk usage of the instance in bytes.
 	CurrentDiskSize int64 `json:"currentDiskSize,omitempty,string"`
@@ -328,6 +335,7 @@ type DatabaseInstance struct {
 	State string `json:"state,omitempty"`
 }
 
+// ExportContext: Database instance export context.
 type ExportContext struct {
 	// Database: Databases (for example, guestbook) from which the export is
 	// made. If unspecified, all databases are exported.
@@ -348,6 +356,7 @@ type ExportContext struct {
 	Uri string `json:"uri,omitempty"`
 }
 
+// Flag: A Google Cloud SQL service flag resource.
 type Flag struct {
 	// AllowedStringValues: For STRING flags, a list of strings that the
 	// value can be set to.
@@ -376,6 +385,7 @@ type Flag struct {
 	Type string `json:"type,omitempty"`
 }
 
+// FlagsListResponse: Flags list response.
 type FlagsListResponse struct {
 	// Items: List of flags.
 	Items []*Flag `json:"items,omitempty"`
@@ -384,6 +394,7 @@ type FlagsListResponse struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// ImportContext: Database instance import context.
 type ImportContext struct {
 	// Database: The database (for example, guestbook) to which the import
 	// is made. If not set, it is assumed that the database is specified in
@@ -399,6 +410,10 @@ type ImportContext struct {
 	Uri []string `json:"uri,omitempty"`
 }
 
+// InstanceOperation: An Operations resource contains information about
+// database instance operations such as create, delete, and restart.
+// Operations resources are created in response to operations that were
+// initiated; you never create them directly.
 type InstanceOperation struct {
 	// EndTime: The time this operation finished in UTC timezone in RFC 3339
 	// format, for example 2012-11-15T16:19:00.094Z.
@@ -447,16 +462,20 @@ type InstanceOperation struct {
 	UserEmailAddress string `json:"userEmailAddress,omitempty"`
 }
 
+// InstanceSetRootPasswordRequest: Database instance set root password
+// request.
 type InstanceSetRootPasswordRequest struct {
 	// SetRootPasswordContext: Set Root Password Context.
 	SetRootPasswordContext *SetRootPasswordContext `json:"setRootPasswordContext,omitempty"`
 }
 
+// InstancesCloneRequest: Database instance clone request.
 type InstancesCloneRequest struct {
 	// CloneContext: Contains details about the clone operation.
 	CloneContext *CloneContext `json:"cloneContext,omitempty"`
 }
 
+// InstancesCloneResponse: Database instance clone response.
 type InstancesCloneResponse struct {
 	// Kind: This is always sql#instancesClone.
 	Kind string `json:"kind,omitempty"`
@@ -467,6 +486,7 @@ type InstancesCloneResponse struct {
 	Operation string `json:"operation,omitempty"`
 }
 
+// InstancesDeleteResponse: Database instance delete response.
 type InstancesDeleteResponse struct {
 	// Kind: This is always sql#instancesDelete.
 	Kind string `json:"kind,omitempty"`
@@ -477,11 +497,13 @@ type InstancesDeleteResponse struct {
 	Operation string `json:"operation,omitempty"`
 }
 
+// InstancesExportRequest: Database instance export request.
 type InstancesExportRequest struct {
 	// ExportContext: Contains details about the export operation.
 	ExportContext *ExportContext `json:"exportContext,omitempty"`
 }
 
+// InstancesExportResponse: Database instance export response.
 type InstancesExportResponse struct {
 	// Kind: This is always sql#instancesExport.
 	Kind string `json:"kind,omitempty"`
@@ -492,11 +514,13 @@ type InstancesExportResponse struct {
 	Operation string `json:"operation,omitempty"`
 }
 
+// InstancesImportRequest: Database instance import request.
 type InstancesImportRequest struct {
 	// ImportContext: Contains details about the import operation.
 	ImportContext *ImportContext `json:"importContext,omitempty"`
 }
 
+// InstancesImportResponse: Database instance import response.
 type InstancesImportResponse struct {
 	// Kind: This is always sql#instancesImport.
 	Kind string `json:"kind,omitempty"`
@@ -507,6 +531,7 @@ type InstancesImportResponse struct {
 	Operation string `json:"operation,omitempty"`
 }
 
+// InstancesInsertResponse: Database instance insert response.
 type InstancesInsertResponse struct {
 	// Kind: This is always sql#instancesInsert.
 	Kind string `json:"kind,omitempty"`
@@ -517,6 +542,7 @@ type InstancesInsertResponse struct {
 	Operation string `json:"operation,omitempty"`
 }
 
+// InstancesListResponse: Database instances list response.
 type InstancesListResponse struct {
 	// Items: List of database instance resources.
 	Items []*DatabaseInstance `json:"items,omitempty"`
@@ -530,6 +556,8 @@ type InstancesListResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// InstancesPromoteReplicaResponse: Database promote read replica
+// response.
 type InstancesPromoteReplicaResponse struct {
 	// Kind: This is always sql#instancesPromoteReplica.
 	Kind string `json:"kind,omitempty"`
@@ -540,6 +568,8 @@ type InstancesPromoteReplicaResponse struct {
 	Operation string `json:"operation,omitempty"`
 }
 
+// InstancesResetSslConfigResponse: Database instance resetSslConfig
+// response.
 type InstancesResetSslConfigResponse struct {
 	// Kind: This is always sql#instancesResetSslConfig.
 	Kind string `json:"kind,omitempty"`
@@ -552,6 +582,7 @@ type InstancesResetSslConfigResponse struct {
 	Operation string `json:"operation,omitempty"`
 }
 
+// InstancesRestartResponse: Database instance restart response.
 type InstancesRestartResponse struct {
 	// Kind: This is always sql#instancesRestart.
 	Kind string `json:"kind,omitempty"`
@@ -562,6 +593,8 @@ type InstancesRestartResponse struct {
 	Operation string `json:"operation,omitempty"`
 }
 
+// InstancesRestoreBackupResponse: Database instance restore backup
+// response.
 type InstancesRestoreBackupResponse struct {
 	// Kind: This is always sql#instancesRestoreBackup.
 	Kind string `json:"kind,omitempty"`
@@ -572,6 +605,8 @@ type InstancesRestoreBackupResponse struct {
 	Operation string `json:"operation,omitempty"`
 }
 
+// InstancesSetRootPasswordResponse: Database instance set root password
+// response.
 type InstancesSetRootPasswordResponse struct {
 	// Kind: This is always sql#instancesSetRootPassword.
 	Kind string `json:"kind,omitempty"`
@@ -582,6 +617,7 @@ type InstancesSetRootPasswordResponse struct {
 	Operation string `json:"operation,omitempty"`
 }
 
+// InstancesUpdateResponse: Database instance update response.
 type InstancesUpdateResponse struct {
 	// Kind: This is always sql#instancesUpdate.
 	Kind string `json:"kind,omitempty"`
@@ -591,6 +627,7 @@ type InstancesUpdateResponse struct {
 	Operation string `json:"operation,omitempty"`
 }
 
+// IpConfiguration: IP Management configuration.
 type IpConfiguration struct {
 	// AuthorizedNetworks: The list of external networks that are allowed to
 	// connect to the instance using the IP. In CIDR notation, also known as
@@ -609,6 +646,7 @@ type IpConfiguration struct {
 	RequireSsl bool `json:"requireSsl,omitempty"`
 }
 
+// IpMapping: Database instance IP Mapping.
 type IpMapping struct {
 	// IpAddress: The IP address assigned.
 	IpAddress string `json:"ipAddress,omitempty"`
@@ -619,6 +657,12 @@ type IpMapping struct {
 	TimeToRetire string `json:"timeToRetire,omitempty"`
 }
 
+// LocationPreference: Preferred location. This specifies where a Cloud
+// SQL instance should preferably be located, either in a specific
+// Compute Engine zone, or co-located with an App Engine application.
+// Note that if the preferred location is not available, the instance
+// will be located as close as possible within the region. Only one
+// location may be specified.
 type LocationPreference struct {
 	// FollowGaeApplication: The App Engine application to follow, it must
 	// be in the same region as the Cloud SQL instance.
@@ -632,6 +676,7 @@ type LocationPreference struct {
 	Zone string `json:"zone,omitempty"`
 }
 
+// OperationError: Database instance operation error.
 type OperationError struct {
 	// Code: Identifies the specific error that occurred.
 	Code string `json:"code,omitempty"`
@@ -640,6 +685,7 @@ type OperationError struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// OperationsListResponse: Database instance list operations response.
 type OperationsListResponse struct {
 	// Items: List of operation resources.
 	Items []*InstanceOperation `json:"items,omitempty"`
@@ -653,6 +699,7 @@ type OperationsListResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// SetRootPasswordContext: Database instance set root password context.
 type SetRootPasswordContext struct {
 	// Kind: This is always sql#setRootUserContext.
 	Kind string `json:"kind,omitempty"`
@@ -661,6 +708,7 @@ type SetRootPasswordContext struct {
 	Password string `json:"password,omitempty"`
 }
 
+// Settings: Database instance settings.
 type Settings struct {
 	// ActivationPolicy: The activation policy for this instance. This
 	// specifies when the instance should be activated and is applicable
@@ -717,6 +765,7 @@ type Settings struct {
 	Tier string `json:"tier,omitempty"`
 }
 
+// SslCert: SslCerts Resource
 type SslCert struct {
 	// Cert: PEM representation.
 	Cert string `json:"cert,omitempty"`
@@ -743,6 +792,7 @@ type SslCert struct {
 	Sha1Fingerprint string `json:"sha1Fingerprint,omitempty"`
 }
 
+// SslCertDetail: SslCertDetail.
 type SslCertDetail struct {
 	// CertInfo: The public information about the cert.
 	CertInfo *SslCert `json:"certInfo,omitempty"`
@@ -752,6 +802,7 @@ type SslCertDetail struct {
 	CertPrivateKey string `json:"certPrivateKey,omitempty"`
 }
 
+// SslCertsDeleteResponse: SslCert delete response.
 type SslCertsDeleteResponse struct {
 	// Kind: This is always sql#sslCertsDelete.
 	Kind string `json:"kind,omitempty"`
@@ -762,6 +813,7 @@ type SslCertsDeleteResponse struct {
 	Operation string `json:"operation,omitempty"`
 }
 
+// SslCertsInsertRequest: SslCerts insert request.
 type SslCertsInsertRequest struct {
 	// CommonName: User supplied name. Must be a distinct name from the
 	// other certificates for this instance. New certificates will not be
@@ -769,6 +821,7 @@ type SslCertsInsertRequest struct {
 	CommonName string `json:"commonName,omitempty"`
 }
 
+// SslCertsInsertResponse: SslCert insert response.
 type SslCertsInsertResponse struct {
 	// ClientCert: The new client certificate and private key. The new
 	// certificate will not work until the instance is restarted.
@@ -783,6 +836,7 @@ type SslCertsInsertResponse struct {
 	ServerCaCert *SslCert `json:"serverCaCert,omitempty"`
 }
 
+// SslCertsListResponse: SslCerts list response.
 type SslCertsListResponse struct {
 	// Items: List of client certificates for the instance.
 	Items []*SslCert `json:"items,omitempty"`
@@ -791,6 +845,7 @@ type SslCertsListResponse struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// Tier: A Google Cloud SQL service tier resource.
 type Tier struct {
 	// DiskQuota: The maximum disk size of this tier in bytes.
 	DiskQuota int64 `json:"DiskQuota,omitempty,string"`
@@ -810,6 +865,7 @@ type Tier struct {
 	Tier string `json:"tier,omitempty"`
 }
 
+// TiersListResponse: Tiers list response.
 type TiersListResponse struct {
 	// Items: List of tiers.
 	Items []*Tier `json:"items,omitempty"`

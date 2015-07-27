@@ -138,6 +138,7 @@ type TaskQueue struct {
 	Stats *TaskQueueStats `json:"stats,omitempty"`
 }
 
+// TaskQueueAcl: ACLs that are applicable to this TaskQueue object.
 type TaskQueueAcl struct {
 	// AdminEmails: Email addresses of users who are "admins" of the
 	// TaskQueue. This means they can control the queue, eg set ACLs for the
@@ -154,6 +155,7 @@ type TaskQueueAcl struct {
 	ProducerEmails []string `json:"producerEmails,omitempty"`
 }
 
+// TaskQueueStats: Statistics for the TaskQueue object in question.
 type TaskQueueStats struct {
 	// LeasedLastHour: Number of tasks leased in the last hour.
 	LeasedLastHour int64 `json:"leasedLastHour,omitempty,string"`

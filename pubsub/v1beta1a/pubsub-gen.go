@@ -95,6 +95,7 @@ type TopicsService struct {
 	s *Service
 }
 
+// AcknowledgeRequest: Request for the Acknowledge method.
 type AcknowledgeRequest struct {
 	// AckId: The acknowledgment ID for the message being acknowledged. This
 	// was returned by the Pub/Sub system in the Pull response.
@@ -104,9 +105,18 @@ type AcknowledgeRequest struct {
 	Subscription string `json:"subscription,omitempty"`
 }
 
+// Empty: An empty message that you can re-use to avoid defining
+// duplicated empty messages in your project. A typical example is to
+// use it as argument or the return value of a service API. For
+// instance: service Foo { rpc Bar (proto2.Empty) returns (proto2.Empty)
+// { }; }; BEGIN GOOGLE-INTERNAL The difference between this one and
+// net/rpc/empty-message.proto is that 1) The generated message here is
+// in proto2 C++ API. 2) The proto2.Empty has minimum dependencies (no
+// message_set or net/rpc dependencies) END GOOGLE-INTERNAL
 type Empty struct {
 }
 
+// Label: A key-value pair applied to a given object.
 type Label struct {
 	// Key: The key of a label is a syntactically valid URL (as per RFC
 	// 1738) with the "scheme" and initial slashes omitted and with the
@@ -128,6 +138,7 @@ type Label struct {
 	StrValue string `json:"strValue,omitempty"`
 }
 
+// ListSubscriptionsResponse: Response for the ListSubscriptions method.
 type ListSubscriptionsResponse struct {
 	// NextPageToken: If not empty, indicates that there are more
 	// subscriptions that match the request and this value should be passed
@@ -138,6 +149,7 @@ type ListSubscriptionsResponse struct {
 	Subscription []*Subscription `json:"subscription,omitempty"`
 }
 
+// ListTopicsResponse: Response for the ListTopics method.
 type ListTopicsResponse struct {
 	// NextPageToken: If not empty, indicates that there are more topics
 	// that match the request, and this value should be passed to the next
@@ -148,6 +160,7 @@ type ListTopicsResponse struct {
 	Topic []*Topic `json:"topic,omitempty"`
 }
 
+// ModifyAckDeadlineRequest: Request for the ModifyAckDeadline method.
 type ModifyAckDeadlineRequest struct {
 	// AckDeadlineSeconds: The new ack deadline with respect to the time
 	// this request was sent to the Pub/Sub system. Must be >= 0. For
@@ -170,6 +183,7 @@ type ModifyAckDeadlineRequest struct {
 	Subscription string `json:"subscription,omitempty"`
 }
 
+// ModifyPushConfigRequest: Request for the ModifyPushConfig method.
 type ModifyPushConfigRequest struct {
 	// PushConfig: An empty push_config indicates that the Pub/Sub system
 	// should pause pushing messages from the given subscription.
@@ -179,6 +193,7 @@ type ModifyPushConfigRequest struct {
 	Subscription string `json:"subscription,omitempty"`
 }
 
+// PublishBatchRequest: Request for the PublishBatch method.
 type PublishBatchRequest struct {
 	// Messages: The messages to publish.
 	Messages []*PubsubMessage `json:"messages,omitempty"`
@@ -187,6 +202,7 @@ type PublishBatchRequest struct {
 	Topic string `json:"topic,omitempty"`
 }
 
+// PublishBatchResponse: Response for the PublishBatch method.
 type PublishBatchResponse struct {
 	// MessageIds: The server-assigned ID of each published message, in the
 	// same order as the messages in the request. IDs are guaranteed to be
@@ -194,6 +210,7 @@ type PublishBatchResponse struct {
 	MessageIds []string `json:"messageIds,omitempty"`
 }
 
+// PublishRequest: Request for the Publish method.
 type PublishRequest struct {
 	// Message: The message to publish.
 	Message *PubsubMessage `json:"message,omitempty"`
@@ -202,6 +219,8 @@ type PublishRequest struct {
 	Topic string `json:"topic,omitempty"`
 }
 
+// PubsubEvent: An event indicating a received message or truncation
+// event.
 type PubsubEvent struct {
 	// Deleted: Indicates that this subscription has been deleted. (Note
 	// that pull subscribers will always receive NOT_FOUND in response in
@@ -219,6 +238,7 @@ type PubsubEvent struct {
 	Truncated bool `json:"truncated,omitempty"`
 }
 
+// PubsubMessage: A message data and its labels.
 type PubsubMessage struct {
 	// Data: The message payload.
 	Data string `json:"data,omitempty"`
@@ -235,6 +255,7 @@ type PubsubMessage struct {
 	MessageId string `json:"messageId,omitempty"`
 }
 
+// PullBatchRequest: Request for the PullBatch method.
 type PullBatchRequest struct {
 	// MaxEvents: The maximum number of PubsubEvents returned for this
 	// request. The Pub/Sub system may return fewer than the number of
@@ -253,6 +274,7 @@ type PullBatchRequest struct {
 	Subscription string `json:"subscription,omitempty"`
 }
 
+// PullBatchResponse: Response for the PullBatch method.
 type PullBatchResponse struct {
 	// PullResponses: Received Pub/Sub messages or status events. The
 	// Pub/Sub system will return zero messages if there are no more
@@ -262,6 +284,7 @@ type PullBatchResponse struct {
 	PullResponses []*PullResponse `json:"pullResponses,omitempty"`
 }
 
+// PullRequest: Request for the Pull method.
 type PullRequest struct {
 	// ReturnImmediately: If this is specified as true the system will
 	// respond immediately even if it is not able to return a message in the
@@ -275,6 +298,8 @@ type PullRequest struct {
 	Subscription string `json:"subscription,omitempty"`
 }
 
+// PullResponse: Either a PubsubMessage or a truncation event. One of
+// these two must be populated.
 type PullResponse struct {
 	// AckId: This ID must be used to acknowledge the received event or
 	// message.
@@ -284,6 +309,7 @@ type PullResponse struct {
 	PubsubEvent *PubsubEvent `json:"pubsubEvent,omitempty"`
 }
 
+// PushConfig: Configuration for a push delivery endpoint.
 type PushConfig struct {
 	// PushEndpoint: A URL locating the endpoint to which messages should be
 	// pushed. For example, a Webhook endpoint might use
@@ -291,6 +317,7 @@ type PushConfig struct {
 	PushEndpoint string `json:"pushEndpoint,omitempty"`
 }
 
+// Subscription: A subscription resource.
 type Subscription struct {
 	// AckDeadlineSeconds: For either push or pull delivery, the value is
 	// the maximum time after a subscriber receives a message before the
@@ -322,6 +349,7 @@ type Subscription struct {
 	Topic string `json:"topic,omitempty"`
 }
 
+// Topic: A topic resource.
 type Topic struct {
 	// Name: Name of the topic.
 	Name string `json:"name,omitempty"`

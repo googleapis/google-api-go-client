@@ -158,6 +158,8 @@ type PagespeedApiImageV2 struct {
 	Width int64 `json:"width,omitempty"`
 }
 
+// PagespeedApiImageV2PageRect: The region of the page that is captured
+// by this image, with dimensions measured in CSS pixels.
 type PagespeedApiImageV2PageRect struct {
 	// Height: The height of the rect.
 	Height int64 `json:"height,omitempty"`
@@ -210,6 +212,9 @@ type Result struct {
 	Version *ResultVersion `json:"version,omitempty"`
 }
 
+// ResultFormattedResults: Localized PageSpeed results. Contains a
+// ruleResults entry for each PageSpeed rule instantiated and run by the
+// server.
 type ResultFormattedResults struct {
 	// Locale: The locale of the formattedResults, e.g. "en_US".
 	Locale string `json:"locale,omitempty"`
@@ -219,9 +224,14 @@ type ResultFormattedResults struct {
 	RuleResults *ResultFormattedResultsRuleResults `json:"ruleResults,omitempty"`
 }
 
+// ResultFormattedResultsRuleResults: Dictionary of formatted rule
+// results, with one entry for each PageSpeed rule instantiated and run
+// by the server.
 type ResultFormattedResultsRuleResults struct {
 }
 
+// ResultPageStats: Summary statistics for the page, such as number of
+// JavaScript bytes, number of HTML bytes, etc.
 type ResultPageStats struct {
 	// CssResponseBytes: Number of uncompressed response bytes for CSS
 	// resources on the page.
@@ -273,9 +283,13 @@ type ResultPageStats struct {
 	TotalRequestBytes int64 `json:"totalRequestBytes,omitempty,string"`
 }
 
+// ResultRuleGroups: A map with one entry for each rule group in these
+// results.
 type ResultRuleGroups struct {
 }
 
+// ResultVersion: The version of PageSpeed used to generate these
+// results.
 type ResultVersion struct {
 	// Major: The major version number of PageSpeed used to generate these
 	// results.

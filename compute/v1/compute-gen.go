@@ -467,6 +467,8 @@ type ZonesService struct {
 	s *Service
 }
 
+// AccessConfig: An access configuration attached to an instance's
+// network interface.
 type AccessConfig struct {
 	// Kind: [Output Only] Type of the resource. Always compute#accessConfig
 	// for access configs.
@@ -490,6 +492,7 @@ type AccessConfig struct {
 	Type string `json:"type,omitempty"`
 }
 
+// Address: A reserved address resource.
 type Address struct {
 	// Address: The static external IP address represented by this resource.
 	Address string `json:"address,omitempty"`
@@ -561,6 +564,7 @@ type AddressAggregatedList struct {
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
+// AddressList: Contains a list of address resources.
 type AddressList struct {
 	// Id: [Output Only] Unique identifier for the resource; defined by the
 	// server.
@@ -590,6 +594,8 @@ type AddressesScopedList struct {
 	Warning *AddressesScopedListWarning `json:"warning,omitempty"`
 }
 
+// AddressesScopedListWarning: [Output Only] Informational warning which
+// replaces the list of addresses when the list is empty.
 type AddressesScopedListWarning struct {
 	// Code: [Output Only] The warning type identifier for this warning.
 	//
@@ -626,6 +632,7 @@ type AddressesScopedListWarningData struct {
 	Value string `json:"value,omitempty"`
 }
 
+// AttachedDisk: An instance-attached disk resource.
 type AttachedDisk struct {
 	// AutoDelete: Specifies whether the disk will be auto-deleted when the
 	// instance is deleted (but not when the disk is detached from the
@@ -697,6 +704,13 @@ type AttachedDisk struct {
 	Type string `json:"type,omitempty"`
 }
 
+// AttachedDiskInitializeParams: [Input Only] Specifies the parameters
+// for a new disk that will be created alongside the new instance. Use
+// initialization parameters to create boot disks or local SSDs attached
+// to the new instance.
+//
+// This property is mutually exclusive with the source property; you can
+// only define one or the other, but not both.
 type AttachedDiskInitializeParams struct {
 	// DiskName: Specifies the disk name. If not specified, the default is
 	// to use the name of the instance.
@@ -796,6 +810,7 @@ type AutoscalerAggregatedList struct {
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
+// AutoscalerList: Contains a list of persistent autoscaler resources.
 type AutoscalerList struct {
 	// Id: Unique identifier for the resource; defined by the server (output
 	// only).
@@ -824,6 +839,8 @@ type AutoscalersScopedList struct {
 	Warning *AutoscalersScopedListWarning `json:"warning,omitempty"`
 }
 
+// AutoscalersScopedListWarning: Informational warning which replaces
+// the list of autoscalers when the list is empty.
 type AutoscalersScopedListWarning struct {
 	// Code: [Output Only] The warning type identifier for this warning.
 	//
@@ -860,6 +877,7 @@ type AutoscalersScopedListWarningData struct {
 	Value string `json:"value,omitempty"`
 }
 
+// AutoscalingPolicy: Cloud Autoscaler policy.
 type AutoscalingPolicy struct {
 	// CoolDownPeriodSec: The number of seconds that the Autoscaler should
 	// wait between two succeeding changes to the number of virtual
@@ -896,6 +914,7 @@ type AutoscalingPolicy struct {
 	MinNumReplicas int64 `json:"minNumReplicas,omitempty"`
 }
 
+// AutoscalingPolicyCpuUtilization: CPU utilization policy.
 type AutoscalingPolicyCpuUtilization struct {
 	// UtilizationTarget: The target utilization that the Autoscaler should
 	// maintain. It is represented as a fraction of used cores. For example:
@@ -904,6 +923,8 @@ type AutoscalingPolicyCpuUtilization struct {
 	UtilizationTarget float64 `json:"utilizationTarget,omitempty"`
 }
 
+// AutoscalingPolicyCustomMetricUtilization: Custom utilization metric
+// policy.
 type AutoscalingPolicyCustomMetricUtilization struct {
 	// Metric: Identifier of the metric. It should be a Cloud Monitoring
 	// metric. The metric can not have negative values. The metric should be
@@ -927,6 +948,8 @@ type AutoscalingPolicyCustomMetricUtilization struct {
 	UtilizationTargetType string `json:"utilizationTargetType,omitempty"`
 }
 
+// AutoscalingPolicyLoadBalancingUtilization: Load balancing utilization
+// policy.
 type AutoscalingPolicyLoadBalancingUtilization struct {
 	// UtilizationTarget: Fraction of backend capacity utilization (set in
 	// HTTP load balancing configuration) that Autoscaler should maintain.
@@ -938,6 +961,7 @@ type AutoscalingPolicyLoadBalancingUtilization struct {
 	UtilizationTarget float64 `json:"utilizationTarget,omitempty"`
 }
 
+// Backend: Message containing information of one individual backend.
 type Backend struct {
 	// BalancingMode: Specifies the balancing mode for this backend. The
 	// default is UTILIZATION but available values are UTILIZATION and RATE.
@@ -987,6 +1011,8 @@ type Backend struct {
 	MaxUtilization float64 `json:"maxUtilization,omitempty"`
 }
 
+// BackendService: A BackendService resource. This resource defines a
+// group of backend VMs together with their serving capacity.
 type BackendService struct {
 	// Backends: The list of backends that serve this BackendService.
 	Backends []*Backend `json:"backends,omitempty"`
@@ -1055,6 +1081,7 @@ type BackendServiceGroupHealth struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// BackendServiceList: Contains a list of BackendService resources.
 type BackendServiceList struct {
 	// Id: [Output Only] Unique identifier for the resource; defined by the
 	// server.
@@ -1075,6 +1102,7 @@ type BackendServiceList struct {
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
+// DeprecationStatus: Deprecation status for a public resource.
 type DeprecationStatus struct {
 	// Deleted: An optional RFC3339 timestamp on or after which the
 	// deprecation state of this resource will be changed to DELETED.
@@ -1107,6 +1135,7 @@ type DeprecationStatus struct {
 	State string `json:"state,omitempty"`
 }
 
+// Disk: A Disk resource.
 type Disk struct {
 	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
 	// format.
@@ -1250,6 +1279,7 @@ type DiskAggregatedList struct {
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
+// DiskList: A list of Disk resources.
 type DiskList struct {
 	// Id: [Output Only] Unique identifier for the resource; defined by the
 	// server.
@@ -1291,6 +1321,7 @@ type DiskMoveRequest struct {
 	TargetDisk string `json:"targetDisk,omitempty"`
 }
 
+// DiskType: A disk type resource.
 type DiskType struct {
 	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
 	// format.
@@ -1350,6 +1381,7 @@ type DiskTypeAggregatedList struct {
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
+// DiskTypeList: Contains a list of disk type resources.
 type DiskTypeList struct {
 	// Id: [Output Only] Unique identifier for the resource; defined by the
 	// server.
@@ -1379,6 +1411,8 @@ type DiskTypesScopedList struct {
 	Warning *DiskTypesScopedListWarning `json:"warning,omitempty"`
 }
 
+// DiskTypesScopedListWarning: [Output Only] Informational warning which
+// replaces the list of disk types when the list is empty.
 type DiskTypesScopedListWarning struct {
 	// Code: [Output Only] The warning type identifier for this warning.
 	//
@@ -1424,6 +1458,8 @@ type DisksScopedList struct {
 	Warning *DisksScopedListWarning `json:"warning,omitempty"`
 }
 
+// DisksScopedListWarning: [Output Only] Informational warning which
+// replaces the list of disks when the list is empty.
 type DisksScopedListWarning struct {
 	// Code: [Output Only] The warning type identifier for this warning.
 	//
@@ -1460,6 +1496,7 @@ type DisksScopedListWarningData struct {
 	Value string `json:"value,omitempty"`
 }
 
+// Firewall: A Firewall resource.
 type Firewall struct {
 	// Allowed: The list of rules specified by this firewall. Each rule
 	// specifies a protocol and port-range tuple that describes a permitted
@@ -1551,6 +1588,7 @@ type FirewallAllowed struct {
 	Ports []string `json:"ports,omitempty"`
 }
 
+// FirewallList: Contains a list of Firewall resources.
 type FirewallList struct {
 	// Id: [Output Only] Unique identifier for the resource; defined by the
 	// server.
@@ -1571,6 +1609,9 @@ type FirewallList struct {
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
+// ForwardingRule: A ForwardingRule resource. A ForwardingRule resource
+// specifies which pool of target VMs to forward a packet to if it
+// matches the given [IPAddress, IPProtocol, portRange] tuple.
 type ForwardingRule struct {
 	// IPAddress: Value of the reserved IP address that this forwarding rule
 	// is serving on behalf of. For global forwarding rules, the address
@@ -1656,6 +1697,7 @@ type ForwardingRuleAggregatedList struct {
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
+// ForwardingRuleList: Contains a list of ForwardingRule resources.
 type ForwardingRuleList struct {
 	// Id: [Output Only] Unique identifier for the resource. Set by the
 	// server.
@@ -1684,6 +1726,8 @@ type ForwardingRulesScopedList struct {
 	Warning *ForwardingRulesScopedListWarning `json:"warning,omitempty"`
 }
 
+// ForwardingRulesScopedListWarning: Informational warning which
+// replaces the list of forwarding rules when the list is empty.
 type ForwardingRulesScopedListWarning struct {
 	// Code: [Output Only] The warning type identifier for this warning.
 	//
@@ -1742,6 +1786,8 @@ type HealthStatus struct {
 	Port int64 `json:"port,omitempty"`
 }
 
+// HostRule: UrlMaps A host-matching rule for a URL. If matched, will
+// use the named PathMatcher to select the BackendService.
 type HostRule struct {
 	// Description: An optional textual description.
 	Description string `json:"description,omitempty"`
@@ -1757,6 +1803,9 @@ type HostRule struct {
 	PathMatcher string `json:"pathMatcher,omitempty"`
 }
 
+// HttpHealthCheck: An HttpHealthCheck resource. This resource defines a
+// template for how individual VMs should be checked for health, via
+// HTTP.
 type HttpHealthCheck struct {
 	// CheckIntervalSec: How often (in seconds) to send a health check. The
 	// default value is 5 seconds.
@@ -1812,6 +1861,7 @@ type HttpHealthCheck struct {
 	UnhealthyThreshold int64 `json:"unhealthyThreshold,omitempty"`
 }
 
+// HttpHealthCheckList: Contains a list of HttpHealthCheck resources.
 type HttpHealthCheckList struct {
 	// Id: Unique identifier for the resource; defined by the server (output
 	// only).
@@ -1831,6 +1881,7 @@ type HttpHealthCheckList struct {
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
+// Image: An Image resource.
 type Image struct {
 	// ArchiveSizeBytes: Size of the image tar.gz archive stored in Google
 	// Cloud Storage (in bytes).
@@ -1912,6 +1963,7 @@ type Image struct {
 	Status string `json:"status,omitempty"`
 }
 
+// ImageRawDisk: The parameters of the raw disk image.
 type ImageRawDisk struct {
 	// ContainerType: The format used to encode and transmit the block
 	// device, which should be TAR. This is just a container and
@@ -1932,6 +1984,7 @@ type ImageRawDisk struct {
 	Source string `json:"source,omitempty"`
 }
 
+// ImageList: Contains a list of Image resources.
 type ImageList struct {
 	// Id: Unique identifier for the resource; defined by the server (output
 	// only).
@@ -1951,6 +2004,7 @@ type ImageList struct {
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
+// Instance: An Instance resource.
 type Instance struct {
 	// CanIpForward: Allows this instance to send and receive packets with
 	// non-matching destination or source IPs. This is required if you plan
@@ -2142,6 +2196,7 @@ type InstanceGroupAggregatedList struct {
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
+// InstanceGroupList: A list of InstanceGroup resources.
 type InstanceGroupList struct {
 	// Id: [Output Only] A unique identifier for this list of instance
 	// groups. The server defines this identifier.
@@ -2163,6 +2218,9 @@ type InstanceGroupList struct {
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
+// InstanceGroupManager: InstanceGroupManagers
+//
+// Next available tag: 17
 type InstanceGroupManager struct {
 	// AutoHealingPolicies: The autohealing policy for this managed instance
 	// group. You can specify only one value.
@@ -2286,6 +2344,8 @@ type InstanceGroupManagerAutoHealingPolicy struct {
 	HealthCheck string `json:"healthCheck,omitempty"`
 }
 
+// InstanceGroupManagerList: [Output Only] A list of
+// InstanceGroupManager resources.
 type InstanceGroupManagerList struct {
 	// Id: [Output Only] A unique identifier for this managed instance
 	// group. The server defines this identifier.
@@ -2340,6 +2400,9 @@ type InstanceGroupManagersScopedList struct {
 	Warning *InstanceGroupManagersScopedListWarning `json:"warning,omitempty"`
 }
 
+// InstanceGroupManagersScopedListWarning: [Output Only] The warning
+// that replaces the list of managed instance groups when the list is
+// empty.
 type InstanceGroupManagersScopedListWarning struct {
 	// Code: [Output Only] The warning type identifier for this warning.
 	//
@@ -2460,6 +2523,9 @@ type InstanceGroupsScopedList struct {
 	Warning *InstanceGroupsScopedListWarning `json:"warning,omitempty"`
 }
 
+// InstanceGroupsScopedListWarning: [Output Only] An informational
+// warning that replaces the list of instance groups when the list is
+// empty.
 type InstanceGroupsScopedListWarning struct {
 	// Code: [Output Only] The warning type identifier for this warning.
 	//
@@ -2506,6 +2572,7 @@ type InstanceGroupsSetNamedPortsRequest struct {
 	NamedPorts []*NamedPort `json:"namedPorts,omitempty"`
 }
 
+// InstanceList: Contains a list of instance resources.
 type InstanceList struct {
 	// Id: [Output Only] Unique identifier for the resource; defined by the
 	// server.
@@ -2603,6 +2670,7 @@ type InstanceReference struct {
 	Instance string `json:"instance,omitempty"`
 }
 
+// InstanceTemplate: An Instance Template resource.
 type InstanceTemplate struct {
 	// CreationTimestamp: [Output Only] The creation timestamp for this
 	// instance template in RFC3339 text format.
@@ -2632,6 +2700,7 @@ type InstanceTemplate struct {
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
+// InstanceTemplateList: A list of instance templates.
 type InstanceTemplateList struct {
 	// Id: [Output Only] A unique identifier for this instance template. The
 	// server defines this identifier.
@@ -2683,6 +2752,8 @@ type InstancesScopedList struct {
 	Warning *InstancesScopedListWarning `json:"warning,omitempty"`
 }
 
+// InstancesScopedListWarning: [Output Only] Informational warning which
+// replaces the list of instances when the list is empty.
 type InstancesScopedListWarning struct {
 	// Code: [Output Only] The warning type identifier for this warning.
 	//
@@ -2719,6 +2790,7 @@ type InstancesScopedListWarningData struct {
 	Value string `json:"value,omitempty"`
 }
 
+// License: A license resource.
 type License struct {
 	// ChargesUseFee: If true, the customer will be charged license fee for
 	// running software that contains this license on an instance.
@@ -2736,6 +2808,7 @@ type License struct {
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
+// MachineType: A Machine Type resource.
 type MachineType struct {
 	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
 	// format.
@@ -2816,6 +2889,7 @@ type MachineTypeAggregatedList struct {
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
+// MachineTypeList: Contains a list of Machine Type resources.
 type MachineTypeList struct {
 	// Id: [Output Only] Unique identifier for the resource; defined by the
 	// server.
@@ -2846,6 +2920,8 @@ type MachineTypesScopedList struct {
 	Warning *MachineTypesScopedListWarning `json:"warning,omitempty"`
 }
 
+// MachineTypesScopedListWarning: [Output Only] An informational warning
+// that appears when the machine types list is empty.
 type MachineTypesScopedListWarning struct {
 	// Code: [Output Only] The warning type identifier for this warning.
 	//
@@ -2929,6 +3005,8 @@ type ManagedInstanceLastAttempt struct {
 	Errors *ManagedInstanceLastAttemptErrors `json:"errors,omitempty"`
 }
 
+// ManagedInstanceLastAttemptErrors: Encountered errors during the last
+// attempt to create or delete the instance.
 type ManagedInstanceLastAttemptErrors struct {
 	// Errors: [Output Only] The array of errors encountered while
 	// processing this operation.
@@ -2947,6 +3025,7 @@ type ManagedInstanceLastAttemptErrorsErrors struct {
 	Message string `json:"message,omitempty"`
 }
 
+// Metadata: A metadata key/value entry.
 type Metadata struct {
 	// Fingerprint: Specifies a fingerprint for this request, which is
 	// essentially a hash of the metadata's contents and used for optimistic
@@ -2980,6 +3059,7 @@ type MetadataItems struct {
 	Value string `json:"value,omitempty"`
 }
 
+// NamedPort: The named port information. For example: .
 type NamedPort struct {
 	// Name: The name for this NamedPort.
 	Name string `json:"name,omitempty"`
@@ -2988,6 +3068,7 @@ type NamedPort struct {
 	Port int64 `json:"port,omitempty"`
 }
 
+// Network: A network resource.
 type Network struct {
 	// IPv4Range: The range of internal addresses that are legal on this
 	// network. This range is a CIDR specification, for example:
@@ -3028,6 +3109,8 @@ type Network struct {
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
+// NetworkInterface: A network interface resource attached to an
+// instance.
 type NetworkInterface struct {
 	// AccessConfigs: An array of configurations for this interface.
 	// Currently, <codeONE_TO_ONE_NAT is the only access config supported.
@@ -3060,6 +3143,7 @@ type NetworkInterface struct {
 	NetworkIP string `json:"networkIP,omitempty"`
 }
 
+// NetworkList: Contains a list of Network resources.
 type NetworkList struct {
 	// Id: [Output Only] Unique identifier for the resource. Defined by the
 	// server.
@@ -3080,6 +3164,8 @@ type NetworkList struct {
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
+// Operation: An Operation resource, used to manage asynchronous API
+// requests.
 type Operation struct {
 	// ClientOperationId: [Output Only] An optional identifier specified by
 	// the client when the mutation was initiated. Must be unique for all
@@ -3176,6 +3262,8 @@ type Operation struct {
 	Zone string `json:"zone,omitempty"`
 }
 
+// OperationError: [Output Only] If errors are generated during
+// processing of the operation, this field will be populated.
 type OperationError struct {
 	// Errors: [Output Only] The array of errors encountered while
 	// processing this operation.
@@ -3250,6 +3338,7 @@ type OperationAggregatedList struct {
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
+// OperationList: Contains a list of Operation resources.
 type OperationList struct {
 	// Id: [Output Only] Unique identifier for the resource; defined by the
 	// server.
@@ -3278,6 +3367,8 @@ type OperationsScopedList struct {
 	Warning *OperationsScopedListWarning `json:"warning,omitempty"`
 }
 
+// OperationsScopedListWarning: [Output Only] Informational warning
+// which replaces the list of operations when the list is empty.
 type OperationsScopedListWarning struct {
 	// Code: [Output Only] The warning type identifier for this warning.
 	//
@@ -3314,6 +3405,9 @@ type OperationsScopedListWarningData struct {
 	Value string `json:"value,omitempty"`
 }
 
+// PathMatcher: A matcher for the path portion of the URL. The
+// BackendService from the longest-matched rule will serve the URL. If
+// no rule was matched, the default_service will be used.
 type PathMatcher struct {
 	// DefaultService: The URL to the BackendService resource. This will be
 	// used if none of the 'pathRules' defined by this PathMatcher is met by
@@ -3330,6 +3424,8 @@ type PathMatcher struct {
 	PathRules []*PathRule `json:"pathRules,omitempty"`
 }
 
+// PathRule: A path-matching rule for a URL. If matched, will use the
+// specified BackendService to handle the traffic arriving at this URL.
 type PathRule struct {
 	// Paths: The list of path patterns to match. Each must start with / and
 	// the only place a * is allowed is at the end following a /. The string
@@ -3342,6 +3438,9 @@ type PathRule struct {
 	Service string `json:"service,omitempty"`
 }
 
+// Project: A Project resource. Projects can only be created in the
+// Google Developers Console. Unless marked otherwise, values can only
+// be modified in the console.
 type Project struct {
 	// CommonInstanceMetadata: Metadata key/value pairs available to all
 	// instances contained in this project. See Custom metadata for more
@@ -3377,6 +3476,7 @@ type Project struct {
 	UsageExportLocation *UsageExportLocation `json:"usageExportLocation,omitempty"`
 }
 
+// Quota: A quotas entry.
 type Quota struct {
 	// Limit: [Output Only] Quota limit for this metric.
 	Limit float64 `json:"limit,omitempty"`
@@ -3414,6 +3514,7 @@ type Quota struct {
 	Usage float64 `json:"usage,omitempty"`
 }
 
+// Region: Region resource.
 type Region struct {
 	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
 	// format.
@@ -3455,6 +3556,7 @@ type Region struct {
 	Zones []string `json:"zones,omitempty"`
 }
 
+// RegionList: Contains a list of region resources.
 type RegionList struct {
 	// Id: [Output Only] Unique identifier for the resource; defined by the
 	// server.
@@ -3481,6 +3583,20 @@ type ResourceGroupReference struct {
 	Group string `json:"group,omitempty"`
 }
 
+// Route: The route resource. A Route is a rule that specifies how
+// certain packets should be handled by the virtual network. Routes are
+// associated with VMs by tag and the set of Routes for a particular VM
+// is called its routing table. For each packet leaving a VM, the system
+// searches that VM's routing table for a single best matching Route.
+// Routes match packets by destination IP address, preferring smaller or
+// more specific ranges over larger ones. If there is a tie, the system
+// selects the Route with the smallest priority value. If there is still
+// a tie, it uses the layer three and four packet headers to select just
+// one of the remaining matching Routes. The packet is then forwarded as
+// specified by the nextHop field of the winning Route -- either to
+// another VM destination, a VM gateway or a GCE operated gateway.
+// Packets that do not match any Route in the sending VM's routing table
+// are dropped.
 type Route struct {
 	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
 	// format.
@@ -3592,6 +3708,7 @@ type RouteWarningsData struct {
 	Value string `json:"value,omitempty"`
 }
 
+// RouteList: Contains a list of route resources.
 type RouteList struct {
 	// Id: [Output Only] Unique identifier for the resource. Defined by the
 	// server.
@@ -3611,6 +3728,7 @@ type RouteList struct {
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
+// Scheduling: Sets the scheduling options for an Instance.
 type Scheduling struct {
 	// AutomaticRestart: Specifies whether the instance should be
 	// automatically restarted if it is terminated by Compute Engine (not
@@ -3630,6 +3748,7 @@ type Scheduling struct {
 	Preemptible bool `json:"preemptible,omitempty"`
 }
 
+// SerialPortOutput: An instance's serial console output.
 type SerialPortOutput struct {
 	// Contents: [Output Only] The contents of the console output.
 	Contents string `json:"contents,omitempty"`
@@ -3642,6 +3761,7 @@ type SerialPortOutput struct {
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
+// ServiceAccount: A service account.
 type ServiceAccount struct {
 	// Email: Email address of the service account.
 	Email string `json:"email,omitempty"`
@@ -3651,6 +3771,7 @@ type ServiceAccount struct {
 	Scopes []string `json:"scopes,omitempty"`
 }
 
+// Snapshot: A persistent disk snapshot resource.
 type Snapshot struct {
 	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
 	// format.
@@ -3720,6 +3841,7 @@ type Snapshot struct {
 	StorageBytesStatus string `json:"storageBytesStatus,omitempty"`
 }
 
+// SnapshotList: Contains a list of Snapshot resources.
 type SnapshotList struct {
 	// Id: Unique identifier for the resource; defined by the server (output
 	// only).
@@ -3739,6 +3861,7 @@ type SnapshotList struct {
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
+// Tags: A set of instance tags.
 type Tags struct {
 	// Fingerprint: Specifies a fingerprint for this request, which is
 	// essentially a hash of the metadata's contents and used for optimistic
@@ -3755,6 +3878,8 @@ type Tags struct {
 	Items []string `json:"items,omitempty"`
 }
 
+// TargetHttpProxy: A TargetHttpProxy resource. This resource defines an
+// HTTP proxy.
 type TargetHttpProxy struct {
 	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
 	// format.
@@ -3789,6 +3914,7 @@ type TargetHttpProxy struct {
 	UrlMap string `json:"urlMap,omitempty"`
 }
 
+// TargetHttpProxyList: A list of TargetHttpProxy resources.
 type TargetHttpProxyList struct {
 	// Id: [Output Only] Unique identifier for the resource; defined by the
 	// server.
@@ -3809,6 +3935,8 @@ type TargetHttpProxyList struct {
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
+// TargetInstance: A TargetInstance resource. This resource defines an
+// endpoint VM that terminates traffic of certain protocols.
 type TargetInstance struct {
 	// CreationTimestamp: Creation timestamp in RFC3339 text format (output
 	// only).
@@ -3868,6 +3996,7 @@ type TargetInstanceAggregatedList struct {
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
+// TargetInstanceList: Contains a list of TargetInstance resources.
 type TargetInstanceList struct {
 	// Id: Unique identifier for the resource; defined by the server (output
 	// only).
@@ -3896,6 +4025,8 @@ type TargetInstancesScopedList struct {
 	Warning *TargetInstancesScopedListWarning `json:"warning,omitempty"`
 }
 
+// TargetInstancesScopedListWarning: Informational warning which
+// replaces the list of addresses when the list is empty.
 type TargetInstancesScopedListWarning struct {
 	// Code: [Output Only] The warning type identifier for this warning.
 	//
@@ -3932,6 +4063,9 @@ type TargetInstancesScopedListWarningData struct {
 	Value string `json:"value,omitempty"`
 }
 
+// TargetPool: A TargetPool resource. This resource defines a pool of
+// VMs, associated HttpHealthCheck resources, and the fallback
+// TargetPool.
 type TargetPool struct {
 	// BackupPool: This field is applicable only when the containing target
 	// pool is serving a forwarding rule as the primary pool, and its
@@ -4046,6 +4180,7 @@ type TargetPoolInstanceHealth struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// TargetPoolList: Contains a list of TargetPool resources.
 type TargetPoolList struct {
 	// Id: Unique identifier for the resource; defined by the server (output
 	// only).
@@ -4094,6 +4229,8 @@ type TargetPoolsScopedList struct {
 	Warning *TargetPoolsScopedListWarning `json:"warning,omitempty"`
 }
 
+// TargetPoolsScopedListWarning: Informational warning which replaces
+// the list of addresses when the list is empty.
 type TargetPoolsScopedListWarning struct {
 	// Code: [Output Only] The warning type identifier for this warning.
 	//
@@ -4211,6 +4348,7 @@ type TargetVpnGatewayAggregatedList struct {
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
+// TargetVpnGatewayList: Contains a list of TargetVpnGateway resources.
 type TargetVpnGatewayList struct {
 	// Id: [Output Only] Unique identifier for the resource. Defined by the
 	// server.
@@ -4241,6 +4379,8 @@ type TargetVpnGatewaysScopedList struct {
 	Warning *TargetVpnGatewaysScopedListWarning `json:"warning,omitempty"`
 }
 
+// TargetVpnGatewaysScopedListWarning: [Output Only] Informational
+// warning which replaces the list of addresses when the list is empty.
 type TargetVpnGatewaysScopedListWarning struct {
 	// Code: [Output Only] The warning type identifier for this warning.
 	//
@@ -4287,6 +4427,9 @@ type TestFailure struct {
 	Path string `json:"path,omitempty"`
 }
 
+// UrlMap: A UrlMap resource. This resource defines the mapping from URL
+// to the BackendService resource, based on the "longest-match" of the
+// URL's host and path.
 type UrlMap struct {
 	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
 	// format.
@@ -4336,6 +4479,7 @@ type UrlMap struct {
 	Tests []*UrlMapTest `json:"tests,omitempty"`
 }
 
+// UrlMapList: Contains a list of UrlMap resources.
 type UrlMapList struct {
 	// Id: [Output Only] Unique identifier for the resource. Set by the
 	// server.
@@ -4359,6 +4503,7 @@ type UrlMapReference struct {
 	UrlMap string `json:"urlMap,omitempty"`
 }
 
+// UrlMapTest: Message for the expected URL mappings.
 type UrlMapTest struct {
 	// Description: Description of this test case.
 	Description string `json:"description,omitempty"`
@@ -4374,6 +4519,8 @@ type UrlMapTest struct {
 	Service string `json:"service,omitempty"`
 }
 
+// UrlMapValidationResult: Message representing the validation result
+// for a UrlMap.
 type UrlMapValidationResult struct {
 	LoadErrors []string `json:"loadErrors,omitempty"`
 
@@ -4398,6 +4545,9 @@ type UrlMapsValidateResponse struct {
 	Result *UrlMapValidationResult `json:"result,omitempty"`
 }
 
+// UsageExportLocation: The location in Cloud Storage and naming method
+// of the daily usage report. Contains bucket_name and report_name
+// prefix.
 type UsageExportLocation struct {
 	// BucketName: The name of an existing bucket in Cloud Storage where the
 	// usage report object is stored. The Google Service Account is granted
@@ -4511,6 +4661,7 @@ type VpnTunnelAggregatedList struct {
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
+// VpnTunnelList: Contains a list of VpnTunnel resources.
 type VpnTunnelList struct {
 	// Id: [Output Only] Unique identifier for the resource; defined by the
 	// server.
@@ -4540,6 +4691,8 @@ type VpnTunnelsScopedList struct {
 	Warning *VpnTunnelsScopedListWarning `json:"warning,omitempty"`
 }
 
+// VpnTunnelsScopedListWarning: Informational warning which replaces the
+// list of addresses when the list is empty.
 type VpnTunnelsScopedListWarning struct {
 	// Code: [Output Only] The warning type identifier for this warning.
 	//
@@ -4576,6 +4729,7 @@ type VpnTunnelsScopedListWarningData struct {
 	Value string `json:"value,omitempty"`
 }
 
+// Zone: A Zone resource.
 type Zone struct {
 	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
 	// format.
@@ -4636,6 +4790,7 @@ type ZoneMaintenanceWindows struct {
 	Name string `json:"name,omitempty"`
 }
 
+// ZoneList: Contains a list of zone resources.
 type ZoneList struct {
 	// Id: [Output Only] Unique identifier for the resource; defined by the
 	// server.

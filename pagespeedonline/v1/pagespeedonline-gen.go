@@ -113,6 +113,9 @@ type Result struct {
 	Version *ResultVersion `json:"version,omitempty"`
 }
 
+// ResultFormattedResults: Localized PageSpeed results. Contains a
+// ruleResults entry for each PageSpeed rule instantiated and run by the
+// server.
 type ResultFormattedResults struct {
 	// Locale: The locale of the formattedResults, e.g. "en_US".
 	Locale string `json:"locale,omitempty"`
@@ -122,9 +125,14 @@ type ResultFormattedResults struct {
 	RuleResults *ResultFormattedResultsRuleResults `json:"ruleResults,omitempty"`
 }
 
+// ResultFormattedResultsRuleResults: Dictionary of formatted rule
+// results, with one entry for each PageSpeed rule instantiated and run
+// by the server.
 type ResultFormattedResultsRuleResults struct {
 }
 
+// ResultPageStats: Summary statistics for the page, such as number of
+// JavaScript bytes, number of HTML bytes, etc.
 type ResultPageStats struct {
 	// CssResponseBytes: Number of uncompressed response bytes for CSS
 	// resources on the page.
@@ -176,6 +184,8 @@ type ResultPageStats struct {
 	TotalRequestBytes int64 `json:"totalRequestBytes,omitempty,string"`
 }
 
+// ResultScreenshot: Base64-encoded screenshot of the page that was
+// analyzed.
 type ResultScreenshot struct {
 	// Data: Image data base64 encoded.
 	Data string `json:"data,omitempty"`
@@ -190,6 +200,8 @@ type ResultScreenshot struct {
 	Width int64 `json:"width,omitempty"`
 }
 
+// ResultVersion: The version of PageSpeed used to generate these
+// results.
 type ResultVersion struct {
 	// Major: The major version number of PageSpeed used to generate these
 	// results.

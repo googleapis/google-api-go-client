@@ -74,6 +74,10 @@ type PawsService struct {
 	s *Service
 }
 
+// AntennaCharacteristics: Antenna characteristics provide additional
+// information, such as the antenna height, antenna type, etc. Whether
+// antenna characteristics must be provided in a request depends on the
+// device type and regulatory domain.
 type AntennaCharacteristics struct {
 	// Height: The antenna height in meters. Whether the antenna height is
 	// required depends on the device type and the regulatory domain. Note
@@ -90,6 +94,7 @@ type AntennaCharacteristics struct {
 	HeightUncertainty float64 `json:"heightUncertainty,omitempty"`
 }
 
+// DatabaseSpec: This message contains the name and URI of a database.
 type DatabaseSpec struct {
 	// Name: The display name for a database.
 	Name string `json:"name,omitempty"`
@@ -98,6 +103,8 @@ type DatabaseSpec struct {
 	Uri string `json:"uri,omitempty"`
 }
 
+// DbUpdateSpec: This message is provided by the database to notify
+// devices of an upcoming change to the database URI.
 type DbUpdateSpec struct {
 	// Databases: A required list of one or more databases. A device should
 	// update its preconfigured list of databases to replace (only) the
@@ -105,6 +112,11 @@ type DbUpdateSpec struct {
 	Databases []*DatabaseSpec `json:"databases,omitempty"`
 }
 
+// DeviceCapabilities: Device capabilities provide additional
+// information that may be used by a device to provide additional
+// information to the database that may help it to determine available
+// spectrum. If the database does not support device capabilities it
+// will ignore the parameter altogether.
 type DeviceCapabilities struct {
 	// FrequencyRanges: An optional list of frequency ranges supported by
 	// the device. Each element must contain start and stop frequencies in
@@ -114,6 +126,10 @@ type DeviceCapabilities struct {
 	FrequencyRanges []*FrequencyRange `json:"frequencyRanges,omitempty"`
 }
 
+// DeviceDescriptor: The device descriptor contains parameters that
+// identify the specific device, such as its manufacturer serial number,
+// regulatory-specific identifier (e.g., FCC ID), and any other device
+// characteristics required by regulatory domains.
 type DeviceDescriptor struct {
 	// EtsiEnDeviceCategory: Specifies the ETSI white space device category.
 	// Valid values are the strings master and slave. This field is
@@ -177,6 +193,21 @@ type DeviceDescriptor struct {
 	SerialNumber string `json:"serialNumber,omitempty"`
 }
 
+// DeviceOwner: This parameter contains device-owner information
+// required as part of device registration. The regulatory domains may
+// require additional parameters.
+//
+// All contact information must be expressed using the structure defined
+// by the vCard format specification. Only the contact fields of vCard
+// are supported:
+// - fn: Full name of an individual
+// - org: Name of the organization
+// - adr: Address fields
+// - tel: Telephone numbers
+// - email: Email addresses
+//
+// Note that the vCard specification defines maximum lengths for each
+// field.
 type DeviceOwner struct {
 	// Operator: The vCard contact information for the device operator is
 	// optional, but may be required by specific regulatory domains.
@@ -187,6 +218,8 @@ type DeviceOwner struct {
 	Owner *Vcard `json:"owner,omitempty"`
 }
 
+// DeviceValidity: The device validity element describes whether a
+// particular device is valid to operate in the regulatory domain.
 type DeviceValidity struct {
 	// DeviceDesc: The descriptor of the device for which the validity check
 	// was requested. It will always be present.
@@ -202,6 +235,11 @@ type DeviceValidity struct {
 	Reason string `json:"reason,omitempty"`
 }
 
+// EventTime: The start and stop times of an event. This is used to
+// indicate the time period for which a spectrum profile is valid.
+//
+// Both times are expressed using the format, YYYY-MM-DDThh:mm:ssZ, as
+// defined in RFC3339. The times must be expressed using UTC.
 type EventTime struct {
 	// StartTime: The inclusive start of the event. It will be present.
 	StartTime string `json:"startTime,omitempty"`
@@ -210,6 +248,8 @@ type EventTime struct {
 	StopTime string `json:"stopTime,omitempty"`
 }
 
+// FrequencyRange: A specific range of frequencies together with the
+// associated maximum power level and channel identifier.
 type FrequencyRange struct {
 	// ChannelId: The database may include a channel identifier, when
 	// applicable. When it is included, the device should treat it as
@@ -235,6 +275,8 @@ type FrequencyRange struct {
 	StopHz float64 `json:"stopHz,omitempty"`
 }
 
+// GeoLocation: This parameter is used to specify the geolocation of the
+// device.
 type GeoLocation struct {
 	// Confidence: The location confidence level, as an integer percentage,
 	// may be required, depending on the regulatory domain. When the
@@ -256,6 +298,8 @@ type GeoLocation struct {
 	Region *GeoLocationPolygon `json:"region,omitempty"`
 }
 
+// GeoLocationEllipse: A "point" with uncertainty is represented using
+// the Ellipse shape.
 type GeoLocationEllipse struct {
 	// Center: A required geo-spatial point representing the center of the
 	// ellipse.
@@ -283,6 +327,7 @@ type GeoLocationEllipse struct {
 	SemiMinorAxis float64 `json:"semiMinorAxis,omitempty"`
 }
 
+// GeoLocationPoint: A single geolocation on the globe.
 type GeoLocationPoint struct {
 	// Latitude: A required floating-point number that expresses the
 	// latitude in degrees using the WGS84 datum. For details on this
@@ -297,6 +342,8 @@ type GeoLocationPoint struct {
 	Longitude float64 `json:"longitude,omitempty"`
 }
 
+// GeoLocationPolygon: A region is represented using the polygonal
+// shape.
 type GeoLocationPolygon struct {
 	// Exterior: When the geolocation describes a region, the exterior field
 	// refers to a list of latitude/longitude points that represent the
@@ -316,6 +363,8 @@ type GeoLocationPolygon struct {
 	Exterior []*GeoLocationPoint `json:"exterior,omitempty"`
 }
 
+// GeoSpectrumSchedule: The schedule of spectrum profiles available at a
+// particular geolocation.
 type GeoSpectrumSchedule struct {
 	// Location: The geolocation identifies the location at which the
 	// spectrum schedule applies. It will always be present.
@@ -329,6 +378,8 @@ type GeoSpectrumSchedule struct {
 	SpectrumSchedules []*SpectrumSchedule `json:"spectrumSchedules,omitempty"`
 }
 
+// PawsGetSpectrumBatchRequest: The request message for a batch
+// available spectrum query protocol.
 type PawsGetSpectrumBatchRequest struct {
 	// Antenna: Depending on device type and regulatory domain, antenna
 	// characteristics may be required.
@@ -403,6 +454,9 @@ type PawsGetSpectrumBatchRequest struct {
 	Version string `json:"version,omitempty"`
 }
 
+// PawsGetSpectrumBatchResponse: The response message for the batch
+// available spectrum query contains a schedule of available spectrum
+// for the device at multiple locations.
 type PawsGetSpectrumBatchResponse struct {
 	// DatabaseChange: A database may include the databaseChange parameter
 	// to notify a device of a change to its database URI, providing one or
@@ -488,6 +542,8 @@ type PawsGetSpectrumBatchResponse struct {
 	Version string `json:"version,omitempty"`
 }
 
+// PawsGetSpectrumRequest: The request message for the available
+// spectrum query protocol which must include the device's geolocation.
 type PawsGetSpectrumRequest struct {
 	// Antenna: Depending on device type and regulatory domain, the
 	// characteristics of the antenna may be required.
@@ -556,6 +612,9 @@ type PawsGetSpectrumRequest struct {
 	Version string `json:"version,omitempty"`
 }
 
+// PawsGetSpectrumResponse: The response message for the available
+// spectrum query which contains a schedule of available spectrum for
+// the device.
 type PawsGetSpectrumResponse struct {
 	// DatabaseChange: A database may include the databaseChange parameter
 	// to notify a device of a change to its database URI, providing one or
@@ -636,6 +695,8 @@ type PawsGetSpectrumResponse struct {
 	Version string `json:"version,omitempty"`
 }
 
+// PawsInitRequest: The initialization request message allows the master
+// device to initiate exchange of capabilities with the database.
 type PawsInitRequest struct {
 	// DeviceDesc: The DeviceDescriptor parameter is required. If the
 	// database does not support the device or any of the rulesets specified
@@ -658,6 +719,8 @@ type PawsInitRequest struct {
 	Version string `json:"version,omitempty"`
 }
 
+// PawsInitResponse: The initialization response message communicates
+// database parameters to the requesting device.
 type PawsInitResponse struct {
 	// DatabaseChange: A database may include the databaseChange parameter
 	// to notify a device of a change to its database URI, providing one or
@@ -690,6 +753,9 @@ type PawsInitResponse struct {
 	Version string `json:"version,omitempty"`
 }
 
+// PawsNotifySpectrumUseRequest: The spectrum-use notification message
+// which must contain the geolocation of the Device and parameters
+// required by the regulatory domain.
 type PawsNotifySpectrumUseRequest struct {
 	// DeviceDesc: Device descriptor information is required in the
 	// spectrum-use notification message.
@@ -729,6 +795,7 @@ type PawsNotifySpectrumUseRequest struct {
 	Version string `json:"version,omitempty"`
 }
 
+// PawsNotifySpectrumUseResponse: An empty response to the notification.
 type PawsNotifySpectrumUseResponse struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "spectrum#pawsNotifySpectrumUseResponse".
@@ -746,6 +813,8 @@ type PawsNotifySpectrumUseResponse struct {
 	Version string `json:"version,omitempty"`
 }
 
+// PawsRegisterRequest: The registration request message contains the
+// required registration parameters.
 type PawsRegisterRequest struct {
 	// Antenna: Antenna characteristics, including its height and height
 	// type.
@@ -772,6 +841,8 @@ type PawsRegisterRequest struct {
 	Version string `json:"version,omitempty"`
 }
 
+// PawsRegisterResponse: The registration response message simply
+// acknowledges receipt of the request and is otherwise empty.
 type PawsRegisterResponse struct {
 	// DatabaseChange: A database may include the databaseChange parameter
 	// to notify a device of a change to its database URI, providing one or
@@ -797,6 +868,7 @@ type PawsRegisterResponse struct {
 	Version string `json:"version,omitempty"`
 }
 
+// PawsVerifyDeviceRequest: The device validation request message.
 type PawsVerifyDeviceRequest struct {
 	// DeviceDescs: A list of device descriptors, which specifies the slave
 	// devices to be validated, is required.
@@ -814,6 +886,7 @@ type PawsVerifyDeviceRequest struct {
 	Version string `json:"version,omitempty"`
 }
 
+// PawsVerifyDeviceResponse: The device validation response message.
 type PawsVerifyDeviceResponse struct {
 	// DatabaseChange: A database may include the databaseChange parameter
 	// to notify a device of a change to its database URI, providing one or
@@ -846,6 +919,9 @@ type PawsVerifyDeviceResponse struct {
 	Version string `json:"version,omitempty"`
 }
 
+// RulesetInfo: This contains parameters for the ruleset of a regulatory
+// domain that is communicated using the initialization and
+// available-spectrum processes.
 type RulesetInfo struct {
 	// Authority: The regulatory domain to which the ruleset belongs is
 	// required. It must be a 2-letter country code. The device should use
@@ -889,6 +965,9 @@ type RulesetInfo struct {
 	RulesetIds []string `json:"rulesetIds,omitempty"`
 }
 
+// SpectrumMessage: Available spectrum can be logically characterized by
+// a list of frequency ranges and permissible power levels for each
+// range.
 type SpectrumMessage struct {
 	// Bandwidth: The bandwidth (in Hertz) for which permissible power
 	// levels are specified. For example, FCC regulation would require only
@@ -904,6 +983,9 @@ type SpectrumMessage struct {
 	FrequencyRanges []*FrequencyRange `json:"frequencyRanges,omitempty"`
 }
 
+// SpectrumSchedule: The spectrum schedule element combines an event
+// time with spectrum profile to define a time period in which the
+// profile is valid.
 type SpectrumSchedule struct {
 	// EventTime: The event time expresses when the spectrum profile is
 	// valid. It will always be present.
@@ -915,6 +997,13 @@ type SpectrumSchedule struct {
 	Spectra []*SpectrumMessage `json:"spectra,omitempty"`
 }
 
+// Vcard: A vCard-in-JSON message that contains only the fields needed
+// for PAWS:
+// - fn: Full name of an individual
+// - org: Name of the organization
+// - adr: Address fields
+// - tel: Telephone numbers
+// - email: Email addresses
 type Vcard struct {
 	// Adr: The street address of the entity.
 	Adr *VcardAddress `json:"adr,omitempty"`
@@ -932,6 +1021,7 @@ type Vcard struct {
 	Tel *VcardTelephone `json:"tel,omitempty"`
 }
 
+// VcardAddress: The structure used to represent a street address.
 type VcardAddress struct {
 	// Code: The postal code associated with the address. For example:
 	// 94423.
@@ -955,11 +1045,14 @@ type VcardAddress struct {
 	Street string `json:"street,omitempty"`
 }
 
+// VcardTelephone: The structure used to represent a telephone number.
 type VcardTelephone struct {
 	// Uri: A nested telephone URI of the form: tel:+1-123-456-7890.
 	Uri string `json:"uri,omitempty"`
 }
 
+// VcardTypedText: The structure used to represent an organization and
+// an email address.
 type VcardTypedText struct {
 	// Text: The text string associated with this item. For example, for an
 	// org field: ACME, inc. For an email field: smith@example.com.

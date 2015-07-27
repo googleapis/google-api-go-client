@@ -140,6 +140,7 @@ type PretargetingConfigService struct {
 	s *Service
 }
 
+// Account: Configuration data for an Ad Exchange buyer account.
 type Account struct {
 	// BidderLocation: Your bidder locations that have distinct URLs.
 	BidderLocation []*AccountBidderLocation `json:"bidderLocation,omitempty"`
@@ -191,6 +192,9 @@ type AccountBidderLocation struct {
 	Url string `json:"url,omitempty"`
 }
 
+// AccountsList: An account feed lists Ad Exchange buyer accounts that
+// the user has access to. Each entry in the feed corresponds to a
+// single buyer account.
 type AccountsList struct {
 	// Items: A list of accounts.
 	Items []*Account `json:"items,omitempty"`
@@ -199,6 +203,7 @@ type AccountsList struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// BillingInfo: The configuration data for an Ad Exchange billing info.
 type BillingInfo struct {
 	// AccountId: Account id.
 	AccountId int64 `json:"accountId,omitempty"`
@@ -215,6 +220,9 @@ type BillingInfo struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// BillingInfoList: A billing info feed lists Billing Info the Ad
+// Exchange buyer account has access to. Each entry in the feed
+// corresponds to a single billing info.
 type BillingInfoList struct {
 	// Items: A list of billing info relevant for your account.
 	Items []*BillingInfo `json:"items,omitempty"`
@@ -223,6 +231,7 @@ type BillingInfoList struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// Budget: The configuration data for Ad Exchange RTB - Budget API.
 type Budget struct {
 	// AccountId: The id of the account. This is required for get and update
 	// requests.
@@ -247,6 +256,7 @@ type Budget struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// Creative: A creative and its classification data.
 type Creative struct {
 	// HTMLSnippet: The HTML snippet that displays the ad when inserted in
 	// the web page. If set, videoURL should not be set.
@@ -346,6 +356,8 @@ type CreativeCorrections struct {
 	Reason string `json:"reason,omitempty"`
 }
 
+// CreativeFilteringReasons: The filtering reasons for the creative.
+// Read-only. This field should not be set in requests.
 type CreativeFilteringReasons struct {
 	// Date: The date in ISO 8601 format for the data. The data is collected
 	// from 00:00:00 to 23:59:59 in PST.
@@ -409,6 +421,9 @@ type CreativeServingRestrictionsDisapprovalReasons struct {
 	Reason string `json:"reason,omitempty"`
 }
 
+// CreativesList: The creatives feed lists the active creatives for the
+// Ad Exchange buyer accounts that the user has access to. Each entry in
+// the feed corresponds to a single creative.
 type CreativesList struct {
 	// Items: A list of creatives.
 	Items []*Creative `json:"items,omitempty"`
@@ -422,6 +437,8 @@ type CreativesList struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// PerformanceReport: The configuration data for an Ad Exchange
+// performance report list.
 type PerformanceReport struct {
 	// BidRate: The number of bid responses with an ad.
 	BidRate float64 `json:"bidRate,omitempty"`
@@ -507,6 +524,12 @@ type PerformanceReport struct {
 	UnsuccessfulRequestRate float64 `json:"unsuccessfulRequestRate,omitempty"`
 }
 
+// PerformanceReportList: The configuration data for an Ad Exchange
+// performance report list.
+// https://sites.google.com/a/google.com/adx-integration/Home/engineering
+// /binary-releases/rtb-api-release
+// https://cs.corp.google.com/#piper///depot/google3/contentads/adx/tools
+// /rtb_api/adxrtb.py
 type PerformanceReportList struct {
 	// Kind: Resource type.
 	Kind string `json:"kind,omitempty"`

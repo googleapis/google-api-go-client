@@ -121,6 +121,8 @@ type Analyze struct {
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
+// AnalyzeDataDescription: Description of the data the model was trained
+// on.
 type AnalyzeDataDescription struct {
 	// Features: Description of the input features in the data set.
 	Features []*AnalyzeDataDescriptionFeatures `json:"features,omitempty"`
@@ -143,6 +145,8 @@ type AnalyzeDataDescriptionFeatures struct {
 	Text *AnalyzeDataDescriptionFeaturesText `json:"text,omitempty"`
 }
 
+// AnalyzeDataDescriptionFeaturesCategorical: Description of the
+// categorical values of this feature.
 type AnalyzeDataDescriptionFeaturesCategorical struct {
 	// Count: Number of categorical values for this feature in the data.
 	Count int64 `json:"count,omitempty,string"`
@@ -159,6 +163,8 @@ type AnalyzeDataDescriptionFeaturesCategoricalValues struct {
 	Value string `json:"value,omitempty"`
 }
 
+// AnalyzeDataDescriptionFeaturesNumeric: Description of the numeric
+// values of this feature.
 type AnalyzeDataDescriptionFeaturesNumeric struct {
 	// Count: Number of numeric values for this feature in the data set.
 	Count int64 `json:"count,omitempty,string"`
@@ -171,11 +177,15 @@ type AnalyzeDataDescriptionFeaturesNumeric struct {
 	Variance float64 `json:"variance,omitempty"`
 }
 
+// AnalyzeDataDescriptionFeaturesText: Description of multiple-word text
+// values of this feature.
 type AnalyzeDataDescriptionFeaturesText struct {
 	// Count: Number of multiple-word text values for this feature.
 	Count int64 `json:"count,omitempty,string"`
 }
 
+// AnalyzeDataDescriptionOutputFeature: Description of the output value
+// or label.
 type AnalyzeDataDescriptionOutputFeature struct {
 	// Numeric: Description of the output values in the data set.
 	Numeric *AnalyzeDataDescriptionOutputFeatureNumeric `json:"numeric,omitempty"`
@@ -184,6 +194,8 @@ type AnalyzeDataDescriptionOutputFeature struct {
 	Text []*AnalyzeDataDescriptionOutputFeatureText `json:"text,omitempty"`
 }
 
+// AnalyzeDataDescriptionOutputFeatureNumeric: Description of the output
+// values in the data set.
 type AnalyzeDataDescriptionOutputFeatureNumeric struct {
 	// Count: Number of numeric output values in the data set.
 	Count int64 `json:"count,omitempty,string"`
@@ -203,6 +215,7 @@ type AnalyzeDataDescriptionOutputFeatureText struct {
 	Value string `json:"value,omitempty"`
 }
 
+// AnalyzeModelDescription: Description of the model.
 type AnalyzeModelDescription struct {
 	// ConfusionMatrix: An output confusion matrix. This shows an estimate
 	// for how this model will do in predictions. This is first indexed by
@@ -220,9 +233,18 @@ type AnalyzeModelDescription struct {
 	Modelinfo *Training `json:"modelinfo,omitempty"`
 }
 
+// AnalyzeModelDescriptionConfusionMatrix: An output confusion matrix.
+// This shows an estimate for how this model will do in predictions.
+// This is first indexed by the true class label. For each true class
+// label, this provides a pair {predicted_label, count}, where count is
+// the estimated number of times the model will predict the predicted
+// label given the true label. Will not output if more then 100 classes
+// [Categorical models only].
 type AnalyzeModelDescriptionConfusionMatrix struct {
 }
 
+// AnalyzeModelDescriptionConfusionMatrixRowTotals: A list of the
+// confusion matrix row totals
 type AnalyzeModelDescriptionConfusionMatrixRowTotals struct {
 }
 
@@ -231,6 +253,7 @@ type Input struct {
 	Input *InputInput `json:"input,omitempty"`
 }
 
+// InputInput: Input to the model for a prediction
 type InputInput struct {
 	// CsvInstance: A list of input features, these can be strings or
 	// doubles.
@@ -327,6 +350,7 @@ type Training struct {
 	Utility []*TrainingUtility `json:"utility,omitempty"`
 }
 
+// TrainingModelInfo: Model metadata.
 type TrainingModelInfo struct {
 	// ClassWeightedAccuracy: Estimated accuracy of model taking utility
 	// weights into account [Categorical models only].
@@ -365,6 +389,7 @@ type TrainingTrainingInstances struct {
 	Output string `json:"output,omitempty"`
 }
 
+// TrainingUtility: Class label (string).
 type TrainingUtility struct {
 }
 

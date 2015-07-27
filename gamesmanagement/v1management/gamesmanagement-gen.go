@@ -168,6 +168,8 @@ type TurnBasedMatchesService struct {
 	s *Service
 }
 
+// AchievementResetAllResponse: This is a JSON template for achievement
+// reset all response.
 type AchievementResetAllResponse struct {
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string gamesManagement#achievementResetAllResponse.
@@ -177,6 +179,8 @@ type AchievementResetAllResponse struct {
 	Results []*AchievementResetResponse `json:"results,omitempty"`
 }
 
+// AchievementResetMultipleForAllRequest: This is a JSON template for
+// multiple achievements reset all request.
 type AchievementResetMultipleForAllRequest struct {
 	// AchievementIds: The IDs of achievements to reset.
 	AchievementIds []string `json:"achievement_ids,omitempty"`
@@ -187,6 +191,8 @@ type AchievementResetMultipleForAllRequest struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// AchievementResetResponse: This is a JSON template for an achievement
+// reset response.
 type AchievementResetResponse struct {
 	// CurrentState: The current state of the achievement. This is the same
 	// as the initial state of the achievement.
@@ -209,6 +215,8 @@ type AchievementResetResponse struct {
 	UpdateOccurred bool `json:"updateOccurred,omitempty"`
 }
 
+// EventsResetMultipleForAllRequest: This is a JSON template for
+// multiple events reset all request.
 type EventsResetMultipleForAllRequest struct {
 	// EventIds: The IDs of events to reset.
 	EventIds []string `json:"event_ids,omitempty"`
@@ -218,6 +226,8 @@ type EventsResetMultipleForAllRequest struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// GamesPlayedResource: This is a JSON template for metadata about a
+// player playing a game with the currently authenticated user.
 type GamesPlayedResource struct {
 	// AutoMatched: True if the player was auto-matched with the currently
 	// authenticated user.
@@ -228,6 +238,8 @@ type GamesPlayedResource struct {
 	TimeMillis int64 `json:"timeMillis,omitempty,string"`
 }
 
+// GamesPlayerExperienceInfoResource: This is a JSON template for 1P/3P
+// metadata about the player's experience.
 type GamesPlayerExperienceInfoResource struct {
 	// CurrentExperiencePoints: The current number of experience points for
 	// the player.
@@ -245,6 +257,8 @@ type GamesPlayerExperienceInfoResource struct {
 	NextLevel *GamesPlayerLevelResource `json:"nextLevel,omitempty"`
 }
 
+// GamesPlayerLevelResource: This is a JSON template for 1P/3P metadata
+// about a user's level.
 type GamesPlayerLevelResource struct {
 	// Level: The level for the user.
 	Level int64 `json:"level,omitempty"`
@@ -256,6 +270,7 @@ type GamesPlayerLevelResource struct {
 	MinExperiencePoints int64 `json:"minExperiencePoints,omitempty,string"`
 }
 
+// HiddenPlayer: This is a JSON template for the HiddenPlayer resource.
 type HiddenPlayer struct {
 	// HiddenTimeMillis: The time this player was hidden.
 	HiddenTimeMillis int64 `json:"hiddenTimeMillis,omitempty,string"`
@@ -268,6 +283,8 @@ type HiddenPlayer struct {
 	Player *Player `json:"player,omitempty"`
 }
 
+// HiddenPlayerList: This is a JSON template for a list of hidden
+// players.
 type HiddenPlayerList struct {
 	// Items: The players.
 	Items []*HiddenPlayer `json:"items,omitempty"`
@@ -280,6 +297,7 @@ type HiddenPlayerList struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// Player: This is a JSON template for a Player resource.
 type Player struct {
 	// AvatarImageUrl: The base URL for the image that represents the
 	// player.
@@ -312,6 +330,8 @@ type Player struct {
 	Title string `json:"title,omitempty"`
 }
 
+// PlayerName: An object representation of the individual components of
+// the player's name. For some players, these fields may not be present.
 type PlayerName struct {
 	// FamilyName: The family name of this player. In some places, this is
 	// known as the last name.
@@ -322,6 +342,8 @@ type PlayerName struct {
 	GivenName string `json:"givenName,omitempty"`
 }
 
+// PlayerScoreResetAllResponse: This is a JSON template for a list of
+// leaderboard reset resources.
 type PlayerScoreResetAllResponse struct {
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string gamesManagement#playerScoreResetResponse.
@@ -331,6 +353,8 @@ type PlayerScoreResetAllResponse struct {
 	Results []*PlayerScoreResetResponse `json:"results,omitempty"`
 }
 
+// PlayerScoreResetResponse: This is a JSON template for a list of reset
+// leaderboard entry resources.
 type PlayerScoreResetResponse struct {
 	// DefinitionId: The ID of an leaderboard for which player state has
 	// been updated.
@@ -348,6 +372,8 @@ type PlayerScoreResetResponse struct {
 	ResetScoreTimeSpans []string `json:"resetScoreTimeSpans,omitempty"`
 }
 
+// QuestsResetMultipleForAllRequest: This is a JSON template for
+// multiple quests reset all request.
 type QuestsResetMultipleForAllRequest struct {
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string gamesManagement#questsResetMultipleForAllRequest.
@@ -357,6 +383,8 @@ type QuestsResetMultipleForAllRequest struct {
 	QuestIds []string `json:"quest_ids,omitempty"`
 }
 
+// ScoresResetMultipleForAllRequest: This is a JSON template for
+// multiple scores reset all request.
 type ScoresResetMultipleForAllRequest struct {
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string gamesManagement#scoresResetMultipleForAllRequest.

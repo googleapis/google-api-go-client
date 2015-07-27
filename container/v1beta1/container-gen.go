@@ -266,6 +266,9 @@ type ListOperationsResponse struct {
 	Operations []*Operation `json:"operations,omitempty"`
 }
 
+// MasterAuth: The authentication information for accessing the master.
+// Authentication is either done using HTTP basic authentication or
+// using a bearer token.
 type MasterAuth struct {
 	// BearerToken: The token used to authenticate API requests to the
 	// master. The token is to be included in an HTTP Authorization Header
@@ -324,6 +327,8 @@ type NodeConfig struct {
 	SourceImage string `json:"sourceImage,omitempty"`
 }
 
+// Operation: Defines the operation resource. All fields are output
+// only.
 type Operation struct {
 	// ErrorMessage: If an error has occurred, a textual description of the
 	// error.
@@ -362,6 +367,7 @@ type Operation struct {
 	Zone string `json:"zone,omitempty"`
 }
 
+// ServiceAccount: A Compute Engine service account.
 type ServiceAccount struct {
 	// Email: Email address of the service account.
 	Email string `json:"email,omitempty"`

@@ -92,6 +92,8 @@ type PurchasesService struct {
 	s *Service
 }
 
+// InappPurchase: An InappPurchase resource indicates the status of a
+// user's inapp product purchase.
 type InappPurchase struct {
 	// ConsumptionState: The consumption state of the inapp product.
 	// Possible values are:
@@ -118,6 +120,8 @@ type InappPurchase struct {
 	PurchaseTime int64 `json:"purchaseTime,omitempty,string"`
 }
 
+// SubscriptionPurchase: A SubscriptionPurchase resource indicates the
+// status of a user's subscription purchase.
 type SubscriptionPurchase struct {
 	// AutoRenewing: Whether the subscription will automatically be renewed
 	// when it reaches its current expiry time.

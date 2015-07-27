@@ -80,6 +80,7 @@ type StatesService struct {
 	s *Service
 }
 
+// GetResponse: This is a JSON template for an app state resource.
 type GetResponse struct {
 	// CurrentStateVersion: The current app state version.
 	CurrentStateVersion string `json:"currentStateVersion,omitempty"`
@@ -95,6 +96,8 @@ type GetResponse struct {
 	StateKey int64 `json:"stateKey,omitempty"`
 }
 
+// ListResponse: This is a JSON template to convert a list-response for
+// app state.
 type ListResponse struct {
 	// Items: The app state data.
 	Items []*GetResponse `json:"items,omitempty"`
@@ -107,6 +110,8 @@ type ListResponse struct {
 	MaximumKeyCount int64 `json:"maximumKeyCount,omitempty"`
 }
 
+// UpdateRequest: This is a JSON template for a requests which update
+// app state
 type UpdateRequest struct {
 	// Data: The new app state data that your application is trying to
 	// update with.
@@ -117,6 +122,7 @@ type UpdateRequest struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// WriteResult: This is a JSON template for an app state write result.
 type WriteResult struct {
 	// CurrentStateVersion: The version of the data for this key on the
 	// server.

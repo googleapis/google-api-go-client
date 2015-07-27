@@ -80,6 +80,7 @@ type GroupsService struct {
 	s *Service
 }
 
+// Groups: JSON template for Group resource
 type Groups struct {
 	// AllowExternalMembers: Are external members allowed to join the group.
 	AllowExternalMembers string `json:"allowExternalMembers,omitempty"`

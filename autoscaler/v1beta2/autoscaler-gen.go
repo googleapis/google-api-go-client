@@ -107,6 +107,7 @@ type ZonesService struct {
 	s *Service
 }
 
+// Autoscaler: Cloud Autoscaler resource.
 type Autoscaler struct {
 	// AutoscalingPolicy: Configuration parameters for autoscaling
 	// algorithm.
@@ -153,6 +154,7 @@ type AutoscalerListResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// AutoscalingPolicy: Cloud Autoscaler policy.
 type AutoscalingPolicy struct {
 	// CoolDownPeriodSec: The number of seconds that the Autoscaler should
 	// wait between two succeeding changes to the number of virtual
@@ -183,6 +185,7 @@ type AutoscalingPolicy struct {
 	MinNumReplicas int64 `json:"minNumReplicas,omitempty"`
 }
 
+// AutoscalingPolicyCpuUtilization: CPU utilization policy.
 type AutoscalingPolicyCpuUtilization struct {
 	// UtilizationTarget: The target utilization that the Autoscaler should
 	// maintain. It is represented as a fraction of used cores. For example:
@@ -191,6 +194,8 @@ type AutoscalingPolicyCpuUtilization struct {
 	UtilizationTarget float64 `json:"utilizationTarget,omitempty"`
 }
 
+// AutoscalingPolicyCustomMetricUtilization: Custom utilization metric
+// policy.
 type AutoscalingPolicyCustomMetricUtilization struct {
 	// Metric: Identifier of the metric. It should be a Cloud Monitoring
 	// metric. The metric can not have negative values. The metric should be
@@ -209,6 +214,8 @@ type AutoscalingPolicyCustomMetricUtilization struct {
 	UtilizationTargetType string `json:"utilizationTargetType,omitempty"`
 }
 
+// AutoscalingPolicyLoadBalancingUtilization: Load balancing utilization
+// policy.
 type AutoscalingPolicyLoadBalancingUtilization struct {
 	// UtilizationTarget: Fraction of backend capacity utilization (set in
 	// HTTP load balancing configuration) that Autoscaler should maintain.

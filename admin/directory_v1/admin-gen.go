@@ -302,6 +302,7 @@ type VerificationCodesService struct {
 	s *Service
 }
 
+// Alias: JSON template for Alias object in Directory API.
 type Alias struct {
 	// Alias: A alias email
 	Alias string `json:"alias,omitempty"`
@@ -321,6 +322,7 @@ type Alias struct {
 	PrimaryEmail string `json:"primaryEmail,omitempty"`
 }
 
+// Aliases: JSON response template to list aliases in Directory API.
 type Aliases struct {
 	// Aliases: List of alias objects.
 	Aliases []*Alias `json:"aliases,omitempty"`
@@ -332,6 +334,7 @@ type Aliases struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// Asp: The template that returns individual ASP (Access Code) data.
 type Asp struct {
 	// CodeId: The unique ID of the ASP.
 	CodeId int64 `json:"codeId,omitempty"`
@@ -371,6 +374,7 @@ type Asps struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// Channel: An notification channel used to watch for resource changes.
 type Channel struct {
 	// Address: The address where notifications are delivered for this
 	// channel.
@@ -410,6 +414,8 @@ type Channel struct {
 	Type string `json:"type,omitempty"`
 }
 
+// ChromeOsDevice: JSON template for Chrome Os Device resource in
+// Directory API.
 type ChromeOsDevice struct {
 	// ActiveTimeRanges: List of active time ranges (Read-only)
 	ActiveTimeRanges []*ChromeOsDeviceActiveTimeRanges `json:"activeTimeRanges,omitempty"`
@@ -514,6 +520,8 @@ type ChromeOsDeviceRecentUsers struct {
 	Type string `json:"type,omitempty"`
 }
 
+// ChromeOsDevices: JSON response template for List Chrome OS Devices
+// operation in Directory API.
 type ChromeOsDevices struct {
 	// Chromeosdevices: List of Chrome OS Device objects.
 	Chromeosdevices []*ChromeOsDevice `json:"chromeosdevices,omitempty"`
@@ -528,6 +536,7 @@ type ChromeOsDevices struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// Group: JSON template for Group resource in Directory API.
 type Group struct {
 	// AdminCreated: Is the group created by admin (Read-only) *
 	AdminCreated bool `json:"adminCreated,omitempty"`
@@ -560,6 +569,8 @@ type Group struct {
 	NonEditableAliases []string `json:"nonEditableAliases,omitempty"`
 }
 
+// Groups: JSON response template for List Groups operation in Directory
+// API.
 type Groups struct {
 	// Etag: ETag of the resource.
 	Etag string `json:"etag,omitempty"`
@@ -574,6 +585,7 @@ type Groups struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// Member: JSON template for Member resource in Directory API.
 type Member struct {
 	// Email: Email of member (Read-only)
 	Email string `json:"email,omitempty"`
@@ -596,6 +608,8 @@ type Member struct {
 	Type string `json:"type,omitempty"`
 }
 
+// Members: JSON response template for List Members operation in
+// Directory API.
 type Members struct {
 	// Etag: ETag of the resource.
 	Etag string `json:"etag,omitempty"`
@@ -610,6 +624,8 @@ type Members struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// MobileDevice: JSON template for Mobile Device resource in Directory
+// API.
 type MobileDevice struct {
 	// Applications: List of applications installed on Mobile Device
 	Applications []*MobileDeviceApplications `json:"applications,omitempty"`
@@ -714,11 +730,15 @@ type MobileDeviceApplications struct {
 	VersionName string `json:"versionName,omitempty"`
 }
 
+// MobileDeviceAction: JSON request template for firing commands on
+// Mobile Device in Directory Devices API.
 type MobileDeviceAction struct {
 	// Action: Action to be taken on the Mobile Device
 	Action string `json:"action,omitempty"`
 }
 
+// MobileDevices: JSON response template for List Mobile Devices
+// operation in Directory API.
 type MobileDevices struct {
 	// Etag: ETag of the resource.
 	Etag string `json:"etag,omitempty"`
@@ -733,6 +753,7 @@ type MobileDevices struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// Notification: Template for a notification resource.
 type Notification struct {
 	// Body: Body of the notification (Read-only)
 	Body string `json:"body,omitempty"`
@@ -760,6 +781,7 @@ type Notification struct {
 	Subject string `json:"subject,omitempty"`
 }
 
+// Notifications: Template for notifications list response.
 type Notifications struct {
 	// Etag: ETag of the resource.
 	Etag string `json:"etag,omitempty"`
@@ -778,6 +800,7 @@ type Notifications struct {
 	UnreadNotificationsCount int64 `json:"unreadNotificationsCount,omitempty"`
 }
 
+// OrgUnit: JSON template for Org Unit resource in Directory API.
 type OrgUnit struct {
 	// BlockInheritance: Should block inheritance
 	BlockInheritance bool `json:"blockInheritance,omitempty"`
@@ -807,6 +830,8 @@ type OrgUnit struct {
 	ParentOrgUnitPath string `json:"parentOrgUnitPath,omitempty"`
 }
 
+// OrgUnits: JSON response template for List Organization Units
+// operation in Directory API.
 type OrgUnits struct {
 	// Etag: ETag of the resource.
 	Etag string `json:"etag,omitempty"`
@@ -818,6 +843,7 @@ type OrgUnits struct {
 	OrganizationUnits []*OrgUnit `json:"organizationUnits,omitempty"`
 }
 
+// Schema: JSON template for Schema resource in Directory API.
 type Schema struct {
 	// Etag: ETag of the resource.
 	Etag string `json:"etag,omitempty"`
@@ -835,6 +861,8 @@ type Schema struct {
 	SchemaName string `json:"schemaName,omitempty"`
 }
 
+// SchemaFieldSpec: JSON template for FieldSpec resource for Schemas in
+// Directory API.
 type SchemaFieldSpec struct {
 	// Etag: ETag of the resource.
 	Etag string `json:"etag,omitempty"`
@@ -871,6 +899,10 @@ type SchemaFieldSpec struct {
 	ReadAccessType string `json:"readAccessType,omitempty"`
 }
 
+// SchemaFieldSpecNumericIndexingSpec: Indexing spec for a numeric
+// field. By default, only exact match queries will be supported for
+// numeric fields. Setting the numericIndexingSpec allows range queries
+// to be supported.
 type SchemaFieldSpecNumericIndexingSpec struct {
 	// MaxValue: Maximum value of this field. This is meant to be indicative
 	// rather than enforced. Values outside this range will still be
@@ -883,6 +915,8 @@ type SchemaFieldSpecNumericIndexingSpec struct {
 	MinValue float64 `json:"minValue,omitempty"`
 }
 
+// Schemas: JSON response template for List Schema operation in
+// Directory API.
 type Schemas struct {
 	// Etag: ETag of the resource.
 	Etag string `json:"etag,omitempty"`
@@ -894,6 +928,7 @@ type Schemas struct {
 	Schemas []*Schema `json:"schemas,omitempty"`
 }
 
+// Token: JSON template for token resource in Directory API.
 type Token struct {
 	// Anonymous: Whether the application is registered with Google. The
 	// value is true if the application has an anonymous Client ID.
@@ -925,6 +960,8 @@ type Token struct {
 	UserKey string `json:"userKey,omitempty"`
 }
 
+// Tokens: JSON response template for List tokens operation in Directory
+// API.
 type Tokens struct {
 	// Etag: ETag of the resource.
 	Etag string `json:"etag,omitempty"`
@@ -937,6 +974,7 @@ type Tokens struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// User: JSON template for User object in Directory API.
 type User struct {
 	Addresses interface{} `json:"addresses,omitempty"`
 
@@ -1038,6 +1076,8 @@ type User struct {
 	Websites interface{} `json:"websites,omitempty"`
 }
 
+// UserAbout: JSON template for About (notes) of a user in Directory
+// API.
 type UserAbout struct {
 	// ContentType: About entry can have a type which indicates the content
 	// type. It can either be plain or html. By default, notes contents are
@@ -1048,6 +1088,7 @@ type UserAbout struct {
 	Value string `json:"value,omitempty"`
 }
 
+// UserAddress: JSON template for address.
 type UserAddress struct {
 	// Country: Country.
 	Country string `json:"country,omitempty"`
@@ -1098,6 +1139,7 @@ type UserAddress struct {
 
 type UserCustomProperties interface{}
 
+// UserEmail: JSON template for an email.
 type UserEmail struct {
 	// Address: Email id of the user.
 	Address string `json:"address,omitempty"`
@@ -1117,6 +1159,7 @@ type UserEmail struct {
 	Type string `json:"type,omitempty"`
 }
 
+// UserExternalId: JSON template for an externalId entry.
 type UserExternalId struct {
 	// CustomType: Custom type.
 	CustomType string `json:"customType,omitempty"`
@@ -1128,6 +1171,7 @@ type UserExternalId struct {
 	Value string `json:"value,omitempty"`
 }
 
+// UserIm: JSON template for instant messenger of an user.
 type UserIm struct {
 	// CustomProtocol: Custom protocol.
 	CustomProtocol string `json:"customProtocol,omitempty"`
@@ -1155,11 +1199,14 @@ type UserIm struct {
 	Type string `json:"type,omitempty"`
 }
 
+// UserMakeAdmin: JSON request template for setting/revoking admin
+// status of a user in Directory API.
 type UserMakeAdmin struct {
 	// Status: Boolean indicating new admin status of the user
 	Status bool `json:"status,omitempty"`
 }
 
+// UserName: JSON template for name of a user in Directory API.
 type UserName struct {
 	// FamilyName: Last Name
 	FamilyName string `json:"familyName,omitempty"`
@@ -1171,6 +1218,7 @@ type UserName struct {
 	GivenName string `json:"givenName,omitempty"`
 }
 
+// UserOrganization: JSON template for an organization entry.
 type UserOrganization struct {
 	// CostCenter: The cost center of the users department.
 	CostCenter string `json:"costCenter,omitempty"`
@@ -1211,6 +1259,7 @@ type UserOrganization struct {
 	Type string `json:"type,omitempty"`
 }
 
+// UserPhone: JSON template for a phone entry.
 type UserPhone struct {
 	// CustomType: Custom Type.
 	CustomType string `json:"customType,omitempty"`
@@ -1229,6 +1278,7 @@ type UserPhone struct {
 	Value string `json:"value,omitempty"`
 }
 
+// UserPhoto: JSON template for Photo object in Directory API.
 type UserPhoto struct {
 	// Etag: ETag of the resource.
 	Etag string `json:"etag,omitempty"`
@@ -1255,6 +1305,7 @@ type UserPhoto struct {
 	Width int64 `json:"width,omitempty"`
 }
 
+// UserRelation: JSON template for a relation entry.
 type UserRelation struct {
 	// CustomType: Custom Type.
 	CustomType string `json:"customType,omitempty"`
@@ -1267,11 +1318,14 @@ type UserRelation struct {
 	Value string `json:"value,omitempty"`
 }
 
+// UserUndelete: JSON request template to undelete a user in Directory
+// API.
 type UserUndelete struct {
 	// OrgUnitPath: OrgUnit of User
 	OrgUnitPath string `json:"orgUnitPath,omitempty"`
 }
 
+// UserWebsite: JSON template for a website entry.
 type UserWebsite struct {
 	// CustomType: Custom Type.
 	CustomType string `json:"customType,omitempty"`
@@ -1290,6 +1344,8 @@ type UserWebsite struct {
 	Value string `json:"value,omitempty"`
 }
 
+// Users: JSON response template for List Users operation in Apps
+// Directory API.
 type Users struct {
 	// Etag: ETag of the resource.
 	Etag string `json:"etag,omitempty"`
@@ -1308,6 +1364,8 @@ type Users struct {
 	Users []*User `json:"users,omitempty"`
 }
 
+// VerificationCode: JSON template for verification codes in Directory
+// API.
 type VerificationCode struct {
 	// Etag: ETag of the resource.
 	Etag string `json:"etag,omitempty"`
@@ -1325,6 +1383,8 @@ type VerificationCode struct {
 	VerificationCode string `json:"verificationCode,omitempty"`
 }
 
+// VerificationCodes: JSON response template for List verification codes
+// operation in Directory API.
 type VerificationCodes struct {
 	// Etag: ETag of the resource.
 	Etag string `json:"etag,omitempty"`

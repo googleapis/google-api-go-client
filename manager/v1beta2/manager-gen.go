@@ -109,6 +109,8 @@ type TemplatesService struct {
 	s *Service
 }
 
+// AccessConfig: A Compute Engine network accessConfig. Identical to the
+// accessConfig on corresponding Compute Engine resource.
 type AccessConfig struct {
 	// Name: Name of this access configuration.
 	Name string `json:"name,omitempty"`
@@ -121,6 +123,8 @@ type AccessConfig struct {
 	Type string `json:"type,omitempty"`
 }
 
+// Action: An Action encapsulates a set of commands as a single runnable
+// module with additional information needed during run-time.
 type Action struct {
 	// Commands: A list of commands to run sequentially for this action.
 	Commands []string `json:"commands,omitempty"`
@@ -129,6 +133,7 @@ type Action struct {
 	TimeoutMs int64 `json:"timeoutMs,omitempty"`
 }
 
+// AllowedRule: An allowed port resource.
 type AllowedRule struct {
 	// IPProtocol: ?tcp?, ?udp? or ?icmp?
 	IPProtocol string `json:"IPProtocol,omitempty"`
@@ -161,6 +166,7 @@ type AutoscalingModuleStatus struct {
 	AutoscalingConfigUrl string `json:"autoscalingConfigUrl,omitempty"`
 }
 
+// DeployState: [Output Only] The current state of a replica or module.
 type DeployState struct {
 	// Details: [Output Only] Human readable details about the current
 	// state.
@@ -178,6 +184,8 @@ type DeployState struct {
 	Status string `json:"status,omitempty"`
 }
 
+// Deployment: A deployment represents a physical instantiation of a
+// Template.
 type Deployment struct {
 	// CreationDate: [Output Only] The time when this deployment was
 	// created.
@@ -212,6 +220,7 @@ type DeploymentsListResponse struct {
 	Resources []*Deployment `json:"resources,omitempty"`
 }
 
+// DiskAttachment: How to attach a disk to a Replica.
 type DiskAttachment struct {
 	// DeviceName: The device name of this disk.
 	DeviceName string `json:"deviceName,omitempty"`
@@ -221,6 +230,7 @@ type DiskAttachment struct {
 	Index int64 `json:"index,omitempty"`
 }
 
+// EnvVariable: An environment variable.
 type EnvVariable struct {
 	// Hidden: Whether this variable is hidden or visible.
 	Hidden bool `json:"hidden,omitempty"`
@@ -229,6 +239,8 @@ type EnvVariable struct {
 	Value string `json:"value,omitempty"`
 }
 
+// ExistingDisk: A pre-existing persistent disk that will be attached to
+// every Replica in the Pool.
 type ExistingDisk struct {
 	// Attachment: Optional. How the disk will be attached to the Replica.
 	Attachment *DiskAttachment `json:"attachment,omitempty"`
@@ -238,6 +250,7 @@ type ExistingDisk struct {
 	Source string `json:"source,omitempty"`
 }
 
+// FirewallModule: A Firewall resource
 type FirewallModule struct {
 	// Allowed: The allowed ports or port ranges.
 	Allowed []*AllowedRule `json:"allowed,omitempty"`
@@ -318,6 +331,8 @@ type LbModuleStatus struct {
 	TargetPoolUrl string `json:"targetPoolUrl,omitempty"`
 }
 
+// Metadata: A Compute Engine metadata entry. Identical to the metadata
+// on the corresponding Compute Engine resource.
 type Metadata struct {
 	// FingerPrint: The fingerprint of the metadata.
 	FingerPrint string `json:"fingerPrint,omitempty"`
@@ -326,6 +341,9 @@ type Metadata struct {
 	Items []*MetadataItem `json:"items,omitempty"`
 }
 
+// MetadataItem: A Compute Engine metadata item, defined as a key:value
+// pair. Identical to the metadata on the corresponding Compute Engine
+// resource.
 type MetadataItem struct {
 	// Key: A metadata key.
 	Key string `json:"key,omitempty"`
@@ -334,6 +352,8 @@ type MetadataItem struct {
 	Value string `json:"value,omitempty"`
 }
 
+// Module: A module in a configuration. A module represents a single
+// homogeneous, possibly replicated task.
 type Module struct {
 	AutoscalingModule *AutoscalingModule `json:"autoscalingModule,omitempty"`
 
@@ -353,6 +373,7 @@ type Module struct {
 	Type string `json:"type,omitempty"`
 }
 
+// ModuleStatus: [Output Only] Aggregate status for a module.
 type ModuleStatus struct {
 	// AutoscalingModuleStatus: [Output Only] The status of the
 	// AutoscalingModule, set for type AUTOSCALING.
@@ -385,6 +406,9 @@ type ModuleStatus struct {
 	Type string `json:"type,omitempty"`
 }
 
+// NetworkInterface: A Compute Engine NetworkInterface resource.
+// Identical to the NetworkInterface on the corresponding Compute Engine
+// resource.
 type NetworkInterface struct {
 	// AccessConfigs: An array of configurations for this interface. This
 	// specifies how this interface is configured to interact with other
@@ -427,6 +451,9 @@ type NetworkModuleStatus struct {
 	NetworkUrl string `json:"networkUrl,omitempty"`
 }
 
+// NewDisk: A Persistent Disk resource that will be created and attached
+// to each Replica in the Pool. Each Replica will have a unique
+// persistent disk that is created and attached to that Replica.
 type NewDisk struct {
 	// Attachment: How the disk will be attached to the Replica.
 	Attachment *DiskAttachment `json:"attachment,omitempty"`
@@ -443,6 +470,8 @@ type NewDisk struct {
 	InitializeParams *NewDiskInitializeParams `json:"initializeParams,omitempty"`
 }
 
+// NewDiskInitializeParams: Initialization parameters for creating a new
+// disk.
 type NewDiskInitializeParams struct {
 	// DiskSizeGb: The size of the created disk in gigabytes.
 	DiskSizeGb int64 `json:"diskSizeGb,omitempty,string"`
@@ -457,6 +486,8 @@ type NewDiskInitializeParams struct {
 	SourceImage string `json:"sourceImage,omitempty"`
 }
 
+// ParamOverride: A specification for overriding parameters in a
+// Template that corresponds to the Deployment.
 type ParamOverride struct {
 	// Path: A JSON Path expression that specifies which parameter should be
 	// overridden.
@@ -496,12 +527,18 @@ type ReplicaPoolModuleStatus struct {
 	ResourceViewUrl string `json:"resourceViewUrl,omitempty"`
 }
 
+// ReplicaPoolParams: Configuration information for a ReplicaPools
+// resource. Specifying an item within will determine the ReplicaPools
+// API version used for a ReplicaPoolModule. Only one may be specified.
 type ReplicaPoolParams struct {
 	// V1beta1: ReplicaPoolParams specifications for use with ReplicaPools
 	// v1beta1.
 	V1beta1 *ReplicaPoolParamsV1Beta1 `json:"v1beta1,omitempty"`
 }
 
+// ReplicaPoolParamsV1Beta1: Configuration information for a
+// ReplicaPools v1beta1 API resource. Directly maps to ReplicaPool
+// InitTemplate.
 type ReplicaPoolParamsV1Beta1 struct {
 	// AutoRestart: Whether these replicas should be restarted if they
 	// experience a failure. The default value is true.
@@ -557,6 +594,8 @@ type ReplicaPoolParamsV1Beta1 struct {
 	Zone string `json:"zone,omitempty"`
 }
 
+// ServiceAccount: A Compute Engine service account, identical to the
+// Compute Engine resource.
 type ServiceAccount struct {
 	// Email: Service account email address.
 	Email string `json:"email,omitempty"`
@@ -565,6 +604,8 @@ type ServiceAccount struct {
 	Scopes []string `json:"scopes,omitempty"`
 }
 
+// Tag: A Compute Engine Instance tag, identical to the tags on the
+// corresponding Compute Engine Instance resource.
 type Tag struct {
 	// FingerPrint: The fingerprint of the tag.
 	FingerPrint string `json:"fingerPrint,omitempty"`
@@ -573,6 +614,8 @@ type Tag struct {
 	Items []string `json:"items,omitempty"`
 }
 
+// Template: A Template represents a complete configuration for a
+// Deployment.
 type Template struct {
 	// Actions: Action definitions for use in Module intents in this
 	// Template.

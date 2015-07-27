@@ -104,6 +104,8 @@ type SavedColumnsService struct {
 	s *Service
 }
 
+// Availability: A message containing availability data relevant to
+// DoubleClick Search.
 type Availability struct {
 	// AdvertiserId: DS advertiser ID.
 	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
@@ -128,6 +130,8 @@ type Availability struct {
 	SegmentationType string `json:"segmentationType,omitempty"`
 }
 
+// Conversion: A conversion containing data relevant to DoubleClick
+// Search.
 type Conversion struct {
 	// AdGroupId: DS ad group ID.
 	AdGroupId int64 `json:"adGroupId,omitempty,string"`
@@ -256,6 +260,7 @@ type Conversion struct {
 	Type string `json:"type,omitempty"`
 }
 
+// ConversionList: A list of conversions.
 type ConversionList struct {
 	// Conversion: The conversions being requested.
 	Conversion []*Conversion `json:"conversion,omitempty"`
@@ -265,6 +270,7 @@ type ConversionList struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// CustomDimension: A message containing the custome dimension.
 type CustomDimension struct {
 	// Name: Custom dimension name.
 	Name string `json:"name,omitempty"`
@@ -273,6 +279,7 @@ type CustomDimension struct {
 	Value string `json:"value,omitempty"`
 }
 
+// CustomMetric: A message containing the custome metric.
 type CustomMetric struct {
 	// Name: Custom metric name.
 	Name string `json:"name,omitempty"`
@@ -281,6 +288,9 @@ type CustomMetric struct {
 	Value float64 `json:"value,omitempty"`
 }
 
+// Report: A DoubleClick Search report. This object contains the report
+// request, some report metadata such as currency code, and the
+// generated report rows or report files.
 type Report struct {
 	// Files: Asynchronous report only. Contains a list of generated report
 	// files once the report has succesfully completed.
@@ -329,6 +339,8 @@ type ReportFiles struct {
 	Url string `json:"url,omitempty"`
 }
 
+// ReportApiColumnSpec: A request object used to create a DoubleClick
+// Search report.
 type ReportApiColumnSpec struct {
 	// ColumnName: Name of a DoubleClick Search column to include in the
 	// report.
@@ -380,6 +392,8 @@ type ReportApiColumnSpec struct {
 	StartDate string `json:"startDate,omitempty"`
 }
 
+// ReportRequest: A request object used to create a DoubleClick Search
+// report.
 type ReportRequest struct {
 	// Columns: The columns to include in the report. This includes both
 	// DoubleClick Search columns and saved columns. For DoubleClick Search
@@ -477,6 +491,10 @@ type ReportRequestOrderBy struct {
 	SortOrder string `json:"sortOrder,omitempty"`
 }
 
+// ReportRequestReportScope: The reportScope is a set of IDs that are
+// used to determine which subset of entities will be returned in the
+// report. The full lineage of IDs from the lowest scoped level desired
+// up through agency is required.
 type ReportRequestReportScope struct {
 	// AdGroupId: DS ad group ID.
 	AdGroupId int64 `json:"adGroupId,omitempty,string"`
@@ -500,6 +518,9 @@ type ReportRequestReportScope struct {
 	KeywordId int64 `json:"keywordId,omitempty,string"`
 }
 
+// ReportRequestTimeRange: If metrics are requested in a report, this
+// argument will be used to restrict the metrics to a specific time
+// range.
 type ReportRequestTimeRange struct {
 	// ChangedAttributesSinceTimestamp: Inclusive UTC timestamp in RFC
 	// format, e.g., 2013-07-16T10:16:23.555Z. See additional references on
@@ -520,6 +541,7 @@ type ReportRequestTimeRange struct {
 
 type ReportRow interface{}
 
+// SavedColumn: A saved column
 type SavedColumn struct {
 	// Kind: Identifies this as a SavedColumn resource. Value: the fixed
 	// string doubleclicksearch#savedColumn.
@@ -532,6 +554,10 @@ type SavedColumn struct {
 	Type string `json:"type,omitempty"`
 }
 
+// SavedColumnList: A list of saved columns. Advertisers create saved
+// columns to report on Floodlight activities, Google Analytics goals,
+// or custom KPIs. To request reports with saved columns, you'll need
+// the saved column names that are available from this list.
 type SavedColumnList struct {
 	// Items: The saved columns being requested.
 	Items []*SavedColumn `json:"items,omitempty"`
@@ -541,11 +567,14 @@ type SavedColumnList struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// UpdateAvailabilityRequest: The request to update availability.
 type UpdateAvailabilityRequest struct {
 	// Availabilities: The availabilities being requested.
 	Availabilities []*Availability `json:"availabilities,omitempty"`
 }
 
+// UpdateAvailabilityResponse: The response to a update availability
+// request.
 type UpdateAvailabilityResponse struct {
 	// Availabilities: The availabilities being returned.
 	Availabilities []*Availability `json:"availabilities,omitempty"`

@@ -14,6 +14,7 @@ func TestAPIs(t *testing.T) {
 	names := []string{
 		"any",
 		"arrayofarray-1",
+		"arrayofenum",
 		"arrayofmapofobjects",
 		"arrayofmapofstrings",
 		"blogger-3",

@@ -81,6 +81,8 @@ type ReconcileCandidate struct {
 	Notable *ReconcileCandidateNotable `json:"notable,omitempty"`
 }
 
+// ReconcileCandidateNotable: Type or profession the candidate is
+// notable for.
 type ReconcileCandidateNotable struct {
 	// Id: MID of notable category.
 	Id string `json:"id,omitempty"`
@@ -111,6 +113,7 @@ type ReconcileGet struct {
 	Warning []*ReconcileGetWarning `json:"warning,omitempty"`
 }
 
+// ReconcileGetCosts: Server costs for reconciling.
 type ReconcileGetCosts struct {
 	// Hits: Total number of hits found.
 	Hits int64 `json:"hits,omitempty"`

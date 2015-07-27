@@ -260,6 +260,7 @@ type VariantsetsService struct {
 	s *Service
 }
 
+// AlignReadGroupSetsRequest: The read group set align request.
 type AlignReadGroupSetsRequest struct {
 	// BamSourceUris: The BAM source files for alignment. Exactly one of
 	// readGroupSetId, bamSourceUris, interleavedFastqSource or
@@ -294,11 +295,19 @@ type AlignReadGroupSetsRequest struct {
 	ReadGroupSetId string `json:"readGroupSetId,omitempty"`
 }
 
+// AlignReadGroupSetsResponse: The read group set align response.
 type AlignReadGroupSetsResponse struct {
 	// JobId: A job ID that can be used to get status information.
 	JobId string `json:"jobId,omitempty"`
 }
 
+// Annotation: An annotation describes a region of reference genome. The
+// value of an annotation may be one of several canonical types,
+// supplemented by arbitrary info tags. A variant annotation is
+// represented by one or more of these canonical types. An annotation is
+// not inherently associated with a specific sample or individual
+// (though a client could choose to use annotations in this way).
+// Example canonical annotation types are 'Gene' and 'Variant'.
 type Annotation struct {
 	// AnnotationSetId: The ID of the containing annotation set.
 	AnnotationSetId string `json:"annotationSetId,omitempty"`
@@ -339,6 +348,10 @@ type Annotation struct {
 	Variant *VariantAnnotation `json:"variant,omitempty"`
 }
 
+// AnnotationSet: An annotation set is a logical grouping of annotations
+// that share consistent type information and provenance. Examples of
+// annotation sets include 'all genes from refseq', and 'all variant
+// annotations from ClinVar'.
 type AnnotationSet struct {
 	// DatasetId: The ID of the containing dataset.
 	DatasetId string `json:"datasetId,omitempty"`
@@ -398,6 +411,11 @@ type BatchCreateAnnotationsRequest struct {
 	Annotations []*Annotation `json:"annotations,omitempty"`
 }
 
+// Call: A call represents the determination of genotype with respect to
+// a particular variant. It may include associated information such as
+// quality and phasing. For example, a call might assign a probability
+// of 0.32 to the occurrence of a SNP named rs1234 in a call set with
+// the name NA12345.
 type Call struct {
 	// CallSetId: The ID of the call set this variant call belongs to.
 	CallSetId string `json:"callSetId,omitempty"`
@@ -437,6 +455,7 @@ type Call struct {
 	Phaseset string `json:"phaseset,omitempty"`
 }
 
+// CallReadGroupSetsRequest: The read group set call request.
 type CallReadGroupSetsRequest struct {
 	// DatasetId: Required. The ID of the dataset the called variants will
 	// belong to. The caller must have WRITE permissions to this dataset.
@@ -454,11 +473,14 @@ type CallReadGroupSetsRequest struct {
 	SourceUris []string `json:"sourceUris,omitempty"`
 }
 
+// CallReadGroupSetsResponse: The read group set call response.
 type CallReadGroupSetsResponse struct {
 	// JobId: A job ID that can be used to get status information.
 	JobId string `json:"jobId,omitempty"`
 }
 
+// CallSet: A call set is a collection of variant calls, typically for
+// one sample. It belongs to a variant set.
 type CallSet struct {
 	// Created: The date this call set was created in milliseconds from the
 	// epoch.
@@ -480,6 +502,7 @@ type CallSet struct {
 	VariantSetIds []string `json:"variantSetIds,omitempty"`
 }
 
+// CigarUnit: A single CIGAR operation.
 type CigarUnit struct {
 	// Possible values:
 	//   "ALIGNMENT_MATCH"
@@ -505,6 +528,9 @@ type CigarUnit struct {
 	ReferenceSequence string `json:"referenceSequence,omitempty"`
 }
 
+// CoverageBucket: A bucket over which read coverage has been
+// precomputed. A bucket corresponds to a specific range of the
+// reference sequence.
 type CoverageBucket struct {
 	// MeanCoverage: The average number of reads which are aligned to each
 	// individual reference base in this bucket.
@@ -514,6 +540,7 @@ type CoverageBucket struct {
 	Range *Range `json:"range,omitempty"`
 }
 
+// Dataset: A Dataset is a collection of genomic data.
 type Dataset struct {
 	// CreateTime: The time this dataset was created, in seconds from the
 	// epoch.
@@ -535,6 +562,7 @@ type Dataset struct {
 	ProjectNumber int64 `json:"projectNumber,omitempty,string"`
 }
 
+// ExperimentalCreateJobRequest: The job creation request.
 type ExperimentalCreateJobRequest struct {
 	// Align: Specifies whether or not to run the alignment pipeline. Either
 	// align or callVariants must be set.
@@ -566,11 +594,13 @@ type ExperimentalCreateJobRequest struct {
 	SourceUris []string `json:"sourceUris,omitempty"`
 }
 
+// ExperimentalCreateJobResponse: The job creation response.
 type ExperimentalCreateJobResponse struct {
 	// JobId: A job ID that can be used to get status information.
 	JobId string `json:"jobId,omitempty"`
 }
 
+// ExportReadGroupSetsRequest: The read group set export request.
 type ExportReadGroupSetsRequest struct {
 	// ExportUri: Required. A Google Cloud Storage URI for the exported BAM
 	// file. The currently authenticated user must have write access to the
@@ -590,11 +620,13 @@ type ExportReadGroupSetsRequest struct {
 	ReferenceNames []string `json:"referenceNames,omitempty"`
 }
 
+// ExportReadGroupSetsResponse: The read group set export response.
 type ExportReadGroupSetsResponse struct {
 	// JobId: A job ID that can be used to get status information.
 	JobId string `json:"jobId,omitempty"`
 }
 
+// ExportVariantSetRequest: The variant data export request.
 type ExportVariantSetRequest struct {
 	// BigqueryDataset: Required. The BigQuery dataset to export data to.
 	// This dataset must already exist. Note that this is distinct from the
@@ -623,6 +655,7 @@ type ExportVariantSetRequest struct {
 	ProjectNumber int64 `json:"projectNumber,omitempty,string"`
 }
 
+// ExportVariantSetResponse: The variant data export response.
 type ExportVariantSetResponse struct {
 	// JobId: A job ID that can be used to get status information.
 	JobId string `json:"jobId,omitempty"`
@@ -660,6 +693,7 @@ type FastqMetadata struct {
 	SampleName string `json:"sampleName,omitempty"`
 }
 
+// ImportReadGroupSetsRequest: The read group set import request.
 type ImportReadGroupSetsRequest struct {
 	// DatasetId: Required. The ID of the dataset these read group sets will
 	// belong to. The caller must have WRITE permissions to this dataset.
@@ -685,11 +719,13 @@ type ImportReadGroupSetsRequest struct {
 	SourceUris []string `json:"sourceUris,omitempty"`
 }
 
+// ImportReadGroupSetsResponse: The read group set import response.
 type ImportReadGroupSetsResponse struct {
 	// JobId: A job ID that can be used to get status information.
 	JobId string `json:"jobId,omitempty"`
 }
 
+// ImportVariantsRequest: The variant data import request.
 type ImportVariantsRequest struct {
 	// Format: The format of the variant data being imported. If
 	// unspecified, defaults to to "VCF".
@@ -714,16 +750,22 @@ type ImportVariantsRequest struct {
 	SourceUris []string `json:"sourceUris,omitempty"`
 }
 
+// ImportVariantsResponse: The variant data import response.
 type ImportVariantsResponse struct {
 	// JobId: A job ID that can be used to get status information.
 	JobId string `json:"jobId,omitempty"`
 }
 
+// Int32Value: Wrapper message for `int32`.
+//
+// The JSON representation for `Int32Value` is JSON number.
 type Int32Value struct {
 	// Value: The int32 value.
 	Value int64 `json:"value,omitempty"`
 }
 
+// InterleavedFastqSource: Describes an interleaved FASTQ file source
+// for alignment.
 type InterleavedFastqSource struct {
 	// Metadata: Optionally specifies the metadata to be associated with the
 	// final aligned read group set.
@@ -735,6 +777,8 @@ type InterleavedFastqSource struct {
 	SourceUris []string `json:"sourceUris,omitempty"`
 }
 
+// Job: A Job represents an ongoing process that can be monitored for
+// status information.
 type Job struct {
 	// Created: The date this job was created, in milliseconds from the
 	// epoch.
@@ -777,6 +821,8 @@ type Job struct {
 	Warnings []string `json:"warnings,omitempty"`
 }
 
+// JobRequest: A summary representation of the service request that
+// spawned the job.
 type JobRequest struct {
 	// Destination: The data destination of the request, for example, a
 	// Google BigQuery Table or Dataset ID.
@@ -800,6 +846,7 @@ type JobRequest struct {
 	Type string `json:"type,omitempty"`
 }
 
+// KeyValue: Used to hold basic key value information.
 type KeyValue struct {
 	// Key: A string which maps to an array of values.
 	Key string `json:"key,omitempty"`
@@ -808,6 +855,9 @@ type KeyValue struct {
 	Value []string `json:"value,omitempty"`
 }
 
+// LinearAlignment: A linear alignment can be represented by one CIGAR
+// string. Describes the mapped position and local alignment of the read
+// to the reference.
 type LinearAlignment struct {
 	// Cigar: Represents the local alignment of this sequence (alignment
 	// matches, indels, etc) against the reference.
@@ -857,6 +907,7 @@ type ListCoverageBucketsResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// ListDatasetsResponse: The dataset list response.
 type ListDatasetsResponse struct {
 	// Datasets: The list of matching Datasets.
 	Datasets []*Dataset `json:"datasets,omitempty"`
@@ -873,6 +924,10 @@ type MergeVariantsRequest struct {
 	Variants []*Variant `json:"variants,omitempty"`
 }
 
+// Metadata: Metadata describes a single piece of variant call metadata.
+// These data include a top level key and either a single value string
+// (value) or a list of key-value pairs (info.) Value and info are
+// mutually exclusive.
 type Metadata struct {
 	// Description: A textual description of this metadata.
 	Description string `json:"description,omitempty"`
@@ -908,6 +963,8 @@ type Metadata struct {
 	Value string `json:"value,omitempty"`
 }
 
+// PairedFastqSource: Describes a paired-end FASTQ file source for
+// alignment.
 type PairedFastqSource struct {
 	// FirstSourceUris: A list of URIs pointing at paired end FASTQ files in
 	// Google Cloud Storage which will be aligned. The first of each paired
@@ -932,6 +989,10 @@ type PairedFastqSource struct {
 	SecondSourceUris []string `json:"secondSourceUris,omitempty"`
 }
 
+// Position: An abstraction for referring to a genomic position, in
+// relation to some already known reference. For now, represents a
+// genomic position as a reference name, a base number on that reference
+// (0-based), and a determination of forward or reverse strand.
 type Position struct {
 	// Position: The 0-based offset from the start of the forward strand for
 	// that reference.
@@ -946,6 +1007,8 @@ type Position struct {
 	ReverseStrand bool `json:"reverseStrand,omitempty"`
 }
 
+// QueryRange: A 0-based half-open genomic coordinate range for search
+// requests.
 type QueryRange struct {
 	// End: The end position of the range on the reference, 0-based
 	// exclusive. If specified, referenceId or referenceName must also be
@@ -967,6 +1030,8 @@ type QueryRange struct {
 	Start int64 `json:"start,omitempty,string"`
 }
 
+// Range: A 0-based half-open genomic coordinate range over a reference
+// sequence.
 type Range struct {
 	// End: The end position of the range on the reference, 0-based
 	// exclusive. If specified, referenceName must also be specified.
@@ -981,6 +1046,9 @@ type Range struct {
 	Start int64 `json:"start,omitempty,string"`
 }
 
+// RangePosition: A 0-based half-open genomic coordinate range over a
+// reference sequence, for representing the position of a genomic
+// resource.
 type RangePosition struct {
 	// End: The end position of the range on the reference, 0-based
 	// exclusive.
@@ -1005,6 +1073,33 @@ type RangePosition struct {
 	Start int64 `json:"start,omitempty,string"`
 }
 
+// Read: A read alignment describes a linear alignment of a string of
+// DNA to a reference sequence, in addition to metadata about the
+// fragment (the molecule of DNA sequenced) and the read (the bases
+// which were read by the sequencer). A read is equivalent to a line in
+// a SAM file. A read belongs to exactly one read group and exactly one
+// read group set. Generating a reference-aligned sequence string When
+// interacting with mapped reads, it's often useful to produce a string
+// representing the local alignment of the read to reference. The
+// following pseudocode demonstrates one way of doing this:
+// out = "" offset = 0 for c in read.alignment.cigar { switch
+// c.operation { case "ALIGNMENT_MATCH", "SEQUENCE_MATCH",
+// "SEQUENCE_MISMATCH": out +=
+// read.alignedSequence[offset:offset+c.operationLength] offset +=
+// c.operationLength break case "CLIP_SOFT", "INSERT": offset +=
+// c.operationLength break case "PAD": out += repeat("*",
+// c.operationLength) break case "DELETE": out += repeat("-",
+// c.operationLength) break case "SKIP": out += repeat(" ",
+// c.operationLength) break case "CLIP_HARD": break } } return
+// out
+// Converting to SAM's CIGAR string The following pseudocode generates a
+// SAM CIGAR string from the cigar field. Note that this is a lossy
+// conversion (cigar.referenceSequence is lost).
+// cigarMap = { "ALIGNMENT_MATCH": "M", "INSERT": "I", "DELETE": "D",
+// "SKIP": "N", "CLIP_SOFT": "S", "CLIP_HARD": "H", "PAD": "P",
+// "SEQUENCE_MATCH": "=", "SEQUENCE_MISMATCH": "X", } cigarStr = "" for
+// c in read.alignment.cigar { cigarStr += c.operationLength +
+// cigarMap[c.operation] } return cigarStr
 type Read struct {
 	// AlignedQuality: The quality of the read sequence contained in this
 	// alignment record. alignedSequence and alignedQuality may be shorter
@@ -1099,6 +1194,8 @@ type Read struct {
 	SupplementaryAlignment bool `json:"supplementaryAlignment,omitempty"`
 }
 
+// ReadGroup: A read group is all the data that's processed the same way
+// by the sequencer.
 type ReadGroup struct {
 	// DatasetId: The ID of the dataset this read group belongs to.
 	DatasetId string `json:"datasetId,omitempty"`
@@ -1180,6 +1277,13 @@ type ReadGroupProgram struct {
 	Version string `json:"version,omitempty"`
 }
 
+// ReadGroupSet: A read group set is a logical collection of read
+// groups, which are collections of reads produced by a sequencer. A
+// read group set typically models reads corresponding to one sample,
+// sequenced one way, and aligned one way.
+// - A read group set belongs to one dataset.
+// - A read group belongs to one read group set.
+// - A read belongs to one read group.
 type ReadGroupSet struct {
 	// DatasetId: The dataset ID.
 	DatasetId string `json:"datasetId,omitempty"`
@@ -1207,6 +1311,11 @@ type ReadGroupSet struct {
 	ReferenceSetId string `json:"referenceSetId,omitempty"`
 }
 
+// Reference: A reference is a canonical assembled DNA sequence,
+// intended to act as a reference coordinate space for other genomic
+// annotations. A single reference might represent the human chromosome
+// 1 or mitochandrial DNA, for instance. A reference belongs to one or
+// more reference sets.
 type Reference struct {
 	// Id: The Google generated immutable ID of the reference.
 	Id string `json:"id,omitempty"`
@@ -1236,6 +1345,8 @@ type Reference struct {
 	SourceURI string `json:"sourceURI,omitempty"`
 }
 
+// ReferenceBound: ReferenceBound records an upper bound for the
+// starting coordinate of variants in a particular reference.
 type ReferenceBound struct {
 	// ReferenceName: The reference the bound is associate with.
 	ReferenceName string `json:"referenceName,omitempty"`
@@ -1245,6 +1356,11 @@ type ReferenceBound struct {
 	UpperBound int64 `json:"upperBound,omitempty,string"`
 }
 
+// ReferenceSet: A reference set is a set of references which typically
+// comprise a reference assembly for a species, such as GRCh38 which is
+// representative of the human genome. A reference set defines a common
+// coordinate space for comparing reference-aligned experimental data. A
+// reference set contains 1 or more references.
 type ReferenceSet struct {
 	// AssemblyId: Public id of this reference set, such as GRCh37.
 	AssemblyId string `json:"assemblyId,omitempty"`
@@ -1308,6 +1424,12 @@ type SearchAnnotationSetsRequest struct {
 
 	// Types: If specified, only annotation sets that have any of these
 	// types are returned.
+	//
+	// Possible values:
+	//   "GENE"
+	//   "GENERIC"
+	//   "TRANSCRIPT"
+	//   "VARIANT"
 	Types []string `json:"types,omitempty"`
 }
 
@@ -1353,6 +1475,7 @@ type SearchAnnotationsResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// SearchCallSetsRequest: The call set search request.
 type SearchCallSetsRequest struct {
 	// Name: Only return call sets for which a substring of the name matches
 	// this string.
@@ -1372,6 +1495,7 @@ type SearchCallSetsRequest struct {
 	VariantSetIds []string `json:"variantSetIds,omitempty"`
 }
 
+// SearchCallSetsResponse: The call set search response.
 type SearchCallSetsResponse struct {
 	// CallSets: The list of matching call sets.
 	CallSets []*CallSet `json:"callSets,omitempty"`
@@ -1383,6 +1507,7 @@ type SearchCallSetsResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// SearchJobsRequest: The jobs search request.
 type SearchJobsRequest struct {
 	// CreatedAfter: If specified, only jobs created on or after this date,
 	// given in milliseconds since Unix epoch, will be returned.
@@ -1406,9 +1531,19 @@ type SearchJobsRequest struct {
 	ProjectNumber int64 `json:"projectNumber,omitempty,string"`
 
 	// Status: Only return jobs which have a matching status.
+	//
+	// Possible values:
+	//   "CANCELED"
+	//   "FAILURE"
+	//   "NEW"
+	//   "PENDING"
+	//   "RUNNING"
+	//   "SUCCESS"
+	//   "UNKNOWN_STATUS"
 	Status []string `json:"status,omitempty"`
 }
 
+// SearchJobsResponse: The job search response.
 type SearchJobsResponse struct {
 	// Jobs: The list of jobs results, ordered newest to oldest.
 	Jobs []*Job `json:"jobs,omitempty"`
@@ -1420,6 +1555,7 @@ type SearchJobsResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// SearchReadGroupSetsRequest: The read group set search request.
 type SearchReadGroupSetsRequest struct {
 	// DatasetIds: Restricts this query to read group sets within the given
 	// datasets. At least one ID must be provided.
@@ -1439,6 +1575,7 @@ type SearchReadGroupSetsRequest struct {
 	PageToken string `json:"pageToken,omitempty"`
 }
 
+// SearchReadGroupSetsResponse: The read group set search response.
 type SearchReadGroupSetsResponse struct {
 	// NextPageToken: The continuation token, which is used to page through
 	// large result sets. Provide this value in a subsequent request to
@@ -1450,6 +1587,7 @@ type SearchReadGroupSetsResponse struct {
 	ReadGroupSets []*ReadGroupSet `json:"readGroupSets,omitempty"`
 }
 
+// SearchReadsRequest: The read search request.
 type SearchReadsRequest struct {
 	// End: The end position of the range on the reference, 0-based
 	// exclusive. If specified, referenceName must also be specified.
@@ -1485,6 +1623,7 @@ type SearchReadsRequest struct {
 	Start int64 `json:"start,omitempty,string"`
 }
 
+// SearchReadsResponse: The read search response.
 type SearchReadsResponse struct {
 	// Alignments: The list of matching alignments sorted by mapped genomic
 	// coordinate, if any, ascending in position within the same reference.
@@ -1573,6 +1712,7 @@ type SearchReferencesResponse struct {
 	References []*Reference `json:"references,omitempty"`
 }
 
+// SearchVariantSetsRequest: The search variant sets request.
 type SearchVariantSetsRequest struct {
 	// DatasetIds: Exactly one dataset ID must be provided here. Only
 	// variant sets which belong to this dataset will be returned.
@@ -1587,6 +1727,7 @@ type SearchVariantSetsRequest struct {
 	PageToken string `json:"pageToken,omitempty"`
 }
 
+// SearchVariantSetsResponse: The search variant sets response.
 type SearchVariantSetsResponse struct {
 	// NextPageToken: The continuation token, which is used to page through
 	// large result sets. Provide this value in a subsequent request to
@@ -1598,6 +1739,7 @@ type SearchVariantSetsResponse struct {
 	VariantSets []*VariantSet `json:"variantSets,omitempty"`
 }
 
+// SearchVariantsRequest: The variant search request.
 type SearchVariantsRequest struct {
 	// CallSetIds: Only return variant calls which belong to call sets with
 	// these ids. Leaving this blank returns all variant calls. If a variant
@@ -1642,6 +1784,7 @@ type SearchVariantsRequest struct {
 	VariantSetIds []string `json:"variantSetIds,omitempty"`
 }
 
+// SearchVariantsResponse: The variant search response.
 type SearchVariantsResponse struct {
 	// NextPageToken: The continuation token, which is used to page through
 	// large result sets. Provide this value in a subsequent request to
@@ -1653,6 +1796,8 @@ type SearchVariantsResponse struct {
 	Variants []*Variant `json:"variants,omitempty"`
 }
 
+// Transcript: A transcript represents the assertion that a particular
+// region of the reference genome may be transcribed as RNA.
 type Transcript struct {
 	// CodingSequence: The range of the coding sequence for this transcript,
 	// if any. To determine the exact ranges of coding sequence, intersect
@@ -1729,6 +1874,14 @@ type TranscriptExon struct {
 	Start int64 `json:"start,omitempty,string"`
 }
 
+// Variant: A variant represents a change in DNA sequence relative to a
+// reference sequence. For example, a variant could represent a SNP or
+// an insertion. Variants belong to a variant set. Each of the calls on
+// a variant represent a determination of genotype with respect to that
+// variant. For example, a call might assign probability of 0.32 to the
+// occurrence of a SNP named rs1234 in a sample named NA12345. A call
+// belongs to a call set, which contains related calls typically from
+// one sample.
 type Variant struct {
 	// AlternateBases: The bases that appear instead of the reference bases.
 	AlternateBases []string `json:"alternateBases,omitempty"`
@@ -1782,6 +1935,7 @@ type Variant struct {
 	VariantSetId string `json:"variantSetId,omitempty"`
 }
 
+// VariantAnnotation: A Variant annotation.
 type VariantAnnotation struct {
 	// AlternateBases: The alternate allele for this variant. If multiple
 	// alternate alleles exist at this location, create a separate variant
@@ -1866,6 +2020,9 @@ type VariantAnnotationCondition struct {
 	OmimId string `json:"omimId,omitempty"`
 }
 
+// VariantSet: A variant set is a collection of call sets and variants.
+// It contains summary statistics of those contents. A variant set
+// belongs to a dataset.
 type VariantSet struct {
 	// DatasetId: The dataset to which this variant set belongs. Immutable.
 	DatasetId string `json:"datasetId,omitempty"`

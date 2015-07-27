@@ -347,6 +347,8 @@ type TablesPermissionsService struct {
 	s *Service
 }
 
+// AcquisitionTime: Acquisition time represents acquired time of a
+// raster.
 type AcquisitionTime struct {
 	// End: The end time if acquisition time is a range. The value is an RFC
 	// 3339 formatted date-time value (1970-01-01T00:00:00Z).
@@ -369,6 +371,13 @@ type AcquisitionTime struct {
 	Start string `json:"start,omitempty"`
 }
 
+// Asset: An asset is any Google Maps Engine resource that has a
+// globally unique ID. Assets include maps, layers, vector tables,
+// raster collections, and rasters. Projects and features are not
+// considered assets.
+//
+// More detailed information about an asset can be obtained by querying
+// the asset's particular endpoint.
 type Asset struct {
 	// Bbox: A rectangular bounding box which contains all of the data in
 	// this asset. The box is expressed as \"west, south, east, north\". The
@@ -433,6 +442,8 @@ type Asset struct {
 	WritersCanEditPermissions bool `json:"writersCanEditPermissions,omitempty"`
 }
 
+// AssetsListResponse: The response returned by a call to
+// resources.List.
 type AssetsListResponse struct {
 	// Assets: Assets returned.
 	Assets []*Asset `json:"assets,omitempty"`
@@ -441,6 +452,7 @@ type AssetsListResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// Border: Border in line style. Both color and width are required.
 type Border struct {
 	// Color: Color of the border.
 	Color string `json:"color,omitempty"`
@@ -452,6 +464,7 @@ type Border struct {
 	Width float64 `json:"width,omitempty"`
 }
 
+// Color: Basic color used in styling.
 type Color struct {
 	// Color: The CSS style color, can be in format of "red" or "#7733EE".
 	Color string `json:"color,omitempty"`
@@ -466,6 +479,7 @@ type Datasource struct {
 	Id string `json:"id,omitempty"`
 }
 
+// DisplayRule: A display rule of the vector style.
 type DisplayRule struct {
 	// Filters: This display rule will only be applied to features that
 	// match all of the filters here. If filters is empty, then the rule
@@ -491,6 +505,7 @@ type DisplayRule struct {
 	ZoomLevels *ZoomLevels `json:"zoomLevels,omitempty"`
 }
 
+// Feature: A feature within a table.
 type Feature struct {
 	// Geometry: The geometry member of this Feature.
 	Geometry GeoJsonGeometry `json:"geometry,omitempty"`
@@ -502,18 +517,22 @@ type Feature struct {
 	Type string `json:"type,omitempty"`
 }
 
+// FeatureInfo: A feature info contains information about individual
+// feature.
 type FeatureInfo struct {
 	// Content: HTML template of the info window. If not provided, a default
 	// template with all attributes will be generated.
 	Content string `json:"content,omitempty"`
 }
 
+// FeaturesBatchDeleteRequest: The request sent to features.BatchDelete.
 type FeaturesBatchDeleteRequest struct {
 	GxIds []string `json:"gx_ids,omitempty"`
 
 	PrimaryKeys []string `json:"primaryKeys,omitempty"`
 }
 
+// FeaturesBatchInsertRequest: The request sent to features.Insert.
 type FeaturesBatchInsertRequest struct {
 	Features []*Feature `json:"features,omitempty"`
 
@@ -528,6 +547,7 @@ type FeaturesBatchInsertRequest struct {
 	NormalizeGeometries *bool `json:"normalizeGeometries,omitempty"`
 }
 
+// FeaturesBatchPatchRequest: The request sent to features.BatchPatch.
 type FeaturesBatchPatchRequest struct {
 	Features []*Feature `json:"features,omitempty"`
 
@@ -542,6 +562,8 @@ type FeaturesBatchPatchRequest struct {
 	NormalizeGeometries *bool `json:"normalizeGeometries,omitempty"`
 }
 
+// FeaturesListResponse: The response returned by a call to
+// features.List.
 type FeaturesListResponse struct {
 	// AllowedQueriesPerSecond: An indicator of the maximum rate at which
 	// queries may be made, if all queries were as expensive as this query.
@@ -559,6 +581,7 @@ type FeaturesListResponse struct {
 	Type string `json:"type,omitempty"`
 }
 
+// File: A single File, which is a component of an Asset.
 type File struct {
 	// Filename: The name of the file.
 	Filename string `json:"filename,omitempty"`
@@ -576,6 +599,7 @@ type File struct {
 	UploadStatus string `json:"uploadStatus,omitempty"`
 }
 
+// Filter: Conditions for filtering features.
 type Filter struct {
 	// Column: The column name to filter on.
 	Column string `json:"column,omitempty"`
@@ -660,6 +684,8 @@ func (t GeoJsonGeometry) Polygon() (r GeoJsonPolygon, ok bool) {
 	return r, ok
 }
 
+// GeoJsonGeometryCollection: A heterogenous collection of
+// GeoJsonGeometry objects.
 type GeoJsonGeometryCollection struct {
 	// Geometries: An array of geometry objects. There must be at least 2
 	// different types of geometries in the array.
@@ -683,6 +709,7 @@ type GeoJsonLineString struct {
 	Type string `json:"type,omitempty"`
 }
 
+// GeoJsonMultiLineString: Multi Line String
 type GeoJsonMultiLineString struct {
 	// Coordinates: An array of at least two GeoJsonLineString coordinate
 	// arrays.
@@ -748,6 +775,8 @@ type GeoJsonPolygon struct {
 
 type GeoJsonProperties interface{}
 
+// Icon: An icon is a user-uploaded image that can be used to style
+// point geometries.
 type Icon struct {
 	// Description: The description of this Icon, supplied by the author.
 	Description string `json:"description,omitempty"`
@@ -759,6 +788,7 @@ type Icon struct {
 	Name string `json:"name,omitempty"`
 }
 
+// IconStyle: Style for icon, this is part of point style.
 type IconStyle struct {
 	// Id: Custom icon id.
 	Id string `json:"id,omitempty"`
@@ -776,6 +806,7 @@ type IconStyle struct {
 	ScalingFunction *ScalingFunction `json:"scalingFunction,omitempty"`
 }
 
+// IconsListResponse: The response returned by a call to icons.List.
 type IconsListResponse struct {
 	// Icons: Resources returned.
 	Icons []*Icon `json:"icons,omitempty"`
@@ -784,6 +815,7 @@ type IconsListResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// LabelStyle: Text label style.
 type LabelStyle struct {
 	// Color: Color of the text. If not provided, default to black.
 	Color string `json:"color,omitempty"`
@@ -816,6 +848,8 @@ type LabelStyle struct {
 	Size float64 `json:"size,omitempty"`
 }
 
+// Layer: A Layer combines multiple datasources, with styling
+// information, for presentation on a map.
 type Layer struct {
 	// Bbox: A rectangular bounding box which contains all of the data in
 	// this Layer. The box is expressed as \"west, south, east, north\". The
@@ -935,6 +969,11 @@ type Layer struct {
 	WritersCanEditPermissions bool `json:"writersCanEditPermissions,omitempty"`
 }
 
+// LayersListResponse: The response returned by a call to layers.List.
+// Note: The list response does not include all the fields available in
+// a layer. Refer to the layer resource description for details of the
+// fields that are not included. You'll need to send a get request to
+// retrieve the additional fields for each layer.
 type LayersListResponse struct {
 	// Layers: Resources returned.
 	Layers []*Layer `json:"layers,omitempty"`
@@ -943,6 +982,7 @@ type LayersListResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// LineStyle: Style for lines.
 type LineStyle struct {
 	// Border: Border of the line. 0 < border.width <= 5.
 	Border *Border `json:"border,omitempty"`
@@ -960,6 +1000,7 @@ type LineStyle struct {
 	Stroke *LineStyleStroke `json:"stroke,omitempty"`
 }
 
+// LineStyleStroke: Stroke of the line.
 type LineStyleStroke struct {
 	// Color: Color of the line.
 	Color string `json:"color,omitempty"`
@@ -972,6 +1013,8 @@ type LineStyleStroke struct {
 	Width float64 `json:"width,omitempty"`
 }
 
+// Map: A Map is a collection of Layers, optionally contained within
+// folders.
 type Map struct {
 	// Bbox: A rectangular bounding box which contains all of the data in
 	// this Map. The box is expressed as \"west, south, east, north\". The
@@ -1181,6 +1224,7 @@ type MapLayer struct {
 	Visibility string `json:"visibility,omitempty"`
 }
 
+// MapsListResponse: The response returned by a call to maps.List.
 type MapsListResponse struct {
 	// Maps: Resources returned.
 	Maps []*Map `json:"maps,omitempty"`
@@ -1189,11 +1233,13 @@ type MapsListResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// Parent: A list of the parents of an asset.
 type Parent struct {
 	// Id: The ID of this parent.
 	Id string `json:"id,omitempty"`
 }
 
+// ParentsListResponse: The response returned by a call to parents.List.
 type ParentsListResponse struct {
 	// NextPageToken: Next page token.
 	NextPageToken string `json:"nextPageToken,omitempty"`
@@ -1202,6 +1248,8 @@ type ParentsListResponse struct {
 	Parents []*Parent `json:"parents,omitempty"`
 }
 
+// Permission: A permission defines the user or group that has access to
+// an asset, and the type of access they have.
 type Permission struct {
 	// Discoverable: Indicates whether a public asset is listed and can be
 	// found via a web search (value true), or is visible only to people who
@@ -1231,6 +1279,8 @@ type Permission struct {
 	Type string `json:"type,omitempty"`
 }
 
+// PermissionsBatchDeleteRequest: The request sent to
+// mapsengine.permissions.batchDelete.
 type PermissionsBatchDeleteRequest struct {
 	// Ids: An array of permission ids to be removed. This could be the
 	// email address of the user or group this permission refers to, or the
@@ -1238,14 +1288,20 @@ type PermissionsBatchDeleteRequest struct {
 	Ids []string `json:"ids,omitempty"`
 }
 
+// PermissionsBatchDeleteResponse: The response returned by a call to
+// mapsengine.permissions.batchDelete.
 type PermissionsBatchDeleteResponse struct {
 }
 
+// PermissionsBatchUpdateRequest: The request sent to
+// mapsengine.permissions.batchUpdate.
 type PermissionsBatchUpdateRequest struct {
 	// Permissions: The permissions to be inserted or updated.
 	Permissions []*Permission `json:"permissions,omitempty"`
 }
 
+// PermissionsBatchUpdateResponse: The response returned by a call to
+// mapsengine.permissions.batchUpdate.
 type PermissionsBatchUpdateResponse struct {
 }
 
@@ -1254,6 +1310,7 @@ type PermissionsListResponse struct {
 	Permissions []*Permission `json:"permissions,omitempty"`
 }
 
+// PointStyle: Style for points.
 type PointStyle struct {
 	// Icon: Icon for the point; if it isn't null, exactly one of 'name',
 	// 'id' or 'scaledShape' must be set.
@@ -1263,6 +1320,7 @@ type PointStyle struct {
 	Label *LabelStyle `json:"label,omitempty"`
 }
 
+// PolygonStyle: Style for polygons.
 type PolygonStyle struct {
 	// Fill: Fill color of the polygon. If not provided, the polygon will be
 	// transparent and not visible if there is no border.
@@ -1275,9 +1333,12 @@ type PolygonStyle struct {
 	Stroke *Border `json:"stroke,omitempty"`
 }
 
+// ProcessResponse: The response returned by a call to any asset's
+// Process method.
 type ProcessResponse struct {
 }
 
+// Project: A Maps Engine project groups a collection of resources.
 type Project struct {
 	// Id: An ID used to refer to this Maps Engine project.
 	Id string `json:"id,omitempty"`
@@ -1286,14 +1347,19 @@ type Project struct {
 	Name string `json:"name,omitempty"`
 }
 
+// ProjectsListResponse: The response returned by a call to
+// projects.List.
 type ProjectsListResponse struct {
 	// Projects: Projects returned.
 	Projects []*Project `json:"projects,omitempty"`
 }
 
+// PublishResponse: The response returned by a call to any asset's
+// Publish method.
 type PublishResponse struct {
 }
 
+// PublishedLayer: The published version of a layer.
 type PublishedLayer struct {
 	// Description: The description of this Layer, supplied by the author.
 	Description string `json:"description,omitempty"`
@@ -1318,6 +1384,8 @@ type PublishedLayer struct {
 	ProjectId string `json:"projectId,omitempty"`
 }
 
+// PublishedLayersListResponse: The response returned by a call to
+// layers.List.published.
 type PublishedLayersListResponse struct {
 	// Layers: Resources returned.
 	Layers []*PublishedLayer `json:"layers,omitempty"`
@@ -1326,6 +1394,7 @@ type PublishedLayersListResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// PublishedMap: The published version of a map asset.
 type PublishedMap struct {
 	// Contents: The contents of this Map.
 	Contents []MapItem `json:"contents,omitempty"`
@@ -1348,6 +1417,8 @@ type PublishedMap struct {
 	ProjectId string `json:"projectId,omitempty"`
 }
 
+// PublishedMapsListResponse: The response returned by a call to
+// maps.List.published.
 type PublishedMapsListResponse struct {
 	// Maps: Resources returned.
 	Maps []*PublishedMap `json:"maps,omitempty"`
@@ -1356,6 +1427,7 @@ type PublishedMapsListResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// Raster: A geo-referenced raster.
 type Raster struct {
 	// AcquisitionTime: The acquisition time of this Raster.
 	AcquisitionTime *AcquisitionTime `json:"acquisitionTime,omitempty"`
@@ -1441,6 +1513,8 @@ type Raster struct {
 	WritersCanEditPermissions bool `json:"writersCanEditPermissions,omitempty"`
 }
 
+// RasterCollection: A raster collection groups multiple Raster
+// resources for inclusion in a Layer.
 type RasterCollection struct {
 	// Attribution: The name of the attribution to be used for this
 	// RasterCollection. Note: Attribution is returned in response to a get
@@ -1530,6 +1604,12 @@ type RasterCollection struct {
 	WritersCanEditPermissions bool `json:"writersCanEditPermissions,omitempty"`
 }
 
+// RasterCollectionsListResponse: The response returned by a call to
+// raster_collections.List. Note: The list response does not include all
+// the fields available in a raster collection. Refer to the
+// RasterCollection resource description for details of the fields that
+// are not included. You'll need to send a get request to retrieve the
+// additional fields for each raster collection.
 type RasterCollectionsListResponse struct {
 	// NextPageToken: Next page token.
 	NextPageToken string `json:"nextPageToken,omitempty"`
@@ -1538,6 +1618,7 @@ type RasterCollectionsListResponse struct {
 	RasterCollections []*RasterCollection `json:"rasterCollections,omitempty"`
 }
 
+// RasterCollectionsRaster: A raster resource.
 type RasterCollectionsRaster struct {
 	// Bbox: A rectangular bounding box which contains all of the data in
 	// this Raster. The box is expressed as \"west, south, east, north\".
@@ -1571,24 +1652,34 @@ type RasterCollectionsRaster struct {
 	Tags []string `json:"tags,omitempty"`
 }
 
+// RasterCollectionsRasterBatchDeleteRequest: The request sent to
+// rasterCollections.Rasters.BatchDelete.
 type RasterCollectionsRasterBatchDeleteRequest struct {
 	// Ids: An array of Raster asset IDs to be removed from this
 	// RasterCollection.
 	Ids []string `json:"ids,omitempty"`
 }
 
+// RasterCollectionsRastersBatchDeleteResponse: The response returned by
+// a call to rasterCollections.rasters.batchDelete.
 type RasterCollectionsRastersBatchDeleteResponse struct {
 }
 
+// RasterCollectionsRastersBatchInsertRequest: The request sent to
+// rasterCollections.Rasters.BatchInsert.
 type RasterCollectionsRastersBatchInsertRequest struct {
 	// Ids: An array of Raster asset IDs to be added to this
 	// RasterCollection.
 	Ids []string `json:"ids,omitempty"`
 }
 
+// RasterCollectionsRastersBatchInsertResponse: The response returned by
+// a call to rasterCollections.rasters.batchInsert.
 type RasterCollectionsRastersBatchInsertResponse struct {
 }
 
+// RasterCollectionsRastersListResponse: The response returned by a call
+// to rasterCollections.rasters.List.
 type RasterCollectionsRastersListResponse struct {
 	// NextPageToken: Next page token.
 	NextPageToken string `json:"nextPageToken,omitempty"`
@@ -1597,6 +1688,7 @@ type RasterCollectionsRastersListResponse struct {
 	Rasters []*RasterCollectionsRaster `json:"rasters,omitempty"`
 }
 
+// RastersListResponse: The response returned by a call to rasters.List.
 type RastersListResponse struct {
 	// NextPageToken: Next page token.
 	NextPageToken string `json:"nextPageToken,omitempty"`
@@ -1605,6 +1697,7 @@ type RastersListResponse struct {
 	Rasters []*Raster `json:"rasters,omitempty"`
 }
 
+// ScaledShape: Parameters for styling points as scaled shapes.
 type ScaledShape struct {
 	// Border: Border color/width of the shape. If not specified the shape
 	// won't have a border.
@@ -1621,6 +1714,7 @@ type ScaledShape struct {
 	Shape string `json:"shape,omitempty"`
 }
 
+// ScalingFunction: Parameters for scaling scaled shapes.
 type ScalingFunction struct {
 	// Column: Name of the numeric column used to scale a shape.
 	Column string `json:"column,omitempty"`
@@ -1641,6 +1735,8 @@ type ScalingFunction struct {
 	ValueRange *ValueRange `json:"valueRange,omitempty"`
 }
 
+// Schema: A schema indicating the properties which may be associated
+// with features within a Table, and the types of those properties.
 type Schema struct {
 	// Columns: An array of TableColumn objects. The first object in the
 	// array must be named geometry and be of type points, lineStrings,
@@ -1658,6 +1754,8 @@ type Schema struct {
 	PrimaryKey string `json:"primaryKey,omitempty"`
 }
 
+// SizeRange: Scaled shape size range in pixels. For circles, size
+// corresponds to diameter.
 type SizeRange struct {
 	// Max: Maximum size, in pixels.
 	Max float64 `json:"max,omitempty"`
@@ -1666,6 +1764,7 @@ type SizeRange struct {
 	Min float64 `json:"min,omitempty"`
 }
 
+// Table: A collection of geographic features, and associated metadata.
 type Table struct {
 	// Bbox: A rectangular bounding box which contains all of the data in
 	// this Table. The box is expressed as \"west, south, east, north\". The
@@ -1778,6 +1877,11 @@ type TableColumn struct {
 	Type string `json:"type,omitempty"`
 }
 
+// TablesListResponse: The response returned by a call to tables.List.
+// Note: The list response does not include all the fields available in
+// a table. Refer to the table resource description for details of the
+// fields that are not included. You'll need to send a get request to
+// retrieve the additional fields for each table.
 type TablesListResponse struct {
 	// NextPageToken: Next page token.
 	NextPageToken string `json:"nextPageToken,omitempty"`
@@ -1786,6 +1890,8 @@ type TablesListResponse struct {
 	Tables []*Table `json:"tables,omitempty"`
 }
 
+// ValueRange: Range of values used for scaling shapes. The min/max
+// values will be drawn as shapes with the min/max size.
 type ValueRange struct {
 	// Max: Maximum value.
 	Max float64 `json:"max,omitempty"`
@@ -1794,6 +1900,8 @@ type ValueRange struct {
 	Min float64 `json:"min,omitempty"`
 }
 
+// VectorStyle: A vector style contains styling information for vector
+// layer.
 type VectorStyle struct {
 	DisplayRules []*DisplayRule `json:"displayRules,omitempty"`
 
@@ -1810,6 +1918,8 @@ type VectorStyle struct {
 	Type string `json:"type,omitempty"`
 }
 
+// ZoomLevels: Zoom level range. Zoom levels are restricted between 0
+// and 24, inclusive.
 type ZoomLevels struct {
 	// Max: Maximum zoom level.
 	Max int64 `json:"max,omitempty"`

@@ -128,6 +128,7 @@ type UserProfilesService struct {
 	s *Service
 }
 
+// DimensionFilter: Represents a dimension filter.
 type DimensionFilter struct {
 	// DimensionName: The name of the dimension to filter.
 	DimensionName string `json:"dimensionName,omitempty"`
@@ -140,6 +141,7 @@ type DimensionFilter struct {
 	Value string `json:"value,omitempty"`
 }
 
+// DimensionValue: Represents a DimensionValue resource.
 type DimensionValue struct {
 	// DimensionName: Name of the dimension.
 	DimensionName string `json:"dimensionName,omitempty"`
@@ -158,6 +160,7 @@ type DimensionValue struct {
 	Value string `json:"value,omitempty"`
 }
 
+// DimensionValueList: Represents the list of DimensionValue resources.
 type DimensionValueList struct {
 	// Etag: ETag of this response for caching purposes.
 	Etag string `json:"etag,omitempty"`
@@ -176,6 +179,7 @@ type DimensionValueList struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// DimensionValueRequest: Represents a DimensionValuesRequest.
 type DimensionValueRequest struct {
 	// DimensionName: The name of the dimension values should be requested
 	// for.
@@ -197,6 +201,10 @@ type DimensionValueRequest struct {
 	StartDate string `json:"startDate,omitempty"`
 }
 
+// File: Represents a File resource. A File contains the meta-data for a
+// report run. It shows the status of the run and holds the urls to the
+// generated report data if the run is finished and the status is
+// "REPORT_AVAILABLE".
 type File struct {
 	// DateRange: The date range for which the file has report data.
 	DateRange *FileDateRange `json:"dateRange,omitempty"`
@@ -231,6 +239,7 @@ type File struct {
 	Urls *FileUrls `json:"urls,omitempty"`
 }
 
+// FileDateRange: The date range for which the file has report data.
 type FileDateRange struct {
 	// EndDate: The end date of the date range, inclusive. A string of the
 	// format: "yyyy-MM-dd".
@@ -241,11 +250,13 @@ type FileDateRange struct {
 	StartDate string `json:"startDate,omitempty"`
 }
 
+// FileUrls: The urls where the completed report file can be downloaded.
 type FileUrls struct {
 	// Csv: Urls for generated CSV data.
 	Csv *FileUrlsCsv `json:"csv,omitempty"`
 }
 
+// FileUrlsCsv: Urls for generated CSV data.
 type FileUrlsCsv struct {
 	// ApiUrl: The url for downloading the report data through the API.
 	ApiUrl string `json:"apiUrl,omitempty"`
@@ -255,6 +266,7 @@ type FileUrlsCsv struct {
 	BrowserUrl string `json:"browserUrl,omitempty"`
 }
 
+// FileList: Represents the list of File resources.
 type FileList struct {
 	// Etag: ETag of this response for caching purposes.
 	Etag string `json:"etag,omitempty"`
@@ -272,6 +284,7 @@ type FileList struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// Report: Represents a Report resource.
 type Report struct {
 	// AccountId: The account id this report belongs to.
 	AccountId int64 `json:"accountId,omitempty,string"`
@@ -315,6 +328,7 @@ type Report struct {
 	Type string `json:"type,omitempty"`
 }
 
+// ReportCriteria: The report criteria.
 type ReportCriteria struct {
 	// Activities: Activity group.
 	Activities *ReportCriteriaActivities `json:"activities,omitempty"`
@@ -338,6 +352,7 @@ type ReportCriteria struct {
 	MetricNames []string `json:"metricNames,omitempty"`
 }
 
+// ReportCriteriaActivities: Activity group.
 type ReportCriteriaActivities struct {
 	// Filters: List of activity filters. The dimension values need to be
 	// all either of type "dfa:activity" or "dfa:activityGroup".
@@ -347,12 +362,15 @@ type ReportCriteriaActivities struct {
 	MetricNames []string `json:"metricNames,omitempty"`
 }
 
+// ReportCriteriaCustomRichMediaEvents: Custom Rich Media Events group.
 type ReportCriteriaCustomRichMediaEvents struct {
 	// FilteredEventIds: List of custom rich media event IDs. Dimension
 	// values must be all of type dfa:richMediaEventTypeIdAndName.
 	FilteredEventIds []*DimensionValue `json:"filteredEventIds,omitempty"`
 }
 
+// ReportCriteriaDateRange: The date range this report should be run
+// for.
 type ReportCriteriaDateRange struct {
 	// EndDate: The end date of the date range, inclusive. A string of the
 	// format: "yyyy-MM-dd".
@@ -382,6 +400,9 @@ type ReportCriteriaDateRange struct {
 	StartDate string `json:"startDate,omitempty"`
 }
 
+// ReportSchedule: The report's schedule. Can only be set if the
+// report's 'dateRange' is a relative date range and the relative date
+// range is not "TODAY".
 type ReportSchedule struct {
 	// Active: Whether the schedule is active or not. Must be set to either
 	// true or false.
@@ -428,6 +449,7 @@ type ReportSchedule struct {
 	StartDate string `json:"startDate,omitempty"`
 }
 
+// ReportList: Represents the list of reports.
 type ReportList struct {
 	// Etag: ETag of this response for caching purposes.
 	Etag string `json:"etag,omitempty"`
@@ -445,6 +467,7 @@ type ReportList struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// SortedDimension: Represents a sorted dimension.
 type SortedDimension struct {
 	// Kind: Kind of resource this is, in this case
 	// dfareporting#sortedDimension.
@@ -460,6 +483,7 @@ type SortedDimension struct {
 	SortOrder string `json:"sortOrder,omitempty"`
 }
 
+// UserProfile: Represents a UserProfile resource.
 type UserProfile struct {
 	// AccountId: The account ID this profile belongs to.
 	AccountId int64 `json:"accountId,omitempty,string"`
@@ -489,6 +513,7 @@ type UserProfile struct {
 	UserName string `json:"userName,omitempty"`
 }
 
+// UserProfileList: Represents the list of user profiles.
 type UserProfileList struct {
 	// Etag: ETag of this response for caching purposes.
 	Etag string `json:"etag,omitempty"`

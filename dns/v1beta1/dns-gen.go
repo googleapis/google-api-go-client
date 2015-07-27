@@ -122,6 +122,7 @@ type ResourceRecordSetsService struct {
 	s *Service
 }
 
+// Change: An atomic update to a collection of ResourceRecordSets.
 type Change struct {
 	// Additions: Which ResourceRecordSets to add?
 	Additions []*ResourceRecordSet `json:"additions,omitempty"`
@@ -146,6 +147,8 @@ type Change struct {
 	Status string `json:"status,omitempty"`
 }
 
+// ChangesListResponse: The response to a request to enumerate Changes
+// to a ResourceRecordSets collection.
 type ChangesListResponse struct {
 	// Changes: The requested changes.
 	Changes []*Change `json:"changes,omitempty"`
@@ -167,6 +170,9 @@ type ChangesListResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// ManagedZone: A zone is a subtree of the DNS namespace under one
+// administrative responsibility. A ManagedZone is a resource that
+// represents a DNS zone hosted by the Cloud DNS service.
 type ManagedZone struct {
 	// CreationTime: The time that this resource was created on the server.
 	// This is in RFC3339 text format. Output only.
@@ -226,6 +232,9 @@ type ManagedZonesListResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// Project: A project resource. The project is a top level container for
+// resources including Cloud DNS ManagedZones. Projects can be created
+// only in the APIs console.
 type Project struct {
 	// Id: User assigned unique identifier for the resource (output only).
 	Id string `json:"id,omitempty"`
@@ -242,6 +251,7 @@ type Project struct {
 	Quota *Quota `json:"quota,omitempty"`
 }
 
+// Quota: Limits associated with a Project.
 type Quota struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "dns#quota".
@@ -271,6 +281,8 @@ type Quota struct {
 	TotalRrdataSizePerChange int64 `json:"totalRrdataSizePerChange,omitempty"`
 }
 
+// ResourceRecordSet: A unit of data that will be returned by the DNS
+// servers.
 type ResourceRecordSet struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "dns#resourceRecordSet".

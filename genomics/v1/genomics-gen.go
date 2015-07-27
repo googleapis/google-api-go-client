@@ -210,6 +210,8 @@ type VariantsetsService struct {
 	s *Service
 }
 
+// CallSet: A call set is a collection of variant calls, typically for
+// one sample. It belongs to a variant set.
 type CallSet struct {
 	// Created: The date this call set was created in milliseconds from the
 	// epoch.
@@ -232,12 +234,18 @@ type CallSet struct {
 	VariantSetIds []string `json:"variantSetIds,omitempty"`
 }
 
+// CallSetInfo: A map of additional call set information. This must be
+// of the form map (string key mapping to a list of string values).
 type CallSetInfo struct {
 }
 
+// CancelOperationRequest: The request message for
+// [Operations.CancelOperation][google.longrunning.Operations.CancelOpera
+// tion].
 type CancelOperationRequest struct {
 }
 
+// CigarUnit: A single CIGAR operation.
 type CigarUnit struct {
 	// Possible values:
 	//   "OPERATION_UNSPECIFIED"
@@ -263,6 +271,9 @@ type CigarUnit struct {
 	ReferenceSequence string `json:"referenceSequence,omitempty"`
 }
 
+// CoverageBucket: A bucket over which read coverage has been
+// precomputed. A bucket corresponds to a specific range of the
+// reference sequence.
 type CoverageBucket struct {
 	// MeanCoverage: The average number of reads which are aligned to each
 	// individual reference base in this bucket.
@@ -272,6 +283,7 @@ type CoverageBucket struct {
 	Range *Range `json:"range,omitempty"`
 }
 
+// Dataset: A Dataset is a collection of genomic data.
 type Dataset struct {
 	// CreateTime: The time this dataset was created, in seconds from the
 	// epoch.
@@ -288,6 +300,12 @@ type Dataset struct {
 	ProjectId string `json:"projectId,omitempty"`
 }
 
+// Empty: A generic empty message that you can re-use to avoid defining
+// duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For
+// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); } The JSON representation for `Empty` is
+// empty JSON object `{}`.
 type Empty struct {
 }
 
@@ -311,6 +329,7 @@ type Experiment struct {
 	SequencingCenter string `json:"sequencingCenter,omitempty"`
 }
 
+// ExportReadGroupSetRequest: The read group set export request.
 type ExportReadGroupSetRequest struct {
 	// ExportUri: Required. A Google Cloud Storage URI for the exported BAM
 	// file. The currently authenticated user must have write access to the
@@ -327,6 +346,7 @@ type ExportReadGroupSetRequest struct {
 	ReferenceNames []string `json:"referenceNames,omitempty"`
 }
 
+// ExportVariantSetRequest: The variant data export request.
 type ExportVariantSetRequest struct {
 	// BigqueryDataset: Required. The BigQuery dataset to export data to.
 	// This dataset must already exist. Note that this is distinct from the
@@ -356,6 +376,7 @@ type ExportVariantSetRequest struct {
 	ProjectId string `json:"projectId,omitempty"`
 }
 
+// ImportReadGroupSetsRequest: The read group set import request.
 type ImportReadGroupSetsRequest struct {
 	// DatasetId: Required. The ID of the dataset these read group sets will
 	// belong to. The caller must have WRITE permissions to this dataset.
@@ -382,11 +403,13 @@ type ImportReadGroupSetsRequest struct {
 	SourceUris []string `json:"sourceUris,omitempty"`
 }
 
+// ImportReadGroupSetsResponse: The read group set import response.
 type ImportReadGroupSetsResponse struct {
 	// ReadGroupSetIds: IDs of the read group sets that were created.
 	ReadGroupSetIds []string `json:"readGroupSetIds,omitempty"`
 }
 
+// ImportVariantsRequest: The variant data import request.
 type ImportVariantsRequest struct {
 	// Format: The format of the variant data being imported. If
 	// unspecified, defaults to to `VCF`.
@@ -417,11 +440,15 @@ type ImportVariantsRequest struct {
 	VariantSetId string `json:"variantSetId,omitempty"`
 }
 
+// ImportVariantsResponse: The variant data import response.
 type ImportVariantsResponse struct {
 	// CallSetIds: IDs of the call sets that were created.
 	CallSetIds []string `json:"callSetIds,omitempty"`
 }
 
+// LinearAlignment: A linear alignment can be represented by one CIGAR
+// string. Describes the mapped position and local alignment of the read
+// to the reference.
 type LinearAlignment struct {
 	// Cigar: Represents the local alignment of this sequence (alignment
 	// matches, indels, etc) against the reference.
@@ -471,6 +498,7 @@ type ListCoverageBucketsResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// ListDatasetsResponse: The dataset list response.
 type ListDatasetsResponse struct {
 	// Datasets: The list of matching Datasets.
 	Datasets []*Dataset `json:"datasets,omitempty"`
@@ -482,6 +510,9 @@ type ListDatasetsResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// ListOperationsResponse: The response message for
+// [Operations.ListOperations][google.longrunning.Operations.ListOperatio
+// ns].
 type ListOperationsResponse struct {
 	// NextPageToken: The standard List next-page token.
 	NextPageToken string `json:"nextPageToken,omitempty"`
@@ -499,6 +530,8 @@ type MergeVariantsRequest struct {
 	Variants []*Variant `json:"variants,omitempty"`
 }
 
+// Operation: This resource represents a long-running operation that is
+// the result of a network API call.
 type Operation struct {
 	// Done: If the value is `false`, it means the operation is still in
 	// progress. If true, the operation is completed and the `result` is
@@ -533,11 +566,15 @@ type OperationMetadata interface{}
 
 type OperationResponse interface{}
 
+// OperationEvent: An event that occurred during an
+// [Operation][google.longrunning.Operation].
 type OperationEvent struct {
 	// Description: Required description of event.
 	Description string `json:"description,omitempty"`
 }
 
+// OperationMetadata1: Metadata describing an
+// [Operation][google.longrunning.Operation].
 type OperationMetadata1 struct {
 	// CreateTime: The time at which the job was submitted to the Genomics
 	// service.
@@ -560,6 +597,10 @@ type OperationMetadata1 struct {
 
 type OperationMetadataRequest interface{}
 
+// Position: An abstraction for referring to a genomic position, in
+// relation to some already known reference. For now, represents a
+// genomic position as a reference name, a base number on that reference
+// (0-based), and a determination of forward or reverse strand.
 type Position struct {
 	// Position: The 0-based offset from the start of the forward strand for
 	// that reference.
@@ -592,6 +633,8 @@ type Program struct {
 	Version string `json:"version,omitempty"`
 }
 
+// Range: A 0-based half-open genomic coordinate range for search
+// requests.
 type Range struct {
 	// End: The end position of the range on the reference, 0-based
 	// exclusive.
@@ -606,6 +649,33 @@ type Range struct {
 	Start int64 `json:"start,omitempty,string"`
 }
 
+// Read: A read alignment describes a linear alignment of a string of
+// DNA to a [reference sequence][google.genomics.v1.Reference], in
+// addition to metadata about the fragment (the molecule of DNA
+// sequenced) and the read (the bases which were read by the sequencer).
+// A read is equivalent to a line in a SAM file. A read belongs to
+// exactly one read group and exactly one [read group
+// set][google.genomics.v1.ReadGroupSet]. ### Generating a
+// reference-aligned sequence string When interacting with mapped reads,
+// it's often useful to produce a string representing the local
+// alignment of the read to reference. The following pseudocode
+// demonstrates one way of doing this: out = "" offset = 0 for c in
+// read.alignment.cigar { switch c.operation { case "ALIGNMENT_MATCH",
+// "SEQUENCE_MATCH", "SEQUENCE_MISMATCH": out +=
+// read.alignedSequence[offset:offset+c.operationLength] offset +=
+// c.operationLength break case "CLIP_SOFT", "INSERT": offset +=
+// c.operationLength break case "PAD": out += repeat("*",
+// c.operationLength) break case "DELETE": out += repeat("-",
+// c.operationLength) break case "SKIP": out += repeat(" ",
+// c.operationLength) break case "CLIP_HARD": break } } return out ###
+// Converting to SAM's CIGAR string The following pseudocode generates a
+// SAM CIGAR string from the `cigar` field. Note that this is a lossy
+// conversion (`cigar.referenceSequence` is lost). cigarMap = {
+// "ALIGNMENT_MATCH": "M", "INSERT": "I", "DELETE": "D", "SKIP": "N",
+// "CLIP_SOFT": "S", "CLIP_HARD": "H", "PAD": "P", "SEQUENCE_MATCH":
+// "=", "SEQUENCE_MISMATCH": "X", } cigarStr = "" for c in
+// read.alignment.cigar { cigarStr += c.operationLength +
+// cigarMap[c.operation] } return cigarStr
 type Read struct {
 	// AlignedQuality: The quality of the read sequence contained in this
 	// alignment record. `alignedSequence` and `alignedQuality` may be
@@ -701,9 +771,13 @@ type Read struct {
 	SupplementaryAlignment bool `json:"supplementaryAlignment,omitempty"`
 }
 
+// ReadInfo: A map of additional read alignment information. This must
+// be of the form map (string key mapping to a list of string values).
 type ReadInfo struct {
 }
 
+// ReadGroup: A read group is all the data that's processed the same way
+// by the sequencer.
 type ReadGroup struct {
 	// DatasetId: The ID of the dataset this read group belongs to.
 	DatasetId string `json:"datasetId,omitempty"`
@@ -749,9 +823,17 @@ type ReadGroup struct {
 	SampleId string `json:"sampleId,omitempty"`
 }
 
+// ReadGroupInfo: A map of additional read group information. This must
+// be of the form map (string key mapping to a list of string values).
 type ReadGroupInfo struct {
 }
 
+// ReadGroupSet: A read group set is a logical collection of read
+// groups, which are collections of reads produced by a sequencer. A
+// read group set typically models reads corresponding to one sample,
+// sequenced one way, and aligned one way. * A read group set belongs to
+// one dataset. * A read group belongs to one read group set. * A read
+// belongs to one read group.
 type ReadGroupSet struct {
 	// DatasetId: The dataset ID.
 	DatasetId string `json:"datasetId,omitempty"`
@@ -780,9 +862,15 @@ type ReadGroupSet struct {
 	ReferenceSetId string `json:"referenceSetId,omitempty"`
 }
 
+// ReadGroupSetInfo: A map of additional read group set information.
 type ReadGroupSetInfo struct {
 }
 
+// Reference: A reference is a canonical assembled DNA sequence,
+// intended to act as a reference coordinate space for other genomic
+// annotations. A single reference might represent the human chromosome
+// 1 or mitochandrial DNA, for instance. A reference belongs to one or
+// more reference sets.
 type Reference struct {
 	// Id: The server-generated reference ID, unique across all references.
 	Id string `json:"id,omitempty"`
@@ -812,6 +900,8 @@ type Reference struct {
 	SourceUri string `json:"sourceUri,omitempty"`
 }
 
+// ReferenceBound: ReferenceBound records an upper bound for the
+// starting coordinate of variants in a particular reference.
 type ReferenceBound struct {
 	// ReferenceName: The reference the bound is associate with.
 	ReferenceName string `json:"referenceName,omitempty"`
@@ -821,6 +911,11 @@ type ReferenceBound struct {
 	UpperBound int64 `json:"upperBound,omitempty,string"`
 }
 
+// ReferenceSet: A reference set is a set of references which typically
+// comprise a reference assembly for a species, such as `GRCh38` which
+// is representative of the human genome. A reference set defines a
+// common coordinate space for comparing reference-aligned experimental
+// data. A reference set contains 1 or more references.
 type ReferenceSet struct {
 	// AssemblyId: Public id of this reference set, such as `GRCh37`.
 	AssemblyId string `json:"assemblyId,omitempty"`
@@ -861,6 +956,7 @@ type ReferenceSet struct {
 	SourceUri string `json:"sourceUri,omitempty"`
 }
 
+// SearchCallSetsRequest: The call set search request.
 type SearchCallSetsRequest struct {
 	// Name: Only return call sets for which a substring of the name matches
 	// this string.
@@ -880,6 +976,7 @@ type SearchCallSetsRequest struct {
 	VariantSetIds []string `json:"variantSetIds,omitempty"`
 }
 
+// SearchCallSetsResponse: The call set search response.
 type SearchCallSetsResponse struct {
 	// CallSets: The list of matching call sets.
 	CallSets []*CallSet `json:"callSets,omitempty"`
@@ -891,6 +988,7 @@ type SearchCallSetsResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// SearchReadGroupSetsRequest: The read group set search request.
 type SearchReadGroupSetsRequest struct {
 	// DatasetIds: Restricts this query to read group sets within the given
 	// datasets. At least one ID must be provided.
@@ -910,6 +1008,7 @@ type SearchReadGroupSetsRequest struct {
 	PageToken string `json:"pageToken,omitempty"`
 }
 
+// SearchReadGroupSetsResponse: The read group set search response.
 type SearchReadGroupSetsResponse struct {
 	// NextPageToken: The continuation token, which is used to page through
 	// large result sets. Provide this value in a subsequent request to
@@ -921,6 +1020,7 @@ type SearchReadGroupSetsResponse struct {
 	ReadGroupSets []*ReadGroupSet `json:"readGroupSets,omitempty"`
 }
 
+// SearchReadsRequest: The read search request.
 type SearchReadsRequest struct {
 	// End: The end position of the range on the reference, 0-based
 	// exclusive. If specified, `referenceName` must also be specified.
@@ -956,6 +1056,7 @@ type SearchReadsRequest struct {
 	Start int64 `json:"start,omitempty,string"`
 }
 
+// SearchReadsResponse: The read search response.
 type SearchReadsResponse struct {
 	// Alignments: The list of matching alignments sorted by mapped genomic
 	// coordinate, if any, ascending in position within the same reference.
@@ -1046,6 +1147,7 @@ type SearchReferencesResponse struct {
 	References []*Reference `json:"references,omitempty"`
 }
 
+// SearchVariantSetsRequest: The search variant sets request.
 type SearchVariantSetsRequest struct {
 	// DatasetIds: Exactly one dataset ID must be provided here. Only
 	// variant sets which belong to this dataset will be returned.
@@ -1060,6 +1162,7 @@ type SearchVariantSetsRequest struct {
 	PageToken string `json:"pageToken,omitempty"`
 }
 
+// SearchVariantSetsResponse: The search variant sets response.
 type SearchVariantSetsResponse struct {
 	// NextPageToken: The continuation token, which is used to page through
 	// large result sets. Provide this value in a subsequent request to
@@ -1071,6 +1174,7 @@ type SearchVariantSetsResponse struct {
 	VariantSets []*VariantSet `json:"variantSets,omitempty"`
 }
 
+// SearchVariantsRequest: The variant search request.
 type SearchVariantsRequest struct {
 	// CallSetIds: Only return variant calls which belong to call sets with
 	// these ids. Leaving this blank returns all variant calls. If a variant
@@ -1115,6 +1219,7 @@ type SearchVariantsRequest struct {
 	VariantSetIds []string `json:"variantSetIds,omitempty"`
 }
 
+// SearchVariantsResponse: The variant search response.
 type SearchVariantsResponse struct {
 	// NextPageToken: The continuation token, which is used to page through
 	// large result sets. Provide this value in a subsequent request to
@@ -1126,6 +1231,43 @@ type SearchVariantsResponse struct {
 	Variants []*Variant `json:"variants,omitempty"`
 }
 
+// Status: The `Status` defines a logical error model that is suitable
+// for different programming environments, including REST APIs and RPC
+// APIs. It is used by [gRPC](https://github.com/grpc). The error model
+// is designed to be: - Simple to use and understand for most users. -
+// Flexible enough to meet unexpected needs. # Overview The `Status`
+// message contains 3 pieces of data: error code, error message, and
+// error details. The error code should be an enum value of
+// [google.rpc.Code][google.rpc.Code], but it may accept additional
+// error codes if needed. The error message should be a developer-facing
+// English message that helps developers *understand* and *resolve* the
+// error. If a localized user-facing error message is needed, it can be
+// sent in the error details or localized by the client. The optional
+// error details may contain arbitrary information about the error.
+// There is a predefined set of error detail types in the package
+// `google.rpc` which can be used for common error conditions. #
+// Language mapping The `Status` message is the logical representation
+// of the error model, but it is not necessarily the actual wire format.
+// When the `Status` message is exposed in different client libraries
+// and different wire protocols, it can be mapped differently. For
+// example, it will likely be mapped to some exceptions in Java, but
+// more likely mapped to some error codes in C. # Other uses The error
+// model and the `Status` message can be used in a variety of
+// environments - either with or without APIs - to provide consistent
+// developer experience across different environments. Example uses of
+// this error model include: - Partial errors. If a service needs to
+// return partial errors to the client, it may embed the `Status` in the
+// normal response to indicate the partial errors. - Workflow errors. A
+// typical workflow has multiple steps. Each step may have a `Status`
+// message for error reporting purpose. - Batch operations. If a client
+// uses batch request and batch response, the `Status` message should be
+// used directly inside batch response, one for each error sub-response.
+// - Asynchronous operations. If an API call embeds asynchronous
+// operation results in its response, the status of those operations
+// should be represented directly using the `Status` message. - Logging.
+// If some API errors are stored in logs, the message `Status` could be
+// used directly after any stripping needed for security/privacy
+// reasons.
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// [google.rpc.Code][google.rpc.Code].
@@ -1147,6 +1289,14 @@ type StatusDetails interface{}
 type UndeleteDatasetRequest struct {
 }
 
+// Variant: A variant represents a change in DNA sequence relative to a
+// reference sequence. For example, a variant could represent a SNP or
+// an insertion. Variants belong to a variant set. Each of the calls on
+// a variant represent a determination of genotype with respect to that
+// variant. For example, a call might assign probability of 0.32 to the
+// occurrence of a SNP named rs1234 in a sample named NA12345. A call
+// belongs to a call set, which contains related calls typically from
+// one sample.
 type Variant struct {
 	// AlternateBases: The bases that appear instead of the reference bases.
 	AlternateBases []string `json:"alternateBases,omitempty"`
@@ -1201,9 +1351,16 @@ type Variant struct {
 	VariantSetId string `json:"variantSetId,omitempty"`
 }
 
+// VariantInfo: A map of additional variant information. This must be of
+// the form map (string key mapping to a list of string values).
 type VariantInfo struct {
 }
 
+// VariantCall: A call represents the determination of genotype with
+// respect to a particular variant. It may include associated
+// information such as quality and phasing. For example, a call might
+// assign a probability of 0.32 to the occurrence of a SNP named rs1234
+// in a call set with the name NA12345.
 type VariantCall struct {
 	// CallSetId: The ID of the call set this variant call belongs to.
 	CallSetId string `json:"callSetId,omitempty"`
@@ -1244,9 +1401,15 @@ type VariantCall struct {
 	Phaseset string `json:"phaseset,omitempty"`
 }
 
+// VariantCallInfo: A map of additional variant call information. This
+// must be of the form map (string key mapping to a list of string
+// values).
 type VariantCallInfo struct {
 }
 
+// VariantSet: A variant set is a collection of call sets and variants.
+// It contains summary statistics of those contents. A variant set
+// belongs to a dataset.
 type VariantSet struct {
 	// DatasetId: The dataset to which this variant set belongs.
 	DatasetId string `json:"datasetId,omitempty"`
@@ -1263,6 +1426,10 @@ type VariantSet struct {
 	ReferenceBounds []*ReferenceBound `json:"referenceBounds,omitempty"`
 }
 
+// VariantSetMetadata: Metadata describes a single piece of variant call
+// metadata. These data include a top level key and either a single
+// value string (value) or a list of key-value pairs (info.) Value and
+// info are mutually exclusive.
 type VariantSetMetadata struct {
 	// Description: A textual description of this metadata.
 	Description string `json:"description,omitempty"`
@@ -1299,6 +1466,9 @@ type VariantSetMetadata struct {
 	Value string `json:"value,omitempty"`
 }
 
+// VariantSetMetadataInfo: Remaining structured metadata key-value
+// pairs. This must be of the form map (string key mapping to a list of
+// string values).
 type VariantSetMetadataInfo struct {
 }
 

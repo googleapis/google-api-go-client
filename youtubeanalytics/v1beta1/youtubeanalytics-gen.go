@@ -141,6 +141,7 @@ type ReportsService struct {
 	s *Service
 }
 
+// BatchReport: Contains single batchReport resource.
 type BatchReport struct {
 	// Id: The ID that YouTube assigns and uses to uniquely identify the
 	// report.
@@ -177,6 +178,9 @@ type BatchReportOutputs struct {
 	Type string `json:"type,omitempty"`
 }
 
+// BatchReportTimeSpan: Period included in the report. For reports
+// containing all entities endTime is not set. Both startTime and
+// endTime are inclusive.
 type BatchReportTimeSpan struct {
 	// EndTime: End of the period included in the report. Inclusive. For
 	// reports containing all entities endTime is not set.
@@ -186,6 +190,8 @@ type BatchReportTimeSpan struct {
 	StartTime string `json:"startTime,omitempty"`
 }
 
+// BatchReportDefinition: Contains single batchReportDefinition
+// resource.
 type BatchReportDefinition struct {
 	// Id: The ID that YouTube assigns and uses to uniquely identify the
 	// report definition.
@@ -206,6 +212,9 @@ type BatchReportDefinition struct {
 	Type string `json:"type,omitempty"`
 }
 
+// BatchReportDefinitionList: A paginated list of batchReportDefinition
+// resources returned in response to a
+// youtubeAnalytics.batchReportDefinitions.list request.
 type BatchReportDefinitionList struct {
 	// Items: A list of batchReportDefinition resources that match the
 	// request criteria.
@@ -217,6 +226,8 @@ type BatchReportDefinitionList struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// BatchReportList: A paginated list of batchReport resources returned
+// in response to a youtubeAnalytics.batchReport.list request.
 type BatchReportList struct {
 	// Items: A list of batchReport resources that match the request
 	// criteria.
@@ -270,6 +281,8 @@ type GroupItemResource struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// GroupItemListResponse: A paginated list of grouList resources
+// returned in response to a youtubeAnalytics.groupApi.list request.
 type GroupItemListResponse struct {
 	Etag string `json:"etag,omitempty"`
 
@@ -278,6 +291,8 @@ type GroupItemListResponse struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// GroupListResponse: A paginated list of grouList resources returned in
+// response to a youtubeAnalytics.groupApi.list request.
 type GroupListResponse struct {
 	Etag string `json:"etag,omitempty"`
 
@@ -286,6 +301,11 @@ type GroupListResponse struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// ResultTable: Contains a single result table. The table is returned as
+// an array of rows that contain the values for the cells of the table.
+// Depending on the metric or dimension, the cell can contain a string
+// (video ID, country code) or a number (number of views or number of
+// likes).
 type ResultTable struct {
 	// ColumnHeaders: This value specifies information about the data
 	// returned in the rows fields. Each item in the columnHeaders list

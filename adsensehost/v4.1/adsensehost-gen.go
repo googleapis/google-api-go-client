@@ -261,6 +261,9 @@ type AdStyle struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// AdStyleColors: The colors included in the style. These are
+// represented as six hexadecimal characters, similar to HTML color
+// codes, but without the leading hash.
 type AdStyleColors struct {
 	// Background: The color of the ad background.
 	Background string `json:"background,omitempty"`
@@ -278,6 +281,7 @@ type AdStyleColors struct {
 	Url string `json:"url,omitempty"`
 }
 
+// AdStyleFont: The font which is included in the style.
 type AdStyleFont struct {
 	// Family: The family of the font. Possible values are:
 	// ACCOUNT_DEFAULT_FAMILY, ADSENSE_DEFAULT_FAMILY, ARIAL, TIMES and
@@ -328,6 +332,8 @@ type AdUnit struct {
 	Status string `json:"status,omitempty"`
 }
 
+// AdUnitContentAdsSettings: Settings specific to content ads (AFC) and
+// highend mobile content ads (AFMC).
 type AdUnitContentAdsSettings struct {
 	// BackupOption: The backup option to be used in instances where no ad
 	// is available.
@@ -342,6 +348,8 @@ type AdUnitContentAdsSettings struct {
 	Type string `json:"type,omitempty"`
 }
 
+// AdUnitContentAdsSettingsBackupOption: The backup option to be used in
+// instances where no ad is available.
 type AdUnitContentAdsSettingsBackupOption struct {
 	// Color: Color to use when type is set to COLOR. These are represented
 	// as six hexadecimal characters, similar to HTML color codes, but
@@ -356,6 +364,8 @@ type AdUnitContentAdsSettingsBackupOption struct {
 	Url string `json:"url,omitempty"`
 }
 
+// AdUnitMobileContentAdsSettings: Settings specific to WAP mobile
+// content ads (AFMC).
 type AdUnitMobileContentAdsSettings struct {
 	// MarkupLanguage: The markup language to use for this ad unit.
 	MarkupLanguage string `json:"markupLanguage,omitempty"`

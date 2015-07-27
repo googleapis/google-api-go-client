@@ -134,6 +134,7 @@ type ReportsService struct {
 	s *Service
 }
 
+// Advertiser: An AdvertiserResource.
 type Advertiser struct {
 	// AllowPublisherCreatedLinks: True if the advertiser allows publisher
 	// created links, otherwise false.
@@ -141,8 +142,7 @@ type Advertiser struct {
 
 	// Category: Category that this advertiser belongs to. A valid list of
 	// categories can be found here:
-	// http://www.google.com/support/affiliatenetwork/advertiser/bin/answer.p
-	// y?hl=en&answer=107581
+	// http://www.google.com/support/affiliatenetwork/advertiser/bin/answer.py?hl=en&answer=107581
 	Category string `json:"category,omitempty"`
 
 	// CommissionDuration: The longest possible length of a commission (how
@@ -229,6 +229,12 @@ type Advertisers struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// CcOffer: A credit card offer. There are many possible result fields.
+// We provide two different views of the data, or "projections." The
+// "full" projection includes every result field. And the "summary"
+// projection, which is the default, includes a smaller subset of the
+// fields. The fields included in the summary projection are marked as
+// such in their descriptions.
 type CcOffer struct {
 	// AdditionalCardBenefits: More marketing copy about the card's
 	// benefits. A summary field.
@@ -529,6 +535,7 @@ type CcOffers struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// Event: An EventResource.
 type Event struct {
 	// AdvertiserId: The ID of advertiser for this event.
 	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
@@ -638,6 +645,7 @@ type Events struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// Link: A LinkResource.
 type Link struct {
 	// AdvertiserId: The advertiser id for the advertiser who owns this
 	// link.
@@ -708,6 +716,7 @@ type Link struct {
 	StartDate string `json:"startDate,omitempty"`
 }
 
+// LinkSpecialOffers: Special offers on the link.
 type LinkSpecialOffers struct {
 	// FreeGift: Whether there is a free gift
 	FreeGift bool `json:"freeGift,omitempty"`
@@ -745,6 +754,7 @@ type Links struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// Money: An ApiMoneyProto.
 type Money struct {
 	// Amount: The amount of money.
 	Amount float64 `json:"amount,omitempty"`
@@ -753,11 +763,11 @@ type Money struct {
 	CurrencyCode string `json:"currencyCode,omitempty"`
 }
 
+// Publisher: A PublisherResource.
 type Publisher struct {
 	// Classification: Classification that this publisher belongs to. See
 	// this link for all publisher classifications:
-	// http://www.google.com/support/affiliatenetwork/advertiser/bin/answer.p
-	// y?hl=en&answer=107625&ctx=cb&src=cb&cbid=-k5fihzthfaik&cbrank=4
+	// http://www.google.com/support/affiliatenetwork/advertiser/bin/answer.py?hl=en&answer=107625&ctx=cb&src=cb&cbid=-k5fihzthfaik&cbrank=4
 	Classification string `json:"classification,omitempty"`
 
 	// EpcNinetyDayAverage: The sum of fees paid to this publisher divided
@@ -812,6 +822,8 @@ type Publishers struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// Report: A ReportResource representing a report of a certain type
+// either for an advertiser or publisher.
 type Report struct {
 	// ColumnNames: The column names for the report
 	ColumnNames []string `json:"column_names,omitempty"`
@@ -969,9 +981,8 @@ func (r *AdvertisersService) List(role string, roleId string) *AdvertisersListCa
 // AdvertiserCategory sets the optional parameter "advertiserCategory":
 // Caret(^) delimted list of advertiser categories. Valid categories are
 // defined here:
-// http://www.google.com/support/affiliatenetwork/advertiser/bin/answer.p
-// y?hl=en&answer=107581. Filters out all advertisers not in one of the
-// given advertiser categories.
+// http://www.google.com/support/affiliatenetwork/advertiser/bin/answer.py?hl=en&answer=107581. Filters out all advertisers not in one of the given advertiser
+// categories.
 func (c *AdvertisersListCall) AdvertiserCategory(advertiserCategory string) *AdvertisersListCall {
 	c.opt_["advertiserCategory"] = advertiserCategory
 	return c

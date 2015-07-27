@@ -143,6 +143,7 @@ type WorkerService struct {
 	s *Service
 }
 
+// CustomField: Custom field.
 type CustomField struct {
 	// CustomFieldId: Custom field id.
 	CustomFieldId int64 `json:"customFieldId,omitempty,string"`
@@ -154,6 +155,7 @@ type CustomField struct {
 	Value string `json:"value,omitempty"`
 }
 
+// CustomFieldDef: Custom field definition.
 type CustomFieldDef struct {
 	// Enabled: Whether the field is enabled.
 	Enabled bool `json:"enabled,omitempty"`
@@ -179,6 +181,8 @@ type CustomFieldDef struct {
 	Type string `json:"type,omitempty"`
 }
 
+// CustomFieldDefListResponse: Collection of custom field definitions
+// for a team.
 type CustomFieldDefListResponse struct {
 	// Items: Collection of custom field definitions in a team.
 	Items []*CustomFieldDef `json:"items,omitempty"`
@@ -188,6 +192,7 @@ type CustomFieldDefListResponse struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// CustomFields: Collection of custom fields.
 type CustomFields struct {
 	// CustomField: Collection of custom fields.
 	CustomField []*CustomField `json:"customField,omitempty"`
@@ -196,6 +201,7 @@ type CustomFields struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// EnumItemDef: Enum Item definition.
 type EnumItemDef struct {
 	// Active: Whether the enum item is active. Jobs may contain inactive
 	// enum values; however, setting an enum to an inactive value when
@@ -209,6 +215,7 @@ type EnumItemDef struct {
 	Value string `json:"value,omitempty"`
 }
 
+// Job: A job.
 type Job struct {
 	// Id: Job id.
 	Id uint64 `json:"id,omitempty,string"`
@@ -224,6 +231,8 @@ type Job struct {
 	State *JobState `json:"state,omitempty"`
 }
 
+// JobChange: Change to a job. For example assigning the job to a
+// different worker.
 type JobChange struct {
 	// Kind: Identifies this object as a job change.
 	Kind string `json:"kind,omitempty"`
@@ -236,6 +245,7 @@ type JobChange struct {
 	Timestamp uint64 `json:"timestamp,omitempty,string"`
 }
 
+// JobListResponse: Response from a List Jobs request.
 type JobListResponse struct {
 	// Items: Jobs in the collection.
 	Items []*Job `json:"items,omitempty"`
@@ -247,6 +257,7 @@ type JobListResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// JobState: Current state of a job.
 type JobState struct {
 	// Assignee: Email address of the assignee, or the string "DELETED_USER"
 	// if the account is no longer available.
@@ -277,6 +288,7 @@ type JobState struct {
 	Title string `json:"title,omitempty"`
 }
 
+// Location: Location of a job.
 type Location struct {
 	// AddressLine: Address.
 	AddressLine []string `json:"addressLine,omitempty"`
@@ -291,6 +303,7 @@ type Location struct {
 	Lng float64 `json:"lng,omitempty"`
 }
 
+// LocationListResponse: Response from a List Locations request.
 type LocationListResponse struct {
 	// Items: Locations in the collection.
 	Items []*LocationRecord `json:"items,omitempty"`
@@ -305,6 +318,7 @@ type LocationListResponse struct {
 	TokenPagination *TokenPagination `json:"tokenPagination,omitempty"`
 }
 
+// LocationRecord: Recorded location of a worker.
 type LocationRecord struct {
 	// CollectionTime: The collection time in milliseconds since the epoch.
 	CollectionTime int64 `json:"collectionTime,omitempty,string"`
@@ -323,6 +337,7 @@ type LocationRecord struct {
 	Longitude float64 `json:"longitude,omitempty"`
 }
 
+// Schedule: Job schedule.
 type Schedule struct {
 	// AllDay: Whether the job is scheduled for the whole day. Time of day
 	// in start/end times is ignored if this is true.
@@ -341,6 +356,7 @@ type Schedule struct {
 	StartTime uint64 `json:"startTime,omitempty,string"`
 }
 
+// Team: A Coordinate team.
 type Team struct {
 	// Id: Team id, as found in a coordinate team url e.g.
 	// https://coordinate.google.com/f/xyz where "xyz" is the team id.
@@ -353,6 +369,7 @@ type Team struct {
 	Name string `json:"name,omitempty"`
 }
 
+// TeamListResponse: Response from a List Teams request.
 type TeamListResponse struct {
 	// Items: Teams in the collection.
 	Items []*Team `json:"items,omitempty"`
@@ -361,6 +378,7 @@ type TeamListResponse struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// TokenPagination: Pagination information.
 type TokenPagination struct {
 	// Kind: Identifies this object as pagination information.
 	Kind string `json:"kind,omitempty"`
@@ -373,6 +391,7 @@ type TokenPagination struct {
 	PreviousPageToken string `json:"previousPageToken,omitempty"`
 }
 
+// Worker: A worker in a Coordinate team.
 type Worker struct {
 	// Id: Worker email address. If a worker has been deleted from your
 	// team, the email address will appear as DELETED_USER.
@@ -382,6 +401,7 @@ type Worker struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// WorkerListResponse: Response from a List Workers request.
 type WorkerListResponse struct {
 	// Items: Workers in the collection.
 	Items []*Worker `json:"items,omitempty"`

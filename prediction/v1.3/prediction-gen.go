@@ -106,6 +106,7 @@ type Input struct {
 	Input *InputInput `json:"input,omitempty"`
 }
 
+// InputInput: Input to the model for a prediction
 type InputInput struct {
 	// CsvInstance: A list of input features, these can be strings or
 	// doubles.
@@ -163,6 +164,7 @@ type Training struct {
 	Utility []*TrainingUtility `json:"utility,omitempty"`
 }
 
+// TrainingModelInfo: Model metadata.
 type TrainingModelInfo struct {
 	// ClassWeightedAccuracy: Estimated accuracy of model taking utility
 	// weights into account [Categorical models only].
@@ -205,12 +207,22 @@ type TrainingModelInfo struct {
 	NumberInstances int64 `json:"numberInstances,omitempty,string"`
 }
 
+// TrainingModelInfoConfusionMatrix: An output confusion matrix. This
+// shows an estimate for how this model will do in predictions. This is
+// first indexed by the true class label. For each true class label,
+// this provides a pair {predicted_label, count}, where count is the
+// estimated number of times the model will predict the predicted label
+// given the true label. Will not output if more then 100 classes
+// [Categorical models only].
 type TrainingModelInfoConfusionMatrix struct {
 }
 
+// TrainingModelInfoConfusionMatrixRowTotals: A list of the confusion
+// matrix row totals
 type TrainingModelInfoConfusionMatrixRowTotals struct {
 }
 
+// TrainingUtility: Class label (string).
 type TrainingUtility struct {
 }
 

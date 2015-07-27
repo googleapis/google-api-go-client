@@ -68,6 +68,7 @@ func (s *Service) userAgent() string {
 	return googleapi.UserAgent + " " + s.UserAgent
 }
 
+// Creative: A creative and its classification data.
 type Creative struct {
 	// AdvertiserId: Detected advertiser id, if any. Read-only. This field
 	// should not be set in requests.

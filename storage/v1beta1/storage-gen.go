@@ -122,6 +122,7 @@ type ObjectsService struct {
 	s *Service
 }
 
+// Bucket: A bucket.
 type Bucket struct {
 	// Acl: Access controls on the bucket.
 	Acl []*BucketAccessControl `json:"acl,omitempty"`
@@ -159,6 +160,8 @@ type Bucket struct {
 	Website *BucketWebsite `json:"website,omitempty"`
 }
 
+// BucketOwner: The owner of the bucket. This will always be the project
+// team's owner group.
 type BucketOwner struct {
 	// Entity: The entity, in the form group-groupId.
 	Entity string `json:"entity,omitempty"`
@@ -167,6 +170,7 @@ type BucketOwner struct {
 	EntityId string `json:"entityId,omitempty"`
 }
 
+// BucketWebsite: The bucket's website configuration.
 type BucketWebsite struct {
 	// MainPageSuffix: Behaves as the bucket's directory index where missing
 	// objects are treated as potential directories.
@@ -177,6 +181,7 @@ type BucketWebsite struct {
 	NotFoundPage string `json:"notFoundPage,omitempty"`
 }
 
+// BucketAccessControl: An access-control entry.
 type BucketAccessControl struct {
 	// Bucket: The name of the bucket.
 	Bucket string `json:"bucket,omitempty"`
@@ -221,6 +226,7 @@ type BucketAccessControl struct {
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
+// BucketAccessControls: An access-control list.
 type BucketAccessControls struct {
 	// Items: The list of items.
 	Items []*BucketAccessControl `json:"items,omitempty"`
@@ -230,6 +236,7 @@ type BucketAccessControls struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// Buckets: A list of buckets.
 type Buckets struct {
 	// Items: The list of items.
 	Items []*Bucket `json:"items,omitempty"`
@@ -244,6 +251,7 @@ type Buckets struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// Object: An object.
 type Object struct {
 	// Acl: Access controls on the object.
 	Acl []*ObjectAccessControl `json:"acl,omitempty"`
@@ -289,6 +297,9 @@ type Object struct {
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
+// ObjectMedia: Object media data. Provided on your behalf when
+// uploading raw media or multipart/related with an auxiliary media
+// part.
 type ObjectMedia struct {
 	// Algorithm: Hash algorithm used. Currently only MD5 is supported.
 	// Required if a hash is provided.
@@ -316,6 +327,8 @@ type ObjectMedia struct {
 	TimeCreated string `json:"timeCreated,omitempty"`
 }
 
+// ObjectOwner: The owner of the object. This will always be the
+// uploader of the object.
 type ObjectOwner struct {
 	// Entity: The entity, in the form user-userId.
 	Entity string `json:"entity,omitempty"`
@@ -324,6 +337,7 @@ type ObjectOwner struct {
 	EntityId string `json:"entityId,omitempty"`
 }
 
+// ObjectAccessControl: An access-control entry.
 type ObjectAccessControl struct {
 	// Bucket: The name of the bucket.
 	Bucket string `json:"bucket,omitempty"`
@@ -370,6 +384,7 @@ type ObjectAccessControl struct {
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
+// ObjectAccessControls: An access-control list.
 type ObjectAccessControls struct {
 	// Items: The list of items.
 	Items []*ObjectAccessControl `json:"items,omitempty"`
@@ -379,6 +394,7 @@ type ObjectAccessControls struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// Objects: A list of objects.
 type Objects struct {
 	// Items: The list of items.
 	Items []*Object `json:"items,omitempty"`

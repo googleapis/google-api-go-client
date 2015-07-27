@@ -245,6 +245,7 @@ type Apk struct {
 	VersionCode int64 `json:"versionCode,omitempty"`
 }
 
+// ApkBinary: Represents the binary payload of an APK.
 type ApkBinary struct {
 	// Sha1: A sha1 hash of the APK payload, encoded as a hex string and
 	// matching the output of the sha1sum command.
@@ -302,6 +303,8 @@ type AppDetails struct {
 	DefaultLanguage string `json:"defaultLanguage,omitempty"`
 }
 
+// AppEdit: Represents an edit of an app. An edit allows clients to make
+// multiple changes before committing them in one operation.
 type AppEdit struct {
 	// ExpiryTimeSeconds: The time at which the edit will expire and will be
 	// no longer valid for use in any subsequent API calls (encoded as
@@ -312,6 +315,8 @@ type AppEdit struct {
 	Id string `json:"id,omitempty"`
 }
 
+// Entitlement: An Entitlement resource indicates a user's current
+// entitlement to an inapp item or subscription.
 type Entitlement struct {
 	// Kind: This kind represents an entitlement object in the
 	// androidpublisher service.
@@ -354,6 +359,11 @@ type ExpansionFilesUploadResponse struct {
 	ExpansionFile *ExpansionFile `json:"expansionFile,omitempty"`
 }
 
+// ExternallyHostedApk: Defines an APK available for this application
+// that is hosted externally and not uploaded to Google Play. This
+// function is only available to enterprises who are using Google Play
+// for Work, and whos application is restricted to the enterprise
+// private channel
 type ExternallyHostedApk struct {
 	// ApplicationLabel: The application label.
 	ApplicationLabel string `json:"applicationLabel,omitempty"`
@@ -408,6 +418,7 @@ type ExternallyHostedApk struct {
 	VersionName string `json:"versionName,omitempty"`
 }
 
+// ExternallyHostedApkUsesPermission: A permission used by this APK.
 type ExternallyHostedApkUsesPermission struct {
 	// MaxSdkVersion: Optionally, the maximum SDK version for which the
 	// permission is required.
@@ -602,6 +613,8 @@ type Price struct {
 	PriceMicros string `json:"priceMicros,omitempty"`
 }
 
+// ProductPurchase: A ProductPurchase resource indicates the status of a
+// user's inapp product purchase.
 type ProductPurchase struct {
 	// ConsumptionState: The consumption state of the inapp product.
 	// Possible values are:
@@ -636,6 +649,8 @@ type Season struct {
 	Start *MonthDay `json:"start,omitempty"`
 }
 
+// SubscriptionDeferralInfo: A SubscriptionDeferralInfo contains the
+// data needed to defer a subscription purchase to a future expiry time.
 type SubscriptionDeferralInfo struct {
 	// DesiredExpiryTimeMillis: The desired next expiry time for the
 	// subscription in milliseconds since Epoch. The given time must be
@@ -648,6 +663,8 @@ type SubscriptionDeferralInfo struct {
 	ExpectedExpiryTimeMillis int64 `json:"expectedExpiryTimeMillis,omitempty,string"`
 }
 
+// SubscriptionPurchase: A SubscriptionPurchase resource indicates the
+// status of a user's subscription purchase.
 type SubscriptionPurchase struct {
 	// AutoRenewing: Whether the subscription will automatically be renewed
 	// when it reaches its current expiry time.

@@ -119,6 +119,7 @@ type ProjectsTopicsSubscriptionsService struct {
 	s *Service
 }
 
+// AcknowledgeRequest: Request for the Acknowledge method.
 type AcknowledgeRequest struct {
 	// AckIds: The acknowledgment ID for the messages being acknowledged
 	// that was returned by the Pub/Sub system in the Pull response. Must
@@ -126,6 +127,8 @@ type AcknowledgeRequest struct {
 	AckIds []string `json:"ackIds,omitempty"`
 }
 
+// Binding: Associates members with roles. See below for allowed formats
+// of members.
 type Binding struct {
 	// Members: Format of member entries: 1. allUsers Matches any requesting
 	// principal (users, service accounts or anonymous). 2.
@@ -143,9 +146,11 @@ type Binding struct {
 	Role string `json:"role,omitempty"`
 }
 
+// CloudAuditOptions: Write a Cloud Audit log
 type CloudAuditOptions struct {
 }
 
+// Condition: A condition to be met.
 type Condition struct {
 	// Iam: Trusted attributes supplied by the IAM system.
 	//
@@ -188,6 +193,7 @@ type Condition struct {
 	Values []string `json:"values,omitempty"`
 }
 
+// CounterOptions: Options for counters
 type CounterOptions struct {
 	// Field: The field value to attribute.
 	Field string `json:"field,omitempty"`
@@ -196,12 +202,20 @@ type CounterOptions struct {
 	Metric string `json:"metric,omitempty"`
 }
 
+// DataAccessOptions: Write a Data Access (Gin) log
 type DataAccessOptions struct {
 }
 
+// Empty: A generic empty message that you can re-use to avoid defining
+// duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For
+// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); } The JSON representation for `Empty` is
+// empty JSON object `{}`.
 type Empty struct {
 }
 
+// ListSubscriptionsResponse: Response for the ListSubscriptions method.
 type ListSubscriptionsResponse struct {
 	// NextPageToken: If not empty, indicates that there may be more
 	// subscriptions that match the request; this value should be passed in
@@ -212,6 +226,8 @@ type ListSubscriptionsResponse struct {
 	Subscriptions []*Subscription `json:"subscriptions,omitempty"`
 }
 
+// ListTopicSubscriptionsResponse: Response for the
+// ListTopicSubscriptions method.
 type ListTopicSubscriptionsResponse struct {
 	// NextPageToken: If not empty, indicates that there may be more
 	// subscriptions that match the request; this value should be passed in
@@ -222,6 +238,7 @@ type ListTopicSubscriptionsResponse struct {
 	Subscriptions []string `json:"subscriptions,omitempty"`
 }
 
+// ListTopicsResponse: Response for the ListTopics method.
 type ListTopicsResponse struct {
 	// NextPageToken: If not empty, indicates that there may be more topics
 	// that match the request; this value should be passed in a new
@@ -232,6 +249,19 @@ type ListTopicsResponse struct {
 	Topics []*Topic `json:"topics,omitempty"`
 }
 
+// LogConfig: Specifies what kind of log the caller must write Increment
+// a streamz counter with the specified metric and field names. Metric
+// names should start with a '/', generally be lowercase-only, and end
+// in "_count". Field names should not contain an initial slash. The
+// actual exported metric names will have "/iam/policy" prepended. Field
+// names correspond to IAM request parameters and field values are their
+// respective values. At present only "iam_principal", corresponding to
+// IAMContext.principal, is supported. Examples: counter { metric:
+// "/debug_access_count" field: "iam_principal" } ==> increment counter
+// /iam/policy/backend_debug_access_count {iam_principal=[value of
+// IAMContext.principal]} At this time we do not support: * multiple
+// field names (though this may be supported in the future) *
+// decrementing the counter * incrementing it by anything other than 1
 type LogConfig struct {
 	// CloudAudit: Cloud audit options.
 	CloudAudit *CloudAuditOptions `json:"cloudAudit,omitempty"`
@@ -243,6 +273,7 @@ type LogConfig struct {
 	DataAccess *DataAccessOptions `json:"dataAccess,omitempty"`
 }
 
+// ModifyAckDeadlineRequest: Request for the ModifyAckDeadline method.
 type ModifyAckDeadlineRequest struct {
 	// AckDeadlineSeconds: The new ack deadline with respect to the time
 	// this request was sent to the Pub/Sub system. Must be >= 0. For
@@ -255,6 +286,7 @@ type ModifyAckDeadlineRequest struct {
 	AckIds []string `json:"ackIds,omitempty"`
 }
 
+// ModifyPushConfigRequest: Request for the ModifyPushConfig method.
 type ModifyPushConfigRequest struct {
 	// PushConfig: The push configuration for future deliveries. An empty
 	// pushConfig indicates that the Pub/Sub system should stop pushing
@@ -264,6 +296,23 @@ type ModifyPushConfigRequest struct {
 	PushConfig *PushConfig `json:"pushConfig,omitempty"`
 }
 
+// Policy: # Overview The `Policy` defines an access control policy
+// language. It is used to define policies that are attached to
+// resources like files, folders, VMs, etc. # Policy structure A
+// `Policy` consists of a list of bindings. A `Binding` binds a set of
+// members to a role, where the members include user accounts, user
+// groups, user domains, and service accounts. A 'role' is a named set
+// of permissions, defined by IAM. The definition of a role is outside
+// the policy. A permission check first determines the roles that
+// include the specified permission, and then determines if the
+// principal specified is a member of a binding to at least one of these
+// roles. The membership check is recursive when a group is bound to a
+// role. Policy examples: ``` { "bindings": [ { "role": "roles/owner",
+// "members": [ "user:mike@example.com", "group:admins@example.com",
+// "domain:google.com",
+// "serviceAccount:frontend@example.iam.gserviceaccounts.com"] }, {
+// "role": "roles/viewer", "members": ["user:sean@example.com"] } ] }
+// ```
 type Policy struct {
 	// Bindings: It is an error to specify multiple bindings for the same
 	// role. It is an error to specify a binding with no members.
@@ -279,11 +328,13 @@ type Policy struct {
 	Version int64 `json:"version,omitempty"`
 }
 
+// PublishRequest: Request for the Publish method.
 type PublishRequest struct {
 	// Messages: The messages to publish.
 	Messages []*PubsubMessage `json:"messages,omitempty"`
 }
 
+// PublishResponse: Response for the Publish method.
 type PublishResponse struct {
 	// MessageIds: The server-assigned ID of each published message, in the
 	// same order as the messages in the request. IDs are guaranteed to be
@@ -291,6 +342,7 @@ type PublishResponse struct {
 	MessageIds []string `json:"messageIds,omitempty"`
 }
 
+// PubsubMessage: A message data and its attributes.
 type PubsubMessage struct {
 	// Attributes: Optional attributes for this message.
 	Attributes map[string]string `json:"attributes,omitempty"`
@@ -307,6 +359,7 @@ type PubsubMessage struct {
 	MessageId string `json:"messageId,omitempty"`
 }
 
+// PullRequest: Request for the Pull method.
 type PullRequest struct {
 	// MaxMessages: The maximum number of messages returned for this
 	// request. The Pub/Sub system may return fewer than the number
@@ -322,6 +375,7 @@ type PullRequest struct {
 	ReturnImmediately bool `json:"returnImmediately,omitempty"`
 }
 
+// PullResponse: Response for the Pull method.
 type PullResponse struct {
 	// ReceivedMessages: Received Pub/Sub messages. The Pub/Sub system will
 	// return zero messages if there are no more available in the backlog.
@@ -330,6 +384,7 @@ type PullResponse struct {
 	ReceivedMessages []*ReceivedMessage `json:"receivedMessages,omitempty"`
 }
 
+// PushConfig: Configuration for a push delivery endpoint.
 type PushConfig struct {
 	// Attributes: Endpoint configuration attributes. Every endpoint has a
 	// set of API supported attributes that can be used to control different
@@ -354,6 +409,7 @@ type PushConfig struct {
 	PushEndpoint string `json:"pushEndpoint,omitempty"`
 }
 
+// ReceivedMessage: A message and its corresponding acknowledgment ID.
 type ReceivedMessage struct {
 	// AckId: This ID can be used to acknowledge the received message.
 	AckId string `json:"ackId,omitempty"`
@@ -362,6 +418,7 @@ type ReceivedMessage struct {
 	Message *PubsubMessage `json:"message,omitempty"`
 }
 
+// Rule: A rule to be applied in a Policy.
 type Rule struct {
 	// Action: Required
 	//
@@ -399,6 +456,7 @@ type Rule struct {
 	Permissions []string `json:"permissions,omitempty"`
 }
 
+// SetIamPolicyRequest: Request message for `SetIamPolicy` method.
 type SetIamPolicyRequest struct {
 	// Policy: REQUIRED: The complete policy to be applied to the
 	// 'resource'. The size of the policy is limited to a few 10s of KB. An
@@ -407,6 +465,7 @@ type SetIamPolicyRequest struct {
 	Policy *Policy `json:"policy,omitempty"`
 }
 
+// Subscription: A subscription resource.
 type Subscription struct {
 	// AckDeadlineSeconds: This value is the maximum time after a subscriber
 	// receives a message before the subscriber should acknowledge the
@@ -442,6 +501,8 @@ type Subscription struct {
 	Topic string `json:"topic,omitempty"`
 }
 
+// TestIamPermissionsRequest: Request message for `TestIamPermissions`
+// method.
 type TestIamPermissionsRequest struct {
 	// Permissions: The set of permissions to check for the 'resource'.
 	// Permissions with wildcards (such as '*' or 'storage.*') are not
@@ -449,12 +510,15 @@ type TestIamPermissionsRequest struct {
 	Permissions []string `json:"permissions,omitempty"`
 }
 
+// TestIamPermissionsResponse: Response message for `TestIamPermissions`
+// method.
 type TestIamPermissionsResponse struct {
 	// Permissions: A subset of `TestPermissionsRequest.permissions` that
 	// the caller is allowed.
 	Permissions []string `json:"permissions,omitempty"`
 }
 
+// Topic: A topic resource.
 type Topic struct {
 	// Name: The name of the topic. It must have the format
 	// "projects/{project}/topics/{topic}" for Google Cloud Pub/Sub API v1

@@ -128,6 +128,7 @@ type UserProfilesService struct {
 	s *Service
 }
 
+// Activities: Represents an activity group.
 type Activities struct {
 	// Filters: List of activity filters. The dimension values need to be
 	// all either of type "dfa:activity" or "dfa:activityGroup".
@@ -141,6 +142,7 @@ type Activities struct {
 	MetricNames []string `json:"metricNames,omitempty"`
 }
 
+// CustomRichMediaEvents: Represents a Custom Rich Media Events group.
 type CustomRichMediaEvents struct {
 	// FilteredEventIds: List of custom rich media event IDs. Dimension
 	// values must be all of type dfa:richMediaEventTypeIdAndName.
@@ -151,6 +153,7 @@ type CustomRichMediaEvents struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// DateRange: Represents a date range.
 type DateRange struct {
 	// EndDate: The end date of the date range, inclusive. A string of the
 	// format: "yyyy-MM-dd".
@@ -184,6 +187,7 @@ type DateRange struct {
 	StartDate string `json:"startDate,omitempty"`
 }
 
+// DimensionFilter: Represents a dimension filter.
 type DimensionFilter struct {
 	// DimensionName: The name of the dimension to filter.
 	DimensionName string `json:"dimensionName,omitempty"`
@@ -196,6 +200,7 @@ type DimensionFilter struct {
 	Value string `json:"value,omitempty"`
 }
 
+// DimensionValue: Represents a DimensionValue resource.
 type DimensionValue struct {
 	// DimensionName: The name of the dimension.
 	DimensionName string `json:"dimensionName,omitempty"`
@@ -214,6 +219,7 @@ type DimensionValue struct {
 	Value string `json:"value,omitempty"`
 }
 
+// DimensionValueList: Represents the list of DimensionValue resources.
 type DimensionValueList struct {
 	// Etag: The eTag of this response for caching purposes.
 	Etag string `json:"etag,omitempty"`
@@ -232,6 +238,7 @@ type DimensionValueList struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// DimensionValueRequest: Represents a DimensionValuesRequest.
 type DimensionValueRequest struct {
 	// DimensionName: The name of the dimension for which values should be
 	// requested.
@@ -254,6 +261,10 @@ type DimensionValueRequest struct {
 	StartDate string `json:"startDate,omitempty"`
 }
 
+// File: Represents a File resource. A File contains the meta-data for a
+// report run. It shows the status of the run and holds the urls to the
+// generated report data if the run is finished and the status is
+// "REPORT_AVAILABLE".
 type File struct {
 	// DateRange: The date range for which the file has report data. The
 	// date range will always be the absolute date range for which the
@@ -294,6 +305,7 @@ type File struct {
 	Urls *FileUrls `json:"urls,omitempty"`
 }
 
+// FileUrls: The urls where the completed report file can be downloaded.
 type FileUrls struct {
 	// ApiUrl: The url for downloading the report data through the API.
 	ApiUrl string `json:"apiUrl,omitempty"`
@@ -303,6 +315,7 @@ type FileUrls struct {
 	BrowserUrl string `json:"browserUrl,omitempty"`
 }
 
+// FileList: Represents the list of File resources.
 type FileList struct {
 	// Etag: The eTag of this response for caching purposes.
 	Etag string `json:"etag,omitempty"`
@@ -320,6 +333,7 @@ type FileList struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// Recipient: Represents a recipient.
 type Recipient struct {
 	// DeliveryType: The delivery type for the recipient, one of:
 	// - "ATTACHMENT"
@@ -334,6 +348,7 @@ type Recipient struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// Report: Represents a Report resource.
 type Report struct {
 	// AccountId: The account ID to which this report belongs.
 	AccountId int64 `json:"accountId,omitempty,string"`
@@ -413,6 +428,8 @@ type Report struct {
 	Type string `json:"type,omitempty"`
 }
 
+// ReportActiveGrpCriteria: The report criteria for a report of type
+// "ACTIVE_GRP".
 type ReportActiveGrpCriteria struct {
 	// DateRange: The date range this report should be run for.
 	DateRange *DateRange `json:"dateRange,omitempty"`
@@ -433,6 +450,7 @@ type ReportActiveGrpCriteria struct {
 	MetricNames []string `json:"metricNames,omitempty"`
 }
 
+// ReportCriteria: The report criteria for a report of type "STANDARD".
 type ReportCriteria struct {
 	// Activities: Activity group.
 	Activities *Activities `json:"activities,omitempty"`
@@ -457,6 +475,8 @@ type ReportCriteria struct {
 	MetricNames []string `json:"metricNames,omitempty"`
 }
 
+// ReportCrossDimensionReachCriteria: The report criteria for a report
+// of type "CROSS_DIMENSION_REACH".
 type ReportCrossDimensionReachCriteria struct {
 	// Breakdown: The list of dimensions the report should include.
 	Breakdown []*SortedDimension `json:"breakdown,omitempty"`
@@ -486,6 +506,7 @@ type ReportCrossDimensionReachCriteria struct {
 	Pivoted bool `json:"pivoted,omitempty"`
 }
 
+// ReportDelivery: The report's email delivery settings.
 type ReportDelivery struct {
 	// EmailOwner: Whether the report should be emailed to the report owner.
 	EmailOwner bool `json:"emailOwner,omitempty"`
@@ -503,6 +524,8 @@ type ReportDelivery struct {
 	Recipients []*Recipient `json:"recipients,omitempty"`
 }
 
+// ReportFloodlightCriteria: The report criteria for a report of type
+// "FLOODLIGHT".
 type ReportFloodlightCriteria struct {
 	// DateRange: The date range this report should be run for.
 	DateRange *DateRange `json:"dateRange,omitempty"`
@@ -529,6 +552,8 @@ type ReportFloodlightCriteria struct {
 	ReportProperties *ReportFloodlightCriteriaReportProperties `json:"reportProperties,omitempty"`
 }
 
+// ReportFloodlightCriteriaReportProperties: The properties of the
+// report.
 type ReportFloodlightCriteriaReportProperties struct {
 	// IncludeAttributedIPConversions: Include conversions that have no
 	// cookie, but do have an exposure path.
@@ -548,6 +573,8 @@ type ReportFloodlightCriteriaReportProperties struct {
 	IncludeUnattributedIPConversions bool `json:"includeUnattributedIPConversions,omitempty"`
 }
 
+// ReportPathToConversionCriteria: The report criteria for a report of
+// type "PATH_TO_CONVERSION".
 type ReportPathToConversionCriteria struct {
 	// ActivityFilters: The list of 'dfa:activity' values to filter on.
 	ActivityFilters []*DimensionValue `json:"activityFilters,omitempty"`
@@ -580,6 +607,8 @@ type ReportPathToConversionCriteria struct {
 	ReportProperties *ReportPathToConversionCriteriaReportProperties `json:"reportProperties,omitempty"`
 }
 
+// ReportPathToConversionCriteriaReportProperties: The properties of the
+// report.
 type ReportPathToConversionCriteriaReportProperties struct {
 	// ClicksLookbackWindow: DFA checks to see if a click interaction
 	// occurred within the specified period of time before a conversion. By
@@ -633,6 +662,8 @@ type ReportPathToConversionCriteriaReportProperties struct {
 	PivotOnInteractionPath bool `json:"pivotOnInteractionPath,omitempty"`
 }
 
+// ReportReachCriteria: The report criteria for a report of type
+// "REACH".
 type ReportReachCriteria struct {
 	// Activities: Activity group.
 	Activities *Activities `json:"activities,omitempty"`
@@ -660,6 +691,9 @@ type ReportReachCriteria struct {
 	ReachByFrequencyMetricNames []string `json:"reachByFrequencyMetricNames,omitempty"`
 }
 
+// ReportSchedule: The report's schedule. Can only be set if the
+// report's 'dateRange' is a relative date range and the relative date
+// range is not "TODAY".
 type ReportSchedule struct {
 	// Active: Whether the schedule is active or not. Must be set to either
 	// true or false.
@@ -706,6 +740,7 @@ type ReportSchedule struct {
 	StartDate string `json:"startDate,omitempty"`
 }
 
+// ReportList: Represents the list of reports.
 type ReportList struct {
 	// Etag: The eTag of this response for caching purposes.
 	Etag string `json:"etag,omitempty"`
@@ -723,6 +758,7 @@ type ReportList struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// SortedDimension: Represents a sorted dimension.
 type SortedDimension struct {
 	// Kind: The kind of resource this is, in this case
 	// dfareporting#sortedDimension.
@@ -738,6 +774,7 @@ type SortedDimension struct {
 	SortOrder string `json:"sortOrder,omitempty"`
 }
 
+// UserProfile: Represents a UserProfile resource.
 type UserProfile struct {
 	// AccountId: The account ID to which this profile belongs.
 	AccountId int64 `json:"accountId,omitempty,string"`
@@ -767,6 +804,7 @@ type UserProfile struct {
 	UserName string `json:"userName,omitempty"`
 }
 
+// UserProfileList: Represents the list of user profiles.
 type UserProfileList struct {
 	// Etag: The eTag of this response for caching purposes.
 	Etag string `json:"etag,omitempty"`

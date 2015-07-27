@@ -74,6 +74,8 @@ type RelyingpartyService struct {
 	s *Service
 }
 
+// CreateAuthUriResponse: Response of creating the IDP authentication
+// URL.
 type CreateAuthUriResponse struct {
 	// AuthUri: The URI used by the IDP to authenticate the user.
 	AuthUri string `json:"authUri,omitempty"`
@@ -96,11 +98,13 @@ type CreateAuthUriResponse struct {
 	Registered bool `json:"registered,omitempty"`
 }
 
+// DeleteAccountResponse: Respone of deleting account.
 type DeleteAccountResponse struct {
 	// Kind: The fixed string "identitytoolkit#DeleteAccountResponse".
 	Kind string `json:"kind,omitempty"`
 }
 
+// DownloadAccountResponse: Respone of downloading accounts in batch.
 type DownloadAccountResponse struct {
 	// Kind: The fixed string "identitytoolkit#DownloadAccountResponse".
 	Kind string `json:"kind,omitempty"`
@@ -113,6 +117,7 @@ type DownloadAccountResponse struct {
 	Users []*UserInfo `json:"users,omitempty"`
 }
 
+// GetAccountInfoResponse: Response of getting account information.
 type GetAccountInfoResponse struct {
 	// Kind: The fixed string "identitytoolkit#GetAccountInfoResponse".
 	Kind string `json:"kind,omitempty"`
@@ -121,6 +126,8 @@ type GetAccountInfoResponse struct {
 	Users []*UserInfo `json:"users,omitempty"`
 }
 
+// GetOobConfirmationCodeResponse: Response of getting a code for user
+// confirmation (reset password, change email etc.).
 type GetOobConfirmationCodeResponse struct {
 	// Kind: The fixed string
 	// "identitytoolkit#GetOobConfirmationCodeResponse".
@@ -130,6 +137,7 @@ type GetOobConfirmationCodeResponse struct {
 	OobCode string `json:"oobCode,omitempty"`
 }
 
+// GetRecaptchaParamResponse: Response of getting recaptcha param.
 type GetRecaptchaParamResponse struct {
 	// Kind: The fixed string "identitytoolkit#GetRecaptchaParamResponse".
 	Kind string `json:"kind,omitempty"`
@@ -142,6 +150,8 @@ type GetRecaptchaParamResponse struct {
 	RecaptchaStoken string `json:"recaptchaStoken,omitempty"`
 }
 
+// IdentitytoolkitRelyingpartyCreateAuthUriRequest: Request to get the
+// IDP authentication URL.
 type IdentitytoolkitRelyingpartyCreateAuthUriRequest struct {
 	// AppId: The app ID of the mobile app, base64(CERT_SHA1):PACKAGE_NAME
 	// for Android, BUNDLE_ID for iOS.
@@ -183,11 +193,15 @@ type IdentitytoolkitRelyingpartyCreateAuthUriRequest struct {
 	ProviderId string `json:"providerId,omitempty"`
 }
 
+// IdentitytoolkitRelyingpartyDeleteAccountRequest: Request to delete
+// account.
 type IdentitytoolkitRelyingpartyDeleteAccountRequest struct {
 	// LocalId: The local ID of the user.
 	LocalId string `json:"localId,omitempty"`
 }
 
+// IdentitytoolkitRelyingpartyDownloadAccountRequest: Request to
+// download user account in batch.
 type IdentitytoolkitRelyingpartyDownloadAccountRequest struct {
 	// MaxResults: The max number of results to return in the response.
 	MaxResults int64 `json:"maxResults,omitempty"`
@@ -197,6 +211,8 @@ type IdentitytoolkitRelyingpartyDownloadAccountRequest struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// IdentitytoolkitRelyingpartyGetAccountInfoRequest: Request to get the
+// account information.
 type IdentitytoolkitRelyingpartyGetAccountInfoRequest struct {
 	// Email: The list of emails of the users to inquiry.
 	Email []string `json:"email,omitempty"`
@@ -208,6 +224,8 @@ type IdentitytoolkitRelyingpartyGetAccountInfoRequest struct {
 	LocalId []string `json:"localId,omitempty"`
 }
 
+// IdentitytoolkitRelyingpartyResetPasswordRequest: Request to reset the
+// password.
 type IdentitytoolkitRelyingpartyResetPasswordRequest struct {
 	// Email: The email address of the user.
 	Email string `json:"email,omitempty"`
@@ -222,6 +240,8 @@ type IdentitytoolkitRelyingpartyResetPasswordRequest struct {
 	OobCode string `json:"oobCode,omitempty"`
 }
 
+// IdentitytoolkitRelyingpartySetAccountInfoRequest: Request to set the
+// account information.
 type IdentitytoolkitRelyingpartySetAccountInfoRequest struct {
 	// CaptchaChallenge: The captcha challenge.
 	CaptchaChallenge string `json:"captchaChallenge,omitempty"`
@@ -263,6 +283,8 @@ type IdentitytoolkitRelyingpartySetAccountInfoRequest struct {
 	ValidSince int64 `json:"validSince,omitempty,string"`
 }
 
+// IdentitytoolkitRelyingpartyUploadAccountRequest: Request to upload
+// user account in batch.
 type IdentitytoolkitRelyingpartyUploadAccountRequest struct {
 	// HashAlgorithm: The password hash algorithm.
 	HashAlgorithm string `json:"hashAlgorithm,omitempty"`
@@ -285,6 +307,8 @@ type IdentitytoolkitRelyingpartyUploadAccountRequest struct {
 	Users []*UserInfo `json:"users,omitempty"`
 }
 
+// IdentitytoolkitRelyingpartyVerifyAssertionRequest: Request to verify
+// the IDP assertion.
 type IdentitytoolkitRelyingpartyVerifyAssertionRequest struct {
 	// PendingIdToken: The GITKit token for the non-trusted IDP pending to
 	// be confirmed by the user.
@@ -301,6 +325,8 @@ type IdentitytoolkitRelyingpartyVerifyAssertionRequest struct {
 	ReturnRefreshToken bool `json:"returnRefreshToken,omitempty"`
 }
 
+// IdentitytoolkitRelyingpartyVerifyPasswordRequest: Request to verify
+// the password.
 type IdentitytoolkitRelyingpartyVerifyPasswordRequest struct {
 	// CaptchaChallenge: The captcha challenge.
 	CaptchaChallenge string `json:"captchaChallenge,omitempty"`
@@ -319,6 +345,8 @@ type IdentitytoolkitRelyingpartyVerifyPasswordRequest struct {
 	PendingIdToken string `json:"pendingIdToken,omitempty"`
 }
 
+// Relyingparty: Request of getting a code for user confirmation (reset
+// password, change email etc.)
 type Relyingparty struct {
 	// CaptchaResp: The recaptcha response from the user.
 	CaptchaResp string `json:"captchaResp,omitempty"`
@@ -345,6 +373,7 @@ type Relyingparty struct {
 	UserIp string `json:"userIp,omitempty"`
 }
 
+// ResetPasswordResponse: Response of resetting the password.
 type ResetPasswordResponse struct {
 	// Email: The user's email.
 	Email string `json:"email,omitempty"`
@@ -353,6 +382,7 @@ type ResetPasswordResponse struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// SetAccountInfoResponse: Respone of setting the account information.
 type SetAccountInfoResponse struct {
 	// DisplayName: The name of the user.
 	DisplayName string `json:"displayName,omitempty"`
@@ -383,6 +413,7 @@ type SetAccountInfoResponseProviderUserInfo struct {
 	ProviderId string `json:"providerId,omitempty"`
 }
 
+// UploadAccountResponse: Respone of uploading accounts in batch.
 type UploadAccountResponse struct {
 	// Error: The error encountered while processing the account info.
 	Error []*UploadAccountResponseError `json:"error,omitempty"`
@@ -399,6 +430,7 @@ type UploadAccountResponseError struct {
 	Message string `json:"message,omitempty"`
 }
 
+// UserInfo: Template for an individual account info.
 type UserInfo struct {
 	// Disabled: Whether the user is disabled.
 	Disabled bool `json:"disabled,omitempty"`
@@ -453,6 +485,7 @@ type UserInfoProviderUserInfo struct {
 	ProviderId string `json:"providerId,omitempty"`
 }
 
+// VerifyAssertionResponse: Response of verifying the IDP assertion.
 type VerifyAssertionResponse struct {
 	// Action: The action code.
 	Action string `json:"action,omitempty"`
@@ -560,6 +593,7 @@ type VerifyAssertionResponse struct {
 	VerifiedProvider []string `json:"verifiedProvider,omitempty"`
 }
 
+// VerifyPasswordResponse: Request of verifying the password.
 type VerifyPasswordResponse struct {
 	// DisplayName: The name of the user.
 	DisplayName string `json:"displayName,omitempty"`

@@ -81,6 +81,7 @@ type FilesService struct {
 	s *Service
 }
 
+// File: The metadata for a file.
 type File struct {
 	// CreatedDate: Create time for this file (formatted RFC 3339
 	// timestamp).
@@ -154,11 +155,14 @@ type File struct {
 	UserPermission *Permission `json:"userPermission,omitempty"`
 }
 
+// FileIndexableText: Indexable text attributes for the file (can only
+// be written)
 type FileIndexableText struct {
 	// Text: The text to be indexed for this file
 	Text string `json:"text,omitempty"`
 }
 
+// FileLabels: Labels for the file.
 type FileLabels struct {
 	// Hidden: Whether this file is hidden from the user
 	Hidden bool `json:"hidden,omitempty"`
@@ -178,6 +182,7 @@ type FileParentsCollection struct {
 	ParentLink string `json:"parentLink,omitempty"`
 }
 
+// Permission: A single permission for a file.
 type Permission struct {
 	// AdditionalRoles: Any additional roles that this permission describes.
 	AdditionalRoles []string `json:"additionalRoles,omitempty"`

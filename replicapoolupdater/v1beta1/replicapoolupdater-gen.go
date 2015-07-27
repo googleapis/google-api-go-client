@@ -98,6 +98,7 @@ type ZoneOperationsService struct {
 	s *Service
 }
 
+// InstanceUpdate: Update of a single instance.
 type InstanceUpdate struct {
 	// Error: Errors that occurred during the instance update.
 	Error *InstanceUpdateError `json:"error,omitempty"`
@@ -119,6 +120,7 @@ type InstanceUpdate struct {
 	Status string `json:"status,omitempty"`
 }
 
+// InstanceUpdateError: Errors that occurred during the instance update.
 type InstanceUpdateError struct {
 	// Errors: [Output Only] The array of errors encountered while
 	// processing this operation.
@@ -137,6 +139,7 @@ type InstanceUpdateErrorErrors struct {
 	Message string `json:"message,omitempty"`
 }
 
+// InstanceUpdateList: Response returned by ListInstanceUpdates method.
 type InstanceUpdateList struct {
 	// Items: Collection of requested instance updates.
 	Items []*InstanceUpdate `json:"items,omitempty"`
@@ -151,6 +154,8 @@ type InstanceUpdateList struct {
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
+// Operation: An operation resource, used to manage asynchronous API
+// requests.
 type Operation struct {
 	ClientOperationId string `json:"clientOperationId,omitempty"`
 
@@ -221,6 +226,8 @@ type Operation struct {
 	Zone string `json:"zone,omitempty"`
 }
 
+// OperationError: [Output Only] If errors occurred during processing of
+// this operation, this field will be populated.
 type OperationError struct {
 	// Errors: [Output Only] The array of errors encountered while
 	// processing this operation.
@@ -259,6 +266,9 @@ type OperationWarningsData struct {
 	Value string `json:"value,omitempty"`
 }
 
+// RollingUpdate: The following represents a resource describing a
+// single update (rollout) of a group of instances to the given
+// template.
 type RollingUpdate struct {
 	// ActionType: Specifies the action to take for each instance within the
 	// instance group. This can be RECREATE which will recreate each
@@ -333,6 +343,8 @@ type RollingUpdate struct {
 	User string `json:"user,omitempty"`
 }
 
+// RollingUpdateError: [Output Only] Errors that occurred during the
+// rolling update.
 type RollingUpdateError struct {
 	// Errors: [Output Only] The array of errors encountered while
 	// processing this operation.
@@ -351,6 +363,7 @@ type RollingUpdateErrorErrors struct {
 	Message string `json:"message,omitempty"`
 }
 
+// RollingUpdatePolicy: Parameters of the update process.
 type RollingUpdatePolicy struct {
 	// AutoPauseAfterInstances: Number of instances to update before the
 	// updater pauses the rolling update.
@@ -384,6 +397,7 @@ type RollingUpdatePolicy struct {
 	MinInstanceUpdateTimeSec int64 `json:"minInstanceUpdateTimeSec,omitempty"`
 }
 
+// RollingUpdateList: Response returned by List method.
 type RollingUpdateList struct {
 	// Items: Collection of requested updates.
 	Items []*RollingUpdate `json:"items,omitempty"`

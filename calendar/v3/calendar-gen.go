@@ -218,6 +218,7 @@ type AclRule struct {
 	Scope *AclRuleScope `json:"scope,omitempty"`
 }
 
+// AclRuleScope: The scope of the rule.
 type AclRuleScope struct {
 	// Type: The type of the scope. Possible values are:
 	// - "default" - The public scope. This is the default value.
@@ -362,6 +363,8 @@ type CalendarListEntry struct {
 	TimeZone string `json:"timeZone,omitempty"`
 }
 
+// CalendarListEntryNotificationSettings: The notifications that the
+// authenticated user is receiving for this calendar.
 type CalendarListEntryNotificationSettings struct {
 	// Notifications: The list of notifications set for this calendar.
 	Notifications []*CalendarNotification `json:"notifications,omitempty"`
@@ -659,6 +662,7 @@ type Event struct {
 	Visibility string `json:"visibility,omitempty"`
 }
 
+// EventCreator: The creator of the event. Read-only.
 type EventCreator struct {
 	// DisplayName: The creator's name, if available.
 	DisplayName string `json:"displayName,omitempty"`
@@ -674,6 +678,7 @@ type EventCreator struct {
 	Self bool `json:"self,omitempty"`
 }
 
+// EventExtendedProperties: Extended properties of the event.
 type EventExtendedProperties struct {
 	// Private: Properties that are private to the copy of the event that
 	// appears on this calendar.
@@ -684,6 +689,7 @@ type EventExtendedProperties struct {
 	Shared map[string]string `json:"shared,omitempty"`
 }
 
+// EventGadget: A gadget that extends this event.
 type EventGadget struct {
 	// Display: The gadget's display mode. Optional. Possible values are:
 	//
@@ -714,6 +720,10 @@ type EventGadget struct {
 	Width int64 `json:"width,omitempty"`
 }
 
+// EventOrganizer: The organizer of the event. If the organizer is also
+// an attendee, this is indicated with a separate entry in attendees
+// with the organizer field set to True. To change the organizer, use
+// the move operation. Read-only, except when importing an event.
 type EventOrganizer struct {
 	// DisplayName: The organizer's name, if available.
 	DisplayName string `json:"displayName,omitempty"`
@@ -729,6 +739,8 @@ type EventOrganizer struct {
 	Self bool `json:"self,omitempty"`
 }
 
+// EventReminders: Information about the event's reminders for the
+// authenticated user.
 type EventReminders struct {
 	// Overrides: If the event doesn't use the default reminders, this lists
 	// the reminders specific to the event, or, if not set, indicates that
@@ -740,6 +752,10 @@ type EventReminders struct {
 	UseDefault bool `json:"useDefault,omitempty"`
 }
 
+// EventSource: Source of an event from which it was created; for
+// example a web page, an email message or any document identifiable by
+// an URL using HTTP/HTTPS protocol. Accessible only by the creator of
+// the event.
 type EventSource struct {
 	// Title: Title of the source; for example a title of a web page or an
 	// email subject.

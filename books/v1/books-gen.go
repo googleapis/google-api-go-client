@@ -365,6 +365,7 @@ type Annotation struct {
 	VolumeId string `json:"volumeId,omitempty"`
 }
 
+// AnnotationClientVersionRanges: Selection ranges sent from the client.
 type AnnotationClientVersionRanges struct {
 	// CfiRange: Range in CFI format for this annotation sent by client.
 	CfiRange *BooksAnnotationsRange `json:"cfiRange,omitempty"`
@@ -385,6 +386,8 @@ type AnnotationClientVersionRanges struct {
 	ImageCfiRange *BooksAnnotationsRange `json:"imageCfiRange,omitempty"`
 }
 
+// AnnotationCurrentVersionRanges: Selection ranges for the most recent
+// content version.
 type AnnotationCurrentVersionRanges struct {
 	// CfiRange: Range in CFI format for this annotation for version above.
 	CfiRange *BooksAnnotationsRange `json:"cfiRange,omitempty"`
@@ -646,6 +649,8 @@ type DictlayerdataDict struct {
 	Words []*DictlayerdataDictWords `json:"words,omitempty"`
 }
 
+// DictlayerdataDictSource: The source, url and attribution for this
+// dictionary data.
 type DictlayerdataDictSource struct {
 	Attribution string `json:"attribution,omitempty"`
 
@@ -748,6 +753,8 @@ type DictlayerdataDictWordsSensesSynonymsSource struct {
 	Url string `json:"url,omitempty"`
 }
 
+// DictlayerdataDictWordsSource: The words with different meanings but
+// not related words, e.g. "go" (game) and "go" (verb).
 type DictlayerdataDictWordsSource struct {
 	Attribution string `json:"attribution,omitempty"`
 
@@ -865,8 +872,7 @@ type GeolayerdataGeo struct {
 	// Zoom: The Zoom level to use for the map. Zoom levels between 0 (the
 	// lowest zoom level, in which the entire world can be seen on one map)
 	// to 21+ (down to individual buildings). See:
-	// https://developers.google.com/maps/documentation/staticmaps/#Zoomlevel
-	// s
+	// https://developers.google.com/maps/documentation/staticmaps/#Zoomlevels
 	Zoom int64 `json:"zoom,omitempty"`
 }
 
@@ -876,6 +882,8 @@ type GeolayerdataGeoBoundaryItem struct {
 	Longitude int64 `json:"longitude,omitempty"`
 }
 
+// GeolayerdataGeoViewport: The viewport for showing this location. This
+// is a latitude, longitude rectangle.
 type GeolayerdataGeoViewport struct {
 	Hi *GeolayerdataGeoViewportHi `json:"hi,omitempty"`
 
@@ -1074,11 +1082,14 @@ type Review struct {
 	VolumeId string `json:"volumeId,omitempty"`
 }
 
+// ReviewAuthor: Author of this review.
 type ReviewAuthor struct {
 	// DisplayName: Name of this person.
 	DisplayName string `json:"displayName,omitempty"`
 }
 
+// ReviewSource: Information regarding the source of this review, when
+// the review is not from a Google Books user.
 type ReviewSource struct {
 	// Description: Name of the source.
 	Description string `json:"description,omitempty"`
@@ -1099,6 +1110,8 @@ type Usersettings struct {
 	NotesExport *UsersettingsNotesExport `json:"notesExport,omitempty"`
 }
 
+// UsersettingsNotesExport: User settings in sub-objects, each for
+// different purposes.
 type UsersettingsNotesExport struct {
 	FolderName string `json:"folderName,omitempty"`
 
@@ -1148,6 +1161,9 @@ type Volume struct {
 	VolumeInfo *VolumeVolumeInfo `json:"volumeInfo,omitempty"`
 }
 
+// VolumeAccessInfo: Any information about a volume related to reading
+// or obtaining that volume text. This information can depend on country
+// (books may be public domain in one country but not in another, e.g.).
 type VolumeAccessInfo struct {
 	// AccessViewStatus: Combines the access and viewability of this volume
 	// into a single status field for this user. Values can be
@@ -1214,6 +1230,8 @@ type VolumeAccessInfo struct {
 	WebReaderLink string `json:"webReaderLink,omitempty"`
 }
 
+// VolumeAccessInfoEpub: Information about epub content. (In LITE
+// projection.)
 type VolumeAccessInfoEpub struct {
 	// AcsTokenLink: URL to retrieve ACS token for epub download. (In LITE
 	// projection.)
@@ -1227,6 +1245,8 @@ type VolumeAccessInfoEpub struct {
 	IsAvailable bool `json:"isAvailable,omitempty"`
 }
 
+// VolumeAccessInfoPdf: Information about pdf content. (In LITE
+// projection.)
 type VolumeAccessInfoPdf struct {
 	// AcsTokenLink: URL to retrieve ACS token for pdf download. (In LITE
 	// projection.)
@@ -1240,6 +1260,8 @@ type VolumeAccessInfoPdf struct {
 	IsAvailable bool `json:"isAvailable,omitempty"`
 }
 
+// VolumeLayerInfo: What layers exist in this volume and high level
+// information about them.
 type VolumeLayerInfo struct {
 	// Layers: A layer should appear here if and only if the layer exists
 	// for this book.
@@ -1257,11 +1279,17 @@ type VolumeLayerInfoLayers struct {
 	VolumeAnnotationsVersion string `json:"volumeAnnotationsVersion,omitempty"`
 }
 
+// VolumeRecommendedInfo: Recommendation related information for this
+// volume.
 type VolumeRecommendedInfo struct {
 	// Explanation: A text explaining why this volume is recommended.
 	Explanation string `json:"explanation,omitempty"`
 }
 
+// VolumeSaleInfo: Any information about a volume related to the
+// eBookstore and/or purchaseability. This information can depend on the
+// country where the request originates from (i.e. books may not be for
+// sale in certain countries).
 type VolumeSaleInfo struct {
 	// BuyLink: URL to purchase this volume on the Google Books site. (In
 	// LITE projection)
@@ -1296,6 +1324,8 @@ type VolumeSaleInfo struct {
 	Saleability string `json:"saleability,omitempty"`
 }
 
+// VolumeSaleInfoListPrice: Suggested retail price. (In LITE
+// projection.)
 type VolumeSaleInfoListPrice struct {
 	// Amount: Amount in the currency listed below. (In LITE projection.)
 	Amount float64 `json:"amount,omitempty"`
@@ -1319,24 +1349,33 @@ type VolumeSaleInfoOffers struct {
 	RetailPrice *VolumeSaleInfoOffersRetailPrice `json:"retailPrice,omitempty"`
 }
 
+// VolumeSaleInfoOffersListPrice: Offer list (=undiscounted) price in
+// Micros.
 type VolumeSaleInfoOffersListPrice struct {
 	AmountInMicros float64 `json:"amountInMicros,omitempty"`
 
 	CurrencyCode string `json:"currencyCode,omitempty"`
 }
 
+// VolumeSaleInfoOffersRentalDuration: The rental duration (for rental
+// offers only).
 type VolumeSaleInfoOffersRentalDuration struct {
 	Count float64 `json:"count,omitempty"`
 
 	Unit string `json:"unit,omitempty"`
 }
 
+// VolumeSaleInfoOffersRetailPrice: Offer retail (=discounted) price in
+// Micros
 type VolumeSaleInfoOffersRetailPrice struct {
 	AmountInMicros float64 `json:"amountInMicros,omitempty"`
 
 	CurrencyCode string `json:"currencyCode,omitempty"`
 }
 
+// VolumeSaleInfoRetailPrice: The actual selling price of the book. This
+// is the same as the suggested retail or list price unless there are
+// offers or discounts on this volume. (In LITE projection.)
 type VolumeSaleInfoRetailPrice struct {
 	// Amount: Amount in the currency listed below. (In LITE projection.)
 	Amount float64 `json:"amount,omitempty"`
@@ -1346,11 +1385,14 @@ type VolumeSaleInfoRetailPrice struct {
 	CurrencyCode string `json:"currencyCode,omitempty"`
 }
 
+// VolumeSearchInfo: Search result information related to this volume.
 type VolumeSearchInfo struct {
 	// TextSnippet: A text snippet containing the search query.
 	TextSnippet string `json:"textSnippet,omitempty"`
 }
 
+// VolumeUserInfo: User specific information related to this volume.
+// (e.g. page this user last read or whether they purchased this book)
 type VolumeUserInfo struct {
 	// Copy: Copy/Paste accounting information.
 	Copy *VolumeUserInfoCopy `json:"copy,omitempty"`
@@ -1390,6 +1432,7 @@ type VolumeUserInfo struct {
 	UserUploadedVolumeInfo *VolumeUserInfoUserUploadedVolumeInfo `json:"userUploadedVolumeInfo,omitempty"`
 }
 
+// VolumeUserInfoCopy: Copy/Paste accounting information.
 type VolumeUserInfoCopy struct {
 	AllowedCharacterCount int64 `json:"allowedCharacterCount,omitempty"`
 
@@ -1400,6 +1443,8 @@ type VolumeUserInfoCopy struct {
 	Updated string `json:"updated,omitempty"`
 }
 
+// VolumeUserInfoRentalPeriod: Period during this book is/was a valid
+// rental.
 type VolumeUserInfoRentalPeriod struct {
 	EndUtcSec int64 `json:"endUtcSec,omitempty,string"`
 
@@ -1410,6 +1455,7 @@ type VolumeUserInfoUserUploadedVolumeInfo struct {
 	ProcessingState string `json:"processingState,omitempty"`
 }
 
+// VolumeVolumeInfo: General volume information.
 type VolumeVolumeInfo struct {
 	// AllowAnonLogging: Whether anonymous logging should be allowed.
 	AllowAnonLogging bool `json:"allowAnonLogging,omitempty"`
@@ -1501,6 +1547,7 @@ type VolumeVolumeInfo struct {
 	Title string `json:"title,omitempty"`
 }
 
+// VolumeVolumeInfoDimensions: Physical dimensions of this volume.
 type VolumeVolumeInfoDimensions struct {
 	// Height: Height or length of this volume (in cm).
 	Height string `json:"height,omitempty"`
@@ -1512,6 +1559,8 @@ type VolumeVolumeInfoDimensions struct {
 	Width string `json:"width,omitempty"`
 }
 
+// VolumeVolumeInfoImageLinks: A list of image links for all the sizes
+// that are available. (In LITE projection.)
 type VolumeVolumeInfoImageLinks struct {
 	// ExtraLarge: Image link for extra large size (width of ~1280 pixels).
 	// (In LITE projection)
@@ -1602,6 +1651,8 @@ type Volumeannotation struct {
 	VolumeId string `json:"volumeId,omitempty"`
 }
 
+// VolumeannotationContentRanges: The content ranges to identify the
+// selected text.
 type VolumeannotationContentRanges struct {
 	// CfiRange: Range in CFI format for this annotation for version above.
 	CfiRange *BooksAnnotationsRange `json:"cfiRange,omitempty"`

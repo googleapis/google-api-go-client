@@ -98,6 +98,7 @@ type ReportsService struct {
 	s *Service
 }
 
+// DownloadLineItemsRequest: Request to fetch stored line items.
 type DownloadLineItemsRequest struct {
 	// FilterIds: Ids of the specified filter type used to filter line items
 	// to fetch. If omitted, all the line items will be returned.
@@ -119,12 +120,14 @@ type DownloadLineItemsRequest struct {
 	Format string `json:"format,omitempty"`
 }
 
+// DownloadLineItemsResponse: Download line items response.
 type DownloadLineItemsResponse struct {
 	// LineItems: Retrieved line items in CSV format. Refer to  Entity Write
 	// File Format for more information on file format.
 	LineItems string `json:"lineItems,omitempty"`
 }
 
+// FilterPair: Filter used to match traffic data in your report.
 type FilterPair struct {
 	// Type: Filter type.
 	//
@@ -214,6 +217,7 @@ type FilterPair struct {
 	Value string `json:"value,omitempty"`
 }
 
+// ListQueriesResponse: List queries response.
 type ListQueriesResponse struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "doubleclickbidmanager#listQueriesResponse".
@@ -223,6 +227,7 @@ type ListQueriesResponse struct {
 	Queries []*Query `json:"queries,omitempty"`
 }
 
+// ListReportsResponse: List reports response.
 type ListReportsResponse struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "doubleclickbidmanager#listReportsResponse".
@@ -232,17 +237,340 @@ type ListReportsResponse struct {
 	Reports []*Report `json:"reports,omitempty"`
 }
 
+// Parameters: Parameters of a query or report.
 type Parameters struct {
 	// Filters: Filters used to match traffic data in your report.
 	Filters []*FilterPair `json:"filters,omitempty"`
 
 	// GroupBys: Data is grouped by the filters listed in this field.
+	//
+	// Possible values:
+	//   "FILTER_ACTIVE_VIEW_EXPECTED_VIEWABILITY"
+	//   "FILTER_ACTIVITY_ID"
+	//   "FILTER_ADVERTISER"
+	//   "FILTER_ADVERTISER_CURRENCY"
+	//   "FILTER_ADVERTISER_TIMEZONE"
+	//   "FILTER_AD_POSITION"
+	//   "FILTER_AGE"
+	//   "FILTER_BRANDSAFE_CHANNEL_ID"
+	//   "FILTER_BROWSER"
+	//   "FILTER_CAMPAIGN_DAILY_FREQUENCY"
+	//   "FILTER_CARRIER"
+	//   "FILTER_CHANNEL_ID"
+	//   "FILTER_CITY"
+	//   "FILTER_CONVERSION_DELAY"
+	//   "FILTER_COUNTRY"
+	//   "FILTER_CREATIVE_ID"
+	//   "FILTER_CREATIVE_SIZE"
+	//   "FILTER_CREATIVE_TYPE"
+	//   "FILTER_DATA_PROVIDER"
+	//   "FILTER_DATE"
+	//   "FILTER_DAY_OF_WEEK"
+	//   "FILTER_DMA"
+	//   "FILTER_EXCHANGE_ID"
+	//   "FILTER_FLOODLIGHT_PIXEL_ID"
+	//   "FILTER_GENDER"
+	//   "FILTER_INSERTION_ORDER"
+	//   "FILTER_INVENTORY_FORMAT"
+	//   "FILTER_INVENTORY_SOURCE"
+	//   "FILTER_INVENTORY_SOURCE_TYPE"
+	//   "FILTER_KEYWORD"
+	//   "FILTER_LINE_ITEM"
+	//   "FILTER_LINE_ITEM_DAILY_FREQUENCY"
+	//   "FILTER_LINE_ITEM_LIFETIME_FREQUENCY"
+	//   "FILTER_LINE_ITEM_TYPE"
+	//   "FILTER_MOBILE_DEVICE_MAKE"
+	//   "FILTER_MOBILE_DEVICE_MAKE_MODEL"
+	//   "FILTER_MOBILE_DEVICE_TYPE"
+	//   "FILTER_MOBILE_GEO"
+	//   "FILTER_MONTH"
+	//   "FILTER_MRAID_SUPPORT"
+	//   "FILTER_NIELSEN_AGE"
+	//   "FILTER_NIELSEN_COUNTRY_CODE"
+	//   "FILTER_NIELSEN_DEVICE_ID"
+	//   "FILTER_NIELSEN_GENDER"
+	//   "FILTER_ORDER_ID"
+	//   "FILTER_OS"
+	//   "FILTER_PAGE_CATEGORY"
+	//   "FILTER_PAGE_LAYOUT"
+	//   "FILTER_PARTNER"
+	//   "FILTER_PARTNER_CURRENCY"
+	//   "FILTER_PUBLIC_INVENTORY"
+	//   "FILTER_QUARTER"
+	//   "FILTER_REGION"
+	//   "FILTER_REGULAR_CHANNEL_ID"
+	//   "FILTER_SITE_ID"
+	//   "FILTER_SITE_LANGUAGE"
+	//   "FILTER_TARGETED_USER_LIST"
+	//   "FILTER_TIME_OF_DAY"
+	//   "FILTER_TRUEVIEW_CONVERSION_TYPE"
+	//   "FILTER_UNKNOWN"
+	//   "FILTER_USER_LIST"
+	//   "FILTER_USER_LIST_FIRST_PARTY"
+	//   "FILTER_USER_LIST_THIRD_PARTY"
+	//   "FILTER_VIDEO_AD_POSITION_IN_STREAM"
+	//   "FILTER_VIDEO_COMPANION_SIZE"
+	//   "FILTER_VIDEO_COMPANION_TYPE"
+	//   "FILTER_VIDEO_CREATIVE_DURATION"
+	//   "FILTER_VIDEO_CREATIVE_DURATION_SKIPPABLE"
+	//   "FILTER_VIDEO_DURATION_SECONDS"
+	//   "FILTER_VIDEO_FORMAT_SUPPORT"
+	//   "FILTER_VIDEO_INVENTORY_TYPE"
+	//   "FILTER_VIDEO_PLAYER_SIZE"
+	//   "FILTER_VIDEO_RATING_TIER"
+	//   "FILTER_VIDEO_SKIPPABLE_SUPPORT"
+	//   "FILTER_VIDEO_VPAID_SUPPORT"
+	//   "FILTER_WEEK"
+	//   "FILTER_YEAR"
+	//   "FILTER_YOUTUBE_VERTICAL"
+	//   "FILTER_ZIP_CODE"
 	GroupBys []string `json:"groupBys,omitempty"`
 
 	// IncludeInviteData: Whether to include data from Invite Media.
 	IncludeInviteData bool `json:"includeInviteData,omitempty"`
 
 	// Metrics: Metrics to include as columns in your report.
+	//
+	// Possible values:
+	//   "METRIC_BID_REQUESTS"
+	//   "METRIC_BILLABLE_COST_ADVERTISER"
+	//   "METRIC_BILLABLE_COST_PARTNER"
+	//   "METRIC_BILLABLE_COST_USD"
+	//   "METRIC_CLICKS"
+	//   "METRIC_CLICK_TO_POST_CLICK_CONVERSION_RATE"
+	//   "METRIC_COMSCORE_VCE_AUDIENCE_AVG_FREQUENCY"
+	//   "METRIC_COMSCORE_VCE_AUDIENCE_IMPRESSIONS"
+	//   "METRIC_COMSCORE_VCE_AUDIENCE_IMPRESSIONS_SHARE"
+	//   "METRIC_COMSCORE_VCE_AUDIENCE_REACH_PCT"
+	//   "METRIC_COMSCORE_VCE_AUDIENCE_SHARE_PCT"
+	//   "METRIC_COMSCORE_VCE_GROSS_RATING_POINTS"
+	//   "METRIC_COMSCORE_VCE_POPULATION"
+	//   "METRIC_COMSCORE_VCE_UNIQUE_AUDIENCE"
+	//   "METRIC_CONVERSIONS_PER_MILLE"
+	//   "METRIC_CPM_FEE1_ADVERTISER"
+	//   "METRIC_CPM_FEE1_PARTNER"
+	//   "METRIC_CPM_FEE1_USD"
+	//   "METRIC_CPM_FEE2_ADVERTISER"
+	//   "METRIC_CPM_FEE2_PARTNER"
+	//   "METRIC_CPM_FEE2_USD"
+	//   "METRIC_CPM_FEE3_ADVERTISER"
+	//   "METRIC_CPM_FEE3_PARTNER"
+	//   "METRIC_CPM_FEE3_USD"
+	//   "METRIC_CPM_FEE4_ADVERTISER"
+	//   "METRIC_CPM_FEE4_PARTNER"
+	//   "METRIC_CPM_FEE4_USD"
+	//   "METRIC_CPM_FEE5_ADVERTISER"
+	//   "METRIC_CPM_FEE5_PARTNER"
+	//   "METRIC_CPM_FEE5_USD"
+	//   "METRIC_CTR"
+	//   "METRIC_DATA_COST_ADVERTISER"
+	//   "METRIC_DATA_COST_PARTNER"
+	//   "METRIC_DATA_COST_USD"
+	//   "METRIC_FEE10_ADVERTISER"
+	//   "METRIC_FEE10_PARTNER"
+	//   "METRIC_FEE10_USD"
+	//   "METRIC_FEE11_ADVERTISER"
+	//   "METRIC_FEE11_PARTNER"
+	//   "METRIC_FEE11_USD"
+	//   "METRIC_FEE12_ADVERTISER"
+	//   "METRIC_FEE12_PARTNER"
+	//   "METRIC_FEE12_USD"
+	//   "METRIC_FEE13_ADVERTISER"
+	//   "METRIC_FEE13_PARTNER"
+	//   "METRIC_FEE13_USD"
+	//   "METRIC_FEE14_ADVERTISER"
+	//   "METRIC_FEE14_PARTNER"
+	//   "METRIC_FEE14_USD"
+	//   "METRIC_FEE15_ADVERTISER"
+	//   "METRIC_FEE15_PARTNER"
+	//   "METRIC_FEE15_USD"
+	//   "METRIC_FEE16_ADVERTISER"
+	//   "METRIC_FEE16_PARTNER"
+	//   "METRIC_FEE16_USD"
+	//   "METRIC_FEE17_ADVERTISER"
+	//   "METRIC_FEE17_PARTNER"
+	//   "METRIC_FEE17_USD"
+	//   "METRIC_FEE18_ADVERTISER"
+	//   "METRIC_FEE18_PARTNER"
+	//   "METRIC_FEE18_USD"
+	//   "METRIC_FEE19_ADVERTISER"
+	//   "METRIC_FEE19_PARTNER"
+	//   "METRIC_FEE19_USD"
+	//   "METRIC_FEE20_ADVERTISER"
+	//   "METRIC_FEE20_PARTNER"
+	//   "METRIC_FEE20_USD"
+	//   "METRIC_FEE2_ADVERTISER"
+	//   "METRIC_FEE2_PARTNER"
+	//   "METRIC_FEE2_USD"
+	//   "METRIC_FEE3_ADVERTISER"
+	//   "METRIC_FEE3_PARTNER"
+	//   "METRIC_FEE3_USD"
+	//   "METRIC_FEE4_ADVERTISER"
+	//   "METRIC_FEE4_PARTNER"
+	//   "METRIC_FEE4_USD"
+	//   "METRIC_FEE5_ADVERTISER"
+	//   "METRIC_FEE5_PARTNER"
+	//   "METRIC_FEE5_USD"
+	//   "METRIC_FEE6_ADVERTISER"
+	//   "METRIC_FEE6_PARTNER"
+	//   "METRIC_FEE6_USD"
+	//   "METRIC_FEE7_ADVERTISER"
+	//   "METRIC_FEE7_PARTNER"
+	//   "METRIC_FEE7_USD"
+	//   "METRIC_FEE8_ADVERTISER"
+	//   "METRIC_FEE8_PARTNER"
+	//   "METRIC_FEE8_USD"
+	//   "METRIC_FEE9_ADVERTISER"
+	//   "METRIC_FEE9_PARTNER"
+	//   "METRIC_FEE9_USD"
+	//   "METRIC_IMPRESSIONS"
+	//   "METRIC_IMPRESSIONS_TO_CONVERSION_RATE"
+	//   "METRIC_LAST_CLICKS"
+	//   "METRIC_LAST_IMPRESSIONS"
+	//   "METRIC_MEDIA_COST_ADVERTISER"
+	//   "METRIC_MEDIA_COST_ECPAPC_ADVERTISER"
+	//   "METRIC_MEDIA_COST_ECPAPC_PARTNER"
+	//   "METRIC_MEDIA_COST_ECPAPC_USD"
+	//   "METRIC_MEDIA_COST_ECPAPV_ADVERTISER"
+	//   "METRIC_MEDIA_COST_ECPAPV_PARTNER"
+	//   "METRIC_MEDIA_COST_ECPAPV_USD"
+	//   "METRIC_MEDIA_COST_ECPA_ADVERTISER"
+	//   "METRIC_MEDIA_COST_ECPA_PARTNER"
+	//   "METRIC_MEDIA_COST_ECPA_USD"
+	//   "METRIC_MEDIA_COST_ECPCV_ADVERTISER"
+	//   "METRIC_MEDIA_COST_ECPCV_PARTNER"
+	//   "METRIC_MEDIA_COST_ECPCV_USD"
+	//   "METRIC_MEDIA_COST_ECPC_ADVERTISER"
+	//   "METRIC_MEDIA_COST_ECPC_PARTNER"
+	//   "METRIC_MEDIA_COST_ECPC_USD"
+	//   "METRIC_MEDIA_COST_ECPM_ADVERTISER"
+	//   "METRIC_MEDIA_COST_ECPM_PARTNER"
+	//   "METRIC_MEDIA_COST_ECPM_USD"
+	//   "METRIC_MEDIA_COST_PARTNER"
+	//   "METRIC_MEDIA_COST_USD"
+	//   "METRIC_MEDIA_FEE1_ADVERTISER"
+	//   "METRIC_MEDIA_FEE1_PARTNER"
+	//   "METRIC_MEDIA_FEE1_USD"
+	//   "METRIC_MEDIA_FEE2_ADVERTISER"
+	//   "METRIC_MEDIA_FEE2_PARTNER"
+	//   "METRIC_MEDIA_FEE2_USD"
+	//   "METRIC_MEDIA_FEE3_ADVERTISER"
+	//   "METRIC_MEDIA_FEE3_PARTNER"
+	//   "METRIC_MEDIA_FEE3_USD"
+	//   "METRIC_MEDIA_FEE4_ADVERTISER"
+	//   "METRIC_MEDIA_FEE4_PARTNER"
+	//   "METRIC_MEDIA_FEE4_USD"
+	//   "METRIC_MEDIA_FEE5_ADVERTISER"
+	//   "METRIC_MEDIA_FEE5_PARTNER"
+	//   "METRIC_MEDIA_FEE5_USD"
+	//   "METRIC_PIXEL_LOADS"
+	//   "METRIC_PLATFORM_FEE_ADVERTISER"
+	//   "METRIC_PLATFORM_FEE_PARTNER"
+	//   "METRIC_PLATFORM_FEE_USD"
+	//   "METRIC_POST_CLICK_DFA_REVENUE"
+	//   "METRIC_POST_VIEW_DFA_REVENUE"
+	//   "METRIC_PROFIT_ADVERTISER"
+	//   "METRIC_PROFIT_ECPAPC_ADVERTISER"
+	//   "METRIC_PROFIT_ECPAPC_PARTNER"
+	//   "METRIC_PROFIT_ECPAPC_USD"
+	//   "METRIC_PROFIT_ECPAPV_ADVERTISER"
+	//   "METRIC_PROFIT_ECPAPV_PARTNER"
+	//   "METRIC_PROFIT_ECPAPV_USD"
+	//   "METRIC_PROFIT_ECPA_ADVERTISER"
+	//   "METRIC_PROFIT_ECPA_PARTNER"
+	//   "METRIC_PROFIT_ECPA_USD"
+	//   "METRIC_PROFIT_ECPC_ADVERTISER"
+	//   "METRIC_PROFIT_ECPC_PARTNER"
+	//   "METRIC_PROFIT_ECPC_USD"
+	//   "METRIC_PROFIT_ECPM_ADVERTISER"
+	//   "METRIC_PROFIT_ECPM_PARTNER"
+	//   "METRIC_PROFIT_ECPM_USD"
+	//   "METRIC_PROFIT_MARGIN"
+	//   "METRIC_PROFIT_PARTNER"
+	//   "METRIC_PROFIT_USD"
+	//   "METRIC_REVENUE_ADVERTISER"
+	//   "METRIC_REVENUE_ECPAPC_ADVERTISER"
+	//   "METRIC_REVENUE_ECPAPC_PARTNER"
+	//   "METRIC_REVENUE_ECPAPC_USD"
+	//   "METRIC_REVENUE_ECPAPV_ADVERTISER"
+	//   "METRIC_REVENUE_ECPAPV_PARTNER"
+	//   "METRIC_REVENUE_ECPAPV_USD"
+	//   "METRIC_REVENUE_ECPA_ADVERTISER"
+	//   "METRIC_REVENUE_ECPA_PARTNER"
+	//   "METRIC_REVENUE_ECPA_USD"
+	//   "METRIC_REVENUE_ECPCV_ADVERTISER"
+	//   "METRIC_REVENUE_ECPCV_PARTNER"
+	//   "METRIC_REVENUE_ECPCV_USD"
+	//   "METRIC_REVENUE_ECPC_ADVERTISER"
+	//   "METRIC_REVENUE_ECPC_PARTNER"
+	//   "METRIC_REVENUE_ECPC_USD"
+	//   "METRIC_REVENUE_ECPM_ADVERTISER"
+	//   "METRIC_REVENUE_ECPM_PARTNER"
+	//   "METRIC_REVENUE_ECPM_USD"
+	//   "METRIC_REVENUE_PARTNER"
+	//   "METRIC_REVENUE_USD"
+	//   "METRIC_RICH_MEDIA_VIDEO_COMPLETIONS"
+	//   "METRIC_RICH_MEDIA_VIDEO_FIRST_QUARTILE_COMPLETES"
+	//   "METRIC_RICH_MEDIA_VIDEO_FULL_SCREENS"
+	//   "METRIC_RICH_MEDIA_VIDEO_MIDPOINTS"
+	//   "METRIC_RICH_MEDIA_VIDEO_MUTES"
+	//   "METRIC_RICH_MEDIA_VIDEO_PAUSES"
+	//   "METRIC_RICH_MEDIA_VIDEO_PLAYS"
+	//   "METRIC_RICH_MEDIA_VIDEO_SKIPS"
+	//   "METRIC_RICH_MEDIA_VIDEO_THIRD_QUARTILE_COMPLETES"
+	//   "METRIC_TEA_TRUEVIEW_IMPRESSIONS"
+	//   "METRIC_TEA_TRUEVIEW_UNIQUE_COOKIES"
+	//   "METRIC_TEA_TRUEVIEW_UNIQUE_PEOPLE"
+	//   "METRIC_TOTAL_CONVERSIONS"
+	//   "METRIC_TOTAL_MEDIA_COST_ADVERTISER"
+	//   "METRIC_TOTAL_MEDIA_COST_ECPAPC_ADVERTISER"
+	//   "METRIC_TOTAL_MEDIA_COST_ECPAPC_PARTNER"
+	//   "METRIC_TOTAL_MEDIA_COST_ECPAPC_USD"
+	//   "METRIC_TOTAL_MEDIA_COST_ECPAPV_ADVERTISER"
+	//   "METRIC_TOTAL_MEDIA_COST_ECPAPV_PARTNER"
+	//   "METRIC_TOTAL_MEDIA_COST_ECPAPV_USD"
+	//   "METRIC_TOTAL_MEDIA_COST_ECPA_ADVERTISER"
+	//   "METRIC_TOTAL_MEDIA_COST_ECPA_PARTNER"
+	//   "METRIC_TOTAL_MEDIA_COST_ECPA_USD"
+	//   "METRIC_TOTAL_MEDIA_COST_ECPCV_ADVERTISER"
+	//   "METRIC_TOTAL_MEDIA_COST_ECPCV_PARTNER"
+	//   "METRIC_TOTAL_MEDIA_COST_ECPCV_USD"
+	//   "METRIC_TOTAL_MEDIA_COST_ECPC_ADVERTISER"
+	//   "METRIC_TOTAL_MEDIA_COST_ECPC_PARTNER"
+	//   "METRIC_TOTAL_MEDIA_COST_ECPC_USD"
+	//   "METRIC_TOTAL_MEDIA_COST_ECPM_ADVERTISER"
+	//   "METRIC_TOTAL_MEDIA_COST_ECPM_PARTNER"
+	//   "METRIC_TOTAL_MEDIA_COST_ECPM_USD"
+	//   "METRIC_TOTAL_MEDIA_COST_PARTNER"
+	//   "METRIC_TOTAL_MEDIA_COST_USD"
+	//   "METRIC_TRUEVIEW_CONVERSION_MANY_PER_VIEW"
+	//   "METRIC_TRUEVIEW_CONVERSION_ONE_PER_VIEW"
+	//   "METRIC_TRUEVIEW_CONVERSION_RATE_ONE_PER_VIEW"
+	//   "METRIC_TRUEVIEW_COST_CONVERSION_MANY_PER_VIEW_RATIO"
+	//   "METRIC_TRUEVIEW_COST_CONVERSION_ONE_PER_VIEW_RATIO"
+	//   "METRIC_TRUEVIEW_CPV_ADVERTISER"
+	//   "METRIC_TRUEVIEW_CPV_PARTNER"
+	//   "METRIC_TRUEVIEW_CPV_USD"
+	//   "METRIC_TRUEVIEW_EARNED_LIKES"
+	//   "METRIC_TRUEVIEW_EARNED_PLAYLIST_ADDITIONS"
+	//   "METRIC_TRUEVIEW_EARNED_SHARES"
+	//   "METRIC_TRUEVIEW_EARNED_SUBSCRIBERS"
+	//   "METRIC_TRUEVIEW_EARNED_VIEWS"
+	//   "METRIC_TRUEVIEW_IMPRESSION_SHARE"
+	//   "METRIC_TRUEVIEW_LOST_IS_BUDGET"
+	//   "METRIC_TRUEVIEW_LOST_IS_RANK"
+	//   "METRIC_TRUEVIEW_TOTAL_CONVERSION_VALUE"
+	//   "METRIC_TRUEVIEW_UNIQUE_VIEWERS"
+	//   "METRIC_TRUEVIEW_VALUE_CONVERSION_MANY_PER_VIEW_RATIO"
+	//   "METRIC_TRUEVIEW_VALUE_CONVERSION_ONE_PER_VIEW_RATIO"
+	//   "METRIC_TRUEVIEW_VIEWS"
+	//   "METRIC_TRUEVIEW_VIEW_RATE"
+	//   "METRIC_TRUEVIEW_VIEW_THROUGH_CONVERSION"
+	//   "METRIC_UNIQUE_VISITORS_COOKIES"
+	//   "METRIC_UNKNOWN"
+	//   "METRIC_VIDEO_COMPANION_CLICKS"
+	//   "METRIC_VIDEO_COMPANION_IMPRESSIONS"
+	//   "METRIC_VIDEO_COMPLETION_RATE"
 	Metrics []string `json:"metrics,omitempty"`
 
 	// Type: Report type.
@@ -276,6 +604,7 @@ type Parameters struct {
 	Type string `json:"type,omitempty"`
 }
 
+// Query: Represents a query.
 type Query struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "doubleclickbidmanager#query".
@@ -308,6 +637,7 @@ type Query struct {
 	TimezoneCode string `json:"timezoneCode,omitempty"`
 }
 
+// QueryMetadata: Query metadata.
 type QueryMetadata struct {
 	// DataRange: Range of report data.
 	//
@@ -382,6 +712,7 @@ type QueryMetadata struct {
 	Title string `json:"title,omitempty"`
 }
 
+// QuerySchedule: Information on how frequently and when to run a query.
 type QuerySchedule struct {
 	// EndTimeMs: Datetime to periodically run the query until.
 	EndTimeMs int64 `json:"endTimeMs,omitempty,string"`
@@ -407,6 +738,7 @@ type QuerySchedule struct {
 	NextRunTimezoneCode string `json:"nextRunTimezoneCode,omitempty"`
 }
 
+// Report: Represents a report.
 type Report struct {
 	// Key: Key used to identify a report.
 	Key *ReportKey `json:"key,omitempty"`
@@ -418,6 +750,7 @@ type Report struct {
 	Params *Parameters `json:"params,omitempty"`
 }
 
+// ReportFailure: An explanation of a report failure.
 type ReportFailure struct {
 	// ErrorCode: Error code that shows why the report was not created.
 	//
@@ -443,6 +776,7 @@ type ReportFailure struct {
 	ErrorCode string `json:"errorCode,omitempty"`
 }
 
+// ReportKey: Key used to identify a report.
 type ReportKey struct {
 	// QueryId: Query ID.
 	QueryId int64 `json:"queryId,omitempty,string"`
@@ -451,6 +785,7 @@ type ReportKey struct {
 	ReportId int64 `json:"reportId,omitempty,string"`
 }
 
+// ReportMetadata: Report metadata.
 type ReportMetadata struct {
 	// GoogleCloudStoragePath: The path to the location in Google Cloud
 	// Storage where the report is stored.
@@ -468,6 +803,7 @@ type ReportMetadata struct {
 	Status *ReportStatus `json:"status,omitempty"`
 }
 
+// ReportStatus: Report status.
 type ReportStatus struct {
 	// Failure: If the report failed, this records the cause.
 	Failure *ReportFailure `json:"failure,omitempty"`
@@ -493,6 +829,7 @@ type ReportStatus struct {
 	State string `json:"state,omitempty"`
 }
 
+// RowStatus: Represents the upload status of a row in the request.
 type RowStatus struct {
 	// Changed: Whether the stored entity is changed as a result of upload.
 	Changed bool `json:"changed,omitempty"`
@@ -513,6 +850,7 @@ type RowStatus struct {
 	RowNumber int64 `json:"rowNumber,omitempty"`
 }
 
+// RunQueryRequest: Request to run a stored query to generate a report.
 type RunQueryRequest struct {
 	// DataRange: Report data range used to generate the report.
 	//
@@ -552,6 +890,7 @@ type RunQueryRequest struct {
 	TimezoneCode string `json:"timezoneCode,omitempty"`
 }
 
+// UploadLineItemsRequest: Request to upload line items.
 type UploadLineItemsRequest struct {
 	// DryRun: Set to true to get upload status without actually persisting
 	// the line items.
@@ -568,11 +907,13 @@ type UploadLineItemsRequest struct {
 	LineItems string `json:"lineItems,omitempty"`
 }
 
+// UploadLineItemsResponse: Upload line items response.
 type UploadLineItemsResponse struct {
 	// UploadStatus: Status of upload.
 	UploadStatus *UploadStatus `json:"uploadStatus,omitempty"`
 }
 
+// UploadStatus: Represents the status of upload.
 type UploadStatus struct {
 	// Errors: Reasons why upload can't be completed.
 	Errors []string `json:"errors,omitempty"`

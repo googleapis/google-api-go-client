@@ -93,6 +93,8 @@ type SiteVerificationWebResourceGettokenRequest struct {
 	VerificationMethod string `json:"verificationMethod,omitempty"`
 }
 
+// SiteVerificationWebResourceGettokenRequestSite: The site for which a
+// verification token will be generated.
 type SiteVerificationWebResourceGettokenRequestSite struct {
 	// Identifier: The site identifier. If the type is set to SITE, the
 	// identifier is a URL. If the type is set to INET_DOMAIN, the site
@@ -137,6 +139,8 @@ type SiteVerificationWebResourceResource struct {
 	Site *SiteVerificationWebResourceResourceSite `json:"site,omitempty"`
 }
 
+// SiteVerificationWebResourceResourceSite: The address and type of a
+// site that is verified or will be verified.
 type SiteVerificationWebResourceResourceSite struct {
 	// Identifier: The site identifier. If the type is set to SITE, the
 	// identifier is a URL. If the type is set to INET_DOMAIN, the site

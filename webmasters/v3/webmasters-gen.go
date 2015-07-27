@@ -205,6 +205,10 @@ type SearchAnalyticsQueryRequest struct {
 	StartDate string `json:"startDate,omitempty"`
 }
 
+// SearchAnalyticsQueryResponse: A list of rows, one per result, grouped
+// by key. Metrics in each row are aggregated for all data grouped by
+// that key either by page or property, as specified by the aggregation
+// type parameter.
 type SearchAnalyticsQueryResponse struct {
 	// ResponseAggregationType: How the results were aggregated.
 	ResponseAggregationType string `json:"responseAggregationType,omitempty"`
@@ -214,18 +218,21 @@ type SearchAnalyticsQueryResponse struct {
 	Rows []*ApiDataRow `json:"rows,omitempty"`
 }
 
+// SitemapsListResponse: List of sitemaps.
 type SitemapsListResponse struct {
 	// Sitemap: Contains detailed information about a specific URL submitted
 	// as a sitemap.
 	Sitemap []*WmxSitemap `json:"sitemap,omitempty"`
 }
 
+// SitesListResponse: List of sites with access level information.
 type SitesListResponse struct {
 	// SiteEntry: Contains permission level information about a Webmaster
 	// Tools site. For more information, see Permissions in Webmaster Tools.
 	SiteEntry []*WmxSite `json:"siteEntry,omitempty"`
 }
 
+// UrlCrawlErrorCount: An entry in a URL crawl errors time series.
 type UrlCrawlErrorCount struct {
 	// Count: The error count at the given timestamp.
 	Count int64 `json:"count,omitempty,string"`
@@ -235,6 +242,8 @@ type UrlCrawlErrorCount struct {
 	Timestamp string `json:"timestamp,omitempty"`
 }
 
+// UrlCrawlErrorCountsPerType: Number of errors per day for a specific
+// error type (defined by platform and category).
 type UrlCrawlErrorCountsPerType struct {
 	// Category: The crawl error type.
 	Category string `json:"category,omitempty"`
@@ -247,12 +256,16 @@ type UrlCrawlErrorCountsPerType struct {
 	Platform string `json:"platform,omitempty"`
 }
 
+// UrlCrawlErrorsCountsQueryResponse: A time series of the number of URL
+// crawl errors per error category and platform.
 type UrlCrawlErrorsCountsQueryResponse struct {
 	// CountPerTypes: The time series of the number of URL crawl errors per
 	// error category and platform.
 	CountPerTypes []*UrlCrawlErrorCountsPerType `json:"countPerTypes,omitempty"`
 }
 
+// UrlCrawlErrorsSample: Contains information about specific crawl
+// errors.
 type UrlCrawlErrorsSample struct {
 	// FirstDetected: The time the error was first detected, in RFC 3339
 	// format.
@@ -273,12 +286,15 @@ type UrlCrawlErrorsSample struct {
 	UrlDetails *UrlSampleDetails `json:"urlDetails,omitempty"`
 }
 
+// UrlCrawlErrorsSamplesListResponse: List of crawl error samples.
 type UrlCrawlErrorsSamplesListResponse struct {
 	// UrlCrawlErrorSample: Information about the sample URL and its crawl
 	// error.
 	UrlCrawlErrorSample []*UrlCrawlErrorsSample `json:"urlCrawlErrorSample,omitempty"`
 }
 
+// UrlSampleDetails: Additional details about the URL, set only when
+// calling get().
 type UrlSampleDetails struct {
 	// ContainingSitemaps: List of sitemaps pointing at this URL.
 	ContainingSitemaps []string `json:"containingSitemaps,omitempty"`
@@ -287,6 +303,9 @@ type UrlSampleDetails struct {
 	LinkedFromUrls []string `json:"linkedFromUrls,omitempty"`
 }
 
+// WmxSite: Contains permission level information about a Webmaster
+// Tools site. For more information, see  Permissions in Webmaster
+// Tools.
 type WmxSite struct {
 	// PermissionLevel: The user's permission level for the site.
 	PermissionLevel string `json:"permissionLevel,omitempty"`
@@ -295,6 +314,8 @@ type WmxSite struct {
 	SiteUrl string `json:"siteUrl,omitempty"`
 }
 
+// WmxSitemap: Contains detailed information about a specific URL
+// submitted as a sitemap.
 type WmxSitemap struct {
 	// Contents: The various content types in the sitemap.
 	Contents []*WmxSitemapContent `json:"contents,omitempty"`
@@ -329,6 +350,8 @@ type WmxSitemap struct {
 	Warnings int64 `json:"warnings,omitempty,string"`
 }
 
+// WmxSitemapContent: Information about the various content types in the
+// sitemap.
 type WmxSitemapContent struct {
 	// Indexed: The number of URLs from the sitemap that were indexed (of
 	// the content type).

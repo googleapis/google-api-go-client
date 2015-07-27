@@ -80,6 +80,8 @@ type PurchasesService struct {
 	s *Service
 }
 
+// SubscriptionPurchase: A SubscriptionPurchase resource indicates the
+// status of a user's subscription purchase.
 type SubscriptionPurchase struct {
 	// AutoRenewing: Whether the subscription will automatically be renewed
 	// when it reaches its current expiry time.

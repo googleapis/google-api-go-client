@@ -80,9 +80,20 @@ type ProjectsService struct {
 	s *Service
 }
 
+// Empty: A generic empty message that you can re-use to avoid defining
+// duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For
+// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); } The JSON representation for `Empty` is
+// empty JSON object `{}`.
 type Empty struct {
 }
 
+// ListProjectsResponse: A page of the response received from the
+// [ListProjects][google.cloudresourcemanager.projects.v1beta1.DeveloperP
+// rojects.ListProjects] method. A paginated response where more pages
+// are available has `next_page_token` set. This token can be used in a
+// subsequent request to retrieve the next request page.
 type ListProjectsResponse struct {
 	// NextPageToken: Pagination token. If the result set is too large to
 	// fit in a single response, this token is returned. It encodes the
@@ -99,6 +110,9 @@ type ListProjectsResponse struct {
 	Projects []*Project `json:"projects,omitempty"`
 }
 
+// Project: A Project is a high-level Google Cloud Platform entity. It
+// is a container for ACLs, APIs, AppEngine Apps, VMs, and other Google
+// Cloud Platform resources.
 type Project struct {
 	// CreateTime: Creation time. Read-only.
 	CreateTime string `json:"createTime,omitempty"`

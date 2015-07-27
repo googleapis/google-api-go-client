@@ -266,6 +266,9 @@ type ListOperationsResponse struct {
 	Operations []*Operation `json:"operations,omitempty"`
 }
 
+// MasterAuth: The authentication information for accessing the master.
+// Authentication is either done using HTTP basic authentication or
+// using a bearer token.
 type MasterAuth struct {
 	// BearerToken: The token used to authenticate API requests to the
 	// master. The token is to be included in an HTTP Authorization Header
@@ -313,9 +316,7 @@ type NodeConfig struct {
 
 	// SourceImage: The fully-specified name of a Google Compute Engine
 	// image. For example:
-	// https://www.googleapis.com/compute/v1/projects/debian-cloud/global/ima
-	// ges/backports-debian-7-wheezy-vYYYYMMDD (where YYYMMDD is the version
-	// date).
+	// https://www.googleapis.com/compute/v1/projects/debian-cloud/global/images/backports-debian-7-wheezy-vYYYYMMDD (where YYYMMDD is the version date).
 	//
 	// If specifying an image, you are responsible for ensuring its
 	// compatibility with the Debian 7 backports image. We recommend leaving
@@ -324,6 +325,8 @@ type NodeConfig struct {
 	SourceImage string `json:"sourceImage,omitempty"`
 }
 
+// Operation: Defines the operation resource. All fields are output
+// only.
 type Operation struct {
 	// ErrorMessage: If an error has occurred, a textual description of the
 	// error.
@@ -362,6 +365,7 @@ type Operation struct {
 	Zone string `json:"zone,omitempty"`
 }
 
+// ServiceAccount: A Compute Engine service account.
 type ServiceAccount struct {
 	// Email: Email address of the service account.
 	Email string `json:"email,omitempty"`

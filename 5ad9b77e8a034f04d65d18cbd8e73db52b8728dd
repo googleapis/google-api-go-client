@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "0d4162d7_bfd1d7ca",
+        "filename": "gmail/v1/gmail-gen.go",
+        "patchSetId": 10
+      },
+      "lineNbr": 781,
+      "author": {
+        "id": 5815
+      },
+      "writtenOn": "2015-07-27T20:41:23Z",
+      "side": 1,
+      "message": "At the risk of dragging the review further: how about changing the signature of ResumableMedia method once again:\n\n    ResumableMedia(context.Context, r io.Reader, opt *googleapi.UploadParameters)\n\nUploadParameters would loose the embedded io.Reader field, and all fields would be optional.\n\nYes, that\u0027s one extra parameter in the method, but it provides direct godoc link to UploadParameters (as opposed to indirect via googleapi.Reader), and I think it\u0027s easier to understand. You pass nil for ptr if you don\u0027t want to configure any additional parameters. It\u0027s also equally extensible as the previous solution.\n\nI am fine either way, but wanted to bring this up. Thoughts?",
+      "parentUuid": "0da7a2c0_7e3d5de9",
+      "revId": "5ad9b77e8a034f04d65d18cbd8e73db52b8728dd",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0da5e2c6_dfb95b69",
         "filename": "googleapi/googleapi.go",
         "patchSetId": 10

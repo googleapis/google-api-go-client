@@ -482,6 +482,9 @@ type AdStyle struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// AdStyleColors: The colors which are included in the style. These are
+// represented as six hexadecimal characters, similar to HTML color
+// codes, but without the leading hash.
 type AdStyleColors struct {
 	// Background: The color of the ad background.
 	Background string `json:"background,omitempty"`
@@ -499,6 +502,7 @@ type AdStyleColors struct {
 	Url string `json:"url,omitempty"`
 }
 
+// AdStyleFont: The font which is included in the style.
 type AdStyleFont struct {
 	// Family: The family of the font.
 	Family string `json:"family,omitempty"`
@@ -553,6 +557,8 @@ type AdUnit struct {
 	Status string `json:"status,omitempty"`
 }
 
+// AdUnitContentAdsSettings: Settings specific to content ads (AFC) and
+// highend mobile content ads (AFMC).
 type AdUnitContentAdsSettings struct {
 	// BackupOption: The backup option to be used in instances where no ad
 	// is available.
@@ -565,6 +571,8 @@ type AdUnitContentAdsSettings struct {
 	Type string `json:"type,omitempty"`
 }
 
+// AdUnitContentAdsSettingsBackupOption: The backup option to be used in
+// instances where no ad is available.
 type AdUnitContentAdsSettingsBackupOption struct {
 	// Color: Color to use when type is set to COLOR.
 	Color string `json:"color,omitempty"`
@@ -577,6 +585,7 @@ type AdUnitContentAdsSettingsBackupOption struct {
 	Url string `json:"url,omitempty"`
 }
 
+// AdUnitFeedAdsSettings: Settings specific to feed ads (AFF).
 type AdUnitFeedAdsSettings struct {
 	// AdPosition: The position of the ads relative to the feed entries.
 	AdPosition string `json:"adPosition,omitempty"`
@@ -593,6 +602,8 @@ type AdUnitFeedAdsSettings struct {
 	Type string `json:"type,omitempty"`
 }
 
+// AdUnitMobileContentAdsSettings: Settings specific to WAP mobile
+// content ads (AFMC).
 type AdUnitMobileContentAdsSettings struct {
 	// MarkupLanguage: The markup language to use for this ad unit.
 	MarkupLanguage string `json:"markupLanguage,omitempty"`
@@ -731,6 +742,8 @@ type CustomChannel struct {
 	TargetingInfo *CustomChannelTargetingInfo `json:"targetingInfo,omitempty"`
 }
 
+// CustomChannelTargetingInfo: The targeting information of this custom
+// channel, if activated.
 type CustomChannelTargetingInfo struct {
 	// AdsAppearOn: The name used to describe this channel externally.
 	AdsAppearOn string `json:"adsAppearOn,omitempty"`

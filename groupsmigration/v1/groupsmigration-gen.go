@@ -80,6 +80,7 @@ type ArchiveService struct {
 	s *Service
 }
 
+// Groups: JSON response template for groups migration API.
 type Groups struct {
 	// Kind: The kind of insert resource this is.
 	Kind string `json:"kind,omitempty"`

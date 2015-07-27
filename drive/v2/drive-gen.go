@@ -246,6 +246,7 @@ type RevisionsService struct {
 	s *Service
 }
 
+// About: An item with user information and settings.
 type About struct {
 	// AdditionalRoleInfo: Information about supported additional roles per
 	// file type. The most specific type takes precedence.
@@ -396,6 +397,9 @@ type AboutQuotaBytesByService struct {
 	ServiceName string `json:"serviceName,omitempty"`
 }
 
+// App: The apps resource provides a list of the apps that a user has
+// installed, with information about each app's supported MIME types,
+// file extensions, and other details.
 type App struct {
 	// Authorized: Whether the app is authorized to access data on the
 	// user's Drive.
@@ -495,6 +499,8 @@ type AppIcons struct {
 	Size int64 `json:"size,omitempty"`
 }
 
+// AppList: A list of third-party applications which the user has
+// installed or given access to Google Drive.
 type AppList struct {
 	// DefaultAppIds: List of app IDs that the user has specified to use by
 	// default. The list is in reverse-priority order (lowest to highest).
@@ -513,6 +519,7 @@ type AppList struct {
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
+// Change: Representation of a change to a file.
 type Change struct {
 	// Deleted: Whether the file has been deleted.
 	Deleted bool `json:"deleted,omitempty"`
@@ -537,6 +544,7 @@ type Change struct {
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
+// ChangeList: A list of changes for a user.
 type ChangeList struct {
 	// Etag: The ETag of the list.
 	Etag string `json:"etag,omitempty"`
@@ -560,6 +568,7 @@ type ChangeList struct {
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
+// Channel: An notification channel used to watch for resource changes.
 type Channel struct {
 	// Address: The address where notifications are delivered for this
 	// channel.
@@ -599,6 +608,7 @@ type Channel struct {
 	Type string `json:"type,omitempty"`
 }
 
+// ChildList: A list of children of a file.
 type ChildList struct {
 	// Etag: The ETag of the list.
 	Etag string `json:"etag,omitempty"`
@@ -619,6 +629,7 @@ type ChildList struct {
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
+// ChildReference: A reference to a folder's child.
 type ChildReference struct {
 	// ChildLink: A link to the child.
 	ChildLink string `json:"childLink,omitempty"`
@@ -633,6 +644,8 @@ type ChildReference struct {
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
+// Comment: A JSON representation of a comment on a file in Google
+// Drive.
 type Comment struct {
 	// Anchor: A region of the document represented as a JSON string. See
 	// anchor documentation for details on how to define and interpret
@@ -690,6 +703,7 @@ type Comment struct {
 	Status string `json:"status,omitempty"`
 }
 
+// CommentContext: The context of the file which is being commented on.
 type CommentContext struct {
 	// Type: The MIME type of the context snippet.
 	Type string `json:"type,omitempty"`
@@ -700,6 +714,8 @@ type CommentContext struct {
 	Value string `json:"value,omitempty"`
 }
 
+// CommentList: A JSON representation of a list of comments on a file in
+// Google Drive.
 type CommentList struct {
 	// Items: List of comments.
 	Items []*Comment `json:"items,omitempty"`
@@ -717,6 +733,8 @@ type CommentList struct {
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
+// CommentReply: A JSON representation of a reply to a comment on a file
+// in Google Drive.
 type CommentReply struct {
 	// Author: The user who wrote this reply.
 	Author *User `json:"author,omitempty"`
@@ -755,6 +773,8 @@ type CommentReply struct {
 	Verb string `json:"verb,omitempty"`
 }
 
+// CommentReplyList: A JSON representation of a list of replies to a
+// comment on a file in Google Drive.
 type CommentReplyList struct {
 	// Items: List of reply.
 	Items []*CommentReply `json:"items,omitempty"`
@@ -772,6 +792,7 @@ type CommentReplyList struct {
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
+// File: The metadata for a file.
 type File struct {
 	// AlternateLink: A link for opening the file in a relevant Google
 	// editor or viewer.
@@ -991,6 +1012,9 @@ type File struct {
 	WritersCanShare bool `json:"writersCanShare,omitempty"`
 }
 
+// FileImageMediaMetadata: Metadata about image media. This will only be
+// present for image types, and its contents will depend on what can be
+// parsed from the image content.
 type FileImageMediaMetadata struct {
 	// Aperture: The aperture used to create the photo (f-number).
 	Aperture float64 `json:"aperture,omitempty"`
@@ -1059,6 +1083,8 @@ type FileImageMediaMetadata struct {
 	Width int64 `json:"width,omitempty"`
 }
 
+// FileImageMediaMetadataLocation: Geographic location information
+// stored in the image.
 type FileImageMediaMetadataLocation struct {
 	// Altitude: The altitude stored in the image.
 	Altitude float64 `json:"altitude,omitempty"`
@@ -1070,11 +1096,14 @@ type FileImageMediaMetadataLocation struct {
 	Longitude float64 `json:"longitude,omitempty"`
 }
 
+// FileIndexableText: Indexable text attributes for the file (can only
+// be written)
 type FileIndexableText struct {
 	// Text: The text to be indexed for this file.
 	Text string `json:"text,omitempty"`
 }
 
+// FileLabels: A group of labels for the file.
 type FileLabels struct {
 	// Hidden: Deprecated.
 	Hidden bool `json:"hidden,omitempty"`
@@ -1094,6 +1123,8 @@ type FileLabels struct {
 	Viewed bool `json:"viewed,omitempty"`
 }
 
+// FileThumbnail: Thumbnail for the file. Only accepted on upload and
+// for files that are not already thumbnailed by Google.
 type FileThumbnail struct {
 	// Image: The URL-safe Base64 encoded bytes of the thumbnail image. It
 	// should conform to RFC 4648 section 5.
@@ -1103,6 +1134,8 @@ type FileThumbnail struct {
 	MimeType string `json:"mimeType,omitempty"`
 }
 
+// FileVideoMediaMetadata: Metadata about video media. This will only be
+// present for video types.
 type FileVideoMediaMetadata struct {
 	// DurationMillis: The duration of the video in milliseconds.
 	DurationMillis int64 `json:"durationMillis,omitempty,string"`
@@ -1114,6 +1147,7 @@ type FileVideoMediaMetadata struct {
 	Width int64 `json:"width,omitempty"`
 }
 
+// FileList: A list of files.
 type FileList struct {
 	// Etag: The ETag of the list.
 	Etag string `json:"etag,omitempty"`
@@ -1134,6 +1168,7 @@ type FileList struct {
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
+// ParentList: A list of a file's parents.
 type ParentList struct {
 	// Etag: The ETag of the list.
 	Etag string `json:"etag,omitempty"`
@@ -1148,6 +1183,7 @@ type ParentList struct {
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
+// ParentReference: A reference to a file's parent.
 type ParentReference struct {
 	// Id: The ID of the parent.
 	Id string `json:"id,omitempty"`
@@ -1165,6 +1201,7 @@ type ParentReference struct {
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
+// Permission: A permission for a file.
 type Permission struct {
 	// AdditionalRoles: Additional roles for this user. Only commenter is
 	// currently allowed.
@@ -1227,6 +1264,7 @@ type Permission struct {
 	WithLink bool `json:"withLink,omitempty"`
 }
 
+// PermissionId: An ID for a user or group as seen in Permission items.
 type PermissionId struct {
 	// Id: The permission ID.
 	Id string `json:"id,omitempty"`
@@ -1235,6 +1273,7 @@ type PermissionId struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// PermissionList: A list of permissions associated with a file.
 type PermissionList struct {
 	// Etag: The ETag of the list.
 	Etag string `json:"etag,omitempty"`
@@ -1249,6 +1288,14 @@ type PermissionList struct {
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
+// Property: A key-value pair attached to a file that is either public
+// or private to an application.
+// The following limits apply to file properties:
+// - Maximum of 100 properties total per file
+// - Maximum of 30 private properties per app
+// - Maximum of 30 public properties
+// - Maximum of 124 bytes size limit on (key + value) string in UTF-8
+// encoding for a single property.
 type Property struct {
 	// Etag: ETag of the property.
 	Etag string `json:"etag,omitempty"`
@@ -1269,6 +1316,8 @@ type Property struct {
 	Visibility string `json:"visibility,omitempty"`
 }
 
+// PropertyList: A collection of properties, key-value pairs that are
+// either public or private to an application.
 type PropertyList struct {
 	// Etag: The ETag of the list.
 	Etag string `json:"etag,omitempty"`
@@ -1283,6 +1332,7 @@ type PropertyList struct {
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
+// Revision: A revision of a file.
 type Revision struct {
 	// DownloadUrl: Short term download URL for the file. This will only be
 	// populated on files with content stored in Drive.
@@ -1354,6 +1404,7 @@ type Revision struct {
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
+// RevisionList: A list of revisions of a file.
 type RevisionList struct {
 	// Etag: The ETag of the list.
 	Etag string `json:"etag,omitempty"`
@@ -1368,6 +1419,7 @@ type RevisionList struct {
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
+// User: The JSON template for a user.
 type User struct {
 	// DisplayName: A plain text displayable name for this user.
 	DisplayName string `json:"displayName,omitempty"`
@@ -1389,6 +1441,7 @@ type User struct {
 	Picture *UserPicture `json:"picture,omitempty"`
 }
 
+// UserPicture: The user's profile picture.
 type UserPicture struct {
 	// Url: A URL that points to a profile picture of this user.
 	Url string `json:"url,omitempty"`

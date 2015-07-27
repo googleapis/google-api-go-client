@@ -143,6 +143,8 @@ type TemplateService struct {
 	s *Service
 }
 
+// Bucket: Specifies the minimum and maximum values, the color, opacity,
+// icon and weight of a bucket within a StyleSetting.
 type Bucket struct {
 	// Color: Color of line or the interior of a polygon in #RRGGBB format.
 	Color string `json:"color,omitempty"`
@@ -165,6 +167,7 @@ type Bucket struct {
 	Weight int64 `json:"weight,omitempty"`
 }
 
+// Column: Specifies the details of a column in a table.
 type Column struct {
 	// BaseColumn: Identifier of the base column. If present, this column is
 	// derived from the specified base column.
@@ -235,6 +238,8 @@ type Column struct {
 	ValidateData bool `json:"validateData,omitempty"`
 }
 
+// ColumnBaseColumn: Identifier of the base column. If present, this
+// column is derived from the specified base column.
 type ColumnBaseColumn struct {
 	// ColumnId: The id of the column in the base table from which this
 	// column is derived.
@@ -245,6 +250,7 @@ type ColumnBaseColumn struct {
 	TableIndex int64 `json:"tableIndex,omitempty"`
 }
 
+// ColumnList: Represents a list of columns in a table.
 type ColumnList struct {
 	// Items: List of all requested columns.
 	Items []*Column `json:"items,omitempty"`
@@ -261,6 +267,7 @@ type ColumnList struct {
 	TotalItems int64 `json:"totalItems,omitempty"`
 }
 
+// Geometry: Represents a Geometry object.
 type Geometry struct {
 	// Geometries: The list of geometries in this geometry collection.
 	Geometries []interface{} `json:"geometries,omitempty"`
@@ -271,6 +278,7 @@ type Geometry struct {
 	Type string `json:"type,omitempty"`
 }
 
+// Import: Represents an import request.
 type Import struct {
 	// Kind: The kind of item this is. For an import, this is always
 	// fusiontables#import.
@@ -280,6 +288,7 @@ type Import struct {
 	NumRowsReceived int64 `json:"numRowsReceived,omitempty,string"`
 }
 
+// Line: Represents a line geometry.
 type Line struct {
 	// Coordinates: The coordinates that define the line.
 	Coordinates [][]float64 `json:"coordinates,omitempty"`
@@ -288,6 +297,7 @@ type Line struct {
 	Type string `json:"type,omitempty"`
 }
 
+// LineStyle: Represents a LineStyle within a StyleSetting
 type LineStyle struct {
 	// StrokeColor: Color of the line in #RRGGBB format.
 	StrokeColor string `json:"strokeColor,omitempty"`
@@ -308,6 +318,7 @@ type LineStyle struct {
 	StrokeWeightStyler *StyleFunction `json:"strokeWeightStyler,omitempty"`
 }
 
+// Point: Represents a point object.
 type Point struct {
 	// Coordinates: The coordinates that define the point.
 	Coordinates []float64 `json:"coordinates,omitempty"`
@@ -316,6 +327,7 @@ type Point struct {
 	Type string `json:"type,omitempty"`
 }
 
+// PointStyle: Represents a PointStyle within a StyleSetting
 type PointStyle struct {
 	// IconName: Name of the icon. Use values defined in
 	// http://www.google.com/fusiontables/DataSource?dsrcid=308519
@@ -326,6 +338,7 @@ type PointStyle struct {
 	IconStyler *StyleFunction `json:"iconStyler,omitempty"`
 }
 
+// Polygon: Represents a polygon object.
 type Polygon struct {
 	// Coordinates: The coordinates that define the polygon.
 	Coordinates [][][]float64 `json:"coordinates,omitempty"`
@@ -334,6 +347,7 @@ type Polygon struct {
 	Type string `json:"type,omitempty"`
 }
 
+// PolygonStyle: Represents a PolygonStyle within a StyleSetting
 type PolygonStyle struct {
 	// FillColor: Color of the interior of the polygon in #RRGGBB format.
 	FillColor string `json:"fillColor,omitempty"`
@@ -365,6 +379,7 @@ type PolygonStyle struct {
 	StrokeWeightStyler *StyleFunction `json:"strokeWeightStyler,omitempty"`
 }
 
+// Sqlresponse: Represents a response to a SQL statement.
 type Sqlresponse struct {
 	// Columns: Columns in the table.
 	Columns []string `json:"columns,omitempty"`
@@ -379,6 +394,7 @@ type Sqlresponse struct {
 	Rows [][]interface{} `json:"rows,omitempty"`
 }
 
+// StyleFunction: Represents a StyleFunction within a StyleSetting
 type StyleFunction struct {
 	// Buckets: Bucket function that assigns a style based on the range a
 	// column value falls into.
@@ -401,6 +417,8 @@ type StyleFunction struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// StyleFunctionGradient: Gradient function that interpolates a range of
+// colors based on column value.
 type StyleFunctionGradient struct {
 	// Colors: Array with two or more colors.
 	Colors []*StyleFunctionGradientColors `json:"colors,omitempty"`
@@ -422,6 +440,8 @@ type StyleFunctionGradientColors struct {
 	Opacity float64 `json:"opacity,omitempty"`
 }
 
+// StyleSetting: Represents a complete StyleSettings object. The primary
+// key is a combination of the tableId and a styleId.
 type StyleSetting struct {
 	// Kind: The kind of item this is. A StyleSetting contains the style
 	// definitions for points, lines, and polygons in a table. Since a table
@@ -449,6 +469,7 @@ type StyleSetting struct {
 	TableId string `json:"tableId,omitempty"`
 }
 
+// StyleSettingList: Represents a list of styles for a given table.
 type StyleSettingList struct {
 	// Items: All requested style settings.
 	Items []*StyleSetting `json:"items,omitempty"`
@@ -465,6 +486,7 @@ type StyleSettingList struct {
 	TotalItems int64 `json:"totalItems,omitempty"`
 }
 
+// Table: Represents a table.
 type Table struct {
 	// Attribution: Attribution assigned to the table.
 	Attribution string `json:"attribution,omitempty"`
@@ -510,6 +532,7 @@ type Table struct {
 	TablePropertiesJsonSchema string `json:"tablePropertiesJsonSchema,omitempty"`
 }
 
+// TableList: Represents a list of tables.
 type TableList struct {
 	// Items: List of all requested tables.
 	Items []*Table `json:"items,omitempty"`
@@ -523,6 +546,9 @@ type TableList struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// Task: A background task on a table, initiated for time- or
+// resource-consuming operations such as changing column types or
+// deleting all rows.
 type Task struct {
 	// Kind: Type of the resource. This is always "fusiontables#task".
 	Kind string `json:"kind,omitempty"`
@@ -541,6 +567,7 @@ type Task struct {
 	Type string `json:"type,omitempty"`
 }
 
+// TaskList: Represents a list of tasks for a table.
 type TaskList struct {
 	// Items: List of all requested tasks.
 	Items []*Task `json:"items,omitempty"`
@@ -556,6 +583,7 @@ type TaskList struct {
 	TotalItems int64 `json:"totalItems,omitempty"`
 }
 
+// Template: Represents the contents of InfoWindow templates.
 type Template struct {
 	// AutomaticColumnNames: List of columns from which the template is to
 	// be automatically constructed. Only one of body or automaticColumns
@@ -583,6 +611,7 @@ type Template struct {
 	TemplateId int64 `json:"templateId,omitempty"`
 }
 
+// TemplateList: Represents a list of templates for a given table.
 type TemplateList struct {
 	// Items: List of all requested templates.
 	Items []*Template `json:"items,omitempty"`

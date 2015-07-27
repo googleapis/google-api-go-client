@@ -146,6 +146,8 @@ type DebuggerDebuggeesBreakpointsService struct {
 	s *Service
 }
 
+// Breakpoint: Represents the breakpoint specification, status and
+// results.
 type Breakpoint struct {
 	// Action: Defines what to do when the breakpoint hits.
 	//
@@ -240,6 +242,9 @@ type Breakpoint struct {
 	VariableTable []*Variable `json:"variableTable,omitempty"`
 }
 
+// CloudRepoSourceContext: A CloudRepoSourceContext denotes a particular
+// revision in a cloud repo (a repo hosted by the Google Cloud
+// Platform).
 type CloudRepoSourceContext struct {
 	// AliasName: The name of an alias (branch, tag, etc.).
 	AliasName string `json:"aliasName,omitempty"`
@@ -251,6 +256,9 @@ type CloudRepoSourceContext struct {
 	RevisionId string `json:"revisionId,omitempty"`
 }
 
+// CloudWorkspaceId: A CloudWorkspaceId is a unique identifier for a
+// cloud workspace. A cloud workspace is a place associated with a repo
+// where modified files can be stored before they are committed.
 type CloudWorkspaceId struct {
 	// Name: The unique name of the workspace within the repo. This is the
 	// name chosen by the client in the Source API's CreateWorkspace method.
@@ -260,6 +268,8 @@ type CloudWorkspaceId struct {
 	RepoId *RepoId `json:"repoId,omitempty"`
 }
 
+// CloudWorkspaceSourceContext: A CloudWorkspaceSourceContext denotes a
+// workspace at a particular snapshot.
 type CloudWorkspaceSourceContext struct {
 	// SnapshotId: The ID of the snapshot. An empty snapshot_id refers to
 	// the most recent snapshot.
@@ -269,6 +279,12 @@ type CloudWorkspaceSourceContext struct {
 	WorkspaceId *CloudWorkspaceId `json:"workspaceId,omitempty"`
 }
 
+// Debuggee: Represents the application to debug. The application may
+// include one or more replicated processes executing the same code.
+// Each of these processes is attached with a debugger agent, carrying
+// out the debugging commands. The agents attached to the same debuggee
+// are identified by using exactly the same fields' values when
+// registering.
 type Debuggee struct {
 	// AgentVersion: Version ID of the agent release. The version ID is
 	// structured as following: "domain/type/vmajor.minor" (for example
@@ -315,9 +331,16 @@ type Debuggee struct {
 	Uniquifier string `json:"uniquifier,omitempty"`
 }
 
+// Empty: A generic empty message that you can re-use to avoid defining
+// duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For
+// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); } The JSON representation for `Empty` is
+// empty JSON object `{}`.
 type Empty struct {
 }
 
+// FormatMessage: Represents a message with parameters.
 type FormatMessage struct {
 	// Format: Format template of the message. The "format" uses
 	// placeholders "$0", "$1", etc. to reference parameters. "$$" can be
@@ -330,6 +353,7 @@ type FormatMessage struct {
 	Parameters []string `json:"parameters,omitempty"`
 }
 
+// GerritSourceContext: A SourceContext referring to a Gerrit project.
 type GerritSourceContext struct {
 	// AliasName: The name of an alias (branch, tag, etc.).
 	AliasName string `json:"aliasName,omitempty"`
@@ -346,12 +370,16 @@ type GerritSourceContext struct {
 	RevisionId string `json:"revisionId,omitempty"`
 }
 
+// GetBreakpointResponse: The response of getting breakpoint
+// information.
 type GetBreakpointResponse struct {
 	// Breakpoint: The complete breakpoint state. The fields 'id' and
 	// 'location' are guranteed to be set.
 	Breakpoint *Breakpoint `json:"breakpoint,omitempty"`
 }
 
+// ListActiveBreakpointsResponse: The response of listing active
+// breakpoints.
 type ListActiveBreakpointsResponse struct {
 	// Breakpoints: List of all active breakpoints. The fields 'id' and
 	// 'location' are guranteed to be set on each breakpoint.
@@ -362,6 +390,7 @@ type ListActiveBreakpointsResponse struct {
 	NextWaitToken string `json:"nextWaitToken,omitempty"`
 }
 
+// ListBreakpointsResponse: The response of listing breakpoints.
 type ListBreakpointsResponse struct {
 	// Breakpoints: List of all breakpoints with complete state. The fields
 	// 'id' and 'location' are guranteed to be set on each breakpoint.
@@ -372,6 +401,7 @@ type ListBreakpointsResponse struct {
 	NextWaitToken string `json:"nextWaitToken,omitempty"`
 }
 
+// ListDebuggeesResponse: The response of listing debuggees.
 type ListDebuggeesResponse struct {
 	// Debuggees: The list of debuggees accessible to the calling user. Note
 	// that the description field is the only human readable field that
@@ -380,6 +410,8 @@ type ListDebuggeesResponse struct {
 	Debuggees []*Debuggee `json:"debuggees,omitempty"`
 }
 
+// ProjectRepoId: Selects a repo using a Google Cloud Platform project
+// ID (e.g. winged-cargo-31) and a repo name within that project.
 type ProjectRepoId struct {
 	// ProjectId: The ID of the project.
 	ProjectId string `json:"projectId,omitempty"`
@@ -388,6 +420,7 @@ type ProjectRepoId struct {
 	RepoName string `json:"repoName,omitempty"`
 }
 
+// RegisterDebuggeeRequest: The request to register a debuggee.
 type RegisterDebuggeeRequest struct {
 	// Debuggee: The debuggee information to register. The fields 'project',
 	// 'uniquifier', 'description' and 'agent_version' of the debuggee must
@@ -395,12 +428,14 @@ type RegisterDebuggeeRequest struct {
 	Debuggee *Debuggee `json:"debuggee,omitempty"`
 }
 
+// RegisterDebuggeeResponse: The response of registering a debuggee.
 type RegisterDebuggeeResponse struct {
 	// Debuggee: The debuggee resource. The field 'id' is guranteed to be
 	// set (in addition to the echoed fields).
 	Debuggee *Debuggee `json:"debuggee,omitempty"`
 }
 
+// RepoId: A unique identifier for a cloud repo.
 type RepoId struct {
 	// ProjectRepoId: A combination of a project ID and a repo name.
 	ProjectRepoId *ProjectRepoId `json:"projectRepoId,omitempty"`
@@ -409,12 +444,16 @@ type RepoId struct {
 	Uid string `json:"uid,omitempty"`
 }
 
+// SetBreakpointResponse: The response of setting a breakpoint.
 type SetBreakpointResponse struct {
 	// Breakpoint: The breakpoint resource. The field 'id' is guranteed to
 	// be set (in addition to the echoed fileds).
 	Breakpoint *Breakpoint `json:"breakpoint,omitempty"`
 }
 
+// SourceContext: A SourceContext is a reference to a tree of files. A
+// SourceContext together with a path point to a unique revision of a
+// single file or directory.
 type SourceContext struct {
 	// CloudRepo: A SourceContext referring to a revision in a cloud repo.
 	CloudRepo *CloudRepoSourceContext `json:"cloudRepo,omitempty"`
@@ -427,6 +466,7 @@ type SourceContext struct {
 	Gerrit *GerritSourceContext `json:"gerrit,omitempty"`
 }
 
+// SourceLocation: Represents a location in the source code.
 type SourceLocation struct {
 	// Line: The line inside the file (first line value is '1').
 	Line int64 `json:"line,omitempty"`
@@ -436,6 +476,7 @@ type SourceLocation struct {
 	Path string `json:"path,omitempty"`
 }
 
+// StackFrame: Represents a stack frame context.
 type StackFrame struct {
 	// Arguments: The set of arguments passed to this function Note that
 	// this might not be populated for all stack frames.
@@ -452,6 +493,11 @@ type StackFrame struct {
 	Location *SourceLocation `json:"location,omitempty"`
 }
 
+// StatusMessage: Represents a contextual status message. The message
+// can indicate an error or informational status, and refer to specific
+// parts of the containing object. For example, the Breakpoint.status
+// field can indicate an error referring to the
+// BREAKPOINT_SOURCE_LOCATION with the message "Location not found".
 type StatusMessage struct {
 	// Description: Status message text.
 	Description *FormatMessage `json:"description,omitempty"`
@@ -471,15 +517,51 @@ type StatusMessage struct {
 	RefersTo string `json:"refersTo,omitempty"`
 }
 
+// UpdateActiveBreakpointRequest: The request to update an active
+// breakpoint.
 type UpdateActiveBreakpointRequest struct {
 	// Breakpoint: The updated breakpoint information. The field 'id' must
 	// be set.
 	Breakpoint *Breakpoint `json:"breakpoint,omitempty"`
 }
 
+// UpdateActiveBreakpointResponse: The response of updating an active
+// breakpoint. The message is defined to allow future extensions.
 type UpdateActiveBreakpointResponse struct {
 }
 
+// Variable: Represents a variable or an argument possibly of a compound
+// object type. 1. A simple variable such as, int x = 5 is represented
+// as: { name: "x", value: "5" } 2. A compound object such as, struct T
+// { int m1; int m2; }; T x = { 3, 7 }; is represented as: { name: "x",
+// members { name: "m1", value: "3" }, members { name: "m2", value: "7"
+// } } 3. A pointer where the pointee was captured such as, T x = { 3, 7
+// }; T* p = &x; is represented as: { name: "p", value: "0x00500500",
+// members { name: "m1", value: "3" }, members { name: "m2", value: "7"
+// } } 4. A pointer where the pointee was not captured or is
+// inaccessible such as, T* p = new T; is represented as: { name: "p",
+// value: "0x00400400", members { value: "" } } the value text should
+// decribe the reason for the missing value. such as , ,
+// . note that a null pointer should not have members. 5. An unnamed
+// value such as, int* p = new int(7); is represented as, { name: "p",
+// value: "0x00500500", members { value: "7" } } 6. An unnamed pointer
+// where the pointee was not captured such as, int* p = new int(7);
+// int** pp = &p; is represented as: { name: "pp", value: "0x00500500",
+// members { value: "0x00400400", members { value: "" } } } To optimize
+// computation, memory and network traffic, variables that repeat in the
+// output multiple times can be stored once in a shared variable table
+// and be referenced using the var_index field. The variables stored in
+// the shared table are nameless and are essentially a partition of the
+// complete variable. To reconstruct the complete variable merge the
+// referencing variable with the referenced variable. When using the
+// shared variable table, variables can be represented as: T x = { 3, 7
+// }; T* p = &x; T& r = x; are represented as, { name: "x", var_index: 3
+// } { name: "p", value "0x00500500", var_index: 3 } { name: "r",
+// var_index: 3 } with shared variable table entry #3: { members { name:
+// "m1", value: "3" }, members { name: "m2", value: "7" } } Note that
+// the pointer address is stored with the referencing variable and not
+// with the referenced variable, to allow the referenced variable to be
+// shared between pointer and references.
 type Variable struct {
 	// Members: The members contained or pointed to by the variable.
 	Members []*Variable `json:"members,omitempty"`

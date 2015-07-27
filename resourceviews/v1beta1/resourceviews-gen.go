@@ -106,6 +106,7 @@ type ZoneViewsService struct {
 	s *Service
 }
 
+// Label: The Label to be applied to the resource views.
 type Label struct {
 	// Key: Key of the label.
 	Key string `json:"key,omitempty"`
@@ -114,16 +115,22 @@ type Label struct {
 	Value string `json:"value,omitempty"`
 }
 
+// RegionViewsAddResourcesRequest: The request to add resources to the
+// resource view.
 type RegionViewsAddResourcesRequest struct {
 	// Resources: The list of resources to be added.
 	Resources []string `json:"resources,omitempty"`
 }
 
+// RegionViewsInsertResponse: The response to a resource view insert
+// request.
 type RegionViewsInsertResponse struct {
 	// Resource: The resource view object inserted.
 	Resource *ResourceView `json:"resource,omitempty"`
 }
 
+// RegionViewsListResourcesResponse: The response to the list resource
+// request.
 type RegionViewsListResourcesResponse struct {
 	// Members: The resources in the view.
 	Members []string `json:"members,omitempty"`
@@ -132,6 +139,8 @@ type RegionViewsListResourcesResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// RegionViewsListResponse: The response to the list resource view
+// request.
 type RegionViewsListResponse struct {
 	// NextPageToken: A token used for pagination.
 	NextPageToken string `json:"nextPageToken,omitempty"`
@@ -140,11 +149,14 @@ type RegionViewsListResponse struct {
 	ResourceViews []*ResourceView `json:"resourceViews,omitempty"`
 }
 
+// RegionViewsRemoveResourcesRequest: The request to remove resources
+// from the resource view.
 type RegionViewsRemoveResourcesRequest struct {
 	// Resources: The list of resources to be removed.
 	Resources []string `json:"resources,omitempty"`
 }
 
+// ResourceView: The resource view object.
 type ResourceView struct {
 	// CreationTime: The creation time of the resource view.
 	CreationTime string `json:"creationTime,omitempty"`
@@ -177,16 +189,21 @@ type ResourceView struct {
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
+// ZoneViewsAddResourcesRequest: The request to add resources to the
+// resource view.
 type ZoneViewsAddResourcesRequest struct {
 	// Resources: The list of resources to be added.
 	Resources []string `json:"resources,omitempty"`
 }
 
+// ZoneViewsInsertResponse: The response to an insert request.
 type ZoneViewsInsertResponse struct {
 	// Resource: The resource view object that has been inserted.
 	Resource *ResourceView `json:"resource,omitempty"`
 }
 
+// ZoneViewsListResourcesResponse: The response to a list resource
+// request.
 type ZoneViewsListResourcesResponse struct {
 	// Members: The full URL of resources in the view.
 	Members []string `json:"members,omitempty"`
@@ -195,6 +212,7 @@ type ZoneViewsListResourcesResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// ZoneViewsListResponse: The response to a list request.
 type ZoneViewsListResponse struct {
 	// NextPageToken: A token used for pagination.
 	NextPageToken string `json:"nextPageToken,omitempty"`
@@ -204,6 +222,8 @@ type ZoneViewsListResponse struct {
 	ResourceViews []*ResourceView `json:"resourceViews,omitempty"`
 }
 
+// ZoneViewsRemoveResourcesRequest: The request to remove resources from
+// the resource view.
 type ZoneViewsRemoveResourcesRequest struct {
 	// Resources: The list of resources to be removed.
 	Resources []string `json:"resources,omitempty"`

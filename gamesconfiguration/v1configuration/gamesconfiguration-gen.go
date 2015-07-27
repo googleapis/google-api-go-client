@@ -104,6 +104,8 @@ type LeaderboardConfigurationsService struct {
 	s *Service
 }
 
+// AchievementConfiguration: This is a JSON template for an achievement
+// configuration resource.
 type AchievementConfiguration struct {
 	// AchievementType: The type of the achievement.
 	// Possible values are:
@@ -139,6 +141,8 @@ type AchievementConfiguration struct {
 	Token string `json:"token,omitempty"`
 }
 
+// AchievementConfigurationDetail: This is a JSON template for an
+// achievement configuration detail.
 type AchievementConfigurationDetail struct {
 	// Description: Localized strings for the achievement description.
 	Description *LocalizedStringBundle `json:"description,omitempty"`
@@ -162,6 +166,8 @@ type AchievementConfigurationDetail struct {
 	SortRank int64 `json:"sortRank,omitempty"`
 }
 
+// AchievementConfigurationListResponse: This is a JSON template for a
+// ListConfigurations response.
 type AchievementConfigurationListResponse struct {
 	// Items: The achievement configurations.
 	Items []*AchievementConfiguration `json:"items,omitempty"`
@@ -174,6 +180,8 @@ type AchievementConfigurationListResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// GamesNumberAffixConfiguration: This is a JSON template for a number
+// affix resource.
 type GamesNumberAffixConfiguration struct {
 	// Few: When the language requires special treatment of "small" numbers
 	// (as with 2, 3, and 4 in Czech; or numbers ending 2, 3, or 4 but not
@@ -203,6 +211,8 @@ type GamesNumberAffixConfiguration struct {
 	Zero *LocalizedStringBundle `json:"zero,omitempty"`
 }
 
+// GamesNumberFormatConfiguration: This is a JSON template for a number
+// format resource.
 type GamesNumberFormatConfiguration struct {
 	// CurrencyCode: The curreny code string. Only used for CURRENCY format
 	// type.
@@ -227,6 +237,8 @@ type GamesNumberFormatConfiguration struct {
 	Suffix *GamesNumberAffixConfiguration `json:"suffix,omitempty"`
 }
 
+// ImageConfiguration: This is a JSON template for an image
+// configuration resource.
 type ImageConfiguration struct {
 	// ImageType: The image type for the image.
 	ImageType string `json:"imageType,omitempty"`
@@ -242,6 +254,8 @@ type ImageConfiguration struct {
 	Url string `json:"url,omitempty"`
 }
 
+// LeaderboardConfiguration: This is a JSON template for an leaderboard
+// configuration resource.
 type LeaderboardConfiguration struct {
 	// Draft: The draft data of the leaderboard.
 	Draft *LeaderboardConfigurationDetail `json:"draft,omitempty"`
@@ -272,6 +286,8 @@ type LeaderboardConfiguration struct {
 	Token string `json:"token,omitempty"`
 }
 
+// LeaderboardConfigurationDetail: This is a JSON template for a
+// leaderboard configuration detail.
 type LeaderboardConfigurationDetail struct {
 	// IconUrl: The icon url of this leaderboard. Writes to this field are
 	// ignored.
@@ -292,6 +308,8 @@ type LeaderboardConfigurationDetail struct {
 	SortRank int64 `json:"sortRank,omitempty"`
 }
 
+// LeaderboardConfigurationListResponse: This is a JSON template for a
+// ListConfigurations response.
 type LeaderboardConfigurationListResponse struct {
 	// Items: The leaderboard configurations.
 	Items []*LeaderboardConfiguration `json:"items,omitempty"`
@@ -304,6 +322,8 @@ type LeaderboardConfigurationListResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// LocalizedString: This is a JSON template for a localized string
+// resource.
 type LocalizedString struct {
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string gamesConfiguration#localizedString.
@@ -316,6 +336,8 @@ type LocalizedString struct {
 	Value string `json:"value,omitempty"`
 }
 
+// LocalizedStringBundle: This is a JSON template for a localized string
+// bundle resource.
 type LocalizedStringBundle struct {
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string gamesConfiguration#localizedStringBundle.

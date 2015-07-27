@@ -336,6 +336,7 @@ type WatermarksService struct {
 	s *Service
 }
 
+// AccessPolicy: Rights management policy for YouTube resources.
 type AccessPolicy struct {
 	// Allowed: The value of allowed indicates whether the access to the
 	// policy is allowed or denied by default.
@@ -346,6 +347,14 @@ type AccessPolicy struct {
 	Exception []string `json:"exception,omitempty"`
 }
 
+// Activity: An activity resource contains information about an action
+// that a particular channel, or user, has taken on YouTube.The actions
+// reported in activity feeds include rating a video, sharing a video,
+// marking a video as a favorite, commenting on a video, uploading a
+// video, and so forth. Each activity resource identifies the type of
+// action, the channel associated with the action, and the resource(s)
+// associated with the action, such as the video that was rated or
+// uploaded.
 type Activity struct {
 	// ContentDetails: The contentDetails object contains information about
 	// the content associated with the activity. For example, if the
@@ -368,6 +377,8 @@ type Activity struct {
 	Snippet *ActivitySnippet `json:"snippet,omitempty"`
 }
 
+// ActivityContentDetails: Details about the content of an activity: the
+// video that was shared, the channel that was subscribed to, etc.
 type ActivityContentDetails struct {
 	// Bulletin: The bulletin object contains details about a channel
 	// bulletin post. This object is only present if the snippet.type is
@@ -423,36 +434,48 @@ type ActivityContentDetails struct {
 	Upload *ActivityContentDetailsUpload `json:"upload,omitempty"`
 }
 
+// ActivityContentDetailsBulletin: Details about a channel bulletin
+// post.
 type ActivityContentDetailsBulletin struct {
 	// ResourceId: The resourceId object contains information that
 	// identifies the resource associated with a bulletin post.
 	ResourceId *ResourceId `json:"resourceId,omitempty"`
 }
 
+// ActivityContentDetailsChannelItem: Details about a resource which was
+// added to a channel.
 type ActivityContentDetailsChannelItem struct {
 	// ResourceId: The resourceId object contains information that
 	// identifies the resource that was added to the channel.
 	ResourceId *ResourceId `json:"resourceId,omitempty"`
 }
 
+// ActivityContentDetailsComment: Information about a resource that
+// received a comment.
 type ActivityContentDetailsComment struct {
 	// ResourceId: The resourceId object contains information that
 	// identifies the resource associated with the comment.
 	ResourceId *ResourceId `json:"resourceId,omitempty"`
 }
 
+// ActivityContentDetailsFavorite: Information about a video that was
+// marked as a favorite video.
 type ActivityContentDetailsFavorite struct {
 	// ResourceId: The resourceId object contains information that
 	// identifies the resource that was marked as a favorite.
 	ResourceId *ResourceId `json:"resourceId,omitempty"`
 }
 
+// ActivityContentDetailsLike: Information about a resource that
+// received a positive (like) rating.
 type ActivityContentDetailsLike struct {
 	// ResourceId: The resourceId object contains information that
 	// identifies the rated resource.
 	ResourceId *ResourceId `json:"resourceId,omitempty"`
 }
 
+// ActivityContentDetailsPlaylistItem: Information about a new playlist
+// item.
 type ActivityContentDetailsPlaylistItem struct {
 	// PlaylistId: The value that YouTube uses to uniquely identify the
 	// playlist.
@@ -466,6 +489,8 @@ type ActivityContentDetailsPlaylistItem struct {
 	ResourceId *ResourceId `json:"resourceId,omitempty"`
 }
 
+// ActivityContentDetailsPromotedItem: Details about a resource which is
+// being promoted.
 type ActivityContentDetailsPromotedItem struct {
 	// AdTag: The URL the client should fetch to request a promoted item.
 	AdTag string `json:"adTag,omitempty"`
@@ -512,6 +537,8 @@ type ActivityContentDetailsPromotedItem struct {
 	VideoId string `json:"videoId,omitempty"`
 }
 
+// ActivityContentDetailsRecommendation: Information that identifies the
+// recommended resource.
 type ActivityContentDetailsRecommendation struct {
 	// Reason: The reason that the resource is recommended to the user.
 	//
@@ -531,6 +558,7 @@ type ActivityContentDetailsRecommendation struct {
 	SeedResourceId *ResourceId `json:"seedResourceId,omitempty"`
 }
 
+// ActivityContentDetailsSocial: Details about a social network post.
 type ActivityContentDetailsSocial struct {
 	// Author: The author of the social network post.
 	Author string `json:"author,omitempty"`
@@ -555,12 +583,15 @@ type ActivityContentDetailsSocial struct {
 	Type string `json:"type,omitempty"`
 }
 
+// ActivityContentDetailsSubscription: Information about a channel that
+// a user subscribed to.
 type ActivityContentDetailsSubscription struct {
 	// ResourceId: The resourceId object contains information that
 	// identifies the resource that the user subscribed to.
 	ResourceId *ResourceId `json:"resourceId,omitempty"`
 }
 
+// ActivityContentDetailsUpload: Information about the uploaded video.
 type ActivityContentDetailsUpload struct {
 	// VideoId: The ID that YouTube uses to uniquely identify the uploaded
 	// video.
@@ -599,6 +630,8 @@ type ActivityListResponse struct {
 	VisitorId string `json:"visitorId,omitempty"`
 }
 
+// ActivitySnippet: Basic details about an activity, including title,
+// description, thumbnails, activity type and group.
 type ActivitySnippet struct {
 	// ChannelId: The ID that YouTube uses to uniquely identify the channel
 	// associated with the activity.
@@ -651,6 +684,8 @@ type ActivitySnippet struct {
 	Type string `json:"type,omitempty"`
 }
 
+// Caption: A caption resource represents a YouTube caption track. A
+// caption track is associated with exactly one YouTube video.
 type Caption struct {
 	// Etag: Etag of this resource.
 	Etag string `json:"etag,omitempty"`
@@ -685,6 +720,8 @@ type CaptionListResponse struct {
 	VisitorId string `json:"visitorId,omitempty"`
 }
 
+// CaptionSnippet: Basic details about a caption track, such as its
+// language and name.
 type CaptionSnippet struct {
 	// AudioTrackType: The type of audio track associated with the caption
 	// track.
@@ -768,6 +805,7 @@ type CaptionSnippet struct {
 	VideoId string `json:"videoId,omitempty"`
 }
 
+// CdnSettings: Brief description of the live stream cdn settings.
 type CdnSettings struct {
 	// Format: The format of the video stream that you are sending to
 	// Youtube.
@@ -787,6 +825,8 @@ type CdnSettings struct {
 	IngestionType string `json:"ingestionType,omitempty"`
 }
 
+// Channel: A channel resource contains information about a YouTube
+// channel.
 type Channel struct {
 	// AuditDetails: The auditionDetails object encapsulates channel data
 	// that is relevant for YouTube Partners during the audition process.
@@ -843,6 +883,8 @@ type Channel struct {
 	TopicDetails *ChannelTopicDetails `json:"topicDetails,omitempty"`
 }
 
+// ChannelAuditDetails: The auditDetails object encapsulates channel
+// data that is relevant for YouTube Partners during the audit process.
 type ChannelAuditDetails struct {
 	// CommunityGuidelinesGoodStanding: Whether or not the channel respects
 	// the community guidelines.
@@ -865,6 +907,8 @@ type ChannelAuditDetails struct {
 	OverallGoodStanding bool `json:"overallGoodStanding,omitempty"`
 }
 
+// ChannelBannerResource: A channel banner returned as the response to a
+// channel_banner.insert call.
 type ChannelBannerResource struct {
 	// Etag: Etag of this resource.
 	Etag string `json:"etag,omitempty"`
@@ -877,6 +921,7 @@ type ChannelBannerResource struct {
 	Url string `json:"url,omitempty"`
 }
 
+// ChannelBrandingSettings: Branding properties of a YouTube channel.
 type ChannelBrandingSettings struct {
 	// Channel: Branding properties for the channel view.
 	Channel *ChannelSettings `json:"channel,omitempty"`
@@ -891,6 +936,7 @@ type ChannelBrandingSettings struct {
 	Watch *WatchSettings `json:"watch,omitempty"`
 }
 
+// ChannelContentDetails: Details about the content of a channel.
 type ChannelContentDetails struct {
 	// GooglePlusUserId: The googlePlusUserId object identifies the Google+
 	// profile ID associated with this channel.
@@ -926,6 +972,9 @@ type ChannelContentDetailsRelatedPlaylists struct {
 	WatchLater string `json:"watchLater,omitempty"`
 }
 
+// ChannelContentOwnerDetails: The contentOwnerDetails object
+// encapsulates channel data that is relevant for YouTube Partners
+// linked with the channel.
 type ChannelContentOwnerDetails struct {
 	// ContentOwner: The ID of the content owner linked to the channel.
 	ContentOwner string `json:"contentOwner,omitempty"`
@@ -936,6 +985,9 @@ type ChannelContentOwnerDetails struct {
 	TimeLinked string `json:"timeLinked,omitempty"`
 }
 
+// ChannelConversionPing: Pings that the app shall fire (authenticated
+// by biscotti cookie). Each ping has a context, in which the app must
+// fire the ping, and a url identifying the ping.
 type ChannelConversionPing struct {
 	// Context: Defines the context of the ping.
 	//
@@ -956,6 +1008,9 @@ type ChannelConversionPing struct {
 	ConversionUrl string `json:"conversionUrl,omitempty"`
 }
 
+// ChannelConversionPings: The conversionPings object encapsulates
+// information about conversion pings that need to be respected by the
+// channel.
 type ChannelConversionPings struct {
 	// Pings: Pings that the app shall fire (authenticated by biscotti
 	// cookie). Each ping has a context, in which the app must fire the
@@ -998,6 +1053,7 @@ type ChannelListResponse struct {
 	VisitorId string `json:"visitorId,omitempty"`
 }
 
+// ChannelLocalization: Channel localization setting
 type ChannelLocalization struct {
 	// Description: The localized strings for channel's description.
 	Description string `json:"description,omitempty"`
@@ -1035,6 +1091,8 @@ type ChannelSection struct {
 	Targeting *ChannelSectionTargeting `json:"targeting,omitempty"`
 }
 
+// ChannelSectionContentDetails: Details about a channelsection,
+// including playlists and channels.
 type ChannelSectionContentDetails struct {
 	// Channels: The channel ids for type multiple_channels.
 	Channels []string `json:"channels,omitempty"`
@@ -1064,11 +1122,14 @@ type ChannelSectionListResponse struct {
 	VisitorId string `json:"visitorId,omitempty"`
 }
 
+// ChannelSectionLocalization: ChannelSection localization setting
 type ChannelSectionLocalization struct {
 	// Title: The localized strings for channel section's title.
 	Title string `json:"title,omitempty"`
 }
 
+// ChannelSectionSnippet: Basic details about a channel section,
+// including title, style and position.
 type ChannelSectionSnippet struct {
 	// ChannelId: The ID that YouTube uses to uniquely identify the channel
 	// that published the channel section.
@@ -1119,6 +1180,7 @@ type ChannelSectionSnippet struct {
 	Type string `json:"type,omitempty"`
 }
 
+// ChannelSectionTargeting: ChannelSection targeting setting.
 type ChannelSectionTargeting struct {
 	// Countries: The country the channel section is targeting.
 	Countries []string `json:"countries,omitempty"`
@@ -1130,6 +1192,7 @@ type ChannelSectionTargeting struct {
 	Regions []string `json:"regions,omitempty"`
 }
 
+// ChannelSettings: Branding properties for the channel view.
 type ChannelSettings struct {
 	// Country: The country of the channel.
 	Country string `json:"country,omitempty"`
@@ -1180,6 +1243,8 @@ type ChannelSettings struct {
 	UnsubscribedTrailer string `json:"unsubscribedTrailer,omitempty"`
 }
 
+// ChannelSnippet: Basic details about a channel, including title,
+// description and thumbnails.
 type ChannelSnippet struct {
 	// Country: The country of the channel.
 	Country string `json:"country,omitempty"`
@@ -1208,6 +1273,8 @@ type ChannelSnippet struct {
 	Title string `json:"title,omitempty"`
 }
 
+// ChannelStatistics: Statistics about a channel: number of subscribers,
+// number of videos in the channel, etc.
 type ChannelStatistics struct {
 	// CommentCount: The number of comments for the channel.
 	CommentCount uint64 `json:"commentCount,omitempty,string"`
@@ -1226,6 +1293,7 @@ type ChannelStatistics struct {
 	ViewCount uint64 `json:"viewCount,omitempty,string"`
 }
 
+// ChannelStatus: JSON template for the status part of a channel.
 type ChannelStatus struct {
 	// IsLinked: If true, then the user is linked to either a YouTube
 	// username or G+ account. Otherwise, the user doesn't have a public
@@ -1250,6 +1318,8 @@ type ChannelStatus struct {
 	PrivacyStatus string `json:"privacyStatus,omitempty"`
 }
 
+// ChannelTopicDetails: Freebase topic information related to the
+// channel.
 type ChannelTopicDetails struct {
 	// TopicIds: A list of Freebase topic IDs associated with the channel.
 	// You can retrieve information about each topic using the Freebase
@@ -1257,6 +1327,7 @@ type ChannelTopicDetails struct {
 	TopicIds []string `json:"topicIds,omitempty"`
 }
 
+// Comment: A comment represents a single YouTube comment.
 type Comment struct {
 	// Etag: Etag of this resource.
 	Etag string `json:"etag,omitempty"`
@@ -1299,6 +1370,8 @@ type CommentListResponse struct {
 	VisitorId string `json:"visitorId,omitempty"`
 }
 
+// CommentSnippet: Basic details about a comment, such as its author and
+// text.
 type CommentSnippet struct {
 	// AuthorChannelId: The id of the author's YouTube channel, if any.
 	AuthorChannelId *ChannelId `json:"authorChannelId,omitempty"`
@@ -1377,6 +1450,9 @@ type CommentSnippet struct {
 	ViewerRating string `json:"viewerRating,omitempty"`
 }
 
+// CommentThread: A comment thread represents information that applies
+// to a top level comment and all its replies. It can also include the
+// top level comment itself and some of the replies.
 type CommentThread struct {
 	// Etag: Etag of this resource.
 	Etag string `json:"etag,omitempty"`
@@ -1424,6 +1500,8 @@ type CommentThreadListResponse struct {
 	VisitorId string `json:"visitorId,omitempty"`
 }
 
+// CommentThreadReplies: Comments written in (direct or indirect) reply
+// to the top level comment.
 type CommentThreadReplies struct {
 	// Comments: A limited number of replies. Unless the number of replies
 	// returned equals total_reply_count in the snippet the returned replies
@@ -1431,6 +1509,7 @@ type CommentThreadReplies struct {
 	Comments []*Comment `json:"comments,omitempty"`
 }
 
+// CommentThreadSnippet: Basic details about a comment thread.
 type CommentThreadSnippet struct {
 	// CanReply: Whether the current viewer of the thread can reply to it.
 	// This is viewer specific - other viewers may see a different value for
@@ -1458,6 +1537,8 @@ type CommentThreadSnippet struct {
 	VideoId string `json:"videoId,omitempty"`
 }
 
+// ContentRating: Ratings schemes. The country-specific ratings are
+// mostly for movies and shows. NEXT_ID: 65
 type ContentRating struct {
 	// AcbRating: Rating system in Australia - Australian Classification
 	// Board
@@ -1694,6 +1775,19 @@ type ContentRating struct {
 	//   "djctqUnrated"
 	DjctqRating string `json:"djctqRating,omitempty"`
 
+	// Possible values:
+	//   "djctqCriminalActs"
+	//   "djctqDrugs"
+	//   "djctqExplicitSex"
+	//   "djctqExtremeViolence"
+	//   "djctqIllegalDrugs"
+	//   "djctqImpactingContent"
+	//   "djctqInappropriateLanguage"
+	//   "djctqLegalDrugs"
+	//   "djctqNudity"
+	//   "djctqSex"
+	//   "djctqSexualContent"
+	//   "djctqViolence"
 	DjctqRatingReasons []string `json:"djctqRatingReasons,omitempty"`
 
 	// EefilmRating: Rating system for Estonia - Estonia Rating System
@@ -2222,6 +2316,7 @@ type ContentRating struct {
 	YtRating string `json:"ytRating,omitempty"`
 }
 
+// GeoPoint: Geographical coordinates of a point, in WGS84.
 type GeoPoint struct {
 	// Altitude: Altitude above the reference ellipsoid, in meters.
 	Altitude float64 `json:"altitude,omitempty"`
@@ -2233,6 +2328,12 @@ type GeoPoint struct {
 	Longitude float64 `json:"longitude,omitempty"`
 }
 
+// GuideCategory: A guideCategory resource identifies a category that
+// YouTube algorithmically assigns based on a channel's content or other
+// indicators, such as the channel's popularity. The list is similar to
+// video categories, with the difference being that a video's uploader
+// can assign a video category but only YouTube can assign a channel
+// category.
 type GuideCategory struct {
 	// Etag: Etag of this resource.
 	Etag string `json:"etag,omitempty"`
@@ -2282,6 +2383,7 @@ type GuideCategoryListResponse struct {
 	VisitorId string `json:"visitorId,omitempty"`
 }
 
+// GuideCategorySnippet: Basic details about a guide category.
 type GuideCategorySnippet struct {
 	ChannelId string `json:"channelId,omitempty"`
 
@@ -2289,6 +2391,8 @@ type GuideCategorySnippet struct {
 	Title string `json:"title,omitempty"`
 }
 
+// I18nLanguage: An i18nLanguage resource identifies a UI language
+// currently supported by YouTube.
 type I18nLanguage struct {
 	// Etag: Etag of this resource.
 	Etag string `json:"etag,omitempty"`
@@ -2326,6 +2430,8 @@ type I18nLanguageListResponse struct {
 	VisitorId string `json:"visitorId,omitempty"`
 }
 
+// I18nLanguageSnippet: Basic details about an i18n language, such as
+// language code and human-readable name.
 type I18nLanguageSnippet struct {
 	// Hl: A short BCP-47 code that uniquely identifies a language.
 	Hl string `json:"hl,omitempty"`
@@ -2334,6 +2440,8 @@ type I18nLanguageSnippet struct {
 	Name string `json:"name,omitempty"`
 }
 
+// I18nRegion: A i18nRegion resource identifies a region where YouTube
+// is available.
 type I18nRegion struct {
 	// Etag: Etag of this resource.
 	Etag string `json:"etag,omitempty"`
@@ -2371,6 +2479,8 @@ type I18nRegionListResponse struct {
 	VisitorId string `json:"visitorId,omitempty"`
 }
 
+// I18nRegionSnippet: Basic details about an i18n region, such as region
+// code and human-readable name.
 type I18nRegionSnippet struct {
 	// Gl: The region code as a 2-letter ISO country code.
 	Gl string `json:"gl,omitempty"`
@@ -2379,6 +2489,8 @@ type I18nRegionSnippet struct {
 	Name string `json:"name,omitempty"`
 }
 
+// ImageSettings: Branding properties for images associated with the
+// channel.
 type ImageSettings struct {
 	// BackgroundImageUrl: The URL for the background image shown on the
 	// video watch page. The image should be 1200px by 615px, with a maximum
@@ -2469,6 +2581,8 @@ type ImageSettings struct {
 	WatchIconImageUrl string `json:"watchIconImageUrl,omitempty"`
 }
 
+// IngestionInfo: Describes information necessary for ingesting an RTMP
+// or an HTTP stream.
 type IngestionInfo struct {
 	// BackupIngestionAddress: The backup ingestion URL that you should use
 	// to stream video to YouTube. You have the option of simultaneously
@@ -2505,6 +2619,9 @@ type InvideoBranding struct {
 	Timing *InvideoTiming `json:"timing,omitempty"`
 }
 
+// InvideoPosition: Describes the spatial position of a visual widget
+// inside a video. It is a union of various position types, out of which
+// only will be set one.
 type InvideoPosition struct {
 	// CornerPosition: Describes in which corner of the video the visual
 	// widget will appear.
@@ -2523,6 +2640,9 @@ type InvideoPosition struct {
 	Type string `json:"type,omitempty"`
 }
 
+// InvideoPromotion: Describes an invideo promotion campaign consisting
+// of multiple promoted items. A campaign belongs to a single
+// channel_id.
 type InvideoPromotion struct {
 	// DefaultTiming: The default temporal position within the video where
 	// the promoted item will be displayed. Can be overriden by more
@@ -2544,6 +2664,8 @@ type InvideoPromotion struct {
 	UseSmartTiming bool `json:"useSmartTiming,omitempty"`
 }
 
+// InvideoTiming: Describes a temporal position of a visual widget
+// inside a video.
 type InvideoTiming struct {
 	// DurationMs: Defines the duration in milliseconds for which the
 	// promotion should be displayed. If missing, the client should use the
@@ -2571,6 +2693,8 @@ type LanguageTag struct {
 	Value string `json:"value,omitempty"`
 }
 
+// LiveBroadcast: A liveBroadcast resource represents an event that will
+// be streamed, via live video, on YouTube.
 type LiveBroadcast struct {
 	// ContentDetails: The contentDetails object contains information about
 	// the event's video content, such as whether the content can be shown
@@ -2605,6 +2729,7 @@ type LiveBroadcast struct {
 	TopicDetails *LiveBroadcastTopicDetails `json:"topicDetails,omitempty"`
 }
 
+// LiveBroadcastContentDetails: Detailed settings of a broadcast.
 type LiveBroadcastContentDetails struct {
 	// BoundStreamId: This value uniquely identifies the live stream bound
 	// to the broadcast.
@@ -2750,6 +2875,9 @@ type LiveBroadcastSnippet struct {
 	Title string `json:"title,omitempty"`
 }
 
+// LiveBroadcastStatistics: Statistics about the live broadcast. These
+// represent a snapshot of the values at the time of the request.
+// Statistics are only returned for live broadcasts.
 type LiveBroadcastStatistics struct {
 	// ConcurrentViewers: The number of viewers currently watching the
 	// broadcast. The property and its value will be present if the
@@ -2845,6 +2973,7 @@ type LiveBroadcastTopicSnippet struct {
 	ReleaseDate string `json:"releaseDate,omitempty"`
 }
 
+// LiveStream: A live stream describes a live ingestion point.
 type LiveStream struct {
 	// Cdn: The cdn object defines the live stream's content delivery
 	// network (CDN) settings. These settings provide details about the
@@ -2929,6 +3058,7 @@ type LiveStreamConfigurationIssue struct {
 	Type string `json:"type,omitempty"`
 }
 
+// LiveStreamContentDetails: Detailed settings of a stream.
 type LiveStreamContentDetails struct {
 	// ClosedCaptionsIngestionUrl: The ingestion URL where the closed
 	// captions of this stream are sent.
@@ -3022,6 +3152,7 @@ type LiveStreamSnippet struct {
 	Title string `json:"title,omitempty"`
 }
 
+// LiveStreamStatus: Brief description of the live stream status.
 type LiveStreamStatus struct {
 	// HealthStatus: The health status of the stream.
 	HealthStatus *LiveStreamHealthStatus `json:"healthStatus,omitempty"`
@@ -3050,6 +3181,7 @@ type LocalizedString struct {
 	Value string `json:"value,omitempty"`
 }
 
+// MonitorStreamInfo: Settings and Info of the monitor stream
 type MonitorStreamInfo struct {
 	// BroadcastStreamDelayMs: If you have set the enableMonitorStream
 	// property to true, then this property determines the length of the
@@ -3075,6 +3207,9 @@ type MonitorStreamInfo struct {
 	EnableMonitorStream bool `json:"enableMonitorStream,omitempty"`
 }
 
+// PageInfo: Paging details for lists of resources, including total
+// number of items available and number of resources returned in a
+// single page.
 type PageInfo struct {
 	// ResultsPerPage: The number of results included in the API response.
 	ResultsPerPage int64 `json:"resultsPerPage,omitempty"`
@@ -3083,6 +3218,29 @@ type PageInfo struct {
 	TotalResults int64 `json:"totalResults,omitempty"`
 }
 
+// Playlist: A playlist resource represents a YouTube playlist. A
+// playlist is a collection of videos that can be viewed sequentially
+// and shared with other users. A playlist can contain up to 200 videos,
+// and YouTube does not limit the number of playlists that each user
+// creates. By default, playlists are publicly visible to other users,
+// but playlists can be public or private.
+//
+// YouTube also uses playlists to identify special collections of videos
+// for a channel, such as:
+// - uploaded videos
+// - favorite videos
+// - positively rated (liked) videos
+// - watch history
+// - watch later  To be more specific, these lists are associated with a
+// channel, which is a collection of a person, group, or company's
+// videos, playlists, and other YouTube information. You can retrieve
+// the playlist IDs for each of these lists from the  channel resource
+// for a given channel.
+//
+// You can then use the   playlistItems.list method to retrieve any of
+// those lists. You can also add or remove items from those lists by
+// calling the   playlistItems.insert and   playlistItems.delete
+// methods.
 type Playlist struct {
 	// ContentDetails: The contentDetails object contains information like
 	// video count.
@@ -3119,6 +3277,29 @@ type PlaylistContentDetails struct {
 	ItemCount int64 `json:"itemCount,omitempty"`
 }
 
+// PlaylistItem: A playlistItem resource identifies another resource,
+// such as a video, that is included in a playlist. In addition, the
+// playlistItem  resource contains details about the included resource
+// that pertain specifically to how that resource is used in that
+// playlist.
+//
+// YouTube uses playlists to identify special collections of videos for
+// a channel, such as:
+// - uploaded videos
+// - favorite videos
+// - positively rated (liked) videos
+// - watch history
+// - watch later  To be more specific, these lists are associated with a
+// channel, which is a collection of a person, group, or company's
+// videos, playlists, and other YouTube information.
+//
+// You can retrieve the playlist IDs for each of these lists from the
+// channel resource  for a given channel. You can then use the
+// playlistItems.list method to retrieve any of those lists. You can
+// also add or remove items from those lists by calling the
+// playlistItems.insert and   playlistItems.delete methods. For example,
+// if a user gives a positive rating to a video, you would insert that
+// video into the liked videos playlist for that user's channel.
 type PlaylistItem struct {
 	// ContentDetails: The contentDetails object is included in the resource
 	// if the included item is a YouTube video. The object contains
@@ -3198,6 +3379,8 @@ type PlaylistItemListResponse struct {
 	VisitorId string `json:"visitorId,omitempty"`
 }
 
+// PlaylistItemSnippet: Basic details about a playlist, including title,
+// description and thumbnails.
 type PlaylistItemSnippet struct {
 	// ChannelId: The ID that YouTube uses to uniquely identify the user
 	// that added the item to the playlist.
@@ -3239,6 +3422,8 @@ type PlaylistItemSnippet struct {
 	Title string `json:"title,omitempty"`
 }
 
+// PlaylistItemStatus: Information about the playlist item's privacy
+// status.
 type PlaylistItemStatus struct {
 	// PrivacyStatus: This resource's privacy status.
 	//
@@ -3280,6 +3465,7 @@ type PlaylistListResponse struct {
 	VisitorId string `json:"visitorId,omitempty"`
 }
 
+// PlaylistLocalization: Playlist localization setting
 type PlaylistLocalization struct {
 	// Description: The localized strings for playlist's description.
 	Description string `json:"description,omitempty"`
@@ -3294,6 +3480,8 @@ type PlaylistPlayer struct {
 	EmbedHtml string `json:"embedHtml,omitempty"`
 }
 
+// PlaylistSnippet: Basic details about a playlist, including title,
+// description and thumbnails.
 type PlaylistSnippet struct {
 	// ChannelId: The ID that YouTube uses to uniquely identify the channel
 	// that published the playlist.
@@ -3340,6 +3528,7 @@ type PlaylistStatus struct {
 	PrivacyStatus string `json:"privacyStatus,omitempty"`
 }
 
+// PromotedItem: Describes a single promoted item.
 type PromotedItem struct {
 	// CustomMessage: A custom message to display for this promotion. This
 	// field is currently ignored unless the promoted item is a website.
@@ -3358,6 +3547,8 @@ type PromotedItem struct {
 	Timing *InvideoTiming `json:"timing,omitempty"`
 }
 
+// PromotedItemId: Describes a single promoted item id. It is a union of
+// various possible types.
 type PromotedItemId struct {
 	// RecentlyUploadedBy: If type is recentUpload, this field identifies
 	// the channel from which to take the recent upload. If missing, the
@@ -3384,6 +3575,7 @@ type PromotedItemId struct {
 	WebsiteUrl string `json:"websiteUrl,omitempty"`
 }
 
+// PropertyValue: A pair Property / Value.
 type PropertyValue struct {
 	// Property: A property.
 	Property string `json:"property,omitempty"`
@@ -3392,6 +3584,8 @@ type PropertyValue struct {
 	Value string `json:"value,omitempty"`
 }
 
+// ResourceId: A resource id is a generic reference that points to
+// another YouTube resource.
 type ResourceId struct {
 	// ChannelId: The ID that YouTube uses to uniquely identify the referred
 	// resource, if that resource is a channel. This property is only
@@ -3443,6 +3637,11 @@ type SearchListResponse struct {
 	VisitorId string `json:"visitorId,omitempty"`
 }
 
+// SearchResult: A search result contains information about a YouTube
+// video, channel, or playlist that matches the search parameters
+// specified in an API request. While a search result points to a
+// uniquely identifiable resource, like a video, it does not have its
+// own persistent data.
 type SearchResult struct {
 	// Etag: Etag of this resource.
 	Etag string `json:"etag,omitempty"`
@@ -3462,6 +3661,9 @@ type SearchResult struct {
 	Snippet *SearchResultSnippet `json:"snippet,omitempty"`
 }
 
+// SearchResultSnippet: Basic details about a search result, including
+// title, description and thumbnails of the item referenced by the
+// search result.
 type SearchResultSnippet struct {
 	// ChannelId: The value that YouTube uses to uniquely identify the
 	// channel that published the resource that the search result
@@ -3500,6 +3702,11 @@ type SearchResultSnippet struct {
 	Title string `json:"title,omitempty"`
 }
 
+// Subscription: A subscription resource contains information about a
+// YouTube user subscription. A subscription notifies a user when new
+// videos are added to a channel or when another user takes one of
+// several actions on YouTube, such as uploading a video, rating a
+// video, or commenting on a video.
 type Subscription struct {
 	// ContentDetails: The contentDetails object contains basic statistics
 	// about the subscription.
@@ -3525,6 +3732,8 @@ type Subscription struct {
 	SubscriberSnippet *SubscriptionSubscriberSnippet `json:"subscriberSnippet,omitempty"`
 }
 
+// SubscriptionContentDetails: Details about the content to witch a
+// subscription refers.
 type SubscriptionContentDetails struct {
 	// ActivityType: The type of activity this subscription is for (only
 	// uploads, everything).
@@ -3574,6 +3783,8 @@ type SubscriptionListResponse struct {
 	VisitorId string `json:"visitorId,omitempty"`
 }
 
+// SubscriptionSnippet: Basic details about a subscription, including
+// title, description and thumbnails of the subscribed item.
 type SubscriptionSnippet struct {
 	// ChannelId: The ID that YouTube uses to uniquely identify the
 	// subscriber's channel.
@@ -3604,6 +3815,8 @@ type SubscriptionSnippet struct {
 	Title string `json:"title,omitempty"`
 }
 
+// SubscriptionSubscriberSnippet: Basic details about a subscription's
+// subscriber including title, description, channel ID and thumbnails.
 type SubscriptionSubscriberSnippet struct {
 	// ChannelId: The channel ID of the subscriber.
 	ChannelId string `json:"channelId,omitempty"`
@@ -3618,6 +3831,7 @@ type SubscriptionSubscriberSnippet struct {
 	Title string `json:"title,omitempty"`
 }
 
+// Thumbnail: A thumbnail is an image representing a YouTube resource.
 type Thumbnail struct {
 	// Height: (Optional) Height of the thumbnail image.
 	Height int64 `json:"height,omitempty"`
@@ -3629,6 +3843,8 @@ type Thumbnail struct {
 	Width int64 `json:"width,omitempty"`
 }
 
+// ThumbnailDetails: Internal representation of thumbnails for a YouTube
+// resource.
 type ThumbnailDetails struct {
 	// Default: The default image for this resource.
 	Default *Thumbnail `json:"default,omitempty"`
@@ -3665,9 +3881,11 @@ type ThumbnailSetResponse struct {
 	VisitorId string `json:"visitorId,omitempty"`
 }
 
+// TokenPagination: Stub token pagination template to suppress results.
 type TokenPagination struct {
 }
 
+// Video: A video resource represents a YouTube video.
 type Video struct {
 	// AgeGating: Age restriction details related to a video.
 	AgeGating *VideoAgeGating `json:"ageGating,omitempty"`
@@ -3781,6 +3999,9 @@ type VideoAbuseReport struct {
 	VideoId string `json:"videoId,omitempty"`
 }
 
+// VideoAbuseReportReason: A videoAbuseReportReason resource identifies
+// a reason that a video could be reported as abusive. Video abuse
+// report reasons are used with video.ReportAbuse.
 type VideoAbuseReportReason struct {
 	// Etag: Etag of this resource.
 	Etag string `json:"etag,omitempty"`
@@ -3817,6 +4038,8 @@ type VideoAbuseReportReasonListResponse struct {
 	VisitorId string `json:"visitorId,omitempty"`
 }
 
+// VideoAbuseReportReasonSnippet: Basic details about a video category,
+// such as its localized title.
 type VideoAbuseReportReasonSnippet struct {
 	// Label: The localized label belonging to this abuse report reason.
 	Label string `json:"label,omitempty"`
@@ -3856,6 +4079,8 @@ type VideoAgeGating struct {
 	VideoGameRating string `json:"videoGameRating,omitempty"`
 }
 
+// VideoCategory: A videoCategory resource identifies a category that
+// has been or could be associated with uploaded videos.
 type VideoCategory struct {
 	// Etag: Etag of this resource.
 	Etag string `json:"etag,omitempty"`
@@ -3905,6 +4130,8 @@ type VideoCategoryListResponse struct {
 	VisitorId string `json:"visitorId,omitempty"`
 }
 
+// VideoCategorySnippet: Basic details about a video category, such as
+// its localized title.
 type VideoCategorySnippet struct {
 	Assignable bool `json:"assignable,omitempty"`
 
@@ -3915,6 +4142,7 @@ type VideoCategorySnippet struct {
 	Title string `json:"title,omitempty"`
 }
 
+// VideoContentDetails: Details about the content of a YouTube Video.
 type VideoContentDetails struct {
 	// Caption: The value of captions indicates whether the video has
 	// captions or not.
@@ -3965,6 +4193,8 @@ type VideoContentDetails struct {
 	RegionRestriction *VideoContentDetailsRegionRestriction `json:"regionRestriction,omitempty"`
 }
 
+// VideoContentDetailsRegionRestriction: DEPRECATED Region restriction
+// of the video.
 type VideoContentDetailsRegionRestriction struct {
 	// Allowed: A list of region codes that identify countries where the
 	// video is viewable. If this property is present and a country is not
@@ -4009,6 +4239,10 @@ type VideoConversionPings struct {
 	Pings []*VideoConversionPing `json:"pings,omitempty"`
 }
 
+// VideoFileDetails: Describes original video file properties, including
+// technical details about audio and video streams, but also metadata
+// information like content length, digitization time, or geotagging
+// information.
 type VideoFileDetails struct {
 	// AudioStreams: A list of audio streams contained in the uploaded video
 	// file. Each item in the list contains detailed metadata about an audio
@@ -4067,6 +4301,7 @@ type VideoFileDetails struct {
 	VideoStreams []*VideoFileDetailsVideoStream `json:"videoStreams,omitempty"`
 }
 
+// VideoFileDetailsAudioStream: Information about an audio stream.
 type VideoFileDetailsAudioStream struct {
 	// BitrateBps: The audio stream's bitrate, in bits per second.
 	BitrateBps uint64 `json:"bitrateBps,omitempty,string"`
@@ -4082,6 +4317,7 @@ type VideoFileDetailsAudioStream struct {
 	Vendor string `json:"vendor,omitempty"`
 }
 
+// VideoFileDetailsVideoStream: Information about a video stream.
 type VideoFileDetailsVideoStream struct {
 	// AspectRatio: The video content's display aspect ratio, which
 	// specifies the aspect ratio in which the video should be displayed.
@@ -4170,6 +4406,7 @@ type VideoListResponse struct {
 	VisitorId string `json:"visitorId,omitempty"`
 }
 
+// VideoLiveStreamingDetails: Details about the live streaming metadata.
 type VideoLiveStreamingDetails struct {
 	// ActualEndTime: The time that the broadcast actually ended. The value
 	// is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format. This value
@@ -4202,6 +4439,8 @@ type VideoLiveStreamingDetails struct {
 	ScheduledStartTime string `json:"scheduledStartTime,omitempty"`
 }
 
+// VideoLocalization: Localized versions of certain video properties
+// (e.g. title).
 type VideoLocalization struct {
 	// Description: Localized version of the video's description.
 	Description string `json:"description,omitempty"`
@@ -4210,18 +4449,23 @@ type VideoLocalization struct {
 	Title string `json:"title,omitempty"`
 }
 
+// VideoMonetizationDetails: Details about monetization of a YouTube
+// Video.
 type VideoMonetizationDetails struct {
 	// Access: The value of access indicates whether the video can be
 	// monetized or not.
 	Access *AccessPolicy `json:"access,omitempty"`
 }
 
+// VideoPlayer: Player to be used for a video playback.
 type VideoPlayer struct {
 	// EmbedHtml: An <iframe> tag that embeds a player that will play the
 	// video.
 	EmbedHtml string `json:"embedHtml,omitempty"`
 }
 
+// VideoProcessingDetails: Describes processing status and progress and
+// availability of some other Video resource parts.
 type VideoProcessingDetails struct {
 	// EditorSuggestionsAvailability: This value indicates whether video
 	// editing suggestions, which might improve video quality or the
@@ -4284,6 +4528,8 @@ type VideoProcessingDetails struct {
 	ThumbnailsAvailability string `json:"thumbnailsAvailability,omitempty"`
 }
 
+// VideoProcessingDetailsProcessingProgress: Video processing progress
+// and completion time estimate.
 type VideoProcessingDetailsProcessingProgress struct {
 	// PartsProcessed: The number of parts of the video that YouTube has
 	// already processed. You can estimate the percentage of the video that
@@ -4306,6 +4552,8 @@ type VideoProcessingDetailsProcessingProgress struct {
 	TimeLeftMs uint64 `json:"timeLeftMs,omitempty,string"`
 }
 
+// VideoProjectDetails: Project specific details about the content of a
+// YouTube Video.
 type VideoProjectDetails struct {
 	// Tags: A list of project tags associated with the video during the
 	// upload.
@@ -4323,6 +4571,8 @@ type VideoRating struct {
 	VideoId string `json:"videoId,omitempty"`
 }
 
+// VideoRecordingDetails: Recording information associated with the
+// video.
 type VideoRecordingDetails struct {
 	// Location: The geolocation information associated with the video.
 	Location *GeoPoint `json:"location,omitempty"`
@@ -4336,6 +4586,8 @@ type VideoRecordingDetails struct {
 	RecordingDate string `json:"recordingDate,omitempty"`
 }
 
+// VideoSnippet: Basic details about a video, including title,
+// description, uploader, thumbnails and category.
 type VideoSnippet struct {
 	// CategoryId: The YouTube video category associated with the video.
 	CategoryId string `json:"categoryId,omitempty"`
@@ -4391,6 +4643,8 @@ type VideoSnippet struct {
 	Title string `json:"title,omitempty"`
 }
 
+// VideoStatistics: Statistics about the video, such as the number of
+// times the video was viewed or liked.
 type VideoStatistics struct {
 	// CommentCount: The number of comments for the video.
 	CommentCount uint64 `json:"commentCount,omitempty,string"`
@@ -4411,6 +4665,8 @@ type VideoStatistics struct {
 	ViewCount uint64 `json:"viewCount,omitempty,string"`
 }
 
+// VideoStatus: Basic details about a video category, such as its
+// localized title.
 type VideoStatus struct {
 	// Embeddable: This value indicates if the video can be embedded on
 	// another website.
@@ -4481,20 +4737,41 @@ type VideoStatus struct {
 	UploadStatus string `json:"uploadStatus,omitempty"`
 }
 
+// VideoSuggestions: Specifies suggestions on how to improve video
+// content, including encoding hints, tag suggestions, and editor
+// suggestions.
 type VideoSuggestions struct {
 	// EditorSuggestions: A list of video editing operations that might
 	// improve the video quality or playback experience of the uploaded
 	// video.
+	//
+	// Possible values:
+	//   "audioQuietAudioSwap"
+	//   "videoAutoLevels"
+	//   "videoCrop"
+	//   "videoStabilize"
 	EditorSuggestions []string `json:"editorSuggestions,omitempty"`
 
 	// ProcessingErrors: A list of errors that will prevent YouTube from
 	// successfully processing the uploaded video video. These errors
 	// indicate that, regardless of the video's current processing status,
 	// eventually, that status will almost certainly be failed.
+	//
+	// Possible values:
+	//   "archiveFile"
+	//   "audioFile"
+	//   "docFile"
+	//   "imageFile"
+	//   "notAVideoFile"
+	//   "projectFile"
 	ProcessingErrors []string `json:"processingErrors,omitempty"`
 
 	// ProcessingHints: A list of suggestions that may improve YouTube's
 	// ability to process the video.
+	//
+	// Possible values:
+	//   "nonStreamableMov"
+	//   "sendBestQualityVideo"
 	ProcessingHints []string `json:"processingHints,omitempty"`
 
 	// ProcessingWarnings: A list of reasons why YouTube may have difficulty
@@ -4504,6 +4781,15 @@ type VideoSuggestions struct {
 	// that are unlikely to cause the video processing to fail but that
 	// might cause problems such as sync issues, video artifacts, or a
 	// missing audio track.
+	//
+	// Possible values:
+	//   "hasEditlist"
+	//   "inconsistentResolution"
+	//   "problematicAudioCodec"
+	//   "problematicVideoCodec"
+	//   "unknownAudioCodec"
+	//   "unknownContainer"
+	//   "unknownVideoCodec"
 	ProcessingWarnings []string `json:"processingWarnings,omitempty"`
 
 	// TagSuggestions: A list of keyword tags that could be added to the
@@ -4512,6 +4798,8 @@ type VideoSuggestions struct {
 	TagSuggestions []*VideoSuggestionsTagSuggestion `json:"tagSuggestions,omitempty"`
 }
 
+// VideoSuggestionsTagSuggestion: A single tag suggestion with it's
+// relevance information.
 type VideoSuggestionsTagSuggestion struct {
 	// CategoryRestricts: A set of video categories for which the tag is
 	// relevant. You can use this information to display appropriate tag
@@ -4524,6 +4812,7 @@ type VideoSuggestionsTagSuggestion struct {
 	Tag string `json:"tag,omitempty"`
 }
 
+// VideoTopicDetails: Freebase topic information related to the video.
 type VideoTopicDetails struct {
 	// RelevantTopicIds: Similar to topic_id, except that these topics are
 	// merely relevant to the video. These are topics that may be mentioned
@@ -4539,6 +4828,7 @@ type VideoTopicDetails struct {
 	TopicIds []string `json:"topicIds,omitempty"`
 }
 
+// WatchSettings: Branding properties for the watch.
 type WatchSettings struct {
 	// BackgroundColor: The text color for the video watch page's branded
 	// area.

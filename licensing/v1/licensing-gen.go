@@ -80,6 +80,7 @@ type LicenseAssignmentsService struct {
 	s *Service
 }
 
+// LicenseAssignment: Template for LiscenseAssignment Resource
 type LicenseAssignment struct {
 	// Etags: ETag of the resource.
 	Etags string `json:"etags,omitempty"`
@@ -100,11 +101,15 @@ type LicenseAssignment struct {
 	UserId string `json:"userId,omitempty"`
 }
 
+// LicenseAssignmentInsert: Template for LicenseAssignment Insert
+// request
 type LicenseAssignmentInsert struct {
 	// UserId: Email id of the user
 	UserId string `json:"userId,omitempty"`
 }
 
+// LicenseAssignmentList: LicesnseAssignment List for a given
+// product/sku for a customer.
 type LicenseAssignmentList struct {
 	// Etag: ETag of the resource.
 	Etag string `json:"etag,omitempty"`

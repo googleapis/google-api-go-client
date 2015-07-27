@@ -150,9 +150,16 @@ type ProjectsLogsSinksService struct {
 	s *Service
 }
 
+// Empty: A generic empty message that you can re-use to avoid defining
+// duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For
+// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); }
 type Empty struct {
 }
 
+// ListLogServiceIndexesResponse: Result returned from
+// ListLogServiceIndexesRequest.
 type ListLogServiceIndexesResponse struct {
 	// NextPageToken: If there are more results, then `nextPageToken` is
 	// returned in the response. To get the next batch of indexes, use the
@@ -165,6 +172,8 @@ type ListLogServiceIndexesResponse struct {
 	ServiceIndexPrefixes []string `json:"serviceIndexPrefixes,omitempty"`
 }
 
+// ListLogServiceSinksResponse: Result returned from
+// `ListLogServiceSinks`.
 type ListLogServiceSinksResponse struct {
 	// Sinks: The requested log service sinks. If any of the returned
 	// `LogSink` objects have an empty `destination` field, then call
@@ -172,6 +181,8 @@ type ListLogServiceSinksResponse struct {
 	Sinks []*LogSink `json:"sinks,omitempty"`
 }
 
+// ListLogServicesResponse: Result returned from
+// `ListLogServicesRequest`.
 type ListLogServicesResponse struct {
 	// LogServices: A list of log services.
 	LogServices []*LogService `json:"logServices,omitempty"`
@@ -184,6 +195,7 @@ type ListLogServicesResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// ListLogSinksResponse: Result returned from `ListLogSinks`.
 type ListLogSinksResponse struct {
 	// Sinks: The requested log sinks. If any of the returned `LogSink`
 	// objects have an empty `destination` field, then call
@@ -191,6 +203,7 @@ type ListLogSinksResponse struct {
 	Sinks []*LogSink `json:"sinks,omitempty"`
 }
 
+// ListLogsResponse: Result returned from ListLogs.
 type ListLogsResponse struct {
 	// Logs: A list of log resources.
 	Logs []*Log `json:"logs,omitempty"`
@@ -203,6 +216,7 @@ type ListLogsResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// Log: A log object.
 type Log struct {
 	// DisplayName: Name used when displaying the log to the user (for
 	// example, in a UI). Example: "activity_log"
@@ -217,6 +231,7 @@ type Log struct {
 	PayloadType string `json:"payloadType,omitempty"`
 }
 
+// LogEntry: An individual entry in a log.
 type LogEntry struct {
 	// InsertId: A unique ID for the log entry. If you provide this field,
 	// the logging service considers other log entries in the same log with
@@ -247,6 +262,8 @@ type LogEntryProtoPayload interface{}
 
 type LogEntryStructPayload interface{}
 
+// LogEntryMetadata: Additional data that is associated with a log
+// entry, set by the service creating the log entry.
 type LogEntryMetadata struct {
 	// Labels: A set of (key, value) data that provides additional
 	// information about the log entry. If the log entry is from one of the
@@ -302,6 +319,7 @@ type LogEntryMetadata struct {
 	Zone string `json:"zone,omitempty"`
 }
 
+// LogError: A problem in a sink or the sink's configuration.
 type LogError struct {
 	// Resource: The resource associated with the error. It may be different
 	// from the sink destination. For example, the sink may point to a
@@ -317,6 +335,7 @@ type LogError struct {
 	TimeNanos int64 `json:"timeNanos,omitempty,string"`
 }
 
+// LogService: A log service object.
 type LogService struct {
 	// IndexKeys: Label keys used when labeling log entries for this
 	// service. The order of the keys is significant, with higher priority
@@ -327,6 +346,7 @@ type LogService struct {
 	Name string `json:"name,omitempty"`
 }
 
+// LogSink: An object that describes where a log may be written.
 type LogSink struct {
 	// Destination: The resource to send log entries to. The supported sink
 	// resource types are: + Google Cloud Storage:
@@ -346,6 +366,8 @@ type LogSink struct {
 	Name string `json:"name,omitempty"`
 }
 
+// Status: Represents the RPC error status for Google APIs. See
+// http://go/errormodel for details.
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// [google.rpc.Code][].
@@ -363,6 +385,7 @@ type Status struct {
 
 type StatusDetails interface{}
 
+// WriteLogEntriesRequest: The parameters to WriteLogEntries.
 type WriteLogEntriesRequest struct {
 	// CommonLabels: Metadata labels that apply to all entries in this
 	// request. If one of the log entries contains a (key, value) with the
@@ -374,6 +397,7 @@ type WriteLogEntriesRequest struct {
 	Entries []*LogEntry `json:"entries,omitempty"`
 }
 
+// WriteLogEntriesResponse: Result returned from WriteLogEntries. empty
 type WriteLogEntriesResponse struct {
 }
 

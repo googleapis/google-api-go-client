@@ -383,6 +383,8 @@ type CustomChannel struct {
 	TargetingInfo *CustomChannelTargetingInfo `json:"targetingInfo,omitempty"`
 }
 
+// CustomChannelTargetingInfo: The targeting information of this custom
+// channel, if activated.
 type CustomChannelTargetingInfo struct {
 	// AdsAppearOn: The name used to describe this channel externally.
 	AdsAppearOn string `json:"adsAppearOn,omitempty"`

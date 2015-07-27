@@ -72,12 +72,16 @@ type MetricDescriptorsService struct {
 	s *Service
 }
 
+// ListMetricRequest: The request of
+// getwithoutbody.metricDescriptors.list.
 type ListMetricRequest struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "getwithoutbody#listMetricRequest".
 	Kind string `json:"kind,omitempty"`
 }
 
+// ListMetricResponse: The response of
+// getwithoutbody.metricDescriptors.list.
 type ListMetricResponse struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "getwithoutbody#listMetricResponse".

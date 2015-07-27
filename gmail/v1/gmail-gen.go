@@ -167,6 +167,7 @@ type UsersThreadsService struct {
 	s *Service
 }
 
+// Draft: A draft email in the user's mailbox.
 type Draft struct {
 	// Id: The immutable ID of the draft.
 	Id string `json:"id,omitempty"`
@@ -175,6 +176,8 @@ type Draft struct {
 	Message *Message `json:"message,omitempty"`
 }
 
+// History: A record of a change to the user's mailbox. Each history
+// change may affect multiple messages in multiple ways.
 type History struct {
 	// Id: The mailbox sequence ID.
 	Id uint64 `json:"id,omitempty,string"`
@@ -221,6 +224,8 @@ type HistoryMessageDeleted struct {
 	Message *Message `json:"message,omitempty"`
 }
 
+// Label: Labels are used to categorize messages and threads within the
+// user's mailbox.
 type Label struct {
 	// Id: The immutable ID of the label.
 	Id string `json:"id,omitempty"`
@@ -327,6 +332,7 @@ type ListThreadsResponse struct {
 	Threads []*Thread `json:"threads,omitempty"`
 }
 
+// Message: An email message.
 type Message struct {
 	// HistoryId: The ID of the last history record that modified this
 	// message.
@@ -370,6 +376,7 @@ type Message struct {
 	ThreadId string `json:"threadId,omitempty"`
 }
 
+// MessagePart: A single MIME message part.
 type MessagePart struct {
 	// Body: The message part body for this part, which may be empty for
 	// container MIME message parts.
@@ -398,6 +405,7 @@ type MessagePart struct {
 	Parts []*MessagePart `json:"parts,omitempty"`
 }
 
+// MessagePartBody: The body of a single MIME message part.
 type MessagePartBody struct {
 	// AttachmentId: When present, contains the ID of an external attachment
 	// that can be retrieved in a separate messages.attachments.get request.
@@ -440,6 +448,7 @@ type ModifyThreadRequest struct {
 	RemoveLabelIds []string `json:"removeLabelIds,omitempty"`
 }
 
+// Profile: Profile for a Gmail user.
 type Profile struct {
 	// EmailAddress: The user's email address.
 	EmailAddress string `json:"emailAddress,omitempty"`
@@ -454,6 +463,7 @@ type Profile struct {
 	ThreadsTotal int64 `json:"threadsTotal,omitempty"`
 }
 
+// Thread: A collection of messages representing a conversation.
 type Thread struct {
 	// HistoryId: The ID of the last history record that modified this
 	// thread.
@@ -469,6 +479,8 @@ type Thread struct {
 	Snippet string `json:"snippet,omitempty"`
 }
 
+// WatchRequest: Set up or update a new push notification watch on this
+// user's mailbox.
 type WatchRequest struct {
 	// LabelFilterAction: Filtering behavior of labelIds list specified.
 	//
@@ -495,6 +507,7 @@ type WatchRequest struct {
 	TopicName string `json:"topicName,omitempty"`
 }
 
+// WatchResponse: Push notification watch response.
 type WatchResponse struct {
 	// Expiration: When Gmail will stop sending notifications for mailbox
 	// updates (epoch millis). Call watch again before this time to renew

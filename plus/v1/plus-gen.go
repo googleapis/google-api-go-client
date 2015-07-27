@@ -212,6 +212,7 @@ type Activity struct {
 	Verb string `json:"verb,omitempty"`
 }
 
+// ActivityActor: The person who performed this activity.
 type ActivityActor struct {
 	// DisplayName: The name of the actor, suitable for display.
 	DisplayName string `json:"displayName,omitempty"`
@@ -229,6 +230,7 @@ type ActivityActor struct {
 	Url string `json:"url,omitempty"`
 }
 
+// ActivityActorImage: The image representation of the actor.
 type ActivityActorImage struct {
 	// Url: The URL of the actor's profile photo. To resize the image and
 	// crop it to a square, append the query string ?sz=x, where x is the
@@ -236,6 +238,8 @@ type ActivityActorImage struct {
 	Url string `json:"url,omitempty"`
 }
 
+// ActivityActorName: An object representation of the individual
+// components of name.
 type ActivityActorName struct {
 	// FamilyName: The family name ("last name") of the actor.
 	FamilyName string `json:"familyName,omitempty"`
@@ -244,6 +248,7 @@ type ActivityActorName struct {
 	GivenName string `json:"givenName,omitempty"`
 }
 
+// ActivityObject: The object of this activity.
 type ActivityObject struct {
 	// Actor: If this activity's object is itself another activity, such as
 	// when a person reshares an activity, this property specifies the
@@ -284,6 +289,9 @@ type ActivityObject struct {
 	Url string `json:"url,omitempty"`
 }
 
+// ActivityObjectActor: If this activity's object is itself another
+// activity, such as when a person reshares an activity, this property
+// specifies the original activity's actor.
 type ActivityObjectActor struct {
 	// DisplayName: The original actor's name, which is suitable for
 	// display.
@@ -299,6 +307,8 @@ type ActivityObjectActor struct {
 	Url string `json:"url,omitempty"`
 }
 
+// ActivityObjectActorImage: The image representation of the original
+// actor.
 type ActivityObjectActorImage struct {
 	// Url: A URL that points to a thumbnail photo of the original actor.
 	Url string `json:"url,omitempty"`
@@ -342,6 +352,8 @@ type ActivityObjectAttachments struct {
 	Url string `json:"url,omitempty"`
 }
 
+// ActivityObjectAttachmentsEmbed: If the attachment is a video, the
+// embeddable link.
 type ActivityObjectAttachmentsEmbed struct {
 	// Type: Media type of the link.
 	Type string `json:"type,omitempty"`
@@ -350,6 +362,8 @@ type ActivityObjectAttachmentsEmbed struct {
 	Url string `json:"url,omitempty"`
 }
 
+// ActivityObjectAttachmentsFullImage: The full image URL for photo
+// attachments.
 type ActivityObjectAttachmentsFullImage struct {
 	// Height: The height, in pixels, of the linked resource.
 	Height int64 `json:"height,omitempty"`
@@ -364,6 +378,8 @@ type ActivityObjectAttachmentsFullImage struct {
 	Width int64 `json:"width,omitempty"`
 }
 
+// ActivityObjectAttachmentsImage: The preview image for photos or
+// videos.
 type ActivityObjectAttachmentsImage struct {
 	// Height: The height, in pixels, of the linked resource.
 	Height int64 `json:"height,omitempty"`
@@ -389,6 +405,7 @@ type ActivityObjectAttachmentsThumbnails struct {
 	Url string `json:"url,omitempty"`
 }
 
+// ActivityObjectAttachmentsThumbnailsImage: Image resource.
 type ActivityObjectAttachmentsThumbnailsImage struct {
 	// Height: The height, in pixels, of the linked resource.
 	Height int64 `json:"height,omitempty"`
@@ -403,6 +420,7 @@ type ActivityObjectAttachmentsThumbnailsImage struct {
 	Width int64 `json:"width,omitempty"`
 }
 
+// ActivityObjectPlusoners: People who +1'd this activity.
 type ActivityObjectPlusoners struct {
 	// SelfLink: The URL for the collection of people who +1'd this
 	// activity.
@@ -412,6 +430,7 @@ type ActivityObjectPlusoners struct {
 	TotalItems int64 `json:"totalItems,omitempty"`
 }
 
+// ActivityObjectReplies: Comments in reply to this activity.
 type ActivityObjectReplies struct {
 	// SelfLink: The URL for the collection of comments in reply to this
 	// activity.
@@ -421,6 +440,7 @@ type ActivityObjectReplies struct {
 	TotalItems int64 `json:"totalItems,omitempty"`
 }
 
+// ActivityObjectResharers: People who reshared this activity.
 type ActivityObjectResharers struct {
 	// SelfLink: The URL for the collection of resharers.
 	SelfLink string `json:"selfLink,omitempty"`
@@ -429,6 +449,8 @@ type ActivityObjectResharers struct {
 	TotalItems int64 `json:"totalItems,omitempty"`
 }
 
+// ActivityProvider: The service provider that initially published this
+// activity.
 type ActivityProvider struct {
 	// Title: Name of the service provider.
 	Title string `json:"title,omitempty"`
@@ -507,6 +529,7 @@ type Comment struct {
 	Verb string `json:"verb,omitempty"`
 }
 
+// CommentActor: The person who posted this comment.
 type CommentActor struct {
 	// DisplayName: The name of this actor, suitable for display.
 	DisplayName string `json:"displayName,omitempty"`
@@ -521,6 +544,7 @@ type CommentActor struct {
 	Url string `json:"url,omitempty"`
 }
 
+// CommentActorImage: The image representation of this actor.
 type CommentActorImage struct {
 	// Url: The URL of the actor's profile photo. To resize the image and
 	// crop it to a square, append the query string ?sz=x, where x is the
@@ -536,6 +560,7 @@ type CommentInReplyTo struct {
 	Url string `json:"url,omitempty"`
 }
 
+// CommentObject: The object of this comment.
 type CommentObject struct {
 	// Content: The HTML-formatted content, suitable for display.
 	Content string `json:"content,omitempty"`
@@ -550,6 +575,7 @@ type CommentObject struct {
 	OriginalContent string `json:"originalContent,omitempty"`
 }
 
+// CommentPlusoners: People who +1'd this comment.
 type CommentPlusoners struct {
 	// TotalItems: Total number of people who +1'd this comment.
 	TotalItems int64 `json:"totalItems,omitempty"`
@@ -1005,6 +1031,9 @@ type Person struct {
 	Verified bool `json:"verified,omitempty"`
 }
 
+// PersonAgeRange: The age range of the person. Valid ranges are 17 or
+// younger, 18 to 20, and 21 or older. Age is determined from the user's
+// birthday using Western age reckoning.
 type PersonAgeRange struct {
 	// Max: The age range's upper bound, if any. Possible values include,
 	// but are not limited to, the following:
@@ -1019,6 +1048,7 @@ type PersonAgeRange struct {
 	Min int64 `json:"min,omitempty"`
 }
 
+// PersonCover: The cover photo content.
 type PersonCover struct {
 	// CoverInfo: Extra information about the cover photo.
 	CoverInfo *PersonCoverCoverInfo `json:"coverInfo,omitempty"`
@@ -1032,6 +1062,7 @@ type PersonCover struct {
 	Layout string `json:"layout,omitempty"`
 }
 
+// PersonCoverCoverInfo: Extra information about the cover photo.
 type PersonCoverCoverInfo struct {
 	// LeftImageOffset: The difference between the left position of the
 	// cover image and the actual displayed cover image. Only valid for
@@ -1044,6 +1075,7 @@ type PersonCoverCoverInfo struct {
 	TopImageOffset int64 `json:"topImageOffset,omitempty"`
 }
 
+// PersonCoverCoverPhoto: The person's primary cover image.
 type PersonCoverCoverPhoto struct {
 	// Height: The height of the image.
 	Height int64 `json:"height,omitempty"`
@@ -1068,6 +1100,7 @@ type PersonEmails struct {
 	Value string `json:"value,omitempty"`
 }
 
+// PersonImage: The representation of the person's profile photo.
 type PersonImage struct {
 	// IsDefault: Whether the person's profile photo is the default one
 	IsDefault bool `json:"isDefault,omitempty"`
@@ -1078,6 +1111,8 @@ type PersonImage struct {
 	Url string `json:"url,omitempty"`
 }
 
+// PersonName: An object representation of the individual components of
+// a person's name.
 type PersonName struct {
 	// FamilyName: The family name (last name) of this person.
 	FamilyName string `json:"familyName,omitempty"`
@@ -1179,11 +1214,13 @@ type Place struct {
 	Position *PlacePosition `json:"position,omitempty"`
 }
 
+// PlaceAddress: The physical address of the place.
 type PlaceAddress struct {
 	// Formatted: The formatted address for display.
 	Formatted string `json:"formatted,omitempty"`
 }
 
+// PlacePosition: The position of the place.
 type PlacePosition struct {
 	// Latitude: The latitude of this position.
 	Latitude float64 `json:"latitude,omitempty"`

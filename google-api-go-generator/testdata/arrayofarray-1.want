@@ -60,6 +60,7 @@ func (s *Service) userAgent() string {
 	return googleapi.UserAgent + " " + s.UserAgent
 }
 
+// GeoJsonMultiPolygon: Multi Polygon
 type GeoJsonMultiPolygon struct {
 	// Coordinates: Coordinate arrays.
 	Coordinates [][][][]float64 `json:"coordinates,omitempty"`

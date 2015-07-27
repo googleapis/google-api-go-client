@@ -396,6 +396,7 @@ type ProvisioningService struct {
 	s *Service
 }
 
+// Account: JSON template for Analytics account entry.
 type Account struct {
 	// ChildLink: Child link for an account entry. Points to the list of web
 	// properties for this account.
@@ -423,6 +424,8 @@ type Account struct {
 	Updated string `json:"updated,omitempty"`
 }
 
+// AccountChildLink: Child link for an account entry. Points to the list
+// of web properties for this account.
 type AccountChildLink struct {
 	// Href: Link to the list of web properties for this account.
 	Href string `json:"href,omitempty"`
@@ -431,12 +434,14 @@ type AccountChildLink struct {
 	Type string `json:"type,omitempty"`
 }
 
+// AccountPermissions: Permissions the user has for this account.
 type AccountPermissions struct {
 	// Effective: All the permissions that the user has for this account.
 	// These include any implied permissions (e.g., EDIT implies VIEW).
 	Effective []string `json:"effective,omitempty"`
 }
 
+// AccountRef: JSON template for a linked account.
 type AccountRef struct {
 	// Href: Link for this account.
 	Href string `json:"href,omitempty"`
@@ -451,6 +456,10 @@ type AccountRef struct {
 	Name string `json:"name,omitempty"`
 }
 
+// AccountSummaries: An AccountSummary collection lists a summary of
+// accounts, properties and views (profiles) to which the user has
+// access. Each resource in the collection corresponds to a single
+// AccountSummary.
 type AccountSummaries struct {
 	// Items: A list of AccountSummaries.
 	Items []*AccountSummary `json:"items,omitempty"`
@@ -483,6 +492,9 @@ type AccountSummaries struct {
 	Username string `json:"username,omitempty"`
 }
 
+// AccountSummary: JSON template for an Analytics AccountSummary. An
+// AccountSummary is a lightweight tree comprised of
+// properties/profiles.
 type AccountSummary struct {
 	// Id: Account ID.
 	Id string `json:"id,omitempty"`
@@ -497,6 +509,9 @@ type AccountSummary struct {
 	WebProperties []*WebPropertySummary `json:"webProperties,omitempty"`
 }
 
+// AccountTicket: JSON template for an Analytics account ticket. The
+// account ticket consists of the ticket ID and the basic information
+// for the account, property and profile.
 type AccountTicket struct {
 	// Account: Account for this ticket.
 	Account *Account `json:"account,omitempty"`
@@ -519,6 +534,10 @@ type AccountTicket struct {
 	Webproperty *Webproperty `json:"webproperty,omitempty"`
 }
 
+// Accounts: An account collection provides a list of Analytics accounts
+// to which a user has access. The account collection is the entry point
+// to all management information. Each resource in the collection
+// corresponds to a single Analytics account.
 type Accounts struct {
 	// Items: A list of accounts.
 	Items []*Account `json:"items,omitempty"`
@@ -550,6 +569,7 @@ type Accounts struct {
 	Username string `json:"username,omitempty"`
 }
 
+// AdWordsAccount: JSON template for an AdWords account.
 type AdWordsAccount struct {
 	// AutoTaggingEnabled: True if auto-tagging is enabled on the AdWords
 	// account. Read-only after the insert operation.
@@ -563,11 +583,14 @@ type AdWordsAccount struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// AnalyticsDataimportDeleteUploadDataRequest: Request template for the
+// delete upload data request.
 type AnalyticsDataimportDeleteUploadDataRequest struct {
 	// CustomDataImportUids: A list of upload UIDs.
 	CustomDataImportUids []string `json:"customDataImportUids,omitempty"`
 }
 
+// Column: JSON template for a metadata column.
 type Column struct {
 	// Attributes: Map of attribute name and value for this column.
 	Attributes map[string]string `json:"attributes,omitempty"`
@@ -579,6 +602,8 @@ type Column struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// Columns: Lists columns (dimensions and metrics) for a particular
+// report type.
 type Columns struct {
 	// AttributeNames: List of attributes names returned by columns.
 	AttributeNames []string `json:"attributeNames,omitempty"`
@@ -597,6 +622,7 @@ type Columns struct {
 	TotalResults int64 `json:"totalResults,omitempty"`
 }
 
+// CustomDataSource: JSON template for an Analytics custom data source.
 type CustomDataSource struct {
 	// AccountId: Account ID to which this custom data source belongs.
 	AccountId string `json:"accountId,omitempty"`
@@ -654,6 +680,8 @@ type CustomDataSourceChildLink struct {
 	Type string `json:"type,omitempty"`
 }
 
+// CustomDataSourceParentLink: Parent link for this custom data source.
+// Points to the web property to which this custom data source belongs.
 type CustomDataSourceParentLink struct {
 	// Href: Link to the web property to which this custom data source
 	// belongs.
@@ -663,6 +691,9 @@ type CustomDataSourceParentLink struct {
 	Type string `json:"type,omitempty"`
 }
 
+// CustomDataSources: Lists Analytics custom data sources to which the
+// user has access. Each resource in the collection corresponds to a
+// single Analytics custom data source.
 type CustomDataSources struct {
 	// Items: Collection of custom data sources.
 	Items []*CustomDataSource `json:"items,omitempty"`
@@ -695,6 +726,7 @@ type CustomDataSources struct {
 	Username string `json:"username,omitempty"`
 }
 
+// CustomDimension: JSON template for Analytics Custom Dimension.
 type CustomDimension struct {
 	// AccountId: Account ID.
 	AccountId string `json:"accountId,omitempty"`
@@ -735,6 +767,8 @@ type CustomDimension struct {
 	WebPropertyId string `json:"webPropertyId,omitempty"`
 }
 
+// CustomDimensionParentLink: Parent link for the custom dimension.
+// Points to the property to which the custom dimension belongs.
 type CustomDimensionParentLink struct {
 	// Href: Link to the property to which the custom dimension belongs.
 	Href string `json:"href,omitempty"`
@@ -743,6 +777,9 @@ type CustomDimensionParentLink struct {
 	Type string `json:"type,omitempty"`
 }
 
+// CustomDimensions: A custom dimension collection lists Analytics
+// custom dimensions to which the user has access. Each resource in the
+// collection corresponds to a single Analytics custom dimension.
 type CustomDimensions struct {
 	// Items: Collection of custom dimensions.
 	Items []*CustomDimension `json:"items,omitempty"`
@@ -775,6 +812,7 @@ type CustomDimensions struct {
 	Username string `json:"username,omitempty"`
 }
 
+// CustomMetric: JSON template for Analytics Custom Metric.
 type CustomMetric struct {
 	// AccountId: Account ID.
 	AccountId string `json:"accountId,omitempty"`
@@ -824,6 +862,8 @@ type CustomMetric struct {
 	WebPropertyId string `json:"webPropertyId,omitempty"`
 }
 
+// CustomMetricParentLink: Parent link for the custom metric. Points to
+// the property to which the custom metric belongs.
 type CustomMetricParentLink struct {
 	// Href: Link to the property to which the custom metric belongs.
 	Href string `json:"href,omitempty"`
@@ -832,6 +872,9 @@ type CustomMetricParentLink struct {
 	Type string `json:"type,omitempty"`
 }
 
+// CustomMetrics: A custom metric collection lists Analytics custom
+// metrics to which the user has access. Each resource in the collection
+// corresponds to a single Analytics custom metric.
 type CustomMetrics struct {
 	// Items: Collection of custom metrics.
 	Items []*CustomMetric `json:"items,omitempty"`
@@ -864,6 +907,7 @@ type CustomMetrics struct {
 	Username string `json:"username,omitempty"`
 }
 
+// EntityAdWordsLink: JSON template for Analytics Entity AdWords Link.
 type EntityAdWordsLink struct {
 	// AdWordsAccounts: A list of AdWords client accounts. These cannot be
 	// MCC accounts. This field is required when creating an AdWords link.
@@ -890,10 +934,14 @@ type EntityAdWordsLink struct {
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
+// EntityAdWordsLinkEntity: Web property being linked.
 type EntityAdWordsLinkEntity struct {
 	WebPropertyRef *WebPropertyRef `json:"webPropertyRef,omitempty"`
 }
 
+// EntityAdWordsLinks: An entity AdWords link collection provides a list
+// of GA-AdWords links Each resource in this collection corresponds to a
+// single link.
 type EntityAdWordsLinks struct {
 	// Items: A list of entity AdWords links.
 	Items []*EntityAdWordsLink `json:"items,omitempty"`
@@ -922,6 +970,8 @@ type EntityAdWordsLinks struct {
 	TotalResults int64 `json:"totalResults,omitempty"`
 }
 
+// EntityUserLink: JSON template for an Analytics Entity-User Link.
+// Returns permissions that a user has for an entity.
 type EntityUserLink struct {
 	// Entity: Entity for this link. It can be an account, a web property,
 	// or a view (profile).
@@ -943,6 +993,8 @@ type EntityUserLink struct {
 	UserRef *UserRef `json:"userRef,omitempty"`
 }
 
+// EntityUserLinkEntity: Entity for this link. It can be an account, a
+// web property, or a view (profile).
 type EntityUserLinkEntity struct {
 	// AccountRef: Account for this link.
 	AccountRef *AccountRef `json:"accountRef,omitempty"`
@@ -954,6 +1006,7 @@ type EntityUserLinkEntity struct {
 	WebPropertyRef *WebPropertyRef `json:"webPropertyRef,omitempty"`
 }
 
+// EntityUserLinkPermissions: Permissions the user has for this entity.
 type EntityUserLinkPermissions struct {
 	// Effective: Effective permissions represent all the permissions that a
 	// user has for this entity. These include any implied permissions
@@ -967,6 +1020,9 @@ type EntityUserLinkPermissions struct {
 	Local []string `json:"local,omitempty"`
 }
 
+// EntityUserLinks: An entity user link collection provides a list of
+// Analytics ACL links Each resource in this collection corresponds to a
+// single link.
 type EntityUserLinks struct {
 	// Items: A list of entity user links.
 	Items []*EntityUserLink `json:"items,omitempty"`
@@ -995,6 +1051,7 @@ type EntityUserLinks struct {
 	TotalResults int64 `json:"totalResults,omitempty"`
 }
 
+// Experiment: JSON template for Analytics experiment resource.
 type Experiment struct {
 	// AccountId: Account ID to which this experiment belongs. This field is
 	// read-only.
@@ -1142,6 +1199,8 @@ type Experiment struct {
 	WinnerFound bool `json:"winnerFound,omitempty"`
 }
 
+// ExperimentParentLink: Parent link for an experiment. Points to the
+// view (profile) to which this experiment belongs.
 type ExperimentParentLink struct {
 	// Href: Link to the view (profile) to which this experiment belongs.
 	// This field is read-only.
@@ -1176,6 +1235,10 @@ type ExperimentVariations struct {
 	Won bool `json:"won,omitempty"`
 }
 
+// Experiments: An experiment collection lists Analytics experiments to
+// which the user has access. Each view (profile) can have a set of
+// experiments. Each resource in the Experiment collection corresponds
+// to a single Analytics experiment.
 type Experiments struct {
 	// Items: A list of experiments.
 	Items []*Experiment `json:"items,omitempty"`
@@ -1207,6 +1270,7 @@ type Experiments struct {
 	Username string `json:"username,omitempty"`
 }
 
+// Filter: JSON template for an Analytics account filter.
 type Filter struct {
 	// AccountId: Account ID to which this filter belongs.
 	AccountId string `json:"accountId,omitempty"`
@@ -1257,6 +1321,7 @@ type Filter struct {
 	UppercaseDetails *FilterUppercaseDetails `json:"uppercaseDetails,omitempty"`
 }
 
+// FilterAdvancedDetails: Details for the filter of the type ADVANCED.
 type FilterAdvancedDetails struct {
 	// CaseSensitive: Indicates if the filter expressions are case
 	// sensitive.
@@ -1303,6 +1368,7 @@ type FilterAdvancedDetails struct {
 	OverrideOutputField bool `json:"overrideOutputField,omitempty"`
 }
 
+// FilterLowercaseDetails: Details for the filter of the type LOWER.
 type FilterLowercaseDetails struct {
 	// Field: Field to use in the filter.
 	Field string `json:"field,omitempty"`
@@ -1312,6 +1378,8 @@ type FilterLowercaseDetails struct {
 	FieldIndex int64 `json:"fieldIndex,omitempty"`
 }
 
+// FilterParentLink: Parent link for this filter. Points to the account
+// to which this filter belongs.
 type FilterParentLink struct {
 	// Href: Link to the account to which this filter belongs.
 	Href string `json:"href,omitempty"`
@@ -1320,6 +1388,8 @@ type FilterParentLink struct {
 	Type string `json:"type,omitempty"`
 }
 
+// FilterSearchAndReplaceDetails: Details for the filter of the type
+// SEARCH_AND_REPLACE.
 type FilterSearchAndReplaceDetails struct {
 	// CaseSensitive: Determines if the filter is case sensitive.
 	CaseSensitive bool `json:"caseSensitive,omitempty"`
@@ -1338,6 +1408,7 @@ type FilterSearchAndReplaceDetails struct {
 	SearchString string `json:"searchString,omitempty"`
 }
 
+// FilterUppercaseDetails: Details for the filter of the type UPPER.
 type FilterUppercaseDetails struct {
 	// Field: Field to use in the filter.
 	Field string `json:"field,omitempty"`
@@ -1347,6 +1418,7 @@ type FilterUppercaseDetails struct {
 	FieldIndex int64 `json:"fieldIndex,omitempty"`
 }
 
+// FilterExpression: JSON template for an Analytics filter expression.
 type FilterExpression struct {
 	// CaseSensitive: Determines if the filter is case sensitive.
 	CaseSensitive bool `json:"caseSensitive,omitempty"`
@@ -1462,6 +1534,7 @@ type FilterExpression struct {
 	MatchType string `json:"matchType,omitempty"`
 }
 
+// FilterRef: JSON template for a profile filter link.
 type FilterRef struct {
 	// AccountId: Account ID to which this filter belongs.
 	AccountId string `json:"accountId,omitempty"`
@@ -1479,6 +1552,9 @@ type FilterRef struct {
 	Name string `json:"name,omitempty"`
 }
 
+// Filters: A filter collection lists filters created by users in an
+// Analytics account. Each resource in the collection corresponds to a
+// filter.
 type Filters struct {
 	// Items: A list of filters.
 	Items []*Filter `json:"items,omitempty"`
@@ -1510,6 +1586,7 @@ type Filters struct {
 	Username string `json:"username,omitempty"`
 }
 
+// GaData: Analytics data for a given view (profile).
 type GaData struct {
 	// ColumnHeaders: Column headers that list dimension names followed by
 	// the metric names. The order of dimensions and metrics is same as
@@ -1607,6 +1684,8 @@ type GaDataDataTableRowsC struct {
 	V string `json:"v,omitempty"`
 }
 
+// GaDataProfileInfo: Information for the view (profile), for which the
+// Analytics data was requested.
 type GaDataProfileInfo struct {
 	// AccountId: Account ID to which this view (profile) belongs.
 	AccountId string `json:"accountId,omitempty"`
@@ -1628,6 +1707,7 @@ type GaDataProfileInfo struct {
 	WebPropertyId string `json:"webPropertyId,omitempty"`
 }
 
+// GaDataQuery: Analytics data request query parameters.
 type GaDataQuery struct {
 	// Dimensions: List of analytics dimensions.
 	Dimensions string `json:"dimensions,omitempty"`
@@ -1664,6 +1744,7 @@ type GaDataQuery struct {
 	StartIndex int64 `json:"start-index,omitempty"`
 }
 
+// Goal: JSON template for Analytics goal resource.
 type Goal struct {
 	// AccountId: Account ID to which this goal belongs.
 	AccountId string `json:"accountId,omitempty"`
@@ -1727,6 +1808,7 @@ type Goal struct {
 	WebPropertyId string `json:"webPropertyId,omitempty"`
 }
 
+// GoalEventDetails: Details for the goal of the type EVENT.
 type GoalEventDetails struct {
 	// EventConditions: List of event conditions.
 	EventConditions []*GoalEventDetailsEventConditions `json:"eventConditions,omitempty"`
@@ -1756,6 +1838,8 @@ type GoalEventDetailsEventConditions struct {
 	Type string `json:"type,omitempty"`
 }
 
+// GoalParentLink: Parent link for a goal. Points to the view (profile)
+// to which this goal belongs.
 type GoalParentLink struct {
 	// Href: Link to the view (profile) to which this goal belongs.
 	Href string `json:"href,omitempty"`
@@ -1764,6 +1848,8 @@ type GoalParentLink struct {
 	Type string `json:"type,omitempty"`
 }
 
+// GoalUrlDestinationDetails: Details for the goal of the type
+// URL_DESTINATION.
 type GoalUrlDestinationDetails struct {
 	// CaseSensitive: Determines if the goal URL must exactly match the
 	// capitalization of visited URLs.
@@ -1795,6 +1881,8 @@ type GoalUrlDestinationDetailsSteps struct {
 	Url string `json:"url,omitempty"`
 }
 
+// GoalVisitNumPagesDetails: Details for the goal of the type
+// VISIT_NUM_PAGES.
 type GoalVisitNumPagesDetails struct {
 	// ComparisonType: Type of comparison. Possible values are LESS_THAN,
 	// GREATER_THAN, or EQUAL.
@@ -1804,6 +1892,8 @@ type GoalVisitNumPagesDetails struct {
 	ComparisonValue int64 `json:"comparisonValue,omitempty,string"`
 }
 
+// GoalVisitTimeOnSiteDetails: Details for the goal of the type
+// VISIT_TIME_ON_SITE.
 type GoalVisitTimeOnSiteDetails struct {
 	// ComparisonType: Type of comparison. Possible values are LESS_THAN or
 	// GREATER_THAN.
@@ -1813,6 +1903,9 @@ type GoalVisitTimeOnSiteDetails struct {
 	ComparisonValue int64 `json:"comparisonValue,omitempty,string"`
 }
 
+// Goals: A goal collection lists Analytics goals to which the user has
+// access. Each view (profile) can have a set of goals. Each resource in
+// the Goal collection corresponds to a single Analytics goal.
 type Goals struct {
 	// Items: A list of goals.
 	Items []*Goal `json:"items,omitempty"`
@@ -1844,6 +1937,7 @@ type Goals struct {
 	Username string `json:"username,omitempty"`
 }
 
+// McfData: Multi-Channel Funnels data for a given view (profile).
 type McfData struct {
 	// ColumnHeaders: Column headers that list dimension names followed by
 	// the metric names. The order of dimensions and metrics is same as
@@ -1917,6 +2011,8 @@ type McfDataColumnHeaders struct {
 	Name string `json:"name,omitempty"`
 }
 
+// McfDataProfileInfo: Information for the view (profile), for which the
+// Analytics data was requested.
 type McfDataProfileInfo struct {
 	// AccountId: Account ID to which this view (profile) belongs.
 	AccountId string `json:"accountId,omitempty"`
@@ -1938,6 +2034,7 @@ type McfDataProfileInfo struct {
 	WebPropertyId string `json:"webPropertyId,omitempty"`
 }
 
+// McfDataQuery: Analytics data request query parameters.
 type McfDataQuery struct {
 	// Dimensions: List of analytics dimensions.
 	Dimensions string `json:"dimensions,omitempty"`
@@ -1974,6 +2071,9 @@ type McfDataQuery struct {
 	StartIndex int64 `json:"start-index,omitempty"`
 }
 
+// McfDataRowsItem: A union object representing a dimension or metric
+// value. Only one of "primitiveValue" or "conversionPathValue"
+// attribute will be populated.
 type McfDataRowsItem struct {
 	// ConversionPathValue: A conversion path dimension value, containing a
 	// list of interactions with their attributes.
@@ -1994,6 +2094,7 @@ type McfDataRowsItemConversionPathValue struct {
 	NodeValue string `json:"nodeValue,omitempty"`
 }
 
+// Profile: JSON template for an Analytics view (profile).
 type Profile struct {
 	// AccountId: Account ID to which this view (profile) belongs.
 	AccountId string `json:"accountId,omitempty"`
@@ -2086,6 +2187,8 @@ type Profile struct {
 	WebsiteUrl string `json:"websiteUrl,omitempty"`
 }
 
+// ProfileChildLink: Child link for this view (profile). Points to the
+// list of goals for this view (profile).
 type ProfileChildLink struct {
 	// Href: Link to the list of goals for this view (profile).
 	Href string `json:"href,omitempty"`
@@ -2094,6 +2197,8 @@ type ProfileChildLink struct {
 	Type string `json:"type,omitempty"`
 }
 
+// ProfileParentLink: Parent link for this view (profile). Points to the
+// web property to which this view (profile) belongs.
 type ProfileParentLink struct {
 	// Href: Link to the web property to which this view (profile) belongs.
 	Href string `json:"href,omitempty"`
@@ -2102,6 +2207,7 @@ type ProfileParentLink struct {
 	Type string `json:"type,omitempty"`
 }
 
+// ProfilePermissions: Permissions the user has for this view (profile).
 type ProfilePermissions struct {
 	// Effective: All the permissions that the user has for this view
 	// (profile). These include any implied permissions (e.g., EDIT implies
@@ -2109,6 +2215,8 @@ type ProfilePermissions struct {
 	Effective []string `json:"effective,omitempty"`
 }
 
+// ProfileFilterLink: JSON template for an Analytics profile filter
+// link.
 type ProfileFilterLink struct {
 	// FilterRef: Filter for this link.
 	FilterRef *FilterRef `json:"filterRef,omitempty"`
@@ -2141,6 +2249,9 @@ type ProfileFilterLink struct {
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
+// ProfileFilterLinks: A profile filter link collection lists profile
+// filter links between profiles and filters. Each resource in the
+// collection corresponds to a profile filter link.
 type ProfileFilterLinks struct {
 	// Items: A list of profile filter links.
 	Items []*ProfileFilterLink `json:"items,omitempty"`
@@ -2173,6 +2284,7 @@ type ProfileFilterLinks struct {
 	Username string `json:"username,omitempty"`
 }
 
+// ProfileRef: JSON template for a linked view (profile).
 type ProfileRef struct {
 	// AccountId: Account ID to which this view (profile) belongs.
 	AccountId string `json:"accountId,omitempty"`
@@ -2198,6 +2310,9 @@ type ProfileRef struct {
 	WebPropertyId string `json:"webPropertyId,omitempty"`
 }
 
+// ProfileSummary: JSON template for an Analytics ProfileSummary.
+// ProfileSummary returns basic information (i.e., summary) for a
+// profile.
 type ProfileSummary struct {
 	// Id: View (profile) ID.
 	Id string `json:"id,omitempty"`
@@ -2212,6 +2327,9 @@ type ProfileSummary struct {
 	Type string `json:"type,omitempty"`
 }
 
+// Profiles: A view (profile) collection lists Analytics views
+// (profiles) to which the user has access. Each resource in the
+// collection corresponds to a single Analytics view (profile).
 type Profiles struct {
 	// Items: A list of views (profiles).
 	Items []*Profile `json:"items,omitempty"`
@@ -2244,6 +2362,7 @@ type Profiles struct {
 	Username string `json:"username,omitempty"`
 }
 
+// RealtimeData: Real time data for a given view (profile).
 type RealtimeData struct {
 	// ColumnHeaders: Column headers that list dimension names followed by
 	// the metric names. The order of dimensions and metrics is same as
@@ -2295,6 +2414,8 @@ type RealtimeDataColumnHeaders struct {
 	Name string `json:"name,omitempty"`
 }
 
+// RealtimeDataProfileInfo: Information for the view (profile), for
+// which the real time data was requested.
 type RealtimeDataProfileInfo struct {
 	// AccountId: Account ID to which this view (profile) belongs.
 	AccountId string `json:"accountId,omitempty"`
@@ -2316,6 +2437,7 @@ type RealtimeDataProfileInfo struct {
 	WebPropertyId string `json:"webPropertyId,omitempty"`
 }
 
+// RealtimeDataQuery: Real time data request query parameters.
 type RealtimeDataQuery struct {
 	// Dimensions: List of real time dimensions.
 	Dimensions string `json:"dimensions,omitempty"`
@@ -2337,6 +2459,7 @@ type RealtimeDataQuery struct {
 	Sort []string `json:"sort,omitempty"`
 }
 
+// Segment: JSON template for an Analytics segment.
 type Segment struct {
 	// Created: Time the segment was created.
 	Created string `json:"created,omitempty"`
@@ -2367,6 +2490,9 @@ type Segment struct {
 	Updated string `json:"updated,omitempty"`
 }
 
+// Segments: An segment collection lists Analytics segments that the
+// user has access to. Each resource in the collection corresponds to a
+// single Analytics segment.
 type Segments struct {
 	// Items: A list of segments.
 	Items []*Segment `json:"items,omitempty"`
@@ -2398,6 +2524,8 @@ type Segments struct {
 	Username string `json:"username,omitempty"`
 }
 
+// UnsampledReport: JSON template for Analytics unsampled report
+// resource.
 type UnsampledReport struct {
 	// AccountId: Account ID to which this unsampled report belongs.
 	AccountId string `json:"accountId,omitempty"`
@@ -2462,6 +2590,8 @@ type UnsampledReport struct {
 	WebPropertyId string `json:"webPropertyId,omitempty"`
 }
 
+// UnsampledReportCloudStorageDownloadDetails: Download details for a
+// file stored in Google Cloud Storage.
 type UnsampledReportCloudStorageDownloadDetails struct {
 	// BucketId: Id of the bucket the file object is stored in.
 	BucketId string `json:"bucketId,omitempty"`
@@ -2470,11 +2600,17 @@ type UnsampledReportCloudStorageDownloadDetails struct {
 	ObjectId string `json:"objectId,omitempty"`
 }
 
+// UnsampledReportDriveDownloadDetails: Download details for a file
+// stored in Google Drive.
 type UnsampledReportDriveDownloadDetails struct {
 	// DocumentId: Id of the document/file containing the report data.
 	DocumentId string `json:"documentId,omitempty"`
 }
 
+// UnsampledReports: An unsampled report collection lists Analytics
+// unsampled reports to which the user has access. Each view (profile)
+// can have a set of unsampled reports. Each resource in the unsampled
+// report collection corresponds to a single Analytics unsampled report.
 type UnsampledReports struct {
 	// Items: A list of unsampled reports.
 	Items []*UnsampledReport `json:"items,omitempty"`
@@ -2507,6 +2643,7 @@ type UnsampledReports struct {
 	Username string `json:"username,omitempty"`
 }
 
+// Upload: Metadata returned for an upload operation.
 type Upload struct {
 	// AccountId: Account Id to which this upload belongs.
 	AccountId int64 `json:"accountId,omitempty,string"`
@@ -2529,6 +2666,10 @@ type Upload struct {
 	Status string `json:"status,omitempty"`
 }
 
+// Uploads: Upload collection lists Analytics uploads to which the user
+// has access. Each custom data source can have a set of uploads. Each
+// resource in the upload collection corresponds to a single Analytics
+// data upload.
 type Uploads struct {
 	// Items: A list of uploads.
 	Items []*Upload `json:"items,omitempty"`
@@ -2557,6 +2698,7 @@ type Uploads struct {
 	TotalResults int64 `json:"totalResults,omitempty"`
 }
 
+// UserRef: JSON template for a user reference.
 type UserRef struct {
 	// Email: Email ID of this user.
 	Email string `json:"email,omitempty"`
@@ -2567,6 +2709,7 @@ type UserRef struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// WebPropertyRef: JSON template for a web property reference.
 type WebPropertyRef struct {
 	// AccountId: Account ID to which this web property belongs.
 	AccountId string `json:"accountId,omitempty"`
@@ -2587,6 +2730,9 @@ type WebPropertyRef struct {
 	Name string `json:"name,omitempty"`
 }
 
+// WebPropertySummary: JSON template for an Analytics
+// WebPropertySummary. WebPropertySummary returns basic information
+// (i.e., summary) for a web property.
 type WebPropertySummary struct {
 	// Id: Web property ID of the form UA-XXXXX-YY.
 	Id string `json:"id,omitempty"`
@@ -2611,6 +2757,9 @@ type WebPropertySummary struct {
 	WebsiteUrl string `json:"websiteUrl,omitempty"`
 }
 
+// Webproperties: A web property collection lists Analytics web
+// properties to which the user has access. Each resource in the
+// collection corresponds to a single Analytics web property.
 type Webproperties struct {
 	// Items: A list of web properties.
 	Items []*Webproperty `json:"items,omitempty"`
@@ -2642,6 +2791,7 @@ type Webproperties struct {
 	Username string `json:"username,omitempty"`
 }
 
+// Webproperty: JSON template for an Analytics web property.
 type Webproperty struct {
 	// AccountId: Account ID to which this web property belongs.
 	AccountId string `json:"accountId,omitempty"`
@@ -2696,6 +2846,8 @@ type Webproperty struct {
 	WebsiteUrl string `json:"websiteUrl,omitempty"`
 }
 
+// WebpropertyChildLink: Child link for this web property. Points to the
+// list of views (profiles) for this web property.
 type WebpropertyChildLink struct {
 	// Href: Link to the list of views (profiles) for this web property.
 	Href string `json:"href,omitempty"`
@@ -2704,6 +2856,8 @@ type WebpropertyChildLink struct {
 	Type string `json:"type,omitempty"`
 }
 
+// WebpropertyParentLink: Parent link for this web property. Points to
+// the account to which this web property belongs.
 type WebpropertyParentLink struct {
 	// Href: Link to the account for this web property.
 	Href string `json:"href,omitempty"`
@@ -2712,6 +2866,8 @@ type WebpropertyParentLink struct {
 	Type string `json:"type,omitempty"`
 }
 
+// WebpropertyPermissions: Permissions the user has for this web
+// property.
 type WebpropertyPermissions struct {
 	// Effective: All the permissions that the user has for this web
 	// property. These include any implied permissions (e.g., EDIT implies

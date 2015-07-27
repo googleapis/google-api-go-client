@@ -756,6 +756,7 @@ type UserRolesService struct {
 	s *Service
 }
 
+// Account: Contains properties of a DCM account.
 type Account struct {
 	// AccountPermissionIds: Account permissions assigned to this account.
 	AccountPermissionIds googleapi.Int64s `json:"accountPermissionIds,omitempty"`
@@ -891,6 +892,7 @@ type Account struct {
 	TeaserSizeLimit int64 `json:"teaserSizeLimit,omitempty,string"`
 }
 
+// AccountActiveAdSummary: Gets a summary of active ads in an account.
 type AccountActiveAdSummary struct {
 	// AccountId: ID of the account.
 	AccountId int64 `json:"accountId,omitempty,string"`
@@ -917,6 +919,9 @@ type AccountActiveAdSummary struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// AccountPermission: AccountPermissions contains information about a
+// particular account permission. Some features of DCM require an
+// account permission to be present in the account.
 type AccountPermission struct {
 	// AccountProfiles: Account profiles associated with this account
 	// permission.
@@ -924,6 +929,10 @@ type AccountPermission struct {
 	// Possible values are:
 	// - "ACCOUNT_PROFILE_BASIC"
 	// - "ACCOUNT_PROFILE_STANDARD"
+	//
+	// Possible values:
+	//   "ACCOUNT_PROFILE_BASIC"
+	//   "ACCOUNT_PROFILE_STANDARD"
 	AccountProfiles []string `json:"accountProfiles,omitempty"`
 
 	// Id: ID of this account permission.
@@ -948,6 +957,9 @@ type AccountPermission struct {
 	PermissionGroupId int64 `json:"permissionGroupId,omitempty,string"`
 }
 
+// AccountPermissionGroup: AccountPermissionGroups contains a mapping of
+// permission group IDs to names. A permission group is a grouping of
+// account permissions.
 type AccountPermissionGroup struct {
 	// Id: ID of this account permission group.
 	Id int64 `json:"id,omitempty,string"`
@@ -960,6 +972,8 @@ type AccountPermissionGroup struct {
 	Name string `json:"name,omitempty"`
 }
 
+// AccountPermissionGroupsListResponse: Account Permission Group List
+// Response
 type AccountPermissionGroupsListResponse struct {
 	// AccountPermissionGroups: Account permission group collection.
 	AccountPermissionGroups []*AccountPermissionGroup `json:"accountPermissionGroups,omitempty"`
@@ -969,6 +983,7 @@ type AccountPermissionGroupsListResponse struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// AccountPermissionsListResponse: Account Permission List Response
 type AccountPermissionsListResponse struct {
 	// AccountPermissions: Account permission collection.
 	AccountPermissions []*AccountPermission `json:"accountPermissions,omitempty"`
@@ -978,6 +993,9 @@ type AccountPermissionsListResponse struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// AccountUserProfile: AccountUserProfiles contains properties of a DCM
+// user profile. This resource is specifically for managing user
+// profiles, whereas UserProfiles is for accessing the API.
 type AccountUserProfile struct {
 	// AccountId: Account ID of the user profile. This is a read-only field
 	// that can be left blank.
@@ -1071,6 +1089,7 @@ type AccountUserProfile struct {
 	UserRoleId int64 `json:"userRoleId,omitempty,string"`
 }
 
+// AccountUserProfilesListResponse: Account User Profile List Response
 type AccountUserProfilesListResponse struct {
 	// AccountUserProfiles: Account user profile collection.
 	AccountUserProfiles []*AccountUserProfile `json:"accountUserProfiles,omitempty"`
@@ -1084,6 +1103,7 @@ type AccountUserProfilesListResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// AccountsListResponse: Account List Response
 type AccountsListResponse struct {
 	// Accounts: Account collection.
 	Accounts []*Account `json:"accounts,omitempty"`
@@ -1097,6 +1117,7 @@ type AccountsListResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// Activities: Represents an activity group.
 type Activities struct {
 	// Filters: List of activity filters. The dimension values need to be
 	// all either of type "dfa:activity" or "dfa:activityGroup".
@@ -1110,6 +1131,7 @@ type Activities struct {
 	MetricNames []string `json:"metricNames,omitempty"`
 }
 
+// Ad: Contains properties of a DCM ad.
 type Ad struct {
 	// AccountId: Account ID of this ad. This is a read-only field that can
 	// be left blank.
@@ -1282,6 +1304,7 @@ type Ad struct {
 	Type string `json:"type,omitempty"`
 }
 
+// AdSlot: Ad Slot
 type AdSlot struct {
 	// Comment: Comment for this ad slot.
 	Comment string `json:"comment,omitempty"`
@@ -1324,6 +1347,7 @@ type AdSlot struct {
 	Width int64 `json:"width,omitempty,string"`
 }
 
+// AdsListResponse: Ad List Response
 type AdsListResponse struct {
 	// Ads: Ad collection.
 	Ads []*Ad `json:"ads,omitempty"`
@@ -1337,6 +1361,7 @@ type AdsListResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// Advertiser: Contains properties of a DCM advertiser.
 type Advertiser struct {
 	// AccountId: Account ID of this advertiser.This is a read-only field
 	// that can be left blank.
@@ -1414,6 +1439,8 @@ type Advertiser struct {
 	SubaccountId int64 `json:"subaccountId,omitempty,string"`
 }
 
+// AdvertiserGroup: Groups advertisers together so that reports can be
+// generated for the entire group at once.
 type AdvertiserGroup struct {
 	// AccountId: Account ID of this advertiser group. This is a read-only
 	// field that can be left blank.
@@ -1433,6 +1460,7 @@ type AdvertiserGroup struct {
 	Name string `json:"name,omitempty"`
 }
 
+// AdvertiserGroupsListResponse: Advertiser Group List Response
 type AdvertiserGroupsListResponse struct {
 	// AdvertiserGroups: Advertiser group collection.
 	AdvertiserGroups []*AdvertiserGroup `json:"advertiserGroups,omitempty"`
@@ -1446,6 +1474,7 @@ type AdvertiserGroupsListResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// AdvertisersListResponse: Advertiser List Response
 type AdvertisersListResponse struct {
 	// Advertisers: Advertiser collection.
 	Advertisers []*Advertiser `json:"advertisers,omitempty"`
@@ -1459,6 +1488,7 @@ type AdvertisersListResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// AudienceSegment: Audience Segment.
 type AudienceSegment struct {
 	// Allocation: Weight allocated to this segment. Must be between 1 and
 	// 1000. The weight assigned will be understood in proportion to the
@@ -1474,6 +1504,7 @@ type AudienceSegment struct {
 	Name string `json:"name,omitempty"`
 }
 
+// AudienceSegmentGroup: Audience Segment Group.
 type AudienceSegmentGroup struct {
 	// AudienceSegments: Audience segments assigned to this group. The
 	// number of segments must be between 2 and 100.
@@ -1488,6 +1519,8 @@ type AudienceSegmentGroup struct {
 	Name string `json:"name,omitempty"`
 }
 
+// Browser: Contains information about a browser that can be targeted by
+// ads.
 type Browser struct {
 	// BrowserVersionId: ID referring to this grouping of browser and
 	// version numbers. This is the ID used for targeting.
@@ -1527,6 +1560,7 @@ type Browser struct {
 	Name string `json:"name,omitempty"`
 }
 
+// BrowsersListResponse: Browser List Response
 type BrowsersListResponse struct {
 	// Browsers: Browser collection.
 	Browsers []*Browser `json:"browsers,omitempty"`
@@ -1536,6 +1570,7 @@ type BrowsersListResponse struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// Campaign: Contains properties of a DCM campaign.
 type Campaign struct {
 	// AccountId: Account ID of this campaign. This is a read-only field
 	// that can be left blank.
@@ -1652,6 +1687,8 @@ type Campaign struct {
 	TraffickerEmails []string `json:"traffickerEmails,omitempty"`
 }
 
+// CampaignCreativeAssociation: Identifies a creative which has been
+// associated with a given campaign.
 type CampaignCreativeAssociation struct {
 	// CreativeId: ID of the creative associated with the campaign. This is
 	// a required field.
@@ -1662,6 +1699,8 @@ type CampaignCreativeAssociation struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// CampaignCreativeAssociationsListResponse: Campaign Creative
+// Association List Response
 type CampaignCreativeAssociationsListResponse struct {
 	// CampaignCreativeAssociations: Campaign creative association
 	// collection
@@ -1676,6 +1715,7 @@ type CampaignCreativeAssociationsListResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// CampaignsListResponse: Campaign List Response
 type CampaignsListResponse struct {
 	// Campaigns: Campaign collection.
 	Campaigns []*Campaign `json:"campaigns,omitempty"`
@@ -1689,6 +1729,7 @@ type CampaignsListResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// ChangeLog: Describes a change that a user has made to a resource.
 type ChangeLog struct {
 	// AccountId: Account ID of the modified object.
 	AccountId int64 `json:"accountId,omitempty,string"`
@@ -1738,6 +1779,7 @@ type ChangeLog struct {
 	UserProfileName string `json:"userProfileName,omitempty"`
 }
 
+// ChangeLogsListResponse: Change Log List Response
 type ChangeLogsListResponse struct {
 	// ChangeLogs: Change log collection.
 	ChangeLogs []*ChangeLog `json:"changeLogs,omitempty"`
@@ -1751,6 +1793,7 @@ type ChangeLogsListResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// CitiesListResponse: City List Response
 type CitiesListResponse struct {
 	// Cities: City collection.
 	Cities []*City `json:"cities,omitempty"`
@@ -1760,6 +1803,7 @@ type CitiesListResponse struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// City: Contains information about a city that can be targeted by ads.
 type City struct {
 	// CountryCode: Country code of the country to which this city belongs.
 	CountryCode string `json:"countryCode,omitempty"`
@@ -1792,6 +1836,7 @@ type City struct {
 	RegionDartId int64 `json:"regionDartId,omitempty,string"`
 }
 
+// ClickTag: Creative Click Tag.
 type ClickTag struct {
 	// EventName: Advertiser event name associated with the click tag. This
 	// field is used by ENHANCED_BANNER, ENHANCED_IMAGE, and HTML5_BANNER
@@ -1808,6 +1853,7 @@ type ClickTag struct {
 	Value string `json:"value,omitempty"`
 }
 
+// ClickThroughUrl: Click-through URL
 type ClickThroughUrl struct {
 	// CustomClickThroughUrl: Custom click-through URL. Applicable if the
 	// defaultLandingPage field is set to false and the landingPageId field
@@ -1823,6 +1869,7 @@ type ClickThroughUrl struct {
 	LandingPageId int64 `json:"landingPageId,omitempty,string"`
 }
 
+// ClickThroughUrlSuffixProperties: Click Through URL Suffix settings.
 type ClickThroughUrlSuffixProperties struct {
 	// ClickThroughUrlSuffix: Click-through URL suffix to apply to all ads
 	// in this entity's scope. Must be less than 128 characters long.
@@ -1833,6 +1880,7 @@ type ClickThroughUrlSuffixProperties struct {
 	OverrideInheritedSuffix bool `json:"overrideInheritedSuffix,omitempty"`
 }
 
+// CompanionClickThroughOverride: Companion Click-through override.
 type CompanionClickThroughOverride struct {
 	// ClickThroughUrl: Click-through URL of this companion click-through
 	// override.
@@ -1843,6 +1891,8 @@ type CompanionClickThroughOverride struct {
 	CreativeId int64 `json:"creativeId,omitempty,string"`
 }
 
+// CompatibleFields: Represents a response to the queryCompatibleFields
+// method.
 type CompatibleFields struct {
 	// CrossDimensionReachReportCompatibleFields: Contains items that are
 	// compatible to be selected for a report of type
@@ -1870,6 +1920,9 @@ type CompatibleFields struct {
 	ReportCompatibleFields *ReportCompatibleFields `json:"reportCompatibleFields,omitempty"`
 }
 
+// ConnectionType: Contains information about an internet connection
+// type that can be targeted by ads. Clients can use the connection type
+// to target mobile vs. broadband users.
 type ConnectionType struct {
 	// Id: ID of this connection type.
 	Id int64 `json:"id,omitempty,string"`
@@ -1882,6 +1935,7 @@ type ConnectionType struct {
 	Name string `json:"name,omitempty"`
 }
 
+// ConnectionTypesListResponse: Connection Type List Response
 type ConnectionTypesListResponse struct {
 	// ConnectionTypes: Collection of connection types such as broadband and
 	// mobile.
@@ -1892,6 +1946,7 @@ type ConnectionTypesListResponse struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// ContentCategoriesListResponse: Content Category List Response
 type ContentCategoriesListResponse struct {
 	// ContentCategories: Content category collection.
 	ContentCategories []*ContentCategory `json:"contentCategories,omitempty"`
@@ -1905,6 +1960,8 @@ type ContentCategoriesListResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// ContentCategory: Organizes placements according to the contents of
+// their associated webpages.
 type ContentCategory struct {
 	// AccountId: Account ID of this content category. This is a read-only
 	// field that can be left blank.
@@ -1924,6 +1981,7 @@ type ContentCategory struct {
 	Name string `json:"name,omitempty"`
 }
 
+// CountriesListResponse: Country List Response
 type CountriesListResponse struct {
 	// Countries: Country collection.
 	Countries []*Country `json:"countries,omitempty"`
@@ -1933,6 +1991,8 @@ type CountriesListResponse struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// Country: Contains information about a country that can be targeted by
+// ads.
 type Country struct {
 	// CountryCode: Country code.
 	CountryCode string `json:"countryCode,omitempty"`
@@ -1953,6 +2013,7 @@ type Country struct {
 	SslEnabled bool `json:"sslEnabled,omitempty"`
 }
 
+// Creative: Contains properties of a Creative.
 type Creative struct {
 	// AccountId: Account ID of this creative. This field, if left unset,
 	// will be auto-generated for both insert and update operations.
@@ -2034,6 +2095,74 @@ type Creative struct {
 	// then be modified by the client. To reset this field, copy over all
 	// the creativeAssets' detected features. Applicable to the following
 	// creative types: ENHANCED_BANNER and HTML5_BANNER.
+	//
+	// Possible values:
+	//   "APPLICATION_CACHE"
+	//   "AUDIO"
+	//   "CANVAS"
+	//   "CANVAS_TEXT"
+	//   "CSS_ANIMATIONS"
+	//   "CSS_BACKGROUND_SIZE"
+	//   "CSS_BORDER_IMAGE"
+	//   "CSS_BORDER_RADIUS"
+	//   "CSS_BOX_SHADOW"
+	//   "CSS_COLUMNS"
+	//   "CSS_FLEX_BOX"
+	//   "CSS_FONT_FACE"
+	//   "CSS_GENERATED_CONTENT"
+	//   "CSS_GRADIENTS"
+	//   "CSS_HSLA"
+	//   "CSS_MULTIPLE_BGS"
+	//   "CSS_OPACITY"
+	//   "CSS_REFLECTIONS"
+	//   "CSS_RGBA"
+	//   "CSS_TEXT_SHADOW"
+	//   "CSS_TRANSFORMS"
+	//   "CSS_TRANSFORMS3D"
+	//   "CSS_TRANSITIONS"
+	//   "DRAG_AND_DROP"
+	//   "GEO_LOCATION"
+	//   "HASH_CHANGE"
+	//   "HISTORY"
+	//   "INDEXED_DB"
+	//   "INLINE_SVG"
+	//   "INPUT_ATTR_AUTOCOMPLETE"
+	//   "INPUT_ATTR_AUTOFOCUS"
+	//   "INPUT_ATTR_LIST"
+	//   "INPUT_ATTR_MAX"
+	//   "INPUT_ATTR_MIN"
+	//   "INPUT_ATTR_MULTIPLE"
+	//   "INPUT_ATTR_PATTERN"
+	//   "INPUT_ATTR_PLACEHOLDER"
+	//   "INPUT_ATTR_REQUIRED"
+	//   "INPUT_ATTR_STEP"
+	//   "INPUT_TYPE_COLOR"
+	//   "INPUT_TYPE_DATE"
+	//   "INPUT_TYPE_DATETIME"
+	//   "INPUT_TYPE_DATETIME_LOCAL"
+	//   "INPUT_TYPE_EMAIL"
+	//   "INPUT_TYPE_MONTH"
+	//   "INPUT_TYPE_NUMBER"
+	//   "INPUT_TYPE_RANGE"
+	//   "INPUT_TYPE_SEARCH"
+	//   "INPUT_TYPE_TEL"
+	//   "INPUT_TYPE_TIME"
+	//   "INPUT_TYPE_URL"
+	//   "INPUT_TYPE_WEEK"
+	//   "LOCAL_STORAGE"
+	//   "POST_MESSAGE"
+	//   "SESSION_STORAGE"
+	//   "SMIL"
+	//   "SVG_CLIP_PATHS"
+	//   "SVG_FE_IMAGE"
+	//   "SVG_FILTERS"
+	//   "SVG_HREF"
+	//   "TOUCH"
+	//   "VIDEO"
+	//   "WEBGL"
+	//   "WEB_SOCKETS"
+	//   "WEB_SQL_DATABASE"
+	//   "WEB_WORKERS"
 	BackupImageFeatures []string `json:"backupImageFeatures,omitempty"`
 
 	// BackupImageReportingLabel: Reporting label used for HTML5 banner
@@ -2085,6 +2214,13 @@ type Creative struct {
 	// - "IN_STREAM_VIDEO"
 	// - "WEB"
 	// - "WEB_INTERSTITIAL"
+	//
+	// Possible values:
+	//   "APP"
+	//   "APP_INTERSTITIAL"
+	//   "IN_STREAM_VIDEO"
+	//   "WEB"
+	//   "WEB_INTERSTITIAL"
 	Compatibility []string `json:"compatibility,omitempty"`
 
 	// ConvertFlashToHtml5: Whether Flash assets associated with the
@@ -2310,6 +2446,7 @@ type Creative struct {
 	VideoDuration float64 `json:"videoDuration,omitempty"`
 }
 
+// CreativeAsset: Creative Asset.
 type CreativeAsset struct {
 	// ActionScript3: Whether ActionScript3 is enabled for the flash asset.
 	// This is a read-only field. Applicable to the following creative
@@ -2383,6 +2520,74 @@ type CreativeAsset struct {
 	// creative correctly. This is a read-only, auto-generated field.
 	// Applicable to the following creative types: ENHANCED_BANNER and
 	// HTML5_BANNER.
+	//
+	// Possible values:
+	//   "APPLICATION_CACHE"
+	//   "AUDIO"
+	//   "CANVAS"
+	//   "CANVAS_TEXT"
+	//   "CSS_ANIMATIONS"
+	//   "CSS_BACKGROUND_SIZE"
+	//   "CSS_BORDER_IMAGE"
+	//   "CSS_BORDER_RADIUS"
+	//   "CSS_BOX_SHADOW"
+	//   "CSS_COLUMNS"
+	//   "CSS_FLEX_BOX"
+	//   "CSS_FONT_FACE"
+	//   "CSS_GENERATED_CONTENT"
+	//   "CSS_GRADIENTS"
+	//   "CSS_HSLA"
+	//   "CSS_MULTIPLE_BGS"
+	//   "CSS_OPACITY"
+	//   "CSS_REFLECTIONS"
+	//   "CSS_RGBA"
+	//   "CSS_TEXT_SHADOW"
+	//   "CSS_TRANSFORMS"
+	//   "CSS_TRANSFORMS3D"
+	//   "CSS_TRANSITIONS"
+	//   "DRAG_AND_DROP"
+	//   "GEO_LOCATION"
+	//   "HASH_CHANGE"
+	//   "HISTORY"
+	//   "INDEXED_DB"
+	//   "INLINE_SVG"
+	//   "INPUT_ATTR_AUTOCOMPLETE"
+	//   "INPUT_ATTR_AUTOFOCUS"
+	//   "INPUT_ATTR_LIST"
+	//   "INPUT_ATTR_MAX"
+	//   "INPUT_ATTR_MIN"
+	//   "INPUT_ATTR_MULTIPLE"
+	//   "INPUT_ATTR_PATTERN"
+	//   "INPUT_ATTR_PLACEHOLDER"
+	//   "INPUT_ATTR_REQUIRED"
+	//   "INPUT_ATTR_STEP"
+	//   "INPUT_TYPE_COLOR"
+	//   "INPUT_TYPE_DATE"
+	//   "INPUT_TYPE_DATETIME"
+	//   "INPUT_TYPE_DATETIME_LOCAL"
+	//   "INPUT_TYPE_EMAIL"
+	//   "INPUT_TYPE_MONTH"
+	//   "INPUT_TYPE_NUMBER"
+	//   "INPUT_TYPE_RANGE"
+	//   "INPUT_TYPE_SEARCH"
+	//   "INPUT_TYPE_TEL"
+	//   "INPUT_TYPE_TIME"
+	//   "INPUT_TYPE_URL"
+	//   "INPUT_TYPE_WEEK"
+	//   "LOCAL_STORAGE"
+	//   "POST_MESSAGE"
+	//   "SESSION_STORAGE"
+	//   "SMIL"
+	//   "SVG_CLIP_PATHS"
+	//   "SVG_FE_IMAGE"
+	//   "SVG_FILTERS"
+	//   "SVG_HREF"
+	//   "TOUCH"
+	//   "VIDEO"
+	//   "WEBGL"
+	//   "WEB_SOCKETS"
+	//   "WEB_SQL_DATABASE"
+	//   "WEB_WORKERS"
 	DetectedFeatures []string `json:"detectedFeatures,omitempty"`
 
 	// DisplayType: Type of rich media asset. This is a read-only field.
@@ -2612,6 +2817,7 @@ type CreativeAsset struct {
 	ZipFilesize string `json:"zipFilesize,omitempty"`
 }
 
+// CreativeAssetId: Creative Asset ID.
 type CreativeAssetId struct {
 	// Name: Name of the creative asset. This is a required field while
 	// inserting an asset. After insertion, this assetIdentifier is used to
@@ -2632,6 +2838,10 @@ type CreativeAssetId struct {
 	Type string `json:"type,omitempty"`
 }
 
+// CreativeAssetMetadata: CreativeAssets contains properties of a
+// creative asset file which will be uploaded or has already been
+// uploaded. Refer to the creative sample code for how to upload assets
+// and insert a creative.
 type CreativeAssetMetadata struct {
 	// AssetIdentifier: ID of the creative asset. This is a required field.
 	AssetIdentifier *CreativeAssetId `json:"assetIdentifier,omitempty"`
@@ -2644,6 +2854,74 @@ type CreativeAssetMetadata struct {
 	// that are detected by DCM. Feature dependencies are features that a
 	// browser must be able to support in order to render your HTML5
 	// creative correctly. This is a read-only, auto-generated field.
+	//
+	// Possible values:
+	//   "APPLICATION_CACHE"
+	//   "AUDIO"
+	//   "CANVAS"
+	//   "CANVAS_TEXT"
+	//   "CSS_ANIMATIONS"
+	//   "CSS_BACKGROUND_SIZE"
+	//   "CSS_BORDER_IMAGE"
+	//   "CSS_BORDER_RADIUS"
+	//   "CSS_BOX_SHADOW"
+	//   "CSS_COLUMNS"
+	//   "CSS_FLEX_BOX"
+	//   "CSS_FONT_FACE"
+	//   "CSS_GENERATED_CONTENT"
+	//   "CSS_GRADIENTS"
+	//   "CSS_HSLA"
+	//   "CSS_MULTIPLE_BGS"
+	//   "CSS_OPACITY"
+	//   "CSS_REFLECTIONS"
+	//   "CSS_RGBA"
+	//   "CSS_TEXT_SHADOW"
+	//   "CSS_TRANSFORMS"
+	//   "CSS_TRANSFORMS3D"
+	//   "CSS_TRANSITIONS"
+	//   "DRAG_AND_DROP"
+	//   "GEO_LOCATION"
+	//   "HASH_CHANGE"
+	//   "HISTORY"
+	//   "INDEXED_DB"
+	//   "INLINE_SVG"
+	//   "INPUT_ATTR_AUTOCOMPLETE"
+	//   "INPUT_ATTR_AUTOFOCUS"
+	//   "INPUT_ATTR_LIST"
+	//   "INPUT_ATTR_MAX"
+	//   "INPUT_ATTR_MIN"
+	//   "INPUT_ATTR_MULTIPLE"
+	//   "INPUT_ATTR_PATTERN"
+	//   "INPUT_ATTR_PLACEHOLDER"
+	//   "INPUT_ATTR_REQUIRED"
+	//   "INPUT_ATTR_STEP"
+	//   "INPUT_TYPE_COLOR"
+	//   "INPUT_TYPE_DATE"
+	//   "INPUT_TYPE_DATETIME"
+	//   "INPUT_TYPE_DATETIME_LOCAL"
+	//   "INPUT_TYPE_EMAIL"
+	//   "INPUT_TYPE_MONTH"
+	//   "INPUT_TYPE_NUMBER"
+	//   "INPUT_TYPE_RANGE"
+	//   "INPUT_TYPE_SEARCH"
+	//   "INPUT_TYPE_TEL"
+	//   "INPUT_TYPE_TIME"
+	//   "INPUT_TYPE_URL"
+	//   "INPUT_TYPE_WEEK"
+	//   "LOCAL_STORAGE"
+	//   "POST_MESSAGE"
+	//   "SESSION_STORAGE"
+	//   "SMIL"
+	//   "SVG_CLIP_PATHS"
+	//   "SVG_FE_IMAGE"
+	//   "SVG_FILTERS"
+	//   "SVG_HREF"
+	//   "TOUCH"
+	//   "VIDEO"
+	//   "WEBGL"
+	//   "WEB_SOCKETS"
+	//   "WEB_SQL_DATABASE"
+	//   "WEB_WORKERS"
 	DetectedFeatures []string `json:"detectedFeatures,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -2676,9 +2954,33 @@ type CreativeAssetMetadata struct {
 	// - "ASSET_FORMAT_UNSUPPORTED_DCM"
 	// - "COMPONENT_UNSUPPORTED_DCM"
 	// - "HTML5_FEATURE_UNSUPPORTED' "
+	//
+	// Possible values:
+	//   "ADMOB_REFERENCED"
+	//   "ASSET_FORMAT_UNSUPPORTED_DCM"
+	//   "ASSET_INVALID"
+	//   "CLICK_TAG_INVALID"
+	//   "CLICK_TAG_MISSING"
+	//   "CLICK_TAG_MORE_THAN_ONE"
+	//   "CLICK_TAG_NON_TOP_LEVEL"
+	//   "COMPONENT_UNSUPPORTED_DCM"
+	//   "ENABLER_UNSUPPORTED_METHOD_DCM"
+	//   "EXTERNAL_FILE_REFERENCED"
+	//   "FILE_DETAIL_EMPTY"
+	//   "FILE_TYPE_INVALID"
+	//   "GWD_PROPERTIES_INVALID"
+	//   "HTML5_FEATURE_UNSUPPORTED"
+	//   "LINKED_FILE_NOT_FOUND"
+	//   "MAX_FLASH_VERSION_11"
+	//   "MRAID_REFERENCED"
+	//   "NOT_SSL_COMPLIANT"
+	//   "ORPHANED_ASSET"
+	//   "PRIMARY_HTML_MISSING"
+	//   "ZIP_INVALID"
 	WarnedValidationRules []string `json:"warnedValidationRules,omitempty"`
 }
 
+// CreativeAssignment: Creative Assignment.
 type CreativeAssignment struct {
 	// Active: Whether this creative assignment is active. When true, the
 	// creative will be included in the ad's rotation.
@@ -2749,6 +3051,7 @@ type CreativeAssignment struct {
 	Weight int64 `json:"weight,omitempty"`
 }
 
+// CreativeCustomEvent: Creative Custom Event.
 type CreativeCustomEvent struct {
 	// Active: Whether the event is active.
 	Active bool `json:"active,omitempty"`
@@ -2806,6 +3109,7 @@ type CreativeCustomEvent struct {
 	VideoReportingId string `json:"videoReportingId,omitempty"`
 }
 
+// CreativeField: Contains properties of a creative field.
 type CreativeField struct {
 	// AccountId: Account ID of this creative field. This is a read-only
 	// field that can be left blank.
@@ -2837,6 +3141,7 @@ type CreativeField struct {
 	SubaccountId int64 `json:"subaccountId,omitempty,string"`
 }
 
+// CreativeFieldAssignment: Creative Field Assignment.
 type CreativeFieldAssignment struct {
 	// CreativeFieldId: ID of the creative field.
 	CreativeFieldId int64 `json:"creativeFieldId,omitempty,string"`
@@ -2845,6 +3150,7 @@ type CreativeFieldAssignment struct {
 	CreativeFieldValueId int64 `json:"creativeFieldValueId,omitempty,string"`
 }
 
+// CreativeFieldValue: Contains properties of a creative field value.
 type CreativeFieldValue struct {
 	// Id: ID of this creative field value. This is a read-only,
 	// auto-generated field.
@@ -2859,6 +3165,7 @@ type CreativeFieldValue struct {
 	Value string `json:"value,omitempty"`
 }
 
+// CreativeFieldValuesListResponse: Creative Field Value List Response
 type CreativeFieldValuesListResponse struct {
 	// CreativeFieldValues: Creative field value collection.
 	CreativeFieldValues []*CreativeFieldValue `json:"creativeFieldValues,omitempty"`
@@ -2872,6 +3179,7 @@ type CreativeFieldValuesListResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// CreativeFieldsListResponse: Creative Field List Response
 type CreativeFieldsListResponse struct {
 	// CreativeFields: Creative field collection.
 	CreativeFields []*CreativeField `json:"creativeFields,omitempty"`
@@ -2885,6 +3193,7 @@ type CreativeFieldsListResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// CreativeGroup: Contains properties of a creative group.
 type CreativeGroup struct {
 	// AccountId: Account ID of this creative group. This is a read-only
 	// field that can be left blank.
@@ -2925,6 +3234,7 @@ type CreativeGroup struct {
 	SubaccountId int64 `json:"subaccountId,omitempty,string"`
 }
 
+// CreativeGroupAssignment: Creative Group Assignment.
 type CreativeGroupAssignment struct {
 	// CreativeGroupId: ID of the creative group to be assigned.
 	CreativeGroupId int64 `json:"creativeGroupId,omitempty,string"`
@@ -2938,6 +3248,7 @@ type CreativeGroupAssignment struct {
 	CreativeGroupNumber string `json:"creativeGroupNumber,omitempty"`
 }
 
+// CreativeGroupsListResponse: Creative Group List Response
 type CreativeGroupsListResponse struct {
 	// CreativeGroups: Creative group collection.
 	CreativeGroups []*CreativeGroup `json:"creativeGroups,omitempty"`
@@ -2951,6 +3262,7 @@ type CreativeGroupsListResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// CreativeOptimizationConfiguration: Creative optimization settings.
 type CreativeOptimizationConfiguration struct {
 	// Id: ID of this creative optimization config. This field is
 	// auto-generated when the campaign is inserted or updated. It can be
@@ -2975,6 +3287,7 @@ type CreativeOptimizationConfiguration struct {
 	OptimizationModel string `json:"optimizationModel,omitempty"`
 }
 
+// CreativeRotation: Creative Rotation.
 type CreativeRotation struct {
 	// CreativeAssignments: Creative assignments in this creative rotation.
 	CreativeAssignments []*CreativeAssignment `json:"creativeAssignments,omitempty"`
@@ -3005,6 +3318,7 @@ type CreativeRotation struct {
 	WeightCalculationStrategy string `json:"weightCalculationStrategy,omitempty"`
 }
 
+// CreativeSettings: Creative Settings
 type CreativeSettings struct {
 	// IFrameFooter: Header text for iFrames for this site. Must be less
 	// than or equal to 2000 characters long.
@@ -3015,6 +3329,7 @@ type CreativeSettings struct {
 	IFrameHeader string `json:"iFrameHeader,omitempty"`
 }
 
+// CreativesListResponse: Creative List Response
 type CreativesListResponse struct {
 	// Creatives: Creative collection.
 	Creatives []*Creative `json:"creatives,omitempty"`
@@ -3028,6 +3343,9 @@ type CreativesListResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// CrossDimensionReachReportCompatibleFields: Represents fields that are
+// compatible to be selected for a report of type
+// "CROSS_DIMENSION_REACH".
 type CrossDimensionReachReportCompatibleFields struct {
 	// Breakdown: Dimensions which are compatible to be selected in the
 	// "breakdown" section of the report.
@@ -3050,6 +3368,7 @@ type CrossDimensionReachReportCompatibleFields struct {
 	OverlapMetrics []*Metric `json:"overlapMetrics,omitempty"`
 }
 
+// CustomRichMediaEvents: Represents a Custom Rich Media Events group.
 type CustomRichMediaEvents struct {
 	// FilteredEventIds: List of custom rich media event IDs. Dimension
 	// values must be all of type dfa:richMediaEventTypeIdAndName.
@@ -3060,6 +3379,7 @@ type CustomRichMediaEvents struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// DateRange: Represents a date range.
 type DateRange struct {
 	// EndDate: The end date of the date range, inclusive. A string of the
 	// format: "yyyy-MM-dd".
@@ -3095,6 +3415,7 @@ type DateRange struct {
 	StartDate string `json:"startDate,omitempty"`
 }
 
+// DayPartTargeting: Day Part Targeting.
 type DayPartTargeting struct {
 	// DaysOfWeek: Days of the week when the ad will serve.
 	//
@@ -3106,6 +3427,15 @@ type DayPartTargeting struct {
 	// - "THURSDAY"
 	// - "FRIDAY"
 	// - "SATURDAY"
+	//
+	// Possible values:
+	//   "FRIDAY"
+	//   "MONDAY"
+	//   "SATURDAY"
+	//   "SUNDAY"
+	//   "THURSDAY"
+	//   "TUESDAY"
+	//   "WEDNESDAY"
 	DaysOfWeek []string `json:"daysOfWeek,omitempty"`
 
 	// HoursOfDay: Hours of the day when the ad will serve. Must be an
@@ -3122,6 +3452,10 @@ type DayPartTargeting struct {
 	UserLocalTime bool `json:"userLocalTime,omitempty"`
 }
 
+// DefaultClickThroughEventTagProperties: Properties of inheriting and
+// overriding the default click-through event tag. A campaign may
+// override the event tag defined at the advertiser level, and an ad may
+// also override the campaign's setting further.
 type DefaultClickThroughEventTagProperties struct {
 	// DefaultClickThroughEventTagId: ID of the click-through event tag to
 	// apply to all ads in this entity's scope.
@@ -3132,6 +3466,7 @@ type DefaultClickThroughEventTagProperties struct {
 	OverrideInheritedEventTag bool `json:"overrideInheritedEventTag,omitempty"`
 }
 
+// DeliverySchedule: Delivery Schedule.
 type DeliverySchedule struct {
 	// FrequencyCap: Limit on the number of times an individual user can be
 	// served the ad within a specified period of time.
@@ -3173,6 +3508,7 @@ type DeliverySchedule struct {
 	Priority string `json:"priority,omitempty"`
 }
 
+// DfpSettings: DFP Settings
 type DfpSettings struct {
 	// DfpNetworkCode: DFP network code for this directory site.
 	DfpNetworkCode string `json:"dfp_network_code,omitempty"`
@@ -3193,6 +3529,7 @@ type DfpSettings struct {
 	PublisherPortalOnly bool `json:"publisherPortalOnly,omitempty"`
 }
 
+// Dimension: Represents a dimension.
 type Dimension struct {
 	// Kind: The kind of resource this is, in this case
 	// dfareporting#dimension.
@@ -3202,6 +3539,7 @@ type Dimension struct {
 	Name string `json:"name,omitempty"`
 }
 
+// DimensionFilter: Represents a dimension filter.
 type DimensionFilter struct {
 	// DimensionName: The name of the dimension to filter.
 	DimensionName string `json:"dimensionName,omitempty"`
@@ -3214,6 +3552,7 @@ type DimensionFilter struct {
 	Value string `json:"value,omitempty"`
 }
 
+// DimensionValue: Represents a DimensionValue resource.
 type DimensionValue struct {
 	// DimensionName: The name of the dimension.
 	DimensionName string `json:"dimensionName,omitempty"`
@@ -3246,6 +3585,7 @@ type DimensionValue struct {
 	Value string `json:"value,omitempty"`
 }
 
+// DimensionValueList: Represents the list of DimensionValue resources.
 type DimensionValueList struct {
 	// Etag: The eTag of this response for caching purposes.
 	Etag string `json:"etag,omitempty"`
@@ -3264,6 +3604,7 @@ type DimensionValueList struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// DimensionValueRequest: Represents a DimensionValuesRequest.
 type DimensionValueRequest struct {
 	// DimensionName: The name of the dimension for which values should be
 	// requested.
@@ -3286,6 +3627,9 @@ type DimensionValueRequest struct {
 	StartDate string `json:"startDate,omitempty"`
 }
 
+// DirectorySite: DirectorySites contains properties of a website from
+// the Site Directory. Sites need to be added to an account via the
+// Sites resource before they can be assigned to a placement.
 type DirectorySite struct {
 	// Active: Whether this directory site is active.
 	Active bool `json:"active,omitempty"`
@@ -3354,6 +3698,12 @@ type DirectorySite struct {
 	// - "IFRAME_JAVASCRIPT_INPAGE"
 	// - "INTERNAL_REDIRECT_INPAGE"
 	// - "JAVASCRIPT_INPAGE"
+	//
+	// Possible values:
+	//   "IFRAME_JAVASCRIPT_INPAGE"
+	//   "INTERNAL_REDIRECT_INPAGE"
+	//   "JAVASCRIPT_INPAGE"
+	//   "STANDARD"
 	InpageTagFormats []string `json:"inpageTagFormats,omitempty"`
 
 	// InterstitialTagFormats: Tag types for interstitial
@@ -3363,6 +3713,11 @@ type DirectorySite struct {
 	// - "IFRAME_JAVASCRIPT_INTERSTITIAL"
 	// - "INTERNAL_REDIRECT_INTERSTITIAL"
 	// - "JAVASCRIPT_INTERSTITIAL"
+	//
+	// Possible values:
+	//   "IFRAME_JAVASCRIPT_INTERSTITIAL"
+	//   "INTERNAL_REDIRECT_INTERSTITIAL"
+	//   "JAVASCRIPT_INTERSTITIAL"
 	InterstitialTagFormats []string `json:"interstitialTagFormats,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -3382,6 +3737,8 @@ type DirectorySite struct {
 	Url string `json:"url,omitempty"`
 }
 
+// DirectorySiteContact: Contains properties of a Site Directory
+// contact.
 type DirectorySiteContact struct {
 	// Address: Address of this directory site contact.
 	Address string `json:"address,omitempty"`
@@ -3427,6 +3784,7 @@ type DirectorySiteContact struct {
 	Type string `json:"type,omitempty"`
 }
 
+// DirectorySiteContactAssignment: Directory Site Contact Assignment
 type DirectorySiteContactAssignment struct {
 	// ContactId: ID of this directory site contact. This is a read-only,
 	// auto-generated field.
@@ -3442,6 +3800,8 @@ type DirectorySiteContactAssignment struct {
 	Visibility string `json:"visibility,omitempty"`
 }
 
+// DirectorySiteContactsListResponse: Directory Site Contact List
+// Response
 type DirectorySiteContactsListResponse struct {
 	// DirectorySiteContacts: Directory site contact collection
 	DirectorySiteContacts []*DirectorySiteContact `json:"directorySiteContacts,omitempty"`
@@ -3455,6 +3815,7 @@ type DirectorySiteContactsListResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// DirectorySiteSettings: Directory Site Settings
 type DirectorySiteSettings struct {
 	// ActiveViewOptOut: Whether this directory site has disabled active
 	// view creatives.
@@ -3484,6 +3845,7 @@ type DirectorySiteSettings struct {
 	VideoActiveViewOptOut bool `json:"videoActiveViewOptOut,omitempty"`
 }
 
+// DirectorySitesListResponse: Directory Site List Response
 type DirectorySitesListResponse struct {
 	// DirectorySites: Directory site collection.
 	DirectorySites []*DirectorySite `json:"directorySites,omitempty"`
@@ -3497,6 +3859,7 @@ type DirectorySitesListResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// EventTag: Contains properties of an event tag.
 type EventTag struct {
 	// AccountId: Account ID of this event tag. This is a read-only field
 	// that can be left blank.
@@ -3584,6 +3947,7 @@ type EventTag struct {
 	UrlEscapeLevels int64 `json:"urlEscapeLevels,omitempty"`
 }
 
+// EventTagOverride: Event tag override information.
 type EventTagOverride struct {
 	// Enabled: Whether this override is enabled.
 	Enabled bool `json:"enabled,omitempty"`
@@ -3593,6 +3957,7 @@ type EventTagOverride struct {
 	Id int64 `json:"id,omitempty,string"`
 }
 
+// EventTagsListResponse: Event Tag List Response
 type EventTagsListResponse struct {
 	// EventTags: Event tag collection.
 	EventTags []*EventTag `json:"eventTags,omitempty"`
@@ -3602,6 +3967,10 @@ type EventTagsListResponse struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// File: Represents a File resource. A file contains the metadata for a
+// report run. It shows the status of the run and holds the URLs to the
+// generated report data if the run is finished and the status is
+// "REPORT_AVAILABLE".
 type File struct {
 	// DateRange: The date range for which the file has report data. The
 	// date range will always be the absolute date range for which the
@@ -3648,6 +4017,7 @@ type File struct {
 	Urls *FileUrls `json:"urls,omitempty"`
 }
 
+// FileUrls: The URLs where the completed report file can be downloaded.
 type FileUrls struct {
 	// ApiUrl: The URL for downloading the report data through the API.
 	ApiUrl string `json:"apiUrl,omitempty"`
@@ -3657,6 +4027,7 @@ type FileUrls struct {
 	BrowserUrl string `json:"browserUrl,omitempty"`
 }
 
+// FileList: Represents the list of File resources.
 type FileList struct {
 	// Etag: The eTag of this response for caching purposes.
 	Etag string `json:"etag,omitempty"`
@@ -3674,6 +4045,7 @@ type FileList struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// Flight: Flight
 type Flight struct {
 	// EndDate: Inventory item flight end date.
 	EndDate string `json:"endDate,omitempty"`
@@ -3688,6 +4060,8 @@ type Flight struct {
 	Units int64 `json:"units,omitempty,string"`
 }
 
+// FloodlightActivitiesGenerateTagResponse: Floodlight Activity
+// GenerateTag Response
 type FloodlightActivitiesGenerateTagResponse struct {
 	// FloodlightActivityTag: Generated tag for this floodlight activity.
 	FloodlightActivityTag string `json:"floodlightActivityTag,omitempty"`
@@ -3697,6 +4071,7 @@ type FloodlightActivitiesGenerateTagResponse struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// FloodlightActivitiesListResponse: Floodlight Activity List Response
 type FloodlightActivitiesListResponse struct {
 	// FloodlightActivities: Floodlight activity collection.
 	FloodlightActivities []*FloodlightActivity `json:"floodlightActivities,omitempty"`
@@ -3710,6 +4085,7 @@ type FloodlightActivitiesListResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// FloodlightActivity: Contains properties of a Floodlight activity.
 type FloodlightActivity struct {
 	// AccountId: Account ID of this floodlight activity. This is a
 	// read-only field that can be left blank.
@@ -3868,9 +4244,112 @@ type FloodlightActivity struct {
 	// - "U18"
 	// - "U19"
 	// - "U20"
+	//
+	// Possible values:
+	//   "U1"
+	//   "U10"
+	//   "U100"
+	//   "U11"
+	//   "U12"
+	//   "U13"
+	//   "U14"
+	//   "U15"
+	//   "U16"
+	//   "U17"
+	//   "U18"
+	//   "U19"
+	//   "U2"
+	//   "U20"
+	//   "U21"
+	//   "U22"
+	//   "U23"
+	//   "U24"
+	//   "U25"
+	//   "U26"
+	//   "U27"
+	//   "U28"
+	//   "U29"
+	//   "U3"
+	//   "U30"
+	//   "U31"
+	//   "U32"
+	//   "U33"
+	//   "U34"
+	//   "U35"
+	//   "U36"
+	//   "U37"
+	//   "U38"
+	//   "U39"
+	//   "U4"
+	//   "U40"
+	//   "U41"
+	//   "U42"
+	//   "U43"
+	//   "U44"
+	//   "U45"
+	//   "U46"
+	//   "U47"
+	//   "U48"
+	//   "U49"
+	//   "U5"
+	//   "U50"
+	//   "U51"
+	//   "U52"
+	//   "U53"
+	//   "U54"
+	//   "U55"
+	//   "U56"
+	//   "U57"
+	//   "U58"
+	//   "U59"
+	//   "U6"
+	//   "U60"
+	//   "U61"
+	//   "U62"
+	//   "U63"
+	//   "U64"
+	//   "U65"
+	//   "U66"
+	//   "U67"
+	//   "U68"
+	//   "U69"
+	//   "U7"
+	//   "U70"
+	//   "U71"
+	//   "U72"
+	//   "U73"
+	//   "U74"
+	//   "U75"
+	//   "U76"
+	//   "U77"
+	//   "U78"
+	//   "U79"
+	//   "U8"
+	//   "U80"
+	//   "U81"
+	//   "U82"
+	//   "U83"
+	//   "U84"
+	//   "U85"
+	//   "U86"
+	//   "U87"
+	//   "U88"
+	//   "U89"
+	//   "U9"
+	//   "U90"
+	//   "U91"
+	//   "U92"
+	//   "U93"
+	//   "U94"
+	//   "U95"
+	//   "U96"
+	//   "U97"
+	//   "U98"
+	//   "U99"
 	UserDefinedVariableTypes []string `json:"userDefinedVariableTypes,omitempty"`
 }
 
+// FloodlightActivityDynamicTag: Dynamic Tag
 type FloodlightActivityDynamicTag struct {
 	// Id: ID of this dynamic tag. This is a read-only, auto-generated
 	// field.
@@ -3883,6 +4362,8 @@ type FloodlightActivityDynamicTag struct {
 	Tag string `json:"tag,omitempty"`
 }
 
+// FloodlightActivityGroup: Contains properties of a Floodlight activity
+// group.
 type FloodlightActivityGroup struct {
 	// AccountId: Account ID of this floodlight activity group. This is a
 	// read-only field that can be left blank.
@@ -3946,6 +4427,8 @@ type FloodlightActivityGroup struct {
 	Type string `json:"type,omitempty"`
 }
 
+// FloodlightActivityGroupsListResponse: Floodlight Activity Group List
+// Response
 type FloodlightActivityGroupsListResponse struct {
 	// FloodlightActivityGroups: Floodlight activity group collection.
 	FloodlightActivityGroups []*FloodlightActivityGroup `json:"floodlightActivityGroups,omitempty"`
@@ -3959,6 +4442,7 @@ type FloodlightActivityGroupsListResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// FloodlightActivityPublisherDynamicTag: Publisher Dynamic Tag
 type FloodlightActivityPublisherDynamicTag struct {
 	// ClickThrough: Whether this tag is applicable only for click-throughs.
 	ClickThrough bool `json:"clickThrough,omitempty"`
@@ -3983,6 +4467,8 @@ type FloodlightActivityPublisherDynamicTag struct {
 	ViewThrough bool `json:"viewThrough,omitempty"`
 }
 
+// FloodlightConfiguration: Contains properties of a Floodlight
+// configuration.
 type FloodlightConfiguration struct {
 	// AccountId: Account ID of this floodlight configuration. This is a
 	// read-only field that can be left blank.
@@ -4052,6 +4538,12 @@ type FloodlightConfiguration struct {
 	// Acceptable values are:
 	// - "ORD"
 	// - "NUM"
+	//
+	// Possible values:
+	//   "NUM"
+	//   "ORD"
+	//   "TRAN"
+	//   "U"
 	StandardVariableTypes []string `json:"standardVariableTypes,omitempty"`
 
 	// SubaccountId: Subaccount ID of this floodlight configuration. This is
@@ -4067,6 +4559,8 @@ type FloodlightConfiguration struct {
 	UserDefinedVariableConfigurations []*UserDefinedVariableConfiguration `json:"userDefinedVariableConfigurations,omitempty"`
 }
 
+// FloodlightConfigurationsListResponse: Floodlight Configuration List
+// Response
 type FloodlightConfigurationsListResponse struct {
 	// FloodlightConfigurations: Floodlight configuration collection.
 	FloodlightConfigurations []*FloodlightConfiguration `json:"floodlightConfigurations,omitempty"`
@@ -4076,6 +4570,8 @@ type FloodlightConfigurationsListResponse struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// FloodlightReportCompatibleFields: Represents fields that are
+// compatible to be selected for a report of type "FlOODLIGHT".
 type FloodlightReportCompatibleFields struct {
 	// DimensionFilters: Dimensions which are compatible to be selected in
 	// the "dimensionFilters" section of the report.
@@ -4094,6 +4590,7 @@ type FloodlightReportCompatibleFields struct {
 	Metrics []*Metric `json:"metrics,omitempty"`
 }
 
+// FrequencyCap: Frequency Cap.
 type FrequencyCap struct {
 	// Duration: Duration of time, in seconds, for this frequency cap. The
 	// maximum duration is 90 days in seconds, or 7,776,000.
@@ -4104,6 +4601,7 @@ type FrequencyCap struct {
 	Impressions int64 `json:"impressions,omitempty,string"`
 }
 
+// FsCommand: FsCommand.
 type FsCommand struct {
 	// Left: Distance from the left of the browser.Applicable when
 	// positionOption is DISTANCE_FROM_TOP_LEFT_CORNER.
@@ -4127,6 +4625,7 @@ type FsCommand struct {
 	WindowWidth int64 `json:"windowWidth,omitempty"`
 }
 
+// GeoTargeting: Geographical Targeting.
 type GeoTargeting struct {
 	// Cities: Cities to be targeted. For each city only dartId is required.
 	// The other fields are populated automatically when the ad is inserted
@@ -4166,6 +4665,8 @@ type GeoTargeting struct {
 	Regions []*Region `json:"regions,omitempty"`
 }
 
+// InventoryItem: Represents a buy from the DoubleClick Planning
+// inventory store.
 type InventoryItem struct {
 	// AccountId: Account ID of this inventory item.
 	AccountId int64 `json:"accountId,omitempty,string"`
@@ -4236,6 +4737,7 @@ type InventoryItem struct {
 	SubaccountId int64 `json:"subaccountId,omitempty,string"`
 }
 
+// InventoryItemsListResponse: Inventory item List Response
 type InventoryItemsListResponse struct {
 	// InventoryItems: Inventory item collection
 	InventoryItems []*InventoryItem `json:"inventoryItems,omitempty"`
@@ -4249,11 +4751,14 @@ type InventoryItemsListResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// KeyValueTargetingExpression: Key Value Targeting Expression.
 type KeyValueTargetingExpression struct {
 	// Expression: Keyword expression being targeted by the ad.
 	Expression string `json:"expression,omitempty"`
 }
 
+// LandingPage: Contains information about where a user's browser is
+// taken after the user clicks an ad.
 type LandingPage struct {
 	// Default: Whether or not this landing page will be assigned to any ads
 	// or creatives that do not have a landing page assigned explicitly.
@@ -4277,6 +4782,7 @@ type LandingPage struct {
 	Url string `json:"url,omitempty"`
 }
 
+// LandingPagesListResponse: Landing Page List Response
 type LandingPagesListResponse struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "dfareporting#landingPagesListResponse".
@@ -4286,11 +4792,14 @@ type LandingPagesListResponse struct {
 	LandingPages []*LandingPage `json:"landingPages,omitempty"`
 }
 
+// LastModifiedInfo: Modification timestamp.
 type LastModifiedInfo struct {
 	// Time: Timestamp of the last change in milliseconds since epoch.
 	Time int64 `json:"time,omitempty,string"`
 }
 
+// ListPopulationClause: A group clause made up of list population terms
+// representing constraints joined by ORs.
 type ListPopulationClause struct {
 	// Terms: Terms of this list population clause. Each clause is made up
 	// of list population terms representing constraints and are joined by
@@ -4298,6 +4807,7 @@ type ListPopulationClause struct {
 	Terms []*ListPopulationTerm `json:"terms,omitempty"`
 }
 
+// ListPopulationRule: Remarketing List Population Rule.
 type ListPopulationRule struct {
 	// FloodlightActivityId: Floodlight activity ID associated with this
 	// rule. This field can be left blank.
@@ -4313,6 +4823,7 @@ type ListPopulationRule struct {
 	ListPopulationClauses []*ListPopulationClause `json:"listPopulationClauses,omitempty"`
 }
 
+// ListPopulationTerm: Remarketing List Population Rule Term.
 type ListPopulationTerm struct {
 	// Contains: Will be true if the term should check if the user is in the
 	// list and false if the term should check if the user is not in the
@@ -4372,12 +4883,14 @@ type ListPopulationTerm struct {
 	VariableName string `json:"variableName,omitempty"`
 }
 
+// ListTargetingExpression: Remarketing List Targeting Expression.
 type ListTargetingExpression struct {
 	// Expression: Expression describing which lists are being targeted by
 	// the ad.
 	Expression string `json:"expression,omitempty"`
 }
 
+// LookbackConfiguration: Lookback configuration settings.
 type LookbackConfiguration struct {
 	// ClickDuration: Lookback window, in days, from the last time a given
 	// user clicked on one of your ads. If you enter 0, clicks will not be
@@ -4393,6 +4906,7 @@ type LookbackConfiguration struct {
 	PostImpressionActivitiesDuration int64 `json:"postImpressionActivitiesDuration,omitempty"`
 }
 
+// Metric: Represents a metric.
 type Metric struct {
 	// Kind: The kind of resource this is, in this case dfareporting#metric.
 	Kind string `json:"kind,omitempty"`
@@ -4401,6 +4915,8 @@ type Metric struct {
 	Name string `json:"name,omitempty"`
 }
 
+// Metro: Contains information about a metro region that can be targeted
+// by ads.
 type Metro struct {
 	// CountryCode: Country code of the country to which this metro region
 	// belongs.
@@ -4429,6 +4945,7 @@ type Metro struct {
 	Name string `json:"name,omitempty"`
 }
 
+// MetrosListResponse: Metro List Response
 type MetrosListResponse struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "dfareporting#metrosListResponse".
@@ -4438,6 +4955,8 @@ type MetrosListResponse struct {
 	Metros []*Metro `json:"metros,omitempty"`
 }
 
+// MobileCarrier: Contains information about a mobile carrier that can
+// be targeted by ads.
 type MobileCarrier struct {
 	// CountryCode: Country code of the country to which this mobile carrier
 	// belongs.
@@ -4458,6 +4977,7 @@ type MobileCarrier struct {
 	Name string `json:"name,omitempty"`
 }
 
+// MobileCarriersListResponse: Mobile Carrier List Response
 type MobileCarriersListResponse struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "dfareporting#mobileCarriersListResponse".
@@ -4467,6 +4987,7 @@ type MobileCarriersListResponse struct {
 	MobileCarriers []*MobileCarrier `json:"mobileCarriers,omitempty"`
 }
 
+// ObjectFilter: Object Filter.
 type ObjectFilter struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "dfareporting#objectFilter".
@@ -4488,6 +5009,7 @@ type ObjectFilter struct {
 	Status string `json:"status,omitempty"`
 }
 
+// OffsetPosition: Offset Position.
 type OffsetPosition struct {
 	// Left: Offset distance from left side of an asset or a window.
 	Left int64 `json:"left,omitempty"`
@@ -4496,6 +5018,7 @@ type OffsetPosition struct {
 	Top int64 `json:"top,omitempty"`
 }
 
+// OmnitureSettings: Omniture Integration Settings.
 type OmnitureSettings struct {
 	// OmnitureCostDataEnabled: Whether placement cost data will be sent to
 	// Omniture. This property can be enabled only if
@@ -4508,6 +5031,8 @@ type OmnitureSettings struct {
 	OmnitureIntegrationEnabled bool `json:"omnitureIntegrationEnabled,omitempty"`
 }
 
+// OperatingSystem: Contains information about an operating system that
+// can be targeted by ads.
 type OperatingSystem struct {
 	// DartId: DART ID of this operating system. This is the ID used for
 	// targeting.
@@ -4527,6 +5052,8 @@ type OperatingSystem struct {
 	Name string `json:"name,omitempty"`
 }
 
+// OperatingSystemVersion: Contains information about a particular
+// version of an operating system that can be targeted by ads.
 type OperatingSystemVersion struct {
 	// Id: ID of this operating system version.
 	Id int64 `json:"id,omitempty,string"`
@@ -4550,6 +5077,8 @@ type OperatingSystemVersion struct {
 	OperatingSystem *OperatingSystem `json:"operatingSystem,omitempty"`
 }
 
+// OperatingSystemVersionsListResponse: Operating System Version List
+// Response
 type OperatingSystemVersionsListResponse struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "dfareporting#operatingSystemVersionsListResponse".
@@ -4559,6 +5088,7 @@ type OperatingSystemVersionsListResponse struct {
 	OperatingSystemVersions []*OperatingSystemVersion `json:"operatingSystemVersions,omitempty"`
 }
 
+// OperatingSystemsListResponse: Operating System List Response
 type OperatingSystemsListResponse struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "dfareporting#operatingSystemsListResponse".
@@ -4568,6 +5098,7 @@ type OperatingSystemsListResponse struct {
 	OperatingSystems []*OperatingSystem `json:"operatingSystems,omitempty"`
 }
 
+// OptimizationActivity: Creative optimization activity.
 type OptimizationActivity struct {
 	// FloodlightActivityId: Floodlight activity ID of this optimization
 	// activity. This is a required field.
@@ -4583,6 +5114,7 @@ type OptimizationActivity struct {
 	Weight int64 `json:"weight,omitempty"`
 }
 
+// Order: Describes properties of a DoubleClick Planning order.
 type Order struct {
 	// AccountId: Account ID of this order.
 	AccountId int64 `json:"accountId,omitempty,string"`
@@ -4649,6 +5181,7 @@ type Order struct {
 	TermsAndConditions string `json:"termsAndConditions,omitempty"`
 }
 
+// OrderContact: Contact of an order.
 type OrderContact struct {
 	// ContactInfo: Free-form information about this contact. It could be
 	// any information related to this contact in addition to type, title,
@@ -4674,6 +5207,8 @@ type OrderContact struct {
 	SignatureUserProfileId int64 `json:"signatureUserProfileId,omitempty,string"`
 }
 
+// OrderDocument: Contains properties of a DoubleClick Planning order
+// document.
 type OrderDocument struct {
 	// AccountId: Account ID of this order document.
 	AccountId int64 `json:"accountId,omitempty,string"`
@@ -4729,6 +5264,7 @@ type OrderDocument struct {
 	Type string `json:"type,omitempty"`
 }
 
+// OrderDocumentsListResponse: Order document List Response
 type OrderDocumentsListResponse struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "dfareporting#orderDocumentsListResponse".
@@ -4742,6 +5278,7 @@ type OrderDocumentsListResponse struct {
 	OrderDocuments []*OrderDocument `json:"orderDocuments,omitempty"`
 }
 
+// OrdersListResponse: Order List Response
 type OrdersListResponse struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "dfareporting#ordersListResponse".
@@ -4755,6 +5292,8 @@ type OrdersListResponse struct {
 	Orders []*Order `json:"orders,omitempty"`
 }
 
+// PathToConversionReportCompatibleFields: Represents fields that are
+// compatible to be selected for a report of type "PATH_TO_CONVERSION".
 type PathToConversionReportCompatibleFields struct {
 	// ConversionDimensions: Conversion dimensions which are compatible to
 	// be selected in the "conversionDimensions" section of the report.
@@ -4779,6 +5318,7 @@ type PathToConversionReportCompatibleFields struct {
 	PerInteractionDimensions []*Dimension `json:"perInteractionDimensions,omitempty"`
 }
 
+// Placement: Contains properties of a placement.
 type Placement struct {
 	// AccountId: Account ID of this placement. This field can be left
 	// blank.
@@ -4958,12 +5498,28 @@ type Placement struct {
 	// - "PLACEMENT_TAG_TRACKING"
 	// - "PLACEMENT_TAG_TRACKING_IFRAME"
 	// - "PLACEMENT_TAG_TRACKING_JAVASCRIPT"
+	//
+	// Possible values:
+	//   "PLACEMENT_TAG_CLICK_COMMANDS"
+	//   "PLACEMENT_TAG_IFRAME_ILAYER"
+	//   "PLACEMENT_TAG_IFRAME_JAVASCRIPT"
+	//   "PLACEMENT_TAG_INSTREAM_VIDEO_PREFETCH"
+	//   "PLACEMENT_TAG_INTERNAL_REDIRECT"
+	//   "PLACEMENT_TAG_INTERSTITIAL_IFRAME_JAVASCRIPT"
+	//   "PLACEMENT_TAG_INTERSTITIAL_INTERNAL_REDIRECT"
+	//   "PLACEMENT_TAG_INTERSTITIAL_JAVASCRIPT"
+	//   "PLACEMENT_TAG_JAVASCRIPT"
+	//   "PLACEMENT_TAG_STANDARD"
+	//   "PLACEMENT_TAG_TRACKING"
+	//   "PLACEMENT_TAG_TRACKING_IFRAME"
+	//   "PLACEMENT_TAG_TRACKING_JAVASCRIPT"
 	TagFormats []string `json:"tagFormats,omitempty"`
 
 	// TagSetting: Tag settings for this placement.
 	TagSetting *TagSetting `json:"tagSetting,omitempty"`
 }
 
+// PlacementAssignment: Placement Assignment.
 type PlacementAssignment struct {
 	// Active: Whether this placement assignment is active. When true, the
 	// placement will be included in the ad's rotation.
@@ -4983,6 +5539,7 @@ type PlacementAssignment struct {
 	SslRequired bool `json:"sslRequired,omitempty"`
 }
 
+// PlacementGroup: Contains properties of a package or roadblock.
 type PlacementGroup struct {
 	// AccountId: Account ID of this placement group. This is a read-only
 	// field that can be left blank.
@@ -5104,6 +5661,7 @@ type PlacementGroup struct {
 	SubaccountId int64 `json:"subaccountId,omitempty,string"`
 }
 
+// PlacementGroupsListResponse: Placement Group List Response
 type PlacementGroupsListResponse struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "dfareporting#placementGroupsListResponse".
@@ -5117,6 +5675,7 @@ type PlacementGroupsListResponse struct {
 	PlacementGroups []*PlacementGroup `json:"placementGroups,omitempty"`
 }
 
+// PlacementStrategiesListResponse: Placement Strategy List Response
 type PlacementStrategiesListResponse struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "dfareporting#placementStrategiesListResponse".
@@ -5130,6 +5689,7 @@ type PlacementStrategiesListResponse struct {
 	PlacementStrategies []*PlacementStrategy `json:"placementStrategies,omitempty"`
 }
 
+// PlacementStrategy: Contains properties of a placement strategy.
 type PlacementStrategy struct {
 	// AccountId: Account ID of this placement strategy.This is a read-only
 	// field that can be left blank.
@@ -5149,6 +5709,7 @@ type PlacementStrategy struct {
 	Name string `json:"name,omitempty"`
 }
 
+// PlacementTag: Placement Tag
 type PlacementTag struct {
 	// PlacementId: Placement ID
 	PlacementId int64 `json:"placementId,omitempty,string"`
@@ -5157,6 +5718,7 @@ type PlacementTag struct {
 	TagDatas []*TagData `json:"tagDatas,omitempty"`
 }
 
+// PlacementsGenerateTagsResponse: Placement GenerateTags Response
 type PlacementsGenerateTagsResponse struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "dfareporting#placementsGenerateTagsResponse".
@@ -5166,6 +5728,7 @@ type PlacementsGenerateTagsResponse struct {
 	PlacementTags []*PlacementTag `json:"placementTags,omitempty"`
 }
 
+// PlacementsListResponse: Placement List Response
 type PlacementsListResponse struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "dfareporting#placementsListResponse".
@@ -5179,6 +5742,8 @@ type PlacementsListResponse struct {
 	Placements []*Placement `json:"placements,omitempty"`
 }
 
+// PlatformType: Contains information about a platform type that can be
+// targeted by ads.
 type PlatformType struct {
 	// Id: ID of this platform type.
 	Id int64 `json:"id,omitempty,string"`
@@ -5191,6 +5756,7 @@ type PlatformType struct {
 	Name string `json:"name,omitempty"`
 }
 
+// PlatformTypesListResponse: Platform Type List Response
 type PlatformTypesListResponse struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "dfareporting#platformTypesListResponse".
@@ -5200,6 +5766,7 @@ type PlatformTypesListResponse struct {
 	PlatformTypes []*PlatformType `json:"platformTypes,omitempty"`
 }
 
+// PopupWindowProperties: Popup Window Properties.
 type PopupWindowProperties struct {
 	// Dimension: Popup dimension for a creative. This is a read-only field.
 	// Applicable to the following creative types: all RICH_MEDIA and all
@@ -5237,6 +5804,8 @@ type PopupWindowProperties struct {
 	Title string `json:"title,omitempty"`
 }
 
+// PostalCode: Contains information about a postal code that can be
+// targeted by ads.
 type PostalCode struct {
 	// Code: Postal code. This is equivalent to the id field.
 	Code string `json:"code,omitempty"`
@@ -5257,6 +5826,7 @@ type PostalCode struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// PostalCodesListResponse: Postal Code List Response
 type PostalCodesListResponse struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "dfareporting#postalCodesListResponse".
@@ -5266,6 +5836,7 @@ type PostalCodesListResponse struct {
 	PostalCodes []*PostalCode `json:"postalCodes,omitempty"`
 }
 
+// Pricing: Pricing Information
 type Pricing struct {
 	// CapCostType: Cap cost type of this inventory item.
 	//
@@ -5313,6 +5884,7 @@ type Pricing struct {
 	StartDate string `json:"startDate,omitempty"`
 }
 
+// PricingSchedule: Pricing Schedule
 type PricingSchedule struct {
 	// CapCostOption: Placement cap cost option.
 	//
@@ -5369,6 +5941,7 @@ type PricingSchedule struct {
 	TestingStartDate string `json:"testingStartDate,omitempty"`
 }
 
+// PricingSchedulePricingPeriod: Pricing Period
 type PricingSchedulePricingPeriod struct {
 	// EndDate: Pricing period end date. This date must be later than, or
 	// the same day as, the pricing period start date, but not later than
@@ -5395,6 +5968,7 @@ type PricingSchedulePricingPeriod struct {
 	Units int64 `json:"units,omitempty,string"`
 }
 
+// ProgrammaticSetting: Programmatic Setting
 type ProgrammaticSetting struct {
 	// AdxDealIds: Adx deal IDs assigned to the placement.
 	AdxDealIds googleapi.Int64s `json:"adxDealIds,omitempty"`
@@ -5416,6 +5990,7 @@ type ProgrammaticSetting struct {
 	TraffickerEmails []string `json:"traffickerEmails,omitempty"`
 }
 
+// Project: Contains properties of a DoubleClick Planning project.
 type Project struct {
 	// AccountId: Account ID of this project.
 	AccountId int64 `json:"accountId,omitempty,string"`
@@ -5501,6 +6076,7 @@ type Project struct {
 	TargetImpressions int64 `json:"targetImpressions,omitempty,string"`
 }
 
+// ProjectsListResponse: Project List Response
 type ProjectsListResponse struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "dfareporting#projectsListResponse".
@@ -5514,6 +6090,8 @@ type ProjectsListResponse struct {
 	Projects []*Project `json:"projects,omitempty"`
 }
 
+// ReachReportCompatibleFields: Represents fields that are compatible to
+// be selected for a report of type "REACH".
 type ReachReportCompatibleFields struct {
 	// DimensionFilters: Dimensions which are compatible to be selected in
 	// the "dimensionFilters" section of the report.
@@ -5541,6 +6119,7 @@ type ReachReportCompatibleFields struct {
 	ReachByFrequencyMetrics []*Metric `json:"reachByFrequencyMetrics,omitempty"`
 }
 
+// Recipient: Represents a recipient.
 type Recipient struct {
 	// DeliveryType: The delivery type for the recipient.
 	//
@@ -5557,6 +6136,8 @@ type Recipient struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// Region: Contains information about a region that can be targeted by
+// ads.
 type Region struct {
 	// CountryCode: Country code of the country to which this region
 	// belongs.
@@ -5579,6 +6160,7 @@ type Region struct {
 	RegionCode string `json:"regionCode,omitempty"`
 }
 
+// RegionsListResponse: Region List Response
 type RegionsListResponse struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "dfareporting#regionsListResponse".
@@ -5588,6 +6170,13 @@ type RegionsListResponse struct {
 	Regions []*Region `json:"regions,omitempty"`
 }
 
+// RemarketingList: Contains properties of a remarketing list.
+// Remarketing enables you to create lists of users who have performed
+// specific actions on a site, then target ads to members of those
+// lists. This resource can be used to manage remarketing lists that are
+// owned by your advertisers. To see all remarketing lists that are
+// visible to your advertisers, including those that are shared to your
+// advertiser or account, use the TargetableRemarketingList resource.
 type RemarketingList struct {
 	// AccountId: Account ID of this remarketing list. This is a read-only,
 	// auto-generated field that is only returned in GET requests.
@@ -5646,6 +6235,10 @@ type RemarketingList struct {
 	SubaccountId int64 `json:"subaccountId,omitempty,string"`
 }
 
+// RemarketingListShare: Contains properties of a remarketing list's
+// sharing information. Sharing allows other accounts or advertisers to
+// target to your remarketing lists. This resource can be used to manage
+// remarketing list sharing to other accounts and advertisers.
 type RemarketingListShare struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "dfareporting#remarketingListShare".
@@ -5663,6 +6256,7 @@ type RemarketingListShare struct {
 	SharedAdvertiserIds googleapi.Int64s `json:"sharedAdvertiserIds,omitempty"`
 }
 
+// RemarketingListsListResponse: Remarketing list response
 type RemarketingListsListResponse struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "dfareporting#remarketingListsListResponse".
@@ -5676,6 +6270,7 @@ type RemarketingListsListResponse struct {
 	RemarketingLists []*RemarketingList `json:"remarketingLists,omitempty"`
 }
 
+// Report: Represents a Report resource.
 type Report struct {
 	// AccountId: The account ID to which this report belongs.
 	AccountId int64 `json:"accountId,omitempty,string"`
@@ -5754,6 +6349,7 @@ type Report struct {
 	Type string `json:"type,omitempty"`
 }
 
+// ReportCriteria: The report criteria for a report of type "STANDARD".
 type ReportCriteria struct {
 	// Activities: Activity group.
 	Activities *Activities `json:"activities,omitempty"`
@@ -5778,6 +6374,8 @@ type ReportCriteria struct {
 	MetricNames []string `json:"metricNames,omitempty"`
 }
 
+// ReportCrossDimensionReachCriteria: The report criteria for a report
+// of type "CROSS_DIMENSION_REACH".
 type ReportCrossDimensionReachCriteria struct {
 	// Breakdown: The list of dimensions the report should include.
 	Breakdown []*SortedDimension `json:"breakdown,omitempty"`
@@ -5809,6 +6407,7 @@ type ReportCrossDimensionReachCriteria struct {
 	Pivoted bool `json:"pivoted,omitempty"`
 }
 
+// ReportDelivery: The report's email delivery settings.
 type ReportDelivery struct {
 	// EmailOwner: Whether the report should be emailed to the report owner.
 	EmailOwner bool `json:"emailOwner,omitempty"`
@@ -5828,6 +6427,8 @@ type ReportDelivery struct {
 	Recipients []*Recipient `json:"recipients,omitempty"`
 }
 
+// ReportFloodlightCriteria: The report criteria for a report of type
+// "FLOODLIGHT".
 type ReportFloodlightCriteria struct {
 	// CustomRichMediaEvents: The list of custom rich media events to
 	// include.
@@ -5858,6 +6459,8 @@ type ReportFloodlightCriteria struct {
 	ReportProperties *ReportFloodlightCriteriaReportProperties `json:"reportProperties,omitempty"`
 }
 
+// ReportFloodlightCriteriaReportProperties: The properties of the
+// report.
 type ReportFloodlightCriteriaReportProperties struct {
 	// IncludeAttributedIPConversions: Include conversions that have no
 	// cookie, but do have an exposure path.
@@ -5877,6 +6480,8 @@ type ReportFloodlightCriteriaReportProperties struct {
 	IncludeUnattributedIPConversions bool `json:"includeUnattributedIPConversions,omitempty"`
 }
 
+// ReportPathToConversionCriteria: The report criteria for a report of
+// type "PATH_TO_CONVERSION".
 type ReportPathToConversionCriteria struct {
 	// ActivityFilters: The list of 'dfa:activity' values to filter on.
 	ActivityFilters []*DimensionValue `json:"activityFilters,omitempty"`
@@ -5913,6 +6518,8 @@ type ReportPathToConversionCriteria struct {
 	ReportProperties *ReportPathToConversionCriteriaReportProperties `json:"reportProperties,omitempty"`
 }
 
+// ReportPathToConversionCriteriaReportProperties: The properties of the
+// report.
 type ReportPathToConversionCriteriaReportProperties struct {
 	// ClicksLookbackWindow: DFA checks to see if a click interaction
 	// occurred within the specified period of time before a conversion. By
@@ -5965,6 +6572,8 @@ type ReportPathToConversionCriteriaReportProperties struct {
 	PivotOnInteractionPath bool `json:"pivotOnInteractionPath,omitempty"`
 }
 
+// ReportReachCriteria: The report criteria for a report of type
+// "REACH".
 type ReportReachCriteria struct {
 	// Activities: Activity group.
 	Activities *Activities `json:"activities,omitempty"`
@@ -5997,6 +6606,9 @@ type ReportReachCriteria struct {
 	ReachByFrequencyMetricNames []string `json:"reachByFrequencyMetricNames,omitempty"`
 }
 
+// ReportSchedule: The report's schedule. Can only be set if the
+// report's 'dateRange' is a relative date range and the relative date
+// range is not "TODAY".
 type ReportSchedule struct {
 	// Active: Whether the schedule is active or not. Must be set to either
 	// true or false.
@@ -6021,6 +6633,15 @@ type ReportSchedule struct {
 
 	// RepeatsOnWeekDays: List of week days "WEEKLY" on which scheduled
 	// reports should run.
+	//
+	// Possible values:
+	//   "FRIDAY"
+	//   "MONDAY"
+	//   "SATURDAY"
+	//   "SUNDAY"
+	//   "THURSDAY"
+	//   "TUESDAY"
+	//   "WEDNESDAY"
 	RepeatsOnWeekDays []string `json:"repeatsOnWeekDays,omitempty"`
 
 	// RunsOnDayOfMonth: Enum to define for "MONTHLY" scheduled reports
@@ -6041,6 +6662,8 @@ type ReportSchedule struct {
 	StartDate string `json:"startDate,omitempty"`
 }
 
+// ReportCompatibleFields: Represents fields that are compatible to be
+// selected for a report of type "STANDARD".
 type ReportCompatibleFields struct {
 	// DimensionFilters: Dimensions which are compatible to be selected in
 	// the "dimensionFilters" section of the report.
@@ -6064,6 +6687,7 @@ type ReportCompatibleFields struct {
 	PivotedActivityMetrics []*Metric `json:"pivotedActivityMetrics,omitempty"`
 }
 
+// ReportList: Represents the list of reports.
 type ReportList struct {
 	// Etag: The eTag of this response for caching purposes.
 	Etag string `json:"etag,omitempty"`
@@ -6081,6 +6705,7 @@ type ReportList struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// ReportsConfiguration: Reporting Configuration
 type ReportsConfiguration struct {
 	// ExposureToConversionEnabled: Whether the exposure to conversion
 	// report is enabled. This report shows detailed pathway information on
@@ -6113,6 +6738,7 @@ type ReportsConfiguration struct {
 	ReportGenerationTimeZoneId int64 `json:"reportGenerationTimeZoneId,omitempty,string"`
 }
 
+// RichMediaExitOverride: Rich Media Exit Override.
 type RichMediaExitOverride struct {
 	// CustomExitUrl: Click-through URL to override the default exit URL.
 	// Applicable if the useCustomExitUrl field is set to true.
@@ -6126,6 +6752,7 @@ type RichMediaExitOverride struct {
 	UseCustomExitUrl bool `json:"useCustomExitUrl,omitempty"`
 }
 
+// Site: Contains properties of a site.
 type Site struct {
 	// AccountId: Account ID of this site. This is a read-only field that
 	// can be left blank.
@@ -6175,6 +6802,7 @@ type Site struct {
 	SubaccountId int64 `json:"subaccountId,omitempty,string"`
 }
 
+// SiteContact: Site Contact
 type SiteContact struct {
 	// Address: Address of this site contact.
 	Address string `json:"address,omitempty"`
@@ -6206,6 +6834,7 @@ type SiteContact struct {
 	Title string `json:"title,omitempty"`
 }
 
+// SiteSettings: Site Settings
 type SiteSettings struct {
 	// ActiveViewOptOut: Whether active view creatives are disabled for this
 	// site.
@@ -6229,6 +6858,7 @@ type SiteSettings struct {
 	TagSetting *TagSetting `json:"tagSetting,omitempty"`
 }
 
+// SitesListResponse: Site List Response
 type SitesListResponse struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "dfareporting#sitesListResponse".
@@ -6242,6 +6872,8 @@ type SitesListResponse struct {
 	Sites []*Site `json:"sites,omitempty"`
 }
 
+// Size: Represents the dimensions of ads, placements, creatives, or
+// creative assets.
 type Size struct {
 	// Height: Height of this size.
 	Height int64 `json:"height,omitempty"`
@@ -6260,6 +6892,7 @@ type Size struct {
 	Width int64 `json:"width,omitempty"`
 }
 
+// SizesListResponse: Size List Response
 type SizesListResponse struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "dfareporting#sizesListResponse".
@@ -6269,6 +6902,7 @@ type SizesListResponse struct {
 	Sizes []*Size `json:"sizes,omitempty"`
 }
 
+// SortedDimension: Represents a sorted dimension.
 type SortedDimension struct {
 	// Kind: The kind of resource this is, in this case
 	// dfareporting#sortedDimension.
@@ -6285,6 +6919,7 @@ type SortedDimension struct {
 	SortOrder string `json:"sortOrder,omitempty"`
 }
 
+// Subaccount: Contains properties of a DCM subaccount.
 type Subaccount struct {
 	// AccountId: ID of the account that contains this subaccount. This is a
 	// read-only field that can be left blank.
@@ -6307,6 +6942,7 @@ type Subaccount struct {
 	Name string `json:"name,omitempty"`
 }
 
+// SubaccountsListResponse: Subaccount List Response
 type SubaccountsListResponse struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "dfareporting#subaccountsListResponse".
@@ -6320,6 +6956,7 @@ type SubaccountsListResponse struct {
 	Subaccounts []*Subaccount `json:"subaccounts,omitempty"`
 }
 
+// TagData: Placement Tag Data
 type TagData struct {
 	// AdId: Ad associated with this placement tag.
 	AdId int64 `json:"adId,omitempty,string"`
@@ -6352,6 +6989,7 @@ type TagData struct {
 	ImpressionTag string `json:"impressionTag,omitempty"`
 }
 
+// TagSetting: Tag Settings
 type TagSetting struct {
 	// AdditionalKeyValues: Additional key-values to be included in tags.
 	// Each key-value pair must be of the form key=value, and pairs must be
@@ -6379,6 +7017,7 @@ type TagSetting struct {
 	KeywordOption string `json:"keywordOption,omitempty"`
 }
 
+// TagSettings: Dynamic and Image Tag Settings.
 type TagSettings struct {
 	// DynamicTagEnabled: Whether dynamic floodlight tags are enabled.
 	DynamicTagEnabled bool `json:"dynamicTagEnabled,omitempty"`
@@ -6387,6 +7026,7 @@ type TagSettings struct {
 	ImageTagEnabled bool `json:"imageTagEnabled,omitempty"`
 }
 
+// TargetWindow: Target Window.
 type TargetWindow struct {
 	// CustomHtml: User-entered value.
 	CustomHtml string `json:"customHtml,omitempty"`
@@ -6401,6 +7041,15 @@ type TargetWindow struct {
 	TargetWindowOption string `json:"targetWindowOption,omitempty"`
 }
 
+// TargetableRemarketingList: Contains properties of a targetable
+// remarketing list. Remarketing enables you to create lists of users
+// who have performed specific actions on a site, then target ads to
+// members of those lists. This resource is a read-only view of a
+// remarketing list to be used to faciliate targeting ads to specific
+// lists. Remarketing lists that are owned by your advertisers and those
+// that are shared to your advertisers or account are accessible via
+// this resource. To manage remarketing lists that are owned by your
+// advertisers, use the RemarketingList resource.
 type TargetableRemarketingList struct {
 	// AccountId: Account ID of this remarketing list. This is a read-only,
 	// auto-generated field that is only returned in GET requests.
@@ -6456,6 +7105,8 @@ type TargetableRemarketingList struct {
 	SubaccountId int64 `json:"subaccountId,omitempty,string"`
 }
 
+// TargetableRemarketingListsListResponse: Targetable remarketing list
+// response
 type TargetableRemarketingListsListResponse struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "dfareporting#targetableRemarketingListsListResponse".
@@ -6469,6 +7120,7 @@ type TargetableRemarketingListsListResponse struct {
 	TargetableRemarketingLists []*TargetableRemarketingList `json:"targetableRemarketingLists,omitempty"`
 }
 
+// TechnologyTargeting: Technology Targeting.
 type TechnologyTargeting struct {
 	// Browsers: Browsers that this ad targets. For each browser either set
 	// browserVersionId or dartId along with the version numbers. If both
@@ -6510,6 +7162,7 @@ type TechnologyTargeting struct {
 	PlatformTypes []*PlatformType `json:"platformTypes,omitempty"`
 }
 
+// ThirdPartyTrackingUrl: Third-party Tracking URL.
 type ThirdPartyTrackingUrl struct {
 	// ThirdPartyUrlType: Third-party URL type for in-stream video
 	// creatives.
@@ -6538,6 +7191,8 @@ type ThirdPartyTrackingUrl struct {
 	Url string `json:"url,omitempty"`
 }
 
+// UserDefinedVariableConfiguration: User Defined Variable
+// configuration.
 type UserDefinedVariableConfiguration struct {
 	// DataType: Data type for the variable. This is a required field.
 	//
@@ -6657,6 +7312,7 @@ type UserDefinedVariableConfiguration struct {
 	VariableType string `json:"variableType,omitempty"`
 }
 
+// UserProfile: Represents a UserProfile resource.
 type UserProfile struct {
 	// AccountId: The account ID to which this profile belongs.
 	AccountId int64 `json:"accountId,omitempty,string"`
@@ -6686,6 +7342,7 @@ type UserProfile struct {
 	UserName string `json:"userName,omitempty"`
 }
 
+// UserProfileList: Represents the list of user profiles.
 type UserProfileList struct {
 	// Etag: The eTag of this response for caching purposes.
 	Etag string `json:"etag,omitempty"`
@@ -6698,6 +7355,8 @@ type UserProfileList struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// UserRole: Contains properties of auser role, which is used to manage
+// user access.
 type UserRole struct {
 	// AccountId: Account ID of this user role. This is a read-only field
 	// that can be left blank.
@@ -6735,6 +7394,7 @@ type UserRole struct {
 	SubaccountId int64 `json:"subaccountId,omitempty,string"`
 }
 
+// UserRolePermission: Contains properties of a user role permission.
 type UserRolePermission struct {
 	// Availability: Levels of availability for a user role permission.
 	//
@@ -6761,6 +7421,8 @@ type UserRolePermission struct {
 	PermissionGroupId int64 `json:"permissionGroupId,omitempty,string"`
 }
 
+// UserRolePermissionGroup: Represents a grouping of related user role
+// permissions.
 type UserRolePermissionGroup struct {
 	// Id: ID of this user role permission.
 	Id int64 `json:"id,omitempty,string"`
@@ -6773,6 +7435,8 @@ type UserRolePermissionGroup struct {
 	Name string `json:"name,omitempty"`
 }
 
+// UserRolePermissionGroupsListResponse: User Role Permission Group List
+// Response
 type UserRolePermissionGroupsListResponse struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "dfareporting#userRolePermissionGroupsListResponse".
@@ -6782,6 +7446,7 @@ type UserRolePermissionGroupsListResponse struct {
 	UserRolePermissionGroups []*UserRolePermissionGroup `json:"userRolePermissionGroups,omitempty"`
 }
 
+// UserRolePermissionsListResponse: User Role Permission List Response
 type UserRolePermissionsListResponse struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "dfareporting#userRolePermissionsListResponse".
@@ -6791,6 +7456,7 @@ type UserRolePermissionsListResponse struct {
 	UserRolePermissions []*UserRolePermission `json:"userRolePermissions,omitempty"`
 }
 
+// UserRolesListResponse: User Role List Response
 type UserRolesListResponse struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "dfareporting#userRolesListResponse".

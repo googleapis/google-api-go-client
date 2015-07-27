@@ -155,6 +155,8 @@ type TimelineAttachmentsService struct {
 	s *Service
 }
 
+// Account: Represents an account passed into the Account Manager on
+// Glass.
 type Account struct {
 	AuthTokens []*AuthToken `json:"authTokens,omitempty"`
 
@@ -165,6 +167,8 @@ type Account struct {
 	UserData []*UserData `json:"userData,omitempty"`
 }
 
+// Attachment: Represents media content, such as a photo, that can be
+// attached to a timeline item.
 type Attachment struct {
 	// ContentType: The MIME type of the attachment.
 	ContentType string `json:"contentType,omitempty"`
@@ -181,6 +185,8 @@ type Attachment struct {
 	IsProcessingContent bool `json:"isProcessingContent,omitempty"`
 }
 
+// AttachmentsListResponse: A list of Attachments. This is the response
+// from the server to GET requests on the attachments collection.
 type AttachmentsListResponse struct {
 	// Items: The list of attachments.
 	Items []*Attachment `json:"items,omitempty"`
@@ -195,6 +201,7 @@ type AuthToken struct {
 	Type string `json:"type,omitempty"`
 }
 
+// Command: A single menu command that is part of a Contact.
 type Command struct {
 	// Type: The type of operation this command corresponds to. Allowed
 	// values are:
@@ -205,6 +212,8 @@ type Command struct {
 	Type string `json:"type,omitempty"`
 }
 
+// Contact: A person or group that can be used as a creator or a
+// contact.
 type Contact struct {
 	// AcceptCommands: A list of voice menu commands that a contact can
 	// handle. Glass shows up to three contacts for each voice menu command.
@@ -267,6 +276,9 @@ type Contact struct {
 	Type string `json:"type,omitempty"`
 }
 
+// ContactsListResponse: A list of Contacts representing contacts. This
+// is the response from the server to GET requests on the contacts
+// collection.
 type ContactsListResponse struct {
 	// Items: Contact list.
 	Items []*Contact `json:"items,omitempty"`
@@ -275,6 +287,8 @@ type ContactsListResponse struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// Location: A geographic location that can be associated with a
+// timeline item.
 type Location struct {
 	// Accuracy: The accuracy of the location fix in meters.
 	Accuracy float64 `json:"accuracy,omitempty"`
@@ -303,6 +317,8 @@ type Location struct {
 	Timestamp string `json:"timestamp,omitempty"`
 }
 
+// LocationsListResponse: A list of Locations. This is the response from
+// the server to GET requests on the locations collection.
 type LocationsListResponse struct {
 	// Items: The list of locations.
 	Items []*Location `json:"items,omitempty"`
@@ -311,6 +327,8 @@ type LocationsListResponse struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// MenuItem: A custom menu item that can be presented to the user by a
+// timeline item.
 type MenuItem struct {
 	// Action: Controls the behavior when the user picks the menu option.
 	// Allowed values are:
@@ -381,6 +399,7 @@ type MenuItem struct {
 	Values []*MenuValue `json:"values,omitempty"`
 }
 
+// MenuValue: A single value that is part of a MenuItem.
 type MenuValue struct {
 	// DisplayName: The name to display for the menu item. If you specify
 	// this property for a built-in menu item, the default contextual voice
@@ -400,6 +419,7 @@ type MenuValue struct {
 	State string `json:"state,omitempty"`
 }
 
+// Notification: A notification delivered by the API.
 type Notification struct {
 	// Collection: The collection that generated the notification.
 	Collection string `json:"collection,omitempty"`
@@ -423,6 +443,8 @@ type Notification struct {
 	VerifyToken string `json:"verifyToken,omitempty"`
 }
 
+// NotificationConfig: Controls how notifications for a timeline item
+// are presented to the user.
 type NotificationConfig struct {
 	// DeliveryTime: The time at which the notification should be delivered.
 	DeliveryTime string `json:"deliveryTime,omitempty"`
@@ -434,6 +456,7 @@ type NotificationConfig struct {
 	Level string `json:"level,omitempty"`
 }
 
+// Setting: A setting for Glass.
 type Setting struct {
 	// Id: The setting's ID. The following IDs are valid:
 	// - locale - The key to the user’s language/locale (BCP 47
@@ -450,6 +473,7 @@ type Setting struct {
 	Value string `json:"value,omitempty"`
 }
 
+// Subscription: A subscription to events on a collection.
 type Subscription struct {
 	// CallbackUrl: The URL where notifications should be delivered (must
 	// start with https://).
@@ -494,6 +518,9 @@ type Subscription struct {
 	VerifyToken string `json:"verifyToken,omitempty"`
 }
 
+// SubscriptionsListResponse: A list of Subscriptions. This is the
+// response from the server to GET requests on the subscription
+// collection.
 type SubscriptionsListResponse struct {
 	// Items: The list of subscriptions.
 	Items []*Subscription `json:"items,omitempty"`
@@ -502,6 +529,8 @@ type SubscriptionsListResponse struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// TimelineItem: Each item in the user's timeline is represented as a
+// TimelineItem JSON structure, described below.
 type TimelineItem struct {
 	// Attachments: A list of media attachments associated with this item.
 	// As a convenience, you can refer to attachments in your HTML payloads
@@ -667,6 +696,8 @@ type TimelineItem struct {
 	Updated string `json:"updated,omitempty"`
 }
 
+// TimelineListResponse: A list of timeline items. This is the response
+// from the server to GET requests on the timeline collection.
 type TimelineListResponse struct {
 	// Items: Items in the timeline.
 	Items []*TimelineItem `json:"items,omitempty"`
@@ -679,6 +710,8 @@ type TimelineListResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// UserAction: Represents an action taken by the user that triggered a
+// notification.
 type UserAction struct {
 	// Payload: An optional payload for the action.
 	//

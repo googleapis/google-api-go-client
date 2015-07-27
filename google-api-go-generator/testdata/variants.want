@@ -122,6 +122,8 @@ func (t GeoJsonGeometry) Polygon() (r GeoJsonPolygon, ok bool) {
 	return r, ok
 }
 
+// GeoJsonGeometryCollection: A heterogenous collection of
+// GeoJsonGeometry objects.
 type GeoJsonGeometryCollection struct {
 	// Geometries: An array of geometry objects. There must be at least 2
 	// different types of geometries in the array.
@@ -145,6 +147,7 @@ type GeoJsonLineString struct {
 	Type string `json:"type,omitempty"`
 }
 
+// GeoJsonMultiLineString: Multi Line String
 type GeoJsonMultiLineString struct {
 	// Coordinates: An array of at least two GeoJsonLineString coordinate
 	// arrays.

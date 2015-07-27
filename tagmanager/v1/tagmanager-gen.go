@@ -194,6 +194,7 @@ type AccountsPermissionsService struct {
 	s *Service
 }
 
+// Account: Represents a Google Tag Manager Account.
 type Account struct {
 	// AccountId: The Account ID uniquely identifies the GTM Account.
 	AccountId string `json:"accountId,omitempty"`
@@ -211,12 +212,22 @@ type Account struct {
 	ShareData bool `json:"shareData,omitempty"`
 }
 
+// AccountAccess: Defines the Google Tag Manager Account access
+// permissions.
 type AccountAccess struct {
 	// Permission: List of Account permissions. Valid account permissions
 	// are read and manage.
+	//
+	// Possible values:
+	//   "delete"
+	//   "edit"
+	//   "manage"
+	//   "publish"
+	//   "read"
 	Permission []string `json:"permission,omitempty"`
 }
 
+// Condition: Represents a predicate.
 type Condition struct {
 	// Parameter: A list of named parameters (key/value), depending on the
 	// condition's type. Notes:
@@ -247,6 +258,7 @@ type Condition struct {
 	Type string `json:"type,omitempty"`
 }
 
+// Container: Represents a Google Tag Manager Container.
 type Container struct {
 	// AccountId: GTM Account ID.
 	AccountId string `json:"accountId,omitempty"`
@@ -265,6 +277,49 @@ type Container struct {
 	// formText, errorMessage, errorUrl, errorLine, newHistoryFragment,
 	// oldHistoryFragment, newHistoryState, oldHistoryState, historySource,
 	// containerVersion, debugMode, randomNumber, containerId.
+	//
+	// Possible values:
+	//   "advertiserId"
+	//   "advertisingTrackingEnabled"
+	//   "appId"
+	//   "appName"
+	//   "appVersionCode"
+	//   "appVersionName"
+	//   "clickClasses"
+	//   "clickElement"
+	//   "clickId"
+	//   "clickTarget"
+	//   "clickText"
+	//   "clickUrl"
+	//   "containerId"
+	//   "containerVersion"
+	//   "debugMode"
+	//   "deviceName"
+	//   "errorLine"
+	//   "errorMessage"
+	//   "errorUrl"
+	//   "event"
+	//   "formClasses"
+	//   "formElement"
+	//   "formId"
+	//   "formTarget"
+	//   "formText"
+	//   "formUrl"
+	//   "historySource"
+	//   "language"
+	//   "newHistoryFragment"
+	//   "newHistoryState"
+	//   "oldHistoryFragment"
+	//   "oldHistoryState"
+	//   "osVersion"
+	//   "pageHostname"
+	//   "pagePath"
+	//   "pageUrl"
+	//   "platform"
+	//   "randomNumber"
+	//   "referrer"
+	//   "resolution"
+	//   "sdkVersion"
 	EnabledBuiltInVariable []string `json:"enabledBuiltInVariable,omitempty"`
 
 	// Fingerprint: The fingerprint of the GTM Container as computed at
@@ -289,18 +344,33 @@ type Container struct {
 
 	// UsageContext: List of Usage Contexts for the Container. Valid values
 	// include: web, android, ios.
+	//
+	// Possible values:
+	//   "android"
+	//   "ios"
+	//   "web"
 	UsageContext []string `json:"usageContext,omitempty"`
 }
 
+// ContainerAccess: Defines the Google Tag Manager Container access
+// permissions.
 type ContainerAccess struct {
 	// ContainerId: GTM Container ID.
 	ContainerId string `json:"containerId,omitempty"`
 
 	// Permission: List of Container permissions. Valid container
 	// permissions are: read, edit, delete, publish.
+	//
+	// Possible values:
+	//   "delete"
+	//   "edit"
+	//   "manage"
+	//   "publish"
+	//   "read"
 	Permission []string `json:"permission,omitempty"`
 }
 
+// ContainerVersion: Represents a Google Tag Manager Container Version.
 type ContainerVersion struct {
 	// AccountId: GTM Account ID.
 	AccountId string `json:"accountId,omitempty"`
@@ -349,6 +419,8 @@ type ContainerVersion struct {
 	Variable []*Variable `json:"variable,omitempty"`
 }
 
+// ContainerVersionHeader: Represents a Google Tag Manager Container
+// Version Header.
 type ContainerVersionHeader struct {
 	// AccountId: GTM Account ID.
 	AccountId string `json:"accountId,omitempty"`
@@ -383,6 +455,8 @@ type ContainerVersionHeader struct {
 	NumVariables string `json:"numVariables,omitempty"`
 }
 
+// CreateContainerVersionRequestVersionOptions: Options for new
+// container versions.
 type CreateContainerVersionRequestVersionOptions struct {
 	// Name: The name of the container version to be created.
 	Name string `json:"name,omitempty"`
@@ -395,6 +469,7 @@ type CreateContainerVersionRequestVersionOptions struct {
 	QuickPreview bool `json:"quickPreview,omitempty"`
 }
 
+// CreateContainerVersionResponse: Create container versions response.
 type CreateContainerVersionResponse struct {
 	// CompilerError: Compiler errors or not.
 	CompilerError bool `json:"compilerError,omitempty"`
@@ -403,16 +478,19 @@ type CreateContainerVersionResponse struct {
 	ContainerVersion *ContainerVersion `json:"containerVersion,omitempty"`
 }
 
+// ListAccountUsersResponse: List AccountUsers Response.
 type ListAccountUsersResponse struct {
 	// UserAccess: All GTM AccountUsers of a GTM Account.
 	UserAccess []*UserAccess `json:"userAccess,omitempty"`
 }
 
+// ListAccountsResponse: List Accounts Response.
 type ListAccountsResponse struct {
 	// Accounts: List of GTM Accounts that a user has access to.
 	Accounts []*Account `json:"accounts,omitempty"`
 }
 
+// ListContainerVersionsResponse: List container versions response.
 type ListContainerVersionsResponse struct {
 	// ContainerVersion: All versions of a GTM Container.
 	ContainerVersion []*ContainerVersion `json:"containerVersion,omitempty"`
@@ -422,36 +500,43 @@ type ListContainerVersionsResponse struct {
 	ContainerVersionHeader []*ContainerVersionHeader `json:"containerVersionHeader,omitempty"`
 }
 
+// ListContainersResponse: List Containers Response.
 type ListContainersResponse struct {
 	// Containers: All Containers of a GTM Account.
 	Containers []*Container `json:"containers,omitempty"`
 }
 
+// ListMacrosResponse: List Macros Response.
 type ListMacrosResponse struct {
 	// Macros: All GTM Macros of a GTM Container.
 	Macros []*Macro `json:"macros,omitempty"`
 }
 
+// ListRulesResponse: List Rules Response.
 type ListRulesResponse struct {
 	// Rules: All GTM Rules of a GTM Container.
 	Rules []*Rule `json:"rules,omitempty"`
 }
 
+// ListTagsResponse: List Tags Response.
 type ListTagsResponse struct {
 	// Tags: All GTM Tags of a GTM Container.
 	Tags []*Tag `json:"tags,omitempty"`
 }
 
+// ListTriggersResponse: List triggers response.
 type ListTriggersResponse struct {
 	// Triggers: All GTM Triggers of a GTM Container.
 	Triggers []*Trigger `json:"triggers,omitempty"`
 }
 
+// ListVariablesResponse: List Variables Response.
 type ListVariablesResponse struct {
 	// Variables: All GTM Variables of a GTM Container.
 	Variables []*Variable `json:"variables,omitempty"`
 }
 
+// Macro: Represents a Google Tag Manager Macro.
 type Macro struct {
 	// AccountId: GTM Account ID.
 	AccountId string `json:"accountId,omitempty"`
@@ -498,6 +583,7 @@ type Macro struct {
 	Type string `json:"type,omitempty"`
 }
 
+// Parameter: Represents a Google Tag Manager Parameter.
 type Parameter struct {
 	// Key: The named key that uniquely identifies a parameter. Required for
 	// top-level parameters, as well as map values. Ignored for list values.
@@ -533,6 +619,7 @@ type Parameter struct {
 	Value string `json:"value,omitempty"`
 }
 
+// PublishContainerVersionResponse: Publish container version response.
 type PublishContainerVersionResponse struct {
 	// CompilerError: Compiler errors or not.
 	CompilerError bool `json:"compilerError,omitempty"`
@@ -541,6 +628,7 @@ type PublishContainerVersionResponse struct {
 	ContainerVersion *ContainerVersion `json:"containerVersion,omitempty"`
 }
 
+// Rule: Represents a Google Tag Manager Rule.
 type Rule struct {
 	// AccountId: GTM Account ID.
 	AccountId string `json:"accountId,omitempty"`
@@ -566,6 +654,7 @@ type Rule struct {
 	RuleId string `json:"ruleId,omitempty"`
 }
 
+// Tag: Represents a Google Tag Manager Tag.
 type Tag struct {
 	// AccountId: GTM Account ID.
 	AccountId string `json:"accountId,omitempty"`
@@ -628,6 +717,7 @@ type Tag struct {
 	Type string `json:"type,omitempty"`
 }
 
+// Trigger: Represents a Google Tag Manager Trigger
 type Trigger struct {
 	// AccountId: GTM Account ID.
 	AccountId string `json:"accountId,omitempty"`
@@ -723,6 +813,8 @@ type Trigger struct {
 	WaitForTagsTimeout *Parameter `json:"waitForTagsTimeout,omitempty"`
 }
 
+// UserAccess: Represents a user's permissions to an account and its
+// container.
 type UserAccess struct {
 	// AccountAccess: GTM Account access permissions.
 	AccountAccess *AccountAccess `json:"accountAccess,omitempty"`
@@ -740,6 +832,7 @@ type UserAccess struct {
 	PermissionId string `json:"permissionId,omitempty"`
 }
 
+// Variable: Represents a Google Tag Manager Variable.
 type Variable struct {
 	// AccountId: GTM Account ID.
 	AccountId string `json:"accountId,omitempty"`

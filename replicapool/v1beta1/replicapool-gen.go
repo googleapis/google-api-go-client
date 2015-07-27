@@ -106,6 +106,8 @@ type ReplicasService struct {
 	s *Service
 }
 
+// AccessConfig: A Compute Engine network accessConfig. Identical to the
+// accessConfig on corresponding Compute Engine resource.
 type AccessConfig struct {
 	// Name: Name of this access configuration.
 	Name string `json:"name,omitempty"`
@@ -118,6 +120,8 @@ type AccessConfig struct {
 	Type string `json:"type,omitempty"`
 }
 
+// Action: An action that gets executed during initialization of the
+// replicas.
 type Action struct {
 	// Commands: A list of commands to run, one per line. If any command
 	// fails, the whole action is considered a failure and no further
@@ -138,6 +142,7 @@ type Action struct {
 	TimeoutMilliSeconds int64 `json:"timeoutMilliSeconds,omitempty"`
 }
 
+// DiskAttachment: Specifies how to attach a disk to a Replica.
 type DiskAttachment struct {
 	// DeviceName: The device name of this disk.
 	DeviceName string `json:"deviceName,omitempty"`
@@ -147,6 +152,7 @@ type DiskAttachment struct {
 	Index int64 `json:"index,omitempty"`
 }
 
+// EnvVariable: An environment variable to set for an action.
 type EnvVariable struct {
 	// Hidden: Deprecated, do not use.
 	Hidden bool `json:"hidden,omitempty"`
@@ -158,6 +164,8 @@ type EnvVariable struct {
 	Value string `json:"value,omitempty"`
 }
 
+// ExistingDisk: A pre-existing persistent disk that will be attached to
+// every Replica in the Pool in READ_ONLY mode.
 type ExistingDisk struct {
 	// Attachment: How the disk will be attached to the Replica.
 	Attachment *DiskAttachment `json:"attachment,omitempty"`
@@ -205,6 +213,7 @@ type HealthCheck struct {
 	UnhealthyThreshold int64 `json:"unhealthyThreshold,omitempty"`
 }
 
+// Label: A label to apply to this replica pool.
 type Label struct {
 	// Key: The key for this label.
 	Key string `json:"key,omitempty"`
@@ -213,6 +222,8 @@ type Label struct {
 	Value string `json:"value,omitempty"`
 }
 
+// Metadata: A Compute Engine metadata entry. Identical to the metadata
+// on the corresponding Compute Engine resource.
 type Metadata struct {
 	// FingerPrint: The fingerprint of the metadata. Required for updating
 	// the metadata entries for this instance.
@@ -222,6 +233,9 @@ type Metadata struct {
 	Items []*MetadataItem `json:"items,omitempty"`
 }
 
+// MetadataItem: A Compute Engine metadata item, defined as a key:value
+// pair. Identical to the metadata on the corresponding Compute Engine
+// resource.
 type MetadataItem struct {
 	// Key: A metadata key.
 	Key string `json:"key,omitempty"`
@@ -230,6 +244,9 @@ type MetadataItem struct {
 	Value string `json:"value,omitempty"`
 }
 
+// NetworkInterface: A Compute Engine NetworkInterface resource.
+// Identical to the NetworkInterface on the corresponding Compute Engine
+// resource.
 type NetworkInterface struct {
 	// AccessConfigs: An array of configurations for this interface. This
 	// specifies how this interface is configured to interact with other
@@ -244,6 +261,10 @@ type NetworkInterface struct {
 	NetworkIp string `json:"networkIp,omitempty"`
 }
 
+// NewDisk: A Persistent Disk resource that will be created and attached
+// to each Replica in the Pool. Each Replica will have a unique
+// persistent disk that is created and attached to that Replica in
+// READ_WRITE mode.
 type NewDisk struct {
 	// Attachment: How the disk will be attached to the Replica.
 	Attachment *DiskAttachment `json:"attachment,omitempty"`
@@ -260,6 +281,8 @@ type NewDisk struct {
 	InitializeParams *NewDiskInitializeParams `json:"initializeParams,omitempty"`
 }
 
+// NewDiskInitializeParams: Initialization parameters for creating a new
+// disk.
 type NewDiskInitializeParams struct {
 	// DiskSizeGb: The size of the created disk in gigabytes.
 	DiskSizeGb int64 `json:"diskSizeGb,omitempty,string"`
@@ -360,6 +383,9 @@ type PoolsListResponse struct {
 	Resources []*Pool `json:"resources,omitempty"`
 }
 
+// Replica: An individual Replica within a Pool. Replicas are
+// automatically created by the replica pool, using the template
+// provided by the user. You cannot directly create replicas.
 type Replica struct {
 	// Name: [Output Only] The name of the Replica object.
 	Name string `json:"name,omitempty"`
@@ -371,6 +397,7 @@ type Replica struct {
 	Status *ReplicaStatus `json:"status,omitempty"`
 }
 
+// ReplicaStatus: The current status of a Replica.
 type ReplicaStatus struct {
 	// Details: [Output Only] Human-readable details about the current state
 	// of the replica
@@ -408,6 +435,8 @@ type ReplicasListResponse struct {
 	Resources []*Replica `json:"resources,omitempty"`
 }
 
+// ServiceAccount: A Compute Engine service account, identical to the
+// Compute Engine resource.
 type ServiceAccount struct {
 	// Email: The service account email address, for example:
 	// 123845678986@project.gserviceaccount.com
@@ -418,6 +447,8 @@ type ServiceAccount struct {
 	Scopes []string `json:"scopes,omitempty"`
 }
 
+// Tag: A Compute Engine Instance tag, identical to the tags on the
+// corresponding Compute Engine Instance resource.
 type Tag struct {
 	// FingerPrint: The fingerprint of the tag. Required for updating the
 	// list of tags.
@@ -427,6 +458,7 @@ type Tag struct {
 	Items []string `json:"items,omitempty"`
 }
 
+// Template: The template used for creating replicas in the pool.
 type Template struct {
 	// Action: An action to run during initialization of your replicas. An
 	// action is run as shell commands which are executed one after the
@@ -450,6 +482,9 @@ type Template struct {
 	VmParams *VmParams `json:"vmParams,omitempty"`
 }
 
+// VmParams: Parameters for creating a Compute Engine Instance resource.
+// Most fields are identical to the corresponding Compute Engine
+// resource.
 type VmParams struct {
 	// BaseInstanceName: Deprecated. Please use baseInstanceName instead.
 	BaseInstanceName string `json:"baseInstanceName,omitempty"`

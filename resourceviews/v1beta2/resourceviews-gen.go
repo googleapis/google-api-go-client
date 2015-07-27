@@ -106,6 +106,7 @@ type ZoneViewsService struct {
 	s *Service
 }
 
+// Label: The Label to be applied to the resource views.
 type Label struct {
 	// Key: Key of the label.
 	Key string `json:"key,omitempty"`
@@ -114,6 +115,8 @@ type Label struct {
 	Value string `json:"value,omitempty"`
 }
 
+// ListResourceResponseItem: The list response item that contains the
+// resource and end points information.
 type ListResourceResponseItem struct {
 	// Endpoints: The list of service end points on the resource.
 	Endpoints *ListResourceResponseItemEndpoints `json:"endpoints,omitempty"`
@@ -122,9 +125,13 @@ type ListResourceResponseItem struct {
 	Resource string `json:"resource,omitempty"`
 }
 
+// ListResourceResponseItemEndpoints: The list of service end points on
+// the resource.
 type ListResourceResponseItemEndpoints struct {
 }
 
+// Operation: An operation resource, used to manage asynchronous API
+// requests.
 type Operation struct {
 	// ClientOperationId: [Output only] An optional identifier specified by
 	// the client when the mutation was initiated. Must be unique for all
@@ -216,6 +223,8 @@ type Operation struct {
 	Zone string `json:"zone,omitempty"`
 }
 
+// OperationError: [Output Only] If errors occurred during processing of
+// this operation, this field will be populated.
 type OperationError struct {
 	// Errors: [Output Only] The array of errors encountered while
 	// processing this operation.
@@ -273,6 +282,7 @@ type OperationList struct {
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
+// ResourceView: The resource view object.
 type ResourceView struct {
 	// CreationTimestamp: The creation time of the resource view.
 	CreationTimestamp string `json:"creationTimestamp,omitempty"`
@@ -312,6 +322,7 @@ type ResourceView struct {
 	Size int64 `json:"size,omitempty"`
 }
 
+// ServiceEndpoint: The service endpoint that may be started in a VM.
 type ServiceEndpoint struct {
 	// Name: The name of the service endpoint.
 	Name string `json:"name,omitempty"`
@@ -320,6 +331,8 @@ type ServiceEndpoint struct {
 	Port int64 `json:"port,omitempty"`
 }
 
+// ZoneViewsAddResourcesRequest: The request to add resources to the
+// resource view.
 type ZoneViewsAddResourcesRequest struct {
 	// Resources: The list of resources to be added.
 	Resources []string `json:"resources,omitempty"`
@@ -333,6 +346,7 @@ type ZoneViewsGetServiceResponse struct {
 	Fingerprint string `json:"fingerprint,omitempty"`
 }
 
+// ZoneViewsList: The response to a list request.
 type ZoneViewsList struct {
 	// Items: The result that contains all resource views that meet the
 	// criteria.
@@ -348,6 +362,8 @@ type ZoneViewsList struct {
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
+// ZoneViewsListResourcesResponse: The response to a list resource
+// request.
 type ZoneViewsListResourcesResponse struct {
 	// Items: The formatted JSON that is requested by the user.
 	Items []*ListResourceResponseItem `json:"items,omitempty"`
@@ -360,6 +376,8 @@ type ZoneViewsListResourcesResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// ZoneViewsRemoveResourcesRequest: The request to remove resources from
+// the resource view.
 type ZoneViewsRemoveResourcesRequest struct {
 	// Resources: The list of resources to be removed.
 	Resources []string `json:"resources,omitempty"`

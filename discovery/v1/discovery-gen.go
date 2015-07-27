@@ -127,6 +127,8 @@ type DirectoryListItems struct {
 	Version string `json:"version,omitempty"`
 }
 
+// DirectoryListItemsIcons: Links to 16x16 and 32x32 icons representing
+// the API.
 type DirectoryListItemsIcons struct {
 	// X16: The URL of the 16x16 icon.
 	X16 string `json:"x16,omitempty"`
@@ -213,12 +215,16 @@ type JsonSchema struct {
 	Variant *JsonSchemaVariant `json:"variant,omitempty"`
 }
 
+// JsonSchemaAnnotations: Additional information about this property.
 type JsonSchemaAnnotations struct {
 	// Required: A list of methods for which this property is required on
 	// requests.
 	Required []string `json:"required,omitempty"`
 }
 
+// JsonSchemaVariant: In a variant data type, the value of one property
+// is used to determine how to interpret the entire entity. Its value
+// must exist in a map of descriminant values to schema names.
 type JsonSchemaVariant struct {
 	// Discriminant: The name of the type discriminant property.
 	Discriminant string `json:"discriminant,omitempty"`
@@ -329,19 +335,24 @@ type RestDescription struct {
 	Version string `json:"version,omitempty"`
 }
 
+// RestDescriptionAuth: Authentication information.
 type RestDescriptionAuth struct {
 	// Oauth2: OAuth 2.0 authentication information.
 	Oauth2 *RestDescriptionAuthOauth2 `json:"oauth2,omitempty"`
 }
 
+// RestDescriptionAuthOauth2: OAuth 2.0 authentication information.
 type RestDescriptionAuthOauth2 struct {
 	// Scopes: Available OAuth 2.0 scopes.
 	Scopes *RestDescriptionAuthOauth2Scopes `json:"scopes,omitempty"`
 }
 
+// RestDescriptionAuthOauth2Scopes: Available OAuth 2.0 scopes.
 type RestDescriptionAuthOauth2Scopes struct {
 }
 
+// RestDescriptionIcons: Links to 16x16 and 32x32 icons representing the
+// API.
 type RestDescriptionIcons struct {
 	// X16: The URL of the 16x16 icon.
 	X16 string `json:"x16,omitempty"`
@@ -404,6 +415,7 @@ type RestMethod struct {
 	UseMediaDownloadService bool `json:"useMediaDownloadService,omitempty"`
 }
 
+// RestMethodMediaUpload: Media upload parameters.
 type RestMethodMediaUpload struct {
 	// Accept: MIME Media Ranges for acceptable media uploads to this
 	// method.
@@ -417,6 +429,7 @@ type RestMethodMediaUpload struct {
 	Protocols *RestMethodMediaUploadProtocols `json:"protocols,omitempty"`
 }
 
+// RestMethodMediaUploadProtocols: Supported upload protocols.
 type RestMethodMediaUploadProtocols struct {
 	// Resumable: Supports the Resumable Media Upload protocol.
 	Resumable *RestMethodMediaUploadProtocolsResumable `json:"resumable,omitempty"`
@@ -425,6 +438,8 @@ type RestMethodMediaUploadProtocols struct {
 	Simple *RestMethodMediaUploadProtocolsSimple `json:"simple,omitempty"`
 }
 
+// RestMethodMediaUploadProtocolsResumable: Supports the Resumable Media
+// Upload protocol.
 type RestMethodMediaUploadProtocolsResumable struct {
 	// Multipart: True if this endpoint supports uploading multipart media.
 	//
@@ -436,6 +451,8 @@ type RestMethodMediaUploadProtocolsResumable struct {
 	Path string `json:"path,omitempty"`
 }
 
+// RestMethodMediaUploadProtocolsSimple: Supports uploading as a single
+// HTTP request.
 type RestMethodMediaUploadProtocolsSimple struct {
 	// Multipart: True if this endpoint supports upload multipart media.
 	//
@@ -447,6 +464,7 @@ type RestMethodMediaUploadProtocolsSimple struct {
 	Path string `json:"path,omitempty"`
 }
 
+// RestMethodRequest: The schema for the request.
 type RestMethodRequest struct {
 	// Ref: Schema ID for the request schema.
 	Ref string `json:"$ref,omitempty"`
@@ -455,6 +473,7 @@ type RestMethodRequest struct {
 	ParameterName string `json:"parameterName,omitempty"`
 }
 
+// RestMethodResponse: The schema for the response.
 type RestMethodResponse struct {
 	// Ref: Schema ID for the response schema.
 	Ref string `json:"$ref,omitempty"`

@@ -98,6 +98,7 @@ type ZoneOperationsService struct {
 	s *Service
 }
 
+// InstanceGroupManager: An Instance Group Manager resource.
 type InstanceGroupManager struct {
 	// AutoHealingPolicies: The autohealing policy for this managed instance
 	// group. You can specify only one value.
@@ -224,6 +225,8 @@ type InstanceGroupManagersSetTargetPoolsRequest struct {
 	TargetPools []string `json:"targetPools,omitempty"`
 }
 
+// Operation: An operation resource, used to manage asynchronous API
+// requests.
 type Operation struct {
 	// ClientOperationId: [Output only] An optional identifier specified by
 	// the client when the mutation was initiated. Must be unique for all
@@ -320,6 +323,8 @@ type Operation struct {
 	Zone string `json:"zone,omitempty"`
 }
 
+// OperationError: [Output Only] If errors occurred during processing of
+// this operation, this field will be populated.
 type OperationError struct {
 	// Errors: [Output Only] The array of errors encountered while
 	// processing this operation.

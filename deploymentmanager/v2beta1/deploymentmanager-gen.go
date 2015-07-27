@@ -136,6 +136,7 @@ type TypesService struct {
 	s *Service
 }
 
+// Deployment: Next available tag: 8
 type Deployment struct {
 	// Description: ! An optional user-provided description of the
 	// deployment.
@@ -160,6 +161,9 @@ type Deployment struct {
 	TargetConfig string `json:"targetConfig,omitempty"`
 }
 
+// DeploymentsListResponse: ! A response containing a partial list of
+// deployments and a page token used ! to build the next request if the
+// request has been truncated. Next available tag: 4
 type DeploymentsListResponse struct {
 	// Deployments: ! The deployments contained in this response.
 	Deployments []*Deployment `json:"deployments,omitempty"`
@@ -168,6 +172,7 @@ type DeploymentsListResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// Manifest: Next available tag: 10
 type Manifest struct {
 	// Config: v2beta1: YAML with config - described above v2beta2: YAML +
 	// templates. ! The YAML configuration for this manifest.
@@ -188,6 +193,9 @@ type Manifest struct {
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
+// ManifestsListResponse: ! A response containing a partial list of
+// manifests and a page token used ! to build the next request if the
+// request has been truncated. Next available tag: 4
 type ManifestsListResponse struct {
 	// Manifests: ! Manifests contained in this list response.
 	Manifests []*Manifest `json:"manifests,omitempty"`
@@ -196,6 +204,8 @@ type ManifestsListResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// Operation: ! An operation resource, used to manage asynchronous API
+// requests. Next available tag: 24
 type Operation struct {
 	// CreationTimestamp: ! [Output Only] Creation timestamp in RFC3339 text
 	// format.
@@ -271,6 +281,8 @@ type Operation struct {
 	Warnings []*OperationWarnings `json:"warnings,omitempty"`
 }
 
+// OperationError: ! [Output Only] If errors occurred during processing
+// of this operation, ! this field will be populated.
 type OperationError struct {
 	// Errors: ! The array of errors encountered while processing this
 	// operation.
@@ -308,6 +320,9 @@ type OperationWarningsData struct {
 	Value string `json:"value,omitempty"`
 }
 
+// OperationsListResponse: ! A response containing a partial list of
+// operations and a page token used ! to build the next request if the
+// request has been truncated. Next available tag: 4
 type OperationsListResponse struct {
 	// NextPageToken: ! A token used to continue a truncated list request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
@@ -316,6 +331,7 @@ type OperationsListResponse struct {
 	Operations []*Operation `json:"operations,omitempty"`
 }
 
+// Resource: Next available tag: 12
 type Resource struct {
 	// Errors: ! [Output Only] A list of any errors that occurred during
 	// deployment.
@@ -347,6 +363,9 @@ type Resource struct {
 	Url string `json:"url,omitempty"`
 }
 
+// ResourcesListResponse: ! A response containing a partial list of
+// resources and a page token used ! to build the next request if the
+// request has been truncated. Next available tag: 4
 type ResourcesListResponse struct {
 	// NextPageToken: ! A token used to continue a truncated list request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
@@ -355,11 +374,14 @@ type ResourcesListResponse struct {
 	Resources []*Resource `json:"resources,omitempty"`
 }
 
+// Type: ! A type supported by Deployment Manager. Next available tag: 4
 type Type struct {
 	// Name: ! Name of the type.
 	Name string `json:"name,omitempty"`
 }
 
+// TypesListResponse: ! A response that returns all Types supported by
+// Deployment Manager Next available tag: 3
 type TypesListResponse struct {
 	// Types: ! Types supported by Deployment Manager
 	Types []*Type `json:"types,omitempty"`

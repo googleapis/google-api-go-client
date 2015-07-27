@@ -95,6 +95,7 @@ type SubscriptionsService struct {
 	s *Service
 }
 
+// Address: JSON template for address of a customer.
 type Address struct {
 	// AddressLine1: Address line 1 of the address.
 	AddressLine1 string `json:"addressLine1,omitempty"`
@@ -130,6 +131,7 @@ type Address struct {
 	Region string `json:"region,omitempty"`
 }
 
+// ChangePlanRequest: JSON template for the ChangePlan rpc request.
 type ChangePlanRequest struct {
 	// Kind: Identifies the resource as a subscription change plan request.
 	Kind string `json:"kind,omitempty"`
@@ -144,6 +146,7 @@ type ChangePlanRequest struct {
 	Seats *Seats `json:"seats,omitempty"`
 }
 
+// Customer: JSON template for a customer.
 type Customer struct {
 	// AlternateEmail: The alternate email of the customer.
 	AlternateEmail string `json:"alternateEmail,omitempty"`
@@ -167,6 +170,7 @@ type Customer struct {
 	ResourceUiUrl string `json:"resourceUiUrl,omitempty"`
 }
 
+// RenewalSettings: JSON template for a subscription renewal settings.
 type RenewalSettings struct {
 	// Kind: Identifies the resource as a subscription renewal setting.
 	Kind string `json:"kind,omitempty"`
@@ -175,6 +179,7 @@ type RenewalSettings struct {
 	RenewalType string `json:"renewalType,omitempty"`
 }
 
+// Seats: JSON template for subscription seats.
 type Seats struct {
 	// Kind: Identifies the resource as a subscription change plan request.
 	Kind string `json:"kind,omitempty"`
@@ -194,6 +199,7 @@ type Seats struct {
 	NumberOfSeats int64 `json:"numberOfSeats,omitempty"`
 }
 
+// Subscription: JSON template for a subscription.
 type Subscription struct {
 	// BillingMethod: Billing method of this subscription.
 	BillingMethod string `json:"billingMethod,omitempty"`
@@ -242,6 +248,7 @@ type Subscription struct {
 	TrialSettings *SubscriptionTrialSettings `json:"trialSettings,omitempty"`
 }
 
+// SubscriptionPlan: Plan details of the subscription
 type SubscriptionPlan struct {
 	// CommitmentInterval: Interval of the commitment if it is a commitment
 	// plan.
@@ -254,6 +261,8 @@ type SubscriptionPlan struct {
 	PlanName string `json:"planName,omitempty"`
 }
 
+// SubscriptionPlanCommitmentInterval: Interval of the commitment if it
+// is a commitment plan.
 type SubscriptionPlanCommitmentInterval struct {
 	// EndTime: End time of the commitment interval in milliseconds since
 	// Unix epoch.
@@ -264,6 +273,8 @@ type SubscriptionPlanCommitmentInterval struct {
 	StartTime int64 `json:"startTime,omitempty,string"`
 }
 
+// SubscriptionTransferInfo: Transfer related information for the
+// subscription.
 type SubscriptionTransferInfo struct {
 	MinimumTransferableSeats int64 `json:"minimumTransferableSeats,omitempty"`
 
@@ -272,6 +283,7 @@ type SubscriptionTransferInfo struct {
 	TransferabilityExpirationTime int64 `json:"transferabilityExpirationTime,omitempty,string"`
 }
 
+// SubscriptionTrialSettings: Trial Settings of the subscription.
 type SubscriptionTrialSettings struct {
 	// IsInTrial: Whether the subscription is in trial.
 	IsInTrial bool `json:"isInTrial,omitempty"`
@@ -280,6 +292,7 @@ type SubscriptionTrialSettings struct {
 	TrialEndTime int64 `json:"trialEndTime,omitempty,string"`
 }
 
+// Subscriptions: JSON template for a subscription list.
 type Subscriptions struct {
 	// Kind: Identifies the resource as a collection of subscriptions.
 	Kind string `json:"kind,omitempty"`

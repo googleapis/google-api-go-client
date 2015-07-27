@@ -224,6 +224,9 @@ type DeploymentUpdate struct {
 	Manifest string `json:"manifest,omitempty"`
 }
 
+// DeploymentsListResponse: A response containing a partial list of
+// deployments and a page token used to build the next request if the
+// request has been truncated.
 type DeploymentsListResponse struct {
 	// Deployments: [Output Only] The deployments contained in this
 	// response.
@@ -271,6 +274,9 @@ type Manifest struct {
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
+// ManifestsListResponse: A response containing a partial list of
+// manifests and a page token used to build the next request if the
+// request has been truncated.
 type ManifestsListResponse struct {
 	// Manifests: [Output Only] Manifests contained in this list response.
 	Manifests []*Manifest `json:"manifests,omitempty"`
@@ -280,6 +286,8 @@ type ManifestsListResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// Operation: An Operation resource, used to manage asynchronous API
+// requests.
 type Operation struct {
 	// ClientOperationId: [Output Only] An optional identifier specified by
 	// the client when the mutation was initiated. Must be unique for all
@@ -371,6 +379,8 @@ type Operation struct {
 	Zone string `json:"zone,omitempty"`
 }
 
+// OperationError: [Output Only] If errors are generated during
+// processing of the operation, this field will be populated.
 type OperationError struct {
 	// Errors: [Output Only] The array of errors encountered while
 	// processing this operation.
@@ -409,6 +419,9 @@ type OperationWarningsData struct {
 	Value string `json:"value,omitempty"`
 }
 
+// OperationsListResponse: A response containing a partial list of
+// operations and a page token used to build the next request if the
+// request has been truncated.
 type OperationsListResponse struct {
 	// NextPageToken: [Output Only] A token used to continue a truncated
 	// list request.
@@ -487,6 +500,9 @@ type ResourceUpdate struct {
 	State string `json:"state,omitempty"`
 }
 
+// ResourcesListResponse: A response containing a partial list of
+// resources and a page token used to build the next request if the
+// request has been truncated.
 type ResourcesListResponse struct {
 	// NextPageToken: A token used to continue a truncated list request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
@@ -505,11 +521,14 @@ type TargetConfiguration struct {
 	Imports []*ImportFile `json:"imports,omitempty"`
 }
 
+// Type: A resource type supported by Deployment Manager.
 type Type struct {
 	// Name: Name of the type.
 	Name string `json:"name,omitempty"`
 }
 
+// TypesListResponse: A response that returns all Types supported by
+// Deployment Manager
 type TypesListResponse struct {
 	// NextPageToken: A token used to continue a truncated list request.
 	NextPageToken string `json:"nextPageToken,omitempty"`

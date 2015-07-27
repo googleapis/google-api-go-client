@@ -255,6 +255,8 @@ type TurnBasedMatchesService struct {
 	s *Service
 }
 
+// AchievementDefinition: This is a JSON template for an achievement
+// definition object.
 type AchievementDefinition struct {
 	// AchievementType: The type of the achievement.
 	// Possible values are:
@@ -308,6 +310,8 @@ type AchievementDefinition struct {
 	UnlockedIconUrl string `json:"unlockedIconUrl,omitempty"`
 }
 
+// AchievementDefinitionsListResponse: This is a JSON template for a
+// list of achievement definition objects.
 type AchievementDefinitionsListResponse struct {
 	// Items: The achievement definitions.
 	Items []*AchievementDefinition `json:"items,omitempty"`
@@ -320,6 +324,8 @@ type AchievementDefinitionsListResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// AchievementIncrementResponse: This is a JSON template for an
+// achievement increment response
 type AchievementIncrementResponse struct {
 	// CurrentSteps: The current steps recorded for this incremental
 	// achievement.
@@ -334,6 +340,8 @@ type AchievementIncrementResponse struct {
 	NewlyUnlocked bool `json:"newlyUnlocked,omitempty"`
 }
 
+// AchievementRevealResponse: This is a JSON template for an achievement
+// reveal response
 type AchievementRevealResponse struct {
 	// CurrentState: The current state of the achievement for which a reveal
 	// was attempted. This might be UNLOCKED if the achievement was already
@@ -348,6 +356,8 @@ type AchievementRevealResponse struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// AchievementSetStepsAtLeastResponse: This is a JSON template for an
+// achievement set steps at least response.
 type AchievementSetStepsAtLeastResponse struct {
 	// CurrentSteps: The current steps recorded for this incremental
 	// achievement.
@@ -362,6 +372,8 @@ type AchievementSetStepsAtLeastResponse struct {
 	NewlyUnlocked bool `json:"newlyUnlocked,omitempty"`
 }
 
+// AchievementUnlockResponse: This is a JSON template for an achievement
+// unlock response
 type AchievementUnlockResponse struct {
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string games#achievementUnlockResponse.
@@ -373,6 +385,8 @@ type AchievementUnlockResponse struct {
 	NewlyUnlocked bool `json:"newlyUnlocked,omitempty"`
 }
 
+// AchievementUpdateMultipleRequest: This is a JSON template for a list
+// of achievement update requests.
 type AchievementUpdateMultipleRequest struct {
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string games#achievementUpdateMultipleRequest.
@@ -382,6 +396,8 @@ type AchievementUpdateMultipleRequest struct {
 	Updates []*AchievementUpdateRequest `json:"updates,omitempty"`
 }
 
+// AchievementUpdateMultipleResponse: This is a JSON template for an
+// achievement unlock response.
 type AchievementUpdateMultipleResponse struct {
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string games#achievementUpdateListResponse.
@@ -391,6 +407,8 @@ type AchievementUpdateMultipleResponse struct {
 	UpdatedAchievements []*AchievementUpdateResponse `json:"updatedAchievements,omitempty"`
 }
 
+// AchievementUpdateRequest: This is a JSON template for a request to
+// update an achievement.
 type AchievementUpdateRequest struct {
 	// AchievementId: The achievement this update is being applied to.
 	AchievementId string `json:"achievementId,omitempty"`
@@ -417,6 +435,8 @@ type AchievementUpdateRequest struct {
 	UpdateType string `json:"updateType,omitempty"`
 }
 
+// AchievementUpdateResponse: This is a JSON template for an achievement
+// update response.
 type AchievementUpdateResponse struct {
 	// AchievementId: The achievement this update is was applied to.
 	AchievementId string `json:"achievementId,omitempty"`
@@ -446,6 +466,7 @@ type AchievementUpdateResponse struct {
 	UpdateOccurred bool `json:"updateOccurred,omitempty"`
 }
 
+// AggregateStats: This is a JSON template for aggregate stats.
 type AggregateStats struct {
 	// Count: The number of messages sent between a pair of peers.
 	Count int64 `json:"count,omitempty,string"`
@@ -465,6 +486,7 @@ type AggregateStats struct {
 	Sum int64 `json:"sum,omitempty,string"`
 }
 
+// AnonymousPlayer: This is a JSON template for an anonymous player
 type AnonymousPlayer struct {
 	// AvatarImageUrl: The base URL for the image to display for the
 	// anonymous player.
@@ -478,6 +500,7 @@ type AnonymousPlayer struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// Application: This is a JSON template for the Application resource.
 type Application struct {
 	// AchievementCount: The number of achievements visible to the currently
 	// authenticated player.
@@ -527,6 +550,8 @@ type Application struct {
 	ThemeColor string `json:"themeColor,omitempty"`
 }
 
+// ApplicationCategory: This is a JSON template for an application
+// category object.
 type ApplicationCategory struct {
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string games#applicationCategory.
@@ -539,6 +564,8 @@ type ApplicationCategory struct {
 	Secondary string `json:"secondary,omitempty"`
 }
 
+// Category: This is a JSON template for data related to individual game
+// categories.
 type Category struct {
 	// Category: The category name.
 	Category string `json:"category,omitempty"`
@@ -551,6 +578,8 @@ type Category struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// CategoryListResponse: This is a JSON template for a list of category
+// data objects.
 type CategoryListResponse struct {
 	// Items: The list of categories with usage data.
 	Items []*Category `json:"items,omitempty"`
@@ -563,6 +592,8 @@ type CategoryListResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// EventBatchRecordFailure: This is a JSON template for a batch update
+// failure resource.
 type EventBatchRecordFailure struct {
 	// FailureCause: The cause for the update failure.
 	// Possible values are:
@@ -589,6 +620,8 @@ type EventBatchRecordFailure struct {
 	Range *EventPeriodRange `json:"range,omitempty"`
 }
 
+// EventChild: This is a JSON template for an event child relationship
+// resource.
 type EventChild struct {
 	// ChildId: The ID of the child event.
 	ChildId string `json:"childId,omitempty"`
@@ -598,6 +631,8 @@ type EventChild struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// EventDefinition: This is a JSON template for an event definition
+// resource.
 type EventDefinition struct {
 	// ChildEvents: A list of events that are a child of this event.
 	ChildEvents []*EventChild `json:"childEvents,omitempty"`
@@ -631,6 +666,8 @@ type EventDefinition struct {
 	Visibility string `json:"visibility,omitempty"`
 }
 
+// EventDefinitionListResponse: This is a JSON template for a
+// ListDefinitions response.
 type EventDefinitionListResponse struct {
 	// Items: The event definitions.
 	Items []*EventDefinition `json:"items,omitempty"`
@@ -643,6 +680,8 @@ type EventDefinitionListResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// EventPeriodRange: This is a JSON template for an event period time
+// range.
 type EventPeriodRange struct {
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string games#eventPeriodRange.
@@ -657,6 +696,8 @@ type EventPeriodRange struct {
 	PeriodStartMillis int64 `json:"periodStartMillis,omitempty,string"`
 }
 
+// EventPeriodUpdate: This is a JSON template for an event period update
+// resource.
 type EventPeriodUpdate struct {
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string games#eventPeriodUpdate.
@@ -669,6 +710,8 @@ type EventPeriodUpdate struct {
 	Updates []*EventUpdateRequest `json:"updates,omitempty"`
 }
 
+// EventRecordFailure: This is a JSON template for an event update
+// failure resource.
 type EventRecordFailure struct {
 	// EventId: The ID of the event that was not updated.
 	EventId string `json:"eventId,omitempty"`
@@ -686,6 +729,8 @@ type EventRecordFailure struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// EventRecordRequest: This is a JSON template for an event period
+// update resource.
 type EventRecordRequest struct {
 	// CurrentTimeMillis: The current time when this update was sent, in
 	// milliseconds, since 1970 UTC (Unix Epoch).
@@ -704,6 +749,8 @@ type EventRecordRequest struct {
 	TimePeriods []*EventPeriodUpdate `json:"timePeriods,omitempty"`
 }
 
+// EventUpdateRequest: This is a JSON template for an event period
+// update resource.
 type EventUpdateRequest struct {
 	// DefinitionId: The ID of the event being modified in this update.
 	DefinitionId string `json:"definitionId,omitempty"`
@@ -717,6 +764,8 @@ type EventUpdateRequest struct {
 	UpdateCount int64 `json:"updateCount,omitempty,string"`
 }
 
+// EventUpdateResponse: This is a JSON template for an event period
+// update resource.
 type EventUpdateResponse struct {
 	// BatchFailures: Any batch-wide failures which occurred applying
 	// updates.
@@ -733,6 +782,8 @@ type EventUpdateResponse struct {
 	PlayerEvents []*PlayerEvent `json:"playerEvents,omitempty"`
 }
 
+// GamesAchievementIncrement: This is a JSON template for the payload to
+// request to increment an achievement.
 type GamesAchievementIncrement struct {
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string games#GamesAchievementIncrement.
@@ -746,6 +797,8 @@ type GamesAchievementIncrement struct {
 	Steps int64 `json:"steps,omitempty"`
 }
 
+// GamesAchievementSetStepsAtLeast: This is a JSON template for the
+// payload to request to increment an achievement.
 type GamesAchievementSetStepsAtLeast struct {
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string games#GamesAchievementSetStepsAtLeast.
@@ -755,6 +808,7 @@ type GamesAchievementSetStepsAtLeast struct {
 	Steps int64 `json:"steps,omitempty"`
 }
 
+// ImageAsset: This is a JSON template for an image asset object.
 type ImageAsset struct {
 	// Height: The height of the asset.
 	Height int64 `json:"height,omitempty"`
@@ -773,6 +827,7 @@ type ImageAsset struct {
 	Width int64 `json:"width,omitempty"`
 }
 
+// Instance: This is a JSON template for the Instance resource.
 type Instance struct {
 	// AcquisitionUri: URI which shows where a user can acquire this
 	// instance.
@@ -810,6 +865,8 @@ type Instance struct {
 	WebInstance *InstanceWebDetails `json:"webInstance,omitempty"`
 }
 
+// InstanceAndroidDetails: This is a JSON template for the Android
+// instance details resource.
 type InstanceAndroidDetails struct {
 	// EnablePiracyCheck: Flag indicating whether the anti-piracy check is
 	// enabled.
@@ -827,6 +884,8 @@ type InstanceAndroidDetails struct {
 	Preferred bool `json:"preferred,omitempty"`
 }
 
+// InstanceIosDetails: This is a JSON template for the iOS details
+// resource.
 type InstanceIosDetails struct {
 	// BundleIdentifier: Bundle identifier.
 	BundleIdentifier string `json:"bundleIdentifier,omitempty"`
@@ -853,6 +912,8 @@ type InstanceIosDetails struct {
 	SupportIphone bool `json:"supportIphone,omitempty"`
 }
 
+// InstanceWebDetails: This is a JSON template for the Web details
+// resource.
 type InstanceWebDetails struct {
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string games#instanceWebDetails.
@@ -866,6 +927,7 @@ type InstanceWebDetails struct {
 	Preferred bool `json:"preferred,omitempty"`
 }
 
+// Leaderboard: This is a JSON template for the Leaderboard resource.
 type Leaderboard struct {
 	// IconUrl: The icon for the leaderboard.
 	IconUrl string `json:"iconUrl,omitempty"`
@@ -893,6 +955,8 @@ type Leaderboard struct {
 	Order string `json:"order,omitempty"`
 }
 
+// LeaderboardEntry: This is a JSON template for the Leaderboard Entry
+// resource.
 type LeaderboardEntry struct {
 	// FormattedScore: The localized string for the numerical value of this
 	// score.
@@ -932,6 +996,8 @@ type LeaderboardEntry struct {
 	WriteTimestampMillis int64 `json:"writeTimestampMillis,omitempty,string"`
 }
 
+// LeaderboardListResponse: This is a JSON template for a list of
+// leaderboard objects.
 type LeaderboardListResponse struct {
 	// Items: The leaderboards.
 	Items []*Leaderboard `json:"items,omitempty"`
@@ -944,6 +1010,8 @@ type LeaderboardListResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// LeaderboardScoreRank: This is a JSON template for a score rank in a
+// leaderboard.
 type LeaderboardScoreRank struct {
 	// FormattedNumScores: The number of scores in the leaderboard as a
 	// string.
@@ -963,6 +1031,7 @@ type LeaderboardScoreRank struct {
 	Rank int64 `json:"rank,omitempty,string"`
 }
 
+// LeaderboardScores: This is a JSON template for a ListScores response.
 type LeaderboardScores struct {
 	// Items: The scores in the leaderboard.
 	Items []*LeaderboardEntry `json:"items,omitempty"`
@@ -988,6 +1057,8 @@ type LeaderboardScores struct {
 	PrevPageToken string `json:"prevPageToken,omitempty"`
 }
 
+// MetagameConfig: This is a JSON template for the metagame config
+// resource
 type MetagameConfig struct {
 	// CurrentVersion: Current version of the metagame configuration data.
 	// When this data is updated, the version number will be increased by
@@ -1002,6 +1073,8 @@ type MetagameConfig struct {
 	PlayerLevels []*PlayerLevel `json:"playerLevels,omitempty"`
 }
 
+// NetworkDiagnostics: This is a JSON template for network diagnostics
+// reported for a client.
 type NetworkDiagnostics struct {
 	// AndroidNetworkSubtype: The Android network subtype.
 	AndroidNetworkSubtype int64 `json:"androidNetworkSubtype,omitempty"`
@@ -1018,19 +1091,14 @@ type NetworkDiagnostics struct {
 
 	// NetworkOperatorCode: The MCC+MNC code for the client's network
 	// connection. On Android:
-	// http://developer.android.com/reference/android/telephony/TelephonyMana
-	// ger.html#getNetworkOperator() On iOS, see:
-	// https://developer.apple.com/library/ios/documentation/NetworkingIntern
-	// et/Reference/CTCarrier/Reference/Reference.html
+	// http://developer.android.com/reference/android/telephony/TelephonyManager.html#getNetworkOperator() On iOS, see:
+	// https://developer.apple.com/library/ios/documentation/NetworkingInternet/Reference/CTCarrier/Reference/Reference.html
 	NetworkOperatorCode string `json:"networkOperatorCode,omitempty"`
 
 	// NetworkOperatorName: The name of the carrier of the client's network
 	// connection. On Android:
-	// http://developer.android.com/reference/android/telephony/TelephonyMana
-	// ger.html#getNetworkOperatorName() On iOS:
-	// https://developer.apple.com/library/ios/documentation/NetworkingIntern
-	// et/Reference/CTCarrier/Reference/Reference.html#//apple_ref/occ/instp/
-	// CTCarrier/carrierName
+	// http://developer.android.com/reference/android/telephony/TelephonyManager.html#getNetworkOperatorName() On iOS:
+	// https://developer.apple.com/library/ios/documentation/NetworkingInternet/Reference/CTCarrier/Reference/Reference.html#//apple_ref/occ/instp/CTCarrier/carrierName
 	NetworkOperatorName string `json:"networkOperatorName,omitempty"`
 
 	// RegistrationLatencyMillis: The amount of time in milliseconds it took
@@ -1038,6 +1106,8 @@ type NetworkDiagnostics struct {
 	RegistrationLatencyMillis int64 `json:"registrationLatencyMillis,omitempty"`
 }
 
+// ParticipantResult: This is a JSON template for a result for a match
+// participant.
 type ParticipantResult struct {
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string games#participantResult.
@@ -1066,6 +1136,8 @@ type ParticipantResult struct {
 	Result string `json:"result,omitempty"`
 }
 
+// PeerChannelDiagnostics: This is a JSON template for peer channel
+// diagnostics.
 type PeerChannelDiagnostics struct {
 	// BytesReceived: Number of bytes received.
 	BytesReceived *AggregateStats `json:"bytesReceived,omitempty"`
@@ -1093,6 +1165,8 @@ type PeerChannelDiagnostics struct {
 	RoundtripLatencyMillis *AggregateStats `json:"roundtripLatencyMillis,omitempty"`
 }
 
+// PeerSessionDiagnostics: This is a JSON template for peer session
+// diagnostics.
 type PeerSessionDiagnostics struct {
 	// ConnectedTimestampMillis: Connected time in milliseconds.
 	ConnectedTimestampMillis int64 `json:"connectedTimestampMillis,omitempty,string"`
@@ -1111,6 +1185,8 @@ type PeerSessionDiagnostics struct {
 	UnreliableChannel *PeerChannelDiagnostics `json:"unreliableChannel,omitempty"`
 }
 
+// Played: This is a JSON template for metadata about a player playing a
+// game with the currently authenticated user.
 type Played struct {
 	// AutoMatched: True if the player was auto-matched with the currently
 	// authenticated user.
@@ -1125,6 +1201,7 @@ type Played struct {
 	TimeMillis int64 `json:"timeMillis,omitempty,string"`
 }
 
+// Player: This is a JSON template for a Player resource.
 type Player struct {
 	// AvatarImageUrl: The base URL for the image that represents the
 	// player.
@@ -1157,6 +1234,8 @@ type Player struct {
 	Title string `json:"title,omitempty"`
 }
 
+// PlayerName: An object representation of the individual components of
+// the player's name. For some players, these fields may not be present.
 type PlayerName struct {
 	// FamilyName: The family name of this player. In some places, this is
 	// known as the last name.
@@ -1167,6 +1246,7 @@ type PlayerName struct {
 	GivenName string `json:"givenName,omitempty"`
 }
 
+// PlayerAchievement: This is a JSON template for an achievement object.
 type PlayerAchievement struct {
 	// AchievementState: The state of the achievement.
 	// Possible values are:
@@ -1200,6 +1280,8 @@ type PlayerAchievement struct {
 	LastUpdatedTimestamp int64 `json:"lastUpdatedTimestamp,omitempty,string"`
 }
 
+// PlayerAchievementListResponse: This is a JSON template for a list of
+// achievement objects.
 type PlayerAchievementListResponse struct {
 	// Items: The achievements.
 	Items []*PlayerAchievement `json:"items,omitempty"`
@@ -1212,6 +1294,7 @@ type PlayerAchievementListResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// PlayerEvent: This is a JSON template for an event status resource.
 type PlayerEvent struct {
 	// DefinitionId: The ID of the event definition.
 	DefinitionId string `json:"definitionId,omitempty"`
@@ -1232,6 +1315,8 @@ type PlayerEvent struct {
 	PlayerId string `json:"playerId,omitempty"`
 }
 
+// PlayerEventListResponse: This is a JSON template for a ListByPlayer
+// response.
 type PlayerEventListResponse struct {
 	// Items: The player events.
 	Items []*PlayerEvent `json:"items,omitempty"`
@@ -1244,6 +1329,8 @@ type PlayerEventListResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// PlayerExperienceInfo: This is a JSON template for 1P/3P metadata
+// about the player's experience.
 type PlayerExperienceInfo struct {
 	// CurrentExperiencePoints: The current number of experience points for
 	// the player.
@@ -1265,6 +1352,8 @@ type PlayerExperienceInfo struct {
 	NextLevel *PlayerLevel `json:"nextLevel,omitempty"`
 }
 
+// PlayerLeaderboardScore: This is a JSON template for a player
+// leaderboard score object.
 type PlayerLeaderboardScore struct {
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string games#playerLeaderboardScore.
@@ -1304,6 +1393,8 @@ type PlayerLeaderboardScore struct {
 	WriteTimestamp int64 `json:"writeTimestamp,omitempty,string"`
 }
 
+// PlayerLeaderboardScoreListResponse: This is a JSON template for a
+// list of player leaderboard scores.
 type PlayerLeaderboardScoreListResponse struct {
 	// Items: The leaderboard scores.
 	Items []*PlayerLeaderboardScore `json:"items,omitempty"`
@@ -1319,6 +1410,8 @@ type PlayerLeaderboardScoreListResponse struct {
 	Player *Player `json:"player,omitempty"`
 }
 
+// PlayerLevel: This is a JSON template for 1P/3P metadata about a
+// user's level.
 type PlayerLevel struct {
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string games#playerLevel.
@@ -1334,6 +1427,8 @@ type PlayerLevel struct {
 	MinExperiencePoints int64 `json:"minExperiencePoints,omitempty,string"`
 }
 
+// PlayerListResponse: This is a JSON template for a third party player
+// list response.
 type PlayerListResponse struct {
 	// Items: The players.
 	Items []*Player `json:"items,omitempty"`
@@ -1346,6 +1441,7 @@ type PlayerListResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// PlayerScore: This is a JSON template for a player score.
 type PlayerScore struct {
 	// FormattedScore: The formatted score for this player score.
 	FormattedScore string `json:"formattedScore,omitempty"`
@@ -1370,6 +1466,8 @@ type PlayerScore struct {
 	TimeSpan string `json:"timeSpan,omitempty"`
 }
 
+// PlayerScoreListResponse: This is a JSON template for a list of score
+// submission statuses.
 type PlayerScoreListResponse struct {
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string games#playerScoreListResponse.
@@ -1379,6 +1477,8 @@ type PlayerScoreListResponse struct {
 	SubmittedScores []*PlayerScoreResponse `json:"submittedScores,omitempty"`
 }
 
+// PlayerScoreResponse: This is a JSON template for a list of
+// leaderboard entry resources.
 type PlayerScoreResponse struct {
 	// BeatenScoreTimeSpans: The time spans where the submitted score is
 	// better than the existing score for that time span.
@@ -1410,6 +1510,8 @@ type PlayerScoreResponse struct {
 	UnbeatenScores []*PlayerScore `json:"unbeatenScores,omitempty"`
 }
 
+// PlayerScoreSubmissionList: This is a JSON template for a list of
+// score submission requests
 type PlayerScoreSubmissionList struct {
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string games#playerScoreSubmissionList.
@@ -1419,6 +1521,7 @@ type PlayerScoreSubmissionList struct {
 	Scores []*ScoreSubmission `json:"scores,omitempty"`
 }
 
+// PushToken: This is a JSON template for a push token resource.
 type PushToken struct {
 	// ClientRevision: The revision of the client SDK used by your
 	// application, in the same format that's used by revisions.check. Used
@@ -1440,6 +1543,7 @@ type PushToken struct {
 	Language string `json:"language,omitempty"`
 }
 
+// PushTokenId: This is a JSON template for a push token ID resource.
 type PushTokenId struct {
 	// Ios: A push token ID for iOS devices.
 	Ios *PushTokenIdIos `json:"ios,omitempty"`
@@ -1449,6 +1553,7 @@ type PushTokenId struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// PushTokenIdIos: A push token ID for iOS devices.
 type PushTokenIdIos struct {
 	// ApnsDeviceToken: Device token supplied by an iOS system call to
 	// register for remote notifications. Encode this field as web-safe
@@ -1460,6 +1565,7 @@ type PushTokenIdIos struct {
 	ApnsEnvironment string `json:"apns_environment,omitempty"`
 }
 
+// Quest: This is a JSON template for a Quest resource.
 type Quest struct {
 	// AcceptedTimestampMillis: The timestamp at which the user accepted the
 	// quest in milliseconds since the epoch in UTC. Only present if the
@@ -1532,6 +1638,8 @@ type Quest struct {
 	State string `json:"state,omitempty"`
 }
 
+// QuestContribution: This is a JSON template for a Quest Criterion
+// Contribution resource.
 type QuestContribution struct {
 	// FormattedValue: The formatted value of the contribution as a string.
 	// Format depends on the configuration for the associated event
@@ -1546,6 +1654,8 @@ type QuestContribution struct {
 	Value int64 `json:"value,omitempty,string"`
 }
 
+// QuestCriterion: This is a JSON template for a Quest Criterion
+// resource.
 type QuestCriterion struct {
 	// CompletionContribution: The total number of times the associated
 	// event must be incremented for the player to complete this quest.
@@ -1574,6 +1684,8 @@ type QuestCriterion struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// QuestListResponse: This is a JSON template for a list of quest
+// objects.
 type QuestListResponse struct {
 	// Items: The quests.
 	Items []*Quest `json:"items,omitempty"`
@@ -1586,6 +1698,8 @@ type QuestListResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// QuestMilestone: This is a JSON template for a Quest Milestone
+// resource.
 type QuestMilestone struct {
 	// CompletionRewardData: The completion reward data of the milestone,
 	// represented as a Base64-encoded string. This is a developer-specified
@@ -1613,6 +1727,8 @@ type QuestMilestone struct {
 	State string `json:"state,omitempty"`
 }
 
+// RevisionCheckResponse: This is a JSON template for the result of
+// checking a revision.
 type RevisionCheckResponse struct {
 	// ApiVersion: The version of the API this client revision should use
 	// when calling API methods.
@@ -1632,6 +1748,7 @@ type RevisionCheckResponse struct {
 	RevisionStatus string `json:"revisionStatus,omitempty"`
 }
 
+// Room: This is a JSON template for a room resource object.
 type Room struct {
 	// ApplicationId: The ID of the application being played.
 	ApplicationId string `json:"applicationId,omitempty"`
@@ -1697,6 +1814,8 @@ type Room struct {
 	Variant int64 `json:"variant,omitempty"`
 }
 
+// RoomAutoMatchStatus: This is a JSON template for status of room
+// automatching that is in progress.
 type RoomAutoMatchStatus struct {
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string games#roomAutoMatchStatus.
@@ -1707,6 +1826,8 @@ type RoomAutoMatchStatus struct {
 	WaitEstimateSeconds int64 `json:"waitEstimateSeconds,omitempty"`
 }
 
+// RoomAutoMatchingCriteria: This is a JSON template for a room
+// auto-match criteria object.
 type RoomAutoMatchingCriteria struct {
 	// ExclusiveBitmask: A bitmask indicating when auto-matches are valid.
 	// When ANDed with other exclusive bitmasks, the result must be zero.
@@ -1726,6 +1847,8 @@ type RoomAutoMatchingCriteria struct {
 	MinAutoMatchingPlayers int64 `json:"minAutoMatchingPlayers,omitempty"`
 }
 
+// RoomClientAddress: This is a JSON template for the client address
+// when setting up a room.
 type RoomClientAddress struct {
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string games#roomClientAddress.
@@ -1736,6 +1859,8 @@ type RoomClientAddress struct {
 	XmppAddress string `json:"xmppAddress,omitempty"`
 }
 
+// RoomCreateRequest: This is a JSON template for a room creation
+// request.
 type RoomCreateRequest struct {
 	// AutoMatchingCriteria: Criteria for auto-matching players into this
 	// room.
@@ -1770,6 +1895,7 @@ type RoomCreateRequest struct {
 	Variant int64 `json:"variant,omitempty"`
 }
 
+// RoomJoinRequest: This is a JSON template for a join room request.
 type RoomJoinRequest struct {
 	// Capabilities: The capabilities that this client supports for realtime
 	// communication.
@@ -1787,15 +1913,15 @@ type RoomJoinRequest struct {
 	NetworkDiagnostics *NetworkDiagnostics `json:"networkDiagnostics,omitempty"`
 }
 
+// RoomLeaveDiagnostics: This is a JSON template for room leave
+// diagnostics.
 type RoomLeaveDiagnostics struct {
 	// AndroidNetworkSubtype: Android network subtype.
-	// http://developer.android.com/reference/android/net/NetworkInfo.html#ge
-	// tSubtype()
+	// http://developer.android.com/reference/android/net/NetworkInfo.html#getSubtype()
 	AndroidNetworkSubtype int64 `json:"androidNetworkSubtype,omitempty"`
 
 	// AndroidNetworkType: Android network type.
-	// http://developer.android.com/reference/android/net/NetworkInfo.html#ge
-	// tType()
+	// http://developer.android.com/reference/android/net/NetworkInfo.html#getType()
 	AndroidNetworkType int64 `json:"androidNetworkType,omitempty"`
 
 	// IosNetworkType: iOS network type as defined in Reachability.h.
@@ -1807,19 +1933,14 @@ type RoomLeaveDiagnostics struct {
 
 	// NetworkOperatorCode: The MCC+MNC code for the client's network
 	// connection. On Android:
-	// http://developer.android.com/reference/android/telephony/TelephonyMana
-	// ger.html#getNetworkOperator() On iOS, see:
-	// https://developer.apple.com/library/ios/documentation/NetworkingIntern
-	// et/Reference/CTCarrier/Reference/Reference.html
+	// http://developer.android.com/reference/android/telephony/TelephonyManager.html#getNetworkOperator() On iOS, see:
+	// https://developer.apple.com/library/ios/documentation/NetworkingInternet/Reference/CTCarrier/Reference/Reference.html
 	NetworkOperatorCode string `json:"networkOperatorCode,omitempty"`
 
 	// NetworkOperatorName: The name of the carrier of the client's network
 	// connection. On Android:
-	// http://developer.android.com/reference/android/telephony/TelephonyMana
-	// ger.html#getNetworkOperatorName() On iOS:
-	// https://developer.apple.com/library/ios/documentation/NetworkingIntern
-	// et/Reference/CTCarrier/Reference/Reference.html#//apple_ref/occ/instp/
-	// CTCarrier/carrierName
+	// http://developer.android.com/reference/android/telephony/TelephonyManager.html#getNetworkOperatorName() On iOS:
+	// https://developer.apple.com/library/ios/documentation/NetworkingInternet/Reference/CTCarrier/Reference/Reference.html#//apple_ref/occ/instp/CTCarrier/carrierName
 	NetworkOperatorName string `json:"networkOperatorName,omitempty"`
 
 	// PeerSession: Diagnostics about all peer sessions.
@@ -1829,6 +1950,7 @@ type RoomLeaveDiagnostics struct {
 	SocketsUsed bool `json:"socketsUsed,omitempty"`
 }
 
+// RoomLeaveRequest: This is a JSON template for a leave room request.
 type RoomLeaveRequest struct {
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string games#roomLeaveRequest.
@@ -1864,6 +1986,7 @@ type RoomLeaveRequest struct {
 	Reason string `json:"reason,omitempty"`
 }
 
+// RoomList: This is a JSON template for a list of rooms.
 type RoomList struct {
 	// Items: The rooms.
 	Items []*Room `json:"items,omitempty"`
@@ -1876,6 +1999,8 @@ type RoomList struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// RoomModification: This is a JSON template for room modification
+// metadata.
 type RoomModification struct {
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string games#roomModification.
@@ -1889,6 +2014,8 @@ type RoomModification struct {
 	ParticipantId string `json:"participantId,omitempty"`
 }
 
+// RoomP2PStatus: This is a JSON template for an update on the status of
+// a peer in a room.
 type RoomP2PStatus struct {
 	// ConnectionSetupLatencyMillis: The amount of time in milliseconds it
 	// took to establish connections with this peer.
@@ -1929,6 +2056,8 @@ type RoomP2PStatus struct {
 	UnreliableRoundtripLatencyMillis int64 `json:"unreliableRoundtripLatencyMillis,omitempty"`
 }
 
+// RoomP2PStatuses: This is a JSON template for an update on the status
+// of peers in a room.
 type RoomP2PStatuses struct {
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string games#roomP2PStatuses.
@@ -1938,6 +2067,7 @@ type RoomP2PStatuses struct {
 	Updates []*RoomP2PStatus `json:"updates,omitempty"`
 }
 
+// RoomParticipant: This is a JSON template for a participant in a room.
 type RoomParticipant struct {
 	// AutoMatched: True if this participant was auto-matched with the
 	// requesting player.
@@ -2003,6 +2133,8 @@ type RoomParticipant struct {
 	Status string `json:"status,omitempty"`
 }
 
+// RoomStatus: This is a JSON template for the status of a room that the
+// player has joined.
 type RoomStatus struct {
 	// AutoMatchingStatus: Auto-matching status for this room. Not set if
 	// the room is not currently in the automatching queue.
@@ -2039,6 +2171,8 @@ type RoomStatus struct {
 	StatusVersion int64 `json:"statusVersion,omitempty"`
 }
 
+// ScoreSubmission: This is a JSON template for a request to submit a
+// score to leaderboards.
 type ScoreSubmission struct {
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string games#scoreSubmission.
@@ -2060,6 +2194,7 @@ type ScoreSubmission struct {
 	Signature string `json:"signature,omitempty"`
 }
 
+// Snapshot: This is a JSON template for an snapshot object.
 type Snapshot struct {
 	// CoverImage: The cover image of this snapshot. May be absent if there
 	// is no image.
@@ -2104,6 +2239,7 @@ type Snapshot struct {
 	UniqueName string `json:"uniqueName,omitempty"`
 }
 
+// SnapshotImage: This is a JSON template for an image of a snapshot.
 type SnapshotImage struct {
 	// Height: The height of the image.
 	Height int64 `json:"height,omitempty"`
@@ -2123,6 +2259,8 @@ type SnapshotImage struct {
 	Width int64 `json:"width,omitempty"`
 }
 
+// SnapshotListResponse: This is a JSON template for a list of snapshot
+// objects.
 type SnapshotListResponse struct {
 	// Items: The snapshots.
 	Items []*Snapshot `json:"items,omitempty"`
@@ -2136,6 +2274,8 @@ type SnapshotListResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// TurnBasedAutoMatchingCriteria: This is a JSON template for an
+// turn-based auto-match criteria object.
 type TurnBasedAutoMatchingCriteria struct {
 	// ExclusiveBitmask: A bitmask indicating when auto-matches are valid.
 	// When ANDed with other exclusive bitmasks, the result must be zero.
@@ -2155,6 +2295,8 @@ type TurnBasedAutoMatchingCriteria struct {
 	MinAutoMatchingPlayers int64 `json:"minAutoMatchingPlayers,omitempty"`
 }
 
+// TurnBasedMatch: This is a JSON template for a turn-based match
+// resource object.
 type TurnBasedMatch struct {
 	// ApplicationId: The ID of the application being played.
 	ApplicationId string `json:"applicationId,omitempty"`
@@ -2252,6 +2394,8 @@ type TurnBasedMatch struct {
 	WithParticipantId string `json:"withParticipantId,omitempty"`
 }
 
+// TurnBasedMatchCreateRequest: This is a JSON template for a turn-based
+// match creation request.
 type TurnBasedMatchCreateRequest struct {
 	// AutoMatchingCriteria: Criteria for auto-matching players into this
 	// match.
@@ -2275,6 +2419,8 @@ type TurnBasedMatchCreateRequest struct {
 	Variant int64 `json:"variant,omitempty"`
 }
 
+// TurnBasedMatchData: This is a JSON template for a turn-based match
+// data object.
 type TurnBasedMatchData struct {
 	// Data: The byte representation of the data (limited to 128 kB), as a
 	// Base64-encoded string with the URL_SAFE encoding option.
@@ -2290,6 +2436,8 @@ type TurnBasedMatchData struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// TurnBasedMatchDataRequest: This is a JSON template for sending a
+// turn-based match data object.
 type TurnBasedMatchDataRequest struct {
 	// Data: The byte representation of the data (limited to 128 kB), as a
 	// Base64-encoded string with the URL_SAFE encoding option.
@@ -2300,6 +2448,8 @@ type TurnBasedMatchDataRequest struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// TurnBasedMatchList: This is a JSON template for a list of turn-based
+// matches.
 type TurnBasedMatchList struct {
 	// Items: The matches.
 	Items []*TurnBasedMatch `json:"items,omitempty"`
@@ -2312,6 +2462,8 @@ type TurnBasedMatchList struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// TurnBasedMatchModification: This is a JSON template for turn-based
+// match modification metadata.
 type TurnBasedMatchModification struct {
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string games#turnBasedMatchModification.
@@ -2325,6 +2477,8 @@ type TurnBasedMatchModification struct {
 	ParticipantId string `json:"participantId,omitempty"`
 }
 
+// TurnBasedMatchParticipant: This is a JSON template for a participant
+// in a turn-based match.
 type TurnBasedMatchParticipant struct {
 	// AutoMatched: True if this participant was auto-matched with the
 	// requesting player.
@@ -2370,6 +2524,8 @@ type TurnBasedMatchParticipant struct {
 	Status string `json:"status,omitempty"`
 }
 
+// TurnBasedMatchRematch: This is a JSON template for a rematch
+// response.
 type TurnBasedMatchRematch struct {
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string games#turnBasedMatchRematch.
@@ -2384,6 +2540,8 @@ type TurnBasedMatchRematch struct {
 	Rematch *TurnBasedMatch `json:"rematch,omitempty"`
 }
 
+// TurnBasedMatchResults: This is a JSON template for a turn-based match
+// results object.
 type TurnBasedMatchResults struct {
 	// Data: The final match data.
 	Data *TurnBasedMatchDataRequest `json:"data,omitempty"`
@@ -2399,6 +2557,8 @@ type TurnBasedMatchResults struct {
 	Results []*ParticipantResult `json:"results,omitempty"`
 }
 
+// TurnBasedMatchSync: This is a JSON template for a list of turn-based
+// matches returned from a sync.
 type TurnBasedMatchSync struct {
 	// Items: The matches.
 	Items []*TurnBasedMatch `json:"items,omitempty"`
@@ -2416,6 +2576,8 @@ type TurnBasedMatchSync struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// TurnBasedMatchTurn: This is a JSON template for the object
+// representing a turn.
 type TurnBasedMatchTurn struct {
 	// Data: The shared game state data after the turn is over.
 	Data *TurnBasedMatchDataRequest `json:"data,omitempty"`

@@ -141,6 +141,7 @@ type UserProfilesService struct {
 	s *Service
 }
 
+// Course: A Course in Classroom.
 type Course struct {
 	// CourseState: State of the course. If unspecified, the default state
 	// will be `PROVISIONED`.
@@ -217,6 +218,18 @@ type Course struct {
 	WebLink string `json:"webLink,omitempty"`
 }
 
+// CourseAlias: Alternative identifier for a course. An alias uniquely
+// identifies a course. It will be unique within one of the following
+// scopes: * domain: A domain-scoped alias is visible to all users
+// within the alias creator's domain and may only be created by a domain
+// admin. A domain-scoped alias is often used when a course has an
+// identifier external to Classroom. * project: A project-scoped alias
+// is visible to any request from an application using the Developer
+// Console Project ID that created the alias and may be created by any
+// project. A project-scoped alias is often used when an application has
+// alternative identifiers. A random value can also be used to avoid
+// duplicate courses in the event of transmission failures, as retrying
+// a request will return ALREADY_EXISTS if a previous one has succeeded.
 type CourseAlias struct {
 	// Alias: Alias string. The format of the string indicated the desired
 	// alias scoping. * "d:" indicates a domain-scoped alias. Example:
@@ -225,9 +238,16 @@ type CourseAlias struct {
 	Alias string `json:"alias,omitempty"`
 }
 
+// Empty: A generic empty message that you can re-use to avoid defining
+// duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For
+// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); } The JSON representation for `Empty` is
+// empty JSON object `{}`.
 type Empty struct {
 }
 
+// GlobalPermission: Global user permission description.
 type GlobalPermission struct {
 	// Permission: Permission value.
 	//
@@ -237,6 +257,7 @@ type GlobalPermission struct {
 	Permission string `json:"permission,omitempty"`
 }
 
+// ListCourseAliasesResponse: Response when listing course aliases.
 type ListCourseAliasesResponse struct {
 	// Aliases: The course aliases.
 	Aliases []*CourseAlias `json:"aliases,omitempty"`
@@ -246,6 +267,7 @@ type ListCourseAliasesResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// ListCoursesResponse: Response when listing courses.
 type ListCoursesResponse struct {
 	// Courses: Courses that match the request.
 	Courses []*Course `json:"courses,omitempty"`
@@ -255,6 +277,7 @@ type ListCoursesResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 }
 
+// ListStudentsResponse: Response when listing students.
 type ListStudentsResponse struct {
 	// NextPageToken: Token identifying the next page of results to return.
 	// If empty, no further results are available.
@@ -264,6 +287,7 @@ type ListStudentsResponse struct {
 	Students []*Student `json:"students,omitempty"`
 }
 
+// ListTeachersResponse: Response when listing teachers.
 type ListTeachersResponse struct {
 	// NextPageToken: Token identifying the next page of results to return.
 	// If empty, no further results are available.
@@ -273,6 +297,7 @@ type ListTeachersResponse struct {
 	Teachers []*Teacher `json:"teachers,omitempty"`
 }
 
+// Name: Details of the user's name.
 type Name struct {
 	// FamilyName: The user's last name. Read-only
 	FamilyName string `json:"familyName,omitempty"`
@@ -285,6 +310,7 @@ type Name struct {
 	GivenName string `json:"givenName,omitempty"`
 }
 
+// Student: Student in a course.
 type Student struct {
 	// CourseId: Unique identifier of the course. Read-only
 	CourseId string `json:"courseId,omitempty"`
@@ -299,6 +325,7 @@ type Student struct {
 	UserId string `json:"userId,omitempty"`
 }
 
+// Teacher: Teacher of a course.
 type Teacher struct {
 	// CourseId: Unique identifier of the course. Read-only
 	CourseId string `json:"courseId,omitempty"`
@@ -313,6 +340,7 @@ type Teacher struct {
 	UserId string `json:"userId,omitempty"`
 }
 
+// UserProfile: Global information for a user.
 type UserProfile struct {
 	// EmailAddress: E-mail address of the user. Read-only
 	EmailAddress string `json:"emailAddress,omitempty"`

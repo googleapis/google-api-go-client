@@ -92,6 +92,7 @@ type CreativesService struct {
 	s *Service
 }
 
+// Account: Configuration data for an Ad Exchange buyer account.
 type Account struct {
 	// BidderLocation: Your bidder locations that have distinct URLs.
 	BidderLocation []*AccountBidderLocation `json:"bidderLocation,omitempty"`
@@ -143,6 +144,9 @@ type AccountBidderLocation struct {
 	Url string `json:"url,omitempty"`
 }
 
+// AccountsList: An account feed lists Ad Exchange buyer accounts that
+// the user has access to. Each entry in the feed corresponds to a
+// single buyer account.
 type AccountsList struct {
 	// Items: A list of accounts.
 	Items []*Account `json:"items,omitempty"`
@@ -151,6 +155,7 @@ type AccountsList struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+// Creative: A creative and its classification data.
 type Creative struct {
 	// HTMLSnippet: The HTML snippet that displays the ad when inserted in
 	// the web page. If set, videoURL should not be set.
@@ -247,6 +252,8 @@ type CreativeDisapprovalReasons struct {
 	Reason string `json:"reason,omitempty"`
 }
 
+// CreativeFilteringReasons: The filtering reasons for the creative.
+// Read-only. This field should not be set in requests.
 type CreativeFilteringReasons struct {
 	// Date: The date in ISO 8601 format for the data. The data is collected
 	// from 00:00:00 to 23:59:59 in PST.
@@ -267,6 +274,9 @@ type CreativeFilteringReasonsReasons struct {
 	FilteringStatus int64 `json:"filteringStatus,omitempty"`
 }
 
+// CreativesList: The creatives feed lists the active creatives for the
+// Ad Exchange buyer accounts that the user has access to. Each entry in
+// the feed corresponds to a single creative.
 type CreativesList struct {
 	// Items: A list of creatives.
 	Items []*Creative `json:"items,omitempty"`

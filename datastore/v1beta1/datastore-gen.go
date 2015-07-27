@@ -149,6 +149,8 @@ type CommitResponse struct {
 	MutationResult *MutationResult `json:"mutationResult,omitempty"`
 }
 
+// CompositeFilter: A filter that merges the multiple other filters
+// using the given operation.
 type CompositeFilter struct {
 	// Filters: The list of filters to combine. Must contain at least one
 	// filter.
@@ -159,6 +161,7 @@ type CompositeFilter struct {
 	Operator string `json:"operator,omitempty"`
 }
 
+// Entity: An entity.
 type Entity struct {
 	// Key: The entity's key.
 	//
@@ -171,11 +174,14 @@ type Entity struct {
 	Properties map[string]Property `json:"properties,omitempty"`
 }
 
+// EntityResult: The result of fetching an entity from the datastore.
 type EntityResult struct {
 	// Entity: The resulting entity.
 	Entity *Entity `json:"entity,omitempty"`
 }
 
+// Filter: A holder for any type of filter. Exactly one field should be
+// specified.
 type Filter struct {
 	// CompositeFilter: A composite filter.
 	CompositeFilter *CompositeFilter `json:"compositeFilter,omitempty"`
@@ -184,6 +190,7 @@ type Filter struct {
 	PropertyFilter *PropertyFilter `json:"propertyFilter,omitempty"`
 }
 
+// GqlQuery: A GQL query.
 type GqlQuery struct {
 	// AllowLiteral: When false, the query string must not contain a
 	// literal.
@@ -206,6 +213,7 @@ type GqlQuery struct {
 	QueryString string `json:"queryString,omitempty"`
 }
 
+// GqlQueryArg: A binding argument for a GQL query.
 type GqlQueryArg struct {
 	Cursor string `json:"cursor,omitempty"`
 
@@ -216,6 +224,7 @@ type GqlQueryArg struct {
 	Value *Value `json:"value,omitempty"`
 }
 
+// Key: A unique identifier for an entity.
 type Key struct {
 	// PartitionId: Entities are partitioned into subsets, currently
 	// identified by a dataset (usually implicitly specified by the project)
@@ -237,6 +246,11 @@ type Key struct {
 	Path []*KeyPathElement `json:"path,omitempty"`
 }
 
+// KeyPathElement: A (kind, ID/name) pair used to construct a key
+// path.
+//
+// At most one of name or ID may be set. If either is set, the element
+// is complete. If neither is set, the element is incomplete.
 type KeyPathElement struct {
 	// Id: The ID of the entity. Never equal to zero. Values less than zero
 	// are discouraged and will not be supported in the future.
@@ -253,6 +267,7 @@ type KeyPathElement struct {
 	Name string `json:"name,omitempty"`
 }
 
+// KindExpression: A representation of a kind.
 type KindExpression struct {
 	// Name: The name of the kind.
 	Name string `json:"name,omitempty"`
@@ -280,6 +295,7 @@ type LookupResponse struct {
 	Missing []*EntityResult `json:"missing,omitempty"`
 }
 
+// Mutation: A set of changes to apply.
 type Mutation struct {
 	// Delete: Keys of entities to delete. Each key must have a complete key
 	// path and must not be reserved/read-only.
@@ -315,6 +331,11 @@ type MutationResult struct {
 	InsertAutoIdKeys []*Key `json:"insertAutoIdKeys,omitempty"`
 }
 
+// PartitionId: An identifier for a particular subset of
+// entities.
+//
+// Entities are partitioned into various subsets, each used by different
+// datasets and different namespaces within a dataset and so forth.
 type PartitionId struct {
 	// DatasetId: The dataset ID.
 	DatasetId string `json:"datasetId,omitempty"`
@@ -323,6 +344,7 @@ type PartitionId struct {
 	Namespace string `json:"namespace,omitempty"`
 }
 
+// Property: An entity property.
 type Property struct {
 	// Multi: If this property contains a list of values. Input values may
 	// explicitly set multi to false, but otherwise false is always
@@ -338,6 +360,7 @@ type Property struct {
 	Values []*Value `json:"values,omitempty"`
 }
 
+// PropertyExpression: A representation of a property in a projection.
 type PropertyExpression struct {
 	// AggregationFunction: The aggregation function to apply to the
 	// property. Optional. Can only be used when grouping by at least one
@@ -350,6 +373,7 @@ type PropertyExpression struct {
 	Property *PropertyReference `json:"property,omitempty"`
 }
 
+// PropertyFilter: A filter on a specific property.
 type PropertyFilter struct {
 	// Operator: The operator to filter by. One of lessThan,
 	// lessThanOrEqual, greaterThan, greaterThanOrEqual, equal, or
@@ -363,6 +387,7 @@ type PropertyFilter struct {
 	Value *Value `json:"value,omitempty"`
 }
 
+// PropertyOrder: The desired order for a specific property.
 type PropertyOrder struct {
 	// Direction: The direction to order by. One of ascending or descending.
 	// Optional, defaults to ascending.
@@ -372,11 +397,14 @@ type PropertyOrder struct {
 	Property *PropertyReference `json:"property,omitempty"`
 }
 
+// PropertyReference: A reference to a property relative to the kind
+// expressions.
 type PropertyReference struct {
 	// Name: The name of the property.
 	Name string `json:"name,omitempty"`
 }
 
+// Query: A query.
 type Query struct {
 	// EndCursor: An ending point for the query results. Optional. Query
 	// cursors are returned in query result batches.
@@ -414,6 +442,7 @@ type Query struct {
 	StartCursor string `json:"startCursor,omitempty"`
 }
 
+// QueryResultBatch: A batch of results produced by a query.
 type QueryResultBatch struct {
 	// EndCursor: A cursor that points to the position after the last result
 	// in the batch. May be absent. TODO(arfuller): Once all plans produce
@@ -492,6 +521,8 @@ type RunQueryResponse struct {
 	Header *ResponseHeader `json:"header,omitempty"`
 }
 
+// Value: A message that can hold any of the supported value types and
+// associated metadata.
 type Value struct {
 	// BlobKeyValue: A blob key value.
 	BlobKeyValue string `json:"blobKeyValue,omitempty"`

@@ -116,6 +116,7 @@ type ProjectsZonesOperationsService struct {
 	s *Service
 }
 
+// Cluster: A Google Container Engine cluster.
 type Cluster struct {
 	// ClusterIpv4Cidr: The IP address range of the container pods in this
 	// cluster, in
@@ -236,6 +237,7 @@ type Cluster struct {
 	Zone string `json:"zone,omitempty"`
 }
 
+// ClusterUpdate: ClusterUpdate describes an update to the cluster.
 type ClusterUpdate struct {
 	// DesiredNodeVersion: The Kubernetes version to change the nodes to
 	// (typically an upgrade). Use "-" to upgrade to the latest version
@@ -243,24 +245,32 @@ type ClusterUpdate struct {
 	DesiredNodeVersion string `json:"desiredNodeVersion,omitempty"`
 }
 
+// CreateClusterRequest: CreateClusterRequest creates a cluster.
 type CreateClusterRequest struct {
 	// Cluster: A [cluster
 	// resource](/container-engine/docs/v1/projects/zones/clusters)
 	Cluster *Cluster `json:"cluster,omitempty"`
 }
 
+// ListClustersResponse: ListClustersResponse is the result of
+// ListClustersRequest.
 type ListClustersResponse struct {
 	// Clusters: A list of clusters in the project in the specified zone, or
 	// across all ones.
 	Clusters []*Cluster `json:"clusters,omitempty"`
 }
 
+// ListOperationsResponse: ListOperationsResponse is the result of
+// ListOperationsRequest.
 type ListOperationsResponse struct {
 	// Operations: A list of operations in the project in the specified
 	// zone.
 	Operations []*Operation `json:"operations,omitempty"`
 }
 
+// MasterAuth: The authentication information for accessing the master
+// endpoint. Authentication can be done using HTTP basic auth or using
+// client certificates.
 type MasterAuth struct {
 	// ClientCertificate: [Output only] Base64 encoded public certificate
 	// used by clients to authenticate to the cluster endpoint. @OutputOnly.
@@ -284,6 +294,7 @@ type MasterAuth struct {
 	Username string `json:"username,omitempty"`
 }
 
+// NodeConfig: Per-node parameters.
 type NodeConfig struct {
 	// DiskSizeGb: Size of the disk attached to each node, specified in GB.
 	// The smallest allowed disk size is 10GB, and the default is 100GB.
@@ -302,6 +313,8 @@ type NodeConfig struct {
 	OauthScopes []string `json:"oauthScopes,omitempty"`
 }
 
+// Operation: Defines the operation resource. All fields are output
+// only.
 type Operation struct {
 	// Name: The server-assigned ID for the operation. @OutputOnly.
 	Name string `json:"name,omitempty"`
@@ -343,6 +356,7 @@ type Operation struct {
 	Zone string `json:"zone,omitempty"`
 }
 
+// UpdateClusterRequest: UpdateClusterRequest updates a cluster.
 type UpdateClusterRequest struct {
 	// Update: A description of the update.
 	Update *ClusterUpdate `json:"update,omitempty"`

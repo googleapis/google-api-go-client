@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6dae5efb_d2ad0471",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 1832,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-07-28T15:05:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6d657ec3_9ab2ad33",
+      "revId": "e2b0f686e89e6afbcd9e2788f476c6eb6a3a6d78",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d657ec3_bab77122",
         "filename": "google-api-go-generator/gen.go",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2015-07-28T06:34:27Z",
       "side": 1,
       "message": "wouldn\u0027t you want to break before the URL then and at least have it on its own line, rather than having a really long line if the URL starts right before maxLen?\n\nI suppose it\u0027s rare.",
+      "revId": "e2b0f686e89e6afbcd9e2788f476c6eb6a3a6d78",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6dae5efb_12b02cc6",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 1849,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-07-28T15:05:59Z",
+      "side": 1,
+      "message": "The previous iteration through this loop will ensure that a break will occur immediately before a long URL.\nThen this line prevents breaking the URL somewhere in its middle.",
+      "parentUuid": "6d657ec3_bab77122",
       "revId": "e2b0f686e89e6afbcd9e2788f476c6eb6a3a6d78",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false

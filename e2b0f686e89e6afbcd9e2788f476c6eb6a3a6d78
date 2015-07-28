@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d657ec3_9ab2ad33",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 1832,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-07-28T06:34:27Z",
+      "side": 1,
+      "message": "this seems like a separate logical fix which could be in its own commit with tests, but I guess it\u0027s fine here.",
+      "revId": "e2b0f686e89e6afbcd9e2788f476c6eb6a3a6d78",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6d657ec3_bab77122",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 1849,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-07-28T06:34:27Z",
+      "side": 1,
+      "message": "wouldn\u0027t you want to break before the URL then and at least have it on its own line, rather than having a really long line if the URL starts right before maxLen?\n\nI suppose it\u0027s rare.",
+      "revId": "e2b0f686e89e6afbcd9e2788f476c6eb6a3a6d78",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

@@ -37,3 +37,31 @@ For examples, see:
 For support, use the golang-nuts@ mailing list:
 
    https://groups.google.com/group/golang-nuts
+
+## Application Default Credentials Example
+
+Application Default Credentials provide a simplified way to obtain credentials
+for authenticating with Google APIs.
+
+The Application Default Credentials authenticate as the application itself,
+which make them great for working with Google Cloud APIs like Storage or
+Datastore. They are the recommended form of authentication when building
+applications that run on Google Compute Engine or Google App Engine.
+
+```
+import (
+	"log"
+
+	"golang.org/x/oauth2"
+	"golang.org/x/oauth2/google"
+)
+
+func ExampleDefaultClient() {
+	client, err := google.DefaultClient(oauth2.NoContext,
+		"https://www.googleapis.com/auth/devstorage.full_control")
+	if err != nil {
+		log.Fatal(err)
+	}
+	client.Get("...")
+}
+```

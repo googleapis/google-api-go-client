@@ -637,6 +637,7 @@ type LogUserEventRequest struct {
 	//   "AGENCY_SEARCHED_FOR_AGENCIES"
 	//   "AGENCY_PICKED_SEARCHED_AGENCY"
 	//   "AGENCY_DISMISSED_AFFILIATION_WIDGET"
+	//   "AGENCY_CLICKED_INSIGHTS_DOWNLOAD_CONTENT"
 	EventAction string `json:"eventAction,omitempty"`
 
 	// EventCategory: The category the action belongs to.

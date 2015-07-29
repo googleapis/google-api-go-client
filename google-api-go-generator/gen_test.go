@@ -149,3 +149,27 @@ func TestDepunct(t *testing.T) {
 		}
 	}
 }
+
+func TestRenameVersion(t *testing.T) {
+	tests := []struct {
+		version, want string
+	}{
+		{
+			version: "directory_v1",
+			want:    "directory/v1",
+		},
+		{
+			version: "email_migration_v1",
+			want:    "email_migration/v1",
+		},
+		{
+			version: "my_api_v1.2",
+			want:    "my_api/v1.2",
+		},
+	}
+	for _, test := range tests {
+		if got := renameVersion(test.version); got != test.want {
+			t.Errorf("renameVersion(%q) = %q; want %q", test.version, got, test.want)
+		}
+	}
+}

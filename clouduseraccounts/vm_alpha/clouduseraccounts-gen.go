@@ -708,25 +708,19 @@ func (r *GlobalAccountsOperationsService) List(project string) *GlobalAccountsOp
 
 // Filter sets the optional parameter "filter": Sets a filter expression
 // for filtering listed resources, in the form filter={expression}. Your
-// {expression} must contain the following:
-// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+// {expression} must be in the format: FIELD_NAME COMPARISON_STRING
+// LITERAL_STRING.
 //
-// - FIELD_NAME: The name of the field you want to compare. The field
-// name must be valid for the type of resource being filtered. Only
-// atomic field types are supported (string, number, boolean). Array and
-// object fields are not currently supported.
-// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
-// (not equals).
-// - LITERAL_STRING: The literal string value to filter to. The literal
-// value must be valid for the type of field (string, number, boolean).
-// For string fields, the literal value is interpreted as a regular
+// The FIELD_NAME is the name of the field you want to compare. Only
+// atomic field types are supported (string, number, boolean). The
+// COMPARISON_STRING must be either eq (equals) or ne (not equals). The
+// LITERAL_STRING is the string value to filter to. The literal value
+// must be valid for the type of field (string, number, boolean). For
+// string fields, the literal value is interpreted as a regular
 // expression using RE2 syntax. The literal value must match the entire
-// field.  For example, you can filter by the name of a
-// resource:
-// filter=name ne example-instance
-// The above filter returns only results whose name field does not equal
-// example-instance. You can also enclose your literal string in single,
-// double, or no quotes.
+// field.
+//
+// For example, filter=name ne example-instance.
 func (c *GlobalAccountsOperationsListCall) Filter(filter string) *GlobalAccountsOperationsListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -821,7 +815,7 @@ func (c *GlobalAccountsOperationsListCall) Do() (*OperationList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: FIELD_NAME COMPARISON_STRING LITERAL_STRING.\n\nThe FIELD_NAME is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The COMPARISON_STRING must be either eq (equals) or ne (not equals). The LITERAL_STRING is the string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, filter=name ne example-instance.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1259,25 +1253,19 @@ func (r *GroupsService) List(project string) *GroupsListCall {
 
 // Filter sets the optional parameter "filter": Sets a filter expression
 // for filtering listed resources, in the form filter={expression}. Your
-// {expression} must contain the following:
-// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+// {expression} must be in the format: FIELD_NAME COMPARISON_STRING
+// LITERAL_STRING.
 //
-// - FIELD_NAME: The name of the field you want to compare. The field
-// name must be valid for the type of resource being filtered. Only
-// atomic field types are supported (string, number, boolean). Array and
-// object fields are not currently supported.
-// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
-// (not equals).
-// - LITERAL_STRING: The literal string value to filter to. The literal
-// value must be valid for the type of field (string, number, boolean).
-// For string fields, the literal value is interpreted as a regular
+// The FIELD_NAME is the name of the field you want to compare. Only
+// atomic field types are supported (string, number, boolean). The
+// COMPARISON_STRING must be either eq (equals) or ne (not equals). The
+// LITERAL_STRING is the string value to filter to. The literal value
+// must be valid for the type of field (string, number, boolean). For
+// string fields, the literal value is interpreted as a regular
 // expression using RE2 syntax. The literal value must match the entire
-// field.  For example, you can filter by the name of a
-// resource:
-// filter=name ne example-instance
-// The above filter returns only results whose name field does not equal
-// example-instance. You can also enclose your literal string in single,
-// double, or no quotes.
+// field.
+//
+// For example, filter=name ne example-instance.
 func (c *GroupsListCall) Filter(filter string) *GroupsListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -1372,7 +1360,7 @@ func (c *GroupsListCall) Do() (*GroupList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: FIELD_NAME COMPARISON_STRING LITERAL_STRING.\n\nThe FIELD_NAME is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The COMPARISON_STRING must be either eq (equals) or ne (not equals). The LITERAL_STRING is the string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, filter=name ne example-instance.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1655,25 +1643,19 @@ func (r *LinuxService) GetLinuxAccountViews(project string, zone string, instanc
 
 // Filter sets the optional parameter "filter": Sets a filter expression
 // for filtering listed resources, in the form filter={expression}. Your
-// {expression} must contain the following:
-// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+// {expression} must be in the format: FIELD_NAME COMPARISON_STRING
+// LITERAL_STRING.
 //
-// - FIELD_NAME: The name of the field you want to compare. The field
-// name must be valid for the type of resource being filtered. Only
-// atomic field types are supported (string, number, boolean). Array and
-// object fields are not currently supported.
-// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
-// (not equals).
-// - LITERAL_STRING: The literal string value to filter to. The literal
-// value must be valid for the type of field (string, number, boolean).
-// For string fields, the literal value is interpreted as a regular
+// The FIELD_NAME is the name of the field you want to compare. Only
+// atomic field types are supported (string, number, boolean). The
+// COMPARISON_STRING must be either eq (equals) or ne (not equals). The
+// LITERAL_STRING is the string value to filter to. The literal value
+// must be valid for the type of field (string, number, boolean). For
+// string fields, the literal value is interpreted as a regular
 // expression using RE2 syntax. The literal value must match the entire
-// field.  For example, you can filter by the name of a
-// resource:
-// filter=name ne example-instance
-// The above filter returns only results whose name field does not equal
-// example-instance. You can also enclose your literal string in single,
-// double, or no quotes.
+// field.
+//
+// For example, filter=name ne example-instance.
 func (c *LinuxGetLinuxAccountViewsCall) Filter(filter string) *LinuxGetLinuxAccountViewsCall {
 	c.opt_["filter"] = filter
 	return c
@@ -1772,7 +1754,7 @@ func (c *LinuxGetLinuxAccountViewsCall) Do() (*LinuxGetLinuxAccountViewsResponse
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: FIELD_NAME COMPARISON_STRING LITERAL_STRING.\n\nThe FIELD_NAME is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The COMPARISON_STRING must be either eq (equals) or ne (not equals). The LITERAL_STRING is the string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, filter=name ne example-instance.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2224,25 +2206,19 @@ func (r *UsersService) List(project string) *UsersListCall {
 
 // Filter sets the optional parameter "filter": Sets a filter expression
 // for filtering listed resources, in the form filter={expression}. Your
-// {expression} must contain the following:
-// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+// {expression} must be in the format: FIELD_NAME COMPARISON_STRING
+// LITERAL_STRING.
 //
-// - FIELD_NAME: The name of the field you want to compare. The field
-// name must be valid for the type of resource being filtered. Only
-// atomic field types are supported (string, number, boolean). Array and
-// object fields are not currently supported.
-// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
-// (not equals).
-// - LITERAL_STRING: The literal string value to filter to. The literal
-// value must be valid for the type of field (string, number, boolean).
-// For string fields, the literal value is interpreted as a regular
+// The FIELD_NAME is the name of the field you want to compare. Only
+// atomic field types are supported (string, number, boolean). The
+// COMPARISON_STRING must be either eq (equals) or ne (not equals). The
+// LITERAL_STRING is the string value to filter to. The literal value
+// must be valid for the type of field (string, number, boolean). For
+// string fields, the literal value is interpreted as a regular
 // expression using RE2 syntax. The literal value must match the entire
-// field.  For example, you can filter by the name of a
-// resource:
-// filter=name ne example-instance
-// The above filter returns only results whose name field does not equal
-// example-instance. You can also enclose your literal string in single,
-// double, or no quotes.
+// field.
+//
+// For example, filter=name ne example-instance.
 func (c *UsersListCall) Filter(filter string) *UsersListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -2337,7 +2313,7 @@ func (c *UsersListCall) Do() (*UserList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: FIELD_NAME COMPARISON_STRING LITERAL_STRING.\n\nThe FIELD_NAME is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The COMPARISON_STRING must be either eq (equals) or ne (not equals). The LITERAL_STRING is the string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, filter=name ne example-instance.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

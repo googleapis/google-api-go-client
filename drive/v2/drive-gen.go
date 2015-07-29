@@ -62,6 +62,9 @@ const (
 	// View metadata for files in your Google Drive
 	DriveMetadataReadonlyScope = "https://www.googleapis.com/auth/drive.metadata.readonly"
 
+	// View the photos, videos and albums in your Google Photos
+	DrivePhotosReadonlyScope = "https://www.googleapis.com/auth/drive.photos.readonly"
+
 	// View the files in your Google Drive
 	DriveReadonlyScope = "https://www.googleapis.com/auth/drive.readonly"
 
@@ -969,7 +972,7 @@ type File struct {
 	SharingUser *User `json:"sharingUser,omitempty"`
 
 	// Spaces: The list of spaces which contain the file. Supported values
-	// are 'drive' and 'appDataFolder'.
+	// are 'drive', 'appDataFolder' and 'photos'.
 	Spaces []string `json:"spaces,omitempty"`
 
 	// Thumbnail: Thumbnail for the file. Only accepted on upload and for
@@ -1564,6 +1567,7 @@ func (c *AboutGetCall) Do() (*About, error) {
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.metadata",
 	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
+	//     "https://www.googleapis.com/auth/drive.photos.readonly",
 	//     "https://www.googleapis.com/auth/drive.readonly"
 	//   ]
 	// }
@@ -1847,6 +1851,7 @@ func (c *ChangesGetCall) Do() (*Change, error) {
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.metadata",
 	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
+	//     "https://www.googleapis.com/auth/drive.photos.readonly",
 	//     "https://www.googleapis.com/auth/drive.readonly"
 	//   ]
 	// }
@@ -1897,7 +1902,8 @@ func (c *ChangesListCall) PageToken(pageToken string) *ChangesListCall {
 }
 
 // Spaces sets the optional parameter "spaces": A comma-separated list
-// of spaces to query. Supported values are 'drive' and 'appDataFolder'.
+// of spaces to query. Supported values are 'drive', 'appDataFolder' and
+// 'photos'.
 func (c *ChangesListCall) Spaces(spaces string) *ChangesListCall {
 	c.opt_["spaces"] = spaces
 	return c
@@ -1992,7 +1998,7 @@ func (c *ChangesListCall) Do() (*ChangeList, error) {
 	//       "type": "string"
 	//     },
 	//     "spaces": {
-	//       "description": "A comma-separated list of spaces to query. Supported values are 'drive' and 'appDataFolder'.",
+	//       "description": "A comma-separated list of spaces to query. Supported values are 'drive', 'appDataFolder' and 'photos'.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2014,6 +2020,7 @@ func (c *ChangesListCall) Do() (*ChangeList, error) {
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.metadata",
 	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
+	//     "https://www.googleapis.com/auth/drive.photos.readonly",
 	//     "https://www.googleapis.com/auth/drive.readonly"
 	//   ],
 	//   "supportsSubscription": true
@@ -2067,7 +2074,8 @@ func (c *ChangesWatchCall) PageToken(pageToken string) *ChangesWatchCall {
 }
 
 // Spaces sets the optional parameter "spaces": A comma-separated list
-// of spaces to query. Supported values are 'drive' and 'appDataFolder'.
+// of spaces to query. Supported values are 'drive', 'appDataFolder' and
+// 'photos'.
 func (c *ChangesWatchCall) Spaces(spaces string) *ChangesWatchCall {
 	c.opt_["spaces"] = spaces
 	return c
@@ -2168,7 +2176,7 @@ func (c *ChangesWatchCall) Do() (*Channel, error) {
 	//       "type": "string"
 	//     },
 	//     "spaces": {
-	//       "description": "A comma-separated list of spaces to query. Supported values are 'drive' and 'appDataFolder'.",
+	//       "description": "A comma-separated list of spaces to query. Supported values are 'drive', 'appDataFolder' and 'photos'.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2194,6 +2202,7 @@ func (c *ChangesWatchCall) Do() (*Channel, error) {
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.metadata",
 	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
+	//     "https://www.googleapis.com/auth/drive.photos.readonly",
 	//     "https://www.googleapis.com/auth/drive.readonly"
 	//   ],
 	//   "supportsSubscription": true
@@ -2267,6 +2276,7 @@ func (c *ChannelsStopCall) Do() error {
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.metadata",
 	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
+	//     "https://www.googleapis.com/auth/drive.photos.readonly",
 	//     "https://www.googleapis.com/auth/drive.readonly"
 	//   ]
 	// }
@@ -2438,6 +2448,7 @@ func (c *ChildrenGetCall) Do() (*ChildReference, error) {
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.metadata",
 	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
+	//     "https://www.googleapis.com/auth/drive.photos.readonly",
 	//     "https://www.googleapis.com/auth/drive.readonly"
 	//   ]
 	// }
@@ -2656,6 +2667,7 @@ func (c *ChildrenListCall) Do() (*ChildList, error) {
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.metadata",
 	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
+	//     "https://www.googleapis.com/auth/drive.photos.readonly",
 	//     "https://www.googleapis.com/auth/drive.readonly"
 	//   ]
 	// }
@@ -3487,7 +3499,8 @@ func (c *FilesCopyCall) Do() (*File, error) {
 	//     "https://www.googleapis.com/auth/drive",
 	//     "https://www.googleapis.com/auth/drive.appdata",
 	//     "https://www.googleapis.com/auth/drive.apps.readonly",
-	//     "https://www.googleapis.com/auth/drive.file"
+	//     "https://www.googleapis.com/auth/drive.file",
+	//     "https://www.googleapis.com/auth/drive.photos.readonly"
 	//   ]
 	// }
 
@@ -3772,6 +3785,7 @@ func (c *FilesGetCall) Do() (*File, error) {
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.metadata",
 	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
+	//     "https://www.googleapis.com/auth/drive.photos.readonly",
 	//     "https://www.googleapis.com/auth/drive.readonly"
 	//   ],
 	//   "supportsMediaDownload": true,
@@ -4146,7 +4160,8 @@ func (c *FilesListCall) Q(q string) *FilesListCall {
 }
 
 // Spaces sets the optional parameter "spaces": A comma-separated list
-// of spaces to query. Supported values are 'drive' and 'appDataFolder'.
+// of spaces to query. Supported values are 'drive', 'appDataFolder' and
+// 'photos'.
 func (c *FilesListCall) Spaces(spaces string) *FilesListCall {
 	c.opt_["spaces"] = spaces
 	return c
@@ -4253,7 +4268,7 @@ func (c *FilesListCall) Do() (*FileList, error) {
 	//       "type": "string"
 	//     },
 	//     "spaces": {
-	//       "description": "A comma-separated list of spaces to query. Supported values are 'drive' and 'appDataFolder'.",
+	//       "description": "A comma-separated list of spaces to query. Supported values are 'drive', 'appDataFolder' and 'photos'.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -4269,6 +4284,7 @@ func (c *FilesListCall) Do() (*FileList, error) {
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.metadata",
 	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
+	//     "https://www.googleapis.com/auth/drive.photos.readonly",
 	//     "https://www.googleapis.com/auth/drive.readonly"
 	//   ]
 	// }
@@ -4693,7 +4709,8 @@ type FilesTrashCall struct {
 	opt_   map[string]interface{}
 }
 
-// Trash: Moves a file to the trash.
+// Trash: Moves a file to the trash. The currently authenticated user
+// must own the file.
 func (r *FilesService) Trash(fileId string) *FilesTrashCall {
 	c := &FilesTrashCall{s: r.s, opt_: make(map[string]interface{})}
 	c.fileId = fileId
@@ -4736,7 +4753,7 @@ func (c *FilesTrashCall) Do() (*File, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Moves a file to the trash.",
+	//   "description": "Moves a file to the trash. The currently authenticated user must own the file.",
 	//   "httpMethod": "POST",
 	//   "id": "drive.files.trash",
 	//   "parameterOrder": [
@@ -5429,6 +5446,7 @@ func (c *FilesWatchCall) Do() (*Channel, error) {
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.metadata",
 	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
+	//     "https://www.googleapis.com/auth/drive.photos.readonly",
 	//     "https://www.googleapis.com/auth/drive.readonly"
 	//   ],
 	//   "supportsMediaDownload": true,
@@ -5602,6 +5620,7 @@ func (c *ParentsGetCall) Do() (*ParentReference, error) {
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.metadata",
 	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
+	//     "https://www.googleapis.com/auth/drive.photos.readonly",
 	//     "https://www.googleapis.com/auth/drive.readonly"
 	//   ]
 	// }
@@ -5772,6 +5791,7 @@ func (c *ParentsListCall) Do() (*ParentList, error) {
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.metadata",
 	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
+	//     "https://www.googleapis.com/auth/drive.photos.readonly",
 	//     "https://www.googleapis.com/auth/drive.readonly"
 	//   ]
 	// }
@@ -5942,6 +5962,7 @@ func (c *PermissionsGetCall) Do() (*Permission, error) {
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.metadata",
 	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
+	//     "https://www.googleapis.com/auth/drive.photos.readonly",
 	//     "https://www.googleapis.com/auth/drive.readonly"
 	//   ]
 	// }
@@ -6024,6 +6045,7 @@ func (c *PermissionsGetIdForEmailCall) Do() (*PermissionId, error) {
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.metadata",
 	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
+	//     "https://www.googleapis.com/auth/drive.photos.readonly",
 	//     "https://www.googleapis.com/auth/drive.readonly"
 	//   ]
 	// }
@@ -6225,6 +6247,7 @@ func (c *PermissionsListCall) Do() (*PermissionList, error) {
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.metadata",
 	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
+	//     "https://www.googleapis.com/auth/drive.photos.readonly",
 	//     "https://www.googleapis.com/auth/drive.readonly"
 	//   ]
 	// }
@@ -6660,6 +6683,7 @@ func (c *PropertiesGetCall) Do() (*Property, error) {
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.metadata",
 	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
+	//     "https://www.googleapis.com/auth/drive.photos.readonly",
 	//     "https://www.googleapis.com/auth/drive.readonly"
 	//   ]
 	// }
@@ -6831,6 +6855,7 @@ func (c *PropertiesListCall) Do() (*PropertyList, error) {
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.metadata",
 	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
+	//     "https://www.googleapis.com/auth/drive.photos.readonly",
 	//     "https://www.googleapis.com/auth/drive.readonly"
 	//   ]
 	// }
@@ -8172,6 +8197,7 @@ func (c *RevisionsGetCall) Do() (*Revision, error) {
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.metadata",
 	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
+	//     "https://www.googleapis.com/auth/drive.photos.readonly",
 	//     "https://www.googleapis.com/auth/drive.readonly"
 	//   ]
 	// }
@@ -8253,6 +8279,7 @@ func (c *RevisionsListCall) Do() (*RevisionList, error) {
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.metadata",
 	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
+	//     "https://www.googleapis.com/auth/drive.photos.readonly",
 	//     "https://www.googleapis.com/auth/drive.readonly"
 	//   ]
 	// }

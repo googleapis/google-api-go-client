@@ -635,7 +635,7 @@
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
     "x32": "http://www.google.com/images/icons/product/search-32.gif"
    },
-   "documentationLink": "",
+   "documentationLink": "https://cloud.google.com/dataflow",
    "preferred": true
   },
   {
@@ -672,6 +672,22 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "deploymentmanager:v2",
+   "name": "deploymentmanager",
+   "version": "v2",
+   "title": "Google Cloud Deployment Manager API V2",
+   "description": "The Deployment Manager API allows users to declaratively configure, deploy and run complex solutions on the Google Cloud Platform.",
+   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/deploymentmanager/v2/rest",
+   "discoveryLink": "./apis/deploymentmanager/v2/rest",
+   "icons": {
+    "x16": "http://www.google.com/images/icons/product/search-16.gif",
+    "x32": "http://www.google.com/images/icons/product/search-32.gif"
+   },
+   "documentationLink": "https://developers.google.com/deployment-manager/",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "deploymentmanager:v2beta1",
    "name": "deploymentmanager",
    "version": "v2beta1",
@@ -703,7 +719,7 @@
     "x32": "http://www.google.com/images/icons/product/search-32.gif"
    },
    "documentationLink": "https://developers.google.com/deployment-manager/",
-   "preferred": true
+   "preferred": false
   },
   {
    "kind": "discovery#directoryItem",
@@ -931,38 +947,6 @@
    },
    "documentationLink": "https://developers.google.com/fit/rest/",
    "preferred": true
-  },
-  {
-   "kind": "discovery#directoryItem",
-   "id": "freebase:v1-sandbox",
-   "name": "freebase",
-   "version": "v1-sandbox",
-   "title": "Freebase Search",
-   "description": "Find Freebase entities using textual queries and other constraints.",
-   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/freebase/v1-sandbox/rest",
-   "discoveryLink": "./apis/freebase/v1-sandbox/rest",
-   "icons": {
-    "x16": "https://www.google.com/images/icons/product/freebase-16.png",
-    "x32": "https://www.google.com/images/icons/product/freebase-32.png"
-   },
-   "documentationLink": "https://developers.google.com/freebase/",
-   "preferred": false
-  },
-  {
-   "kind": "discovery#directoryItem",
-   "id": "freebase:v1sandbox",
-   "name": "freebase",
-   "version": "v1sandbox",
-   "title": "Freebase Search",
-   "description": "Find Freebase entities using textual queries and other constraints.",
-   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/freebase/v1sandbox/rest",
-   "discoveryLink": "./apis/freebase/v1sandbox/rest",
-   "icons": {
-    "x16": "https://www.google.com/images/icons/product/freebase-16.png",
-    "x32": "https://www.google.com/images/icons/product/freebase-32.png"
-   },
-   "documentationLink": "https://developers.google.com/freebase/",
-   "preferred": false
   },
   {
    "kind": "discovery#directoryItem",
@@ -1347,6 +1331,22 @@
    },
    "documentationLink": "https://cloud.google.com/pubsub/docs",
    "preferred": false
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "storagetransfer:v1",
+   "name": "storagetransfer",
+   "version": "v1",
+   "title": "Google Storage Transfer API",
+   "description": "Transfers data from external data sources to a Google Cloud Storage bucket or between Google Cloud Storage buckets.",
+   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/storagetransfer/v1/rest",
+   "discoveryLink": "./apis/storagetransfer/v1/rest",
+   "icons": {
+    "x16": "http://www.google.com/images/icons/product/search-16.gif",
+    "x32": "http://www.google.com/images/icons/product/search-32.gif"
+   },
+   "documentationLink": "https://cloud.google.com/storage/transfer",
+   "preferred": true
   },
   {
    "kind": "discovery#directoryItem",

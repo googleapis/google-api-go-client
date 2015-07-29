@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/NtZ5jtkXTc_PcGwBbw5OcARIHbE\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/0nL8vPei9NsMRi6QUKi327oAZxg\"",
  "discoveryVersion": "v1",
  "id": "bigquery:v2",
  "name": "bigquery",
  "version": "v2",
- "revision": "20150710",
+ "revision": "20150723",
  "title": "BigQuery API",
  "description": "A data platform for customers to create, manage, share and query data.",
  "ownerDomain": "google.com",
@@ -205,7 +205,7 @@
     },
     "location": {
      "type": "string",
-     "description": "[Experimental] The location where the data resides. If not present, the data will be stored in the US."
+     "description": "[Experimental] The geographic location where the dataset should reside. Possible values include EU and US. The default value is US."
     },
     "selfLink": {
      "type": "string",
@@ -1010,7 +1010,7 @@
     },
     "dryRun": {
      "type": "boolean",
-     "description": "[Optional] If set, don't actually run this job. A valid query will return a mostly empty response with some processing statistics, while an invalid query will return the same error it would if it wasn't a dry run."
+     "description": "[Optional] If set to true, BigQuery doesn't run the job. Instead, if the query is valid, BigQuery returns statistics about the job such as how many bytes would be processed. If the query is invalid, an error returns. The default value is false."
     },
     "kind": {
      "type": "string",
@@ -1117,6 +1117,10 @@
      "description": "[Optional] The time when this table expires, in milliseconds since the epoch. If not present, the table will persist indefinitely. Expired tables will be deleted and their storage reclaimed.",
      "format": "int64"
     },
+    "externalDataConfiguration": {
+     "$ref": "ExternalDataConfiguration",
+     "description": "[Experimental] Describes the data format, location, and other properties of a table stored outside of BigQuery. By defining these properties, the data source can then be queried as if it were a standard BigQuery table."
+    },
     "friendlyName": {
      "type": "string",
      "description": "[Optional] A descriptive name for this table."
@@ -1137,7 +1141,7 @@
     },
     "location": {
      "type": "string",
-     "description": "[Optional] The backing storage location."
+     "description": "[Output-only] The geographic location where the table resides. This value is inherited from the dataset."
     },
     "numBytes": {
      "type": "string",
@@ -1818,7 +1822,7 @@
      "id": "bigquery.jobs.list",
      "path": "projects/{projectId}/jobs",
      "httpMethod": "GET",
-     "description": "Lists all jobs that you started in the specified project. The job list returns in reverse chronological order of when the jobs were created, starting with the most recent job created. Requires the Can View project role, or the Is Owner project role if you set the allUsers property.",
+     "description": "Lists all jobs that you started in the specified project. Job information is available for a six month period after creation. The job list is sorted in reverse chronological order, by job creation time. Requires the Can View project role, or the Is Owner project role if you set the allUsers property.",
      "parameters": {
       "allUsers": {
        "type": "boolean",

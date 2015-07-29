@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/zns4Y3D5E2S2gwCEbkUlMZNgyY0\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/riWQE71Cr2waA88G5CzNk8YtARs\"",
  "discoveryVersion": "v1",
  "id": "dataflow:v1b3",
  "name": "dataflow",
  "version": "v1b3",
- "revision": "20150322",
+ "revision": "20150401",
  "title": "Google Dataflow API",
  "description": "Google Dataflow API.",
  "ownerDomain": "google.com",
@@ -14,7 +14,7 @@
   "x16": "http://www.google.com/images/icons/product/search-16.gif",
   "x32": "http://www.google.com/images/icons/product/search-32.gif"
  },
- "documentationLink": "",
+ "documentationLink": "https://cloud.google.com/dataflow",
  "protocol": "rest",
  "baseUrl": "https://dataflow.googleapis.com/v1b3/projects/",
  "basePath": "/v1b3/projects/",
@@ -141,6 +141,12 @@
      "type": "array",
      "items": {
       "$ref": "StreamLocation"
+     }
+    },
+    "stateFamilies": {
+     "type": "array",
+     "items": {
+      "$ref": "StateFamilyConfig"
      }
     },
     "systemStageName": {
@@ -1161,6 +1167,18 @@
     }
    }
   },
+  "StateFamilyConfig": {
+   "id": "StateFamilyConfig",
+   "type": "object",
+   "properties": {
+    "isRead": {
+     "type": "boolean"
+    },
+    "stateFamily": {
+     "type": "string"
+    }
+   }
+  },
   "Status": {
    "id": "Status",
    "type": "object",
@@ -1286,6 +1304,9 @@
    "id": "StreamingSideInputLocation",
    "type": "object",
    "properties": {
+    "stateFamily": {
+     "type": "string"
+    },
     "tag": {
      "type": "string"
     }

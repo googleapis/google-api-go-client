@@ -346,7 +346,9 @@ type PublishResponse struct {
 	MessageIds []string `json:"messageIds,omitempty"`
 }
 
-// PubsubMessage: A message data and its attributes.
+// PubsubMessage: A message data and its attributes. The message payload
+// must not be empty; it must contain either a non-empty data field, or
+// at least one attribute.
 type PubsubMessage struct {
 	// Attributes: Optional attributes for this message.
 	Attributes map[string]string `json:"attributes,omitempty"`
@@ -477,21 +479,20 @@ type Subscription struct {
 	// and before the message is acknowledged, it is an outstanding message
 	// and will not be delivered again during that time (on a best-effort
 	// basis). For pull delivery this value is used as the initial value for
-	// the ack deadline. It may be overridden for each message using its
-	// corresponding ack_id by calling ModifyAckDeadline. For push delivery,
+	// the ack deadline. To override this value for a given message, call
+	// ModifyAckDeadline with the corresponding ack_id. For push delivery,
 	// this value is also used to set the request timeout for the call to
 	// the push endpoint. If the subscriber never acknowledges the message,
 	// the Pub/Sub system will eventually redeliver the message. If this
-	// parameter is not set, the default value of 60 seconds is used.
+	// parameter is not set, the default value of 10 seconds is used.
 	AckDeadlineSeconds int64 `json:"ackDeadlineSeconds,omitempty"`
 
 	// Name: The name of the subscription. It must have the format
-	// "projects/{project}/subscriptions/{subscription}" for Google Cloud
-	// Pub/Sub API v1 and v1beta2. {subscription} must start with a letter,
-	// and contain only letters ([A-Za-z]), numbers ([0-9], dashes (-),
-	// underscores (_), periods (.), tildes (~), plus (+) or percent signs
-	// (%). It must be between 3 and 255 characters in length, and it must
-	// not start with "goog".
+	// "projects/{project}/subscriptions/{subscription}". `{subscription}`
+	// must start with a letter, and contain only letters (`[A-Za-z]`),
+	// numbers (`[0-9]`), dashes (`-`), underscores (`_`), periods (`.`),
+	// tildes (`~`), plus (`+`) or percent signs (`%`). It must be between 3
+	// and 255 characters in length, and it must not start with "goog".
 	Name string `json:"name,omitempty"`
 
 	// PushConfig: If push delivery is used with this subscription, this
@@ -525,12 +526,11 @@ type TestIamPermissionsResponse struct {
 // Topic: A topic resource.
 type Topic struct {
 	// Name: The name of the topic. It must have the format
-	// "projects/{project}/topics/{topic}" for Google Cloud Pub/Sub API v1
-	// and v1beta2. {topic} must start with a letter, and contain only
-	// letters ([A-Za-z]), numbers ([0-9], dashes (-), underscores (_),
-	// periods (.), tildes (~), plus (+) or percent signs (%). It must be
-	// between 3 and 255 characters in length, and it must not start with
-	// "goog".
+	// "projects/{project}/topics/{topic}". `{topic}` must start with a
+	// letter, and contain only letters (`[A-Za-z]`), numbers (`[0-9]`),
+	// dashes (`-`), underscores (`_`), periods (`.`), tildes (`~`), plus
+	// (`+`) or percent signs (`%`). It must be between 3 and 255 characters
+	// in length, and it must not start with "goog".
 	Name string `json:"name,omitempty"`
 }
 
@@ -700,7 +700,7 @@ func (c *ProjectsSubscriptionsCreateCall) Do() (*Subscription, error) {
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the subscription. It must have the format \"projects/{project}/subscriptions/{subscription}\" for Google Cloud Pub/Sub API v1 and v1beta2. {subscription} must start with a letter, and contain only letters ([A-Za-z]), numbers ([0-9], dashes (-), underscores (_), periods (.), tildes (~), plus (+) or percent signs (%). It must be between 3 and 255 characters in length, and it must not start with \"goog\".",
+	//       "description": "The name of the subscription. It must have the format `\"projects/{project}/subscriptions/{subscription}\"`. `{subscription}` must start with a letter, and contain only letters (`[A-Za-z]`), numbers (`[0-9]`), dashes (`-`), underscores (`_`), periods (`.`), tildes (`~`), plus (`+`) or percent signs (`%`). It must be between 3 and 255 characters in length, and it must not start with `\"goog\"`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]*/subscriptions/[^/]*$",
 	//       "required": true,
@@ -1598,7 +1598,7 @@ func (c *ProjectsTopicsCreateCall) Do() (*Topic, error) {
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the topic. It must have the format \"projects/{project}/topics/{topic}\" for Google Cloud Pub/Sub API v1 and v1beta2. {topic} must start with a letter, and contain only letters ([A-Za-z]), numbers ([0-9], dashes (-), underscores (_), periods (.), tildes (~), plus (+) or percent signs (%). It must be between 3 and 255 characters in length, and it must not start with \"goog\".",
+	//       "description": "The name of the topic. It must have the format `\"projects/{project}/topics/{topic}\"`. `{topic}` must start with a letter, and contain only letters (`[A-Za-z]`), numbers (`[0-9]`), dashes (`-`), underscores (`_`), periods (`.`), tildes (`~`), plus (`+`) or percent signs (`%`). It must be between 3 and 255 characters in length, and it must not start with `\"goog\"`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]*/topics/[^/]*$",
 	//       "required": true,
@@ -1981,7 +1981,9 @@ type ProjectsTopicsPublishCall struct {
 }
 
 // Publish: Adds one or more messages to the topic. Returns NOT_FOUND if
-// the topic does not exist.
+// the topic does not exist. The message payload must not be empty; it
+// must contain either a non-empty data field, or at least one
+// attribute.
 func (r *ProjectsTopicsService) Publish(topic string, publishrequest *PublishRequest) *ProjectsTopicsPublishCall {
 	c := &ProjectsTopicsPublishCall{s: r.s, opt_: make(map[string]interface{})}
 	c.topic = topic
@@ -2031,7 +2033,7 @@ func (c *ProjectsTopicsPublishCall) Do() (*PublishResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Adds one or more messages to the topic. Returns NOT_FOUND if the topic does not exist.",
+	//   "description": "Adds one or more messages to the topic. Returns NOT_FOUND if the topic does not exist. The message payload must not be empty; it must contain either a non-empty data field, or at least one attribute.",
 	//   "httpMethod": "POST",
 	//   "id": "pubsub.projects.topics.publish",
 	//   "parameterOrder": [

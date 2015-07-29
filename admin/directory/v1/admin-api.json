@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/QlXkTp8arWMqhMMilmdrbkzNu_E\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/uQEY1lxUpBjGfWxd7mioMh_V8P8\"",
  "discoveryVersion": "v1",
  "id": "admin:directory_v1",
  "name": "admin",
  "canonicalName": "directory",
  "version": "directory_v1",
- "revision": "20150326",
+ "revision": "20150720",
  "title": "Admin Directory API",
  "description": "The Admin SDK Directory API lets you view and manage enterprise resources such as users and groups, administrative notifications, security features, and more.",
  "ownerDomain": "google.com",
@@ -614,6 +614,10 @@
    "type": "object",
    "description": "JSON template for Mobile Device resource in Directory API.",
    "properties": {
+    "adbStatus": {
+     "type": "boolean",
+     "description": "Adb (USB debugging) enabled or disabled on device (Read-only)"
+    },
     "applications": {
      "type": "array",
      "description": "List of applications installed on Mobile Device",
@@ -658,6 +662,10 @@
     "defaultLanguage": {
      "type": "string",
      "description": "The default locale used on the Mobile Device (Read-only)"
+    },
+    "developerOptionsStatus": {
+     "type": "boolean",
+     "description": "Developer options enabled or disabled on device (Read-only)"
     },
     "deviceCompromisedStatus": {
      "type": "string",
@@ -732,6 +740,13 @@
      "type": "string",
      "description": "Name of the mobile operating system"
     },
+    "otherAccountsInfo": {
+     "type": "array",
+     "description": "List of accounts added on device (Read-only)",
+     "items": {
+      "type": "string"
+     }
+    },
     "resourceId": {
      "type": "string",
      "description": "Unique identifier of Mobile Device (Read-only)"
@@ -744,9 +759,17 @@
      "type": "string",
      "description": "Status of the device (Read-only)"
     },
+    "supportsWorkProfile": {
+     "type": "boolean",
+     "description": "Work profile supported on device (Read-only)"
+    },
     "type": {
      "type": "string",
      "description": "The type of device (Read-only)"
+    },
+    "unknownSourcesStatus": {
+     "type": "boolean",
+     "description": "Unknown sources enabled or disabled on device (Read-only)"
     },
     "userAgent": {
      "type": "string",

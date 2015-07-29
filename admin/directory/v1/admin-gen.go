@@ -4,7 +4,7 @@
 //
 // Usage example:
 //
-//   import "google.golang.org/api/admin/directory_v1"
+//   import "google.golang.org/api/admin/directory/v1"
 //   ...
 //   adminService, err := admin.New(oauthHttpClient)
 package admin
@@ -627,6 +627,10 @@ type Members struct {
 // MobileDevice: JSON template for Mobile Device resource in Directory
 // API.
 type MobileDevice struct {
+	// AdbStatus: Adb (USB debugging) enabled or disabled on device
+	// (Read-only)
+	AdbStatus bool `json:"adbStatus,omitempty"`
+
 	// Applications: List of applications installed on Mobile Device
 	Applications []*MobileDeviceApplications `json:"applications,omitempty"`
 
@@ -639,6 +643,10 @@ type MobileDevice struct {
 	// DefaultLanguage: The default locale used on the Mobile Device
 	// (Read-only)
 	DefaultLanguage string `json:"defaultLanguage,omitempty"`
+
+	// DeveloperOptionsStatus: Developer options enabled or disabled on
+	// device (Read-only)
+	DeveloperOptionsStatus bool `json:"developerOptionsStatus,omitempty"`
 
 	// DeviceCompromisedStatus: Mobile Device compromised status (Read-only)
 	DeviceCompromisedStatus string `json:"deviceCompromisedStatus,omitempty"`
@@ -694,6 +702,9 @@ type MobileDevice struct {
 	// Os: Name of the mobile operating system
 	Os string `json:"os,omitempty"`
 
+	// OtherAccountsInfo: List of accounts added on device (Read-only)
+	OtherAccountsInfo []string `json:"otherAccountsInfo,omitempty"`
+
 	// ResourceId: Unique identifier of Mobile Device (Read-only)
 	ResourceId string `json:"resourceId,omitempty"`
 
@@ -703,8 +714,15 @@ type MobileDevice struct {
 	// Status: Status of the device (Read-only)
 	Status string `json:"status,omitempty"`
 
+	// SupportsWorkProfile: Work profile supported on device (Read-only)
+	SupportsWorkProfile bool `json:"supportsWorkProfile,omitempty"`
+
 	// Type: The type of device (Read-only)
 	Type string `json:"type,omitempty"`
+
+	// UnknownSourcesStatus: Unknown sources enabled or disabled on device
+	// (Read-only)
+	UnknownSourcesStatus bool `json:"unknownSourcesStatus,omitempty"`
 
 	// UserAgent: Mobile Device user agent
 	UserAgent string `json:"userAgent,omitempty"`

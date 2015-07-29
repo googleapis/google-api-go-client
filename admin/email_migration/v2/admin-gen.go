@@ -4,7 +4,7 @@
 //
 // Usage example:
 //
-//   import "google.golang.org/api/admin/email_migration_v2"
+//   import "google.golang.org/api/admin/email_migration/v2"
 //   ...
 //   adminService, err := admin.New(oauthHttpClient)
 package admin

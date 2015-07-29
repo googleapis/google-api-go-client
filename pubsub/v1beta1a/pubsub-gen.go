@@ -174,8 +174,7 @@ type ModifyAckDeadlineRequest struct {
 	AckId string `json:"ackId,omitempty"`
 
 	// AckIds: List of acknowledgment IDs. Either this field or ack_id
-	// should be populated, not both. TODO(handrei): mark the above field
-	// deprecated once it's not used internally.
+	// should be populated, not both.
 	AckIds []string `json:"ackIds,omitempty"`
 
 	// Subscription: Next Index: 5 The name of the subscription from which

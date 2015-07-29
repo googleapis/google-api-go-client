@@ -158,9 +158,9 @@ type ApiDimensionFilterGroup struct {
 }
 
 type SearchAnalyticsQueryRequest struct {
-	// AggregationType: [Optional; Default is AUTO] How data is aggregated.
-	// If aggregated by property, all data for the same property is
-	// aggregated; if aggregated by page, all data is aggregated by
+	// AggregationType: [Optional; Default is "auto"] How data is
+	// aggregated. If aggregated by property, all data for the same property
+	// is aggregated; if aggregated by page, all data is aggregated by
 	// canonical URI. If you filter or group by page, choose AUTO; otherwise
 	// you can aggregate either by property or by page, depending on how you
 	// want your data calculated; see  the help documentation to learn how
@@ -176,9 +176,10 @@ type SearchAnalyticsQueryRequest struct {
 	AggregationType string `json:"aggregationType,omitempty"`
 
 	// DimensionFilterGroups: [Optional] Zero or more filters to apply to
-	// the dimension grouping values; for example, 'Country CONTAINS
-	// "Guinea"' to see only data where the country contains the substring
-	// "Guinea". You can filter by a dimension without grouping by it.
+	// the dimension grouping values; for example, 'query contains "buy"' to
+	// see only data where the query string contains the substring "buy"
+	// (not case-sensitive). You can filter by a dimension without grouping
+	// by it.
 	DimensionFilterGroups []*ApiDimensionFilterGroup `json:"dimensionFilterGroups,omitempty"`
 
 	// Dimensions: [Optional] Zero or more dimensions to group results by.
@@ -193,10 +194,11 @@ type SearchAnalyticsQueryRequest struct {
 	EndDate string `json:"endDate,omitempty"`
 
 	// RowLimit: [Optional; Default is 1000] The maximum number of rows to
-	// return. Must be a number from 1 to 1,000 (inclusive).
+	// return. Must be a number from 1 to 5,000 (inclusive).
 	RowLimit int64 `json:"rowLimit,omitempty"`
 
-	// SearchType: [Optional; Default is WEB] The search type to filter for.
+	// SearchType: [Optional; Default is "web"] The search type to filter
+	// for.
 	SearchType string `json:"searchType,omitempty"`
 
 	// StartDate: [Required] Start date of the requested date range, in

@@ -242,8 +242,9 @@ type Dataset struct {
 	// its tables was last modified, in milliseconds since the epoch.
 	LastModifiedTime int64 `json:"lastModifiedTime,omitempty,string"`
 
-	// Location: [Experimental] The location where the data resides. If not
-	// present, the data will be stored in the US.
+	// Location: [Experimental] The geographic location where the dataset
+	// should reside. Possible values include EU and US. The default value
+	// is US.
 	Location string `json:"location,omitempty"`
 
 	// SelfLink: [Output-only] A URL that can be used to access the resource
@@ -974,10 +975,10 @@ type QueryRequest struct {
 	// format 'datasetId.tableId'.
 	DefaultDataset *DatasetReference `json:"defaultDataset,omitempty"`
 
-	// DryRun: [Optional] If set, don't actually run this job. A valid query
-	// will return a mostly empty response with some processing statistics,
-	// while an invalid query will return the same error it would if it
-	// wasn't a dry run.
+	// DryRun: [Optional] If set to true, BigQuery doesn't run the job.
+	// Instead, if the query is valid, BigQuery returns statistics about the
+	// job such as how many bytes would be processed. If the query is
+	// invalid, an error returns. The default value is false.
 	DryRun bool `json:"dryRun,omitempty"`
 
 	// Kind: The resource type of the request.
@@ -1076,6 +1077,12 @@ type Table struct {
 	// reclaimed.
 	ExpirationTime int64 `json:"expirationTime,omitempty,string"`
 
+	// ExternalDataConfiguration: [Experimental] Describes the data format,
+	// location, and other properties of a table stored outside of BigQuery.
+	// By defining these properties, the data source can then be queried as
+	// if it were a standard BigQuery table.
+	ExternalDataConfiguration *ExternalDataConfiguration `json:"externalDataConfiguration,omitempty"`
+
 	// FriendlyName: [Optional] A descriptive name for this table.
 	FriendlyName string `json:"friendlyName,omitempty"`
 
@@ -1089,7 +1096,8 @@ type Table struct {
 	// modified, in milliseconds since the epoch.
 	LastModifiedTime uint64 `json:"lastModifiedTime,omitempty,string"`
 
-	// Location: [Optional] The backing storage location.
+	// Location: [Output-only] The geographic location where the table
+	// resides. This value is inherited from the dataset.
 	Location string `json:"location,omitempty"`
 
 	// NumBytes: [Output-only] The size of the table in bytes. This property
@@ -2410,11 +2418,11 @@ type JobsListCall struct {
 	opt_      map[string]interface{}
 }
 
-// List: Lists all jobs that you started in the specified project. The
-// job list returns in reverse chronological order of when the jobs were
-// created, starting with the most recent job created. Requires the Can
-// View project role, or the Is Owner project role if you set the
-// allUsers property.
+// List: Lists all jobs that you started in the specified project. Job
+// information is available for a six month period after creation. The
+// job list is sorted in reverse chronological order, by job creation
+// time. Requires the Can View project role, or the Is Owner project
+// role if you set the allUsers property.
 func (r *JobsService) List(projectId string) *JobsListCall {
 	c := &JobsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectId = projectId
@@ -2516,7 +2524,7 @@ func (c *JobsListCall) Do() (*JobList, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists all jobs that you started in the specified project. The job list returns in reverse chronological order of when the jobs were created, starting with the most recent job created. Requires the Can View project role, or the Is Owner project role if you set the allUsers property.",
+	//   "description": "Lists all jobs that you started in the specified project. Job information is available for a six month period after creation. The job list is sorted in reverse chronological order, by job creation time. Requires the Can View project role, or the Is Owner project role if you set the allUsers property.",
 	//   "httpMethod": "GET",
 	//   "id": "bigquery.jobs.list",
 	//   "parameterOrder": [

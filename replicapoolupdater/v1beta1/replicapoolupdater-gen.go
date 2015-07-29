@@ -103,7 +103,7 @@ type InstanceUpdate struct {
 	// Error: Errors that occurred during the instance update.
 	Error *InstanceUpdateError `json:"error,omitempty"`
 
-	// Instance: URL of the instance being updated.
+	// Instance: Fully-qualified URL of the instance being updated.
 	Instance string `json:"instance,omitempty"`
 
 	// Status: Status of the instance update. Possible values are:
@@ -308,6 +308,10 @@ type RollingUpdate struct {
 
 	// Kind: [Output Only] Type of the resource.
 	Kind string `json:"kind,omitempty"`
+
+	// OldInstanceTemplate: Fully-qualified URL of the instance template
+	// encountered while starting the update.
+	OldInstanceTemplate string `json:"oldInstanceTemplate,omitempty"`
 
 	// Policy: Parameters of the update process.
 	Policy *RollingUpdatePolicy `json:"policy,omitempty"`
@@ -738,15 +742,6 @@ func (c *RollingUpdatesListCall) Filter(filter string) *RollingUpdatesListCall {
 	return c
 }
 
-// InstanceGroupManager sets the optional parameter
-// "instanceGroupManager": The name of the instance group manager. Use
-// this parameter to return only updates to instances that are part of a
-// specific instance group.
-func (c *RollingUpdatesListCall) InstanceGroupManager(instanceGroupManager string) *RollingUpdatesListCall {
-	c.opt_["instanceGroupManager"] = instanceGroupManager
-	return c
-}
-
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned. Maximum value is 500 and default value is
 // 500.
@@ -777,9 +772,6 @@ func (c *RollingUpdatesListCall) Do() (*RollingUpdateList, error) {
 	params.Set("alt", "json")
 	if v, ok := c.opt_["filter"]; ok {
 		params.Set("filter", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["instanceGroupManager"]; ok {
-		params.Set("instanceGroupManager", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
@@ -822,11 +814,6 @@ func (c *RollingUpdatesListCall) Do() (*RollingUpdateList, error) {
 	//   "parameters": {
 	//     "filter": {
 	//       "description": "Optional. Filter expression for filtering listed resources.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "instanceGroupManager": {
-	//       "description": "The name of the instance group manager. Use this parameter to return only updates to instances that are part of a specific instance group.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

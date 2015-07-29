@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/VmJ_vmyXHKjcZlOaFyHKHkKE8I0\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/gjHR7N7QvlGi6Fhuq-FqZZkDIL0\"",
  "discoveryVersion": "v1",
  "id": "replicapoolupdater:v1beta1",
  "name": "replicapoolupdater",
  "version": "v1beta1",
- "revision": "20150326",
+ "revision": "20150722",
  "title": "Google Compute Engine Instance Group Updater API",
  "description": "The Google Compute Engine Instance Group Updater API provides services for updating groups of Compute Engine Instances.",
  "ownerDomain": "google.com",
@@ -119,7 +119,7 @@
     },
     "instance": {
      "type": "string",
-     "description": "URL of the instance being updated."
+     "description": "Fully-qualified URL of the instance being updated."
     },
     "status": {
      "type": "string",
@@ -364,6 +364,10 @@
      "description": "[Output Only] Type of the resource.",
      "default": "replicapoolupdater#rollingUpdate"
     },
+    "oldInstanceTemplate": {
+     "type": "string",
+     "description": "Fully-qualified URL of the instance template encountered while starting the update."
+    },
     "policy": {
      "type": "object",
      "description": "Parameters of the update process.",
@@ -572,11 +576,6 @@
       "filter": {
        "type": "string",
        "description": "Optional. Filter expression for filtering listed resources.",
-       "location": "query"
-      },
-      "instanceGroupManager": {
-       "type": "string",
-       "description": "The name of the instance group manager. Use this parameter to return only updates to instances that are part of a specific instance group.",
        "location": "query"
       },
       "maxResults": {

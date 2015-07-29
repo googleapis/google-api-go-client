@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/H5vlYxYcjMuH0uPSZu-WXGARHps\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/rro3d8sNtkecuRxE0ciFBE5d5FI\"",
  "discoveryVersion": "v1",
  "id": "container:v1beta1",
  "name": "container",
  "version": "v1beta1",
- "revision": "20150326",
+ "revision": "20150721",
  "title": "Google Container Engine API",
  "description": "The Google Container Engine API is used for building and managing container based applications, powered by the open source Kubernetes technology.",
  "ownerDomain": "google.com",
@@ -86,7 +86,7 @@
     },
     "containerIpv4Cidr": {
      "type": "string",
-     "description": "The IP address range of the container pods in this cluster, in  CIDR notation (e.g. 10.96.0.0/14). Leave blank to have one automatically chosen or specify a /14 block in 10.0.0.0/8 or 172.16.0.0/12."
+     "description": "The IP address range of the container pods in this cluster, in  CIDR notation (e.g. 10.96.0.0/14). Leave blank to have one automatically chosen or specify a /14 block in 10.0.0.0/8."
     },
     "creationTimestamp": {
      "type": "string",

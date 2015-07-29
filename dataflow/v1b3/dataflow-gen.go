@@ -1,5 +1,7 @@
 // Package dataflow provides access to the Google Dataflow API.
 //
+// See https://cloud.google.com/dataflow
+//
 // Usage example:
 //
 //   import "google.golang.org/api/dataflow/v1b3"
@@ -143,6 +145,8 @@ type ComputationTopology struct {
 	KeyRanges []*KeyRangeLocation `json:"keyRanges,omitempty"`
 
 	Outputs []*StreamLocation `json:"outputs,omitempty"`
+
+	StateFamilies []*StateFamilyConfig `json:"stateFamilies,omitempty"`
 
 	SystemStageName string `json:"systemStageName,omitempty"`
 
@@ -638,6 +642,12 @@ type SourceSplitShard struct {
 	Source *Source `json:"source,omitempty"`
 }
 
+type StateFamilyConfig struct {
+	IsRead bool `json:"isRead,omitempty"`
+
+	StateFamily string `json:"stateFamily,omitempty"`
+}
+
 type Status struct {
 	Code int64 `json:"code,omitempty"`
 
@@ -695,6 +705,8 @@ type StreamingSetupTask struct {
 }
 
 type StreamingSideInputLocation struct {
+	StateFamily string `json:"stateFamily,omitempty"`
+
 	Tag string `json:"tag,omitempty"`
 }
 

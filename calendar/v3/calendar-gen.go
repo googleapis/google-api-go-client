@@ -299,12 +299,16 @@ type CalendarListEntry struct {
 
 	// BackgroundColor: The main color of the calendar in the hexadecimal
 	// format "#0088aa". This property supersedes the index-based colorId
-	// property. Optional.
+	// property. To set or change this property, you need to specify
+	// colorRgbFormat=true in the parameters of the insert, update and patch
+	// methods. Optional.
 	BackgroundColor string `json:"backgroundColor,omitempty"`
 
 	// ColorId: The color of the calendar. This is an ID referring to an
 	// entry in the calendar section of the colors definition (see the
-	// colors endpoint). Optional.
+	// colors endpoint). This property is superseded by the backgroundColor
+	// and foregroundColor properties and can be ignored when using these
+	// properties. Optional.
 	ColorId string `json:"colorId,omitempty"`
 
 	// DefaultReminders: The default reminders that the authenticated user
@@ -323,7 +327,9 @@ type CalendarListEntry struct {
 
 	// ForegroundColor: The foreground color of the calendar in the
 	// hexadecimal format "#ffffff". This property supersedes the
-	// index-based colorId property. Optional.
+	// index-based colorId property. To set or change this property, you
+	// need to specify colorRgbFormat=true in the parameters of the insert,
+	// update and patch methods. Optional.
 	ForegroundColor string `json:"foregroundColor,omitempty"`
 
 	// Hidden: Whether the calendar has been hidden from the list. Optional.
@@ -375,9 +381,8 @@ type CalendarNotification struct {
 	// are:
 	// - "email" - Reminders are sent via email.
 	// - "sms" - Reminders are sent via SMS. This value is read-only and is
-	// ignored on inserts and updates. Furthermore, SMS reminders are only
-	// available for Google Apps for Work, Education, and Government
-	// customers.
+	// ignored on inserts and updates. SMS reminders are only available for
+	// Google Apps for Work, Education, and Government customers.
 	Method string `json:"method,omitempty"`
 
 	// Type: The type of notification. Possible values are:
@@ -442,14 +447,14 @@ type ColorDefinition struct {
 }
 
 type Colors struct {
-	// Calendar: Palette of calendar colors, mapping from the color ID to
-	// its definition. A calendarListEntry resource refers to one of these
-	// color IDs in its color field. Read-only.
+	// Calendar: A global palette of calendar colors, mapping from the color
+	// ID to its definition. A calendarListEntry resource refers to one of
+	// these color IDs in its color field. Read-only.
 	Calendar map[string]ColorDefinition `json:"calendar,omitempty"`
 
-	// Event: Palette of event colors, mapping from the color ID to its
-	// definition. An event resource may refer to one of these color IDs in
-	// its color field. Read-only.
+	// Event: A global palette of event colors, mapping from the color ID to
+	// its definition. An event resource may refer to one of these color IDs
+	// in its color field. Read-only.
 	Event map[string]ColorDefinition `json:"event,omitempty"`
 
 	// Kind: Type of the resource ("calendar#colors").
@@ -490,7 +495,9 @@ type Event struct {
 	// There can be at most 25 attachments per event,
 	Attachments []*EventAttachment `json:"attachments,omitempty"`
 
-	// Attendees: The attendees of the event.
+	// Attendees: The attendees of the event. See the Events with attendees
+	// guide for more information on scheduling events with other calendar
+	// users.
 	Attendees []*EventAttendee `json:"attendees,omitempty"`
 
 	// AttendeesOmitted: Whether attendees may have been omitted from the
@@ -603,8 +610,10 @@ type Event struct {
 	PrivateCopy bool `json:"privateCopy,omitempty"`
 
 	// Recurrence: List of RRULE, EXRULE, RDATE and EXDATE lines for a
-	// recurring event. This field is omitted for single events or instances
-	// of recurring events.
+	// recurring event, as specified in RFC5545. Note that DTSTART and DTEND
+	// lines are not allowed in this field; event start and end times are
+	// specified in the start and end fields. This field is omitted for
+	// single events or instances of recurring events.
 	Recurrence []string `json:"recurrence,omitempty"`
 
 	// RecurringEventId: For an instance of a recurring event, this is the
@@ -618,10 +627,10 @@ type Event struct {
 	// Sequence: Sequence number as per iCalendar.
 	Sequence int64 `json:"sequence,omitempty"`
 
-	// Source: Source of an event from which it was created; for example a
-	// web page, an email message or any document identifiable by an URL
-	// using HTTP/HTTPS protocol. Accessible only by the creator of the
-	// event.
+	// Source: Source from which the event was created. For example, a web
+	// page, an email message or any document identifiable by an URL with
+	// HTTP or HTTPS scheme. Can only be seen or modified by the creator of
+	// the event.
 	Source *EventSource `json:"source,omitempty"`
 
 	// Start: The (inclusive) start time of the event. For a recurring
@@ -698,13 +707,14 @@ type EventGadget struct {
 	// - "chip" - The gadget displays when the event is clicked.
 	Display string `json:"display,omitempty"`
 
-	// Height: The gadget's height in pixels. Optional.
+	// Height: The gadget's height in pixels. The height must be an integer
+	// greater than 0. Optional.
 	Height int64 `json:"height,omitempty"`
 
-	// IconLink: The gadget's icon URL.
+	// IconLink: The gadget's icon URL. The URL scheme must be HTTPS.
 	IconLink string `json:"iconLink,omitempty"`
 
-	// Link: The gadget's URL.
+	// Link: The gadget's URL. The URL scheme must be HTTPS.
 	Link string `json:"link,omitempty"`
 
 	// Preferences: Preferences.
@@ -716,7 +726,8 @@ type EventGadget struct {
 	// Type: The gadget's type.
 	Type string `json:"type,omitempty"`
 
-	// Width: The gadget's width in pixels. Optional.
+	// Width: The gadget's width in pixels. The width must be an integer
+	// greater than 0. Optional.
 	Width int64 `json:"width,omitempty"`
 }
 
@@ -744,7 +755,8 @@ type EventOrganizer struct {
 type EventReminders struct {
 	// Overrides: If the event doesn't use the default reminders, this lists
 	// the reminders specific to the event, or, if not set, indicates that
-	// no reminders are set for this event.
+	// no reminders are set for this event. The maximum number of override
+	// reminders is 5.
 	Overrides []*EventReminder `json:"overrides,omitempty"`
 
 	// UseDefault: Whether the default reminders of the calendar apply to
@@ -752,23 +764,23 @@ type EventReminders struct {
 	UseDefault bool `json:"useDefault,omitempty"`
 }
 
-// EventSource: Source of an event from which it was created; for
-// example a web page, an email message or any document identifiable by
-// an URL using HTTP/HTTPS protocol. Accessible only by the creator of
-// the event.
+// EventSource: Source from which the event was created. For example, a
+// web page, an email message or any document identifiable by an URL
+// with HTTP or HTTPS scheme. Can only be seen or modified by the
+// creator of the event.
 type EventSource struct {
 	// Title: Title of the source; for example a title of a web page or an
 	// email subject.
 	Title string `json:"title,omitempty"`
 
-	// Url: URL of the source pointing to a resource. URL's protocol must be
+	// Url: URL of the source pointing to a resource. The URL scheme must be
 	// HTTP or HTTPS.
 	Url string `json:"url,omitempty"`
 }
 
 type EventAttachment struct {
 	// FileId: ID of the attached file. Read-only.
-	// E.g. for Google Drive files this is the ID of the corresponding Files
+	// For Google Drive files, this is the ID of the corresponding Files
 	// resource entry in the Drive API.
 	FileId string `json:"fileId,omitempty"`
 
@@ -853,14 +865,15 @@ type EventDateTime struct {
 type EventReminder struct {
 	// Method: The method used by this reminder. Possible values are:
 	// - "email" - Reminders are sent via email.
-	// - "sms" - Reminders are sent via SMS. They are only available for
+	// - "sms" - Reminders are sent via SMS. These are only available for
 	// Google Apps for Work, Education, and Government customers. Requests
-	// to set SMS reminders for the other accounts will be ignored.
+	// to set SMS reminders for other account types are ignored.
 	// - "popup" - Reminders are sent via a UI popup.
 	Method string `json:"method,omitempty"`
 
 	// Minutes: Number of minutes before the start of the event when the
-	// reminder should trigger.
+	// reminder should trigger. Valid values are between 0 and 40320 (4
+	// weeks in minutes).
 	Minutes int64 `json:"minutes,omitempty"`
 }
 
@@ -3779,7 +3792,8 @@ func (c *EventsInstancesCall) ShowDeleted(showDeleted bool) *EventsInstancesCall
 
 // TimeMax sets the optional parameter "timeMax": Upper bound
 // (exclusive) for an event's start time to filter by.  The default is
-// not to filter by start time.
+// not to filter by start time. Must be an RFC3339 timestamp with
+// mandatory time zone offset.
 func (c *EventsInstancesCall) TimeMax(timeMax string) *EventsInstancesCall {
 	c.opt_["timeMax"] = timeMax
 	return c
@@ -3787,7 +3801,8 @@ func (c *EventsInstancesCall) TimeMax(timeMax string) *EventsInstancesCall {
 
 // TimeMin sets the optional parameter "timeMin": Lower bound
 // (inclusive) for an event's end time to filter by.  The default is not
-// to filter by end time.
+// to filter by end time. Must be an RFC3339 timestamp with mandatory
+// time zone offset.
 func (c *EventsInstancesCall) TimeMin(timeMin string) *EventsInstancesCall {
 	c.opt_["timeMin"] = timeMin
 	return c
@@ -3919,13 +3934,13 @@ func (c *EventsInstancesCall) Do() (*Events, error) {
 	//       "type": "boolean"
 	//     },
 	//     "timeMax": {
-	//       "description": "Upper bound (exclusive) for an event's start time to filter by. Optional. The default is not to filter by start time.",
+	//       "description": "Upper bound (exclusive) for an event's start time to filter by. Optional. The default is not to filter by start time. Must be an RFC3339 timestamp with mandatory time zone offset.",
 	//       "format": "date-time",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "timeMin": {
-	//       "description": "Lower bound (inclusive) for an event's end time to filter by. Optional. The default is not to filter by end time.",
+	//       "description": "Lower bound (inclusive) for an event's end time to filter by. Optional. The default is not to filter by end time. Must be an RFC3339 timestamp with mandatory time zone offset.",
 	//       "format": "date-time",
 	//       "location": "query",
 	//       "type": "string"
@@ -4107,7 +4122,10 @@ func (c *EventsListCall) SyncToken(syncToken string) *EventsListCall {
 
 // TimeMax sets the optional parameter "timeMax": Upper bound
 // (exclusive) for an event's start time to filter by.  The default is
-// not to filter by start time.
+// not to filter by start time. Must be an RFC3339 timestamp with
+// mandatory time zone offset, e.g., 2011-06-03T10:00:00-07:00,
+// 2011-06-03T10:00:00Z. Milliseconds may be provided but will be
+// ignored.
 func (c *EventsListCall) TimeMax(timeMax string) *EventsListCall {
 	c.opt_["timeMax"] = timeMax
 	return c
@@ -4115,7 +4133,10 @@ func (c *EventsListCall) TimeMax(timeMax string) *EventsListCall {
 
 // TimeMin sets the optional parameter "timeMin": Lower bound
 // (inclusive) for an event's end time to filter by.  The default is not
-// to filter by end time.
+// to filter by end time. Must be an RFC3339 timestamp with mandatory
+// time zone offset, e.g., 2011-06-03T10:00:00-07:00,
+// 2011-06-03T10:00:00Z. Milliseconds may be provided but will be
+// ignored.
 func (c *EventsListCall) TimeMin(timeMin string) *EventsListCall {
 	c.opt_["timeMin"] = timeMin
 	return c
@@ -4318,13 +4339,13 @@ func (c *EventsListCall) Do() (*Events, error) {
 	//       "type": "string"
 	//     },
 	//     "timeMax": {
-	//       "description": "Upper bound (exclusive) for an event's start time to filter by. Optional. The default is not to filter by start time.",
+	//       "description": "Upper bound (exclusive) for an event's start time to filter by. Optional. The default is not to filter by start time. Must be an RFC3339 timestamp with mandatory time zone offset, e.g., 2011-06-03T10:00:00-07:00, 2011-06-03T10:00:00Z. Milliseconds may be provided but will be ignored.",
 	//       "format": "date-time",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "timeMin": {
-	//       "description": "Lower bound (inclusive) for an event's end time to filter by. Optional. The default is not to filter by end time.",
+	//       "description": "Lower bound (inclusive) for an event's end time to filter by. Optional. The default is not to filter by end time. Must be an RFC3339 timestamp with mandatory time zone offset, e.g., 2011-06-03T10:00:00-07:00, 2011-06-03T10:00:00Z. Milliseconds may be provided but will be ignored.",
 	//       "format": "date-time",
 	//       "location": "query",
 	//       "type": "string"
@@ -5065,7 +5086,10 @@ func (c *EventsWatchCall) SyncToken(syncToken string) *EventsWatchCall {
 
 // TimeMax sets the optional parameter "timeMax": Upper bound
 // (exclusive) for an event's start time to filter by.  The default is
-// not to filter by start time.
+// not to filter by start time. Must be an RFC3339 timestamp with
+// mandatory time zone offset, e.g., 2011-06-03T10:00:00-07:00,
+// 2011-06-03T10:00:00Z. Milliseconds may be provided but will be
+// ignored.
 func (c *EventsWatchCall) TimeMax(timeMax string) *EventsWatchCall {
 	c.opt_["timeMax"] = timeMax
 	return c
@@ -5073,7 +5097,10 @@ func (c *EventsWatchCall) TimeMax(timeMax string) *EventsWatchCall {
 
 // TimeMin sets the optional parameter "timeMin": Lower bound
 // (inclusive) for an event's end time to filter by.  The default is not
-// to filter by end time.
+// to filter by end time. Must be an RFC3339 timestamp with mandatory
+// time zone offset, e.g., 2011-06-03T10:00:00-07:00,
+// 2011-06-03T10:00:00Z. Milliseconds may be provided but will be
+// ignored.
 func (c *EventsWatchCall) TimeMin(timeMin string) *EventsWatchCall {
 	c.opt_["timeMin"] = timeMin
 	return c
@@ -5282,13 +5309,13 @@ func (c *EventsWatchCall) Do() (*Channel, error) {
 	//       "type": "string"
 	//     },
 	//     "timeMax": {
-	//       "description": "Upper bound (exclusive) for an event's start time to filter by. Optional. The default is not to filter by start time.",
+	//       "description": "Upper bound (exclusive) for an event's start time to filter by. Optional. The default is not to filter by start time. Must be an RFC3339 timestamp with mandatory time zone offset, e.g., 2011-06-03T10:00:00-07:00, 2011-06-03T10:00:00Z. Milliseconds may be provided but will be ignored.",
 	//       "format": "date-time",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "timeMin": {
-	//       "description": "Lower bound (inclusive) for an event's end time to filter by. Optional. The default is not to filter by end time.",
+	//       "description": "Lower bound (inclusive) for an event's end time to filter by. Optional. The default is not to filter by end time. Must be an RFC3339 timestamp with mandatory time zone offset, e.g., 2011-06-03T10:00:00-07:00, 2011-06-03T10:00:00Z. Milliseconds may be provided but will be ignored.",
 	//       "format": "date-time",
 	//       "location": "query",
 	//       "type": "string"

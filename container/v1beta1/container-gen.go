@@ -151,8 +151,7 @@ type Cluster struct {
 
 	// ContainerIpv4Cidr: The IP address range of the container pods in this
 	// cluster, in  CIDR notation (e.g. 10.96.0.0/14). Leave blank to have
-	// one automatically chosen or specify a /14 block in 10.0.0.0/8 or
-	// 172.16.0.0/12.
+	// one automatically chosen or specify a /14 block in 10.0.0.0/8.
 	ContainerIpv4Cidr string `json:"containerIpv4Cidr,omitempty"`
 
 	// CreationTimestamp: [Output only] The time the cluster was created, in

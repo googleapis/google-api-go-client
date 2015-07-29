@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"uUWyYHXmEn-ab7WLvo8qNz2S8ws/Dam2iHq0kOgu8qnsdYB9fhgy5SY\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/_VRzIG5q4_x1FzCCxocLHIuiUhw\"",
  "discoveryVersion": "v1",
  "id": "admin:email_migration_v2",
  "name": "admin",
  "version": "email_migration_v2",
- "revision": "20140903",
+ "revision": "20150303",
  "title": "Email Migration API v2",
  "description": "Email Migration API lets you migrate emails of users to Google backends.",
  "ownerDomain": "google.com",

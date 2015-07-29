@@ -287,6 +287,9 @@ type namePool struct {
 	m map[string]bool // lazily initialized
 }
 
+// oddVersionRE matches unusual API names like directory_v1.
+var oddVersionRE = regexp.MustCompile(`^(.+)_(v[\d\.]+)$`)
+
 // renameVersion conditionally rewrites the provided version such
 // that the final path component of the import path doesn't look
 // like a Go identifier. This keeps the consistency that import paths
@@ -295,12 +298,13 @@ type namePool struct {
 // and have package NAME.
 // See https://github.com/google/google-api-go-client/issues/78
 func renameVersion(version string) string {
-	// TODO: Add support for mapping hierarchical APIs (see bug for details).
 	if version == "alpha" || version == "beta" {
 		return "v0." + version
-	} else {
-		return version
 	}
+	if m := oddVersionRE.FindStringSubmatch(version); m != nil {
+		return m[1] + "/" + m[2]
+	}
+	return version
 }
 
 func (p *namePool) Get(preferred string) string {

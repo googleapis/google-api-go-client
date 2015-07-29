@@ -38,3 +38,53 @@ For examples, see:
 For support, use the golang-nuts@ mailing list:
 
 * https://groups.google.com/group/golang-nuts
+
+## Application Default Credentials Example
+
+Application Default Credentials provide a simplified way to obtain credentials
+for authenticating with Google APIs.
+
+The Application Default Credentials authenticate as the application itself,
+which make them great for working with Google Cloud APIs like Storage or
+Datastore. They are the recommended form of authentication when building
+applications that run on Google Compute Engine or Google App Engine.
+
+Default credentials are provided by the `golang.org/x/oauth2/google` package. To use them, add the following import:
+
+```
+import "golang.org/x/oauth2/google"
+```
+
+Some credentials types require you to specify scopes, and service entry points may not inject them. If you encounter this situation you may need to specify scopes as follows:
+
+```
+import (
+        "golang.org/x/net/context"
+        "golang.org/x/oauth2/google"
+        "google.golang.org/api/compute/v1"
+)
+
+// Use oauth2.NoContext if there isn't a good context to pass in.
+ctx := context.TODO()
+
+client, err := google.DefaultClient(ctx, compute.ComputeScope)
+if err != nil {
+        // Handle error.
+}
+computeService, err := compute.New(client)
+if err != nil {
+        // Handle error.
+}
+```
+
+If you need a `oauth2.TokenSource`, use the `DefaultTokenSource` function:
+
+```
+ts, err := google.DefaultTokenSource(ctx, scope1, scope2, ...)
+if err != nil {
+        // Handle error.
+}
+httpClient := oauth2.NewClient(ctx, ts)
+```
+
+See also: [golang.org/x/oauth2/google](https://godoc.org/golang.org/x/oauth2/google) package documentation.

@@ -15,7 +15,7 @@
 //	expanded, _ := template.ExpandString(values)
 //	fmt.Printf(expanded)
 //
-package uritemplates
+package uritemplates // import "google.golang.org/api/googleapi/internal/uritemplates"
 
 import (
 	"bytes"

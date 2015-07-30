@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "ed788e71_b65228b6",
+        "filename": "googleapi/fake_readerat.go",
+        "patchSetId": 10
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-07-30T03:16:00Z",
+      "side": 1,
+      "message": "Never mind; I just saw this:\n(from https://cloud.google.com/storage/docs/concepts-techniques):\n\n\"The sizes of all the blocks written, except the final block, must be a multiple of 256K bytes\".\n\nI guess you already knew that since you are rounding chunk sizes up to the nearest multiple of 256K.  There\u0027s no point doing as I suggested if it\u0027s not possible upload \u003c256K chunks.\n\nOh well, I look forward to seeing your next change.",
+      "parentUuid": "6dae5efb_c6c8a251",
+      "range": {
+        "startLine": 68,
+        "startChar": 2,
+        "endLine": 68,
+        "endChar": 21
+      },
+      "revId": "5ad9b77e8a034f04d65d18cbd8e73db52b8728dd",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0da5e2c6_dfb95b69",
         "filename": "googleapi/googleapi.go",
         "patchSetId": 10

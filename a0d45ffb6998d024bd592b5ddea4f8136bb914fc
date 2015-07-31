@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed788e71_5942e711",
+        "filename": "googleapi/fake_readerat.go",
+        "patchSetId": 13
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-07-31T05:47:20Z",
+      "side": 1,
+      "message": "s/file-like reader://",
+      "range": {
+        "startLine": 32,
+        "startChar": 60,
+        "endLine": 33,
+        "endChar": 49
+      },
+      "revId": "a0d45ffb6998d024bd592b5ddea4f8136bb914fc",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ed788e71_b9ee9b7c",
+        "filename": "googleapi/fake_readerat.go",
+        "patchSetId": 13
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-07-31T05:47:20Z",
+      "side": 1,
+      "message": "This code will never actually execute, because for fakeReaders, chunkSize is always \u003e 0, and SizeAt is only called in one place, and always with size\u003d\u003dchunkSize.\n\nI think that this code would actually be nicer if ResumableUpload did not keep track of the chunkSize.  Instead, the sequentialReaderAt implementations could keep track of it.  If you do this, then SizeAt could take a single parameter (off), and you wouldn\u0027t need to handle the possibility that size is \u003c\u003d0 in fakeReaderAt.  You\u0027d want to remove the chunkSize field from ResumableUpload, and probably contentLength could be dropped as well.  The means that your UploadOptions should operate on something other than a *ResumableUpload. You could reintroduce an (unexported) uploadParameters struct to hold the values which are set via options.  Then in configure, copy MediaType into ResumableUpload and use the chunkSize and Size to construct your sequentialReaderAts.",
+      "range": {
+        "startLine": 83,
+        "startChar": 1,
+        "endLine": 85,
+        "endChar": 2
+      },
+      "revId": "a0d45ffb6998d024bd592b5ddea4f8136bb914fc",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ed788e71_3978cb37",
+        "filename": "googleapi/fake_readerat.go",
+        "patchSetId": 13
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-07-31T05:47:20Z",
+      "side": 1,
+      "message": "Furthermore, now that you\u0027ve simplified the transferChunks code, it easier to see that sequentialReaderAt and its implementations don\u0027t actually need to implement ReaderAt.  What they are really for is to provide access to chunks of data, buffering if necessary.  I think you can now avoid the awkwardness of the extra constraints imposed by sequentialReaderAt by doing the following:\n\n* change the name of the method to Chunk\n* change the return type from (int64,error) to (io.Reader, error).\n* return a SectionReader which wraps r.buf\n* delete the ReadAt method.\n\nYou\u0027d probably want to rename a bunch of things as a consequence.  Effectively, sequentialReaderAt is no longer a ReaderAt, and instead is a helper which splits a reader into a sequence of SectionReaders.\n\nIt also solves any remaining issues with assumptions about whether SectionReader can access content to the left of its specified section.  I acknowledge that it\u0027s very unlikely to ever do that, but with the change I\u0027ve suggested, the SectionReader only ever wraps the underlying r.buf, so the issue is avoided.",
+      "range": {
+        "startLine": 86,
+        "startChar": 0,
+        "endLine": 86,
+        "endChar": 1
+      },
+      "revId": "a0d45ffb6998d024bd592b5ddea4f8136bb914fc",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ed788e71_3929ab3a",
+        "filename": "googleapi/fake_readerat.go",
+        "patchSetId": 13
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-07-31T05:47:20Z",
+      "side": 1,
+      "message": "I think this could be simpler if you did something like:\n\nnewBuf :\u003d bytes.NewBuffer(r.buf)\nn1, err1 :\u003d io.CopyN(newBuf, r.r, extra)\nr.buf \u003d newBuf.Bytes()\n\nI think it\u0027s important to remove as much manual calculation of indexes etc. as possible, make it less error-prone. Going further, you might be able to make r.buf itself a bytes.Buffer and avoid creating a new one each time.  I think that doing so could remove the need for a bunch of buffer management you are doing here.  You might also find Buffer\u0027s UnreadByte method handy for supporting the early detection of EOF.",
+      "range": {
+        "startLine": 94,
+        "startChar": 1,
+        "endLine": 98,
+        "endChar": 30
+      },
+      "revId": "a0d45ffb6998d024bd592b5ddea4f8136bb914fc",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ed788e71_b9585b09",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 13
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-07-31T05:47:20Z",
+      "side": 1,
+      "message": "could you make these \"rx\", for consistency?",
+      "range": {
+        "startLine": 42,
+        "startChar": 11,
+        "endLine": 42,
+        "endChar": 12
+      },
+      "revId": "a0d45ffb6998d024bd592b5ddea4f8136bb914fc",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ed788e71_79232358",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 13
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-07-31T05:47:20Z",
+      "side": 1,
+      "message": "This need not be a struct.  It\u0027s fine to do:\n\nfunc SetContentSize(size int64) UploadOption { return setContentSize(size) }\n\ntype setContentSize int64\n\nfunc (opt setContentSize) setOption(rx *ResumableUpload) { rx.contentLength \u003d int64(opt) }",
+      "range": {
+        "startLine": 50,
+        "startChar": 20,
+        "endLine": 50,
+        "endChar": 26
+      },
+      "revId": "a0d45ffb6998d024bd592b5ddea4f8136bb914fc",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ed788e71_59266769",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 13
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-07-31T05:47:20Z",
+      "side": 1,
+      "message": "Please give this a more meaningful name.  \"opt\" would be fine.",
+      "range": {
+        "startLine": 52,
+        "startChar": 6,
+        "endLine": 52,
+        "endChar": 7
+      },
+      "revId": "a0d45ffb6998d024bd592b5ddea4f8136bb914fc",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ed788e71_99663f9d",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 13
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-07-31T05:47:20Z",
+      "side": 1,
+      "message": "this looks a little odd; if you\u0027re going to be this specific I think you should just write it as 262144.",
+      "range": {
+        "startLine": 65,
+        "startChar": 46,
+        "endLine": 65,
+        "endChar": 56
+      },
+      "revId": "a0d45ffb6998d024bd592b5ddea4f8136bb914fc",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

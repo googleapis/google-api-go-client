@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "6a5f2428_b3264a68",
+        "filename": "googleapi/fake_readerat.go",
+        "patchSetId": 13
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 5815
+      },
+      "writtenOn": "2015-07-31T21:42:24Z",
+      "side": 1,
+      "message": "Yes, I was aware that this code would execute only if a bug was introduced. I like the suggestion of folding chunkSize into sequentialReaderAt. I really disliked that special case handling of size\u003d0, I thought that was a big kludge - folding in chunkSize would indeed solve that.",
+      "parentUuid": "ed788e71_b9ee9b7c",
+      "range": {
+        "startLine": 83,
+        "startChar": 1,
+        "endLine": 85,
+        "endChar": 2
+      },
+      "revId": "a0d45ffb6998d024bd592b5ddea4f8136bb914fc",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed788e71_3978cb37",
         "filename": "googleapi/fake_readerat.go",
         "patchSetId": 13
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "6a5f2428_53382e5a",
+        "filename": "googleapi/fake_readerat.go",
+        "patchSetId": 13
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 5815
+      },
+      "writtenOn": "2015-07-31T21:42:24Z",
+      "side": 1,
+      "message": "At the minimum Chunk would need to also return size of the section that the returned reader will read from, so that Content-Range header can be set appropriately.\n\n  Chunk(off int64) (r io.Reader, size int64, err error)\n\nAlso, we could no longer use DetectMediaType directly since it requires io.ReaderAt. I\u0027d probably remove DetectMediaType altogether, and just do something like this within Configure():\n\n  rdr, _, _ :\u003d rx.Media.Chunk(0)\n  buf :\u003d ioutil.ReadAll(io.LimitReader(rdr, 512))\n  rx.mediaType \u003d http.DetectContentType(buf)\n\nReleaseAt method could be removed; calls to Chunk(offset) would only be valid if offset values are non-decreasing. \n\nI think by not leaking a constrained implementation of io.ReaderAt outside of transferChunks() loop, this change will make it easier to see that sequentialReaderAt constraints are satisfied - so I welcome this change. That said, I am not sure I agree that this will remove any of the unusual constraints of sequentialReaderAt: there is still a requirement to call Chunk() method with monotonically non-decreasing offsets, and there is still a requirement that EOF is detected along with returning the chunk. I think that\u0027s simply result of crossing GCS resumable upload requirements with the desire to handle streamed content without buffering everything.",
+      "parentUuid": "ed788e71_3978cb37",
+      "range": {
+        "startLine": 86,
+        "startChar": 0,
+        "endLine": 86,
+        "endChar": 1
+      },
+      "revId": "a0d45ffb6998d024bd592b5ddea4f8136bb914fc",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed788e71_3929ab3a",
         "filename": "googleapi/fake_readerat.go",
         "patchSetId": 13
@@ -82,6 +130,30 @@
       "writtenOn": "2015-07-31T05:47:20Z",
       "side": 1,
       "message": "I think this could be simpler if you did something like:\n\nnewBuf :\u003d bytes.NewBuffer(r.buf)\nn1, err1 :\u003d io.CopyN(newBuf, r.r, extra)\nr.buf \u003d newBuf.Bytes()\n\nI think it\u0027s important to remove as much manual calculation of indexes etc. as possible, make it less error-prone. Going further, you might be able to make r.buf itself a bytes.Buffer and avoid creating a new one each time.  I think that doing so could remove the need for a bunch of buffer management you are doing here.  You might also find Buffer\u0027s UnreadByte method handy for supporting the early detection of EOF.",
+      "range": {
+        "startLine": 94,
+        "startChar": 1,
+        "endLine": 98,
+        "endChar": 30
+      },
+      "revId": "a0d45ffb6998d024bd592b5ddea4f8136bb914fc",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6a5f2428_7e8d393d",
+        "filename": "googleapi/fake_readerat.go",
+        "patchSetId": 13
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 5815
+      },
+      "writtenOn": "2015-07-31T21:42:24Z",
+      "side": 1,
+      "message": "Agree on the first suggestion.\n\nI still need to think through the second suggestion. I don\u0027t think I could simply io.CopyN() input stream in chunks into the buffer, and then return that buffer from Chunk(), because we\u0027d loose the ability to rewind - I think bytes.Buffer is free to permanently release any read content except for the very last byte read.\n\nIn other words inside Chunk() I\u0027d have to use a combination of io.CopyN(ioutil.Discard, buffer) to forward the buffer, and io.CopyN(buffer, inputReader) to refill the buffer, all along keeping track of where the buffer stands within the underlying inputReader, and how much data to read and release. To return a io.Reader from Chunk I\u0027d have to do something like this:\n\n  buf :\u003d buffer.Bytes()\n  if [some carefully crafted condition] {\n      // remove last byte - EOF detection\n      buf \u003d buf[:len(buf)-1]\n  }\n  return bytes.NewReader(buf), len(buf), err\n\nThis doesn\u0027t feel like a big improvement - let me know if I am overlooking something obvious...",
+      "parentUuid": "ed788e71_3929ab3a",
       "range": {
         "startLine": 94,
         "startChar": 1,
@@ -140,6 +212,30 @@
     },
     {
       "key": {
+        "uuid": "6a5f2428_be16117e",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 13
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5815
+      },
+      "writtenOn": "2015-07-31T21:42:24Z",
+      "side": 1,
+      "message": "Ah, right. Will do.",
+      "parentUuid": "ed788e71_79232358",
+      "range": {
+        "startLine": 50,
+        "startChar": 20,
+        "endLine": 50,
+        "endChar": 26
+      },
+      "revId": "a0d45ffb6998d024bd592b5ddea4f8136bb914fc",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed788e71_59266769",
         "filename": "googleapi/googleapi.go",
         "patchSetId": 13
@@ -174,6 +270,30 @@
       "writtenOn": "2015-07-31T05:47:20Z",
       "side": 1,
       "message": "this looks a little odd; if you\u0027re going to be this specific I think you should just write it as 262144.",
+      "range": {
+        "startLine": 65,
+        "startChar": 46,
+        "endLine": 65,
+        "endChar": 56
+      },
+      "revId": "a0d45ffb6998d024bd592b5ddea4f8136bb914fc",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6a5f2428_3e2341df",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 13
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5815
+      },
+      "writtenOn": "2015-07-31T21:42:24Z",
+      "side": 1,
+      "message": "I\u0027ve copied that part (including \"256 x 1024\") verbatim from the GCS resumable upload spec. I suspect their motivation for the specificity is the eternal confusion over whether {K,M,G} mean 1000^{1,2,3} or 1024^{1,2,3}.",
+      "parentUuid": "ed788e71_99663f9d",
       "range": {
         "startLine": 65,
         "startChar": 46,

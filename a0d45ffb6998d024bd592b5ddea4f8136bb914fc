@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ed788e71_59ee672a",
+        "filename": "googleapi/fake_readerat.go",
+        "patchSetId": 13
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-08-03T04:57:14Z",
+      "side": 1,
+      "message": "\u003e At the minimum Chunk would need to also return size of the section that the returned reader will read from\n\nAh, yes, I had considered that.  I intended that the caller could determined the size by calling Size on the returned SectionReader; I meant to suggest a return type of (io.SectionReader, error).  But I think a Reader and size is fine too.\n\n\n\u003e That said, I am not sure I agree that this will remove any of the unusual constraints of sequentialReaderAt\n\nI think we\u0027re on the same page here; I just worded my statement poorly.  What I was getting at was that previously sequentialReaderAt was being used in places where a ReaderAt is expected, even though sequentialReaderAt imposes constraints that clients of ReaderAt do not expect.  It was this usage that was awkward, not the constraints per se. Because the new approach does not use a sequentialReaderAt as a ReaderAt, it\u0027s free to impose whatever constraints make sense, such as monotonically increasing offsets (the early EOF detection was actually always fine, since it is allowed by ReaderAt).\n\nP.S. sequentialReaderAt should probably be renamed to something like \"chunker\" or \"sequentialChunker\".",
+      "parentUuid": "6a5f2428_53382e5a",
+      "range": {
+        "startLine": 86,
+        "startChar": 0,
+        "endLine": 86,
+        "endChar": 1
+      },
+      "revId": "a0d45ffb6998d024bd592b5ddea4f8136bb914fc",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed788e71_3929ab3a",
         "filename": "googleapi/fake_readerat.go",
         "patchSetId": 13
@@ -154,6 +178,30 @@
       "side": 1,
       "message": "Agree on the first suggestion.\n\nI still need to think through the second suggestion. I don\u0027t think I could simply io.CopyN() input stream in chunks into the buffer, and then return that buffer from Chunk(), because we\u0027d loose the ability to rewind - I think bytes.Buffer is free to permanently release any read content except for the very last byte read.\n\nIn other words inside Chunk() I\u0027d have to use a combination of io.CopyN(ioutil.Discard, buffer) to forward the buffer, and io.CopyN(buffer, inputReader) to refill the buffer, all along keeping track of where the buffer stands within the underlying inputReader, and how much data to read and release. To return a io.Reader from Chunk I\u0027d have to do something like this:\n\n  buf :\u003d buffer.Bytes()\n  if [some carefully crafted condition] {\n      // remove last byte - EOF detection\n      buf \u003d buf[:len(buf)-1]\n  }\n  return bytes.NewReader(buf), len(buf), err\n\nThis doesn\u0027t feel like a big improvement - let me know if I am overlooking something obvious...",
       "parentUuid": "ed788e71_3929ab3a",
+      "range": {
+        "startLine": 94,
+        "startChar": 1,
+        "endLine": 98,
+        "endChar": 30
+      },
+      "revId": "a0d45ffb6998d024bd592b5ddea4f8136bb914fc",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ed788e71_f9bd7322",
+        "filename": "googleapi/fake_readerat.go",
+        "patchSetId": 13
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-08-03T04:57:14Z",
+      "side": 1,
+      "message": "I don\u0027t think that the \"carefully crafted condition\" would be particularly tricky, and you can use a LimitReader instead of reslicing.  I think you could just do:\n\n  size :\u003d chunkSize\n  if r.buf.Len() \u003c chunkSize {\n    size \u003d r.buf.Len()\n  }\n\n  var err error\n  if r.buf.Len() \u003c\u003d chunkSize {\n    err \u003d io.EOF\n  }\n\n  reader :\u003d io.LimitReader(bytes.NewReader(r.buf.Bytes()), size)\n  return reader, size, err\n\n\nbut let\u0027s see what works best with the code for the \"first suggestion\".",
+      "parentUuid": "6a5f2428_7e8d393d",
       "range": {
         "startLine": 94,
         "startChar": 1,

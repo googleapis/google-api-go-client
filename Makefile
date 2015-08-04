@@ -2,7 +2,8 @@ API_JSON = $(wildcard */*/*-api.json)
 
 # Download all API specifications and rebuild Go bindings.
 # All downloaded files are cached in $TMPDIR for reuse with 'cached' below.
-all: generator
+# Force the creation of the compute:beta API.
+all: generator compute
 	$(GOPATH)/bin/google-api-go-generator -cache=false -install -api=*
 
 # Reuse cached API specifications in $TMPDIR and rebuild Go bindings.
@@ -24,4 +25,9 @@ generator:
 	go install google.golang.org/api/googleapi
 	go install google.golang.org/api/google-api-go-generator
 
-.PHONY: all cached local generator
+# compute:beta needs special handling since it is hidden from the discovery doc. 
+compute:
+	$(GOPATH)/bin/google-api-go-generator -cache=false -install \
+	-publiconly=false -api=compute:beta
+
+.PHONY: all cached local generator compute

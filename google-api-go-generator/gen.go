@@ -75,6 +75,21 @@ type AllAPIs struct {
 	Items []*API `json:"items"`
 }
 
+func (all *AllAPIs) addAPI(api string) {
+	parts := strings.Split(api, ":")
+	if len(parts) != 2 {
+		panicf("malformed API name: %q", api)
+	}
+	apiName := parts[0]
+	apiVersion := parts[1]
+	all.Items = append(all.Items, &API{
+		ID:            api,
+		Name:          apiName,
+		Version:       apiVersion,
+		DiscoveryLink: fmt.Sprintf("./apis/%s/%s/rest", apiName, apiVersion),
+	})
+}
+
 type generateError struct {
 	api   *API
 	error error
@@ -190,15 +205,12 @@ func getAPIs() []*API {
 		log.Fatalf("error decoding JSON in %s: %v", *apisURL, err)
 	}
 	if !*publicOnly && *apiToGenerate != "*" {
-		parts := strings.SplitN(*apiToGenerate, ":", 2)
-		apiName := parts[0]
-		apiVersion := parts[1]
-		all.Items = append(all.Items, &API{
-			ID:            *apiToGenerate,
-			Name:          apiName,
-			Version:       apiVersion,
-			DiscoveryLink: fmt.Sprintf("./apis/%s/%s/rest", apiName, apiVersion),
-		})
+		all.addAPI(*apiToGenerate)
+	}
+	if *apiToGenerate == "*" {
+		// Force generation of compute:beta which doesn't appear in the
+		// directory for some reason, but they've asked us to include it.
+		all.addAPI("compute:beta")
 	}
 	return all.Items
 }

@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4a68a09e_d9035318",
+        "filename": "googleapi/chunker.go",
+        "patchSetId": 14
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 5815
+      },
+      "writtenOn": "2015-08-07T23:26:38Z",
+      "side": 1,
+      "message": "Added entry to AUTHORS file, but also left the copyright notice in this file. Note that other (non-generated) source files also carry copyright notices, like googleapi.go.",
+      "parentUuid": "cac570ce_6531e6f2",
+      "revId": "b40e02abfdf7f3667295ac0e0c62bec2cb3542f7",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca157084_745f566f",
         "filename": "googleapi/chunker.go",
         "patchSetId": 14
@@ -30,6 +48,30 @@
       "writtenOn": "2015-08-04T20:37:21Z",
       "side": 1,
       "message": "Maybe this should say \"ChunkAt\" so as to not confuse the comment with a \"sequentialChunker\".",
+      "range": {
+        "startLine": 22,
+        "startChar": 4,
+        "endLine": 22,
+        "endChar": 11
+      },
+      "revId": "b40e02abfdf7f3667295ac0e0c62bec2cb3542f7",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a68a09e_f9081735",
+        "filename": "googleapi/chunker.go",
+        "patchSetId": 14
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 5815
+      },
+      "writtenOn": "2015-08-07T23:26:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca157084_745f566f",
       "range": {
         "startLine": 22,
         "startChar": 4,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "4a68a09e_190eab3e",
+        "filename": "googleapi/chunker.go",
+        "patchSetId": 14
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 5815
+      },
+      "writtenOn": "2015-08-07T23:26:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca157084_5464da3b",
+      "range": {
+        "startLine": 24,
+        "startChar": 4,
+        "endLine": 24,
+        "endChar": 11
+      },
+      "revId": "b40e02abfdf7f3667295ac0e0c62bec2cb3542f7",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed788e71_3ca6f941",
         "filename": "googleapi/chunker.go",
         "patchSetId": 14
@@ -76,6 +142,30 @@
       "writtenOn": "2015-08-06T12:53:37Z",
       "side": 1,
       "message": "add \":\" for consistency.",
+      "range": {
+        "startLine": 33,
+        "startChar": 45,
+        "endLine": 33,
+        "endChar": 46
+      },
+      "revId": "b40e02abfdf7f3667295ac0e0c62bec2cb3542f7",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a68a09e_390b6f2f",
+        "filename": "googleapi/chunker.go",
+        "patchSetId": 14
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 5815
+      },
+      "writtenOn": "2015-08-07T23:26:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed788e71_3ca6f941",
       "range": {
         "startLine": 33,
         "startChar": 45,
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "4a68a09e_59182382",
+        "filename": "googleapi/chunker.go",
+        "patchSetId": 14
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 5815
+      },
+      "writtenOn": "2015-08-07T23:26:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed788e71_5cb3b582",
+      "range": {
+        "startLine": 38,
+        "startChar": 79,
+        "endLine": 38,
+        "endChar": 84
+      },
+      "revId": "b40e02abfdf7f3667295ac0e0c62bec2cb3542f7",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed788e71_7cb07175",
         "filename": "googleapi/chunker.go",
         "patchSetId": 14
@@ -122,6 +236,30 @@
       "writtenOn": "2015-08-06T12:53:37Z",
       "side": 1,
       "message": "Please avoid using named returned values unless they are really necessary to disambiguate between e.g. two return values of the same type.  Here the names don\u0027t really add anything.\n\nIt\u0027s also generally preferable to avoid naked returns; explicitly listing the values to return is more readable.",
+      "range": {
+        "startLine": 46,
+        "startChar": 44,
+        "endLine": 46,
+        "endChar": 75
+      },
+      "revId": "b40e02abfdf7f3667295ac0e0c62bec2cb3542f7",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a68a09e_9922bbaa",
+        "filename": "googleapi/chunker.go",
+        "patchSetId": 14
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5815
+      },
+      "writtenOn": "2015-08-07T23:26:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed788e71_7cb07175",
       "range": {
         "startLine": 46,
         "startChar": 44,
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "4a68a09e_b9277fb9",
+        "filename": "googleapi/chunker.go",
+        "patchSetId": 14
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 5815
+      },
+      "writtenOn": "2015-08-07T23:26:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed788e71_1cf4ddfa",
+      "range": {
+        "startLine": 65,
+        "startChar": 34,
+        "endLine": 66,
+        "endChar": 45
+      },
+      "revId": "b40e02abfdf7f3667295ac0e0c62bec2cb3542f7",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed788e71_bca04922",
         "filename": "googleapi/chunker.go",
         "patchSetId": 14
@@ -168,6 +330,30 @@
       "writtenOn": "2015-08-06T12:53:37Z",
       "side": 1,
       "message": "rather than constructing a LimitReader for the caller, why not make the caller responsible for passing in a LimitReader if they want to restrict how much of the reader\u0027s data is transmitted.  Then you don\u0027t need this constructor; you can just export r, and chunkSize and size.\n\nNote: this would make it possible for the bufferedChunker to be initialized with a reader with a size that is greater than bufferedChunker.size, but it\u0027s already possible that it could be smaller than bufferedChunker.size, so I don\u0027t think this would be particularly worse.",
+      "range": {
+        "startLine": 77,
+        "startChar": 1,
+        "endLine": 79,
+        "endChar": 2
+      },
+      "revId": "b40e02abfdf7f3667295ac0e0c62bec2cb3542f7",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a68a09e_f921f7a4",
+        "filename": "googleapi/chunker.go",
+        "patchSetId": 14
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 5815
+      },
+      "writtenOn": "2015-08-07T23:26:38Z",
+      "side": 1,
+      "message": "I can do that, but note the resulting inconsistency in honoring SetContentSize option between file and stream readers:\n\n- If user passes *os.File and sets SetContentSize option to a value shorter than the file size, we\u0027ll upload the short content, rather than the full file.\n\n- If user passes just io.Reader and sets SetContentSize option to a value shorter than the full reader size, we\u0027ll upload full size, and the explicitly set shorter size will be used only in the progress indications.\n\nIn fact, if we want truly consistent behavior between the two reader types in presence of explicit SetContentSize option, I think we need to continue creating io.LimitReader and to also detect premature EOF in bufferedChunker (when size is set), and return ErrUnexpectedEOF from ChunkAt.\n\nThat way premature EOF would result in failed upload for both reader types:\n\n- for sizedChunker http stack will err out when content terminates short (since req.ContentLength is set)\n- for bufferedChunker error will be detected when calling ChunkAt\n\nThoughts?",
+      "parentUuid": "ed788e71_bca04922",
       "range": {
         "startLine": 77,
         "startChar": 1,
@@ -203,6 +389,30 @@
     },
     {
       "key": {
+        "uuid": "4a68a09e_d9d193fc",
+        "filename": "googleapi/chunker.go",
+        "patchSetId": 14
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 5815
+      },
+      "writtenOn": "2015-08-07T23:26:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed788e71_fcfe41dd",
+      "range": {
+        "startLine": 83,
+        "startChar": 27,
+        "endLine": 83,
+        "endChar": 34
+      },
+      "revId": "b40e02abfdf7f3667295ac0e0c62bec2cb3542f7",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cac570ce_852d02cb",
         "filename": "googleapi/chunker.go",
         "patchSetId": 14
@@ -220,6 +430,24 @@
     },
     {
       "key": {
+        "uuid": "4a68a09e_19e5cbc6",
+        "filename": "googleapi/chunker.go",
+        "patchSetId": 14
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 5815
+      },
+      "writtenOn": "2015-08-07T23:26:38Z",
+      "side": 1,
+      "message": "Yes, using single pre-allocated buffer across ChunkAt calls makes perfect sense.",
+      "parentUuid": "cac570ce_852d02cb",
+      "revId": "b40e02abfdf7f3667295ac0e0c62bec2cb3542f7",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cac570ce_a528feba",
         "filename": "googleapi/chunker.go",
         "patchSetId": 14
@@ -231,6 +459,30 @@
       "writtenOn": "2015-08-06T12:53:37Z",
       "side": 1,
       "message": "you\u0027ve already checked that discard \u003e\u003d 0 on line 84, so you may as well discard unconditionally at this point (it\u0027s safe to discard 0 bytes).  By moving the discard code out of the body of the if, it makes it very clear that you are maintaining an invariant that bc.pos \u003d\u003d off.",
+      "range": {
+        "startLine": 93,
+        "startChar": 29,
+        "endLine": 93,
+        "endChar": 40
+      },
+      "revId": "b40e02abfdf7f3667295ac0e0c62bec2cb3542f7",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a68a09e_39e28fbf",
+        "filename": "googleapi/chunker.go",
+        "patchSetId": 14
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 5815
+      },
+      "writtenOn": "2015-08-07T23:26:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cac570ce_a528feba",
       "range": {
         "startLine": 93,
         "startChar": 29,
@@ -266,6 +518,30 @@
     },
     {
       "key": {
+        "uuid": "4a68a09e_f9d657f1",
+        "filename": "googleapi/chunker.go",
+        "patchSetId": 14
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 5815
+      },
+      "writtenOn": "2015-08-07T23:26:38Z",
+      "side": 1,
+      "message": "This becomes a moot point if I switch to managing single buffer myself, as you suggested above, but I don\u0027t think there is a bug here. CopyN documentation states:\n\"On return, written \u003d\u003d n if and only if err \u003d\u003d nil.\"\n\nSince \"extra\" always includes the 1 extra byte, the err \u003d io.EOF if and only if this is the last chunk.",
+      "parentUuid": "ed788e71_dcf985f8",
+      "range": {
+        "startLine": 99,
+        "startChar": 5,
+        "endLine": 99,
+        "endChar": 8
+      },
+      "revId": "b40e02abfdf7f3667295ac0e0c62bec2cb3542f7",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cac570ce_053472e2",
         "filename": "googleapi/chunker_test.go",
         "patchSetId": 14
@@ -277,6 +553,24 @@
       "writtenOn": "2015-08-06T12:53:37Z",
       "side": 1,
       "message": "Please add \"Motorola Mobility LLC\" to the AUTHORS file instead.",
+      "revId": "b40e02abfdf7f3667295ac0e0c62bec2cb3542f7",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a68a09e_395d2ffb",
+        "filename": "googleapi/chunker_test.go",
+        "patchSetId": 14
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 5815
+      },
+      "writtenOn": "2015-08-07T23:26:38Z",
+      "side": 1,
+      "message": "Added entry to AUTHORS, but also kept the copyright notice.",
+      "parentUuid": "cac570ce_053472e2",
       "revId": "b40e02abfdf7f3667295ac0e0c62bec2cb3542f7",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
@@ -306,6 +600,30 @@
     },
     {
       "key": {
+        "uuid": "4a68a09e_19d6abc1",
+        "filename": "googleapi/chunker_test.go",
+        "patchSetId": 14
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 5815
+      },
+      "writtenOn": "2015-08-07T23:26:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed788e71_7c4f91b8",
+      "range": {
+        "startLine": 24,
+        "startChar": 5,
+        "endLine": 24,
+        "endChar": 11
+      },
+      "revId": "b40e02abfdf7f3667295ac0e0c62bec2cb3542f7",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed788e71_9fb29f33",
         "filename": "googleapi/chunker_test.go",
         "patchSetId": 14
@@ -317,6 +635,30 @@
       "writtenOn": "2015-08-06T12:53:37Z",
       "side": 1,
       "message": "These are ignored because n\u003d0.  Similarly on lines 53,71.\n\nPassing arbitrary values in these cases makes these tests harder to read. I think you extract the first half our the expect function into a separate function, which does not take first,last parameters and can be called directly in cases like this one.  The existing expect function can call the extracted function and then also check the first and last bytes.",
+      "range": {
+        "startLine": 46,
+        "startChar": 35,
+        "endLine": 46,
+        "endChar": 40
+      },
+      "revId": "b40e02abfdf7f3667295ac0e0c62bec2cb3542f7",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a68a09e_596ae38d",
+        "filename": "googleapi/chunker_test.go",
+        "patchSetId": 14
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5815
+      },
+      "writtenOn": "2015-08-07T23:26:38Z",
+      "side": 1,
+      "message": "The tests also need restructuring. They were written back when fakeReaderAt supported passing the chunk size at read time, and adaptation to sequentialChunker was a kludge.",
+      "parentUuid": "ed788e71_9fb29f33",
       "range": {
         "startLine": 46,
         "startChar": 35,
@@ -369,6 +711,30 @@
     },
     {
       "key": {
+        "uuid": "4a68a09e_59958311",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 14
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 5815
+      },
+      "writtenOn": "2015-08-07T23:26:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed788e71_3cc0b990",
+      "range": {
+        "startLine": 394,
+        "startChar": 2,
+        "endLine": 394,
+        "endChar": 13
+      },
+      "revId": "b40e02abfdf7f3667295ac0e0c62bec2cb3542f7",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed788e71_fcbd6122",
         "filename": "googleapi/googleapi.go",
         "patchSetId": 14
@@ -380,6 +746,30 @@
       "writtenOn": "2015-08-06T12:53:37Z",
       "side": 1,
       "message": "This can be hoisted out of its enclosing if, as it doesn\u0027t depend on any methods from ReaderAt.\n\nThe rest of this if can then be\n\nif r, ok :\u003d r.(io.ReaderAt); ok \u0026\u0026 opt.contentSize \u003e 0 {\n  rx.media \u003d ...\n}\n\nand line 415 can be an else block.",
+      "range": {
+        "startLine": 402,
+        "startChar": 2,
+        "endLine": 409,
+        "endChar": 3
+      },
+      "revId": "b40e02abfdf7f3667295ac0e0c62bec2cb3542f7",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a68a09e_3998cf4a",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 14
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 5815
+      },
+      "writtenOn": "2015-08-07T23:26:38Z",
+      "side": 1,
+      "message": "This was intentional - I didn\u0027t want to try to guess content size unless there was a tangible benefit - which there was only for io.ReaderAt.\n\n(Note how this decision is coupled to the decision about the role of bufferedChunker size: whether to use the size for progress indications only, or whether to trim long content and fail on short content.)\n\nNow that I think about this again, I\u0027d prefer to give both types of readers an equal treatment. This means doing as you suggested, and always try to guess content size when not explicitly provided, regardless of io.ReaderAt capability.\n\nThis is a long way of saying \"yes\" to your suggestion - just want to make sure you understand the implications.",
+      "parentUuid": "ed788e71_fcbd6122",
       "range": {
         "startLine": 402,
         "startChar": 2,
@@ -415,6 +805,30 @@
     },
     {
       "key": {
+        "uuid": "4a68a09e_999d5b4a",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 14
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 5815
+      },
+      "writtenOn": "2015-08-07T23:26:38Z",
+      "side": 1,
+      "message": "Itoa takes an int, which would limit max upload size to 2GB on 32-bit architectures.",
+      "parentUuid": "ed788e71_bc812953",
+      "range": {
+        "startLine": 492,
+        "startChar": 16,
+        "endLine": 492,
+        "endChar": 44
+      },
+      "revId": "b40e02abfdf7f3667295ac0e0c62bec2cb3542f7",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed788e71_3c55194b",
         "filename": "googleapi/googleapi.go",
         "patchSetId": 14
@@ -426,6 +840,30 @@
       "writtenOn": "2015-08-06T12:53:37Z",
       "side": 1,
       "message": "It reads a little odd to increment start here even though the request might fail. It works because there is a return in the case of failure later on. I think this would be easier to understand if this increment happened just before line 502.",
+      "range": {
+        "startLine": 499,
+        "startChar": 2,
+        "endLine": 499,
+        "endChar": 18
+      },
+      "revId": "b40e02abfdf7f3667295ac0e0c62bec2cb3542f7",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a68a09e_b9a21f81",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 14
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 5815
+      },
+      "writtenOn": "2015-08-07T23:26:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed788e71_3c55194b",
       "range": {
         "startLine": 499,
         "startChar": 2,
@@ -461,6 +899,30 @@
     },
     {
       "key": {
+        "uuid": "4a68a09e_f9ac9774",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 14
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 5815
+      },
+      "writtenOn": "2015-08-07T23:26:38Z",
+      "side": 1,
+      "message": "Yes, but only if response is consumed internally in the loop, as opposed to returning it from the function. Done.",
+      "parentUuid": "ed788e71_bc684913",
+      "range": {
+        "startLine": 500,
+        "startChar": 2,
+        "endLine": 500,
+        "endChar": 5
+      },
+      "revId": "b40e02abfdf7f3667295ac0e0c62bec2cb3542f7",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed788e71_fc62c12e",
         "filename": "googleapi/googleapi.go",
         "patchSetId": 14
@@ -472,6 +934,30 @@
       "writtenOn": "2015-08-06T12:53:37Z",
       "side": 1,
       "message": "I think that this code would be easier to follow if err were checked first and separately, so\n\nif err !\u003d nil {\n  return res, err\n}\nres.Body.Close()\n\nbefore line 501.",
+      "range": {
+        "startLine": 509,
+        "startChar": 5,
+        "endLine": 509,
+        "endChar": 15
+      },
+      "revId": "b40e02abfdf7f3667295ac0e0c62bec2cb3542f7",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a68a09e_d980b3d7",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 14
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 5815
+      },
+      "writtenOn": "2015-08-07T23:26:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed788e71_fc62c12e",
       "range": {
         "startLine": 509,
         "startChar": 5,

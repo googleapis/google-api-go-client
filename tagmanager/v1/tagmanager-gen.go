@@ -106,7 +106,9 @@ type AccountsService struct {
 
 func NewAccountsContainersService(s *Service) *AccountsContainersService {
 	rs := &AccountsContainersService{s: s}
+	rs.Folders = NewAccountsContainersFoldersService(s)
 	rs.Macros = NewAccountsContainersMacrosService(s)
+	rs.MoveFolders = NewAccountsContainersMoveFoldersService(s)
 	rs.Rules = NewAccountsContainersRulesService(s)
 	rs.Tags = NewAccountsContainersTagsService(s)
 	rs.Triggers = NewAccountsContainersTriggersService(s)
@@ -118,7 +120,11 @@ func NewAccountsContainersService(s *Service) *AccountsContainersService {
 type AccountsContainersService struct {
 	s *Service
 
+	Folders *AccountsContainersFoldersService
+
 	Macros *AccountsContainersMacrosService
+
+	MoveFolders *AccountsContainersMoveFoldersService
 
 	Rules *AccountsContainersRulesService
 
@@ -131,12 +137,42 @@ type AccountsContainersService struct {
 	Versions *AccountsContainersVersionsService
 }
 
+func NewAccountsContainersFoldersService(s *Service) *AccountsContainersFoldersService {
+	rs := &AccountsContainersFoldersService{s: s}
+	rs.Entities = NewAccountsContainersFoldersEntitiesService(s)
+	return rs
+}
+
+type AccountsContainersFoldersService struct {
+	s *Service
+
+	Entities *AccountsContainersFoldersEntitiesService
+}
+
+func NewAccountsContainersFoldersEntitiesService(s *Service) *AccountsContainersFoldersEntitiesService {
+	rs := &AccountsContainersFoldersEntitiesService{s: s}
+	return rs
+}
+
+type AccountsContainersFoldersEntitiesService struct {
+	s *Service
+}
+
 func NewAccountsContainersMacrosService(s *Service) *AccountsContainersMacrosService {
 	rs := &AccountsContainersMacrosService{s: s}
 	return rs
 }
 
 type AccountsContainersMacrosService struct {
+	s *Service
+}
+
+func NewAccountsContainersMoveFoldersService(s *Service) *AccountsContainersMoveFoldersService {
+	rs := &AccountsContainersMoveFoldersService{s: s}
+	return rs
+}
+
+type AccountsContainersMoveFoldersService struct {
 	s *Service
 }
 
@@ -255,6 +291,7 @@ type Condition struct {
 	//   "lessOrEquals"
 	//   "matchRegex"
 	//   "startsWith"
+	//   "urlMatches"
 	Type string `json:"type,omitempty"`
 }
 
@@ -306,6 +343,7 @@ type Container struct {
 	//   "formText"
 	//   "formUrl"
 	//   "historySource"
+	//   "htmlId"
 	//   "language"
 	//   "newHistoryFragment"
 	//   "newHistoryState"
@@ -394,6 +432,10 @@ type ContainerVersion struct {
 	// version is modified.
 	Fingerprint string `json:"fingerprint,omitempty"`
 
+	// Folder: The folders in the container that this version was taken
+	// from.
+	Folder []*Folder `json:"folder,omitempty"`
+
 	// Macro: The macros in the container that this version was taken from.
 	Macro []*Macro `json:"macro,omitempty"`
 
@@ -478,6 +520,37 @@ type CreateContainerVersionResponse struct {
 	ContainerVersion *ContainerVersion `json:"containerVersion,omitempty"`
 }
 
+// Folder: Represents a Google Tag Manager Folder.
+type Folder struct {
+	// AccountId: GTM Account ID.
+	AccountId string `json:"accountId,omitempty"`
+
+	// ContainerId: GTM Container ID.
+	ContainerId string `json:"containerId,omitempty"`
+
+	// Fingerprint: The fingerprint of the GTM Folder as computed at storage
+	// time. This value is recomputed whenever the folder is modified.
+	Fingerprint string `json:"fingerprint,omitempty"`
+
+	// FolderId: The Folder ID uniquely identifies the GTM Folder.
+	FolderId string `json:"folderId,omitempty"`
+
+	// Name: Folder display name.
+	Name string `json:"name,omitempty"`
+}
+
+// FolderEntities: Represents a Google Tag Manager Folder's contents.
+type FolderEntities struct {
+	// Tag: The list of tags inside the folder.
+	Tag []*Tag `json:"tag,omitempty"`
+
+	// Trigger: The list of triggers inside the folder.
+	Trigger []*Trigger `json:"trigger,omitempty"`
+
+	// Variable: The list of variables inside the folder.
+	Variable []*Variable `json:"variable,omitempty"`
+}
+
 // ListAccountUsersResponse: List AccountUsers Response.
 type ListAccountUsersResponse struct {
 	// UserAccess: All GTM AccountUsers of a GTM Account.
@@ -504,6 +577,12 @@ type ListContainerVersionsResponse struct {
 type ListContainersResponse struct {
 	// Containers: All Containers of a GTM Account.
 	Containers []*Container `json:"containers,omitempty"`
+}
+
+// ListFoldersResponse: List Folders Response.
+type ListFoldersResponse struct {
+	// Folders: All GTM Folders of a GTM Container.
+	Folders []*Folder `json:"folders,omitempty"`
 }
 
 // ListMacrosResponse: List Macros Response.
@@ -571,6 +650,9 @@ type Macro struct {
 
 	// Parameter: The macro's parameters.
 	Parameter []*Parameter `json:"parameter,omitempty"`
+
+	// ParentFolderId: Parent folder id.
+	ParentFolderId string `json:"parentFolderId,omitempty"`
 
 	// ScheduleEndMs: The end timestamp in milliseconds to schedule a macro.
 	ScheduleEndMs int64 `json:"scheduleEndMs,omitempty,string"`
@@ -654,6 +736,16 @@ type Rule struct {
 	RuleId string `json:"ruleId,omitempty"`
 }
 
+type SetupTag struct {
+	// StopOnSetupFailure: If true, fire the main tag if and only if the
+	// setup tag fires successfully. If false, fire the main tag regardless
+	// of setup tag firing status.
+	StopOnSetupFailure bool `json:"stopOnSetupFailure,omitempty"`
+
+	// TagName: The name of the setup tag.
+	TagName string `json:"tagName,omitempty"`
+}
+
 // Tag: Represents a Google Tag Manager Tag.
 type Tag struct {
 	// AccountId: GTM Account ID.
@@ -697,6 +789,9 @@ type Tag struct {
 	// Parameter: The tag's parameters.
 	Parameter []*Parameter `json:"parameter,omitempty"`
 
+	// ParentFolderId: Parent folder id.
+	ParentFolderId string `json:"parentFolderId,omitempty"`
+
 	// Priority: User defined numeric priority of the tag. Tags are fired
 	// asynchronously in order of priority. Tags with higher numeric value
 	// fire first. A tag's priority can be a positive or negative value. The
@@ -710,11 +805,27 @@ type Tag struct {
 	// tag.
 	ScheduleStartMs int64 `json:"scheduleStartMs,omitempty,string"`
 
+	// SetupTag: The list of setup tags. Currently we only allow one.
+	SetupTag []*SetupTag `json:"setupTag,omitempty"`
+
 	// TagId: The Tag ID uniquely identifies the GTM Tag.
 	TagId string `json:"tagId,omitempty"`
 
+	// TeardownTag: The list of teardown tags. Currently we only allow one.
+	TeardownTag []*TeardownTag `json:"teardownTag,omitempty"`
+
 	// Type: GTM Tag Type.
 	Type string `json:"type,omitempty"`
+}
+
+type TeardownTag struct {
+	// StopTeardownOnFailure: If true, fire the teardown tag if and only if
+	// the main tag fires successfully. If false, fire the teardown tag
+	// regardless of main tag firing status.
+	StopTeardownOnFailure bool `json:"stopTeardownOnFailure,omitempty"`
+
+	// TagName: The name of the teardown tag.
+	TagName string `json:"tagName,omitempty"`
 }
 
 // Trigger: Represents a Google Tag Manager Trigger
@@ -766,6 +877,9 @@ type Trigger struct {
 
 	// Name: Trigger display name.
 	Name string `json:"name,omitempty"`
+
+	// ParentFolderId: Parent folder id.
+	ParentFolderId string `json:"parentFolderId,omitempty"`
 
 	// TriggerId: The Trigger ID uniquely identifies the GTM Trigger.
 	TriggerId string `json:"triggerId,omitempty"`
@@ -866,6 +980,9 @@ type Variable struct {
 	// Parameter: The variable's parameters.
 	Parameter []*Parameter `json:"parameter,omitempty"`
 
+	// ParentFolderId: Parent folder id.
+	ParentFolderId string `json:"parentFolderId,omitempty"`
+
 	// ScheduleEndMs: The end timestamp in milliseconds to schedule a
 	// variable.
 	ScheduleEndMs int64 `json:"scheduleEndMs,omitempty,string"`
@@ -904,10 +1021,10 @@ func (c *AccountsGetCall) Fields(s ...googleapi.Field) *AccountsGetCall {
 	return c
 }
 
-func (c *AccountsGetCall) Do() (*Account, error) {
+func (c *AccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -918,7 +1035,11 @@ func (c *AccountsGetCall) Do() (*Account, error) {
 		"accountId": c.accountId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsGetCall) Do() (*Account, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -980,10 +1101,10 @@ func (c *AccountsListCall) Fields(s ...googleapi.Field) *AccountsListCall {
 	return c
 }
 
-func (c *AccountsListCall) Do() (*ListAccountsResponse, error) {
+func (c *AccountsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -992,7 +1113,11 @@ func (c *AccountsListCall) Do() (*ListAccountsResponse, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsListCall) Do() (*ListAccountsResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1055,7 +1180,7 @@ func (c *AccountsUpdateCall) Fields(s ...googleapi.Field) *AccountsUpdateCall {
 	return c
 }
 
-func (c *AccountsUpdateCall) Do() (*Account, error) {
+func (c *AccountsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.account)
 	if err != nil {
@@ -1063,7 +1188,7 @@ func (c *AccountsUpdateCall) Do() (*Account, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fingerprint"]; ok {
 		params.Set("fingerprint", fmt.Sprintf("%v", v))
 	}
@@ -1078,7 +1203,11 @@ func (c *AccountsUpdateCall) Do() (*Account, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsUpdateCall) Do() (*Account, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1150,7 +1279,7 @@ func (c *AccountsContainersCreateCall) Fields(s ...googleapi.Field) *AccountsCon
 	return c
 }
 
-func (c *AccountsContainersCreateCall) Do() (*Container, error) {
+func (c *AccountsContainersCreateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.container)
 	if err != nil {
@@ -1158,7 +1287,7 @@ func (c *AccountsContainersCreateCall) Do() (*Container, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1170,7 +1299,11 @@ func (c *AccountsContainersCreateCall) Do() (*Container, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsContainersCreateCall) Do() (*Container, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1237,10 +1370,10 @@ func (c *AccountsContainersDeleteCall) Fields(s ...googleapi.Field) *AccountsCon
 	return c
 }
 
-func (c *AccountsContainersDeleteCall) Do() error {
+func (c *AccountsContainersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1252,7 +1385,11 @@ func (c *AccountsContainersDeleteCall) Do() error {
 		"containerId": c.containerId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsContainersDeleteCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -1316,10 +1453,10 @@ func (c *AccountsContainersGetCall) Fields(s ...googleapi.Field) *AccountsContai
 	return c
 }
 
-func (c *AccountsContainersGetCall) Do() (*Container, error) {
+func (c *AccountsContainersGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1331,7 +1468,11 @@ func (c *AccountsContainersGetCall) Do() (*Container, error) {
 		"containerId": c.containerId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsContainersGetCall) Do() (*Container, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1401,10 +1542,10 @@ func (c *AccountsContainersListCall) Fields(s ...googleapi.Field) *AccountsConta
 	return c
 }
 
-func (c *AccountsContainersListCall) Do() (*ListContainersResponse, error) {
+func (c *AccountsContainersListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1415,7 +1556,11 @@ func (c *AccountsContainersListCall) Do() (*ListContainersResponse, error) {
 		"accountId": c.accountId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsContainersListCall) Do() (*ListContainersResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1490,7 +1635,7 @@ func (c *AccountsContainersUpdateCall) Fields(s ...googleapi.Field) *AccountsCon
 	return c
 }
 
-func (c *AccountsContainersUpdateCall) Do() (*Container, error) {
+func (c *AccountsContainersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.container)
 	if err != nil {
@@ -1498,7 +1643,7 @@ func (c *AccountsContainersUpdateCall) Do() (*Container, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fingerprint"]; ok {
 		params.Set("fingerprint", fmt.Sprintf("%v", v))
 	}
@@ -1514,7 +1659,11 @@ func (c *AccountsContainersUpdateCall) Do() (*Container, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsContainersUpdateCall) Do() (*Container, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1568,6 +1717,619 @@ func (c *AccountsContainersUpdateCall) Do() (*Container, error) {
 
 }
 
+// method id "tagmanager.accounts.containers.folders.create":
+
+type AccountsContainersFoldersCreateCall struct {
+	s           *Service
+	accountId   string
+	containerId string
+	folder      *Folder
+	opt_        map[string]interface{}
+}
+
+// Create: Creates a GTM Folder.
+func (r *AccountsContainersFoldersService) Create(accountId string, containerId string, folder *Folder) *AccountsContainersFoldersCreateCall {
+	c := &AccountsContainersFoldersCreateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.containerId = containerId
+	c.folder = folder
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsContainersFoldersCreateCall) Fields(s ...googleapi.Field) *AccountsContainersFoldersCreateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *AccountsContainersFoldersCreateCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.folder)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/containers/{containerId}/folders")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"accountId":   c.accountId,
+		"containerId": c.containerId,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsContainersFoldersCreateCall) Do() (*Folder, error) {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Folder
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a GTM Folder.",
+	//   "httpMethod": "POST",
+	//   "id": "tagmanager.accounts.containers.folders.create",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "containerId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "The GTM Account ID.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "containerId": {
+	//       "description": "The GTM Container ID.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "accounts/{accountId}/containers/{containerId}/folders",
+	//   "request": {
+	//     "$ref": "Folder"
+	//   },
+	//   "response": {
+	//     "$ref": "Folder"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/tagmanager.edit.containers"
+	//   ]
+	// }
+
+}
+
+// method id "tagmanager.accounts.containers.folders.delete":
+
+type AccountsContainersFoldersDeleteCall struct {
+	s           *Service
+	accountId   string
+	containerId string
+	folderId    string
+	opt_        map[string]interface{}
+}
+
+// Delete: Deletes a GTM Folder.
+func (r *AccountsContainersFoldersService) Delete(accountId string, containerId string, folderId string) *AccountsContainersFoldersDeleteCall {
+	c := &AccountsContainersFoldersDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.containerId = containerId
+	c.folderId = folderId
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsContainersFoldersDeleteCall) Fields(s ...googleapi.Field) *AccountsContainersFoldersDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *AccountsContainersFoldersDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/containers/{containerId}/folders/{folderId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"accountId":   c.accountId,
+		"containerId": c.containerId,
+		"folderId":    c.folderId,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsContainersFoldersDeleteCall) Do() error {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Deletes a GTM Folder.",
+	//   "httpMethod": "DELETE",
+	//   "id": "tagmanager.accounts.containers.folders.delete",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "containerId",
+	//     "folderId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "The GTM Account ID.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "containerId": {
+	//       "description": "The GTM Container ID.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "folderId": {
+	//       "description": "The GTM Folder ID.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "accounts/{accountId}/containers/{containerId}/folders/{folderId}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/tagmanager.edit.containers"
+	//   ]
+	// }
+
+}
+
+// method id "tagmanager.accounts.containers.folders.get":
+
+type AccountsContainersFoldersGetCall struct {
+	s           *Service
+	accountId   string
+	containerId string
+	folderId    string
+	opt_        map[string]interface{}
+}
+
+// Get: Gets a GTM Folder.
+func (r *AccountsContainersFoldersService) Get(accountId string, containerId string, folderId string) *AccountsContainersFoldersGetCall {
+	c := &AccountsContainersFoldersGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.containerId = containerId
+	c.folderId = folderId
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsContainersFoldersGetCall) Fields(s ...googleapi.Field) *AccountsContainersFoldersGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *AccountsContainersFoldersGetCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/containers/{containerId}/folders/{folderId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"accountId":   c.accountId,
+		"containerId": c.containerId,
+		"folderId":    c.folderId,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsContainersFoldersGetCall) Do() (*Folder, error) {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Folder
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a GTM Folder.",
+	//   "httpMethod": "GET",
+	//   "id": "tagmanager.accounts.containers.folders.get",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "containerId",
+	//     "folderId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "The GTM Account ID.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "containerId": {
+	//       "description": "The GTM Container ID.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "folderId": {
+	//       "description": "The GTM Folder ID.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "accounts/{accountId}/containers/{containerId}/folders/{folderId}",
+	//   "response": {
+	//     "$ref": "Folder"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/tagmanager.edit.containers",
+	//     "https://www.googleapis.com/auth/tagmanager.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "tagmanager.accounts.containers.folders.list":
+
+type AccountsContainersFoldersListCall struct {
+	s           *Service
+	accountId   string
+	containerId string
+	opt_        map[string]interface{}
+}
+
+// List: Lists all GTM Folders of a Container.
+func (r *AccountsContainersFoldersService) List(accountId string, containerId string) *AccountsContainersFoldersListCall {
+	c := &AccountsContainersFoldersListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.containerId = containerId
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsContainersFoldersListCall) Fields(s ...googleapi.Field) *AccountsContainersFoldersListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *AccountsContainersFoldersListCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/containers/{containerId}/folders")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"accountId":   c.accountId,
+		"containerId": c.containerId,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsContainersFoldersListCall) Do() (*ListFoldersResponse, error) {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *ListFoldersResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all GTM Folders of a Container.",
+	//   "httpMethod": "GET",
+	//   "id": "tagmanager.accounts.containers.folders.list",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "containerId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "The GTM Account ID.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "containerId": {
+	//       "description": "The GTM Container ID.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "accounts/{accountId}/containers/{containerId}/folders",
+	//   "response": {
+	//     "$ref": "ListFoldersResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/tagmanager.edit.containers",
+	//     "https://www.googleapis.com/auth/tagmanager.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "tagmanager.accounts.containers.folders.update":
+
+type AccountsContainersFoldersUpdateCall struct {
+	s           *Service
+	accountId   string
+	containerId string
+	folderId    string
+	folder      *Folder
+	opt_        map[string]interface{}
+}
+
+// Update: Updates a GTM Folder.
+func (r *AccountsContainersFoldersService) Update(accountId string, containerId string, folderId string, folder *Folder) *AccountsContainersFoldersUpdateCall {
+	c := &AccountsContainersFoldersUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.containerId = containerId
+	c.folderId = folderId
+	c.folder = folder
+	return c
+}
+
+// Fingerprint sets the optional parameter "fingerprint": When provided,
+// this fingerprint must match the fingerprint of the folder in storage.
+func (c *AccountsContainersFoldersUpdateCall) Fingerprint(fingerprint string) *AccountsContainersFoldersUpdateCall {
+	c.opt_["fingerprint"] = fingerprint
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsContainersFoldersUpdateCall) Fields(s ...googleapi.Field) *AccountsContainersFoldersUpdateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *AccountsContainersFoldersUpdateCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.folder)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fingerprint"]; ok {
+		params.Set("fingerprint", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/containers/{containerId}/folders/{folderId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"accountId":   c.accountId,
+		"containerId": c.containerId,
+		"folderId":    c.folderId,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsContainersFoldersUpdateCall) Do() (*Folder, error) {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Folder
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a GTM Folder.",
+	//   "httpMethod": "PUT",
+	//   "id": "tagmanager.accounts.containers.folders.update",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "containerId",
+	//     "folderId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "The GTM Account ID.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "containerId": {
+	//       "description": "The GTM Container ID.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "fingerprint": {
+	//       "description": "When provided, this fingerprint must match the fingerprint of the folder in storage.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "folderId": {
+	//       "description": "The GTM Folder ID.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "accounts/{accountId}/containers/{containerId}/folders/{folderId}",
+	//   "request": {
+	//     "$ref": "Folder"
+	//   },
+	//   "response": {
+	//     "$ref": "Folder"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/tagmanager.edit.containers"
+	//   ]
+	// }
+
+}
+
+// method id "tagmanager.accounts.containers.folders.entities.list":
+
+type AccountsContainersFoldersEntitiesListCall struct {
+	s           *Service
+	accountId   string
+	containerId string
+	folderId    string
+	opt_        map[string]interface{}
+}
+
+// List: List all entities in a GTM Folder.
+func (r *AccountsContainersFoldersEntitiesService) List(accountId string, containerId string, folderId string) *AccountsContainersFoldersEntitiesListCall {
+	c := &AccountsContainersFoldersEntitiesListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.containerId = containerId
+	c.folderId = folderId
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsContainersFoldersEntitiesListCall) Fields(s ...googleapi.Field) *AccountsContainersFoldersEntitiesListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *AccountsContainersFoldersEntitiesListCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/containers/{containerId}/folders/{folderId}/entities")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"accountId":   c.accountId,
+		"containerId": c.containerId,
+		"folderId":    c.folderId,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsContainersFoldersEntitiesListCall) Do() (*FolderEntities, error) {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *FolderEntities
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List all entities in a GTM Folder.",
+	//   "httpMethod": "GET",
+	//   "id": "tagmanager.accounts.containers.folders.entities.list",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "containerId",
+	//     "folderId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "The GTM Account ID.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "containerId": {
+	//       "description": "The GTM Container ID.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "folderId": {
+	//       "description": "The GTM Folder ID.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "accounts/{accountId}/containers/{containerId}/folders/{folderId}/entities",
+	//   "response": {
+	//     "$ref": "FolderEntities"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/tagmanager.edit.containers",
+	//     "https://www.googleapis.com/auth/tagmanager.readonly"
+	//   ]
+	// }
+
+}
+
 // method id "tagmanager.accounts.containers.macros.create":
 
 type AccountsContainersMacrosCreateCall struct {
@@ -1595,7 +2357,7 @@ func (c *AccountsContainersMacrosCreateCall) Fields(s ...googleapi.Field) *Accou
 	return c
 }
 
-func (c *AccountsContainersMacrosCreateCall) Do() (*Macro, error) {
+func (c *AccountsContainersMacrosCreateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.macro)
 	if err != nil {
@@ -1603,7 +2365,7 @@ func (c *AccountsContainersMacrosCreateCall) Do() (*Macro, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1616,7 +2378,11 @@ func (c *AccountsContainersMacrosCreateCall) Do() (*Macro, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsContainersMacrosCreateCall) Do() (*Macro, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1692,10 +2458,10 @@ func (c *AccountsContainersMacrosDeleteCall) Fields(s ...googleapi.Field) *Accou
 	return c
 }
 
-func (c *AccountsContainersMacrosDeleteCall) Do() error {
+func (c *AccountsContainersMacrosDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1708,7 +2474,11 @@ func (c *AccountsContainersMacrosDeleteCall) Do() error {
 		"macroId":     c.macroId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsContainersMacrosDeleteCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -1781,10 +2551,10 @@ func (c *AccountsContainersMacrosGetCall) Fields(s ...googleapi.Field) *Accounts
 	return c
 }
 
-func (c *AccountsContainersMacrosGetCall) Do() (*Macro, error) {
+func (c *AccountsContainersMacrosGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1797,7 +2567,11 @@ func (c *AccountsContainersMacrosGetCall) Do() (*Macro, error) {
 		"macroId":     c.macroId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsContainersMacrosGetCall) Do() (*Macro, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1876,10 +2650,10 @@ func (c *AccountsContainersMacrosListCall) Fields(s ...googleapi.Field) *Account
 	return c
 }
 
-func (c *AccountsContainersMacrosListCall) Do() (*ListMacrosResponse, error) {
+func (c *AccountsContainersMacrosListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1891,7 +2665,11 @@ func (c *AccountsContainersMacrosListCall) Do() (*ListMacrosResponse, error) {
 		"containerId": c.containerId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsContainersMacrosListCall) Do() (*ListMacrosResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1974,7 +2752,7 @@ func (c *AccountsContainersMacrosUpdateCall) Fields(s ...googleapi.Field) *Accou
 	return c
 }
 
-func (c *AccountsContainersMacrosUpdateCall) Do() (*Macro, error) {
+func (c *AccountsContainersMacrosUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.macro)
 	if err != nil {
@@ -1982,7 +2760,7 @@ func (c *AccountsContainersMacrosUpdateCall) Do() (*Macro, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fingerprint"]; ok {
 		params.Set("fingerprint", fmt.Sprintf("%v", v))
 	}
@@ -1999,7 +2777,11 @@ func (c *AccountsContainersMacrosUpdateCall) Do() (*Macro, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsContainersMacrosUpdateCall) Do() (*Macro, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2060,6 +2842,144 @@ func (c *AccountsContainersMacrosUpdateCall) Do() (*Macro, error) {
 
 }
 
+// method id "tagmanager.accounts.containers.move_folders.update":
+
+type AccountsContainersMoveFoldersUpdateCall struct {
+	s           *Service
+	accountId   string
+	containerId string
+	folderId    string
+	opt_        map[string]interface{}
+}
+
+// Update: Moves entities to a GTM Folder.
+func (r *AccountsContainersMoveFoldersService) Update(accountId string, containerId string, folderId string) *AccountsContainersMoveFoldersUpdateCall {
+	c := &AccountsContainersMoveFoldersUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.accountId = accountId
+	c.containerId = containerId
+	c.folderId = folderId
+	return c
+}
+
+// TagId sets the optional parameter "tagId": The tags to be moved to
+// the folder.
+func (c *AccountsContainersMoveFoldersUpdateCall) TagId(tagId string) *AccountsContainersMoveFoldersUpdateCall {
+	c.opt_["tagId"] = tagId
+	return c
+}
+
+// TriggerId sets the optional parameter "triggerId": The triggers to be
+// moved to the folder.
+func (c *AccountsContainersMoveFoldersUpdateCall) TriggerId(triggerId string) *AccountsContainersMoveFoldersUpdateCall {
+	c.opt_["triggerId"] = triggerId
+	return c
+}
+
+// VariableId sets the optional parameter "variableId": The variables to
+// be moved to the folder.
+func (c *AccountsContainersMoveFoldersUpdateCall) VariableId(variableId string) *AccountsContainersMoveFoldersUpdateCall {
+	c.opt_["variableId"] = variableId
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsContainersMoveFoldersUpdateCall) Fields(s ...googleapi.Field) *AccountsContainersMoveFoldersUpdateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *AccountsContainersMoveFoldersUpdateCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["tagId"]; ok {
+		params.Set("tagId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["triggerId"]; ok {
+		params.Set("triggerId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["variableId"]; ok {
+		params.Set("variableId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/containers/{containerId}/move_folders/{folderId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"accountId":   c.accountId,
+		"containerId": c.containerId,
+		"folderId":    c.folderId,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsContainersMoveFoldersUpdateCall) Do() error {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Moves entities to a GTM Folder.",
+	//   "httpMethod": "PUT",
+	//   "id": "tagmanager.accounts.containers.move_folders.update",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "containerId",
+	//     "folderId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "The GTM Account ID.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "containerId": {
+	//       "description": "The GTM Container ID.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "folderId": {
+	//       "description": "The GTM Folder ID.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "tagId": {
+	//       "description": "The tags to be moved to the folder.",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "triggerId": {
+	//       "description": "The triggers to be moved to the folder.",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "variableId": {
+	//       "description": "The variables to be moved to the folder.",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "accounts/{accountId}/containers/{containerId}/move_folders/{folderId}"
+	// }
+
+}
+
 // method id "tagmanager.accounts.containers.rules.create":
 
 type AccountsContainersRulesCreateCall struct {
@@ -2087,7 +3007,7 @@ func (c *AccountsContainersRulesCreateCall) Fields(s ...googleapi.Field) *Accoun
 	return c
 }
 
-func (c *AccountsContainersRulesCreateCall) Do() (*Rule, error) {
+func (c *AccountsContainersRulesCreateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.rule)
 	if err != nil {
@@ -2095,7 +3015,7 @@ func (c *AccountsContainersRulesCreateCall) Do() (*Rule, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -2108,7 +3028,11 @@ func (c *AccountsContainersRulesCreateCall) Do() (*Rule, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsContainersRulesCreateCall) Do() (*Rule, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2184,10 +3108,10 @@ func (c *AccountsContainersRulesDeleteCall) Fields(s ...googleapi.Field) *Accoun
 	return c
 }
 
-func (c *AccountsContainersRulesDeleteCall) Do() error {
+func (c *AccountsContainersRulesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -2200,7 +3124,11 @@ func (c *AccountsContainersRulesDeleteCall) Do() error {
 		"ruleId":      c.ruleId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsContainersRulesDeleteCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -2273,10 +3201,10 @@ func (c *AccountsContainersRulesGetCall) Fields(s ...googleapi.Field) *AccountsC
 	return c
 }
 
-func (c *AccountsContainersRulesGetCall) Do() (*Rule, error) {
+func (c *AccountsContainersRulesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -2289,7 +3217,11 @@ func (c *AccountsContainersRulesGetCall) Do() (*Rule, error) {
 		"ruleId":      c.ruleId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsContainersRulesGetCall) Do() (*Rule, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2368,10 +3300,10 @@ func (c *AccountsContainersRulesListCall) Fields(s ...googleapi.Field) *Accounts
 	return c
 }
 
-func (c *AccountsContainersRulesListCall) Do() (*ListRulesResponse, error) {
+func (c *AccountsContainersRulesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -2383,7 +3315,11 @@ func (c *AccountsContainersRulesListCall) Do() (*ListRulesResponse, error) {
 		"containerId": c.containerId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsContainersRulesListCall) Do() (*ListRulesResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2466,7 +3402,7 @@ func (c *AccountsContainersRulesUpdateCall) Fields(s ...googleapi.Field) *Accoun
 	return c
 }
 
-func (c *AccountsContainersRulesUpdateCall) Do() (*Rule, error) {
+func (c *AccountsContainersRulesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.rule)
 	if err != nil {
@@ -2474,7 +3410,7 @@ func (c *AccountsContainersRulesUpdateCall) Do() (*Rule, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fingerprint"]; ok {
 		params.Set("fingerprint", fmt.Sprintf("%v", v))
 	}
@@ -2491,7 +3427,11 @@ func (c *AccountsContainersRulesUpdateCall) Do() (*Rule, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsContainersRulesUpdateCall) Do() (*Rule, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2579,7 +3519,7 @@ func (c *AccountsContainersTagsCreateCall) Fields(s ...googleapi.Field) *Account
 	return c
 }
 
-func (c *AccountsContainersTagsCreateCall) Do() (*Tag, error) {
+func (c *AccountsContainersTagsCreateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.tag)
 	if err != nil {
@@ -2587,7 +3527,7 @@ func (c *AccountsContainersTagsCreateCall) Do() (*Tag, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -2600,7 +3540,11 @@ func (c *AccountsContainersTagsCreateCall) Do() (*Tag, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsContainersTagsCreateCall) Do() (*Tag, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2676,10 +3620,10 @@ func (c *AccountsContainersTagsDeleteCall) Fields(s ...googleapi.Field) *Account
 	return c
 }
 
-func (c *AccountsContainersTagsDeleteCall) Do() error {
+func (c *AccountsContainersTagsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -2692,7 +3636,11 @@ func (c *AccountsContainersTagsDeleteCall) Do() error {
 		"tagId":       c.tagId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsContainersTagsDeleteCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -2765,10 +3713,10 @@ func (c *AccountsContainersTagsGetCall) Fields(s ...googleapi.Field) *AccountsCo
 	return c
 }
 
-func (c *AccountsContainersTagsGetCall) Do() (*Tag, error) {
+func (c *AccountsContainersTagsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -2781,7 +3729,11 @@ func (c *AccountsContainersTagsGetCall) Do() (*Tag, error) {
 		"tagId":       c.tagId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsContainersTagsGetCall) Do() (*Tag, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2860,10 +3812,10 @@ func (c *AccountsContainersTagsListCall) Fields(s ...googleapi.Field) *AccountsC
 	return c
 }
 
-func (c *AccountsContainersTagsListCall) Do() (*ListTagsResponse, error) {
+func (c *AccountsContainersTagsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -2875,7 +3827,11 @@ func (c *AccountsContainersTagsListCall) Do() (*ListTagsResponse, error) {
 		"containerId": c.containerId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsContainersTagsListCall) Do() (*ListTagsResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2958,7 +3914,7 @@ func (c *AccountsContainersTagsUpdateCall) Fields(s ...googleapi.Field) *Account
 	return c
 }
 
-func (c *AccountsContainersTagsUpdateCall) Do() (*Tag, error) {
+func (c *AccountsContainersTagsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.tag)
 	if err != nil {
@@ -2966,7 +3922,7 @@ func (c *AccountsContainersTagsUpdateCall) Do() (*Tag, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fingerprint"]; ok {
 		params.Set("fingerprint", fmt.Sprintf("%v", v))
 	}
@@ -2983,7 +3939,11 @@ func (c *AccountsContainersTagsUpdateCall) Do() (*Tag, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsContainersTagsUpdateCall) Do() (*Tag, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3071,7 +4031,7 @@ func (c *AccountsContainersTriggersCreateCall) Fields(s ...googleapi.Field) *Acc
 	return c
 }
 
-func (c *AccountsContainersTriggersCreateCall) Do() (*Trigger, error) {
+func (c *AccountsContainersTriggersCreateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.trigger)
 	if err != nil {
@@ -3079,7 +4039,7 @@ func (c *AccountsContainersTriggersCreateCall) Do() (*Trigger, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -3092,7 +4052,11 @@ func (c *AccountsContainersTriggersCreateCall) Do() (*Trigger, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsContainersTriggersCreateCall) Do() (*Trigger, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3168,10 +4132,10 @@ func (c *AccountsContainersTriggersDeleteCall) Fields(s ...googleapi.Field) *Acc
 	return c
 }
 
-func (c *AccountsContainersTriggersDeleteCall) Do() error {
+func (c *AccountsContainersTriggersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -3184,7 +4148,11 @@ func (c *AccountsContainersTriggersDeleteCall) Do() error {
 		"triggerId":   c.triggerId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsContainersTriggersDeleteCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -3257,10 +4225,10 @@ func (c *AccountsContainersTriggersGetCall) Fields(s ...googleapi.Field) *Accoun
 	return c
 }
 
-func (c *AccountsContainersTriggersGetCall) Do() (*Trigger, error) {
+func (c *AccountsContainersTriggersGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -3273,7 +4241,11 @@ func (c *AccountsContainersTriggersGetCall) Do() (*Trigger, error) {
 		"triggerId":   c.triggerId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsContainersTriggersGetCall) Do() (*Trigger, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3352,10 +4324,10 @@ func (c *AccountsContainersTriggersListCall) Fields(s ...googleapi.Field) *Accou
 	return c
 }
 
-func (c *AccountsContainersTriggersListCall) Do() (*ListTriggersResponse, error) {
+func (c *AccountsContainersTriggersListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -3367,7 +4339,11 @@ func (c *AccountsContainersTriggersListCall) Do() (*ListTriggersResponse, error)
 		"containerId": c.containerId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsContainersTriggersListCall) Do() (*ListTriggersResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3451,7 +4427,7 @@ func (c *AccountsContainersTriggersUpdateCall) Fields(s ...googleapi.Field) *Acc
 	return c
 }
 
-func (c *AccountsContainersTriggersUpdateCall) Do() (*Trigger, error) {
+func (c *AccountsContainersTriggersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.trigger)
 	if err != nil {
@@ -3459,7 +4435,7 @@ func (c *AccountsContainersTriggersUpdateCall) Do() (*Trigger, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fingerprint"]; ok {
 		params.Set("fingerprint", fmt.Sprintf("%v", v))
 	}
@@ -3476,7 +4452,11 @@ func (c *AccountsContainersTriggersUpdateCall) Do() (*Trigger, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsContainersTriggersUpdateCall) Do() (*Trigger, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3564,7 +4544,7 @@ func (c *AccountsContainersVariablesCreateCall) Fields(s ...googleapi.Field) *Ac
 	return c
 }
 
-func (c *AccountsContainersVariablesCreateCall) Do() (*Variable, error) {
+func (c *AccountsContainersVariablesCreateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.variable)
 	if err != nil {
@@ -3572,7 +4552,7 @@ func (c *AccountsContainersVariablesCreateCall) Do() (*Variable, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -3585,7 +4565,11 @@ func (c *AccountsContainersVariablesCreateCall) Do() (*Variable, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsContainersVariablesCreateCall) Do() (*Variable, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3661,10 +4645,10 @@ func (c *AccountsContainersVariablesDeleteCall) Fields(s ...googleapi.Field) *Ac
 	return c
 }
 
-func (c *AccountsContainersVariablesDeleteCall) Do() error {
+func (c *AccountsContainersVariablesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -3677,7 +4661,11 @@ func (c *AccountsContainersVariablesDeleteCall) Do() error {
 		"variableId":  c.variableId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsContainersVariablesDeleteCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -3750,10 +4738,10 @@ func (c *AccountsContainersVariablesGetCall) Fields(s ...googleapi.Field) *Accou
 	return c
 }
 
-func (c *AccountsContainersVariablesGetCall) Do() (*Variable, error) {
+func (c *AccountsContainersVariablesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -3766,7 +4754,11 @@ func (c *AccountsContainersVariablesGetCall) Do() (*Variable, error) {
 		"variableId":  c.variableId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsContainersVariablesGetCall) Do() (*Variable, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3845,10 +4837,10 @@ func (c *AccountsContainersVariablesListCall) Fields(s ...googleapi.Field) *Acco
 	return c
 }
 
-func (c *AccountsContainersVariablesListCall) Do() (*ListVariablesResponse, error) {
+func (c *AccountsContainersVariablesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -3860,7 +4852,11 @@ func (c *AccountsContainersVariablesListCall) Do() (*ListVariablesResponse, erro
 		"containerId": c.containerId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsContainersVariablesListCall) Do() (*ListVariablesResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3944,7 +4940,7 @@ func (c *AccountsContainersVariablesUpdateCall) Fields(s ...googleapi.Field) *Ac
 	return c
 }
 
-func (c *AccountsContainersVariablesUpdateCall) Do() (*Variable, error) {
+func (c *AccountsContainersVariablesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.variable)
 	if err != nil {
@@ -3952,7 +4948,7 @@ func (c *AccountsContainersVariablesUpdateCall) Do() (*Variable, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fingerprint"]; ok {
 		params.Set("fingerprint", fmt.Sprintf("%v", v))
 	}
@@ -3969,7 +4965,11 @@ func (c *AccountsContainersVariablesUpdateCall) Do() (*Variable, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsContainersVariablesUpdateCall) Do() (*Variable, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -4057,7 +5057,7 @@ func (c *AccountsContainersVersionsCreateCall) Fields(s ...googleapi.Field) *Acc
 	return c
 }
 
-func (c *AccountsContainersVersionsCreateCall) Do() (*CreateContainerVersionResponse, error) {
+func (c *AccountsContainersVersionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.createcontainerversionrequestversionoptions)
 	if err != nil {
@@ -4065,7 +5065,7 @@ func (c *AccountsContainersVersionsCreateCall) Do() (*CreateContainerVersionResp
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -4078,7 +5078,11 @@ func (c *AccountsContainersVersionsCreateCall) Do() (*CreateContainerVersionResp
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsContainersVersionsCreateCall) Do() (*CreateContainerVersionResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -4154,10 +5158,10 @@ func (c *AccountsContainersVersionsDeleteCall) Fields(s ...googleapi.Field) *Acc
 	return c
 }
 
-func (c *AccountsContainersVersionsDeleteCall) Do() error {
+func (c *AccountsContainersVersionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -4170,7 +5174,11 @@ func (c *AccountsContainersVersionsDeleteCall) Do() error {
 		"containerVersionId": c.containerVersionId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsContainersVersionsDeleteCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -4243,10 +5251,10 @@ func (c *AccountsContainersVersionsGetCall) Fields(s ...googleapi.Field) *Accoun
 	return c
 }
 
-func (c *AccountsContainersVersionsGetCall) Do() (*ContainerVersion, error) {
+func (c *AccountsContainersVersionsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -4259,7 +5267,11 @@ func (c *AccountsContainersVersionsGetCall) Do() (*ContainerVersion, error) {
 		"containerVersionId": c.containerVersionId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsContainersVersionsGetCall) Do() (*ContainerVersion, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -4346,10 +5358,10 @@ func (c *AccountsContainersVersionsListCall) Fields(s ...googleapi.Field) *Accou
 	return c
 }
 
-func (c *AccountsContainersVersionsListCall) Do() (*ListContainerVersionsResponse, error) {
+func (c *AccountsContainersVersionsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["headers"]; ok {
 		params.Set("headers", fmt.Sprintf("%v", v))
 	}
@@ -4364,7 +5376,11 @@ func (c *AccountsContainersVersionsListCall) Do() (*ListContainerVersionsRespons
 		"containerId": c.containerId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsContainersVersionsListCall) Do() (*ListContainerVersionsResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -4453,10 +5469,10 @@ func (c *AccountsContainersVersionsPublishCall) Fields(s ...googleapi.Field) *Ac
 	return c
 }
 
-func (c *AccountsContainersVersionsPublishCall) Do() (*PublishContainerVersionResponse, error) {
+func (c *AccountsContainersVersionsPublishCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fingerprint"]; ok {
 		params.Set("fingerprint", fmt.Sprintf("%v", v))
 	}
@@ -4472,7 +5488,11 @@ func (c *AccountsContainersVersionsPublishCall) Do() (*PublishContainerVersionRe
 		"containerVersionId": c.containerVersionId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsContainersVersionsPublishCall) Do() (*PublishContainerVersionResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -4560,10 +5580,10 @@ func (c *AccountsContainersVersionsRestoreCall) Fields(s ...googleapi.Field) *Ac
 	return c
 }
 
-func (c *AccountsContainersVersionsRestoreCall) Do() (*ContainerVersion, error) {
+func (c *AccountsContainersVersionsRestoreCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -4576,7 +5596,11 @@ func (c *AccountsContainersVersionsRestoreCall) Do() (*ContainerVersion, error) 
 		"containerVersionId": c.containerVersionId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsContainersVersionsRestoreCall) Do() (*ContainerVersion, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -4656,10 +5680,10 @@ func (c *AccountsContainersVersionsUndeleteCall) Fields(s ...googleapi.Field) *A
 	return c
 }
 
-func (c *AccountsContainersVersionsUndeleteCall) Do() (*ContainerVersion, error) {
+func (c *AccountsContainersVersionsUndeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -4672,7 +5696,11 @@ func (c *AccountsContainersVersionsUndeleteCall) Do() (*ContainerVersion, error)
 		"containerVersionId": c.containerVersionId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsContainersVersionsUndeleteCall) Do() (*ContainerVersion, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -4762,7 +5790,7 @@ func (c *AccountsContainersVersionsUpdateCall) Fields(s ...googleapi.Field) *Acc
 	return c
 }
 
-func (c *AccountsContainersVersionsUpdateCall) Do() (*ContainerVersion, error) {
+func (c *AccountsContainersVersionsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.containerversion)
 	if err != nil {
@@ -4770,7 +5798,7 @@ func (c *AccountsContainersVersionsUpdateCall) Do() (*ContainerVersion, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fingerprint"]; ok {
 		params.Set("fingerprint", fmt.Sprintf("%v", v))
 	}
@@ -4787,7 +5815,11 @@ func (c *AccountsContainersVersionsUpdateCall) Do() (*ContainerVersion, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsContainersVersionsUpdateCall) Do() (*ContainerVersion, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -4873,7 +5905,7 @@ func (c *AccountsPermissionsCreateCall) Fields(s ...googleapi.Field) *AccountsPe
 	return c
 }
 
-func (c *AccountsPermissionsCreateCall) Do() (*UserAccess, error) {
+func (c *AccountsPermissionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.useraccess)
 	if err != nil {
@@ -4881,7 +5913,7 @@ func (c *AccountsPermissionsCreateCall) Do() (*UserAccess, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -4893,7 +5925,11 @@ func (c *AccountsPermissionsCreateCall) Do() (*UserAccess, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsPermissionsCreateCall) Do() (*UserAccess, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -4961,10 +5997,10 @@ func (c *AccountsPermissionsDeleteCall) Fields(s ...googleapi.Field) *AccountsPe
 	return c
 }
 
-func (c *AccountsPermissionsDeleteCall) Do() error {
+func (c *AccountsPermissionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -4976,7 +6012,11 @@ func (c *AccountsPermissionsDeleteCall) Do() error {
 		"permissionId": c.permissionId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsPermissionsDeleteCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -5040,10 +6080,10 @@ func (c *AccountsPermissionsGetCall) Fields(s ...googleapi.Field) *AccountsPermi
 	return c
 }
 
-func (c *AccountsPermissionsGetCall) Do() (*UserAccess, error) {
+func (c *AccountsPermissionsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -5055,7 +6095,11 @@ func (c *AccountsPermissionsGetCall) Do() (*UserAccess, error) {
 		"permissionId": c.permissionId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsPermissionsGetCall) Do() (*UserAccess, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -5125,10 +6169,10 @@ func (c *AccountsPermissionsListCall) Fields(s ...googleapi.Field) *AccountsPerm
 	return c
 }
 
-func (c *AccountsPermissionsListCall) Do() (*ListAccountUsersResponse, error) {
+func (c *AccountsPermissionsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -5139,7 +6183,11 @@ func (c *AccountsPermissionsListCall) Do() (*ListAccountUsersResponse, error) {
 		"accountId": c.accountId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsPermissionsListCall) Do() (*ListAccountUsersResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -5205,7 +6253,7 @@ func (c *AccountsPermissionsUpdateCall) Fields(s ...googleapi.Field) *AccountsPe
 	return c
 }
 
-func (c *AccountsPermissionsUpdateCall) Do() (*UserAccess, error) {
+func (c *AccountsPermissionsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.useraccess)
 	if err != nil {
@@ -5213,7 +6261,7 @@ func (c *AccountsPermissionsUpdateCall) Do() (*UserAccess, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -5226,7 +6274,11 @@ func (c *AccountsPermissionsUpdateCall) Do() (*UserAccess, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AccountsPermissionsUpdateCall) Do() (*UserAccess, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}

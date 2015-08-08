@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/ZkR-AOQeuSbCQ7gjAz0_-RpvTqg\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/ienJtHXSgvp2PqTI_8QrrraJ4bU\"",
  "discoveryVersion": "v1",
  "id": "content:v2",
  "name": "content",
  "canonicalName": "Shopping Content",
  "version": "v2",
- "revision": "20150710",
+ "revision": "20150729",
  "title": "Content API for Shopping",
  "description": "Manage product items, inventory, and Merchant Center accounts for Google Shopping.",
  "ownerDomain": "google.com",
@@ -262,7 +262,7 @@
     },
     "saleCountry": {
      "type": "string",
-     "description": "Sale country for which this carrier rate is valid, represented as an ISO 3166-1 Alpha-2 code.",
+     "description": "The sale country for which this carrier rate is valid, represented as a CLDR territory code.",
      "annotations": {
       "required": [
        "content.accountshipping.update"
@@ -322,7 +322,7 @@
    "properties": {
     "country": {
      "type": "string",
-     "description": "The country in which this location group is, represented as ISO 3166-1 Alpha-2 code.",
+     "description": "The CLDR territory code of the country in which this location group is.",
      "annotations": {
       "required": [
        "content.accountshipping.update"
@@ -410,7 +410,7 @@
     },
     "saleCountry": {
      "type": "string",
-     "description": "Sale country for which this table is valid, represented as an ISO 3166-1 Alpha-2 code.",
+     "description": "The sale country for which this table is valid, represented as a CLDR territory code.",
      "annotations": {
       "required": [
        "content.accountshipping.update"
@@ -466,7 +466,7 @@
     },
     "saleCountry": {
      "type": "string",
-     "description": "Sale country for which this service can be used, represented as an ISO 3166-1 Alpha-2 code.",
+     "description": "The CLDR territory code of the sale country for which this service can be used.",
      "annotations": {
       "required": [
        "content.accountshipping.update"
@@ -1205,7 +1205,7 @@
     },
     "targetCountry": {
      "type": "string",
-     "description": "The two-letter ISO 3166 country where the items in the feed will be included in the search index.",
+     "description": "The country where the items in the feed will be included in the search index, represented as a CLDR territory code.",
      "annotations": {
       "required": [
        "content.datafeeds.insert",
@@ -1635,6 +1635,11 @@
     "salePriceEffectiveDate": {
      "type": "string",
      "description": "A date range represented by a pair of ISO 8601 dates separated by a space, comma, or slash. Both dates might be specified as 'null' if undecided."
+    },
+    "sellOnGoogleQuantity": {
+     "type": "integer",
+     "description": "The quantity of the product that is reserved for sell-on-google ads. Supported only for online products.",
+     "format": "uint32"
     }
    }
   },
@@ -1743,6 +1748,11 @@
     "salePriceEffectiveDate": {
      "type": "string",
      "description": "A date range represented by a pair of ISO 8601 dates separated by a space, comma, or slash. Both dates might be specified as 'null' if undecided."
+    },
+    "sellOnGoogleQuantity": {
+     "type": "integer",
+     "description": "The quantity of the product that is reserved for sell-on-google ads. Supported only for online products.",
+     "format": "uint32"
     }
    }
   },
@@ -2091,7 +2101,7 @@
     },
     "targetCountry": {
      "type": "string",
-     "description": "The two-letter ISO 3166 country code for the item.",
+     "description": "The CLDR territory code for the item.",
      "annotations": {
       "required": [
        "content.products.insert"
@@ -2225,7 +2235,7 @@
    "properties": {
     "country": {
      "type": "string",
-     "description": "The two-letter ISO 3166 country code for the country to which an item will ship."
+     "description": "The CLDR territory code of the country to which an item will ship."
     },
     "locationGroupName": {
      "type": "string",
@@ -2396,7 +2406,7 @@
    "properties": {
     "country": {
      "type": "string",
-     "description": "The country within which the item is taxed, specified with a two-letter ISO 3166 country code."
+     "description": "The country within which the item is taxed, specified as a CLDR territory code."
     },
     "locationId": {
      "type": "string",
@@ -3684,7 +3694,7 @@
      "id": "content.inventory.custombatch",
      "path": "inventory/batch",
      "httpMethod": "POST",
-     "description": "Updates price and availability for multiple products or stores in a single request.",
+     "description": "Updates price and availability for multiple products or stores in a single request. This operation does not update the expiration date of the products.",
      "parameters": {
       "dryRun": {
        "type": "boolean",
@@ -3706,7 +3716,7 @@
      "id": "content.inventory.set",
      "path": "{merchantId}/inventory/{storeCode}/products/{productId}",
      "httpMethod": "POST",
-     "description": "Updates price and availability of a product in your Merchant Center account.",
+     "description": "Updates price and availability of a product in your Merchant Center account. This operation does not update the expiration date of the product.",
      "parameters": {
       "dryRun": {
        "type": "boolean",

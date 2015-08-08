@@ -46,6 +46,10 @@ const (
 	// View and manage your data across Google Cloud Platform services
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
+	// MESSAGE UNDER CONSTRUCTION View your data across Google Cloud
+	// Platform services
+	CloudPlatformReadOnlyScope = "https://www.googleapis.com/auth/cloud-platform.read-only"
+
 	// View and manage replica pools
 	ReplicapoolScope = "https://www.googleapis.com/auth/replicapool"
 
@@ -103,7 +107,7 @@ type InstanceUpdate struct {
 	// Error: Errors that occurred during the instance update.
 	Error *InstanceUpdateError `json:"error,omitempty"`
 
-	// Instance: URL of the instance being updated.
+	// Instance: Fully-qualified URL of the instance being updated.
 	Instance string `json:"instance,omitempty"`
 
 	// Status: Status of the instance update. Possible values are:
@@ -309,6 +313,10 @@ type RollingUpdate struct {
 	// Kind: [Output Only] Type of the resource.
 	Kind string `json:"kind,omitempty"`
 
+	// OldInstanceTemplate: Fully-qualified URL of the instance template
+	// encountered while starting the update.
+	OldInstanceTemplate string `json:"oldInstanceTemplate,omitempty"`
+
 	// Policy: Parameters of the update process.
 	Policy *RollingUpdatePolicy `json:"policy,omitempty"`
 
@@ -441,10 +449,10 @@ func (c *RollingUpdatesCancelCall) Fields(s ...googleapi.Field) *RollingUpdatesC
 	return c
 }
 
-func (c *RollingUpdatesCancelCall) Do() (*Operation, error) {
+func (c *RollingUpdatesCancelCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -457,7 +465,11 @@ func (c *RollingUpdatesCancelCall) Do() (*Operation, error) {
 		"rollingUpdate": c.rollingUpdate,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *RollingUpdatesCancelCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -540,10 +552,10 @@ func (c *RollingUpdatesGetCall) Fields(s ...googleapi.Field) *RollingUpdatesGetC
 	return c
 }
 
-func (c *RollingUpdatesGetCall) Do() (*RollingUpdate, error) {
+func (c *RollingUpdatesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -556,7 +568,11 @@ func (c *RollingUpdatesGetCall) Do() (*RollingUpdate, error) {
 		"rollingUpdate": c.rollingUpdate,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *RollingUpdatesGetCall) Do() (*RollingUpdate, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -605,6 +621,7 @@ func (c *RollingUpdatesGetCall) Do() (*RollingUpdate, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
 	//     "https://www.googleapis.com/auth/replicapool",
 	//     "https://www.googleapis.com/auth/replicapool.readonly"
 	//   ]
@@ -640,7 +657,7 @@ func (c *RollingUpdatesInsertCall) Fields(s ...googleapi.Field) *RollingUpdatesI
 	return c
 }
 
-func (c *RollingUpdatesInsertCall) Do() (*Operation, error) {
+func (c *RollingUpdatesInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.rollingupdate)
 	if err != nil {
@@ -648,7 +665,7 @@ func (c *RollingUpdatesInsertCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -661,7 +678,11 @@ func (c *RollingUpdatesInsertCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *RollingUpdatesInsertCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -738,15 +759,6 @@ func (c *RollingUpdatesListCall) Filter(filter string) *RollingUpdatesListCall {
 	return c
 }
 
-// InstanceGroupManager sets the optional parameter
-// "instanceGroupManager": The name of the instance group manager. Use
-// this parameter to return only updates to instances that are part of a
-// specific instance group.
-func (c *RollingUpdatesListCall) InstanceGroupManager(instanceGroupManager string) *RollingUpdatesListCall {
-	c.opt_["instanceGroupManager"] = instanceGroupManager
-	return c
-}
-
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned. Maximum value is 500 and default value is
 // 500.
@@ -771,15 +783,12 @@ func (c *RollingUpdatesListCall) Fields(s ...googleapi.Field) *RollingUpdatesLis
 	return c
 }
 
-func (c *RollingUpdatesListCall) Do() (*RollingUpdateList, error) {
+func (c *RollingUpdatesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["filter"]; ok {
 		params.Set("filter", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["instanceGroupManager"]; ok {
-		params.Set("instanceGroupManager", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
@@ -798,7 +807,11 @@ func (c *RollingUpdatesListCall) Do() (*RollingUpdateList, error) {
 		"zone":    c.zone,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *RollingUpdatesListCall) Do() (*RollingUpdateList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -822,11 +835,6 @@ func (c *RollingUpdatesListCall) Do() (*RollingUpdateList, error) {
 	//   "parameters": {
 	//     "filter": {
 	//       "description": "Optional. Filter expression for filtering listed resources.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "instanceGroupManager": {
-	//       "description": "The name of the instance group manager. Use this parameter to return only updates to instances that are part of a specific instance group.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -864,6 +872,7 @@ func (c *RollingUpdatesListCall) Do() (*RollingUpdateList, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
 	//     "https://www.googleapis.com/auth/replicapool",
 	//     "https://www.googleapis.com/auth/replicapool.readonly"
 	//   ]
@@ -923,10 +932,10 @@ func (c *RollingUpdatesListInstanceUpdatesCall) Fields(s ...googleapi.Field) *Ro
 	return c
 }
 
-func (c *RollingUpdatesListInstanceUpdatesCall) Do() (*InstanceUpdateList, error) {
+func (c *RollingUpdatesListInstanceUpdatesCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["filter"]; ok {
 		params.Set("filter", fmt.Sprintf("%v", v))
 	}
@@ -948,7 +957,11 @@ func (c *RollingUpdatesListInstanceUpdatesCall) Do() (*InstanceUpdateList, error
 		"rollingUpdate": c.rollingUpdate,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *RollingUpdatesListInstanceUpdatesCall) Do() (*InstanceUpdateList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1016,6 +1029,7 @@ func (c *RollingUpdatesListInstanceUpdatesCall) Do() (*InstanceUpdateList, error
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
 	//     "https://www.googleapis.com/auth/replicapool",
 	//     "https://www.googleapis.com/auth/replicapool.readonly"
 	//   ]
@@ -1053,10 +1067,10 @@ func (c *RollingUpdatesPauseCall) Fields(s ...googleapi.Field) *RollingUpdatesPa
 	return c
 }
 
-func (c *RollingUpdatesPauseCall) Do() (*Operation, error) {
+func (c *RollingUpdatesPauseCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1069,7 +1083,11 @@ func (c *RollingUpdatesPauseCall) Do() (*Operation, error) {
 		"rollingUpdate": c.rollingUpdate,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *RollingUpdatesPauseCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1153,10 +1171,10 @@ func (c *RollingUpdatesResumeCall) Fields(s ...googleapi.Field) *RollingUpdatesR
 	return c
 }
 
-func (c *RollingUpdatesResumeCall) Do() (*Operation, error) {
+func (c *RollingUpdatesResumeCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1169,7 +1187,11 @@ func (c *RollingUpdatesResumeCall) Do() (*Operation, error) {
 		"rollingUpdate": c.rollingUpdate,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *RollingUpdatesResumeCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1254,10 +1276,10 @@ func (c *RollingUpdatesRollbackCall) Fields(s ...googleapi.Field) *RollingUpdate
 	return c
 }
 
-func (c *RollingUpdatesRollbackCall) Do() (*Operation, error) {
+func (c *RollingUpdatesRollbackCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1270,7 +1292,11 @@ func (c *RollingUpdatesRollbackCall) Do() (*Operation, error) {
 		"rollingUpdate": c.rollingUpdate,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *RollingUpdatesRollbackCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1352,10 +1378,10 @@ func (c *ZoneOperationsGetCall) Fields(s ...googleapi.Field) *ZoneOperationsGetC
 	return c
 }
 
-func (c *ZoneOperationsGetCall) Do() (*Operation, error) {
+func (c *ZoneOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1368,7 +1394,11 @@ func (c *ZoneOperationsGetCall) Do() (*Operation, error) {
 		"operation": c.operation,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ZoneOperationsGetCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}

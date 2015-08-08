@@ -9085,10 +9085,10 @@ func (c *LiveBroadcastsBindDirectCall) Fields(s ...googleapi.Field) *LiveBroadca
 	return c
 }
 
-func (c *LiveBroadcastsBindDirectCall) Do() (*LiveBroadcast, error) {
+func (c *LiveBroadcastsBindDirectCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	params.Set("id", fmt.Sprintf("%v", c.id))
 	params.Set("part", fmt.Sprintf("%v", c.part))
 	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
@@ -9108,7 +9108,11 @@ func (c *LiveBroadcastsBindDirectCall) Do() (*LiveBroadcast, error) {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *LiveBroadcastsBindDirectCall) Do() (*LiveBroadcast, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}

@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/Dp57l-pfCxeHpBW5IqweXjCaYQ4\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/fYkZdznRstWgwJ0BIA_7B934-2Y\"",
  "discoveryVersion": "v1",
  "id": "plusDomains:v1",
  "name": "plusDomains",
  "version": "v1",
- "revision": "20150105",
+ "revision": "20150805",
  "title": "Google+ Domains API",
  "description": "The Google+ API enables developers to build on top of the Google+ platform.",
  "ownerDomain": "google.com",
@@ -176,6 +176,16 @@
       "url": {
        "type": "string",
        "description": "The link to the actor's Google profile."
+      },
+      "verification": {
+       "type": "object",
+       "description": "Verification status of actor.",
+       "properties": {
+        "adHocVerified": {
+         "type": "string",
+         "description": "Verification for one-time or manual processes."
+        }
+       }
       }
      }
     },
@@ -241,6 +251,16 @@
         "url": {
          "type": "string",
          "description": "A link to the original actor's Google profile."
+        },
+        "verification": {
+         "type": "object",
+         "description": "Verification status of actor.",
+         "properties": {
+          "adHocVerified": {
+           "type": "string",
+           "description": "Verification for one-time or manual processes."
+          }
+         }
         }
        }
       },
@@ -748,6 +768,16 @@
       "url": {
        "type": "string",
        "description": "A link to the Person resource for this actor."
+      },
+      "verification": {
+       "type": "object",
+       "description": "Verification status of actor.",
+       "properties": {
+        "adHocVerified": {
+         "type": "string",
+         "description": "Verification for one-time or manual processes."
+        }
+       }
       }
      }
     },

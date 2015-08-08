@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/q8uch3ImrfylJzc7hmtPqukUei0\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/-iFw9dE8BJO-i4H0GmJgrTZCaW8\"",
  "discoveryVersion": "v1",
  "id": "drive:v2",
  "name": "drive",
  "version": "v2",
- "revision": "20150709",
+ "revision": "20150730",
  "title": "Drive API",
  "description": "The API to interact with Drive.",
  "ownerDomain": "google.com",
@@ -87,6 +87,9 @@
     "https://www.googleapis.com/auth/drive.metadata.readonly": {
      "description": "View metadata for files in your Google Drive"
     },
+    "https://www.googleapis.com/auth/drive.photos.readonly": {
+     "description": "View the photos, videos and albums in your Google Photos"
+    },
     "https://www.googleapis.com/auth/drive.readonly": {
      "description": "View the files in your Google Drive"
     },
@@ -137,7 +140,7 @@
     },
     "domainSharingPolicy": {
      "type": "string",
-     "description": "The domain sharing policy for the current user. Possible values are:  \n- ALLOWED \n- ALLOWED_WITH_WARNING \n- INCOMING_ONLY \n- DISALLOWED"
+     "description": "The domain sharing policy for the current user. Possible values are:  \n- allowed \n- allowedWithWarning \n- incomingOnly \n- disallowed"
     },
     "etag": {
      "type": "string",
@@ -1236,7 +1239,7 @@
     },
     "spaces": {
      "type": "array",
-     "description": "The list of spaces which contain the file. Supported values are 'drive' and 'appDataFolder'.",
+     "description": "The list of spaces which contain the file. Supported values are 'drive', 'appDataFolder' and 'photos'.",
      "items": {
       "type": "string"
      }
@@ -1340,6 +1343,29 @@
     "selfLink": {
      "type": "string",
      "description": "A link back to this list."
+    }
+   }
+  },
+  "GeneratedIds": {
+   "id": "GeneratedIds",
+   "type": "object",
+   "description": "A list of generated IDs which can be provided in insert requests",
+   "properties": {
+    "ids": {
+     "type": "array",
+     "description": "The IDs generated for the requesting user in the specified space.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "This is always drive#generatedIds",
+     "default": "drive#generatedIds"
+    },
+    "space": {
+     "type": "string",
+     "description": "The type of file that can be created with these IDs."
     }
    }
   },
@@ -1772,6 +1798,7 @@
       "https://www.googleapis.com/auth/drive.file",
       "https://www.googleapis.com/auth/drive.metadata",
       "https://www.googleapis.com/auth/drive.metadata.readonly",
+      "https://www.googleapis.com/auth/drive.photos.readonly",
       "https://www.googleapis.com/auth/drive.readonly"
      ]
     }
@@ -1869,6 +1896,7 @@
       "https://www.googleapis.com/auth/drive.file",
       "https://www.googleapis.com/auth/drive.metadata",
       "https://www.googleapis.com/auth/drive.metadata.readonly",
+      "https://www.googleapis.com/auth/drive.photos.readonly",
       "https://www.googleapis.com/auth/drive.readonly"
      ]
     },
@@ -1905,7 +1933,7 @@
       },
       "spaces": {
        "type": "string",
-       "description": "A comma-separated list of spaces to query. Supported values are 'drive' and 'appDataFolder'.",
+       "description": "A comma-separated list of spaces to query. Supported values are 'drive', 'appDataFolder' and 'photos'.",
        "location": "query"
       },
       "startChangeId": {
@@ -1925,6 +1953,7 @@
       "https://www.googleapis.com/auth/drive.file",
       "https://www.googleapis.com/auth/drive.metadata",
       "https://www.googleapis.com/auth/drive.metadata.readonly",
+      "https://www.googleapis.com/auth/drive.photos.readonly",
       "https://www.googleapis.com/auth/drive.readonly"
      ],
      "supportsSubscription": true
@@ -1962,7 +1991,7 @@
       },
       "spaces": {
        "type": "string",
-       "description": "A comma-separated list of spaces to query. Supported values are 'drive' and 'appDataFolder'.",
+       "description": "A comma-separated list of spaces to query. Supported values are 'drive', 'appDataFolder' and 'photos'.",
        "location": "query"
       },
       "startChangeId": {
@@ -1986,6 +2015,7 @@
       "https://www.googleapis.com/auth/drive.file",
       "https://www.googleapis.com/auth/drive.metadata",
       "https://www.googleapis.com/auth/drive.metadata.readonly",
+      "https://www.googleapis.com/auth/drive.photos.readonly",
       "https://www.googleapis.com/auth/drive.readonly"
      ],
      "supportsSubscription": true
@@ -2010,6 +2040,7 @@
       "https://www.googleapis.com/auth/drive.file",
       "https://www.googleapis.com/auth/drive.metadata",
       "https://www.googleapis.com/auth/drive.metadata.readonly",
+      "https://www.googleapis.com/auth/drive.photos.readonly",
       "https://www.googleapis.com/auth/drive.readonly"
      ]
     }
@@ -2077,6 +2108,7 @@
       "https://www.googleapis.com/auth/drive.file",
       "https://www.googleapis.com/auth/drive.metadata",
       "https://www.googleapis.com/auth/drive.metadata.readonly",
+      "https://www.googleapis.com/auth/drive.photos.readonly",
       "https://www.googleapis.com/auth/drive.readonly"
      ]
     },
@@ -2151,6 +2183,7 @@
       "https://www.googleapis.com/auth/drive.file",
       "https://www.googleapis.com/auth/drive.metadata",
       "https://www.googleapis.com/auth/drive.metadata.readonly",
+      "https://www.googleapis.com/auth/drive.photos.readonly",
       "https://www.googleapis.com/auth/drive.readonly"
      ]
     }
@@ -2446,7 +2479,8 @@
       "https://www.googleapis.com/auth/drive",
       "https://www.googleapis.com/auth/drive.appdata",
       "https://www.googleapis.com/auth/drive.apps.readonly",
-      "https://www.googleapis.com/auth/drive.file"
+      "https://www.googleapis.com/auth/drive.file",
+      "https://www.googleapis.com/auth/drive.photos.readonly"
      ]
     },
     "delete": {
@@ -2478,6 +2512,37 @@
      "description": "Permanently deletes all of the user's trashed files.",
      "scopes": [
       "https://www.googleapis.com/auth/drive"
+     ]
+    },
+    "generateIds": {
+     "id": "drive.files.generateIds",
+     "path": "files/generateIds",
+     "httpMethod": "GET",
+     "description": "Generates a set of file IDs which can be provided in insert requests.",
+     "parameters": {
+      "maxResults": {
+       "type": "integer",
+       "description": "Maximum number of IDs to return.",
+       "default": "10",
+       "format": "int32",
+       "minimum": "1",
+       "maximum": "1000",
+       "location": "query"
+      },
+      "space": {
+       "type": "string",
+       "description": "The space in which the IDs can be used to create new files. Supported values are 'drive' and 'appDataFolder'.",
+       "default": "drive",
+       "location": "query"
+      }
+     },
+     "response": {
+      "$ref": "GeneratedIds"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/drive",
+      "https://www.googleapis.com/auth/drive.appdata",
+      "https://www.googleapis.com/auth/drive.file"
      ]
     },
     "get": {
@@ -2536,6 +2601,7 @@
       "https://www.googleapis.com/auth/drive.file",
       "https://www.googleapis.com/auth/drive.metadata",
       "https://www.googleapis.com/auth/drive.metadata.readonly",
+      "https://www.googleapis.com/auth/drive.photos.readonly",
       "https://www.googleapis.com/auth/drive.readonly"
      ],
      "supportsMediaDownload": true,
@@ -2684,7 +2750,7 @@
       },
       "spaces": {
        "type": "string",
-       "description": "A comma-separated list of spaces to query. Supported values are 'drive' and 'appDataFolder'.",
+       "description": "A comma-separated list of spaces to query. Supported values are 'drive', 'appDataFolder' and 'photos'.",
        "location": "query"
       }
      },
@@ -2698,6 +2764,7 @@
       "https://www.googleapis.com/auth/drive.file",
       "https://www.googleapis.com/auth/drive.metadata",
       "https://www.googleapis.com/auth/drive.metadata.readonly",
+      "https://www.googleapis.com/auth/drive.photos.readonly",
       "https://www.googleapis.com/auth/drive.readonly"
      ]
     },
@@ -2851,7 +2918,7 @@
      "id": "drive.files.trash",
      "path": "files/{fileId}/trash",
      "httpMethod": "POST",
-     "description": "Moves a file to the trash.",
+     "description": "Moves a file to the trash. The currently authenticated user must own the file.",
      "parameters": {
       "fileId": {
        "type": "string",
@@ -3095,6 +3162,7 @@
       "https://www.googleapis.com/auth/drive.file",
       "https://www.googleapis.com/auth/drive.metadata",
       "https://www.googleapis.com/auth/drive.metadata.readonly",
+      "https://www.googleapis.com/auth/drive.photos.readonly",
       "https://www.googleapis.com/auth/drive.readonly"
      ],
      "supportsMediaDownload": true,
@@ -3164,6 +3232,7 @@
       "https://www.googleapis.com/auth/drive.file",
       "https://www.googleapis.com/auth/drive.metadata",
       "https://www.googleapis.com/auth/drive.metadata.readonly",
+      "https://www.googleapis.com/auth/drive.photos.readonly",
       "https://www.googleapis.com/auth/drive.readonly"
      ]
     },
@@ -3220,6 +3289,7 @@
       "https://www.googleapis.com/auth/drive.file",
       "https://www.googleapis.com/auth/drive.metadata",
       "https://www.googleapis.com/auth/drive.metadata.readonly",
+      "https://www.googleapis.com/auth/drive.photos.readonly",
       "https://www.googleapis.com/auth/drive.readonly"
      ]
     }
@@ -3286,6 +3356,7 @@
       "https://www.googleapis.com/auth/drive.file",
       "https://www.googleapis.com/auth/drive.metadata",
       "https://www.googleapis.com/auth/drive.metadata.readonly",
+      "https://www.googleapis.com/auth/drive.photos.readonly",
       "https://www.googleapis.com/auth/drive.readonly"
      ]
     },
@@ -3315,6 +3386,7 @@
       "https://www.googleapis.com/auth/drive.file",
       "https://www.googleapis.com/auth/drive.metadata",
       "https://www.googleapis.com/auth/drive.metadata.readonly",
+      "https://www.googleapis.com/auth/drive.photos.readonly",
       "https://www.googleapis.com/auth/drive.readonly"
      ]
     },
@@ -3380,6 +3452,7 @@
       "https://www.googleapis.com/auth/drive.file",
       "https://www.googleapis.com/auth/drive.metadata",
       "https://www.googleapis.com/auth/drive.metadata.readonly",
+      "https://www.googleapis.com/auth/drive.photos.readonly",
       "https://www.googleapis.com/auth/drive.readonly"
      ]
     },
@@ -3541,6 +3614,7 @@
       "https://www.googleapis.com/auth/drive.file",
       "https://www.googleapis.com/auth/drive.metadata",
       "https://www.googleapis.com/auth/drive.metadata.readonly",
+      "https://www.googleapis.com/auth/drive.photos.readonly",
       "https://www.googleapis.com/auth/drive.readonly"
      ]
     },
@@ -3598,6 +3672,7 @@
       "https://www.googleapis.com/auth/drive.file",
       "https://www.googleapis.com/auth/drive.metadata",
       "https://www.googleapis.com/auth/drive.metadata.readonly",
+      "https://www.googleapis.com/auth/drive.photos.readonly",
       "https://www.googleapis.com/auth/drive.readonly"
      ]
     },
@@ -4079,6 +4154,7 @@
       "https://www.googleapis.com/auth/drive.file",
       "https://www.googleapis.com/auth/drive.metadata",
       "https://www.googleapis.com/auth/drive.metadata.readonly",
+      "https://www.googleapis.com/auth/drive.photos.readonly",
       "https://www.googleapis.com/auth/drive.readonly"
      ]
     },
@@ -4107,6 +4183,7 @@
       "https://www.googleapis.com/auth/drive.file",
       "https://www.googleapis.com/auth/drive.metadata",
       "https://www.googleapis.com/auth/drive.metadata.readonly",
+      "https://www.googleapis.com/auth/drive.photos.readonly",
       "https://www.googleapis.com/auth/drive.readonly"
      ]
     },

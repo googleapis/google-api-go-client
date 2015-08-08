@@ -1084,7 +1084,7 @@ func (c *PawsGetSpectrumCall) Fields(s ...googleapi.Field) *PawsGetSpectrumCall 
 	return c
 }
 
-func (c *PawsGetSpectrumCall) Do() (*PawsGetSpectrumResponse, error) {
+func (c *PawsGetSpectrumCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.pawsgetspectrumrequest)
 	if err != nil {
@@ -1092,7 +1092,7 @@ func (c *PawsGetSpectrumCall) Do() (*PawsGetSpectrumResponse, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1102,7 +1102,11 @@ func (c *PawsGetSpectrumCall) Do() (*PawsGetSpectrumResponse, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *PawsGetSpectrumCall) Do() (*PawsGetSpectrumResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1154,7 +1158,7 @@ func (c *PawsGetSpectrumBatchCall) Fields(s ...googleapi.Field) *PawsGetSpectrum
 	return c
 }
 
-func (c *PawsGetSpectrumBatchCall) Do() (*PawsGetSpectrumBatchResponse, error) {
+func (c *PawsGetSpectrumBatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.pawsgetspectrumbatchrequest)
 	if err != nil {
@@ -1162,7 +1166,7 @@ func (c *PawsGetSpectrumBatchCall) Do() (*PawsGetSpectrumBatchResponse, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1172,7 +1176,11 @@ func (c *PawsGetSpectrumBatchCall) Do() (*PawsGetSpectrumBatchResponse, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *PawsGetSpectrumBatchCall) Do() (*PawsGetSpectrumBatchResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1224,7 +1232,7 @@ func (c *PawsInitCall) Fields(s ...googleapi.Field) *PawsInitCall {
 	return c
 }
 
-func (c *PawsInitCall) Do() (*PawsInitResponse, error) {
+func (c *PawsInitCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.pawsinitrequest)
 	if err != nil {
@@ -1232,7 +1240,7 @@ func (c *PawsInitCall) Do() (*PawsInitResponse, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1242,7 +1250,11 @@ func (c *PawsInitCall) Do() (*PawsInitResponse, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *PawsInitCall) Do() (*PawsInitResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1297,7 +1309,7 @@ func (c *PawsNotifySpectrumUseCall) Fields(s ...googleapi.Field) *PawsNotifySpec
 	return c
 }
 
-func (c *PawsNotifySpectrumUseCall) Do() (*PawsNotifySpectrumUseResponse, error) {
+func (c *PawsNotifySpectrumUseCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.pawsnotifyspectrumuserequest)
 	if err != nil {
@@ -1305,7 +1317,7 @@ func (c *PawsNotifySpectrumUseCall) Do() (*PawsNotifySpectrumUseResponse, error)
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1315,7 +1327,11 @@ func (c *PawsNotifySpectrumUseCall) Do() (*PawsNotifySpectrumUseResponse, error)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *PawsNotifySpectrumUseCall) Do() (*PawsNotifySpectrumUseResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1368,7 +1384,7 @@ func (c *PawsRegisterCall) Fields(s ...googleapi.Field) *PawsRegisterCall {
 	return c
 }
 
-func (c *PawsRegisterCall) Do() (*PawsRegisterResponse, error) {
+func (c *PawsRegisterCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.pawsregisterrequest)
 	if err != nil {
@@ -1376,7 +1392,7 @@ func (c *PawsRegisterCall) Do() (*PawsRegisterResponse, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1386,7 +1402,11 @@ func (c *PawsRegisterCall) Do() (*PawsRegisterResponse, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *PawsRegisterCall) Do() (*PawsRegisterResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1440,7 +1460,7 @@ func (c *PawsVerifyDeviceCall) Fields(s ...googleapi.Field) *PawsVerifyDeviceCal
 	return c
 }
 
-func (c *PawsVerifyDeviceCall) Do() (*PawsVerifyDeviceResponse, error) {
+func (c *PawsVerifyDeviceCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.pawsverifydevicerequest)
 	if err != nil {
@@ -1448,7 +1468,7 @@ func (c *PawsVerifyDeviceCall) Do() (*PawsVerifyDeviceResponse, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1458,7 +1478,11 @@ func (c *PawsVerifyDeviceCall) Do() (*PawsVerifyDeviceResponse, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *PawsVerifyDeviceCall) Do() (*PawsVerifyDeviceResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}

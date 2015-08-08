@@ -313,6 +313,7 @@ type EventData struct {
 	//   "GPS_MOTIVATION"
 	//   "URL"
 	//   "ELEMENT_FOCUS"
+	//   "PROGRESS"
 	Key string `json:"key,omitempty"`
 
 	// Values: Data values.
@@ -637,6 +638,9 @@ type LogUserEventRequest struct {
 	//   "AGENCY_SEARCHED_FOR_AGENCIES"
 	//   "AGENCY_PICKED_SEARCHED_AGENCY"
 	//   "AGENCY_DISMISSED_AFFILIATION_WIDGET"
+	//   "AGENCY_CLICKED_INSIGHTS_DOWNLOAD_CONTENT"
+	//   "AGENCY_PROGRESS_INSIGHTS_VIEW_CONTENT"
+	//   "AGENCY_CLICKED_CANCEL_ACCEPT_TOS_BUTTON"
 	EventAction string `json:"eventAction,omitempty"`
 
 	// EventCategory: The category the action belongs to.
@@ -789,7 +793,7 @@ func (c *ClientMessagesLogCall) Fields(s ...googleapi.Field) *ClientMessagesLogC
 	return c
 }
 
-func (c *ClientMessagesLogCall) Do() (*LogMessageResponse, error) {
+func (c *ClientMessagesLogCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.logmessagerequest)
 	if err != nil {
@@ -797,7 +801,7 @@ func (c *ClientMessagesLogCall) Do() (*LogMessageResponse, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -807,7 +811,11 @@ func (c *ClientMessagesLogCall) Do() (*LogMessageResponse, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ClientMessagesLogCall) Do() (*LogMessageResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -918,10 +926,10 @@ func (c *CompaniesGetCall) Fields(s ...googleapi.Field) *CompaniesGetCall {
 	return c
 }
 
-func (c *CompaniesGetCall) Do() (*GetCompanyResponse, error) {
+func (c *CompaniesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["address"]; ok {
 		params.Set("address", fmt.Sprintf("%v", v))
 	}
@@ -953,7 +961,11 @@ func (c *CompaniesGetCall) Do() (*GetCompanyResponse, error) {
 		"companyId": c.companyId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *CompaniesGetCall) Do() (*GetCompanyResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1246,10 +1258,10 @@ func (c *CompaniesListCall) Fields(s ...googleapi.Field) *CompaniesListCall {
 	return c
 }
 
-func (c *CompaniesListCall) Do() (*ListCompaniesResponse, error) {
+func (c *CompaniesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["address"]; ok {
 		params.Set("address", fmt.Sprintf("%v", v))
 	}
@@ -1318,7 +1330,11 @@ func (c *CompaniesListCall) Do() (*ListCompaniesResponse, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *CompaniesListCall) Do() (*ListCompaniesResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1511,7 +1527,7 @@ func (c *CompaniesLeadsCreateCall) Fields(s ...googleapi.Field) *CompaniesLeadsC
 	return c
 }
 
-func (c *CompaniesLeadsCreateCall) Do() (*CreateLeadResponse, error) {
+func (c *CompaniesLeadsCreateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.createleadrequest)
 	if err != nil {
@@ -1519,7 +1535,7 @@ func (c *CompaniesLeadsCreateCall) Do() (*CreateLeadResponse, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1531,7 +1547,11 @@ func (c *CompaniesLeadsCreateCall) Do() (*CreateLeadResponse, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *CompaniesLeadsCreateCall) Do() (*CreateLeadResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1593,7 +1613,7 @@ func (c *UserEventsLogCall) Fields(s ...googleapi.Field) *UserEventsLogCall {
 	return c
 }
 
-func (c *UserEventsLogCall) Do() (*LogUserEventResponse, error) {
+func (c *UserEventsLogCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.logusereventrequest)
 	if err != nil {
@@ -1601,7 +1621,7 @@ func (c *UserEventsLogCall) Do() (*LogUserEventResponse, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1611,7 +1631,11 @@ func (c *UserEventsLogCall) Do() (*LogUserEventResponse, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *UserEventsLogCall) Do() (*LogUserEventResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1682,10 +1706,10 @@ func (c *UserStatesListCall) Fields(s ...googleapi.Field) *UserStatesListCall {
 	return c
 }
 
-func (c *UserStatesListCall) Do() (*ListUserStatesResponse, error) {
+func (c *UserStatesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["requestMetadata.experimentIds"]; ok {
 		params.Set("requestMetadata.experimentIds", fmt.Sprintf("%v", v))
 	}
@@ -1703,7 +1727,11 @@ func (c *UserStatesListCall) Do() (*ListUserStatesResponse, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *UserStatesListCall) Do() (*ListUserStatesResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}

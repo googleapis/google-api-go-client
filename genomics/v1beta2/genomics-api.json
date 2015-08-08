@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/hlRrQoFUbR1DFyke-B8BPXehGzw\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/4YC_x1YgHf9C7vsc4gi0Fyn2OjE\"",
  "discoveryVersion": "v1",
  "id": "genomics:v1beta2",
  "name": "genomics",
  "version": "v1beta2",
- "revision": "20150715",
+ "revision": "20150805",
  "title": "Genomics API",
  "description": "Provides access to Genomics data.",
  "ownerDomain": "google.com",
@@ -1875,7 +1875,7 @@
    "properties": {
     "alignments": {
      "type": "array",
-     "description": "The list of matching alignments sorted by mapped genomic coordinate, if any, ascending in position within the same reference. Unmapped reads, which have no position, are returned last and are further sorted in ascending lexicographic order by fragment name.",
+     "description": "The list of matching alignments sorted by mapped genomic coordinate, if any, ascending in position within the same reference. Unmapped reads, which have no position, are returned contiguously and are sorted in ascending lexicographic order by fragment name.",
      "items": {
       "$ref": "Read"
      }
@@ -3648,7 +3648,7 @@
      "id": "genomics.variantsets.create",
      "path": "variantsets",
      "httpMethod": "POST",
-     "description": "Creates a new variant set (only necessary in v1).",
+     "description": "Creates a new variant set (only necessary in v1).\n\nThe provided variant set must have a valid datasetId set - all other fields are optional. Note that the id field will be ignored, as this is assigned by the server.",
      "request": {
       "$ref": "VariantSet"
      },

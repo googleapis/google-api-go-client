@@ -684,7 +684,7 @@ func (c *UsersDataSourcesCreateCall) Fields(s ...googleapi.Field) *UsersDataSour
 	return c
 }
 
-func (c *UsersDataSourcesCreateCall) Do() (*DataSource, error) {
+func (c *UsersDataSourcesCreateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.datasource)
 	if err != nil {
@@ -692,7 +692,7 @@ func (c *UsersDataSourcesCreateCall) Do() (*DataSource, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -704,7 +704,11 @@ func (c *UsersDataSourcesCreateCall) Do() (*DataSource, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *UsersDataSourcesCreateCall) Do() (*DataSource, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -774,10 +778,10 @@ func (c *UsersDataSourcesDeleteCall) Fields(s ...googleapi.Field) *UsersDataSour
 	return c
 }
 
-func (c *UsersDataSourcesDeleteCall) Do() (*DataSource, error) {
+func (c *UsersDataSourcesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -789,7 +793,11 @@ func (c *UsersDataSourcesDeleteCall) Do() (*DataSource, error) {
 		"dataSourceId": c.dataSourceId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *UsersDataSourcesDeleteCall) Do() (*DataSource, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -862,10 +870,10 @@ func (c *UsersDataSourcesGetCall) Fields(s ...googleapi.Field) *UsersDataSources
 	return c
 }
 
-func (c *UsersDataSourcesGetCall) Do() (*DataSource, error) {
+func (c *UsersDataSourcesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -877,7 +885,11 @@ func (c *UsersDataSourcesGetCall) Do() (*DataSource, error) {
 		"dataSourceId": c.dataSourceId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *UsersDataSourcesGetCall) Do() (*DataSource, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -962,10 +974,10 @@ func (c *UsersDataSourcesListCall) Fields(s ...googleapi.Field) *UsersDataSource
 	return c
 }
 
-func (c *UsersDataSourcesListCall) Do() (*ListDataSourcesResponse, error) {
+func (c *UsersDataSourcesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["dataTypeName"]; ok {
 		params.Set("dataTypeName", fmt.Sprintf("%v", v))
 	}
@@ -979,7 +991,11 @@ func (c *UsersDataSourcesListCall) Do() (*ListDataSourcesResponse, error) {
 		"userId": c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *UsersDataSourcesListCall) Do() (*ListDataSourcesResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1063,7 +1079,7 @@ func (c *UsersDataSourcesPatchCall) Fields(s ...googleapi.Field) *UsersDataSourc
 	return c
 }
 
-func (c *UsersDataSourcesPatchCall) Do() (*DataSource, error) {
+func (c *UsersDataSourcesPatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.datasource)
 	if err != nil {
@@ -1071,7 +1087,7 @@ func (c *UsersDataSourcesPatchCall) Do() (*DataSource, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1084,7 +1100,11 @@ func (c *UsersDataSourcesPatchCall) Do() (*DataSource, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *UsersDataSourcesPatchCall) Do() (*DataSource, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1168,7 +1188,7 @@ func (c *UsersDataSourcesUpdateCall) Fields(s ...googleapi.Field) *UsersDataSour
 	return c
 }
 
-func (c *UsersDataSourcesUpdateCall) Do() (*DataSource, error) {
+func (c *UsersDataSourcesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.datasource)
 	if err != nil {
@@ -1176,7 +1196,7 @@ func (c *UsersDataSourcesUpdateCall) Do() (*DataSource, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1189,7 +1209,11 @@ func (c *UsersDataSourcesUpdateCall) Do() (*DataSource, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *UsersDataSourcesUpdateCall) Do() (*DataSource, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1287,10 +1311,10 @@ func (c *UsersDataSourcesDatasetsDeleteCall) Fields(s ...googleapi.Field) *Users
 	return c
 }
 
-func (c *UsersDataSourcesDatasetsDeleteCall) Do() error {
+func (c *UsersDataSourcesDatasetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["currentTimeMillis"]; ok {
 		params.Set("currentTimeMillis", fmt.Sprintf("%v", v))
 	}
@@ -1309,7 +1333,11 @@ func (c *UsersDataSourcesDatasetsDeleteCall) Do() error {
 		"datasetId":    c.datasetId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *UsersDataSourcesDatasetsDeleteCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -1420,10 +1448,10 @@ func (c *UsersDataSourcesDatasetsGetCall) Fields(s ...googleapi.Field) *UsersDat
 	return c
 }
 
-func (c *UsersDataSourcesDatasetsGetCall) Do() (*Dataset, error) {
+func (c *UsersDataSourcesDatasetsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["limit"]; ok {
 		params.Set("limit", fmt.Sprintf("%v", v))
 	}
@@ -1442,7 +1470,11 @@ func (c *UsersDataSourcesDatasetsGetCall) Do() (*Dataset, error) {
 		"datasetId":    c.datasetId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *UsersDataSourcesDatasetsGetCall) Do() (*Dataset, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1553,7 +1585,7 @@ func (c *UsersDataSourcesDatasetsPatchCall) Fields(s ...googleapi.Field) *UsersD
 	return c
 }
 
-func (c *UsersDataSourcesDatasetsPatchCall) Do() (*Dataset, error) {
+func (c *UsersDataSourcesDatasetsPatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.dataset)
 	if err != nil {
@@ -1561,7 +1593,7 @@ func (c *UsersDataSourcesDatasetsPatchCall) Do() (*Dataset, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["currentTimeMillis"]; ok {
 		params.Set("currentTimeMillis", fmt.Sprintf("%v", v))
 	}
@@ -1578,7 +1610,11 @@ func (c *UsersDataSourcesDatasetsPatchCall) Do() (*Dataset, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *UsersDataSourcesDatasetsPatchCall) Do() (*Dataset, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1670,7 +1706,7 @@ func (c *UsersDatasetAggregateCall) Fields(s ...googleapi.Field) *UsersDatasetAg
 	return c
 }
 
-func (c *UsersDatasetAggregateCall) Do() (*AggregateResponse, error) {
+func (c *UsersDatasetAggregateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.aggregaterequest)
 	if err != nil {
@@ -1678,7 +1714,7 @@ func (c *UsersDatasetAggregateCall) Do() (*AggregateResponse, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1690,7 +1726,11 @@ func (c *UsersDatasetAggregateCall) Do() (*AggregateResponse, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *UsersDatasetAggregateCall) Do() (*AggregateResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1766,10 +1806,10 @@ func (c *UsersSessionsDeleteCall) Fields(s ...googleapi.Field) *UsersSessionsDel
 	return c
 }
 
-func (c *UsersSessionsDeleteCall) Do() error {
+func (c *UsersSessionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["currentTimeMillis"]; ok {
 		params.Set("currentTimeMillis", fmt.Sprintf("%v", v))
 	}
@@ -1784,7 +1824,11 @@ func (c *UsersSessionsDeleteCall) Do() error {
 		"sessionId": c.sessionId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *UsersSessionsDeleteCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -1886,10 +1930,10 @@ func (c *UsersSessionsListCall) Fields(s ...googleapi.Field) *UsersSessionsListC
 	return c
 }
 
-func (c *UsersSessionsListCall) Do() (*ListSessionsResponse, error) {
+func (c *UsersSessionsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["endTime"]; ok {
 		params.Set("endTime", fmt.Sprintf("%v", v))
 	}
@@ -1912,7 +1956,11 @@ func (c *UsersSessionsListCall) Do() (*ListSessionsResponse, error) {
 		"userId": c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *UsersSessionsListCall) Do() (*ListSessionsResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2010,7 +2058,7 @@ func (c *UsersSessionsUpdateCall) Fields(s ...googleapi.Field) *UsersSessionsUpd
 	return c
 }
 
-func (c *UsersSessionsUpdateCall) Do() (*Session, error) {
+func (c *UsersSessionsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.session)
 	if err != nil {
@@ -2018,7 +2066,7 @@ func (c *UsersSessionsUpdateCall) Do() (*Session, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["currentTimeMillis"]; ok {
 		params.Set("currentTimeMillis", fmt.Sprintf("%v", v))
 	}
@@ -2034,7 +2082,11 @@ func (c *UsersSessionsUpdateCall) Do() (*Session, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *UsersSessionsUpdateCall) Do() (*Session, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}

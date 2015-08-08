@@ -174,10 +174,10 @@ func (c *WebResourceDeleteCall) Fields(s ...googleapi.Field) *WebResourceDeleteC
 	return c
 }
 
-func (c *WebResourceDeleteCall) Do() error {
+func (c *WebResourceDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -188,7 +188,11 @@ func (c *WebResourceDeleteCall) Do() error {
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *WebResourceDeleteCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -243,10 +247,10 @@ func (c *WebResourceGetCall) Fields(s ...googleapi.Field) *WebResourceGetCall {
 	return c
 }
 
-func (c *WebResourceGetCall) Do() (*SiteVerificationWebResourceResource, error) {
+func (c *WebResourceGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -257,7 +261,11 @@ func (c *WebResourceGetCall) Do() (*SiteVerificationWebResourceResource, error) 
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *WebResourceGetCall) Do() (*SiteVerificationWebResourceResource, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -320,7 +328,7 @@ func (c *WebResourceGetTokenCall) Fields(s ...googleapi.Field) *WebResourceGetTo
 	return c
 }
 
-func (c *WebResourceGetTokenCall) Do() (*SiteVerificationWebResourceGettokenResponse, error) {
+func (c *WebResourceGetTokenCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.siteverificationwebresourcegettokenrequest)
 	if err != nil {
@@ -328,7 +336,7 @@ func (c *WebResourceGetTokenCall) Do() (*SiteVerificationWebResourceGettokenResp
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -338,7 +346,11 @@ func (c *WebResourceGetTokenCall) Do() (*SiteVerificationWebResourceGettokenResp
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *WebResourceGetTokenCall) Do() (*SiteVerificationWebResourceGettokenResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -395,7 +407,7 @@ func (c *WebResourceInsertCall) Fields(s ...googleapi.Field) *WebResourceInsertC
 	return c
 }
 
-func (c *WebResourceInsertCall) Do() (*SiteVerificationWebResourceResource, error) {
+func (c *WebResourceInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.siteverificationwebresourceresource)
 	if err != nil {
@@ -403,7 +415,7 @@ func (c *WebResourceInsertCall) Do() (*SiteVerificationWebResourceResource, erro
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	params.Set("verificationMethod", fmt.Sprintf("%v", c.verificationMethod))
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
@@ -414,7 +426,11 @@ func (c *WebResourceInsertCall) Do() (*SiteVerificationWebResourceResource, erro
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *WebResourceInsertCall) Do() (*SiteVerificationWebResourceResource, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -478,10 +494,10 @@ func (c *WebResourceListCall) Fields(s ...googleapi.Field) *WebResourceListCall 
 	return c
 }
 
-func (c *WebResourceListCall) Do() (*SiteVerificationWebResourceListResponse, error) {
+func (c *WebResourceListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -490,7 +506,11 @@ func (c *WebResourceListCall) Do() (*SiteVerificationWebResourceListResponse, er
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *WebResourceListCall) Do() (*SiteVerificationWebResourceListResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -544,7 +564,7 @@ func (c *WebResourcePatchCall) Fields(s ...googleapi.Field) *WebResourcePatchCal
 	return c
 }
 
-func (c *WebResourcePatchCall) Do() (*SiteVerificationWebResourceResource, error) {
+func (c *WebResourcePatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.siteverificationwebresourceresource)
 	if err != nil {
@@ -552,7 +572,7 @@ func (c *WebResourcePatchCall) Do() (*SiteVerificationWebResourceResource, error
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -564,7 +584,11 @@ func (c *WebResourcePatchCall) Do() (*SiteVerificationWebResourceResource, error
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *WebResourcePatchCall) Do() (*SiteVerificationWebResourceResource, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -631,7 +655,7 @@ func (c *WebResourceUpdateCall) Fields(s ...googleapi.Field) *WebResourceUpdateC
 	return c
 }
 
-func (c *WebResourceUpdateCall) Do() (*SiteVerificationWebResourceResource, error) {
+func (c *WebResourceUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.siteverificationwebresourceresource)
 	if err != nil {
@@ -639,7 +663,7 @@ func (c *WebResourceUpdateCall) Do() (*SiteVerificationWebResourceResource, erro
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -651,7 +675,11 @@ func (c *WebResourceUpdateCall) Do() (*SiteVerificationWebResourceResource, erro
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *WebResourceUpdateCall) Do() (*SiteVerificationWebResourceResource, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}

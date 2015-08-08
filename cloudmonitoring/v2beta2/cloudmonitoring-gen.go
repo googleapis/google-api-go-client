@@ -439,7 +439,7 @@ func (c *MetricDescriptorsCreateCall) Fields(s ...googleapi.Field) *MetricDescri
 	return c
 }
 
-func (c *MetricDescriptorsCreateCall) Do() (*MetricDescriptor, error) {
+func (c *MetricDescriptorsCreateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.metricdescriptor)
 	if err != nil {
@@ -447,7 +447,7 @@ func (c *MetricDescriptorsCreateCall) Do() (*MetricDescriptor, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -459,7 +459,11 @@ func (c *MetricDescriptorsCreateCall) Do() (*MetricDescriptor, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *MetricDescriptorsCreateCall) Do() (*MetricDescriptor, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -527,10 +531,10 @@ func (c *MetricDescriptorsDeleteCall) Fields(s ...googleapi.Field) *MetricDescri
 	return c
 }
 
-func (c *MetricDescriptorsDeleteCall) Do() (*DeleteMetricDescriptorResponse, error) {
+func (c *MetricDescriptorsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -542,7 +546,11 @@ func (c *MetricDescriptorsDeleteCall) Do() (*DeleteMetricDescriptorResponse, err
 		"metric":  c.metric,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *MetricDescriptorsDeleteCall) Do() (*DeleteMetricDescriptorResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -646,10 +654,10 @@ func (c *MetricDescriptorsListCall) Fields(s ...googleapi.Field) *MetricDescript
 	return c
 }
 
-func (c *MetricDescriptorsListCall) Do() (*ListMetricDescriptorsResponse, error) {
+func (c *MetricDescriptorsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["count"]; ok {
 		params.Set("count", fmt.Sprintf("%v", v))
 	}
@@ -669,7 +677,11 @@ func (c *MetricDescriptorsListCall) Do() (*ListMetricDescriptorsResponse, error)
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *MetricDescriptorsListCall) Do() (*ListMetricDescriptorsResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -851,10 +863,10 @@ func (c *TimeseriesListCall) Fields(s ...googleapi.Field) *TimeseriesListCall {
 	return c
 }
 
-func (c *TimeseriesListCall) Do() (*ListTimeseriesResponse, error) {
+func (c *TimeseriesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	params.Set("youngest", fmt.Sprintf("%v", c.youngest))
 	if v, ok := c.opt_["aggregator"]; ok {
 		params.Set("aggregator", fmt.Sprintf("%v", v))
@@ -888,7 +900,11 @@ func (c *TimeseriesListCall) Do() (*ListTimeseriesResponse, error) {
 		"metric":  c.metric,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TimeseriesListCall) Do() (*ListTimeseriesResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1032,7 +1048,7 @@ func (c *TimeseriesWriteCall) Fields(s ...googleapi.Field) *TimeseriesWriteCall 
 	return c
 }
 
-func (c *TimeseriesWriteCall) Do() (*WriteTimeseriesResponse, error) {
+func (c *TimeseriesWriteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.writetimeseriesrequest)
 	if err != nil {
@@ -1040,7 +1056,7 @@ func (c *TimeseriesWriteCall) Do() (*WriteTimeseriesResponse, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1052,7 +1068,11 @@ func (c *TimeseriesWriteCall) Do() (*WriteTimeseriesResponse, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TimeseriesWriteCall) Do() (*WriteTimeseriesResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1216,10 +1236,10 @@ func (c *TimeseriesDescriptorsListCall) Fields(s ...googleapi.Field) *Timeseries
 	return c
 }
 
-func (c *TimeseriesDescriptorsListCall) Do() (*ListTimeseriesDescriptorsResponse, error) {
+func (c *TimeseriesDescriptorsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	params.Set("youngest", fmt.Sprintf("%v", c.youngest))
 	if v, ok := c.opt_["aggregator"]; ok {
 		params.Set("aggregator", fmt.Sprintf("%v", v))
@@ -1253,7 +1273,11 @@ func (c *TimeseriesDescriptorsListCall) Do() (*ListTimeseriesDescriptorsResponse
 		"metric":  c.metric,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TimeseriesDescriptorsListCall) Do() (*ListTimeseriesDescriptorsResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}

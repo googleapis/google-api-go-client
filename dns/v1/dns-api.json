@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/-U4jrXk6-vTBoDv0IALjnOwY9tw\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/huM5ESXFYmqFx37lRvLrT-VEvys\"",
  "discoveryVersion": "v1",
  "id": "dns:v1",
  "name": "dns",
@@ -71,6 +71,9 @@
    "scopes": {
     "https://www.googleapis.com/auth/cloud-platform": {
      "description": "View and manage your data across Google Cloud Platform services"
+    },
+    "https://www.googleapis.com/auth/cloud-platform.read-only": {
+     "description": "MESSAGE UNDER CONSTRUCTION View your data across Google Cloud Platform services"
     },
     "https://www.googleapis.com/auth/ndev.clouddns.readonly": {
      "description": "View your DNS records hosted by Google Cloud DNS"
@@ -411,6 +414,7 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/cloud-platform.read-only",
       "https://www.googleapis.com/auth/ndev.clouddns.readonly",
       "https://www.googleapis.com/auth/ndev.clouddns.readwrite"
      ]
@@ -471,6 +475,7 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/cloud-platform.read-only",
       "https://www.googleapis.com/auth/ndev.clouddns.readonly",
       "https://www.googleapis.com/auth/ndev.clouddns.readwrite"
      ]
@@ -562,6 +567,7 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/cloud-platform.read-only",
       "https://www.googleapis.com/auth/ndev.clouddns.readonly",
       "https://www.googleapis.com/auth/ndev.clouddns.readwrite"
      ]
@@ -603,6 +609,7 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/cloud-platform.read-only",
       "https://www.googleapis.com/auth/ndev.clouddns.readonly",
       "https://www.googleapis.com/auth/ndev.clouddns.readwrite"
      ]
@@ -632,6 +639,7 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/cloud-platform.read-only",
       "https://www.googleapis.com/auth/ndev.clouddns.readonly",
       "https://www.googleapis.com/auth/ndev.clouddns.readwrite"
      ]
@@ -689,6 +697,7 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/cloud-platform.read-only",
       "https://www.googleapis.com/auth/ndev.clouddns.readonly",
       "https://www.googleapis.com/auth/ndev.clouddns.readwrite"
      ]

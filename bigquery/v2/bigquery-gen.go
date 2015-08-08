@@ -52,6 +52,10 @@ const (
 	// View and manage your data across Google Cloud Platform services
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
+	// MESSAGE UNDER CONSTRUCTION View your data across Google Cloud
+	// Platform services
+	CloudPlatformReadOnlyScope = "https://www.googleapis.com/auth/cloud-platform.read-only"
+
 	// Manage your data and permissions in Google Cloud Storage
 	DevstorageFullControlScope = "https://www.googleapis.com/auth/devstorage.full_control"
 
@@ -242,8 +246,9 @@ type Dataset struct {
 	// its tables was last modified, in milliseconds since the epoch.
 	LastModifiedTime int64 `json:"lastModifiedTime,omitempty,string"`
 
-	// Location: [Experimental] The location where the data resides. If not
-	// present, the data will be stored in the US.
+	// Location: [Experimental] The geographic location where the dataset
+	// should reside. Possible values include EU and US. The default value
+	// is US.
 	Location string `json:"location,omitempty"`
 
 	// SelfLink: [Output-only] A URL that can be used to access the resource
@@ -389,6 +394,11 @@ type ExternalDataConfiguration struct {
 type GetQueryResultsResponse struct {
 	// CacheHit: Whether the query result was fetched from the query cache.
 	CacheHit bool `json:"cacheHit,omitempty"`
+
+	// Errors: [Output-only] All errors and warnings encountered during the
+	// running of the job. Errors here do not necessarily mean that the job
+	// has completed or was unsuccessful.
+	Errors []*ErrorProto `json:"errors,omitempty"`
 
 	// Etag: A hash of this response.
 	Etag string `json:"etag,omitempty"`
@@ -974,10 +984,10 @@ type QueryRequest struct {
 	// format 'datasetId.tableId'.
 	DefaultDataset *DatasetReference `json:"defaultDataset,omitempty"`
 
-	// DryRun: [Optional] If set, don't actually run this job. A valid query
-	// will return a mostly empty response with some processing statistics,
-	// while an invalid query will return the same error it would if it
-	// wasn't a dry run.
+	// DryRun: [Optional] If set to true, BigQuery doesn't run the job.
+	// Instead, if the query is valid, BigQuery returns statistics about the
+	// job such as how many bytes would be processed. If the query is
+	// invalid, an error returns. The default value is false.
 	DryRun bool `json:"dryRun,omitempty"`
 
 	// Kind: The resource type of the request.
@@ -1019,6 +1029,11 @@ type QueryRequest struct {
 type QueryResponse struct {
 	// CacheHit: Whether the query result was fetched from the query cache.
 	CacheHit bool `json:"cacheHit,omitempty"`
+
+	// Errors: [Output-only] All errors and warnings encountered during the
+	// running of the job. Errors here do not necessarily mean that the job
+	// has completed or was unsuccessful.
+	Errors []*ErrorProto `json:"errors,omitempty"`
 
 	// JobComplete: Whether the query has completed or not. If rows or
 	// totalRows are present, this will always be true. If this is false,
@@ -1076,6 +1091,12 @@ type Table struct {
 	// reclaimed.
 	ExpirationTime int64 `json:"expirationTime,omitempty,string"`
 
+	// ExternalDataConfiguration: [Experimental] Describes the data format,
+	// location, and other properties of a table stored outside of BigQuery.
+	// By defining these properties, the data source can then be queried as
+	// if it were a standard BigQuery table.
+	ExternalDataConfiguration *ExternalDataConfiguration `json:"externalDataConfiguration,omitempty"`
+
 	// FriendlyName: [Optional] A descriptive name for this table.
 	FriendlyName string `json:"friendlyName,omitempty"`
 
@@ -1089,7 +1110,8 @@ type Table struct {
 	// modified, in milliseconds since the epoch.
 	LastModifiedTime uint64 `json:"lastModifiedTime,omitempty,string"`
 
-	// Location: [Optional] The backing storage location.
+	// Location: [Output-only] The geographic location where the table
+	// resides. This value is inherited from the dataset.
 	Location string `json:"location,omitempty"`
 
 	// NumBytes: [Output-only] The size of the table in bytes. This property
@@ -1326,10 +1348,10 @@ func (c *DatasetsDeleteCall) Fields(s ...googleapi.Field) *DatasetsDeleteCall {
 	return c
 }
 
-func (c *DatasetsDeleteCall) Do() error {
+func (c *DatasetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["deleteContents"]; ok {
 		params.Set("deleteContents", fmt.Sprintf("%v", v))
 	}
@@ -1344,7 +1366,11 @@ func (c *DatasetsDeleteCall) Do() error {
 		"datasetId": c.datasetId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *DatasetsDeleteCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -1414,10 +1440,10 @@ func (c *DatasetsGetCall) Fields(s ...googleapi.Field) *DatasetsGetCall {
 	return c
 }
 
-func (c *DatasetsGetCall) Do() (*Dataset, error) {
+func (c *DatasetsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1429,7 +1455,11 @@ func (c *DatasetsGetCall) Do() (*Dataset, error) {
 		"datasetId": c.datasetId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *DatasetsGetCall) Do() (*Dataset, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1470,7 +1500,8 @@ func (c *DatasetsGetCall) Do() (*Dataset, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/bigquery",
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
 	//   ]
 	// }
 
@@ -1501,7 +1532,7 @@ func (c *DatasetsInsertCall) Fields(s ...googleapi.Field) *DatasetsInsertCall {
 	return c
 }
 
-func (c *DatasetsInsertCall) Do() (*Dataset, error) {
+func (c *DatasetsInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.dataset)
 	if err != nil {
@@ -1509,7 +1540,7 @@ func (c *DatasetsInsertCall) Do() (*Dataset, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1521,7 +1552,11 @@ func (c *DatasetsInsertCall) Do() (*Dataset, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *DatasetsInsertCall) Do() (*Dataset, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1609,10 +1644,10 @@ func (c *DatasetsListCall) Fields(s ...googleapi.Field) *DatasetsListCall {
 	return c
 }
 
-func (c *DatasetsListCall) Do() (*DatasetList, error) {
+func (c *DatasetsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["all"]; ok {
 		params.Set("all", fmt.Sprintf("%v", v))
 	}
@@ -1632,7 +1667,11 @@ func (c *DatasetsListCall) Do() (*DatasetList, error) {
 		"projectId": c.projectId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *DatasetsListCall) Do() (*DatasetList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1682,7 +1721,8 @@ func (c *DatasetsListCall) Do() (*DatasetList, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/bigquery",
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
 	//   ]
 	// }
 
@@ -1718,7 +1758,7 @@ func (c *DatasetsPatchCall) Fields(s ...googleapi.Field) *DatasetsPatchCall {
 	return c
 }
 
-func (c *DatasetsPatchCall) Do() (*Dataset, error) {
+func (c *DatasetsPatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.dataset)
 	if err != nil {
@@ -1726,7 +1766,7 @@ func (c *DatasetsPatchCall) Do() (*Dataset, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1739,7 +1779,11 @@ func (c *DatasetsPatchCall) Do() (*Dataset, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *DatasetsPatchCall) Do() (*Dataset, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1818,7 +1862,7 @@ func (c *DatasetsUpdateCall) Fields(s ...googleapi.Field) *DatasetsUpdateCall {
 	return c
 }
 
-func (c *DatasetsUpdateCall) Do() (*Dataset, error) {
+func (c *DatasetsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.dataset)
 	if err != nil {
@@ -1826,7 +1870,7 @@ func (c *DatasetsUpdateCall) Do() (*Dataset, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1839,7 +1883,11 @@ func (c *DatasetsUpdateCall) Do() (*Dataset, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *DatasetsUpdateCall) Do() (*Dataset, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1916,10 +1964,10 @@ func (c *JobsCancelCall) Fields(s ...googleapi.Field) *JobsCancelCall {
 	return c
 }
 
-func (c *JobsCancelCall) Do() (*JobCancelResponse, error) {
+func (c *JobsCancelCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1931,7 +1979,11 @@ func (c *JobsCancelCall) Do() (*JobCancelResponse, error) {
 		"jobId":     c.jobId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *JobsCancelCall) Do() (*JobCancelResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2005,10 +2057,10 @@ func (c *JobsGetCall) Fields(s ...googleapi.Field) *JobsGetCall {
 	return c
 }
 
-func (c *JobsGetCall) Do() (*Job, error) {
+func (c *JobsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -2020,7 +2072,11 @@ func (c *JobsGetCall) Do() (*Job, error) {
 		"jobId":     c.jobId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *JobsGetCall) Do() (*Job, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2061,7 +2117,8 @@ func (c *JobsGetCall) Do() (*Job, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/bigquery",
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
 	//   ]
 	// }
 
@@ -2122,10 +2179,10 @@ func (c *JobsGetQueryResultsCall) Fields(s ...googleapi.Field) *JobsGetQueryResu
 	return c
 }
 
-func (c *JobsGetQueryResultsCall) Do() (*GetQueryResultsResponse, error) {
+func (c *JobsGetQueryResultsCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
@@ -2149,7 +2206,11 @@ func (c *JobsGetQueryResultsCall) Do() (*GetQueryResultsResponse, error) {
 		"jobId":     c.jobId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *JobsGetQueryResultsCall) Do() (*GetQueryResultsResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2213,7 +2274,8 @@ func (c *JobsGetQueryResultsCall) Do() (*GetQueryResultsResponse, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/bigquery",
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
 	//   ]
 	// }
 
@@ -2278,7 +2340,7 @@ func (c *JobsInsertCall) Fields(s ...googleapi.Field) *JobsInsertCall {
 	return c
 }
 
-func (c *JobsInsertCall) Do() (*Job, error) {
+func (c *JobsInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.job)
 	if err != nil {
@@ -2286,17 +2348,11 @@ func (c *JobsInsertCall) Do() (*Job, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/jobs")
-	var progressUpdater_ googleapi.ProgressUpdater
-	if v, ok := c.opt_["progressUpdater"]; ok {
-		if pu, ok := v.(googleapi.ProgressUpdater); ok {
-			progressUpdater_ = pu
-		}
-	}
 	if c.media_ != nil || c.resumable_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
 		params.Set("uploadType", c.protocol_)
@@ -2323,13 +2379,23 @@ func (c *JobsInsertCall) Do() (*Job, error) {
 		req.Header.Set("Content-Type", ctype)
 	}
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *JobsInsertCall) Do() (*Job, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
+	}
+	var progressUpdater_ googleapi.ProgressUpdater
+	if v, ok := c.opt_["progressUpdater"]; ok {
+		if pu, ok := v.(googleapi.ProgressUpdater); ok {
+			progressUpdater_ = pu
+		}
 	}
 	if c.protocol_ == "resumable" {
 		loc := res.Header.Get("Location")
@@ -2410,11 +2476,11 @@ type JobsListCall struct {
 	opt_      map[string]interface{}
 }
 
-// List: Lists all jobs that you started in the specified project. The
-// job list returns in reverse chronological order of when the jobs were
-// created, starting with the most recent job created. Requires the Can
-// View project role, or the Is Owner project role if you set the
-// allUsers property.
+// List: Lists all jobs that you started in the specified project. Job
+// information is available for a six month period after creation. The
+// job list is sorted in reverse chronological order, by job creation
+// time. Requires the Can View project role, or the Is Owner project
+// role if you set the allUsers property.
 func (r *JobsService) List(projectId string) *JobsListCall {
 	c := &JobsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectId = projectId
@@ -2473,10 +2539,10 @@ func (c *JobsListCall) Fields(s ...googleapi.Field) *JobsListCall {
 	return c
 }
 
-func (c *JobsListCall) Do() (*JobList, error) {
+func (c *JobsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["allUsers"]; ok {
 		params.Set("allUsers", fmt.Sprintf("%v", v))
 	}
@@ -2502,7 +2568,11 @@ func (c *JobsListCall) Do() (*JobList, error) {
 		"projectId": c.projectId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *JobsListCall) Do() (*JobList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2516,7 +2586,7 @@ func (c *JobsListCall) Do() (*JobList, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists all jobs that you started in the specified project. The job list returns in reverse chronological order of when the jobs were created, starting with the most recent job created. Requires the Can View project role, or the Is Owner project role if you set the allUsers property.",
+	//   "description": "Lists all jobs that you started in the specified project. Job information is available for a six month period after creation. The job list is sorted in reverse chronological order, by job creation time. Requires the Can View project role, or the Is Owner project role if you set the allUsers property.",
 	//   "httpMethod": "GET",
 	//   "id": "bigquery.jobs.list",
 	//   "parameterOrder": [
@@ -2581,7 +2651,8 @@ func (c *JobsListCall) Do() (*JobList, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/bigquery",
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
 	//   ]
 	// }
 
@@ -2613,7 +2684,7 @@ func (c *JobsQueryCall) Fields(s ...googleapi.Field) *JobsQueryCall {
 	return c
 }
 
-func (c *JobsQueryCall) Do() (*QueryResponse, error) {
+func (c *JobsQueryCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.queryrequest)
 	if err != nil {
@@ -2621,7 +2692,7 @@ func (c *JobsQueryCall) Do() (*QueryResponse, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -2633,7 +2704,11 @@ func (c *JobsQueryCall) Do() (*QueryResponse, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *JobsQueryCall) Do() (*QueryResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2670,7 +2745,8 @@ func (c *JobsQueryCall) Do() (*QueryResponse, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/bigquery",
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
 	//   ]
 	// }
 
@@ -2712,10 +2788,10 @@ func (c *ProjectsListCall) Fields(s ...googleapi.Field) *ProjectsListCall {
 	return c
 }
 
-func (c *ProjectsListCall) Do() (*ProjectList, error) {
+func (c *ProjectsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
@@ -2730,7 +2806,11 @@ func (c *ProjectsListCall) Do() (*ProjectList, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ProjectsListCall) Do() (*ProjectList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2766,7 +2846,8 @@ func (c *ProjectsListCall) Do() (*ProjectList, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/bigquery",
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
 	//   ]
 	// }
 
@@ -2802,7 +2883,7 @@ func (c *TabledataInsertAllCall) Fields(s ...googleapi.Field) *TabledataInsertAl
 	return c
 }
 
-func (c *TabledataInsertAllCall) Do() (*TableDataInsertAllResponse, error) {
+func (c *TabledataInsertAllCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.tabledatainsertallrequest)
 	if err != nil {
@@ -2810,7 +2891,7 @@ func (c *TabledataInsertAllCall) Do() (*TableDataInsertAllResponse, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -2824,7 +2905,11 @@ func (c *TabledataInsertAllCall) Do() (*TableDataInsertAllResponse, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TabledataInsertAllCall) Do() (*TableDataInsertAllResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2931,10 +3016,10 @@ func (c *TabledataListCall) Fields(s ...googleapi.Field) *TabledataListCall {
 	return c
 }
 
-func (c *TabledataListCall) Do() (*TableDataList, error) {
+func (c *TabledataListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
@@ -2956,7 +3041,11 @@ func (c *TabledataListCall) Do() (*TableDataList, error) {
 		"tableId":   c.tableId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TabledataListCall) Do() (*TableDataList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3021,7 +3110,8 @@ func (c *TabledataListCall) Do() (*TableDataList, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/bigquery",
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
 	//   ]
 	// }
 
@@ -3055,10 +3145,10 @@ func (c *TablesDeleteCall) Fields(s ...googleapi.Field) *TablesDeleteCall {
 	return c
 }
 
-func (c *TablesDeleteCall) Do() error {
+func (c *TablesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -3071,7 +3161,11 @@ func (c *TablesDeleteCall) Do() error {
 		"tableId":   c.tableId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TablesDeleteCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -3147,10 +3241,10 @@ func (c *TablesGetCall) Fields(s ...googleapi.Field) *TablesGetCall {
 	return c
 }
 
-func (c *TablesGetCall) Do() (*Table, error) {
+func (c *TablesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -3163,7 +3257,11 @@ func (c *TablesGetCall) Do() (*Table, error) {
 		"tableId":   c.tableId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TablesGetCall) Do() (*Table, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3211,7 +3309,8 @@ func (c *TablesGetCall) Do() (*Table, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/bigquery",
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
 	//   ]
 	// }
 
@@ -3244,7 +3343,7 @@ func (c *TablesInsertCall) Fields(s ...googleapi.Field) *TablesInsertCall {
 	return c
 }
 
-func (c *TablesInsertCall) Do() (*Table, error) {
+func (c *TablesInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.table)
 	if err != nil {
@@ -3252,7 +3351,7 @@ func (c *TablesInsertCall) Do() (*Table, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -3265,7 +3364,11 @@ func (c *TablesInsertCall) Do() (*Table, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TablesInsertCall) Do() (*Table, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3355,10 +3458,10 @@ func (c *TablesListCall) Fields(s ...googleapi.Field) *TablesListCall {
 	return c
 }
 
-func (c *TablesListCall) Do() (*TableList, error) {
+func (c *TablesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
@@ -3376,7 +3479,11 @@ func (c *TablesListCall) Do() (*TableList, error) {
 		"datasetId": c.datasetId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TablesListCall) Do() (*TableList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3428,7 +3535,8 @@ func (c *TablesListCall) Do() (*TableList, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/bigquery",
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
 	//   ]
 	// }
 
@@ -3466,7 +3574,7 @@ func (c *TablesPatchCall) Fields(s ...googleapi.Field) *TablesPatchCall {
 	return c
 }
 
-func (c *TablesPatchCall) Do() (*Table, error) {
+func (c *TablesPatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.table)
 	if err != nil {
@@ -3474,7 +3582,7 @@ func (c *TablesPatchCall) Do() (*Table, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -3488,7 +3596,11 @@ func (c *TablesPatchCall) Do() (*Table, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TablesPatchCall) Do() (*Table, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3576,7 +3688,7 @@ func (c *TablesUpdateCall) Fields(s ...googleapi.Field) *TablesUpdateCall {
 	return c
 }
 
-func (c *TablesUpdateCall) Do() (*Table, error) {
+func (c *TablesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.table)
 	if err != nil {
@@ -3584,7 +3696,7 @@ func (c *TablesUpdateCall) Do() (*Table, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -3598,7 +3710,11 @@ func (c *TablesUpdateCall) Do() (*Table, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TablesUpdateCall) Do() (*Table, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}

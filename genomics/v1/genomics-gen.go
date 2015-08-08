@@ -210,6 +210,25 @@ type VariantsetsService struct {
 	s *Service
 }
 
+// Binding: Associates members with roles. See below for allowed formats
+// of members.
+type Binding struct {
+	// Members: Format of member entries: 1. allUsers Matches any requesting
+	// principal (users, service accounts or anonymous). 2.
+	// allAuthenticatedUsers Matches any requesting authenticated principal
+	// (users or service accounts). 3. user:{emailid} A google user account
+	// using an email address. For example alice@gmail.com, joe@example.com
+	// 4. serviceAccount:{emailid} An service account email. 5.
+	// group:{emailid} A google group with an email address. For example
+	// auth-ti-cloud@google.com 6. domain:{domain} A Google Apps domain
+	// name. For example google.com, example.com
+	Members []string `json:"members,omitempty"`
+
+	// Role: The name of the role to which the members should be bound.
+	// Examples: "roles/viewer", "roles/editor", "roles/owner". Required
+	Role string `json:"role,omitempty"`
+}
+
 // CallSet: A call set is a collection of variant calls, typically for
 // one sample. It belongs to a variant set.
 type CallSet struct {
@@ -231,6 +250,11 @@ type CallSet struct {
 	SampleId string `json:"sampleId,omitempty"`
 
 	// VariantSetIds: The IDs of the variant sets this call set belongs to.
+	// This field must have exactly length one, as a call set belongs to a
+	// single variant set. This field is repeated for compatibility with the
+	// [GA4GH 0.5.1
+	// API](https://github.com/ga4gh/schemas/blob/v0.5.1/src/main/resources/a
+	// vro/variants.avdl#L76).
 	VariantSetIds []string `json:"variantSetIds,omitempty"`
 }
 
@@ -271,6 +295,62 @@ type CigarUnit struct {
 	ReferenceSequence string `json:"referenceSequence,omitempty"`
 }
 
+// CloudAuditOptions: Write a Cloud Audit log
+type CloudAuditOptions struct {
+}
+
+// Condition: A condition to be met.
+type Condition struct {
+	// Iam: Trusted attributes supplied by the IAM system.
+	//
+	// Possible values:
+	//   "NO_ATTR"
+	//   "AUTHORITY"
+	//   "ATTRIBUTION"
+	Iam string `json:"iam,omitempty"`
+
+	// Op: An operator to apply the subject with.
+	//
+	// Possible values:
+	//   "NO_OP"
+	//   "EQUALS"
+	//   "NOT_EQUALS"
+	//   "IN"
+	//   "NOT_IN"
+	//   "DISCHARGED"
+	Op string `json:"op,omitempty"`
+
+	// Svc: Trusted attributes discharged by the service.
+	Svc string `json:"svc,omitempty"`
+
+	// Sys: Trusted attributes supplied by any service that owns resources
+	// and uses the IAM system for access control.
+	//
+	// Possible values:
+	//   "NO_ATTR"
+	//   "REGION"
+	//   "SERVICE"
+	//   "NAME"
+	//   "IP"
+	Sys string `json:"sys,omitempty"`
+
+	// Value: The object of the condition. Exactly one of these must be set.
+	Value string `json:"value,omitempty"`
+
+	// Values: The objects of the condition. This is mutually exclusive with
+	// 'value'.
+	Values []string `json:"values,omitempty"`
+}
+
+// CounterOptions: Options for counters
+type CounterOptions struct {
+	// Field: The field value to attribute.
+	Field string `json:"field,omitempty"`
+
+	// Metric: The metric to update.
+	Metric string `json:"metric,omitempty"`
+}
+
 // CoverageBucket: A bucket over which read coverage has been
 // precomputed. A bucket corresponds to a specific range of the
 // reference sequence.
@@ -281,6 +361,10 @@ type CoverageBucket struct {
 
 	// Range: The genomic coordinate range spanned by this bucket.
 	Range *Range `json:"range,omitempty"`
+}
+
+// DataAccessOptions: Write a Data Access (Gin) log
+type DataAccessOptions struct {
 }
 
 // Dataset: A Dataset is a collection of genomic data.
@@ -374,6 +458,10 @@ type ExportVariantSetRequest struct {
 	// destination BigQuery dataset. The caller must have WRITE access to
 	// this project. This project will also own the resulting export job.
 	ProjectId string `json:"projectId,omitempty"`
+}
+
+// GetIamPolicyRequest: Request message for `GetIamPolicy` method.
+type GetIamPolicyRequest struct {
 }
 
 // ImportReadGroupSetsRequest: The read group set import request.
@@ -522,12 +610,28 @@ type ListOperationsResponse struct {
 	Operations []*Operation `json:"operations,omitempty"`
 }
 
-type MergeVariantsRequest struct {
-	// VariantSetId: The destination variant set.
-	VariantSetId string `json:"variantSetId,omitempty"`
+// LogConfig: Specifies what kind of log the caller must write Increment
+// a streamz counter with the specified metric and field names. Metric
+// names should start with a '/', generally be lowercase-only, and end
+// in "_count". Field names should not contain an initial slash. The
+// actual exported metric names will have "/iam/policy" prepended. Field
+// names correspond to IAM request parameters and field values are their
+// respective values. At present only "iam_principal", corresponding to
+// IAMContext.principal, is supported. Examples: counter { metric:
+// "/debug_access_count" field: "iam_principal" } ==> increment counter
+// /iam/policy/backend_debug_access_count {iam_principal=[value of
+// IAMContext.principal]} At this time we do not support: * multiple
+// field names (though this may be supported in the future) *
+// decrementing the counter * incrementing it by anything other than 1
+type LogConfig struct {
+	// CloudAudit: Cloud audit options.
+	CloudAudit *CloudAuditOptions `json:"cloudAudit,omitempty"`
 
-	// Variants: The variants to be merged with existing variants.
-	Variants []*Variant `json:"variants,omitempty"`
+	// Counter: Counter options.
+	Counter *CounterOptions `json:"counter,omitempty"`
+
+	// DataAccess: Data access options.
+	DataAccess *DataAccessOptions `json:"dataAccess,omitempty"`
 }
 
 // Operation: This resource represents a long-running operation that is
@@ -596,6 +700,38 @@ type OperationMetadata1 struct {
 }
 
 type OperationMetadataRequest interface{}
+
+// Policy: # Overview The `Policy` defines an access control policy
+// language. It is used to define policies that are attached to
+// resources like files, folders, VMs, etc. # Policy structure A
+// `Policy` consists of a list of bindings. A `Binding` binds a set of
+// members to a role, where the members include user accounts, user
+// groups, user domains, and service accounts. A 'role' is a named set
+// of permissions, defined by IAM. The definition of a role is outside
+// the policy. A permission check first determines the roles that
+// include the specified permission, and then determines if the
+// principal specified is a member of a binding to at least one of these
+// roles. The membership check is recursive when a group is bound to a
+// role. Policy examples: ``` { "bindings": [ { "role": "roles/owner",
+// "members": [ "user:mike@example.com", "group:admins@example.com",
+// "domain:google.com",
+// "serviceAccount:frontend@example.iam.gserviceaccounts.com"] }, {
+// "role": "roles/viewer", "members": ["user:sean@example.com"] } ] }
+// ```
+type Policy struct {
+	// Bindings: It is an error to specify multiple bindings for the same
+	// role. It is an error to specify a binding with no members.
+	Bindings []*Binding `json:"bindings,omitempty"`
+
+	// Etag: Can be used to perform a read-modify-write.
+	Etag string `json:"etag,omitempty"`
+
+	Rules []*Rule `json:"rules,omitempty"`
+
+	// Version: The policy language version. The version of the policy is
+	// represented by the etag. The default version is 0.
+	Version int64 `json:"version,omitempty"`
+}
 
 // Position: An abstraction for referring to a genomic position, in
 // relation to some already known reference. For now, represents a
@@ -956,6 +1092,44 @@ type ReferenceSet struct {
 	SourceUri string `json:"sourceUri,omitempty"`
 }
 
+// Rule: A rule to be applied in a Policy.
+type Rule struct {
+	// Action: Required
+	//
+	// Possible values:
+	//   "NO_ACTION"
+	//   "ALLOW"
+	//   "ALLOW_WITH_LOG"
+	//   "DENY"
+	//   "DENY_WITH_LOG"
+	//   "LOG"
+	Action string `json:"action,omitempty"`
+
+	// Conditions: Additional restrictions that must be met
+	Conditions []*Condition `json:"conditions,omitempty"`
+
+	// Description: Human-readable description of the rule.
+	Description string `json:"description,omitempty"`
+
+	// In: The rule matches if the PRINCIPAL/AUTHORITY_SELECTOR is in this
+	// set of entries.
+	In []string `json:"in,omitempty"`
+
+	// LogConfig: The config returned to callers of tech.iam.IAM.CheckPolicy
+	// for any entries that match the LOG action.
+	LogConfig []*LogConfig `json:"logConfig,omitempty"`
+
+	// NotIn: The rule matches if the PRINCIPAL/AUTHORITY_SELECTOR is not in
+	// this set of entries. The formation for in and not_in entries is the
+	// same as members in a Binding above.
+	NotIn []string `json:"notIn,omitempty"`
+
+	// Permissions: A permission is a string of form '..' (e.g.,
+	// 'storage.buckets.list'). A value of '*' matches all permissions, and
+	// a verb part of '*' (e.g., 'storage.buckets.*') matches all verbs.
+	Permissions []string `json:"permissions,omitempty"`
+}
+
 // SearchCallSetsRequest: The call set search request.
 type SearchCallSetsRequest struct {
 	// Name: Only return call sets for which a substring of the name matches
@@ -1060,8 +1234,8 @@ type SearchReadsRequest struct {
 type SearchReadsResponse struct {
 	// Alignments: The list of matching alignments sorted by mapped genomic
 	// coordinate, if any, ascending in position within the same reference.
-	// Unmapped reads, which have no position, are returned last and are
-	// further sorted in ascending lexicographic order by fragment name.
+	// Unmapped reads, which have no position, are returned contiguously and
+	// are sorted in ascending lexicographic order by fragment name.
 	Alignments []*Read `json:"alignments,omitempty"`
 
 	// NextPageToken: The continuation token, which is used to page through
@@ -1231,21 +1405,30 @@ type SearchVariantsResponse struct {
 	Variants []*Variant `json:"variants,omitempty"`
 }
 
-// Status: The `Status` defines a logical error model that is suitable
-// for different programming environments, including REST APIs and RPC
-// APIs. It is used by [gRPC](https://github.com/grpc). The error model
-// is designed to be: - Simple to use and understand for most users. -
-// Flexible enough to meet unexpected needs. # Overview The `Status`
-// message contains 3 pieces of data: error code, error message, and
-// error details. The error code should be an enum value of
+// SetIamPolicyRequest: Request message for `SetIamPolicy` method.
+type SetIamPolicyRequest struct {
+	// Policy: REQUIRED: The complete policy to be applied to the
+	// 'resource'. The size of the policy is limited to a few 10s of KB. An
+	// empty policy is in general a valid policy but certain services (like
+	// Projects) might reject them.
+	Policy *Policy `json:"policy,omitempty"`
+}
+
+// Status: The `Status` type defines a logical error model that is
+// suitable for different programming environments, including REST APIs
+// and RPC APIs. It is used by [gRPC](https://github.com/grpc). The
+// error model is designed to be: - Simple to use and understand for
+// most users - Flexible enough to meet unexpected needs # Overview The
+// `Status` message contains three pieces of data: error code, error
+// message, and error details. The error code should be an enum value of
 // [google.rpc.Code][google.rpc.Code], but it may accept additional
 // error codes if needed. The error message should be a developer-facing
 // English message that helps developers *understand* and *resolve* the
-// error. If a localized user-facing error message is needed, it can be
-// sent in the error details or localized by the client. The optional
-// error details may contain arbitrary information about the error.
-// There is a predefined set of error detail types in the package
-// `google.rpc` which can be used for common error conditions. #
+// error. If a localized user-facing error message is needed, put the
+// localized message in the error details or localize it in the client.
+// The optional error details may contain arbitrary information about
+// the error. There is a predefined set of error detail types in the
+// package `google.rpc` which can be used for common error conditions. #
 // Language mapping The `Status` message is the logical representation
 // of the error model, but it is not necessarily the actual wire format.
 // When the `Status` message is exposed in different client libraries
@@ -1253,7 +1436,7 @@ type SearchVariantsResponse struct {
 // example, it will likely be mapped to some exceptions in Java, but
 // more likely mapped to some error codes in C. # Other uses The error
 // model and the `Status` message can be used in a variety of
-// environments - either with or without APIs - to provide consistent
+// environments, either with or without APIs, to provide a consistent
 // developer experience across different environments. Example uses of
 // this error model include: - Partial errors. If a service needs to
 // return partial errors to the client, it may embed the `Status` in the
@@ -1285,6 +1468,27 @@ type Status struct {
 }
 
 type StatusDetails interface{}
+
+// TestIamPermissionsRequest: Request message for `TestIamPermissions`
+// method.
+type TestIamPermissionsRequest struct {
+	// Permissions: REQUIRED: The set of permissions to check for the
+	// 'resource'. Permissions with wildcards (such as '*' or 'storage.*')
+	// are not allowed. Allowed permissions are: *
+	// `genomics.datasets.create` * `genomics.datasets.delete` *
+	// `genomics.datasets.get` * `genomics.datasets.list` *
+	// `genomics.datasets.update` * `genomics.datasets.getIamPolicy` *
+	// `genomics.datasets.setIamPolicy`
+	Permissions []string `json:"permissions,omitempty"`
+}
+
+// TestIamPermissionsResponse: Response message for `TestIamPermissions`
+// method.
+type TestIamPermissionsResponse struct {
+	// Permissions: A subset of `TestPermissionsRequest.permissions` that
+	// the caller is allowed.
+	Permissions []string `json:"permissions,omitempty"`
+}
 
 type UndeleteDatasetRequest struct {
 }
@@ -1448,7 +1652,7 @@ type VariantSetMetadata struct {
 
 	// Number: The number of values that can be included in a field
 	// described by this metadata.
-	Number int64 `json:"number,omitempty"`
+	Number string `json:"number,omitempty"`
 
 	// Type: The type of data. Possible types include: Integer, Float, Flag,
 	// Character, and String.
@@ -1495,7 +1699,7 @@ func (c *CallsetsCreateCall) Fields(s ...googleapi.Field) *CallsetsCreateCall {
 	return c
 }
 
-func (c *CallsetsCreateCall) Do() (*CallSet, error) {
+func (c *CallsetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.callset)
 	if err != nil {
@@ -1503,7 +1707,7 @@ func (c *CallsetsCreateCall) Do() (*CallSet, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1513,7 +1717,11 @@ func (c *CallsetsCreateCall) Do() (*CallSet, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *CallsetsCreateCall) Do() (*CallSet, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1568,10 +1776,10 @@ func (c *CallsetsDeleteCall) Fields(s ...googleapi.Field) *CallsetsDeleteCall {
 	return c
 }
 
-func (c *CallsetsDeleteCall) Do() (*Empty, error) {
+func (c *CallsetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1582,7 +1790,11 @@ func (c *CallsetsDeleteCall) Do() (*Empty, error) {
 		"callSetId": c.callSetId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *CallsetsDeleteCall) Do() (*Empty, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1645,10 +1857,10 @@ func (c *CallsetsGetCall) Fields(s ...googleapi.Field) *CallsetsGetCall {
 	return c
 }
 
-func (c *CallsetsGetCall) Do() (*CallSet, error) {
+func (c *CallsetsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1659,7 +1871,11 @@ func (c *CallsetsGetCall) Do() (*CallSet, error) {
 		"callSetId": c.callSetId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *CallsetsGetCall) Do() (*CallSet, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1734,7 +1950,7 @@ func (c *CallsetsPatchCall) Fields(s ...googleapi.Field) *CallsetsPatchCall {
 	return c
 }
 
-func (c *CallsetsPatchCall) Do() (*CallSet, error) {
+func (c *CallsetsPatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.callset)
 	if err != nil {
@@ -1742,7 +1958,7 @@ func (c *CallsetsPatchCall) Do() (*CallSet, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["updateMask"]; ok {
 		params.Set("updateMask", fmt.Sprintf("%v", v))
 	}
@@ -1757,7 +1973,11 @@ func (c *CallsetsPatchCall) Do() (*CallSet, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *CallsetsPatchCall) Do() (*CallSet, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1830,7 +2050,7 @@ func (c *CallsetsSearchCall) Fields(s ...googleapi.Field) *CallsetsSearchCall {
 	return c
 }
 
-func (c *CallsetsSearchCall) Do() (*SearchCallSetsResponse, error) {
+func (c *CallsetsSearchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.searchcallsetsrequest)
 	if err != nil {
@@ -1838,7 +2058,7 @@ func (c *CallsetsSearchCall) Do() (*SearchCallSetsResponse, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1848,7 +2068,11 @@ func (c *CallsetsSearchCall) Do() (*SearchCallSetsResponse, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *CallsetsSearchCall) Do() (*SearchCallSetsResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1904,7 +2128,7 @@ func (c *DatasetsCreateCall) Fields(s ...googleapi.Field) *DatasetsCreateCall {
 	return c
 }
 
-func (c *DatasetsCreateCall) Do() (*Dataset, error) {
+func (c *DatasetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.dataset)
 	if err != nil {
@@ -1912,7 +2136,7 @@ func (c *DatasetsCreateCall) Do() (*Dataset, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1922,7 +2146,11 @@ func (c *DatasetsCreateCall) Do() (*Dataset, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *DatasetsCreateCall) Do() (*Dataset, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1977,10 +2205,10 @@ func (c *DatasetsDeleteCall) Fields(s ...googleapi.Field) *DatasetsDeleteCall {
 	return c
 }
 
-func (c *DatasetsDeleteCall) Do() (*Empty, error) {
+func (c *DatasetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1991,7 +2219,11 @@ func (c *DatasetsDeleteCall) Do() (*Empty, error) {
 		"datasetId": c.datasetId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *DatasetsDeleteCall) Do() (*Empty, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2054,10 +2286,10 @@ func (c *DatasetsGetCall) Fields(s ...googleapi.Field) *DatasetsGetCall {
 	return c
 }
 
-func (c *DatasetsGetCall) Do() (*Dataset, error) {
+func (c *DatasetsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -2068,7 +2300,11 @@ func (c *DatasetsGetCall) Do() (*Dataset, error) {
 		"datasetId": c.datasetId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *DatasetsGetCall) Do() (*Dataset, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2104,6 +2340,99 @@ func (c *DatasetsGetCall) Do() (*Dataset, error) {
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/genomics",
 	//     "https://www.googleapis.com/auth/genomics.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "genomics.datasets.getIamPolicy":
+
+type DatasetsGetIamPolicyCall struct {
+	s                   *Service
+	resource            string
+	getiampolicyrequest *GetIamPolicyRequest
+	opt_                map[string]interface{}
+}
+
+// GetIamPolicy:
+func (r *DatasetsService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *DatasetsGetIamPolicyCall {
+	c := &DatasetsGetIamPolicyCall{s: r.s, opt_: make(map[string]interface{})}
+	c.resource = resource
+	c.getiampolicyrequest = getiampolicyrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *DatasetsGetIamPolicyCall) Fields(s ...googleapi.Field) *DatasetsGetIamPolicyCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *DatasetsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.getiampolicyrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:getIamPolicy")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	return c.s.client.Do(req)
+}
+
+func (c *DatasetsGetIamPolicyCall) Do() (*Policy, error) {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Policy
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "",
+	//   "httpMethod": "POST",
+	//   "id": "genomics.datasets.getIamPolicy",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "resource": {
+	//       "description": "REQUIRED: The resource for which policy is being specified. Format is `datasets/`.",
+	//       "location": "path",
+	//       "pattern": "^datasets/[^/]*$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+resource}:getIamPolicy",
+	//   "request": {
+	//     "$ref": "GetIamPolicyRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Policy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/genomics"
 	//   ]
 	// }
 
@@ -2154,10 +2483,10 @@ func (c *DatasetsListCall) Fields(s ...googleapi.Field) *DatasetsListCall {
 	return c
 }
 
-func (c *DatasetsListCall) Do() (*ListDatasetsResponse, error) {
+func (c *DatasetsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["pageSize"]; ok {
 		params.Set("pageSize", fmt.Sprintf("%v", v))
 	}
@@ -2175,7 +2504,11 @@ func (c *DatasetsListCall) Do() (*ListDatasetsResponse, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *DatasetsListCall) Do() (*ListDatasetsResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2257,7 +2590,7 @@ func (c *DatasetsPatchCall) Fields(s ...googleapi.Field) *DatasetsPatchCall {
 	return c
 }
 
-func (c *DatasetsPatchCall) Do() (*Dataset, error) {
+func (c *DatasetsPatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.dataset)
 	if err != nil {
@@ -2265,7 +2598,7 @@ func (c *DatasetsPatchCall) Do() (*Dataset, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["updateMask"]; ok {
 		params.Set("updateMask", fmt.Sprintf("%v", v))
 	}
@@ -2280,7 +2613,11 @@ func (c *DatasetsPatchCall) Do() (*Dataset, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *DatasetsPatchCall) Do() (*Dataset, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2328,6 +2665,192 @@ func (c *DatasetsPatchCall) Do() (*Dataset, error) {
 
 }
 
+// method id "genomics.datasets.setIamPolicy":
+
+type DatasetsSetIamPolicyCall struct {
+	s                   *Service
+	resource            string
+	setiampolicyrequest *SetIamPolicyRequest
+	opt_                map[string]interface{}
+}
+
+// SetIamPolicy:
+func (r *DatasetsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *DatasetsSetIamPolicyCall {
+	c := &DatasetsSetIamPolicyCall{s: r.s, opt_: make(map[string]interface{})}
+	c.resource = resource
+	c.setiampolicyrequest = setiampolicyrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *DatasetsSetIamPolicyCall) Fields(s ...googleapi.Field) *DatasetsSetIamPolicyCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *DatasetsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.setiampolicyrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:setIamPolicy")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	return c.s.client.Do(req)
+}
+
+func (c *DatasetsSetIamPolicyCall) Do() (*Policy, error) {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Policy
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "",
+	//   "httpMethod": "POST",
+	//   "id": "genomics.datasets.setIamPolicy",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "resource": {
+	//       "description": "REQUIRED: The resource for which policy is being specified. Format is `datasets/`.",
+	//       "location": "path",
+	//       "pattern": "^datasets/[^/]*$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+resource}:setIamPolicy",
+	//   "request": {
+	//     "$ref": "SetIamPolicyRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Policy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/genomics"
+	//   ]
+	// }
+
+}
+
+// method id "genomics.datasets.testIamPermissions":
+
+type DatasetsTestIamPermissionsCall struct {
+	s                         *Service
+	resource                  string
+	testiampermissionsrequest *TestIamPermissionsRequest
+	opt_                      map[string]interface{}
+}
+
+// TestIamPermissions:
+func (r *DatasetsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *DatasetsTestIamPermissionsCall {
+	c := &DatasetsTestIamPermissionsCall{s: r.s, opt_: make(map[string]interface{})}
+	c.resource = resource
+	c.testiampermissionsrequest = testiampermissionsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *DatasetsTestIamPermissionsCall) Fields(s ...googleapi.Field) *DatasetsTestIamPermissionsCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *DatasetsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.testiampermissionsrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:testIamPermissions")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	return c.s.client.Do(req)
+}
+
+func (c *DatasetsTestIamPermissionsCall) Do() (*TestIamPermissionsResponse, error) {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *TestIamPermissionsResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "",
+	//   "httpMethod": "POST",
+	//   "id": "genomics.datasets.testIamPermissions",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "resource": {
+	//       "description": "REQUIRED: The resource for which policy is being specified. Format is `datasets/`.",
+	//       "location": "path",
+	//       "pattern": "^datasets/[^/]*$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+resource}:testIamPermissions",
+	//   "request": {
+	//     "$ref": "TestIamPermissionsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "TestIamPermissionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/genomics"
+	//   ]
+	// }
+
+}
+
 // method id "genomics.datasets.undelete":
 
 type DatasetsUndeleteCall struct {
@@ -2355,7 +2878,7 @@ func (c *DatasetsUndeleteCall) Fields(s ...googleapi.Field) *DatasetsUndeleteCal
 	return c
 }
 
-func (c *DatasetsUndeleteCall) Do() (*Dataset, error) {
+func (c *DatasetsUndeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.undeletedatasetrequest)
 	if err != nil {
@@ -2363,7 +2886,7 @@ func (c *DatasetsUndeleteCall) Do() (*Dataset, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -2375,7 +2898,11 @@ func (c *DatasetsUndeleteCall) Do() (*Dataset, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *DatasetsUndeleteCall) Do() (*Dataset, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2450,7 +2977,7 @@ func (c *OperationsCancelCall) Fields(s ...googleapi.Field) *OperationsCancelCal
 	return c
 }
 
-func (c *OperationsCancelCall) Do() (*Empty, error) {
+func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.canceloperationrequest)
 	if err != nil {
@@ -2458,7 +2985,7 @@ func (c *OperationsCancelCall) Do() (*Empty, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -2470,7 +2997,11 @@ func (c *OperationsCancelCall) Do() (*Empty, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *OperationsCancelCall) Do() (*Empty, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2540,10 +3071,10 @@ func (c *OperationsDeleteCall) Fields(s ...googleapi.Field) *OperationsDeleteCal
 	return c
 }
 
-func (c *OperationsDeleteCall) Do() (*Empty, error) {
+func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -2554,7 +3085,11 @@ func (c *OperationsDeleteCall) Do() (*Empty, error) {
 		"name": c.name,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *OperationsDeleteCall) Do() (*Empty, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2620,10 +3155,10 @@ func (c *OperationsGetCall) Fields(s ...googleapi.Field) *OperationsGetCall {
 	return c
 }
 
-func (c *OperationsGetCall) Do() (*Operation, error) {
+func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -2634,7 +3169,11 @@ func (c *OperationsGetCall) Do() (*Operation, error) {
 		"name": c.name,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *OperationsGetCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2712,7 +3251,7 @@ func (c *OperationsListCall) PageSize(pageSize int64) *OperationsListCall {
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The standard List
+// PageToken sets the optional parameter "pageToken": The standard list
 // page token.
 func (c *OperationsListCall) PageToken(pageToken string) *OperationsListCall {
 	c.opt_["pageToken"] = pageToken
@@ -2727,10 +3266,10 @@ func (c *OperationsListCall) Fields(s ...googleapi.Field) *OperationsListCall {
 	return c
 }
 
-func (c *OperationsListCall) Do() (*ListOperationsResponse, error) {
+func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["filter"]; ok {
 		params.Set("filter", fmt.Sprintf("%v", v))
 	}
@@ -2750,7 +3289,11 @@ func (c *OperationsListCall) Do() (*ListOperationsResponse, error) {
 		"name": c.name,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *OperationsListCall) Do() (*ListOperationsResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2790,7 +3333,7 @@ func (c *OperationsListCall) Do() (*ListOperationsResponse, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The standard List page token.",
+	//       "description": "The standard list page token.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -2830,10 +3373,10 @@ func (c *ReadgroupsetsDeleteCall) Fields(s ...googleapi.Field) *ReadgroupsetsDel
 	return c
 }
 
-func (c *ReadgroupsetsDeleteCall) Do() (*Empty, error) {
+func (c *ReadgroupsetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -2844,7 +3387,11 @@ func (c *ReadgroupsetsDeleteCall) Do() (*Empty, error) {
 		"readGroupSetId": c.readGroupSetId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ReadgroupsetsDeleteCall) Do() (*Empty, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2914,7 +3461,7 @@ func (c *ReadgroupsetsExportCall) Fields(s ...googleapi.Field) *ReadgroupsetsExp
 	return c
 }
 
-func (c *ReadgroupsetsExportCall) Do() (*Operation, error) {
+func (c *ReadgroupsetsExportCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.exportreadgroupsetrequest)
 	if err != nil {
@@ -2922,7 +3469,7 @@ func (c *ReadgroupsetsExportCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -2934,7 +3481,11 @@ func (c *ReadgroupsetsExportCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ReadgroupsetsExportCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3001,10 +3552,10 @@ func (c *ReadgroupsetsGetCall) Fields(s ...googleapi.Field) *ReadgroupsetsGetCal
 	return c
 }
 
-func (c *ReadgroupsetsGetCall) Do() (*ReadGroupSet, error) {
+func (c *ReadgroupsetsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -3015,7 +3566,11 @@ func (c *ReadgroupsetsGetCall) Do() (*ReadGroupSet, error) {
 		"readGroupSetId": c.readGroupSetId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ReadgroupsetsGetCall) Do() (*ReadGroupSet, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3083,7 +3638,7 @@ func (c *ReadgroupsetsImportCall) Fields(s ...googleapi.Field) *ReadgroupsetsImp
 	return c
 }
 
-func (c *ReadgroupsetsImportCall) Do() (*Operation, error) {
+func (c *ReadgroupsetsImportCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.importreadgroupsetsrequest)
 	if err != nil {
@@ -3091,7 +3646,7 @@ func (c *ReadgroupsetsImportCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -3101,7 +3656,11 @@ func (c *ReadgroupsetsImportCall) Do() (*Operation, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ReadgroupsetsImportCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3171,7 +3730,7 @@ func (c *ReadgroupsetsPatchCall) Fields(s ...googleapi.Field) *ReadgroupsetsPatc
 	return c
 }
 
-func (c *ReadgroupsetsPatchCall) Do() (*ReadGroupSet, error) {
+func (c *ReadgroupsetsPatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.readgroupset)
 	if err != nil {
@@ -3179,7 +3738,7 @@ func (c *ReadgroupsetsPatchCall) Do() (*ReadGroupSet, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["updateMask"]; ok {
 		params.Set("updateMask", fmt.Sprintf("%v", v))
 	}
@@ -3194,7 +3753,11 @@ func (c *ReadgroupsetsPatchCall) Do() (*ReadGroupSet, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ReadgroupsetsPatchCall) Do() (*ReadGroupSet, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3268,7 +3831,7 @@ func (c *ReadgroupsetsSearchCall) Fields(s ...googleapi.Field) *ReadgroupsetsSea
 	return c
 }
 
-func (c *ReadgroupsetsSearchCall) Do() (*SearchReadGroupSetsResponse, error) {
+func (c *ReadgroupsetsSearchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.searchreadgroupsetsrequest)
 	if err != nil {
@@ -3276,7 +3839,7 @@ func (c *ReadgroupsetsSearchCall) Do() (*SearchReadGroupSetsResponse, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -3286,7 +3849,11 @@ func (c *ReadgroupsetsSearchCall) Do() (*SearchReadGroupSetsResponse, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ReadgroupsetsSearchCall) Do() (*SearchReadGroupSetsResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3404,10 +3971,10 @@ func (c *ReadgroupsetsCoveragebucketsListCall) Fields(s ...googleapi.Field) *Rea
 	return c
 }
 
-func (c *ReadgroupsetsCoveragebucketsListCall) Do() (*ListCoverageBucketsResponse, error) {
+func (c *ReadgroupsetsCoveragebucketsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["end"]; ok {
 		params.Set("end", fmt.Sprintf("%v", v))
 	}
@@ -3436,7 +4003,11 @@ func (c *ReadgroupsetsCoveragebucketsListCall) Do() (*ListCoverageBucketsRespons
 		"readGroupSetId": c.readGroupSetId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ReadgroupsetsCoveragebucketsListCall) Do() (*ListCoverageBucketsResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3546,7 +4117,7 @@ func (c *ReadsSearchCall) Fields(s ...googleapi.Field) *ReadsSearchCall {
 	return c
 }
 
-func (c *ReadsSearchCall) Do() (*SearchReadsResponse, error) {
+func (c *ReadsSearchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.searchreadsrequest)
 	if err != nil {
@@ -3554,7 +4125,7 @@ func (c *ReadsSearchCall) Do() (*SearchReadsResponse, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -3564,7 +4135,11 @@ func (c *ReadsSearchCall) Do() (*SearchReadsResponse, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ReadsSearchCall) Do() (*SearchReadsResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3622,10 +4197,10 @@ func (c *ReferencesGetCall) Fields(s ...googleapi.Field) *ReferencesGetCall {
 	return c
 }
 
-func (c *ReferencesGetCall) Do() (*Reference, error) {
+func (c *ReferencesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -3636,7 +4211,11 @@ func (c *ReferencesGetCall) Do() (*Reference, error) {
 		"referenceId": c.referenceId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ReferencesGetCall) Do() (*Reference, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3703,7 +4282,7 @@ func (c *ReferencesSearchCall) Fields(s ...googleapi.Field) *ReferencesSearchCal
 	return c
 }
 
-func (c *ReferencesSearchCall) Do() (*SearchReferencesResponse, error) {
+func (c *ReferencesSearchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.searchreferencesrequest)
 	if err != nil {
@@ -3711,7 +4290,7 @@ func (c *ReferencesSearchCall) Do() (*SearchReferencesResponse, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -3721,7 +4300,11 @@ func (c *ReferencesSearchCall) Do() (*SearchReferencesResponse, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ReferencesSearchCall) Do() (*SearchReferencesResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3810,10 +4393,10 @@ func (c *ReferencesBasesListCall) Fields(s ...googleapi.Field) *ReferencesBasesL
 	return c
 }
 
-func (c *ReferencesBasesListCall) Do() (*ListBasesResponse, error) {
+func (c *ReferencesBasesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["end"]; ok {
 		params.Set("end", fmt.Sprintf("%v", v))
 	}
@@ -3836,7 +4419,11 @@ func (c *ReferencesBasesListCall) Do() (*ListBasesResponse, error) {
 		"referenceId": c.referenceId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ReferencesBasesListCall) Do() (*ListBasesResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3925,10 +4512,10 @@ func (c *ReferencesetsGetCall) Fields(s ...googleapi.Field) *ReferencesetsGetCal
 	return c
 }
 
-func (c *ReferencesetsGetCall) Do() (*ReferenceSet, error) {
+func (c *ReferencesetsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -3939,7 +4526,11 @@ func (c *ReferencesetsGetCall) Do() (*ReferenceSet, error) {
 		"referenceSetId": c.referenceSetId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ReferencesetsGetCall) Do() (*ReferenceSet, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -4006,7 +4597,7 @@ func (c *ReferencesetsSearchCall) Fields(s ...googleapi.Field) *ReferencesetsSea
 	return c
 }
 
-func (c *ReferencesetsSearchCall) Do() (*SearchReferenceSetsResponse, error) {
+func (c *ReferencesetsSearchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.searchreferencesetsrequest)
 	if err != nil {
@@ -4014,7 +4605,7 @@ func (c *ReferencesetsSearchCall) Do() (*SearchReferenceSetsResponse, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -4024,7 +4615,11 @@ func (c *ReferencesetsSearchCall) Do() (*SearchReferenceSetsResponse, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ReferencesetsSearchCall) Do() (*SearchReferenceSetsResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -4080,7 +4675,7 @@ func (c *VariantsCreateCall) Fields(s ...googleapi.Field) *VariantsCreateCall {
 	return c
 }
 
-func (c *VariantsCreateCall) Do() (*Variant, error) {
+func (c *VariantsCreateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.variant)
 	if err != nil {
@@ -4088,7 +4683,7 @@ func (c *VariantsCreateCall) Do() (*Variant, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -4098,7 +4693,11 @@ func (c *VariantsCreateCall) Do() (*Variant, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *VariantsCreateCall) Do() (*Variant, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -4153,10 +4752,10 @@ func (c *VariantsDeleteCall) Fields(s ...googleapi.Field) *VariantsDeleteCall {
 	return c
 }
 
-func (c *VariantsDeleteCall) Do() (*Empty, error) {
+func (c *VariantsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -4167,7 +4766,11 @@ func (c *VariantsDeleteCall) Do() (*Empty, error) {
 		"variantId": c.variantId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *VariantsDeleteCall) Do() (*Empty, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -4230,10 +4833,10 @@ func (c *VariantsGetCall) Fields(s ...googleapi.Field) *VariantsGetCall {
 	return c
 }
 
-func (c *VariantsGetCall) Do() (*Variant, error) {
+func (c *VariantsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -4244,7 +4847,11 @@ func (c *VariantsGetCall) Do() (*Variant, error) {
 		"variantId": c.variantId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *VariantsGetCall) Do() (*Variant, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -4316,7 +4923,7 @@ func (c *VariantsImportCall) Fields(s ...googleapi.Field) *VariantsImportCall {
 	return c
 }
 
-func (c *VariantsImportCall) Do() (*Operation, error) {
+func (c *VariantsImportCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.importvariantsrequest)
 	if err != nil {
@@ -4324,7 +4931,7 @@ func (c *VariantsImportCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -4334,7 +4941,11 @@ func (c *VariantsImportCall) Do() (*Operation, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *VariantsImportCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -4361,85 +4972,6 @@ func (c *VariantsImportCall) Do() (*Operation, error) {
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/devstorage.read_write",
-	//     "https://www.googleapis.com/auth/genomics"
-	//   ]
-	// }
-
-}
-
-// method id "genomics.variants.merge":
-
-type VariantsMergeCall struct {
-	s                    *Service
-	mergevariantsrequest *MergeVariantsRequest
-	opt_                 map[string]interface{}
-}
-
-// Merge: Merges the given variants with existing variants. Each variant
-// will be merged with an existing variant that matches its reference
-// sequence, start, end, reference bases, and alternative bases. If no
-// such variant exists, a new one will be created. When variants are
-// merged, the call information from the new variant is added to the
-// existing variant, and other fields (such as key/value pairs) are
-// discarded.
-func (r *VariantsService) Merge(mergevariantsrequest *MergeVariantsRequest) *VariantsMergeCall {
-	c := &VariantsMergeCall{s: r.s, opt_: make(map[string]interface{})}
-	c.mergevariantsrequest = mergevariantsrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *VariantsMergeCall) Fields(s ...googleapi.Field) *VariantsMergeCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
-	return c
-}
-
-func (c *VariantsMergeCall) Do() (*Empty, error) {
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.mergevariantsrequest)
-	if err != nil {
-		return nil, err
-	}
-	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", "json")
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/variants:merge")
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("POST", urls, body)
-	googleapi.SetOpaque(req.URL)
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	var ret *Empty
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Merges the given variants with existing variants. Each variant will be merged with an existing variant that matches its reference sequence, start, end, reference bases, and alternative bases. If no such variant exists, a new one will be created. When variants are merged, the call information from the new variant is added to the existing variant, and other fields (such as key/value pairs) are discarded.",
-	//   "httpMethod": "POST",
-	//   "id": "genomics.variants.merge",
-	//   "path": "v1/variants:merge",
-	//   "request": {
-	//     "$ref": "MergeVariantsRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/genomics"
 	//   ]
 	// }
@@ -4483,7 +5015,7 @@ func (c *VariantsPatchCall) Fields(s ...googleapi.Field) *VariantsPatchCall {
 	return c
 }
 
-func (c *VariantsPatchCall) Do() (*Variant, error) {
+func (c *VariantsPatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.variant)
 	if err != nil {
@@ -4491,7 +5023,7 @@ func (c *VariantsPatchCall) Do() (*Variant, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["updateMask"]; ok {
 		params.Set("updateMask", fmt.Sprintf("%v", v))
 	}
@@ -4506,7 +5038,11 @@ func (c *VariantsPatchCall) Do() (*Variant, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *VariantsPatchCall) Do() (*Variant, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -4579,7 +5115,7 @@ func (c *VariantsSearchCall) Fields(s ...googleapi.Field) *VariantsSearchCall {
 	return c
 }
 
-func (c *VariantsSearchCall) Do() (*SearchVariantsResponse, error) {
+func (c *VariantsSearchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.searchvariantsrequest)
 	if err != nil {
@@ -4587,7 +5123,7 @@ func (c *VariantsSearchCall) Do() (*SearchVariantsResponse, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -4597,7 +5133,11 @@ func (c *VariantsSearchCall) Do() (*SearchVariantsResponse, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *VariantsSearchCall) Do() (*SearchVariantsResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -4638,7 +5178,9 @@ type VariantsetsCreateCall struct {
 	opt_       map[string]interface{}
 }
 
-// Create: Creates a new variant set.
+// Create: Creates a new variant set. The provided variant set must have
+// a valid `datasetId` set - all other fields are optional. Note that
+// the `id` field will be ignored, as this is assigned by the server.
 func (r *VariantsetsService) Create(variantset *VariantSet) *VariantsetsCreateCall {
 	c := &VariantsetsCreateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.variantset = variantset
@@ -4653,7 +5195,7 @@ func (c *VariantsetsCreateCall) Fields(s ...googleapi.Field) *VariantsetsCreateC
 	return c
 }
 
-func (c *VariantsetsCreateCall) Do() (*VariantSet, error) {
+func (c *VariantsetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.variantset)
 	if err != nil {
@@ -4661,7 +5203,7 @@ func (c *VariantsetsCreateCall) Do() (*VariantSet, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -4671,7 +5213,11 @@ func (c *VariantsetsCreateCall) Do() (*VariantSet, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *VariantsetsCreateCall) Do() (*VariantSet, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -4685,7 +5231,7 @@ func (c *VariantsetsCreateCall) Do() (*VariantSet, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new variant set.",
+	//   "description": "Creates a new variant set. The provided variant set must have a valid `datasetId` set - all other fields are optional. Note that the `id` field will be ignored, as this is assigned by the server.",
 	//   "httpMethod": "POST",
 	//   "id": "genomics.variantsets.create",
 	//   "path": "v1/variantsets",
@@ -4727,10 +5273,10 @@ func (c *VariantsetsDeleteCall) Fields(s ...googleapi.Field) *VariantsetsDeleteC
 	return c
 }
 
-func (c *VariantsetsDeleteCall) Do() (*Empty, error) {
+func (c *VariantsetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -4741,7 +5287,11 @@ func (c *VariantsetsDeleteCall) Do() (*Empty, error) {
 		"variantSetId": c.variantSetId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *VariantsetsDeleteCall) Do() (*Empty, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -4806,7 +5356,7 @@ func (c *VariantsetsExportCall) Fields(s ...googleapi.Field) *VariantsetsExportC
 	return c
 }
 
-func (c *VariantsetsExportCall) Do() (*Operation, error) {
+func (c *VariantsetsExportCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.exportvariantsetrequest)
 	if err != nil {
@@ -4814,7 +5364,7 @@ func (c *VariantsetsExportCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -4826,7 +5376,11 @@ func (c *VariantsetsExportCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *VariantsetsExportCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -4893,10 +5447,10 @@ func (c *VariantsetsGetCall) Fields(s ...googleapi.Field) *VariantsetsGetCall {
 	return c
 }
 
-func (c *VariantsetsGetCall) Do() (*VariantSet, error) {
+func (c *VariantsetsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -4907,7 +5461,11 @@ func (c *VariantsetsGetCall) Do() (*VariantSet, error) {
 		"variantSetId": c.variantSetId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *VariantsetsGetCall) Do() (*VariantSet, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -4983,7 +5541,7 @@ func (c *VariantsetsPatchCall) Fields(s ...googleapi.Field) *VariantsetsPatchCal
 	return c
 }
 
-func (c *VariantsetsPatchCall) Do() (*VariantSet, error) {
+func (c *VariantsetsPatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.variantset)
 	if err != nil {
@@ -4991,7 +5549,7 @@ func (c *VariantsetsPatchCall) Do() (*VariantSet, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["updateMask"]; ok {
 		params.Set("updateMask", fmt.Sprintf("%v", v))
 	}
@@ -5006,7 +5564,11 @@ func (c *VariantsetsPatchCall) Do() (*VariantSet, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *VariantsetsPatchCall) Do() (*VariantSet, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -5080,7 +5642,7 @@ func (c *VariantsetsSearchCall) Fields(s ...googleapi.Field) *VariantsetsSearchC
 	return c
 }
 
-func (c *VariantsetsSearchCall) Do() (*SearchVariantSetsResponse, error) {
+func (c *VariantsetsSearchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.searchvariantsetsrequest)
 	if err != nil {
@@ -5088,7 +5650,7 @@ func (c *VariantsetsSearchCall) Do() (*SearchVariantSetsResponse, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -5098,7 +5660,11 @@ func (c *VariantsetsSearchCall) Do() (*SearchVariantSetsResponse, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *VariantsetsSearchCall) Do() (*SearchVariantSetsResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}

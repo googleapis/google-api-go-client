@@ -2282,6 +2282,7 @@ type Creative struct {
 	//   "RICH_MEDIA_MULTI_FLOATING"
 	//   "RICH_MEDIA_PEEL_DOWN"
 	//   "TRACKING_TEXT"
+	//   "VAST_REDIRECT"
 	//   "VPAID_LINEAR"
 	//   "VPAID_NON_LINEAR"
 	Type string `json:"type,omitempty"`
@@ -3760,7 +3761,8 @@ type EventTag struct {
 	// filter.
 	SiteIds googleapi.Int64s `json:"siteIds,omitempty"`
 
-	// SslCompliant: Whether this tag is SSL-compliant or not.
+	// SslCompliant: Whether this tag is SSL-compliant or not. This is a
+	// read-only field.
 	SslCompliant bool `json:"sslCompliant,omitempty"`
 
 	// Status: Status of this event tag. Must be ENABLED for this event tag
@@ -4084,7 +4086,6 @@ type FloodlightActivity struct {
 	// Possible values:
 	//   "U1"
 	//   "U10"
-	//   "U100"
 	//   "U11"
 	//   "U12"
 	//   "U13"
@@ -4096,92 +4097,13 @@ type FloodlightActivity struct {
 	//   "U19"
 	//   "U2"
 	//   "U20"
-	//   "U21"
-	//   "U22"
-	//   "U23"
-	//   "U24"
-	//   "U25"
-	//   "U26"
-	//   "U27"
-	//   "U28"
-	//   "U29"
 	//   "U3"
-	//   "U30"
-	//   "U31"
-	//   "U32"
-	//   "U33"
-	//   "U34"
-	//   "U35"
-	//   "U36"
-	//   "U37"
-	//   "U38"
-	//   "U39"
 	//   "U4"
-	//   "U40"
-	//   "U41"
-	//   "U42"
-	//   "U43"
-	//   "U44"
-	//   "U45"
-	//   "U46"
-	//   "U47"
-	//   "U48"
-	//   "U49"
 	//   "U5"
-	//   "U50"
-	//   "U51"
-	//   "U52"
-	//   "U53"
-	//   "U54"
-	//   "U55"
-	//   "U56"
-	//   "U57"
-	//   "U58"
-	//   "U59"
 	//   "U6"
-	//   "U60"
-	//   "U61"
-	//   "U62"
-	//   "U63"
-	//   "U64"
-	//   "U65"
-	//   "U66"
-	//   "U67"
-	//   "U68"
-	//   "U69"
 	//   "U7"
-	//   "U70"
-	//   "U71"
-	//   "U72"
-	//   "U73"
-	//   "U74"
-	//   "U75"
-	//   "U76"
-	//   "U77"
-	//   "U78"
-	//   "U79"
 	//   "U8"
-	//   "U80"
-	//   "U81"
-	//   "U82"
-	//   "U83"
-	//   "U84"
-	//   "U85"
-	//   "U86"
-	//   "U87"
-	//   "U88"
-	//   "U89"
 	//   "U9"
-	//   "U90"
-	//   "U91"
-	//   "U92"
-	//   "U93"
-	//   "U94"
-	//   "U95"
-	//   "U96"
-	//   "U97"
-	//   "U98"
-	//   "U99"
 	UserDefinedVariableTypes []string `json:"userDefinedVariableTypes,omitempty"`
 }
 
@@ -4990,12 +4912,17 @@ type Placement struct {
 	//   "PLACEMENT_TAG_CLICK_COMMANDS"
 	//   "PLACEMENT_TAG_IFRAME_ILAYER"
 	//   "PLACEMENT_TAG_IFRAME_JAVASCRIPT"
+	//   "PLACEMENT_TAG_IFRAME_JAVASCRIPT_LEGACY"
 	//   "PLACEMENT_TAG_INSTREAM_VIDEO_PREFETCH"
+	//   "PLACEMENT_TAG_INSTREAM_VIDEO_PREFETCH_VAST_3"
 	//   "PLACEMENT_TAG_INTERNAL_REDIRECT"
 	//   "PLACEMENT_TAG_INTERSTITIAL_IFRAME_JAVASCRIPT"
+	//   "PLACEMENT_TAG_INTERSTITIAL_IFRAME_JAVASCRIPT_LEGACY"
 	//   "PLACEMENT_TAG_INTERSTITIAL_INTERNAL_REDIRECT"
 	//   "PLACEMENT_TAG_INTERSTITIAL_JAVASCRIPT"
+	//   "PLACEMENT_TAG_INTERSTITIAL_JAVASCRIPT_LEGACY"
 	//   "PLACEMENT_TAG_JAVASCRIPT"
+	//   "PLACEMENT_TAG_JAVASCRIPT_LEGACY"
 	//   "PLACEMENT_TAG_STANDARD"
 	//   "PLACEMENT_TAG_TRACKING"
 	//   "PLACEMENT_TAG_TRACKING_IFRAME"
@@ -6095,7 +6022,7 @@ type SitesListResponse struct {
 	// operation.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// Sites: Site collection
+	// Sites: Site collection.
 	Sites []*Site `json:"sites,omitempty"`
 }
 
@@ -6200,12 +6127,17 @@ type TagData struct {
 	//   "PLACEMENT_TAG_CLICK_COMMANDS"
 	//   "PLACEMENT_TAG_IFRAME_ILAYER"
 	//   "PLACEMENT_TAG_IFRAME_JAVASCRIPT"
+	//   "PLACEMENT_TAG_IFRAME_JAVASCRIPT_LEGACY"
 	//   "PLACEMENT_TAG_INSTREAM_VIDEO_PREFETCH"
+	//   "PLACEMENT_TAG_INSTREAM_VIDEO_PREFETCH_VAST_3"
 	//   "PLACEMENT_TAG_INTERNAL_REDIRECT"
 	//   "PLACEMENT_TAG_INTERSTITIAL_IFRAME_JAVASCRIPT"
+	//   "PLACEMENT_TAG_INTERSTITIAL_IFRAME_JAVASCRIPT_LEGACY"
 	//   "PLACEMENT_TAG_INTERSTITIAL_INTERNAL_REDIRECT"
 	//   "PLACEMENT_TAG_INTERSTITIAL_JAVASCRIPT"
+	//   "PLACEMENT_TAG_INTERSTITIAL_JAVASCRIPT_LEGACY"
 	//   "PLACEMENT_TAG_JAVASCRIPT"
+	//   "PLACEMENT_TAG_JAVASCRIPT_LEGACY"
 	//   "PLACEMENT_TAG_STANDARD"
 	//   "PLACEMENT_TAG_TRACKING"
 	//   "PLACEMENT_TAG_TRACKING_IFRAME"
@@ -6359,7 +6291,6 @@ type UserDefinedVariableConfiguration struct {
 	// Possible values:
 	//   "U1"
 	//   "U10"
-	//   "U100"
 	//   "U11"
 	//   "U12"
 	//   "U13"
@@ -6371,92 +6302,13 @@ type UserDefinedVariableConfiguration struct {
 	//   "U19"
 	//   "U2"
 	//   "U20"
-	//   "U21"
-	//   "U22"
-	//   "U23"
-	//   "U24"
-	//   "U25"
-	//   "U26"
-	//   "U27"
-	//   "U28"
-	//   "U29"
 	//   "U3"
-	//   "U30"
-	//   "U31"
-	//   "U32"
-	//   "U33"
-	//   "U34"
-	//   "U35"
-	//   "U36"
-	//   "U37"
-	//   "U38"
-	//   "U39"
 	//   "U4"
-	//   "U40"
-	//   "U41"
-	//   "U42"
-	//   "U43"
-	//   "U44"
-	//   "U45"
-	//   "U46"
-	//   "U47"
-	//   "U48"
-	//   "U49"
 	//   "U5"
-	//   "U50"
-	//   "U51"
-	//   "U52"
-	//   "U53"
-	//   "U54"
-	//   "U55"
-	//   "U56"
-	//   "U57"
-	//   "U58"
-	//   "U59"
 	//   "U6"
-	//   "U60"
-	//   "U61"
-	//   "U62"
-	//   "U63"
-	//   "U64"
-	//   "U65"
-	//   "U66"
-	//   "U67"
-	//   "U68"
-	//   "U69"
 	//   "U7"
-	//   "U70"
-	//   "U71"
-	//   "U72"
-	//   "U73"
-	//   "U74"
-	//   "U75"
-	//   "U76"
-	//   "U77"
-	//   "U78"
-	//   "U79"
 	//   "U8"
-	//   "U80"
-	//   "U81"
-	//   "U82"
-	//   "U83"
-	//   "U84"
-	//   "U85"
-	//   "U86"
-	//   "U87"
-	//   "U88"
-	//   "U89"
 	//   "U9"
-	//   "U90"
-	//   "U91"
-	//   "U92"
-	//   "U93"
-	//   "U94"
-	//   "U95"
-	//   "U96"
-	//   "U97"
-	//   "U98"
-	//   "U99"
 	VariableType string `json:"variableType,omitempty"`
 }
 
@@ -8396,6 +8248,7 @@ func (c *AdsListCall) CreativeOptimizationConfigurationIds(creativeOptimizationC
 //   "RICH_MEDIA_MULTI_FLOATING"
 //   "RICH_MEDIA_PEEL_DOWN"
 //   "TRACKING_TEXT"
+//   "VAST_REDIRECT"
 //   "VPAID_LINEAR"
 //   "VPAID_NON_LINEAR"
 func (c *AdsListCall) CreativeType(creativeType string) *AdsListCall {
@@ -8738,10 +8591,12 @@ func (c *AdsListCall) Do() (*AdsListResponse, error) {
 	//         "RICH_MEDIA_MULTI_FLOATING",
 	//         "RICH_MEDIA_PEEL_DOWN",
 	//         "TRACKING_TEXT",
+	//         "VAST_REDIRECT",
 	//         "VPAID_LINEAR",
 	//         "VPAID_NON_LINEAR"
 	//       ],
 	//       "enumDescriptions": [
+	//         "",
 	//         "",
 	//         "",
 	//         "",
@@ -11644,6 +11499,7 @@ func (r *ChangeLogsService) List(profileId int64) *ChangeLogsListCall {
 //   "ACTION_PUSH"
 //   "ACTION_REMOVE"
 //   "ACTION_SEND"
+//   "ACTION_SHARE"
 //   "ACTION_UNASSIGN"
 //   "ACTION_UNLINK"
 //   "ACTION_UPDATE"
@@ -11859,11 +11715,13 @@ func (c *ChangeLogsListCall) Do() (*ChangeLogsListResponse, error) {
 	//         "ACTION_PUSH",
 	//         "ACTION_REMOVE",
 	//         "ACTION_SEND",
+	//         "ACTION_SHARE",
 	//         "ACTION_UNASSIGN",
 	//         "ACTION_UNLINK",
 	//         "ACTION_UPDATE"
 	//       ],
 	//       "enumDescriptions": [
+	//         "",
 	//         "",
 	//         "",
 	//         "",
@@ -15676,6 +15534,7 @@ func (c *CreativesListCall) StudioCreativeId(studioCreativeId int64) *CreativesL
 //   "RICH_MEDIA_MULTI_FLOATING"
 //   "RICH_MEDIA_PEEL_DOWN"
 //   "TRACKING_TEXT"
+//   "VAST_REDIRECT"
 //   "VPAID_LINEAR"
 //   "VPAID_NON_LINEAR"
 func (c *CreativesListCall) Types(types string) *CreativesListCall {
@@ -15914,10 +15773,12 @@ func (c *CreativesListCall) Do() (*CreativesListResponse, error) {
 	//         "RICH_MEDIA_MULTI_FLOATING",
 	//         "RICH_MEDIA_PEEL_DOWN",
 	//         "TRACKING_TEXT",
+	//         "VAST_REDIRECT",
 	//         "VPAID_LINEAR",
 	//         "VPAID_NON_LINEAR"
 	//       ],
 	//       "enumDescriptions": [
+	//         "",
 	//         "",
 	//         "",
 	//         "",
@@ -17310,22 +17171,26 @@ func (c *EventTagsListCall) CampaignId(campaignId int64) *EventTagsListCall {
 }
 
 // DefinitionsOnly sets the optional parameter "definitionsOnly":
-// Examine only the specified ad or campaign or advertiser's event tags
-// for matching selector criteria. When set to false, the parent
-// advertiser and parent campaign is examined as well. In addition, when
-// set to false, the status field is examined as well along with the
-// enabledByDefault field.
+// Examine only the specified campaign or advertiser's event tags for
+// matching selector criteria. When set to false, the parent advertiser
+// and parent campaign of the specified ad or campaign is examined as
+// well. In addition, when set to false, the status field is examined as
+// well, along with the enabledByDefault field. This parameter can not
+// be set to true when adId is specified as ads do not define their own
+// even tags.
 func (c *EventTagsListCall) DefinitionsOnly(definitionsOnly bool) *EventTagsListCall {
 	c.opt_["definitionsOnly"] = definitionsOnly
 	return c
 }
 
 // Enabled sets the optional parameter "enabled": Select only enabled
-// event tags. When definitionsOnly is set to true, only the specified
-// advertiser or campaign's event tags' enabledByDefault field is
-// examined. When definitionsOnly is set to false, the specified ad or
-// specified campaign's parent advertiser's or parent campaign's event
-// tags' enabledByDefault and status fields are examined as well.
+// event tags. What is considered enabled or disabled depends on the
+// definitionsOnly parameter. When definitionsOnly is set to true, only
+// the specified advertiser or campaign's event tags' enabledByDefault
+// field is examined. When definitionsOnly is set to false, the
+// specified ad or specified campaign's parent advertiser's or parent
+// campaign's event tags' enabledByDefault and status fields are
+// examined as well.
 func (c *EventTagsListCall) Enabled(enabled bool) *EventTagsListCall {
 	c.opt_["enabled"] = enabled
 	return c
@@ -17484,12 +17349,12 @@ func (c *EventTagsListCall) Do() (*EventTagsListResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "definitionsOnly": {
-	//       "description": "Examine only the specified ad or campaign or advertiser's event tags for matching selector criteria. When set to false, the parent advertiser and parent campaign is examined as well. In addition, when set to false, the status field is examined as well along with the enabledByDefault field.",
+	//       "description": "Examine only the specified campaign or advertiser's event tags for matching selector criteria. When set to false, the parent advertiser and parent campaign of the specified ad or campaign is examined as well. In addition, when set to false, the status field is examined as well, along with the enabledByDefault field. This parameter can not be set to true when adId is specified as ads do not define their own even tags.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "enabled": {
-	//       "description": "Select only enabled event tags. When definitionsOnly is set to true, only the specified advertiser or campaign's event tags' enabledByDefault field is examined. When definitionsOnly is set to false, the specified ad or specified campaign's parent advertiser's or parent campaign's event tags' enabledByDefault and status fields are examined as well.",
+	//       "description": "Select only enabled event tags. What is considered enabled or disabled depends on the definitionsOnly parameter. When definitionsOnly is set to true, only the specified advertiser or campaign's event tags' enabledByDefault field is examined. When definitionsOnly is set to false, the specified ad or specified campaign's parent advertiser's or parent campaign's event tags' enabledByDefault and status fields are examined as well.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -22510,12 +22375,17 @@ func (c *PlacementsGeneratetagsCall) PlacementIds(placementIds int64) *Placement
 //   "PLACEMENT_TAG_CLICK_COMMANDS"
 //   "PLACEMENT_TAG_IFRAME_ILAYER"
 //   "PLACEMENT_TAG_IFRAME_JAVASCRIPT"
+//   "PLACEMENT_TAG_IFRAME_JAVASCRIPT_LEGACY"
 //   "PLACEMENT_TAG_INSTREAM_VIDEO_PREFETCH"
+//   "PLACEMENT_TAG_INSTREAM_VIDEO_PREFETCH_VAST_3"
 //   "PLACEMENT_TAG_INTERNAL_REDIRECT"
 //   "PLACEMENT_TAG_INTERSTITIAL_IFRAME_JAVASCRIPT"
+//   "PLACEMENT_TAG_INTERSTITIAL_IFRAME_JAVASCRIPT_LEGACY"
 //   "PLACEMENT_TAG_INTERSTITIAL_INTERNAL_REDIRECT"
 //   "PLACEMENT_TAG_INTERSTITIAL_JAVASCRIPT"
+//   "PLACEMENT_TAG_INTERSTITIAL_JAVASCRIPT_LEGACY"
 //   "PLACEMENT_TAG_JAVASCRIPT"
+//   "PLACEMENT_TAG_JAVASCRIPT_LEGACY"
 //   "PLACEMENT_TAG_STANDARD"
 //   "PLACEMENT_TAG_TRACKING"
 //   "PLACEMENT_TAG_TRACKING_IFRAME"
@@ -22607,18 +22477,28 @@ func (c *PlacementsGeneratetagsCall) Do() (*PlacementsGenerateTagsResponse, erro
 	//         "PLACEMENT_TAG_CLICK_COMMANDS",
 	//         "PLACEMENT_TAG_IFRAME_ILAYER",
 	//         "PLACEMENT_TAG_IFRAME_JAVASCRIPT",
+	//         "PLACEMENT_TAG_IFRAME_JAVASCRIPT_LEGACY",
 	//         "PLACEMENT_TAG_INSTREAM_VIDEO_PREFETCH",
+	//         "PLACEMENT_TAG_INSTREAM_VIDEO_PREFETCH_VAST_3",
 	//         "PLACEMENT_TAG_INTERNAL_REDIRECT",
 	//         "PLACEMENT_TAG_INTERSTITIAL_IFRAME_JAVASCRIPT",
+	//         "PLACEMENT_TAG_INTERSTITIAL_IFRAME_JAVASCRIPT_LEGACY",
 	//         "PLACEMENT_TAG_INTERSTITIAL_INTERNAL_REDIRECT",
 	//         "PLACEMENT_TAG_INTERSTITIAL_JAVASCRIPT",
+	//         "PLACEMENT_TAG_INTERSTITIAL_JAVASCRIPT_LEGACY",
 	//         "PLACEMENT_TAG_JAVASCRIPT",
+	//         "PLACEMENT_TAG_JAVASCRIPT_LEGACY",
 	//         "PLACEMENT_TAG_STANDARD",
 	//         "PLACEMENT_TAG_TRACKING",
 	//         "PLACEMENT_TAG_TRACKING_IFRAME",
 	//         "PLACEMENT_TAG_TRACKING_JAVASCRIPT"
 	//       ],
 	//       "enumDescriptions": [
+	//         "",
+	//         "",
+	//         "",
+	//         "",
+	//         "",
 	//         "",
 	//         "",
 	//         "",

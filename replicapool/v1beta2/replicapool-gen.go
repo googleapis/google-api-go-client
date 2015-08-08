@@ -46,6 +46,10 @@ const (
 	// View and manage your data across Google Cloud Platform services
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
+	// MESSAGE UNDER CONSTRUCTION View your data across Google Cloud
+	// Platform services
+	CloudPlatformReadOnlyScope = "https://www.googleapis.com/auth/cloud-platform.read-only"
+
 	// View and manage your Google Compute Engine resources
 	ComputeScope = "https://www.googleapis.com/auth/compute"
 
@@ -445,7 +449,7 @@ func (c *InstanceGroupManagersAbandonInstancesCall) Fields(s ...googleapi.Field)
 	return c
 }
 
-func (c *InstanceGroupManagersAbandonInstancesCall) Do() (*Operation, error) {
+func (c *InstanceGroupManagersAbandonInstancesCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.instancegroupmanagersabandoninstancesrequest)
 	if err != nil {
@@ -453,7 +457,7 @@ func (c *InstanceGroupManagersAbandonInstancesCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -467,7 +471,11 @@ func (c *InstanceGroupManagersAbandonInstancesCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *InstanceGroupManagersAbandonInstancesCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -557,10 +565,10 @@ func (c *InstanceGroupManagersDeleteCall) Fields(s ...googleapi.Field) *Instance
 	return c
 }
 
-func (c *InstanceGroupManagersDeleteCall) Do() (*Operation, error) {
+func (c *InstanceGroupManagersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -573,7 +581,11 @@ func (c *InstanceGroupManagersDeleteCall) Do() (*Operation, error) {
 		"instanceGroupManager": c.instanceGroupManager,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *InstanceGroupManagersDeleteCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -662,7 +674,7 @@ func (c *InstanceGroupManagersDeleteInstancesCall) Fields(s ...googleapi.Field) 
 	return c
 }
 
-func (c *InstanceGroupManagersDeleteInstancesCall) Do() (*Operation, error) {
+func (c *InstanceGroupManagersDeleteInstancesCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.instancegroupmanagersdeleteinstancesrequest)
 	if err != nil {
@@ -670,7 +682,7 @@ func (c *InstanceGroupManagersDeleteInstancesCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -684,7 +696,11 @@ func (c *InstanceGroupManagersDeleteInstancesCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *InstanceGroupManagersDeleteInstancesCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -771,10 +787,10 @@ func (c *InstanceGroupManagersGetCall) Fields(s ...googleapi.Field) *InstanceGro
 	return c
 }
 
-func (c *InstanceGroupManagersGetCall) Do() (*InstanceGroupManager, error) {
+func (c *InstanceGroupManagersGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -787,7 +803,11 @@ func (c *InstanceGroupManagersGetCall) Do() (*InstanceGroupManager, error) {
 		"instanceGroupManager": c.instanceGroupManager,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *InstanceGroupManagersGetCall) Do() (*InstanceGroupManager, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -838,6 +858,7 @@ func (c *InstanceGroupManagersGetCall) Do() (*InstanceGroupManager, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
@@ -875,7 +896,7 @@ func (c *InstanceGroupManagersInsertCall) Fields(s ...googleapi.Field) *Instance
 	return c
 }
 
-func (c *InstanceGroupManagersInsertCall) Do() (*Operation, error) {
+func (c *InstanceGroupManagersInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.instancegroupmanager)
 	if err != nil {
@@ -883,7 +904,7 @@ func (c *InstanceGroupManagersInsertCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	params.Set("size", fmt.Sprintf("%v", c.size))
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
@@ -897,7 +918,11 @@ func (c *InstanceGroupManagersInsertCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *InstanceGroupManagersInsertCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1007,10 +1032,10 @@ func (c *InstanceGroupManagersListCall) Fields(s ...googleapi.Field) *InstanceGr
 	return c
 }
 
-func (c *InstanceGroupManagersListCall) Do() (*InstanceGroupManagerList, error) {
+func (c *InstanceGroupManagersListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["filter"]; ok {
 		params.Set("filter", fmt.Sprintf("%v", v))
 	}
@@ -1031,7 +1056,11 @@ func (c *InstanceGroupManagersListCall) Do() (*InstanceGroupManagerList, error) 
 		"zone":    c.zone,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *InstanceGroupManagersListCall) Do() (*InstanceGroupManagerList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1093,6 +1122,7 @@ func (c *InstanceGroupManagersListCall) Do() (*InstanceGroupManagerList, error) 
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
 	//     "https://www.googleapis.com/auth/compute",
 	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
@@ -1131,7 +1161,7 @@ func (c *InstanceGroupManagersRecreateInstancesCall) Fields(s ...googleapi.Field
 	return c
 }
 
-func (c *InstanceGroupManagersRecreateInstancesCall) Do() (*Operation, error) {
+func (c *InstanceGroupManagersRecreateInstancesCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.instancegroupmanagersrecreateinstancesrequest)
 	if err != nil {
@@ -1139,7 +1169,7 @@ func (c *InstanceGroupManagersRecreateInstancesCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1153,7 +1183,11 @@ func (c *InstanceGroupManagersRecreateInstancesCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *InstanceGroupManagersRecreateInstancesCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1245,10 +1279,10 @@ func (c *InstanceGroupManagersResizeCall) Fields(s ...googleapi.Field) *Instance
 	return c
 }
 
-func (c *InstanceGroupManagersResizeCall) Do() (*Operation, error) {
+func (c *InstanceGroupManagersResizeCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	params.Set("size", fmt.Sprintf("%v", c.size))
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
@@ -1262,7 +1296,11 @@ func (c *InstanceGroupManagersResizeCall) Do() (*Operation, error) {
 		"instanceGroupManager": c.instanceGroupManager,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *InstanceGroupManagersResizeCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1358,7 +1396,7 @@ func (c *InstanceGroupManagersSetInstanceTemplateCall) Fields(s ...googleapi.Fie
 	return c
 }
 
-func (c *InstanceGroupManagersSetInstanceTemplateCall) Do() (*Operation, error) {
+func (c *InstanceGroupManagersSetInstanceTemplateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.instancegroupmanagerssetinstancetemplaterequest)
 	if err != nil {
@@ -1366,7 +1404,7 @@ func (c *InstanceGroupManagersSetInstanceTemplateCall) Do() (*Operation, error) 
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1380,7 +1418,11 @@ func (c *InstanceGroupManagersSetInstanceTemplateCall) Do() (*Operation, error) 
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *InstanceGroupManagersSetInstanceTemplateCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1471,7 +1513,7 @@ func (c *InstanceGroupManagersSetTargetPoolsCall) Fields(s ...googleapi.Field) *
 	return c
 }
 
-func (c *InstanceGroupManagersSetTargetPoolsCall) Do() (*Operation, error) {
+func (c *InstanceGroupManagersSetTargetPoolsCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.instancegroupmanagerssettargetpoolsrequest)
 	if err != nil {
@@ -1479,7 +1521,7 @@ func (c *InstanceGroupManagersSetTargetPoolsCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1493,7 +1535,11 @@ func (c *InstanceGroupManagersSetTargetPoolsCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *InstanceGroupManagersSetTargetPoolsCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1580,10 +1626,10 @@ func (c *ZoneOperationsGetCall) Fields(s ...googleapi.Field) *ZoneOperationsGetC
 	return c
 }
 
-func (c *ZoneOperationsGetCall) Do() (*Operation, error) {
+func (c *ZoneOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1596,7 +1642,11 @@ func (c *ZoneOperationsGetCall) Do() (*Operation, error) {
 		"operation": c.operation,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ZoneOperationsGetCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1702,10 +1752,10 @@ func (c *ZoneOperationsListCall) Fields(s ...googleapi.Field) *ZoneOperationsLis
 	return c
 }
 
-func (c *ZoneOperationsListCall) Do() (*OperationList, error) {
+func (c *ZoneOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["filter"]; ok {
 		params.Set("filter", fmt.Sprintf("%v", v))
 	}
@@ -1726,7 +1776,11 @@ func (c *ZoneOperationsListCall) Do() (*OperationList, error) {
 		"zone":    c.zone,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ZoneOperationsListCall) Do() (*OperationList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}

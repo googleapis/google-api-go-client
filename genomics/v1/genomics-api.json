@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/FV8wyJgOhzZ7rpR6g2FmI8jROkE\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/vh8VgNEma49U1w-wXC7hcxIfBa8\"",
  "discoveryVersion": "v1",
  "id": "genomics:v1",
  "name": "genomics",
  "version": "v1",
- "revision": "20150716",
+ "revision": "20150813",
  "title": "Genomics API",
  "description": "An API to store, process, explore, and share DNA sequence reads, reference-based alignments, and variant calls.",
  "ownerDomain": "google.com",
@@ -172,6 +172,254 @@
    "id": "UndeleteDatasetRequest",
    "type": "object"
   },
+  "SetIamPolicyRequest": {
+   "id": "SetIamPolicyRequest",
+   "type": "object",
+   "description": "Request message for `SetIamPolicy` method.",
+   "properties": {
+    "policy": {
+     "$ref": "Policy",
+     "description": "REQUIRED: The complete policy to be applied to the 'resource'. The size of the policy is limited to a few 10s of KB. An empty policy is in general a valid policy but certain services (like Projects) might reject them."
+    }
+   }
+  },
+  "Policy": {
+   "id": "Policy",
+   "type": "object",
+   "description": "# Overview The `Policy` defines an access control policy language. It is used to define policies that are attached to resources like files, folders, VMs, etc. # Policy structure A `Policy` consists of a list of bindings. A `Binding` binds a set of members to a role, where the members include user accounts, user groups, user domains, and service accounts. A 'role' is a named set of permissions, defined by IAM. The definition of a role is outside the policy. A permission check first determines the roles that include the specified permission, and then determines if the principal specified is a member of a binding to at least one of these roles. The membership check is recursive when a group is bound to a role. Policy examples: ``` { \"bindings\": [ { \"role\": \"roles/owner\", \"members\": [ \"user:mike@example.com\", \"group:admins@example.com\", \"domain:google.com\", \"serviceAccount:frontend@example.iam.gserviceaccounts.com\"] }, { \"role\": \"roles/viewer\", \"members\": [\"user:sean@example.com\"] } ] } ```",
+   "properties": {
+    "version": {
+     "type": "integer",
+     "description": "The policy language version. The version of the policy is represented by the etag. The default version is 0.",
+     "format": "int32"
+    },
+    "bindings": {
+     "type": "array",
+     "description": "It is an error to specify multiple bindings for the same role. It is an error to specify a binding with no members.",
+     "items": {
+      "$ref": "Binding"
+     }
+    },
+    "rules": {
+     "type": "array",
+     "items": {
+      "$ref": "Rule"
+     }
+    },
+    "etag": {
+     "type": "string",
+     "description": "Can be used to perform a read-modify-write.",
+     "format": "byte"
+    }
+   }
+  },
+  "Binding": {
+   "id": "Binding",
+   "type": "object",
+   "description": "Associates members with roles. See below for allowed formats of members.",
+   "properties": {
+    "role": {
+     "type": "string",
+     "description": "The name of the role to which the members should be bound. Examples: \"roles/viewer\", \"roles/editor\", \"roles/owner\". Required"
+    },
+    "members": {
+     "type": "array",
+     "description": "Format of member entries: 1. allUsers Matches any requesting principal (users, service accounts or anonymous). 2. allAuthenticatedUsers Matches any requesting authenticated principal (users or service accounts). 3. user:{emailid} A google user account using an email address. For example alice@gmail.com, joe@example.com 4. serviceAccount:{emailid} An service account email. 5. group:{emailid} A google group with an email address. For example auth-ti-cloud@google.com 6. domain:{domain} A Google Apps domain name. For example google.com, example.com",
+     "items": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  "Rule": {
+   "id": "Rule",
+   "type": "object",
+   "description": "A rule to be applied in a Policy.",
+   "properties": {
+    "description": {
+     "type": "string",
+     "description": "Human-readable description of the rule."
+    },
+    "permissions": {
+     "type": "array",
+     "description": "A permission is a string of form '..' (e.g., 'storage.buckets.list'). A value of '*' matches all permissions, and a verb part of '*' (e.g., 'storage.buckets.*') matches all verbs.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "action": {
+     "type": "string",
+     "description": "Required",
+     "enum": [
+      "NO_ACTION",
+      "ALLOW",
+      "ALLOW_WITH_LOG",
+      "DENY",
+      "DENY_WITH_LOG",
+      "LOG"
+     ]
+    },
+    "in": {
+     "type": "array",
+     "description": "The rule matches if the PRINCIPAL/AUTHORITY_SELECTOR is in this set of entries.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "notIn": {
+     "type": "array",
+     "description": "The rule matches if the PRINCIPAL/AUTHORITY_SELECTOR is not in this set of entries. The formation for in and not_in entries is the same as members in a Binding above.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "conditions": {
+     "type": "array",
+     "description": "Additional restrictions that must be met",
+     "items": {
+      "$ref": "Condition"
+     }
+    },
+    "logConfig": {
+     "type": "array",
+     "description": "The config returned to callers of tech.iam.IAM.CheckPolicy for any entries that match the LOG action.",
+     "items": {
+      "$ref": "LogConfig"
+     }
+    }
+   }
+  },
+  "Condition": {
+   "id": "Condition",
+   "type": "object",
+   "description": "A condition to be met.",
+   "properties": {
+    "iam": {
+     "type": "string",
+     "description": "Trusted attributes supplied by the IAM system.",
+     "enum": [
+      "NO_ATTR",
+      "AUTHORITY",
+      "ATTRIBUTION"
+     ]
+    },
+    "sys": {
+     "type": "string",
+     "description": "Trusted attributes supplied by any service that owns resources and uses the IAM system for access control.",
+     "enum": [
+      "NO_ATTR",
+      "REGION",
+      "SERVICE",
+      "NAME",
+      "IP"
+     ]
+    },
+    "svc": {
+     "type": "string",
+     "description": "Trusted attributes discharged by the service."
+    },
+    "op": {
+     "type": "string",
+     "description": "An operator to apply the subject with.",
+     "enum": [
+      "NO_OP",
+      "EQUALS",
+      "NOT_EQUALS",
+      "IN",
+      "NOT_IN",
+      "DISCHARGED"
+     ]
+    },
+    "value": {
+     "type": "string",
+     "description": "The object of the condition. Exactly one of these must be set."
+    },
+    "values": {
+     "type": "array",
+     "description": "The objects of the condition. This is mutually exclusive with 'value'.",
+     "items": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  "LogConfig": {
+   "id": "LogConfig",
+   "type": "object",
+   "description": "Specifies what kind of log the caller must write Increment a streamz counter with the specified metric and field names. Metric names should start with a '/', generally be lowercase-only, and end in \"_count\". Field names should not contain an initial slash. The actual exported metric names will have \"/iam/policy\" prepended. Field names correspond to IAM request parameters and field values are their respective values. At present only \"iam_principal\", corresponding to IAMContext.principal, is supported. Examples: counter { metric: \"/debug_access_count\" field: \"iam_principal\" } ==\u003e increment counter /iam/policy/backend_debug_access_count {iam_principal=[value of IAMContext.principal]} At this time we do not support: * multiple field names (though this may be supported in the future) * decrementing the counter * incrementing it by anything other than 1",
+   "properties": {
+    "counter": {
+     "$ref": "CounterOptions",
+     "description": "Counter options."
+    },
+    "dataAccess": {
+     "$ref": "DataAccessOptions",
+     "description": "Data access options."
+    },
+    "cloudAudit": {
+     "$ref": "CloudAuditOptions",
+     "description": "Cloud audit options."
+    }
+   }
+  },
+  "CounterOptions": {
+   "id": "CounterOptions",
+   "type": "object",
+   "description": "Options for counters",
+   "properties": {
+    "metric": {
+     "type": "string",
+     "description": "The metric to update."
+    },
+    "field": {
+     "type": "string",
+     "description": "The field value to attribute."
+    }
+   }
+  },
+  "DataAccessOptions": {
+   "id": "DataAccessOptions",
+   "type": "object",
+   "description": "Write a Data Access (Gin) log"
+  },
+  "CloudAuditOptions": {
+   "id": "CloudAuditOptions",
+   "type": "object",
+   "description": "Write a Cloud Audit log"
+  },
+  "GetIamPolicyRequest": {
+   "id": "GetIamPolicyRequest",
+   "type": "object",
+   "description": "Request message for `GetIamPolicy` method."
+  },
+  "TestIamPermissionsRequest": {
+   "id": "TestIamPermissionsRequest",
+   "type": "object",
+   "description": "Request message for `TestIamPermissions` method.",
+   "properties": {
+    "permissions": {
+     "type": "array",
+     "description": "REQUIRED: The set of permissions to check for the 'resource'. Permissions with wildcards (such as '*' or 'storage.*') are not allowed. Allowed permissions are: * `genomics.datasets.create` * `genomics.datasets.delete` * `genomics.datasets.get` * `genomics.datasets.list` * `genomics.datasets.update` * `genomics.datasets.getIamPolicy` * `genomics.datasets.setIamPolicy`",
+     "items": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  "TestIamPermissionsResponse": {
+   "id": "TestIamPermissionsResponse",
+   "type": "object",
+   "description": "Response message for `TestIamPermissions` method.",
+   "properties": {
+    "permissions": {
+     "type": "array",
+     "description": "A subset of `TestPermissionsRequest.permissions` that the caller is allowed.",
+     "items": {
+      "type": "string"
+     }
+    }
+   }
+  },
   "Operation": {
    "id": "Operation",
    "type": "object",
@@ -210,7 +458,7 @@
   "Status": {
    "id": "Status",
    "type": "object",
-   "description": "The `Status` defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). The error model is designed to be: - Simple to use and understand for most users. - Flexible enough to meet unexpected needs. # Overview The `Status` message contains 3 pieces of data: error code, error message, and error details. The error code should be an enum value of [google.rpc.Code][google.rpc.Code], but it may accept additional error codes if needed. The error message should be a developer-facing English message that helps developers *understand* and *resolve* the error. If a localized user-facing error message is needed, it can be sent in the error details or localized by the client. The optional error details may contain arbitrary information about the error. There is a predefined set of error detail types in the package `google.rpc` which can be used for common error conditions. # Language mapping The `Status` message is the logical representation of the error model, but it is not necessarily the actual wire format. When the `Status` message is exposed in different client libraries and different wire protocols, it can be mapped differently. For example, it will likely be mapped to some exceptions in Java, but more likely mapped to some error codes in C. # Other uses The error model and the `Status` message can be used in a variety of environments - either with or without APIs - to provide consistent developer experience across different environments. Example uses of this error model include: - Partial errors. If a service needs to return partial errors to the client, it may embed the `Status` in the normal response to indicate the partial errors. - Workflow errors. A typical workflow has multiple steps. Each step may have a `Status` message for error reporting purpose. - Batch operations. If a client uses batch request and batch response, the `Status` message should be used directly inside batch response, one for each error sub-response. - Asynchronous operations. If an API call embeds asynchronous operation results in its response, the status of those operations should be represented directly using the `Status` message. - Logging. If some API errors are stored in logs, the message `Status` could be used directly after any stripping needed for security/privacy reasons.",
+   "description": "The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). The error model is designed to be: - Simple to use and understand for most users - Flexible enough to meet unexpected needs # Overview The `Status` message contains three pieces of data: error code, error message, and error details. The error code should be an enum value of [google.rpc.Code][google.rpc.Code], but it may accept additional error codes if needed. The error message should be a developer-facing English message that helps developers *understand* and *resolve* the error. If a localized user-facing error message is needed, put the localized message in the error details or localize it in the client. The optional error details may contain arbitrary information about the error. There is a predefined set of error detail types in the package `google.rpc` which can be used for common error conditions. # Language mapping The `Status` message is the logical representation of the error model, but it is not necessarily the actual wire format. When the `Status` message is exposed in different client libraries and different wire protocols, it can be mapped differently. For example, it will likely be mapped to some exceptions in Java, but more likely mapped to some error codes in C. # Other uses The error model and the `Status` message can be used in a variety of environments, either with or without APIs, to provide a consistent developer experience across different environments. Example uses of this error model include: - Partial errors. If a service needs to return partial errors to the client, it may embed the `Status` in the normal response to indicate the partial errors. - Workflow errors. A typical workflow has multiple steps. Each step may have a `Status` message for error reporting purpose. - Batch operations. If a client uses batch request and batch response, the `Status` message should be used directly inside batch response, one for each error sub-response. - Asynchronous operations. If an API call embeds asynchronous operation results in its response, the status of those operations should be represented directly using the `Status` message. - Logging. If some API errors are stored in logs, the message `Status` could be used directly after any stripping needed for security/privacy reasons.",
    "properties": {
     "code": {
      "type": "integer",
@@ -272,7 +520,7 @@
     },
     "sourceUris": {
      "type": "array",
-     "description": "A list of URIs pointing at BAM files in Google Cloud Storage.",
+     "description": "A list of URIs pointing at [BAM files](https://samtools.github.io/hts-specs/SAMv1.pdf) in Google Cloud Storage.",
      "items": {
       "type": "string"
      }
@@ -614,7 +862,7 @@
    "properties": {
     "alignments": {
      "type": "array",
-     "description": "The list of matching alignments sorted by mapped genomic coordinate, if any, ascending in position within the same reference. Unmapped reads, which have no position, are returned last and are further sorted in ascending lexicographic order by fragment name.",
+     "description": "The list of matching alignments sorted by mapped genomic coordinate, if any, ascending in position within the same reference. Unmapped reads, which have no position, are returned contiguously and are sorted in ascending lexicographic order by fragment name.",
      "items": {
       "$ref": "Read"
      }
@@ -1098,9 +1346,8 @@
      ]
     },
     "number": {
-     "type": "integer",
-     "description": "The number of values that can be included in a field described by this metadata.",
-     "format": "int32"
+     "type": "string",
+     "description": "The number of values that can be included in a field described by this metadata."
     },
     "description": {
      "type": "string",
@@ -1390,23 +1637,6 @@
     }
    }
   },
-  "MergeVariantsRequest": {
-   "id": "MergeVariantsRequest",
-   "type": "object",
-   "properties": {
-    "variantSetId": {
-     "type": "string",
-     "description": "The destination variant set."
-    },
-    "variants": {
-     "type": "array",
-     "description": "The variants to be merged with existing variants.",
-     "items": {
-      "$ref": "Variant"
-     }
-    }
-   }
-  },
   "SearchCallSetsRequest": {
    "id": "SearchCallSetsRequest",
    "type": "object",
@@ -1471,7 +1701,7 @@
     },
     "variantSetIds": {
      "type": "array",
-     "description": "The IDs of the variant sets this call set belongs to.",
+     "description": "The IDs of the variant sets this call set belongs to. This field must have exactly length one, as a call set belongs to a single variant set. This field is repeated for compatibility with the [GA4GH 0.5.1 API](https://github.com/ga4gh/schemas/blob/v0.5.1/src/main/resources/avro/variants.avdl#L76).",
      "items": {
       "type": "string"
      }
@@ -1721,6 +1951,90 @@
       "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/genomics"
      ]
+    },
+    "setIamPolicy": {
+     "id": "genomics.datasets.setIamPolicy",
+     "path": "v1/{+resource}:setIamPolicy",
+     "httpMethod": "POST",
+     "description": "",
+     "parameters": {
+      "resource": {
+       "type": "string",
+       "description": "REQUIRED: The resource for which policy is being specified. Format is `datasets/`.",
+       "required": true,
+       "pattern": "^datasets/[^/]*$",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "resource"
+     ],
+     "request": {
+      "$ref": "SetIamPolicyRequest"
+     },
+     "response": {
+      "$ref": "Policy"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/genomics"
+     ]
+    },
+    "getIamPolicy": {
+     "id": "genomics.datasets.getIamPolicy",
+     "path": "v1/{+resource}:getIamPolicy",
+     "httpMethod": "POST",
+     "description": "",
+     "parameters": {
+      "resource": {
+       "type": "string",
+       "description": "REQUIRED: The resource for which policy is being specified. Format is `datasets/`.",
+       "required": true,
+       "pattern": "^datasets/[^/]*$",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "resource"
+     ],
+     "request": {
+      "$ref": "GetIamPolicyRequest"
+     },
+     "response": {
+      "$ref": "Policy"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/genomics"
+     ]
+    },
+    "testIamPermissions": {
+     "id": "genomics.datasets.testIamPermissions",
+     "path": "v1/{+resource}:testIamPermissions",
+     "httpMethod": "POST",
+     "description": "",
+     "parameters": {
+      "resource": {
+       "type": "string",
+       "description": "REQUIRED: The resource for which policy is being specified. Format is `datasets/`.",
+       "required": true,
+       "pattern": "^datasets/[^/]*$",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "resource"
+     ],
+     "request": {
+      "$ref": "TestIamPermissionsRequest"
+     },
+     "response": {
+      "$ref": "TestIamPermissionsResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/genomics"
+     ]
     }
    }
   },
@@ -1777,7 +2091,7 @@
       },
       "pageToken": {
        "type": "string",
-       "description": "The standard List page token.",
+       "description": "The standard list page token.",
        "location": "query"
       }
      },
@@ -1853,7 +2167,7 @@
      "id": "genomics.readgroupsets.import",
      "path": "v1/readgroupsets:import",
      "httpMethod": "POST",
-     "description": "Creates read group sets by asynchronously importing the provided information. Note that currently comments in the input file header are **not** imported and some custom tags will be converted to strings, rather than preserving tag types. The caller must have WRITE permissions to the dataset.",
+     "description": "Creates read group sets by asynchronously importing the provided information. The caller must have WRITE permissions to the dataset. ## Notes on [BAM](https://samtools.github.io/hts-specs/SAMv1.pdf) import - Tags will be converted to strings - tag types are not preserved - Comments (`@CO`) in the input file header will not be preserved - Original header order of references (`@SQ`) will not be preserved - Any reverse stranded unmapped reads will be reverse complemented, and their qualities (and \"BQ\" tag, if any) will be reversed - Unmapped reads will be stripped of positional information (reference name and position)",
      "request": {
       "$ref": "ImportReadGroupSetsRequest"
      },
@@ -1870,7 +2184,7 @@
      "id": "genomics.readgroupsets.export",
      "path": "v1/readgroupsets/{readGroupSetId}:export",
      "httpMethod": "POST",
-     "description": "Exports a read group set to a BAM file in Google Cloud Storage. Note that currently there may be some differences between exported BAM files and the original BAM file at the time of import. In particular, comments in the input file header will not be preserved, some custom tags will be converted to strings, and original reference sequence order is not necessarily preserved.",
+     "description": "Exports a read group set to a BAM file in Google Cloud Storage. Note that currently there may be some differences between exported BAM files and the original BAM file at the time of import. See [ImportReadGroupSets](google.genomics.v1.ReadServiceV1.ImportReadGroupSets) for caveats.",
      "parameters": {
       "readGroupSetId": {
        "type": "string",
@@ -2358,22 +2672,6 @@
       "https://www.googleapis.com/auth/genomics",
       "https://www.googleapis.com/auth/genomics.readonly"
      ]
-    },
-    "merge": {
-     "id": "genomics.variants.merge",
-     "path": "v1/variants:merge",
-     "httpMethod": "POST",
-     "description": "Merges the given variants with existing variants. Each variant will be merged with an existing variant that matches its reference sequence, start, end, reference bases, and alternative bases. If no such variant exists, a new one will be created. When variants are merged, the call information from the new variant is added to the existing variant, and other fields (such as key/value pairs) are discarded.",
-     "request": {
-      "$ref": "MergeVariantsRequest"
-     },
-     "response": {
-      "$ref": "Empty"
-     },
-     "scopes": [
-      "https://www.googleapis.com/auth/cloud-platform",
-      "https://www.googleapis.com/auth/genomics"
-     ]
     }
    }
   },
@@ -2383,7 +2681,7 @@
      "id": "genomics.variantsets.create",
      "path": "v1/variantsets",
      "httpMethod": "POST",
-     "description": "Creates a new variant set.",
+     "description": "Creates a new variant set. The provided variant set must have a valid `datasetId` set - all other fields are optional. Note that the `id` field will be ignored, as this is assigned by the server.",
      "request": {
       "$ref": "VariantSet"
      },

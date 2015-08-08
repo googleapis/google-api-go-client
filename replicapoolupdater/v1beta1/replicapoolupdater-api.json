@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/VmJ_vmyXHKjcZlOaFyHKHkKE8I0\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/ls6prcFEwNExLeKeNy_PY2Dokdc\"",
  "discoveryVersion": "v1",
  "id": "replicapoolupdater:v1beta1",
  "name": "replicapoolupdater",
  "version": "v1beta1",
- "revision": "20150326",
+ "revision": "20150722",
  "title": "Google Compute Engine Instance Group Updater API",
  "description": "The Google Compute Engine Instance Group Updater API provides services for updating groups of Compute Engine Instances.",
  "ownerDomain": "google.com",
@@ -75,6 +75,9 @@
     "https://www.googleapis.com/auth/cloud-platform": {
      "description": "View and manage your data across Google Cloud Platform services"
     },
+    "https://www.googleapis.com/auth/cloud-platform.read-only": {
+     "description": "MESSAGE UNDER CONSTRUCTION View your data across Google Cloud Platform services"
+    },
     "https://www.googleapis.com/auth/replicapool": {
      "description": "View and manage replica pools"
     },
@@ -119,7 +122,7 @@
     },
     "instance": {
      "type": "string",
-     "description": "URL of the instance being updated."
+     "description": "Fully-qualified URL of the instance being updated."
     },
     "status": {
      "type": "string",
@@ -364,6 +367,10 @@
      "description": "[Output Only] Type of the resource.",
      "default": "replicapoolupdater#rollingUpdate"
     },
+    "oldInstanceTemplate": {
+     "type": "string",
+     "description": "Fully-qualified URL of the instance template encountered while starting the update."
+    },
     "policy": {
      "type": "object",
      "description": "Parameters of the update process.",
@@ -524,6 +531,7 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/cloud-platform.read-only",
       "https://www.googleapis.com/auth/replicapool",
       "https://www.googleapis.com/auth/replicapool.readonly"
      ]
@@ -574,11 +582,6 @@
        "description": "Optional. Filter expression for filtering listed resources.",
        "location": "query"
       },
-      "instanceGroupManager": {
-       "type": "string",
-       "description": "The name of the instance group manager. Use this parameter to return only updates to instances that are part of a specific instance group.",
-       "location": "query"
-      },
       "maxResults": {
        "type": "integer",
        "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
@@ -616,6 +619,7 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/cloud-platform.read-only",
       "https://www.googleapis.com/auth/replicapool",
       "https://www.googleapis.com/auth/replicapool.readonly"
      ]
@@ -675,6 +679,7 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/cloud-platform.read-only",
       "https://www.googleapis.com/auth/replicapool",
       "https://www.googleapis.com/auth/replicapool.readonly"
      ]

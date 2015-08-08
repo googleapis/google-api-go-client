@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/dDzLANLY4y_3rdEpUNli-dPof40\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/W5t9TOfEJ0i1qWNP9JX0Xv9x3ws\"",
  "discoveryVersion": "v1",
  "id": "youtube:v3",
  "name": "youtube",
  "canonicalName": "YouTube",
  "version": "v3",
- "revision": "20150706",
+ "revision": "20150727",
  "title": "YouTube Data API",
  "description": "Programmatic access to YouTube features.",
  "ownerDomain": "google.com",
@@ -1721,7 +1721,7 @@
   "ContentRating": {
    "id": "ContentRating",
    "type": "object",
-   "description": "Ratings schemes. The country-specific ratings are mostly for movies and shows. NEXT_ID: 65",
+   "description": "Ratings schemes. The country-specific ratings are mostly for movies and shows. NEXT_ID: 66",
    "properties": {
     "acbRating": {
      "type": "string",
@@ -2041,6 +2041,28 @@
       ""
      ]
     },
+    "cncRating": {
+     "type": "string",
+     "description": "Rating system in France - Commission de classification cinematographique",
+     "enum": [
+      "cnc10",
+      "cnc12",
+      "cnc16",
+      "cnc18",
+      "cncE",
+      "cncT",
+      "cncUnrated"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
     "csaRating": {
      "type": "string",
      "description": "Rating system for France - Conseil sup�rieur de l?audiovisuel",
@@ -2050,9 +2072,11 @@
       "csa16",
       "csa18",
       "csaInterdiction",
+      "csaT",
       "csaUnrated"
      ],
      "enumDescriptions": [
+      "",
       "",
       "",
       "",
@@ -2265,7 +2289,7 @@
     },
     "fmocRating": {
      "type": "string",
-     "description": "Rating system in France - French Minister of Culture",
+     "description": "Deprecated use CNC rating instead",
      "enum": [
       "fmoc10",
       "fmoc12",
@@ -6078,7 +6102,7 @@
     },
     "tags": {
      "type": "array",
-     "description": "A list of keyword tags associated with the video. Tags may contain spaces. This field is only visible to the video's uploader.",
+     "description": "A list of keyword tags associated with the video. Tags may contain spaces.",
      "items": {
       "type": "string"
      }
@@ -6501,12 +6525,6 @@
      "httpMethod": "DELETE",
      "description": "Deletes a specified caption track.",
      "parameters": {
-      "debugProjectIdOverride": {
-       "type": "string",
-       "description": "The debugProjectIdOverride parameter should be used for mimicking a request for a certain project ID",
-       "format": "int64",
-       "location": "query"
-      },
       "id": {
        "type": "string",
        "description": "The id parameter identifies the caption track that is being deleted. The value is a caption track ID as identified by the id property in a caption resource.",
@@ -6538,12 +6556,6 @@
      "httpMethod": "GET",
      "description": "Downloads a caption track. The caption track is returned in its original format unless the request specifies a value for the tfmt parameter and in its original language unless the request specifies a value for the tlang parameter.",
      "parameters": {
-      "debugProjectIdOverride": {
-       "type": "string",
-       "description": "The debugProjectIdOverride parameter should be used for mimicking a request for a certain project ID",
-       "format": "int64",
-       "location": "query"
-      },
       "id": {
        "type": "string",
        "description": "The id parameter identifies the caption track that is being retrieved. The value is a caption track ID as identified by the id property in a caption resource.",
@@ -6600,12 +6612,6 @@
      "httpMethod": "POST",
      "description": "Uploads a caption track.",
      "parameters": {
-      "debugProjectIdOverride": {
-       "type": "string",
-       "description": "The debugProjectIdOverride parameter should be used for mimicking a request for a certain project ID.",
-       "format": "int64",
-       "location": "query"
-      },
       "onBehalfOf": {
        "type": "string",
        "description": "ID of the Google+ Page for the channel that the request is be on behalf of",
@@ -6667,12 +6673,6 @@
      "httpMethod": "GET",
      "description": "Returns a list of caption tracks that are associated with a specified video. Note that the API response does not contain the actual captions and that the captions.download method provides the ability to retrieve a caption track.",
      "parameters": {
-      "debugProjectIdOverride": {
-       "type": "string",
-       "description": "The debugProjectIdOverride parameter should be used for mimicking a request for a certain project ID.",
-       "format": "int64",
-       "location": "query"
-      },
       "id": {
        "type": "string",
        "description": "The id parameter specifies a comma-separated list of IDs that identify the caption resources that should be retrieved. Each ID must identify a caption track associated with the specified video.",
@@ -6719,12 +6719,6 @@
      "httpMethod": "PUT",
      "description": "Updates a caption track. When updating a caption track, you can change the track's draft status, upload a new caption file for the track, or both.",
      "parameters": {
-      "debugProjectIdOverride": {
-       "type": "string",
-       "description": "The debugProjectIdOverride parameter should be used for mimicking a request for a certain project ID.",
-       "format": "int64",
-       "location": "query"
-      },
       "onBehalfOf": {
        "type": "string",
        "description": "ID of the Google+ Page for the channel that the request is be on behalf of",
@@ -9204,12 +9198,6 @@
        "enumDescriptions": [
         "Return the most popular videos for the specified content region and video category."
        ],
-       "location": "query"
-      },
-      "debugProjectIdOverride": {
-       "type": "string",
-       "description": "The debugProjectIdOverride parameter should be used for mimicking a request for a certain project ID",
-       "format": "int64",
        "location": "query"
       },
       "hl": {

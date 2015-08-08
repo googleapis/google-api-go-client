@@ -122,22 +122,21 @@ type Cluster struct {
 	// cluster, in
 	// [CIDR](http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing)
 	// notation (e.g. `10.96.0.0/14`). Leave blank to have one automatically
-	// chosen or specify a `/14` block in `10.0.0.0/8` or `172.16.0.0/12`.
+	// chosen or specify a `/14` block in `10.0.0.0/8`.
 	ClusterIpv4Cidr string `json:"clusterIpv4Cidr,omitempty"`
 
 	// CreateTime: [Output only] The time the cluster was created, in
-	// [RFC3339](href='https://www.ietf.org/rfc/rfc3339.txt) text format.
-	// @OutputOnly.
+	// [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) text format.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// CurrentMasterVersion: [Output only] The current software version of
-	// the master endpoint. @OutputOnly.
+	// the master endpoint.
 	CurrentMasterVersion string `json:"currentMasterVersion,omitempty"`
 
 	// CurrentNodeVersion: [Output only] The current version of the node
 	// software components. If they are currently at different versions
 	// because they're in the process of being upgraded, this reflects the
-	// minimum version of any of them. @OutputOnly.
+	// minimum version of any of them.
 	CurrentNodeVersion string `json:"currentNodeVersion,omitempty"`
 
 	// Description: An optional description of this cluster.
@@ -145,14 +144,13 @@ type Cluster struct {
 
 	// Endpoint: [Output only] The IP address of this cluster's Kubernetes
 	// master endpoint. The endpoint can be accessed from the internet at
-	// `https://username:password@endpoint/`. @OutputOnly. See the
-	// `masterAuth` property of this resource for username and password
-	// information.
+	// `https://username:password@endpoint/`. See the `masterAuth` property
+	// of this resource for username and password information.
 	Endpoint string `json:"endpoint,omitempty"`
 
 	// InitialClusterVersion: [Output only] The software version of
 	// Kubernetes master and kubelets used in the cluster when it was first
-	// created. The version can be upgraded over time. @OutputOnly.
+	// created. The version can be upgraded over time.
 	InitialClusterVersion string `json:"initialClusterVersion,omitempty"`
 
 	// InitialNodeCount: The number of nodes to create in this cluster. You
@@ -163,7 +161,6 @@ type Cluster struct {
 
 	// InstanceGroupUrls: [Output only] The resource URLs of [instance
 	// groups](/compute/docs/instance-groups/) associated with this cluster.
-	// @OutputOnly.
 	InstanceGroupUrls []string `json:"instanceGroupUrls,omitempty"`
 
 	// LoggingService: The logging service that the cluster should write
@@ -196,27 +193,26 @@ type Cluster struct {
 	Network string `json:"network,omitempty"`
 
 	// NodeConfig: Parameters used in creating the cluster's nodes. See the
-	// descriptions of the child properties of `nodeConfig`.
+	// descriptions of the child properties of `nodeConfig`. If unspecified,
+	// the defaults for all child properties are used.
 	NodeConfig *NodeConfig `json:"nodeConfig,omitempty"`
 
 	// NodeIpv4CidrSize: [Output only] The size of the address space on each
 	// node for hosting containers. This is provisioned from within the
-	// container_ipv4_cidr range. @OutputOnly.
+	// container_ipv4_cidr range.
 	NodeIpv4CidrSize int64 `json:"nodeIpv4CidrSize,omitempty"`
 
 	// SelfLink: [Output only] Server-defined URL for the resource.
-	// @OutputOnly.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// ServicesIpv4Cidr: [Output only] The IP address range of the
 	// Kubernetes services in this cluster, in
 	// [CIDR](http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing)
 	// notation (e.g. `1.2.3.4/29`). Service addresses are typically put in
-	// the last /16 from the container CIDR. @OutputOnly.
+	// the last /16 from the container CIDR.
 	ServicesIpv4Cidr string `json:"servicesIpv4Cidr,omitempty"`
 
 	// Status: [Output only] The current status of this cluster.
-	// @OutputOnly.
 	//
 	// Possible values:
 	//   "STATUS_UNSPECIFIED"
@@ -228,12 +224,11 @@ type Cluster struct {
 	Status string `json:"status,omitempty"`
 
 	// StatusMessage: [Output only] Additional information about the current
-	// status of this cluster, if available. @OutputOnly.
+	// status of this cluster, if available.
 	StatusMessage string `json:"statusMessage,omitempty"`
 
 	// Zone: [Output only] The name of the Google Compute Engine
 	// [zone](/compute/docs/zones#available) in which the cluster resides.
-	// @OutputOnly.
 	Zone string `json:"zone,omitempty"`
 }
 
@@ -248,7 +243,7 @@ type ClusterUpdate struct {
 // CreateClusterRequest: CreateClusterRequest creates a cluster.
 type CreateClusterRequest struct {
 	// Cluster: A [cluster
-	// resource](/container-engine/docs/v1/projects/zones/clusters)
+	// resource](/container-engine/reference/rest/v1/projects.zones.clusters)
 	Cluster *Cluster `json:"cluster,omitempty"`
 }
 
@@ -273,15 +268,15 @@ type ListOperationsResponse struct {
 // client certificates.
 type MasterAuth struct {
 	// ClientCertificate: [Output only] Base64 encoded public certificate
-	// used by clients to authenticate to the cluster endpoint. @OutputOnly.
+	// used by clients to authenticate to the cluster endpoint.
 	ClientCertificate string `json:"clientCertificate,omitempty"`
 
 	// ClientKey: [Output only] Base64 encoded private key used by clients
-	// to authenticate to the cluster endpoint. @OutputOnly.
+	// to authenticate to the cluster endpoint.
 	ClientKey string `json:"clientKey,omitempty"`
 
 	// ClusterCaCertificate: [Output only] Base64 encoded public certificate
-	// that is the root of trust for the cluster. @OutputOnly.
+	// that is the root of trust for the cluster.
 	ClusterCaCertificate string `json:"clusterCaCertificate,omitempty"`
 
 	// Password: The password to use for HTTP basic authentication when
@@ -297,7 +292,8 @@ type MasterAuth struct {
 // NodeConfig: Per-node parameters.
 type NodeConfig struct {
 	// DiskSizeGb: Size of the disk attached to each node, specified in GB.
-	// The smallest allowed disk size is 10GB, and the default is 100GB.
+	// The smallest allowed disk size is 10GB. If unspecified, the default
+	// disk size is 100GB.
 	DiskSizeGb int64 `json:"diskSizeGb,omitempty"`
 
 	// MachineType: The name of a Google Compute Engine [machine
@@ -306,20 +302,22 @@ type NodeConfig struct {
 	MachineType string `json:"machineType,omitempty"`
 
 	// OauthScopes: The set of Google API scopes to be made available on all
-	// of the node VMs under the "default" service account. Currently, the
-	// following scopes are necessary to ensure the correct functioning of
-	// the cluster: * "https://www.googleapis.com/auth/compute" *
-	// "https://www.googleapis.com/auth/devstorage.read_only"
+	// of the node VMs under the "default" service account. The following
+	// scopes are recommended, but not required, and by default are not
+	// included: * `https://www.googleapis.com/auth/compute` is required for
+	// mounting persistent storage on your nodes. *
+	// `https://www.googleapis.com/auth/devstorage.read_only` is required
+	// for communicating with *gcr.io*. If unspecified, no scopes are added.
 	OauthScopes []string `json:"oauthScopes,omitempty"`
 }
 
 // Operation: Defines the operation resource. All fields are output
 // only.
 type Operation struct {
-	// Name: The server-assigned ID for the operation. @OutputOnly.
+	// Name: The server-assigned ID for the operation.
 	Name string `json:"name,omitempty"`
 
-	// OperationType: The operation type. @OutputOnly.
+	// OperationType: The operation type.
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED"
@@ -330,10 +328,10 @@ type Operation struct {
 	//   "REPAIR_CLUSTER"
 	OperationType string `json:"operationType,omitempty"`
 
-	// SelfLink: Server-defined URL for the resource. @OutputOnly.
+	// SelfLink: Server-defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
-	// Status: The current status of the operation. @OutputOnly.
+	// Status: The current status of the operation.
 	//
 	// Possible values:
 	//   "STATUS_UNSPECIFIED"
@@ -343,23 +341,122 @@ type Operation struct {
 	Status string `json:"status,omitempty"`
 
 	// StatusMessage: If an error has occurred, a textual description of the
-	// error. @OutputOnly.
+	// error.
 	StatusMessage string `json:"statusMessage,omitempty"`
 
 	// TargetLink: Server-defined URL for the target of the operation.
-	// @OutputOnly.
 	TargetLink string `json:"targetLink,omitempty"`
 
 	// Zone: The name of the Google Compute Engine
 	// [zone](/compute/docs/zones#available) in which the operation is
-	// taking place. @OutputOnly.
+	// taking place.
 	Zone string `json:"zone,omitempty"`
+}
+
+// ServerConfig: Container Engine Server configuration.
+type ServerConfig struct {
+	// DefaultClusterVersion: What version this server deploys by default.
+	DefaultClusterVersion string `json:"defaultClusterVersion,omitempty"`
+
+	// ValidNodeVersions: List of valid node upgrade target versions.
+	ValidNodeVersions []string `json:"validNodeVersions,omitempty"`
 }
 
 // UpdateClusterRequest: UpdateClusterRequest updates a cluster.
 type UpdateClusterRequest struct {
 	// Update: A description of the update.
 	Update *ClusterUpdate `json:"update,omitempty"`
+}
+
+// method id "container.projects.zones.getServerconfig":
+
+type ProjectsZonesGetServerconfigCall struct {
+	s         *Service
+	projectId string
+	zone      string
+	opt_      map[string]interface{}
+}
+
+// GetServerconfig: Returns configuration info about the Container
+// Engine service.
+func (r *ProjectsZonesService) GetServerconfig(projectId string, zone string) *ProjectsZonesGetServerconfigCall {
+	c := &ProjectsZonesGetServerconfigCall{s: r.s, opt_: make(map[string]interface{})}
+	c.projectId = projectId
+	c.zone = zone
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsZonesGetServerconfigCall) Fields(s ...googleapi.Field) *ProjectsZonesGetServerconfigCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *ProjectsZonesGetServerconfigCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{projectId}/zones/{zone}/serverconfig")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"projectId": c.projectId,
+		"zone":      c.zone,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	return c.s.client.Do(req)
+}
+
+func (c *ProjectsZonesGetServerconfigCall) Do() (*ServerConfig, error) {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *ServerConfig
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns configuration info about the Container Engine service.",
+	//   "httpMethod": "GET",
+	//   "id": "container.projects.zones.getServerconfig",
+	//   "parameterOrder": [
+	//     "projectId",
+	//     "zone"
+	//   ],
+	//   "parameters": {
+	//     "projectId": {
+	//       "description": "The Google Developers Console [project ID or project number](https://developers.google.com/console/help/new/#projectnumber).",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "The name of the Google Compute Engine [zone](/compute/docs/zones#available) to return operations for, or \"-\" for all zones.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/projects/{projectId}/zones/{zone}/serverconfig",
+	//   "response": {
+	//     "$ref": "ServerConfig"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
 }
 
 // method id "container.projects.zones.clusters.create":
@@ -375,12 +472,12 @@ type ProjectsZonesClustersCreateCall struct {
 // Create: Creates a cluster, consisting of the specified number and
 // type of Google Compute Engine instances, plus a Kubernetes master
 // endpoint. By default, the cluster is created in the project's
-// [default network]('/compute/docs/networking#networks_1'). One
-// firewall is added for the cluster. After cluster creation, the
-// cluster creates routes for each node to allow the containers on that
-// node to communicate with all other instances in the cluster. Finally,
-// an entry is added to the project's global metadata indicating which
-// CIDR range is being used by the cluster.
+// [default network](/compute/docs/networking#networks_1). One firewall
+// is added for the cluster. After cluster creation, the cluster creates
+// routes for each node to allow the containers on that node to
+// communicate with all other instances in the cluster. Finally, an
+// entry is added to the project's global metadata indicating which CIDR
+// range is being used by the cluster.
 func (r *ProjectsZonesClustersService) Create(projectId string, zone string, createclusterrequest *CreateClusterRequest) *ProjectsZonesClustersCreateCall {
 	c := &ProjectsZonesClustersCreateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectId = projectId
@@ -397,7 +494,7 @@ func (c *ProjectsZonesClustersCreateCall) Fields(s ...googleapi.Field) *Projects
 	return c
 }
 
-func (c *ProjectsZonesClustersCreateCall) Do() (*Operation, error) {
+func (c *ProjectsZonesClustersCreateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.createclusterrequest)
 	if err != nil {
@@ -405,7 +502,7 @@ func (c *ProjectsZonesClustersCreateCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -418,7 +515,11 @@ func (c *ProjectsZonesClustersCreateCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ProjectsZonesClustersCreateCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -432,7 +533,7 @@ func (c *ProjectsZonesClustersCreateCall) Do() (*Operation, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a cluster, consisting of the specified number and type of Google Compute Engine instances, plus a Kubernetes master endpoint. By default, the cluster is created in the project's [default network]('/compute/docs/networking#networks_1'). One firewall is added for the cluster. After cluster creation, the cluster creates routes for each node to allow the containers on that node to communicate with all other instances in the cluster. Finally, an entry is added to the project's global metadata indicating which CIDR range is being used by the cluster.",
+	//   "description": "Creates a cluster, consisting of the specified number and type of Google Compute Engine instances, plus a Kubernetes master endpoint. By default, the cluster is created in the project's [default network](/compute/docs/networking#networks_1). One firewall is added for the cluster. After cluster creation, the cluster creates routes for each node to allow the containers on that node to communicate with all other instances in the cluster. Finally, an entry is added to the project's global metadata indicating which CIDR range is being used by the cluster.",
 	//   "httpMethod": "POST",
 	//   "id": "container.projects.zones.clusters.create",
 	//   "parameterOrder": [
@@ -441,7 +542,7 @@ func (c *ProjectsZonesClustersCreateCall) Do() (*Operation, error) {
 	//   ],
 	//   "parameters": {
 	//     "projectId": {
-	//       "description": "The Google Developers Console [project ID](https://console.developers.google.com/project) or [project number](https://developers.google.com/console/help/project-number)",
+	//       "description": "The Google Developers Console [project ID or project number](https://developers.google.com/console/help/new/#projectnumber).",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -496,10 +597,10 @@ func (c *ProjectsZonesClustersDeleteCall) Fields(s ...googleapi.Field) *Projects
 	return c
 }
 
-func (c *ProjectsZonesClustersDeleteCall) Do() (*Operation, error) {
+func (c *ProjectsZonesClustersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -512,7 +613,11 @@ func (c *ProjectsZonesClustersDeleteCall) Do() (*Operation, error) {
 		"clusterId": c.clusterId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ProjectsZonesClustersDeleteCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -542,7 +647,7 @@ func (c *ProjectsZonesClustersDeleteCall) Do() (*Operation, error) {
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "The Google Developers Console [project ID](https://console.developers.google.com/project) or [project number](https://developers.google.com/console/help/project-number)",
+	//       "description": "The Google Developers Console [project ID or project number](https://developers.google.com/console/help/new/#projectnumber).",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -592,10 +697,10 @@ func (c *ProjectsZonesClustersGetCall) Fields(s ...googleapi.Field) *ProjectsZon
 	return c
 }
 
-func (c *ProjectsZonesClustersGetCall) Do() (*Cluster, error) {
+func (c *ProjectsZonesClustersGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -608,7 +713,11 @@ func (c *ProjectsZonesClustersGetCall) Do() (*Cluster, error) {
 		"clusterId": c.clusterId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ProjectsZonesClustersGetCall) Do() (*Cluster, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -638,7 +747,7 @@ func (c *ProjectsZonesClustersGetCall) Do() (*Cluster, error) {
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "The Google Developers Console A [project ID](https://console.developers.google.com/project) or [project number](https://developers.google.com/console/help/project-number)",
+	//       "description": "The Google Developers Console [project ID or project number](https://developers.google.com/console/help/new/#projectnumber).",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -687,10 +796,10 @@ func (c *ProjectsZonesClustersListCall) Fields(s ...googleapi.Field) *ProjectsZo
 	return c
 }
 
-func (c *ProjectsZonesClustersListCall) Do() (*ListClustersResponse, error) {
+func (c *ProjectsZonesClustersListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -702,7 +811,11 @@ func (c *ProjectsZonesClustersListCall) Do() (*ListClustersResponse, error) {
 		"zone":      c.zone,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ProjectsZonesClustersListCall) Do() (*ListClustersResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -725,7 +838,7 @@ func (c *ProjectsZonesClustersListCall) Do() (*ListClustersResponse, error) {
 	//   ],
 	//   "parameters": {
 	//     "projectId": {
-	//       "description": "The Google Developers Console [project ID](https://console.developers.google.com/project) or [project number](https://developers.google.com/console/help/project-number)",
+	//       "description": "The Google Developers Console [project ID or project number](https://developers.google.com/console/help/new/#projectnumber).",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -777,7 +890,7 @@ func (c *ProjectsZonesClustersUpdateCall) Fields(s ...googleapi.Field) *Projects
 	return c
 }
 
-func (c *ProjectsZonesClustersUpdateCall) Do() (*Operation, error) {
+func (c *ProjectsZonesClustersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.updateclusterrequest)
 	if err != nil {
@@ -785,7 +898,7 @@ func (c *ProjectsZonesClustersUpdateCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -799,7 +912,11 @@ func (c *ProjectsZonesClustersUpdateCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ProjectsZonesClustersUpdateCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -829,7 +946,7 @@ func (c *ProjectsZonesClustersUpdateCall) Do() (*Operation, error) {
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "The Google Developers Console [project ID](https://console.developers.google.com/project) or [project number](https://developers.google.com/console/help/project-number)",
+	//       "description": "The Google Developers Console [project ID or project number](https://developers.google.com/console/help/new/#projectnumber).",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -882,10 +999,10 @@ func (c *ProjectsZonesOperationsGetCall) Fields(s ...googleapi.Field) *ProjectsZ
 	return c
 }
 
-func (c *ProjectsZonesOperationsGetCall) Do() (*Operation, error) {
+func (c *ProjectsZonesOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -898,7 +1015,11 @@ func (c *ProjectsZonesOperationsGetCall) Do() (*Operation, error) {
 		"operationId": c.operationId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ProjectsZonesOperationsGetCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -928,7 +1049,7 @@ func (c *ProjectsZonesOperationsGetCall) Do() (*Operation, error) {
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "The Google Developers Console [project ID](https://console.developers.google.com/project) or [project number](https://developers.google.com/console/help/project-number)",
+	//       "description": "The Google Developers Console [project ID or project number](https://developers.google.com/console/help/new/#projectnumber).",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -977,10 +1098,10 @@ func (c *ProjectsZonesOperationsListCall) Fields(s ...googleapi.Field) *Projects
 	return c
 }
 
-func (c *ProjectsZonesOperationsListCall) Do() (*ListOperationsResponse, error) {
+func (c *ProjectsZonesOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -992,7 +1113,11 @@ func (c *ProjectsZonesOperationsListCall) Do() (*ListOperationsResponse, error) 
 		"zone":      c.zone,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ProjectsZonesOperationsListCall) Do() (*ListOperationsResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1015,7 +1140,7 @@ func (c *ProjectsZonesOperationsListCall) Do() (*ListOperationsResponse, error) 
 	//   ],
 	//   "parameters": {
 	//     "projectId": {
-	//       "description": "The Google Developers Console [project ID](https://console.developers.google.com/project) or [project number](https://developers.google.com/console/help/project-number)",
+	//       "description": "The Google Developers Console [project ID or project number](https://developers.google.com/console/help/new/#projectnumber).",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"

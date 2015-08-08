@@ -277,10 +277,10 @@ func (c *PagespeedapiRunpagespeedCall) Fields(s ...googleapi.Field) *Pagespeedap
 	return c
 }
 
-func (c *PagespeedapiRunpagespeedCall) Do() (*Result, error) {
+func (c *PagespeedapiRunpagespeedCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	params.Set("url", fmt.Sprintf("%v", c.url))
 	if v, ok := c.opt_["filter_third_party_resources"]; ok {
 		params.Set("filter_third_party_resources", fmt.Sprintf("%v", v))
@@ -305,7 +305,11 @@ func (c *PagespeedapiRunpagespeedCall) Do() (*Result, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *PagespeedapiRunpagespeedCall) Do() (*Result, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}

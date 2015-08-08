@@ -241,7 +241,8 @@ type Calendar struct {
 	// Etag: ETag of the resource.
 	Etag string `json:"etag,omitempty"`
 
-	// Id: Identifier of the calendar.
+	// Id: Identifier of the calendar. To retrieve IDs you call the
+	// calendarList.list() method.
 	Id string `json:"id,omitempty"`
 
 	// Kind: Type of the resource ("calendar#calendar").
@@ -299,12 +300,16 @@ type CalendarListEntry struct {
 
 	// BackgroundColor: The main color of the calendar in the hexadecimal
 	// format "#0088aa". This property supersedes the index-based colorId
-	// property. Optional.
+	// property. To set or change this property, you need to specify
+	// colorRgbFormat=true in the parameters of the insert, update and patch
+	// methods. Optional.
 	BackgroundColor string `json:"backgroundColor,omitempty"`
 
 	// ColorId: The color of the calendar. This is an ID referring to an
 	// entry in the calendar section of the colors definition (see the
-	// colors endpoint). Optional.
+	// colors endpoint). This property is superseded by the backgroundColor
+	// and foregroundColor properties and can be ignored when using these
+	// properties. Optional.
 	ColorId string `json:"colorId,omitempty"`
 
 	// DefaultReminders: The default reminders that the authenticated user
@@ -323,7 +328,9 @@ type CalendarListEntry struct {
 
 	// ForegroundColor: The foreground color of the calendar in the
 	// hexadecimal format "#ffffff". This property supersedes the
-	// index-based colorId property. Optional.
+	// index-based colorId property. To set or change this property, you
+	// need to specify colorRgbFormat=true in the parameters of the insert,
+	// update and patch methods. Optional.
 	ForegroundColor string `json:"foregroundColor,omitempty"`
 
 	// Hidden: Whether the calendar has been hidden from the list. Optional.
@@ -375,9 +382,8 @@ type CalendarNotification struct {
 	// are:
 	// - "email" - Reminders are sent via email.
 	// - "sms" - Reminders are sent via SMS. This value is read-only and is
-	// ignored on inserts and updates. Furthermore, SMS reminders are only
-	// available for Google Apps for Work, Education, and Government
-	// customers.
+	// ignored on inserts and updates. SMS reminders are only available for
+	// Google Apps for Work, Education, and Government customers.
 	Method string `json:"method,omitempty"`
 
 	// Type: The type of notification. Possible values are:
@@ -442,20 +448,20 @@ type ColorDefinition struct {
 }
 
 type Colors struct {
-	// Calendar: Palette of calendar colors, mapping from the color ID to
-	// its definition. A calendarListEntry resource refers to one of these
-	// color IDs in its color field. Read-only.
+	// Calendar: A global palette of calendar colors, mapping from the color
+	// ID to its definition. A calendarListEntry resource refers to one of
+	// these color IDs in its color field. Read-only.
 	Calendar map[string]ColorDefinition `json:"calendar,omitempty"`
 
-	// Event: Palette of event colors, mapping from the color ID to its
-	// definition. An event resource may refer to one of these color IDs in
-	// its color field. Read-only.
+	// Event: A global palette of event colors, mapping from the color ID to
+	// its definition. An event resource may refer to one of these color IDs
+	// in its color field. Read-only.
 	Event map[string]ColorDefinition `json:"event,omitempty"`
 
 	// Kind: Type of the resource ("calendar#colors").
 	Kind string `json:"kind,omitempty"`
 
-	// Updated: Last modification time of the color palette (as a RFC 3339
+	// Updated: Last modification time of the color palette (as a RFC3339
 	// timestamp). Read-only.
 	Updated string `json:"updated,omitempty"`
 }
@@ -490,7 +496,9 @@ type Event struct {
 	// There can be at most 25 attachments per event,
 	Attachments []*EventAttachment `json:"attachments,omitempty"`
 
-	// Attendees: The attendees of the event.
+	// Attendees: The attendees of the event. See the Events with attendees
+	// guide for more information on scheduling events with other calendar
+	// users.
 	Attendees []*EventAttendee `json:"attendees,omitempty"`
 
 	// AttendeesOmitted: Whether attendees may have been omitted from the
@@ -505,7 +513,7 @@ type Event struct {
 	// endpoint). Optional.
 	ColorId string `json:"colorId,omitempty"`
 
-	// Created: Creation time of the event (as a RFC 3339 timestamp).
+	// Created: Creation time of the event (as a RFC3339 timestamp).
 	// Read-only.
 	Created string `json:"created,omitempty"`
 
@@ -557,12 +565,18 @@ type Event struct {
 	// UI. Read-only.
 	HtmlLink string `json:"htmlLink,omitempty"`
 
-	// ICalUID: Event ID in the iCalendar format.
+	// ICalUID: Event unique identifier as defined in RFC5545. It is used to
+	// uniquely identify events accross calendaring systems and must be
+	// supplied when importing events via the import method.
+	// Note that the icalUID and the id are not identical and only one of
+	// them should be supplied at event creation time. One difference in
+	// their semantics is that in recurring events, all occurrences of one
+	// event have different ids while they all share the same icalUIDs.
 	ICalUID string `json:"iCalUID,omitempty"`
 
-	// Id: Identifier of the event. When creating new single or recurring
-	// events, you can specify their IDs. Provided IDs must follow these
-	// rules:
+	// Id: Opaque identifier of the event. When creating new single or
+	// recurring events, you can specify their IDs. Provided IDs must follow
+	// these rules:
 	// - characters allowed in the ID are those used in base32hex encoding,
 	// i.e. lowercase letters a-v and digits 0-9, see section 3.1.2 in
 	// RFC2938
@@ -572,6 +586,12 @@ type Event struct {
 	// detected at event creation time. To minimize the risk of collisions
 	// we recommend using an established UUID algorithm such as one
 	// described in RFC4122.
+	// If you do not specify an ID, it will be automatically generated by
+	// the server.
+	// Note that the icalUID and the id are not identical and only one of
+	// them should be supplied at event creation time. One difference in
+	// their semantics is that in recurring events, all occurrences of one
+	// event have different ids while they all share the same icalUIDs.
 	Id string `json:"id,omitempty"`
 
 	// Kind: Type of the resource ("calendar#event").
@@ -603,12 +623,14 @@ type Event struct {
 	PrivateCopy bool `json:"privateCopy,omitempty"`
 
 	// Recurrence: List of RRULE, EXRULE, RDATE and EXDATE lines for a
-	// recurring event. This field is omitted for single events or instances
-	// of recurring events.
+	// recurring event, as specified in RFC5545. Note that DTSTART and DTEND
+	// lines are not allowed in this field; event start and end times are
+	// specified in the start and end fields. This field is omitted for
+	// single events or instances of recurring events.
 	Recurrence []string `json:"recurrence,omitempty"`
 
 	// RecurringEventId: For an instance of a recurring event, this is the
-	// event ID of the recurring event itself. Immutable.
+	// id of the recurring event to which this instance belongs. Immutable.
 	RecurringEventId string `json:"recurringEventId,omitempty"`
 
 	// Reminders: Information about the event's reminders for the
@@ -618,10 +640,10 @@ type Event struct {
 	// Sequence: Sequence number as per iCalendar.
 	Sequence int64 `json:"sequence,omitempty"`
 
-	// Source: Source of an event from which it was created; for example a
-	// web page, an email message or any document identifiable by an URL
-	// using HTTP/HTTPS protocol. Accessible only by the creator of the
-	// event.
+	// Source: Source from which the event was created. For example, a web
+	// page, an email message or any document identifiable by an URL with
+	// HTTP or HTTPS scheme. Can only be seen or modified by the creator of
+	// the event.
 	Source *EventSource `json:"source,omitempty"`
 
 	// Start: The (inclusive) start time of the event. For a recurring
@@ -645,7 +667,7 @@ type Event struct {
 	// - "transparent" - The event does not block time on the calendar.
 	Transparency string `json:"transparency,omitempty"`
 
-	// Updated: Last modification time of the event (as a RFC 3339
+	// Updated: Last modification time of the event (as a RFC3339
 	// timestamp). Read-only.
 	Updated string `json:"updated,omitempty"`
 
@@ -670,7 +692,8 @@ type EventCreator struct {
 	// Email: The creator's email address, if available.
 	Email string `json:"email,omitempty"`
 
-	// Id: The creator's Profile ID, if available.
+	// Id: The creator's Profile ID, if available. It corresponds to theid
+	// field in the People collection of the Google+ API
 	Id string `json:"id,omitempty"`
 
 	// Self: Whether the creator corresponds to the calendar on which this
@@ -698,13 +721,14 @@ type EventGadget struct {
 	// - "chip" - The gadget displays when the event is clicked.
 	Display string `json:"display,omitempty"`
 
-	// Height: The gadget's height in pixels. Optional.
+	// Height: The gadget's height in pixels. The height must be an integer
+	// greater than 0. Optional.
 	Height int64 `json:"height,omitempty"`
 
-	// IconLink: The gadget's icon URL.
+	// IconLink: The gadget's icon URL. The URL scheme must be HTTPS.
 	IconLink string `json:"iconLink,omitempty"`
 
-	// Link: The gadget's URL.
+	// Link: The gadget's URL. The URL scheme must be HTTPS.
 	Link string `json:"link,omitempty"`
 
 	// Preferences: Preferences.
@@ -716,7 +740,8 @@ type EventGadget struct {
 	// Type: The gadget's type.
 	Type string `json:"type,omitempty"`
 
-	// Width: The gadget's width in pixels. Optional.
+	// Width: The gadget's width in pixels. The width must be an integer
+	// greater than 0. Optional.
 	Width int64 `json:"width,omitempty"`
 }
 
@@ -728,10 +753,12 @@ type EventOrganizer struct {
 	// DisplayName: The organizer's name, if available.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Email: The organizer's email address, if available.
+	// Email: The organizer's email address, if available. It must be a
+	// valid email address as per RFC5322.
 	Email string `json:"email,omitempty"`
 
-	// Id: The organizer's Profile ID, if available.
+	// Id: The organizer's Profile ID, if available. It corresponds to theid
+	// field in the People collection of the Google+ API
 	Id string `json:"id,omitempty"`
 
 	// Self: Whether the organizer corresponds to the calendar on which this
@@ -744,7 +771,8 @@ type EventOrganizer struct {
 type EventReminders struct {
 	// Overrides: If the event doesn't use the default reminders, this lists
 	// the reminders specific to the event, or, if not set, indicates that
-	// no reminders are set for this event.
+	// no reminders are set for this event. The maximum number of override
+	// reminders is 5.
 	Overrides []*EventReminder `json:"overrides,omitempty"`
 
 	// UseDefault: Whether the default reminders of the calendar apply to
@@ -752,23 +780,23 @@ type EventReminders struct {
 	UseDefault bool `json:"useDefault,omitempty"`
 }
 
-// EventSource: Source of an event from which it was created; for
-// example a web page, an email message or any document identifiable by
-// an URL using HTTP/HTTPS protocol. Accessible only by the creator of
-// the event.
+// EventSource: Source from which the event was created. For example, a
+// web page, an email message or any document identifiable by an URL
+// with HTTP or HTTPS scheme. Can only be seen or modified by the
+// creator of the event.
 type EventSource struct {
 	// Title: Title of the source; for example a title of a web page or an
 	// email subject.
 	Title string `json:"title,omitempty"`
 
-	// Url: URL of the source pointing to a resource. URL's protocol must be
+	// Url: URL of the source pointing to a resource. The URL scheme must be
 	// HTTP or HTTPS.
 	Url string `json:"url,omitempty"`
 }
 
 type EventAttachment struct {
 	// FileId: ID of the attached file. Read-only.
-	// E.g. for Google Drive files this is the ID of the corresponding Files
+	// For Google Drive files, this is the ID of the corresponding Files
 	// resource entry in the Drive API.
 	FileId string `json:"fileId,omitempty"`
 
@@ -799,10 +827,12 @@ type EventAttendee struct {
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Email: The attendee's email address, if available. This field must be
-	// present when adding an attendee.
+	// present when adding an attendee. It must be a valid email address as
+	// per RFC5322.
 	Email string `json:"email,omitempty"`
 
-	// Id: The attendee's Profile ID, if available.
+	// Id: The attendee's Profile ID, if available. It corresponds to theid
+	// field in the People collection of the Google+ API
 	Id string `json:"id,omitempty"`
 
 	// Optional: Whether this is an optional attendee. Optional. The default
@@ -838,7 +868,7 @@ type EventDateTime struct {
 	Date string `json:"date,omitempty"`
 
 	// DateTime: The time, as a combined date-time value (formatted
-	// according to RFC 3339). A time zone offset is required unless a time
+	// according to RFC3339). A time zone offset is required unless a time
 	// zone is explicitly specified in timeZone.
 	DateTime string `json:"dateTime,omitempty"`
 
@@ -853,14 +883,15 @@ type EventDateTime struct {
 type EventReminder struct {
 	// Method: The method used by this reminder. Possible values are:
 	// - "email" - Reminders are sent via email.
-	// - "sms" - Reminders are sent via SMS. They are only available for
+	// - "sms" - Reminders are sent via SMS. These are only available for
 	// Google Apps for Work, Education, and Government customers. Requests
-	// to set SMS reminders for the other accounts will be ignored.
+	// to set SMS reminders for other account types are ignored.
 	// - "popup" - Reminders are sent via a UI popup.
 	Method string `json:"method,omitempty"`
 
 	// Minutes: Number of minutes before the start of the event when the
-	// reminder should trigger.
+	// reminder should trigger. Valid values are between 0 and 40320 (4
+	// weeks in minutes).
 	Minutes int64 `json:"minutes,omitempty"`
 }
 
@@ -916,7 +947,7 @@ type Events struct {
 	// TimeZone: The time zone of the calendar. Read-only.
 	TimeZone string `json:"timeZone,omitempty"`
 
-	// Updated: Last modification time of the calendar (as a RFC 3339
+	// Updated: Last modification time of the calendar (as a RFC3339
 	// timestamp). Read-only.
 	Updated string `json:"updated,omitempty"`
 }
@@ -1055,10 +1086,10 @@ func (c *AclDeleteCall) Fields(s ...googleapi.Field) *AclDeleteCall {
 	return c
 }
 
-func (c *AclDeleteCall) Do() error {
+func (c *AclDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1070,7 +1101,11 @@ func (c *AclDeleteCall) Do() error {
 		"ruleId":     c.ruleId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AclDeleteCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -1089,7 +1124,7 @@ func (c *AclDeleteCall) Do() error {
 	//   ],
 	//   "parameters": {
 	//     "calendarId": {
-	//       "description": "Calendar identifier.",
+	//       "description": "Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the \"primary\" keyword.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1134,10 +1169,10 @@ func (c *AclGetCall) Fields(s ...googleapi.Field) *AclGetCall {
 	return c
 }
 
-func (c *AclGetCall) Do() (*AclRule, error) {
+func (c *AclGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1149,7 +1184,11 @@ func (c *AclGetCall) Do() (*AclRule, error) {
 		"ruleId":     c.ruleId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AclGetCall) Do() (*AclRule, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1172,7 +1211,7 @@ func (c *AclGetCall) Do() (*AclRule, error) {
 	//   ],
 	//   "parameters": {
 	//     "calendarId": {
-	//       "description": "Calendar identifier.",
+	//       "description": "Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the \"primary\" keyword.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1221,7 +1260,7 @@ func (c *AclInsertCall) Fields(s ...googleapi.Field) *AclInsertCall {
 	return c
 }
 
-func (c *AclInsertCall) Do() (*AclRule, error) {
+func (c *AclInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.aclrule)
 	if err != nil {
@@ -1229,7 +1268,7 @@ func (c *AclInsertCall) Do() (*AclRule, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1241,7 +1280,11 @@ func (c *AclInsertCall) Do() (*AclRule, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AclInsertCall) Do() (*AclRule, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1263,7 +1306,7 @@ func (c *AclInsertCall) Do() (*AclRule, error) {
 	//   ],
 	//   "parameters": {
 	//     "calendarId": {
-	//       "description": "Calendar identifier.",
+	//       "description": "Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the \"primary\" keyword.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1346,10 +1389,10 @@ func (c *AclListCall) Fields(s ...googleapi.Field) *AclListCall {
 	return c
 }
 
-func (c *AclListCall) Do() (*Acl, error) {
+func (c *AclListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
@@ -1372,7 +1415,11 @@ func (c *AclListCall) Do() (*Acl, error) {
 		"calendarId": c.calendarId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AclListCall) Do() (*Acl, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1394,7 +1441,7 @@ func (c *AclListCall) Do() (*Acl, error) {
 	//   ],
 	//   "parameters": {
 	//     "calendarId": {
-	//       "description": "Calendar identifier.",
+	//       "description": "Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the \"primary\" keyword.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1462,7 +1509,7 @@ func (c *AclPatchCall) Fields(s ...googleapi.Field) *AclPatchCall {
 	return c
 }
 
-func (c *AclPatchCall) Do() (*AclRule, error) {
+func (c *AclPatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.aclrule)
 	if err != nil {
@@ -1470,7 +1517,7 @@ func (c *AclPatchCall) Do() (*AclRule, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1483,7 +1530,11 @@ func (c *AclPatchCall) Do() (*AclRule, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AclPatchCall) Do() (*AclRule, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1506,7 +1557,7 @@ func (c *AclPatchCall) Do() (*AclRule, error) {
 	//   ],
 	//   "parameters": {
 	//     "calendarId": {
-	//       "description": "Calendar identifier.",
+	//       "description": "Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the \"primary\" keyword.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1559,7 +1610,7 @@ func (c *AclUpdateCall) Fields(s ...googleapi.Field) *AclUpdateCall {
 	return c
 }
 
-func (c *AclUpdateCall) Do() (*AclRule, error) {
+func (c *AclUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.aclrule)
 	if err != nil {
@@ -1567,7 +1618,7 @@ func (c *AclUpdateCall) Do() (*AclRule, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1580,7 +1631,11 @@ func (c *AclUpdateCall) Do() (*AclRule, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AclUpdateCall) Do() (*AclRule, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1603,7 +1658,7 @@ func (c *AclUpdateCall) Do() (*AclRule, error) {
 	//   ],
 	//   "parameters": {
 	//     "calendarId": {
-	//       "description": "Calendar identifier.",
+	//       "description": "Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the \"primary\" keyword.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1694,7 +1749,7 @@ func (c *AclWatchCall) Fields(s ...googleapi.Field) *AclWatchCall {
 	return c
 }
 
-func (c *AclWatchCall) Do() (*Channel, error) {
+func (c *AclWatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channel)
 	if err != nil {
@@ -1702,7 +1757,7 @@ func (c *AclWatchCall) Do() (*Channel, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
@@ -1726,7 +1781,11 @@ func (c *AclWatchCall) Do() (*Channel, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AclWatchCall) Do() (*Channel, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1748,7 +1807,7 @@ func (c *AclWatchCall) Do() (*Channel, error) {
 	//   ],
 	//   "parameters": {
 	//     "calendarId": {
-	//       "description": "Calendar identifier.",
+	//       "description": "Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the \"primary\" keyword.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1815,10 +1874,10 @@ func (c *CalendarListDeleteCall) Fields(s ...googleapi.Field) *CalendarListDelet
 	return c
 }
 
-func (c *CalendarListDeleteCall) Do() error {
+func (c *CalendarListDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1829,7 +1888,11 @@ func (c *CalendarListDeleteCall) Do() error {
 		"calendarId": c.calendarId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *CalendarListDeleteCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -1847,7 +1910,7 @@ func (c *CalendarListDeleteCall) Do() error {
 	//   ],
 	//   "parameters": {
 	//     "calendarId": {
-	//       "description": "Calendar identifier.",
+	//       "description": "Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the \"primary\" keyword.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1884,10 +1947,10 @@ func (c *CalendarListGetCall) Fields(s ...googleapi.Field) *CalendarListGetCall 
 	return c
 }
 
-func (c *CalendarListGetCall) Do() (*CalendarListEntry, error) {
+func (c *CalendarListGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1898,7 +1961,11 @@ func (c *CalendarListGetCall) Do() (*CalendarListEntry, error) {
 		"calendarId": c.calendarId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *CalendarListGetCall) Do() (*CalendarListEntry, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1920,7 +1987,7 @@ func (c *CalendarListGetCall) Do() (*CalendarListEntry, error) {
 	//   ],
 	//   "parameters": {
 	//     "calendarId": {
-	//       "description": "Calendar identifier.",
+	//       "description": "Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the \"primary\" keyword.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1971,7 +2038,7 @@ func (c *CalendarListInsertCall) Fields(s ...googleapi.Field) *CalendarListInser
 	return c
 }
 
-func (c *CalendarListInsertCall) Do() (*CalendarListEntry, error) {
+func (c *CalendarListInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.calendarlistentry)
 	if err != nil {
@@ -1979,7 +2046,7 @@ func (c *CalendarListInsertCall) Do() (*CalendarListEntry, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["colorRgbFormat"]; ok {
 		params.Set("colorRgbFormat", fmt.Sprintf("%v", v))
 	}
@@ -1992,7 +2059,11 @@ func (c *CalendarListInsertCall) Do() (*CalendarListEntry, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *CalendarListInsertCall) Do() (*CalendarListEntry, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2116,10 +2187,10 @@ func (c *CalendarListListCall) Fields(s ...googleapi.Field) *CalendarListListCal
 	return c
 }
 
-func (c *CalendarListListCall) Do() (*CalendarList, error) {
+func (c *CalendarListListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
@@ -2146,7 +2217,11 @@ func (c *CalendarListListCall) Do() (*CalendarList, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *CalendarListListCall) Do() (*CalendarList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2258,7 +2333,7 @@ func (c *CalendarListPatchCall) Fields(s ...googleapi.Field) *CalendarListPatchC
 	return c
 }
 
-func (c *CalendarListPatchCall) Do() (*CalendarListEntry, error) {
+func (c *CalendarListPatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.calendarlistentry)
 	if err != nil {
@@ -2266,7 +2341,7 @@ func (c *CalendarListPatchCall) Do() (*CalendarListEntry, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["colorRgbFormat"]; ok {
 		params.Set("colorRgbFormat", fmt.Sprintf("%v", v))
 	}
@@ -2281,7 +2356,11 @@ func (c *CalendarListPatchCall) Do() (*CalendarListEntry, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *CalendarListPatchCall) Do() (*CalendarListEntry, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2303,7 +2382,7 @@ func (c *CalendarListPatchCall) Do() (*CalendarListEntry, error) {
 	//   ],
 	//   "parameters": {
 	//     "calendarId": {
-	//       "description": "Calendar identifier.",
+	//       "description": "Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the \"primary\" keyword.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2363,7 +2442,7 @@ func (c *CalendarListUpdateCall) Fields(s ...googleapi.Field) *CalendarListUpdat
 	return c
 }
 
-func (c *CalendarListUpdateCall) Do() (*CalendarListEntry, error) {
+func (c *CalendarListUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.calendarlistentry)
 	if err != nil {
@@ -2371,7 +2450,7 @@ func (c *CalendarListUpdateCall) Do() (*CalendarListEntry, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["colorRgbFormat"]; ok {
 		params.Set("colorRgbFormat", fmt.Sprintf("%v", v))
 	}
@@ -2386,7 +2465,11 @@ func (c *CalendarListUpdateCall) Do() (*CalendarListEntry, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *CalendarListUpdateCall) Do() (*CalendarListEntry, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2408,7 +2491,7 @@ func (c *CalendarListUpdateCall) Do() (*CalendarListEntry, error) {
 	//   ],
 	//   "parameters": {
 	//     "calendarId": {
-	//       "description": "Calendar identifier.",
+	//       "description": "Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the \"primary\" keyword.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2521,7 +2604,7 @@ func (c *CalendarListWatchCall) Fields(s ...googleapi.Field) *CalendarListWatchC
 	return c
 }
 
-func (c *CalendarListWatchCall) Do() (*Channel, error) {
+func (c *CalendarListWatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channel)
 	if err != nil {
@@ -2529,7 +2612,7 @@ func (c *CalendarListWatchCall) Do() (*Channel, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
@@ -2557,7 +2640,11 @@ func (c *CalendarListWatchCall) Do() (*Channel, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *CalendarListWatchCall) Do() (*Channel, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2661,10 +2748,10 @@ func (c *CalendarsClearCall) Fields(s ...googleapi.Field) *CalendarsClearCall {
 	return c
 }
 
-func (c *CalendarsClearCall) Do() error {
+func (c *CalendarsClearCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -2675,7 +2762,11 @@ func (c *CalendarsClearCall) Do() error {
 		"calendarId": c.calendarId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *CalendarsClearCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -2693,7 +2784,7 @@ func (c *CalendarsClearCall) Do() error {
 	//   ],
 	//   "parameters": {
 	//     "calendarId": {
-	//       "description": "Calendar identifier.",
+	//       "description": "Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the \"primary\" keyword.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2731,10 +2822,10 @@ func (c *CalendarsDeleteCall) Fields(s ...googleapi.Field) *CalendarsDeleteCall 
 	return c
 }
 
-func (c *CalendarsDeleteCall) Do() error {
+func (c *CalendarsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -2745,7 +2836,11 @@ func (c *CalendarsDeleteCall) Do() error {
 		"calendarId": c.calendarId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *CalendarsDeleteCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -2763,7 +2858,7 @@ func (c *CalendarsDeleteCall) Do() error {
 	//   ],
 	//   "parameters": {
 	//     "calendarId": {
-	//       "description": "Calendar identifier.",
+	//       "description": "Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the \"primary\" keyword.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2800,10 +2895,10 @@ func (c *CalendarsGetCall) Fields(s ...googleapi.Field) *CalendarsGetCall {
 	return c
 }
 
-func (c *CalendarsGetCall) Do() (*Calendar, error) {
+func (c *CalendarsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -2814,7 +2909,11 @@ func (c *CalendarsGetCall) Do() (*Calendar, error) {
 		"calendarId": c.calendarId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *CalendarsGetCall) Do() (*Calendar, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2836,7 +2935,7 @@ func (c *CalendarsGetCall) Do() (*Calendar, error) {
 	//   ],
 	//   "parameters": {
 	//     "calendarId": {
-	//       "description": "Calendar identifier.",
+	//       "description": "Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the \"primary\" keyword.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2877,7 +2976,7 @@ func (c *CalendarsInsertCall) Fields(s ...googleapi.Field) *CalendarsInsertCall 
 	return c
 }
 
-func (c *CalendarsInsertCall) Do() (*Calendar, error) {
+func (c *CalendarsInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.calendar)
 	if err != nil {
@@ -2885,7 +2984,7 @@ func (c *CalendarsInsertCall) Do() (*Calendar, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -2895,7 +2994,11 @@ func (c *CalendarsInsertCall) Do() (*Calendar, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *CalendarsInsertCall) Do() (*Calendar, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2952,7 +3055,7 @@ func (c *CalendarsPatchCall) Fields(s ...googleapi.Field) *CalendarsPatchCall {
 	return c
 }
 
-func (c *CalendarsPatchCall) Do() (*Calendar, error) {
+func (c *CalendarsPatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.calendar)
 	if err != nil {
@@ -2960,7 +3063,7 @@ func (c *CalendarsPatchCall) Do() (*Calendar, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -2972,7 +3075,11 @@ func (c *CalendarsPatchCall) Do() (*Calendar, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *CalendarsPatchCall) Do() (*Calendar, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2994,7 +3101,7 @@ func (c *CalendarsPatchCall) Do() (*Calendar, error) {
 	//   ],
 	//   "parameters": {
 	//     "calendarId": {
-	//       "description": "Calendar identifier.",
+	//       "description": "Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the \"primary\" keyword.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -3039,7 +3146,7 @@ func (c *CalendarsUpdateCall) Fields(s ...googleapi.Field) *CalendarsUpdateCall 
 	return c
 }
 
-func (c *CalendarsUpdateCall) Do() (*Calendar, error) {
+func (c *CalendarsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.calendar)
 	if err != nil {
@@ -3047,7 +3154,7 @@ func (c *CalendarsUpdateCall) Do() (*Calendar, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -3059,7 +3166,11 @@ func (c *CalendarsUpdateCall) Do() (*Calendar, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *CalendarsUpdateCall) Do() (*Calendar, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3081,7 +3192,7 @@ func (c *CalendarsUpdateCall) Do() (*Calendar, error) {
 	//   ],
 	//   "parameters": {
 	//     "calendarId": {
-	//       "description": "Calendar identifier.",
+	//       "description": "Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the \"primary\" keyword.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -3124,15 +3235,15 @@ func (c *ChannelsStopCall) Fields(s ...googleapi.Field) *ChannelsStopCall {
 	return c
 }
 
-func (c *ChannelsStopCall) Do() error {
+func (c *ChannelsStopCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channel)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -3142,7 +3253,11 @@ func (c *ChannelsStopCall) Do() error {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ChannelsStopCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -3189,10 +3304,10 @@ func (c *ColorsGetCall) Fields(s ...googleapi.Field) *ColorsGetCall {
 	return c
 }
 
-func (c *ColorsGetCall) Do() (*Colors, error) {
+func (c *ColorsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -3201,7 +3316,11 @@ func (c *ColorsGetCall) Do() (*Colors, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ColorsGetCall) Do() (*Colors, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3263,10 +3382,10 @@ func (c *EventsDeleteCall) Fields(s ...googleapi.Field) *EventsDeleteCall {
 	return c
 }
 
-func (c *EventsDeleteCall) Do() error {
+func (c *EventsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["sendNotifications"]; ok {
 		params.Set("sendNotifications", fmt.Sprintf("%v", v))
 	}
@@ -3281,7 +3400,11 @@ func (c *EventsDeleteCall) Do() error {
 		"eventId":    c.eventId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *EventsDeleteCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -3300,7 +3423,7 @@ func (c *EventsDeleteCall) Do() error {
 	//   ],
 	//   "parameters": {
 	//     "calendarId": {
-	//       "description": "Calendar identifier.",
+	//       "description": "Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the \"primary\" keyword.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -3378,10 +3501,10 @@ func (c *EventsGetCall) Fields(s ...googleapi.Field) *EventsGetCall {
 	return c
 }
 
-func (c *EventsGetCall) Do() (*Event, error) {
+func (c *EventsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["alwaysIncludeEmail"]; ok {
 		params.Set("alwaysIncludeEmail", fmt.Sprintf("%v", v))
 	}
@@ -3402,7 +3525,11 @@ func (c *EventsGetCall) Do() (*Event, error) {
 		"eventId":    c.eventId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *EventsGetCall) Do() (*Event, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3430,7 +3557,7 @@ func (c *EventsGetCall) Do() (*Event, error) {
 	//       "type": "boolean"
 	//     },
 	//     "calendarId": {
-	//       "description": "Calendar identifier.",
+	//       "description": "Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the \"primary\" keyword.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -3500,7 +3627,7 @@ func (c *EventsImportCall) Fields(s ...googleapi.Field) *EventsImportCall {
 	return c
 }
 
-func (c *EventsImportCall) Do() (*Event, error) {
+func (c *EventsImportCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.event)
 	if err != nil {
@@ -3508,7 +3635,7 @@ func (c *EventsImportCall) Do() (*Event, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["supportsAttachments"]; ok {
 		params.Set("supportsAttachments", fmt.Sprintf("%v", v))
 	}
@@ -3523,7 +3650,11 @@ func (c *EventsImportCall) Do() (*Event, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *EventsImportCall) Do() (*Event, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3545,7 +3676,7 @@ func (c *EventsImportCall) Do() (*Event, error) {
 	//   ],
 	//   "parameters": {
 	//     "calendarId": {
-	//       "description": "Calendar identifier.",
+	//       "description": "Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the \"primary\" keyword.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -3620,7 +3751,7 @@ func (c *EventsInsertCall) Fields(s ...googleapi.Field) *EventsInsertCall {
 	return c
 }
 
-func (c *EventsInsertCall) Do() (*Event, error) {
+func (c *EventsInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.event)
 	if err != nil {
@@ -3628,7 +3759,7 @@ func (c *EventsInsertCall) Do() (*Event, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["maxAttendees"]; ok {
 		params.Set("maxAttendees", fmt.Sprintf("%v", v))
 	}
@@ -3649,7 +3780,11 @@ func (c *EventsInsertCall) Do() (*Event, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *EventsInsertCall) Do() (*Event, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3671,7 +3806,7 @@ func (c *EventsInsertCall) Do() (*Event, error) {
 	//   ],
 	//   "parameters": {
 	//     "calendarId": {
-	//       "description": "Calendar identifier.",
+	//       "description": "Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the \"primary\" keyword.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -3779,7 +3914,8 @@ func (c *EventsInstancesCall) ShowDeleted(showDeleted bool) *EventsInstancesCall
 
 // TimeMax sets the optional parameter "timeMax": Upper bound
 // (exclusive) for an event's start time to filter by.  The default is
-// not to filter by start time.
+// not to filter by start time. Must be an RFC3339 timestamp with
+// mandatory time zone offset.
 func (c *EventsInstancesCall) TimeMax(timeMax string) *EventsInstancesCall {
 	c.opt_["timeMax"] = timeMax
 	return c
@@ -3787,7 +3923,8 @@ func (c *EventsInstancesCall) TimeMax(timeMax string) *EventsInstancesCall {
 
 // TimeMin sets the optional parameter "timeMin": Lower bound
 // (inclusive) for an event's end time to filter by.  The default is not
-// to filter by end time.
+// to filter by end time. Must be an RFC3339 timestamp with mandatory
+// time zone offset.
 func (c *EventsInstancesCall) TimeMin(timeMin string) *EventsInstancesCall {
 	c.opt_["timeMin"] = timeMin
 	return c
@@ -3808,10 +3945,10 @@ func (c *EventsInstancesCall) Fields(s ...googleapi.Field) *EventsInstancesCall 
 	return c
 }
 
-func (c *EventsInstancesCall) Do() (*Events, error) {
+func (c *EventsInstancesCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["alwaysIncludeEmail"]; ok {
 		params.Set("alwaysIncludeEmail", fmt.Sprintf("%v", v))
 	}
@@ -3850,7 +3987,11 @@ func (c *EventsInstancesCall) Do() (*Events, error) {
 		"eventId":    c.eventId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *EventsInstancesCall) Do() (*Events, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -3878,7 +4019,7 @@ func (c *EventsInstancesCall) Do() (*Events, error) {
 	//       "type": "boolean"
 	//     },
 	//     "calendarId": {
-	//       "description": "Calendar identifier.",
+	//       "description": "Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the \"primary\" keyword.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -3919,13 +4060,13 @@ func (c *EventsInstancesCall) Do() (*Events, error) {
 	//       "type": "boolean"
 	//     },
 	//     "timeMax": {
-	//       "description": "Upper bound (exclusive) for an event's start time to filter by. Optional. The default is not to filter by start time.",
+	//       "description": "Upper bound (exclusive) for an event's start time to filter by. Optional. The default is not to filter by start time. Must be an RFC3339 timestamp with mandatory time zone offset.",
 	//       "format": "date-time",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "timeMin": {
-	//       "description": "Lower bound (inclusive) for an event's end time to filter by. Optional. The default is not to filter by end time.",
+	//       "description": "Lower bound (inclusive) for an event's end time to filter by. Optional. The default is not to filter by end time. Must be an RFC3339 timestamp with mandatory time zone offset.",
 	//       "format": "date-time",
 	//       "location": "query",
 	//       "type": "string"
@@ -4107,7 +4248,10 @@ func (c *EventsListCall) SyncToken(syncToken string) *EventsListCall {
 
 // TimeMax sets the optional parameter "timeMax": Upper bound
 // (exclusive) for an event's start time to filter by.  The default is
-// not to filter by start time.
+// not to filter by start time. Must be an RFC3339 timestamp with
+// mandatory time zone offset, e.g., 2011-06-03T10:00:00-07:00,
+// 2011-06-03T10:00:00Z. Milliseconds may be provided but will be
+// ignored.
 func (c *EventsListCall) TimeMax(timeMax string) *EventsListCall {
 	c.opt_["timeMax"] = timeMax
 	return c
@@ -4115,7 +4259,10 @@ func (c *EventsListCall) TimeMax(timeMax string) *EventsListCall {
 
 // TimeMin sets the optional parameter "timeMin": Lower bound
 // (inclusive) for an event's end time to filter by.  The default is not
-// to filter by end time.
+// to filter by end time. Must be an RFC3339 timestamp with mandatory
+// time zone offset, e.g., 2011-06-03T10:00:00-07:00,
+// 2011-06-03T10:00:00Z. Milliseconds may be provided but will be
+// ignored.
 func (c *EventsListCall) TimeMin(timeMin string) *EventsListCall {
 	c.opt_["timeMin"] = timeMin
 	return c
@@ -4129,7 +4276,7 @@ func (c *EventsListCall) TimeZone(timeZone string) *EventsListCall {
 }
 
 // UpdatedMin sets the optional parameter "updatedMin": Lower bound for
-// an event's last modification time (as a RFC 3339 timestamp) to filter
+// an event's last modification time (as a RFC3339 timestamp) to filter
 // by. When specified, entries deleted since this time will always be
 // included regardless of showDeleted.  The default is not to filter by
 // last modification time.
@@ -4146,10 +4293,10 @@ func (c *EventsListCall) Fields(s ...googleapi.Field) *EventsListCall {
 	return c
 }
 
-func (c *EventsListCall) Do() (*Events, error) {
+func (c *EventsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["alwaysIncludeEmail"]; ok {
 		params.Set("alwaysIncludeEmail", fmt.Sprintf("%v", v))
 	}
@@ -4211,7 +4358,11 @@ func (c *EventsListCall) Do() (*Events, error) {
 		"calendarId": c.calendarId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *EventsListCall) Do() (*Events, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -4238,7 +4389,7 @@ func (c *EventsListCall) Do() (*Events, error) {
 	//       "type": "boolean"
 	//     },
 	//     "calendarId": {
-	//       "description": "Calendar identifier.",
+	//       "description": "Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the \"primary\" keyword.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -4318,13 +4469,13 @@ func (c *EventsListCall) Do() (*Events, error) {
 	//       "type": "string"
 	//     },
 	//     "timeMax": {
-	//       "description": "Upper bound (exclusive) for an event's start time to filter by. Optional. The default is not to filter by start time.",
+	//       "description": "Upper bound (exclusive) for an event's start time to filter by. Optional. The default is not to filter by start time. Must be an RFC3339 timestamp with mandatory time zone offset, e.g., 2011-06-03T10:00:00-07:00, 2011-06-03T10:00:00Z. Milliseconds may be provided but will be ignored.",
 	//       "format": "date-time",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "timeMin": {
-	//       "description": "Lower bound (inclusive) for an event's end time to filter by. Optional. The default is not to filter by end time.",
+	//       "description": "Lower bound (inclusive) for an event's end time to filter by. Optional. The default is not to filter by end time. Must be an RFC3339 timestamp with mandatory time zone offset, e.g., 2011-06-03T10:00:00-07:00, 2011-06-03T10:00:00Z. Milliseconds may be provided but will be ignored.",
 	//       "format": "date-time",
 	//       "location": "query",
 	//       "type": "string"
@@ -4335,7 +4486,7 @@ func (c *EventsListCall) Do() (*Events, error) {
 	//       "type": "string"
 	//     },
 	//     "updatedMin": {
-	//       "description": "Lower bound for an event's last modification time (as a RFC 3339 timestamp) to filter by. When specified, entries deleted since this time will always be included regardless of showDeleted. Optional. The default is not to filter by last modification time.",
+	//       "description": "Lower bound for an event's last modification time (as a RFC3339 timestamp) to filter by. When specified, entries deleted since this time will always be included regardless of showDeleted. Optional. The default is not to filter by last modification time.",
 	//       "format": "date-time",
 	//       "location": "query",
 	//       "type": "string"
@@ -4390,10 +4541,10 @@ func (c *EventsMoveCall) Fields(s ...googleapi.Field) *EventsMoveCall {
 	return c
 }
 
-func (c *EventsMoveCall) Do() (*Event, error) {
+func (c *EventsMoveCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	params.Set("destination", fmt.Sprintf("%v", c.destinationid))
 	if v, ok := c.opt_["sendNotifications"]; ok {
 		params.Set("sendNotifications", fmt.Sprintf("%v", v))
@@ -4409,7 +4560,11 @@ func (c *EventsMoveCall) Do() (*Event, error) {
 		"eventId":    c.eventId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *EventsMoveCall) Do() (*Event, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -4531,7 +4686,7 @@ func (c *EventsPatchCall) Fields(s ...googleapi.Field) *EventsPatchCall {
 	return c
 }
 
-func (c *EventsPatchCall) Do() (*Event, error) {
+func (c *EventsPatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.event)
 	if err != nil {
@@ -4539,7 +4694,7 @@ func (c *EventsPatchCall) Do() (*Event, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["alwaysIncludeEmail"]; ok {
 		params.Set("alwaysIncludeEmail", fmt.Sprintf("%v", v))
 	}
@@ -4564,7 +4719,11 @@ func (c *EventsPatchCall) Do() (*Event, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *EventsPatchCall) Do() (*Event, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -4592,7 +4751,7 @@ func (c *EventsPatchCall) Do() (*Event, error) {
 	//       "type": "boolean"
 	//     },
 	//     "calendarId": {
-	//       "description": "Calendar identifier.",
+	//       "description": "Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the \"primary\" keyword.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -4668,10 +4827,10 @@ func (c *EventsQuickAddCall) Fields(s ...googleapi.Field) *EventsQuickAddCall {
 	return c
 }
 
-func (c *EventsQuickAddCall) Do() (*Event, error) {
+func (c *EventsQuickAddCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	params.Set("text", fmt.Sprintf("%v", c.text))
 	if v, ok := c.opt_["sendNotifications"]; ok {
 		params.Set("sendNotifications", fmt.Sprintf("%v", v))
@@ -4686,7 +4845,11 @@ func (c *EventsQuickAddCall) Do() (*Event, error) {
 		"calendarId": c.calendarId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *EventsQuickAddCall) Do() (*Event, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -4709,7 +4872,7 @@ func (c *EventsQuickAddCall) Do() (*Event, error) {
 	//   ],
 	//   "parameters": {
 	//     "calendarId": {
-	//       "description": "Calendar identifier.",
+	//       "description": "Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the \"primary\" keyword.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -4801,7 +4964,7 @@ func (c *EventsUpdateCall) Fields(s ...googleapi.Field) *EventsUpdateCall {
 	return c
 }
 
-func (c *EventsUpdateCall) Do() (*Event, error) {
+func (c *EventsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.event)
 	if err != nil {
@@ -4809,7 +4972,7 @@ func (c *EventsUpdateCall) Do() (*Event, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["alwaysIncludeEmail"]; ok {
 		params.Set("alwaysIncludeEmail", fmt.Sprintf("%v", v))
 	}
@@ -4834,7 +4997,11 @@ func (c *EventsUpdateCall) Do() (*Event, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *EventsUpdateCall) Do() (*Event, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -4862,7 +5029,7 @@ func (c *EventsUpdateCall) Do() (*Event, error) {
 	//       "type": "boolean"
 	//     },
 	//     "calendarId": {
-	//       "description": "Calendar identifier.",
+	//       "description": "Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the \"primary\" keyword.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -5065,7 +5232,10 @@ func (c *EventsWatchCall) SyncToken(syncToken string) *EventsWatchCall {
 
 // TimeMax sets the optional parameter "timeMax": Upper bound
 // (exclusive) for an event's start time to filter by.  The default is
-// not to filter by start time.
+// not to filter by start time. Must be an RFC3339 timestamp with
+// mandatory time zone offset, e.g., 2011-06-03T10:00:00-07:00,
+// 2011-06-03T10:00:00Z. Milliseconds may be provided but will be
+// ignored.
 func (c *EventsWatchCall) TimeMax(timeMax string) *EventsWatchCall {
 	c.opt_["timeMax"] = timeMax
 	return c
@@ -5073,7 +5243,10 @@ func (c *EventsWatchCall) TimeMax(timeMax string) *EventsWatchCall {
 
 // TimeMin sets the optional parameter "timeMin": Lower bound
 // (inclusive) for an event's end time to filter by.  The default is not
-// to filter by end time.
+// to filter by end time. Must be an RFC3339 timestamp with mandatory
+// time zone offset, e.g., 2011-06-03T10:00:00-07:00,
+// 2011-06-03T10:00:00Z. Milliseconds may be provided but will be
+// ignored.
 func (c *EventsWatchCall) TimeMin(timeMin string) *EventsWatchCall {
 	c.opt_["timeMin"] = timeMin
 	return c
@@ -5087,7 +5260,7 @@ func (c *EventsWatchCall) TimeZone(timeZone string) *EventsWatchCall {
 }
 
 // UpdatedMin sets the optional parameter "updatedMin": Lower bound for
-// an event's last modification time (as a RFC 3339 timestamp) to filter
+// an event's last modification time (as a RFC3339 timestamp) to filter
 // by. When specified, entries deleted since this time will always be
 // included regardless of showDeleted.  The default is not to filter by
 // last modification time.
@@ -5104,7 +5277,7 @@ func (c *EventsWatchCall) Fields(s ...googleapi.Field) *EventsWatchCall {
 	return c
 }
 
-func (c *EventsWatchCall) Do() (*Channel, error) {
+func (c *EventsWatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channel)
 	if err != nil {
@@ -5112,7 +5285,7 @@ func (c *EventsWatchCall) Do() (*Channel, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["alwaysIncludeEmail"]; ok {
 		params.Set("alwaysIncludeEmail", fmt.Sprintf("%v", v))
 	}
@@ -5175,7 +5348,11 @@ func (c *EventsWatchCall) Do() (*Channel, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *EventsWatchCall) Do() (*Channel, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -5202,7 +5379,7 @@ func (c *EventsWatchCall) Do() (*Channel, error) {
 	//       "type": "boolean"
 	//     },
 	//     "calendarId": {
-	//       "description": "Calendar identifier.",
+	//       "description": "Calendar identifier. To retrieve calendar IDs call the calendarList.list method. If you want to access the primary calendar of the currently logged in user, use the \"primary\" keyword.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -5282,13 +5459,13 @@ func (c *EventsWatchCall) Do() (*Channel, error) {
 	//       "type": "string"
 	//     },
 	//     "timeMax": {
-	//       "description": "Upper bound (exclusive) for an event's start time to filter by. Optional. The default is not to filter by start time.",
+	//       "description": "Upper bound (exclusive) for an event's start time to filter by. Optional. The default is not to filter by start time. Must be an RFC3339 timestamp with mandatory time zone offset, e.g., 2011-06-03T10:00:00-07:00, 2011-06-03T10:00:00Z. Milliseconds may be provided but will be ignored.",
 	//       "format": "date-time",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "timeMin": {
-	//       "description": "Lower bound (inclusive) for an event's end time to filter by. Optional. The default is not to filter by end time.",
+	//       "description": "Lower bound (inclusive) for an event's end time to filter by. Optional. The default is not to filter by end time. Must be an RFC3339 timestamp with mandatory time zone offset, e.g., 2011-06-03T10:00:00-07:00, 2011-06-03T10:00:00Z. Milliseconds may be provided but will be ignored.",
 	//       "format": "date-time",
 	//       "location": "query",
 	//       "type": "string"
@@ -5299,7 +5476,7 @@ func (c *EventsWatchCall) Do() (*Channel, error) {
 	//       "type": "string"
 	//     },
 	//     "updatedMin": {
-	//       "description": "Lower bound for an event's last modification time (as a RFC 3339 timestamp) to filter by. When specified, entries deleted since this time will always be included regardless of showDeleted. Optional. The default is not to filter by last modification time.",
+	//       "description": "Lower bound for an event's last modification time (as a RFC3339 timestamp) to filter by. When specified, entries deleted since this time will always be included regardless of showDeleted. Optional. The default is not to filter by last modification time.",
 	//       "format": "date-time",
 	//       "location": "query",
 	//       "type": "string"
@@ -5345,7 +5522,7 @@ func (c *FreebusyQueryCall) Fields(s ...googleapi.Field) *FreebusyQueryCall {
 	return c
 }
 
-func (c *FreebusyQueryCall) Do() (*FreeBusyResponse, error) {
+func (c *FreebusyQueryCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.freebusyrequest)
 	if err != nil {
@@ -5353,7 +5530,7 @@ func (c *FreebusyQueryCall) Do() (*FreeBusyResponse, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -5363,7 +5540,11 @@ func (c *FreebusyQueryCall) Do() (*FreeBusyResponse, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *FreebusyQueryCall) Do() (*FreeBusyResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -5418,10 +5599,10 @@ func (c *SettingsGetCall) Fields(s ...googleapi.Field) *SettingsGetCall {
 	return c
 }
 
-func (c *SettingsGetCall) Do() (*Setting, error) {
+func (c *SettingsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -5432,7 +5613,11 @@ func (c *SettingsGetCall) Do() (*Setting, error) {
 		"setting": c.setting,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *SettingsGetCall) Do() (*Setting, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -5522,10 +5707,10 @@ func (c *SettingsListCall) Fields(s ...googleapi.Field) *SettingsListCall {
 	return c
 }
 
-func (c *SettingsListCall) Do() (*Settings, error) {
+func (c *SettingsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
@@ -5543,7 +5728,11 @@ func (c *SettingsListCall) Do() (*Settings, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *SettingsListCall) Do() (*Settings, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -5644,7 +5833,7 @@ func (c *SettingsWatchCall) Fields(s ...googleapi.Field) *SettingsWatchCall {
 	return c
 }
 
-func (c *SettingsWatchCall) Do() (*Channel, error) {
+func (c *SettingsWatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channel)
 	if err != nil {
@@ -5652,7 +5841,7 @@ func (c *SettingsWatchCall) Do() (*Channel, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
@@ -5671,7 +5860,11 @@ func (c *SettingsWatchCall) Do() (*Channel, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *SettingsWatchCall) Do() (*Channel, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}

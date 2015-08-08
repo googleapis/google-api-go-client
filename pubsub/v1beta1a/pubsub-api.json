@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/7dF_Pdkn9CaqP2VR3Xvya3Y17a8\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/ORVtBcGWEB-nbtUzzP27Hw2wQdQ\"",
  "discoveryVersion": "v1",
  "id": "pubsub:v1beta1a",
  "name": "pubsub",
@@ -407,7 +407,7 @@
     },
     "ackIds": {
      "type": "array",
-     "description": "List of acknowledgment IDs. Either this field or ack_id should be populated, not both. TODO(handrei): mark the above field deprecated once it's not used internally.",
+     "description": "List of acknowledgment IDs. Either this field or ack_id should be populated, not both.",
      "items": {
       "type": "string"
      }

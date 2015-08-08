@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/T8xjS8-LAPJJ1wXBIGC7t3Ehz9c\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/iV3v-C_yUys3U_llqVYPlrZ-gmI\"",
  "discoveryVersion": "v1",
  "id": "androidenterprise:v1",
  "name": "androidenterprise",
  "canonicalName": "Android Enterprise",
  "version": "v1",
- "revision": "20150715",
+ "revision": "20150729",
  "title": "Google Play EMM API",
  "description": "Allows MDMs/EMMs and enterprises to manage the deployment of apps to Android for Work users.",
  "ownerDomain": "google.com",
@@ -82,6 +82,11 @@
    "type": "object",
    "description": "Represents the list of app restrictions available to be pre-configured for the product.",
    "properties": {
+    "kind": {
+     "type": "string",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"androidenterprise#appRestrictionsSchema\".",
+     "default": "androidenterprise#appRestrictionsSchema"
+    },
     "restrictions": {
      "type": "array",
      "description": "The set of restrictions that make up this schema.",
@@ -234,7 +239,7 @@
     },
     "visibility": {
      "type": "string",
-     "description": "Whether this collection is visible to all users, or only to the users that have been granted access through the collection_viewers api. Even if a collection is visible to allUsers, it is possible to add and remove viewers, but this will have no effect until the collection's visibility changes to viewersOnly."
+     "description": "Whether this collection is visible to all users, or only to the users that have been granted access through the \"Collectionviewers\" API. With the launch of the \"setAvailableProductSet\" API, this property should always be set to \"viewersOnly\", as the \"allUsers\" option will bypass the \"availableProductSet\" for all users within a domain.\n\nThe \"allUsers\" setting is deprecated, and will be removed."
     }
    }
   },
@@ -609,7 +614,7 @@
     },
     "productId": {
      "type": "string",
-     "description": "A string of the form app:\n. For example, app:com.google.android.gm represents the Gmail app."
+     "description": "A string of the form app:\u003cpackage name\u003e. For example, app:com.google.android.gm represents the Gmail app."
     },
     "requiresContainerApp": {
      "type": "boolean",
@@ -665,6 +670,25 @@
     "productId": {
      "type": "string",
      "description": "The ID of the app that the permissions relate to, e.g. \"app:com.google.android.gm\"."
+    }
+   }
+  },
+  "ProductSet": {
+   "id": "ProductSet",
+   "type": "object",
+   "description": "A set of products.",
+   "properties": {
+    "kind": {
+     "type": "string",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"androidenterprise#productSet\".",
+     "default": "androidenterprise#productSet"
+    },
+    "productId": {
+     "type": "array",
+     "description": "The list of product IDs making up the set of products.",
+     "items": {
+      "type": "string"
+     }
     }
    }
   },
@@ -2228,6 +2252,36 @@
       "https://www.googleapis.com/auth/androidenterprise"
      ]
     },
+    "getAvailableProductSet": {
+     "id": "androidenterprise.users.getAvailableProductSet",
+     "path": "enterprises/{enterpriseId}/users/{userId}/availableProductSet",
+     "httpMethod": "GET",
+     "description": "Retrieves the set of products a user is entitled to access.",
+     "parameters": {
+      "enterpriseId": {
+       "type": "string",
+       "description": "The ID of the enterprise.",
+       "required": true,
+       "location": "path"
+      },
+      "userId": {
+       "type": "string",
+       "description": "The ID of the user.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "enterpriseId",
+      "userId"
+     ],
+     "response": {
+      "$ref": "ProductSet"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/androidenterprise"
+     ]
+    },
     "list": {
      "id": "androidenterprise.users.list",
      "path": "enterprises/{enterpriseId}/users",
@@ -2281,6 +2335,39 @@
       "enterpriseId",
       "userId"
      ],
+     "scopes": [
+      "https://www.googleapis.com/auth/androidenterprise"
+     ]
+    },
+    "setAvailableProductSet": {
+     "id": "androidenterprise.users.setAvailableProductSet",
+     "path": "enterprises/{enterpriseId}/users/{userId}/availableProductSet",
+     "httpMethod": "PUT",
+     "description": "Modifies the set of products a user is entitled to access.",
+     "parameters": {
+      "enterpriseId": {
+       "type": "string",
+       "description": "The ID of the enterprise.",
+       "required": true,
+       "location": "path"
+      },
+      "userId": {
+       "type": "string",
+       "description": "The ID of the user.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "enterpriseId",
+      "userId"
+     ],
+     "request": {
+      "$ref": "ProductSet"
+     },
+     "response": {
+      "$ref": "ProductSet"
+     },
      "scopes": [
       "https://www.googleapis.com/auth/androidenterprise"
      ]

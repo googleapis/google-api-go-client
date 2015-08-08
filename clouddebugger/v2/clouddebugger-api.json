@@ -1,13 +1,13 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/Wr2nY13LMpGgsT7w2l5JsXnAVu4\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/Uxjs8-mLkSVyfZFdV4VVGF9Ux4M\"",
  "discoveryVersion": "v1",
  "id": "clouddebugger:v2",
  "name": "clouddebugger",
  "version": "v2",
- "revision": "20150710",
+ "revision": "20150807",
  "title": "Google Cloud Debugger API",
- "description": "",
+ "description": "Lets you examine the stack and variables of your running application without stopping or slowing it down.",
  "ownerDomain": "google.com",
  "ownerName": "Google",
  "icons": {
@@ -241,6 +241,10 @@
     "gerrit": {
      "$ref": "GerritSourceContext",
      "description": "A SourceContext referring to a Gerrit project."
+    },
+    "git": {
+     "$ref": "GitSourceContext",
+     "description": "A SourceContext referring to any third party Git repo (e.g. GitHub)."
     }
    }
   },
@@ -343,6 +347,21 @@
     "aliasName": {
      "type": "string",
      "description": "The name of an alias (branch, tag, etc.)."
+    }
+   }
+  },
+  "GitSourceContext": {
+   "id": "GitSourceContext",
+   "type": "object",
+   "description": "A GitSourceContext denotes a particular revision in a third party Git repository (e.g. GitHub).",
+   "properties": {
+    "url": {
+     "type": "string",
+     "description": "Git repository URL."
+    },
+    "revisionId": {
+     "type": "string",
+     "description": "Git commit hash. required."
     }
    }
   },

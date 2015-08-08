@@ -526,7 +526,7 @@ type Address struct {
 	// resides. This field is not applicable to global addresses.
 	Region string `json:"region,omitempty"`
 
-	// SelfLink: [Output Only] Server defined URL for the resource.
+	// SelfLink: [Output Only] Server-defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// Status: [Output Only] The status of the address, which can be either
@@ -560,7 +560,7 @@ type AddressAggregatedList struct {
 	// list request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: [Output Only] Server defined URL for this resource.
+	// SelfLink: [Output Only] Server-defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
@@ -581,7 +581,7 @@ type AddressList struct {
 	// list request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: [Output Only] Server defined URL for the resource.
+	// SelfLink: [Output Only] Server-defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
@@ -644,9 +644,10 @@ type AttachedDisk struct {
 	Boot bool `json:"boot,omitempty"`
 
 	// DeviceName: Specifies a unique device name of your choice that is
-	// reflected into the /dev/ tree of a Linux operating system running
-	// within the instance. This name can be used to reference the device
-	// for mounting, resizing, and so on, from within the instance.
+	// reflected into the /dev/disk/by-id/google-* tree of a Linux operating
+	// system running within the instance. This name can be used to
+	// reference the device for mounting, resizing, and so on, from within
+	// the instance.
 	//
 	// If not specified, the server chooses a default device name to apply
 	// to this disk, in the form persistent-disks-x, where x is a number
@@ -759,40 +760,44 @@ type Autoscaler struct {
 	// AutoscalingPolicy: Autoscaling configuration.
 	AutoscalingPolicy *AutoscalingPolicy `json:"autoscalingPolicy,omitempty"`
 
-	// CreationTimestamp: Creation timestamp in RFC3339 text format (output
-	// only).
+	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
+	// format.
 	CreationTimestamp string `json:"creationTimestamp,omitempty"`
 
 	// Description: An optional textual description of the resource;
 	// provided by the client when the resource is created.
 	Description string `json:"description,omitempty"`
 
-	// Id: Unique identifier for the resource; defined by the server (output
-	// only).
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
 	Id uint64 `json:"id,omitempty,string"`
 
 	// Kind: Type of the resource.
 	Kind string `json:"kind,omitempty"`
 
-	// Name: Name of the resource; provided by the client when the resource
+	// Name: Name of the resource. Provided by the client when the resource
 	// is created. The name must be 1-63 characters long, and comply with
-	// RFC1035.
+	// RFC1035. Specifically, the name must be 1-63 characters long and
+	// match the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means
+	// the first character must be a lowercase letter, and all following
+	// characters must be a dash, lowercase letter, or digit, except the
+	// last character, which cannot be a dash.
 	Name string `json:"name,omitempty"`
 
-	// SelfLink: Server defined URL for the resource (output only).
+	// SelfLink: [Output Only] Server-defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// Target: URL of Instance Group Manager or Replica Pool which will be
 	// controlled by Autoscaler.
 	Target string `json:"target,omitempty"`
 
-	// Zone: URL of the zone where the instance group resides (output only).
+	// Zone: [Output Only] URL of the zone where the instance group resides.
 	Zone string `json:"zone,omitempty"`
 }
 
 type AutoscalerAggregatedList struct {
-	// Id: Unique identifier for the resource; defined by the server (output
-	// only).
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
 	Id string `json:"id,omitempty"`
 
 	// Items: A map of scoped autoscaler lists.
@@ -801,18 +806,18 @@ type AutoscalerAggregatedList struct {
 	// Kind: Type of resource.
 	Kind string `json:"kind,omitempty"`
 
-	// NextPageToken: A token used to continue a truncated list request
-	// (output only).
+	// NextPageToken: [Output Only] A token used to continue a truncated
+	// list request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: Server defined URL for this resource (output only).
+	// SelfLink: [Output Only] Server-defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
 // AutoscalerList: Contains a list of persistent autoscaler resources.
 type AutoscalerList struct {
-	// Id: Unique identifier for the resource; defined by the server (output
-	// only).
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
 	Id string `json:"id,omitempty"`
 
 	// Items: A list of Autoscaler resources.
@@ -821,11 +826,11 @@ type AutoscalerList struct {
 	// Kind: Type of resource.
 	Kind string `json:"kind,omitempty"`
 
-	// NextPageToken: A token used to continue a truncated list request
-	// (output only).
+	// NextPageToken: [Output Only] A token used to continue a truncated
+	// list request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: Server defined URL for this resource (output only).
+	// SelfLink: [Output Only] Server-defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
@@ -1011,7 +1016,8 @@ type Backend struct {
 }
 
 // BackendService: A BackendService resource. This resource defines a
-// group of backend VMs together with their serving capacity.
+// group of backend virtual machines together with their serving
+// capacity.
 type BackendService struct {
 	// Backends: The list of backends that serve this BackendService.
 	Backends []*Backend `json:"backends,omitempty"`
@@ -1064,7 +1070,7 @@ type BackendService struct {
 	//   "HTTP"
 	Protocol string `json:"protocol,omitempty"`
 
-	// SelfLink: [Output Only] Server defined URL for the resource.
+	// SelfLink: [Output Only] Server-defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// TimeoutSec: How many seconds to wait for the backend before
@@ -1273,7 +1279,7 @@ type DiskAggregatedList struct {
 	// list request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: [Output Only] Server defined URL for this resource.
+	// SelfLink: [Output Only] Server-defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
@@ -1294,7 +1300,7 @@ type DiskList struct {
 	// list request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: [Output Only] Server defined URL for this resource.
+	// SelfLink: [Output Only] Server-defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
@@ -1324,7 +1330,7 @@ type DiskType struct {
 	// format.
 	CreationTimestamp string `json:"creationTimestamp,omitempty"`
 
-	// DefaultDiskSizeGb: [Output Only] Server defined default disk size in
+	// DefaultDiskSizeGb: [Output Only] Server-defined default disk size in
 	// GB.
 	DefaultDiskSizeGb int64 `json:"defaultDiskSizeGb,omitempty,string"`
 
@@ -1347,7 +1353,7 @@ type DiskType struct {
 	// Name: [Output Only] Name of the resource.
 	Name string `json:"name,omitempty"`
 
-	// SelfLink: [Output Only] Server defined URL for the resource.
+	// SelfLink: [Output Only] Server-defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// ValidDiskSize: [Output Only] An optional textual description of the
@@ -1374,7 +1380,7 @@ type DiskTypeAggregatedList struct {
 	// list request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: [Output Only] Server defined URL for this resource.
+	// SelfLink: [Output Only] Server-defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
@@ -1395,7 +1401,7 @@ type DiskTypeList struct {
 	// list request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: [Output Only] Server defined URL for this resource.
+	// SelfLink: [Output Only] Server-defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
@@ -1539,7 +1545,7 @@ type Firewall struct {
 	// - global/networks/default
 	Network string `json:"network,omitempty"`
 
-	// SelfLink: [Output Only] Server defined URL for the resource.
+	// SelfLink: [Output Only] Server-defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// SourceRanges: The IP address blocks that this rule applies to,
@@ -1601,13 +1607,13 @@ type FirewallList struct {
 	// list request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: [Output Only] Server defined URL for this resource.
+	// SelfLink: [Output Only] Server-defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
 // ForwardingRule: A ForwardingRule resource. A ForwardingRule resource
-// specifies which pool of target VMs to forward a packet to if it
-// matches the given [IPAddress, IPProtocol, portRange] tuple.
+// specifies which pool of target virtual machines to forward a packet
+// to if it matches the given [IPAddress, IPProtocol, portRange] tuple.
 type ForwardingRule struct {
 	// IPAddress: Value of the reserved IP address that this forwarding rule
 	// is serving on behalf of. For global forwarding rules, the address
@@ -1617,7 +1623,7 @@ type ForwardingRule struct {
 	// regional) will be assigned.
 	IPAddress string `json:"IPAddress,omitempty"`
 
-	// IPProtocol: The IP protocol to which this rule applies, valid options
+	// IPProtocol: The IP protocol to which this rule applies. Valid options
 	// are TCP, UDP, ESP, AH or SCTP.
 	//
 	// Possible values:
@@ -1689,7 +1695,7 @@ type ForwardingRuleAggregatedList struct {
 	// list request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: [Output Only] Server defined URL for this resource.
+	// SelfLink: [Output Only] Server-defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
@@ -1709,7 +1715,7 @@ type ForwardingRuleList struct {
 	// list request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: [Output Only] Server defined URL for this resource.
+	// SelfLink: [Output Only] Server-defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
@@ -1800,23 +1806,23 @@ type HostRule struct {
 }
 
 // HttpHealthCheck: An HttpHealthCheck resource. This resource defines a
-// template for how individual VMs should be checked for health, via
-// HTTP.
+// template for how individual instances should be checked for health,
+// via HTTP.
 type HttpHealthCheck struct {
 	// CheckIntervalSec: How often (in seconds) to send a health check. The
 	// default value is 5 seconds.
 	CheckIntervalSec int64 `json:"checkIntervalSec,omitempty"`
 
-	// CreationTimestamp: Creation timestamp in RFC3339 text format (output
-	// only).
+	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
+	// format.
 	CreationTimestamp string `json:"creationTimestamp,omitempty"`
 
 	// Description: An optional textual description of the resource;
 	// provided by the client when the resource is created.
 	Description string `json:"description,omitempty"`
 
-	// HealthyThreshold: A so-far unhealthy VM will be marked healthy after
-	// this many consecutive successes. The default value is 2.
+	// HealthyThreshold: A so-far unhealthy instance will be marked healthy
+	// after this many consecutive successes. The default value is 2.
 	HealthyThreshold int64 `json:"healthyThreshold,omitempty"`
 
 	// Host: The value of the host header in the HTTP health check request.
@@ -1824,16 +1830,20 @@ type HttpHealthCheck struct {
 	// health check is performed will be used.
 	Host string `json:"host,omitempty"`
 
-	// Id: Unique identifier for the resource; defined by the server (output
-	// only).
+	// Id: [Output Only] Unique identifier for the resource. Defined by the
+	// server.
 	Id uint64 `json:"id,omitempty,string"`
 
 	// Kind: Type of the resource.
 	Kind string `json:"kind,omitempty"`
 
-	// Name: Name of the resource; provided by the client when the resource
+	// Name: Name of the resource. Provided by the client when the resource
 	// is created. The name must be 1-63 characters long, and comply with
-	// RFC1035.
+	// RFC1035. Specifically, the name must be 1-63 characters long and
+	// match the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means
+	// the first character must be a lowercase letter, and all following
+	// characters must be a dash, lowercase letter, or digit, except the
+	// last character, which cannot be a dash.
 	Name string `json:"name,omitempty"`
 
 	// Port: The TCP port number for the HTTP health check request. The
@@ -1844,7 +1854,7 @@ type HttpHealthCheck struct {
 	// default value is "/".
 	RequestPath string `json:"requestPath,omitempty"`
 
-	// SelfLink: Server defined URL for the resource (output only).
+	// SelfLink: [Output Only] Server-defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// TimeoutSec: How long (in seconds) to wait before claiming failure.
@@ -1852,15 +1862,16 @@ type HttpHealthCheck struct {
 	// greater value than checkIntervalSec.
 	TimeoutSec int64 `json:"timeoutSec,omitempty"`
 
-	// UnhealthyThreshold: A so-far healthy VM will be marked unhealthy
-	// after this many consecutive failures. The default value is 2.
+	// UnhealthyThreshold: A so-far healthy instance will be marked
+	// unhealthy after this many consecutive failures. The default value is
+	// 2.
 	UnhealthyThreshold int64 `json:"unhealthyThreshold,omitempty"`
 }
 
 // HttpHealthCheckList: Contains a list of HttpHealthCheck resources.
 type HttpHealthCheckList struct {
-	// Id: Unique identifier for the resource; defined by the server (output
-	// only).
+	// Id: [Output Only] Unique identifier for the resource. Defined by the
+	// server.
 	Id string `json:"id,omitempty"`
 
 	// Items: A list of HttpHealthCheck resources.
@@ -1869,11 +1880,11 @@ type HttpHealthCheckList struct {
 	// Kind: Type of resource.
 	Kind string `json:"kind,omitempty"`
 
-	// NextPageToken: A token used to continue a truncated list request
-	// (output only).
+	// NextPageToken: [Output Only] A token used to continue a truncated
+	// list request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: Server defined URL for this resource (output only).
+	// SelfLink: [Output Only] Server-defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
@@ -1921,7 +1932,7 @@ type Image struct {
 	// RawDisk: The parameters of the raw disk image.
 	RawDisk *ImageRawDisk `json:"rawDisk,omitempty"`
 
-	// SelfLink: [Output Only] Server defined URL for the resource.
+	// SelfLink: [Output Only] Server-defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// SourceDisk: URL of the The source disk used to create this image.
@@ -1981,8 +1992,8 @@ type ImageRawDisk struct {
 
 // ImageList: Contains a list of Image resources.
 type ImageList struct {
-	// Id: Unique identifier for the resource; defined by the server (output
-	// only).
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
 	Id string `json:"id,omitempty"`
 
 	// Items: A list of Image resources.
@@ -1991,11 +2002,11 @@ type ImageList struct {
 	// Kind: Type of resource.
 	Kind string `json:"kind,omitempty"`
 
-	// NextPageToken: A token used to continue a truncated list request
-	// (output only).
+	// NextPageToken: [Output Only] A token used to continue a truncated
+	// list request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: Server defined URL for this resource (output only).
+	// SelfLink: [Output Only] Server-defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
@@ -2059,7 +2070,7 @@ type Instance struct {
 	// Scheduling: Scheduling options for this instance.
 	Scheduling *Scheduling `json:"scheduling,omitempty"`
 
-	// SelfLink: [Output Only] Server defined URL for this resource.
+	// SelfLink: [Output Only] Server-defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// ServiceAccounts: A list of service accounts, with their specified
@@ -2116,7 +2127,7 @@ type InstanceAggregatedList struct {
 	// list request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: [Output Only] Server defined URL for this resource.
+	// SelfLink: [Output Only] Server-defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
@@ -2265,11 +2276,11 @@ type InstanceGroupManager struct {
 	// characters long, and comply with RFC1035.
 	Name string `json:"name,omitempty"`
 
-	// SelfLink: [Output Only] Server defined URL for this managed instance
+	// SelfLink: [Output Only] Server-defined URL for this managed instance
 	// group.
 	SelfLink string `json:"selfLink,omitempty"`
 
-	// TargetPools: The URL of all TargetPool resources to which new
+	// TargetPools: The URLs of all TargetPool resources to which new
 	// instances in the instanceGroup field are added. Updating the target
 	// pool values does not affect existing instances.
 	TargetPools []string `json:"targetPools,omitempty"`
@@ -2285,18 +2296,42 @@ type InstanceGroupManager struct {
 }
 
 type InstanceGroupManagerActionsSummary struct {
+	// Abandoning: [Output Only] Total number of instances in the managed
+	// instance group that are scheduled to be abandoned. Abandoning an
+	// instance removes it from the managed instance group without deleting
+	// it.
 	Abandoning int64 `json:"abandoning,omitempty"`
 
+	// Creating: [Output Only] The number of instances in the managed
+	// instance group that are scheduled to be created or are currently
+	// being created.
 	Creating int64 `json:"creating,omitempty"`
 
+	// Deleting: [Output Only] The number of instances in the managed
+	// instance group that are scheduled to be deleted or are currently
+	// being deleted.
 	Deleting int64 `json:"deleting,omitempty"`
 
+	// None: [Output Only] The number of instances in the managed instance
+	// group that currently have no scheduled actions.
 	None int64 `json:"none,omitempty"`
 
+	// Recreating: [Output Only] The number of instances in the managed
+	// instance group that are scheduled to be recreated or are currently
+	// being being recreated. Recreating an instance deletes the existing
+	// root persistent disk and creates a new disk from the image that is
+	// defined in the instance template.
 	Recreating int64 `json:"recreating,omitempty"`
 
+	// Refreshing: [Output Only] The number of instances in the managed
+	// instance group that are being reconfigured with properties that do
+	// not require a restart or a recreate action. For example, setting or
+	// removing target pools for the instance.
 	Refreshing int64 `json:"refreshing,omitempty"`
 
+	// Restarting: [Output Only] The number of instances in the managed
+	// instance group that are scheduled to be restarted or are currently
+	// being restarted.
 	Restarting int64 `json:"restarting,omitempty"`
 }
 
@@ -2493,14 +2528,6 @@ type InstanceGroupsListInstancesRequest struct {
 	//   "ALL"
 	//   "RUNNING"
 	InstanceState string `json:"instanceState,omitempty"`
-
-	// PortName: A filter for the named ports that are associated with
-	// instances in the instance group. If you specify this parameter, the
-	// generated list includes only instances that are associated with the
-	// specified named ports. If you do not specify this parameter, the
-	// generated list includes all instances regardless of their named
-	// ports.
-	PortName string `json:"portName,omitempty"`
 }
 
 type InstanceGroupsRemoveInstancesRequest struct {
@@ -2584,7 +2611,7 @@ type InstanceList struct {
 	// list request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: [Output Only] Server defined URL for this resource.
+	// SelfLink: [Output Only] Server-defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
@@ -2795,10 +2822,10 @@ type License struct {
 	Kind string `json:"kind,omitempty"`
 
 	// Name: Name of the resource. The name must be 1-63 characters long,
-	// and comply with RCF1035.
+	// and comply with RFC1035.
 	Name string `json:"name,omitempty"`
 
-	// SelfLink: [Output Only] Server defined URL for the resource.
+	// SelfLink: [Output Only] Server-defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
@@ -2849,7 +2876,7 @@ type MachineType struct {
 	// to the instance.
 	ScratchDisks []*MachineTypeScratchDisks `json:"scratchDisks,omitempty"`
 
-	// SelfLink: [Output Only] Server defined URL for the resource.
+	// SelfLink: [Output Only] Server-defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// Zone: [Output Only] The name of the zone where the machine type
@@ -2879,7 +2906,7 @@ type MachineTypeAggregatedList struct {
 	// list request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: [Output Only] Server defined URL for this resource.
+	// SelfLink: [Output Only] Server-defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
@@ -2900,7 +2927,7 @@ type MachineTypeList struct {
 	// list request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: [Output Only] Server defined URL for this resource.
+	// SelfLink: [Output Only] Server-defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
@@ -3099,7 +3126,7 @@ type Network struct {
 	// last character, which cannot be a dash.
 	Name string `json:"name,omitempty"`
 
-	// SelfLink: [Output Only] Server defined URL for the resource.
+	// SelfLink: [Output Only] Server-defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
@@ -3107,9 +3134,9 @@ type Network struct {
 // instance.
 type NetworkInterface struct {
 	// AccessConfigs: An array of configurations for this interface.
-	// Currently, <codeONE_TO_ONE_NAT is the only access config supported.
-	// If there are no accessConfigs specified, then this instance will have
-	// no external internet access.
+	// Currently, ONE_TO_ONE_NAT is the only access config supported. If
+	// there are no accessConfigs specified, then this instance will have no
+	// external internet access.
 	AccessConfigs []*AccessConfig `json:"accessConfigs,omitempty"`
 
 	// Name: [Output Only] The name of the network interface, generated by
@@ -3153,7 +3180,7 @@ type NetworkList struct {
 	// list request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: [Output Only] Server defined URL for this resource .
+	// SelfLink: [Output Only] Server-defined URL for this resource .
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
@@ -3215,7 +3242,7 @@ type Operation struct {
 	// Only applicable for regional resources.
 	Region string `json:"region,omitempty"`
 
-	// SelfLink: [Output Only] Server defined URL for the resource.
+	// SelfLink: [Output Only] Server-defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// StartTime: [Output Only] The time that this operation was started by
@@ -3327,7 +3354,7 @@ type OperationAggregatedList struct {
 	// list request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: [Output Only] Server defined URL for this resource.
+	// SelfLink: [Output Only] Server-defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
@@ -3347,7 +3374,7 @@ type OperationList struct {
 	// NextPageToken: [Output Only] A token used to continue a truncate.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: [Output Only] Server defined URL for this resource.
+	// SelfLink: [Output Only] Server-defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
@@ -3447,6 +3474,9 @@ type Project struct {
 	// Description: An optional textual description of the resource.
 	Description string `json:"description,omitempty"`
 
+	// EnabledFeatures: Restricted features enabled for use on this project.
+	EnabledFeatures []string `json:"enabledFeatures,omitempty"`
+
 	// Id: [Output Only] Unique identifier for the resource; defined by the
 	// server.
 	Id uint64 `json:"id,omitempty,string"`
@@ -3461,7 +3491,7 @@ type Project struct {
 	// Quotas: [Output Only] Quotas assigned to this project.
 	Quotas []*Quota `json:"quotas,omitempty"`
 
-	// SelfLink: [Output Only] Server defined URL for the resource.
+	// SelfLink: [Output Only] Server-defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// UsageExportLocation: The location in Cloud Storage and naming method
@@ -3534,7 +3564,7 @@ type Region struct {
 	// Quotas: [Output Only] Quotas assigned to this region.
 	Quotas []*Quota `json:"quotas,omitempty"`
 
-	// SelfLink: [Output Only] Server defined URL for the resource.
+	// SelfLink: [Output Only] Server-defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// Status: [Output Only] Status of the region, either UP or DOWN.
@@ -3566,7 +3596,7 @@ type RegionList struct {
 	// list request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: [Output Only] Server defined URL for this resource.
+	// SelfLink: [Output Only] Server-defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
@@ -3578,18 +3608,19 @@ type ResourceGroupReference struct {
 
 // Route: The route resource. A Route is a rule that specifies how
 // certain packets should be handled by the virtual network. Routes are
-// associated with VMs by tag and the set of Routes for a particular VM
-// is called its routing table. For each packet leaving a VM, the system
-// searches that VM's routing table for a single best matching Route.
-// Routes match packets by destination IP address, preferring smaller or
-// more specific ranges over larger ones. If there is a tie, the system
-// selects the Route with the smallest priority value. If there is still
-// a tie, it uses the layer three and four packet headers to select just
-// one of the remaining matching Routes. The packet is then forwarded as
-// specified by the nextHop field of the winning Route -- either to
-// another VM destination, a VM gateway or a GCE operated gateway.
-// Packets that do not match any Route in the sending VM's routing table
-// are dropped.
+// associated with instances by tag and the set of Routes for a
+// particular instance is called its routing table. For each packet
+// leaving a instance, the system searches that instance's routing table
+// for a single best matching Route. Routes match packets by destination
+// IP address, preferring smaller or more specific ranges over larger
+// ones. If there is a tie, the system selects the Route with the
+// smallest priority value. If there is still a tie, it uses the layer
+// three and four packet headers to select just one of the remaining
+// matching Routes. The packet is then forwarded as specified by the
+// nextHop field of the winning Route -- either to another instance
+// destination, a instance gateway or a Google Compute Engien-operated
+// gateway. Packets that do not match any Route in the sending
+// instance's routing table are dropped.
 type Route struct {
 	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
 	// format.
@@ -3717,7 +3748,7 @@ type RouteList struct {
 	// list request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: [Output Only] Server defined URL for this resource.
+	// SelfLink: [Output Only] Server-defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
@@ -3750,7 +3781,7 @@ type SerialPortOutput struct {
 	// compute#serialPortOutput for serial port output.
 	Kind string `json:"kind,omitempty"`
 
-	// SelfLink: [Output Only] Server defined URL for the resource.
+	// SelfLink: [Output Only] Server-defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
@@ -3836,8 +3867,8 @@ type Snapshot struct {
 
 // SnapshotList: Contains a list of Snapshot resources.
 type SnapshotList struct {
-	// Id: Unique identifier for the resource; defined by the server (output
-	// only).
+	// Id: [Output Only] Unique identifier for the resource. Defined by the
+	// server.
 	Id string `json:"id,omitempty"`
 
 	// Items: A list of Snapshot resources.
@@ -3846,11 +3877,11 @@ type SnapshotList struct {
 	// Kind: Type of resource.
 	Kind string `json:"kind,omitempty"`
 
-	// NextPageToken: A token used to continue a truncated list request
-	// (output only).
+	// NextPageToken: [Output Only] A token used to continue a truncated
+	// list request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: Server defined URL for this resource (output only).
+	// SelfLink: [Output Only] Server-defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
@@ -3899,7 +3930,7 @@ type TargetHttpProxy struct {
 	// last character, which cannot be a dash.
 	Name string `json:"name,omitempty"`
 
-	// SelfLink: [Output Only] Server defined URL for the resource.
+	// SelfLink: [Output Only] Server-defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// UrlMap: URL to the UrlMap resource that defines the mapping from URL
@@ -3929,18 +3960,18 @@ type TargetHttpProxyList struct {
 }
 
 // TargetInstance: A TargetInstance resource. This resource defines an
-// endpoint VM that terminates traffic of certain protocols.
+// endpoint instance that terminates traffic of certain protocols.
 type TargetInstance struct {
-	// CreationTimestamp: Creation timestamp in RFC3339 text format (output
-	// only).
+	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
+	// format.
 	CreationTimestamp string `json:"creationTimestamp,omitempty"`
 
 	// Description: An optional textual description of the resource;
 	// provided by the client when the resource is created.
 	Description string `json:"description,omitempty"`
 
-	// Id: Unique identifier for the resource; defined by the server (output
-	// only).
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
 	Id uint64 `json:"id,omitempty,string"`
 
 	// Instance: The URL to the instance that terminates the relevant
@@ -3950,29 +3981,33 @@ type TargetInstance struct {
 	// Kind: Type of the resource.
 	Kind string `json:"kind,omitempty"`
 
-	// Name: Name of the resource; provided by the client when the resource
+	// Name: Name of the resource. Provided by the client when the resource
 	// is created. The name must be 1-63 characters long, and comply with
-	// RFC1035.
+	// RFC1035. Specifically, the name must be 1-63 characters long and
+	// match the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means
+	// the first character must be a lowercase letter, and all following
+	// characters must be a dash, lowercase letter, or digit, except the
+	// last character, which cannot be a dash.
 	Name string `json:"name,omitempty"`
 
-	// NatPolicy: NAT option controlling how IPs are NAT'ed to the VM.
+	// NatPolicy: NAT option controlling how IPs are NAT'ed to the instance.
 	// Currently only NO_NAT (default value) is supported.
 	//
 	// Possible values:
 	//   "NO_NAT"
 	NatPolicy string `json:"natPolicy,omitempty"`
 
-	// SelfLink: Server defined URL for the resource (output only).
+	// SelfLink: [Output Only] Server-defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
-	// Zone: URL of the zone where the target instance resides (output
-	// only).
+	// Zone: [Output Only] URL of the zone where the target instance
+	// resides.
 	Zone string `json:"zone,omitempty"`
 }
 
 type TargetInstanceAggregatedList struct {
-	// Id: Unique identifier for the resource; defined by the server (output
-	// only).
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
 	Id string `json:"id,omitempty"`
 
 	// Items: A map of scoped target instance lists.
@@ -3981,18 +4016,18 @@ type TargetInstanceAggregatedList struct {
 	// Kind: Type of resource.
 	Kind string `json:"kind,omitempty"`
 
-	// NextPageToken: A token used to continue a truncated list request
-	// (output only).
+	// NextPageToken: [Output Only] A token used to continue a truncated
+	// list request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: Server defined URL for this resource (output only).
+	// SelfLink: [Output Only] Server-defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
 // TargetInstanceList: Contains a list of TargetInstance resources.
 type TargetInstanceList struct {
-	// Id: Unique identifier for the resource; defined by the server (output
-	// only).
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
 	Id string `json:"id,omitempty"`
 
 	// Items: A list of TargetInstance resources.
@@ -4001,11 +4036,11 @@ type TargetInstanceList struct {
 	// Kind: Type of resource.
 	Kind string `json:"kind,omitempty"`
 
-	// NextPageToken: A token used to continue a truncated list request
-	// (output only).
+	// NextPageToken: [Output Only] A token used to continue a truncated
+	// list request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: Server defined URL for this resource (output only).
+	// SelfLink: [Output Only] Server-defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
@@ -4057,28 +4092,28 @@ type TargetInstancesScopedListWarningData struct {
 }
 
 // TargetPool: A TargetPool resource. This resource defines a pool of
-// VMs, associated HttpHealthCheck resources, and the fallback
+// instances, associated HttpHealthCheck resources, and the fallback
 // TargetPool.
 type TargetPool struct {
 	// BackupPool: This field is applicable only when the containing target
 	// pool is serving a forwarding rule as the primary pool, and its
-	// 'failoverRatio' field is properly set to a value between [0,
+	// failoverRatio field is properly set to a value between [0,
 	// 1].
 	//
-	// 'backupPool' and 'failoverRatio' together define the fallback
-	// behavior of the primary target pool: if the ratio of the healthy VMs
-	// in the primary pool is at or below 'failoverRatio', traffic arriving
-	// at the load-balanced IP will be directed to the backup pool.
+	// backupPool and failoverRatio together define the fallback behavior of
+	// the primary target pool: if the ratio of the healthy instances in the
+	// primary pool is at or below failoverRatio, traffic arriving at the
+	// load-balanced IP will be directed to the backup pool.
 	//
-	// In case where 'failoverRatio' and 'backupPool' are not set, or all
-	// the VMs in the backup pool are unhealthy, the traffic will be
+	// In case where failoverRatio and backupPool are not set, or all the
+	// instances in the backup pool are unhealthy, the traffic will be
 	// directed back to the primary pool in the "force" mode, where traffic
-	// will be spread to the healthy VMs with the best effort, or to all VMs
-	// when no VM is healthy.
+	// will be spread to the healthy instances with the best effort, or to
+	// all instances when no instance is healthy.
 	BackupPool string `json:"backupPool,omitempty"`
 
-	// CreationTimestamp: Creation timestamp in RFC3339 text format (output
-	// only).
+	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
+	// format.
 	CreationTimestamp string `json:"creationTimestamp,omitempty"`
 
 	// Description: An optional textual description of the resource;
@@ -4090,55 +4125,60 @@ type TargetPool struct {
 	// not as a backup pool to some other target pool). The value of the
 	// field must be in [0, 1].
 	//
-	// If set, 'backupPool' must also be set. They together define the
+	// If set, backupPool must also be set. They together define the
 	// fallback behavior of the primary target pool: if the ratio of the
-	// healthy VMs in the primary pool is at or below this number, traffic
-	// arriving at the load-balanced IP will be directed to the backup
-	// pool.
+	// healthy instances in the primary pool is at or below this number,
+	// traffic arriving at the load-balanced IP will be directed to the
+	// backup pool.
 	//
-	// In case where 'failoverRatio' is not set or all the VMs in the backup
-	// pool are unhealthy, the traffic will be directed back to the primary
-	// pool in the "force" mode, where traffic will be spread to the healthy
-	// VMs with the best effort, or to all VMs when no VM is healthy.
+	// In case where failoverRatio is not set or all the instances in the
+	// backup pool are unhealthy, the traffic will be directed back to the
+	// primary pool in the "force" mode, where traffic will be spread to the
+	// healthy instances with the best effort, or to all instances when no
+	// instance is healthy.
 	FailoverRatio float64 `json:"failoverRatio,omitempty"`
 
 	// HealthChecks: A list of URLs to the HttpHealthCheck resource. A
-	// member VM in this pool is considered healthy if and only if all
-	// specified health checks pass. An empty list means all member VMs will
-	// be considered healthy at all times.
+	// member instance in this pool is considered healthy if and only if all
+	// specified health checks pass. An empty list means all member
+	// instances will be considered healthy at all times.
 	HealthChecks []string `json:"healthChecks,omitempty"`
 
-	// Id: Unique identifier for the resource; defined by the server (output
-	// only).
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
 	Id uint64 `json:"id,omitempty,string"`
 
-	// Instances: A list of resource URLs to the member VMs serving this
-	// pool. They must live in zones contained in the same region as this
-	// pool.
+	// Instances: A list of resource URLs to the member virtual machines
+	// serving this pool. They must live in zones contained in the same
+	// region as this pool.
 	Instances []string `json:"instances,omitempty"`
 
 	// Kind: Type of the resource.
 	Kind string `json:"kind,omitempty"`
 
-	// Name: Name of the resource; provided by the client when the resource
+	// Name: Name of the resource. Provided by the client when the resource
 	// is created. The name must be 1-63 characters long, and comply with
-	// RFC1035.
+	// RFC1035. Specifically, the name must be 1-63 characters long and
+	// match the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means
+	// the first character must be a lowercase letter, and all following
+	// characters must be a dash, lowercase letter, or digit, except the
+	// last character, which cannot be a dash.
 	Name string `json:"name,omitempty"`
 
-	// Region: URL of the region where the target pool resides (output
-	// only).
+	// Region: [Output Only] URL of the region where the target pool
+	// resides.
 	Region string `json:"region,omitempty"`
 
-	// SelfLink: Server defined URL for the resource (output only).
+	// SelfLink: [Output Only] Server-defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// SessionAffinity: Sesssion affinity option, must be one of the
-	// following values: 'NONE': Connections from the same client IP may go
-	// to any VM in the pool; 'CLIENT_IP': Connections from the same client
-	// IP will go to the same VM in the pool while that VM remains healthy.
-	// 'CLIENT_IP_PROTO': Connections from the same client IP with the same
-	// IP protocol will go to the same VM in the pool while that VM remains
-	// healthy.
+	// following values: NONE: Connections from the same client IP may go to
+	// any instance in the pool; CLIENT_IP: Connections from the same client
+	// IP will go to the same instance in the pool while that instance
+	// remains healthy. CLIENT_IP_PROTO: Connections from the same client IP
+	// with the same IP protocol will go to the same instance in the pool
+	// while that instance remains healthy.
 	//
 	// Possible values:
 	//   "CLIENT_IP"
@@ -4148,8 +4188,8 @@ type TargetPool struct {
 }
 
 type TargetPoolAggregatedList struct {
-	// Id: Unique identifier for the resource; defined by the server (output
-	// only).
+	// Id: [Output Only] Unique identifier for the resource. Defined by the
+	// server.
 	Id string `json:"id,omitempty"`
 
 	// Items: A map of scoped target pool lists.
@@ -4158,11 +4198,11 @@ type TargetPoolAggregatedList struct {
 	// Kind: Type of resource.
 	Kind string `json:"kind,omitempty"`
 
-	// NextPageToken: A token used to continue a truncated list request
-	// (output only).
+	// NextPageToken: [Output Only] A token used to continue a truncated
+	// list request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: Server defined URL for this resource (output only).
+	// SelfLink: [Output Only] Server-defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
@@ -4175,8 +4215,8 @@ type TargetPoolInstanceHealth struct {
 
 // TargetPoolList: Contains a list of TargetPool resources.
 type TargetPoolList struct {
-	// Id: Unique identifier for the resource; defined by the server (output
-	// only).
+	// Id: [Output Only] Unique identifier for the resource. Defined by the
+	// server.
 	Id string `json:"id,omitempty"`
 
 	// Items: A list of TargetPool resources.
@@ -4185,11 +4225,11 @@ type TargetPoolList struct {
 	// Kind: Type of resource.
 	Kind string `json:"kind,omitempty"`
 
-	// NextPageToken: A token used to continue a truncated list request
-	// (output only).
+	// NextPageToken: [Output Only] A token used to continue a truncated
+	// list request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: Server defined URL for this resource (output only).
+	// SelfLink: [Output Only] Server-defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
@@ -4464,7 +4504,7 @@ type UrlMap struct {
 	// PathMatchers: The list of named PathMatchers to use against the URL.
 	PathMatchers []*PathMatcher `json:"pathMatchers,omitempty"`
 
-	// SelfLink: [Output Only] Server defined URL for the resource.
+	// SelfLink: [Output Only] Server-defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// Tests: The list of expected URL mappings. Request to update this
@@ -4488,7 +4528,7 @@ type UrlMapList struct {
 	// list request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: [Output Only] Server defined URL for this resource.
+	// SelfLink: [Output Only] Server-defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
@@ -4574,11 +4614,6 @@ type VpnTunnel struct {
 	// server.
 	Id uint64 `json:"id,omitempty,string"`
 
-	// IkeNetworks: IKE networks to use when establishing the VPN tunnel
-	// with peer VPN gateway. The value should be a CIDR formatted string,
-	// for example: 192.168.0.0/16. The ranges should be disjoint.
-	IkeNetworks []string `json:"ikeNetworks,omitempty"`
-
 	// IkeVersion: IKE protocol version to use when establishing the VPN
 	// tunnel with peer VPN gateway. Acceptable IKE versions are 1 or 2.
 	// Default version is 2.
@@ -4603,7 +4638,7 @@ type VpnTunnel struct {
 	// Region: [Output Only] URL of the region where the VPN tunnel resides.
 	Region string `json:"region,omitempty"`
 
-	// SelfLink: [Output Only] Server defined URL for the resource.
+	// SelfLink: [Output Only] Server-defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// SharedSecret: Shared secret used to set the secure session between
@@ -4650,7 +4685,7 @@ type VpnTunnelAggregatedList struct {
 	// list request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: [Output Only] Server defined URL for this resource.
+	// SelfLink: [Output Only] Server-defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
@@ -4755,7 +4790,7 @@ type Zone struct {
 	// the zone.
 	Region string `json:"region,omitempty"`
 
-	// SelfLink: [Output Only] Server defined URL for the resource.
+	// SelfLink: [Output Only] Server-defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// Status: [Output Only] Status of the zone, either UP or DOWN.
@@ -4799,7 +4834,7 @@ type ZoneList struct {
 	// list request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: Server defined URL for this resource (output only).
+	// SelfLink: [Output Only] Server-defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
@@ -4821,25 +4856,19 @@ func (r *AddressesService) AggregatedList(project string) *AddressesAggregatedLi
 
 // Filter sets the optional parameter "filter": Sets a filter expression
 // for filtering listed resources, in the form filter={expression}. Your
-// {expression} must contain the following:
-// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+// {expression} must be in the format: FIELD_NAME COMPARISON_STRING
+// LITERAL_STRING.
 //
-// - FIELD_NAME: The name of the field you want to compare. The field
-// name must be valid for the type of resource being filtered. Only
-// atomic field types are supported (string, number, boolean). Array and
-// object fields are not currently supported.
-// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
-// (not equals).
-// - LITERAL_STRING: The literal string value to filter to. The literal
-// value must be valid for the type of field (string, number, boolean).
-// For string fields, the literal value is interpreted as a regular
+// The FIELD_NAME is the name of the field you want to compare. Only
+// atomic field types are supported (string, number, boolean). The
+// COMPARISON_STRING must be either eq (equals) or ne (not equals). The
+// LITERAL_STRING is the string value to filter to. The literal value
+// must be valid for the type of field (string, number, boolean). For
+// string fields, the literal value is interpreted as a regular
 // expression using RE2 syntax. The literal value must match the entire
-// field.  For example, you can filter by the name of a
-// resource:
-// filter=name ne example-instance
-// The above filter returns only results whose name field does not equal
-// example-instance. You can also enclose your literal string in single,
-// double, or no quotes.
+// field.
+//
+// For example, filter=name ne example-instance.
 func (c *AddressesAggregatedListCall) Filter(filter string) *AddressesAggregatedListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -4869,10 +4898,10 @@ func (c *AddressesAggregatedListCall) Fields(s ...googleapi.Field) *AddressesAgg
 	return c
 }
 
-func (c *AddressesAggregatedListCall) Do() (*AddressAggregatedList, error) {
+func (c *AddressesAggregatedListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["filter"]; ok {
 		params.Set("filter", fmt.Sprintf("%v", v))
 	}
@@ -4892,7 +4921,11 @@ func (c *AddressesAggregatedListCall) Do() (*AddressAggregatedList, error) {
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AddressesAggregatedListCall) Do() (*AddressAggregatedList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -4914,7 +4947,7 @@ func (c *AddressesAggregatedListCall) Do() (*AddressAggregatedList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: FIELD_NAME COMPARISON_STRING LITERAL_STRING.\n\nThe FIELD_NAME is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The COMPARISON_STRING must be either eq (equals) or ne (not equals). The LITERAL_STRING is the string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, filter=name ne example-instance.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4981,10 +5014,10 @@ func (c *AddressesDeleteCall) Fields(s ...googleapi.Field) *AddressesDeleteCall 
 	return c
 }
 
-func (c *AddressesDeleteCall) Do() (*Operation, error) {
+func (c *AddressesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -4997,7 +5030,11 @@ func (c *AddressesDeleteCall) Do() (*Operation, error) {
 		"address": c.address,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AddressesDeleteCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -5082,10 +5119,10 @@ func (c *AddressesGetCall) Fields(s ...googleapi.Field) *AddressesGetCall {
 	return c
 }
 
-func (c *AddressesGetCall) Do() (*Address, error) {
+func (c *AddressesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -5098,7 +5135,11 @@ func (c *AddressesGetCall) Do() (*Address, error) {
 		"address": c.address,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AddressesGetCall) Do() (*Address, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -5185,7 +5226,7 @@ func (c *AddressesInsertCall) Fields(s ...googleapi.Field) *AddressesInsertCall 
 	return c
 }
 
-func (c *AddressesInsertCall) Do() (*Operation, error) {
+func (c *AddressesInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.address)
 	if err != nil {
@@ -5193,7 +5234,7 @@ func (c *AddressesInsertCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -5206,7 +5247,11 @@ func (c *AddressesInsertCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AddressesInsertCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -5279,25 +5324,19 @@ func (r *AddressesService) List(project string, region string) *AddressesListCal
 
 // Filter sets the optional parameter "filter": Sets a filter expression
 // for filtering listed resources, in the form filter={expression}. Your
-// {expression} must contain the following:
-// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+// {expression} must be in the format: FIELD_NAME COMPARISON_STRING
+// LITERAL_STRING.
 //
-// - FIELD_NAME: The name of the field you want to compare. The field
-// name must be valid for the type of resource being filtered. Only
-// atomic field types are supported (string, number, boolean). Array and
-// object fields are not currently supported.
-// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
-// (not equals).
-// - LITERAL_STRING: The literal string value to filter to. The literal
-// value must be valid for the type of field (string, number, boolean).
-// For string fields, the literal value is interpreted as a regular
+// The FIELD_NAME is the name of the field you want to compare. Only
+// atomic field types are supported (string, number, boolean). The
+// COMPARISON_STRING must be either eq (equals) or ne (not equals). The
+// LITERAL_STRING is the string value to filter to. The literal value
+// must be valid for the type of field (string, number, boolean). For
+// string fields, the literal value is interpreted as a regular
 // expression using RE2 syntax. The literal value must match the entire
-// field.  For example, you can filter by the name of a
-// resource:
-// filter=name ne example-instance
-// The above filter returns only results whose name field does not equal
-// example-instance. You can also enclose your literal string in single,
-// double, or no quotes.
+// field.
+//
+// For example, filter=name ne example-instance.
 func (c *AddressesListCall) Filter(filter string) *AddressesListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -5327,10 +5366,10 @@ func (c *AddressesListCall) Fields(s ...googleapi.Field) *AddressesListCall {
 	return c
 }
 
-func (c *AddressesListCall) Do() (*AddressList, error) {
+func (c *AddressesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["filter"]; ok {
 		params.Set("filter", fmt.Sprintf("%v", v))
 	}
@@ -5351,7 +5390,11 @@ func (c *AddressesListCall) Do() (*AddressList, error) {
 		"region":  c.region,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AddressesListCall) Do() (*AddressList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -5374,7 +5417,7 @@ func (c *AddressesListCall) Do() (*AddressList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: FIELD_NAME COMPARISON_STRING LITERAL_STRING.\n\nThe FIELD_NAME is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The COMPARISON_STRING must be either eq (equals) or ne (not equals). The LITERAL_STRING is the string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, filter=name ne example-instance.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5437,25 +5480,19 @@ func (r *AutoscalersService) AggregatedList(project string) *AutoscalersAggregat
 
 // Filter sets the optional parameter "filter": Sets a filter expression
 // for filtering listed resources, in the form filter={expression}. Your
-// {expression} must contain the following:
-// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+// {expression} must be in the format: FIELD_NAME COMPARISON_STRING
+// LITERAL_STRING.
 //
-// - FIELD_NAME: The name of the field you want to compare. The field
-// name must be valid for the type of resource being filtered. Only
-// atomic field types are supported (string, number, boolean). Array and
-// object fields are not currently supported.
-// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
-// (not equals).
-// - LITERAL_STRING: The literal string value to filter to. The literal
-// value must be valid for the type of field (string, number, boolean).
-// For string fields, the literal value is interpreted as a regular
+// The FIELD_NAME is the name of the field you want to compare. Only
+// atomic field types are supported (string, number, boolean). The
+// COMPARISON_STRING must be either eq (equals) or ne (not equals). The
+// LITERAL_STRING is the string value to filter to. The literal value
+// must be valid for the type of field (string, number, boolean). For
+// string fields, the literal value is interpreted as a regular
 // expression using RE2 syntax. The literal value must match the entire
-// field.  For example, you can filter by the name of a
-// resource:
-// filter=name ne example-instance
-// The above filter returns only results whose name field does not equal
-// example-instance. You can also enclose your literal string in single,
-// double, or no quotes.
+// field.
+//
+// For example, filter=name ne example-instance.
 func (c *AutoscalersAggregatedListCall) Filter(filter string) *AutoscalersAggregatedListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -5485,10 +5522,10 @@ func (c *AutoscalersAggregatedListCall) Fields(s ...googleapi.Field) *Autoscaler
 	return c
 }
 
-func (c *AutoscalersAggregatedListCall) Do() (*AutoscalerAggregatedList, error) {
+func (c *AutoscalersAggregatedListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["filter"]; ok {
 		params.Set("filter", fmt.Sprintf("%v", v))
 	}
@@ -5508,7 +5545,11 @@ func (c *AutoscalersAggregatedListCall) Do() (*AutoscalerAggregatedList, error) 
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AutoscalersAggregatedListCall) Do() (*AutoscalerAggregatedList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -5530,7 +5571,7 @@ func (c *AutoscalersAggregatedListCall) Do() (*AutoscalerAggregatedList, error) 
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: FIELD_NAME COMPARISON_STRING LITERAL_STRING.\n\nThe FIELD_NAME is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The COMPARISON_STRING must be either eq (equals) or ne (not equals). The LITERAL_STRING is the string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, filter=name ne example-instance.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5596,10 +5637,10 @@ func (c *AutoscalersDeleteCall) Fields(s ...googleapi.Field) *AutoscalersDeleteC
 	return c
 }
 
-func (c *AutoscalersDeleteCall) Do() (*Operation, error) {
+func (c *AutoscalersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -5612,7 +5653,11 @@ func (c *AutoscalersDeleteCall) Do() (*Operation, error) {
 		"autoscaler": c.autoscaler,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AutoscalersDeleteCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -5696,10 +5741,10 @@ func (c *AutoscalersGetCall) Fields(s ...googleapi.Field) *AutoscalersGetCall {
 	return c
 }
 
-func (c *AutoscalersGetCall) Do() (*Autoscaler, error) {
+func (c *AutoscalersGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -5712,7 +5757,11 @@ func (c *AutoscalersGetCall) Do() (*Autoscaler, error) {
 		"autoscaler": c.autoscaler,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AutoscalersGetCall) Do() (*Autoscaler, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -5798,7 +5847,7 @@ func (c *AutoscalersInsertCall) Fields(s ...googleapi.Field) *AutoscalersInsertC
 	return c
 }
 
-func (c *AutoscalersInsertCall) Do() (*Operation, error) {
+func (c *AutoscalersInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.autoscaler)
 	if err != nil {
@@ -5806,7 +5855,7 @@ func (c *AutoscalersInsertCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -5819,7 +5868,11 @@ func (c *AutoscalersInsertCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AutoscalersInsertCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -5891,25 +5944,19 @@ func (r *AutoscalersService) List(project string, zone string) *AutoscalersListC
 
 // Filter sets the optional parameter "filter": Sets a filter expression
 // for filtering listed resources, in the form filter={expression}. Your
-// {expression} must contain the following:
-// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+// {expression} must be in the format: FIELD_NAME COMPARISON_STRING
+// LITERAL_STRING.
 //
-// - FIELD_NAME: The name of the field you want to compare. The field
-// name must be valid for the type of resource being filtered. Only
-// atomic field types are supported (string, number, boolean). Array and
-// object fields are not currently supported.
-// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
-// (not equals).
-// - LITERAL_STRING: The literal string value to filter to. The literal
-// value must be valid for the type of field (string, number, boolean).
-// For string fields, the literal value is interpreted as a regular
+// The FIELD_NAME is the name of the field you want to compare. Only
+// atomic field types are supported (string, number, boolean). The
+// COMPARISON_STRING must be either eq (equals) or ne (not equals). The
+// LITERAL_STRING is the string value to filter to. The literal value
+// must be valid for the type of field (string, number, boolean). For
+// string fields, the literal value is interpreted as a regular
 // expression using RE2 syntax. The literal value must match the entire
-// field.  For example, you can filter by the name of a
-// resource:
-// filter=name ne example-instance
-// The above filter returns only results whose name field does not equal
-// example-instance. You can also enclose your literal string in single,
-// double, or no quotes.
+// field.
+//
+// For example, filter=name ne example-instance.
 func (c *AutoscalersListCall) Filter(filter string) *AutoscalersListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -5939,10 +5986,10 @@ func (c *AutoscalersListCall) Fields(s ...googleapi.Field) *AutoscalersListCall 
 	return c
 }
 
-func (c *AutoscalersListCall) Do() (*AutoscalerList, error) {
+func (c *AutoscalersListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["filter"]; ok {
 		params.Set("filter", fmt.Sprintf("%v", v))
 	}
@@ -5963,7 +6010,11 @@ func (c *AutoscalersListCall) Do() (*AutoscalerList, error) {
 		"zone":    c.zone,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AutoscalersListCall) Do() (*AutoscalerList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -5986,7 +6037,7 @@ func (c *AutoscalersListCall) Do() (*AutoscalerList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: FIELD_NAME COMPARISON_STRING LITERAL_STRING.\n\nThe FIELD_NAME is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The COMPARISON_STRING must be either eq (equals) or ne (not equals). The LITERAL_STRING is the string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, filter=name ne example-instance.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6063,7 +6114,7 @@ func (c *AutoscalersPatchCall) Fields(s ...googleapi.Field) *AutoscalersPatchCal
 	return c
 }
 
-func (c *AutoscalersPatchCall) Do() (*Operation, error) {
+func (c *AutoscalersPatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.autoscaler2)
 	if err != nil {
@@ -6071,7 +6122,7 @@ func (c *AutoscalersPatchCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	params.Set("autoscaler", fmt.Sprintf("%v", c.autoscaler))
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
@@ -6085,7 +6136,11 @@ func (c *AutoscalersPatchCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AutoscalersPatchCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -6180,7 +6235,7 @@ func (c *AutoscalersUpdateCall) Fields(s ...googleapi.Field) *AutoscalersUpdateC
 	return c
 }
 
-func (c *AutoscalersUpdateCall) Do() (*Operation, error) {
+func (c *AutoscalersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.autoscaler)
 	if err != nil {
@@ -6188,7 +6243,7 @@ func (c *AutoscalersUpdateCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["autoscaler"]; ok {
 		params.Set("autoscaler", fmt.Sprintf("%v", v))
 	}
@@ -6204,7 +6259,11 @@ func (c *AutoscalersUpdateCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *AutoscalersUpdateCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -6288,10 +6347,10 @@ func (c *BackendServicesDeleteCall) Fields(s ...googleapi.Field) *BackendService
 	return c
 }
 
-func (c *BackendServicesDeleteCall) Do() (*Operation, error) {
+func (c *BackendServicesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -6303,7 +6362,11 @@ func (c *BackendServicesDeleteCall) Do() (*Operation, error) {
 		"backendService": c.backendService,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *BackendServicesDeleteCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -6378,10 +6441,10 @@ func (c *BackendServicesGetCall) Fields(s ...googleapi.Field) *BackendServicesGe
 	return c
 }
 
-func (c *BackendServicesGetCall) Do() (*BackendService, error) {
+func (c *BackendServicesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -6393,7 +6456,11 @@ func (c *BackendServicesGetCall) Do() (*BackendService, error) {
 		"backendService": c.backendService,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *BackendServicesGetCall) Do() (*BackendService, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -6472,7 +6539,7 @@ func (c *BackendServicesGetHealthCall) Fields(s ...googleapi.Field) *BackendServ
 	return c
 }
 
-func (c *BackendServicesGetHealthCall) Do() (*BackendServiceGroupHealth, error) {
+func (c *BackendServicesGetHealthCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.resourcegroupreference)
 	if err != nil {
@@ -6480,7 +6547,7 @@ func (c *BackendServicesGetHealthCall) Do() (*BackendServiceGroupHealth, error) 
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -6493,7 +6560,11 @@ func (c *BackendServicesGetHealthCall) Do() (*BackendServiceGroupHealth, error) 
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *BackendServicesGetHealthCall) Do() (*BackendServiceGroupHealth, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -6572,7 +6643,7 @@ func (c *BackendServicesInsertCall) Fields(s ...googleapi.Field) *BackendService
 	return c
 }
 
-func (c *BackendServicesInsertCall) Do() (*Operation, error) {
+func (c *BackendServicesInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.backendservice)
 	if err != nil {
@@ -6580,7 +6651,7 @@ func (c *BackendServicesInsertCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -6592,7 +6663,11 @@ func (c *BackendServicesInsertCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *BackendServicesInsertCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -6655,25 +6730,19 @@ func (r *BackendServicesService) List(project string) *BackendServicesListCall {
 
 // Filter sets the optional parameter "filter": Sets a filter expression
 // for filtering listed resources, in the form filter={expression}. Your
-// {expression} must contain the following:
-// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+// {expression} must be in the format: FIELD_NAME COMPARISON_STRING
+// LITERAL_STRING.
 //
-// - FIELD_NAME: The name of the field you want to compare. The field
-// name must be valid for the type of resource being filtered. Only
-// atomic field types are supported (string, number, boolean). Array and
-// object fields are not currently supported.
-// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
-// (not equals).
-// - LITERAL_STRING: The literal string value to filter to. The literal
-// value must be valid for the type of field (string, number, boolean).
-// For string fields, the literal value is interpreted as a regular
+// The FIELD_NAME is the name of the field you want to compare. Only
+// atomic field types are supported (string, number, boolean). The
+// COMPARISON_STRING must be either eq (equals) or ne (not equals). The
+// LITERAL_STRING is the string value to filter to. The literal value
+// must be valid for the type of field (string, number, boolean). For
+// string fields, the literal value is interpreted as a regular
 // expression using RE2 syntax. The literal value must match the entire
-// field.  For example, you can filter by the name of a
-// resource:
-// filter=name ne example-instance
-// The above filter returns only results whose name field does not equal
-// example-instance. You can also enclose your literal string in single,
-// double, or no quotes.
+// field.
+//
+// For example, filter=name ne example-instance.
 func (c *BackendServicesListCall) Filter(filter string) *BackendServicesListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -6703,10 +6772,10 @@ func (c *BackendServicesListCall) Fields(s ...googleapi.Field) *BackendServicesL
 	return c
 }
 
-func (c *BackendServicesListCall) Do() (*BackendServiceList, error) {
+func (c *BackendServicesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["filter"]; ok {
 		params.Set("filter", fmt.Sprintf("%v", v))
 	}
@@ -6726,7 +6795,11 @@ func (c *BackendServicesListCall) Do() (*BackendServiceList, error) {
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *BackendServicesListCall) Do() (*BackendServiceList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -6748,7 +6821,7 @@ func (c *BackendServicesListCall) Do() (*BackendServiceList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: FIELD_NAME COMPARISON_STRING LITERAL_STRING.\n\nThe FIELD_NAME is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The COMPARISON_STRING must be either eq (equals) or ne (not equals). The LITERAL_STRING is the string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, filter=name ne example-instance.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6816,7 +6889,7 @@ func (c *BackendServicesPatchCall) Fields(s ...googleapi.Field) *BackendServices
 	return c
 }
 
-func (c *BackendServicesPatchCall) Do() (*Operation, error) {
+func (c *BackendServicesPatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.backendservice)
 	if err != nil {
@@ -6824,7 +6897,7 @@ func (c *BackendServicesPatchCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -6837,7 +6910,11 @@ func (c *BackendServicesPatchCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *BackendServicesPatchCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -6917,7 +6994,7 @@ func (c *BackendServicesUpdateCall) Fields(s ...googleapi.Field) *BackendService
 	return c
 }
 
-func (c *BackendServicesUpdateCall) Do() (*Operation, error) {
+func (c *BackendServicesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.backendservice)
 	if err != nil {
@@ -6925,7 +7002,7 @@ func (c *BackendServicesUpdateCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -6938,7 +7015,11 @@ func (c *BackendServicesUpdateCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *BackendServicesUpdateCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -7009,25 +7090,19 @@ func (r *DiskTypesService) AggregatedList(project string) *DiskTypesAggregatedLi
 
 // Filter sets the optional parameter "filter": Sets a filter expression
 // for filtering listed resources, in the form filter={expression}. Your
-// {expression} must contain the following:
-// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+// {expression} must be in the format: FIELD_NAME COMPARISON_STRING
+// LITERAL_STRING.
 //
-// - FIELD_NAME: The name of the field you want to compare. The field
-// name must be valid for the type of resource being filtered. Only
-// atomic field types are supported (string, number, boolean). Array and
-// object fields are not currently supported.
-// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
-// (not equals).
-// - LITERAL_STRING: The literal string value to filter to. The literal
-// value must be valid for the type of field (string, number, boolean).
-// For string fields, the literal value is interpreted as a regular
+// The FIELD_NAME is the name of the field you want to compare. Only
+// atomic field types are supported (string, number, boolean). The
+// COMPARISON_STRING must be either eq (equals) or ne (not equals). The
+// LITERAL_STRING is the string value to filter to. The literal value
+// must be valid for the type of field (string, number, boolean). For
+// string fields, the literal value is interpreted as a regular
 // expression using RE2 syntax. The literal value must match the entire
-// field.  For example, you can filter by the name of a
-// resource:
-// filter=name ne example-instance
-// The above filter returns only results whose name field does not equal
-// example-instance. You can also enclose your literal string in single,
-// double, or no quotes.
+// field.
+//
+// For example, filter=name ne example-instance.
 func (c *DiskTypesAggregatedListCall) Filter(filter string) *DiskTypesAggregatedListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -7057,10 +7132,10 @@ func (c *DiskTypesAggregatedListCall) Fields(s ...googleapi.Field) *DiskTypesAgg
 	return c
 }
 
-func (c *DiskTypesAggregatedListCall) Do() (*DiskTypeAggregatedList, error) {
+func (c *DiskTypesAggregatedListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["filter"]; ok {
 		params.Set("filter", fmt.Sprintf("%v", v))
 	}
@@ -7080,7 +7155,11 @@ func (c *DiskTypesAggregatedListCall) Do() (*DiskTypeAggregatedList, error) {
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *DiskTypesAggregatedListCall) Do() (*DiskTypeAggregatedList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -7102,7 +7181,7 @@ func (c *DiskTypesAggregatedListCall) Do() (*DiskTypeAggregatedList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: FIELD_NAME COMPARISON_STRING LITERAL_STRING.\n\nThe FIELD_NAME is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The COMPARISON_STRING must be either eq (equals) or ne (not equals). The LITERAL_STRING is the string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, filter=name ne example-instance.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7169,10 +7248,10 @@ func (c *DiskTypesGetCall) Fields(s ...googleapi.Field) *DiskTypesGetCall {
 	return c
 }
 
-func (c *DiskTypesGetCall) Do() (*DiskType, error) {
+func (c *DiskTypesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -7185,7 +7264,11 @@ func (c *DiskTypesGetCall) Do() (*DiskType, error) {
 		"diskType": c.diskType,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *DiskTypesGetCall) Do() (*DiskType, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -7264,25 +7347,19 @@ func (r *DiskTypesService) List(project string, zone string) *DiskTypesListCall 
 
 // Filter sets the optional parameter "filter": Sets a filter expression
 // for filtering listed resources, in the form filter={expression}. Your
-// {expression} must contain the following:
-// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+// {expression} must be in the format: FIELD_NAME COMPARISON_STRING
+// LITERAL_STRING.
 //
-// - FIELD_NAME: The name of the field you want to compare. The field
-// name must be valid for the type of resource being filtered. Only
-// atomic field types are supported (string, number, boolean). Array and
-// object fields are not currently supported.
-// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
-// (not equals).
-// - LITERAL_STRING: The literal string value to filter to. The literal
-// value must be valid for the type of field (string, number, boolean).
-// For string fields, the literal value is interpreted as a regular
+// The FIELD_NAME is the name of the field you want to compare. Only
+// atomic field types are supported (string, number, boolean). The
+// COMPARISON_STRING must be either eq (equals) or ne (not equals). The
+// LITERAL_STRING is the string value to filter to. The literal value
+// must be valid for the type of field (string, number, boolean). For
+// string fields, the literal value is interpreted as a regular
 // expression using RE2 syntax. The literal value must match the entire
-// field.  For example, you can filter by the name of a
-// resource:
-// filter=name ne example-instance
-// The above filter returns only results whose name field does not equal
-// example-instance. You can also enclose your literal string in single,
-// double, or no quotes.
+// field.
+//
+// For example, filter=name ne example-instance.
 func (c *DiskTypesListCall) Filter(filter string) *DiskTypesListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -7312,10 +7389,10 @@ func (c *DiskTypesListCall) Fields(s ...googleapi.Field) *DiskTypesListCall {
 	return c
 }
 
-func (c *DiskTypesListCall) Do() (*DiskTypeList, error) {
+func (c *DiskTypesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["filter"]; ok {
 		params.Set("filter", fmt.Sprintf("%v", v))
 	}
@@ -7336,7 +7413,11 @@ func (c *DiskTypesListCall) Do() (*DiskTypeList, error) {
 		"zone":    c.zone,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *DiskTypesListCall) Do() (*DiskTypeList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -7359,7 +7440,7 @@ func (c *DiskTypesListCall) Do() (*DiskTypeList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: FIELD_NAME COMPARISON_STRING LITERAL_STRING.\n\nThe FIELD_NAME is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The COMPARISON_STRING must be either eq (equals) or ne (not equals). The LITERAL_STRING is the string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, filter=name ne example-instance.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7423,25 +7504,19 @@ func (r *DisksService) AggregatedList(project string) *DisksAggregatedListCall {
 
 // Filter sets the optional parameter "filter": Sets a filter expression
 // for filtering listed resources, in the form filter={expression}. Your
-// {expression} must contain the following:
-// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+// {expression} must be in the format: FIELD_NAME COMPARISON_STRING
+// LITERAL_STRING.
 //
-// - FIELD_NAME: The name of the field you want to compare. The field
-// name must be valid for the type of resource being filtered. Only
-// atomic field types are supported (string, number, boolean). Array and
-// object fields are not currently supported.
-// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
-// (not equals).
-// - LITERAL_STRING: The literal string value to filter to. The literal
-// value must be valid for the type of field (string, number, boolean).
-// For string fields, the literal value is interpreted as a regular
+// The FIELD_NAME is the name of the field you want to compare. Only
+// atomic field types are supported (string, number, boolean). The
+// COMPARISON_STRING must be either eq (equals) or ne (not equals). The
+// LITERAL_STRING is the string value to filter to. The literal value
+// must be valid for the type of field (string, number, boolean). For
+// string fields, the literal value is interpreted as a regular
 // expression using RE2 syntax. The literal value must match the entire
-// field.  For example, you can filter by the name of a
-// resource:
-// filter=name ne example-instance
-// The above filter returns only results whose name field does not equal
-// example-instance. You can also enclose your literal string in single,
-// double, or no quotes.
+// field.
+//
+// For example, filter=name ne example-instance.
 func (c *DisksAggregatedListCall) Filter(filter string) *DisksAggregatedListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -7471,10 +7546,10 @@ func (c *DisksAggregatedListCall) Fields(s ...googleapi.Field) *DisksAggregatedL
 	return c
 }
 
-func (c *DisksAggregatedListCall) Do() (*DiskAggregatedList, error) {
+func (c *DisksAggregatedListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["filter"]; ok {
 		params.Set("filter", fmt.Sprintf("%v", v))
 	}
@@ -7494,7 +7569,11 @@ func (c *DisksAggregatedListCall) Do() (*DiskAggregatedList, error) {
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *DisksAggregatedListCall) Do() (*DiskAggregatedList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -7516,7 +7595,7 @@ func (c *DisksAggregatedListCall) Do() (*DiskAggregatedList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: FIELD_NAME COMPARISON_STRING LITERAL_STRING.\n\nThe FIELD_NAME is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The COMPARISON_STRING must be either eq (equals) or ne (not equals). The LITERAL_STRING is the string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, filter=name ne example-instance.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7585,7 +7664,7 @@ func (c *DisksCreateSnapshotCall) Fields(s ...googleapi.Field) *DisksCreateSnaps
 	return c
 }
 
-func (c *DisksCreateSnapshotCall) Do() (*Operation, error) {
+func (c *DisksCreateSnapshotCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.snapshot)
 	if err != nil {
@@ -7593,7 +7672,7 @@ func (c *DisksCreateSnapshotCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -7607,7 +7686,11 @@ func (c *DisksCreateSnapshotCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *DisksCreateSnapshotCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -7698,10 +7781,10 @@ func (c *DisksDeleteCall) Fields(s ...googleapi.Field) *DisksDeleteCall {
 	return c
 }
 
-func (c *DisksDeleteCall) Do() (*Operation, error) {
+func (c *DisksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -7714,7 +7797,11 @@ func (c *DisksDeleteCall) Do() (*Operation, error) {
 		"disk":    c.disk,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *DisksDeleteCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -7799,10 +7886,10 @@ func (c *DisksGetCall) Fields(s ...googleapi.Field) *DisksGetCall {
 	return c
 }
 
-func (c *DisksGetCall) Do() (*Disk, error) {
+func (c *DisksGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -7815,7 +7902,11 @@ func (c *DisksGetCall) Do() (*Disk, error) {
 		"disk":    c.disk,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *DisksGetCall) Do() (*Disk, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -7909,7 +8000,7 @@ func (c *DisksInsertCall) Fields(s ...googleapi.Field) *DisksInsertCall {
 	return c
 }
 
-func (c *DisksInsertCall) Do() (*Operation, error) {
+func (c *DisksInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.disk)
 	if err != nil {
@@ -7917,7 +8008,7 @@ func (c *DisksInsertCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["sourceImage"]; ok {
 		params.Set("sourceImage", fmt.Sprintf("%v", v))
 	}
@@ -7933,7 +8024,11 @@ func (c *DisksInsertCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *DisksInsertCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -8011,25 +8106,19 @@ func (r *DisksService) List(project string, zone string) *DisksListCall {
 
 // Filter sets the optional parameter "filter": Sets a filter expression
 // for filtering listed resources, in the form filter={expression}. Your
-// {expression} must contain the following:
-// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+// {expression} must be in the format: FIELD_NAME COMPARISON_STRING
+// LITERAL_STRING.
 //
-// - FIELD_NAME: The name of the field you want to compare. The field
-// name must be valid for the type of resource being filtered. Only
-// atomic field types are supported (string, number, boolean). Array and
-// object fields are not currently supported.
-// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
-// (not equals).
-// - LITERAL_STRING: The literal string value to filter to. The literal
-// value must be valid for the type of field (string, number, boolean).
-// For string fields, the literal value is interpreted as a regular
+// The FIELD_NAME is the name of the field you want to compare. Only
+// atomic field types are supported (string, number, boolean). The
+// COMPARISON_STRING must be either eq (equals) or ne (not equals). The
+// LITERAL_STRING is the string value to filter to. The literal value
+// must be valid for the type of field (string, number, boolean). For
+// string fields, the literal value is interpreted as a regular
 // expression using RE2 syntax. The literal value must match the entire
-// field.  For example, you can filter by the name of a
-// resource:
-// filter=name ne example-instance
-// The above filter returns only results whose name field does not equal
-// example-instance. You can also enclose your literal string in single,
-// double, or no quotes.
+// field.
+//
+// For example, filter=name ne example-instance.
 func (c *DisksListCall) Filter(filter string) *DisksListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -8059,10 +8148,10 @@ func (c *DisksListCall) Fields(s ...googleapi.Field) *DisksListCall {
 	return c
 }
 
-func (c *DisksListCall) Do() (*DiskList, error) {
+func (c *DisksListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["filter"]; ok {
 		params.Set("filter", fmt.Sprintf("%v", v))
 	}
@@ -8083,7 +8172,11 @@ func (c *DisksListCall) Do() (*DiskList, error) {
 		"zone":    c.zone,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *DisksListCall) Do() (*DiskList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -8106,7 +8199,7 @@ func (c *DisksListCall) Do() (*DiskList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: FIELD_NAME COMPARISON_STRING LITERAL_STRING.\n\nThe FIELD_NAME is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The COMPARISON_STRING must be either eq (equals) or ne (not equals). The LITERAL_STRING is the string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, filter=name ne example-instance.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8178,10 +8271,10 @@ func (c *FirewallsDeleteCall) Fields(s ...googleapi.Field) *FirewallsDeleteCall 
 	return c
 }
 
-func (c *FirewallsDeleteCall) Do() (*Operation, error) {
+func (c *FirewallsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -8193,7 +8286,11 @@ func (c *FirewallsDeleteCall) Do() (*Operation, error) {
 		"firewall": c.firewall,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *FirewallsDeleteCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -8268,10 +8365,10 @@ func (c *FirewallsGetCall) Fields(s ...googleapi.Field) *FirewallsGetCall {
 	return c
 }
 
-func (c *FirewallsGetCall) Do() (*Firewall, error) {
+func (c *FirewallsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -8283,7 +8380,11 @@ func (c *FirewallsGetCall) Do() (*Firewall, error) {
 		"firewall": c.firewall,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *FirewallsGetCall) Do() (*Firewall, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -8360,7 +8461,7 @@ func (c *FirewallsInsertCall) Fields(s ...googleapi.Field) *FirewallsInsertCall 
 	return c
 }
 
-func (c *FirewallsInsertCall) Do() (*Operation, error) {
+func (c *FirewallsInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.firewall)
 	if err != nil {
@@ -8368,7 +8469,7 @@ func (c *FirewallsInsertCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -8380,7 +8481,11 @@ func (c *FirewallsInsertCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *FirewallsInsertCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -8443,25 +8548,19 @@ func (r *FirewallsService) List(project string) *FirewallsListCall {
 
 // Filter sets the optional parameter "filter": Sets a filter expression
 // for filtering listed resources, in the form filter={expression}. Your
-// {expression} must contain the following:
-// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+// {expression} must be in the format: FIELD_NAME COMPARISON_STRING
+// LITERAL_STRING.
 //
-// - FIELD_NAME: The name of the field you want to compare. The field
-// name must be valid for the type of resource being filtered. Only
-// atomic field types are supported (string, number, boolean). Array and
-// object fields are not currently supported.
-// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
-// (not equals).
-// - LITERAL_STRING: The literal string value to filter to. The literal
-// value must be valid for the type of field (string, number, boolean).
-// For string fields, the literal value is interpreted as a regular
+// The FIELD_NAME is the name of the field you want to compare. Only
+// atomic field types are supported (string, number, boolean). The
+// COMPARISON_STRING must be either eq (equals) or ne (not equals). The
+// LITERAL_STRING is the string value to filter to. The literal value
+// must be valid for the type of field (string, number, boolean). For
+// string fields, the literal value is interpreted as a regular
 // expression using RE2 syntax. The literal value must match the entire
-// field.  For example, you can filter by the name of a
-// resource:
-// filter=name ne example-instance
-// The above filter returns only results whose name field does not equal
-// example-instance. You can also enclose your literal string in single,
-// double, or no quotes.
+// field.
+//
+// For example, filter=name ne example-instance.
 func (c *FirewallsListCall) Filter(filter string) *FirewallsListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -8491,10 +8590,10 @@ func (c *FirewallsListCall) Fields(s ...googleapi.Field) *FirewallsListCall {
 	return c
 }
 
-func (c *FirewallsListCall) Do() (*FirewallList, error) {
+func (c *FirewallsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["filter"]; ok {
 		params.Set("filter", fmt.Sprintf("%v", v))
 	}
@@ -8514,7 +8613,11 @@ func (c *FirewallsListCall) Do() (*FirewallList, error) {
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *FirewallsListCall) Do() (*FirewallList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -8536,7 +8639,7 @@ func (c *FirewallsListCall) Do() (*FirewallList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: FIELD_NAME COMPARISON_STRING LITERAL_STRING.\n\nThe FIELD_NAME is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The COMPARISON_STRING must be either eq (equals) or ne (not equals). The LITERAL_STRING is the string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, filter=name ne example-instance.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8604,7 +8707,7 @@ func (c *FirewallsPatchCall) Fields(s ...googleapi.Field) *FirewallsPatchCall {
 	return c
 }
 
-func (c *FirewallsPatchCall) Do() (*Operation, error) {
+func (c *FirewallsPatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.firewall2)
 	if err != nil {
@@ -8612,7 +8715,7 @@ func (c *FirewallsPatchCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -8625,7 +8728,11 @@ func (c *FirewallsPatchCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *FirewallsPatchCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -8706,7 +8813,7 @@ func (c *FirewallsUpdateCall) Fields(s ...googleapi.Field) *FirewallsUpdateCall 
 	return c
 }
 
-func (c *FirewallsUpdateCall) Do() (*Operation, error) {
+func (c *FirewallsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.firewall2)
 	if err != nil {
@@ -8714,7 +8821,7 @@ func (c *FirewallsUpdateCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -8727,7 +8834,11 @@ func (c *FirewallsUpdateCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *FirewallsUpdateCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -8798,25 +8909,19 @@ func (r *ForwardingRulesService) AggregatedList(project string) *ForwardingRules
 
 // Filter sets the optional parameter "filter": Sets a filter expression
 // for filtering listed resources, in the form filter={expression}. Your
-// {expression} must contain the following:
-// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+// {expression} must be in the format: FIELD_NAME COMPARISON_STRING
+// LITERAL_STRING.
 //
-// - FIELD_NAME: The name of the field you want to compare. The field
-// name must be valid for the type of resource being filtered. Only
-// atomic field types are supported (string, number, boolean). Array and
-// object fields are not currently supported.
-// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
-// (not equals).
-// - LITERAL_STRING: The literal string value to filter to. The literal
-// value must be valid for the type of field (string, number, boolean).
-// For string fields, the literal value is interpreted as a regular
+// The FIELD_NAME is the name of the field you want to compare. Only
+// atomic field types are supported (string, number, boolean). The
+// COMPARISON_STRING must be either eq (equals) or ne (not equals). The
+// LITERAL_STRING is the string value to filter to. The literal value
+// must be valid for the type of field (string, number, boolean). For
+// string fields, the literal value is interpreted as a regular
 // expression using RE2 syntax. The literal value must match the entire
-// field.  For example, you can filter by the name of a
-// resource:
-// filter=name ne example-instance
-// The above filter returns only results whose name field does not equal
-// example-instance. You can also enclose your literal string in single,
-// double, or no quotes.
+// field.
+//
+// For example, filter=name ne example-instance.
 func (c *ForwardingRulesAggregatedListCall) Filter(filter string) *ForwardingRulesAggregatedListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -8846,10 +8951,10 @@ func (c *ForwardingRulesAggregatedListCall) Fields(s ...googleapi.Field) *Forwar
 	return c
 }
 
-func (c *ForwardingRulesAggregatedListCall) Do() (*ForwardingRuleAggregatedList, error) {
+func (c *ForwardingRulesAggregatedListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["filter"]; ok {
 		params.Set("filter", fmt.Sprintf("%v", v))
 	}
@@ -8869,7 +8974,11 @@ func (c *ForwardingRulesAggregatedListCall) Do() (*ForwardingRuleAggregatedList,
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ForwardingRulesAggregatedListCall) Do() (*ForwardingRuleAggregatedList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -8891,7 +9000,7 @@ func (c *ForwardingRulesAggregatedListCall) Do() (*ForwardingRuleAggregatedList,
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: FIELD_NAME COMPARISON_STRING LITERAL_STRING.\n\nThe FIELD_NAME is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The COMPARISON_STRING must be either eq (equals) or ne (not equals). The LITERAL_STRING is the string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, filter=name ne example-instance.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8958,10 +9067,10 @@ func (c *ForwardingRulesDeleteCall) Fields(s ...googleapi.Field) *ForwardingRule
 	return c
 }
 
-func (c *ForwardingRulesDeleteCall) Do() (*Operation, error) {
+func (c *ForwardingRulesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -8974,7 +9083,11 @@ func (c *ForwardingRulesDeleteCall) Do() (*Operation, error) {
 		"forwardingRule": c.forwardingRule,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ForwardingRulesDeleteCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -9059,10 +9172,10 @@ func (c *ForwardingRulesGetCall) Fields(s ...googleapi.Field) *ForwardingRulesGe
 	return c
 }
 
-func (c *ForwardingRulesGetCall) Do() (*ForwardingRule, error) {
+func (c *ForwardingRulesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -9075,7 +9188,11 @@ func (c *ForwardingRulesGetCall) Do() (*ForwardingRule, error) {
 		"forwardingRule": c.forwardingRule,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ForwardingRulesGetCall) Do() (*ForwardingRule, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -9162,7 +9279,7 @@ func (c *ForwardingRulesInsertCall) Fields(s ...googleapi.Field) *ForwardingRule
 	return c
 }
 
-func (c *ForwardingRulesInsertCall) Do() (*Operation, error) {
+func (c *ForwardingRulesInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.forwardingrule)
 	if err != nil {
@@ -9170,7 +9287,7 @@ func (c *ForwardingRulesInsertCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -9183,7 +9300,11 @@ func (c *ForwardingRulesInsertCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ForwardingRulesInsertCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -9256,25 +9377,19 @@ func (r *ForwardingRulesService) List(project string, region string) *Forwarding
 
 // Filter sets the optional parameter "filter": Sets a filter expression
 // for filtering listed resources, in the form filter={expression}. Your
-// {expression} must contain the following:
-// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+// {expression} must be in the format: FIELD_NAME COMPARISON_STRING
+// LITERAL_STRING.
 //
-// - FIELD_NAME: The name of the field you want to compare. The field
-// name must be valid for the type of resource being filtered. Only
-// atomic field types are supported (string, number, boolean). Array and
-// object fields are not currently supported.
-// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
-// (not equals).
-// - LITERAL_STRING: The literal string value to filter to. The literal
-// value must be valid for the type of field (string, number, boolean).
-// For string fields, the literal value is interpreted as a regular
+// The FIELD_NAME is the name of the field you want to compare. Only
+// atomic field types are supported (string, number, boolean). The
+// COMPARISON_STRING must be either eq (equals) or ne (not equals). The
+// LITERAL_STRING is the string value to filter to. The literal value
+// must be valid for the type of field (string, number, boolean). For
+// string fields, the literal value is interpreted as a regular
 // expression using RE2 syntax. The literal value must match the entire
-// field.  For example, you can filter by the name of a
-// resource:
-// filter=name ne example-instance
-// The above filter returns only results whose name field does not equal
-// example-instance. You can also enclose your literal string in single,
-// double, or no quotes.
+// field.
+//
+// For example, filter=name ne example-instance.
 func (c *ForwardingRulesListCall) Filter(filter string) *ForwardingRulesListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -9304,10 +9419,10 @@ func (c *ForwardingRulesListCall) Fields(s ...googleapi.Field) *ForwardingRulesL
 	return c
 }
 
-func (c *ForwardingRulesListCall) Do() (*ForwardingRuleList, error) {
+func (c *ForwardingRulesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["filter"]; ok {
 		params.Set("filter", fmt.Sprintf("%v", v))
 	}
@@ -9328,7 +9443,11 @@ func (c *ForwardingRulesListCall) Do() (*ForwardingRuleList, error) {
 		"region":  c.region,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ForwardingRulesListCall) Do() (*ForwardingRuleList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -9351,7 +9470,7 @@ func (c *ForwardingRulesListCall) Do() (*ForwardingRuleList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: FIELD_NAME COMPARISON_STRING LITERAL_STRING.\n\nThe FIELD_NAME is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The COMPARISON_STRING must be either eq (equals) or ne (not equals). The LITERAL_STRING is the string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, filter=name ne example-instance.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -9427,7 +9546,7 @@ func (c *ForwardingRulesSetTargetCall) Fields(s ...googleapi.Field) *ForwardingR
 	return c
 }
 
-func (c *ForwardingRulesSetTargetCall) Do() (*Operation, error) {
+func (c *ForwardingRulesSetTargetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.targetreference)
 	if err != nil {
@@ -9435,7 +9554,7 @@ func (c *ForwardingRulesSetTargetCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -9449,7 +9568,11 @@ func (c *ForwardingRulesSetTargetCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ForwardingRulesSetTargetCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -9535,10 +9658,10 @@ func (c *GlobalAddressesDeleteCall) Fields(s ...googleapi.Field) *GlobalAddresse
 	return c
 }
 
-func (c *GlobalAddressesDeleteCall) Do() (*Operation, error) {
+func (c *GlobalAddressesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -9550,7 +9673,11 @@ func (c *GlobalAddressesDeleteCall) Do() (*Operation, error) {
 		"address": c.address,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *GlobalAddressesDeleteCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -9625,10 +9752,10 @@ func (c *GlobalAddressesGetCall) Fields(s ...googleapi.Field) *GlobalAddressesGe
 	return c
 }
 
-func (c *GlobalAddressesGetCall) Do() (*Address, error) {
+func (c *GlobalAddressesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -9640,7 +9767,11 @@ func (c *GlobalAddressesGetCall) Do() (*Address, error) {
 		"address": c.address,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *GlobalAddressesGetCall) Do() (*Address, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -9717,7 +9848,7 @@ func (c *GlobalAddressesInsertCall) Fields(s ...googleapi.Field) *GlobalAddresse
 	return c
 }
 
-func (c *GlobalAddressesInsertCall) Do() (*Operation, error) {
+func (c *GlobalAddressesInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.address)
 	if err != nil {
@@ -9725,7 +9856,7 @@ func (c *GlobalAddressesInsertCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -9737,7 +9868,11 @@ func (c *GlobalAddressesInsertCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *GlobalAddressesInsertCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -9799,25 +9934,19 @@ func (r *GlobalAddressesService) List(project string) *GlobalAddressesListCall {
 
 // Filter sets the optional parameter "filter": Sets a filter expression
 // for filtering listed resources, in the form filter={expression}. Your
-// {expression} must contain the following:
-// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+// {expression} must be in the format: FIELD_NAME COMPARISON_STRING
+// LITERAL_STRING.
 //
-// - FIELD_NAME: The name of the field you want to compare. The field
-// name must be valid for the type of resource being filtered. Only
-// atomic field types are supported (string, number, boolean). Array and
-// object fields are not currently supported.
-// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
-// (not equals).
-// - LITERAL_STRING: The literal string value to filter to. The literal
-// value must be valid for the type of field (string, number, boolean).
-// For string fields, the literal value is interpreted as a regular
+// The FIELD_NAME is the name of the field you want to compare. Only
+// atomic field types are supported (string, number, boolean). The
+// COMPARISON_STRING must be either eq (equals) or ne (not equals). The
+// LITERAL_STRING is the string value to filter to. The literal value
+// must be valid for the type of field (string, number, boolean). For
+// string fields, the literal value is interpreted as a regular
 // expression using RE2 syntax. The literal value must match the entire
-// field.  For example, you can filter by the name of a
-// resource:
-// filter=name ne example-instance
-// The above filter returns only results whose name field does not equal
-// example-instance. You can also enclose your literal string in single,
-// double, or no quotes.
+// field.
+//
+// For example, filter=name ne example-instance.
 func (c *GlobalAddressesListCall) Filter(filter string) *GlobalAddressesListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -9847,10 +9976,10 @@ func (c *GlobalAddressesListCall) Fields(s ...googleapi.Field) *GlobalAddressesL
 	return c
 }
 
-func (c *GlobalAddressesListCall) Do() (*AddressList, error) {
+func (c *GlobalAddressesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["filter"]; ok {
 		params.Set("filter", fmt.Sprintf("%v", v))
 	}
@@ -9870,7 +9999,11 @@ func (c *GlobalAddressesListCall) Do() (*AddressList, error) {
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *GlobalAddressesListCall) Do() (*AddressList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -9892,7 +10025,7 @@ func (c *GlobalAddressesListCall) Do() (*AddressList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: FIELD_NAME COMPARISON_STRING LITERAL_STRING.\n\nThe FIELD_NAME is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The COMPARISON_STRING must be either eq (equals) or ne (not equals). The LITERAL_STRING is the string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, filter=name ne example-instance.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -9957,10 +10090,10 @@ func (c *GlobalForwardingRulesDeleteCall) Fields(s ...googleapi.Field) *GlobalFo
 	return c
 }
 
-func (c *GlobalForwardingRulesDeleteCall) Do() (*Operation, error) {
+func (c *GlobalForwardingRulesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -9972,7 +10105,11 @@ func (c *GlobalForwardingRulesDeleteCall) Do() (*Operation, error) {
 		"forwardingRule": c.forwardingRule,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *GlobalForwardingRulesDeleteCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -10047,10 +10184,10 @@ func (c *GlobalForwardingRulesGetCall) Fields(s ...googleapi.Field) *GlobalForwa
 	return c
 }
 
-func (c *GlobalForwardingRulesGetCall) Do() (*ForwardingRule, error) {
+func (c *GlobalForwardingRulesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -10062,7 +10199,11 @@ func (c *GlobalForwardingRulesGetCall) Do() (*ForwardingRule, error) {
 		"forwardingRule": c.forwardingRule,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *GlobalForwardingRulesGetCall) Do() (*ForwardingRule, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -10139,7 +10280,7 @@ func (c *GlobalForwardingRulesInsertCall) Fields(s ...googleapi.Field) *GlobalFo
 	return c
 }
 
-func (c *GlobalForwardingRulesInsertCall) Do() (*Operation, error) {
+func (c *GlobalForwardingRulesInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.forwardingrule)
 	if err != nil {
@@ -10147,7 +10288,7 @@ func (c *GlobalForwardingRulesInsertCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -10159,7 +10300,11 @@ func (c *GlobalForwardingRulesInsertCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *GlobalForwardingRulesInsertCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -10222,25 +10367,19 @@ func (r *GlobalForwardingRulesService) List(project string) *GlobalForwardingRul
 
 // Filter sets the optional parameter "filter": Sets a filter expression
 // for filtering listed resources, in the form filter={expression}. Your
-// {expression} must contain the following:
-// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+// {expression} must be in the format: FIELD_NAME COMPARISON_STRING
+// LITERAL_STRING.
 //
-// - FIELD_NAME: The name of the field you want to compare. The field
-// name must be valid for the type of resource being filtered. Only
-// atomic field types are supported (string, number, boolean). Array and
-// object fields are not currently supported.
-// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
-// (not equals).
-// - LITERAL_STRING: The literal string value to filter to. The literal
-// value must be valid for the type of field (string, number, boolean).
-// For string fields, the literal value is interpreted as a regular
+// The FIELD_NAME is the name of the field you want to compare. Only
+// atomic field types are supported (string, number, boolean). The
+// COMPARISON_STRING must be either eq (equals) or ne (not equals). The
+// LITERAL_STRING is the string value to filter to. The literal value
+// must be valid for the type of field (string, number, boolean). For
+// string fields, the literal value is interpreted as a regular
 // expression using RE2 syntax. The literal value must match the entire
-// field.  For example, you can filter by the name of a
-// resource:
-// filter=name ne example-instance
-// The above filter returns only results whose name field does not equal
-// example-instance. You can also enclose your literal string in single,
-// double, or no quotes.
+// field.
+//
+// For example, filter=name ne example-instance.
 func (c *GlobalForwardingRulesListCall) Filter(filter string) *GlobalForwardingRulesListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -10270,10 +10409,10 @@ func (c *GlobalForwardingRulesListCall) Fields(s ...googleapi.Field) *GlobalForw
 	return c
 }
 
-func (c *GlobalForwardingRulesListCall) Do() (*ForwardingRuleList, error) {
+func (c *GlobalForwardingRulesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["filter"]; ok {
 		params.Set("filter", fmt.Sprintf("%v", v))
 	}
@@ -10293,7 +10432,11 @@ func (c *GlobalForwardingRulesListCall) Do() (*ForwardingRuleList, error) {
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *GlobalForwardingRulesListCall) Do() (*ForwardingRuleList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -10315,7 +10458,7 @@ func (c *GlobalForwardingRulesListCall) Do() (*ForwardingRuleList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: FIELD_NAME COMPARISON_STRING LITERAL_STRING.\n\nThe FIELD_NAME is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The COMPARISON_STRING must be either eq (equals) or ne (not equals). The LITERAL_STRING is the string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, filter=name ne example-instance.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -10382,7 +10525,7 @@ func (c *GlobalForwardingRulesSetTargetCall) Fields(s ...googleapi.Field) *Globa
 	return c
 }
 
-func (c *GlobalForwardingRulesSetTargetCall) Do() (*Operation, error) {
+func (c *GlobalForwardingRulesSetTargetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.targetreference)
 	if err != nil {
@@ -10390,7 +10533,7 @@ func (c *GlobalForwardingRulesSetTargetCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -10403,7 +10546,11 @@ func (c *GlobalForwardingRulesSetTargetCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *GlobalForwardingRulesSetTargetCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -10474,25 +10621,19 @@ func (r *GlobalOperationsService) AggregatedList(project string) *GlobalOperatio
 
 // Filter sets the optional parameter "filter": Sets a filter expression
 // for filtering listed resources, in the form filter={expression}. Your
-// {expression} must contain the following:
-// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+// {expression} must be in the format: FIELD_NAME COMPARISON_STRING
+// LITERAL_STRING.
 //
-// - FIELD_NAME: The name of the field you want to compare. The field
-// name must be valid for the type of resource being filtered. Only
-// atomic field types are supported (string, number, boolean). Array and
-// object fields are not currently supported.
-// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
-// (not equals).
-// - LITERAL_STRING: The literal string value to filter to. The literal
-// value must be valid for the type of field (string, number, boolean).
-// For string fields, the literal value is interpreted as a regular
+// The FIELD_NAME is the name of the field you want to compare. Only
+// atomic field types are supported (string, number, boolean). The
+// COMPARISON_STRING must be either eq (equals) or ne (not equals). The
+// LITERAL_STRING is the string value to filter to. The literal value
+// must be valid for the type of field (string, number, boolean). For
+// string fields, the literal value is interpreted as a regular
 // expression using RE2 syntax. The literal value must match the entire
-// field.  For example, you can filter by the name of a
-// resource:
-// filter=name ne example-instance
-// The above filter returns only results whose name field does not equal
-// example-instance. You can also enclose your literal string in single,
-// double, or no quotes.
+// field.
+//
+// For example, filter=name ne example-instance.
 func (c *GlobalOperationsAggregatedListCall) Filter(filter string) *GlobalOperationsAggregatedListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -10522,10 +10663,10 @@ func (c *GlobalOperationsAggregatedListCall) Fields(s ...googleapi.Field) *Globa
 	return c
 }
 
-func (c *GlobalOperationsAggregatedListCall) Do() (*OperationAggregatedList, error) {
+func (c *GlobalOperationsAggregatedListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["filter"]; ok {
 		params.Set("filter", fmt.Sprintf("%v", v))
 	}
@@ -10545,7 +10686,11 @@ func (c *GlobalOperationsAggregatedListCall) Do() (*OperationAggregatedList, err
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *GlobalOperationsAggregatedListCall) Do() (*OperationAggregatedList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -10567,7 +10712,7 @@ func (c *GlobalOperationsAggregatedListCall) Do() (*OperationAggregatedList, err
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: FIELD_NAME COMPARISON_STRING LITERAL_STRING.\n\nThe FIELD_NAME is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The COMPARISON_STRING must be either eq (equals) or ne (not equals). The LITERAL_STRING is the string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, filter=name ne example-instance.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -10632,10 +10777,10 @@ func (c *GlobalOperationsDeleteCall) Fields(s ...googleapi.Field) *GlobalOperati
 	return c
 }
 
-func (c *GlobalOperationsDeleteCall) Do() error {
+func (c *GlobalOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -10647,7 +10792,11 @@ func (c *GlobalOperationsDeleteCall) Do() error {
 		"operation": c.operation,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *GlobalOperationsDeleteCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -10715,10 +10864,10 @@ func (c *GlobalOperationsGetCall) Fields(s ...googleapi.Field) *GlobalOperations
 	return c
 }
 
-func (c *GlobalOperationsGetCall) Do() (*Operation, error) {
+func (c *GlobalOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -10730,7 +10879,11 @@ func (c *GlobalOperationsGetCall) Do() (*Operation, error) {
 		"operation": c.operation,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *GlobalOperationsGetCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -10799,25 +10952,19 @@ func (r *GlobalOperationsService) List(project string) *GlobalOperationsListCall
 
 // Filter sets the optional parameter "filter": Sets a filter expression
 // for filtering listed resources, in the form filter={expression}. Your
-// {expression} must contain the following:
-// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+// {expression} must be in the format: FIELD_NAME COMPARISON_STRING
+// LITERAL_STRING.
 //
-// - FIELD_NAME: The name of the field you want to compare. The field
-// name must be valid for the type of resource being filtered. Only
-// atomic field types are supported (string, number, boolean). Array and
-// object fields are not currently supported.
-// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
-// (not equals).
-// - LITERAL_STRING: The literal string value to filter to. The literal
-// value must be valid for the type of field (string, number, boolean).
-// For string fields, the literal value is interpreted as a regular
+// The FIELD_NAME is the name of the field you want to compare. Only
+// atomic field types are supported (string, number, boolean). The
+// COMPARISON_STRING must be either eq (equals) or ne (not equals). The
+// LITERAL_STRING is the string value to filter to. The literal value
+// must be valid for the type of field (string, number, boolean). For
+// string fields, the literal value is interpreted as a regular
 // expression using RE2 syntax. The literal value must match the entire
-// field.  For example, you can filter by the name of a
-// resource:
-// filter=name ne example-instance
-// The above filter returns only results whose name field does not equal
-// example-instance. You can also enclose your literal string in single,
-// double, or no quotes.
+// field.
+//
+// For example, filter=name ne example-instance.
 func (c *GlobalOperationsListCall) Filter(filter string) *GlobalOperationsListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -10847,10 +10994,10 @@ func (c *GlobalOperationsListCall) Fields(s ...googleapi.Field) *GlobalOperation
 	return c
 }
 
-func (c *GlobalOperationsListCall) Do() (*OperationList, error) {
+func (c *GlobalOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["filter"]; ok {
 		params.Set("filter", fmt.Sprintf("%v", v))
 	}
@@ -10870,7 +11017,11 @@ func (c *GlobalOperationsListCall) Do() (*OperationList, error) {
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *GlobalOperationsListCall) Do() (*OperationList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -10892,7 +11043,7 @@ func (c *GlobalOperationsListCall) Do() (*OperationList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: FIELD_NAME COMPARISON_STRING LITERAL_STRING.\n\nThe FIELD_NAME is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The COMPARISON_STRING must be either eq (equals) or ne (not equals). The LITERAL_STRING is the string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, filter=name ne example-instance.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -10957,10 +11108,10 @@ func (c *HttpHealthChecksDeleteCall) Fields(s ...googleapi.Field) *HttpHealthChe
 	return c
 }
 
-func (c *HttpHealthChecksDeleteCall) Do() (*Operation, error) {
+func (c *HttpHealthChecksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -10972,7 +11123,11 @@ func (c *HttpHealthChecksDeleteCall) Do() (*Operation, error) {
 		"httpHealthCheck": c.httpHealthCheck,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *HttpHealthChecksDeleteCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -11047,10 +11202,10 @@ func (c *HttpHealthChecksGetCall) Fields(s ...googleapi.Field) *HttpHealthChecks
 	return c
 }
 
-func (c *HttpHealthChecksGetCall) Do() (*HttpHealthCheck, error) {
+func (c *HttpHealthChecksGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -11062,7 +11217,11 @@ func (c *HttpHealthChecksGetCall) Do() (*HttpHealthCheck, error) {
 		"httpHealthCheck": c.httpHealthCheck,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *HttpHealthChecksGetCall) Do() (*HttpHealthCheck, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -11139,7 +11298,7 @@ func (c *HttpHealthChecksInsertCall) Fields(s ...googleapi.Field) *HttpHealthChe
 	return c
 }
 
-func (c *HttpHealthChecksInsertCall) Do() (*Operation, error) {
+func (c *HttpHealthChecksInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.httphealthcheck)
 	if err != nil {
@@ -11147,7 +11306,7 @@ func (c *HttpHealthChecksInsertCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -11159,7 +11318,11 @@ func (c *HttpHealthChecksInsertCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *HttpHealthChecksInsertCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -11222,25 +11385,19 @@ func (r *HttpHealthChecksService) List(project string) *HttpHealthChecksListCall
 
 // Filter sets the optional parameter "filter": Sets a filter expression
 // for filtering listed resources, in the form filter={expression}. Your
-// {expression} must contain the following:
-// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+// {expression} must be in the format: FIELD_NAME COMPARISON_STRING
+// LITERAL_STRING.
 //
-// - FIELD_NAME: The name of the field you want to compare. The field
-// name must be valid for the type of resource being filtered. Only
-// atomic field types are supported (string, number, boolean). Array and
-// object fields are not currently supported.
-// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
-// (not equals).
-// - LITERAL_STRING: The literal string value to filter to. The literal
-// value must be valid for the type of field (string, number, boolean).
-// For string fields, the literal value is interpreted as a regular
+// The FIELD_NAME is the name of the field you want to compare. Only
+// atomic field types are supported (string, number, boolean). The
+// COMPARISON_STRING must be either eq (equals) or ne (not equals). The
+// LITERAL_STRING is the string value to filter to. The literal value
+// must be valid for the type of field (string, number, boolean). For
+// string fields, the literal value is interpreted as a regular
 // expression using RE2 syntax. The literal value must match the entire
-// field.  For example, you can filter by the name of a
-// resource:
-// filter=name ne example-instance
-// The above filter returns only results whose name field does not equal
-// example-instance. You can also enclose your literal string in single,
-// double, or no quotes.
+// field.
+//
+// For example, filter=name ne example-instance.
 func (c *HttpHealthChecksListCall) Filter(filter string) *HttpHealthChecksListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -11270,10 +11427,10 @@ func (c *HttpHealthChecksListCall) Fields(s ...googleapi.Field) *HttpHealthCheck
 	return c
 }
 
-func (c *HttpHealthChecksListCall) Do() (*HttpHealthCheckList, error) {
+func (c *HttpHealthChecksListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["filter"]; ok {
 		params.Set("filter", fmt.Sprintf("%v", v))
 	}
@@ -11293,7 +11450,11 @@ func (c *HttpHealthChecksListCall) Do() (*HttpHealthCheckList, error) {
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *HttpHealthChecksListCall) Do() (*HttpHealthCheckList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -11315,7 +11476,7 @@ func (c *HttpHealthChecksListCall) Do() (*HttpHealthCheckList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: FIELD_NAME COMPARISON_STRING LITERAL_STRING.\n\nThe FIELD_NAME is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The COMPARISON_STRING must be either eq (equals) or ne (not equals). The LITERAL_STRING is the string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, filter=name ne example-instance.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -11384,7 +11545,7 @@ func (c *HttpHealthChecksPatchCall) Fields(s ...googleapi.Field) *HttpHealthChec
 	return c
 }
 
-func (c *HttpHealthChecksPatchCall) Do() (*Operation, error) {
+func (c *HttpHealthChecksPatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.httphealthcheck)
 	if err != nil {
@@ -11392,7 +11553,7 @@ func (c *HttpHealthChecksPatchCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -11405,7 +11566,11 @@ func (c *HttpHealthChecksPatchCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *HttpHealthChecksPatchCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -11486,7 +11651,7 @@ func (c *HttpHealthChecksUpdateCall) Fields(s ...googleapi.Field) *HttpHealthChe
 	return c
 }
 
-func (c *HttpHealthChecksUpdateCall) Do() (*Operation, error) {
+func (c *HttpHealthChecksUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.httphealthcheck)
 	if err != nil {
@@ -11494,7 +11659,7 @@ func (c *HttpHealthChecksUpdateCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -11507,7 +11672,11 @@ func (c *HttpHealthChecksUpdateCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *HttpHealthChecksUpdateCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -11585,10 +11754,10 @@ func (c *ImagesDeleteCall) Fields(s ...googleapi.Field) *ImagesDeleteCall {
 	return c
 }
 
-func (c *ImagesDeleteCall) Do() (*Operation, error) {
+func (c *ImagesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -11600,7 +11769,11 @@ func (c *ImagesDeleteCall) Do() (*Operation, error) {
 		"image":   c.image,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ImagesDeleteCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -11680,7 +11853,7 @@ func (c *ImagesDeprecateCall) Fields(s ...googleapi.Field) *ImagesDeprecateCall 
 	return c
 }
 
-func (c *ImagesDeprecateCall) Do() (*Operation, error) {
+func (c *ImagesDeprecateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.deprecationstatus)
 	if err != nil {
@@ -11688,7 +11861,7 @@ func (c *ImagesDeprecateCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -11701,7 +11874,11 @@ func (c *ImagesDeprecateCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ImagesDeprecateCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -11779,10 +11956,10 @@ func (c *ImagesGetCall) Fields(s ...googleapi.Field) *ImagesGetCall {
 	return c
 }
 
-func (c *ImagesGetCall) Do() (*Image, error) {
+func (c *ImagesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -11794,7 +11971,11 @@ func (c *ImagesGetCall) Do() (*Image, error) {
 		"image":   c.image,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ImagesGetCall) Do() (*Image, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -11871,7 +12052,7 @@ func (c *ImagesInsertCall) Fields(s ...googleapi.Field) *ImagesInsertCall {
 	return c
 }
 
-func (c *ImagesInsertCall) Do() (*Operation, error) {
+func (c *ImagesInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.image)
 	if err != nil {
@@ -11879,7 +12060,7 @@ func (c *ImagesInsertCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -11891,7 +12072,11 @@ func (c *ImagesInsertCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ImagesInsertCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -11957,25 +12142,19 @@ func (r *ImagesService) List(project string) *ImagesListCall {
 
 // Filter sets the optional parameter "filter": Sets a filter expression
 // for filtering listed resources, in the form filter={expression}. Your
-// {expression} must contain the following:
-// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+// {expression} must be in the format: FIELD_NAME COMPARISON_STRING
+// LITERAL_STRING.
 //
-// - FIELD_NAME: The name of the field you want to compare. The field
-// name must be valid for the type of resource being filtered. Only
-// atomic field types are supported (string, number, boolean). Array and
-// object fields are not currently supported.
-// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
-// (not equals).
-// - LITERAL_STRING: The literal string value to filter to. The literal
-// value must be valid for the type of field (string, number, boolean).
-// For string fields, the literal value is interpreted as a regular
+// The FIELD_NAME is the name of the field you want to compare. Only
+// atomic field types are supported (string, number, boolean). The
+// COMPARISON_STRING must be either eq (equals) or ne (not equals). The
+// LITERAL_STRING is the string value to filter to. The literal value
+// must be valid for the type of field (string, number, boolean). For
+// string fields, the literal value is interpreted as a regular
 // expression using RE2 syntax. The literal value must match the entire
-// field.  For example, you can filter by the name of a
-// resource:
-// filter=name ne example-instance
-// The above filter returns only results whose name field does not equal
-// example-instance. You can also enclose your literal string in single,
-// double, or no quotes.
+// field.
+//
+// For example, filter=name ne example-instance.
 func (c *ImagesListCall) Filter(filter string) *ImagesListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -12005,10 +12184,10 @@ func (c *ImagesListCall) Fields(s ...googleapi.Field) *ImagesListCall {
 	return c
 }
 
-func (c *ImagesListCall) Do() (*ImageList, error) {
+func (c *ImagesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["filter"]; ok {
 		params.Set("filter", fmt.Sprintf("%v", v))
 	}
@@ -12028,7 +12207,11 @@ func (c *ImagesListCall) Do() (*ImageList, error) {
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ImagesListCall) Do() (*ImageList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -12050,7 +12233,7 @@ func (c *ImagesListCall) Do() (*ImageList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: FIELD_NAME COMPARISON_STRING LITERAL_STRING.\n\nThe FIELD_NAME is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The COMPARISON_STRING must be either eq (equals) or ne (not equals). The LITERAL_STRING is the string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, filter=name ne example-instance.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -12122,7 +12305,7 @@ func (c *InstanceGroupManagersAbandonInstancesCall) Fields(s ...googleapi.Field)
 	return c
 }
 
-func (c *InstanceGroupManagersAbandonInstancesCall) Do() (*Operation, error) {
+func (c *InstanceGroupManagersAbandonInstancesCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.instancegroupmanagersabandoninstancesrequest)
 	if err != nil {
@@ -12130,7 +12313,7 @@ func (c *InstanceGroupManagersAbandonInstancesCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -12144,7 +12327,11 @@ func (c *InstanceGroupManagersAbandonInstancesCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *InstanceGroupManagersAbandonInstancesCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -12220,25 +12407,19 @@ func (r *InstanceGroupManagersService) AggregatedList(project string) *InstanceG
 
 // Filter sets the optional parameter "filter": Sets a filter expression
 // for filtering listed resources, in the form filter={expression}. Your
-// {expression} must contain the following:
-// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+// {expression} must be in the format: FIELD_NAME COMPARISON_STRING
+// LITERAL_STRING.
 //
-// - FIELD_NAME: The name of the field you want to compare. The field
-// name must be valid for the type of resource being filtered. Only
-// atomic field types are supported (string, number, boolean). Array and
-// object fields are not currently supported.
-// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
-// (not equals).
-// - LITERAL_STRING: The literal string value to filter to. The literal
-// value must be valid for the type of field (string, number, boolean).
-// For string fields, the literal value is interpreted as a regular
+// The FIELD_NAME is the name of the field you want to compare. Only
+// atomic field types are supported (string, number, boolean). The
+// COMPARISON_STRING must be either eq (equals) or ne (not equals). The
+// LITERAL_STRING is the string value to filter to. The literal value
+// must be valid for the type of field (string, number, boolean). For
+// string fields, the literal value is interpreted as a regular
 // expression using RE2 syntax. The literal value must match the entire
-// field.  For example, you can filter by the name of a
-// resource:
-// filter=name ne example-instance
-// The above filter returns only results whose name field does not equal
-// example-instance. You can also enclose your literal string in single,
-// double, or no quotes.
+// field.
+//
+// For example, filter=name ne example-instance.
 func (c *InstanceGroupManagersAggregatedListCall) Filter(filter string) *InstanceGroupManagersAggregatedListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -12268,10 +12449,10 @@ func (c *InstanceGroupManagersAggregatedListCall) Fields(s ...googleapi.Field) *
 	return c
 }
 
-func (c *InstanceGroupManagersAggregatedListCall) Do() (*InstanceGroupManagerAggregatedList, error) {
+func (c *InstanceGroupManagersAggregatedListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["filter"]; ok {
 		params.Set("filter", fmt.Sprintf("%v", v))
 	}
@@ -12291,7 +12472,11 @@ func (c *InstanceGroupManagersAggregatedListCall) Do() (*InstanceGroupManagerAgg
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *InstanceGroupManagersAggregatedListCall) Do() (*InstanceGroupManagerAggregatedList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -12313,7 +12498,7 @@ func (c *InstanceGroupManagersAggregatedListCall) Do() (*InstanceGroupManagerAgg
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: FIELD_NAME COMPARISON_STRING LITERAL_STRING.\n\nThe FIELD_NAME is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The COMPARISON_STRING must be either eq (equals) or ne (not equals). The LITERAL_STRING is the string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, filter=name ne example-instance.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -12379,10 +12564,10 @@ func (c *InstanceGroupManagersDeleteCall) Fields(s ...googleapi.Field) *Instance
 	return c
 }
 
-func (c *InstanceGroupManagersDeleteCall) Do() (*Operation, error) {
+func (c *InstanceGroupManagersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -12395,7 +12580,11 @@ func (c *InstanceGroupManagersDeleteCall) Do() (*Operation, error) {
 		"instanceGroupManager": c.instanceGroupManager,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *InstanceGroupManagersDeleteCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -12483,7 +12672,7 @@ func (c *InstanceGroupManagersDeleteInstancesCall) Fields(s ...googleapi.Field) 
 	return c
 }
 
-func (c *InstanceGroupManagersDeleteInstancesCall) Do() (*Operation, error) {
+func (c *InstanceGroupManagersDeleteInstancesCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.instancegroupmanagersdeleteinstancesrequest)
 	if err != nil {
@@ -12491,7 +12680,7 @@ func (c *InstanceGroupManagersDeleteInstancesCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -12505,7 +12694,11 @@ func (c *InstanceGroupManagersDeleteInstancesCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *InstanceGroupManagersDeleteInstancesCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -12590,10 +12783,10 @@ func (c *InstanceGroupManagersGetCall) Fields(s ...googleapi.Field) *InstanceGro
 	return c
 }
 
-func (c *InstanceGroupManagersGetCall) Do() (*InstanceGroupManager, error) {
+func (c *InstanceGroupManagersGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -12606,7 +12799,11 @@ func (c *InstanceGroupManagersGetCall) Do() (*InstanceGroupManager, error) {
 		"instanceGroupManager": c.instanceGroupManager,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *InstanceGroupManagersGetCall) Do() (*InstanceGroupManager, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -12690,7 +12887,7 @@ func (c *InstanceGroupManagersInsertCall) Fields(s ...googleapi.Field) *Instance
 	return c
 }
 
-func (c *InstanceGroupManagersInsertCall) Do() (*Operation, error) {
+func (c *InstanceGroupManagersInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.instancegroupmanager)
 	if err != nil {
@@ -12698,7 +12895,7 @@ func (c *InstanceGroupManagersInsertCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -12711,7 +12908,11 @@ func (c *InstanceGroupManagersInsertCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *InstanceGroupManagersInsertCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -12782,25 +12983,19 @@ func (r *InstanceGroupManagersService) List(project string, zone string) *Instan
 
 // Filter sets the optional parameter "filter": Sets a filter expression
 // for filtering listed resources, in the form filter={expression}. Your
-// {expression} must contain the following:
-// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+// {expression} must be in the format: FIELD_NAME COMPARISON_STRING
+// LITERAL_STRING.
 //
-// - FIELD_NAME: The name of the field you want to compare. The field
-// name must be valid for the type of resource being filtered. Only
-// atomic field types are supported (string, number, boolean). Array and
-// object fields are not currently supported.
-// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
-// (not equals).
-// - LITERAL_STRING: The literal string value to filter to. The literal
-// value must be valid for the type of field (string, number, boolean).
-// For string fields, the literal value is interpreted as a regular
+// The FIELD_NAME is the name of the field you want to compare. Only
+// atomic field types are supported (string, number, boolean). The
+// COMPARISON_STRING must be either eq (equals) or ne (not equals). The
+// LITERAL_STRING is the string value to filter to. The literal value
+// must be valid for the type of field (string, number, boolean). For
+// string fields, the literal value is interpreted as a regular
 // expression using RE2 syntax. The literal value must match the entire
-// field.  For example, you can filter by the name of a
-// resource:
-// filter=name ne example-instance
-// The above filter returns only results whose name field does not equal
-// example-instance. You can also enclose your literal string in single,
-// double, or no quotes.
+// field.
+//
+// For example, filter=name ne example-instance.
 func (c *InstanceGroupManagersListCall) Filter(filter string) *InstanceGroupManagersListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -12830,10 +13025,10 @@ func (c *InstanceGroupManagersListCall) Fields(s ...googleapi.Field) *InstanceGr
 	return c
 }
 
-func (c *InstanceGroupManagersListCall) Do() (*InstanceGroupManagerList, error) {
+func (c *InstanceGroupManagersListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["filter"]; ok {
 		params.Set("filter", fmt.Sprintf("%v", v))
 	}
@@ -12854,7 +13049,11 @@ func (c *InstanceGroupManagersListCall) Do() (*InstanceGroupManagerList, error) 
 		"zone":    c.zone,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *InstanceGroupManagersListCall) Do() (*InstanceGroupManagerList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -12877,7 +13076,7 @@ func (c *InstanceGroupManagersListCall) Do() (*InstanceGroupManagerList, error) 
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: FIELD_NAME COMPARISON_STRING LITERAL_STRING.\n\nThe FIELD_NAME is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The COMPARISON_STRING must be either eq (equals) or ne (not equals). The LITERAL_STRING is the string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, filter=name ne example-instance.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -12949,10 +13148,10 @@ func (c *InstanceGroupManagersListManagedInstancesCall) Fields(s ...googleapi.Fi
 	return c
 }
 
-func (c *InstanceGroupManagersListManagedInstancesCall) Do() (*InstanceGroupManagersListManagedInstancesResponse, error) {
+func (c *InstanceGroupManagersListManagedInstancesCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -12965,7 +13164,11 @@ func (c *InstanceGroupManagersListManagedInstancesCall) Do() (*InstanceGroupMana
 		"instanceGroupManager": c.instanceGroupManager,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *InstanceGroupManagersListManagedInstancesCall) Do() (*InstanceGroupManagersListManagedInstancesResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -13052,7 +13255,7 @@ func (c *InstanceGroupManagersRecreateInstancesCall) Fields(s ...googleapi.Field
 	return c
 }
 
-func (c *InstanceGroupManagersRecreateInstancesCall) Do() (*Operation, error) {
+func (c *InstanceGroupManagersRecreateInstancesCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.instancegroupmanagersrecreateinstancesrequest)
 	if err != nil {
@@ -13060,7 +13263,7 @@ func (c *InstanceGroupManagersRecreateInstancesCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -13074,7 +13277,11 @@ func (c *InstanceGroupManagersRecreateInstancesCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *InstanceGroupManagersRecreateInstancesCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -13164,10 +13371,10 @@ func (c *InstanceGroupManagersResizeCall) Fields(s ...googleapi.Field) *Instance
 	return c
 }
 
-func (c *InstanceGroupManagersResizeCall) Do() (*Operation, error) {
+func (c *InstanceGroupManagersResizeCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	params.Set("size", fmt.Sprintf("%v", c.size))
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
@@ -13181,7 +13388,11 @@ func (c *InstanceGroupManagersResizeCall) Do() (*Operation, error) {
 		"instanceGroupManager": c.instanceGroupManager,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *InstanceGroupManagersResizeCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -13275,7 +13486,7 @@ func (c *InstanceGroupManagersSetInstanceTemplateCall) Fields(s ...googleapi.Fie
 	return c
 }
 
-func (c *InstanceGroupManagersSetInstanceTemplateCall) Do() (*Operation, error) {
+func (c *InstanceGroupManagersSetInstanceTemplateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.instancegroupmanagerssetinstancetemplaterequest)
 	if err != nil {
@@ -13283,7 +13494,7 @@ func (c *InstanceGroupManagersSetInstanceTemplateCall) Do() (*Operation, error) 
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -13297,7 +13508,11 @@ func (c *InstanceGroupManagersSetInstanceTemplateCall) Do() (*Operation, error) 
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *InstanceGroupManagersSetInstanceTemplateCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -13386,7 +13601,7 @@ func (c *InstanceGroupManagersSetTargetPoolsCall) Fields(s ...googleapi.Field) *
 	return c
 }
 
-func (c *InstanceGroupManagersSetTargetPoolsCall) Do() (*Operation, error) {
+func (c *InstanceGroupManagersSetTargetPoolsCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.instancegroupmanagerssettargetpoolsrequest)
 	if err != nil {
@@ -13394,7 +13609,7 @@ func (c *InstanceGroupManagersSetTargetPoolsCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -13408,7 +13623,11 @@ func (c *InstanceGroupManagersSetTargetPoolsCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *InstanceGroupManagersSetTargetPoolsCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -13496,7 +13715,7 @@ func (c *InstanceGroupsAddInstancesCall) Fields(s ...googleapi.Field) *InstanceG
 	return c
 }
 
-func (c *InstanceGroupsAddInstancesCall) Do() (*Operation, error) {
+func (c *InstanceGroupsAddInstancesCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.instancegroupsaddinstancesrequest)
 	if err != nil {
@@ -13504,7 +13723,7 @@ func (c *InstanceGroupsAddInstancesCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -13518,7 +13737,11 @@ func (c *InstanceGroupsAddInstancesCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *InstanceGroupsAddInstancesCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -13594,25 +13817,19 @@ func (r *InstanceGroupsService) AggregatedList(project string) *InstanceGroupsAg
 
 // Filter sets the optional parameter "filter": Sets a filter expression
 // for filtering listed resources, in the form filter={expression}. Your
-// {expression} must contain the following:
-// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+// {expression} must be in the format: FIELD_NAME COMPARISON_STRING
+// LITERAL_STRING.
 //
-// - FIELD_NAME: The name of the field you want to compare. The field
-// name must be valid for the type of resource being filtered. Only
-// atomic field types are supported (string, number, boolean). Array and
-// object fields are not currently supported.
-// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
-// (not equals).
-// - LITERAL_STRING: The literal string value to filter to. The literal
-// value must be valid for the type of field (string, number, boolean).
-// For string fields, the literal value is interpreted as a regular
+// The FIELD_NAME is the name of the field you want to compare. Only
+// atomic field types are supported (string, number, boolean). The
+// COMPARISON_STRING must be either eq (equals) or ne (not equals). The
+// LITERAL_STRING is the string value to filter to. The literal value
+// must be valid for the type of field (string, number, boolean). For
+// string fields, the literal value is interpreted as a regular
 // expression using RE2 syntax. The literal value must match the entire
-// field.  For example, you can filter by the name of a
-// resource:
-// filter=name ne example-instance
-// The above filter returns only results whose name field does not equal
-// example-instance. You can also enclose your literal string in single,
-// double, or no quotes.
+// field.
+//
+// For example, filter=name ne example-instance.
 func (c *InstanceGroupsAggregatedListCall) Filter(filter string) *InstanceGroupsAggregatedListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -13642,10 +13859,10 @@ func (c *InstanceGroupsAggregatedListCall) Fields(s ...googleapi.Field) *Instanc
 	return c
 }
 
-func (c *InstanceGroupsAggregatedListCall) Do() (*InstanceGroupAggregatedList, error) {
+func (c *InstanceGroupsAggregatedListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["filter"]; ok {
 		params.Set("filter", fmt.Sprintf("%v", v))
 	}
@@ -13665,7 +13882,11 @@ func (c *InstanceGroupsAggregatedListCall) Do() (*InstanceGroupAggregatedList, e
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *InstanceGroupsAggregatedListCall) Do() (*InstanceGroupAggregatedList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -13687,7 +13908,7 @@ func (c *InstanceGroupsAggregatedListCall) Do() (*InstanceGroupAggregatedList, e
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: FIELD_NAME COMPARISON_STRING LITERAL_STRING.\n\nThe FIELD_NAME is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The COMPARISON_STRING must be either eq (equals) or ne (not equals). The LITERAL_STRING is the string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, filter=name ne example-instance.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -13753,10 +13974,10 @@ func (c *InstanceGroupsDeleteCall) Fields(s ...googleapi.Field) *InstanceGroupsD
 	return c
 }
 
-func (c *InstanceGroupsDeleteCall) Do() (*Operation, error) {
+func (c *InstanceGroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -13769,7 +13990,11 @@ func (c *InstanceGroupsDeleteCall) Do() (*Operation, error) {
 		"instanceGroup": c.instanceGroup,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *InstanceGroupsDeleteCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -13851,10 +14076,10 @@ func (c *InstanceGroupsGetCall) Fields(s ...googleapi.Field) *InstanceGroupsGetC
 	return c
 }
 
-func (c *InstanceGroupsGetCall) Do() (*InstanceGroup, error) {
+func (c *InstanceGroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -13867,7 +14092,11 @@ func (c *InstanceGroupsGetCall) Do() (*InstanceGroup, error) {
 		"instanceGroup": c.instanceGroup,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *InstanceGroupsGetCall) Do() (*InstanceGroup, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -13951,7 +14180,7 @@ func (c *InstanceGroupsInsertCall) Fields(s ...googleapi.Field) *InstanceGroupsI
 	return c
 }
 
-func (c *InstanceGroupsInsertCall) Do() (*Operation, error) {
+func (c *InstanceGroupsInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.instancegroup)
 	if err != nil {
@@ -13959,7 +14188,7 @@ func (c *InstanceGroupsInsertCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -13972,7 +14201,11 @@ func (c *InstanceGroupsInsertCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *InstanceGroupsInsertCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -14043,25 +14276,19 @@ func (r *InstanceGroupsService) List(project string, zone string) *InstanceGroup
 
 // Filter sets the optional parameter "filter": Sets a filter expression
 // for filtering listed resources, in the form filter={expression}. Your
-// {expression} must contain the following:
-// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+// {expression} must be in the format: FIELD_NAME COMPARISON_STRING
+// LITERAL_STRING.
 //
-// - FIELD_NAME: The name of the field you want to compare. The field
-// name must be valid for the type of resource being filtered. Only
-// atomic field types are supported (string, number, boolean). Array and
-// object fields are not currently supported.
-// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
-// (not equals).
-// - LITERAL_STRING: The literal string value to filter to. The literal
-// value must be valid for the type of field (string, number, boolean).
-// For string fields, the literal value is interpreted as a regular
+// The FIELD_NAME is the name of the field you want to compare. Only
+// atomic field types are supported (string, number, boolean). The
+// COMPARISON_STRING must be either eq (equals) or ne (not equals). The
+// LITERAL_STRING is the string value to filter to. The literal value
+// must be valid for the type of field (string, number, boolean). For
+// string fields, the literal value is interpreted as a regular
 // expression using RE2 syntax. The literal value must match the entire
-// field.  For example, you can filter by the name of a
-// resource:
-// filter=name ne example-instance
-// The above filter returns only results whose name field does not equal
-// example-instance. You can also enclose your literal string in single,
-// double, or no quotes.
+// field.
+//
+// For example, filter=name ne example-instance.
 func (c *InstanceGroupsListCall) Filter(filter string) *InstanceGroupsListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -14091,10 +14318,10 @@ func (c *InstanceGroupsListCall) Fields(s ...googleapi.Field) *InstanceGroupsLis
 	return c
 }
 
-func (c *InstanceGroupsListCall) Do() (*InstanceGroupList, error) {
+func (c *InstanceGroupsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["filter"]; ok {
 		params.Set("filter", fmt.Sprintf("%v", v))
 	}
@@ -14115,7 +14342,11 @@ func (c *InstanceGroupsListCall) Do() (*InstanceGroupList, error) {
 		"zone":    c.zone,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *InstanceGroupsListCall) Do() (*InstanceGroupList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -14138,7 +14369,7 @@ func (c *InstanceGroupsListCall) Do() (*InstanceGroupList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: FIELD_NAME COMPARISON_STRING LITERAL_STRING.\n\nThe FIELD_NAME is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The COMPARISON_STRING must be either eq (equals) or ne (not equals). The LITERAL_STRING is the string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, filter=name ne example-instance.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -14208,25 +14439,19 @@ func (r *InstanceGroupsService) ListInstances(project string, zone string, insta
 
 // Filter sets the optional parameter "filter": Sets a filter expression
 // for filtering listed resources, in the form filter={expression}. Your
-// {expression} must contain the following:
-// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+// {expression} must be in the format: FIELD_NAME COMPARISON_STRING
+// LITERAL_STRING.
 //
-// - FIELD_NAME: The name of the field you want to compare. The field
-// name must be valid for the type of resource being filtered. Only
-// atomic field types are supported (string, number, boolean). Array and
-// object fields are not currently supported.
-// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
-// (not equals).
-// - LITERAL_STRING: The literal string value to filter to. The literal
-// value must be valid for the type of field (string, number, boolean).
-// For string fields, the literal value is interpreted as a regular
+// The FIELD_NAME is the name of the field you want to compare. Only
+// atomic field types are supported (string, number, boolean). The
+// COMPARISON_STRING must be either eq (equals) or ne (not equals). The
+// LITERAL_STRING is the string value to filter to. The literal value
+// must be valid for the type of field (string, number, boolean). For
+// string fields, the literal value is interpreted as a regular
 // expression using RE2 syntax. The literal value must match the entire
-// field.  For example, you can filter by the name of a
-// resource:
-// filter=name ne example-instance
-// The above filter returns only results whose name field does not equal
-// example-instance. You can also enclose your literal string in single,
-// double, or no quotes.
+// field.
+//
+// For example, filter=name ne example-instance.
 func (c *InstanceGroupsListInstancesCall) Filter(filter string) *InstanceGroupsListInstancesCall {
 	c.opt_["filter"] = filter
 	return c
@@ -14256,7 +14481,7 @@ func (c *InstanceGroupsListInstancesCall) Fields(s ...googleapi.Field) *Instance
 	return c
 }
 
-func (c *InstanceGroupsListInstancesCall) Do() (*InstanceGroupsListInstances, error) {
+func (c *InstanceGroupsListInstancesCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.instancegroupslistinstancesrequest)
 	if err != nil {
@@ -14264,7 +14489,7 @@ func (c *InstanceGroupsListInstancesCall) Do() (*InstanceGroupsListInstances, er
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["filter"]; ok {
 		params.Set("filter", fmt.Sprintf("%v", v))
 	}
@@ -14287,7 +14512,11 @@ func (c *InstanceGroupsListInstancesCall) Do() (*InstanceGroupsListInstances, er
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *InstanceGroupsListInstancesCall) Do() (*InstanceGroupsListInstances, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -14311,7 +14540,7 @@ func (c *InstanceGroupsListInstancesCall) Do() (*InstanceGroupsListInstances, er
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: FIELD_NAME COMPARISON_STRING LITERAL_STRING.\n\nThe FIELD_NAME is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The COMPARISON_STRING must be either eq (equals) or ne (not equals). The LITERAL_STRING is the string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, filter=name ne example-instance.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -14394,7 +14623,7 @@ func (c *InstanceGroupsRemoveInstancesCall) Fields(s ...googleapi.Field) *Instan
 	return c
 }
 
-func (c *InstanceGroupsRemoveInstancesCall) Do() (*Operation, error) {
+func (c *InstanceGroupsRemoveInstancesCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.instancegroupsremoveinstancesrequest)
 	if err != nil {
@@ -14402,7 +14631,7 @@ func (c *InstanceGroupsRemoveInstancesCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -14416,7 +14645,11 @@ func (c *InstanceGroupsRemoveInstancesCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *InstanceGroupsRemoveInstancesCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -14503,7 +14736,7 @@ func (c *InstanceGroupsSetNamedPortsCall) Fields(s ...googleapi.Field) *Instance
 	return c
 }
 
-func (c *InstanceGroupsSetNamedPortsCall) Do() (*Operation, error) {
+func (c *InstanceGroupsSetNamedPortsCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.instancegroupssetnamedportsrequest)
 	if err != nil {
@@ -14511,7 +14744,7 @@ func (c *InstanceGroupsSetNamedPortsCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -14525,7 +14758,11 @@ func (c *InstanceGroupsSetNamedPortsCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *InstanceGroupsSetNamedPortsCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -14609,10 +14846,10 @@ func (c *InstanceTemplatesDeleteCall) Fields(s ...googleapi.Field) *InstanceTemp
 	return c
 }
 
-func (c *InstanceTemplatesDeleteCall) Do() (*Operation, error) {
+func (c *InstanceTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -14624,7 +14861,11 @@ func (c *InstanceTemplatesDeleteCall) Do() (*Operation, error) {
 		"instanceTemplate": c.instanceTemplate,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *InstanceTemplatesDeleteCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -14699,10 +14940,10 @@ func (c *InstanceTemplatesGetCall) Fields(s ...googleapi.Field) *InstanceTemplat
 	return c
 }
 
-func (c *InstanceTemplatesGetCall) Do() (*InstanceTemplate, error) {
+func (c *InstanceTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -14714,7 +14955,11 @@ func (c *InstanceTemplatesGetCall) Do() (*InstanceTemplate, error) {
 		"instanceTemplate": c.instanceTemplate,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *InstanceTemplatesGetCall) Do() (*InstanceTemplate, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -14791,7 +15036,7 @@ func (c *InstanceTemplatesInsertCall) Fields(s ...googleapi.Field) *InstanceTemp
 	return c
 }
 
-func (c *InstanceTemplatesInsertCall) Do() (*Operation, error) {
+func (c *InstanceTemplatesInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.instancetemplate)
 	if err != nil {
@@ -14799,7 +15044,7 @@ func (c *InstanceTemplatesInsertCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -14811,7 +15056,11 @@ func (c *InstanceTemplatesInsertCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *InstanceTemplatesInsertCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -14874,25 +15123,19 @@ func (r *InstanceTemplatesService) List(project string) *InstanceTemplatesListCa
 
 // Filter sets the optional parameter "filter": Sets a filter expression
 // for filtering listed resources, in the form filter={expression}. Your
-// {expression} must contain the following:
-// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+// {expression} must be in the format: FIELD_NAME COMPARISON_STRING
+// LITERAL_STRING.
 //
-// - FIELD_NAME: The name of the field you want to compare. The field
-// name must be valid for the type of resource being filtered. Only
-// atomic field types are supported (string, number, boolean). Array and
-// object fields are not currently supported.
-// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
-// (not equals).
-// - LITERAL_STRING: The literal string value to filter to. The literal
-// value must be valid for the type of field (string, number, boolean).
-// For string fields, the literal value is interpreted as a regular
+// The FIELD_NAME is the name of the field you want to compare. Only
+// atomic field types are supported (string, number, boolean). The
+// COMPARISON_STRING must be either eq (equals) or ne (not equals). The
+// LITERAL_STRING is the string value to filter to. The literal value
+// must be valid for the type of field (string, number, boolean). For
+// string fields, the literal value is interpreted as a regular
 // expression using RE2 syntax. The literal value must match the entire
-// field.  For example, you can filter by the name of a
-// resource:
-// filter=name ne example-instance
-// The above filter returns only results whose name field does not equal
-// example-instance. You can also enclose your literal string in single,
-// double, or no quotes.
+// field.
+//
+// For example, filter=name ne example-instance.
 func (c *InstanceTemplatesListCall) Filter(filter string) *InstanceTemplatesListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -14922,10 +15165,10 @@ func (c *InstanceTemplatesListCall) Fields(s ...googleapi.Field) *InstanceTempla
 	return c
 }
 
-func (c *InstanceTemplatesListCall) Do() (*InstanceTemplateList, error) {
+func (c *InstanceTemplatesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["filter"]; ok {
 		params.Set("filter", fmt.Sprintf("%v", v))
 	}
@@ -14945,7 +15188,11 @@ func (c *InstanceTemplatesListCall) Do() (*InstanceTemplateList, error) {
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *InstanceTemplatesListCall) Do() (*InstanceTemplateList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -14967,7 +15214,7 @@ func (c *InstanceTemplatesListCall) Do() (*InstanceTemplateList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: FIELD_NAME COMPARISON_STRING LITERAL_STRING.\n\nThe FIELD_NAME is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The COMPARISON_STRING must be either eq (equals) or ne (not equals). The LITERAL_STRING is the string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, filter=name ne example-instance.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -15039,7 +15286,7 @@ func (c *InstancesAddAccessConfigCall) Fields(s ...googleapi.Field) *InstancesAd
 	return c
 }
 
-func (c *InstancesAddAccessConfigCall) Do() (*Operation, error) {
+func (c *InstancesAddAccessConfigCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.accessconfig)
 	if err != nil {
@@ -15047,7 +15294,7 @@ func (c *InstancesAddAccessConfigCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	params.Set("networkInterface", fmt.Sprintf("%v", c.networkInterface))
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
@@ -15062,7 +15309,11 @@ func (c *InstancesAddAccessConfigCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *InstancesAddAccessConfigCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -15147,25 +15398,19 @@ func (r *InstancesService) AggregatedList(project string) *InstancesAggregatedLi
 
 // Filter sets the optional parameter "filter": Sets a filter expression
 // for filtering listed resources, in the form filter={expression}. Your
-// {expression} must contain the following:
-// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+// {expression} must be in the format: FIELD_NAME COMPARISON_STRING
+// LITERAL_STRING.
 //
-// - FIELD_NAME: The name of the field you want to compare. The field
-// name must be valid for the type of resource being filtered. Only
-// atomic field types are supported (string, number, boolean). Array and
-// object fields are not currently supported.
-// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
-// (not equals).
-// - LITERAL_STRING: The literal string value to filter to. The literal
-// value must be valid for the type of field (string, number, boolean).
-// For string fields, the literal value is interpreted as a regular
+// The FIELD_NAME is the name of the field you want to compare. Only
+// atomic field types are supported (string, number, boolean). The
+// COMPARISON_STRING must be either eq (equals) or ne (not equals). The
+// LITERAL_STRING is the string value to filter to. The literal value
+// must be valid for the type of field (string, number, boolean). For
+// string fields, the literal value is interpreted as a regular
 // expression using RE2 syntax. The literal value must match the entire
-// field.  For example, you can filter by the name of a
-// resource:
-// filter=name ne example-instance
-// The above filter returns only results whose name field does not equal
-// example-instance. You can also enclose your literal string in single,
-// double, or no quotes.
+// field.
+//
+// For example, filter=name ne example-instance.
 func (c *InstancesAggregatedListCall) Filter(filter string) *InstancesAggregatedListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -15195,10 +15440,10 @@ func (c *InstancesAggregatedListCall) Fields(s ...googleapi.Field) *InstancesAgg
 	return c
 }
 
-func (c *InstancesAggregatedListCall) Do() (*InstanceAggregatedList, error) {
+func (c *InstancesAggregatedListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["filter"]; ok {
 		params.Set("filter", fmt.Sprintf("%v", v))
 	}
@@ -15218,7 +15463,11 @@ func (c *InstancesAggregatedListCall) Do() (*InstanceAggregatedList, error) {
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *InstancesAggregatedListCall) Do() (*InstanceAggregatedList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -15239,7 +15488,7 @@ func (c *InstancesAggregatedListCall) Do() (*InstanceAggregatedList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: FIELD_NAME COMPARISON_STRING LITERAL_STRING.\n\nThe FIELD_NAME is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The COMPARISON_STRING must be either eq (equals) or ne (not equals). The LITERAL_STRING is the string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, filter=name ne example-instance.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -15308,7 +15557,7 @@ func (c *InstancesAttachDiskCall) Fields(s ...googleapi.Field) *InstancesAttachD
 	return c
 }
 
-func (c *InstancesAttachDiskCall) Do() (*Operation, error) {
+func (c *InstancesAttachDiskCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.attacheddisk)
 	if err != nil {
@@ -15316,7 +15565,7 @@ func (c *InstancesAttachDiskCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -15330,7 +15579,11 @@ func (c *InstancesAttachDiskCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *InstancesAttachDiskCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -15419,10 +15672,10 @@ func (c *InstancesDeleteCall) Fields(s ...googleapi.Field) *InstancesDeleteCall 
 	return c
 }
 
-func (c *InstancesDeleteCall) Do() (*Operation, error) {
+func (c *InstancesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -15435,7 +15688,11 @@ func (c *InstancesDeleteCall) Do() (*Operation, error) {
 		"instance": c.instance,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *InstancesDeleteCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -15525,10 +15782,10 @@ func (c *InstancesDeleteAccessConfigCall) Fields(s ...googleapi.Field) *Instance
 	return c
 }
 
-func (c *InstancesDeleteAccessConfigCall) Do() (*Operation, error) {
+func (c *InstancesDeleteAccessConfigCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	params.Set("accessConfig", fmt.Sprintf("%v", c.accessConfig))
 	params.Set("networkInterface", fmt.Sprintf("%v", c.networkInterface))
 	if v, ok := c.opt_["fields"]; ok {
@@ -15543,7 +15800,11 @@ func (c *InstancesDeleteAccessConfigCall) Do() (*Operation, error) {
 		"instance": c.instance,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *InstancesDeleteAccessConfigCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -15644,10 +15905,10 @@ func (c *InstancesDetachDiskCall) Fields(s ...googleapi.Field) *InstancesDetachD
 	return c
 }
 
-func (c *InstancesDetachDiskCall) Do() (*Operation, error) {
+func (c *InstancesDetachDiskCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	params.Set("deviceName", fmt.Sprintf("%v", c.deviceName))
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
@@ -15661,7 +15922,11 @@ func (c *InstancesDetachDiskCall) Do() (*Operation, error) {
 		"instance": c.instance,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *InstancesDetachDiskCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -15754,10 +16019,10 @@ func (c *InstancesGetCall) Fields(s ...googleapi.Field) *InstancesGetCall {
 	return c
 }
 
-func (c *InstancesGetCall) Do() (*Instance, error) {
+func (c *InstancesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -15770,7 +16035,11 @@ func (c *InstancesGetCall) Do() (*Instance, error) {
 		"instance": c.instance,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *InstancesGetCall) Do() (*Instance, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -15808,7 +16077,7 @@ func (c *InstancesGetCall) Do() (*Instance, error) {
 	//       "type": "string"
 	//     },
 	//     "zone": {
-	//       "description": "The name of the The name of the zone for this request..",
+	//       "description": "The name of the zone for this request.",
 	//       "location": "path",
 	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,
@@ -15864,10 +16133,10 @@ func (c *InstancesGetSerialPortOutputCall) Fields(s ...googleapi.Field) *Instanc
 	return c
 }
 
-func (c *InstancesGetSerialPortOutputCall) Do() (*SerialPortOutput, error) {
+func (c *InstancesGetSerialPortOutputCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["port"]; ok {
 		params.Set("port", fmt.Sprintf("%v", v))
 	}
@@ -15883,7 +16152,11 @@ func (c *InstancesGetSerialPortOutputCall) Do() (*SerialPortOutput, error) {
 		"instance": c.instance,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *InstancesGetSerialPortOutputCall) Do() (*SerialPortOutput, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -15979,7 +16252,7 @@ func (c *InstancesInsertCall) Fields(s ...googleapi.Field) *InstancesInsertCall 
 	return c
 }
 
-func (c *InstancesInsertCall) Do() (*Operation, error) {
+func (c *InstancesInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.instance)
 	if err != nil {
@@ -15987,7 +16260,7 @@ func (c *InstancesInsertCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -16000,7 +16273,11 @@ func (c *InstancesInsertCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *InstancesInsertCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -16073,25 +16350,19 @@ func (r *InstancesService) List(project string, zone string) *InstancesListCall 
 
 // Filter sets the optional parameter "filter": Sets a filter expression
 // for filtering listed resources, in the form filter={expression}. Your
-// {expression} must contain the following:
-// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+// {expression} must be in the format: FIELD_NAME COMPARISON_STRING
+// LITERAL_STRING.
 //
-// - FIELD_NAME: The name of the field you want to compare. The field
-// name must be valid for the type of resource being filtered. Only
-// atomic field types are supported (string, number, boolean). Array and
-// object fields are not currently supported.
-// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
-// (not equals).
-// - LITERAL_STRING: The literal string value to filter to. The literal
-// value must be valid for the type of field (string, number, boolean).
-// For string fields, the literal value is interpreted as a regular
+// The FIELD_NAME is the name of the field you want to compare. Only
+// atomic field types are supported (string, number, boolean). The
+// COMPARISON_STRING must be either eq (equals) or ne (not equals). The
+// LITERAL_STRING is the string value to filter to. The literal value
+// must be valid for the type of field (string, number, boolean). For
+// string fields, the literal value is interpreted as a regular
 // expression using RE2 syntax. The literal value must match the entire
-// field.  For example, you can filter by the name of a
-// resource:
-// filter=name ne example-instance
-// The above filter returns only results whose name field does not equal
-// example-instance. You can also enclose your literal string in single,
-// double, or no quotes.
+// field.
+//
+// For example, filter=name ne example-instance.
 func (c *InstancesListCall) Filter(filter string) *InstancesListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -16121,10 +16392,10 @@ func (c *InstancesListCall) Fields(s ...googleapi.Field) *InstancesListCall {
 	return c
 }
 
-func (c *InstancesListCall) Do() (*InstanceList, error) {
+func (c *InstancesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["filter"]; ok {
 		params.Set("filter", fmt.Sprintf("%v", v))
 	}
@@ -16145,7 +16416,11 @@ func (c *InstancesListCall) Do() (*InstanceList, error) {
 		"zone":    c.zone,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *InstancesListCall) Do() (*InstanceList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -16168,7 +16443,7 @@ func (c *InstancesListCall) Do() (*InstanceList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: FIELD_NAME COMPARISON_STRING LITERAL_STRING.\n\nThe FIELD_NAME is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The COMPARISON_STRING must be either eq (equals) or ne (not equals). The LITERAL_STRING is the string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, filter=name ne example-instance.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -16242,10 +16517,10 @@ func (c *InstancesResetCall) Fields(s ...googleapi.Field) *InstancesResetCall {
 	return c
 }
 
-func (c *InstancesResetCall) Do() (*Operation, error) {
+func (c *InstancesResetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -16258,7 +16533,11 @@ func (c *InstancesResetCall) Do() (*Operation, error) {
 		"instance": c.instance,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *InstancesResetCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -16348,10 +16627,10 @@ func (c *InstancesSetDiskAutoDeleteCall) Fields(s ...googleapi.Field) *Instances
 	return c
 }
 
-func (c *InstancesSetDiskAutoDeleteCall) Do() (*Operation, error) {
+func (c *InstancesSetDiskAutoDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	params.Set("autoDelete", fmt.Sprintf("%v", c.autoDelete))
 	params.Set("deviceName", fmt.Sprintf("%v", c.deviceName))
 	if v, ok := c.opt_["fields"]; ok {
@@ -16366,7 +16645,11 @@ func (c *InstancesSetDiskAutoDeleteCall) Do() (*Operation, error) {
 		"instance": c.instance,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *InstancesSetDiskAutoDeleteCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -16469,7 +16752,7 @@ func (c *InstancesSetMetadataCall) Fields(s ...googleapi.Field) *InstancesSetMet
 	return c
 }
 
-func (c *InstancesSetMetadataCall) Do() (*Operation, error) {
+func (c *InstancesSetMetadataCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.metadata)
 	if err != nil {
@@ -16477,7 +16760,7 @@ func (c *InstancesSetMetadataCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -16491,7 +16774,11 @@ func (c *InstancesSetMetadataCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *InstancesSetMetadataCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -16581,7 +16868,7 @@ func (c *InstancesSetSchedulingCall) Fields(s ...googleapi.Field) *InstancesSetS
 	return c
 }
 
-func (c *InstancesSetSchedulingCall) Do() (*Operation, error) {
+func (c *InstancesSetSchedulingCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.scheduling)
 	if err != nil {
@@ -16589,7 +16876,7 @@ func (c *InstancesSetSchedulingCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -16603,7 +16890,11 @@ func (c *InstancesSetSchedulingCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *InstancesSetSchedulingCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -16694,7 +16985,7 @@ func (c *InstancesSetTagsCall) Fields(s ...googleapi.Field) *InstancesSetTagsCal
 	return c
 }
 
-func (c *InstancesSetTagsCall) Do() (*Operation, error) {
+func (c *InstancesSetTagsCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.tags)
 	if err != nil {
@@ -16702,7 +16993,7 @@ func (c *InstancesSetTagsCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -16716,7 +17007,11 @@ func (c *InstancesSetTagsCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *InstancesSetTagsCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -16806,10 +17101,10 @@ func (c *InstancesStartCall) Fields(s ...googleapi.Field) *InstancesStartCall {
 	return c
 }
 
-func (c *InstancesStartCall) Do() (*Operation, error) {
+func (c *InstancesStartCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -16822,7 +17117,11 @@ func (c *InstancesStartCall) Do() (*Operation, error) {
 		"instance": c.instance,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *InstancesStartCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -16913,10 +17212,10 @@ func (c *InstancesStopCall) Fields(s ...googleapi.Field) *InstancesStopCall {
 	return c
 }
 
-func (c *InstancesStopCall) Do() (*Operation, error) {
+func (c *InstancesStopCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -16929,7 +17228,11 @@ func (c *InstancesStopCall) Do() (*Operation, error) {
 		"instance": c.instance,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *InstancesStopCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -17012,10 +17315,10 @@ func (c *LicensesGetCall) Fields(s ...googleapi.Field) *LicensesGetCall {
 	return c
 }
 
-func (c *LicensesGetCall) Do() (*License, error) {
+func (c *LicensesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -17027,7 +17330,11 @@ func (c *LicensesGetCall) Do() (*License, error) {
 		"license": c.license,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *LicensesGetCall) Do() (*License, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -17096,25 +17403,19 @@ func (r *MachineTypesService) AggregatedList(project string) *MachineTypesAggreg
 
 // Filter sets the optional parameter "filter": Sets a filter expression
 // for filtering listed resources, in the form filter={expression}. Your
-// {expression} must contain the following:
-// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+// {expression} must be in the format: FIELD_NAME COMPARISON_STRING
+// LITERAL_STRING.
 //
-// - FIELD_NAME: The name of the field you want to compare. The field
-// name must be valid for the type of resource being filtered. Only
-// atomic field types are supported (string, number, boolean). Array and
-// object fields are not currently supported.
-// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
-// (not equals).
-// - LITERAL_STRING: The literal string value to filter to. The literal
-// value must be valid for the type of field (string, number, boolean).
-// For string fields, the literal value is interpreted as a regular
+// The FIELD_NAME is the name of the field you want to compare. Only
+// atomic field types are supported (string, number, boolean). The
+// COMPARISON_STRING must be either eq (equals) or ne (not equals). The
+// LITERAL_STRING is the string value to filter to. The literal value
+// must be valid for the type of field (string, number, boolean). For
+// string fields, the literal value is interpreted as a regular
 // expression using RE2 syntax. The literal value must match the entire
-// field.  For example, you can filter by the name of a
-// resource:
-// filter=name ne example-instance
-// The above filter returns only results whose name field does not equal
-// example-instance. You can also enclose your literal string in single,
-// double, or no quotes.
+// field.
+//
+// For example, filter=name ne example-instance.
 func (c *MachineTypesAggregatedListCall) Filter(filter string) *MachineTypesAggregatedListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -17144,10 +17445,10 @@ func (c *MachineTypesAggregatedListCall) Fields(s ...googleapi.Field) *MachineTy
 	return c
 }
 
-func (c *MachineTypesAggregatedListCall) Do() (*MachineTypeAggregatedList, error) {
+func (c *MachineTypesAggregatedListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["filter"]; ok {
 		params.Set("filter", fmt.Sprintf("%v", v))
 	}
@@ -17167,7 +17468,11 @@ func (c *MachineTypesAggregatedListCall) Do() (*MachineTypeAggregatedList, error
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *MachineTypesAggregatedListCall) Do() (*MachineTypeAggregatedList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -17189,7 +17494,7 @@ func (c *MachineTypesAggregatedListCall) Do() (*MachineTypeAggregatedList, error
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: FIELD_NAME COMPARISON_STRING LITERAL_STRING.\n\nThe FIELD_NAME is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The COMPARISON_STRING must be either eq (equals) or ne (not equals). The LITERAL_STRING is the string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, filter=name ne example-instance.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -17256,10 +17561,10 @@ func (c *MachineTypesGetCall) Fields(s ...googleapi.Field) *MachineTypesGetCall 
 	return c
 }
 
-func (c *MachineTypesGetCall) Do() (*MachineType, error) {
+func (c *MachineTypesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -17272,7 +17577,11 @@ func (c *MachineTypesGetCall) Do() (*MachineType, error) {
 		"machineType": c.machineType,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *MachineTypesGetCall) Do() (*MachineType, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -17351,25 +17660,19 @@ func (r *MachineTypesService) List(project string, zone string) *MachineTypesLis
 
 // Filter sets the optional parameter "filter": Sets a filter expression
 // for filtering listed resources, in the form filter={expression}. Your
-// {expression} must contain the following:
-// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+// {expression} must be in the format: FIELD_NAME COMPARISON_STRING
+// LITERAL_STRING.
 //
-// - FIELD_NAME: The name of the field you want to compare. The field
-// name must be valid for the type of resource being filtered. Only
-// atomic field types are supported (string, number, boolean). Array and
-// object fields are not currently supported.
-// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
-// (not equals).
-// - LITERAL_STRING: The literal string value to filter to. The literal
-// value must be valid for the type of field (string, number, boolean).
-// For string fields, the literal value is interpreted as a regular
+// The FIELD_NAME is the name of the field you want to compare. Only
+// atomic field types are supported (string, number, boolean). The
+// COMPARISON_STRING must be either eq (equals) or ne (not equals). The
+// LITERAL_STRING is the string value to filter to. The literal value
+// must be valid for the type of field (string, number, boolean). For
+// string fields, the literal value is interpreted as a regular
 // expression using RE2 syntax. The literal value must match the entire
-// field.  For example, you can filter by the name of a
-// resource:
-// filter=name ne example-instance
-// The above filter returns only results whose name field does not equal
-// example-instance. You can also enclose your literal string in single,
-// double, or no quotes.
+// field.
+//
+// For example, filter=name ne example-instance.
 func (c *MachineTypesListCall) Filter(filter string) *MachineTypesListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -17399,10 +17702,10 @@ func (c *MachineTypesListCall) Fields(s ...googleapi.Field) *MachineTypesListCal
 	return c
 }
 
-func (c *MachineTypesListCall) Do() (*MachineTypeList, error) {
+func (c *MachineTypesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["filter"]; ok {
 		params.Set("filter", fmt.Sprintf("%v", v))
 	}
@@ -17423,7 +17726,11 @@ func (c *MachineTypesListCall) Do() (*MachineTypeList, error) {
 		"zone":    c.zone,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *MachineTypesListCall) Do() (*MachineTypeList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -17446,7 +17753,7 @@ func (c *MachineTypesListCall) Do() (*MachineTypeList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: FIELD_NAME COMPARISON_STRING LITERAL_STRING.\n\nThe FIELD_NAME is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The COMPARISON_STRING must be either eq (equals) or ne (not equals). The LITERAL_STRING is the string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, filter=name ne example-instance.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -17518,10 +17825,10 @@ func (c *NetworksDeleteCall) Fields(s ...googleapi.Field) *NetworksDeleteCall {
 	return c
 }
 
-func (c *NetworksDeleteCall) Do() (*Operation, error) {
+func (c *NetworksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -17533,7 +17840,11 @@ func (c *NetworksDeleteCall) Do() (*Operation, error) {
 		"network": c.network,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *NetworksDeleteCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -17608,10 +17919,10 @@ func (c *NetworksGetCall) Fields(s ...googleapi.Field) *NetworksGetCall {
 	return c
 }
 
-func (c *NetworksGetCall) Do() (*Network, error) {
+func (c *NetworksGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -17623,7 +17934,11 @@ func (c *NetworksGetCall) Do() (*Network, error) {
 		"network": c.network,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *NetworksGetCall) Do() (*Network, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -17700,7 +18015,7 @@ func (c *NetworksInsertCall) Fields(s ...googleapi.Field) *NetworksInsertCall {
 	return c
 }
 
-func (c *NetworksInsertCall) Do() (*Operation, error) {
+func (c *NetworksInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.network)
 	if err != nil {
@@ -17708,7 +18023,7 @@ func (c *NetworksInsertCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -17720,7 +18035,11 @@ func (c *NetworksInsertCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *NetworksInsertCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -17783,25 +18102,19 @@ func (r *NetworksService) List(project string) *NetworksListCall {
 
 // Filter sets the optional parameter "filter": Sets a filter expression
 // for filtering listed resources, in the form filter={expression}. Your
-// {expression} must contain the following:
-// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+// {expression} must be in the format: FIELD_NAME COMPARISON_STRING
+// LITERAL_STRING.
 //
-// - FIELD_NAME: The name of the field you want to compare. The field
-// name must be valid for the type of resource being filtered. Only
-// atomic field types are supported (string, number, boolean). Array and
-// object fields are not currently supported.
-// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
-// (not equals).
-// - LITERAL_STRING: The literal string value to filter to. The literal
-// value must be valid for the type of field (string, number, boolean).
-// For string fields, the literal value is interpreted as a regular
+// The FIELD_NAME is the name of the field you want to compare. Only
+// atomic field types are supported (string, number, boolean). The
+// COMPARISON_STRING must be either eq (equals) or ne (not equals). The
+// LITERAL_STRING is the string value to filter to. The literal value
+// must be valid for the type of field (string, number, boolean). For
+// string fields, the literal value is interpreted as a regular
 // expression using RE2 syntax. The literal value must match the entire
-// field.  For example, you can filter by the name of a
-// resource:
-// filter=name ne example-instance
-// The above filter returns only results whose name field does not equal
-// example-instance. You can also enclose your literal string in single,
-// double, or no quotes.
+// field.
+//
+// For example, filter=name ne example-instance.
 func (c *NetworksListCall) Filter(filter string) *NetworksListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -17831,10 +18144,10 @@ func (c *NetworksListCall) Fields(s ...googleapi.Field) *NetworksListCall {
 	return c
 }
 
-func (c *NetworksListCall) Do() (*NetworkList, error) {
+func (c *NetworksListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["filter"]; ok {
 		params.Set("filter", fmt.Sprintf("%v", v))
 	}
@@ -17854,7 +18167,11 @@ func (c *NetworksListCall) Do() (*NetworkList, error) {
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *NetworksListCall) Do() (*NetworkList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -17876,7 +18193,7 @@ func (c *NetworksListCall) Do() (*NetworkList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: FIELD_NAME COMPARISON_STRING LITERAL_STRING.\n\nThe FIELD_NAME is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The COMPARISON_STRING must be either eq (equals) or ne (not equals). The LITERAL_STRING is the string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, filter=name ne example-instance.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -17939,10 +18256,10 @@ func (c *ProjectsGetCall) Fields(s ...googleapi.Field) *ProjectsGetCall {
 	return c
 }
 
-func (c *ProjectsGetCall) Do() (*Project, error) {
+func (c *ProjectsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -17953,7 +18270,11 @@ func (c *ProjectsGetCall) Do() (*Project, error) {
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ProjectsGetCall) Do() (*Project, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -18020,7 +18341,7 @@ func (c *ProjectsMoveDiskCall) Fields(s ...googleapi.Field) *ProjectsMoveDiskCal
 	return c
 }
 
-func (c *ProjectsMoveDiskCall) Do() (*Operation, error) {
+func (c *ProjectsMoveDiskCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.diskmoverequest)
 	if err != nil {
@@ -18028,7 +18349,7 @@ func (c *ProjectsMoveDiskCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -18040,7 +18361,11 @@ func (c *ProjectsMoveDiskCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ProjectsMoveDiskCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -18110,7 +18435,7 @@ func (c *ProjectsMoveInstanceCall) Fields(s ...googleapi.Field) *ProjectsMoveIns
 	return c
 }
 
-func (c *ProjectsMoveInstanceCall) Do() (*Operation, error) {
+func (c *ProjectsMoveInstanceCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.instancemoverequest)
 	if err != nil {
@@ -18118,7 +18443,7 @@ func (c *ProjectsMoveInstanceCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -18130,7 +18455,11 @@ func (c *ProjectsMoveInstanceCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ProjectsMoveInstanceCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -18201,7 +18530,7 @@ func (c *ProjectsSetCommonInstanceMetadataCall) Fields(s ...googleapi.Field) *Pr
 	return c
 }
 
-func (c *ProjectsSetCommonInstanceMetadataCall) Do() (*Operation, error) {
+func (c *ProjectsSetCommonInstanceMetadataCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.metadata)
 	if err != nil {
@@ -18209,7 +18538,7 @@ func (c *ProjectsSetCommonInstanceMetadataCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -18221,7 +18550,11 @@ func (c *ProjectsSetCommonInstanceMetadataCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ProjectsSetCommonInstanceMetadataCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -18294,7 +18627,7 @@ func (c *ProjectsSetUsageExportBucketCall) Fields(s ...googleapi.Field) *Project
 	return c
 }
 
-func (c *ProjectsSetUsageExportBucketCall) Do() (*Operation, error) {
+func (c *ProjectsSetUsageExportBucketCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.usageexportlocation)
 	if err != nil {
@@ -18302,7 +18635,7 @@ func (c *ProjectsSetUsageExportBucketCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -18314,7 +18647,11 @@ func (c *ProjectsSetUsageExportBucketCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ProjectsSetUsageExportBucketCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -18389,10 +18726,10 @@ func (c *RegionOperationsDeleteCall) Fields(s ...googleapi.Field) *RegionOperati
 	return c
 }
 
-func (c *RegionOperationsDeleteCall) Do() error {
+func (c *RegionOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -18405,7 +18742,11 @@ func (c *RegionOperationsDeleteCall) Do() error {
 		"operation": c.operation,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *RegionOperationsDeleteCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -18483,10 +18824,10 @@ func (c *RegionOperationsGetCall) Fields(s ...googleapi.Field) *RegionOperations
 	return c
 }
 
-func (c *RegionOperationsGetCall) Do() (*Operation, error) {
+func (c *RegionOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -18499,7 +18840,11 @@ func (c *RegionOperationsGetCall) Do() (*Operation, error) {
 		"operation": c.operation,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *RegionOperationsGetCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -18578,25 +18923,19 @@ func (r *RegionOperationsService) List(project string, region string) *RegionOpe
 
 // Filter sets the optional parameter "filter": Sets a filter expression
 // for filtering listed resources, in the form filter={expression}. Your
-// {expression} must contain the following:
-// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+// {expression} must be in the format: FIELD_NAME COMPARISON_STRING
+// LITERAL_STRING.
 //
-// - FIELD_NAME: The name of the field you want to compare. The field
-// name must be valid for the type of resource being filtered. Only
-// atomic field types are supported (string, number, boolean). Array and
-// object fields are not currently supported.
-// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
-// (not equals).
-// - LITERAL_STRING: The literal string value to filter to. The literal
-// value must be valid for the type of field (string, number, boolean).
-// For string fields, the literal value is interpreted as a regular
+// The FIELD_NAME is the name of the field you want to compare. Only
+// atomic field types are supported (string, number, boolean). The
+// COMPARISON_STRING must be either eq (equals) or ne (not equals). The
+// LITERAL_STRING is the string value to filter to. The literal value
+// must be valid for the type of field (string, number, boolean). For
+// string fields, the literal value is interpreted as a regular
 // expression using RE2 syntax. The literal value must match the entire
-// field.  For example, you can filter by the name of a
-// resource:
-// filter=name ne example-instance
-// The above filter returns only results whose name field does not equal
-// example-instance. You can also enclose your literal string in single,
-// double, or no quotes.
+// field.
+//
+// For example, filter=name ne example-instance.
 func (c *RegionOperationsListCall) Filter(filter string) *RegionOperationsListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -18626,10 +18965,10 @@ func (c *RegionOperationsListCall) Fields(s ...googleapi.Field) *RegionOperation
 	return c
 }
 
-func (c *RegionOperationsListCall) Do() (*OperationList, error) {
+func (c *RegionOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["filter"]; ok {
 		params.Set("filter", fmt.Sprintf("%v", v))
 	}
@@ -18650,7 +18989,11 @@ func (c *RegionOperationsListCall) Do() (*OperationList, error) {
 		"region":  c.region,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *RegionOperationsListCall) Do() (*OperationList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -18673,7 +19016,7 @@ func (c *RegionOperationsListCall) Do() (*OperationList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: FIELD_NAME COMPARISON_STRING LITERAL_STRING.\n\nThe FIELD_NAME is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The COMPARISON_STRING must be either eq (equals) or ne (not equals). The LITERAL_STRING is the string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, filter=name ne example-instance.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -18745,10 +19088,10 @@ func (c *RegionsGetCall) Fields(s ...googleapi.Field) *RegionsGetCall {
 	return c
 }
 
-func (c *RegionsGetCall) Do() (*Region, error) {
+func (c *RegionsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -18760,7 +19103,11 @@ func (c *RegionsGetCall) Do() (*Region, error) {
 		"region":  c.region,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *RegionsGetCall) Do() (*Region, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -18829,25 +19176,19 @@ func (r *RegionsService) List(project string) *RegionsListCall {
 
 // Filter sets the optional parameter "filter": Sets a filter expression
 // for filtering listed resources, in the form filter={expression}. Your
-// {expression} must contain the following:
-// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+// {expression} must be in the format: FIELD_NAME COMPARISON_STRING
+// LITERAL_STRING.
 //
-// - FIELD_NAME: The name of the field you want to compare. The field
-// name must be valid for the type of resource being filtered. Only
-// atomic field types are supported (string, number, boolean). Array and
-// object fields are not currently supported.
-// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
-// (not equals).
-// - LITERAL_STRING: The literal string value to filter to. The literal
-// value must be valid for the type of field (string, number, boolean).
-// For string fields, the literal value is interpreted as a regular
+// The FIELD_NAME is the name of the field you want to compare. Only
+// atomic field types are supported (string, number, boolean). The
+// COMPARISON_STRING must be either eq (equals) or ne (not equals). The
+// LITERAL_STRING is the string value to filter to. The literal value
+// must be valid for the type of field (string, number, boolean). For
+// string fields, the literal value is interpreted as a regular
 // expression using RE2 syntax. The literal value must match the entire
-// field.  For example, you can filter by the name of a
-// resource:
-// filter=name ne example-instance
-// The above filter returns only results whose name field does not equal
-// example-instance. You can also enclose your literal string in single,
-// double, or no quotes.
+// field.
+//
+// For example, filter=name ne example-instance.
 func (c *RegionsListCall) Filter(filter string) *RegionsListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -18877,10 +19218,10 @@ func (c *RegionsListCall) Fields(s ...googleapi.Field) *RegionsListCall {
 	return c
 }
 
-func (c *RegionsListCall) Do() (*RegionList, error) {
+func (c *RegionsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["filter"]; ok {
 		params.Set("filter", fmt.Sprintf("%v", v))
 	}
@@ -18900,7 +19241,11 @@ func (c *RegionsListCall) Do() (*RegionList, error) {
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *RegionsListCall) Do() (*RegionList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -18922,7 +19267,7 @@ func (c *RegionsListCall) Do() (*RegionList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: FIELD_NAME COMPARISON_STRING LITERAL_STRING.\n\nThe FIELD_NAME is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The COMPARISON_STRING must be either eq (equals) or ne (not equals). The LITERAL_STRING is the string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, filter=name ne example-instance.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -18987,10 +19332,10 @@ func (c *RoutesDeleteCall) Fields(s ...googleapi.Field) *RoutesDeleteCall {
 	return c
 }
 
-func (c *RoutesDeleteCall) Do() (*Operation, error) {
+func (c *RoutesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -19002,7 +19347,11 @@ func (c *RoutesDeleteCall) Do() (*Operation, error) {
 		"route":   c.route,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *RoutesDeleteCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -19077,10 +19426,10 @@ func (c *RoutesGetCall) Fields(s ...googleapi.Field) *RoutesGetCall {
 	return c
 }
 
-func (c *RoutesGetCall) Do() (*Route, error) {
+func (c *RoutesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -19092,7 +19441,11 @@ func (c *RoutesGetCall) Do() (*Route, error) {
 		"route":   c.route,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *RoutesGetCall) Do() (*Route, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -19169,7 +19522,7 @@ func (c *RoutesInsertCall) Fields(s ...googleapi.Field) *RoutesInsertCall {
 	return c
 }
 
-func (c *RoutesInsertCall) Do() (*Operation, error) {
+func (c *RoutesInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.route)
 	if err != nil {
@@ -19177,7 +19530,7 @@ func (c *RoutesInsertCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -19189,7 +19542,11 @@ func (c *RoutesInsertCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *RoutesInsertCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -19252,25 +19609,19 @@ func (r *RoutesService) List(project string) *RoutesListCall {
 
 // Filter sets the optional parameter "filter": Sets a filter expression
 // for filtering listed resources, in the form filter={expression}. Your
-// {expression} must contain the following:
-// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+// {expression} must be in the format: FIELD_NAME COMPARISON_STRING
+// LITERAL_STRING.
 //
-// - FIELD_NAME: The name of the field you want to compare. The field
-// name must be valid for the type of resource being filtered. Only
-// atomic field types are supported (string, number, boolean). Array and
-// object fields are not currently supported.
-// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
-// (not equals).
-// - LITERAL_STRING: The literal string value to filter to. The literal
-// value must be valid for the type of field (string, number, boolean).
-// For string fields, the literal value is interpreted as a regular
+// The FIELD_NAME is the name of the field you want to compare. Only
+// atomic field types are supported (string, number, boolean). The
+// COMPARISON_STRING must be either eq (equals) or ne (not equals). The
+// LITERAL_STRING is the string value to filter to. The literal value
+// must be valid for the type of field (string, number, boolean). For
+// string fields, the literal value is interpreted as a regular
 // expression using RE2 syntax. The literal value must match the entire
-// field.  For example, you can filter by the name of a
-// resource:
-// filter=name ne example-instance
-// The above filter returns only results whose name field does not equal
-// example-instance. You can also enclose your literal string in single,
-// double, or no quotes.
+// field.
+//
+// For example, filter=name ne example-instance.
 func (c *RoutesListCall) Filter(filter string) *RoutesListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -19300,10 +19651,10 @@ func (c *RoutesListCall) Fields(s ...googleapi.Field) *RoutesListCall {
 	return c
 }
 
-func (c *RoutesListCall) Do() (*RouteList, error) {
+func (c *RoutesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["filter"]; ok {
 		params.Set("filter", fmt.Sprintf("%v", v))
 	}
@@ -19323,7 +19674,11 @@ func (c *RoutesListCall) Do() (*RouteList, error) {
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *RoutesListCall) Do() (*RouteList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -19345,7 +19700,7 @@ func (c *RoutesListCall) Do() (*RouteList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: FIELD_NAME COMPARISON_STRING LITERAL_STRING.\n\nThe FIELD_NAME is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The COMPARISON_STRING must be either eq (equals) or ne (not equals). The LITERAL_STRING is the string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, filter=name ne example-instance.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -19416,10 +19771,10 @@ func (c *SnapshotsDeleteCall) Fields(s ...googleapi.Field) *SnapshotsDeleteCall 
 	return c
 }
 
-func (c *SnapshotsDeleteCall) Do() (*Operation, error) {
+func (c *SnapshotsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -19431,7 +19786,11 @@ func (c *SnapshotsDeleteCall) Do() (*Operation, error) {
 		"snapshot": c.snapshot,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *SnapshotsDeleteCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -19506,10 +19865,10 @@ func (c *SnapshotsGetCall) Fields(s ...googleapi.Field) *SnapshotsGetCall {
 	return c
 }
 
-func (c *SnapshotsGetCall) Do() (*Snapshot, error) {
+func (c *SnapshotsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -19521,7 +19880,11 @@ func (c *SnapshotsGetCall) Do() (*Snapshot, error) {
 		"snapshot": c.snapshot,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *SnapshotsGetCall) Do() (*Snapshot, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -19590,25 +19953,19 @@ func (r *SnapshotsService) List(project string) *SnapshotsListCall {
 
 // Filter sets the optional parameter "filter": Sets a filter expression
 // for filtering listed resources, in the form filter={expression}. Your
-// {expression} must contain the following:
-// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+// {expression} must be in the format: FIELD_NAME COMPARISON_STRING
+// LITERAL_STRING.
 //
-// - FIELD_NAME: The name of the field you want to compare. The field
-// name must be valid for the type of resource being filtered. Only
-// atomic field types are supported (string, number, boolean). Array and
-// object fields are not currently supported.
-// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
-// (not equals).
-// - LITERAL_STRING: The literal string value to filter to. The literal
-// value must be valid for the type of field (string, number, boolean).
-// For string fields, the literal value is interpreted as a regular
+// The FIELD_NAME is the name of the field you want to compare. Only
+// atomic field types are supported (string, number, boolean). The
+// COMPARISON_STRING must be either eq (equals) or ne (not equals). The
+// LITERAL_STRING is the string value to filter to. The literal value
+// must be valid for the type of field (string, number, boolean). For
+// string fields, the literal value is interpreted as a regular
 // expression using RE2 syntax. The literal value must match the entire
-// field.  For example, you can filter by the name of a
-// resource:
-// filter=name ne example-instance
-// The above filter returns only results whose name field does not equal
-// example-instance. You can also enclose your literal string in single,
-// double, or no quotes.
+// field.
+//
+// For example, filter=name ne example-instance.
 func (c *SnapshotsListCall) Filter(filter string) *SnapshotsListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -19638,10 +19995,10 @@ func (c *SnapshotsListCall) Fields(s ...googleapi.Field) *SnapshotsListCall {
 	return c
 }
 
-func (c *SnapshotsListCall) Do() (*SnapshotList, error) {
+func (c *SnapshotsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["filter"]; ok {
 		params.Set("filter", fmt.Sprintf("%v", v))
 	}
@@ -19661,7 +20018,11 @@ func (c *SnapshotsListCall) Do() (*SnapshotList, error) {
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *SnapshotsListCall) Do() (*SnapshotList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -19683,7 +20044,7 @@ func (c *SnapshotsListCall) Do() (*SnapshotList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: FIELD_NAME COMPARISON_STRING LITERAL_STRING.\n\nThe FIELD_NAME is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The COMPARISON_STRING must be either eq (equals) or ne (not equals). The LITERAL_STRING is the string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, filter=name ne example-instance.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -19748,10 +20109,10 @@ func (c *TargetHttpProxiesDeleteCall) Fields(s ...googleapi.Field) *TargetHttpPr
 	return c
 }
 
-func (c *TargetHttpProxiesDeleteCall) Do() (*Operation, error) {
+func (c *TargetHttpProxiesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -19763,7 +20124,11 @@ func (c *TargetHttpProxiesDeleteCall) Do() (*Operation, error) {
 		"targetHttpProxy": c.targetHttpProxy,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TargetHttpProxiesDeleteCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -19838,10 +20203,10 @@ func (c *TargetHttpProxiesGetCall) Fields(s ...googleapi.Field) *TargetHttpProxi
 	return c
 }
 
-func (c *TargetHttpProxiesGetCall) Do() (*TargetHttpProxy, error) {
+func (c *TargetHttpProxiesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -19853,7 +20218,11 @@ func (c *TargetHttpProxiesGetCall) Do() (*TargetHttpProxy, error) {
 		"targetHttpProxy": c.targetHttpProxy,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TargetHttpProxiesGetCall) Do() (*TargetHttpProxy, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -19930,7 +20299,7 @@ func (c *TargetHttpProxiesInsertCall) Fields(s ...googleapi.Field) *TargetHttpPr
 	return c
 }
 
-func (c *TargetHttpProxiesInsertCall) Do() (*Operation, error) {
+func (c *TargetHttpProxiesInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.targethttpproxy)
 	if err != nil {
@@ -19938,7 +20307,7 @@ func (c *TargetHttpProxiesInsertCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -19950,7 +20319,11 @@ func (c *TargetHttpProxiesInsertCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TargetHttpProxiesInsertCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -20013,25 +20386,19 @@ func (r *TargetHttpProxiesService) List(project string) *TargetHttpProxiesListCa
 
 // Filter sets the optional parameter "filter": Sets a filter expression
 // for filtering listed resources, in the form filter={expression}. Your
-// {expression} must contain the following:
-// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+// {expression} must be in the format: FIELD_NAME COMPARISON_STRING
+// LITERAL_STRING.
 //
-// - FIELD_NAME: The name of the field you want to compare. The field
-// name must be valid for the type of resource being filtered. Only
-// atomic field types are supported (string, number, boolean). Array and
-// object fields are not currently supported.
-// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
-// (not equals).
-// - LITERAL_STRING: The literal string value to filter to. The literal
-// value must be valid for the type of field (string, number, boolean).
-// For string fields, the literal value is interpreted as a regular
+// The FIELD_NAME is the name of the field you want to compare. Only
+// atomic field types are supported (string, number, boolean). The
+// COMPARISON_STRING must be either eq (equals) or ne (not equals). The
+// LITERAL_STRING is the string value to filter to. The literal value
+// must be valid for the type of field (string, number, boolean). For
+// string fields, the literal value is interpreted as a regular
 // expression using RE2 syntax. The literal value must match the entire
-// field.  For example, you can filter by the name of a
-// resource:
-// filter=name ne example-instance
-// The above filter returns only results whose name field does not equal
-// example-instance. You can also enclose your literal string in single,
-// double, or no quotes.
+// field.
+//
+// For example, filter=name ne example-instance.
 func (c *TargetHttpProxiesListCall) Filter(filter string) *TargetHttpProxiesListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -20061,10 +20428,10 @@ func (c *TargetHttpProxiesListCall) Fields(s ...googleapi.Field) *TargetHttpProx
 	return c
 }
 
-func (c *TargetHttpProxiesListCall) Do() (*TargetHttpProxyList, error) {
+func (c *TargetHttpProxiesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["filter"]; ok {
 		params.Set("filter", fmt.Sprintf("%v", v))
 	}
@@ -20084,7 +20451,11 @@ func (c *TargetHttpProxiesListCall) Do() (*TargetHttpProxyList, error) {
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TargetHttpProxiesListCall) Do() (*TargetHttpProxyList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -20106,7 +20477,7 @@ func (c *TargetHttpProxiesListCall) Do() (*TargetHttpProxyList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: FIELD_NAME COMPARISON_STRING LITERAL_STRING.\n\nThe FIELD_NAME is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The COMPARISON_STRING must be either eq (equals) or ne (not equals). The LITERAL_STRING is the string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, filter=name ne example-instance.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -20173,7 +20544,7 @@ func (c *TargetHttpProxiesSetUrlMapCall) Fields(s ...googleapi.Field) *TargetHtt
 	return c
 }
 
-func (c *TargetHttpProxiesSetUrlMapCall) Do() (*Operation, error) {
+func (c *TargetHttpProxiesSetUrlMapCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.urlmapreference)
 	if err != nil {
@@ -20181,7 +20552,7 @@ func (c *TargetHttpProxiesSetUrlMapCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -20194,7 +20565,11 @@ func (c *TargetHttpProxiesSetUrlMapCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TargetHttpProxiesSetUrlMapCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -20265,25 +20640,19 @@ func (r *TargetInstancesService) AggregatedList(project string) *TargetInstances
 
 // Filter sets the optional parameter "filter": Sets a filter expression
 // for filtering listed resources, in the form filter={expression}. Your
-// {expression} must contain the following:
-// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+// {expression} must be in the format: FIELD_NAME COMPARISON_STRING
+// LITERAL_STRING.
 //
-// - FIELD_NAME: The name of the field you want to compare. The field
-// name must be valid for the type of resource being filtered. Only
-// atomic field types are supported (string, number, boolean). Array and
-// object fields are not currently supported.
-// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
-// (not equals).
-// - LITERAL_STRING: The literal string value to filter to. The literal
-// value must be valid for the type of field (string, number, boolean).
-// For string fields, the literal value is interpreted as a regular
+// The FIELD_NAME is the name of the field you want to compare. Only
+// atomic field types are supported (string, number, boolean). The
+// COMPARISON_STRING must be either eq (equals) or ne (not equals). The
+// LITERAL_STRING is the string value to filter to. The literal value
+// must be valid for the type of field (string, number, boolean). For
+// string fields, the literal value is interpreted as a regular
 // expression using RE2 syntax. The literal value must match the entire
-// field.  For example, you can filter by the name of a
-// resource:
-// filter=name ne example-instance
-// The above filter returns only results whose name field does not equal
-// example-instance. You can also enclose your literal string in single,
-// double, or no quotes.
+// field.
+//
+// For example, filter=name ne example-instance.
 func (c *TargetInstancesAggregatedListCall) Filter(filter string) *TargetInstancesAggregatedListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -20313,10 +20682,10 @@ func (c *TargetInstancesAggregatedListCall) Fields(s ...googleapi.Field) *Target
 	return c
 }
 
-func (c *TargetInstancesAggregatedListCall) Do() (*TargetInstanceAggregatedList, error) {
+func (c *TargetInstancesAggregatedListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["filter"]; ok {
 		params.Set("filter", fmt.Sprintf("%v", v))
 	}
@@ -20336,7 +20705,11 @@ func (c *TargetInstancesAggregatedListCall) Do() (*TargetInstanceAggregatedList,
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TargetInstancesAggregatedListCall) Do() (*TargetInstanceAggregatedList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -20358,7 +20731,7 @@ func (c *TargetInstancesAggregatedListCall) Do() (*TargetInstanceAggregatedList,
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: FIELD_NAME COMPARISON_STRING LITERAL_STRING.\n\nThe FIELD_NAME is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The COMPARISON_STRING must be either eq (equals) or ne (not equals). The LITERAL_STRING is the string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, filter=name ne example-instance.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -20425,10 +20798,10 @@ func (c *TargetInstancesDeleteCall) Fields(s ...googleapi.Field) *TargetInstance
 	return c
 }
 
-func (c *TargetInstancesDeleteCall) Do() (*Operation, error) {
+func (c *TargetInstancesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -20441,7 +20814,11 @@ func (c *TargetInstancesDeleteCall) Do() (*Operation, error) {
 		"targetInstance": c.targetInstance,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TargetInstancesDeleteCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -20526,10 +20903,10 @@ func (c *TargetInstancesGetCall) Fields(s ...googleapi.Field) *TargetInstancesGe
 	return c
 }
 
-func (c *TargetInstancesGetCall) Do() (*TargetInstance, error) {
+func (c *TargetInstancesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -20542,7 +20919,11 @@ func (c *TargetInstancesGetCall) Do() (*TargetInstance, error) {
 		"targetInstance": c.targetInstance,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TargetInstancesGetCall) Do() (*TargetInstance, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -20629,7 +21010,7 @@ func (c *TargetInstancesInsertCall) Fields(s ...googleapi.Field) *TargetInstance
 	return c
 }
 
-func (c *TargetInstancesInsertCall) Do() (*Operation, error) {
+func (c *TargetInstancesInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.targetinstance)
 	if err != nil {
@@ -20637,7 +21018,7 @@ func (c *TargetInstancesInsertCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -20650,7 +21031,11 @@ func (c *TargetInstancesInsertCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TargetInstancesInsertCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -20723,25 +21108,19 @@ func (r *TargetInstancesService) List(project string, zone string) *TargetInstan
 
 // Filter sets the optional parameter "filter": Sets a filter expression
 // for filtering listed resources, in the form filter={expression}. Your
-// {expression} must contain the following:
-// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+// {expression} must be in the format: FIELD_NAME COMPARISON_STRING
+// LITERAL_STRING.
 //
-// - FIELD_NAME: The name of the field you want to compare. The field
-// name must be valid for the type of resource being filtered. Only
-// atomic field types are supported (string, number, boolean). Array and
-// object fields are not currently supported.
-// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
-// (not equals).
-// - LITERAL_STRING: The literal string value to filter to. The literal
-// value must be valid for the type of field (string, number, boolean).
-// For string fields, the literal value is interpreted as a regular
+// The FIELD_NAME is the name of the field you want to compare. Only
+// atomic field types are supported (string, number, boolean). The
+// COMPARISON_STRING must be either eq (equals) or ne (not equals). The
+// LITERAL_STRING is the string value to filter to. The literal value
+// must be valid for the type of field (string, number, boolean). For
+// string fields, the literal value is interpreted as a regular
 // expression using RE2 syntax. The literal value must match the entire
-// field.  For example, you can filter by the name of a
-// resource:
-// filter=name ne example-instance
-// The above filter returns only results whose name field does not equal
-// example-instance. You can also enclose your literal string in single,
-// double, or no quotes.
+// field.
+//
+// For example, filter=name ne example-instance.
 func (c *TargetInstancesListCall) Filter(filter string) *TargetInstancesListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -20771,10 +21150,10 @@ func (c *TargetInstancesListCall) Fields(s ...googleapi.Field) *TargetInstancesL
 	return c
 }
 
-func (c *TargetInstancesListCall) Do() (*TargetInstanceList, error) {
+func (c *TargetInstancesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["filter"]; ok {
 		params.Set("filter", fmt.Sprintf("%v", v))
 	}
@@ -20795,7 +21174,11 @@ func (c *TargetInstancesListCall) Do() (*TargetInstanceList, error) {
 		"zone":    c.zone,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TargetInstancesListCall) Do() (*TargetInstanceList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -20818,7 +21201,7 @@ func (c *TargetInstancesListCall) Do() (*TargetInstanceList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: FIELD_NAME COMPARISON_STRING LITERAL_STRING.\n\nThe FIELD_NAME is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The COMPARISON_STRING must be either eq (equals) or ne (not equals). The LITERAL_STRING is the string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, filter=name ne example-instance.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -20894,7 +21277,7 @@ func (c *TargetPoolsAddHealthCheckCall) Fields(s ...googleapi.Field) *TargetPool
 	return c
 }
 
-func (c *TargetPoolsAddHealthCheckCall) Do() (*Operation, error) {
+func (c *TargetPoolsAddHealthCheckCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.targetpoolsaddhealthcheckrequest)
 	if err != nil {
@@ -20902,7 +21285,7 @@ func (c *TargetPoolsAddHealthCheckCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -20916,7 +21299,11 @@ func (c *TargetPoolsAddHealthCheckCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TargetPoolsAddHealthCheckCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -21005,7 +21392,7 @@ func (c *TargetPoolsAddInstanceCall) Fields(s ...googleapi.Field) *TargetPoolsAd
 	return c
 }
 
-func (c *TargetPoolsAddInstanceCall) Do() (*Operation, error) {
+func (c *TargetPoolsAddInstanceCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.targetpoolsaddinstancerequest)
 	if err != nil {
@@ -21013,7 +21400,7 @@ func (c *TargetPoolsAddInstanceCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -21027,7 +21414,11 @@ func (c *TargetPoolsAddInstanceCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TargetPoolsAddInstanceCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -21104,25 +21495,19 @@ func (r *TargetPoolsService) AggregatedList(project string) *TargetPoolsAggregat
 
 // Filter sets the optional parameter "filter": Sets a filter expression
 // for filtering listed resources, in the form filter={expression}. Your
-// {expression} must contain the following:
-// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+// {expression} must be in the format: FIELD_NAME COMPARISON_STRING
+// LITERAL_STRING.
 //
-// - FIELD_NAME: The name of the field you want to compare. The field
-// name must be valid for the type of resource being filtered. Only
-// atomic field types are supported (string, number, boolean). Array and
-// object fields are not currently supported.
-// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
-// (not equals).
-// - LITERAL_STRING: The literal string value to filter to. The literal
-// value must be valid for the type of field (string, number, boolean).
-// For string fields, the literal value is interpreted as a regular
+// The FIELD_NAME is the name of the field you want to compare. Only
+// atomic field types are supported (string, number, boolean). The
+// COMPARISON_STRING must be either eq (equals) or ne (not equals). The
+// LITERAL_STRING is the string value to filter to. The literal value
+// must be valid for the type of field (string, number, boolean). For
+// string fields, the literal value is interpreted as a regular
 // expression using RE2 syntax. The literal value must match the entire
-// field.  For example, you can filter by the name of a
-// resource:
-// filter=name ne example-instance
-// The above filter returns only results whose name field does not equal
-// example-instance. You can also enclose your literal string in single,
-// double, or no quotes.
+// field.
+//
+// For example, filter=name ne example-instance.
 func (c *TargetPoolsAggregatedListCall) Filter(filter string) *TargetPoolsAggregatedListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -21152,10 +21537,10 @@ func (c *TargetPoolsAggregatedListCall) Fields(s ...googleapi.Field) *TargetPool
 	return c
 }
 
-func (c *TargetPoolsAggregatedListCall) Do() (*TargetPoolAggregatedList, error) {
+func (c *TargetPoolsAggregatedListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["filter"]; ok {
 		params.Set("filter", fmt.Sprintf("%v", v))
 	}
@@ -21175,7 +21560,11 @@ func (c *TargetPoolsAggregatedListCall) Do() (*TargetPoolAggregatedList, error) 
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TargetPoolsAggregatedListCall) Do() (*TargetPoolAggregatedList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -21197,7 +21586,7 @@ func (c *TargetPoolsAggregatedListCall) Do() (*TargetPoolAggregatedList, error) 
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: FIELD_NAME COMPARISON_STRING LITERAL_STRING.\n\nThe FIELD_NAME is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The COMPARISON_STRING must be either eq (equals) or ne (not equals). The LITERAL_STRING is the string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, filter=name ne example-instance.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -21264,10 +21653,10 @@ func (c *TargetPoolsDeleteCall) Fields(s ...googleapi.Field) *TargetPoolsDeleteC
 	return c
 }
 
-func (c *TargetPoolsDeleteCall) Do() (*Operation, error) {
+func (c *TargetPoolsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -21280,7 +21669,11 @@ func (c *TargetPoolsDeleteCall) Do() (*Operation, error) {
 		"targetPool": c.targetPool,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TargetPoolsDeleteCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -21365,10 +21758,10 @@ func (c *TargetPoolsGetCall) Fields(s ...googleapi.Field) *TargetPoolsGetCall {
 	return c
 }
 
-func (c *TargetPoolsGetCall) Do() (*TargetPool, error) {
+func (c *TargetPoolsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -21381,7 +21774,11 @@ func (c *TargetPoolsGetCall) Do() (*TargetPool, error) {
 		"targetPool": c.targetPool,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TargetPoolsGetCall) Do() (*TargetPool, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -21470,7 +21867,7 @@ func (c *TargetPoolsGetHealthCall) Fields(s ...googleapi.Field) *TargetPoolsGetH
 	return c
 }
 
-func (c *TargetPoolsGetHealthCall) Do() (*TargetPoolInstanceHealth, error) {
+func (c *TargetPoolsGetHealthCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.instancereference)
 	if err != nil {
@@ -21478,7 +21875,7 @@ func (c *TargetPoolsGetHealthCall) Do() (*TargetPoolInstanceHealth, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -21492,7 +21889,11 @@ func (c *TargetPoolsGetHealthCall) Do() (*TargetPoolInstanceHealth, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TargetPoolsGetHealthCall) Do() (*TargetPoolInstanceHealth, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -21581,7 +21982,7 @@ func (c *TargetPoolsInsertCall) Fields(s ...googleapi.Field) *TargetPoolsInsertC
 	return c
 }
 
-func (c *TargetPoolsInsertCall) Do() (*Operation, error) {
+func (c *TargetPoolsInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.targetpool)
 	if err != nil {
@@ -21589,7 +21990,7 @@ func (c *TargetPoolsInsertCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -21602,7 +22003,11 @@ func (c *TargetPoolsInsertCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TargetPoolsInsertCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -21675,25 +22080,19 @@ func (r *TargetPoolsService) List(project string, region string) *TargetPoolsLis
 
 // Filter sets the optional parameter "filter": Sets a filter expression
 // for filtering listed resources, in the form filter={expression}. Your
-// {expression} must contain the following:
-// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+// {expression} must be in the format: FIELD_NAME COMPARISON_STRING
+// LITERAL_STRING.
 //
-// - FIELD_NAME: The name of the field you want to compare. The field
-// name must be valid for the type of resource being filtered. Only
-// atomic field types are supported (string, number, boolean). Array and
-// object fields are not currently supported.
-// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
-// (not equals).
-// - LITERAL_STRING: The literal string value to filter to. The literal
-// value must be valid for the type of field (string, number, boolean).
-// For string fields, the literal value is interpreted as a regular
+// The FIELD_NAME is the name of the field you want to compare. Only
+// atomic field types are supported (string, number, boolean). The
+// COMPARISON_STRING must be either eq (equals) or ne (not equals). The
+// LITERAL_STRING is the string value to filter to. The literal value
+// must be valid for the type of field (string, number, boolean). For
+// string fields, the literal value is interpreted as a regular
 // expression using RE2 syntax. The literal value must match the entire
-// field.  For example, you can filter by the name of a
-// resource:
-// filter=name ne example-instance
-// The above filter returns only results whose name field does not equal
-// example-instance. You can also enclose your literal string in single,
-// double, or no quotes.
+// field.
+//
+// For example, filter=name ne example-instance.
 func (c *TargetPoolsListCall) Filter(filter string) *TargetPoolsListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -21723,10 +22122,10 @@ func (c *TargetPoolsListCall) Fields(s ...googleapi.Field) *TargetPoolsListCall 
 	return c
 }
 
-func (c *TargetPoolsListCall) Do() (*TargetPoolList, error) {
+func (c *TargetPoolsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["filter"]; ok {
 		params.Set("filter", fmt.Sprintf("%v", v))
 	}
@@ -21747,7 +22146,11 @@ func (c *TargetPoolsListCall) Do() (*TargetPoolList, error) {
 		"region":  c.region,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TargetPoolsListCall) Do() (*TargetPoolList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -21770,7 +22173,7 @@ func (c *TargetPoolsListCall) Do() (*TargetPoolList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: FIELD_NAME COMPARISON_STRING LITERAL_STRING.\n\nThe FIELD_NAME is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The COMPARISON_STRING must be either eq (equals) or ne (not equals). The LITERAL_STRING is the string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, filter=name ne example-instance.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -21846,7 +22249,7 @@ func (c *TargetPoolsRemoveHealthCheckCall) Fields(s ...googleapi.Field) *TargetP
 	return c
 }
 
-func (c *TargetPoolsRemoveHealthCheckCall) Do() (*Operation, error) {
+func (c *TargetPoolsRemoveHealthCheckCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.targetpoolsremovehealthcheckrequest)
 	if err != nil {
@@ -21854,7 +22257,7 @@ func (c *TargetPoolsRemoveHealthCheckCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -21868,7 +22271,11 @@ func (c *TargetPoolsRemoveHealthCheckCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TargetPoolsRemoveHealthCheckCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -21957,7 +22364,7 @@ func (c *TargetPoolsRemoveInstanceCall) Fields(s ...googleapi.Field) *TargetPool
 	return c
 }
 
-func (c *TargetPoolsRemoveInstanceCall) Do() (*Operation, error) {
+func (c *TargetPoolsRemoveInstanceCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.targetpoolsremoveinstancerequest)
 	if err != nil {
@@ -21965,7 +22372,7 @@ func (c *TargetPoolsRemoveInstanceCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -21979,7 +22386,11 @@ func (c *TargetPoolsRemoveInstanceCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TargetPoolsRemoveInstanceCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -22075,7 +22486,7 @@ func (c *TargetPoolsSetBackupCall) Fields(s ...googleapi.Field) *TargetPoolsSetB
 	return c
 }
 
-func (c *TargetPoolsSetBackupCall) Do() (*Operation, error) {
+func (c *TargetPoolsSetBackupCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.targetreference)
 	if err != nil {
@@ -22083,7 +22494,7 @@ func (c *TargetPoolsSetBackupCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["failoverRatio"]; ok {
 		params.Set("failoverRatio", fmt.Sprintf("%v", v))
 	}
@@ -22100,7 +22511,11 @@ func (c *TargetPoolsSetBackupCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TargetPoolsSetBackupCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -22184,25 +22599,19 @@ func (r *TargetVpnGatewaysService) AggregatedList(project string) *TargetVpnGate
 
 // Filter sets the optional parameter "filter": Sets a filter expression
 // for filtering listed resources, in the form filter={expression}. Your
-// {expression} must contain the following:
-// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+// {expression} must be in the format: FIELD_NAME COMPARISON_STRING
+// LITERAL_STRING.
 //
-// - FIELD_NAME: The name of the field you want to compare. The field
-// name must be valid for the type of resource being filtered. Only
-// atomic field types are supported (string, number, boolean). Array and
-// object fields are not currently supported.
-// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
-// (not equals).
-// - LITERAL_STRING: The literal string value to filter to. The literal
-// value must be valid for the type of field (string, number, boolean).
-// For string fields, the literal value is interpreted as a regular
+// The FIELD_NAME is the name of the field you want to compare. Only
+// atomic field types are supported (string, number, boolean). The
+// COMPARISON_STRING must be either eq (equals) or ne (not equals). The
+// LITERAL_STRING is the string value to filter to. The literal value
+// must be valid for the type of field (string, number, boolean). For
+// string fields, the literal value is interpreted as a regular
 // expression using RE2 syntax. The literal value must match the entire
-// field.  For example, you can filter by the name of a
-// resource:
-// filter=name ne example-instance
-// The above filter returns only results whose name field does not equal
-// example-instance. You can also enclose your literal string in single,
-// double, or no quotes.
+// field.
+//
+// For example, filter=name ne example-instance.
 func (c *TargetVpnGatewaysAggregatedListCall) Filter(filter string) *TargetVpnGatewaysAggregatedListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -22232,10 +22641,10 @@ func (c *TargetVpnGatewaysAggregatedListCall) Fields(s ...googleapi.Field) *Targ
 	return c
 }
 
-func (c *TargetVpnGatewaysAggregatedListCall) Do() (*TargetVpnGatewayAggregatedList, error) {
+func (c *TargetVpnGatewaysAggregatedListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["filter"]; ok {
 		params.Set("filter", fmt.Sprintf("%v", v))
 	}
@@ -22255,7 +22664,11 @@ func (c *TargetVpnGatewaysAggregatedListCall) Do() (*TargetVpnGatewayAggregatedL
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TargetVpnGatewaysAggregatedListCall) Do() (*TargetVpnGatewayAggregatedList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -22277,7 +22690,7 @@ func (c *TargetVpnGatewaysAggregatedListCall) Do() (*TargetVpnGatewayAggregatedL
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: FIELD_NAME COMPARISON_STRING LITERAL_STRING.\n\nThe FIELD_NAME is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The COMPARISON_STRING must be either eq (equals) or ne (not equals). The LITERAL_STRING is the string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, filter=name ne example-instance.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -22343,10 +22756,10 @@ func (c *TargetVpnGatewaysDeleteCall) Fields(s ...googleapi.Field) *TargetVpnGat
 	return c
 }
 
-func (c *TargetVpnGatewaysDeleteCall) Do() (*Operation, error) {
+func (c *TargetVpnGatewaysDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -22359,7 +22772,11 @@ func (c *TargetVpnGatewaysDeleteCall) Do() (*Operation, error) {
 		"targetVpnGateway": c.targetVpnGateway,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TargetVpnGatewaysDeleteCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -22443,10 +22860,10 @@ func (c *TargetVpnGatewaysGetCall) Fields(s ...googleapi.Field) *TargetVpnGatewa
 	return c
 }
 
-func (c *TargetVpnGatewaysGetCall) Do() (*TargetVpnGateway, error) {
+func (c *TargetVpnGatewaysGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -22459,7 +22876,11 @@ func (c *TargetVpnGatewaysGetCall) Do() (*TargetVpnGateway, error) {
 		"targetVpnGateway": c.targetVpnGateway,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TargetVpnGatewaysGetCall) Do() (*TargetVpnGateway, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -22545,7 +22966,7 @@ func (c *TargetVpnGatewaysInsertCall) Fields(s ...googleapi.Field) *TargetVpnGat
 	return c
 }
 
-func (c *TargetVpnGatewaysInsertCall) Do() (*Operation, error) {
+func (c *TargetVpnGatewaysInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.targetvpngateway)
 	if err != nil {
@@ -22553,7 +22974,7 @@ func (c *TargetVpnGatewaysInsertCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -22566,7 +22987,11 @@ func (c *TargetVpnGatewaysInsertCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TargetVpnGatewaysInsertCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -22638,25 +23063,19 @@ func (r *TargetVpnGatewaysService) List(project string, region string) *TargetVp
 
 // Filter sets the optional parameter "filter": Sets a filter expression
 // for filtering listed resources, in the form filter={expression}. Your
-// {expression} must contain the following:
-// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+// {expression} must be in the format: FIELD_NAME COMPARISON_STRING
+// LITERAL_STRING.
 //
-// - FIELD_NAME: The name of the field you want to compare. The field
-// name must be valid for the type of resource being filtered. Only
-// atomic field types are supported (string, number, boolean). Array and
-// object fields are not currently supported.
-// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
-// (not equals).
-// - LITERAL_STRING: The literal string value to filter to. The literal
-// value must be valid for the type of field (string, number, boolean).
-// For string fields, the literal value is interpreted as a regular
+// The FIELD_NAME is the name of the field you want to compare. Only
+// atomic field types are supported (string, number, boolean). The
+// COMPARISON_STRING must be either eq (equals) or ne (not equals). The
+// LITERAL_STRING is the string value to filter to. The literal value
+// must be valid for the type of field (string, number, boolean). For
+// string fields, the literal value is interpreted as a regular
 // expression using RE2 syntax. The literal value must match the entire
-// field.  For example, you can filter by the name of a
-// resource:
-// filter=name ne example-instance
-// The above filter returns only results whose name field does not equal
-// example-instance. You can also enclose your literal string in single,
-// double, or no quotes.
+// field.
+//
+// For example, filter=name ne example-instance.
 func (c *TargetVpnGatewaysListCall) Filter(filter string) *TargetVpnGatewaysListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -22686,10 +23105,10 @@ func (c *TargetVpnGatewaysListCall) Fields(s ...googleapi.Field) *TargetVpnGatew
 	return c
 }
 
-func (c *TargetVpnGatewaysListCall) Do() (*TargetVpnGatewayList, error) {
+func (c *TargetVpnGatewaysListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["filter"]; ok {
 		params.Set("filter", fmt.Sprintf("%v", v))
 	}
@@ -22710,7 +23129,11 @@ func (c *TargetVpnGatewaysListCall) Do() (*TargetVpnGatewayList, error) {
 		"region":  c.region,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TargetVpnGatewaysListCall) Do() (*TargetVpnGatewayList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -22733,7 +23156,7 @@ func (c *TargetVpnGatewaysListCall) Do() (*TargetVpnGatewayList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: FIELD_NAME COMPARISON_STRING LITERAL_STRING.\n\nThe FIELD_NAME is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The COMPARISON_STRING must be either eq (equals) or ne (not equals). The LITERAL_STRING is the string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, filter=name ne example-instance.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -22805,10 +23228,10 @@ func (c *UrlMapsDeleteCall) Fields(s ...googleapi.Field) *UrlMapsDeleteCall {
 	return c
 }
 
-func (c *UrlMapsDeleteCall) Do() (*Operation, error) {
+func (c *UrlMapsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -22820,7 +23243,11 @@ func (c *UrlMapsDeleteCall) Do() (*Operation, error) {
 		"urlMap":  c.urlMap,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *UrlMapsDeleteCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -22895,10 +23322,10 @@ func (c *UrlMapsGetCall) Fields(s ...googleapi.Field) *UrlMapsGetCall {
 	return c
 }
 
-func (c *UrlMapsGetCall) Do() (*UrlMap, error) {
+func (c *UrlMapsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -22910,7 +23337,11 @@ func (c *UrlMapsGetCall) Do() (*UrlMap, error) {
 		"urlMap":  c.urlMap,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *UrlMapsGetCall) Do() (*UrlMap, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -22987,7 +23418,7 @@ func (c *UrlMapsInsertCall) Fields(s ...googleapi.Field) *UrlMapsInsertCall {
 	return c
 }
 
-func (c *UrlMapsInsertCall) Do() (*Operation, error) {
+func (c *UrlMapsInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.urlmap)
 	if err != nil {
@@ -22995,7 +23426,7 @@ func (c *UrlMapsInsertCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -23007,7 +23438,11 @@ func (c *UrlMapsInsertCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *UrlMapsInsertCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -23070,25 +23505,19 @@ func (r *UrlMapsService) List(project string) *UrlMapsListCall {
 
 // Filter sets the optional parameter "filter": Sets a filter expression
 // for filtering listed resources, in the form filter={expression}. Your
-// {expression} must contain the following:
-// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+// {expression} must be in the format: FIELD_NAME COMPARISON_STRING
+// LITERAL_STRING.
 //
-// - FIELD_NAME: The name of the field you want to compare. The field
-// name must be valid for the type of resource being filtered. Only
-// atomic field types are supported (string, number, boolean). Array and
-// object fields are not currently supported.
-// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
-// (not equals).
-// - LITERAL_STRING: The literal string value to filter to. The literal
-// value must be valid for the type of field (string, number, boolean).
-// For string fields, the literal value is interpreted as a regular
+// The FIELD_NAME is the name of the field you want to compare. Only
+// atomic field types are supported (string, number, boolean). The
+// COMPARISON_STRING must be either eq (equals) or ne (not equals). The
+// LITERAL_STRING is the string value to filter to. The literal value
+// must be valid for the type of field (string, number, boolean). For
+// string fields, the literal value is interpreted as a regular
 // expression using RE2 syntax. The literal value must match the entire
-// field.  For example, you can filter by the name of a
-// resource:
-// filter=name ne example-instance
-// The above filter returns only results whose name field does not equal
-// example-instance. You can also enclose your literal string in single,
-// double, or no quotes.
+// field.
+//
+// For example, filter=name ne example-instance.
 func (c *UrlMapsListCall) Filter(filter string) *UrlMapsListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -23118,10 +23547,10 @@ func (c *UrlMapsListCall) Fields(s ...googleapi.Field) *UrlMapsListCall {
 	return c
 }
 
-func (c *UrlMapsListCall) Do() (*UrlMapList, error) {
+func (c *UrlMapsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["filter"]; ok {
 		params.Set("filter", fmt.Sprintf("%v", v))
 	}
@@ -23141,7 +23570,11 @@ func (c *UrlMapsListCall) Do() (*UrlMapList, error) {
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *UrlMapsListCall) Do() (*UrlMapList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -23163,7 +23596,7 @@ func (c *UrlMapsListCall) Do() (*UrlMapList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: FIELD_NAME COMPARISON_STRING LITERAL_STRING.\n\nThe FIELD_NAME is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The COMPARISON_STRING must be either eq (equals) or ne (not equals). The LITERAL_STRING is the string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, filter=name ne example-instance.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -23231,7 +23664,7 @@ func (c *UrlMapsPatchCall) Fields(s ...googleapi.Field) *UrlMapsPatchCall {
 	return c
 }
 
-func (c *UrlMapsPatchCall) Do() (*Operation, error) {
+func (c *UrlMapsPatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.urlmap)
 	if err != nil {
@@ -23239,7 +23672,7 @@ func (c *UrlMapsPatchCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -23252,7 +23685,11 @@ func (c *UrlMapsPatchCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *UrlMapsPatchCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -23332,7 +23769,7 @@ func (c *UrlMapsUpdateCall) Fields(s ...googleapi.Field) *UrlMapsUpdateCall {
 	return c
 }
 
-func (c *UrlMapsUpdateCall) Do() (*Operation, error) {
+func (c *UrlMapsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.urlmap)
 	if err != nil {
@@ -23340,7 +23777,7 @@ func (c *UrlMapsUpdateCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -23353,7 +23790,11 @@ func (c *UrlMapsUpdateCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *UrlMapsUpdateCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -23435,7 +23876,7 @@ func (c *UrlMapsValidateCall) Fields(s ...googleapi.Field) *UrlMapsValidateCall 
 	return c
 }
 
-func (c *UrlMapsValidateCall) Do() (*UrlMapsValidateResponse, error) {
+func (c *UrlMapsValidateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.urlmapsvalidaterequest)
 	if err != nil {
@@ -23443,7 +23884,7 @@ func (c *UrlMapsValidateCall) Do() (*UrlMapsValidateResponse, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -23456,7 +23897,11 @@ func (c *UrlMapsValidateCall) Do() (*UrlMapsValidateResponse, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *UrlMapsValidateCall) Do() (*UrlMapsValidateResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -23525,25 +23970,19 @@ func (r *VpnTunnelsService) AggregatedList(project string) *VpnTunnelsAggregated
 
 // Filter sets the optional parameter "filter": Sets a filter expression
 // for filtering listed resources, in the form filter={expression}. Your
-// {expression} must contain the following:
-// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+// {expression} must be in the format: FIELD_NAME COMPARISON_STRING
+// LITERAL_STRING.
 //
-// - FIELD_NAME: The name of the field you want to compare. The field
-// name must be valid for the type of resource being filtered. Only
-// atomic field types are supported (string, number, boolean). Array and
-// object fields are not currently supported.
-// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
-// (not equals).
-// - LITERAL_STRING: The literal string value to filter to. The literal
-// value must be valid for the type of field (string, number, boolean).
-// For string fields, the literal value is interpreted as a regular
+// The FIELD_NAME is the name of the field you want to compare. Only
+// atomic field types are supported (string, number, boolean). The
+// COMPARISON_STRING must be either eq (equals) or ne (not equals). The
+// LITERAL_STRING is the string value to filter to. The literal value
+// must be valid for the type of field (string, number, boolean). For
+// string fields, the literal value is interpreted as a regular
 // expression using RE2 syntax. The literal value must match the entire
-// field.  For example, you can filter by the name of a
-// resource:
-// filter=name ne example-instance
-// The above filter returns only results whose name field does not equal
-// example-instance. You can also enclose your literal string in single,
-// double, or no quotes.
+// field.
+//
+// For example, filter=name ne example-instance.
 func (c *VpnTunnelsAggregatedListCall) Filter(filter string) *VpnTunnelsAggregatedListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -23573,10 +24012,10 @@ func (c *VpnTunnelsAggregatedListCall) Fields(s ...googleapi.Field) *VpnTunnelsA
 	return c
 }
 
-func (c *VpnTunnelsAggregatedListCall) Do() (*VpnTunnelAggregatedList, error) {
+func (c *VpnTunnelsAggregatedListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["filter"]; ok {
 		params.Set("filter", fmt.Sprintf("%v", v))
 	}
@@ -23596,7 +24035,11 @@ func (c *VpnTunnelsAggregatedListCall) Do() (*VpnTunnelAggregatedList, error) {
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *VpnTunnelsAggregatedListCall) Do() (*VpnTunnelAggregatedList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -23618,7 +24061,7 @@ func (c *VpnTunnelsAggregatedListCall) Do() (*VpnTunnelAggregatedList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: FIELD_NAME COMPARISON_STRING LITERAL_STRING.\n\nThe FIELD_NAME is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The COMPARISON_STRING must be either eq (equals) or ne (not equals). The LITERAL_STRING is the string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, filter=name ne example-instance.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -23684,10 +24127,10 @@ func (c *VpnTunnelsDeleteCall) Fields(s ...googleapi.Field) *VpnTunnelsDeleteCal
 	return c
 }
 
-func (c *VpnTunnelsDeleteCall) Do() (*Operation, error) {
+func (c *VpnTunnelsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -23700,7 +24143,11 @@ func (c *VpnTunnelsDeleteCall) Do() (*Operation, error) {
 		"vpnTunnel": c.vpnTunnel,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *VpnTunnelsDeleteCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -23784,10 +24231,10 @@ func (c *VpnTunnelsGetCall) Fields(s ...googleapi.Field) *VpnTunnelsGetCall {
 	return c
 }
 
-func (c *VpnTunnelsGetCall) Do() (*VpnTunnel, error) {
+func (c *VpnTunnelsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -23800,7 +24247,11 @@ func (c *VpnTunnelsGetCall) Do() (*VpnTunnel, error) {
 		"vpnTunnel": c.vpnTunnel,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *VpnTunnelsGetCall) Do() (*VpnTunnel, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -23886,7 +24337,7 @@ func (c *VpnTunnelsInsertCall) Fields(s ...googleapi.Field) *VpnTunnelsInsertCal
 	return c
 }
 
-func (c *VpnTunnelsInsertCall) Do() (*Operation, error) {
+func (c *VpnTunnelsInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.vpntunnel)
 	if err != nil {
@@ -23894,7 +24345,7 @@ func (c *VpnTunnelsInsertCall) Do() (*Operation, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -23907,7 +24358,11 @@ func (c *VpnTunnelsInsertCall) Do() (*Operation, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *VpnTunnelsInsertCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -23979,25 +24434,19 @@ func (r *VpnTunnelsService) List(project string, region string) *VpnTunnelsListC
 
 // Filter sets the optional parameter "filter": Sets a filter expression
 // for filtering listed resources, in the form filter={expression}. Your
-// {expression} must contain the following:
-// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+// {expression} must be in the format: FIELD_NAME COMPARISON_STRING
+// LITERAL_STRING.
 //
-// - FIELD_NAME: The name of the field you want to compare. The field
-// name must be valid for the type of resource being filtered. Only
-// atomic field types are supported (string, number, boolean). Array and
-// object fields are not currently supported.
-// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
-// (not equals).
-// - LITERAL_STRING: The literal string value to filter to. The literal
-// value must be valid for the type of field (string, number, boolean).
-// For string fields, the literal value is interpreted as a regular
+// The FIELD_NAME is the name of the field you want to compare. Only
+// atomic field types are supported (string, number, boolean). The
+// COMPARISON_STRING must be either eq (equals) or ne (not equals). The
+// LITERAL_STRING is the string value to filter to. The literal value
+// must be valid for the type of field (string, number, boolean). For
+// string fields, the literal value is interpreted as a regular
 // expression using RE2 syntax. The literal value must match the entire
-// field.  For example, you can filter by the name of a
-// resource:
-// filter=name ne example-instance
-// The above filter returns only results whose name field does not equal
-// example-instance. You can also enclose your literal string in single,
-// double, or no quotes.
+// field.
+//
+// For example, filter=name ne example-instance.
 func (c *VpnTunnelsListCall) Filter(filter string) *VpnTunnelsListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -24027,10 +24476,10 @@ func (c *VpnTunnelsListCall) Fields(s ...googleapi.Field) *VpnTunnelsListCall {
 	return c
 }
 
-func (c *VpnTunnelsListCall) Do() (*VpnTunnelList, error) {
+func (c *VpnTunnelsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["filter"]; ok {
 		params.Set("filter", fmt.Sprintf("%v", v))
 	}
@@ -24051,7 +24500,11 @@ func (c *VpnTunnelsListCall) Do() (*VpnTunnelList, error) {
 		"region":  c.region,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *VpnTunnelsListCall) Do() (*VpnTunnelList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -24074,7 +24527,7 @@ func (c *VpnTunnelsListCall) Do() (*VpnTunnelList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: FIELD_NAME COMPARISON_STRING LITERAL_STRING.\n\nThe FIELD_NAME is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The COMPARISON_STRING must be either eq (equals) or ne (not equals). The LITERAL_STRING is the string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, filter=name ne example-instance.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -24148,10 +24601,10 @@ func (c *ZoneOperationsDeleteCall) Fields(s ...googleapi.Field) *ZoneOperationsD
 	return c
 }
 
-func (c *ZoneOperationsDeleteCall) Do() error {
+func (c *ZoneOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -24164,7 +24617,11 @@ func (c *ZoneOperationsDeleteCall) Do() error {
 		"operation": c.operation,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ZoneOperationsDeleteCall) Do() error {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}
@@ -24242,10 +24699,10 @@ func (c *ZoneOperationsGetCall) Fields(s ...googleapi.Field) *ZoneOperationsGetC
 	return c
 }
 
-func (c *ZoneOperationsGetCall) Do() (*Operation, error) {
+func (c *ZoneOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -24258,7 +24715,11 @@ func (c *ZoneOperationsGetCall) Do() (*Operation, error) {
 		"operation": c.operation,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ZoneOperationsGetCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -24337,25 +24798,19 @@ func (r *ZoneOperationsService) List(project string, zone string) *ZoneOperation
 
 // Filter sets the optional parameter "filter": Sets a filter expression
 // for filtering listed resources, in the form filter={expression}. Your
-// {expression} must contain the following:
-// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+// {expression} must be in the format: FIELD_NAME COMPARISON_STRING
+// LITERAL_STRING.
 //
-// - FIELD_NAME: The name of the field you want to compare. The field
-// name must be valid for the type of resource being filtered. Only
-// atomic field types are supported (string, number, boolean). Array and
-// object fields are not currently supported.
-// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
-// (not equals).
-// - LITERAL_STRING: The literal string value to filter to. The literal
-// value must be valid for the type of field (string, number, boolean).
-// For string fields, the literal value is interpreted as a regular
+// The FIELD_NAME is the name of the field you want to compare. Only
+// atomic field types are supported (string, number, boolean). The
+// COMPARISON_STRING must be either eq (equals) or ne (not equals). The
+// LITERAL_STRING is the string value to filter to. The literal value
+// must be valid for the type of field (string, number, boolean). For
+// string fields, the literal value is interpreted as a regular
 // expression using RE2 syntax. The literal value must match the entire
-// field.  For example, you can filter by the name of a
-// resource:
-// filter=name ne example-instance
-// The above filter returns only results whose name field does not equal
-// example-instance. You can also enclose your literal string in single,
-// double, or no quotes.
+// field.
+//
+// For example, filter=name ne example-instance.
 func (c *ZoneOperationsListCall) Filter(filter string) *ZoneOperationsListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -24385,10 +24840,10 @@ func (c *ZoneOperationsListCall) Fields(s ...googleapi.Field) *ZoneOperationsLis
 	return c
 }
 
-func (c *ZoneOperationsListCall) Do() (*OperationList, error) {
+func (c *ZoneOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["filter"]; ok {
 		params.Set("filter", fmt.Sprintf("%v", v))
 	}
@@ -24409,7 +24864,11 @@ func (c *ZoneOperationsListCall) Do() (*OperationList, error) {
 		"zone":    c.zone,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ZoneOperationsListCall) Do() (*OperationList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -24432,7 +24891,7 @@ func (c *ZoneOperationsListCall) Do() (*OperationList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: FIELD_NAME COMPARISON_STRING LITERAL_STRING.\n\nThe FIELD_NAME is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The COMPARISON_STRING must be either eq (equals) or ne (not equals). The LITERAL_STRING is the string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, filter=name ne example-instance.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -24504,10 +24963,10 @@ func (c *ZonesGetCall) Fields(s ...googleapi.Field) *ZonesGetCall {
 	return c
 }
 
-func (c *ZonesGetCall) Do() (*Zone, error) {
+func (c *ZonesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -24519,7 +24978,11 @@ func (c *ZonesGetCall) Do() (*Zone, error) {
 		"zone":    c.zone,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ZonesGetCall) Do() (*Zone, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -24588,25 +25051,19 @@ func (r *ZonesService) List(project string) *ZonesListCall {
 
 // Filter sets the optional parameter "filter": Sets a filter expression
 // for filtering listed resources, in the form filter={expression}. Your
-// {expression} must contain the following:
-// FIELD_NAME COMPARISON_STRING LITERAL_STRING
+// {expression} must be in the format: FIELD_NAME COMPARISON_STRING
+// LITERAL_STRING.
 //
-// - FIELD_NAME: The name of the field you want to compare. The field
-// name must be valid for the type of resource being filtered. Only
-// atomic field types are supported (string, number, boolean). Array and
-// object fields are not currently supported.
-// - COMPARISON_STRING: The comparison string, either eq (equals) or ne
-// (not equals).
-// - LITERAL_STRING: The literal string value to filter to. The literal
-// value must be valid for the type of field (string, number, boolean).
-// For string fields, the literal value is interpreted as a regular
+// The FIELD_NAME is the name of the field you want to compare. Only
+// atomic field types are supported (string, number, boolean). The
+// COMPARISON_STRING must be either eq (equals) or ne (not equals). The
+// LITERAL_STRING is the string value to filter to. The literal value
+// must be valid for the type of field (string, number, boolean). For
+// string fields, the literal value is interpreted as a regular
 // expression using RE2 syntax. The literal value must match the entire
-// field.  For example, you can filter by the name of a
-// resource:
-// filter=name ne example-instance
-// The above filter returns only results whose name field does not equal
-// example-instance. You can also enclose your literal string in single,
-// double, or no quotes.
+// field.
+//
+// For example, filter=name ne example-instance.
 func (c *ZonesListCall) Filter(filter string) *ZonesListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -24636,10 +25093,10 @@ func (c *ZonesListCall) Fields(s ...googleapi.Field) *ZonesListCall {
 	return c
 }
 
-func (c *ZonesListCall) Do() (*ZoneList, error) {
+func (c *ZonesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["filter"]; ok {
 		params.Set("filter", fmt.Sprintf("%v", v))
 	}
@@ -24659,7 +25116,11 @@ func (c *ZonesListCall) Do() (*ZoneList, error) {
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ZonesListCall) Do() (*ZoneList, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -24681,7 +25142,7 @@ func (c *ZonesListCall) Do() (*ZoneList, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must contain the following:\nFIELD_NAME COMPARISON_STRING LITERAL_STRING\n \n- FIELD_NAME: The name of the field you want to compare. The field name must be valid for the type of resource being filtered. Only atomic field types are supported (string, number, boolean). Array and object fields are not currently supported. \n- COMPARISON_STRING: The comparison string, either eq (equals) or ne (not equals). \n- LITERAL_STRING: The literal string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.  For example, you can filter by the name of a resource:\nfilter=name ne example-instance\nThe above filter returns only results whose name field does not equal example-instance. You can also enclose your literal string in single, double, or no quotes.",
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: FIELD_NAME COMPARISON_STRING LITERAL_STRING.\n\nThe FIELD_NAME is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The COMPARISON_STRING must be either eq (equals) or ne (not equals). The LITERAL_STRING is the string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, filter=name ne example-instance.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

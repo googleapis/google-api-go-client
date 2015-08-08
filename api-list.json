@@ -560,22 +560,6 @@
   },
   {
    "kind": "discovery#directoryItem",
-   "id": "container:v1beta1",
-   "name": "container",
-   "version": "v1beta1",
-   "title": "Google Container Engine API",
-   "description": "The Google Container Engine API is used for building and managing container based applications, powered by the open source Kubernetes technology.",
-   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/container/v1beta1/rest",
-   "discoveryLink": "./apis/container/v1beta1/rest",
-   "icons": {
-    "x16": "http://www.google.com/images/icons/product/search-16.gif",
-    "x32": "http://www.google.com/images/icons/product/search-32.gif"
-   },
-   "documentationLink": "https://cloud.google.com/container-engine/docs/v1beta1/",
-   "preferred": true
-  },
-  {
-   "kind": "discovery#directoryItem",
    "id": "content:v2",
    "name": "content",
    "version": "v2",
@@ -624,22 +608,6 @@
   },
   {
    "kind": "discovery#directoryItem",
-   "id": "dataflow:v1b3",
-   "name": "dataflow",
-   "version": "v1b3",
-   "title": "Google Dataflow API",
-   "description": "Google Dataflow API.",
-   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/dataflow/v1b3/rest",
-   "discoveryLink": "./apis/dataflow/v1b3/rest",
-   "icons": {
-    "x16": "http://www.google.com/images/icons/product/search-16.gif",
-    "x32": "http://www.google.com/images/icons/product/search-32.gif"
-   },
-   "documentationLink": "",
-   "preferred": true
-  },
-  {
-   "kind": "discovery#directoryItem",
    "id": "datastore:v1beta1",
    "name": "datastore",
    "version": "v1beta1",
@@ -672,10 +640,26 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "deploymentmanager:v2",
+   "name": "deploymentmanager",
+   "version": "v2",
+   "title": "Google Cloud Deployment Manager API",
+   "description": "The Deployment Manager API allows users to declaratively configure, deploy and run complex solutions on the Google Cloud Platform.",
+   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/deploymentmanager/v2/rest",
+   "discoveryLink": "./apis/deploymentmanager/v2/rest",
+   "icons": {
+    "x16": "http://www.google.com/images/icons/product/search-16.gif",
+    "x32": "http://www.google.com/images/icons/product/search-32.gif"
+   },
+   "documentationLink": "https://cloud.google.com/deployment-manager/",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "deploymentmanager:v2beta1",
    "name": "deploymentmanager",
    "version": "v2beta1",
-   "title": "Google Cloud Deployment Manager API V2",
+   "title": "Google Cloud Deployment Manager API",
    "description": "The Deployment Manager API allows users to declaratively configure, deploy and run complex solutions on the Google Cloud Platform.",
    "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/deploymentmanager/v2beta1/rest",
    "discoveryLink": "./apis/deploymentmanager/v2beta1/rest",
@@ -694,7 +678,7 @@
    "id": "deploymentmanager:v2beta2",
    "name": "deploymentmanager",
    "version": "v2beta2",
-   "title": "Google Cloud Deployment Manager API V2",
+   "title": "Google Cloud Deployment Manager API",
    "description": "The Deployment Manager API allows users to declaratively configure, deploy and run complex solutions on the Google Cloud Platform.",
    "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/deploymentmanager/v2beta2/rest",
    "discoveryLink": "./apis/deploymentmanager/v2beta2/rest",
@@ -703,7 +687,7 @@
     "x32": "http://www.google.com/images/icons/product/search-32.gif"
    },
    "documentationLink": "https://developers.google.com/deployment-manager/",
-   "preferred": true
+   "preferred": false
   },
   {
    "kind": "discovery#directoryItem",
@@ -794,6 +778,22 @@
    "description": "Manage your DoubleClick Campaign Manager ad campaigns and reports.",
    "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/dfareporting/v2.1/rest",
    "discoveryLink": "./apis/dfareporting/v2.1/rest",
+   "icons": {
+    "x16": "https://www.google.com/images/icons/product/doubleclick-16.gif",
+    "x32": "https://www.google.com/images/icons/product/doubleclick-32.gif"
+   },
+   "documentationLink": "https://developers.google.com/doubleclick-advertisers/reporting/",
+   "preferred": false
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "dfareporting:v2.2",
+   "name": "dfareporting",
+   "version": "v2.2",
+   "title": "DCM/DFA Reporting And Trafficking API",
+   "description": "Manage your DoubleClick Campaign Manager ad campaigns and reports.",
+   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/dfareporting/v2.2/rest",
+   "discoveryLink": "./apis/dfareporting/v2.2/rest",
    "icons": {
     "x16": "https://www.google.com/images/icons/product/doubleclick-16.gif",
     "x32": "https://www.google.com/images/icons/product/doubleclick-32.gif"
@@ -931,38 +931,6 @@
    },
    "documentationLink": "https://developers.google.com/fit/rest/",
    "preferred": true
-  },
-  {
-   "kind": "discovery#directoryItem",
-   "id": "freebase:v1-sandbox",
-   "name": "freebase",
-   "version": "v1-sandbox",
-   "title": "Freebase Search",
-   "description": "Find Freebase entities using textual queries and other constraints.",
-   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/freebase/v1-sandbox/rest",
-   "discoveryLink": "./apis/freebase/v1-sandbox/rest",
-   "icons": {
-    "x16": "https://www.google.com/images/icons/product/freebase-16.png",
-    "x32": "https://www.google.com/images/icons/product/freebase-32.png"
-   },
-   "documentationLink": "https://developers.google.com/freebase/",
-   "preferred": false
-  },
-  {
-   "kind": "discovery#directoryItem",
-   "id": "freebase:v1sandbox",
-   "name": "freebase",
-   "version": "v1sandbox",
-   "title": "Freebase Search",
-   "description": "Find Freebase entities using textual queries and other constraints.",
-   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/freebase/v1sandbox/rest",
-   "discoveryLink": "./apis/freebase/v1sandbox/rest",
-   "icons": {
-    "x16": "https://www.google.com/images/icons/product/freebase-16.png",
-    "x32": "https://www.google.com/images/icons/product/freebase-32.png"
-   },
-   "documentationLink": "https://developers.google.com/freebase/",
-   "preferred": false
   },
   {
    "kind": "discovery#directoryItem",
@@ -1174,19 +1142,19 @@
   },
   {
    "kind": "discovery#directoryItem",
-   "id": "classroom:v1beta1",
-   "name": "classroom",
-   "version": "v1beta1",
-   "title": "Google Classroom API",
-   "description": "Google Classroom API",
-   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/classroom/v1beta1/rest",
-   "discoveryLink": "./apis/classroom/v1beta1/rest",
+   "id": "cloudbilling:v1",
+   "name": "cloudbilling",
+   "version": "v1",
+   "title": "Google Cloud Billing API",
+   "description": "",
+   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/cloudbilling/v1/rest",
+   "discoveryLink": "./apis/cloudbilling/v1/rest",
    "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
     "x32": "http://www.google.com/images/icons/product/search-32.gif"
    },
-   "documentationLink": "",
-   "preferred": false
+   "documentationLink": "https://cloud.google.com/billing/",
+   "preferred": true
   },
   {
    "kind": "discovery#directoryItem",
@@ -1194,7 +1162,7 @@
    "name": "clouddebugger",
    "version": "v2",
    "title": "Google Cloud Debugger API",
-   "description": "",
+   "description": "Lets you examine the stack and variables of your running application without stopping or slowing it down.",
    "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/clouddebugger/v2/rest",
    "discoveryLink": "./apis/clouddebugger/v2/rest",
    "icons": {
@@ -1238,6 +1206,22 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "dataflow:v1b3",
+   "name": "dataflow",
+   "version": "v1b3",
+   "title": "Google Dataflow API",
+   "description": "Google Dataflow API.",
+   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/dataflow/v1b3/rest",
+   "discoveryLink": "./apis/dataflow/v1b3/rest",
+   "icons": {
+    "x16": "http://www.google.com/images/icons/product/search-16.gif",
+    "x32": "http://www.google.com/images/icons/product/search-32.gif"
+   },
+   "documentationLink": "https://cloud.google.com/dataflow",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "genomics:v1",
    "name": "genomics",
    "version": "v1",
@@ -1265,7 +1249,7 @@
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
     "x32": "http://www.google.com/images/icons/product/search-32.gif"
    },
-   "documentationLink": "",
+   "documentationLink": "https://cloud.google.com/logging/docs/",
    "preferred": true
   },
   {
@@ -1290,14 +1274,14 @@
    "name": "playmoviespartner",
    "version": "v1",
    "title": "Google Play Movies Partner API",
-   "description": "An API providing Google Play Movies Partners a way to get the delivery status of their titles.",
+   "description": "Lets Google Play Movies Partners get the delivery status of their titles.",
    "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/playmoviespartner/v1/rest",
    "discoveryLink": "./apis/playmoviespartner/v1/rest",
    "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
     "x32": "http://www.google.com/images/icons/product/search-32.gif"
    },
-   "documentationLink": "",
+   "documentationLink": "https://developers.google.com/playmoviespartner/",
    "preferred": true
   },
   {
@@ -1347,6 +1331,22 @@
    },
    "documentationLink": "https://cloud.google.com/pubsub/docs",
    "preferred": false
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "storagetransfer:v1",
+   "name": "storagetransfer",
+   "version": "v1",
+   "title": "Google Storage Transfer API",
+   "description": "Transfers data from external data sources to a Google Cloud Storage bucket or between Google Cloud Storage buckets.",
+   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/storagetransfer/v1/rest",
+   "discoveryLink": "./apis/storagetransfer/v1/rest",
+   "icons": {
+    "x16": "http://www.google.com/images/icons/product/search-16.gif",
+    "x32": "http://www.google.com/images/icons/product/search-32.gif"
+   },
+   "documentationLink": "https://cloud.google.com/storage/transfer",
+   "preferred": true
   },
   {
    "kind": "discovery#directoryItem",

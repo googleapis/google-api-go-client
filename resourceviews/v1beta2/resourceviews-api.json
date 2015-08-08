@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/4MmDAPzSM7FP83q8Q6MVIkiIkKw\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/yzlGzUdfFMQ070LA1GWey4JnOPY\"",
  "discoveryVersion": "v1",
  "id": "resourceviews:v1beta2",
  "name": "resourceviews",
  "version": "v1beta2",
- "revision": "20150302",
+ "revision": "20150708",
  "title": "Google Compute Engine Instance Groups API",
  "description": "The Resource View API allows users to create and manage logical sets of Google Compute Engine instances.",
  "ownerDomain": "google.com",
@@ -74,6 +74,9 @@
    "scopes": {
     "https://www.googleapis.com/auth/cloud-platform": {
      "description": "View and manage your data across Google Cloud Platform services"
+    },
+    "https://www.googleapis.com/auth/cloud-platform.read-only": {
+     "description": "MESSAGE UNDER CONSTRUCTION View your data across Google Cloud Platform services"
     },
     "https://www.googleapis.com/auth/compute": {
      "description": "View and manage your Google Compute Engine resources"
@@ -551,6 +554,7 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/cloud-platform.read-only",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly",
       "https://www.googleapis.com/auth/ndev.cloudman",
@@ -606,6 +610,7 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/cloud-platform.read-only",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly",
       "https://www.googleapis.com/auth/ndev.cloudman",
@@ -732,6 +737,7 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/cloud-platform.read-only",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly",
       "https://www.googleapis.com/auth/ndev.cloudman",
@@ -859,6 +865,7 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/cloud-platform.read-only",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly",
       "https://www.googleapis.com/auth/ndev.cloudman",
@@ -948,6 +955,7 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/cloud-platform.read-only",
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/compute.readonly",
       "https://www.googleapis.com/auth/ndev.cloudman",

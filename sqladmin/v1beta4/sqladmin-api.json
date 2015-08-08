@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/5soduF8PrPVjL_-niuaFSHDnPoQ\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/PiWRyQxPs-4Ktfq_grOnClEFQ5M\"",
  "discoveryVersion": "v1",
  "id": "sqladmin:v1beta4",
  "name": "sqladmin",
  "canonicalName": "SQL Admin",
  "version": "v1beta4",
- "revision": "20150330",
+ "revision": "20150806",
  "title": "Cloud SQL Administration API",
  "description": "API for Cloud SQL database instance management.",
  "ownerDomain": "google.com",
@@ -1155,6 +1155,17 @@
     }
    }
   },
+  "SslCertsSignRequest": {
+   "id": "SslCertsSignRequest",
+   "type": "object",
+   "description": "SslCerts sign request.",
+   "properties": {
+    "public_key": {
+     "type": "string",
+     "description": "PEM encoded public key to include in the signed certificate."
+    }
+   }
+  },
   "Tier": {
    "id": "Tier",
    "type": "object",
@@ -2297,6 +2308,40 @@
      ],
      "response": {
       "$ref": "SslCertsListResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/sqlservice.admin"
+     ]
+    },
+    "sign": {
+     "id": "sql.sslCerts.sign",
+     "path": "projects/{project}/instances/{instance}/certSign",
+     "httpMethod": "POST",
+     "description": "Generates a short-lived X509 certificate containing the provided public key and signed by a private key specific to the target instance. Users may use the certificate to authenticate as themselves when connecting to the database.",
+     "parameters": {
+      "instance": {
+       "type": "string",
+       "description": "Cloud SQL instance ID. This does not include the project ID.",
+       "required": true,
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID of the Cloud SQL project.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "instance"
+     ],
+     "request": {
+      "$ref": "SslCertsSignRequest"
+     },
+     "response": {
+      "$ref": "SslCert"
      },
      "scopes": [
       "https://www.googleapis.com/auth/cloud-platform",

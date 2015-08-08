@@ -62,6 +62,9 @@ const (
 	// View metadata for files in your Google Drive
 	DriveMetadataReadonlyScope = "https://www.googleapis.com/auth/drive.metadata.readonly"
 
+	// View the photos, videos and albums in your Google Photos
+	DrivePhotosReadonlyScope = "https://www.googleapis.com/auth/drive.photos.readonly"
+
 	// View the files in your Google Drive
 	DriveReadonlyScope = "https://www.googleapis.com/auth/drive.readonly"
 
@@ -254,10 +257,10 @@ type About struct {
 
 	// DomainSharingPolicy: The domain sharing policy for the current user.
 	// Possible values are:
-	// - ALLOWED
-	// - ALLOWED_WITH_WARNING
-	// - INCOMING_ONLY
-	// - DISALLOWED
+	// - allowed
+	// - allowedWithWarning
+	// - incomingOnly
+	// - disallowed
 	DomainSharingPolicy string `json:"domainSharingPolicy,omitempty"`
 
 	// Etag: The ETag of the item.
@@ -837,14 +840,15 @@ type File struct {
 	// ExportLinks: Links for exporting Google Docs to specific formats.
 	ExportLinks map[string]string `json:"exportLinks,omitempty"`
 
-	// FileExtension: The file extension used when downloading this file.
-	// This field is read only. To set the extension, include it in the
-	// title when creating the file. This is only populated for files with
-	// content stored in Drive.
+	// FileExtension: The final component of fullFileExtension with trailing
+	// text that does not appear to be part of the extension removed. This
+	// field is only populated for files with content stored in Drive; it is
+	// not populated for Google Docs or shortcut files.
 	FileExtension string `json:"fileExtension,omitempty"`
 
-	// FileSize: The size of the file in bytes. This is only populated for
-	// files with content stored in Drive.
+	// FileSize: The size of the file in bytes. This field is only populated
+	// for files with content stored in Drive; it is not populated for
+	// Google Docs or shortcut files.
 	FileSize int64 `json:"fileSize,omitempty,string"`
 
 	// FolderColorRgb: Folder color as an RGB hex string if the file is a
@@ -854,8 +858,17 @@ type File struct {
 	// palette.
 	FolderColorRgb string `json:"folderColorRgb,omitempty"`
 
-	// HeadRevisionId: The ID of the file's head revision. This will only be
-	// populated for files with content stored in Drive.
+	// FullFileExtension: The full file extension; extracted from the title.
+	// May contain multiple concatenated extensions, such as "tar.gz".
+	// Removing an extension from the title does not clear this field;
+	// however, changing the extension on the title does update this field.
+	// This field is only populated for files with content stored in Drive;
+	// it is not populated for Google Docs or shortcut files.
+	FullFileExtension string `json:"fullFileExtension,omitempty"`
+
+	// HeadRevisionId: The ID of the file's head revision. This field is
+	// only populated for files with content stored in Drive; it is not
+	// populated for Google Docs or shortcut files.
 	HeadRevisionId string `json:"headRevisionId,omitempty"`
 
 	// IconLink: A link to the file's icon.
@@ -893,8 +906,9 @@ type File struct {
 	// the user (formatted RFC 3339 timestamp).
 	MarkedViewedByMeDate string `json:"markedViewedByMeDate,omitempty"`
 
-	// Md5Checksum: An MD5 checksum for the content of this file. This is
-	// populated only for files with content stored in Drive.
+	// Md5Checksum: An MD5 checksum for the content of this file. This field
+	// is only populated for files with content stored in Drive; it is not
+	// populated for Google Docs or shortcut files.
 	Md5Checksum string `json:"md5Checksum,omitempty"`
 
 	// MimeType: The MIME type of the file. This is only mutable on update
@@ -920,8 +934,8 @@ type File struct {
 	// OriginalFilename: The original filename if the file was uploaded
 	// manually, or the original title if the file was inserted through the
 	// API. Note that renames of the title will not change the original
-	// filename. This will only be populated on files with content stored in
-	// Drive.
+	// filename. This field is only populated for files with content stored
+	// in Drive; it is not populated for Google Docs or shortcut files.
 	OriginalFilename string `json:"originalFilename,omitempty"`
 
 	// OwnedByMe: Whether the file is owned by the current user.
@@ -969,7 +983,7 @@ type File struct {
 	SharingUser *User `json:"sharingUser,omitempty"`
 
 	// Spaces: The list of spaces which contain the file. Supported values
-	// are 'drive' and 'appDataFolder'.
+	// are 'drive', 'appDataFolder' and 'photos'.
 	Spaces []string `json:"spaces,omitempty"`
 
 	// Thumbnail: Thumbnail for the file. Only accepted on upload and for
@@ -1166,6 +1180,20 @@ type FileList struct {
 
 	// SelfLink: A link back to this list.
 	SelfLink string `json:"selfLink,omitempty"`
+}
+
+// GeneratedIds: A list of generated IDs which can be provided in insert
+// requests
+type GeneratedIds struct {
+	// Ids: The IDs generated for the requesting user in the specified
+	// space.
+	Ids []string `json:"ids,omitempty"`
+
+	// Kind: This is always drive#generatedIds
+	Kind string `json:"kind,omitempty"`
+
+	// Space: The type of file that can be created with these IDs.
+	Space string `json:"space,omitempty"`
 }
 
 // ParentList: A list of a file's parents.
@@ -1568,6 +1596,7 @@ func (c *AboutGetCall) Do() (*About, error) {
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.metadata",
 	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
+	//     "https://www.googleapis.com/auth/drive.photos.readonly",
 	//     "https://www.googleapis.com/auth/drive.readonly"
 	//   ]
 	// }
@@ -1863,6 +1892,7 @@ func (c *ChangesGetCall) Do() (*Change, error) {
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.metadata",
 	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
+	//     "https://www.googleapis.com/auth/drive.photos.readonly",
 	//     "https://www.googleapis.com/auth/drive.readonly"
 	//   ]
 	// }
@@ -1913,7 +1943,8 @@ func (c *ChangesListCall) PageToken(pageToken string) *ChangesListCall {
 }
 
 // Spaces sets the optional parameter "spaces": A comma-separated list
-// of spaces to query. Supported values are 'drive' and 'appDataFolder'.
+// of spaces to query. Supported values are 'drive', 'appDataFolder' and
+// 'photos'.
 func (c *ChangesListCall) Spaces(spaces string) *ChangesListCall {
 	c.opt_["spaces"] = spaces
 	return c
@@ -2012,7 +2043,7 @@ func (c *ChangesListCall) Do() (*ChangeList, error) {
 	//       "type": "string"
 	//     },
 	//     "spaces": {
-	//       "description": "A comma-separated list of spaces to query. Supported values are 'drive' and 'appDataFolder'.",
+	//       "description": "A comma-separated list of spaces to query. Supported values are 'drive', 'appDataFolder' and 'photos'.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2034,6 +2065,7 @@ func (c *ChangesListCall) Do() (*ChangeList, error) {
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.metadata",
 	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
+	//     "https://www.googleapis.com/auth/drive.photos.readonly",
 	//     "https://www.googleapis.com/auth/drive.readonly"
 	//   ],
 	//   "supportsSubscription": true
@@ -2087,7 +2119,8 @@ func (c *ChangesWatchCall) PageToken(pageToken string) *ChangesWatchCall {
 }
 
 // Spaces sets the optional parameter "spaces": A comma-separated list
-// of spaces to query. Supported values are 'drive' and 'appDataFolder'.
+// of spaces to query. Supported values are 'drive', 'appDataFolder' and
+// 'photos'.
 func (c *ChangesWatchCall) Spaces(spaces string) *ChangesWatchCall {
 	c.opt_["spaces"] = spaces
 	return c
@@ -2192,7 +2225,7 @@ func (c *ChangesWatchCall) Do() (*Channel, error) {
 	//       "type": "string"
 	//     },
 	//     "spaces": {
-	//       "description": "A comma-separated list of spaces to query. Supported values are 'drive' and 'appDataFolder'.",
+	//       "description": "A comma-separated list of spaces to query. Supported values are 'drive', 'appDataFolder' and 'photos'.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2218,6 +2251,7 @@ func (c *ChangesWatchCall) Do() (*Channel, error) {
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.metadata",
 	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
+	//     "https://www.googleapis.com/auth/drive.photos.readonly",
 	//     "https://www.googleapis.com/auth/drive.readonly"
 	//   ],
 	//   "supportsSubscription": true
@@ -2295,6 +2329,7 @@ func (c *ChannelsStopCall) Do() error {
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.metadata",
 	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
+	//     "https://www.googleapis.com/auth/drive.photos.readonly",
 	//     "https://www.googleapis.com/auth/drive.readonly"
 	//   ]
 	// }
@@ -2474,6 +2509,7 @@ func (c *ChildrenGetCall) Do() (*ChildReference, error) {
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.metadata",
 	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
+	//     "https://www.googleapis.com/auth/drive.photos.readonly",
 	//     "https://www.googleapis.com/auth/drive.readonly"
 	//   ]
 	// }
@@ -2700,6 +2736,7 @@ func (c *ChildrenListCall) Do() (*ChildList, error) {
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.metadata",
 	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
+	//     "https://www.googleapis.com/auth/drive.photos.readonly",
 	//     "https://www.googleapis.com/auth/drive.readonly"
 	//   ]
 	// }
@@ -3559,7 +3596,8 @@ func (c *FilesCopyCall) Do() (*File, error) {
 	//     "https://www.googleapis.com/auth/drive",
 	//     "https://www.googleapis.com/auth/drive.appdata",
 	//     "https://www.googleapis.com/auth/drive.apps.readonly",
-	//     "https://www.googleapis.com/auth/drive.file"
+	//     "https://www.googleapis.com/auth/drive.file",
+	//     "https://www.googleapis.com/auth/drive.photos.readonly"
 	//   ]
 	// }
 
@@ -3694,6 +3732,112 @@ func (c *FilesEmptyTrashCall) Do() error {
 	//   "path": "files/trash",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive"
+	//   ]
+	// }
+
+}
+
+// method id "drive.files.generateIds":
+
+type FilesGenerateIdsCall struct {
+	s    *Service
+	opt_ map[string]interface{}
+}
+
+// GenerateIds: Generates a set of file IDs which can be provided in
+// insert requests.
+func (r *FilesService) GenerateIds() *FilesGenerateIdsCall {
+	c := &FilesGenerateIdsCall{s: r.s, opt_: make(map[string]interface{})}
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Maximum number
+// of IDs to return.
+func (c *FilesGenerateIdsCall) MaxResults(maxResults int64) *FilesGenerateIdsCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// Space sets the optional parameter "space": The space in which the IDs
+// can be used to create new files. Supported values are 'drive' and
+// 'appDataFolder'.
+func (c *FilesGenerateIdsCall) Space(space string) *FilesGenerateIdsCall {
+	c.opt_["space"] = space
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FilesGenerateIdsCall) Fields(s ...googleapi.Field) *FilesGenerateIdsCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *FilesGenerateIdsCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["space"]; ok {
+		params.Set("space", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "files/generateIds")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	return c.s.client.Do(req)
+}
+
+func (c *FilesGenerateIdsCall) Do() (*GeneratedIds, error) {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *GeneratedIds
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Generates a set of file IDs which can be provided in insert requests.",
+	//   "httpMethod": "GET",
+	//   "id": "drive.files.generateIds",
+	//   "parameters": {
+	//     "maxResults": {
+	//       "default": "10",
+	//       "description": "Maximum number of IDs to return.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "maximum": "1000",
+	//       "minimum": "1",
+	//       "type": "integer"
+	//     },
+	//     "space": {
+	//       "default": "drive",
+	//       "description": "The space in which the IDs can be used to create new files. Supported values are 'drive' and 'appDataFolder'.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "files/generateIds",
+	//   "response": {
+	//     "$ref": "GeneratedIds"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.appdata",
+	//     "https://www.googleapis.com/auth/drive.file"
 	//   ]
 	// }
 
@@ -3871,6 +4015,7 @@ func (c *FilesGetCall) Do() (*File, error) {
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.metadata",
 	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
+	//     "https://www.googleapis.com/auth/drive.photos.readonly",
 	//     "https://www.googleapis.com/auth/drive.readonly"
 	//   ],
 	//   "supportsMediaDownload": true,
@@ -4249,7 +4394,8 @@ func (c *FilesListCall) Q(q string) *FilesListCall {
 }
 
 // Spaces sets the optional parameter "spaces": A comma-separated list
-// of spaces to query. Supported values are 'drive' and 'appDataFolder'.
+// of spaces to query. Supported values are 'drive', 'appDataFolder' and
+// 'photos'.
 func (c *FilesListCall) Spaces(spaces string) *FilesListCall {
 	c.opt_["spaces"] = spaces
 	return c
@@ -4360,7 +4506,7 @@ func (c *FilesListCall) Do() (*FileList, error) {
 	//       "type": "string"
 	//     },
 	//     "spaces": {
-	//       "description": "A comma-separated list of spaces to query. Supported values are 'drive' and 'appDataFolder'.",
+	//       "description": "A comma-separated list of spaces to query. Supported values are 'drive', 'appDataFolder' and 'photos'.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -4376,6 +4522,7 @@ func (c *FilesListCall) Do() (*FileList, error) {
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.metadata",
 	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
+	//     "https://www.googleapis.com/auth/drive.photos.readonly",
 	//     "https://www.googleapis.com/auth/drive.readonly"
 	//   ]
 	// }
@@ -4808,7 +4955,8 @@ type FilesTrashCall struct {
 	opt_   map[string]interface{}
 }
 
-// Trash: Moves a file to the trash.
+// Trash: Moves a file to the trash. The currently authenticated user
+// must own the file.
 func (r *FilesService) Trash(fileId string) *FilesTrashCall {
 	c := &FilesTrashCall{s: r.s, opt_: make(map[string]interface{})}
 	c.fileId = fileId
@@ -4855,7 +5003,7 @@ func (c *FilesTrashCall) Do() (*File, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Moves a file to the trash.",
+	//   "description": "Moves a file to the trash. The currently authenticated user must own the file.",
 	//   "httpMethod": "POST",
 	//   "id": "drive.files.trash",
 	//   "parameterOrder": [
@@ -5575,6 +5723,7 @@ func (c *FilesWatchCall) Do() (*Channel, error) {
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.metadata",
 	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
+	//     "https://www.googleapis.com/auth/drive.photos.readonly",
 	//     "https://www.googleapis.com/auth/drive.readonly"
 	//   ],
 	//   "supportsMediaDownload": true,
@@ -5756,6 +5905,7 @@ func (c *ParentsGetCall) Do() (*ParentReference, error) {
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.metadata",
 	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
+	//     "https://www.googleapis.com/auth/drive.photos.readonly",
 	//     "https://www.googleapis.com/auth/drive.readonly"
 	//   ]
 	// }
@@ -5934,6 +6084,7 @@ func (c *ParentsListCall) Do() (*ParentList, error) {
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.metadata",
 	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
+	//     "https://www.googleapis.com/auth/drive.photos.readonly",
 	//     "https://www.googleapis.com/auth/drive.readonly"
 	//   ]
 	// }
@@ -6112,6 +6263,7 @@ func (c *PermissionsGetCall) Do() (*Permission, error) {
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.metadata",
 	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
+	//     "https://www.googleapis.com/auth/drive.photos.readonly",
 	//     "https://www.googleapis.com/auth/drive.readonly"
 	//   ]
 	// }
@@ -6198,6 +6350,7 @@ func (c *PermissionsGetIdForEmailCall) Do() (*PermissionId, error) {
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.metadata",
 	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
+	//     "https://www.googleapis.com/auth/drive.photos.readonly",
 	//     "https://www.googleapis.com/auth/drive.readonly"
 	//   ]
 	// }
@@ -6407,6 +6560,7 @@ func (c *PermissionsListCall) Do() (*PermissionList, error) {
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.metadata",
 	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
+	//     "https://www.googleapis.com/auth/drive.photos.readonly",
 	//     "https://www.googleapis.com/auth/drive.readonly"
 	//   ]
 	// }
@@ -6858,6 +7012,7 @@ func (c *PropertiesGetCall) Do() (*Property, error) {
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.metadata",
 	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
+	//     "https://www.googleapis.com/auth/drive.photos.readonly",
 	//     "https://www.googleapis.com/auth/drive.readonly"
 	//   ]
 	// }
@@ -7037,6 +7192,7 @@ func (c *PropertiesListCall) Do() (*PropertyList, error) {
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.metadata",
 	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
+	//     "https://www.googleapis.com/auth/drive.photos.readonly",
 	//     "https://www.googleapis.com/auth/drive.readonly"
 	//   ]
 	// }
@@ -8441,6 +8597,7 @@ func (c *RevisionsGetCall) Do() (*Revision, error) {
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.metadata",
 	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
+	//     "https://www.googleapis.com/auth/drive.photos.readonly",
 	//     "https://www.googleapis.com/auth/drive.readonly"
 	//   ]
 	// }
@@ -8526,6 +8683,7 @@ func (c *RevisionsListCall) Do() (*RevisionList, error) {
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.metadata",
 	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
+	//     "https://www.googleapis.com/auth/drive.photos.readonly",
 	//     "https://www.googleapis.com/auth/drive.readonly"
 	//   ]
 	// }

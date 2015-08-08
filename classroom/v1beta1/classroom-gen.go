@@ -386,7 +386,7 @@ func (c *CoursesCreateCall) Fields(s ...googleapi.Field) *CoursesCreateCall {
 	return c
 }
 
-func (c *CoursesCreateCall) Do() (*Course, error) {
+func (c *CoursesCreateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.course)
 	if err != nil {
@@ -394,7 +394,7 @@ func (c *CoursesCreateCall) Do() (*Course, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -404,7 +404,11 @@ func (c *CoursesCreateCall) Do() (*Course, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *CoursesCreateCall) Do() (*Course, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -461,10 +465,10 @@ func (c *CoursesDeleteCall) Fields(s ...googleapi.Field) *CoursesDeleteCall {
 	return c
 }
 
-func (c *CoursesDeleteCall) Do() (*Empty, error) {
+func (c *CoursesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -475,7 +479,11 @@ func (c *CoursesDeleteCall) Do() (*Empty, error) {
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *CoursesDeleteCall) Do() (*Empty, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -540,10 +548,10 @@ func (c *CoursesGetCall) Fields(s ...googleapi.Field) *CoursesGetCall {
 	return c
 }
 
-func (c *CoursesGetCall) Do() (*Course, error) {
+func (c *CoursesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -554,7 +562,11 @@ func (c *CoursesGetCall) Do() (*Course, error) {
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *CoursesGetCall) Do() (*Course, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -660,10 +672,10 @@ func (c *CoursesListCall) Fields(s ...googleapi.Field) *CoursesListCall {
 	return c
 }
 
-func (c *CoursesListCall) Do() (*ListCoursesResponse, error) {
+func (c *CoursesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["pageSize"]; ok {
 		params.Set("pageSize", fmt.Sprintf("%v", v))
 	}
@@ -684,7 +696,11 @@ func (c *CoursesListCall) Do() (*ListCoursesResponse, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *CoursesListCall) Do() (*ListCoursesResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -778,7 +794,7 @@ func (c *CoursesPatchCall) Fields(s ...googleapi.Field) *CoursesPatchCall {
 	return c
 }
 
-func (c *CoursesPatchCall) Do() (*Course, error) {
+func (c *CoursesPatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.course)
 	if err != nil {
@@ -786,7 +802,7 @@ func (c *CoursesPatchCall) Do() (*Course, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["updateMask"]; ok {
 		params.Set("updateMask", fmt.Sprintf("%v", v))
 	}
@@ -801,7 +817,11 @@ func (c *CoursesPatchCall) Do() (*Course, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *CoursesPatchCall) Do() (*Course, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -876,7 +896,7 @@ func (c *CoursesUpdateCall) Fields(s ...googleapi.Field) *CoursesUpdateCall {
 	return c
 }
 
-func (c *CoursesUpdateCall) Do() (*Course, error) {
+func (c *CoursesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.course)
 	if err != nil {
@@ -884,7 +904,7 @@ func (c *CoursesUpdateCall) Do() (*Course, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -896,7 +916,11 @@ func (c *CoursesUpdateCall) Do() (*Course, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *CoursesUpdateCall) Do() (*Course, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -966,7 +990,7 @@ func (c *CoursesAliasesCreateCall) Fields(s ...googleapi.Field) *CoursesAliasesC
 	return c
 }
 
-func (c *CoursesAliasesCreateCall) Do() (*CourseAlias, error) {
+func (c *CoursesAliasesCreateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.coursealias)
 	if err != nil {
@@ -974,7 +998,7 @@ func (c *CoursesAliasesCreateCall) Do() (*CourseAlias, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -986,7 +1010,11 @@ func (c *CoursesAliasesCreateCall) Do() (*CourseAlias, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *CoursesAliasesCreateCall) Do() (*CourseAlias, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1056,10 +1084,10 @@ func (c *CoursesAliasesDeleteCall) Fields(s ...googleapi.Field) *CoursesAliasesD
 	return c
 }
 
-func (c *CoursesAliasesDeleteCall) Do() (*Empty, error) {
+func (c *CoursesAliasesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1071,7 +1099,11 @@ func (c *CoursesAliasesDeleteCall) Do() (*Empty, error) {
 		"alias":    c.aliasid,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *CoursesAliasesDeleteCall) Do() (*Empty, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1164,10 +1196,10 @@ func (c *CoursesAliasesListCall) Fields(s ...googleapi.Field) *CoursesAliasesLis
 	return c
 }
 
-func (c *CoursesAliasesListCall) Do() (*ListCourseAliasesResponse, error) {
+func (c *CoursesAliasesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["pageSize"]; ok {
 		params.Set("pageSize", fmt.Sprintf("%v", v))
 	}
@@ -1184,7 +1216,11 @@ func (c *CoursesAliasesListCall) Do() (*ListCourseAliasesResponse, error) {
 		"courseId": c.courseId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *CoursesAliasesListCall) Do() (*ListCourseAliasesResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1275,7 +1311,7 @@ func (c *CoursesStudentsCreateCall) Fields(s ...googleapi.Field) *CoursesStudent
 	return c
 }
 
-func (c *CoursesStudentsCreateCall) Do() (*Student, error) {
+func (c *CoursesStudentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.student)
 	if err != nil {
@@ -1283,7 +1319,7 @@ func (c *CoursesStudentsCreateCall) Do() (*Student, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["enrollmentCode"]; ok {
 		params.Set("enrollmentCode", fmt.Sprintf("%v", v))
 	}
@@ -1298,7 +1334,11 @@ func (c *CoursesStudentsCreateCall) Do() (*Student, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *CoursesStudentsCreateCall) Do() (*Student, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1376,10 +1416,10 @@ func (c *CoursesStudentsDeleteCall) Fields(s ...googleapi.Field) *CoursesStudent
 	return c
 }
 
-func (c *CoursesStudentsDeleteCall) Do() (*Empty, error) {
+func (c *CoursesStudentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1391,7 +1431,11 @@ func (c *CoursesStudentsDeleteCall) Do() (*Empty, error) {
 		"userId":   c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *CoursesStudentsDeleteCall) Do() (*Empty, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1466,10 +1510,10 @@ func (c *CoursesStudentsGetCall) Fields(s ...googleapi.Field) *CoursesStudentsGe
 	return c
 }
 
-func (c *CoursesStudentsGetCall) Do() (*Student, error) {
+func (c *CoursesStudentsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1481,7 +1525,11 @@ func (c *CoursesStudentsGetCall) Do() (*Student, error) {
 		"userId":   c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *CoursesStudentsGetCall) Do() (*Student, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1575,10 +1623,10 @@ func (c *CoursesStudentsListCall) Fields(s ...googleapi.Field) *CoursesStudentsL
 	return c
 }
 
-func (c *CoursesStudentsListCall) Do() (*ListStudentsResponse, error) {
+func (c *CoursesStudentsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["pageSize"]; ok {
 		params.Set("pageSize", fmt.Sprintf("%v", v))
 	}
@@ -1595,7 +1643,11 @@ func (c *CoursesStudentsListCall) Do() (*ListStudentsResponse, error) {
 		"courseId": c.courseId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *CoursesStudentsListCall) Do() (*ListStudentsResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1677,7 +1729,7 @@ func (c *CoursesTeachersCreateCall) Fields(s ...googleapi.Field) *CoursesTeacher
 	return c
 }
 
-func (c *CoursesTeachersCreateCall) Do() (*Teacher, error) {
+func (c *CoursesTeachersCreateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.teacher)
 	if err != nil {
@@ -1685,7 +1737,7 @@ func (c *CoursesTeachersCreateCall) Do() (*Teacher, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1697,7 +1749,11 @@ func (c *CoursesTeachersCreateCall) Do() (*Teacher, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *CoursesTeachersCreateCall) Do() (*Teacher, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1771,10 +1827,10 @@ func (c *CoursesTeachersDeleteCall) Fields(s ...googleapi.Field) *CoursesTeacher
 	return c
 }
 
-func (c *CoursesTeachersDeleteCall) Do() (*Empty, error) {
+func (c *CoursesTeachersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1786,7 +1842,11 @@ func (c *CoursesTeachersDeleteCall) Do() (*Empty, error) {
 		"userId":   c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *CoursesTeachersDeleteCall) Do() (*Empty, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1861,10 +1921,10 @@ func (c *CoursesTeachersGetCall) Fields(s ...googleapi.Field) *CoursesTeachersGe
 	return c
 }
 
-func (c *CoursesTeachersGetCall) Do() (*Teacher, error) {
+func (c *CoursesTeachersGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1876,7 +1936,11 @@ func (c *CoursesTeachersGetCall) Do() (*Teacher, error) {
 		"userId":   c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *CoursesTeachersGetCall) Do() (*Teacher, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1970,10 +2034,10 @@ func (c *CoursesTeachersListCall) Fields(s ...googleapi.Field) *CoursesTeachersL
 	return c
 }
 
-func (c *CoursesTeachersListCall) Do() (*ListTeachersResponse, error) {
+func (c *CoursesTeachersListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["pageSize"]; ok {
 		params.Set("pageSize", fmt.Sprintf("%v", v))
 	}
@@ -1990,7 +2054,11 @@ func (c *CoursesTeachersListCall) Do() (*ListTeachersResponse, error) {
 		"courseId": c.courseId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *CoursesTeachersListCall) Do() (*ListTeachersResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2069,10 +2137,10 @@ func (c *UserProfilesGetCall) Fields(s ...googleapi.Field) *UserProfilesGetCall 
 	return c
 }
 
-func (c *UserProfilesGetCall) Do() (*UserProfile, error) {
+func (c *UserProfilesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -2083,7 +2151,11 @@ func (c *UserProfilesGetCall) Do() (*UserProfile, error) {
 		"userId": c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *UserProfilesGetCall) Do() (*UserProfile, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}

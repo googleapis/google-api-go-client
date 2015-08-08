@@ -727,7 +727,7 @@ func (c *TripsSearchCall) Fields(s ...googleapi.Field) *TripsSearchCall {
 	return c
 }
 
-func (c *TripsSearchCall) Do() (*TripsSearchResponse, error) {
+func (c *TripsSearchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.tripssearchrequest)
 	if err != nil {
@@ -735,7 +735,7 @@ func (c *TripsSearchCall) Do() (*TripsSearchResponse, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -745,7 +745,11 @@ func (c *TripsSearchCall) Do() (*TripsSearchResponse, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *TripsSearchCall) Do() (*TripsSearchResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}

@@ -228,6 +228,9 @@ type ActivityActor struct {
 
 	// Url: The link to the actor's Google profile.
 	Url string `json:"url,omitempty"`
+
+	// Verification: Verification status of actor.
+	Verification *ActivityActorVerification `json:"verification,omitempty"`
 }
 
 // ActivityActorImage: The image representation of the actor.
@@ -246,6 +249,12 @@ type ActivityActorName struct {
 
 	// GivenName: The given name ("first name") of the actor.
 	GivenName string `json:"givenName,omitempty"`
+}
+
+// ActivityActorVerification: Verification status of actor.
+type ActivityActorVerification struct {
+	// AdHocVerified: Verification for one-time or manual processes.
+	AdHocVerified string `json:"adHocVerified,omitempty"`
 }
 
 // ActivityObject: The object of this activity.
@@ -305,6 +314,9 @@ type ActivityObjectActor struct {
 
 	// Url: A link to the original actor's Google profile.
 	Url string `json:"url,omitempty"`
+
+	// Verification: Verification status of actor.
+	Verification *ActivityObjectActorVerification `json:"verification,omitempty"`
 }
 
 // ActivityObjectActorImage: The image representation of the original
@@ -312,6 +324,12 @@ type ActivityObjectActor struct {
 type ActivityObjectActorImage struct {
 	// Url: A URL that points to a thumbnail photo of the original actor.
 	Url string `json:"url,omitempty"`
+}
+
+// ActivityObjectActorVerification: Verification status of actor.
+type ActivityObjectActorVerification struct {
+	// AdHocVerified: Verification for one-time or manual processes.
+	AdHocVerified string `json:"adHocVerified,omitempty"`
 }
 
 type ActivityObjectAttachments struct {
@@ -542,6 +560,9 @@ type CommentActor struct {
 
 	// Url: A link to the Person resource for this actor.
 	Url string `json:"url,omitempty"`
+
+	// Verification: Verification status of actor.
+	Verification *CommentActorVerification `json:"verification,omitempty"`
 }
 
 // CommentActorImage: The image representation of this actor.
@@ -550,6 +571,12 @@ type CommentActorImage struct {
 	// crop it to a square, append the query string ?sz=x, where x is the
 	// dimension in pixels of each side.
 	Url string `json:"url,omitempty"`
+}
+
+// CommentActorVerification: Verification status of actor.
+type CommentActorVerification struct {
+	// AdHocVerified: Verification for one-time or manual processes.
+	AdHocVerified string `json:"adHocVerified,omitempty"`
 }
 
 type CommentInReplyTo struct {
@@ -1273,10 +1300,10 @@ func (c *ActivitiesGetCall) Fields(s ...googleapi.Field) *ActivitiesGetCall {
 	return c
 }
 
-func (c *ActivitiesGetCall) Do() (*Activity, error) {
+func (c *ActivitiesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1287,7 +1314,11 @@ func (c *ActivitiesGetCall) Do() (*Activity, error) {
 		"activityId": c.activityId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ActivitiesGetCall) Do() (*Activity, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1371,10 +1402,10 @@ func (c *ActivitiesListCall) Fields(s ...googleapi.Field) *ActivitiesListCall {
 	return c
 }
 
-func (c *ActivitiesListCall) Do() (*ActivityFeed, error) {
+func (c *ActivitiesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
@@ -1392,7 +1423,11 @@ func (c *ActivitiesListCall) Do() (*ActivityFeed, error) {
 		"collection": c.collection,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ActivitiesListCall) Do() (*ActivityFeed, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1522,10 +1557,10 @@ func (c *ActivitiesSearchCall) Fields(s ...googleapi.Field) *ActivitiesSearchCal
 	return c
 }
 
-func (c *ActivitiesSearchCall) Do() (*ActivityFeed, error) {
+func (c *ActivitiesSearchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	params.Set("query", fmt.Sprintf("%v", c.query))
 	if v, ok := c.opt_["language"]; ok {
 		params.Set("language", fmt.Sprintf("%v", v))
@@ -1547,7 +1582,11 @@ func (c *ActivitiesSearchCall) Do() (*ActivityFeed, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ActivitiesSearchCall) Do() (*ActivityFeed, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1644,10 +1683,10 @@ func (c *CommentsGetCall) Fields(s ...googleapi.Field) *CommentsGetCall {
 	return c
 }
 
-func (c *CommentsGetCall) Do() (*Comment, error) {
+func (c *CommentsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1658,7 +1697,11 @@ func (c *CommentsGetCall) Do() (*Comment, error) {
 		"commentId": c.commentId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *CommentsGetCall) Do() (*Comment, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1750,10 +1793,10 @@ func (c *CommentsListCall) Fields(s ...googleapi.Field) *CommentsListCall {
 	return c
 }
 
-func (c *CommentsListCall) Do() (*CommentFeed, error) {
+func (c *CommentsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
@@ -1773,7 +1816,11 @@ func (c *CommentsListCall) Do() (*CommentFeed, error) {
 		"activityId": c.activityId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *CommentsListCall) Do() (*CommentFeed, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1876,7 +1923,7 @@ func (c *MomentsInsertCall) Fields(s ...googleapi.Field) *MomentsInsertCall {
 	return c
 }
 
-func (c *MomentsInsertCall) Do() (*Moment, error) {
+func (c *MomentsInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.moment)
 	if err != nil {
@@ -1884,7 +1931,7 @@ func (c *MomentsInsertCall) Do() (*Moment, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["debug"]; ok {
 		params.Set("debug", fmt.Sprintf("%v", v))
 	}
@@ -1900,7 +1947,11 @@ func (c *MomentsInsertCall) Do() (*Moment, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *MomentsInsertCall) Do() (*Moment, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2018,10 +2069,10 @@ func (c *MomentsListCall) Fields(s ...googleapi.Field) *MomentsListCall {
 	return c
 }
 
-func (c *MomentsListCall) Do() (*MomentsFeed, error) {
+func (c *MomentsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
@@ -2045,7 +2096,11 @@ func (c *MomentsListCall) Do() (*MomentsFeed, error) {
 		"collection": c.collection,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *MomentsListCall) Do() (*MomentsFeed, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2122,75 +2177,6 @@ func (c *MomentsListCall) Do() (*MomentsFeed, error) {
 
 }
 
-// method id "plus.moments.remove":
-
-type MomentsRemoveCall struct {
-	s    *Service
-	id   string
-	opt_ map[string]interface{}
-}
-
-// Remove: Delete a moment.
-func (r *MomentsService) Remove(id string) *MomentsRemoveCall {
-	c := &MomentsRemoveCall{s: r.s, opt_: make(map[string]interface{})}
-	c.id = id
-	return c
-}
-
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *MomentsRemoveCall) Fields(s ...googleapi.Field) *MomentsRemoveCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
-	return c
-}
-
-func (c *MomentsRemoveCall) Do() error {
-	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", "json")
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "moments/{id}")
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("DELETE", urls, body)
-	googleapi.Expand(req.URL, map[string]string{
-		"id": c.id,
-	})
-	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
-	if err != nil {
-		return err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return err
-	}
-	return nil
-	// {
-	//   "description": "Delete a moment.",
-	//   "httpMethod": "DELETE",
-	//   "id": "plus.moments.remove",
-	//   "parameterOrder": [
-	//     "id"
-	//   ],
-	//   "parameters": {
-	//     "id": {
-	//       "description": "The ID of the moment to delete.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "moments/{id}",
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/plus.login"
-	//   ]
-	// }
-
-}
-
 // method id "plus.people.get":
 
 type PeopleGetCall struct {
@@ -2216,10 +2202,10 @@ func (c *PeopleGetCall) Fields(s ...googleapi.Field) *PeopleGetCall {
 	return c
 }
 
-func (c *PeopleGetCall) Do() (*Person, error) {
+func (c *PeopleGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -2230,7 +2216,11 @@ func (c *PeopleGetCall) Do() (*Person, error) {
 		"userId": c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *PeopleGetCall) Do() (*Person, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2326,10 +2316,10 @@ func (c *PeopleListCall) Fields(s ...googleapi.Field) *PeopleListCall {
 	return c
 }
 
-func (c *PeopleListCall) Do() (*PeopleFeed, error) {
+func (c *PeopleListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
@@ -2350,7 +2340,11 @@ func (c *PeopleListCall) Do() (*PeopleFeed, error) {
 		"collection": c.collection,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *PeopleListCall) Do() (*PeopleFeed, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2476,10 +2470,10 @@ func (c *PeopleListByActivityCall) Fields(s ...googleapi.Field) *PeopleListByAct
 	return c
 }
 
-func (c *PeopleListByActivityCall) Do() (*PeopleFeed, error) {
+func (c *PeopleListByActivityCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
@@ -2497,7 +2491,11 @@ func (c *PeopleListByActivityCall) Do() (*PeopleFeed, error) {
 		"collection": c.collection,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *PeopleListByActivityCall) Do() (*PeopleFeed, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2616,10 +2614,10 @@ func (c *PeopleSearchCall) Fields(s ...googleapi.Field) *PeopleSearchCall {
 	return c
 }
 
-func (c *PeopleSearchCall) Do() (*PeopleFeed, error) {
+func (c *PeopleSearchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	params.Set("query", fmt.Sprintf("%v", c.query))
 	if v, ok := c.opt_["language"]; ok {
 		params.Set("language", fmt.Sprintf("%v", v))
@@ -2638,7 +2636,11 @@ func (c *PeopleSearchCall) Do() (*PeopleFeed, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *PeopleSearchCall) Do() (*PeopleFeed, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}

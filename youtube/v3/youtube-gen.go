@@ -1538,7 +1538,7 @@ type CommentThreadSnippet struct {
 }
 
 // ContentRating: Ratings schemes. The country-specific ratings are
-// mostly for movies and shows. NEXT_ID: 65
+// mostly for movies and shows. NEXT_ID: 66
 type ContentRating struct {
 	// AcbRating: Rating system in Australia - Australian Classification
 	// Board
@@ -1725,6 +1725,19 @@ type ContentRating struct {
 	//   "cnaUnrated"
 	CnaRating string `json:"cnaRating,omitempty"`
 
+	// CncRating: Rating system in France - Commission de classification
+	// cinematographique
+	//
+	// Possible values:
+	//   "cnc10"
+	//   "cnc12"
+	//   "cnc16"
+	//   "cnc18"
+	//   "cncE"
+	//   "cncT"
+	//   "cncUnrated"
+	CncRating string `json:"cncRating,omitempty"`
+
 	// CsaRating: Rating system for France - Conseil sup�rieur de
 	// l?audiovisuel
 	//
@@ -1734,6 +1747,7 @@ type ContentRating struct {
 	//   "csa16"
 	//   "csa18"
 	//   "csaInterdiction"
+	//   "csaT"
 	//   "csaUnrated"
 	CsaRating string `json:"csaRating,omitempty"`
 
@@ -1849,7 +1863,7 @@ type ContentRating struct {
 	//   "fcoUnrated"
 	FcoRating string `json:"fcoRating,omitempty"`
 
-	// FmocRating: Rating system in France - French Minister of Culture
+	// FmocRating: Deprecated use CNC rating instead
 	//
 	// Possible values:
 	//   "fmoc10"
@@ -4630,7 +4644,7 @@ type VideoSnippet struct {
 	PublishedAt string `json:"publishedAt,omitempty"`
 
 	// Tags: A list of keyword tags associated with the video. Tags may
-	// contain spaces. This field is only visible to the video's uploader.
+	// contain spaces.
 	Tags []string `json:"tags,omitempty"`
 
 	// Thumbnails: A map of thumbnail images associated with the video. For
@@ -5188,14 +5202,6 @@ func (r *CaptionsService) Delete(id string) *CaptionsDeleteCall {
 	return c
 }
 
-// DebugProjectIdOverride sets the optional parameter
-// "debugProjectIdOverride": The debugProjectIdOverride parameter should
-// be used for mimicking a request for a certain project ID
-func (c *CaptionsDeleteCall) DebugProjectIdOverride(debugProjectIdOverride int64) *CaptionsDeleteCall {
-	c.opt_["debugProjectIdOverride"] = debugProjectIdOverride
-	return c
-}
-
 // OnBehalfOf sets the optional parameter "onBehalfOf": ID of the
 // Google+ Page for the channel that the request is be on behalf of
 func (c *CaptionsDeleteCall) OnBehalfOf(onBehalfOf string) *CaptionsDeleteCall {
@@ -5235,9 +5241,6 @@ func (c *CaptionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	params := make(url.Values)
 	params.Set("alt", alt)
 	params.Set("id", fmt.Sprintf("%v", c.id))
-	if v, ok := c.opt_["debugProjectIdOverride"]; ok {
-		params.Set("debugProjectIdOverride", fmt.Sprintf("%v", v))
-	}
 	if v, ok := c.opt_["onBehalfOf"]; ok {
 		params.Set("onBehalfOf", fmt.Sprintf("%v", v))
 	}
@@ -5273,12 +5276,6 @@ func (c *CaptionsDeleteCall) Do() error {
 	//     "id"
 	//   ],
 	//   "parameters": {
-	//     "debugProjectIdOverride": {
-	//       "description": "The debugProjectIdOverride parameter should be used for mimicking a request for a certain project ID",
-	//       "format": "int64",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "id": {
 	//       "description": "The id parameter identifies the caption track that is being deleted. The value is a caption track ID as identified by the id property in a caption resource.",
 	//       "location": "query",
@@ -5320,14 +5317,6 @@ type CaptionsDownloadCall struct {
 func (r *CaptionsService) Download(id string) *CaptionsDownloadCall {
 	c := &CaptionsDownloadCall{s: r.s, opt_: make(map[string]interface{})}
 	c.id = id
-	return c
-}
-
-// DebugProjectIdOverride sets the optional parameter
-// "debugProjectIdOverride": The debugProjectIdOverride parameter should
-// be used for mimicking a request for a certain project ID
-func (c *CaptionsDownloadCall) DebugProjectIdOverride(debugProjectIdOverride int64) *CaptionsDownloadCall {
-	c.opt_["debugProjectIdOverride"] = debugProjectIdOverride
 	return c
 }
 
@@ -5396,9 +5385,6 @@ func (c *CaptionsDownloadCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", alt)
-	if v, ok := c.opt_["debugProjectIdOverride"]; ok {
-		params.Set("debugProjectIdOverride", fmt.Sprintf("%v", v))
-	}
 	if v, ok := c.opt_["onBehalfOf"]; ok {
 		params.Set("onBehalfOf", fmt.Sprintf("%v", v))
 	}
@@ -5457,12 +5443,6 @@ func (c *CaptionsDownloadCall) Do() error {
 	//     "id"
 	//   ],
 	//   "parameters": {
-	//     "debugProjectIdOverride": {
-	//       "description": "The debugProjectIdOverride parameter should be used for mimicking a request for a certain project ID",
-	//       "format": "int64",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "id": {
 	//       "description": "The id parameter identifies the caption track that is being retrieved. The value is a caption track ID as identified by the id property in a caption resource.",
 	//       "location": "path",
@@ -5533,14 +5513,6 @@ func (r *CaptionsService) Insert(part string, caption *Caption) *CaptionsInsertC
 	c := &CaptionsInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.part = part
 	c.caption = caption
-	return c
-}
-
-// DebugProjectIdOverride sets the optional parameter
-// "debugProjectIdOverride": The debugProjectIdOverride parameter should
-// be used for mimicking a request for a certain project ID.
-func (c *CaptionsInsertCall) DebugProjectIdOverride(debugProjectIdOverride int64) *CaptionsInsertCall {
-	c.opt_["debugProjectIdOverride"] = debugProjectIdOverride
 	return c
 }
 
@@ -5630,9 +5602,6 @@ func (c *CaptionsInsertCall) doRequest(alt string) (*http.Response, error) {
 	params := make(url.Values)
 	params.Set("alt", alt)
 	params.Set("part", fmt.Sprintf("%v", c.part))
-	if v, ok := c.opt_["debugProjectIdOverride"]; ok {
-		params.Set("debugProjectIdOverride", fmt.Sprintf("%v", v))
-	}
 	if v, ok := c.opt_["onBehalfOf"]; ok {
 		params.Set("onBehalfOf", fmt.Sprintf("%v", v))
 	}
@@ -5736,12 +5705,6 @@ func (c *CaptionsInsertCall) Do() (*Caption, error) {
 	//     "part"
 	//   ],
 	//   "parameters": {
-	//     "debugProjectIdOverride": {
-	//       "description": "The debugProjectIdOverride parameter should be used for mimicking a request for a certain project ID.",
-	//       "format": "int64",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "onBehalfOf": {
 	//       "description": "ID of the Google+ Page for the channel that the request is be on behalf of",
 	//       "location": "query",
@@ -5800,14 +5763,6 @@ func (r *CaptionsService) List(part string, videoId string) *CaptionsListCall {
 	return c
 }
 
-// DebugProjectIdOverride sets the optional parameter
-// "debugProjectIdOverride": The debugProjectIdOverride parameter should
-// be used for mimicking a request for a certain project ID.
-func (c *CaptionsListCall) DebugProjectIdOverride(debugProjectIdOverride int64) *CaptionsListCall {
-	c.opt_["debugProjectIdOverride"] = debugProjectIdOverride
-	return c
-}
-
 // Id sets the optional parameter "id": The id parameter specifies a
 // comma-separated list of IDs that identify the caption resources that
 // should be retrieved. Each ID must identify a caption track associated
@@ -5857,9 +5812,6 @@ func (c *CaptionsListCall) doRequest(alt string) (*http.Response, error) {
 	params.Set("alt", alt)
 	params.Set("part", fmt.Sprintf("%v", c.part))
 	params.Set("videoId", fmt.Sprintf("%v", c.videoId))
-	if v, ok := c.opt_["debugProjectIdOverride"]; ok {
-		params.Set("debugProjectIdOverride", fmt.Sprintf("%v", v))
-	}
 	if v, ok := c.opt_["id"]; ok {
 		params.Set("id", fmt.Sprintf("%v", v))
 	}
@@ -5903,12 +5855,6 @@ func (c *CaptionsListCall) Do() (*CaptionListResponse, error) {
 	//     "videoId"
 	//   ],
 	//   "parameters": {
-	//     "debugProjectIdOverride": {
-	//       "description": "The debugProjectIdOverride parameter should be used for mimicking a request for a certain project ID.",
-	//       "format": "int64",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "id": {
 	//       "description": "The id parameter specifies a comma-separated list of IDs that identify the caption resources that should be retrieved. Each ID must identify a caption track associated with the specified video.",
 	//       "location": "query",
@@ -5970,14 +5916,6 @@ func (r *CaptionsService) Update(part string, caption *Caption) *CaptionsUpdateC
 	c := &CaptionsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.part = part
 	c.caption = caption
-	return c
-}
-
-// DebugProjectIdOverride sets the optional parameter
-// "debugProjectIdOverride": The debugProjectIdOverride parameter should
-// be used for mimicking a request for a certain project ID.
-func (c *CaptionsUpdateCall) DebugProjectIdOverride(debugProjectIdOverride int64) *CaptionsUpdateCall {
-	c.opt_["debugProjectIdOverride"] = debugProjectIdOverride
 	return c
 }
 
@@ -6066,9 +6004,6 @@ func (c *CaptionsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	params := make(url.Values)
 	params.Set("alt", alt)
 	params.Set("part", fmt.Sprintf("%v", c.part))
-	if v, ok := c.opt_["debugProjectIdOverride"]; ok {
-		params.Set("debugProjectIdOverride", fmt.Sprintf("%v", v))
-	}
 	if v, ok := c.opt_["onBehalfOf"]; ok {
 		params.Set("onBehalfOf", fmt.Sprintf("%v", v))
 	}
@@ -6172,12 +6107,6 @@ func (c *CaptionsUpdateCall) Do() (*Caption, error) {
 	//     "part"
 	//   ],
 	//   "parameters": {
-	//     "debugProjectIdOverride": {
-	//       "description": "The debugProjectIdOverride parameter should be used for mimicking a request for a certain project ID.",
-	//       "format": "int64",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "onBehalfOf": {
 	//       "description": "ID of the Google+ Page for the channel that the request is be on behalf of",
 	//       "location": "query",
@@ -9085,10 +9014,10 @@ func (c *LiveBroadcastsBindDirectCall) Fields(s ...googleapi.Field) *LiveBroadca
 	return c
 }
 
-func (c *LiveBroadcastsBindDirectCall) Do() (*LiveBroadcast, error) {
+func (c *LiveBroadcastsBindDirectCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	params.Set("id", fmt.Sprintf("%v", c.id))
 	params.Set("part", fmt.Sprintf("%v", c.part))
 	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
@@ -9108,7 +9037,11 @@ func (c *LiveBroadcastsBindDirectCall) Do() (*LiveBroadcast, error) {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *LiveBroadcastsBindDirectCall) Do() (*LiveBroadcast, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -14284,14 +14217,6 @@ func (c *VideosListCall) Chart(chart string) *VideosListCall {
 	return c
 }
 
-// DebugProjectIdOverride sets the optional parameter
-// "debugProjectIdOverride": The debugProjectIdOverride parameter should
-// be used for mimicking a request for a certain project ID
-func (c *VideosListCall) DebugProjectIdOverride(debugProjectIdOverride int64) *VideosListCall {
-	c.opt_["debugProjectIdOverride"] = debugProjectIdOverride
-	return c
-}
-
 // Hl sets the optional parameter "hl": The hl parameter instructs the
 // API to retrieve localized resource metadata for a specific
 // application language that the YouTube website supports. The parameter
@@ -14414,9 +14339,6 @@ func (c *VideosListCall) doRequest(alt string) (*http.Response, error) {
 	if v, ok := c.opt_["chart"]; ok {
 		params.Set("chart", fmt.Sprintf("%v", v))
 	}
-	if v, ok := c.opt_["debugProjectIdOverride"]; ok {
-		params.Set("debugProjectIdOverride", fmt.Sprintf("%v", v))
-	}
 	if v, ok := c.opt_["hl"]; ok {
 		params.Set("hl", fmt.Sprintf("%v", v))
 	}
@@ -14485,12 +14407,6 @@ func (c *VideosListCall) Do() (*VideoListResponse, error) {
 	//       "enumDescriptions": [
 	//         "Return the most popular videos for the specified content region and video category."
 	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "debugProjectIdOverride": {
-	//       "description": "The debugProjectIdOverride parameter should be used for mimicking a request for a certain project ID",
-	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

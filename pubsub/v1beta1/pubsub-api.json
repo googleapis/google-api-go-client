@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/GpjpDLvjZHTVKwwIavBHfgQL16c\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/WREiw9MY3aTruirkUtn50QBMhss\"",
  "discoveryVersion": "v1",
  "id": "pubsub:v1beta1",
  "name": "pubsub",
  "version": "v1beta1",
- "revision": "20150326",
+ "revision": "20150813",
  "title": "Google Cloud Pub/Sub API",
  "description": "Provides reliable, many-to-many, asynchronous messaging between applications.",
  "ownerDomain": "google.com",
@@ -172,7 +172,7 @@
     },
     "ackIds": {
      "type": "array",
-     "description": "List of acknowledgment IDs. Either this field or ack_id should be populated, not both. TODO(handrei): mark the above field deprecated once it's not used internally.",
+     "description": "List of acknowledgment IDs. Either this field or ack_id should be populated, not both.",
      "items": {
       "type": "string"
      }

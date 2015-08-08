@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/Oe1OM8HbjTHLlKoRM5huCxnk-hs\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/RNf67Qs-KGgGShWEZ1M0BbfJUQg\"",
  "discoveryVersion": "v1",
  "id": "coordinate:v1",
  "name": "coordinate",
  "version": "v1",
- "revision": "20141215",
+ "revision": "20150811",
  "title": "Google Maps Coordinate API",
  "description": "Lets you view and manage jobs in a Coordinate team.",
  "ownerDomain": "google.com",
@@ -692,6 +692,11 @@
        "type": "string",
        "description": "Minimum time a job was modified in milliseconds since epoch.",
        "format": "uint64",
+       "location": "query"
+      },
+      "omitJobChanges": {
+       "type": "boolean",
+       "description": "Whether to omit detail job history information.",
        "location": "query"
       },
       "pageToken": {

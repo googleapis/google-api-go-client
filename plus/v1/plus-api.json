@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/yIlgMiAhuGzU5ET3NtXZn6hNffI\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/EYDzxeZQC81bAZfRVFhODjUBwZ8\"",
  "discoveryVersion": "v1",
  "id": "plus:v1",
  "name": "plus",
  "version": "v1",
- "revision": "20150105",
+ "revision": "20150805",
  "title": "Google+ API",
  "description": "The Google+ API enables developers to build on top of the Google+ platform.",
  "ownerDomain": "google.com",
@@ -154,6 +154,16 @@
       "url": {
        "type": "string",
        "description": "The link to the actor's Google profile."
+      },
+      "verification": {
+       "type": "object",
+       "description": "Verification status of actor.",
+       "properties": {
+        "adHocVerified": {
+         "type": "string",
+         "description": "Verification for one-time or manual processes."
+        }
+       }
       }
      }
     },
@@ -219,6 +229,16 @@
         "url": {
          "type": "string",
          "description": "A link to the original actor's Google profile."
+        },
+        "verification": {
+         "type": "object",
+         "description": "Verification status of actor.",
+         "properties": {
+          "adHocVerified": {
+           "type": "string",
+           "description": "Verification for one-time or manual processes."
+          }
+         }
         }
        }
       },
@@ -543,6 +563,16 @@
       "url": {
        "type": "string",
        "description": "A link to the Person resource for this actor."
+      },
+      "verification": {
+       "type": "object",
+       "description": "Verification status of actor.",
+       "properties": {
+        "adHocVerified": {
+         "type": "string",
+         "description": "Verification for one-time or manual processes."
+        }
+       }
       }
      }
     },
@@ -1742,26 +1772,6 @@
      "scopes": [
       "https://www.googleapis.com/auth/plus.login",
       "https://www.googleapis.com/auth/plus.me"
-     ]
-    },
-    "remove": {
-     "id": "plus.moments.remove",
-     "path": "moments/{id}",
-     "httpMethod": "DELETE",
-     "description": "Delete a moment.",
-     "parameters": {
-      "id": {
-       "type": "string",
-       "description": "The ID of the moment to delete.",
-       "required": true,
-       "location": "path"
-      }
-     },
-     "parameterOrder": [
-      "id"
-     ],
-     "scopes": [
-      "https://www.googleapis.com/auth/plus.login"
      ]
     }
    }

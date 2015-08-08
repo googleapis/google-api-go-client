@@ -146,66 +146,6 @@ type Binding struct {
 	Role string `json:"role,omitempty"`
 }
 
-// CloudAuditOptions: Write a Cloud Audit log
-type CloudAuditOptions struct {
-}
-
-// Condition: A condition to be met.
-type Condition struct {
-	// Iam: Trusted attributes supplied by the IAM system.
-	//
-	// Possible values:
-	//   "NO_ATTR"
-	//   "AUTHORITY"
-	//   "ATTRIBUTION"
-	Iam string `json:"iam,omitempty"`
-
-	// Op: An operator to apply the subject with.
-	//
-	// Possible values:
-	//   "NO_OP"
-	//   "EQUALS"
-	//   "NOT_EQUALS"
-	//   "IN"
-	//   "NOT_IN"
-	//   "DISCHARGED"
-	Op string `json:"op,omitempty"`
-
-	// Svc: Trusted attributes discharged by the service.
-	Svc string `json:"svc,omitempty"`
-
-	// Sys: Trusted attributes supplied by any service that owns resources
-	// and uses the IAM system for access control.
-	//
-	// Possible values:
-	//   "NO_ATTR"
-	//   "REGION"
-	//   "SERVICE"
-	//   "NAME"
-	//   "IP"
-	Sys string `json:"sys,omitempty"`
-
-	// Value: The object of the condition. Exactly one of these must be set.
-	Value string `json:"value,omitempty"`
-
-	// Values: The objects of the condition. This is mutually exclusive with
-	// 'value'.
-	Values []string `json:"values,omitempty"`
-}
-
-// CounterOptions: Options for counters
-type CounterOptions struct {
-	// Field: The field value to attribute.
-	Field string `json:"field,omitempty"`
-
-	// Metric: The metric to update.
-	Metric string `json:"metric,omitempty"`
-}
-
-// DataAccessOptions: Write a Data Access (Gin) log
-type DataAccessOptions struct {
-}
-
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
@@ -247,30 +187,6 @@ type ListTopicsResponse struct {
 
 	// Topics: The resulting topics.
 	Topics []*Topic `json:"topics,omitempty"`
-}
-
-// LogConfig: Specifies what kind of log the caller must write Increment
-// a streamz counter with the specified metric and field names. Metric
-// names should start with a '/', generally be lowercase-only, and end
-// in "_count". Field names should not contain an initial slash. The
-// actual exported metric names will have "/iam/policy" prepended. Field
-// names correspond to IAM request parameters and field values are their
-// respective values. At present only "iam_principal", corresponding to
-// IAMContext.principal, is supported. Examples: counter { metric:
-// "/debug_access_count" field: "iam_principal" } ==> increment counter
-// /iam/policy/backend_debug_access_count {iam_principal=[value of
-// IAMContext.principal]} At this time we do not support: * multiple
-// field names (though this may be supported in the future) *
-// decrementing the counter * incrementing it by anything other than 1
-type LogConfig struct {
-	// CloudAudit: Cloud audit options.
-	CloudAudit *CloudAuditOptions `json:"cloudAudit,omitempty"`
-
-	// Counter: Counter options.
-	Counter *CounterOptions `json:"counter,omitempty"`
-
-	// DataAccess: Data access options.
-	DataAccess *DataAccessOptions `json:"dataAccess,omitempty"`
 }
 
 // ModifyAckDeadlineRequest: Request for the ModifyAckDeadline method.
@@ -321,8 +237,6 @@ type Policy struct {
 	// Etag: Can be used to perform a read-modify-write.
 	Etag string `json:"etag,omitempty"`
 
-	Rules []*Rule `json:"rules,omitempty"`
-
 	// Version: The policy language version. The version of the policy is
 	// represented by the etag. The default version is 0.
 	Version int64 `json:"version,omitempty"`
@@ -342,7 +256,9 @@ type PublishResponse struct {
 	MessageIds []string `json:"messageIds,omitempty"`
 }
 
-// PubsubMessage: A message data and its attributes.
+// PubsubMessage: A message data and its attributes. The message payload
+// must not be empty; it must contain either a non-empty data field, or
+// at least one attribute.
 type PubsubMessage struct {
 	// Attributes: Optional attributes for this message.
 	Attributes map[string]string `json:"attributes,omitempty"`
@@ -418,44 +334,6 @@ type ReceivedMessage struct {
 	Message *PubsubMessage `json:"message,omitempty"`
 }
 
-// Rule: A rule to be applied in a Policy.
-type Rule struct {
-	// Action: Required
-	//
-	// Possible values:
-	//   "NO_ACTION"
-	//   "ALLOW"
-	//   "ALLOW_WITH_LOG"
-	//   "DENY"
-	//   "DENY_WITH_LOG"
-	//   "LOG"
-	Action string `json:"action,omitempty"`
-
-	// Conditions: Additional restrictions that must be met
-	Conditions []*Condition `json:"conditions,omitempty"`
-
-	// Description: Human-readable description of the rule.
-	Description string `json:"description,omitempty"`
-
-	// In: The rule matches if the PRINCIPAL/AUTHORITY_SELECTOR is in this
-	// set of entries.
-	In []string `json:"in,omitempty"`
-
-	// LogConfig: The config returned to callers of tech.iam.IAM.CheckPolicy
-	// for any entries that match the LOG action.
-	LogConfig []*LogConfig `json:"logConfig,omitempty"`
-
-	// NotIn: The rule matches if the PRINCIPAL/AUTHORITY_SELECTOR is not in
-	// this set of entries. The formation for in and not_in entries is the
-	// same as members in a Binding above.
-	NotIn []string `json:"notIn,omitempty"`
-
-	// Permissions: A permission is a string of form '..' (e.g.,
-	// 'storage.buckets.list'). A value of '*' matches all permissions, and
-	// a verb part of '*' (e.g., 'storage.buckets.*') matches all verbs.
-	Permissions []string `json:"permissions,omitempty"`
-}
-
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
 type SetIamPolicyRequest struct {
 	// Policy: REQUIRED: The complete policy to be applied to the
@@ -473,21 +351,20 @@ type Subscription struct {
 	// and before the message is acknowledged, it is an outstanding message
 	// and will not be delivered again during that time (on a best-effort
 	// basis). For pull delivery this value is used as the initial value for
-	// the ack deadline. It may be overridden for each message using its
-	// corresponding ack_id by calling ModifyAckDeadline. For push delivery,
+	// the ack deadline. To override this value for a given message, call
+	// ModifyAckDeadline with the corresponding ack_id. For push delivery,
 	// this value is also used to set the request timeout for the call to
 	// the push endpoint. If the subscriber never acknowledges the message,
 	// the Pub/Sub system will eventually redeliver the message. If this
-	// parameter is not set, the default value of 60 seconds is used.
+	// parameter is not set, the default value of 10 seconds is used.
 	AckDeadlineSeconds int64 `json:"ackDeadlineSeconds,omitempty"`
 
 	// Name: The name of the subscription. It must have the format
-	// "projects/{project}/subscriptions/{subscription}" for Google Cloud
-	// Pub/Sub API v1 and v1beta2. {subscription} must start with a letter,
-	// and contain only letters ([A-Za-z]), numbers ([0-9], dashes (-),
-	// underscores (_), periods (.), tildes (~), plus (+) or percent signs
-	// (%). It must be between 3 and 255 characters in length, and it must
-	// not start with "goog".
+	// "projects/{project}/subscriptions/{subscription}". `{subscription}`
+	// must start with a letter, and contain only letters (`[A-Za-z]`),
+	// numbers (`[0-9]`), dashes (`-`), underscores (`_`), periods (`.`),
+	// tildes (`~`), plus (`+`) or percent signs (`%`). It must be between 3
+	// and 255 characters in length, and it must not start with "goog".
 	Name string `json:"name,omitempty"`
 
 	// PushConfig: If push delivery is used with this subscription, this
@@ -521,12 +398,11 @@ type TestIamPermissionsResponse struct {
 // Topic: A topic resource.
 type Topic struct {
 	// Name: The name of the topic. It must have the format
-	// "projects/{project}/topics/{topic}" for Google Cloud Pub/Sub API v1
-	// and v1beta2. {topic} must start with a letter, and contain only
-	// letters ([A-Za-z]), numbers ([0-9], dashes (-), underscores (_),
-	// periods (.), tildes (~), plus (+) or percent signs (%). It must be
-	// between 3 and 255 characters in length, and it must not start with
-	// "goog".
+	// "projects/{project}/topics/{topic}". `{topic}` must start with a
+	// letter, and contain only letters (`[A-Za-z]`), numbers (`[0-9]`),
+	// dashes (`-`), underscores (`_`), periods (`.`), tildes (`~`), plus
+	// (`+`) or percent signs (`%`). It must be between 3 and 255 characters
+	// in length, and it must not start with "goog".
 	Name string `json:"name,omitempty"`
 }
 
@@ -560,7 +436,7 @@ func (c *ProjectsSubscriptionsAcknowledgeCall) Fields(s ...googleapi.Field) *Pro
 	return c
 }
 
-func (c *ProjectsSubscriptionsAcknowledgeCall) Do() (*Empty, error) {
+func (c *ProjectsSubscriptionsAcknowledgeCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.acknowledgerequest)
 	if err != nil {
@@ -568,7 +444,7 @@ func (c *ProjectsSubscriptionsAcknowledgeCall) Do() (*Empty, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -580,7 +456,11 @@ func (c *ProjectsSubscriptionsAcknowledgeCall) Do() (*Empty, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ProjectsSubscriptionsAcknowledgeCall) Do() (*Empty, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -654,7 +534,7 @@ func (c *ProjectsSubscriptionsCreateCall) Fields(s ...googleapi.Field) *Projects
 	return c
 }
 
-func (c *ProjectsSubscriptionsCreateCall) Do() (*Subscription, error) {
+func (c *ProjectsSubscriptionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.subscription)
 	if err != nil {
@@ -662,7 +542,7 @@ func (c *ProjectsSubscriptionsCreateCall) Do() (*Subscription, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -674,7 +554,11 @@ func (c *ProjectsSubscriptionsCreateCall) Do() (*Subscription, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ProjectsSubscriptionsCreateCall) Do() (*Subscription, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -696,7 +580,7 @@ func (c *ProjectsSubscriptionsCreateCall) Do() (*Subscription, error) {
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the subscription. It must have the format \"projects/{project}/subscriptions/{subscription}\" for Google Cloud Pub/Sub API v1 and v1beta2. {subscription} must start with a letter, and contain only letters ([A-Za-z]), numbers ([0-9], dashes (-), underscores (_), periods (.), tildes (~), plus (+) or percent signs (%). It must be between 3 and 255 characters in length, and it must not start with \"goog\".",
+	//       "description": "The name of the subscription. It must have the format `\"projects/{project}/subscriptions/{subscription}\"`. `{subscription}` must start with a letter, and contain only letters (`[A-Za-z]`), numbers (`[0-9]`), dashes (`-`), underscores (`_`), periods (`.`), tildes (`~`), plus (`+`) or percent signs (`%`). It must be between 3 and 255 characters in length, and it must not start with `\"goog\"`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]*/subscriptions/[^/]*$",
 	//       "required": true,
@@ -746,10 +630,10 @@ func (c *ProjectsSubscriptionsDeleteCall) Fields(s ...googleapi.Field) *Projects
 	return c
 }
 
-func (c *ProjectsSubscriptionsDeleteCall) Do() (*Empty, error) {
+func (c *ProjectsSubscriptionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -760,7 +644,11 @@ func (c *ProjectsSubscriptionsDeleteCall) Do() (*Empty, error) {
 		"subscription": c.subscription,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ProjectsSubscriptionsDeleteCall) Do() (*Empty, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -824,10 +712,10 @@ func (c *ProjectsSubscriptionsGetCall) Fields(s ...googleapi.Field) *ProjectsSub
 	return c
 }
 
-func (c *ProjectsSubscriptionsGetCall) Do() (*Subscription, error) {
+func (c *ProjectsSubscriptionsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -838,7 +726,11 @@ func (c *ProjectsSubscriptionsGetCall) Do() (*Subscription, error) {
 		"subscription": c.subscription,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ProjectsSubscriptionsGetCall) Do() (*Subscription, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -903,10 +795,10 @@ func (c *ProjectsSubscriptionsGetIamPolicyCall) Fields(s ...googleapi.Field) *Pr
 	return c
 }
 
-func (c *ProjectsSubscriptionsGetIamPolicyCall) Do() (*Policy, error) {
+func (c *ProjectsSubscriptionsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -917,7 +809,11 @@ func (c *ProjectsSubscriptionsGetIamPolicyCall) Do() (*Policy, error) {
 		"resource": c.resource,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ProjectsSubscriptionsGetIamPolicyCall) Do() (*Policy, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -997,10 +893,10 @@ func (c *ProjectsSubscriptionsListCall) Fields(s ...googleapi.Field) *ProjectsSu
 	return c
 }
 
-func (c *ProjectsSubscriptionsListCall) Do() (*ListSubscriptionsResponse, error) {
+func (c *ProjectsSubscriptionsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["pageSize"]; ok {
 		params.Set("pageSize", fmt.Sprintf("%v", v))
 	}
@@ -1017,7 +913,11 @@ func (c *ProjectsSubscriptionsListCall) Do() (*ListSubscriptionsResponse, error)
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ProjectsSubscriptionsListCall) Do() (*ListSubscriptionsResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1097,7 +997,7 @@ func (c *ProjectsSubscriptionsModifyAckDeadlineCall) Fields(s ...googleapi.Field
 	return c
 }
 
-func (c *ProjectsSubscriptionsModifyAckDeadlineCall) Do() (*Empty, error) {
+func (c *ProjectsSubscriptionsModifyAckDeadlineCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.modifyackdeadlinerequest)
 	if err != nil {
@@ -1105,7 +1005,7 @@ func (c *ProjectsSubscriptionsModifyAckDeadlineCall) Do() (*Empty, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1117,7 +1017,11 @@ func (c *ProjectsSubscriptionsModifyAckDeadlineCall) Do() (*Empty, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ProjectsSubscriptionsModifyAckDeadlineCall) Do() (*Empty, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1191,7 +1095,7 @@ func (c *ProjectsSubscriptionsModifyPushConfigCall) Fields(s ...googleapi.Field)
 	return c
 }
 
-func (c *ProjectsSubscriptionsModifyPushConfigCall) Do() (*Empty, error) {
+func (c *ProjectsSubscriptionsModifyPushConfigCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.modifypushconfigrequest)
 	if err != nil {
@@ -1199,7 +1103,7 @@ func (c *ProjectsSubscriptionsModifyPushConfigCall) Do() (*Empty, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1211,7 +1115,11 @@ func (c *ProjectsSubscriptionsModifyPushConfigCall) Do() (*Empty, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ProjectsSubscriptionsModifyPushConfigCall) Do() (*Empty, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1283,7 +1191,7 @@ func (c *ProjectsSubscriptionsPullCall) Fields(s ...googleapi.Field) *ProjectsSu
 	return c
 }
 
-func (c *ProjectsSubscriptionsPullCall) Do() (*PullResponse, error) {
+func (c *ProjectsSubscriptionsPullCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.pullrequest)
 	if err != nil {
@@ -1291,7 +1199,7 @@ func (c *ProjectsSubscriptionsPullCall) Do() (*PullResponse, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1303,7 +1211,11 @@ func (c *ProjectsSubscriptionsPullCall) Do() (*PullResponse, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ProjectsSubscriptionsPullCall) Do() (*PullResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1373,7 +1285,7 @@ func (c *ProjectsSubscriptionsSetIamPolicyCall) Fields(s ...googleapi.Field) *Pr
 	return c
 }
 
-func (c *ProjectsSubscriptionsSetIamPolicyCall) Do() (*Policy, error) {
+func (c *ProjectsSubscriptionsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.setiampolicyrequest)
 	if err != nil {
@@ -1381,7 +1293,7 @@ func (c *ProjectsSubscriptionsSetIamPolicyCall) Do() (*Policy, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1393,7 +1305,11 @@ func (c *ProjectsSubscriptionsSetIamPolicyCall) Do() (*Policy, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ProjectsSubscriptionsSetIamPolicyCall) Do() (*Policy, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1463,7 +1379,7 @@ func (c *ProjectsSubscriptionsTestIamPermissionsCall) Fields(s ...googleapi.Fiel
 	return c
 }
 
-func (c *ProjectsSubscriptionsTestIamPermissionsCall) Do() (*TestIamPermissionsResponse, error) {
+func (c *ProjectsSubscriptionsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.testiampermissionsrequest)
 	if err != nil {
@@ -1471,7 +1387,7 @@ func (c *ProjectsSubscriptionsTestIamPermissionsCall) Do() (*TestIamPermissionsR
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1483,7 +1399,11 @@ func (c *ProjectsSubscriptionsTestIamPermissionsCall) Do() (*TestIamPermissionsR
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ProjectsSubscriptionsTestIamPermissionsCall) Do() (*TestIamPermissionsResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1552,7 +1472,7 @@ func (c *ProjectsTopicsCreateCall) Fields(s ...googleapi.Field) *ProjectsTopicsC
 	return c
 }
 
-func (c *ProjectsTopicsCreateCall) Do() (*Topic, error) {
+func (c *ProjectsTopicsCreateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.topic)
 	if err != nil {
@@ -1560,7 +1480,7 @@ func (c *ProjectsTopicsCreateCall) Do() (*Topic, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1572,7 +1492,11 @@ func (c *ProjectsTopicsCreateCall) Do() (*Topic, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ProjectsTopicsCreateCall) Do() (*Topic, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1594,7 +1518,7 @@ func (c *ProjectsTopicsCreateCall) Do() (*Topic, error) {
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the topic. It must have the format \"projects/{project}/topics/{topic}\" for Google Cloud Pub/Sub API v1 and v1beta2. {topic} must start with a letter, and contain only letters ([A-Za-z]), numbers ([0-9], dashes (-), underscores (_), periods (.), tildes (~), plus (+) or percent signs (%). It must be between 3 and 255 characters in length, and it must not start with \"goog\".",
+	//       "description": "The name of the topic. It must have the format `\"projects/{project}/topics/{topic}\"`. `{topic}` must start with a letter, and contain only letters (`[A-Za-z]`), numbers (`[0-9]`), dashes (`-`), underscores (`_`), periods (`.`), tildes (`~`), plus (`+`) or percent signs (`%`). It must be between 3 and 255 characters in length, and it must not start with `\"goog\"`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]*/topics/[^/]*$",
 	//       "required": true,
@@ -1644,10 +1568,10 @@ func (c *ProjectsTopicsDeleteCall) Fields(s ...googleapi.Field) *ProjectsTopicsD
 	return c
 }
 
-func (c *ProjectsTopicsDeleteCall) Do() (*Empty, error) {
+func (c *ProjectsTopicsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1658,7 +1582,11 @@ func (c *ProjectsTopicsDeleteCall) Do() (*Empty, error) {
 		"topic": c.topic,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ProjectsTopicsDeleteCall) Do() (*Empty, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1722,10 +1650,10 @@ func (c *ProjectsTopicsGetCall) Fields(s ...googleapi.Field) *ProjectsTopicsGetC
 	return c
 }
 
-func (c *ProjectsTopicsGetCall) Do() (*Topic, error) {
+func (c *ProjectsTopicsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1736,7 +1664,11 @@ func (c *ProjectsTopicsGetCall) Do() (*Topic, error) {
 		"topic": c.topic,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ProjectsTopicsGetCall) Do() (*Topic, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1801,10 +1733,10 @@ func (c *ProjectsTopicsGetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsT
 	return c
 }
 
-func (c *ProjectsTopicsGetIamPolicyCall) Do() (*Policy, error) {
+func (c *ProjectsTopicsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -1815,7 +1747,11 @@ func (c *ProjectsTopicsGetIamPolicyCall) Do() (*Policy, error) {
 		"resource": c.resource,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ProjectsTopicsGetIamPolicyCall) Do() (*Policy, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1895,10 +1831,10 @@ func (c *ProjectsTopicsListCall) Fields(s ...googleapi.Field) *ProjectsTopicsLis
 	return c
 }
 
-func (c *ProjectsTopicsListCall) Do() (*ListTopicsResponse, error) {
+func (c *ProjectsTopicsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["pageSize"]; ok {
 		params.Set("pageSize", fmt.Sprintf("%v", v))
 	}
@@ -1915,7 +1851,11 @@ func (c *ProjectsTopicsListCall) Do() (*ListTopicsResponse, error) {
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ProjectsTopicsListCall) Do() (*ListTopicsResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -1977,7 +1917,9 @@ type ProjectsTopicsPublishCall struct {
 }
 
 // Publish: Adds one or more messages to the topic. Returns NOT_FOUND if
-// the topic does not exist.
+// the topic does not exist. The message payload must not be empty; it
+// must contain either a non-empty data field, or at least one
+// attribute.
 func (r *ProjectsTopicsService) Publish(topic string, publishrequest *PublishRequest) *ProjectsTopicsPublishCall {
 	c := &ProjectsTopicsPublishCall{s: r.s, opt_: make(map[string]interface{})}
 	c.topic = topic
@@ -1993,7 +1935,7 @@ func (c *ProjectsTopicsPublishCall) Fields(s ...googleapi.Field) *ProjectsTopics
 	return c
 }
 
-func (c *ProjectsTopicsPublishCall) Do() (*PublishResponse, error) {
+func (c *ProjectsTopicsPublishCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.publishrequest)
 	if err != nil {
@@ -2001,7 +1943,7 @@ func (c *ProjectsTopicsPublishCall) Do() (*PublishResponse, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -2013,7 +1955,11 @@ func (c *ProjectsTopicsPublishCall) Do() (*PublishResponse, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ProjectsTopicsPublishCall) Do() (*PublishResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2027,7 +1973,7 @@ func (c *ProjectsTopicsPublishCall) Do() (*PublishResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Adds one or more messages to the topic. Returns NOT_FOUND if the topic does not exist.",
+	//   "description": "Adds one or more messages to the topic. Returns NOT_FOUND if the topic does not exist. The message payload must not be empty; it must contain either a non-empty data field, or at least one attribute.",
 	//   "httpMethod": "POST",
 	//   "id": "pubsub.projects.topics.publish",
 	//   "parameterOrder": [
@@ -2083,7 +2029,7 @@ func (c *ProjectsTopicsSetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsT
 	return c
 }
 
-func (c *ProjectsTopicsSetIamPolicyCall) Do() (*Policy, error) {
+func (c *ProjectsTopicsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.setiampolicyrequest)
 	if err != nil {
@@ -2091,7 +2037,7 @@ func (c *ProjectsTopicsSetIamPolicyCall) Do() (*Policy, error) {
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -2103,7 +2049,11 @@ func (c *ProjectsTopicsSetIamPolicyCall) Do() (*Policy, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ProjectsTopicsSetIamPolicyCall) Do() (*Policy, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2173,7 +2123,7 @@ func (c *ProjectsTopicsTestIamPermissionsCall) Fields(s ...googleapi.Field) *Pro
 	return c
 }
 
-func (c *ProjectsTopicsTestIamPermissionsCall) Do() (*TestIamPermissionsResponse, error) {
+func (c *ProjectsTopicsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.testiampermissionsrequest)
 	if err != nil {
@@ -2181,7 +2131,7 @@ func (c *ProjectsTopicsTestIamPermissionsCall) Do() (*TestIamPermissionsResponse
 	}
 	ctype := "application/json"
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -2193,7 +2143,11 @@ func (c *ProjectsTopicsTestIamPermissionsCall) Do() (*TestIamPermissionsResponse
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ProjectsTopicsTestIamPermissionsCall) Do() (*TestIamPermissionsResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -2276,10 +2230,10 @@ func (c *ProjectsTopicsSubscriptionsListCall) Fields(s ...googleapi.Field) *Proj
 	return c
 }
 
-func (c *ProjectsTopicsSubscriptionsListCall) Do() (*ListTopicSubscriptionsResponse, error) {
+func (c *ProjectsTopicsSubscriptionsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["pageSize"]; ok {
 		params.Set("pageSize", fmt.Sprintf("%v", v))
 	}
@@ -2296,7 +2250,11 @@ func (c *ProjectsTopicsSubscriptionsListCall) Do() (*ListTopicSubscriptionsRespo
 		"topic": c.topic,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *ProjectsTopicsSubscriptionsListCall) Do() (*ListTopicSubscriptionsResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}

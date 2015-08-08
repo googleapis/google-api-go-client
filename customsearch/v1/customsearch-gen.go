@@ -629,10 +629,10 @@ func (c *CseListCall) Fields(s ...googleapi.Field) *CseListCall {
 	return c
 }
 
-func (c *CseListCall) Do() (*Search, error) {
+func (c *CseListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	params.Set("q", fmt.Sprintf("%v", c.q))
 	if v, ok := c.opt_["c2coff"]; ok {
 		params.Set("c2coff", fmt.Sprintf("%v", v))
@@ -735,7 +735,11 @@ func (c *CseListCall) Do() (*Search, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *CseListCall) Do() (*Search, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}

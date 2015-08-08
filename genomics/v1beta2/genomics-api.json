@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/hlRrQoFUbR1DFyke-B8BPXehGzw\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/r3Yw5MfzaLpocptE3LE-pmOG6uY\"",
  "discoveryVersion": "v1",
  "id": "genomics:v1beta2",
  "name": "genomics",
  "version": "v1beta2",
- "revision": "20150715",
+ "revision": "20150812",
  "title": "Genomics API",
  "description": "Provides access to Genomics data.",
  "ownerDomain": "google.com",
@@ -1875,7 +1875,7 @@
    "properties": {
     "alignments": {
      "type": "array",
-     "description": "The list of matching alignments sorted by mapped genomic coordinate, if any, ascending in position within the same reference. Unmapped reads, which have no position, are returned last and are further sorted in ascending lexicographic order by fragment name.",
+     "description": "The list of matching alignments sorted by mapped genomic coordinate, if any, ascending in position within the same reference. Unmapped reads, which have no position, are returned contiguously and are sorted in ascending lexicographic order by fragment name.",
      "items": {
       "$ref": "Read"
      }
@@ -3172,7 +3172,7 @@
      "id": "genomics.readgroupsets.export",
      "path": "readgroupsets/export",
      "httpMethod": "POST",
-     "description": "Exports read group sets to a BAM file in Google Cloud Storage.\n\nNote that currently there may be some differences between exported BAM files and the original BAM file at the time of import. In particular, comments in the input file header will not be preserved, some custom tags will be converted to strings, and original reference sequence order is not necessarily preserved.",
+     "description": "Exports read group sets to a BAM file in Google Cloud Storage.\n\nNote that currently there may be some differences between exported BAM files and the original BAM file at the time of import. See ImportReadGroupSets for details.",
      "request": {
       "$ref": "ExportReadGroupSetsRequest"
      },
@@ -3214,7 +3214,7 @@
      "id": "genomics.readgroupsets.import",
      "path": "readgroupsets/import",
      "httpMethod": "POST",
-     "description": "Creates read group sets by asynchronously importing the provided information.\n\nNote that currently comments in the input file header are not imported and some custom tags will be converted to strings, rather than preserving tag types. The caller must have WRITE permissions to the dataset.",
+     "description": "Creates read group sets by asynchronously importing the provided information. The caller must have WRITE permissions to the dataset.\n\nNotes on BAM import:  \n- Tags will be converted to strings - tag types are not preserved\n- Comments (@CO) in the input file header are not imported\n- Original order of reference headers is not preserved\n- Any reverse stranded unmapped reads will be reverse complemented, and their qualities (and \"BQ\" tag, if any) will be reversed\n- Unmapped reads will be stripped of positional information (referenceName and position)",
      "request": {
       "$ref": "ImportReadGroupSetsRequest"
      },
@@ -3648,7 +3648,7 @@
      "id": "genomics.variantsets.create",
      "path": "variantsets",
      "httpMethod": "POST",
-     "description": "Creates a new variant set (only necessary in v1).",
+     "description": "Creates a new variant set (only necessary in v1).\n\nThe provided variant set must have a valid datasetId set - all other fields are optional. Note that the id field will be ignored, as this is assigned by the server.",
      "request": {
       "$ref": "VariantSet"
      },

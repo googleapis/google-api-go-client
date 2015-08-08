@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/w6GoLmZrAsuJCEWtpTx8GQU_AuA\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/V99gURRx2BPPn7oqPKWtUgjaPfs\"",
  "discoveryVersion": "v1",
  "id": "partners:v2",
  "name": "partners",
  "version": "v2",
- "revision": "20150715",
+ "revision": "20150814",
  "title": "Google Partners API",
  "description": "Lets advertisers search certified companies and create contact leads with them, and also audits the usage of clients.",
  "ownerDomain": "google.com",
@@ -262,7 +262,10 @@
       "AGENCY_PICKED_SUGGESTED_AGENCY",
       "AGENCY_SEARCHED_FOR_AGENCIES",
       "AGENCY_PICKED_SEARCHED_AGENCY",
-      "AGENCY_DISMISSED_AFFILIATION_WIDGET"
+      "AGENCY_DISMISSED_AFFILIATION_WIDGET",
+      "AGENCY_CLICKED_INSIGHTS_DOWNLOAD_CONTENT",
+      "AGENCY_PROGRESS_INSIGHTS_VIEW_CONTENT",
+      "AGENCY_CLICKED_CANCEL_ACCEPT_TOS_BUTTON"
      ]
     },
     "eventCategory": {
@@ -381,7 +384,8 @@
       "EXPERIMENT_ID",
       "GPS_MOTIVATION",
       "URL",
-      "ELEMENT_FOCUS"
+      "ELEMENT_FOCUS",
+      "PROGRESS"
      ]
     },
     "values": {
@@ -751,7 +755,7 @@
   "LatLng": {
    "id": "LatLng",
    "type": "object",
-   "description": "An object representing a latitude/longitude pair. This is expressed as a pair of doubles representing degrees latitude and degrees longitude. Unless specified otherwise, this must conform to the WGS84 standard. Values must be within normalized ranges.",
+   "description": "An object representing a latitude/longitude pair. This is expressed as a pair of doubles representing degrees latitude and degrees longitude. Unless specified otherwise, this must conform to the WGS84 standard. Values must be within normalized ranges. Example of normalization code in Python: def NormalizeLongitude(longitude): \"\"\"Wrapsdecimal degrees longitude to [-180.0, 180.0].\"\"\" q, r = divmod(longitude, 360.0) if r \u003e 180.0 or (r == 180.0 and q \u003c= -1.0): return r - 360.0 return r def NormalizeLatLng(latitude, longitude): \"\"\"Wraps decimal degrees latitude and longitude to [-180.0, 180.0] and [-90.0, 90.0], respectively.\"\"\" r = latitude % 360.0 if r = 270.0: return r - 360, NormalizeLongitude(longitude) else: return 180 - r, NormalizeLongitude(longitude + 180.0) assert 180.0 == NormalizeLongitude(180.0) assert -180.0 == NormalizeLongitude(-180.0) assert -179.0 == NormalizeLongitude(181.0) assert (0.0, 0.0) == NormalizeLatLng(360.0, 0.0) assert (0.0, 0.0) == NormalizeLatLng(-360.0, 0.0) assert (85.0, 180.0) == NormalizeLatLng(95.0, 0.0) assert (-85.0, -170.0) == NormalizeLatLng(-95.0, 10.0) assert (90.0, 10.0) == NormalizeLatLng(90.0, 10.0) assert (-90.0, -10.0) == NormalizeLatLng(-90.0, -10.0) assert (0.0, -170.0) == NormalizeLatLng(-180.0, 10.0) assert (0.0, -170.0) == NormalizeLatLng(180.0, 10.0) assert (-90.0, 10.0) == NormalizeLatLng(270.0, 10.0) assert (90.0, 10.0) == NormalizeLatLng(-270.0, 10.0)",
    "properties": {
     "latitude": {
      "type": "number",

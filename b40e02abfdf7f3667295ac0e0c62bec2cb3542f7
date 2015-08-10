@@ -366,6 +366,30 @@
     },
     {
       "key": {
+        "uuid": "278c8786_509bec7f",
+        "filename": "googleapi/chunker.go",
+        "patchSetId": 14
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-08-10T08:41:32Z",
+      "side": 1,
+      "message": "I think that the underlying problem is that SetContentSize is doing too many things. It\u0027s not really clear whether it\u0027s supposed to:\n\n1. inform the ResumableUpload code of the size of the underlying content, or\n2. ask the ResumableUpload code to limit the amount of content that it uploads, or\n3. ask the ResumableUpload code to report when content is shorter than specified.\n\n\nHandling SetContentSize correctly also becomes difficult when its value conflicts with the actual size of the underlying data.\n\n\nI think that things would be much simpler if SetContentSize were removed.\n\nHere\u0027s how things would look without it:\n\n* If a supplied ReaderAt has a Stat method, we use that to specify the size in a sizedChunker.  Content would only terminate early in rare cases where a file is modified while it is being read.\n\n* Similarly, if a supplied ReaderAt has a Size method, we use that to specify size in a sizedChunker.  Content would terminate early if Size is inaccurate.\n\n* If the caller wants to upload only a portion of a file, they can wrap it in a SectionReader.  This will still result in a sizedChunker being used.\n\n* In all other cases, we use a bufferedChunker, and determine the total bytes when we get to EOF.\n\n* If the caller wants to upload only a portion of an io.Reader, they can wrap it in a LimitReader.\n\n* The progress callback can be called with a known total number of bytes in the case of readers with Stat or Size methods, or 0 otherwise.\n\n* Finally, we can return the total number of bytes uploaded, so that the caller can check whether there were fewer than expected.\n\nThis all means that the chunker code is never responsible for truncating content, which simplifies things.\n\nRelating this to the three possible purposes of SetContentSize, above:\n\n1. ResumableUpload is informed about the size of the underlying content via a Size or Stat method on the supplied reader.\n\n2. Limiting the amount of content which is uploaded is the responsibility of the caller.  They can do this via a SectionReader or LimitReader.\n\n3. ResumableUpload can report the total bytes uploaded, which the caller can then compare with the number of bytes that they expected to be uploaded.",
+      "parentUuid": "4a68a09e_f921f7a4",
+      "range": {
+        "startLine": 77,
+        "startChar": 1,
+        "endLine": 79,
+        "endChar": 2
+      },
+      "revId": "b40e02abfdf7f3667295ac0e0c62bec2cb3542f7",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed788e71_fcfe41dd",
         "filename": "googleapi/chunker.go",
         "patchSetId": 14
@@ -530,6 +554,30 @@
       "side": 1,
       "message": "This becomes a moot point if I switch to managing single buffer myself, as you suggested above, but I don\u0027t think there is a bug here. CopyN documentation states:\n\"On return, written \u003d\u003d n if and only if err \u003d\u003d nil.\"\n\nSince \"extra\" always includes the 1 extra byte, the err \u003d io.EOF if and only if this is the last chunk.",
       "parentUuid": "ed788e71_dcf985f8",
+      "range": {
+        "startLine": 99,
+        "startChar": 5,
+        "endLine": 99,
+        "endChar": 8
+      },
+      "revId": "b40e02abfdf7f3667295ac0e0c62bec2cb3542f7",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "278c8786_900cf47b",
+        "filename": "googleapi/chunker.go",
+        "patchSetId": 14
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-08-10T08:41:32Z",
+      "side": 1,
+      "message": "Yes, you are right. My mistake.",
+      "parentUuid": "4a68a09e_f9d657f1",
       "range": {
         "startLine": 99,
         "startChar": 5,
@@ -782,6 +830,30 @@
     },
     {
       "key": {
+        "uuid": "278c8786_107324da",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 14
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-08-10T08:41:32Z",
+      "side": 1,
+      "message": "Let\u0027s think about what happens if we separate the use of size as a progress indicator from its other uses in the sequentialChunkers.\n\nFirst, I\u0027d remove Callback from the ResumableUpload struct, and make it an uploadOption.\n\nThen, Configure could construct a \"reportProgress\" callback with knowledge of the content size, e.g.:\n\nrx.reportProgress \u003d func(current int64) {\n  if opt.callback \u003d\u003d nil {\n    return func(int64) {}\n  }\n  return func(current int64) {\n    opt.callback(current, opt.contentSize) // [1]\n  }\n}\n\n[1] In another comment, I\u0027ve suggested getting rid of contentSize as an option, but you can use here some equivalent local variable).\n\nThen transferChunks can just do \n\nrx.reportProgress(start)\n\n\nNow you don\u0027t need Size in the sequentialChunker interface.\n\nThis means that bufferedChunker does not need to keep track of size.",
+      "parentUuid": "4a68a09e_3998cf4a",
+      "range": {
+        "startLine": 402,
+        "startChar": 2,
+        "endLine": 409,
+        "endChar": 3
+      },
+      "revId": "b40e02abfdf7f3667295ac0e0c62bec2cb3542f7",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed788e71_bc812953",
         "filename": "googleapi/googleapi.go",
         "patchSetId": 14
@@ -817,6 +889,30 @@
       "side": 1,
       "message": "Itoa takes an int, which would limit max upload size to 2GB on 32-bit architectures.",
       "parentUuid": "ed788e71_bc812953",
+      "range": {
+        "startLine": 492,
+        "startChar": 16,
+        "endLine": 492,
+        "endChar": 44
+      },
+      "revId": "b40e02abfdf7f3667295ac0e0c62bec2cb3542f7",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "278c8786_f02ea0c7",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 14
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-08-10T08:41:32Z",
+      "side": 1,
+      "message": "I see.",
+      "parentUuid": "4a68a09e_999d5b4a",
       "range": {
         "startLine": 492,
         "startChar": 16,

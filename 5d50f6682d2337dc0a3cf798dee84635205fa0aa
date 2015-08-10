@@ -1,0 +1,228 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "278c8786_7066301d",
+        "filename": "googleapi/chunker.go",
+        "patchSetId": 15
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-08-10T08:41:32Z",
+      "side": 1,
+      "message": "Do you actually need this?",
+      "range": {
+        "startLine": 32,
+        "startChar": 1,
+        "endLine": 32,
+        "endChar": 51
+      },
+      "revId": "5d50f6682d2337dc0a3cf798dee84635205fa0aa",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "278c8786_5069aceb",
+        "filename": "googleapi/chunker.go",
+        "patchSetId": 15
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-08-10T08:41:32Z",
+      "side": 1,
+      "message": "at a time",
+      "range": {
+        "startLine": 67,
+        "startChar": 3,
+        "endLine": 67,
+        "endChar": 14
+      },
+      "revId": "5d50f6682d2337dc0a3cf798dee84635205fa0aa",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "278c8786_70e950f3",
+        "filename": "googleapi/chunker.go",
+        "patchSetId": 15
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-08-10T08:41:32Z",
+      "side": 1,
+      "message": "Can you add a comment here explaining that the +1 is for EOF detection?",
+      "range": {
+        "startLine": 81,
+        "startChar": 83,
+        "endLine": 81,
+        "endChar": 94
+      },
+      "revId": "5d50f6682d2337dc0a3cf798dee84635205fa0aa",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "278c8786_30e3c813",
+        "filename": "googleapi/chunker.go",
+        "patchSetId": 15
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-08-10T08:41:32Z",
+      "side": 1,
+      "message": "similar to the discarding code above, extra is always going to be \u003e\u003d 0, so there isn\u0027t any need to put this code in an if block.",
+      "range": {
+        "startLine": 106,
+        "startChar": 52,
+        "endLine": 106,
+        "endChar": 61
+      },
+      "revId": "5d50f6682d2337dc0a3cf798dee84635205fa0aa",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "278c8786_10e6c422",
+        "filename": "googleapi/chunker.go",
+        "patchSetId": 15
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-08-10T08:41:32Z",
+      "side": 1,
+      "message": "len(bc.buf) is always (chunkSize + 1), right?\n\nSo extra is always (len(bc.buf) - bc.len).\n\nextra is only used in the call to ReadFull, below, as:\n\nbc.buf[bc.len:bc.len+extra]\n\nwhich is the same as:\n\nbc.buf[bc.len:(bc.len + len(bc.buf) - bc.len)]\n\nwhich is the same as:\n\nbc.buf[bc.len:]\n\nIf you use that form, you don\u0027t need to calculate extra at all.",
+      "range": {
+        "startLine": 106,
+        "startChar": 17,
+        "endLine": 106,
+        "endChar": 50
+      },
+      "revId": "5d50f6682d2337dc0a3cf798dee84635205fa0aa",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "278c8786_50f76cc6",
+        "filename": "googleapi/chunker_test.go",
+        "patchSetId": 15
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-08-10T08:41:32Z",
+      "side": 1,
+      "message": "These tests only cover bufferedChunker.  What about sizedChunker?",
+      "revId": "5d50f6682d2337dc0a3cf798dee84635205fa0aa",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "278c8786_b011f890",
+        "filename": "googleapi/chunker_test.go",
+        "patchSetId": 15
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-08-10T08:41:32Z",
+      "side": 1,
+      "message": "Please terminate with a period.\n\nhttps://github.com/golang/go/wiki/CodeReviewComments#comment-sentences\n\nAlso below.",
+      "range": {
+        "startLine": 26,
+        "startChar": 90,
+        "endLine": 26,
+        "endChar": 91
+      },
+      "revId": "5d50f6682d2337dc0a3cf798dee84635205fa0aa",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "278c8786_70f4f0c0",
+        "filename": "googleapi/chunker_test.go",
+        "patchSetId": 15
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-08-10T08:41:32Z",
+      "side": 1,
+      "message": "This test could tell a clearer story if you tighten up the offset values such that they lie on the boundary that triggers errSkip, so:\n\n  bc1 :\u003d setup100(10, 0)\n  bc2 :\u003d setup100(10, 0)\n  checkContent(t, bc1, 0, 10, nil, 0, 9)\n  checkContent(t, bc2, 0, 10, nil, 0, 9)\n\n  // Valid next read\n  checkContent(t, bc1, 10, 10, nil, 0, 9)\n\n  // Skip read\n  check(t, bc2, 11, 0, errSkip)",
+      "range": {
+        "startLine": 62,
+        "startChar": 1,
+        "endLine": 64,
+        "endChar": 29
+      },
+      "revId": "5d50f6682d2337dc0a3cf798dee84635205fa0aa",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "278c8786_1001e43d",
+        "filename": "googleapi/chunker_test.go",
+        "patchSetId": 15
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-08-10T08:41:32Z",
+      "side": 1,
+      "message": "remove.",
+      "range": {
+        "startLine": 100,
+        "startChar": 1,
+        "endLine": 100,
+        "endChar": 3
+      },
+      "revId": "5d50f6682d2337dc0a3cf798dee84635205fa0aa",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "278c8786_d0291cc2",
+        "filename": "googleapi/chunker_test.go",
+        "patchSetId": 15
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-08-10T08:41:32Z",
+      "side": 1,
+      "message": "Are you planning to use this?",
+      "range": {
+        "startLine": 136,
+        "startChar": 5,
+        "endLine": 136,
+        "endChar": 18
+      },
+      "revId": "5d50f6682d2337dc0a3cf798dee84635205fa0aa",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

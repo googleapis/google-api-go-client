@@ -46,6 +46,53 @@
       "revId": "4732e17a8149f9ed52ee06586417546503dd0214",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "278c8786_d0b6fc75",
+        "filename": "bigquery/v2/bigquery-api.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-08-11T06:20:42Z",
+      "side": 1,
+      "message": "This is present in a bunch of the APIs. I\u0027ve found the change that introduced this upstream and pinged them about it (cc\u0027ed you).\n\nI think we should hold off for now.",
+      "parentUuid": "87c9b39e_dcba7c09",
+      "range": {
+        "startLine": 84,
+        "startChar": 21,
+        "endLine": 84,
+        "endChar": 48
+      },
+      "revId": "4732e17a8149f9ed52ee06586417546503dd0214",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "278c8786_d04b5c04",
+        "filename": "cloudresourcemanager/v1beta1/cloudresourcemanager-gen.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-08-11T06:20:42Z",
+      "side": 1,
+      "message": "ugh.  the formatting of this documentation leaves a lot to be desired.  Any chance you can get this fixed upstream (I don\u0027t think it should block this change, but would be nice to get fixed)?",
+      "range": {
+        "startLine": 220,
+        "startChar": 3,
+        "endLine": 235,
+        "endChar": 69
+      },
+      "revId": "4732e17a8149f9ed52ee06586417546503dd0214",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
     }
   ]
 }

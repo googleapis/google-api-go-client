@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a72a3712_b7bfc2f7",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-08-11T04:42:24Z",
+      "side": 1,
+      "message": "or Split instead of SplitN and panic if len(parts) !\u003d 2?",
+      "revId": "00aca0df97ffd1539f8c0abfa8564b565a47734c",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a72a3712_97bac608",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-08-11T04:42:24Z",
+      "side": 1,
+      "message": "why is this tied to publicOnly? I\u0027d think it\u0027d only be:\n\n  if *apiToGenerate \u003d\u003d \"*\" {\n         // Force generation of compute:beta which doesn\u0027t appear in the\n         // directory for some reason, but they\u0027ve asked us to include it.\n         all.addAPI(\"compute:beta\")\n  }",
+      "revId": "00aca0df97ffd1539f8c0abfa8564b565a47734c",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

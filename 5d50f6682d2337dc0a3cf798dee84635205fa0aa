@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c492c913_3d8eaf3a",
+        "filename": "googleapi/chunker.go",
+        "patchSetId": 15
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 5815
+      },
+      "writtenOn": "2015-08-12T21:45:56Z",
+      "side": 1,
+      "message": "It\u0027s used in googleapi_test.go.",
+      "parentUuid": "278c8786_7066301d",
+      "range": {
+        "startLine": 32,
+        "startChar": 1,
+        "endLine": 32,
+        "endChar": 51
+      },
+      "revId": "5d50f6682d2337dc0a3cf798dee84635205fa0aa",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "278c8786_5069aceb",
         "filename": "googleapi/chunker.go",
         "patchSetId": 15
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c492c913_fd7fe783",
+        "filename": "googleapi/chunker.go",
+        "patchSetId": 15
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 5815
+      },
+      "writtenOn": "2015-08-12T21:45:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "278c8786_5069aceb",
+      "range": {
+        "startLine": 67,
+        "startChar": 3,
+        "endLine": 67,
+        "endChar": 14
+      },
+      "revId": "5d50f6682d2337dc0a3cf798dee84635205fa0aa",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "278c8786_70e950f3",
         "filename": "googleapi/chunker.go",
         "patchSetId": 15
@@ -59,6 +107,30 @@
       "writtenOn": "2015-08-10T08:41:32Z",
       "side": 1,
       "message": "Can you add a comment here explaining that the +1 is for EOF detection?",
+      "range": {
+        "startLine": 81,
+        "startChar": 83,
+        "endLine": 81,
+        "endChar": 94
+      },
+      "revId": "5d50f6682d2337dc0a3cf798dee84635205fa0aa",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c492c913_9d7ca391",
+        "filename": "googleapi/chunker.go",
+        "patchSetId": 15
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 5815
+      },
+      "writtenOn": "2015-08-12T21:45:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "278c8786_70e950f3",
       "range": {
         "startLine": 81,
         "startChar": 83,
@@ -117,6 +189,54 @@
     },
     {
       "key": {
+        "uuid": "c492c913_5df85b89",
+        "filename": "googleapi/chunker.go",
+        "patchSetId": 15
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 5815
+      },
+      "writtenOn": "2015-08-12T21:45:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "278c8786_10e6c422",
+      "range": {
+        "startLine": 106,
+        "startChar": 17,
+        "endLine": 106,
+        "endChar": 50
+      },
+      "revId": "5d50f6682d2337dc0a3cf798dee84635205fa0aa",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c492c913_7dfd1778",
+        "filename": "googleapi/chunker.go",
+        "patchSetId": 15
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 5815
+      },
+      "writtenOn": "2015-08-12T21:45:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "278c8786_30e3c813",
+      "range": {
+        "startLine": 106,
+        "startChar": 52,
+        "endLine": 106,
+        "endChar": 61
+      },
+      "revId": "5d50f6682d2337dc0a3cf798dee84635205fa0aa",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "278c8786_50f76cc6",
         "filename": "googleapi/chunker_test.go",
         "patchSetId": 15
@@ -134,6 +254,24 @@
     },
     {
       "key": {
+        "uuid": "c492c913_5dca9b49",
+        "filename": "googleapi/chunker_test.go",
+        "patchSetId": 15
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 5815
+      },
+      "writtenOn": "2015-08-12T21:45:56Z",
+      "side": 1,
+      "message": "Yeah, I\u0027ll add few basic unit tests for sizedChunker here. Note that sizedChunker is also exercised in googleapi_test.go and storage_test.go",
+      "parentUuid": "278c8786_50f76cc6",
+      "revId": "5d50f6682d2337dc0a3cf798dee84635205fa0aa",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "278c8786_b011f890",
         "filename": "googleapi/chunker_test.go",
         "patchSetId": 15
@@ -145,6 +283,30 @@
       "writtenOn": "2015-08-10T08:41:32Z",
       "side": 1,
       "message": "Please terminate with a period.\n\nhttps://github.com/golang/go/wiki/CodeReviewComments#comment-sentences\n\nAlso below.",
+      "range": {
+        "startLine": 26,
+        "startChar": 90,
+        "endLine": 26,
+        "endChar": 91
+      },
+      "revId": "5d50f6682d2337dc0a3cf798dee84635205fa0aa",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c492c913_1d02d317",
+        "filename": "googleapi/chunker_test.go",
+        "patchSetId": 15
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 5815
+      },
+      "writtenOn": "2015-08-12T21:45:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "278c8786_b011f890",
       "range": {
         "startLine": 26,
         "startChar": 90,
@@ -180,6 +342,30 @@
     },
     {
       "key": {
+        "uuid": "c492c913_1d1bb379",
+        "filename": "googleapi/chunker_test.go",
+        "patchSetId": 15
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 5815
+      },
+      "writtenOn": "2015-08-12T21:45:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "278c8786_70f4f0c0",
+      "range": {
+        "startLine": 62,
+        "startChar": 1,
+        "endLine": 64,
+        "endChar": 29
+      },
+      "revId": "5d50f6682d2337dc0a3cf798dee84635205fa0aa",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "278c8786_1001e43d",
         "filename": "googleapi/chunker_test.go",
         "patchSetId": 15
@@ -203,6 +389,30 @@
     },
     {
       "key": {
+        "uuid": "c492c913_3d20efa0",
+        "filename": "googleapi/chunker_test.go",
+        "patchSetId": 15
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 5815
+      },
+      "writtenOn": "2015-08-12T21:45:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "278c8786_1001e43d",
+      "range": {
+        "startLine": 100,
+        "startChar": 1,
+        "endLine": 100,
+        "endChar": 3
+      },
+      "revId": "5d50f6682d2337dc0a3cf798dee84635205fa0aa",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "278c8786_d0291cc2",
         "filename": "googleapi/chunker_test.go",
         "patchSetId": 15
@@ -214,6 +424,30 @@
       "writtenOn": "2015-08-10T08:41:32Z",
       "side": 1,
       "message": "Are you planning to use this?",
+      "range": {
+        "startLine": 136,
+        "startChar": 5,
+        "endLine": 136,
+        "endChar": 18
+      },
+      "revId": "5d50f6682d2337dc0a3cf798dee84635205fa0aa",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c492c913_fd3127f2",
+        "filename": "googleapi/chunker_test.go",
+        "patchSetId": 15
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 5815
+      },
+      "writtenOn": "2015-08-12T21:45:56Z",
+      "side": 1,
+      "message": "endlessReader is used below in TestMemProfile. I am not sure that we still need TestMemProfile, given the simple buffer management in the newest bufferedChunker implementation. Let me know if you think it\u0027s still worth keeping it; otherwise I\u0027ll remove both endlessReader and TestMemProfile.",
+      "parentUuid": "278c8786_d0291cc2",
       "range": {
         "startLine": 136,
         "startChar": 5,

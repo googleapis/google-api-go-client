@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64303d13_4254122b",
+        "filename": "googleapi/chunker.go",
+        "patchSetId": 17
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-08-14T07:00:35Z",
+      "side": 1,
+      "message": "This no longer happens, right?",
+      "revId": "3d02b69e1297c23ee83c3eed11b897b2fb871d42",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

@@ -16,6 +16,70 @@
       "revId": "3d02b69e1297c23ee83c3eed11b897b2fb871d42",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e41a6db3_26cad648",
+        "filename": "googleapi/chunker.go",
+        "patchSetId": 17
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 5815
+      },
+      "writtenOn": "2015-08-14T21:41:54Z",
+      "side": 1,
+      "message": "Right. Will remove.",
+      "parentUuid": "64303d13_4254122b",
+      "revId": "3d02b69e1297c23ee83c3eed11b897b2fb871d42",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e41a6db3_c6c4a238",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 17
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 5815
+      },
+      "writtenOn": "2015-08-14T21:41:54Z",
+      "side": 1,
+      "message": "The original resumable upload implementation had mediaType as a mandatory parameter, so I\u0027ve kept it at first and then converted it to an UploadOption. But perhaps we should reconsider this.\n\nPresently Media and ResumableMedia use two different mechanisms for overriding automatic content type detection:\n- Media checks whether Reader implements googleapi.ContentTyper interface\n- ResumableMedia looks for UploadOption\n\nNote also that user may attempt to specify contentType as object resource/metadata: https://cloud.google.com/storage/docs/json_api/v1/objects/insert\nCurrent implementation of both regular and resumable upload will send this as JSON payload, but will effectively override it with auto-guessed value through HTTP headers.\n\nI suggest we remove both ContentTyper interface and SetMediaType UploadOption, and instead use contentType field in object resource if present, falling back to http.DetectContentType.\n\nOne caveat with this proposal is that I am only familiar with cloud storage API; I am not sure if other APIs that support upload also support contentType object resource field.",
+      "range": {
+        "startLine": 51,
+        "startChar": 5,
+        "endLine": 51,
+        "endChar": 17
+      },
+      "revId": "3d02b69e1297c23ee83c3eed11b897b2fb871d42",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e41a6db3_66edeeb1",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 17
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 5815
+      },
+      "writtenOn": "2015-08-14T21:41:54Z",
+      "side": 1,
+      "message": "Note that this means that transient connection issues will cause the resumable upload to be aborted. In fact, the only scenario where resumable upload is actually resumed is if cloud storage server returns http code other than 308 and 200, which typically means 5xx.\n\nA more complete approach would be to try to distinguish between potentially transient errors (e.g. connectivity) and permanent errors (e.g. reader error) and implement a retry schema with an exponential backoff.\n\nThese are issues inherited from the initial implementation and are not in any way related to the added support for readers of unknown size, so I am not suggesting fixing them as part of this change set. I just thought this would be a good time to bring this up to everyone\u0027s attention.",
+      "range": {
+        "startLine": 472,
+        "startChar": 3,
+        "endLine": 472,
+        "endChar": 18
+      },
+      "revId": "3d02b69e1297c23ee83c3eed11b897b2fb871d42",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
     }
   ]
 }

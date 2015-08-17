@@ -84,6 +84,53 @@
     },
     {
       "key": {
+        "uuid": "e41a6db3_a6a9a615",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 17
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 5815
+      },
+      "writtenOn": "2015-08-17T18:52:15Z",
+      "side": 1,
+      "message": "OK, I\u0027ll add ...UploadOption to Media(). I think I\u0027ll keep single unexported interface under the hood, and single struct holding union of options applying to Media and ResumableMedia. The relevant functions specific to Media/ResumableMedia will then use only those fields from the struct that are applicable to that upload type.",
+      "parentUuid": "449df96e_b1646015",
+      "range": {
+        "startLine": 51,
+        "startChar": 5,
+        "endLine": 51,
+        "endChar": 17
+      },
+      "revId": "3d02b69e1297c23ee83c3eed11b897b2fb871d42",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e41a6db3_06bb5a5e",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 17
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 5815
+      },
+      "writtenOn": "2015-08-17T18:52:15Z",
+      "side": 1,
+      "message": "This is wrong. An error from ChunkAt() (which would typically be an underlying reader error) would be swallowed, returning an \"application/octet-stream\" and relying on future invocations of ChunktAt to return the same error. But that\u0027s not guaranteed, since the underlying reader is not guaranteed to return the same error in the future.\n\nI think I\u0027ll modify Configure() to return an error, and modify the calling code to terminate upload on error.\n\nIt\u0027s worth noting that regular Media upload also needs to deal with the same issue, yet they chose very different approach. See getMediaType(): instead of propagating error as return value from the func, getMediaType is setting up an io.Pipe and a go routine to copy content from io.MultiReader to the pipe, all for the purpose of propagating the reader error out of io.Pipe. Why go through all that trouble when the end result will be failed upload? Why not just return error from getMediaType and terminate the upload in the caller using the returned error?",
+      "range": {
+        "startLine": 402,
+        "startChar": 2,
+        "endLine": 402,
+        "endChar": 68
+      },
+      "revId": "3d02b69e1297c23ee83c3eed11b897b2fb871d42",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e41a6db3_66edeeb1",
         "filename": "googleapi/googleapi.go",
         "patchSetId": 17
@@ -119,6 +166,30 @@
       "side": 1,
       "message": "Thanks for pointing that out.  I agree that it would be good to make this more robust and that it should not be part of this change.  Can you file an issue to track this?",
       "parentUuid": "e41a6db3_66edeeb1",
+      "range": {
+        "startLine": 472,
+        "startChar": 3,
+        "endLine": 472,
+        "endChar": 18
+      },
+      "revId": "3d02b69e1297c23ee83c3eed11b897b2fb871d42",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e41a6db3_461712d5",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 17
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 5815
+      },
+      "writtenOn": "2015-08-17T18:52:15Z",
+      "side": 1,
+      "message": "Looks like Glenn keeps an issue open for resumable upload support, so I\u0027ve added a comment there instead of creating yet another issue:\nhttps://github.com/google/google-api-go-client/issues/17",
+      "parentUuid": "449df96e_d14ac479",
       "range": {
         "startLine": 472,
         "startChar": 3,

@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "449df96e_f1a0a8a7",
+        "filename": "googleapi/chunker.go",
+        "patchSetId": 14
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-08-17T10:19:41Z",
+      "side": 1,
+      "message": "It\u0027s OK to have a copyright notice here, but it should just say \n\n\"Copyright 2015 The Go Authors\"\n\nso that specifics of copyright is handled by AUTHORS file. It\u0027s fine to remove the existing Google copyright line from all the other files that you\u0027re touching too, such as googleapi.go.",
+      "parentUuid": "4a68a09e_d9035318",
+      "revId": "b40e02abfdf7f3667295ac0e0c62bec2cb3542f7",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca157084_745f566f",
         "filename": "googleapi/chunker.go",
         "patchSetId": 14

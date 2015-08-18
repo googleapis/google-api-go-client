@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e41a6db3_066cfa25",
+        "filename": "google-api-go-generator/storage_test.go",
+        "patchSetId": 17
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 5815
+      },
+      "writtenOn": "2015-08-18T23:39:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "449df96e_11b60c78",
+      "range": {
+        "startLine": 189,
+        "startChar": 58,
+        "endLine": 189,
+        "endChar": 96
+      },
+      "revId": "3d02b69e1297c23ee83c3eed11b897b2fb871d42",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "449df96e_f157c89e",
         "filename": "google-api-go-generator/storage_test.go",
         "patchSetId": 17
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "e41a6db3_66616e2e",
+        "filename": "google-api-go-generator/storage_test.go",
+        "patchSetId": 17
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 5815
+      },
+      "writtenOn": "2015-08-18T23:39:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "449df96e_f157c89e",
+      "range": {
+        "startLine": 190,
+        "startChar": 44,
+        "endLine": 190,
+        "endChar": 52
+      },
+      "revId": "3d02b69e1297c23ee83c3eed11b897b2fb871d42",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "449df96e_31bb105f",
         "filename": "google-api-go-generator/storage_test.go",
         "patchSetId": 17
@@ -59,6 +107,30 @@
       "writtenOn": "2015-08-18T06:42:36Z",
       "side": 1,
       "message": "what is the benefit to using handler.r instead of handler.reqs[3] ?",
+      "range": {
+        "startLine": 271,
+        "startChar": 32,
+        "endLine": 271,
+        "endChar": 55
+      },
+      "revId": "3d02b69e1297c23ee83c3eed11b897b2fb871d42",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e41a6db3_a65a4678",
+        "filename": "google-api-go-generator/storage_test.go",
+        "patchSetId": 17
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 5815
+      },
+      "writtenOn": "2015-08-18T23:39:05Z",
+      "side": 1,
+      "message": "changed to handler.reqs[3]",
+      "parentUuid": "449df96e_31bb105f",
       "range": {
         "startLine": 271,
         "startChar": 32,
@@ -248,6 +320,30 @@
     },
     {
       "key": {
+        "uuid": "e41a6db3_29b0e929",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 17
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 5815
+      },
+      "writtenOn": "2015-08-18T23:39:05Z",
+      "side": 1,
+      "message": "Regarding Pipe and goroutine: they were introduced in 8e023449, perhaps Glenn could comment on that. I suspect the reason was to ensure that any error encountered while reading the first 512 bytes is propagated out.\n\nConsider a hypothetical reader which returns an error other than io.EOF, but on subsequent Read calls returns an EOF. Simply returning io.MultiReader would cause the error to be masked. Of course one could argue that such Reader is buggy, but io.Reader spec does not state anything definitive about reader behavior after the first error.\n\nRegarding unification of error handling: if there was a tangible benefit to allowing the upload to start and then letting the error show up from the reader during HTTP POST request, I could modify the bufferedChunker to have reader error propagated out of returned chunk reader, as opposed to returning the error directly from ChunkAt() call. Right now I don\u0027t see that benefit and I don\u0027t want to complicate the chunker code needlessly, but I wanted to bring this up in case I am missing something.",
+      "parentUuid": "449df96e_f125085f",
+      "range": {
+        "startLine": 402,
+        "startChar": 2,
+        "endLine": 402,
+        "endChar": 68
+      },
+      "revId": "3d02b69e1297c23ee83c3eed11b897b2fb871d42",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e41a6db3_66edeeb1",
         "filename": "googleapi/googleapi.go",
         "patchSetId": 17
@@ -342,6 +438,30 @@
     },
     {
       "key": {
+        "uuid": "e41a6db3_09b52d1a",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 17
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 5815
+      },
+      "writtenOn": "2015-08-18T23:39:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "449df96e_7173d85c",
+      "range": {
+        "startLine": 478,
+        "startChar": 3,
+        "endLine": 478,
+        "endChar": 18
+      },
+      "revId": "3d02b69e1297c23ee83c3eed11b897b2fb871d42",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "449df96e_d181e49f",
         "filename": "googleapi/googleapi_test.go",
         "patchSetId": 17
@@ -359,6 +479,24 @@
     },
     {
       "key": {
+        "uuid": "e41a6db3_49bf25f8",
+        "filename": "googleapi/googleapi_test.go",
+        "patchSetId": 17
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 5815
+      },
+      "writtenOn": "2015-08-18T23:39:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "449df96e_d181e49f",
+      "revId": "3d02b69e1297c23ee83c3eed11b897b2fb871d42",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "449df96e_714cb819",
         "filename": "googleapi/googleapi_test.go",
         "patchSetId": 17
@@ -370,6 +508,30 @@
       "writtenOn": "2015-08-18T06:42:36Z",
       "side": 1,
       "message": "this isn\u0027t being used.",
+      "range": {
+        "startLine": 611,
+        "startChar": 11,
+        "endLine": 611,
+        "endChar": 31
+      },
+      "revId": "3d02b69e1297c23ee83c3eed11b897b2fb871d42",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e41a6db3_a9c33980",
+        "filename": "googleapi/googleapi_test.go",
+        "patchSetId": 17
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 5815
+      },
+      "writtenOn": "2015-08-18T23:39:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "449df96e_714cb819",
       "range": {
         "startLine": 611,
         "startChar": 11,
@@ -405,6 +567,30 @@
     },
     {
       "key": {
+        "uuid": "e41a6db3_e9cd31ab",
+        "filename": "googleapi/googleapi_test.go",
+        "patchSetId": 17
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 5815
+      },
+      "writtenOn": "2015-08-18T23:39:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "449df96e_114d2c18",
+      "range": {
+        "startLine": 617,
+        "startChar": 5,
+        "endLine": 617,
+        "endChar": 44
+      },
+      "revId": "3d02b69e1297c23ee83c3eed11b897b2fb871d42",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "449df96e_91603c7a",
         "filename": "googleapi/googleapi_test.go",
         "patchSetId": 17
@@ -416,6 +602,30 @@
       "writtenOn": "2015-08-18T06:42:36Z",
       "side": 1,
       "message": "this is testing too many things at once.  Please test SetMediatType separately form isBuffered.",
+      "range": {
+        "startLine": 634,
+        "startChar": 1,
+        "endLine": 635,
+        "endChar": 80
+      },
+      "revId": "3d02b69e1297c23ee83c3eed11b897b2fb871d42",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e41a6db3_c9caf590",
+        "filename": "googleapi/googleapi_test.go",
+        "patchSetId": 17
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 5815
+      },
+      "writtenOn": "2015-08-18T23:39:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "449df96e_91603c7a",
       "range": {
         "startLine": 634,
         "startChar": 1,

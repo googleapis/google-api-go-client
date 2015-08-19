@@ -392,6 +392,30 @@
     },
     {
       "key": {
+        "uuid": "e41a6db3_09ab6d90",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 17
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 5815
+      },
+      "writtenOn": "2015-08-19T03:43:22Z",
+      "side": 1,
+      "message": "I think we are on the same page with regard to getMediaType being modified to return an error value. I was just trying to explain that *in the absence* of error return type from getMediaType, the Pipe/goroutine do seem to serve the purpose of ensuring that error return from Reader does not get lost.",
+      "parentUuid": "449df96e_f19fc8ad",
+      "range": {
+        "startLine": 402,
+        "startChar": 2,
+        "endLine": 402,
+        "endChar": 68
+      },
+      "revId": "3d02b69e1297c23ee83c3eed11b897b2fb871d42",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e41a6db3_66edeeb1",
         "filename": "googleapi/googleapi.go",
         "patchSetId": 17

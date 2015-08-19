@@ -368,6 +368,30 @@
     },
     {
       "key": {
+        "uuid": "449df96e_f19fc8ad",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 17
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-08-19T01:55:45Z",
+      "side": 1,
+      "message": "Edit to my comment:\n\ns/could then return early/could then return early after doing:/",
+      "parentUuid": "449df96e_d1f00407",
+      "range": {
+        "startLine": 402,
+        "startChar": 2,
+        "endLine": 402,
+        "endChar": 68
+      },
+      "revId": "3d02b69e1297c23ee83c3eed11b897b2fb871d42",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e41a6db3_66edeeb1",
         "filename": "googleapi/googleapi.go",
         "patchSetId": 17

@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e41a6db3_a950592b",
+        "filename": "google-api-go-generator/storage_test.go",
+        "patchSetId": 18
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5815
+      },
+      "writtenOn": "2015-08-19T03:43:22Z",
+      "side": 1,
+      "message": "will do",
+      "parentUuid": "449df96e_11952c97",
+      "range": {
+        "startLine": 69,
+        "startChar": 7,
+        "endLine": 69,
+        "endChar": 21
+      },
+      "revId": "337dc3cf52c212a2a05230651b2a14721507c047",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "449df96e_71bbd82b",
         "filename": "google-api-go-generator/storage_test.go",
         "patchSetId": 18
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "e41a6db3_894d9d95",
+        "filename": "google-api-go-generator/storage_test.go",
+        "patchSetId": 18
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 5815
+      },
+      "writtenOn": "2015-08-19T03:43:22Z",
+      "side": 1,
+      "message": "I know string literals look neater, but I switched from using string literals to calling http.DetectContentType on purpose. \n\nIf I were writing standard library tests for http.DetectContentType, I would definitely use string literals. But here I think I want to trust standard library to do a good job, and my requirement for upload should be:\n- Use content type passed via UploadOption if present,\n- otherwise use whatever http.DetectContentType would return for that same content.\n\nConsider the case of empty content tested elsewhere in this file. Should empty content be resolved to \"application/octet-stream\" or \"text/plain; charset\u003dutf-8\"? I don\u0027t really know, but am willing to take whatever standard library gives me. Furthermore, I\u0027d rather not have to change the tests in this code if the standard library implementation changes.\n\nLet me know your thoughts on this.",
+      "parentUuid": "449df96e_71bbd82b",
+      "range": {
+        "startLine": 72,
+        "startChar": 26,
+        "endLine": 72,
+        "endChar": 62
+      },
+      "revId": "337dc3cf52c212a2a05230651b2a14721507c047",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "449df96e_91bf5c16",
         "filename": "google-api-go-generator/storage_test.go",
         "patchSetId": 18
@@ -59,6 +107,30 @@
       "writtenOn": "2015-08-19T01:54:38Z",
       "side": 1,
       "message": "Please extract the body of this for loop into a helper function.  It will be a lot clearer to see the connection between the []UploadOption that you are using and the expected contentType if you explicitly pass them together into a helper.",
+      "range": {
+        "startLine": 74,
+        "startChar": 1,
+        "endLine": 74,
+        "endChar": 31
+      },
+      "revId": "337dc3cf52c212a2a05230651b2a14721507c047",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e41a6db3_e94a5179",
+        "filename": "google-api-go-generator/storage_test.go",
+        "patchSetId": 18
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 5815
+      },
+      "writtenOn": "2015-08-19T03:43:22Z",
+      "side": 1,
+      "message": "Sure, will do.",
+      "parentUuid": "449df96e_91bf5c16",
       "range": {
         "startLine": 74,
         "startChar": 1,
@@ -105,6 +177,30 @@
       "writtenOn": "2015-08-19T01:54:38Z",
       "side": 1,
       "message": "s/bogus/overridden/",
+      "range": {
+        "startLine": 271,
+        "startChar": 1,
+        "endLine": 271,
+        "endChar": 6
+      },
+      "revId": "337dc3cf52c212a2a05230651b2a14721507c047",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e41a6db3_c9479571",
+        "filename": "google-api-go-generator/storage_test.go",
+        "patchSetId": 18
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 5815
+      },
+      "writtenOn": "2015-08-19T03:43:22Z",
+      "side": 1,
+      "message": "Will do.",
+      "parentUuid": "449df96e_319a30c6",
       "range": {
         "startLine": 271,
         "startChar": 1,
@@ -174,6 +270,30 @@
       "writtenOn": "2015-08-19T01:54:38Z",
       "side": 1,
       "message": "I don\u0027t think that getMediaType should be aware of UploadOption.  Logically what should happen here is ConditionallyIncludeMedia should create an uploadOptions and populate its mediaType field with the result of getMediaType(media).  Then it should apply each value from opts, so that the mediaType is overridden by a setMediaType option if present.\n\nNow, I can understand that you might want to avoid doing the content sniffing in getMediaType if it\u0027s going to be overridden anyway, so if you like, you could apply all of opts first and check if mediaType is non-empty before calling getMediaType, but I think that would be a premature optimization.",
+      "range": {
+        "startLine": 291,
+        "startChar": 20,
+        "endLine": 291,
+        "endChar": 32
+      },
+      "revId": "337dc3cf52c212a2a05230651b2a14721507c047",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e41a6db3_29a629ca",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 18
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 5815
+      },
+      "writtenOn": "2015-08-19T03:43:22Z",
+      "side": 1,
+      "message": "OK, makes sense. I might take the premature optimization route, given the cost of extra copy and extra goroutine that getMediaType involves :-)",
+      "parentUuid": "449df96e_51fdf4de",
       "range": {
         "startLine": 291,
         "startChar": 20,

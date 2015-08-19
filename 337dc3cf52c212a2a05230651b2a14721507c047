@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "449df96e_11952c97",
+        "filename": "google-api-go-generator/storage_test.go",
+        "patchSetId": 18
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-08-19T01:54:38Z",
+      "side": 1,
+      "message": "s/bogus/overridden/",
+      "range": {
+        "startLine": 69,
+        "startChar": 7,
+        "endLine": 69,
+        "endChar": 21
+      },
+      "revId": "337dc3cf52c212a2a05230651b2a14721507c047",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "449df96e_71bbd82b",
+        "filename": "google-api-go-generator/storage_test.go",
+        "patchSetId": 18
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-08-19T01:54:38Z",
+      "side": 1,
+      "message": "this should be a hard-coded string containing the expected media type.",
+      "range": {
+        "startLine": 72,
+        "startChar": 26,
+        "endLine": 72,
+        "endChar": 62
+      },
+      "revId": "337dc3cf52c212a2a05230651b2a14721507c047",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "449df96e_91bf5c16",
+        "filename": "google-api-go-generator/storage_test.go",
+        "patchSetId": 18
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-08-19T01:54:38Z",
+      "side": 1,
+      "message": "Please extract the body of this for loop into a helper function.  It will be a lot clearer to see the connection between the []UploadOption that you are using and the expected contentType if you explicitly pass them together into a helper.",
+      "range": {
+        "startLine": 74,
+        "startChar": 1,
+        "endLine": 74,
+        "endChar": 31
+      },
+      "revId": "337dc3cf52c212a2a05230651b2a14721507c047",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "449df96e_51b6d446",
+        "filename": "google-api-go-generator/storage_test.go",
+        "patchSetId": 18
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-08-19T01:54:38Z",
+      "side": 1,
+      "message": "Nice.  Thanks.",
+      "range": {
+        "startLine": 198,
+        "startChar": 0,
+        "endLine": 206,
+        "endChar": 61
+      },
+      "revId": "337dc3cf52c212a2a05230651b2a14721507c047",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "449df96e_319a30c6",
+        "filename": "google-api-go-generator/storage_test.go",
+        "patchSetId": 18
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-08-19T01:54:38Z",
+      "side": 1,
+      "message": "s/bogus/overridden/",
+      "range": {
+        "startLine": 271,
+        "startChar": 1,
+        "endLine": 271,
+        "endChar": 6
+      },
+      "revId": "337dc3cf52c212a2a05230651b2a14721507c047",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "449df96e_b1bc6022",
+        "filename": "google-api-go-generator/storage_test.go",
+        "patchSetId": 18
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-08-19T01:54:38Z",
+      "side": 1,
+      "message": "use a string literal here.",
+      "range": {
+        "startLine": 272,
+        "startChar": 14,
+        "endLine": 272,
+        "endChar": 50
+      },
+      "revId": "337dc3cf52c212a2a05230651b2a14721507c047",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "449df96e_d1c9e4be",
+        "filename": "google-api-go-generator/storage_test.go",
+        "patchSetId": 18
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-08-19T01:54:38Z",
+      "side": 1,
+      "message": "here too.",
+      "range": {
+        "startLine": 320,
+        "startChar": 13,
+        "endLine": 320,
+        "endChar": 43
+      },
+      "revId": "337dc3cf52c212a2a05230651b2a14721507c047",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "449df96e_51fdf4de",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 18
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-08-19T01:54:38Z",
+      "side": 1,
+      "message": "I don\u0027t think that getMediaType should be aware of UploadOption.  Logically what should happen here is ConditionallyIncludeMedia should create an uploadOptions and populate its mediaType field with the result of getMediaType(media).  Then it should apply each value from opts, so that the mediaType is overridden by a setMediaType option if present.\n\nNow, I can understand that you might want to avoid doing the content sniffing in getMediaType if it\u0027s going to be overridden anyway, so if you like, you could apply all of opts first and check if mediaType is non-empty before calling getMediaType, but I think that would be a premature optimization.",
+      "range": {
+        "startLine": 291,
+        "startChar": 20,
+        "endLine": 291,
+        "endChar": 32
+      },
+      "revId": "337dc3cf52c212a2a05230651b2a14721507c047",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "449df96e_518fb486",
+        "filename": "googleapi/googleapi_test.go",
+        "patchSetId": 18
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-08-19T01:54:38Z",
+      "side": 1,
+      "message": "please use a string literal content type here.",
+      "range": {
+        "startLine": 608,
+        "startChar": 8,
+        "endLine": 608,
+        "endChar": 44
+      },
+      "revId": "337dc3cf52c212a2a05230651b2a14721507c047",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

@@ -344,6 +344,30 @@
     },
     {
       "key": {
+        "uuid": "449df96e_d1f00407",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 17
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-08-19T01:54:38Z",
+      "side": 1,
+      "message": "It the hypothetical reader returned an error other than io.EOF, it could be returned from getMediaType as an error (assuming that getMediaType were modified to add an error return value).  ConditionallyIncludeMedia could then return early \n\npr, pw :\u003d io.Pipe()\n*bodyp \u003d pr\npw.CloseWithError(fmt.Errorf(\"googleapi: body Copy failed: %v\", errFromGetMediaType))\n\nIn this case, there would be no subsequent Read calls and no errors would be masked.\n\nLet me know if I am misunderstanding you.\n\nRe: your last point: I can\u0027t see any benefit to plumbing the error via the reader.",
+      "parentUuid": "e41a6db3_29b0e929",
+      "range": {
+        "startLine": 402,
+        "startChar": 2,
+        "endLine": 402,
+        "endChar": 68
+      },
+      "revId": "3d02b69e1297c23ee83c3eed11b897b2fb871d42",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e41a6db3_66edeeb1",
         "filename": "googleapi/googleapi.go",
         "patchSetId": 17

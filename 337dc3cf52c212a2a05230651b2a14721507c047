@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "449df96e_34de9e52",
+        "filename": "google-api-go-generator/storage_test.go",
+        "patchSetId": 18
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-08-19T04:59:06Z",
+      "side": 1,
+      "message": "OK.  That\u0027s a reasonable position.  I still prefer being able to see exactly what the expected value is, but the points you list are also advantageous.  I\u0027m fine with you leaving it as is.",
+      "parentUuid": "e41a6db3_894d9d95",
+      "range": {
+        "startLine": 72,
+        "startChar": 26,
+        "endLine": 72,
+        "endChar": 62
+      },
+      "revId": "337dc3cf52c212a2a05230651b2a14721507c047",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "449df96e_91bf5c16",
         "filename": "google-api-go-generator/storage_test.go",
         "patchSetId": 18

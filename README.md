@@ -9,7 +9,8 @@ Due to the auto-generated nature of this collection of libraries, complete APIs 
 As a result, you should always locally vendor any API(s) that your code relies upon.
 
 Announcement email:
-http://groups.google.com/group/golang-nuts/browse_thread/thread/6c7281450be9a21e
+
+   http://groups.google.com/group/golang-nuts/browse_thread/thread/6c7281450be9a21e
 
 Getting started documentation:
 

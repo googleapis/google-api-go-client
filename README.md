@@ -9,11 +9,12 @@ Due to the auto-generated nature of this collection of libraries, complete APIs 
 As a result, you should always locally vendor any API(s) that your code relies upon.
 
 Announcement email:
-http://groups.google.com/group/golang-nuts/browse_thread/thread/6c7281450be9a21e
+
+* http://groups.google.com/group/golang-nuts/browse_thread/thread/6c7281450be9a21e
 
 Getting started documentation:
 
-   https://github.com/google/google-api-go-client/blob/master/GettingStarted.md
+* https://github.com/google/google-api-go-client/blob/master/GettingStarted.md
 
 In summary:
 
@@ -26,14 +27,14 @@ $ go get google.golang.org/api/moderator/v1
 
 For docs, see e.g.:
 
-   https://godoc.org/google.golang.org/api/storage/v1
+* https://godoc.org/google.golang.org/api/storage/v1
 
 The package of a given import is the second-to-last component, before the version number.
 
 For examples, see:
 
-   https://github.com/google/google-api-go-client/tree/master/examples
+* https://github.com/google/google-api-go-client/tree/master/examples
 
 For support, use the golang-nuts@ mailing list:
 
-   https://groups.google.com/group/golang-nuts
+* https://groups.google.com/group/golang-nuts

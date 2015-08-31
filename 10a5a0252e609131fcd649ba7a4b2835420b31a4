@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "641f5e55_15c4d429",
+        "filename": "googleapi/types.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-08-31T16:34:09Z",
+      "side": 1,
+      "message": "make these all one line?\n\n    func Bool(v bool) *bool { return \u0026v }",
+      "revId": "10a5a0252e609131fcd649ba7a4b2835420b31a4",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "641f5e55_35bfd099",
+        "filename": "googleapi/types.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-08-31T16:34:09Z",
+      "side": 1,
+      "message": "why? The caller can do:\n\n   googleapi.Int32(int32(someInt))\n\nI\u0027d delete this one",
+      "revId": "10a5a0252e609131fcd649ba7a4b2835420b31a4",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

@@ -98,7 +98,7 @@ type TasksService struct {
 type Task struct {
 	// Completed: Completion date of the task (as a RFC 3339 timestamp).
 	// This field is omitted if the task has not been completed.
-	Completed string `json:"completed,omitempty"`
+	Completed *string `json:"completed,omitempty"`
 
 	// Deleted: Flag indicating whether the task has been deleted. The
 	// default if False.

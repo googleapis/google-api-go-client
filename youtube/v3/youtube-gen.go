@@ -1143,7 +1143,7 @@ type ChannelSectionSnippet struct {
 	Localized *ChannelSectionLocalization `json:"localized,omitempty"`
 
 	// Position: The position of the channel section in the channel.
-	Position int64 `json:"position,omitempty"`
+	Position *int64 `json:"position,omitempty"`
 
 	// Style: The style of the channel section.
 	//

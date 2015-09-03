@@ -552,7 +552,7 @@ type Dataset struct {
 	// IsPublic: Flag indicating whether or not a dataset is publicly
 	// viewable. If a dataset is not public, it inherits viewing permissions
 	// from its project.
-	IsPublic bool `json:"isPublic,omitempty"`
+	IsPublic *bool `json:"isPublic,omitempty"`
 
 	// Name: The dataset name.
 	Name string `json:"name,omitempty"`

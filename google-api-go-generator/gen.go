@@ -700,6 +700,11 @@ type fieldName struct {
 // an empty value.
 var pointerFields = []fieldName{
 	{api: "compute:v1", schema: "MetadataItems", field: "Value"},
+	{api: "content:v2", schema: "AccountUser", field: "Admin"},
+	{api: "datastore:v1beta2", schema: "Property", field: "Indexed"},
+	{api: "genomics:v1beta2", schema: "Dataset", field: "IsPublic"},
+	{api: "tasks:v1", schema: "Task", field: "Completed"},
+	{api: "youtube:v3", schema: "ChannelSectionSnippet", field: "Position"},
 }
 
 // forcePointerType reports whether p should be represented as a pointer type in its parent schema struct.

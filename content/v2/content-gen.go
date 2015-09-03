@@ -563,7 +563,7 @@ type AccountTaxTaxRule struct {
 
 type AccountUser struct {
 	// Admin: Whether user is an admin.
-	Admin bool `json:"admin,omitempty"`
+	Admin *bool `json:"admin,omitempty"`
 
 	// EmailAddress: User's email address.
 	EmailAddress string `json:"emailAddress,omitempty"`

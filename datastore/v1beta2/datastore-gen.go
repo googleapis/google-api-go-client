@@ -376,7 +376,7 @@ type Property struct {
 	// true; however, you can explicitly set indexed to true if you want.
 	// (An output value never has indexed explicitly set to true.) If a
 	// value is itself an entity, it cannot have indexed set to true.
-	Indexed bool `json:"indexed,omitempty"`
+	Indexed *bool `json:"indexed,omitempty"`
 
 	// IntegerValue: An integer value.
 	IntegerValue int64 `json:"integerValue,omitempty,string"`

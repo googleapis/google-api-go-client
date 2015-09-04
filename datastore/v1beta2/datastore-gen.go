@@ -349,20 +349,20 @@ type PartitionId struct {
 // Property: An entity property.
 type Property struct {
 	// BlobKeyValue: A blob key value.
-	BlobKeyValue string `json:"blobKeyValue,omitempty"`
+	BlobKeyValue *string `json:"blobKeyValue,omitempty"`
 
 	// BlobValue: A blob value. May be a maximum of 1,000,000 bytes. When
 	// indexed is true, may have at most 500 bytes.
-	BlobValue string `json:"blobValue,omitempty"`
+	BlobValue *string `json:"blobValue,omitempty"`
 
 	// BooleanValue: A boolean value.
-	BooleanValue bool `json:"booleanValue,omitempty"`
+	BooleanValue *bool `json:"booleanValue,omitempty"`
 
 	// DateTimeValue: A timestamp value.
-	DateTimeValue string `json:"dateTimeValue,omitempty"`
+	DateTimeValue *string `json:"dateTimeValue,omitempty"`
 
 	// DoubleValue: A double value.
-	DoubleValue float64 `json:"doubleValue,omitempty"`
+	DoubleValue *float64 `json:"doubleValue,omitempty"`
 
 	// EntityValue: An entity value. May have no key. May have a key with an
 	// incomplete key path. May have a reserved/read-only key.
@@ -379,7 +379,7 @@ type Property struct {
 	Indexed *bool `json:"indexed,omitempty"`
 
 	// IntegerValue: An integer value.
-	IntegerValue int64 `json:"integerValue,omitempty,string"`
+	IntegerValue *int64 `json:"integerValue,omitempty,string"`
 
 	// KeyValue: A key value.
 	KeyValue *Key `json:"keyValue,omitempty"`
@@ -394,7 +394,7 @@ type Property struct {
 
 	// StringValue: A UTF-8 encoded string value. When indexed is true, may
 	// have at most 500 characters.
-	StringValue string `json:"stringValue,omitempty"`
+	StringValue *string `json:"stringValue,omitempty"`
 }
 
 // PropertyExpression: A representation of a property in a projection.

@@ -542,6 +542,10 @@ type InstructionOutputCodec interface{}
 
 // Job: Defines a job to be run by the Dataflow service.
 type Job struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// ClientRequestId: Client's unique identifier of the job, re-used by
 	// SDK across retried attempts. If this field is set, the service will
 	// ensure its uniqueness. That is, the request to create a job will fail
@@ -748,6 +752,10 @@ func (s *JobMessage) MarshalJSON() ([]byte, error) {
 // can be queried for them (under the same metric names) from Cloud
 // Monitoring.
 type JobMetrics struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// MetricTime: Timestamp as of which metric values are current.
 	MetricTime string `json:"metricTime,omitempty"`
 
@@ -875,6 +883,10 @@ func (s *LeaseWorkItemRequest) MarshalJSON() ([]byte, error) {
 
 // LeaseWorkItemResponse: Response to a request to lease WorkItems.
 type LeaseWorkItemResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// WorkItems: A list of the leased WorkItems.
 	WorkItems []*WorkItem `json:"workItems,omitempty"`
 
@@ -895,6 +907,10 @@ func (s *LeaseWorkItemResponse) MarshalJSON() ([]byte, error) {
 
 // ListJobMessagesResponse: Response to a request to list job messages.
 type ListJobMessagesResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// JobMessages: Messages in ascending timestamp order.
 	JobMessages []*JobMessage `json:"jobMessages,omitempty"`
 
@@ -921,6 +937,10 @@ func (s *ListJobMessagesResponse) MarshalJSON() ([]byte, error) {
 // may be a partial response, depending on the page size in the
 // ListJobsRequest.
 type ListJobsResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Jobs: A subset of the requested job information.
 	Jobs []*Job `json:"jobs,omitempty"`
 
@@ -1402,6 +1422,10 @@ func (s *ReportWorkItemStatusRequest) MarshalJSON() ([]byte, error) {
 // ReportWorkItemStatusResponse: Response from a request to report the
 // status of WorkItems.
 type ReportWorkItemStatusResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// WorkItemServiceStates: A set of messages indicating the service-side
 	// state for each WorkItem whose status was reported, in the same order
 	// as the WorkItemStatus messages in the ReportWorkItemStatusRequest
@@ -2802,8 +2826,23 @@ func (c *ProjectsJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "dataflow.projects.jobs.create" call.
+// Exactly one of *Job or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Job.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ProjectsJobsCreateCall) Do() (*Job, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -2811,7 +2850,12 @@ func (c *ProjectsJobsCreateCall) Do() (*Job, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Job
+	ret := &Job{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -2899,6 +2943,16 @@ func (c *ProjectsJobsGetCall) Fields(s ...googleapi.Field) *ProjectsJobsGetCall 
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *ProjectsJobsGetCall) IfNoneMatch(entityTag string) *ProjectsJobsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -2925,14 +2979,32 @@ func (c *ProjectsJobsGetCall) doRequest(alt string) (*http.Response, error) {
 		"jobId":     c.jobId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "dataflow.projects.jobs.get" call.
+// Exactly one of *Job or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Job.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ProjectsJobsGetCall) Do() (*Job, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -2940,7 +3012,12 @@ func (c *ProjectsJobsGetCall) Do() (*Job, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Job
+	ret := &Job{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -3023,6 +3100,16 @@ func (c *ProjectsJobsGetMetricsCall) Fields(s ...googleapi.Field) *ProjectsJobsG
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *ProjectsJobsGetMetricsCall) IfNoneMatch(entityTag string) *ProjectsJobsGetMetricsCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -3049,14 +3136,32 @@ func (c *ProjectsJobsGetMetricsCall) doRequest(alt string) (*http.Response, erro
 		"jobId":     c.jobId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "dataflow.projects.jobs.getMetrics" call.
+// Exactly one of *JobMetrics or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *JobMetrics.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ProjectsJobsGetMetricsCall) Do() (*JobMetrics, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -3064,7 +3169,12 @@ func (c *ProjectsJobsGetMetricsCall) Do() (*JobMetrics, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *JobMetrics
+	ret := &JobMetrics{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -3161,6 +3271,16 @@ func (c *ProjectsJobsListCall) Fields(s ...googleapi.Field) *ProjectsJobsListCal
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *ProjectsJobsListCall) IfNoneMatch(entityTag string) *ProjectsJobsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -3192,14 +3312,32 @@ func (c *ProjectsJobsListCall) doRequest(alt string) (*http.Response, error) {
 		"projectId": c.projectId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "dataflow.projects.jobs.list" call.
+// Exactly one of *ListJobsResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *ListJobsResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ProjectsJobsListCall) Do() (*ListJobsResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -3207,7 +3345,12 @@ func (c *ProjectsJobsListCall) Do() (*ListJobsResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *ListJobsResponse
+	ret := &ListJobsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -3323,8 +3466,23 @@ func (c *ProjectsJobsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "dataflow.projects.jobs.update" call.
+// Exactly one of *Job or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Job.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ProjectsJobsUpdateCall) Do() (*Job, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -3332,7 +3490,12 @@ func (c *ProjectsJobsUpdateCall) Do() (*Job, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Job
+	ret := &Job{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -3448,6 +3611,16 @@ func (c *ProjectsJobsMessagesListCall) Fields(s ...googleapi.Field) *ProjectsJob
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *ProjectsJobsMessagesListCall) IfNoneMatch(entityTag string) *ProjectsJobsMessagesListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -3486,14 +3659,32 @@ func (c *ProjectsJobsMessagesListCall) doRequest(alt string) (*http.Response, er
 		"jobId":     c.jobId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "dataflow.projects.jobs.messages.list" call.
+// Exactly one of *ListJobMessagesResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *ListJobMessagesResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ProjectsJobsMessagesListCall) Do() (*ListJobMessagesResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -3501,7 +3692,12 @@ func (c *ProjectsJobsMessagesListCall) Do() (*ListJobMessagesResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *ListJobMessagesResponse
+	ret := &ListJobMessagesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -3637,8 +3833,23 @@ func (c *ProjectsJobsWorkItemsLeaseCall) doRequest(alt string) (*http.Response, 
 	return c.s.client.Do(req)
 }
 
+// Do executes the "dataflow.projects.jobs.workItems.lease" call.
+// Exactly one of *LeaseWorkItemResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *LeaseWorkItemResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ProjectsJobsWorkItemsLeaseCall) Do() (*LeaseWorkItemResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -3646,7 +3857,12 @@ func (c *ProjectsJobsWorkItemsLeaseCall) Do() (*LeaseWorkItemResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *LeaseWorkItemResponse
+	ret := &LeaseWorkItemResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -3752,8 +3968,23 @@ func (c *ProjectsJobsWorkItemsReportStatusCall) doRequest(alt string) (*http.Res
 	return c.s.client.Do(req)
 }
 
+// Do executes the "dataflow.projects.jobs.workItems.reportStatus" call.
+// Exactly one of *ReportWorkItemStatusResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *ReportWorkItemStatusResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ProjectsJobsWorkItemsReportStatusCall) Do() (*ReportWorkItemStatusResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -3761,7 +3992,12 @@ func (c *ProjectsJobsWorkItemsReportStatusCall) Do() (*ReportWorkItemStatusRespo
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *ReportWorkItemStatusResponse
+	ret := &ReportWorkItemStatusResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}

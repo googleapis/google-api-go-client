@@ -329,6 +329,10 @@ func (s *AchievementDefinition) MarshalJSON() ([]byte, error) {
 // AchievementDefinitionsListResponse: This is a JSON template for a
 // list of achievement definition objects.
 type AchievementDefinitionsListResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Items: The achievement definitions.
 	Items []*AchievementDefinition `json:"items,omitempty"`
 
@@ -357,6 +361,10 @@ func (s *AchievementDefinitionsListResponse) MarshalJSON() ([]byte, error) {
 // AchievementIncrementResponse: This is a JSON template for an
 // achievement increment response
 type AchievementIncrementResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// CurrentSteps: The current steps recorded for this incremental
 	// achievement.
 	CurrentSteps int64 `json:"currentSteps,omitempty"`
@@ -387,6 +395,10 @@ func (s *AchievementIncrementResponse) MarshalJSON() ([]byte, error) {
 // AchievementRevealResponse: This is a JSON template for an achievement
 // reveal response
 type AchievementRevealResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// CurrentState: The current state of the achievement for which a reveal
 	// was attempted. This might be UNLOCKED if the achievement was already
 	// unlocked.
@@ -417,6 +429,10 @@ func (s *AchievementRevealResponse) MarshalJSON() ([]byte, error) {
 // AchievementSetStepsAtLeastResponse: This is a JSON template for an
 // achievement set steps at least response.
 type AchievementSetStepsAtLeastResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// CurrentSteps: The current steps recorded for this incremental
 	// achievement.
 	CurrentSteps int64 `json:"currentSteps,omitempty"`
@@ -447,6 +463,10 @@ func (s *AchievementSetStepsAtLeastResponse) MarshalJSON() ([]byte, error) {
 // AchievementUnlockResponse: This is a JSON template for an achievement
 // unlock response
 type AchievementUnlockResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string games#achievementUnlockResponse.
 	Kind string `json:"kind,omitempty"`
@@ -499,6 +519,10 @@ func (s *AchievementUpdateMultipleRequest) MarshalJSON() ([]byte, error) {
 // AchievementUpdateMultipleResponse: This is a JSON template for an
 // achievement unlock response.
 type AchievementUpdateMultipleResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string games#achievementUpdateListResponse.
 	Kind string `json:"kind,omitempty"`
@@ -672,6 +696,10 @@ func (s *AnonymousPlayer) MarshalJSON() ([]byte, error) {
 
 // Application: This is a JSON template for the Application resource.
 type Application struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// AchievementCount: The number of achievements visible to the currently
 	// authenticated player.
 	AchievementCount int64 `json:"achievement_count,omitempty"`
@@ -793,6 +821,10 @@ func (s *Category) MarshalJSON() ([]byte, error) {
 // CategoryListResponse: This is a JSON template for a list of category
 // data objects.
 type CategoryListResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Items: The list of categories with usage data.
 	Items []*Category `json:"items,omitempty"`
 
@@ -937,6 +969,10 @@ func (s *EventDefinition) MarshalJSON() ([]byte, error) {
 // EventDefinitionListResponse: This is a JSON template for a
 // ListDefinitions response.
 type EventDefinitionListResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Items: The event definitions.
 	Items []*EventDefinition `json:"items,omitempty"`
 
@@ -1119,6 +1155,10 @@ func (s *EventUpdateRequest) MarshalJSON() ([]byte, error) {
 // EventUpdateResponse: This is a JSON template for an event period
 // update resource.
 type EventUpdateResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// BatchFailures: Any batch-wide failures which occurred applying
 	// updates.
 	BatchFailures []*EventBatchRecordFailure `json:"batchFailures,omitempty"`
@@ -1393,6 +1433,10 @@ func (s *InstanceWebDetails) MarshalJSON() ([]byte, error) {
 
 // Leaderboard: This is a JSON template for the Leaderboard resource.
 type Leaderboard struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// IconUrl: The icon for the leaderboard.
 	IconUrl string `json:"iconUrl,omitempty"`
 
@@ -1491,6 +1535,10 @@ func (s *LeaderboardEntry) MarshalJSON() ([]byte, error) {
 // LeaderboardListResponse: This is a JSON template for a list of
 // leaderboard objects.
 type LeaderboardListResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Items: The leaderboards.
 	Items []*Leaderboard `json:"items,omitempty"`
 
@@ -1553,6 +1601,10 @@ func (s *LeaderboardScoreRank) MarshalJSON() ([]byte, error) {
 
 // LeaderboardScores: This is a JSON template for a ListScores response.
 type LeaderboardScores struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Items: The scores in the leaderboard.
 	Items []*LeaderboardEntry `json:"items,omitempty"`
 
@@ -1594,6 +1646,10 @@ func (s *LeaderboardScores) MarshalJSON() ([]byte, error) {
 // MetagameConfig: This is a JSON template for the metagame config
 // resource
 type MetagameConfig struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// CurrentVersion: Current version of the metagame configuration data.
 	// When this data is updated, the version number will be increased by
 	// one.
@@ -1823,6 +1879,10 @@ func (s *Played) MarshalJSON() ([]byte, error) {
 
 // Player: This is a JSON template for a Player resource.
 type Player struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// AvatarImageUrl: The base URL for the image that represents the
 	// player.
 	AvatarImageUrl string `json:"avatarImageUrl,omitempty"`
@@ -1945,6 +2005,10 @@ func (s *PlayerAchievement) MarshalJSON() ([]byte, error) {
 // PlayerAchievementListResponse: This is a JSON template for a list of
 // achievement objects.
 type PlayerAchievementListResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Items: The achievements.
 	Items []*PlayerAchievement `json:"items,omitempty"`
 
@@ -2008,6 +2072,10 @@ func (s *PlayerEvent) MarshalJSON() ([]byte, error) {
 // PlayerEventListResponse: This is a JSON template for a ListByPlayer
 // response.
 type PlayerEventListResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Items: The player events.
 	Items []*PlayerEvent `json:"items,omitempty"`
 
@@ -2129,6 +2197,10 @@ func (s *PlayerLeaderboardScore) MarshalJSON() ([]byte, error) {
 // PlayerLeaderboardScoreListResponse: This is a JSON template for a
 // list of player leaderboard scores.
 type PlayerLeaderboardScoreListResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Items: The leaderboard scores.
 	Items []*PlayerLeaderboardScore `json:"items,omitempty"`
 
@@ -2191,6 +2263,10 @@ func (s *PlayerLevel) MarshalJSON() ([]byte, error) {
 // PlayerListResponse: This is a JSON template for a third party player
 // list response.
 type PlayerListResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Items: The players.
 	Items []*Player `json:"items,omitempty"`
 
@@ -2258,6 +2334,10 @@ func (s *PlayerScore) MarshalJSON() ([]byte, error) {
 // PlayerScoreListResponse: This is a JSON template for a list of score
 // submission statuses.
 type PlayerScoreListResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string games#playerScoreListResponse.
 	Kind string `json:"kind,omitempty"`
@@ -2283,6 +2363,10 @@ func (s *PlayerScoreListResponse) MarshalJSON() ([]byte, error) {
 // PlayerScoreResponse: This is a JSON template for a list of
 // leaderboard entry resources.
 type PlayerScoreResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// BeatenScoreTimeSpans: The time spans where the submitted score is
 	// better than the existing score for that time span.
 	// Possible values are:
@@ -2441,6 +2525,10 @@ func (s *PushTokenIdIos) MarshalJSON() ([]byte, error) {
 
 // Quest: This is a JSON template for a Quest resource.
 type Quest struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// AcceptedTimestampMillis: The timestamp at which the user accepted the
 	// quest in milliseconds since the epoch in UTC. Only present if the
 	// player has accepted the quest.
@@ -2605,6 +2693,10 @@ func (s *QuestCriterion) MarshalJSON() ([]byte, error) {
 // QuestListResponse: This is a JSON template for a list of quest
 // objects.
 type QuestListResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Items: The quests.
 	Items []*Quest `json:"items,omitempty"`
 
@@ -2677,6 +2769,10 @@ func (s *QuestMilestone) MarshalJSON() ([]byte, error) {
 // RevisionCheckResponse: This is a JSON template for the result of
 // checking a revision.
 type RevisionCheckResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// ApiVersion: The version of the API this client revision should use
 	// when calling API methods.
 	ApiVersion string `json:"apiVersion,omitempty"`
@@ -2711,6 +2807,10 @@ func (s *RevisionCheckResponse) MarshalJSON() ([]byte, error) {
 
 // Room: This is a JSON template for a room resource object.
 type Room struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// ApplicationId: The ID of the application being played.
 	ApplicationId string `json:"applicationId,omitempty"`
 
@@ -3063,6 +3163,10 @@ func (s *RoomLeaveRequest) MarshalJSON() ([]byte, error) {
 
 // RoomList: This is a JSON template for a list of rooms.
 type RoomList struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Items: The rooms.
 	Items []*Room `json:"items,omitempty"`
 
@@ -3282,6 +3386,10 @@ func (s *RoomParticipant) MarshalJSON() ([]byte, error) {
 // RoomStatus: This is a JSON template for the status of a room that the
 // player has joined.
 type RoomStatus struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// AutoMatchingStatus: Auto-matching status for this room. Not set if
 	// the room is not currently in the automatching queue.
 	AutoMatchingStatus *RoomAutoMatchStatus `json:"autoMatchingStatus,omitempty"`
@@ -3370,6 +3478,10 @@ func (s *ScoreSubmission) MarshalJSON() ([]byte, error) {
 
 // Snapshot: This is a JSON template for an snapshot object.
 type Snapshot struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// CoverImage: The cover image of this snapshot. May be absent if there
 	// is no image.
 	CoverImage *SnapshotImage `json:"coverImage,omitempty"`
@@ -3464,6 +3576,10 @@ func (s *SnapshotImage) MarshalJSON() ([]byte, error) {
 // SnapshotListResponse: This is a JSON template for a list of snapshot
 // objects.
 type SnapshotListResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Items: The snapshots.
 	Items []*Snapshot `json:"items,omitempty"`
 
@@ -3528,6 +3644,10 @@ func (s *TurnBasedAutoMatchingCriteria) MarshalJSON() ([]byte, error) {
 // TurnBasedMatch: This is a JSON template for a turn-based match
 // resource object.
 type TurnBasedMatch struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// ApplicationId: The ID of the application being played.
 	ApplicationId string `json:"applicationId,omitempty"`
 
@@ -3738,6 +3858,10 @@ func (s *TurnBasedMatchDataRequest) MarshalJSON() ([]byte, error) {
 // TurnBasedMatchList: This is a JSON template for a list of turn-based
 // matches.
 type TurnBasedMatchList struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Items: The matches.
 	Items []*TurnBasedMatch `json:"items,omitempty"`
 
@@ -3856,6 +3980,10 @@ func (s *TurnBasedMatchParticipant) MarshalJSON() ([]byte, error) {
 // TurnBasedMatchRematch: This is a JSON template for a rematch
 // response.
 type TurnBasedMatchRematch struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string games#turnBasedMatchRematch.
 	Kind string `json:"kind,omitempty"`
@@ -3917,6 +4045,10 @@ func (s *TurnBasedMatchResults) MarshalJSON() ([]byte, error) {
 // TurnBasedMatchSync: This is a JSON template for a list of turn-based
 // matches returned from a sync.
 type TurnBasedMatchSync struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Items: The matches.
 	Items []*TurnBasedMatch `json:"items,omitempty"`
 
@@ -4032,6 +4164,16 @@ func (c *AchievementDefinitionsListCall) Fields(s ...googleapi.Field) *Achieveme
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *AchievementDefinitionsListCall) IfNoneMatch(entityTag string) *AchievementDefinitionsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -4061,14 +4203,32 @@ func (c *AchievementDefinitionsListCall) doRequest(alt string) (*http.Response, 
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "games.achievementDefinitions.list" call.
+// Exactly one of *AchievementDefinitionsListResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *AchievementDefinitionsListResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AchievementDefinitionsListCall) Do() (*AchievementDefinitionsListResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -4076,7 +4236,12 @@ func (c *AchievementDefinitionsListCall) Do() (*AchievementDefinitionsListRespon
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *AchievementDefinitionsListResponse
+	ret := &AchievementDefinitionsListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -4185,8 +4350,23 @@ func (c *AchievementsIncrementCall) doRequest(alt string) (*http.Response, error
 	return c.s.client.Do(req)
 }
 
+// Do executes the "games.achievements.increment" call.
+// Exactly one of *AchievementIncrementResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *AchievementIncrementResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AchievementsIncrementCall) Do() (*AchievementIncrementResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -4194,7 +4374,12 @@ func (c *AchievementsIncrementCall) Do() (*AchievementIncrementResponse, error) 
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *AchievementIncrementResponse
+	ret := &AchievementIncrementResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -4303,6 +4488,16 @@ func (c *AchievementsListCall) Fields(s ...googleapi.Field) *AchievementsListCal
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *AchievementsListCall) IfNoneMatch(entityTag string) *AchievementsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -4337,14 +4532,32 @@ func (c *AchievementsListCall) doRequest(alt string) (*http.Response, error) {
 		"playerId": c.playerId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "games.achievements.list" call.
+// Exactly one of *PlayerAchievementListResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *PlayerAchievementListResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AchievementsListCall) Do() (*PlayerAchievementListResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -4352,7 +4565,12 @@ func (c *AchievementsListCall) Do() (*PlayerAchievementListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *PlayerAchievementListResponse
+	ret := &PlayerAchievementListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -4472,8 +4690,23 @@ func (c *AchievementsRevealCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "games.achievements.reveal" call.
+// Exactly one of *AchievementRevealResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *AchievementRevealResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AchievementsRevealCall) Do() (*AchievementRevealResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -4481,7 +4714,12 @@ func (c *AchievementsRevealCall) Do() (*AchievementRevealResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *AchievementRevealResponse
+	ret := &AchievementRevealResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -4571,8 +4809,23 @@ func (c *AchievementsSetStepsAtLeastCall) doRequest(alt string) (*http.Response,
 	return c.s.client.Do(req)
 }
 
+// Do executes the "games.achievements.setStepsAtLeast" call.
+// Exactly one of *AchievementSetStepsAtLeastResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *AchievementSetStepsAtLeastResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AchievementsSetStepsAtLeastCall) Do() (*AchievementSetStepsAtLeastResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -4580,7 +4833,12 @@ func (c *AchievementsSetStepsAtLeastCall) Do() (*AchievementSetStepsAtLeastRespo
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *AchievementSetStepsAtLeastResponse
+	ret := &AchievementSetStepsAtLeastResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -4674,8 +4932,23 @@ func (c *AchievementsUnlockCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "games.achievements.unlock" call.
+// Exactly one of *AchievementUnlockResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *AchievementUnlockResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AchievementsUnlockCall) Do() (*AchievementUnlockResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -4683,7 +4956,12 @@ func (c *AchievementsUnlockCall) Do() (*AchievementUnlockResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *AchievementUnlockResponse
+	ret := &AchievementUnlockResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -4772,8 +5050,23 @@ func (c *AchievementsUpdateMultipleCall) doRequest(alt string) (*http.Response, 
 	return c.s.client.Do(req)
 }
 
+// Do executes the "games.achievements.updateMultiple" call.
+// Exactly one of *AchievementUpdateMultipleResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *AchievementUpdateMultipleResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AchievementsUpdateMultipleCall) Do() (*AchievementUpdateMultipleResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -4781,7 +5074,12 @@ func (c *AchievementsUpdateMultipleCall) Do() (*AchievementUpdateMultipleRespons
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *AchievementUpdateMultipleResponse
+	ret := &AchievementUpdateMultipleResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -4852,6 +5150,16 @@ func (c *ApplicationsGetCall) Fields(s ...googleapi.Field) *ApplicationsGetCall 
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *ApplicationsGetCall) IfNoneMatch(entityTag string) *ApplicationsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -4880,14 +5188,32 @@ func (c *ApplicationsGetCall) doRequest(alt string) (*http.Response, error) {
 		"applicationId": c.applicationId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "games.applications.get" call.
+// Exactly one of *Application or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Application.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ApplicationsGetCall) Do() (*Application, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -4895,7 +5221,12 @@ func (c *ApplicationsGetCall) Do() (*Application, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Application
+	ret := &Application{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -4996,6 +5327,7 @@ func (c *ApplicationsPlayedCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "games.applications.played" call.
 func (c *ApplicationsPlayedCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -5065,6 +5397,16 @@ func (c *EventsListByPlayerCall) Fields(s ...googleapi.Field) *EventsListByPlaye
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *EventsListByPlayerCall) IfNoneMatch(entityTag string) *EventsListByPlayerCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -5094,14 +5436,32 @@ func (c *EventsListByPlayerCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "games.events.listByPlayer" call.
+// Exactly one of *PlayerEventListResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *PlayerEventListResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *EventsListByPlayerCall) Do() (*PlayerEventListResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -5109,7 +5469,12 @@ func (c *EventsListByPlayerCall) Do() (*PlayerEventListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *PlayerEventListResponse
+	ret := &PlayerEventListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -5196,6 +5561,16 @@ func (c *EventsListDefinitionsCall) Fields(s ...googleapi.Field) *EventsListDefi
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *EventsListDefinitionsCall) IfNoneMatch(entityTag string) *EventsListDefinitionsCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -5225,14 +5600,32 @@ func (c *EventsListDefinitionsCall) doRequest(alt string) (*http.Response, error
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "games.events.listDefinitions" call.
+// Exactly one of *EventDefinitionListResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *EventDefinitionListResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *EventsListDefinitionsCall) Do() (*EventDefinitionListResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -5240,7 +5633,12 @@ func (c *EventsListDefinitionsCall) Do() (*EventDefinitionListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *EventDefinitionListResponse
+	ret := &EventDefinitionListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -5348,8 +5746,23 @@ func (c *EventsRecordCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "games.events.record" call.
+// Exactly one of *EventUpdateResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *EventUpdateResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *EventsRecordCall) Do() (*EventUpdateResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -5357,7 +5770,12 @@ func (c *EventsRecordCall) Do() (*EventUpdateResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *EventUpdateResponse
+	ret := &EventUpdateResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -5419,6 +5837,16 @@ func (c *LeaderboardsGetCall) Fields(s ...googleapi.Field) *LeaderboardsGetCall 
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *LeaderboardsGetCall) IfNoneMatch(entityTag string) *LeaderboardsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -5444,14 +5872,32 @@ func (c *LeaderboardsGetCall) doRequest(alt string) (*http.Response, error) {
 		"leaderboardId": c.leaderboardId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "games.leaderboards.get" call.
+// Exactly one of *Leaderboard or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Leaderboard.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *LeaderboardsGetCall) Do() (*Leaderboard, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -5459,7 +5905,12 @@ func (c *LeaderboardsGetCall) Do() (*Leaderboard, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Leaderboard
+	ret := &Leaderboard{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -5541,6 +5992,16 @@ func (c *LeaderboardsListCall) Fields(s ...googleapi.Field) *LeaderboardsListCal
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *LeaderboardsListCall) IfNoneMatch(entityTag string) *LeaderboardsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -5570,14 +6031,32 @@ func (c *LeaderboardsListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "games.leaderboards.list" call.
+// Exactly one of *LeaderboardListResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *LeaderboardListResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *LeaderboardsListCall) Do() (*LeaderboardListResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -5585,7 +6064,12 @@ func (c *LeaderboardsListCall) Do() (*LeaderboardListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *LeaderboardListResponse
+	ret := &LeaderboardListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -5649,6 +6133,16 @@ func (c *MetagameGetMetagameConfigCall) Fields(s ...googleapi.Field) *MetagameGe
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *MetagameGetMetagameConfigCall) IfNoneMatch(entityTag string) *MetagameGetMetagameConfigCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -5669,14 +6163,32 @@ func (c *MetagameGetMetagameConfigCall) doRequest(alt string) (*http.Response, e
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "games.metagame.getMetagameConfig" call.
+// Exactly one of *MetagameConfig or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *MetagameConfig.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *MetagameGetMetagameConfigCall) Do() (*MetagameConfig, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -5684,7 +6196,12 @@ func (c *MetagameGetMetagameConfigCall) Do() (*MetagameConfig, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *MetagameConfig
+	ret := &MetagameConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -5755,6 +6272,16 @@ func (c *MetagameListCategoriesByPlayerCall) Fields(s ...googleapi.Field) *Metag
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *MetagameListCategoriesByPlayerCall) IfNoneMatch(entityTag string) *MetagameListCategoriesByPlayerCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -5787,14 +6314,32 @@ func (c *MetagameListCategoriesByPlayerCall) doRequest(alt string) (*http.Respon
 		"collection": c.collection,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "games.metagame.listCategoriesByPlayer" call.
+// Exactly one of *CategoryListResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *CategoryListResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *MetagameListCategoriesByPlayerCall) Do() (*CategoryListResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -5802,7 +6347,12 @@ func (c *MetagameListCategoriesByPlayerCall) Do() (*CategoryListResponse, error)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *CategoryListResponse
+	ret := &CategoryListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -5897,6 +6447,16 @@ func (c *PlayersGetCall) Fields(s ...googleapi.Field) *PlayersGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *PlayersGetCall) IfNoneMatch(entityTag string) *PlayersGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -5922,14 +6482,32 @@ func (c *PlayersGetCall) doRequest(alt string) (*http.Response, error) {
 		"playerId": c.playerId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "games.players.get" call.
+// Exactly one of *Player or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Player.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *PlayersGetCall) Do() (*Player, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -5937,7 +6515,12 @@ func (c *PlayersGetCall) Do() (*Player, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Player
+	ret := &Player{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -6022,6 +6605,16 @@ func (c *PlayersListCall) Fields(s ...googleapi.Field) *PlayersListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *PlayersListCall) IfNoneMatch(entityTag string) *PlayersListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -6053,14 +6646,32 @@ func (c *PlayersListCall) doRequest(alt string) (*http.Response, error) {
 		"collection": c.collection,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "games.players.list" call.
+// Exactly one of *PlayerListResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *PlayerListResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *PlayersListCall) Do() (*PlayerListResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -6068,7 +6679,12 @@ func (c *PlayersListCall) Do() (*PlayerListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *PlayerListResponse
+	ret := &PlayerListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -6183,6 +6799,7 @@ func (c *PushtokensRemoveCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "games.pushtokens.remove" call.
 func (c *PushtokensRemoveCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -6265,6 +6882,7 @@ func (c *PushtokensUpdateCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "games.pushtokens.update" call.
 func (c *PushtokensUpdateCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -6351,6 +6969,7 @@ func (c *QuestMilestonesClaimCall) doRequest(alt string) (*http.Response, error)
 	return c.s.client.Do(req)
 }
 
+// Do executes the "games.questMilestones.claim" call.
 func (c *QuestMilestonesClaimCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -6463,8 +7082,23 @@ func (c *QuestsAcceptCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "games.quests.accept" call.
+// Exactly one of *Quest or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Quest.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *QuestsAcceptCall) Do() (*Quest, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -6472,7 +7106,12 @@ func (c *QuestsAcceptCall) Do() (*Quest, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Quest
+	ret := &Quest{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -6558,6 +7197,16 @@ func (c *QuestsListCall) Fields(s ...googleapi.Field) *QuestsListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *QuestsListCall) IfNoneMatch(entityTag string) *QuestsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -6589,14 +7238,32 @@ func (c *QuestsListCall) doRequest(alt string) (*http.Response, error) {
 		"playerId": c.playerId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "games.quests.list" call.
+// Exactly one of *QuestListResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *QuestListResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *QuestsListCall) Do() (*QuestListResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -6604,7 +7271,12 @@ func (c *QuestsListCall) Do() (*QuestListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *QuestListResponse
+	ret := &QuestListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -6678,6 +7350,16 @@ func (c *RevisionsCheckCall) Fields(s ...googleapi.Field) *RevisionsCheckCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *RevisionsCheckCall) IfNoneMatch(entityTag string) *RevisionsCheckCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -6699,14 +7381,32 @@ func (c *RevisionsCheckCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "games.revisions.check" call.
+// Exactly one of *RevisionCheckResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *RevisionCheckResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *RevisionsCheckCall) Do() (*RevisionCheckResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -6714,7 +7414,12 @@ func (c *RevisionsCheckCall) Do() (*RevisionCheckResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *RevisionCheckResponse
+	ret := &RevisionCheckResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -6813,8 +7518,23 @@ func (c *RoomsCreateCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "games.rooms.create" call.
+// Exactly one of *Room or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Room.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *RoomsCreateCall) Do() (*Room, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -6822,7 +7542,12 @@ func (c *RoomsCreateCall) Do() (*Room, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Room
+	ret := &Room{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -6916,8 +7641,23 @@ func (c *RoomsDeclineCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "games.rooms.decline" call.
+// Exactly one of *Room or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Room.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *RoomsDeclineCall) Do() (*Room, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -6925,7 +7665,12 @@ func (c *RoomsDeclineCall) Do() (*Room, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Room
+	ret := &Room{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -7015,6 +7760,7 @@ func (c *RoomsDismissCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "games.rooms.dismiss" call.
 func (c *RoomsDismissCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -7080,6 +7826,16 @@ func (c *RoomsGetCall) Fields(s ...googleapi.Field) *RoomsGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *RoomsGetCall) IfNoneMatch(entityTag string) *RoomsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -7105,14 +7861,32 @@ func (c *RoomsGetCall) doRequest(alt string) (*http.Response, error) {
 		"roomId": c.roomId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "games.rooms.get" call.
+// Exactly one of *Room or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Room.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *RoomsGetCall) Do() (*Room, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -7120,7 +7894,12 @@ func (c *RoomsGetCall) Do() (*Room, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Room
+	ret := &Room{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -7228,8 +8007,23 @@ func (c *RoomsJoinCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "games.rooms.join" call.
+// Exactly one of *Room or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Room.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *RoomsJoinCall) Do() (*Room, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -7237,7 +8031,12 @@ func (c *RoomsJoinCall) Do() (*Room, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Room
+	ret := &Room{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -7348,8 +8147,23 @@ func (c *RoomsLeaveCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "games.rooms.leave" call.
+// Exactly one of *Room or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Room.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *RoomsLeaveCall) Do() (*Room, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -7357,7 +8171,12 @@ func (c *RoomsLeaveCall) Do() (*Room, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Room
+	ret := &Room{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -7442,6 +8261,16 @@ func (c *RoomsListCall) Fields(s ...googleapi.Field) *RoomsListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *RoomsListCall) IfNoneMatch(entityTag string) *RoomsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -7471,14 +8300,32 @@ func (c *RoomsListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "games.rooms.list" call.
+// Exactly one of *RoomList or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *RoomList.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *RoomsListCall) Do() (*RoomList, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -7486,7 +8333,12 @@ func (c *RoomsListCall) Do() (*RoomList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *RoomList
+	ret := &RoomList{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -7599,8 +8451,23 @@ func (c *RoomsReportStatusCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "games.rooms.reportStatus" call.
+// Exactly one of *RoomStatus or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *RoomStatus.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *RoomsReportStatusCall) Do() (*RoomStatus, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -7608,7 +8475,12 @@ func (c *RoomsReportStatusCall) Do() (*RoomStatus, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *RoomStatus
+	ret := &RoomStatus{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -7718,6 +8590,16 @@ func (c *ScoresGetCall) Fields(s ...googleapi.Field) *ScoresGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *ScoresGetCall) IfNoneMatch(entityTag string) *ScoresGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -7754,14 +8636,32 @@ func (c *ScoresGetCall) doRequest(alt string) (*http.Response, error) {
 		"timeSpan":      c.timeSpan,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "games.scores.get" call.
+// Exactly one of *PlayerLeaderboardScoreListResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *PlayerLeaderboardScoreListResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ScoresGetCall) Do() (*PlayerLeaderboardScoreListResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -7769,7 +8669,12 @@ func (c *ScoresGetCall) Do() (*PlayerLeaderboardScoreListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *PlayerLeaderboardScoreListResponse
+	ret := &PlayerLeaderboardScoreListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -7911,6 +8816,16 @@ func (c *ScoresListCall) Fields(s ...googleapi.Field) *ScoresListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *ScoresListCall) IfNoneMatch(entityTag string) *ScoresListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -7944,14 +8859,32 @@ func (c *ScoresListCall) doRequest(alt string) (*http.Response, error) {
 		"collection":    c.collection,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "games.scores.list" call.
+// Exactly one of *LeaderboardScores or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *LeaderboardScores.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ScoresListCall) Do() (*LeaderboardScores, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -7959,7 +8892,12 @@ func (c *ScoresListCall) Do() (*LeaderboardScores, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *LeaderboardScores
+	ret := &LeaderboardScores{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -8111,6 +9049,16 @@ func (c *ScoresListWindowCall) Fields(s ...googleapi.Field) *ScoresListWindowCal
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *ScoresListWindowCall) IfNoneMatch(entityTag string) *ScoresListWindowCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -8150,14 +9098,32 @@ func (c *ScoresListWindowCall) doRequest(alt string) (*http.Response, error) {
 		"collection":    c.collection,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "games.scores.listWindow" call.
+// Exactly one of *LeaderboardScores or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *LeaderboardScores.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ScoresListWindowCall) Do() (*LeaderboardScores, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -8165,7 +9131,12 @@ func (c *ScoresListWindowCall) Do() (*LeaderboardScores, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *LeaderboardScores
+	ret := &LeaderboardScores{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -8335,8 +9306,23 @@ func (c *ScoresSubmitCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "games.scores.submit" call.
+// Exactly one of *PlayerScoreResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *PlayerScoreResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ScoresSubmitCall) Do() (*PlayerScoreResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -8344,7 +9330,12 @@ func (c *ScoresSubmitCall) Do() (*PlayerScoreResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *PlayerScoreResponse
+	ret := &PlayerScoreResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -8461,8 +9452,23 @@ func (c *ScoresSubmitMultipleCall) doRequest(alt string) (*http.Response, error)
 	return c.s.client.Do(req)
 }
 
+// Do executes the "games.scores.submitMultiple" call.
+// Exactly one of *PlayerScoreListResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *PlayerScoreListResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ScoresSubmitMultipleCall) Do() (*PlayerScoreListResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -8470,7 +9476,12 @@ func (c *ScoresSubmitMultipleCall) Do() (*PlayerScoreListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *PlayerScoreListResponse
+	ret := &PlayerScoreListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -8532,6 +9543,16 @@ func (c *SnapshotsGetCall) Fields(s ...googleapi.Field) *SnapshotsGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *SnapshotsGetCall) IfNoneMatch(entityTag string) *SnapshotsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -8557,14 +9578,32 @@ func (c *SnapshotsGetCall) doRequest(alt string) (*http.Response, error) {
 		"snapshotId": c.snapshotId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "games.snapshots.get" call.
+// Exactly one of *Snapshot or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Snapshot.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *SnapshotsGetCall) Do() (*Snapshot, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -8572,7 +9611,12 @@ func (c *SnapshotsGetCall) Do() (*Snapshot, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Snapshot
+	ret := &Snapshot{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -8658,6 +9702,16 @@ func (c *SnapshotsListCall) Fields(s ...googleapi.Field) *SnapshotsListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *SnapshotsListCall) IfNoneMatch(entityTag string) *SnapshotsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -8689,14 +9743,32 @@ func (c *SnapshotsListCall) doRequest(alt string) (*http.Response, error) {
 		"playerId": c.playerId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "games.snapshots.list" call.
+// Exactly one of *SnapshotListResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *SnapshotListResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *SnapshotsListCall) Do() (*SnapshotListResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -8704,7 +9776,12 @@ func (c *SnapshotsListCall) Do() (*SnapshotListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *SnapshotListResponse
+	ret := &SnapshotListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -8807,6 +9884,7 @@ func (c *TurnBasedMatchesCancelCall) doRequest(alt string) (*http.Response, erro
 	return c.s.client.Do(req)
 }
 
+// Do executes the "games.turnBasedMatches.cancel" call.
 func (c *TurnBasedMatchesCancelCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -8907,8 +9985,23 @@ func (c *TurnBasedMatchesCreateCall) doRequest(alt string) (*http.Response, erro
 	return c.s.client.Do(req)
 }
 
+// Do executes the "games.turnBasedMatches.create" call.
+// Exactly one of *TurnBasedMatch or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *TurnBasedMatch.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *TurnBasedMatchesCreateCall) Do() (*TurnBasedMatch, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -8916,7 +10009,12 @@ func (c *TurnBasedMatchesCreateCall) Do() (*TurnBasedMatch, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *TurnBasedMatch
+	ret := &TurnBasedMatch{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -9009,8 +10107,23 @@ func (c *TurnBasedMatchesDeclineCall) doRequest(alt string) (*http.Response, err
 	return c.s.client.Do(req)
 }
 
+// Do executes the "games.turnBasedMatches.decline" call.
+// Exactly one of *TurnBasedMatch or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *TurnBasedMatch.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *TurnBasedMatchesDeclineCall) Do() (*TurnBasedMatch, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -9018,7 +10131,12 @@ func (c *TurnBasedMatchesDeclineCall) Do() (*TurnBasedMatch, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *TurnBasedMatch
+	ret := &TurnBasedMatch{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -9109,6 +10227,7 @@ func (c *TurnBasedMatchesDismissCall) doRequest(alt string) (*http.Response, err
 	return c.s.client.Do(req)
 }
 
+// Do executes the "games.turnBasedMatches.dismiss" call.
 func (c *TurnBasedMatchesDismissCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -9215,8 +10334,23 @@ func (c *TurnBasedMatchesFinishCall) doRequest(alt string) (*http.Response, erro
 	return c.s.client.Do(req)
 }
 
+// Do executes the "games.turnBasedMatches.finish" call.
+// Exactly one of *TurnBasedMatch or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *TurnBasedMatch.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *TurnBasedMatchesFinishCall) Do() (*TurnBasedMatch, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -9224,7 +10358,12 @@ func (c *TurnBasedMatchesFinishCall) Do() (*TurnBasedMatch, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *TurnBasedMatch
+	ret := &TurnBasedMatch{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -9302,6 +10441,16 @@ func (c *TurnBasedMatchesGetCall) Fields(s ...googleapi.Field) *TurnBasedMatches
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *TurnBasedMatchesGetCall) IfNoneMatch(entityTag string) *TurnBasedMatchesGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -9330,14 +10479,32 @@ func (c *TurnBasedMatchesGetCall) doRequest(alt string) (*http.Response, error) 
 		"matchId": c.matchId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "games.turnBasedMatches.get" call.
+// Exactly one of *TurnBasedMatch or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *TurnBasedMatch.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *TurnBasedMatchesGetCall) Do() (*TurnBasedMatch, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -9345,7 +10512,12 @@ func (c *TurnBasedMatchesGetCall) Do() (*TurnBasedMatch, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *TurnBasedMatch
+	ret := &TurnBasedMatch{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -9449,8 +10621,23 @@ func (c *TurnBasedMatchesJoinCall) doRequest(alt string) (*http.Response, error)
 	return c.s.client.Do(req)
 }
 
+// Do executes the "games.turnBasedMatches.join" call.
+// Exactly one of *TurnBasedMatch or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *TurnBasedMatch.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *TurnBasedMatchesJoinCall) Do() (*TurnBasedMatch, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -9458,7 +10645,12 @@ func (c *TurnBasedMatchesJoinCall) Do() (*TurnBasedMatch, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *TurnBasedMatch
+	ret := &TurnBasedMatch{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -9558,8 +10750,23 @@ func (c *TurnBasedMatchesLeaveCall) doRequest(alt string) (*http.Response, error
 	return c.s.client.Do(req)
 }
 
+// Do executes the "games.turnBasedMatches.leave" call.
+// Exactly one of *TurnBasedMatch or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *TurnBasedMatch.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *TurnBasedMatchesLeaveCall) Do() (*TurnBasedMatch, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -9567,7 +10774,12 @@ func (c *TurnBasedMatchesLeaveCall) Do() (*TurnBasedMatch, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *TurnBasedMatch
+	ret := &TurnBasedMatch{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -9683,8 +10895,23 @@ func (c *TurnBasedMatchesLeaveTurnCall) doRequest(alt string) (*http.Response, e
 	return c.s.client.Do(req)
 }
 
+// Do executes the "games.turnBasedMatches.leaveTurn" call.
+// Exactly one of *TurnBasedMatch or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *TurnBasedMatch.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *TurnBasedMatchesLeaveTurnCall) Do() (*TurnBasedMatch, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -9692,7 +10919,12 @@ func (c *TurnBasedMatchesLeaveTurnCall) Do() (*TurnBasedMatch, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *TurnBasedMatch
+	ret := &TurnBasedMatch{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -9807,6 +11039,16 @@ func (c *TurnBasedMatchesListCall) Fields(s ...googleapi.Field) *TurnBasedMatche
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *TurnBasedMatchesListCall) IfNoneMatch(entityTag string) *TurnBasedMatchesListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -9842,14 +11084,32 @@ func (c *TurnBasedMatchesListCall) doRequest(alt string) (*http.Response, error)
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "games.turnBasedMatches.list" call.
+// Exactly one of *TurnBasedMatchList or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *TurnBasedMatchList.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *TurnBasedMatchesListCall) Do() (*TurnBasedMatchList, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -9857,7 +11117,12 @@ func (c *TurnBasedMatchesListCall) Do() (*TurnBasedMatchList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *TurnBasedMatchList
+	ret := &TurnBasedMatchList{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -9988,8 +11253,23 @@ func (c *TurnBasedMatchesRematchCall) doRequest(alt string) (*http.Response, err
 	return c.s.client.Do(req)
 }
 
+// Do executes the "games.turnBasedMatches.rematch" call.
+// Exactly one of *TurnBasedMatchRematch or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *TurnBasedMatchRematch.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *TurnBasedMatchesRematchCall) Do() (*TurnBasedMatchRematch, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -9997,7 +11277,12 @@ func (c *TurnBasedMatchesRematchCall) Do() (*TurnBasedMatchRematch, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *TurnBasedMatchRematch
+	ret := &TurnBasedMatchRematch{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -10108,6 +11393,16 @@ func (c *TurnBasedMatchesSyncCall) Fields(s ...googleapi.Field) *TurnBasedMatche
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *TurnBasedMatchesSyncCall) IfNoneMatch(entityTag string) *TurnBasedMatchesSyncCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -10143,14 +11438,32 @@ func (c *TurnBasedMatchesSyncCall) doRequest(alt string) (*http.Response, error)
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "games.turnBasedMatches.sync" call.
+// Exactly one of *TurnBasedMatchSync or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *TurnBasedMatchSync.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *TurnBasedMatchesSyncCall) Do() (*TurnBasedMatchSync, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -10158,7 +11471,12 @@ func (c *TurnBasedMatchesSyncCall) Do() (*TurnBasedMatchSync, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *TurnBasedMatchSync
+	ret := &TurnBasedMatchSync{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -10282,8 +11600,23 @@ func (c *TurnBasedMatchesTakeTurnCall) doRequest(alt string) (*http.Response, er
 	return c.s.client.Do(req)
 }
 
+// Do executes the "games.turnBasedMatches.takeTurn" call.
+// Exactly one of *TurnBasedMatch or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *TurnBasedMatch.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *TurnBasedMatchesTakeTurnCall) Do() (*TurnBasedMatch, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -10291,7 +11624,12 @@ func (c *TurnBasedMatchesTakeTurnCall) Do() (*TurnBasedMatch, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *TurnBasedMatch
+	ret := &TurnBasedMatch{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}

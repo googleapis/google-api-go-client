@@ -160,6 +160,10 @@ type TimelineAttachmentsService struct {
 // Account: Represents an account passed into the Account Manager on
 // Glass.
 type Account struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	AuthTokens []*AuthToken `json:"authTokens,omitempty"`
 
 	Features []string `json:"features,omitempty"`
@@ -186,6 +190,10 @@ func (s *Account) MarshalJSON() ([]byte, error) {
 // Attachment: Represents media content, such as a photo, that can be
 // attached to a timeline item.
 type Attachment struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// ContentType: The MIME type of the attachment.
 	ContentType string `json:"contentType,omitempty"`
 
@@ -218,6 +226,10 @@ func (s *Attachment) MarshalJSON() ([]byte, error) {
 // AttachmentsListResponse: A list of Attachments. This is the response
 // from the server to GET requests on the attachments collection.
 type AttachmentsListResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Items: The list of attachments.
 	Items []*Attachment `json:"items,omitempty"`
 
@@ -287,6 +299,10 @@ func (s *Command) MarshalJSON() ([]byte, error) {
 // Contact: A person or group that can be used as a creator or a
 // contact.
 type Contact struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// AcceptCommands: A list of voice menu commands that a contact can
 	// handle. Glass shows up to three contacts for each voice menu command.
 	// If there are more than that, the three contacts with the highest
@@ -366,6 +382,10 @@ func (s *Contact) MarshalJSON() ([]byte, error) {
 // is the response from the server to GET requests on the contacts
 // collection.
 type ContactsListResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Items: Contact list.
 	Items []*Contact `json:"items,omitempty"`
 
@@ -390,6 +410,10 @@ func (s *ContactsListResponse) MarshalJSON() ([]byte, error) {
 // Location: A geographic location that can be associated with a
 // timeline item.
 type Location struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Accuracy: The accuracy of the location fix in meters.
 	Accuracy float64 `json:"accuracy,omitempty"`
 
@@ -434,6 +458,10 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 // LocationsListResponse: A list of Locations. This is the response from
 // the server to GET requests on the locations collection.
 type LocationsListResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Items: The list of locations.
 	Items []*Location `json:"items,omitempty"`
 
@@ -642,6 +670,10 @@ func (s *NotificationConfig) MarshalJSON() ([]byte, error) {
 
 // Setting: A setting for Glass.
 type Setting struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Id: The setting's ID. The following IDs are valid:
 	// - locale - The key to the user’s language/locale (BCP 47
 	// identifier) that Glassware should use to render localized content.
@@ -673,6 +705,10 @@ func (s *Setting) MarshalJSON() ([]byte, error) {
 
 // Subscription: A subscription to events on a collection.
 type Subscription struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// CallbackUrl: The URL where notifications should be delivered (must
 	// start with https://).
 	CallbackUrl string `json:"callbackUrl,omitempty"`
@@ -734,6 +770,10 @@ func (s *Subscription) MarshalJSON() ([]byte, error) {
 // response from the server to GET requests on the subscription
 // collection.
 type SubscriptionsListResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Items: The list of subscriptions.
 	Items []*Subscription `json:"items,omitempty"`
 
@@ -758,6 +798,10 @@ func (s *SubscriptionsListResponse) MarshalJSON() ([]byte, error) {
 // TimelineItem: Each item in the user's timeline is represented as a
 // TimelineItem JSON structure, described below.
 type TimelineItem struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Attachments: A list of media attachments associated with this item.
 	// As a convenience, you can refer to attachments in your HTML payloads
 	// with the attachment or cid scheme. For example:
@@ -939,6 +983,10 @@ func (s *TimelineItem) MarshalJSON() ([]byte, error) {
 // TimelineListResponse: A list of timeline items. This is the response
 // from the server to GET requests on the timeline collection.
 type TimelineListResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Items: Items in the timeline.
 	Items []*TimelineItem `json:"items,omitempty"`
 
@@ -1088,8 +1136,23 @@ func (c *AccountsInsertCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "mirror.accounts.insert" call.
+// Exactly one of *Account or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Account.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsInsertCall) Do() (*Account, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1097,7 +1160,12 @@ func (c *AccountsInsertCall) Do() (*Account, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Account
+	ret := &Account{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1194,6 +1262,7 @@ func (c *ContactsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "mirror.contacts.delete" call.
 func (c *ContactsDeleteCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -1251,6 +1320,16 @@ func (c *ContactsGetCall) Fields(s ...googleapi.Field) *ContactsGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *ContactsGetCall) IfNoneMatch(entityTag string) *ContactsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -1273,14 +1352,32 @@ func (c *ContactsGetCall) doRequest(alt string) (*http.Response, error) {
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "mirror.contacts.get" call.
+// Exactly one of *Contact or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Contact.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ContactsGetCall) Do() (*Contact, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1288,7 +1385,12 @@ func (c *ContactsGetCall) Do() (*Contact, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Contact
+	ret := &Contact{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1375,8 +1477,23 @@ func (c *ContactsInsertCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "mirror.contacts.insert" call.
+// Exactly one of *Contact or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Contact.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ContactsInsertCall) Do() (*Contact, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1384,7 +1501,12 @@ func (c *ContactsInsertCall) Do() (*Contact, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Contact
+	ret := &Contact{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1429,6 +1551,16 @@ func (c *ContactsListCall) Fields(s ...googleapi.Field) *ContactsListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *ContactsListCall) IfNoneMatch(entityTag string) *ContactsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -1449,14 +1581,32 @@ func (c *ContactsListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "mirror.contacts.list" call.
+// Exactly one of *ContactsListResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *ContactsListResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ContactsListCall) Do() (*ContactsListResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1464,7 +1614,12 @@ func (c *ContactsListCall) Do() (*ContactsListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *ContactsListResponse
+	ret := &ContactsListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1545,8 +1700,23 @@ func (c *ContactsPatchCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "mirror.contacts.patch" call.
+// Exactly one of *Contact or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Contact.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ContactsPatchCall) Do() (*Contact, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1554,7 +1724,12 @@ func (c *ContactsPatchCall) Do() (*Contact, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Contact
+	ret := &Contact{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1648,8 +1823,23 @@ func (c *ContactsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "mirror.contacts.update" call.
+// Exactly one of *Contact or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Contact.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ContactsUpdateCall) Do() (*Contact, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1657,7 +1847,12 @@ func (c *ContactsUpdateCall) Do() (*Contact, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Contact
+	ret := &Contact{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1715,6 +1910,16 @@ func (c *LocationsGetCall) Fields(s ...googleapi.Field) *LocationsGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *LocationsGetCall) IfNoneMatch(entityTag string) *LocationsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -1737,14 +1942,32 @@ func (c *LocationsGetCall) doRequest(alt string) (*http.Response, error) {
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "mirror.locations.get" call.
+// Exactly one of *Location or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Location.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *LocationsGetCall) Do() (*Location, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1752,7 +1975,12 @@ func (c *LocationsGetCall) Do() (*Location, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Location
+	ret := &Location{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1806,6 +2034,16 @@ func (c *LocationsListCall) Fields(s ...googleapi.Field) *LocationsListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *LocationsListCall) IfNoneMatch(entityTag string) *LocationsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -1826,14 +2064,32 @@ func (c *LocationsListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "mirror.locations.list" call.
+// Exactly one of *LocationsListResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *LocationsListResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *LocationsListCall) Do() (*LocationsListResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1841,7 +2097,12 @@ func (c *LocationsListCall) Do() (*LocationsListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *LocationsListResponse
+	ret := &LocationsListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1886,6 +2147,16 @@ func (c *SettingsGetCall) Fields(s ...googleapi.Field) *SettingsGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *SettingsGetCall) IfNoneMatch(entityTag string) *SettingsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -1908,14 +2179,32 @@ func (c *SettingsGetCall) doRequest(alt string) (*http.Response, error) {
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "mirror.settings.get" call.
+// Exactly one of *Setting or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Setting.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *SettingsGetCall) Do() (*Setting, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1923,7 +2212,12 @@ func (c *SettingsGetCall) Do() (*Setting, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Setting
+	ret := &Setting{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -2006,6 +2300,7 @@ func (c *SubscriptionsDeleteCall) doRequest(alt string) (*http.Response, error) 
 	return c.s.client.Do(req)
 }
 
+// Do executes the "mirror.subscriptions.delete" call.
 func (c *SubscriptionsDeleteCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -2095,8 +2390,23 @@ func (c *SubscriptionsInsertCall) doRequest(alt string) (*http.Response, error) 
 	return c.s.client.Do(req)
 }
 
+// Do executes the "mirror.subscriptions.insert" call.
+// Exactly one of *Subscription or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Subscription.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *SubscriptionsInsertCall) Do() (*Subscription, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -2104,7 +2414,12 @@ func (c *SubscriptionsInsertCall) Do() (*Subscription, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Subscription
+	ret := &Subscription{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -2150,6 +2465,16 @@ func (c *SubscriptionsListCall) Fields(s ...googleapi.Field) *SubscriptionsListC
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *SubscriptionsListCall) IfNoneMatch(entityTag string) *SubscriptionsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -2170,14 +2495,32 @@ func (c *SubscriptionsListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "mirror.subscriptions.list" call.
+// Exactly one of *SubscriptionsListResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *SubscriptionsListResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *SubscriptionsListCall) Do() (*SubscriptionsListResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -2185,7 +2528,12 @@ func (c *SubscriptionsListCall) Do() (*SubscriptionsListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *SubscriptionsListResponse
+	ret := &SubscriptionsListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -2265,8 +2613,23 @@ func (c *SubscriptionsUpdateCall) doRequest(alt string) (*http.Response, error) 
 	return c.s.client.Do(req)
 }
 
+// Do executes the "mirror.subscriptions.update" call.
+// Exactly one of *Subscription or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Subscription.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *SubscriptionsUpdateCall) Do() (*Subscription, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -2274,7 +2637,12 @@ func (c *SubscriptionsUpdateCall) Do() (*Subscription, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Subscription
+	ret := &Subscription{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -2360,6 +2728,7 @@ func (c *TimelineDeleteCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "mirror.timeline.delete" call.
 func (c *TimelineDeleteCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -2418,6 +2787,16 @@ func (c *TimelineGetCall) Fields(s ...googleapi.Field) *TimelineGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *TimelineGetCall) IfNoneMatch(entityTag string) *TimelineGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -2440,14 +2819,32 @@ func (c *TimelineGetCall) doRequest(alt string) (*http.Response, error) {
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "mirror.timeline.get" call.
+// Exactly one of *TimelineItem or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *TimelineItem.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *TimelineGetCall) Do() (*TimelineItem, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -2455,7 +2852,12 @@ func (c *TimelineGetCall) Do() (*TimelineItem, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *TimelineItem
+	ret := &TimelineItem{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -2598,8 +3000,23 @@ func (c *TimelineInsertCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "mirror.timeline.insert" call.
+// Exactly one of *TimelineItem or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *TimelineItem.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *TimelineInsertCall) Do() (*TimelineItem, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -2630,7 +3047,12 @@ func (c *TimelineInsertCall) Do() (*TimelineItem, error) {
 		}
 		defer res.Body.Close()
 	}
-	var ret *TimelineItem
+	ret := &TimelineItem{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -2750,6 +3172,16 @@ func (c *TimelineListCall) Fields(s ...googleapi.Field) *TimelineListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *TimelineListCall) IfNoneMatch(entityTag string) *TimelineListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -2791,14 +3223,32 @@ func (c *TimelineListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "mirror.timeline.list" call.
+// Exactly one of *TimelineListResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *TimelineListResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *TimelineListCall) Do() (*TimelineListResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -2806,7 +3256,12 @@ func (c *TimelineListCall) Do() (*TimelineListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *TimelineListResponse
+	ret := &TimelineListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -2934,8 +3389,23 @@ func (c *TimelinePatchCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "mirror.timeline.patch" call.
+// Exactly one of *TimelineItem or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *TimelineItem.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *TimelinePatchCall) Do() (*TimelineItem, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -2943,7 +3413,12 @@ func (c *TimelinePatchCall) Do() (*TimelineItem, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *TimelineItem
+	ret := &TimelineItem{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -3093,8 +3568,23 @@ func (c *TimelineUpdateCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "mirror.timeline.update" call.
+// Exactly one of *TimelineItem or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *TimelineItem.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *TimelineUpdateCall) Do() (*TimelineItem, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -3125,7 +3615,12 @@ func (c *TimelineUpdateCall) Do() (*TimelineItem, error) {
 		}
 		defer res.Body.Close()
 	}
-	var ret *TimelineItem
+	ret := &TimelineItem{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -3234,6 +3729,7 @@ func (c *TimelineAttachmentsDeleteCall) doRequest(alt string) (*http.Response, e
 	return c.s.client.Do(req)
 }
 
+// Do executes the "mirror.timeline.attachments.delete" call.
 func (c *TimelineAttachmentsDeleteCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -3301,6 +3797,16 @@ func (c *TimelineAttachmentsGetCall) Fields(s ...googleapi.Field) *TimelineAttac
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *TimelineAttachmentsGetCall) IfNoneMatch(entityTag string) *TimelineAttachmentsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do and Download methods.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -3324,6 +3830,9 @@ func (c *TimelineAttachmentsGetCall) doRequest(alt string) (*http.Response, erro
 		"attachmentId": c.attachmentId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -3345,8 +3854,23 @@ func (c *TimelineAttachmentsGetCall) Download() (*http.Response, error) {
 	return res, nil
 }
 
+// Do executes the "mirror.timeline.attachments.get" call.
+// Exactly one of *Attachment or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Attachment.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *TimelineAttachmentsGetCall) Do() (*Attachment, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -3354,7 +3878,12 @@ func (c *TimelineAttachmentsGetCall) Do() (*Attachment, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Attachment
+	ret := &Attachment{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -3503,8 +4032,23 @@ func (c *TimelineAttachmentsInsertCall) doRequest(alt string) (*http.Response, e
 	return c.s.client.Do(req)
 }
 
+// Do executes the "mirror.timeline.attachments.insert" call.
+// Exactly one of *Attachment or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Attachment.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *TimelineAttachmentsInsertCall) Do() (*Attachment, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -3535,7 +4079,12 @@ func (c *TimelineAttachmentsInsertCall) Do() (*Attachment, error) {
 		}
 		defer res.Body.Close()
 	}
-	var ret *Attachment
+	ret := &Attachment{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -3609,6 +4158,16 @@ func (c *TimelineAttachmentsListCall) Fields(s ...googleapi.Field) *TimelineAtta
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *TimelineAttachmentsListCall) IfNoneMatch(entityTag string) *TimelineAttachmentsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -3631,14 +4190,32 @@ func (c *TimelineAttachmentsListCall) doRequest(alt string) (*http.Response, err
 		"itemId": c.itemId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "mirror.timeline.attachments.list" call.
+// Exactly one of *AttachmentsListResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *AttachmentsListResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *TimelineAttachmentsListCall) Do() (*AttachmentsListResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -3646,7 +4223,12 @@ func (c *TimelineAttachmentsListCall) Do() (*AttachmentsListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *AttachmentsListResponse
+	ret := &AttachmentsListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}

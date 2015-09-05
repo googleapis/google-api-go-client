@@ -372,6 +372,10 @@ func (s *AccessPolicy) MarshalJSON() ([]byte, error) {
 // associated with the action, such as the video that was rated or
 // uploaded.
 type Activity struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// ContentDetails: The contentDetails object contains information about
 	// the content associated with the activity. For example, if the
 	// snippet.type value is videoRated, then the contentDetails object's
@@ -797,6 +801,10 @@ func (s *ActivityContentDetailsUpload) MarshalJSON() ([]byte, error) {
 }
 
 type ActivityListResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Etag: Etag of this resource.
 	Etag string `json:"etag,omitempty"`
 
@@ -913,6 +921,10 @@ func (s *ActivitySnippet) MarshalJSON() ([]byte, error) {
 // Caption: A caption resource represents a YouTube caption track. A
 // caption track is associated with exactly one YouTube video.
 type Caption struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Etag: Etag of this resource.
 	Etag string `json:"etag,omitempty"`
 
@@ -942,6 +954,10 @@ func (s *Caption) MarshalJSON() ([]byte, error) {
 }
 
 type CaptionListResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Etag: Etag of this resource.
 	Etag string `json:"etag,omitempty"`
 
@@ -1110,6 +1126,10 @@ func (s *CdnSettings) MarshalJSON() ([]byte, error) {
 // Channel: A channel resource contains information about a YouTube
 // channel.
 type Channel struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// AuditDetails: The auditionDetails object encapsulates channel data
 	// that is relevant for YouTube Partners during the audition process.
 	AuditDetails *ChannelAuditDetails `json:"auditDetails,omitempty"`
@@ -1221,6 +1241,10 @@ func (s *ChannelAuditDetails) MarshalJSON() ([]byte, error) {
 // ChannelBannerResource: A channel banner returned as the response to a
 // channel_banner.insert call.
 type ChannelBannerResource struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Etag: Etag of this resource.
 	Etag string `json:"etag,omitempty"`
 
@@ -1446,6 +1470,10 @@ func (s *ChannelId) MarshalJSON() ([]byte, error) {
 }
 
 type ChannelListResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Etag: Etag of this resource.
 	Etag string `json:"etag,omitempty"`
 
@@ -1514,6 +1542,10 @@ func (s *ChannelLocalization) MarshalJSON() ([]byte, error) {
 }
 
 type ChannelSection struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// ContentDetails: The contentDetails object contains details about the
 	// channel section content, such as a list of playlists or channels
 	// featured in the section.
@@ -1583,6 +1615,10 @@ func (s *ChannelSectionContentDetails) MarshalJSON() ([]byte, error) {
 }
 
 type ChannelSectionListResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Etag: Etag of this resource.
 	Etag string `json:"etag,omitempty"`
 
@@ -1934,6 +1970,10 @@ func (s *ChannelTopicDetails) MarshalJSON() ([]byte, error) {
 
 // Comment: A comment represents a single YouTube comment.
 type Comment struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Etag: Etag of this resource.
 	Etag string `json:"etag,omitempty"`
 
@@ -1963,6 +2003,10 @@ func (s *Comment) MarshalJSON() ([]byte, error) {
 }
 
 type CommentListResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Etag: Etag of this resource.
 	Etag string `json:"etag,omitempty"`
 
@@ -2101,6 +2145,10 @@ func (s *CommentSnippet) MarshalJSON() ([]byte, error) {
 // to a top level comment and all its replies. It can also include the
 // top level comment itself and some of the replies.
 type CommentThread struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Etag: Etag of this resource.
 	Etag string `json:"etag,omitempty"`
 
@@ -2135,6 +2183,10 @@ func (s *CommentThread) MarshalJSON() ([]byte, error) {
 }
 
 type CommentThreadListResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Etag: Etag of this resource.
 	Etag string `json:"etag,omitempty"`
 
@@ -3138,6 +3190,10 @@ func (s *GuideCategory) MarshalJSON() ([]byte, error) {
 }
 
 type GuideCategoryListResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Etag: Etag of this resource.
 	Etag string `json:"etag,omitempty"`
 
@@ -3239,6 +3295,10 @@ func (s *I18nLanguage) MarshalJSON() ([]byte, error) {
 }
 
 type I18nLanguageListResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Etag: Etag of this resource.
 	Etag string `json:"etag,omitempty"`
 
@@ -3330,6 +3390,10 @@ func (s *I18nRegion) MarshalJSON() ([]byte, error) {
 }
 
 type I18nRegionListResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Etag: Etag of this resource.
 	Etag string `json:"etag,omitempty"`
 
@@ -3694,6 +3758,10 @@ func (s *LanguageTag) MarshalJSON() ([]byte, error) {
 // LiveBroadcast: A liveBroadcast resource represents an event that will
 // be streamed, via live video, on YouTube.
 type LiveBroadcast struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// ContentDetails: The contentDetails object contains information about
 	// the event's video content, such as whether the content can be shown
 	// in an embedded video player or if it will be archived and therefore
@@ -3819,6 +3887,10 @@ func (s *LiveBroadcastContentDetails) MarshalJSON() ([]byte, error) {
 }
 
 type LiveBroadcastListResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Etag: Etag of this resource.
 	Etag string `json:"etag,omitempty"`
 
@@ -4102,6 +4174,10 @@ func (s *LiveBroadcastTopicSnippet) MarshalJSON() ([]byte, error) {
 
 // LiveStream: A live stream describes a live ingestion point.
 type LiveStream struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Cdn: The cdn object defines the live stream's content delivery
 	// network (CDN) settings. These settings provide details about the
 	// manner in which you stream your content to YouTube.
@@ -4286,6 +4362,10 @@ func (s *LiveStreamHealthStatus) MarshalJSON() ([]byte, error) {
 }
 
 type LiveStreamListResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Etag: Etag of this resource.
 	Etag string `json:"etag,omitempty"`
 
@@ -4525,6 +4605,10 @@ func (s *PageInfo) MarshalJSON() ([]byte, error) {
 // calling the   playlistItems.insert and   playlistItems.delete
 // methods.
 type Playlist struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// ContentDetails: The contentDetails object contains information like
 	// video count.
 	ContentDetails *PlaylistContentDetails `json:"contentDetails,omitempty"`
@@ -4612,6 +4696,10 @@ func (s *PlaylistContentDetails) MarshalJSON() ([]byte, error) {
 // if a user gives a positive rating to a video, you would insert that
 // video into the liked videos playlist for that user's channel.
 type PlaylistItem struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// ContentDetails: The contentDetails object is included in the resource
 	// if the included item is a YouTube video. The object contains
 	// additional information about the video.
@@ -4688,6 +4776,10 @@ func (s *PlaylistItemContentDetails) MarshalJSON() ([]byte, error) {
 }
 
 type PlaylistItemListResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Etag: Etag of this resource.
 	Etag string `json:"etag,omitempty"`
 
@@ -4816,6 +4908,10 @@ func (s *PlaylistItemStatus) MarshalJSON() ([]byte, error) {
 }
 
 type PlaylistListResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Etag: Etag of this resource.
 	Etag string `json:"etag,omitempty"`
 
@@ -5114,6 +5210,10 @@ func (s *ResourceId) MarshalJSON() ([]byte, error) {
 }
 
 type SearchListResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Etag: Etag of this resource.
 	Etag string `json:"etag,omitempty"`
 
@@ -5257,6 +5357,10 @@ func (s *SearchResultSnippet) MarshalJSON() ([]byte, error) {
 // several actions on YouTube, such as uploading a video, rating a
 // video, or commenting on a video.
 type Subscription struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// ContentDetails: The contentDetails object contains basic statistics
 	// about the subscription.
 	ContentDetails *SubscriptionContentDetails `json:"contentDetails,omitempty"`
@@ -5330,6 +5434,10 @@ func (s *SubscriptionContentDetails) MarshalJSON() ([]byte, error) {
 }
 
 type SubscriptionListResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Etag: Etag of this resource.
 	Etag string `json:"etag,omitempty"`
 
@@ -5510,6 +5618,10 @@ func (s *ThumbnailDetails) MarshalJSON() ([]byte, error) {
 }
 
 type ThumbnailSetResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Etag: Etag of this resource.
 	Etag string `json:"etag,omitempty"`
 
@@ -5548,6 +5660,10 @@ type TokenPagination struct {
 
 // Video: A video resource represents a YouTube video.
 type Video struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// AgeGating: Age restriction details related to a video.
 	AgeGating *VideoAgeGating `json:"ageGating,omitempty"`
 
@@ -5722,6 +5838,10 @@ func (s *VideoAbuseReportReason) MarshalJSON() ([]byte, error) {
 }
 
 type VideoAbuseReportReasonListResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Etag: Etag of this resource.
 	Etag string `json:"etag,omitempty"`
 
@@ -5871,6 +5991,10 @@ func (s *VideoCategory) MarshalJSON() ([]byte, error) {
 }
 
 type VideoCategoryListResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Etag: Etag of this resource.
 	Etag string `json:"etag,omitempty"`
 
@@ -6256,6 +6380,10 @@ func (s *VideoFileDetailsVideoStream) MarshalJSON() ([]byte, error) {
 }
 
 type VideoGetRatingResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Etag: Etag of this resource.
 	Etag string `json:"etag,omitempty"`
 
@@ -6289,6 +6417,10 @@ func (s *VideoGetRatingResponse) MarshalJSON() ([]byte, error) {
 }
 
 type VideoListResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Etag: Etag of this resource.
 	Etag string `json:"etag,omitempty"`
 
@@ -7063,8 +7195,23 @@ func (c *ActivitiesInsertCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "youtube.activities.insert" call.
+// Exactly one of *Activity or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Activity.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ActivitiesInsertCall) Do() (*Activity, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -7072,7 +7219,12 @@ func (c *ActivitiesInsertCall) Do() (*Activity, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Activity
+	ret := &Activity{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -7210,6 +7362,16 @@ func (c *ActivitiesListCall) Fields(s ...googleapi.Field) *ActivitiesListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *ActivitiesListCall) IfNoneMatch(entityTag string) *ActivitiesListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -7255,14 +7417,32 @@ func (c *ActivitiesListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "youtube.activities.list" call.
+// Exactly one of *ActivityListResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *ActivityListResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ActivitiesListCall) Do() (*ActivityListResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -7270,7 +7450,12 @@ func (c *ActivitiesListCall) Do() (*ActivityListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *ActivityListResponse
+	ret := &ActivityListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -7432,6 +7617,7 @@ func (c *CaptionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "youtube.captions.delete" call.
 func (c *CaptionsDeleteCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -7556,6 +7742,16 @@ func (c *CaptionsDownloadCall) Fields(s ...googleapi.Field) *CaptionsDownloadCal
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *CaptionsDownloadCall) IfNoneMatch(entityTag string) *CaptionsDownloadCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do and Download methods.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -7590,6 +7786,9 @@ func (c *CaptionsDownloadCall) doRequest(alt string) (*http.Response, error) {
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -7611,6 +7810,7 @@ func (c *CaptionsDownloadCall) Download() (*http.Response, error) {
 	return res, nil
 }
 
+// Do executes the "youtube.captions.download" call.
 func (c *CaptionsDownloadCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -7843,8 +8043,23 @@ func (c *CaptionsInsertCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "youtube.captions.insert" call.
+// Exactly one of *Caption or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Caption.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *CaptionsInsertCall) Do() (*Caption, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -7875,7 +8090,12 @@ func (c *CaptionsInsertCall) Do() (*Caption, error) {
 		}
 		defer res.Body.Close()
 	}
-	var ret *Caption
+	ret := &Caption{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -8008,6 +8228,16 @@ func (c *CaptionsListCall) Fields(s ...googleapi.Field) *CaptionsListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *CaptionsListCall) IfNoneMatch(entityTag string) *CaptionsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -8039,14 +8269,32 @@ func (c *CaptionsListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "youtube.captions.list" call.
+// Exactly one of *CaptionListResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *CaptionListResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *CaptionsListCall) Do() (*CaptionListResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -8054,7 +8302,12 @@ func (c *CaptionsListCall) Do() (*CaptionListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *CaptionListResponse
+	ret := &CaptionListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -8272,8 +8525,23 @@ func (c *CaptionsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "youtube.captions.update" call.
+// Exactly one of *Caption or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Caption.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *CaptionsUpdateCall) Do() (*Caption, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -8304,7 +8572,12 @@ func (c *CaptionsUpdateCall) Do() (*Caption, error) {
 		}
 		defer res.Body.Close()
 	}
-	var ret *Caption
+	ret := &Caption{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -8516,8 +8789,23 @@ func (c *ChannelBannersInsertCall) doRequest(alt string) (*http.Response, error)
 	return c.s.client.Do(req)
 }
 
+// Do executes the "youtube.channelBanners.insert" call.
+// Exactly one of *ChannelBannerResource or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *ChannelBannerResource.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ChannelBannersInsertCall) Do() (*ChannelBannerResource, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -8548,7 +8836,12 @@ func (c *ChannelBannersInsertCall) Do() (*ChannelBannerResource, error) {
 		}
 		defer res.Body.Close()
 	}
-	var ret *ChannelBannerResource
+	ret := &ChannelBannerResource{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -8671,6 +8964,7 @@ func (c *ChannelSectionsDeleteCall) doRequest(alt string) (*http.Response, error
 	return c.s.client.Do(req)
 }
 
+// Do executes the "youtube.channelSections.delete" call.
 func (c *ChannelSectionsDeleteCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -8820,8 +9114,23 @@ func (c *ChannelSectionsInsertCall) doRequest(alt string) (*http.Response, error
 	return c.s.client.Do(req)
 }
 
+// Do executes the "youtube.channelSections.insert" call.
+// Exactly one of *ChannelSection or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *ChannelSection.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ChannelSectionsInsertCall) Do() (*ChannelSection, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -8829,7 +9138,12 @@ func (c *ChannelSectionsInsertCall) Do() (*ChannelSection, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *ChannelSection
+	ret := &ChannelSection{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -8956,6 +9270,16 @@ func (c *ChannelSectionsListCall) Fields(s ...googleapi.Field) *ChannelSectionsL
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *ChannelSectionsListCall) IfNoneMatch(entityTag string) *ChannelSectionsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -8992,14 +9316,32 @@ func (c *ChannelSectionsListCall) doRequest(alt string) (*http.Response, error) 
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "youtube.channelSections.list" call.
+// Exactly one of *ChannelSectionListResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *ChannelSectionListResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ChannelSectionsListCall) Do() (*ChannelSectionListResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -9007,7 +9349,12 @@ func (c *ChannelSectionsListCall) Do() (*ChannelSectionListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *ChannelSectionListResponse
+	ret := &ChannelSectionListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -9146,8 +9493,23 @@ func (c *ChannelSectionsUpdateCall) doRequest(alt string) (*http.Response, error
 	return c.s.client.Do(req)
 }
 
+// Do executes the "youtube.channelSections.update" call.
+// Exactly one of *ChannelSection or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *ChannelSection.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ChannelSectionsUpdateCall) Do() (*ChannelSection, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -9155,7 +9517,12 @@ func (c *ChannelSectionsUpdateCall) Do() (*ChannelSection, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *ChannelSection
+	ret := &ChannelSection{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -9318,6 +9685,16 @@ func (c *ChannelsListCall) Fields(s ...googleapi.Field) *ChannelsListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *ChannelsListCall) IfNoneMatch(entityTag string) *ChannelsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -9369,14 +9746,32 @@ func (c *ChannelsListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "youtube.channels.list" call.
+// Exactly one of *ChannelListResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *ChannelListResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ChannelsListCall) Do() (*ChannelListResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -9384,7 +9779,12 @@ func (c *ChannelsListCall) Do() (*ChannelListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *ChannelListResponse
+	ret := &ChannelListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -9552,8 +9952,23 @@ func (c *ChannelsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "youtube.channels.update" call.
+// Exactly one of *Channel or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Channel.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ChannelsUpdateCall) Do() (*Channel, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -9561,7 +9976,12 @@ func (c *ChannelsUpdateCall) Do() (*Channel, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Channel
+	ret := &Channel{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -9662,8 +10082,23 @@ func (c *CommentThreadsInsertCall) doRequest(alt string) (*http.Response, error)
 	return c.s.client.Do(req)
 }
 
+// Do executes the "youtube.commentThreads.insert" call.
+// Exactly one of *CommentThread or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *CommentThread.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *CommentThreadsInsertCall) Do() (*CommentThread, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -9671,7 +10106,12 @@ func (c *CommentThreadsInsertCall) Do() (*CommentThread, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *CommentThread
+	ret := &CommentThread{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -9853,6 +10293,16 @@ func (c *CommentThreadsListCall) Fields(s ...googleapi.Field) *CommentThreadsLis
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *CommentThreadsListCall) IfNoneMatch(entityTag string) *CommentThreadsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -9904,14 +10354,32 @@ func (c *CommentThreadsListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "youtube.commentThreads.list" call.
+// Exactly one of *CommentThreadListResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *CommentThreadListResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *CommentThreadsListCall) Do() (*CommentThreadListResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -9919,7 +10387,12 @@ func (c *CommentThreadsListCall) Do() (*CommentThreadListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *CommentThreadListResponse
+	ret := &CommentThreadListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -10092,8 +10565,23 @@ func (c *CommentThreadsUpdateCall) doRequest(alt string) (*http.Response, error)
 	return c.s.client.Do(req)
 }
 
+// Do executes the "youtube.commentThreads.update" call.
+// Exactly one of *CommentThread or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *CommentThread.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *CommentThreadsUpdateCall) Do() (*CommentThread, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -10101,7 +10589,12 @@ func (c *CommentThreadsUpdateCall) Do() (*CommentThread, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *CommentThread
+	ret := &CommentThread{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -10186,6 +10679,7 @@ func (c *CommentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "youtube.comments.delete" call.
 func (c *CommentsDeleteCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -10279,8 +10773,23 @@ func (c *CommentsInsertCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "youtube.comments.insert" call.
+// Exactly one of *Comment or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Comment.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *CommentsInsertCall) Do() (*Comment, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -10288,7 +10797,12 @@ func (c *CommentsInsertCall) Do() (*Comment, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Comment
+	ret := &Comment{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -10403,6 +10917,16 @@ func (c *CommentsListCall) Fields(s ...googleapi.Field) *CommentsListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *CommentsListCall) IfNoneMatch(entityTag string) *CommentsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -10439,14 +10963,32 @@ func (c *CommentsListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "youtube.comments.list" call.
+// Exactly one of *CommentListResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *CommentListResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *CommentsListCall) Do() (*CommentListResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -10454,7 +10996,12 @@ func (c *CommentsListCall) Do() (*CommentListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *CommentListResponse
+	ret := &CommentListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -10575,6 +11122,7 @@ func (c *CommentsMarkAsSpamCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "youtube.comments.markAsSpam" call.
 func (c *CommentsMarkAsSpamCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -10679,6 +11227,7 @@ func (c *CommentsSetModerationStatusCall) doRequest(alt string) (*http.Response,
 	return c.s.client.Do(req)
 }
 
+// Do executes the "youtube.comments.setModerationStatus" call.
 func (c *CommentsSetModerationStatusCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -10794,8 +11343,23 @@ func (c *CommentsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "youtube.comments.update" call.
+// Exactly one of *Comment or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Comment.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *CommentsUpdateCall) Do() (*Comment, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -10803,7 +11367,12 @@ func (c *CommentsUpdateCall) Do() (*Comment, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Comment
+	ret := &Comment{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -10887,6 +11456,16 @@ func (c *GuideCategoriesListCall) Fields(s ...googleapi.Field) *GuideCategoriesL
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *GuideCategoriesListCall) IfNoneMatch(entityTag string) *GuideCategoriesListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -10917,14 +11496,32 @@ func (c *GuideCategoriesListCall) doRequest(alt string) (*http.Response, error) 
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "youtube.guideCategories.list" call.
+// Exactly one of *GuideCategoryListResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *GuideCategoryListResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *GuideCategoriesListCall) Do() (*GuideCategoryListResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -10932,7 +11529,12 @@ func (c *GuideCategoriesListCall) Do() (*GuideCategoryListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *GuideCategoryListResponse
+	ret := &GuideCategoryListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -11014,6 +11616,16 @@ func (c *I18nLanguagesListCall) Fields(s ...googleapi.Field) *I18nLanguagesListC
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *I18nLanguagesListCall) IfNoneMatch(entityTag string) *I18nLanguagesListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -11038,14 +11650,32 @@ func (c *I18nLanguagesListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "youtube.i18nLanguages.list" call.
+// Exactly one of *I18nLanguageListResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *I18nLanguageListResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *I18nLanguagesListCall) Do() (*I18nLanguageListResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -11053,7 +11683,12 @@ func (c *I18nLanguagesListCall) Do() (*I18nLanguageListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *I18nLanguageListResponse
+	ret := &I18nLanguageListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -11125,6 +11760,16 @@ func (c *I18nRegionsListCall) Fields(s ...googleapi.Field) *I18nRegionsListCall 
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *I18nRegionsListCall) IfNoneMatch(entityTag string) *I18nRegionsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -11149,14 +11794,32 @@ func (c *I18nRegionsListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "youtube.i18nRegions.list" call.
+// Exactly one of *I18nRegionListResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *I18nRegionListResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *I18nRegionsListCall) Do() (*I18nRegionListResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -11164,7 +11827,12 @@ func (c *I18nRegionsListCall) Do() (*I18nRegionListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *I18nRegionListResponse
+	ret := &I18nRegionListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -11323,8 +11991,23 @@ func (c *LiveBroadcastsBindCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "youtube.liveBroadcasts.bind" call.
+// Exactly one of *LiveBroadcast or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *LiveBroadcast.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *LiveBroadcastsBindCall) Do() (*LiveBroadcast, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -11332,7 +12015,12 @@ func (c *LiveBroadcastsBindCall) Do() (*LiveBroadcast, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *LiveBroadcast
+	ret := &LiveBroadcast{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -11505,8 +12193,23 @@ func (c *LiveBroadcastsBindDirectCall) doRequest(alt string) (*http.Response, er
 	return c.s.client.Do(req)
 }
 
+// Do executes the "youtube.liveBroadcasts.bind_direct" call.
+// Exactly one of *LiveBroadcast or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *LiveBroadcast.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *LiveBroadcastsBindDirectCall) Do() (*LiveBroadcast, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -11514,7 +12217,12 @@ func (c *LiveBroadcastsBindDirectCall) Do() (*LiveBroadcast, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *LiveBroadcast
+	ret := &LiveBroadcast{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -11719,8 +12427,23 @@ func (c *LiveBroadcastsControlCall) doRequest(alt string) (*http.Response, error
 	return c.s.client.Do(req)
 }
 
+// Do executes the "youtube.liveBroadcasts.control" call.
+// Exactly one of *LiveBroadcast or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *LiveBroadcast.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *LiveBroadcastsControlCall) Do() (*LiveBroadcast, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -11728,7 +12451,12 @@ func (c *LiveBroadcastsControlCall) Do() (*LiveBroadcast, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *LiveBroadcast
+	ret := &LiveBroadcast{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -11895,6 +12623,7 @@ func (c *LiveBroadcastsDeleteCall) doRequest(alt string) (*http.Response, error)
 	return c.s.client.Do(req)
 }
 
+// Do executes the "youtube.liveBroadcasts.delete" call.
 func (c *LiveBroadcastsDeleteCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -12048,8 +12777,23 @@ func (c *LiveBroadcastsInsertCall) doRequest(alt string) (*http.Response, error)
 	return c.s.client.Do(req)
 }
 
+// Do executes the "youtube.liveBroadcasts.insert" call.
+// Exactly one of *LiveBroadcast or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *LiveBroadcast.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *LiveBroadcastsInsertCall) Do() (*LiveBroadcast, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -12057,7 +12801,12 @@ func (c *LiveBroadcastsInsertCall) Do() (*LiveBroadcast, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *LiveBroadcast
+	ret := &LiveBroadcast{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -12220,6 +12969,16 @@ func (c *LiveBroadcastsListCall) Fields(s ...googleapi.Field) *LiveBroadcastsLis
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *LiveBroadcastsListCall) IfNoneMatch(entityTag string) *LiveBroadcastsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -12262,14 +13021,32 @@ func (c *LiveBroadcastsListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "youtube.liveBroadcasts.list" call.
+// Exactly one of *LiveBroadcastListResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *LiveBroadcastListResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *LiveBroadcastsListCall) Do() (*LiveBroadcastListResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -12277,7 +13054,12 @@ func (c *LiveBroadcastsListCall) Do() (*LiveBroadcastListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *LiveBroadcastListResponse
+	ret := &LiveBroadcastListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -12474,8 +13256,23 @@ func (c *LiveBroadcastsTransitionCall) doRequest(alt string) (*http.Response, er
 	return c.s.client.Do(req)
 }
 
+// Do executes the "youtube.liveBroadcasts.transition" call.
+// Exactly one of *LiveBroadcast or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *LiveBroadcast.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *LiveBroadcastsTransitionCall) Do() (*LiveBroadcast, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -12483,7 +13280,12 @@ func (c *LiveBroadcastsTransitionCall) Do() (*LiveBroadcast, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *LiveBroadcast
+	ret := &LiveBroadcast{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -12660,8 +13462,23 @@ func (c *LiveBroadcastsUpdateCall) doRequest(alt string) (*http.Response, error)
 	return c.s.client.Do(req)
 }
 
+// Do executes the "youtube.liveBroadcasts.update" call.
+// Exactly one of *LiveBroadcast or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *LiveBroadcast.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *LiveBroadcastsUpdateCall) Do() (*LiveBroadcast, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -12669,7 +13486,12 @@ func (c *LiveBroadcastsUpdateCall) Do() (*LiveBroadcast, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *LiveBroadcast
+	ret := &LiveBroadcast{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -12815,6 +13637,7 @@ func (c *LiveStreamsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "youtube.liveStreams.delete" call.
 func (c *LiveStreamsDeleteCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -12970,8 +13793,23 @@ func (c *LiveStreamsInsertCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "youtube.liveStreams.insert" call.
+// Exactly one of *LiveStream or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *LiveStream.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *LiveStreamsInsertCall) Do() (*LiveStream, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -12979,7 +13817,12 @@ func (c *LiveStreamsInsertCall) Do() (*LiveStream, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *LiveStream
+	ret := &LiveStream{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -13128,6 +13971,16 @@ func (c *LiveStreamsListCall) Fields(s ...googleapi.Field) *LiveStreamsListCall 
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *LiveStreamsListCall) IfNoneMatch(entityTag string) *LiveStreamsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -13167,14 +14020,32 @@ func (c *LiveStreamsListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "youtube.liveStreams.list" call.
+// Exactly one of *LiveStreamListResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *LiveStreamListResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *LiveStreamsListCall) Do() (*LiveStreamListResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -13182,7 +14053,12 @@ func (c *LiveStreamsListCall) Do() (*LiveStreamListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *LiveStreamListResponse
+	ret := &LiveStreamListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -13360,8 +14236,23 @@ func (c *LiveStreamsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "youtube.liveStreams.update" call.
+// Exactly one of *LiveStream or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *LiveStream.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *LiveStreamsUpdateCall) Do() (*LiveStream, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -13369,7 +14260,12 @@ func (c *LiveStreamsUpdateCall) Do() (*LiveStream, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *LiveStream
+	ret := &LiveStream{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -13465,6 +14361,7 @@ func (c *PlaylistItemsDeleteCall) doRequest(alt string) (*http.Response, error) 
 	return c.s.client.Do(req)
 }
 
+// Do executes the "youtube.playlistItems.delete" call.
 func (c *PlaylistItemsDeleteCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -13580,8 +14477,23 @@ func (c *PlaylistItemsInsertCall) doRequest(alt string) (*http.Response, error) 
 	return c.s.client.Do(req)
 }
 
+// Do executes the "youtube.playlistItems.insert" call.
+// Exactly one of *PlaylistItem or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *PlaylistItem.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *PlaylistItemsInsertCall) Do() (*PlaylistItem, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -13589,7 +14501,12 @@ func (c *PlaylistItemsInsertCall) Do() (*PlaylistItem, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *PlaylistItem
+	ret := &PlaylistItem{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -13717,6 +14634,16 @@ func (c *PlaylistItemsListCall) Fields(s ...googleapi.Field) *PlaylistItemsListC
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *PlaylistItemsListCall) IfNoneMatch(entityTag string) *PlaylistItemsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -13756,14 +14683,32 @@ func (c *PlaylistItemsListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "youtube.playlistItems.list" call.
+// Exactly one of *PlaylistItemListResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *PlaylistItemListResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *PlaylistItemsListCall) Do() (*PlaylistItemListResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -13771,7 +14716,12 @@ func (c *PlaylistItemsListCall) Do() (*PlaylistItemListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *PlaylistItemListResponse
+	ret := &PlaylistItemListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -13900,8 +14850,23 @@ func (c *PlaylistItemsUpdateCall) doRequest(alt string) (*http.Response, error) 
 	return c.s.client.Do(req)
 }
 
+// Do executes the "youtube.playlistItems.update" call.
+// Exactly one of *PlaylistItem or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *PlaylistItem.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *PlaylistItemsUpdateCall) Do() (*PlaylistItem, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -13909,7 +14874,12 @@ func (c *PlaylistItemsUpdateCall) Do() (*PlaylistItem, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *PlaylistItem
+	ret := &PlaylistItem{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -14017,6 +14987,7 @@ func (c *PlaylistsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "youtube.playlists.delete" call.
 func (c *PlaylistsDeleteCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -14166,8 +15137,23 @@ func (c *PlaylistsInsertCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "youtube.playlists.insert" call.
+// Exactly one of *Playlist or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Playlist.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *PlaylistsInsertCall) Do() (*Playlist, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -14175,7 +15161,12 @@ func (c *PlaylistsInsertCall) Do() (*Playlist, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Playlist
+	ret := &Playlist{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -14342,6 +15333,16 @@ func (c *PlaylistsListCall) Fields(s ...googleapi.Field) *PlaylistsListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *PlaylistsListCall) IfNoneMatch(entityTag string) *PlaylistsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -14387,14 +15388,32 @@ func (c *PlaylistsListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "youtube.playlists.list" call.
+// Exactly one of *PlaylistListResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *PlaylistListResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *PlaylistsListCall) Do() (*PlaylistListResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -14402,7 +15421,12 @@ func (c *PlaylistsListCall) Do() (*PlaylistListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *PlaylistListResponse
+	ret := &PlaylistListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -14561,8 +15585,23 @@ func (c *PlaylistsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "youtube.playlists.update" call.
+// Exactly one of *Playlist or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Playlist.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *PlaylistsUpdateCall) Do() (*Playlist, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -14570,7 +15609,12 @@ func (c *PlaylistsUpdateCall) Do() (*Playlist, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Playlist
+	ret := &Playlist{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -15038,6 +16082,16 @@ func (c *SearchListCall) Fields(s ...googleapi.Field) *SearchListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *SearchListCall) IfNoneMatch(entityTag string) *SearchListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -15149,14 +16203,32 @@ func (c *SearchListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "youtube.search.list" call.
+// Exactly one of *SearchListResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *SearchListResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *SearchListCall) Do() (*SearchListResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -15164,7 +16236,12 @@ func (c *SearchListCall) Do() (*SearchListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *SearchListResponse
+	ret := &SearchListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -15529,6 +16606,7 @@ func (c *SubscriptionsDeleteCall) doRequest(alt string) (*http.Response, error) 
 	return c.s.client.Do(req)
 }
 
+// Do executes the "youtube.subscriptions.delete" call.
 func (c *SubscriptionsDeleteCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -15623,8 +16701,23 @@ func (c *SubscriptionsInsertCall) doRequest(alt string) (*http.Response, error) 
 	return c.s.client.Do(req)
 }
 
+// Do executes the "youtube.subscriptions.insert" call.
+// Exactly one of *Subscription or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Subscription.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *SubscriptionsInsertCall) Do() (*Subscription, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -15632,7 +16725,12 @@ func (c *SubscriptionsInsertCall) Do() (*Subscription, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Subscription
+	ret := &Subscription{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -15808,6 +16906,16 @@ func (c *SubscriptionsListCall) Fields(s ...googleapi.Field) *SubscriptionsListC
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *SubscriptionsListCall) IfNoneMatch(entityTag string) *SubscriptionsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -15859,14 +16967,32 @@ func (c *SubscriptionsListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "youtube.subscriptions.list" call.
+// Exactly one of *SubscriptionListResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *SubscriptionListResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *SubscriptionsListCall) Do() (*SubscriptionListResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -15874,7 +17000,12 @@ func (c *SubscriptionsListCall) Do() (*SubscriptionListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *SubscriptionListResponse
+	ret := &SubscriptionListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -16105,8 +17236,23 @@ func (c *ThumbnailsSetCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "youtube.thumbnails.set" call.
+// Exactly one of *ThumbnailSetResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *ThumbnailSetResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ThumbnailsSetCall) Do() (*ThumbnailSetResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -16137,7 +17283,12 @@ func (c *ThumbnailsSetCall) Do() (*ThumbnailSetResponse, error) {
 		}
 		defer res.Body.Close()
 	}
-	var ret *ThumbnailSetResponse
+	ret := &ThumbnailSetResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -16227,6 +17378,16 @@ func (c *VideoAbuseReportReasonsListCall) Fields(s ...googleapi.Field) *VideoAbu
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *VideoAbuseReportReasonsListCall) IfNoneMatch(entityTag string) *VideoAbuseReportReasonsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -16251,14 +17412,32 @@ func (c *VideoAbuseReportReasonsListCall) doRequest(alt string) (*http.Response,
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "youtube.videoAbuseReportReasons.list" call.
+// Exactly one of *VideoAbuseReportReasonListResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *VideoAbuseReportReasonListResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *VideoAbuseReportReasonsListCall) Do() (*VideoAbuseReportReasonListResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -16266,7 +17445,12 @@ func (c *VideoAbuseReportReasonsListCall) Do() (*VideoAbuseReportReasonListRespo
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *VideoAbuseReportReasonListResponse
+	ret := &VideoAbuseReportReasonListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -16354,6 +17538,16 @@ func (c *VideoCategoriesListCall) Fields(s ...googleapi.Field) *VideoCategoriesL
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *VideoCategoriesListCall) IfNoneMatch(entityTag string) *VideoCategoriesListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -16384,14 +17578,32 @@ func (c *VideoCategoriesListCall) doRequest(alt string) (*http.Response, error) 
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "youtube.videoCategories.list" call.
+// Exactly one of *VideoCategoryListResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *VideoCategoryListResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *VideoCategoriesListCall) Do() (*VideoCategoryListResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -16399,7 +17611,12 @@ func (c *VideoCategoriesListCall) Do() (*VideoCategoryListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *VideoCategoryListResponse
+	ret := &VideoCategoryListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -16522,6 +17739,7 @@ func (c *VideosDeleteCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "youtube.videos.delete" call.
 func (c *VideosDeleteCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -16605,6 +17823,16 @@ func (c *VideosGetRatingCall) Fields(s ...googleapi.Field) *VideosGetRatingCall 
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *VideosGetRatingCall) IfNoneMatch(entityTag string) *VideosGetRatingCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -16629,14 +17857,32 @@ func (c *VideosGetRatingCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "youtube.videos.getRating" call.
+// Exactly one of *VideoGetRatingResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *VideoGetRatingResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *VideosGetRatingCall) Do() (*VideoGetRatingResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -16644,7 +17890,12 @@ func (c *VideosGetRatingCall) Do() (*VideoGetRatingResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *VideoGetRatingResponse
+	ret := &VideoGetRatingResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -16885,8 +18136,23 @@ func (c *VideosInsertCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "youtube.videos.insert" call.
+// Exactly one of *Video or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Video.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *VideosInsertCall) Do() (*Video, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -16917,7 +18183,12 @@ func (c *VideosInsertCall) Do() (*Video, error) {
 		}
 		defer res.Body.Close()
 	}
-	var ret *Video
+	ret := &Video{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -17139,6 +18410,16 @@ func (c *VideosListCall) Fields(s ...googleapi.Field) *VideosListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *VideosListCall) IfNoneMatch(entityTag string) *VideosListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -17190,14 +18471,32 @@ func (c *VideosListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "youtube.videos.list" call.
+// Exactly one of *VideoListResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *VideoListResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *VideosListCall) Do() (*VideoListResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -17205,7 +18504,12 @@ func (c *VideosListCall) Do() (*VideoListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *VideoListResponse
+	ret := &VideoListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -17363,6 +18667,7 @@ func (c *VideosRateCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "youtube.videos.rate" call.
 func (c *VideosRateCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -17492,6 +18797,7 @@ func (c *VideosReportAbuseCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "youtube.videos.reportAbuse" call.
 func (c *VideosReportAbuseCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -17607,8 +18913,23 @@ func (c *VideosUpdateCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "youtube.videos.update" call.
+// Exactly one of *Video or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Video.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *VideosUpdateCall) Do() (*Video, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -17616,7 +18937,12 @@ func (c *VideosUpdateCall) Do() (*Video, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Video
+	ret := &Video{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -17792,6 +19118,7 @@ func (c *WatermarksSetCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "youtube.watermarks.set" call.
 func (c *WatermarksSetCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -17950,6 +19277,7 @@ func (c *WatermarksUnsetCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "youtube.watermarks.unset" call.
 func (c *WatermarksUnsetCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {

@@ -79,6 +79,10 @@ type RelyingpartyService struct {
 // CreateAuthUriResponse: Response of creating the IDP authentication
 // URL.
 type CreateAuthUriResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// AuthUri: The URI used by the IDP to authenticate the user.
 	AuthUri string `json:"authUri,omitempty"`
 
@@ -116,6 +120,10 @@ func (s *CreateAuthUriResponse) MarshalJSON() ([]byte, error) {
 
 // DeleteAccountResponse: Respone of deleting account.
 type DeleteAccountResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Kind: The fixed string "identitytoolkit#DeleteAccountResponse".
 	Kind string `json:"kind,omitempty"`
 
@@ -136,6 +144,10 @@ func (s *DeleteAccountResponse) MarshalJSON() ([]byte, error) {
 
 // DownloadAccountResponse: Respone of downloading accounts in batch.
 type DownloadAccountResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Kind: The fixed string "identitytoolkit#DownloadAccountResponse".
 	Kind string `json:"kind,omitempty"`
 
@@ -163,6 +175,10 @@ func (s *DownloadAccountResponse) MarshalJSON() ([]byte, error) {
 
 // GetAccountInfoResponse: Response of getting account information.
 type GetAccountInfoResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Kind: The fixed string "identitytoolkit#GetAccountInfoResponse".
 	Kind string `json:"kind,omitempty"`
 
@@ -187,6 +203,10 @@ func (s *GetAccountInfoResponse) MarshalJSON() ([]byte, error) {
 // GetOobConfirmationCodeResponse: Response of getting a code for user
 // confirmation (reset password, change email etc.).
 type GetOobConfirmationCodeResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Kind: The fixed string
 	// "identitytoolkit#GetOobConfirmationCodeResponse".
 	Kind string `json:"kind,omitempty"`
@@ -211,6 +231,10 @@ func (s *GetOobConfirmationCodeResponse) MarshalJSON() ([]byte, error) {
 
 // GetRecaptchaParamResponse: Response of getting recaptcha param.
 type GetRecaptchaParamResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Kind: The fixed string "identitytoolkit#GetRecaptchaParamResponse".
 	Kind string `json:"kind,omitempty"`
 
@@ -601,6 +625,10 @@ func (s *Relyingparty) MarshalJSON() ([]byte, error) {
 
 // ResetPasswordResponse: Response of resetting the password.
 type ResetPasswordResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Email: The user's email.
 	Email string `json:"email,omitempty"`
 
@@ -624,6 +652,10 @@ func (s *ResetPasswordResponse) MarshalJSON() ([]byte, error) {
 
 // SetAccountInfoResponse: Respone of setting the account information.
 type SetAccountInfoResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// DisplayName: The name of the user.
 	DisplayName string `json:"displayName,omitempty"`
 
@@ -686,6 +718,10 @@ func (s *SetAccountInfoResponseProviderUserInfo) MarshalJSON() ([]byte, error) {
 
 // UploadAccountResponse: Respone of uploading accounts in batch.
 type UploadAccountResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Error: The error encountered while processing the account info.
 	Error []*UploadAccountResponseError `json:"error,omitempty"`
 
@@ -814,6 +850,10 @@ func (s *UserInfoProviderUserInfo) MarshalJSON() ([]byte, error) {
 
 // VerifyAssertionResponse: Response of verifying the IDP assertion.
 type VerifyAssertionResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Action: The action code.
 	Action string `json:"action,omitempty"`
 
@@ -936,6 +976,10 @@ func (s *VerifyAssertionResponse) MarshalJSON() ([]byte, error) {
 
 // VerifyPasswordResponse: Request of verifying the password.
 type VerifyPasswordResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// DisplayName: The name of the user.
 	DisplayName string `json:"displayName,omitempty"`
 
@@ -1040,8 +1084,23 @@ func (c *RelyingpartyCreateAuthUriCall) doRequest(alt string) (*http.Response, e
 	return c.s.client.Do(req)
 }
 
+// Do executes the "identitytoolkit.relyingparty.createAuthUri" call.
+// Exactly one of *CreateAuthUriResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *CreateAuthUriResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *RelyingpartyCreateAuthUriCall) Do() (*CreateAuthUriResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1049,7 +1108,12 @@ func (c *RelyingpartyCreateAuthUriCall) Do() (*CreateAuthUriResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *CreateAuthUriResponse
+	ret := &CreateAuthUriResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1125,8 +1189,23 @@ func (c *RelyingpartyDeleteAccountCall) doRequest(alt string) (*http.Response, e
 	return c.s.client.Do(req)
 }
 
+// Do executes the "identitytoolkit.relyingparty.deleteAccount" call.
+// Exactly one of *DeleteAccountResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *DeleteAccountResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *RelyingpartyDeleteAccountCall) Do() (*DeleteAccountResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1134,7 +1213,12 @@ func (c *RelyingpartyDeleteAccountCall) Do() (*DeleteAccountResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *DeleteAccountResponse
+	ret := &DeleteAccountResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1210,8 +1294,23 @@ func (c *RelyingpartyDownloadAccountCall) doRequest(alt string) (*http.Response,
 	return c.s.client.Do(req)
 }
 
+// Do executes the "identitytoolkit.relyingparty.downloadAccount" call.
+// Exactly one of *DownloadAccountResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *DownloadAccountResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *RelyingpartyDownloadAccountCall) Do() (*DownloadAccountResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1219,7 +1318,12 @@ func (c *RelyingpartyDownloadAccountCall) Do() (*DownloadAccountResponse, error)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *DownloadAccountResponse
+	ret := &DownloadAccountResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1295,8 +1399,23 @@ func (c *RelyingpartyGetAccountInfoCall) doRequest(alt string) (*http.Response, 
 	return c.s.client.Do(req)
 }
 
+// Do executes the "identitytoolkit.relyingparty.getAccountInfo" call.
+// Exactly one of *GetAccountInfoResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *GetAccountInfoResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *RelyingpartyGetAccountInfoCall) Do() (*GetAccountInfoResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1304,7 +1423,12 @@ func (c *RelyingpartyGetAccountInfoCall) Do() (*GetAccountInfoResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *GetAccountInfoResponse
+	ret := &GetAccountInfoResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1380,8 +1504,23 @@ func (c *RelyingpartyGetOobConfirmationCodeCall) doRequest(alt string) (*http.Re
 	return c.s.client.Do(req)
 }
 
+// Do executes the "identitytoolkit.relyingparty.getOobConfirmationCode" call.
+// Exactly one of *GetOobConfirmationCodeResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *GetOobConfirmationCodeResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *RelyingpartyGetOobConfirmationCodeCall) Do() (*GetOobConfirmationCodeResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1389,7 +1528,12 @@ func (c *RelyingpartyGetOobConfirmationCodeCall) Do() (*GetOobConfirmationCodeRe
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *GetOobConfirmationCodeResponse
+	ret := &GetOobConfirmationCodeResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1431,6 +1575,16 @@ func (c *RelyingpartyGetPublicKeysCall) Fields(s ...googleapi.Field) *Relyingpar
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *RelyingpartyGetPublicKeysCall) IfNoneMatch(entityTag string) *RelyingpartyGetPublicKeysCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -1451,12 +1605,16 @@ func (c *RelyingpartyGetPublicKeysCall) doRequest(alt string) (*http.Response, e
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "identitytoolkit.relyingparty.getPublicKeys" call.
 func (c *RelyingpartyGetPublicKeysCall) Do() (map[string]string, error) {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -1505,6 +1663,16 @@ func (c *RelyingpartyGetRecaptchaParamCall) Fields(s ...googleapi.Field) *Relyin
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *RelyingpartyGetRecaptchaParamCall) IfNoneMatch(entityTag string) *RelyingpartyGetRecaptchaParamCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -1525,14 +1693,32 @@ func (c *RelyingpartyGetRecaptchaParamCall) doRequest(alt string) (*http.Respons
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "identitytoolkit.relyingparty.getRecaptchaParam" call.
+// Exactly one of *GetRecaptchaParamResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *GetRecaptchaParamResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *RelyingpartyGetRecaptchaParamCall) Do() (*GetRecaptchaParamResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1540,7 +1726,12 @@ func (c *RelyingpartyGetRecaptchaParamCall) Do() (*GetRecaptchaParamResponse, er
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *GetRecaptchaParamResponse
+	ret := &GetRecaptchaParamResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1613,8 +1804,23 @@ func (c *RelyingpartyResetPasswordCall) doRequest(alt string) (*http.Response, e
 	return c.s.client.Do(req)
 }
 
+// Do executes the "identitytoolkit.relyingparty.resetPassword" call.
+// Exactly one of *ResetPasswordResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *ResetPasswordResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *RelyingpartyResetPasswordCall) Do() (*ResetPasswordResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1622,7 +1828,12 @@ func (c *RelyingpartyResetPasswordCall) Do() (*ResetPasswordResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *ResetPasswordResponse
+	ret := &ResetPasswordResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1698,8 +1909,23 @@ func (c *RelyingpartySetAccountInfoCall) doRequest(alt string) (*http.Response, 
 	return c.s.client.Do(req)
 }
 
+// Do executes the "identitytoolkit.relyingparty.setAccountInfo" call.
+// Exactly one of *SetAccountInfoResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *SetAccountInfoResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *RelyingpartySetAccountInfoCall) Do() (*SetAccountInfoResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1707,7 +1933,12 @@ func (c *RelyingpartySetAccountInfoCall) Do() (*SetAccountInfoResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *SetAccountInfoResponse
+	ret := &SetAccountInfoResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1783,8 +2014,23 @@ func (c *RelyingpartyUploadAccountCall) doRequest(alt string) (*http.Response, e
 	return c.s.client.Do(req)
 }
 
+// Do executes the "identitytoolkit.relyingparty.uploadAccount" call.
+// Exactly one of *UploadAccountResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *UploadAccountResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *RelyingpartyUploadAccountCall) Do() (*UploadAccountResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1792,7 +2038,12 @@ func (c *RelyingpartyUploadAccountCall) Do() (*UploadAccountResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *UploadAccountResponse
+	ret := &UploadAccountResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1868,8 +2119,23 @@ func (c *RelyingpartyVerifyAssertionCall) doRequest(alt string) (*http.Response,
 	return c.s.client.Do(req)
 }
 
+// Do executes the "identitytoolkit.relyingparty.verifyAssertion" call.
+// Exactly one of *VerifyAssertionResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *VerifyAssertionResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *RelyingpartyVerifyAssertionCall) Do() (*VerifyAssertionResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1877,7 +2143,12 @@ func (c *RelyingpartyVerifyAssertionCall) Do() (*VerifyAssertionResponse, error)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *VerifyAssertionResponse
+	ret := &VerifyAssertionResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1953,8 +2224,23 @@ func (c *RelyingpartyVerifyPasswordCall) doRequest(alt string) (*http.Response, 
 	return c.s.client.Do(req)
 }
 
+// Do executes the "identitytoolkit.relyingparty.verifyPassword" call.
+// Exactly one of *VerifyPasswordResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *VerifyPasswordResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *RelyingpartyVerifyPasswordCall) Do() (*VerifyPasswordResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1962,7 +2248,12 @@ func (c *RelyingpartyVerifyPasswordCall) Do() (*VerifyPasswordResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *VerifyPasswordResponse
+	ret := &VerifyPasswordResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}

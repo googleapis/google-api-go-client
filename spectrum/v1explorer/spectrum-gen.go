@@ -671,6 +671,10 @@ func (s *PawsGetSpectrumBatchRequest) MarshalJSON() ([]byte, error) {
 // available spectrum query contains a schedule of available spectrum
 // for the device at multiple locations.
 type PawsGetSpectrumBatchResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// DatabaseChange: A database may include the databaseChange parameter
 	// to notify a device of a change to its database URI, providing one or
 	// more alternate database URIs. The device should use this information
@@ -857,6 +861,10 @@ func (s *PawsGetSpectrumRequest) MarshalJSON() ([]byte, error) {
 // spectrum query which contains a schedule of available spectrum for
 // the device.
 type PawsGetSpectrumResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// DatabaseChange: A database may include the databaseChange parameter
 	// to notify a device of a change to its database URI, providing one or
 	// more alternate database URIs. The device should use this information
@@ -991,6 +999,10 @@ func (s *PawsInitRequest) MarshalJSON() ([]byte, error) {
 // PawsInitResponse: The initialization response message communicates
 // database parameters to the requesting device.
 type PawsInitResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// DatabaseChange: A database may include the databaseChange parameter
 	// to notify a device of a change to its database URI, providing one or
 	// more alternate database URIs. The device should use this information
@@ -1094,6 +1106,10 @@ func (s *PawsNotifySpectrumUseRequest) MarshalJSON() ([]byte, error) {
 
 // PawsNotifySpectrumUseResponse: An empty response to the notification.
 type PawsNotifySpectrumUseResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "spectrum#pawsNotifySpectrumUseResponse".
 	Kind string `json:"kind,omitempty"`
@@ -1169,6 +1185,10 @@ func (s *PawsRegisterRequest) MarshalJSON() ([]byte, error) {
 // PawsRegisterResponse: The registration response message simply
 // acknowledges receipt of the request and is otherwise empty.
 type PawsRegisterResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// DatabaseChange: A database may include the databaseChange parameter
 	// to notify a device of a change to its database URI, providing one or
 	// more alternate database URIs. The device should use this information
@@ -1241,6 +1261,10 @@ func (s *PawsVerifyDeviceRequest) MarshalJSON() ([]byte, error) {
 
 // PawsVerifyDeviceResponse: The device validation response message.
 type PawsVerifyDeviceResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// DatabaseChange: A database may include the databaseChange parameter
 	// to notify a device of a change to its database URI, providing one or
 	// more alternate database URIs. The device should use this information
@@ -1582,8 +1606,23 @@ func (c *PawsGetSpectrumCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "spectrum.paws.getSpectrum" call.
+// Exactly one of *PawsGetSpectrumResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *PawsGetSpectrumResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *PawsGetSpectrumCall) Do() (*PawsGetSpectrumResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1591,7 +1630,12 @@ func (c *PawsGetSpectrumCall) Do() (*PawsGetSpectrumResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *PawsGetSpectrumResponse
+	ret := &PawsGetSpectrumResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1668,8 +1712,23 @@ func (c *PawsGetSpectrumBatchCall) doRequest(alt string) (*http.Response, error)
 	return c.s.client.Do(req)
 }
 
+// Do executes the "spectrum.paws.getSpectrumBatch" call.
+// Exactly one of *PawsGetSpectrumBatchResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *PawsGetSpectrumBatchResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *PawsGetSpectrumBatchCall) Do() (*PawsGetSpectrumBatchResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1677,7 +1736,12 @@ func (c *PawsGetSpectrumBatchCall) Do() (*PawsGetSpectrumBatchResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *PawsGetSpectrumBatchResponse
+	ret := &PawsGetSpectrumBatchResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1754,8 +1818,23 @@ func (c *PawsInitCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "spectrum.paws.init" call.
+// Exactly one of *PawsInitResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *PawsInitResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *PawsInitCall) Do() (*PawsInitResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1763,7 +1842,12 @@ func (c *PawsInitCall) Do() (*PawsInitResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *PawsInitResponse
+	ret := &PawsInitResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1843,8 +1927,23 @@ func (c *PawsNotifySpectrumUseCall) doRequest(alt string) (*http.Response, error
 	return c.s.client.Do(req)
 }
 
+// Do executes the "spectrum.paws.notifySpectrumUse" call.
+// Exactly one of *PawsNotifySpectrumUseResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *PawsNotifySpectrumUseResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *PawsNotifySpectrumUseCall) Do() (*PawsNotifySpectrumUseResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1852,7 +1951,12 @@ func (c *PawsNotifySpectrumUseCall) Do() (*PawsNotifySpectrumUseResponse, error)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *PawsNotifySpectrumUseResponse
+	ret := &PawsNotifySpectrumUseResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1930,8 +2034,23 @@ func (c *PawsRegisterCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "spectrum.paws.register" call.
+// Exactly one of *PawsRegisterResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *PawsRegisterResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *PawsRegisterCall) Do() (*PawsRegisterResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1939,7 +2058,12 @@ func (c *PawsRegisterCall) Do() (*PawsRegisterResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *PawsRegisterResponse
+	ret := &PawsRegisterResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -2018,8 +2142,23 @@ func (c *PawsVerifyDeviceCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "spectrum.paws.verifyDevice" call.
+// Exactly one of *PawsVerifyDeviceResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *PawsVerifyDeviceResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *PawsVerifyDeviceCall) Do() (*PawsVerifyDeviceResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -2027,7 +2166,12 @@ func (c *PawsVerifyDeviceCall) Do() (*PawsVerifyDeviceResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *PawsVerifyDeviceResponse
+	ret := &PawsVerifyDeviceResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}

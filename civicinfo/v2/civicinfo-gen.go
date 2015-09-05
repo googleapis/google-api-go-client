@@ -404,6 +404,10 @@ func (s *Contest) MarshalJSON() ([]byte, error) {
 
 // DivisionSearchResponse: The result of a division search query.
 type DivisionSearchResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "civicinfo#divisionSearchResponse".
 	Kind string `json:"kind,omitempty"`
@@ -525,6 +529,10 @@ func (s *ElectionOfficial) MarshalJSON() ([]byte, error) {
 // ElectionsQueryResponse: The list of elections available for this
 // version of the API.
 type ElectionsQueryResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Elections: A list of available elections
 	Elections []*Election `json:"elections,omitempty"`
 
@@ -762,6 +770,10 @@ func (s *PollingLocation) MarshalJSON() ([]byte, error) {
 }
 
 type RepresentativeInfoData struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Divisions: Political geographic divisions that contain the requested
 	// address.
 	Divisions map[string]GeographicDivision `json:"divisions,omitempty"`
@@ -792,6 +804,10 @@ func (s *RepresentativeInfoData) MarshalJSON() ([]byte, error) {
 // RepresentativeInfoResponse: The result of a representative info
 // lookup query.
 type RepresentativeInfoResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Divisions: Political geographic divisions that contain the requested
 	// address.
 	Divisions map[string]GeographicDivision `json:"divisions,omitempty"`
@@ -890,6 +906,10 @@ func (s *Source) MarshalJSON() ([]byte, error) {
 
 // VoterInfoResponse: The result of a voter info lookup query.
 type VoterInfoResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Contests: Contests that will appear on the voter's ballot.
 	Contests []*Contest `json:"contests,omitempty"`
 
@@ -983,6 +1003,16 @@ func (c *DivisionsSearchCall) Fields(s ...googleapi.Field) *DivisionsSearchCall 
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *DivisionsSearchCall) IfNoneMatch(entityTag string) *DivisionsSearchCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -1006,14 +1036,32 @@ func (c *DivisionsSearchCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "civicinfo.divisions.search" call.
+// Exactly one of *DivisionSearchResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *DivisionSearchResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *DivisionsSearchCall) Do() (*DivisionSearchResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1021,7 +1069,12 @@ func (c *DivisionsSearchCall) Do() (*DivisionSearchResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *DivisionSearchResponse
+	ret := &DivisionSearchResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1067,6 +1120,16 @@ func (c *ElectionsElectionQueryCall) Fields(s ...googleapi.Field) *ElectionsElec
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *ElectionsElectionQueryCall) IfNoneMatch(entityTag string) *ElectionsElectionQueryCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -1087,14 +1150,32 @@ func (c *ElectionsElectionQueryCall) doRequest(alt string) (*http.Response, erro
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "civicinfo.elections.electionQuery" call.
+// Exactly one of *ElectionsQueryResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *ElectionsQueryResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ElectionsElectionQueryCall) Do() (*ElectionsQueryResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1102,7 +1183,12 @@ func (c *ElectionsElectionQueryCall) Do() (*ElectionsQueryResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *ElectionsQueryResponse
+	ret := &ElectionsQueryResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1159,6 +1245,16 @@ func (c *ElectionsVoterInfoQueryCall) Fields(s ...googleapi.Field) *ElectionsVot
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *ElectionsVoterInfoQueryCall) IfNoneMatch(entityTag string) *ElectionsVoterInfoQueryCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -1186,14 +1282,32 @@ func (c *ElectionsVoterInfoQueryCall) doRequest(alt string) (*http.Response, err
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "civicinfo.elections.voterInfoQuery" call.
+// Exactly one of *VoterInfoResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *VoterInfoResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ElectionsVoterInfoQueryCall) Do() (*VoterInfoResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1201,7 +1315,12 @@ func (c *ElectionsVoterInfoQueryCall) Do() (*VoterInfoResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *VoterInfoResponse
+	ret := &VoterInfoResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1322,6 +1441,16 @@ func (c *RepresentativesRepresentativeInfoByAddressCall) Fields(s ...googleapi.F
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *RepresentativesRepresentativeInfoByAddressCall) IfNoneMatch(entityTag string) *RepresentativesRepresentativeInfoByAddressCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -1354,14 +1483,32 @@ func (c *RepresentativesRepresentativeInfoByAddressCall) doRequest(alt string) (
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "civicinfo.representatives.representativeInfoByAddress" call.
+// Exactly one of *RepresentativeInfoResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *RepresentativeInfoResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *RepresentativesRepresentativeInfoByAddressCall) Do() (*RepresentativeInfoResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1369,7 +1516,12 @@ func (c *RepresentativesRepresentativeInfoByAddressCall) Do() (*RepresentativeIn
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *RepresentativeInfoResponse
+	ret := &RepresentativeInfoResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1536,6 +1688,16 @@ func (c *RepresentativesRepresentativeInfoByDivisionCall) Fields(s ...googleapi.
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *RepresentativesRepresentativeInfoByDivisionCall) IfNoneMatch(entityTag string) *RepresentativesRepresentativeInfoByDivisionCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -1567,14 +1729,32 @@ func (c *RepresentativesRepresentativeInfoByDivisionCall) doRequest(alt string) 
 		"ocdId": c.ocdId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "civicinfo.representatives.representativeInfoByDivision" call.
+// Exactly one of *RepresentativeInfoData or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *RepresentativeInfoData.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *RepresentativesRepresentativeInfoByDivisionCall) Do() (*RepresentativeInfoData, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1582,7 +1762,12 @@ func (c *RepresentativesRepresentativeInfoByDivisionCall) Do() (*RepresentativeI
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *RepresentativeInfoData
+	ret := &RepresentativeInfoData{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}

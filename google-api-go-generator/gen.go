@@ -58,9 +58,10 @@ type API struct {
 
 	m map[string]interface{}
 
-	forceJSON []byte // if non-nil, the JSON schema file. else fetched.
-	usedNames namePool
-	schemas   map[string]*Schema // apiName -> schema
+	forceJSON     []byte // if non-nil, the JSON schema file. else fetched.
+	usedNames     namePool
+	schemas       map[string]*Schema // apiName -> schema
+	responseTypes map[string]bool
 
 	p  func(format string, args ...interface{}) // print raw
 	pn func(format string, args ...interface{}) // print with newline
@@ -552,6 +553,14 @@ func (a *API) GenerateCode() ([]byte, error) {
 	}
 
 	a.PopulateSchemas()
+
+	a.responseTypes = make(map[string]bool)
+	for _, meth := range a.APIMethods() {
+		meth.cacheResponseTypes(a)
+	}
+	for _, res := range reslist {
+		res.cacheResponseTypes(a)
+	}
 
 	for _, name := range a.sortedSchemaNames() {
 		a.schemas[name].writeSchemaCode(a)
@@ -1217,6 +1226,10 @@ func (s *Schema) writeSchemaStruct(api *API) {
 	s.api.p("type %s struct {\n", s.GoName())
 
 	np := new(namePool)
+	forceSendName := np.Get("ForceSendFields")
+	if s.isResponseType() {
+		np.Get("ServerResponse") // reserve the name
+	}
 
 	firstFieldName := "" // used to store a struct field name for use in documentation.
 	for i, p := range s.properties() {
@@ -1246,14 +1259,20 @@ func (s *Schema) writeSchemaStruct(api *API) {
 		}
 	}
 
+	if s.isResponseType() {
+		if firstFieldName != "" {
+			s.api.p("\n")
+		}
+		s.api.p("%s", asComment("\t", "ServerResponse contains the HTTP response code and headers from the server."))
+		s.api.p("\tgoogleapi.ServerResponse `json:\"-\"`\n")
+	}
+
 	if firstFieldName == "" {
 		// There were no fields in the struct, so there is no point
 		// adding any custom JSON marshaling code.
 		s.api.pn("}")
 		return
 	}
-
-	forceSendName := np.Get("ForceSendFields")
 
 	commentFmtStr := "%s is a list of field names (e.g. %q) to " +
 		"unconditionally include in API requests. By default, fields " +
@@ -1282,6 +1301,11 @@ func (s *Schema) writeSchemaMarshal(forceSendFieldName string) {
 	s.api.pn("\traw := noMethod(*s)")
 	s.api.pn("\treturn internal.MarshalJSON(raw, s.%s)", forceSendFieldName)
 	s.api.pn("}")
+}
+
+// isResponseType returns true for all types that are used as a response.
+func (s *Schema) isResponseType() bool {
+	return s.api.responseTypes["*"+s.goName]
 }
 
 // PopulateSchemas reads all the API types ("schemas") from the JSON file
@@ -1347,6 +1371,15 @@ func (r *Resource) generateType() {
 
 	for _, res := range r.resources {
 		res.generateType()
+	}
+}
+
+func (r *Resource) cacheResponseTypes(api *API) {
+	for _, meth := range r.Methods() {
+		meth.cacheResponseTypes(api)
+	}
+	for _, res := range r.resources {
+		res.cacheResponseTypes(api)
 	}
 }
 
@@ -1474,6 +1507,12 @@ func (m *Method) RequiredQueryParams() []*Param {
 	})
 }
 
+func (meth *Method) cacheResponseTypes(api *API) {
+	if retType := responseType(api, meth.m); retType != "" && strings.HasPrefix(retType, "*") {
+		api.responseTypes[retType] = true
+	}
+}
+
 func (meth *Method) generateCode() {
 	res := meth.r // may be nil if a top-level method
 	a := meth.api
@@ -1481,7 +1520,8 @@ func (meth *Method) generateCode() {
 
 	pn("\n// method id %q:", meth.Id())
 
-	retTypeComma := responseType(a, meth.m)
+	retType := responseType(a, meth.m)
+	retTypeComma := retType
 	if retTypeComma != "" {
 		retTypeComma += ", "
 	}
@@ -1585,6 +1625,21 @@ func (meth *Method) generateCode() {
 	pn(`c.opt_["fields"] = googleapi.CombineFields(s)`)
 	pn("return c")
 	pn("}")
+	httpMethod := jstr(meth.m, "httpMethod")
+	if httpMethod == "GET" {
+		// Note that non-GET responses are excluded from supporting If-None-Match.
+		// See https://github.com/google/google-api-go-client/issues/107 for more info.
+		comment := "IfNoneMatch sets the optional parameter which makes the operation fail if " +
+			"the object's ETag matches the given value. This is useful for getting updates " +
+			"only after the object has changed since the last request. " +
+			"Use googleapi.IsNotModified to check whether the response error from Do " +
+			"is the result of In-None-Match."
+		p("\n%s", asComment("", comment))
+		pn("func (c *%s) IfNoneMatch(entityTag string) *%s {", callName, callName)
+		pn(`c.opt_["ifNoneMatch"] = entityTag`)
+		pn("return c")
+		pn("}")
+	}
 
 	doMethod := "Do method"
 	if meth.supportsMediaDownload() {
@@ -1605,7 +1660,6 @@ func (meth *Method) generateCode() {
 	pn("\nfunc (c *%s) doRequest(alt string) (*http.Response, error) {", callName)
 	pn("var body io.Reader = nil")
 	hasContentType := false
-	httpMethod := jstr(meth.m, "httpMethod")
 	if ba := args.bodyArg(); ba != nil && httpMethod != "GET" {
 		style := "WithoutDataWrapper"
 		if a.needsDataWrapper() {
@@ -1684,6 +1738,11 @@ func (meth *Method) generateCode() {
 		pn(`req.Header.Set("Content-Type", ctype)`)
 	}
 	pn(`req.Header.Set("User-Agent", c.s.userAgent())`)
+	if httpMethod == "GET" {
+		pn(`if v, ok := c.opt_["ifNoneMatch"]; ok {`)
+		pn("	req.Header.Set(\"If-None-Match\", fmt.Sprintf(\"%%v\", v))")
+		pn("}")
+	}
 	pn("if c.ctx_ != nil {")
 	pn(" return ctxhttp.Do(c.ctx_, c.s.client, req)")
 	pn("}")
@@ -1705,12 +1764,33 @@ func (meth *Method) generateCode() {
 		pn("}")
 	}
 
-	pn("\nfunc (c *%s) Do() (%serror) {", callName, retTypeComma)
+	mapRetType := strings.HasPrefix(retTypeComma, "map[")
+	pn("\n// Do executes the %q call.", jstr(meth.m, "id"))
+	if retTypeComma != "" && !mapRetType {
+		commentFmtStr := "Exactly one of %v or error will be non-nil. " +
+			"Any non-2xx status code is an error. " +
+			"Response headers are in either %v.ServerResponse.Header " +
+			"or (if a response was returned at all) in error.(*googleapi.Error).Header. " +
+			"Use googleapi.IsNotModified to check whether the returned error was because " +
+			"http.StatusNotModified was returned."
+		comment := fmt.Sprintf(commentFmtStr, retType, retType)
+		p("%s", asComment("", comment))
+	}
+	pn("func (c *%s) Do() (%serror) {", callName, retTypeComma)
 	nilRet := ""
 	if retTypeComma != "" {
 		nilRet = "nil, "
 	}
 	pn(`res, err := c.doRequest("json")`)
+	if retTypeComma != "" && !mapRetType {
+		pn("if res != nil && res.StatusCode == http.StatusNotModified {")
+		pn(" if res.Body != nil { res.Body.Close() }")
+		pn(" return nil, &googleapi.Error{")
+		pn("  Code: res.StatusCode,")
+		pn("  Header: res.Header,")
+		pn(" }")
+		pn("}")
+	}
 	pn("if err != nil { return %serr }", nilRet)
 	pn("defer googleapi.CloseBody(res)")
 	pn("if err := googleapi.CheckResponse(res); err != nil { return %serr }", nilRet)
@@ -1740,7 +1820,16 @@ func (meth *Method) generateCode() {
 	if retTypeComma == "" {
 		pn("return nil")
 	} else {
-		pn("var ret %s", responseType(a, meth.m))
+		if mapRetType {
+			pn("var ret %s", responseType(a, meth.m))
+		} else {
+			pn("ret := &%s{", responseTypeLiteral(a, meth.m))
+			pn(" ServerResponse: googleapi.ServerResponse{")
+			pn("  Header: res.Header,")
+			pn("  HTTPStatusCode: res.StatusCode,")
+			pn(" },")
+			pn("}")
+		}
 		pn("if err := json.NewDecoder(res.Body).Decode(&ret); err != nil { return nil, err }")
 		pn("return ret, nil")
 	}
@@ -2088,6 +2177,15 @@ func responseType(api *API, m map[string]interface{}) string {
 		}
 	}
 	return ""
+}
+
+// Strips the leading '*' from a type name so that it can be used to create a literal.
+func responseTypeLiteral(api *API, m map[string]interface{}) string {
+	v := responseType(api, m)
+	if strings.HasPrefix(v, "*") {
+		return v[1:]
+	}
+	return v
 }
 
 // initialCap returns the identifier with a leading capital letter.

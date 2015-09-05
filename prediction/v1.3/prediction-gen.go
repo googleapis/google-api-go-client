@@ -163,6 +163,10 @@ type Output struct {
 	// SelfLink: A URL to re-request this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
 	// ForceSendFields is a list of field names (e.g. "Id") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -220,6 +224,10 @@ type Training struct {
 	// Utility: A class weighting function, which allows the importance
 	// weights for classes to be specified [Categorical models only].
 	Utility []*TrainingUtility `json:"utility,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
 	// unconditionally include in API requests. By default, fields with
@@ -395,8 +403,23 @@ func (c *HostedmodelsPredictCall) doRequest(alt string) (*http.Response, error) 
 	return c.s.client.Do(req)
 }
 
+// Do executes the "prediction.hostedmodels.predict" call.
+// Exactly one of *Output or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Output.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *HostedmodelsPredictCall) Do() (*Output, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -404,7 +427,12 @@ func (c *HostedmodelsPredictCall) Do() (*Output, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Output
+	ret := &Output{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -490,6 +518,7 @@ func (c *TrainingDeleteCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "prediction.training.delete" call.
 func (c *TrainingDeleteCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -547,6 +576,16 @@ func (c *TrainingGetCall) Fields(s ...googleapi.Field) *TrainingGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *TrainingGetCall) IfNoneMatch(entityTag string) *TrainingGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -569,14 +608,32 @@ func (c *TrainingGetCall) doRequest(alt string) (*http.Response, error) {
 		"data": c.data,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "prediction.training.get" call.
+// Exactly one of *Training or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Training.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *TrainingGetCall) Do() (*Training, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -584,7 +641,12 @@ func (c *TrainingGetCall) Do() (*Training, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Training
+	ret := &Training{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -671,8 +733,23 @@ func (c *TrainingInsertCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "prediction.training.insert" call.
+// Exactly one of *Training or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Training.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *TrainingInsertCall) Do() (*Training, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -680,7 +757,12 @@ func (c *TrainingInsertCall) Do() (*Training, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Training
+	ret := &Training{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -766,8 +848,23 @@ func (c *TrainingPredictCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "prediction.training.predict" call.
+// Exactly one of *Output or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Output.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *TrainingPredictCall) Do() (*Output, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -775,7 +872,12 @@ func (c *TrainingPredictCall) Do() (*Output, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Output
+	ret := &Output{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -869,8 +971,23 @@ func (c *TrainingUpdateCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "prediction.training.update" call.
+// Exactly one of *Training or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Training.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *TrainingUpdateCall) Do() (*Training, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -878,7 +995,12 @@ func (c *TrainingUpdateCall) Do() (*Training, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Training
+	ret := &Training{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}

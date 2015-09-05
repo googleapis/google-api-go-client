@@ -277,6 +277,10 @@ type SearchAnalyticsQueryResponse struct {
 	// the query.
 	Rows []*ApiDataRow `json:"rows,omitempty"`
 
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
 	// ForceSendFields is a list of field names (e.g.
 	// "ResponseAggregationType") to unconditionally include in API
 	// requests. By default, fields with empty values are omitted from API
@@ -299,6 +303,10 @@ type SitemapsListResponse struct {
 	// as a sitemap.
 	Sitemap []*WmxSitemap `json:"sitemap,omitempty"`
 
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
 	// ForceSendFields is a list of field names (e.g. "Sitemap") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -319,6 +327,10 @@ type SitesListResponse struct {
 	// SiteEntry: Contains permission level information about a Webmaster
 	// Tools site. For more information, see Permissions in Webmaster Tools.
 	SiteEntry []*WmxSite `json:"siteEntry,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 
 	// ForceSendFields is a list of field names (e.g. "SiteEntry") to
 	// unconditionally include in API requests. By default, fields with
@@ -394,6 +406,10 @@ type UrlCrawlErrorsCountsQueryResponse struct {
 	// error category and platform.
 	CountPerTypes []*UrlCrawlErrorCountsPerType `json:"countPerTypes,omitempty"`
 
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
 	// ForceSendFields is a list of field names (e.g. "CountPerTypes") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -430,6 +446,10 @@ type UrlCrawlErrorsSample struct {
 	// get().
 	UrlDetails *UrlSampleDetails `json:"urlDetails,omitempty"`
 
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
 	// ForceSendFields is a list of field names (e.g. "FirstDetected") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -450,6 +470,10 @@ type UrlCrawlErrorsSamplesListResponse struct {
 	// UrlCrawlErrorSample: Information about the sample URL and its crawl
 	// error.
 	UrlCrawlErrorSample []*UrlCrawlErrorsSample `json:"urlCrawlErrorSample,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 
 	// ForceSendFields is a list of field names (e.g. "UrlCrawlErrorSample")
 	// to unconditionally include in API requests. By default, fields with
@@ -500,6 +524,10 @@ type WmxSite struct {
 	// SiteUrl: The URL of the site.
 	SiteUrl string `json:"siteUrl,omitempty"`
 
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
 	// ForceSendFields is a list of field names (e.g. "PermissionLevel") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -549,6 +577,10 @@ type WmxSitemap struct {
 	// Warnings: Number of warnings for the sitemap. These are generally
 	// non-critical issues with URLs in the sitemaps.
 	Warnings int64 `json:"warnings,omitempty,string"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 
 	// ForceSendFields is a list of field names (e.g. "Contents") to
 	// unconditionally include in API requests. By default, fields with
@@ -660,8 +692,23 @@ func (c *SearchanalyticsQueryCall) doRequest(alt string) (*http.Response, error)
 	return c.s.client.Do(req)
 }
 
+// Do executes the "webmasters.searchanalytics.query" call.
+// Exactly one of *SearchAnalyticsQueryResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *SearchAnalyticsQueryResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *SearchanalyticsQueryCall) Do() (*SearchAnalyticsQueryResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -669,7 +716,12 @@ func (c *SearchanalyticsQueryCall) Do() (*SearchAnalyticsQueryResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *SearchAnalyticsQueryResponse
+	ret := &SearchAnalyticsQueryResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -759,6 +811,7 @@ func (c *SitemapsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "webmasters.sitemaps.delete" call.
 func (c *SitemapsDeleteCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -825,6 +878,16 @@ func (c *SitemapsGetCall) Fields(s ...googleapi.Field) *SitemapsGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *SitemapsGetCall) IfNoneMatch(entityTag string) *SitemapsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -848,14 +911,32 @@ func (c *SitemapsGetCall) doRequest(alt string) (*http.Response, error) {
 		"feedpath": c.feedpath,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "webmasters.sitemaps.get" call.
+// Exactly one of *WmxSitemap or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *WmxSitemap.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *SitemapsGetCall) Do() (*WmxSitemap, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -863,7 +944,12 @@ func (c *SitemapsGetCall) Do() (*WmxSitemap, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *WmxSitemap
+	ret := &WmxSitemap{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -936,6 +1022,16 @@ func (c *SitemapsListCall) Fields(s ...googleapi.Field) *SitemapsListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *SitemapsListCall) IfNoneMatch(entityTag string) *SitemapsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -961,14 +1057,32 @@ func (c *SitemapsListCall) doRequest(alt string) (*http.Response, error) {
 		"siteUrl": c.siteUrl,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "webmasters.sitemaps.list" call.
+// Exactly one of *SitemapsListResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *SitemapsListResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *SitemapsListCall) Do() (*SitemapsListResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -976,7 +1090,12 @@ func (c *SitemapsListCall) Do() (*SitemapsListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *SitemapsListResponse
+	ret := &SitemapsListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1068,6 +1187,7 @@ func (c *SitemapsSubmitCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "webmasters.sitemaps.submit" call.
 func (c *SitemapsSubmitCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -1160,6 +1280,7 @@ func (c *SitesAddCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "webmasters.sites.add" call.
 func (c *SitesAddCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -1246,6 +1367,7 @@ func (c *SitesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "webmasters.sites.delete" call.
 func (c *SitesDeleteCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -1303,6 +1425,16 @@ func (c *SitesGetCall) Fields(s ...googleapi.Field) *SitesGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *SitesGetCall) IfNoneMatch(entityTag string) *SitesGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -1325,14 +1457,32 @@ func (c *SitesGetCall) doRequest(alt string) (*http.Response, error) {
 		"siteUrl": c.siteUrl,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "webmasters.sites.get" call.
+// Exactly one of *WmxSite or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *WmxSite.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *SitesGetCall) Do() (*WmxSite, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1340,7 +1490,12 @@ func (c *SitesGetCall) Do() (*WmxSite, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *WmxSite
+	ret := &WmxSite{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1394,6 +1549,16 @@ func (c *SitesListCall) Fields(s ...googleapi.Field) *SitesListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *SitesListCall) IfNoneMatch(entityTag string) *SitesListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -1414,14 +1579,32 @@ func (c *SitesListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "webmasters.sites.list" call.
+// Exactly one of *SitesListResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *SitesListResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *SitesListCall) Do() (*SitesListResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1429,7 +1612,12 @@ func (c *SitesListCall) Do() (*SitesListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *SitesListResponse
+	ret := &SitesListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1513,6 +1701,16 @@ func (c *UrlcrawlerrorscountsQueryCall) Fields(s ...googleapi.Field) *Urlcrawler
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *UrlcrawlerrorscountsQueryCall) IfNoneMatch(entityTag string) *UrlcrawlerrorscountsQueryCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -1544,14 +1742,32 @@ func (c *UrlcrawlerrorscountsQueryCall) doRequest(alt string) (*http.Response, e
 		"siteUrl": c.siteUrl,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "webmasters.urlcrawlerrorscounts.query" call.
+// Exactly one of *UrlCrawlErrorsCountsQueryResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *UrlCrawlErrorsCountsQueryResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *UrlcrawlerrorscountsQueryCall) Do() (*UrlCrawlErrorsCountsQueryResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1559,7 +1775,12 @@ func (c *UrlcrawlerrorscountsQueryCall) Do() (*UrlCrawlErrorsCountsQueryResponse
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *UrlCrawlErrorsCountsQueryResponse
+	ret := &UrlCrawlErrorsCountsQueryResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1667,6 +1888,16 @@ func (c *UrlcrawlerrorssamplesGetCall) Fields(s ...googleapi.Field) *Urlcrawlerr
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *UrlcrawlerrorssamplesGetCall) IfNoneMatch(entityTag string) *UrlcrawlerrorssamplesGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -1692,14 +1923,32 @@ func (c *UrlcrawlerrorssamplesGetCall) doRequest(alt string) (*http.Response, er
 		"url":     c.url,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "webmasters.urlcrawlerrorssamples.get" call.
+// Exactly one of *UrlCrawlErrorsSample or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *UrlCrawlErrorsSample.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *UrlcrawlerrorssamplesGetCall) Do() (*UrlCrawlErrorsSample, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1707,7 +1956,12 @@ func (c *UrlcrawlerrorssamplesGetCall) Do() (*UrlCrawlErrorsSample, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *UrlCrawlErrorsSample
+	ret := &UrlCrawlErrorsSample{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1819,6 +2073,16 @@ func (c *UrlcrawlerrorssamplesListCall) Fields(s ...googleapi.Field) *Urlcrawler
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *UrlcrawlerrorssamplesListCall) IfNoneMatch(entityTag string) *UrlcrawlerrorssamplesListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -1843,14 +2107,32 @@ func (c *UrlcrawlerrorssamplesListCall) doRequest(alt string) (*http.Response, e
 		"siteUrl": c.siteUrl,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "webmasters.urlcrawlerrorssamples.list" call.
+// Exactly one of *UrlCrawlErrorsSamplesListResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *UrlCrawlErrorsSamplesListResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *UrlcrawlerrorssamplesListCall) Do() (*UrlCrawlErrorsSamplesListResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1858,7 +2140,12 @@ func (c *UrlcrawlerrorssamplesListCall) Do() (*UrlCrawlErrorsSamplesListResponse
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *UrlCrawlErrorsSamplesListResponse
+	ret := &UrlCrawlErrorsSamplesListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1996,6 +2283,7 @@ func (c *UrlcrawlerrorssamplesMarkAsFixedCall) doRequest(alt string) (*http.Resp
 	return c.s.client.Do(req)
 }
 
+// Do executes the "webmasters.urlcrawlerrorssamples.markAsFixed" call.
 func (c *UrlcrawlerrorssamplesMarkAsFixedCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {

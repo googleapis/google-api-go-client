@@ -223,6 +223,10 @@ type Application struct {
 	// "apps/myapp". @OutputOnly
 	Name string `json:"name,omitempty"`
 
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
 	// ForceSendFields is a list of field names (e.g. "CodeBucket") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -551,6 +555,10 @@ type ListModulesResponse struct {
 	// results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
 	// ForceSendFields is a list of field names (e.g. "Modules") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -577,6 +585,10 @@ type ListOperationsResponse struct {
 	// the request.
 	Operations []*Operation `json:"operations,omitempty"`
 
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -600,6 +612,10 @@ type ListVersionsResponse struct {
 
 	// Versions: The versions belonging to the requested application module.
 	Versions []*Version `json:"versions,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
@@ -657,6 +673,10 @@ type Module struct {
 	// Split: A mapping that defines fractional HTTP traffic diversion to
 	// different versions within the module.
 	Split *TrafficSplit `json:"split,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
 	// unconditionally include in API requests. By default, fields with
@@ -736,6 +756,10 @@ type Operation struct {
 	// if the original method name is `TakeSnapshot()`, the inferred
 	// response type is `TakeSnapshotResponse`.
 	Response OperationResponse `json:"response,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 
 	// ForceSendFields is a list of field names (e.g. "Done") to
 	// unconditionally include in API requests. By default, fields with
@@ -1371,6 +1395,10 @@ type Version struct {
 	// "env":"2").
 	Vm bool `json:"vm,omitempty"`
 
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
 	// ForceSendFields is a list of field names (e.g. "ApiConfig") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -1421,6 +1449,16 @@ func (c *AppsGetCall) Fields(s ...googleapi.Field) *AppsGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *AppsGetCall) IfNoneMatch(entityTag string) *AppsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -1446,14 +1484,32 @@ func (c *AppsGetCall) doRequest(alt string) (*http.Response, error) {
 		"appsId": c.appsId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "appengine.apps.get" call.
+// Exactly one of *Application or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Application.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AppsGetCall) Do() (*Application, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1461,7 +1517,12 @@ func (c *AppsGetCall) Do() (*Application, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Application
+	ret := &Application{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1552,8 +1613,23 @@ func (c *AppsModulesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "appengine.apps.modules.delete" call.
+// Exactly one of *Operation or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Operation.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AppsModulesDeleteCall) Do() (*Operation, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1561,7 +1637,12 @@ func (c *AppsModulesDeleteCall) Do() (*Operation, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Operation
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1625,6 +1706,16 @@ func (c *AppsModulesGetCall) Fields(s ...googleapi.Field) *AppsModulesGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *AppsModulesGetCall) IfNoneMatch(entityTag string) *AppsModulesGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -1648,14 +1739,32 @@ func (c *AppsModulesGetCall) doRequest(alt string) (*http.Response, error) {
 		"modulesId": c.modulesId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "appengine.apps.modules.get" call.
+// Exactly one of *Module or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Module.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AppsModulesGetCall) Do() (*Module, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1663,7 +1772,12 @@ func (c *AppsModulesGetCall) Do() (*Module, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Module
+	ret := &Module{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1739,6 +1853,16 @@ func (c *AppsModulesListCall) Fields(s ...googleapi.Field) *AppsModulesListCall 
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *AppsModulesListCall) IfNoneMatch(entityTag string) *AppsModulesListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -1767,14 +1891,32 @@ func (c *AppsModulesListCall) doRequest(alt string) (*http.Response, error) {
 		"appsId": c.appsId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "appengine.apps.modules.list" call.
+// Exactly one of *ListModulesResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *ListModulesResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AppsModulesListCall) Do() (*ListModulesResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1782,7 +1924,12 @@ func (c *AppsModulesListCall) Do() (*ListModulesResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *ListModulesResponse
+	ret := &ListModulesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1908,8 +2055,23 @@ func (c *AppsModulesPatchCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "appengine.apps.modules.patch" call.
+// Exactly one of *Operation or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Operation.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AppsModulesPatchCall) Do() (*Operation, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1917,7 +2079,12 @@ func (c *AppsModulesPatchCall) Do() (*Operation, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Operation
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -2031,8 +2198,23 @@ func (c *AppsModulesVersionsCreateCall) doRequest(alt string) (*http.Response, e
 	return c.s.client.Do(req)
 }
 
+// Do executes the "appengine.apps.modules.versions.create" call.
+// Exactly one of *Operation or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Operation.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AppsModulesVersionsCreateCall) Do() (*Operation, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -2040,7 +2222,12 @@ func (c *AppsModulesVersionsCreateCall) Do() (*Operation, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Operation
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -2139,8 +2326,23 @@ func (c *AppsModulesVersionsDeleteCall) doRequest(alt string) (*http.Response, e
 	return c.s.client.Do(req)
 }
 
+// Do executes the "appengine.apps.modules.versions.delete" call.
+// Exactly one of *Operation or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Operation.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AppsModulesVersionsDeleteCall) Do() (*Operation, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -2148,7 +2350,12 @@ func (c *AppsModulesVersionsDeleteCall) Do() (*Operation, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Operation
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -2232,6 +2439,16 @@ func (c *AppsModulesVersionsGetCall) Fields(s ...googleapi.Field) *AppsModulesVe
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *AppsModulesVersionsGetCall) IfNoneMatch(entityTag string) *AppsModulesVersionsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -2259,14 +2476,32 @@ func (c *AppsModulesVersionsGetCall) doRequest(alt string) (*http.Response, erro
 		"versionsId": c.versionsId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "appengine.apps.modules.versions.get" call.
+// Exactly one of *Version or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Version.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AppsModulesVersionsGetCall) Do() (*Version, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -2274,7 +2509,12 @@ func (c *AppsModulesVersionsGetCall) Do() (*Version, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Version
+	ret := &Version{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -2379,6 +2619,16 @@ func (c *AppsModulesVersionsListCall) Fields(s ...googleapi.Field) *AppsModulesV
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *AppsModulesVersionsListCall) IfNoneMatch(entityTag string) *AppsModulesVersionsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -2411,14 +2661,32 @@ func (c *AppsModulesVersionsListCall) doRequest(alt string) (*http.Response, err
 		"modulesId": c.modulesId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "appengine.apps.modules.versions.list" call.
+// Exactly one of *ListVersionsResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *ListVersionsResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AppsModulesVersionsListCall) Do() (*ListVersionsResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -2426,7 +2694,12 @@ func (c *AppsModulesVersionsListCall) Do() (*ListVersionsResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *ListVersionsResponse
+	ret := &ListVersionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -2512,6 +2785,16 @@ func (c *AppsOperationsGetCall) Fields(s ...googleapi.Field) *AppsOperationsGetC
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *AppsOperationsGetCall) IfNoneMatch(entityTag string) *AppsOperationsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -2535,14 +2818,32 @@ func (c *AppsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 		"operationsId": c.operationsId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "appengine.apps.operations.get" call.
+// Exactly one of *Operation or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Operation.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AppsOperationsGetCall) Do() (*Operation, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -2550,7 +2851,12 @@ func (c *AppsOperationsGetCall) Do() (*Operation, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Operation
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -2637,6 +2943,16 @@ func (c *AppsOperationsListCall) Fields(s ...googleapi.Field) *AppsOperationsLis
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *AppsOperationsListCall) IfNoneMatch(entityTag string) *AppsOperationsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -2668,14 +2984,32 @@ func (c *AppsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 		"appsId": c.appsId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "appengine.apps.operations.list" call.
+// Exactly one of *ListOperationsResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *ListOperationsResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AppsOperationsListCall) Do() (*ListOperationsResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -2683,7 +3017,12 @@ func (c *AppsOperationsListCall) Do() (*ListOperationsResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *ListOperationsResponse
+	ret := &ListOperationsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}

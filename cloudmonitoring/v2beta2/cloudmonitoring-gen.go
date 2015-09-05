@@ -117,6 +117,10 @@ type DeleteMetricDescriptorResponse struct {
 	// string "cloudmonitoring#deleteMetricDescriptorResponse".
 	Kind string `json:"kind,omitempty"`
 
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
 	// ForceSendFields is a list of field names (e.g. "Kind") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -169,6 +173,10 @@ type ListMetricDescriptorsResponse struct {
 	// past the pagination limit, pass this value to the pageToken query
 	// parameter.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 
 	// ForceSendFields is a list of field names (e.g. "Kind") to
 	// unconditionally include in API requests. By default, fields with
@@ -231,6 +239,10 @@ type ListTimeseriesDescriptorsResponse struct {
 	// RFC 3339 string.
 	Youngest string `json:"youngest,omitempty"`
 
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
 	// ForceSendFields is a list of field names (e.g. "Kind") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -292,6 +304,10 @@ type ListTimeseriesResponse struct {
 	// RFC 3339 string.
 	Youngest string `json:"youngest,omitempty"`
 
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
 	// ForceSendFields is a list of field names (e.g. "Kind") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -324,6 +340,10 @@ type MetricDescriptor struct {
 
 	// TypeDescriptor: Type description for this metric.
 	TypeDescriptor *MetricDescriptorTypeDescriptor `json:"typeDescriptor,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with
@@ -695,6 +715,10 @@ type WriteTimeseriesResponse struct {
 	// string "cloudmonitoring#writeTimeseriesResponse".
 	Kind string `json:"kind,omitempty"`
 
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
 	// ForceSendFields is a list of field names (e.g. "Kind") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -770,8 +794,23 @@ func (c *MetricDescriptorsCreateCall) doRequest(alt string) (*http.Response, err
 	return c.s.client.Do(req)
 }
 
+// Do executes the "cloudmonitoring.metricDescriptors.create" call.
+// Exactly one of *MetricDescriptor or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *MetricDescriptor.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *MetricDescriptorsCreateCall) Do() (*MetricDescriptor, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -779,7 +818,12 @@ func (c *MetricDescriptorsCreateCall) Do() (*MetricDescriptor, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *MetricDescriptor
+	ret := &MetricDescriptor{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -869,8 +913,23 @@ func (c *MetricDescriptorsDeleteCall) doRequest(alt string) (*http.Response, err
 	return c.s.client.Do(req)
 }
 
+// Do executes the "cloudmonitoring.metricDescriptors.delete" call.
+// Exactly one of *DeleteMetricDescriptorResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *DeleteMetricDescriptorResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *MetricDescriptorsDeleteCall) Do() (*DeleteMetricDescriptorResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -878,7 +937,12 @@ func (c *MetricDescriptorsDeleteCall) Do() (*DeleteMetricDescriptorResponse, err
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *DeleteMetricDescriptorResponse
+	ret := &DeleteMetricDescriptorResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -975,6 +1039,16 @@ func (c *MetricDescriptorsListCall) Fields(s ...googleapi.Field) *MetricDescript
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *MetricDescriptorsListCall) IfNoneMatch(entityTag string) *MetricDescriptorsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -1006,14 +1080,32 @@ func (c *MetricDescriptorsListCall) doRequest(alt string) (*http.Response, error
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "cloudmonitoring.metricDescriptors.list" call.
+// Exactly one of *ListMetricDescriptorsResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *ListMetricDescriptorsResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *MetricDescriptorsListCall) Do() (*ListMetricDescriptorsResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1021,7 +1113,12 @@ func (c *MetricDescriptorsListCall) Do() (*ListMetricDescriptorsResponse, error)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *ListMetricDescriptorsResponse
+	ret := &ListMetricDescriptorsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1196,6 +1293,16 @@ func (c *TimeseriesListCall) Fields(s ...googleapi.Field) *TimeseriesListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *TimeseriesListCall) IfNoneMatch(entityTag string) *TimeseriesListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -1241,14 +1348,32 @@ func (c *TimeseriesListCall) doRequest(alt string) (*http.Response, error) {
 		"metric":  c.metric,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "cloudmonitoring.timeseries.list" call.
+// Exactly one of *ListTimeseriesResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *ListTimeseriesResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *TimeseriesListCall) Do() (*ListTimeseriesResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1256,7 +1381,12 @@ func (c *TimeseriesListCall) Do() (*ListTimeseriesResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *ListTimeseriesResponse
+	ret := &ListTimeseriesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1427,8 +1557,23 @@ func (c *TimeseriesWriteCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "cloudmonitoring.timeseries.write" call.
+// Exactly one of *WriteTimeseriesResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *WriteTimeseriesResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *TimeseriesWriteCall) Do() (*WriteTimeseriesResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1436,7 +1581,12 @@ func (c *TimeseriesWriteCall) Do() (*WriteTimeseriesResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *WriteTimeseriesResponse
+	ret := &WriteTimeseriesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1593,6 +1743,16 @@ func (c *TimeseriesDescriptorsListCall) Fields(s ...googleapi.Field) *Timeseries
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *TimeseriesDescriptorsListCall) IfNoneMatch(entityTag string) *TimeseriesDescriptorsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -1638,14 +1798,32 @@ func (c *TimeseriesDescriptorsListCall) doRequest(alt string) (*http.Response, e
 		"metric":  c.metric,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "cloudmonitoring.timeseriesDescriptors.list" call.
+// Exactly one of *ListTimeseriesDescriptorsResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *ListTimeseriesDescriptorsResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *TimeseriesDescriptorsListCall) Do() (*ListTimeseriesDescriptorsResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1653,7 +1831,12 @@ func (c *TimeseriesDescriptorsListCall) Do() (*ListTimeseriesDescriptorsResponse
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *ListTimeseriesDescriptorsResponse
+	ret := &ListTimeseriesDescriptorsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}

@@ -317,6 +317,10 @@ type Account struct {
 	// SubAccounts: Sub accounts of the this account.
 	SubAccounts []*Account `json:"subAccounts,omitempty"`
 
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
 	// ForceSendFields is a list of field names (e.g. "Id") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -346,6 +350,10 @@ type Accounts struct {
 	// retrieve the next page of results, set the next request's "pageToken"
 	// value to this.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
@@ -408,6 +416,10 @@ type AdClients struct {
 	// retrieve the next page of results, set the next request's "pageToken"
 	// value to this.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
@@ -556,6 +568,10 @@ type AdUnit struct {
 	// in the last seven days.
 	Status string `json:"status,omitempty"`
 
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
 	// ForceSendFields is a list of field names (e.g. "Code") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -703,6 +719,10 @@ type AdUnits struct {
 	// value to this.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -750,6 +770,10 @@ type AdsenseReportsGenerateResponse struct {
 
 	// Warnings: Any warnings associated with generation of the report.
 	Warnings []string `json:"warnings,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 
 	// ForceSendFields is a list of field names (e.g. "Averages") to
 	// unconditionally include in API requests. By default, fields with
@@ -812,6 +836,10 @@ type CustomChannel struct {
 	// TargetingInfo: The targeting information of this custom channel, if
 	// activated.
 	TargetingInfo *CustomChannelTargetingInfo `json:"targetingInfo,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
 	// unconditionally include in API requests. By default, fields with
@@ -878,6 +906,10 @@ type CustomChannels struct {
 	// request's "pageToken" value to this.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -908,6 +940,10 @@ type SavedAdStyle struct {
 	// Name: The user selected name of this SavedAdStyle.
 	Name string `json:"name,omitempty"`
 
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
 	// ForceSendFields is a list of field names (e.g. "AdStyle") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -937,6 +973,10 @@ type SavedAdStyles struct {
 	// retrieve the next page of results, set the next request's "pageToken"
 	// value to this.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
@@ -992,6 +1032,10 @@ type SavedReports struct {
 	// To retrieve the next page of results, set the next request's
 	// "pageToken" value to this.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
@@ -1051,6 +1095,10 @@ type UrlChannels struct {
 	// "pageToken" value to this.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -1097,6 +1145,16 @@ func (c *AccountsGetCall) Fields(s ...googleapi.Field) *AccountsGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *AccountsGetCall) IfNoneMatch(entityTag string) *AccountsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -1122,14 +1180,32 @@ func (c *AccountsGetCall) doRequest(alt string) (*http.Response, error) {
 		"accountId": c.accountId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "adsense.accounts.get" call.
+// Exactly one of *Account or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Account.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsGetCall) Do() (*Account, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1137,7 +1213,12 @@ func (c *AccountsGetCall) Do() (*Account, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Account
+	ret := &Account{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1212,6 +1293,16 @@ func (c *AccountsListCall) Fields(s ...googleapi.Field) *AccountsListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *AccountsListCall) IfNoneMatch(entityTag string) *AccountsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -1238,14 +1329,32 @@ func (c *AccountsListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "adsense.accounts.list" call.
+// Exactly one of *Accounts or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Accounts.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsListCall) Do() (*Accounts, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1253,7 +1362,12 @@ func (c *AccountsListCall) Do() (*Accounts, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Accounts
+	ret := &Accounts{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1329,6 +1443,16 @@ func (c *AccountsAdclientsListCall) Fields(s ...googleapi.Field) *AccountsAdclie
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *AccountsAdclientsListCall) IfNoneMatch(entityTag string) *AccountsAdclientsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -1357,14 +1481,32 @@ func (c *AccountsAdclientsListCall) doRequest(alt string) (*http.Response, error
 		"accountId": c.accountId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "adsense.accounts.adclients.list" call.
+// Exactly one of *AdClients or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *AdClients.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsAdclientsListCall) Do() (*AdClients, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1372,7 +1514,12 @@ func (c *AccountsAdclientsListCall) Do() (*AdClients, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *AdClients
+	ret := &AdClients{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1446,6 +1593,16 @@ func (c *AccountsAdunitsGetCall) Fields(s ...googleapi.Field) *AccountsAdunitsGe
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *AccountsAdunitsGetCall) IfNoneMatch(entityTag string) *AccountsAdunitsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -1470,14 +1627,32 @@ func (c *AccountsAdunitsGetCall) doRequest(alt string) (*http.Response, error) {
 		"adUnitId":   c.adUnitId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "adsense.accounts.adunits.get" call.
+// Exactly one of *AdUnit or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *AdUnit.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsAdunitsGetCall) Do() (*AdUnit, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1485,7 +1660,12 @@ func (c *AccountsAdunitsGetCall) Do() (*AdUnit, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *AdUnit
+	ret := &AdUnit{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1581,6 +1761,16 @@ func (c *AccountsAdunitsListCall) Fields(s ...googleapi.Field) *AccountsAdunitsL
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *AccountsAdunitsListCall) IfNoneMatch(entityTag string) *AccountsAdunitsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -1613,14 +1803,32 @@ func (c *AccountsAdunitsListCall) doRequest(alt string) (*http.Response, error) 
 		"adClientId": c.adClientId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "adsense.accounts.adunits.list" call.
+// Exactly one of *AdUnits or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *AdUnits.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsAdunitsListCall) Do() (*AdUnits, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1628,7 +1836,12 @@ func (c *AccountsAdunitsListCall) Do() (*AdUnits, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *AdUnits
+	ret := &AdUnits{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1731,6 +1944,16 @@ func (c *AccountsAdunitsCustomchannelsListCall) Fields(s ...googleapi.Field) *Ac
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *AccountsAdunitsCustomchannelsListCall) IfNoneMatch(entityTag string) *AccountsAdunitsCustomchannelsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -1761,14 +1984,32 @@ func (c *AccountsAdunitsCustomchannelsListCall) doRequest(alt string) (*http.Res
 		"adUnitId":   c.adUnitId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "adsense.accounts.adunits.customchannels.list" call.
+// Exactly one of *CustomChannels or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *CustomChannels.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsAdunitsCustomchannelsListCall) Do() (*CustomChannels, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1776,7 +2017,12 @@ func (c *AccountsAdunitsCustomchannelsListCall) Do() (*CustomChannels, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *CustomChannels
+	ret := &CustomChannels{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1864,6 +2110,16 @@ func (c *AccountsCustomchannelsGetCall) Fields(s ...googleapi.Field) *AccountsCu
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *AccountsCustomchannelsGetCall) IfNoneMatch(entityTag string) *AccountsCustomchannelsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -1888,14 +2144,32 @@ func (c *AccountsCustomchannelsGetCall) doRequest(alt string) (*http.Response, e
 		"customChannelId": c.customChannelId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "adsense.accounts.customchannels.get" call.
+// Exactly one of *CustomChannel or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *CustomChannel.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsCustomchannelsGetCall) Do() (*CustomChannel, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1903,7 +2177,12 @@ func (c *AccountsCustomchannelsGetCall) Do() (*CustomChannel, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *CustomChannel
+	ret := &CustomChannel{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1993,6 +2272,16 @@ func (c *AccountsCustomchannelsListCall) Fields(s ...googleapi.Field) *AccountsC
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *AccountsCustomchannelsListCall) IfNoneMatch(entityTag string) *AccountsCustomchannelsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -2022,14 +2311,32 @@ func (c *AccountsCustomchannelsListCall) doRequest(alt string) (*http.Response, 
 		"adClientId": c.adClientId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "adsense.accounts.customchannels.list" call.
+// Exactly one of *CustomChannels or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *CustomChannels.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsCustomchannelsListCall) Do() (*CustomChannels, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -2037,7 +2344,12 @@ func (c *AccountsCustomchannelsListCall) Do() (*CustomChannels, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *CustomChannels
+	ret := &CustomChannels{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -2140,6 +2452,16 @@ func (c *AccountsCustomchannelsAdunitsListCall) Fields(s ...googleapi.Field) *Ac
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *AccountsCustomchannelsAdunitsListCall) IfNoneMatch(entityTag string) *AccountsCustomchannelsAdunitsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -2173,14 +2495,32 @@ func (c *AccountsCustomchannelsAdunitsListCall) doRequest(alt string) (*http.Res
 		"customChannelId": c.customChannelId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "adsense.accounts.customchannels.adunits.list" call.
+// Exactly one of *AdUnits or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *AdUnits.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsCustomchannelsAdunitsListCall) Do() (*AdUnits, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -2188,7 +2528,12 @@ func (c *AccountsCustomchannelsAdunitsListCall) Do() (*AdUnits, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *AdUnits
+	ret := &AdUnits{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -2342,6 +2687,16 @@ func (c *AccountsReportsGenerateCall) Fields(s ...googleapi.Field) *AccountsRepo
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *AccountsReportsGenerateCall) IfNoneMatch(entityTag string) *AccountsReportsGenerateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do and Download methods.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -2390,6 +2745,9 @@ func (c *AccountsReportsGenerateCall) doRequest(alt string) (*http.Response, err
 		"accountId": c.accountId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -2411,8 +2769,23 @@ func (c *AccountsReportsGenerateCall) Download() (*http.Response, error) {
 	return res, nil
 }
 
+// Do executes the "adsense.accounts.reports.generate" call.
+// Exactly one of *AdsenseReportsGenerateResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *AdsenseReportsGenerateResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsReportsGenerateCall) Do() (*AdsenseReportsGenerateResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -2420,7 +2793,12 @@ func (c *AccountsReportsGenerateCall) Do() (*AdsenseReportsGenerateResponse, err
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *AdsenseReportsGenerateResponse
+	ret := &AdsenseReportsGenerateResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -2574,6 +2952,16 @@ func (c *AccountsReportsSavedGenerateCall) Fields(s ...googleapi.Field) *Account
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *AccountsReportsSavedGenerateCall) IfNoneMatch(entityTag string) *AccountsReportsSavedGenerateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -2606,14 +2994,32 @@ func (c *AccountsReportsSavedGenerateCall) doRequest(alt string) (*http.Response
 		"savedReportId": c.savedReportId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "adsense.accounts.reports.saved.generate" call.
+// Exactly one of *AdsenseReportsGenerateResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *AdsenseReportsGenerateResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsReportsSavedGenerateCall) Do() (*AdsenseReportsGenerateResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -2621,7 +3027,12 @@ func (c *AccountsReportsSavedGenerateCall) Do() (*AdsenseReportsGenerateResponse
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *AdsenseReportsGenerateResponse
+	ret := &AdsenseReportsGenerateResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -2722,6 +3133,16 @@ func (c *AccountsReportsSavedListCall) Fields(s ...googleapi.Field) *AccountsRep
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *AccountsReportsSavedListCall) IfNoneMatch(entityTag string) *AccountsReportsSavedListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -2750,14 +3171,32 @@ func (c *AccountsReportsSavedListCall) doRequest(alt string) (*http.Response, er
 		"accountId": c.accountId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "adsense.accounts.reports.saved.list" call.
+// Exactly one of *SavedReports or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *SavedReports.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsReportsSavedListCall) Do() (*SavedReports, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -2765,7 +3204,12 @@ func (c *AccountsReportsSavedListCall) Do() (*SavedReports, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *SavedReports
+	ret := &SavedReports{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -2836,6 +3280,16 @@ func (c *AccountsSavedadstylesGetCall) Fields(s ...googleapi.Field) *AccountsSav
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *AccountsSavedadstylesGetCall) IfNoneMatch(entityTag string) *AccountsSavedadstylesGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -2859,14 +3313,32 @@ func (c *AccountsSavedadstylesGetCall) doRequest(alt string) (*http.Response, er
 		"savedAdStyleId": c.savedAdStyleId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "adsense.accounts.savedadstyles.get" call.
+// Exactly one of *SavedAdStyle or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *SavedAdStyle.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsSavedadstylesGetCall) Do() (*SavedAdStyle, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -2874,7 +3346,12 @@ func (c *AccountsSavedadstylesGetCall) Do() (*SavedAdStyle, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *SavedAdStyle
+	ret := &SavedAdStyle{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -2954,6 +3431,16 @@ func (c *AccountsSavedadstylesListCall) Fields(s ...googleapi.Field) *AccountsSa
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *AccountsSavedadstylesListCall) IfNoneMatch(entityTag string) *AccountsSavedadstylesListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -2982,14 +3469,32 @@ func (c *AccountsSavedadstylesListCall) doRequest(alt string) (*http.Response, e
 		"accountId": c.accountId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "adsense.accounts.savedadstyles.list" call.
+// Exactly one of *SavedAdStyles or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *SavedAdStyles.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsSavedadstylesListCall) Do() (*SavedAdStyles, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -2997,7 +3502,12 @@ func (c *AccountsSavedadstylesListCall) Do() (*SavedAdStyles, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *SavedAdStyles
+	ret := &SavedAdStyles{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -3085,6 +3595,16 @@ func (c *AccountsUrlchannelsListCall) Fields(s ...googleapi.Field) *AccountsUrlc
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *AccountsUrlchannelsListCall) IfNoneMatch(entityTag string) *AccountsUrlchannelsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -3114,14 +3634,32 @@ func (c *AccountsUrlchannelsListCall) doRequest(alt string) (*http.Response, err
 		"adClientId": c.adClientId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "adsense.accounts.urlchannels.list" call.
+// Exactly one of *UrlChannels or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *UrlChannels.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsUrlchannelsListCall) Do() (*UrlChannels, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -3129,7 +3667,12 @@ func (c *AccountsUrlchannelsListCall) Do() (*UrlChannels, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *UrlChannels
+	ret := &UrlChannels{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -3219,6 +3762,16 @@ func (c *AdclientsListCall) Fields(s ...googleapi.Field) *AdclientsListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *AdclientsListCall) IfNoneMatch(entityTag string) *AdclientsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -3245,14 +3798,32 @@ func (c *AdclientsListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "adsense.adclients.list" call.
+// Exactly one of *AdClients or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *AdClients.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AdclientsListCall) Do() (*AdClients, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -3260,7 +3831,12 @@ func (c *AdclientsListCall) Do() (*AdClients, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *AdClients
+	ret := &AdClients{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -3322,6 +3898,16 @@ func (c *AdunitsGetCall) Fields(s ...googleapi.Field) *AdunitsGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *AdunitsGetCall) IfNoneMatch(entityTag string) *AdunitsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -3345,14 +3931,32 @@ func (c *AdunitsGetCall) doRequest(alt string) (*http.Response, error) {
 		"adUnitId":   c.adUnitId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "adsense.adunits.get" call.
+// Exactly one of *AdUnit or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *AdUnit.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AdunitsGetCall) Do() (*AdUnit, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -3360,7 +3964,12 @@ func (c *AdunitsGetCall) Do() (*AdUnit, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *AdUnit
+	ret := &AdUnit{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -3447,6 +4056,16 @@ func (c *AdunitsListCall) Fields(s ...googleapi.Field) *AdunitsListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *AdunitsListCall) IfNoneMatch(entityTag string) *AdunitsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -3478,14 +4097,32 @@ func (c *AdunitsListCall) doRequest(alt string) (*http.Response, error) {
 		"adClientId": c.adClientId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "adsense.adunits.list" call.
+// Exactly one of *AdUnits or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *AdUnits.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AdunitsListCall) Do() (*AdUnits, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -3493,7 +4130,12 @@ func (c *AdunitsListCall) Do() (*AdUnits, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *AdUnits
+	ret := &AdUnits{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -3587,6 +4229,16 @@ func (c *AdunitsCustomchannelsListCall) Fields(s ...googleapi.Field) *AdunitsCus
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *AdunitsCustomchannelsListCall) IfNoneMatch(entityTag string) *AdunitsCustomchannelsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -3616,14 +4268,32 @@ func (c *AdunitsCustomchannelsListCall) doRequest(alt string) (*http.Response, e
 		"adUnitId":   c.adUnitId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "adsense.adunits.customchannels.list" call.
+// Exactly one of *CustomChannels or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *CustomChannels.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AdunitsCustomchannelsListCall) Do() (*CustomChannels, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -3631,7 +4301,12 @@ func (c *AdunitsCustomchannelsListCall) Do() (*CustomChannels, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *CustomChannels
+	ret := &CustomChannels{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -3709,6 +4384,16 @@ func (c *CustomchannelsGetCall) Fields(s ...googleapi.Field) *CustomchannelsGetC
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *CustomchannelsGetCall) IfNoneMatch(entityTag string) *CustomchannelsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -3732,14 +4417,32 @@ func (c *CustomchannelsGetCall) doRequest(alt string) (*http.Response, error) {
 		"customChannelId": c.customChannelId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "adsense.customchannels.get" call.
+// Exactly one of *CustomChannel or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *CustomChannel.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *CustomchannelsGetCall) Do() (*CustomChannel, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -3747,7 +4450,12 @@ func (c *CustomchannelsGetCall) Do() (*CustomChannel, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *CustomChannel
+	ret := &CustomChannel{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -3828,6 +4536,16 @@ func (c *CustomchannelsListCall) Fields(s ...googleapi.Field) *CustomchannelsLis
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *CustomchannelsListCall) IfNoneMatch(entityTag string) *CustomchannelsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -3856,14 +4574,32 @@ func (c *CustomchannelsListCall) doRequest(alt string) (*http.Response, error) {
 		"adClientId": c.adClientId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "adsense.customchannels.list" call.
+// Exactly one of *CustomChannels or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *CustomChannels.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *CustomchannelsListCall) Do() (*CustomChannels, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -3871,7 +4607,12 @@ func (c *CustomchannelsListCall) Do() (*CustomChannels, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *CustomChannels
+	ret := &CustomChannels{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -3965,6 +4706,16 @@ func (c *CustomchannelsAdunitsListCall) Fields(s ...googleapi.Field) *Customchan
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *CustomchannelsAdunitsListCall) IfNoneMatch(entityTag string) *CustomchannelsAdunitsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -3997,14 +4748,32 @@ func (c *CustomchannelsAdunitsListCall) doRequest(alt string) (*http.Response, e
 		"customChannelId": c.customChannelId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "adsense.customchannels.adunits.list" call.
+// Exactly one of *AdUnits or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *AdUnits.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *CustomchannelsAdunitsListCall) Do() (*AdUnits, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -4012,7 +4781,12 @@ func (c *CustomchannelsAdunitsListCall) Do() (*AdUnits, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *AdUnits
+	ret := &AdUnits{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -4164,6 +4938,16 @@ func (c *ReportsGenerateCall) Fields(s ...googleapi.Field) *ReportsGenerateCall 
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *ReportsGenerateCall) IfNoneMatch(entityTag string) *ReportsGenerateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do and Download methods.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -4213,6 +4997,9 @@ func (c *ReportsGenerateCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -4234,8 +5021,23 @@ func (c *ReportsGenerateCall) Download() (*http.Response, error) {
 	return res, nil
 }
 
+// Do executes the "adsense.reports.generate" call.
+// Exactly one of *AdsenseReportsGenerateResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *AdsenseReportsGenerateResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ReportsGenerateCall) Do() (*AdsenseReportsGenerateResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -4243,7 +5045,12 @@ func (c *ReportsGenerateCall) Do() (*AdsenseReportsGenerateResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *AdsenseReportsGenerateResponse
+	ret := &AdsenseReportsGenerateResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -4394,6 +5201,16 @@ func (c *ReportsSavedGenerateCall) Fields(s ...googleapi.Field) *ReportsSavedGen
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *ReportsSavedGenerateCall) IfNoneMatch(entityTag string) *ReportsSavedGenerateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -4425,14 +5242,32 @@ func (c *ReportsSavedGenerateCall) doRequest(alt string) (*http.Response, error)
 		"savedReportId": c.savedReportId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "adsense.reports.saved.generate" call.
+// Exactly one of *AdsenseReportsGenerateResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *AdsenseReportsGenerateResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ReportsSavedGenerateCall) Do() (*AdsenseReportsGenerateResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -4440,7 +5275,12 @@ func (c *ReportsSavedGenerateCall) Do() (*AdsenseReportsGenerateResponse, error)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *AdsenseReportsGenerateResponse
+	ret := &AdsenseReportsGenerateResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -4532,6 +5372,16 @@ func (c *ReportsSavedListCall) Fields(s ...googleapi.Field) *ReportsSavedListCal
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *ReportsSavedListCall) IfNoneMatch(entityTag string) *ReportsSavedListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -4558,14 +5408,32 @@ func (c *ReportsSavedListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "adsense.reports.saved.list" call.
+// Exactly one of *SavedReports or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *SavedReports.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ReportsSavedListCall) Do() (*SavedReports, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -4573,7 +5441,12 @@ func (c *ReportsSavedListCall) Do() (*SavedReports, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *SavedReports
+	ret := &SavedReports{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -4633,6 +5506,16 @@ func (c *SavedadstylesGetCall) Fields(s ...googleapi.Field) *SavedadstylesGetCal
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *SavedadstylesGetCall) IfNoneMatch(entityTag string) *SavedadstylesGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -4655,14 +5538,32 @@ func (c *SavedadstylesGetCall) doRequest(alt string) (*http.Response, error) {
 		"savedAdStyleId": c.savedAdStyleId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "adsense.savedadstyles.get" call.
+// Exactly one of *SavedAdStyle or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *SavedAdStyle.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *SavedadstylesGetCall) Do() (*SavedAdStyle, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -4670,7 +5571,12 @@ func (c *SavedadstylesGetCall) Do() (*SavedAdStyle, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *SavedAdStyle
+	ret := &SavedAdStyle{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -4741,6 +5647,16 @@ func (c *SavedadstylesListCall) Fields(s ...googleapi.Field) *SavedadstylesListC
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *SavedadstylesListCall) IfNoneMatch(entityTag string) *SavedadstylesListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -4767,14 +5683,32 @@ func (c *SavedadstylesListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "adsense.savedadstyles.list" call.
+// Exactly one of *SavedAdStyles or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *SavedAdStyles.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *SavedadstylesListCall) Do() (*SavedAdStyles, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -4782,7 +5716,12 @@ func (c *SavedadstylesListCall) Do() (*SavedAdStyles, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *SavedAdStyles
+	ret := &SavedAdStyles{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -4859,6 +5798,16 @@ func (c *UrlchannelsListCall) Fields(s ...googleapi.Field) *UrlchannelsListCall 
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *UrlchannelsListCall) IfNoneMatch(entityTag string) *UrlchannelsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -4887,14 +5836,32 @@ func (c *UrlchannelsListCall) doRequest(alt string) (*http.Response, error) {
 		"adClientId": c.adClientId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "adsense.urlchannels.list" call.
+// Exactly one of *UrlChannels or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *UrlChannels.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *UrlchannelsListCall) Do() (*UrlChannels, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -4902,7 +5869,12 @@ func (c *UrlchannelsListCall) Do() (*UrlChannels, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *UrlChannels
+	ret := &UrlChannels{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}

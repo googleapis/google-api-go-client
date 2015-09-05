@@ -215,6 +215,10 @@ type Bucket struct {
 	// Website: The bucket's website configuration.
 	Website *BucketWebsite `json:"website,omitempty"`
 
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
 	// ForceSendFields is a list of field names (e.g. "Acl") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -509,6 +513,10 @@ type BucketAccessControl struct {
 	// SelfLink: The link to this access-control entry.
 	SelfLink string `json:"selfLink,omitempty"`
 
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
 	// ForceSendFields is a list of field names (e.g. "Bucket") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -532,6 +540,10 @@ type BucketAccessControls struct {
 	// Kind: The kind of item this is. For lists of bucket access control
 	// entries, this is always storage#bucketAccessControls.
 	Kind string `json:"kind,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 
 	// ForceSendFields is a list of field names (e.g. "Items") to
 	// unconditionally include in API requests. By default, fields with
@@ -561,6 +573,10 @@ type Buckets struct {
 	// result sets. Provide this value in a subsequent request to return the
 	// next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 
 	// ForceSendFields is a list of field names (e.g. "Items") to
 	// unconditionally include in API requests. By default, fields with
@@ -615,6 +631,10 @@ type Channel struct {
 
 	// Type: The type of delivery mechanism used for this channel.
 	Type string `json:"type,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 
 	// ForceSendFields is a list of field names (e.g. "Address") to
 	// unconditionally include in API requests. By default, fields with
@@ -793,6 +813,10 @@ type Object struct {
 	// Updated: Modification time of the object metadata in RFC 3339 format.
 	Updated string `json:"updated,omitempty"`
 
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
 	// ForceSendFields is a list of field names (e.g. "Acl") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -884,6 +908,10 @@ type ObjectAccessControl struct {
 	// SelfLink: The link to this access-control entry.
 	SelfLink string `json:"selfLink,omitempty"`
 
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
 	// ForceSendFields is a list of field names (e.g. "Bucket") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -907,6 +935,10 @@ type ObjectAccessControls struct {
 	// Kind: The kind of item this is. For lists of object access control
 	// entries, this is always storage#objectAccessControls.
 	Kind string `json:"kind,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 
 	// ForceSendFields is a list of field names (e.g. "Items") to
 	// unconditionally include in API requests. By default, fields with
@@ -940,6 +972,10 @@ type Objects struct {
 	// Prefixes: The list of prefixes of objects matching-but-not-listed up
 	// to and including the requested delimiter.
 	Prefixes []string `json:"prefixes,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 
 	// ForceSendFields is a list of field names (e.g. "Items") to
 	// unconditionally include in API requests. By default, fields with
@@ -1012,6 +1048,7 @@ func (c *BucketAccessControlsDeleteCall) doRequest(alt string) (*http.Response, 
 	return c.s.client.Do(req)
 }
 
+// Do executes the "storage.bucketAccessControls.delete" call.
 func (c *BucketAccessControlsDeleteCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -1079,6 +1116,16 @@ func (c *BucketAccessControlsGetCall) Fields(s ...googleapi.Field) *BucketAccess
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *BucketAccessControlsGetCall) IfNoneMatch(entityTag string) *BucketAccessControlsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -1102,14 +1149,32 @@ func (c *BucketAccessControlsGetCall) doRequest(alt string) (*http.Response, err
 		"entity": c.entity,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "storage.bucketAccessControls.get" call.
+// Exactly one of *BucketAccessControl or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *BucketAccessControl.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *BucketAccessControlsGetCall) Do() (*BucketAccessControl, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1117,7 +1182,12 @@ func (c *BucketAccessControlsGetCall) Do() (*BucketAccessControl, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *BucketAccessControl
+	ret := &BucketAccessControl{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1215,8 +1285,23 @@ func (c *BucketAccessControlsInsertCall) doRequest(alt string) (*http.Response, 
 	return c.s.client.Do(req)
 }
 
+// Do executes the "storage.bucketAccessControls.insert" call.
+// Exactly one of *BucketAccessControl or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *BucketAccessControl.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *BucketAccessControlsInsertCall) Do() (*BucketAccessControl, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1224,7 +1309,12 @@ func (c *BucketAccessControlsInsertCall) Do() (*BucketAccessControl, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *BucketAccessControl
+	ret := &BucketAccessControl{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1282,6 +1372,16 @@ func (c *BucketAccessControlsListCall) Fields(s ...googleapi.Field) *BucketAcces
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *BucketAccessControlsListCall) IfNoneMatch(entityTag string) *BucketAccessControlsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -1304,14 +1404,32 @@ func (c *BucketAccessControlsListCall) doRequest(alt string) (*http.Response, er
 		"bucket": c.bucket,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "storage.bucketAccessControls.list" call.
+// Exactly one of *BucketAccessControls or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *BucketAccessControls.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *BucketAccessControlsListCall) Do() (*BucketAccessControls, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1319,7 +1437,12 @@ func (c *BucketAccessControlsListCall) Do() (*BucketAccessControls, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *BucketAccessControls
+	ret := &BucketAccessControls{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1414,8 +1537,23 @@ func (c *BucketAccessControlsPatchCall) doRequest(alt string) (*http.Response, e
 	return c.s.client.Do(req)
 }
 
+// Do executes the "storage.bucketAccessControls.patch" call.
+// Exactly one of *BucketAccessControl or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *BucketAccessControl.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *BucketAccessControlsPatchCall) Do() (*BucketAccessControl, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1423,7 +1561,12 @@ func (c *BucketAccessControlsPatchCall) Do() (*BucketAccessControl, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *BucketAccessControl
+	ret := &BucketAccessControl{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1527,8 +1670,23 @@ func (c *BucketAccessControlsUpdateCall) doRequest(alt string) (*http.Response, 
 	return c.s.client.Do(req)
 }
 
+// Do executes the "storage.bucketAccessControls.update" call.
+// Exactly one of *BucketAccessControl or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *BucketAccessControl.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *BucketAccessControlsUpdateCall) Do() (*BucketAccessControl, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1536,7 +1694,12 @@ func (c *BucketAccessControlsUpdateCall) Do() (*BucketAccessControl, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *BucketAccessControl
+	ret := &BucketAccessControl{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1653,6 +1816,7 @@ func (c *BucketsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "storage.buckets.delete" call.
 func (c *BucketsDeleteCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -1752,6 +1916,16 @@ func (c *BucketsGetCall) Fields(s ...googleapi.Field) *BucketsGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *BucketsGetCall) IfNoneMatch(entityTag string) *BucketsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -1783,14 +1957,32 @@ func (c *BucketsGetCall) doRequest(alt string) (*http.Response, error) {
 		"bucket": c.bucket,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "storage.buckets.get" call.
+// Exactly one of *Bucket or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Bucket.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *BucketsGetCall) Do() (*Bucket, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1798,7 +1990,12 @@ func (c *BucketsGetCall) Do() (*Bucket, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Bucket
+	ret := &Bucket{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1931,8 +2128,23 @@ func (c *BucketsInsertCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "storage.buckets.insert" call.
+// Exactly one of *Bucket or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Bucket.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *BucketsInsertCall) Do() (*Bucket, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1940,7 +2152,12 @@ func (c *BucketsInsertCall) Do() (*Bucket, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Bucket
+	ret := &Bucket{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -2038,6 +2255,16 @@ func (c *BucketsListCall) Fields(s ...googleapi.Field) *BucketsListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *BucketsListCall) IfNoneMatch(entityTag string) *BucketsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -2068,14 +2295,32 @@ func (c *BucketsListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "storage.buckets.list" call.
+// Exactly one of *Buckets or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Buckets.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *BucketsListCall) Do() (*Buckets, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -2083,7 +2328,12 @@ func (c *BucketsListCall) Do() (*Buckets, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Buckets
+	ret := &Buckets{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -2239,8 +2489,23 @@ func (c *BucketsPatchCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "storage.buckets.patch" call.
+// Exactly one of *Bucket or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Bucket.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *BucketsPatchCall) Do() (*Bucket, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -2248,7 +2513,12 @@ func (c *BucketsPatchCall) Do() (*Bucket, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Bucket
+	ret := &Bucket{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -2406,8 +2676,23 @@ func (c *BucketsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "storage.buckets.update" call.
+// Exactly one of *Bucket or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Bucket.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *BucketsUpdateCall) Do() (*Bucket, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -2415,7 +2700,12 @@ func (c *BucketsUpdateCall) Do() (*Bucket, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Bucket
+	ret := &Bucket{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -2531,6 +2821,7 @@ func (c *ChannelsStopCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "storage.channels.stop" call.
 func (c *ChannelsStopCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -2615,6 +2906,7 @@ func (c *DefaultObjectAccessControlsDeleteCall) doRequest(alt string) (*http.Res
 	return c.s.client.Do(req)
 }
 
+// Do executes the "storage.defaultObjectAccessControls.delete" call.
 func (c *DefaultObjectAccessControlsDeleteCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -2682,6 +2974,16 @@ func (c *DefaultObjectAccessControlsGetCall) Fields(s ...googleapi.Field) *Defau
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *DefaultObjectAccessControlsGetCall) IfNoneMatch(entityTag string) *DefaultObjectAccessControlsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -2705,14 +3007,32 @@ func (c *DefaultObjectAccessControlsGetCall) doRequest(alt string) (*http.Respon
 		"entity": c.entity,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "storage.defaultObjectAccessControls.get" call.
+// Exactly one of *ObjectAccessControl or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *ObjectAccessControl.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *DefaultObjectAccessControlsGetCall) Do() (*ObjectAccessControl, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -2720,7 +3040,12 @@ func (c *DefaultObjectAccessControlsGetCall) Do() (*ObjectAccessControl, error) 
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *ObjectAccessControl
+	ret := &ObjectAccessControl{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -2819,8 +3144,23 @@ func (c *DefaultObjectAccessControlsInsertCall) doRequest(alt string) (*http.Res
 	return c.s.client.Do(req)
 }
 
+// Do executes the "storage.defaultObjectAccessControls.insert" call.
+// Exactly one of *ObjectAccessControl or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *ObjectAccessControl.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *DefaultObjectAccessControlsInsertCall) Do() (*ObjectAccessControl, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -2828,7 +3168,12 @@ func (c *DefaultObjectAccessControlsInsertCall) Do() (*ObjectAccessControl, erro
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *ObjectAccessControl
+	ret := &ObjectAccessControl{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -2903,6 +3248,16 @@ func (c *DefaultObjectAccessControlsListCall) Fields(s ...googleapi.Field) *Defa
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *DefaultObjectAccessControlsListCall) IfNoneMatch(entityTag string) *DefaultObjectAccessControlsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -2931,14 +3286,32 @@ func (c *DefaultObjectAccessControlsListCall) doRequest(alt string) (*http.Respo
 		"bucket": c.bucket,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "storage.defaultObjectAccessControls.list" call.
+// Exactly one of *ObjectAccessControls or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *ObjectAccessControls.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *DefaultObjectAccessControlsListCall) Do() (*ObjectAccessControls, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -2946,7 +3319,12 @@ func (c *DefaultObjectAccessControlsListCall) Do() (*ObjectAccessControls, error
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *ObjectAccessControls
+	ret := &ObjectAccessControls{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -3053,8 +3431,23 @@ func (c *DefaultObjectAccessControlsPatchCall) doRequest(alt string) (*http.Resp
 	return c.s.client.Do(req)
 }
 
+// Do executes the "storage.defaultObjectAccessControls.patch" call.
+// Exactly one of *ObjectAccessControl or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *ObjectAccessControl.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *DefaultObjectAccessControlsPatchCall) Do() (*ObjectAccessControl, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -3062,7 +3455,12 @@ func (c *DefaultObjectAccessControlsPatchCall) Do() (*ObjectAccessControl, error
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *ObjectAccessControl
+	ret := &ObjectAccessControl{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -3166,8 +3564,23 @@ func (c *DefaultObjectAccessControlsUpdateCall) doRequest(alt string) (*http.Res
 	return c.s.client.Do(req)
 }
 
+// Do executes the "storage.defaultObjectAccessControls.update" call.
+// Exactly one of *ObjectAccessControl or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *ObjectAccessControl.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *DefaultObjectAccessControlsUpdateCall) Do() (*ObjectAccessControl, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -3175,7 +3588,12 @@ func (c *DefaultObjectAccessControlsUpdateCall) Do() (*ObjectAccessControl, erro
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *ObjectAccessControl
+	ret := &ObjectAccessControl{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -3286,6 +3704,7 @@ func (c *ObjectAccessControlsDeleteCall) doRequest(alt string) (*http.Response, 
 	return c.s.client.Do(req)
 }
 
+// Do executes the "storage.objectAccessControls.delete" call.
 func (c *ObjectAccessControlsDeleteCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -3376,6 +3795,16 @@ func (c *ObjectAccessControlsGetCall) Fields(s ...googleapi.Field) *ObjectAccess
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *ObjectAccessControlsGetCall) IfNoneMatch(entityTag string) *ObjectAccessControlsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -3403,14 +3832,32 @@ func (c *ObjectAccessControlsGetCall) doRequest(alt string) (*http.Response, err
 		"entity": c.entity,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "storage.objectAccessControls.get" call.
+// Exactly one of *ObjectAccessControl or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *ObjectAccessControl.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ObjectAccessControlsGetCall) Do() (*ObjectAccessControl, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -3418,7 +3865,12 @@ func (c *ObjectAccessControlsGetCall) Do() (*ObjectAccessControl, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *ObjectAccessControl
+	ret := &ObjectAccessControl{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -3543,8 +3995,23 @@ func (c *ObjectAccessControlsInsertCall) doRequest(alt string) (*http.Response, 
 	return c.s.client.Do(req)
 }
 
+// Do executes the "storage.objectAccessControls.insert" call.
+// Exactly one of *ObjectAccessControl or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *ObjectAccessControl.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ObjectAccessControlsInsertCall) Do() (*ObjectAccessControl, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -3552,7 +4019,12 @@ func (c *ObjectAccessControlsInsertCall) Do() (*ObjectAccessControl, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *ObjectAccessControl
+	ret := &ObjectAccessControl{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -3633,6 +4105,16 @@ func (c *ObjectAccessControlsListCall) Fields(s ...googleapi.Field) *ObjectAcces
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *ObjectAccessControlsListCall) IfNoneMatch(entityTag string) *ObjectAccessControlsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -3659,14 +4141,32 @@ func (c *ObjectAccessControlsListCall) doRequest(alt string) (*http.Response, er
 		"object": c.object,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "storage.objectAccessControls.list" call.
+// Exactly one of *ObjectAccessControls or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *ObjectAccessControls.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ObjectAccessControlsListCall) Do() (*ObjectAccessControls, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -3674,7 +4174,12 @@ func (c *ObjectAccessControlsListCall) Do() (*ObjectAccessControls, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *ObjectAccessControls
+	ret := &ObjectAccessControls{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -3796,8 +4301,23 @@ func (c *ObjectAccessControlsPatchCall) doRequest(alt string) (*http.Response, e
 	return c.s.client.Do(req)
 }
 
+// Do executes the "storage.objectAccessControls.patch" call.
+// Exactly one of *ObjectAccessControl or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *ObjectAccessControl.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ObjectAccessControlsPatchCall) Do() (*ObjectAccessControl, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -3805,7 +4325,12 @@ func (c *ObjectAccessControlsPatchCall) Do() (*ObjectAccessControl, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *ObjectAccessControl
+	ret := &ObjectAccessControl{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -3936,8 +4461,23 @@ func (c *ObjectAccessControlsUpdateCall) doRequest(alt string) (*http.Response, 
 	return c.s.client.Do(req)
 }
 
+// Do executes the "storage.objectAccessControls.update" call.
+// Exactly one of *ObjectAccessControl or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *ObjectAccessControl.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ObjectAccessControlsUpdateCall) Do() (*ObjectAccessControl, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -3945,7 +4485,12 @@ func (c *ObjectAccessControlsUpdateCall) Do() (*ObjectAccessControl, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *ObjectAccessControl
+	ret := &ObjectAccessControl{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -4100,8 +4645,23 @@ func (c *ObjectsComposeCall) Download() (*http.Response, error) {
 	return res, nil
 }
 
+// Do executes the "storage.objects.compose" call.
+// Exactly one of *Object or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Object.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ObjectsComposeCall) Do() (*Object, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -4109,7 +4669,12 @@ func (c *ObjectsComposeCall) Do() (*Object, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Object
+	ret := &Object{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -4369,8 +4934,23 @@ func (c *ObjectsCopyCall) Download() (*http.Response, error) {
 	return res, nil
 }
 
+// Do executes the "storage.objects.copy" call.
+// Exactly one of *Object or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Object.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ObjectsCopyCall) Do() (*Object, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -4378,7 +4958,12 @@ func (c *ObjectsCopyCall) Do() (*Object, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Object
+	ret := &Object{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -4615,6 +5200,7 @@ func (c *ObjectsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "storage.objects.delete" call.
 func (c *ObjectsDeleteCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -4764,6 +5350,16 @@ func (c *ObjectsGetCall) Fields(s ...googleapi.Field) *ObjectsGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *ObjectsGetCall) IfNoneMatch(entityTag string) *ObjectsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do and Download methods.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -4805,6 +5401,9 @@ func (c *ObjectsGetCall) doRequest(alt string) (*http.Response, error) {
 		"object": c.object,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -4826,8 +5425,23 @@ func (c *ObjectsGetCall) Download() (*http.Response, error) {
 	return res, nil
 }
 
+// Do executes the "storage.objects.get" call.
+// Exactly one of *Object or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Object.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ObjectsGetCall) Do() (*Object, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -4835,7 +5449,12 @@ func (c *ObjectsGetCall) Do() (*Object, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Object
+	ret := &Object{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -5105,8 +5724,23 @@ func (c *ObjectsInsertCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "storage.objects.insert" call.
+// Exactly one of *Object or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Object.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ObjectsInsertCall) Do() (*Object, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -5137,7 +5771,12 @@ func (c *ObjectsInsertCall) Do() (*Object, error) {
 		}
 		defer res.Body.Close()
 	}
-	var ret *Object
+	ret := &Object{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -5307,6 +5946,16 @@ func (c *ObjectsListCall) Fields(s ...googleapi.Field) *ObjectsListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *ObjectsListCall) IfNoneMatch(entityTag string) *ObjectsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -5347,14 +5996,32 @@ func (c *ObjectsListCall) doRequest(alt string) (*http.Response, error) {
 		"bucket": c.bucket,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "storage.objects.list" call.
+// Exactly one of *Objects or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Objects.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ObjectsListCall) Do() (*Objects, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -5362,7 +6029,12 @@ func (c *ObjectsListCall) Do() (*Objects, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Objects
+	ret := &Objects{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -5570,8 +6242,23 @@ func (c *ObjectsPatchCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "storage.objects.patch" call.
+// Exactly one of *Object or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Object.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ObjectsPatchCall) Do() (*Object, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -5579,7 +6266,12 @@ func (c *ObjectsPatchCall) Do() (*Object, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Object
+	ret := &Object{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -5812,8 +6504,23 @@ func (c *ObjectsUpdateCall) Download() (*http.Response, error) {
 	return res, nil
 }
 
+// Do executes the "storage.objects.update" call.
+// Exactly one of *Object or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Object.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ObjectsUpdateCall) Do() (*Object, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -5821,7 +6528,12 @@ func (c *ObjectsUpdateCall) Do() (*Object, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Object
+	ret := &Object{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -6037,8 +6749,23 @@ func (c *ObjectsWatchAllCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "storage.objects.watchAll" call.
+// Exactly one of *Channel or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Channel.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ObjectsWatchAllCall) Do() (*Channel, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -6046,7 +6773,12 @@ func (c *ObjectsWatchAllCall) Do() (*Channel, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Channel
+	ret := &Channel{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}

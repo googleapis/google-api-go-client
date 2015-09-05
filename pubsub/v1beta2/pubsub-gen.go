@@ -183,6 +183,9 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 // (google.protobuf.Empty); } The JSON representation for `Empty` is
 // empty JSON object `{}`.
 type Empty struct {
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 }
 
 // ListSubscriptionsResponse: Response for the ListSubscriptions method.
@@ -194,6 +197,10 @@ type ListSubscriptionsResponse struct {
 
 	// Subscriptions: The subscriptions that match the request.
 	Subscriptions []*Subscription `json:"subscriptions,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
@@ -221,6 +228,10 @@ type ListTopicSubscriptionsResponse struct {
 	// Subscriptions: The names of the subscriptions that match the request.
 	Subscriptions []string `json:"subscriptions,omitempty"`
 
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -245,6 +256,10 @@ type ListTopicsResponse struct {
 
 	// Topics: The resulting topics.
 	Topics []*Topic `json:"topics,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
@@ -345,6 +360,10 @@ type Policy struct {
 	// represented by the etag. The default version is 0.
 	Version int64 `json:"version,omitempty"`
 
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
 	// ForceSendFields is a list of field names (e.g. "Bindings") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -386,6 +405,10 @@ type PublishResponse struct {
 	// same order as the messages in the request. IDs are guaranteed to be
 	// unique within the topic.
 	MessageIds []string `json:"messageIds,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 
 	// ForceSendFields is a list of field names (e.g. "MessageIds") to
 	// unconditionally include in API requests. By default, fields with
@@ -472,6 +495,10 @@ type PullResponse struct {
 	// The Pub/Sub system may return fewer than the maxMessages requested
 	// even if there are more messages available in the backlog.
 	ReceivedMessages []*ReceivedMessage `json:"receivedMessages,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 
 	// ForceSendFields is a list of field names (e.g. "ReceivedMessages") to
 	// unconditionally include in API requests. By default, fields with
@@ -607,6 +634,10 @@ type Subscription struct {
 	// if the topic has been deleted.
 	Topic string `json:"topic,omitempty"`
 
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
 	// ForceSendFields is a list of field names (e.g. "AckDeadlineSeconds")
 	// to unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -652,6 +683,10 @@ type TestIamPermissionsResponse struct {
 	// the caller is allowed.
 	Permissions []string `json:"permissions,omitempty"`
 
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
 	// ForceSendFields is a list of field names (e.g. "Permissions") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -676,6 +711,10 @@ type Topic struct {
 	// (`+`) or percent signs (`%`). It must be between 3 and 255 characters
 	// in length, and it must not start with "goog".
 	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with
@@ -757,8 +796,23 @@ func (c *ProjectsSubscriptionsAcknowledgeCall) doRequest(alt string) (*http.Resp
 	return c.s.client.Do(req)
 }
 
+// Do executes the "pubsub.projects.subscriptions.acknowledge" call.
+// Exactly one of *Empty or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Empty.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ProjectsSubscriptionsAcknowledgeCall) Do() (*Empty, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -766,7 +820,12 @@ func (c *ProjectsSubscriptionsAcknowledgeCall) Do() (*Empty, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Empty
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -867,8 +926,23 @@ func (c *ProjectsSubscriptionsCreateCall) doRequest(alt string) (*http.Response,
 	return c.s.client.Do(req)
 }
 
+// Do executes the "pubsub.projects.subscriptions.create" call.
+// Exactly one of *Subscription or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Subscription.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ProjectsSubscriptionsCreateCall) Do() (*Subscription, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -876,7 +950,12 @@ func (c *ProjectsSubscriptionsCreateCall) Do() (*Subscription, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Subscription
+	ret := &Subscription{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -969,8 +1048,23 @@ func (c *ProjectsSubscriptionsDeleteCall) doRequest(alt string) (*http.Response,
 	return c.s.client.Do(req)
 }
 
+// Do executes the "pubsub.projects.subscriptions.delete" call.
+// Exactly one of *Empty or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Empty.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ProjectsSubscriptionsDeleteCall) Do() (*Empty, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -978,7 +1072,12 @@ func (c *ProjectsSubscriptionsDeleteCall) Do() (*Empty, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Empty
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1035,6 +1134,16 @@ func (c *ProjectsSubscriptionsGetCall) Fields(s ...googleapi.Field) *ProjectsSub
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *ProjectsSubscriptionsGetCall) IfNoneMatch(entityTag string) *ProjectsSubscriptionsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -1057,14 +1166,32 @@ func (c *ProjectsSubscriptionsGetCall) doRequest(alt string) (*http.Response, er
 		"subscription": c.subscription,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "pubsub.projects.subscriptions.get" call.
+// Exactly one of *Subscription or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Subscription.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ProjectsSubscriptionsGetCall) Do() (*Subscription, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1072,7 +1199,12 @@ func (c *ProjectsSubscriptionsGetCall) Do() (*Subscription, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Subscription
+	ret := &Subscription{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1130,6 +1262,16 @@ func (c *ProjectsSubscriptionsGetIamPolicyCall) Fields(s ...googleapi.Field) *Pr
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *ProjectsSubscriptionsGetIamPolicyCall) IfNoneMatch(entityTag string) *ProjectsSubscriptionsGetIamPolicyCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -1152,14 +1294,32 @@ func (c *ProjectsSubscriptionsGetIamPolicyCall) doRequest(alt string) (*http.Res
 		"resource": c.resource,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "pubsub.projects.subscriptions.getIamPolicy" call.
+// Exactly one of *Policy or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Policy.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ProjectsSubscriptionsGetIamPolicyCall) Do() (*Policy, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1167,7 +1327,12 @@ func (c *ProjectsSubscriptionsGetIamPolicyCall) Do() (*Policy, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Policy
+	ret := &Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1240,6 +1405,16 @@ func (c *ProjectsSubscriptionsListCall) Fields(s ...googleapi.Field) *ProjectsSu
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *ProjectsSubscriptionsListCall) IfNoneMatch(entityTag string) *ProjectsSubscriptionsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -1268,14 +1443,32 @@ func (c *ProjectsSubscriptionsListCall) doRequest(alt string) (*http.Response, e
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "pubsub.projects.subscriptions.list" call.
+// Exactly one of *ListSubscriptionsResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *ListSubscriptionsResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ProjectsSubscriptionsListCall) Do() (*ListSubscriptionsResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1283,7 +1476,12 @@ func (c *ProjectsSubscriptionsListCall) Do() (*ListSubscriptionsResponse, error)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *ListSubscriptionsResponse
+	ret := &ListSubscriptionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1390,8 +1588,23 @@ func (c *ProjectsSubscriptionsModifyAckDeadlineCall) doRequest(alt string) (*htt
 	return c.s.client.Do(req)
 }
 
+// Do executes the "pubsub.projects.subscriptions.modifyAckDeadline" call.
+// Exactly one of *Empty or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Empty.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ProjectsSubscriptionsModifyAckDeadlineCall) Do() (*Empty, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1399,7 +1612,12 @@ func (c *ProjectsSubscriptionsModifyAckDeadlineCall) Do() (*Empty, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Empty
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1500,8 +1718,23 @@ func (c *ProjectsSubscriptionsModifyPushConfigCall) doRequest(alt string) (*http
 	return c.s.client.Do(req)
 }
 
+// Do executes the "pubsub.projects.subscriptions.modifyPushConfig" call.
+// Exactly one of *Empty or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Empty.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ProjectsSubscriptionsModifyPushConfigCall) Do() (*Empty, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1509,7 +1742,12 @@ func (c *ProjectsSubscriptionsModifyPushConfigCall) Do() (*Empty, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Empty
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1608,8 +1846,23 @@ func (c *ProjectsSubscriptionsPullCall) doRequest(alt string) (*http.Response, e
 	return c.s.client.Do(req)
 }
 
+// Do executes the "pubsub.projects.subscriptions.pull" call.
+// Exactly one of *PullResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *PullResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ProjectsSubscriptionsPullCall) Do() (*PullResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1617,7 +1870,12 @@ func (c *ProjectsSubscriptionsPullCall) Do() (*PullResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *PullResponse
+	ret := &PullResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1714,8 +1972,23 @@ func (c *ProjectsSubscriptionsSetIamPolicyCall) doRequest(alt string) (*http.Res
 	return c.s.client.Do(req)
 }
 
+// Do executes the "pubsub.projects.subscriptions.setIamPolicy" call.
+// Exactly one of *Policy or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Policy.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ProjectsSubscriptionsSetIamPolicyCall) Do() (*Policy, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1723,7 +1996,12 @@ func (c *ProjectsSubscriptionsSetIamPolicyCall) Do() (*Policy, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Policy
+	ret := &Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1820,8 +2098,23 @@ func (c *ProjectsSubscriptionsTestIamPermissionsCall) doRequest(alt string) (*ht
 	return c.s.client.Do(req)
 }
 
+// Do executes the "pubsub.projects.subscriptions.testIamPermissions" call.
+// Exactly one of *TestIamPermissionsResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *TestIamPermissionsResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ProjectsSubscriptionsTestIamPermissionsCall) Do() (*TestIamPermissionsResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1829,7 +2122,12 @@ func (c *ProjectsSubscriptionsTestIamPermissionsCall) Do() (*TestIamPermissionsR
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *TestIamPermissionsResponse
+	ret := &TestIamPermissionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1925,8 +2223,23 @@ func (c *ProjectsTopicsCreateCall) doRequest(alt string) (*http.Response, error)
 	return c.s.client.Do(req)
 }
 
+// Do executes the "pubsub.projects.topics.create" call.
+// Exactly one of *Topic or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Topic.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ProjectsTopicsCreateCall) Do() (*Topic, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1934,7 +2247,12 @@ func (c *ProjectsTopicsCreateCall) Do() (*Topic, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Topic
+	ret := &Topic{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -2027,8 +2345,23 @@ func (c *ProjectsTopicsDeleteCall) doRequest(alt string) (*http.Response, error)
 	return c.s.client.Do(req)
 }
 
+// Do executes the "pubsub.projects.topics.delete" call.
+// Exactly one of *Empty or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Empty.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ProjectsTopicsDeleteCall) Do() (*Empty, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -2036,7 +2369,12 @@ func (c *ProjectsTopicsDeleteCall) Do() (*Empty, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Empty
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -2093,6 +2431,16 @@ func (c *ProjectsTopicsGetCall) Fields(s ...googleapi.Field) *ProjectsTopicsGetC
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *ProjectsTopicsGetCall) IfNoneMatch(entityTag string) *ProjectsTopicsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -2115,14 +2463,32 @@ func (c *ProjectsTopicsGetCall) doRequest(alt string) (*http.Response, error) {
 		"topic": c.topic,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "pubsub.projects.topics.get" call.
+// Exactly one of *Topic or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Topic.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ProjectsTopicsGetCall) Do() (*Topic, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -2130,7 +2496,12 @@ func (c *ProjectsTopicsGetCall) Do() (*Topic, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Topic
+	ret := &Topic{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -2188,6 +2559,16 @@ func (c *ProjectsTopicsGetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsT
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *ProjectsTopicsGetIamPolicyCall) IfNoneMatch(entityTag string) *ProjectsTopicsGetIamPolicyCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -2210,14 +2591,32 @@ func (c *ProjectsTopicsGetIamPolicyCall) doRequest(alt string) (*http.Response, 
 		"resource": c.resource,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "pubsub.projects.topics.getIamPolicy" call.
+// Exactly one of *Policy or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Policy.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ProjectsTopicsGetIamPolicyCall) Do() (*Policy, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -2225,7 +2624,12 @@ func (c *ProjectsTopicsGetIamPolicyCall) Do() (*Policy, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Policy
+	ret := &Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -2298,6 +2702,16 @@ func (c *ProjectsTopicsListCall) Fields(s ...googleapi.Field) *ProjectsTopicsLis
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *ProjectsTopicsListCall) IfNoneMatch(entityTag string) *ProjectsTopicsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -2326,14 +2740,32 @@ func (c *ProjectsTopicsListCall) doRequest(alt string) (*http.Response, error) {
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "pubsub.projects.topics.list" call.
+// Exactly one of *ListTopicsResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *ListTopicsResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ProjectsTopicsListCall) Do() (*ListTopicsResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -2341,7 +2773,12 @@ func (c *ProjectsTopicsListCall) Do() (*ListTopicsResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *ListTopicsResponse
+	ret := &ListTopicsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -2448,8 +2885,23 @@ func (c *ProjectsTopicsPublishCall) doRequest(alt string) (*http.Response, error
 	return c.s.client.Do(req)
 }
 
+// Do executes the "pubsub.projects.topics.publish" call.
+// Exactly one of *PublishResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *PublishResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ProjectsTopicsPublishCall) Do() (*PublishResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -2457,7 +2909,12 @@ func (c *ProjectsTopicsPublishCall) Do() (*PublishResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *PublishResponse
+	ret := &PublishResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -2554,8 +3011,23 @@ func (c *ProjectsTopicsSetIamPolicyCall) doRequest(alt string) (*http.Response, 
 	return c.s.client.Do(req)
 }
 
+// Do executes the "pubsub.projects.topics.setIamPolicy" call.
+// Exactly one of *Policy or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Policy.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ProjectsTopicsSetIamPolicyCall) Do() (*Policy, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -2563,7 +3035,12 @@ func (c *ProjectsTopicsSetIamPolicyCall) Do() (*Policy, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Policy
+	ret := &Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -2660,8 +3137,23 @@ func (c *ProjectsTopicsTestIamPermissionsCall) doRequest(alt string) (*http.Resp
 	return c.s.client.Do(req)
 }
 
+// Do executes the "pubsub.projects.topics.testIamPermissions" call.
+// Exactly one of *TestIamPermissionsResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *TestIamPermissionsResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ProjectsTopicsTestIamPermissionsCall) Do() (*TestIamPermissionsResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -2669,7 +3161,12 @@ func (c *ProjectsTopicsTestIamPermissionsCall) Do() (*TestIamPermissionsResponse
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *TestIamPermissionsResponse
+	ret := &TestIamPermissionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -2745,6 +3242,16 @@ func (c *ProjectsTopicsSubscriptionsListCall) Fields(s ...googleapi.Field) *Proj
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *ProjectsTopicsSubscriptionsListCall) IfNoneMatch(entityTag string) *ProjectsTopicsSubscriptionsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -2773,14 +3280,32 @@ func (c *ProjectsTopicsSubscriptionsListCall) doRequest(alt string) (*http.Respo
 		"topic": c.topic,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "pubsub.projects.topics.subscriptions.list" call.
+// Exactly one of *ListTopicSubscriptionsResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *ListTopicSubscriptionsResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ProjectsTopicsSubscriptionsListCall) Do() (*ListTopicSubscriptionsResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -2788,7 +3313,12 @@ func (c *ProjectsTopicsSubscriptionsListCall) Do() (*ListTopicSubscriptionsRespo
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *ListTopicSubscriptionsResponse
+	ret := &ListTopicSubscriptionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}

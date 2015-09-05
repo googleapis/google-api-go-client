@@ -161,6 +161,10 @@ type RegionViewsInsertResponse struct {
 	// Resource: The resource view object inserted.
 	Resource *ResourceView `json:"resource,omitempty"`
 
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
 	// ForceSendFields is a list of field names (e.g. "Resource") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -185,6 +189,10 @@ type RegionViewsListResourcesResponse struct {
 	// NextPageToken: A token used for pagination.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
 	// ForceSendFields is a list of field names (e.g. "Members") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -208,6 +216,10 @@ type RegionViewsListResponse struct {
 
 	// ResourceViews: The list of resource views that meet the criteria.
 	ResourceViews []*ResourceView `json:"resourceViews,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
@@ -277,6 +289,10 @@ type ResourceView struct {
 	// SelfLink: [Output Only] A self-link to the resource view.
 	SelfLink string `json:"selfLink,omitempty"`
 
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
 	// ForceSendFields is a list of field names (e.g. "CreationTime") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -318,6 +334,10 @@ type ZoneViewsInsertResponse struct {
 	// Resource: The resource view object that has been inserted.
 	Resource *ResourceView `json:"resource,omitempty"`
 
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
 	// ForceSendFields is a list of field names (e.g. "Resource") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -342,6 +362,10 @@ type ZoneViewsListResourcesResponse struct {
 	// NextPageToken: A token used for pagination.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
 	// ForceSendFields is a list of field names (e.g. "Members") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -365,6 +389,10 @@ type ZoneViewsListResponse struct {
 	// ResourceViews: The result that contains all resource views that meet
 	// the criteria.
 	ResourceViews []*ResourceView `json:"resourceViews,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
@@ -468,6 +496,7 @@ func (c *RegionViewsAddresourcesCall) doRequest(alt string) (*http.Response, err
 	return c.s.client.Do(req)
 }
 
+// Do executes the "resourceviews.regionViews.addresources" call.
 func (c *RegionViewsAddresourcesCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -578,6 +607,7 @@ func (c *RegionViewsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "resourceviews.regionViews.delete" call.
 func (c *RegionViewsDeleteCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -655,6 +685,16 @@ func (c *RegionViewsGetCall) Fields(s ...googleapi.Field) *RegionViewsGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *RegionViewsGetCall) IfNoneMatch(entityTag string) *RegionViewsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -679,14 +719,32 @@ func (c *RegionViewsGetCall) doRequest(alt string) (*http.Response, error) {
 		"resourceViewName": c.resourceViewName,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "resourceviews.regionViews.get" call.
+// Exactly one of *ResourceView or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *ResourceView.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *RegionViewsGetCall) Do() (*ResourceView, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -694,7 +752,12 @@ func (c *RegionViewsGetCall) Do() (*ResourceView, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *ResourceView
+	ret := &ResourceView{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -807,8 +870,23 @@ func (c *RegionViewsInsertCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "resourceviews.regionViews.insert" call.
+// Exactly one of *RegionViewsInsertResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *RegionViewsInsertResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *RegionViewsInsertCall) Do() (*RegionViewsInsertResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -816,7 +894,12 @@ func (c *RegionViewsInsertCall) Do() (*RegionViewsInsertResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *RegionViewsInsertResponse
+	ret := &RegionViewsInsertResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -902,6 +985,16 @@ func (c *RegionViewsListCall) Fields(s ...googleapi.Field) *RegionViewsListCall 
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *RegionViewsListCall) IfNoneMatch(entityTag string) *RegionViewsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -931,14 +1024,32 @@ func (c *RegionViewsListCall) doRequest(alt string) (*http.Response, error) {
 		"region":      c.region,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "resourceviews.regionViews.list" call.
+// Exactly one of *RegionViewsListResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *RegionViewsListResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *RegionViewsListCall) Do() (*RegionViewsListResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -946,7 +1057,12 @@ func (c *RegionViewsListCall) Do() (*RegionViewsListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *RegionViewsListResponse
+	ret := &RegionViewsListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1084,8 +1200,23 @@ func (c *RegionViewsListresourcesCall) doRequest(alt string) (*http.Response, er
 	return c.s.client.Do(req)
 }
 
+// Do executes the "resourceviews.regionViews.listresources" call.
+// Exactly one of *RegionViewsListResourcesResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *RegionViewsListResourcesResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *RegionViewsListresourcesCall) Do() (*RegionViewsListResourcesResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1093,7 +1224,12 @@ func (c *RegionViewsListresourcesCall) Do() (*RegionViewsListResourcesResponse, 
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *RegionViewsListResourcesResponse
+	ret := &RegionViewsListResourcesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1223,6 +1359,7 @@ func (c *RegionViewsRemoveresourcesCall) doRequest(alt string) (*http.Response, 
 	return c.s.client.Do(req)
 }
 
+// Do executes the "resourceviews.regionViews.removeresources" call.
 func (c *RegionViewsRemoveresourcesCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -1341,6 +1478,7 @@ func (c *ZoneViewsAddresourcesCall) doRequest(alt string) (*http.Response, error
 	return c.s.client.Do(req)
 }
 
+// Do executes the "resourceviews.zoneViews.addresources" call.
 func (c *ZoneViewsAddresourcesCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -1451,6 +1589,7 @@ func (c *ZoneViewsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "resourceviews.zoneViews.delete" call.
 func (c *ZoneViewsDeleteCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -1528,6 +1667,16 @@ func (c *ZoneViewsGetCall) Fields(s ...googleapi.Field) *ZoneViewsGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *ZoneViewsGetCall) IfNoneMatch(entityTag string) *ZoneViewsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -1552,14 +1701,32 @@ func (c *ZoneViewsGetCall) doRequest(alt string) (*http.Response, error) {
 		"resourceViewName": c.resourceViewName,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "resourceviews.zoneViews.get" call.
+// Exactly one of *ResourceView or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *ResourceView.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ZoneViewsGetCall) Do() (*ResourceView, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1567,7 +1734,12 @@ func (c *ZoneViewsGetCall) Do() (*ResourceView, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *ResourceView
+	ret := &ResourceView{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1680,8 +1852,23 @@ func (c *ZoneViewsInsertCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "resourceviews.zoneViews.insert" call.
+// Exactly one of *ZoneViewsInsertResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *ZoneViewsInsertResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ZoneViewsInsertCall) Do() (*ZoneViewsInsertResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1689,7 +1876,12 @@ func (c *ZoneViewsInsertCall) Do() (*ZoneViewsInsertResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *ZoneViewsInsertResponse
+	ret := &ZoneViewsInsertResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1775,6 +1967,16 @@ func (c *ZoneViewsListCall) Fields(s ...googleapi.Field) *ZoneViewsListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *ZoneViewsListCall) IfNoneMatch(entityTag string) *ZoneViewsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -1804,14 +2006,32 @@ func (c *ZoneViewsListCall) doRequest(alt string) (*http.Response, error) {
 		"zone":        c.zone,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "resourceviews.zoneViews.list" call.
+// Exactly one of *ZoneViewsListResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *ZoneViewsListResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ZoneViewsListCall) Do() (*ZoneViewsListResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1819,7 +2039,12 @@ func (c *ZoneViewsListCall) Do() (*ZoneViewsListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *ZoneViewsListResponse
+	ret := &ZoneViewsListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1957,8 +2182,23 @@ func (c *ZoneViewsListresourcesCall) doRequest(alt string) (*http.Response, erro
 	return c.s.client.Do(req)
 }
 
+// Do executes the "resourceviews.zoneViews.listresources" call.
+// Exactly one of *ZoneViewsListResourcesResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *ZoneViewsListResourcesResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ZoneViewsListresourcesCall) Do() (*ZoneViewsListResourcesResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1966,7 +2206,12 @@ func (c *ZoneViewsListresourcesCall) Do() (*ZoneViewsListResourcesResponse, erro
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *ZoneViewsListResourcesResponse
+	ret := &ZoneViewsListResourcesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -2096,6 +2341,7 @@ func (c *ZoneViewsRemoveresourcesCall) doRequest(alt string) (*http.Response, er
 	return c.s.client.Do(req)
 }
 
+// Do executes the "resourceviews.zoneViews.removeresources" call.
 func (c *ZoneViewsRemoveresourcesCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {

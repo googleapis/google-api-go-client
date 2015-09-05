@@ -102,6 +102,10 @@ type LicenseAssignment struct {
 	// UserId: Email id of the user.
 	UserId string `json:"userId,omitempty"`
 
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
 	// ForceSendFields is a list of field names (e.g. "Etags") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -154,6 +158,10 @@ type LicenseAssignmentList struct {
 	// result sets. Provide this value in a subsequent request to return the
 	// next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
@@ -228,6 +236,7 @@ func (c *LicenseAssignmentsDeleteCall) doRequest(alt string) (*http.Response, er
 	return c.s.client.Do(req)
 }
 
+// Do executes the "licensing.licenseAssignments.delete" call.
 func (c *LicenseAssignmentsDeleteCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -304,6 +313,16 @@ func (c *LicenseAssignmentsGetCall) Fields(s ...googleapi.Field) *LicenseAssignm
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *LicenseAssignmentsGetCall) IfNoneMatch(entityTag string) *LicenseAssignmentsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -328,14 +347,32 @@ func (c *LicenseAssignmentsGetCall) doRequest(alt string) (*http.Response, error
 		"userId":    c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "licensing.licenseAssignments.get" call.
+// Exactly one of *LicenseAssignment or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *LicenseAssignment.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *LicenseAssignmentsGetCall) Do() (*LicenseAssignment, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -343,7 +380,12 @@ func (c *LicenseAssignmentsGetCall) Do() (*LicenseAssignment, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *LicenseAssignment
+	ret := &LicenseAssignment{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -451,8 +493,23 @@ func (c *LicenseAssignmentsInsertCall) doRequest(alt string) (*http.Response, er
 	return c.s.client.Do(req)
 }
 
+// Do executes the "licensing.licenseAssignments.insert" call.
+// Exactly one of *LicenseAssignment or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *LicenseAssignment.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *LicenseAssignmentsInsertCall) Do() (*LicenseAssignment, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -460,7 +517,12 @@ func (c *LicenseAssignmentsInsertCall) Do() (*LicenseAssignment, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *LicenseAssignment
+	ret := &LicenseAssignment{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -543,6 +605,16 @@ func (c *LicenseAssignmentsListForProductCall) Fields(s ...googleapi.Field) *Lic
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *LicenseAssignmentsListForProductCall) IfNoneMatch(entityTag string) *LicenseAssignmentsListForProductCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -572,14 +644,32 @@ func (c *LicenseAssignmentsListForProductCall) doRequest(alt string) (*http.Resp
 		"productId": c.productId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "licensing.licenseAssignments.listForProduct" call.
+// Exactly one of *LicenseAssignmentList or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *LicenseAssignmentList.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *LicenseAssignmentsListForProductCall) Do() (*LicenseAssignmentList, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -587,7 +677,12 @@ func (c *LicenseAssignmentsListForProductCall) Do() (*LicenseAssignmentList, err
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *LicenseAssignmentList
+	ret := &LicenseAssignmentList{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -684,6 +779,16 @@ func (c *LicenseAssignmentsListForProductAndSkuCall) Fields(s ...googleapi.Field
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *LicenseAssignmentsListForProductAndSkuCall) IfNoneMatch(entityTag string) *LicenseAssignmentsListForProductAndSkuCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -714,14 +819,32 @@ func (c *LicenseAssignmentsListForProductAndSkuCall) doRequest(alt string) (*htt
 		"skuId":     c.skuId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "licensing.licenseAssignments.listForProductAndSku" call.
+// Exactly one of *LicenseAssignmentList or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *LicenseAssignmentList.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *LicenseAssignmentsListForProductAndSkuCall) Do() (*LicenseAssignmentList, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -729,7 +852,12 @@ func (c *LicenseAssignmentsListForProductAndSkuCall) Do() (*LicenseAssignmentLis
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *LicenseAssignmentList
+	ret := &LicenseAssignmentList{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -855,8 +983,23 @@ func (c *LicenseAssignmentsPatchCall) doRequest(alt string) (*http.Response, err
 	return c.s.client.Do(req)
 }
 
+// Do executes the "licensing.licenseAssignments.patch" call.
+// Exactly one of *LicenseAssignment or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *LicenseAssignment.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *LicenseAssignmentsPatchCall) Do() (*LicenseAssignment, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -864,7 +1007,12 @@ func (c *LicenseAssignmentsPatchCall) Do() (*LicenseAssignment, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *LicenseAssignment
+	ret := &LicenseAssignment{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -978,8 +1126,23 @@ func (c *LicenseAssignmentsUpdateCall) doRequest(alt string) (*http.Response, er
 	return c.s.client.Do(req)
 }
 
+// Do executes the "licensing.licenseAssignments.update" call.
+// Exactly one of *LicenseAssignment or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *LicenseAssignment.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *LicenseAssignmentsUpdateCall) Do() (*LicenseAssignment, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -987,7 +1150,12 @@ func (c *LicenseAssignmentsUpdateCall) Do() (*LicenseAssignment, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *LicenseAssignment
+	ret := &LicenseAssignment{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}

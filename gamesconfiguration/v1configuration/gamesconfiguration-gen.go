@@ -142,6 +142,10 @@ type AchievementConfiguration struct {
 	// Token: The token for this resource.
 	Token string `json:"token,omitempty"`
 
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
 	// ForceSendFields is a list of field names (e.g. "AchievementType") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -208,6 +212,10 @@ type AchievementConfigurationListResponse struct {
 
 	// NextPageToken: The pagination token for the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 
 	// ForceSendFields is a list of field names (e.g. "Items") to
 	// unconditionally include in API requests. By default, fields with
@@ -325,6 +333,10 @@ type ImageConfiguration struct {
 	// Url: The url for this image.
 	Url string `json:"url,omitempty"`
 
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
 	// ForceSendFields is a list of field names (e.g. "ImageType") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -370,6 +382,10 @@ type LeaderboardConfiguration struct {
 
 	// Token: The token for this resource.
 	Token string `json:"token,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 
 	// ForceSendFields is a list of field names (e.g. "Draft") to
 	// unconditionally include in API requests. By default, fields with
@@ -434,6 +450,10 @@ type LeaderboardConfigurationListResponse struct {
 
 	// NextPageToken: The pagination token for the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 
 	// ForceSendFields is a list of field names (e.g. "Items") to
 	// unconditionally include in API requests. By default, fields with
@@ -555,6 +575,7 @@ func (c *AchievementConfigurationsDeleteCall) doRequest(alt string) (*http.Respo
 	return c.s.client.Do(req)
 }
 
+// Do executes the "gamesConfiguration.achievementConfigurations.delete" call.
 func (c *AchievementConfigurationsDeleteCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -613,6 +634,16 @@ func (c *AchievementConfigurationsGetCall) Fields(s ...googleapi.Field) *Achieve
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AchievementConfigurationsGetCall) IfNoneMatch(entityTag string) *AchievementConfigurationsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -635,14 +666,33 @@ func (c *AchievementConfigurationsGetCall) doRequest(alt string) (*http.Response
 		"achievementId": c.achievementId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "gamesConfiguration.achievementConfigurations.get" call.
+// Exactly one of *AchievementConfiguration or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *AchievementConfiguration.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
 func (c *AchievementConfigurationsGetCall) Do() (*AchievementConfiguration, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -650,7 +700,12 @@ func (c *AchievementConfigurationsGetCall) Do() (*AchievementConfiguration, erro
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *AchievementConfiguration
+	ret := &AchievementConfiguration{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -741,8 +796,24 @@ func (c *AchievementConfigurationsInsertCall) doRequest(alt string) (*http.Respo
 	return c.s.client.Do(req)
 }
 
+// Do executes the "gamesConfiguration.achievementConfigurations.insert" call.
+// Exactly one of *AchievementConfiguration or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *AchievementConfiguration.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
 func (c *AchievementConfigurationsInsertCall) Do() (*AchievementConfiguration, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -750,7 +821,12 @@ func (c *AchievementConfigurationsInsertCall) Do() (*AchievementConfiguration, e
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *AchievementConfiguration
+	ret := &AchievementConfiguration{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -825,6 +901,16 @@ func (c *AchievementConfigurationsListCall) Fields(s ...googleapi.Field) *Achiev
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AchievementConfigurationsListCall) IfNoneMatch(entityTag string) *AchievementConfigurationsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -853,14 +939,34 @@ func (c *AchievementConfigurationsListCall) doRequest(alt string) (*http.Respons
 		"applicationId": c.applicationId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "gamesConfiguration.achievementConfigurations.list" call.
+// Exactly one of *AchievementConfigurationListResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *AchievementConfigurationListResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *AchievementConfigurationsListCall) Do() (*AchievementConfigurationListResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -868,7 +974,12 @@ func (c *AchievementConfigurationsListCall) Do() (*AchievementConfigurationListR
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *AchievementConfigurationListResponse
+	ret := &AchievementConfigurationListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -973,8 +1084,24 @@ func (c *AchievementConfigurationsPatchCall) doRequest(alt string) (*http.Respon
 	return c.s.client.Do(req)
 }
 
+// Do executes the "gamesConfiguration.achievementConfigurations.patch" call.
+// Exactly one of *AchievementConfiguration or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *AchievementConfiguration.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
 func (c *AchievementConfigurationsPatchCall) Do() (*AchievementConfiguration, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -982,7 +1109,12 @@ func (c *AchievementConfigurationsPatchCall) Do() (*AchievementConfiguration, er
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *AchievementConfiguration
+	ret := &AchievementConfiguration{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1077,8 +1209,24 @@ func (c *AchievementConfigurationsUpdateCall) doRequest(alt string) (*http.Respo
 	return c.s.client.Do(req)
 }
 
+// Do executes the "gamesConfiguration.achievementConfigurations.update" call.
+// Exactly one of *AchievementConfiguration or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *AchievementConfiguration.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
 func (c *AchievementConfigurationsUpdateCall) Do() (*AchievementConfiguration, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1086,7 +1234,12 @@ func (c *AchievementConfigurationsUpdateCall) Do() (*AchievementConfiguration, e
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *AchievementConfiguration
+	ret := &AchievementConfiguration{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1234,8 +1387,24 @@ func (c *ImageConfigurationsUploadCall) doRequest(alt string) (*http.Response, e
 	return c.s.client.Do(req)
 }
 
+// Do executes the "gamesConfiguration.imageConfigurations.upload" call.
+// Exactly one of *ImageConfiguration or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ImageConfiguration.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
 func (c *ImageConfigurationsUploadCall) Do() (*ImageConfiguration, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1266,7 +1435,12 @@ func (c *ImageConfigurationsUploadCall) Do() (*ImageConfiguration, error) {
 		}
 		defer res.Body.Close()
 	}
-	var ret *ImageConfiguration
+	ret := &ImageConfiguration{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1381,6 +1555,7 @@ func (c *LeaderboardConfigurationsDeleteCall) doRequest(alt string) (*http.Respo
 	return c.s.client.Do(req)
 }
 
+// Do executes the "gamesConfiguration.leaderboardConfigurations.delete" call.
 func (c *LeaderboardConfigurationsDeleteCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -1439,6 +1614,16 @@ func (c *LeaderboardConfigurationsGetCall) Fields(s ...googleapi.Field) *Leaderb
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *LeaderboardConfigurationsGetCall) IfNoneMatch(entityTag string) *LeaderboardConfigurationsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -1461,14 +1646,33 @@ func (c *LeaderboardConfigurationsGetCall) doRequest(alt string) (*http.Response
 		"leaderboardId": c.leaderboardId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "gamesConfiguration.leaderboardConfigurations.get" call.
+// Exactly one of *LeaderboardConfiguration or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *LeaderboardConfiguration.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
 func (c *LeaderboardConfigurationsGetCall) Do() (*LeaderboardConfiguration, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1476,7 +1680,12 @@ func (c *LeaderboardConfigurationsGetCall) Do() (*LeaderboardConfiguration, erro
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *LeaderboardConfiguration
+	ret := &LeaderboardConfiguration{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1567,8 +1776,24 @@ func (c *LeaderboardConfigurationsInsertCall) doRequest(alt string) (*http.Respo
 	return c.s.client.Do(req)
 }
 
+// Do executes the "gamesConfiguration.leaderboardConfigurations.insert" call.
+// Exactly one of *LeaderboardConfiguration or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *LeaderboardConfiguration.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
 func (c *LeaderboardConfigurationsInsertCall) Do() (*LeaderboardConfiguration, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1576,7 +1801,12 @@ func (c *LeaderboardConfigurationsInsertCall) Do() (*LeaderboardConfiguration, e
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *LeaderboardConfiguration
+	ret := &LeaderboardConfiguration{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1651,6 +1881,16 @@ func (c *LeaderboardConfigurationsListCall) Fields(s ...googleapi.Field) *Leader
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *LeaderboardConfigurationsListCall) IfNoneMatch(entityTag string) *LeaderboardConfigurationsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -1679,14 +1919,34 @@ func (c *LeaderboardConfigurationsListCall) doRequest(alt string) (*http.Respons
 		"applicationId": c.applicationId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "gamesConfiguration.leaderboardConfigurations.list" call.
+// Exactly one of *LeaderboardConfigurationListResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *LeaderboardConfigurationListResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *LeaderboardConfigurationsListCall) Do() (*LeaderboardConfigurationListResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1694,7 +1954,12 @@ func (c *LeaderboardConfigurationsListCall) Do() (*LeaderboardConfigurationListR
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *LeaderboardConfigurationListResponse
+	ret := &LeaderboardConfigurationListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1799,8 +2064,24 @@ func (c *LeaderboardConfigurationsPatchCall) doRequest(alt string) (*http.Respon
 	return c.s.client.Do(req)
 }
 
+// Do executes the "gamesConfiguration.leaderboardConfigurations.patch" call.
+// Exactly one of *LeaderboardConfiguration or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *LeaderboardConfiguration.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
 func (c *LeaderboardConfigurationsPatchCall) Do() (*LeaderboardConfiguration, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1808,7 +2089,12 @@ func (c *LeaderboardConfigurationsPatchCall) Do() (*LeaderboardConfiguration, er
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *LeaderboardConfiguration
+	ret := &LeaderboardConfiguration{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1903,8 +2189,24 @@ func (c *LeaderboardConfigurationsUpdateCall) doRequest(alt string) (*http.Respo
 	return c.s.client.Do(req)
 }
 
+// Do executes the "gamesConfiguration.leaderboardConfigurations.update" call.
+// Exactly one of *LeaderboardConfiguration or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *LeaderboardConfiguration.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
 func (c *LeaderboardConfigurationsUpdateCall) Do() (*LeaderboardConfiguration, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1912,7 +2214,12 @@ func (c *LeaderboardConfigurationsUpdateCall) Do() (*LeaderboardConfiguration, e
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *LeaderboardConfiguration
+	ret := &LeaderboardConfiguration{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}

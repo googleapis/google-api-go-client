@@ -241,6 +241,7 @@ func (c *MailInsertCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "emailMigration.mail.insert" call.
 func (c *MailInsertCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {

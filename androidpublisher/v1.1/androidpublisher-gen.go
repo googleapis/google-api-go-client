@@ -95,6 +95,7 @@ type PurchasesService struct {
 // InappPurchase: An InappPurchase resource indicates the status of a
 // user's inapp product purchase.
 type InappPurchase struct {
+	googleapi.ServerResponse
 	// ConsumptionState: The consumption state of the inapp product.
 	// Possible values are:
 	// - Yet to be consumed
@@ -123,6 +124,7 @@ type InappPurchase struct {
 // SubscriptionPurchase: A SubscriptionPurchase resource indicates the
 // status of a user's subscription purchase.
 type SubscriptionPurchase struct {
+	googleapi.ServerResponse
 	// AutoRenewing: Whether the subscription will automatically be renewed
 	// when it reaches its current expiry time.
 	AutoRenewing bool `json:"autoRenewing,omitempty"`
@@ -168,6 +170,14 @@ func (c *InapppurchasesGetCall) Fields(s ...googleapi.Field) *InapppurchasesGetC
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *InapppurchasesGetCall) IfNoneMatch(entityTag string) *InapppurchasesGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -192,26 +202,37 @@ func (c *InapppurchasesGetCall) doRequest(alt string) (*http.Response, error) {
 		"token":       c.token,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "androidpublisher.inapppurchases.get" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *InapppurchasesGetCall) Do() (*InappPurchase, error) {
 	res, err := c.doRequest("json")
+	ret := &InappPurchase{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *InappPurchase
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Checks the purchase and consumption status of an inapp item.",
 	//   "httpMethod": "GET",
@@ -281,6 +302,14 @@ func (c *PurchasesCancelCall) Fields(s ...googleapi.Field) *PurchasesCancelCall 
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *PurchasesCancelCall) IfNoneMatch(entityTag string) *PurchasesCancelCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -305,12 +334,16 @@ func (c *PurchasesCancelCall) doRequest(alt string) (*http.Response, error) {
 		"token":          c.token,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "androidpublisher.purchases.cancel" call.
 func (c *PurchasesCancelCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -387,6 +420,14 @@ func (c *PurchasesGetCall) Fields(s ...googleapi.Field) *PurchasesGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *PurchasesGetCall) IfNoneMatch(entityTag string) *PurchasesGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -411,26 +452,37 @@ func (c *PurchasesGetCall) doRequest(alt string) (*http.Response, error) {
 		"token":          c.token,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "androidpublisher.purchases.get" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *PurchasesGetCall) Do() (*SubscriptionPurchase, error) {
 	res, err := c.doRequest("json")
+	ret := &SubscriptionPurchase{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *SubscriptionPurchase
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Checks whether a user's subscription purchase is valid and returns its expiry time.",
 	//   "httpMethod": "GET",

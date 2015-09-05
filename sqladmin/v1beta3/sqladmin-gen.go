@@ -182,6 +182,10 @@ func (s *BackupConfiguration) MarshalJSON() ([]byte, error) {
 
 // BackupRun: A database instance backup run resource.
 type BackupRun struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// BackupConfiguration: Backup Configuration identifier.
 	BackupConfiguration string `json:"backupConfiguration,omitempty"`
 
@@ -231,6 +235,10 @@ func (s *BackupRun) MarshalJSON() ([]byte, error) {
 
 // BackupRunsListResponse: Backup run list results.
 type BackupRunsListResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Items: A list of backup runs in reverse chronological order of the
 	// enqueued time.
 	Items []*BackupRun `json:"items,omitempty"`
@@ -349,6 +357,10 @@ func (s *DatabaseFlags) MarshalJSON() ([]byte, error) {
 
 // DatabaseInstance: A Cloud SQL instance resource.
 type DatabaseInstance struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// CurrentDiskSize: The current disk usage of the instance in bytes.
 	CurrentDiskSize int64 `json:"currentDiskSize,omitempty,string"`
 
@@ -515,6 +527,10 @@ func (s *Flag) MarshalJSON() ([]byte, error) {
 
 // FlagsListResponse: Flags list response.
 type FlagsListResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Items: List of flags.
 	Items []*Flag `json:"items,omitempty"`
 
@@ -571,6 +587,10 @@ func (s *ImportContext) MarshalJSON() ([]byte, error) {
 // Operations resources are created in response to operations that were
 // initiated; you never create them directly.
 type InstanceOperation struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// EndTime: The time this operation finished in UTC timezone in RFC 3339
 	// format, for example 2012-11-15T16:19:00.094Z.
 	EndTime string `json:"endTime,omitempty"`
@@ -676,6 +696,10 @@ func (s *InstancesCloneRequest) MarshalJSON() ([]byte, error) {
 
 // InstancesCloneResponse: Database instance clone response.
 type InstancesCloneResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Kind: This is always sql#instancesClone.
 	Kind string `json:"kind,omitempty"`
 
@@ -701,6 +725,10 @@ func (s *InstancesCloneResponse) MarshalJSON() ([]byte, error) {
 
 // InstancesDeleteResponse: Database instance delete response.
 type InstancesDeleteResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Kind: This is always sql#instancesDelete.
 	Kind string `json:"kind,omitempty"`
 
@@ -746,6 +774,10 @@ func (s *InstancesExportRequest) MarshalJSON() ([]byte, error) {
 
 // InstancesExportResponse: Database instance export response.
 type InstancesExportResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Kind: This is always sql#instancesExport.
 	Kind string `json:"kind,omitempty"`
 
@@ -791,6 +823,10 @@ func (s *InstancesImportRequest) MarshalJSON() ([]byte, error) {
 
 // InstancesImportResponse: Database instance import response.
 type InstancesImportResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Kind: This is always sql#instancesImport.
 	Kind string `json:"kind,omitempty"`
 
@@ -816,6 +852,10 @@ func (s *InstancesImportResponse) MarshalJSON() ([]byte, error) {
 
 // InstancesInsertResponse: Database instance insert response.
 type InstancesInsertResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Kind: This is always sql#instancesInsert.
 	Kind string `json:"kind,omitempty"`
 
@@ -841,6 +881,10 @@ func (s *InstancesInsertResponse) MarshalJSON() ([]byte, error) {
 
 // InstancesListResponse: Database instances list response.
 type InstancesListResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Items: List of database instance resources.
 	Items []*DatabaseInstance `json:"items,omitempty"`
 
@@ -870,6 +914,10 @@ func (s *InstancesListResponse) MarshalJSON() ([]byte, error) {
 // InstancesPromoteReplicaResponse: Database promote read replica
 // response.
 type InstancesPromoteReplicaResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Kind: This is always sql#instancesPromoteReplica.
 	Kind string `json:"kind,omitempty"`
 
@@ -896,6 +944,10 @@ func (s *InstancesPromoteReplicaResponse) MarshalJSON() ([]byte, error) {
 // InstancesResetSslConfigResponse: Database instance resetSslConfig
 // response.
 type InstancesResetSslConfigResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Kind: This is always sql#instancesResetSslConfig.
 	Kind string `json:"kind,omitempty"`
 
@@ -923,6 +975,10 @@ func (s *InstancesResetSslConfigResponse) MarshalJSON() ([]byte, error) {
 
 // InstancesRestartResponse: Database instance restart response.
 type InstancesRestartResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Kind: This is always sql#instancesRestart.
 	Kind string `json:"kind,omitempty"`
 
@@ -949,6 +1005,10 @@ func (s *InstancesRestartResponse) MarshalJSON() ([]byte, error) {
 // InstancesRestoreBackupResponse: Database instance restore backup
 // response.
 type InstancesRestoreBackupResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Kind: This is always sql#instancesRestoreBackup.
 	Kind string `json:"kind,omitempty"`
 
@@ -975,6 +1035,10 @@ func (s *InstancesRestoreBackupResponse) MarshalJSON() ([]byte, error) {
 // InstancesSetRootPasswordResponse: Database instance set root password
 // response.
 type InstancesSetRootPasswordResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Kind: This is always sql#instancesSetRootPassword.
 	Kind string `json:"kind,omitempty"`
 
@@ -1000,6 +1064,10 @@ func (s *InstancesSetRootPasswordResponse) MarshalJSON() ([]byte, error) {
 
 // InstancesUpdateResponse: Database instance update response.
 type InstancesUpdateResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Kind: This is always sql#instancesUpdate.
 	Kind string `json:"kind,omitempty"`
 
@@ -1139,6 +1207,10 @@ func (s *OperationError) MarshalJSON() ([]byte, error) {
 
 // OperationsListResponse: Database instance list operations response.
 type OperationsListResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Items: List of operation resources.
 	Items []*InstanceOperation `json:"items,omitempty"`
 
@@ -1261,6 +1333,10 @@ func (s *Settings) MarshalJSON() ([]byte, error) {
 
 // SslCert: SslCerts Resource
 type SslCert struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Cert: PEM representation.
 	Cert string `json:"cert,omitempty"`
 
@@ -1326,6 +1402,10 @@ func (s *SslCertDetail) MarshalJSON() ([]byte, error) {
 
 // SslCertsDeleteResponse: SslCert delete response.
 type SslCertsDeleteResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Kind: This is always sql#sslCertsDelete.
 	Kind string `json:"kind,omitempty"`
 
@@ -1373,6 +1453,10 @@ func (s *SslCertsInsertRequest) MarshalJSON() ([]byte, error) {
 
 // SslCertsInsertResponse: SslCert insert response.
 type SslCertsInsertResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// ClientCert: The new client certificate and private key. The new
 	// certificate will not work until the instance is restarted.
 	ClientCert *SslCertDetail `json:"clientCert,omitempty"`
@@ -1402,6 +1486,10 @@ func (s *SslCertsInsertResponse) MarshalJSON() ([]byte, error) {
 
 // SslCertsListResponse: SslCerts list response.
 type SslCertsListResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Items: List of client certificates for the instance.
 	Items []*SslCert `json:"items,omitempty"`
 
@@ -1459,6 +1547,10 @@ func (s *Tier) MarshalJSON() ([]byte, error) {
 
 // TiersListResponse: Tiers list response.
 type TiersListResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Items: List of tiers.
 	Items []*Tier `json:"items,omitempty"`
 
@@ -1511,6 +1603,14 @@ func (c *BackupRunsGetCall) Fields(s ...googleapi.Field) *BackupRunsGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *BackupRunsGetCall) IfNoneMatch(entityTag string) *BackupRunsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -1536,26 +1636,37 @@ func (c *BackupRunsGetCall) doRequest(alt string) (*http.Response, error) {
 		"backupConfiguration": c.backupConfiguration,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "sql.backupRuns.get" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *BackupRunsGetCall) Do() (*BackupRun, error) {
 	res, err := c.doRequest("json")
+	ret := &BackupRun{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *BackupRun
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Retrieves information about a specified backup run for a Cloud SQL instance.",
 	//   "httpMethod": "GET",
@@ -1647,6 +1758,14 @@ func (c *BackupRunsListCall) Fields(s ...googleapi.Field) *BackupRunsListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *BackupRunsListCall) IfNoneMatch(entityTag string) *BackupRunsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -1677,26 +1796,37 @@ func (c *BackupRunsListCall) doRequest(alt string) (*http.Response, error) {
 		"instance": c.instance,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "sql.backupRuns.list" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *BackupRunsListCall) Do() (*BackupRunsListResponse, error) {
 	res, err := c.doRequest("json")
+	ret := &BackupRunsListResponse{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *BackupRunsListResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Lists all backup runs associated with a Cloud SQL instance.",
 	//   "httpMethod": "GET",
@@ -1772,6 +1902,14 @@ func (c *FlagsListCall) Fields(s ...googleapi.Field) *FlagsListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *FlagsListCall) IfNoneMatch(entityTag string) *FlagsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -1792,26 +1930,37 @@ func (c *FlagsListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "sql.flags.list" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *FlagsListCall) Do() (*FlagsListResponse, error) {
 	res, err := c.doRequest("json")
+	ret := &FlagsListResponse{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *FlagsListResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Lists all database flags that can be set for Google Cloud SQL instances.",
 	//   "httpMethod": "GET",
@@ -1854,6 +2003,14 @@ func (c *InstancesCloneCall) Fields(s ...googleapi.Field) *InstancesCloneCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *InstancesCloneCall) IfNoneMatch(entityTag string) *InstancesCloneCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -1882,26 +2039,37 @@ func (c *InstancesCloneCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "sql.instances.clone" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *InstancesCloneCall) Do() (*InstancesCloneResponse, error) {
 	res, err := c.doRequest("json")
+	ret := &InstancesCloneResponse{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *InstancesCloneResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Creates a Cloud SQL instance as a clone of a source instance.",
 	//   "httpMethod": "POST",
@@ -1958,6 +2126,14 @@ func (c *InstancesDeleteCall) Fields(s ...googleapi.Field) *InstancesDeleteCall 
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *InstancesDeleteCall) IfNoneMatch(entityTag string) *InstancesDeleteCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -1981,26 +2157,37 @@ func (c *InstancesDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"instance": c.instance,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "sql.instances.delete" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *InstancesDeleteCall) Do() (*InstancesDeleteResponse, error) {
 	res, err := c.doRequest("json")
+	ret := &InstancesDeleteResponse{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *InstancesDeleteResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Deletes a Cloud SQL instance.",
 	//   "httpMethod": "DELETE",
@@ -2064,6 +2251,14 @@ func (c *InstancesExportCall) Fields(s ...googleapi.Field) *InstancesExportCall 
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *InstancesExportCall) IfNoneMatch(entityTag string) *InstancesExportCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -2093,26 +2288,37 @@ func (c *InstancesExportCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "sql.instances.export" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *InstancesExportCall) Do() (*InstancesExportResponse, error) {
 	res, err := c.doRequest("json")
+	ret := &InstancesExportResponse{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *InstancesExportResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Exports data from a Cloud SQL instance to a Google Cloud Storage bucket as a MySQL dump file.",
 	//   "httpMethod": "POST",
@@ -2175,6 +2381,14 @@ func (c *InstancesGetCall) Fields(s ...googleapi.Field) *InstancesGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *InstancesGetCall) IfNoneMatch(entityTag string) *InstancesGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -2198,26 +2412,37 @@ func (c *InstancesGetCall) doRequest(alt string) (*http.Response, error) {
 		"instance": c.instance,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "sql.instances.get" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *InstancesGetCall) Do() (*DatabaseInstance, error) {
 	res, err := c.doRequest("json")
+	ret := &DatabaseInstance{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *DatabaseInstance
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Retrieves information about a Cloud SQL instance.",
 	//   "httpMethod": "GET",
@@ -2281,6 +2506,14 @@ func (c *InstancesImportCall) Fields(s ...googleapi.Field) *InstancesImportCall 
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *InstancesImportCall) IfNoneMatch(entityTag string) *InstancesImportCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -2310,26 +2543,37 @@ func (c *InstancesImportCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "sql.instances.import" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *InstancesImportCall) Do() (*InstancesImportResponse, error) {
 	res, err := c.doRequest("json")
+	ret := &InstancesImportResponse{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *InstancesImportResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Imports data into a Cloud SQL instance from a MySQL dump file stored in a Google Cloud Storage bucket.",
 	//   "httpMethod": "POST",
@@ -2392,6 +2636,14 @@ func (c *InstancesInsertCall) Fields(s ...googleapi.Field) *InstancesInsertCall 
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *InstancesInsertCall) IfNoneMatch(entityTag string) *InstancesInsertCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -2420,26 +2672,37 @@ func (c *InstancesInsertCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "sql.instances.insert" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *InstancesInsertCall) Do() (*InstancesInsertResponse, error) {
 	res, err := c.doRequest("json")
+	ret := &InstancesInsertResponse{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *InstancesInsertResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Creates a new Cloud SQL instance.",
 	//   "httpMethod": "POST",
@@ -2510,6 +2773,14 @@ func (c *InstancesListCall) Fields(s ...googleapi.Field) *InstancesListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *InstancesListCall) IfNoneMatch(entityTag string) *InstancesListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -2538,26 +2809,37 @@ func (c *InstancesListCall) doRequest(alt string) (*http.Response, error) {
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "sql.instances.list" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *InstancesListCall) Do() (*InstancesListResponse, error) {
 	res, err := c.doRequest("json")
+	ret := &InstancesListResponse{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *InstancesListResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Lists instances for a given project, in alphabetical order by instance name.",
 	//   "httpMethod": "GET",
@@ -2625,6 +2907,14 @@ func (c *InstancesPatchCall) Fields(s ...googleapi.Field) *InstancesPatchCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *InstancesPatchCall) IfNoneMatch(entityTag string) *InstancesPatchCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -2654,26 +2944,37 @@ func (c *InstancesPatchCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "sql.instances.patch" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *InstancesPatchCall) Do() (*InstancesUpdateResponse, error) {
 	res, err := c.doRequest("json")
+	ret := &InstancesUpdateResponse{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *InstancesUpdateResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Updates the settings of a Cloud SQL instance. This method supports patch semantics.",
 	//   "httpMethod": "PATCH",
@@ -2738,6 +3039,14 @@ func (c *InstancesPromoteReplicaCall) Fields(s ...googleapi.Field) *InstancesPro
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *InstancesPromoteReplicaCall) IfNoneMatch(entityTag string) *InstancesPromoteReplicaCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -2761,26 +3070,37 @@ func (c *InstancesPromoteReplicaCall) doRequest(alt string) (*http.Response, err
 		"instance": c.instance,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "sql.instances.promoteReplica" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *InstancesPromoteReplicaCall) Do() (*InstancesPromoteReplicaResponse, error) {
 	res, err := c.doRequest("json")
+	ret := &InstancesPromoteReplicaResponse{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *InstancesPromoteReplicaResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Promotes the read replica instance to be a stand-alone Cloud SQL instance.",
 	//   "httpMethod": "POST",
@@ -2842,6 +3162,14 @@ func (c *InstancesResetSslConfigCall) Fields(s ...googleapi.Field) *InstancesRes
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *InstancesResetSslConfigCall) IfNoneMatch(entityTag string) *InstancesResetSslConfigCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -2865,26 +3193,37 @@ func (c *InstancesResetSslConfigCall) doRequest(alt string) (*http.Response, err
 		"instance": c.instance,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "sql.instances.resetSslConfig" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *InstancesResetSslConfigCall) Do() (*InstancesResetSslConfigResponse, error) {
 	res, err := c.doRequest("json")
+	ret := &InstancesResetSslConfigResponse{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *InstancesResetSslConfigResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Deletes all client certificates and generates a new server SSL certificate for a Cloud SQL instance.",
 	//   "httpMethod": "POST",
@@ -2945,6 +3284,14 @@ func (c *InstancesRestartCall) Fields(s ...googleapi.Field) *InstancesRestartCal
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *InstancesRestartCall) IfNoneMatch(entityTag string) *InstancesRestartCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -2968,26 +3315,37 @@ func (c *InstancesRestartCall) doRequest(alt string) (*http.Response, error) {
 		"instance": c.instance,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "sql.instances.restart" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *InstancesRestartCall) Do() (*InstancesRestartResponse, error) {
 	res, err := c.doRequest("json")
+	ret := &InstancesRestartResponse{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *InstancesRestartResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Restarts a Cloud SQL instance.",
 	//   "httpMethod": "POST",
@@ -3052,6 +3410,14 @@ func (c *InstancesRestoreBackupCall) Fields(s ...googleapi.Field) *InstancesRest
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *InstancesRestoreBackupCall) IfNoneMatch(entityTag string) *InstancesRestoreBackupCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -3077,26 +3443,37 @@ func (c *InstancesRestoreBackupCall) doRequest(alt string) (*http.Response, erro
 		"instance": c.instance,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "sql.instances.restoreBackup" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *InstancesRestoreBackupCall) Do() (*InstancesRestoreBackupResponse, error) {
 	res, err := c.doRequest("json")
+	ret := &InstancesRestoreBackupResponse{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *InstancesRestoreBackupResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Restores a backup of a Cloud SQL instance.",
 	//   "httpMethod": "POST",
@@ -3174,6 +3551,14 @@ func (c *InstancesSetRootPasswordCall) Fields(s ...googleapi.Field) *InstancesSe
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *InstancesSetRootPasswordCall) IfNoneMatch(entityTag string) *InstancesSetRootPasswordCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -3203,26 +3588,37 @@ func (c *InstancesSetRootPasswordCall) doRequest(alt string) (*http.Response, er
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "sql.instances.setRootPassword" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *InstancesSetRootPasswordCall) Do() (*InstancesSetRootPasswordResponse, error) {
 	res, err := c.doRequest("json")
+	ret := &InstancesSetRootPasswordResponse{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *InstancesSetRootPasswordResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Sets the password for the root user of the specified Cloud SQL instance.",
 	//   "httpMethod": "POST",
@@ -3288,6 +3684,14 @@ func (c *InstancesUpdateCall) Fields(s ...googleapi.Field) *InstancesUpdateCall 
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *InstancesUpdateCall) IfNoneMatch(entityTag string) *InstancesUpdateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -3317,26 +3721,37 @@ func (c *InstancesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "sql.instances.update" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *InstancesUpdateCall) Do() (*InstancesUpdateResponse, error) {
 	res, err := c.doRequest("json")
+	ret := &InstancesUpdateResponse{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *InstancesUpdateResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Updates the settings of a Cloud SQL instance.",
 	//   "etagRequired": true,
@@ -3404,6 +3819,14 @@ func (c *OperationsGetCall) Fields(s ...googleapi.Field) *OperationsGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OperationsGetCall) IfNoneMatch(entityTag string) *OperationsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -3428,26 +3851,37 @@ func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 		"operation": c.operation,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "sql.operations.get" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *OperationsGetCall) Do() (*InstanceOperation, error) {
 	res, err := c.doRequest("json")
+	ret := &InstanceOperation{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *InstanceOperation
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Retrieves information about a specific operation that was performed on a Cloud SQL instance.",
 	//   "httpMethod": "GET",
@@ -3531,6 +3965,14 @@ func (c *OperationsListCall) Fields(s ...googleapi.Field) *OperationsListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OperationsListCall) IfNoneMatch(entityTag string) *OperationsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -3560,26 +4002,37 @@ func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 		"instance": c.instance,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "sql.operations.list" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *OperationsListCall) Do() (*OperationsListResponse, error) {
 	res, err := c.doRequest("json")
+	ret := &OperationsListResponse{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *OperationsListResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Lists all operations that have been performed on a Cloud SQL instance.",
 	//   "httpMethod": "GET",
@@ -3653,6 +4106,14 @@ func (c *SslCertsDeleteCall) Fields(s ...googleapi.Field) *SslCertsDeleteCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *SslCertsDeleteCall) IfNoneMatch(entityTag string) *SslCertsDeleteCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -3677,26 +4138,37 @@ func (c *SslCertsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"sha1Fingerprint": c.sha1Fingerprint,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "sql.sslCerts.delete" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *SslCertsDeleteCall) Do() (*SslCertsDeleteResponse, error) {
 	res, err := c.doRequest("json")
+	ret := &SslCertsDeleteResponse{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *SslCertsDeleteResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Deletes an SSL certificate from a Cloud SQL instance.",
 	//   "httpMethod": "DELETE",
@@ -3767,6 +4239,14 @@ func (c *SslCertsGetCall) Fields(s ...googleapi.Field) *SslCertsGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *SslCertsGetCall) IfNoneMatch(entityTag string) *SslCertsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -3791,26 +4271,37 @@ func (c *SslCertsGetCall) doRequest(alt string) (*http.Response, error) {
 		"sha1Fingerprint": c.sha1Fingerprint,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "sql.sslCerts.get" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *SslCertsGetCall) Do() (*SslCert, error) {
 	res, err := c.doRequest("json")
+	ret := &SslCert{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *SslCert
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Retrieves an SSL certificate as specified by its SHA-1 fingerprint.",
 	//   "httpMethod": "GET",
@@ -3881,6 +4372,14 @@ func (c *SslCertsInsertCall) Fields(s ...googleapi.Field) *SslCertsInsertCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *SslCertsInsertCall) IfNoneMatch(entityTag string) *SslCertsInsertCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -3910,26 +4409,37 @@ func (c *SslCertsInsertCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "sql.sslCerts.insert" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *SslCertsInsertCall) Do() (*SslCertsInsertResponse, error) {
 	res, err := c.doRequest("json")
+	ret := &SslCertsInsertResponse{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *SslCertsInsertResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Creates an SSL certificate and returns the certificate, the associated private key, and the server certificate authority.",
 	//   "httpMethod": "POST",
@@ -3994,6 +4504,14 @@ func (c *SslCertsListCall) Fields(s ...googleapi.Field) *SslCertsListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *SslCertsListCall) IfNoneMatch(entityTag string) *SslCertsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -4017,26 +4535,37 @@ func (c *SslCertsListCall) doRequest(alt string) (*http.Response, error) {
 		"instance": c.instance,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "sql.sslCerts.list" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *SslCertsListCall) Do() (*SslCertsListResponse, error) {
 	res, err := c.doRequest("json")
+	ret := &SslCertsListResponse{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *SslCertsListResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Lists all of the current SSL certificates defined for a Cloud SQL instance.",
 	//   "httpMethod": "GET",
@@ -4096,6 +4625,14 @@ func (c *TiersListCall) Fields(s ...googleapi.Field) *TiersListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *TiersListCall) IfNoneMatch(entityTag string) *TiersListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -4118,26 +4655,37 @@ func (c *TiersListCall) doRequest(alt string) (*http.Response, error) {
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "sql.tiers.list" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *TiersListCall) Do() (*TiersListResponse, error) {
 	res, err := c.doRequest("json")
+	ret := &TiersListResponse{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *TiersListResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Lists service tiers that can be used to create Google Cloud SQL instances.",
 	//   "httpMethod": "GET",

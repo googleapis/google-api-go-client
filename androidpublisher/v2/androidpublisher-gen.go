@@ -239,6 +239,10 @@ type PurchasesSubscriptionsService struct {
 }
 
 type Apk struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Binary: Information about the binary payload of this APK.
 	Binary *ApkBinary `json:"binary,omitempty"`
 
@@ -283,6 +287,10 @@ func (s *ApkBinary) MarshalJSON() ([]byte, error) {
 }
 
 type ApkListing struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Language: The language code, in BCP 47 format (eg "en-US").
 	Language string `json:"language,omitempty"`
 
@@ -305,6 +313,10 @@ func (s *ApkListing) MarshalJSON() ([]byte, error) {
 }
 
 type ApkListingsListResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "androidpublisher#apkListingsListResponse".
 	Kind string `json:"kind,omitempty"`
@@ -347,6 +359,10 @@ func (s *ApksAddExternallyHostedRequest) MarshalJSON() ([]byte, error) {
 }
 
 type ApksAddExternallyHostedResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// ExternallyHostedApk: The definition of the externally-hosted APK and
 	// where it is located.
 	ExternallyHostedApk *ExternallyHostedApk `json:"externallyHostedApk,omitempty"`
@@ -367,6 +383,10 @@ func (s *ApksAddExternallyHostedResponse) MarshalJSON() ([]byte, error) {
 }
 
 type ApksListResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	Apks []*Apk `json:"apks,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -389,6 +409,10 @@ func (s *ApksListResponse) MarshalJSON() ([]byte, error) {
 }
 
 type AppDetails struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// ContactEmail: The user-visible support email for this app.
 	ContactEmail string `json:"contactEmail,omitempty"`
 
@@ -420,6 +444,10 @@ func (s *AppDetails) MarshalJSON() ([]byte, error) {
 // AppEdit: Represents an edit of an app. An edit allows clients to make
 // multiple changes before committing them in one operation.
 type AppEdit struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// ExpiryTimeSeconds: The time at which the edit will expire and will be
 	// no longer valid for use in any subsequent API calls (encoded as
 	// seconds since the Epoch).
@@ -478,6 +506,10 @@ func (s *Entitlement) MarshalJSON() ([]byte, error) {
 }
 
 type EntitlementsListResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	PageInfo *PageInfo `json:"pageInfo,omitempty"`
 
 	Resources []*Entitlement `json:"resources,omitempty"`
@@ -500,6 +532,10 @@ func (s *EntitlementsListResponse) MarshalJSON() ([]byte, error) {
 }
 
 type ExpansionFile struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// FileSize: If set this field indicates that this APK has an Expansion
 	// File uploaded to it: this APK does not reference another APK's
 	// Expansion File. The field's value is the size of the uploaded
@@ -526,6 +562,10 @@ func (s *ExpansionFile) MarshalJSON() ([]byte, error) {
 }
 
 type ExpansionFilesUploadResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	ExpansionFile *ExpansionFile `json:"expansionFile,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ExpansionFile") to
@@ -666,6 +706,10 @@ func (s *Image) MarshalJSON() ([]byte, error) {
 }
 
 type ImagesDeleteAllResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	Deleted []*Image `json:"deleted,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Deleted") to
@@ -684,6 +728,10 @@ func (s *ImagesDeleteAllResponse) MarshalJSON() ([]byte, error) {
 }
 
 type ImagesListResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	Images []*Image `json:"images,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Images") to
@@ -702,6 +750,10 @@ func (s *ImagesListResponse) MarshalJSON() ([]byte, error) {
 }
 
 type ImagesUploadResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	Image *Image `json:"image,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Image") to
@@ -720,6 +772,10 @@ func (s *ImagesUploadResponse) MarshalJSON() ([]byte, error) {
 }
 
 type InAppProduct struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// DefaultLanguage: The default language of the localized data, as
 	// defined by BCP 47. e.g. "en-US", "en-GB".
 	DefaultLanguage string `json:"defaultLanguage,omitempty"`
@@ -840,6 +896,10 @@ func (s *InappproductsBatchRequestEntry) MarshalJSON() ([]byte, error) {
 }
 
 type InappproductsBatchResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	Entrys []*InappproductsBatchResponseEntry `json:"entrys,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -920,6 +980,10 @@ func (s *InappproductsInsertResponse) MarshalJSON() ([]byte, error) {
 }
 
 type InappproductsListResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	Inappproduct []*InAppProduct `json:"inappproduct,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -982,6 +1046,10 @@ func (s *InappproductsUpdateResponse) MarshalJSON() ([]byte, error) {
 }
 
 type Listing struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// FullDescription: Full description of the app; this may be up to 4000
 	// characters in length.
 	FullDescription string `json:"fullDescription,omitempty"`
@@ -1016,6 +1084,10 @@ func (s *Listing) MarshalJSON() ([]byte, error) {
 }
 
 type ListingsListResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "androidpublisher#listingsListResponse".
 	Kind string `json:"kind,omitempty"`
@@ -1108,6 +1180,10 @@ func (s *Price) MarshalJSON() ([]byte, error) {
 // ProductPurchase: A ProductPurchase resource indicates the status of a
 // user's inapp product purchase.
 type ProductPurchase struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// ConsumptionState: The consumption state of the inapp product.
 	// Possible values are:
 	// - Yet to be consumed
@@ -1201,6 +1277,10 @@ func (s *SubscriptionDeferralInfo) MarshalJSON() ([]byte, error) {
 // SubscriptionPurchase: A SubscriptionPurchase resource indicates the
 // status of a user's subscription purchase.
 type SubscriptionPurchase struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// AutoRenewing: Whether the subscription will automatically be renewed
 	// when it reaches its current expiry time.
 	AutoRenewing bool `json:"autoRenewing,omitempty"`
@@ -1253,6 +1333,10 @@ func (s *SubscriptionPurchasesDeferRequest) MarshalJSON() ([]byte, error) {
 }
 
 type SubscriptionPurchasesDeferResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// NewExpiryTimeMillis: The new expiry time for the subscription in
 	// milliseconds since the Epoch.
 	NewExpiryTimeMillis int64 `json:"newExpiryTimeMillis,omitempty,string"`
@@ -1273,6 +1357,10 @@ func (s *SubscriptionPurchasesDeferResponse) MarshalJSON() ([]byte, error) {
 }
 
 type Testers struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	GoogleGroups []string `json:"googleGroups,omitempty"`
 
 	GooglePlusCommunities []string `json:"googlePlusCommunities,omitempty"`
@@ -1313,6 +1401,10 @@ func (s *TokenPagination) MarshalJSON() ([]byte, error) {
 }
 
 type Track struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	Track string `json:"track,omitempty"`
 
 	UserFraction float64 `json:"userFraction,omitempty"`
@@ -1335,6 +1427,10 @@ func (s *Track) MarshalJSON() ([]byte, error) {
 }
 
 type TracksListResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "androidpublisher#tracksListResponse".
 	Kind string `json:"kind,omitempty"`
@@ -1383,6 +1479,14 @@ func (c *EditsCommitCall) Fields(s ...googleapi.Field) *EditsCommitCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *EditsCommitCall) IfNoneMatch(entityTag string) *EditsCommitCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -1406,26 +1510,37 @@ func (c *EditsCommitCall) doRequest(alt string) (*http.Response, error) {
 		"editId":      c.editId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "androidpublisher.edits.commit" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *EditsCommitCall) Do() (*AppEdit, error) {
 	res, err := c.doRequest("json")
+	ret := &AppEdit{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *AppEdit
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Commits/applies the changes made in this edit back to the app.",
 	//   "httpMethod": "POST",
@@ -1487,6 +1602,14 @@ func (c *EditsDeleteCall) Fields(s ...googleapi.Field) *EditsDeleteCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *EditsDeleteCall) IfNoneMatch(entityTag string) *EditsDeleteCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -1510,12 +1633,16 @@ func (c *EditsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"editId":      c.editId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "androidpublisher.edits.delete" call.
 func (c *EditsDeleteCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -1584,6 +1711,14 @@ func (c *EditsGetCall) Fields(s ...googleapi.Field) *EditsGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *EditsGetCall) IfNoneMatch(entityTag string) *EditsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -1607,26 +1742,37 @@ func (c *EditsGetCall) doRequest(alt string) (*http.Response, error) {
 		"editId":      c.editId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "androidpublisher.edits.get" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *EditsGetCall) Do() (*AppEdit, error) {
 	res, err := c.doRequest("json")
+	ret := &AppEdit{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *AppEdit
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Returns information about the edit specified. Calls will fail if the edit is no long active (e.g. has been deleted, superseded or expired).",
 	//   "httpMethod": "GET",
@@ -1687,6 +1833,14 @@ func (c *EditsInsertCall) Fields(s ...googleapi.Field) *EditsInsertCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *EditsInsertCall) IfNoneMatch(entityTag string) *EditsInsertCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -1715,26 +1869,37 @@ func (c *EditsInsertCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "androidpublisher.edits.insert" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *EditsInsertCall) Do() (*AppEdit, error) {
 	res, err := c.doRequest("json")
+	ret := &AppEdit{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *AppEdit
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Creates a new edit for an app, populated with the app's current state.",
 	//   "httpMethod": "POST",
@@ -1791,6 +1956,14 @@ func (c *EditsValidateCall) Fields(s ...googleapi.Field) *EditsValidateCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *EditsValidateCall) IfNoneMatch(entityTag string) *EditsValidateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -1814,26 +1987,37 @@ func (c *EditsValidateCall) doRequest(alt string) (*http.Response, error) {
 		"editId":      c.editId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "androidpublisher.edits.validate" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *EditsValidateCall) Do() (*AppEdit, error) {
 	res, err := c.doRequest("json")
+	ret := &AppEdit{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *AppEdit
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Checks that the edit can be successfully committed. The edit's changes are not applied to the live app.",
 	//   "httpMethod": "POST",
@@ -1898,6 +2082,14 @@ func (c *EditsApklistingsDeleteCall) Fields(s ...googleapi.Field) *EditsApklisti
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *EditsApklistingsDeleteCall) IfNoneMatch(entityTag string) *EditsApklistingsDeleteCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -1923,12 +2115,16 @@ func (c *EditsApklistingsDeleteCall) doRequest(alt string) (*http.Response, erro
 		"language":       c.language,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "androidpublisher.edits.apklistings.delete" call.
 func (c *EditsApklistingsDeleteCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -2013,6 +2209,14 @@ func (c *EditsApklistingsDeleteallCall) Fields(s ...googleapi.Field) *EditsApkli
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *EditsApklistingsDeleteallCall) IfNoneMatch(entityTag string) *EditsApklistingsDeleteallCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -2037,12 +2241,16 @@ func (c *EditsApklistingsDeleteallCall) doRequest(alt string) (*http.Response, e
 		"apkVersionCode": strconv.FormatInt(c.apkVersionCode, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "androidpublisher.edits.apklistings.deleteall" call.
 func (c *EditsApklistingsDeleteallCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -2122,6 +2330,14 @@ func (c *EditsApklistingsGetCall) Fields(s ...googleapi.Field) *EditsApklistings
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *EditsApklistingsGetCall) IfNoneMatch(entityTag string) *EditsApklistingsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -2147,26 +2363,37 @@ func (c *EditsApklistingsGetCall) doRequest(alt string) (*http.Response, error) 
 		"language":       c.language,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "androidpublisher.edits.apklistings.get" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *EditsApklistingsGetCall) Do() (*ApkListing, error) {
 	res, err := c.doRequest("json")
+	ret := &ApkListing{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *ApkListing
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Fetches the APK-specific localized listing for a specified APK and language code.",
 	//   "httpMethod": "GET",
@@ -2244,6 +2471,14 @@ func (c *EditsApklistingsListCall) Fields(s ...googleapi.Field) *EditsApklisting
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *EditsApklistingsListCall) IfNoneMatch(entityTag string) *EditsApklistingsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -2268,26 +2503,37 @@ func (c *EditsApklistingsListCall) doRequest(alt string) (*http.Response, error)
 		"apkVersionCode": strconv.FormatInt(c.apkVersionCode, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "androidpublisher.edits.apklistings.list" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *EditsApklistingsListCall) Do() (*ApkListingsListResponse, error) {
 	res, err := c.doRequest("json")
+	ret := &ApkListingsListResponse{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *ApkListingsListResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Lists all the APK-specific localized listings for a specified APK.",
 	//   "httpMethod": "GET",
@@ -2363,6 +2609,14 @@ func (c *EditsApklistingsPatchCall) Fields(s ...googleapi.Field) *EditsApklistin
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *EditsApklistingsPatchCall) IfNoneMatch(entityTag string) *EditsApklistingsPatchCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -2394,26 +2648,37 @@ func (c *EditsApklistingsPatchCall) doRequest(alt string) (*http.Response, error
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "androidpublisher.edits.apklistings.patch" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *EditsApklistingsPatchCall) Do() (*ApkListing, error) {
 	res, err := c.doRequest("json")
+	ret := &ApkListing{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *ApkListing
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Updates or creates the APK-specific localized listing for a specified APK and language code. This method supports patch semantics.",
 	//   "httpMethod": "PATCH",
@@ -2498,6 +2763,14 @@ func (c *EditsApklistingsUpdateCall) Fields(s ...googleapi.Field) *EditsApklisti
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *EditsApklistingsUpdateCall) IfNoneMatch(entityTag string) *EditsApklistingsUpdateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -2529,26 +2802,37 @@ func (c *EditsApklistingsUpdateCall) doRequest(alt string) (*http.Response, erro
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "androidpublisher.edits.apklistings.update" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *EditsApklistingsUpdateCall) Do() (*ApkListing, error) {
 	res, err := c.doRequest("json")
+	ret := &ApkListing{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *ApkListing
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Updates or creates the APK-specific localized listing for a specified APK and language code.",
 	//   "httpMethod": "PUT",
@@ -2632,6 +2916,14 @@ func (c *EditsApksAddexternallyhostedCall) Fields(s ...googleapi.Field) *EditsAp
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *EditsApksAddexternallyhostedCall) IfNoneMatch(entityTag string) *EditsApksAddexternallyhostedCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -2661,26 +2953,37 @@ func (c *EditsApksAddexternallyhostedCall) doRequest(alt string) (*http.Response
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "androidpublisher.edits.apks.addexternallyhosted" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *EditsApksAddexternallyhostedCall) Do() (*ApksAddExternallyHostedResponse, error) {
 	res, err := c.doRequest("json")
+	ret := &ApksAddExternallyHostedResponse{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *ApksAddExternallyHostedResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Creates a new APK without uploading the APK itself to Google Play, instead hosting the APK at a specified URL. This function is only available to enterprises using Google Play for Work whose application is configured to restrict distribution to the enterprise domain.",
 	//   "httpMethod": "POST",
@@ -2743,6 +3046,14 @@ func (c *EditsApksListCall) Fields(s ...googleapi.Field) *EditsApksListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *EditsApksListCall) IfNoneMatch(entityTag string) *EditsApksListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -2766,26 +3077,37 @@ func (c *EditsApksListCall) doRequest(alt string) (*http.Response, error) {
 		"editId":      c.editId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "androidpublisher.edits.apks.list" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *EditsApksListCall) Do() (*ApksListResponse, error) {
 	res, err := c.doRequest("json")
+	ret := &ApksListResponse{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *ApksListResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "httpMethod": "GET",
 	//   "id": "androidpublisher.edits.apks.list",
@@ -2878,6 +3200,14 @@ func (c *EditsApksUploadCall) Fields(s ...googleapi.Field) *EditsApksUploadCall 
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *EditsApksUploadCall) IfNoneMatch(entityTag string) *EditsApksUploadCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -2925,20 +3255,34 @@ func (c *EditsApksUploadCall) doRequest(alt string) (*http.Response, error) {
 		req.Header.Set("Content-Type", ctype)
 	}
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "androidpublisher.edits.apks.upload" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *EditsApksUploadCall) Do() (*Apk, error) {
 	res, err := c.doRequest("json")
+	ret := &Apk{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
 	var progressUpdater_ googleapi.ProgressUpdater
 	if v, ok := c.opt_["progressUpdater"]; ok {
@@ -2958,16 +3302,19 @@ func (c *EditsApksUploadCall) Do() (*Apk, error) {
 			Callback:      progressUpdater_,
 		}
 		res, err = rx.Upload(c.ctx_)
+		if res != nil {
+			ret.ServerResponse = googleapi.ServerResponse{
+				Header:         res.Header,
+				HTTPStatusCode: res.StatusCode,
+			}
+		}
 		if err != nil {
-			return nil, err
+			return ret, err
 		}
 		defer res.Body.Close()
 	}
-	var ret *Apk
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "httpMethod": "POST",
 	//   "id": "androidpublisher.edits.apks.upload",
@@ -3045,6 +3392,14 @@ func (c *EditsDetailsGetCall) Fields(s ...googleapi.Field) *EditsDetailsGetCall 
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *EditsDetailsGetCall) IfNoneMatch(entityTag string) *EditsDetailsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -3068,26 +3423,37 @@ func (c *EditsDetailsGetCall) doRequest(alt string) (*http.Response, error) {
 		"editId":      c.editId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "androidpublisher.edits.details.get" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *EditsDetailsGetCall) Do() (*AppDetails, error) {
 	res, err := c.doRequest("json")
+	ret := &AppDetails{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *AppDetails
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Fetches app details for this edit. This includes the default language and developer support contact information.",
 	//   "httpMethod": "GET",
@@ -3150,6 +3516,14 @@ func (c *EditsDetailsPatchCall) Fields(s ...googleapi.Field) *EditsDetailsPatchC
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *EditsDetailsPatchCall) IfNoneMatch(entityTag string) *EditsDetailsPatchCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -3179,26 +3553,37 @@ func (c *EditsDetailsPatchCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "androidpublisher.edits.details.patch" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *EditsDetailsPatchCall) Do() (*AppDetails, error) {
 	res, err := c.doRequest("json")
+	ret := &AppDetails{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *AppDetails
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Updates app details for this edit. This method supports patch semantics.",
 	//   "httpMethod": "PATCH",
@@ -3263,6 +3648,14 @@ func (c *EditsDetailsUpdateCall) Fields(s ...googleapi.Field) *EditsDetailsUpdat
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *EditsDetailsUpdateCall) IfNoneMatch(entityTag string) *EditsDetailsUpdateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -3292,26 +3685,37 @@ func (c *EditsDetailsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "androidpublisher.edits.details.update" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *EditsDetailsUpdateCall) Do() (*AppDetails, error) {
 	res, err := c.doRequest("json")
+	ret := &AppDetails{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *AppDetails
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Updates app details for this edit.",
 	//   "httpMethod": "PUT",
@@ -3378,6 +3782,14 @@ func (c *EditsExpansionfilesGetCall) Fields(s ...googleapi.Field) *EditsExpansio
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *EditsExpansionfilesGetCall) IfNoneMatch(entityTag string) *EditsExpansionfilesGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -3403,26 +3815,37 @@ func (c *EditsExpansionfilesGetCall) doRequest(alt string) (*http.Response, erro
 		"expansionFileType": c.expansionFileType,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "androidpublisher.edits.expansionfiles.get" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *EditsExpansionfilesGetCall) Do() (*ExpansionFile, error) {
 	res, err := c.doRequest("json")
+	ret := &ExpansionFile{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *ExpansionFile
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Fetches the Expansion File configuration for the APK specified.",
 	//   "httpMethod": "GET",
@@ -3512,6 +3935,14 @@ func (c *EditsExpansionfilesPatchCall) Fields(s ...googleapi.Field) *EditsExpans
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *EditsExpansionfilesPatchCall) IfNoneMatch(entityTag string) *EditsExpansionfilesPatchCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -3543,26 +3974,37 @@ func (c *EditsExpansionfilesPatchCall) doRequest(alt string) (*http.Response, er
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "androidpublisher.edits.expansionfiles.patch" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *EditsExpansionfilesPatchCall) Do() (*ExpansionFile, error) {
 	res, err := c.doRequest("json")
+	ret := &ExpansionFile{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *ExpansionFile
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Updates the APK's Expansion File configuration to reference another APK's Expansion Files. To add a new Expansion File use the Upload method. This method supports patch semantics.",
 	//   "httpMethod": "PATCH",
@@ -3655,6 +4097,14 @@ func (c *EditsExpansionfilesUpdateCall) Fields(s ...googleapi.Field) *EditsExpan
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *EditsExpansionfilesUpdateCall) IfNoneMatch(entityTag string) *EditsExpansionfilesUpdateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -3686,26 +4136,37 @@ func (c *EditsExpansionfilesUpdateCall) doRequest(alt string) (*http.Response, e
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "androidpublisher.edits.expansionfiles.update" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *EditsExpansionfilesUpdateCall) Do() (*ExpansionFile, error) {
 	res, err := c.doRequest("json")
+	ret := &ExpansionFile{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *ExpansionFile
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Updates the APK's Expansion File configuration to reference another APK's Expansion Files. To add a new Expansion File use the Upload method.",
 	//   "httpMethod": "PUT",
@@ -3829,6 +4290,14 @@ func (c *EditsExpansionfilesUploadCall) Fields(s ...googleapi.Field) *EditsExpan
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *EditsExpansionfilesUploadCall) IfNoneMatch(entityTag string) *EditsExpansionfilesUploadCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -3878,20 +4347,34 @@ func (c *EditsExpansionfilesUploadCall) doRequest(alt string) (*http.Response, e
 		req.Header.Set("Content-Type", ctype)
 	}
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "androidpublisher.edits.expansionfiles.upload" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *EditsExpansionfilesUploadCall) Do() (*ExpansionFilesUploadResponse, error) {
 	res, err := c.doRequest("json")
+	ret := &ExpansionFilesUploadResponse{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
 	var progressUpdater_ googleapi.ProgressUpdater
 	if v, ok := c.opt_["progressUpdater"]; ok {
@@ -3911,16 +4394,19 @@ func (c *EditsExpansionfilesUploadCall) Do() (*ExpansionFilesUploadResponse, err
 			Callback:      progressUpdater_,
 		}
 		res, err = rx.Upload(c.ctx_)
+		if res != nil {
+			ret.ServerResponse = googleapi.ServerResponse{
+				Header:         res.Header,
+				HTTPStatusCode: res.StatusCode,
+			}
+		}
 		if err != nil {
-			return nil, err
+			return ret, err
 		}
 		defer res.Body.Close()
 	}
-	var ret *ExpansionFilesUploadResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Uploads and attaches a new Expansion File to the APK specified.",
 	//   "httpMethod": "POST",
@@ -4025,6 +4511,14 @@ func (c *EditsImagesDeleteCall) Fields(s ...googleapi.Field) *EditsImagesDeleteC
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *EditsImagesDeleteCall) IfNoneMatch(entityTag string) *EditsImagesDeleteCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -4051,12 +4545,16 @@ func (c *EditsImagesDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"imageId":     c.imageId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "androidpublisher.edits.images.delete" call.
 func (c *EditsImagesDeleteCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -4170,6 +4668,14 @@ func (c *EditsImagesDeleteallCall) Fields(s ...googleapi.Field) *EditsImagesDele
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *EditsImagesDeleteallCall) IfNoneMatch(entityTag string) *EditsImagesDeleteallCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -4195,26 +4701,37 @@ func (c *EditsImagesDeleteallCall) doRequest(alt string) (*http.Response, error)
 		"imageType":   c.imageType,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "androidpublisher.edits.images.deleteall" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *EditsImagesDeleteallCall) Do() (*ImagesDeleteAllResponse, error) {
 	res, err := c.doRequest("json")
+	ret := &ImagesDeleteAllResponse{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *ImagesDeleteAllResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Deletes all images for the specified language and image type.",
 	//   "httpMethod": "DELETE",
@@ -4313,6 +4830,14 @@ func (c *EditsImagesListCall) Fields(s ...googleapi.Field) *EditsImagesListCall 
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *EditsImagesListCall) IfNoneMatch(entityTag string) *EditsImagesListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -4338,26 +4863,37 @@ func (c *EditsImagesListCall) doRequest(alt string) (*http.Response, error) {
 		"imageType":   c.imageType,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "androidpublisher.edits.images.list" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *EditsImagesListCall) Do() (*ImagesListResponse, error) {
 	res, err := c.doRequest("json")
+	ret := &ImagesListResponse{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *ImagesListResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Lists all images for the specified language and image type.",
 	//   "httpMethod": "GET",
@@ -4491,6 +5027,14 @@ func (c *EditsImagesUploadCall) Fields(s ...googleapi.Field) *EditsImagesUploadC
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *EditsImagesUploadCall) IfNoneMatch(entityTag string) *EditsImagesUploadCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -4540,20 +5084,34 @@ func (c *EditsImagesUploadCall) doRequest(alt string) (*http.Response, error) {
 		req.Header.Set("Content-Type", ctype)
 	}
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "androidpublisher.edits.images.upload" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *EditsImagesUploadCall) Do() (*ImagesUploadResponse, error) {
 	res, err := c.doRequest("json")
+	ret := &ImagesUploadResponse{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
 	var progressUpdater_ googleapi.ProgressUpdater
 	if v, ok := c.opt_["progressUpdater"]; ok {
@@ -4573,16 +5131,19 @@ func (c *EditsImagesUploadCall) Do() (*ImagesUploadResponse, error) {
 			Callback:      progressUpdater_,
 		}
 		res, err = rx.Upload(c.ctx_)
+		if res != nil {
+			ret.ServerResponse = googleapi.ServerResponse{
+				Header:         res.Header,
+				HTTPStatusCode: res.StatusCode,
+			}
+		}
 		if err != nil {
-			return nil, err
+			return ret, err
 		}
 		defer res.Body.Close()
 	}
-	var ret *ImagesUploadResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Uploads a new image and adds it to the list of images for the specified language and image type.",
 	//   "httpMethod": "POST",
@@ -4696,6 +5257,14 @@ func (c *EditsListingsDeleteCall) Fields(s ...googleapi.Field) *EditsListingsDel
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *EditsListingsDeleteCall) IfNoneMatch(entityTag string) *EditsListingsDeleteCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -4720,12 +5289,16 @@ func (c *EditsListingsDeleteCall) doRequest(alt string) (*http.Response, error) 
 		"language":    c.language,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "androidpublisher.edits.listings.delete" call.
 func (c *EditsListingsDeleteCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -4799,6 +5372,14 @@ func (c *EditsListingsDeleteallCall) Fields(s ...googleapi.Field) *EditsListings
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *EditsListingsDeleteallCall) IfNoneMatch(entityTag string) *EditsListingsDeleteallCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -4822,12 +5403,16 @@ func (c *EditsListingsDeleteallCall) doRequest(alt string) (*http.Response, erro
 		"editId":      c.editId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "androidpublisher.edits.listings.deleteall" call.
 func (c *EditsListingsDeleteallCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -4896,6 +5481,14 @@ func (c *EditsListingsGetCall) Fields(s ...googleapi.Field) *EditsListingsGetCal
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *EditsListingsGetCall) IfNoneMatch(entityTag string) *EditsListingsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -4920,26 +5513,37 @@ func (c *EditsListingsGetCall) doRequest(alt string) (*http.Response, error) {
 		"language":    c.language,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "androidpublisher.edits.listings.get" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *EditsListingsGetCall) Do() (*Listing, error) {
 	res, err := c.doRequest("json")
+	ret := &Listing{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Listing
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Fetches information about a localized store listing.",
 	//   "httpMethod": "GET",
@@ -5007,6 +5611,14 @@ func (c *EditsListingsListCall) Fields(s ...googleapi.Field) *EditsListingsListC
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *EditsListingsListCall) IfNoneMatch(entityTag string) *EditsListingsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -5030,26 +5642,37 @@ func (c *EditsListingsListCall) doRequest(alt string) (*http.Response, error) {
 		"editId":      c.editId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "androidpublisher.edits.listings.list" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *EditsListingsListCall) Do() (*ListingsListResponse, error) {
 	res, err := c.doRequest("json")
+	ret := &ListingsListResponse{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *ListingsListResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Returns all of the localized store listings attached to this edit.",
 	//   "httpMethod": "GET",
@@ -5114,6 +5737,14 @@ func (c *EditsListingsPatchCall) Fields(s ...googleapi.Field) *EditsListingsPatc
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *EditsListingsPatchCall) IfNoneMatch(entityTag string) *EditsListingsPatchCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -5144,26 +5775,37 @@ func (c *EditsListingsPatchCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "androidpublisher.edits.listings.patch" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *EditsListingsPatchCall) Do() (*Listing, error) {
 	res, err := c.doRequest("json")
+	ret := &Listing{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Listing
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Creates or updates a localized store listing. This method supports patch semantics.",
 	//   "httpMethod": "PATCH",
@@ -5237,6 +5879,14 @@ func (c *EditsListingsUpdateCall) Fields(s ...googleapi.Field) *EditsListingsUpd
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *EditsListingsUpdateCall) IfNoneMatch(entityTag string) *EditsListingsUpdateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -5267,26 +5917,37 @@ func (c *EditsListingsUpdateCall) doRequest(alt string) (*http.Response, error) 
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "androidpublisher.edits.listings.update" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *EditsListingsUpdateCall) Do() (*Listing, error) {
 	res, err := c.doRequest("json")
+	ret := &Listing{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Listing
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Creates or updates a localized store listing.",
 	//   "httpMethod": "PUT",
@@ -5358,6 +6019,14 @@ func (c *EditsTestersGetCall) Fields(s ...googleapi.Field) *EditsTestersGetCall 
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *EditsTestersGetCall) IfNoneMatch(entityTag string) *EditsTestersGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -5382,26 +6051,37 @@ func (c *EditsTestersGetCall) doRequest(alt string) (*http.Response, error) {
 		"track":       c.track,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "androidpublisher.edits.testers.get" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *EditsTestersGetCall) Do() (*Testers, error) {
 	res, err := c.doRequest("json")
+	ret := &Testers{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Testers
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "httpMethod": "GET",
 	//   "id": "androidpublisher.edits.testers.get",
@@ -5482,6 +6162,14 @@ func (c *EditsTestersPatchCall) Fields(s ...googleapi.Field) *EditsTestersPatchC
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *EditsTestersPatchCall) IfNoneMatch(entityTag string) *EditsTestersPatchCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -5512,26 +6200,37 @@ func (c *EditsTestersPatchCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "androidpublisher.edits.testers.patch" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *EditsTestersPatchCall) Do() (*Testers, error) {
 	res, err := c.doRequest("json")
+	ret := &Testers{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Testers
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "httpMethod": "PATCH",
 	//   "id": "androidpublisher.edits.testers.patch",
@@ -5615,6 +6314,14 @@ func (c *EditsTestersUpdateCall) Fields(s ...googleapi.Field) *EditsTestersUpdat
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *EditsTestersUpdateCall) IfNoneMatch(entityTag string) *EditsTestersUpdateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -5645,26 +6352,37 @@ func (c *EditsTestersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "androidpublisher.edits.testers.update" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *EditsTestersUpdateCall) Do() (*Testers, error) {
 	res, err := c.doRequest("json")
+	ret := &Testers{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Testers
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "httpMethod": "PUT",
 	//   "id": "androidpublisher.edits.testers.update",
@@ -5747,6 +6465,14 @@ func (c *EditsTracksGetCall) Fields(s ...googleapi.Field) *EditsTracksGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *EditsTracksGetCall) IfNoneMatch(entityTag string) *EditsTracksGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -5771,26 +6497,37 @@ func (c *EditsTracksGetCall) doRequest(alt string) (*http.Response, error) {
 		"track":       c.track,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "androidpublisher.edits.tracks.get" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *EditsTracksGetCall) Do() (*Track, error) {
 	res, err := c.doRequest("json")
+	ret := &Track{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Track
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Fetches the track configuration for the specified track type. Includes the APK version codes that are in this track.",
 	//   "httpMethod": "GET",
@@ -5869,6 +6606,14 @@ func (c *EditsTracksListCall) Fields(s ...googleapi.Field) *EditsTracksListCall 
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *EditsTracksListCall) IfNoneMatch(entityTag string) *EditsTracksListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -5892,26 +6637,37 @@ func (c *EditsTracksListCall) doRequest(alt string) (*http.Response, error) {
 		"editId":      c.editId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "androidpublisher.edits.tracks.list" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *EditsTracksListCall) Do() (*TracksListResponse, error) {
 	res, err := c.doRequest("json")
+	ret := &TracksListResponse{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *TracksListResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Lists all the track configurations for this edit.",
 	//   "httpMethod": "GET",
@@ -5978,6 +6734,14 @@ func (c *EditsTracksPatchCall) Fields(s ...googleapi.Field) *EditsTracksPatchCal
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *EditsTracksPatchCall) IfNoneMatch(entityTag string) *EditsTracksPatchCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -6008,26 +6772,37 @@ func (c *EditsTracksPatchCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "androidpublisher.edits.tracks.patch" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *EditsTracksPatchCall) Do() (*Track, error) {
 	res, err := c.doRequest("json")
+	ret := &Track{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Track
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Updates the track configuration for the specified track type. When halted, the rollout track cannot be updated without adding new APKs, and adding new APKs will cause it to resume. This method supports patch semantics.",
 	//   "httpMethod": "PATCH",
@@ -6115,6 +6890,14 @@ func (c *EditsTracksUpdateCall) Fields(s ...googleapi.Field) *EditsTracksUpdateC
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *EditsTracksUpdateCall) IfNoneMatch(entityTag string) *EditsTracksUpdateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -6145,26 +6928,37 @@ func (c *EditsTracksUpdateCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "androidpublisher.edits.tracks.update" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *EditsTracksUpdateCall) Do() (*Track, error) {
 	res, err := c.doRequest("json")
+	ret := &Track{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Track
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Updates the track configuration for the specified track type. When halted, the rollout track cannot be updated without adding new APKs, and adding new APKs will cause it to resume.",
 	//   "httpMethod": "PUT",
@@ -6271,6 +7065,14 @@ func (c *EntitlementsListCall) Fields(s ...googleapi.Field) *EntitlementsListCal
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *EntitlementsListCall) IfNoneMatch(entityTag string) *EntitlementsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -6305,26 +7107,37 @@ func (c *EntitlementsListCall) doRequest(alt string) (*http.Response, error) {
 		"packageName": c.packageName,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "androidpublisher.entitlements.list" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *EntitlementsListCall) Do() (*EntitlementsListResponse, error) {
 	res, err := c.doRequest("json")
+	ret := &EntitlementsListResponse{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *EntitlementsListResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Lists the user's current inapp item or subscription entitlements",
 	//   "httpMethod": "GET",
@@ -6391,6 +7204,14 @@ func (c *InappproductsBatchCall) Fields(s ...googleapi.Field) *InappproductsBatc
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *InappproductsBatchCall) IfNoneMatch(entityTag string) *InappproductsBatchCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -6417,26 +7238,37 @@ func (c *InappproductsBatchCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "androidpublisher.inappproducts.batch" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *InappproductsBatchCall) Do() (*InappproductsBatchResponse, error) {
 	res, err := c.doRequest("json")
+	ret := &InappproductsBatchResponse{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *InappproductsBatchResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "httpMethod": "POST",
 	//   "id": "androidpublisher.inappproducts.batch",
@@ -6480,6 +7312,14 @@ func (c *InappproductsDeleteCall) Fields(s ...googleapi.Field) *InappproductsDel
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *InappproductsDeleteCall) IfNoneMatch(entityTag string) *InappproductsDeleteCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -6503,12 +7343,16 @@ func (c *InappproductsDeleteCall) doRequest(alt string) (*http.Response, error) 
 		"sku":         c.skuid,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "androidpublisher.inappproducts.delete" call.
 func (c *InappproductsDeleteCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -6575,6 +7419,14 @@ func (c *InappproductsGetCall) Fields(s ...googleapi.Field) *InappproductsGetCal
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *InappproductsGetCall) IfNoneMatch(entityTag string) *InappproductsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -6598,26 +7450,37 @@ func (c *InappproductsGetCall) doRequest(alt string) (*http.Response, error) {
 		"sku":         c.skuid,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "androidpublisher.inappproducts.get" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *InappproductsGetCall) Do() (*InAppProduct, error) {
 	res, err := c.doRequest("json")
+	ret := &InAppProduct{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *InAppProduct
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Returns information about the in-app product specified.",
 	//   "httpMethod": "GET",
@@ -6686,6 +7549,14 @@ func (c *InappproductsInsertCall) Fields(s ...googleapi.Field) *InappproductsIns
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *InappproductsInsertCall) IfNoneMatch(entityTag string) *InappproductsInsertCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -6717,26 +7588,37 @@ func (c *InappproductsInsertCall) doRequest(alt string) (*http.Response, error) 
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "androidpublisher.inappproducts.insert" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *InappproductsInsertCall) Do() (*InAppProduct, error) {
 	res, err := c.doRequest("json")
+	ret := &InAppProduct{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *InAppProduct
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Creates a new in-app product for an app.",
 	//   "httpMethod": "POST",
@@ -6814,6 +7696,14 @@ func (c *InappproductsListCall) Fields(s ...googleapi.Field) *InappproductsListC
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *InappproductsListCall) IfNoneMatch(entityTag string) *InappproductsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -6845,26 +7735,37 @@ func (c *InappproductsListCall) doRequest(alt string) (*http.Response, error) {
 		"packageName": c.packageNameid,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "androidpublisher.inappproducts.list" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *InappproductsListCall) Do() (*InappproductsListResponse, error) {
 	res, err := c.doRequest("json")
+	ret := &InappproductsListResponse{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *InappproductsListResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "List all the in-app products for an Android app, both subscriptions and managed in-app products..",
 	//   "httpMethod": "GET",
@@ -6944,6 +7845,14 @@ func (c *InappproductsPatchCall) Fields(s ...googleapi.Field) *InappproductsPatc
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *InappproductsPatchCall) IfNoneMatch(entityTag string) *InappproductsPatchCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -6976,26 +7885,37 @@ func (c *InappproductsPatchCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "androidpublisher.inappproducts.patch" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *InappproductsPatchCall) Do() (*InAppProduct, error) {
 	res, err := c.doRequest("json")
+	ret := &InAppProduct{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *InAppProduct
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Updates the details of an in-app product. This method supports patch semantics.",
 	//   "httpMethod": "PATCH",
@@ -7075,6 +7995,14 @@ func (c *InappproductsUpdateCall) Fields(s ...googleapi.Field) *InappproductsUpd
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *InappproductsUpdateCall) IfNoneMatch(entityTag string) *InappproductsUpdateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -7107,26 +8035,37 @@ func (c *InappproductsUpdateCall) doRequest(alt string) (*http.Response, error) 
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "androidpublisher.inappproducts.update" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *InappproductsUpdateCall) Do() (*InAppProduct, error) {
 	res, err := c.doRequest("json")
+	ret := &InAppProduct{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *InAppProduct
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Updates the details of an in-app product.",
 	//   "httpMethod": "PUT",
@@ -7196,6 +8135,14 @@ func (c *PurchasesProductsGetCall) Fields(s ...googleapi.Field) *PurchasesProduc
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *PurchasesProductsGetCall) IfNoneMatch(entityTag string) *PurchasesProductsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -7220,26 +8167,37 @@ func (c *PurchasesProductsGetCall) doRequest(alt string) (*http.Response, error)
 		"token":       c.token,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "androidpublisher.purchases.products.get" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *PurchasesProductsGetCall) Do() (*ProductPurchase, error) {
 	res, err := c.doRequest("json")
+	ret := &ProductPurchase{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *ProductPurchase
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Checks the purchase and consumption status of an inapp item.",
 	//   "httpMethod": "GET",
@@ -7309,6 +8267,14 @@ func (c *PurchasesSubscriptionsCancelCall) Fields(s ...googleapi.Field) *Purchas
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *PurchasesSubscriptionsCancelCall) IfNoneMatch(entityTag string) *PurchasesSubscriptionsCancelCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -7333,12 +8299,16 @@ func (c *PurchasesSubscriptionsCancelCall) doRequest(alt string) (*http.Response
 		"token":          c.token,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "androidpublisher.purchases.subscriptions.cancel" call.
 func (c *PurchasesSubscriptionsCancelCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -7417,6 +8387,14 @@ func (c *PurchasesSubscriptionsDeferCall) Fields(s ...googleapi.Field) *Purchase
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *PurchasesSubscriptionsDeferCall) IfNoneMatch(entityTag string) *PurchasesSubscriptionsDeferCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -7447,26 +8425,37 @@ func (c *PurchasesSubscriptionsDeferCall) doRequest(alt string) (*http.Response,
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "androidpublisher.purchases.subscriptions.defer" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *PurchasesSubscriptionsDeferCall) Do() (*SubscriptionPurchasesDeferResponse, error) {
 	res, err := c.doRequest("json")
+	ret := &SubscriptionPurchasesDeferResponse{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *SubscriptionPurchasesDeferResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Defers a user's subscription purchase until a specified future expiration time.",
 	//   "httpMethod": "POST",
@@ -7539,6 +8528,14 @@ func (c *PurchasesSubscriptionsGetCall) Fields(s ...googleapi.Field) *PurchasesS
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *PurchasesSubscriptionsGetCall) IfNoneMatch(entityTag string) *PurchasesSubscriptionsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -7563,26 +8560,37 @@ func (c *PurchasesSubscriptionsGetCall) doRequest(alt string) (*http.Response, e
 		"token":          c.token,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "androidpublisher.purchases.subscriptions.get" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *PurchasesSubscriptionsGetCall) Do() (*SubscriptionPurchase, error) {
 	res, err := c.doRequest("json")
+	ret := &SubscriptionPurchase{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *SubscriptionPurchase
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Checks whether a user's subscription purchase is valid and returns its expiry time.",
 	//   "httpMethod": "GET",
@@ -7653,6 +8661,14 @@ func (c *PurchasesSubscriptionsRefundCall) Fields(s ...googleapi.Field) *Purchas
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *PurchasesSubscriptionsRefundCall) IfNoneMatch(entityTag string) *PurchasesSubscriptionsRefundCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -7677,12 +8693,16 @@ func (c *PurchasesSubscriptionsRefundCall) doRequest(alt string) (*http.Response
 		"token":          c.token,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "androidpublisher.purchases.subscriptions.refund" call.
 func (c *PurchasesSubscriptionsRefundCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -7760,6 +8780,14 @@ func (c *PurchasesSubscriptionsRevokeCall) Fields(s ...googleapi.Field) *Purchas
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *PurchasesSubscriptionsRevokeCall) IfNoneMatch(entityTag string) *PurchasesSubscriptionsRevokeCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -7784,12 +8812,16 @@ func (c *PurchasesSubscriptionsRevokeCall) doRequest(alt string) (*http.Response
 		"token":          c.token,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "androidpublisher.purchases.subscriptions.revoke" call.
 func (c *PurchasesSubscriptionsRevokeCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {

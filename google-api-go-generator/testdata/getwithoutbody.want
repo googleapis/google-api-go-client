@@ -99,6 +99,10 @@ func (s *ListMetricRequest) MarshalJSON() ([]byte, error) {
 // ListMetricResponse: The response of
 // getwithoutbody.metricDescriptors.list.
 type ListMetricResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "getwithoutbody#listMetricResponse".
 	Kind string `json:"kind,omitempty"`
@@ -170,6 +174,14 @@ func (c *MetricDescriptorsListCall) Fields(s ...googleapi.Field) *MetricDescript
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *MetricDescriptorsListCall) IfNoneMatch(entityTag string) *MetricDescriptorsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -198,26 +210,37 @@ func (c *MetricDescriptorsListCall) doRequest(alt string) (*http.Response, error
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "getwithoutbody.metricDescriptors.list" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *MetricDescriptorsListCall) Do() (*ListMetricResponse, error) {
 	res, err := c.doRequest("json")
+	ret := &ListMetricResponse{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *ListMetricResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "List all of the available metric descriptors. Large number of metric descriptors will be paginated, use the nextPageToken returned in the response to request subsequent pages of results by setting the pageToken query parameter to the value of the nextPageToken.",
 	//   "httpMethod": "GET",

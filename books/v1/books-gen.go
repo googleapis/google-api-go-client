@@ -311,6 +311,10 @@ type VolumesUseruploadedService struct {
 }
 
 type Annotation struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// AfterSelectedText: Anchor text after excerpt. For requests, if the
 	// user bookmarked a screen that has no flowing text on it, then this
 	// field should be empty.
@@ -482,6 +486,10 @@ func (s *AnnotationLayerSummary) MarshalJSON() ([]byte, error) {
 }
 
 type Annotationdata struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// AnnotationType: The type of annotation this data is for.
 	AnnotationType string `json:"annotationType,omitempty"`
 
@@ -525,6 +533,10 @@ func (s *Annotationdata) MarshalJSON() ([]byte, error) {
 }
 
 type Annotations struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Items: A list of annotations.
 	Items []*Annotation `json:"items,omitempty"`
 
@@ -556,6 +568,10 @@ func (s *Annotations) MarshalJSON() ([]byte, error) {
 }
 
 type AnnotationsSummary struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	Kind string `json:"kind,omitempty"`
 
 	Layers []*AnnotationsSummaryLayers `json:"layers,omitempty"`
@@ -603,6 +619,10 @@ func (s *AnnotationsSummaryLayers) MarshalJSON() ([]byte, error) {
 }
 
 type Annotationsdata struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Items: A list of Annotation Data.
 	Items []*Annotationdata `json:"items,omitempty"`
 
@@ -660,6 +680,10 @@ func (s *BooksAnnotationsRange) MarshalJSON() ([]byte, error) {
 }
 
 type BooksCloudloadingResource struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	Author string `json:"author,omitempty"`
 
 	ProcessingState string `json:"processingState,omitempty"`
@@ -684,6 +708,10 @@ func (s *BooksCloudloadingResource) MarshalJSON() ([]byte, error) {
 }
 
 type BooksVolumesRecommendedRateResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	ConsistencyToken string `json:"consistency_token,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ConsistencyToken") to
@@ -702,6 +730,10 @@ func (s *BooksVolumesRecommendedRateResponse) MarshalJSON() ([]byte, error) {
 }
 
 type Bookshelf struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Access: Whether this bookshelf is PUBLIC or PRIVATE.
 	Access string `json:"access,omitempty"`
 
@@ -751,6 +783,10 @@ func (s *Bookshelf) MarshalJSON() ([]byte, error) {
 }
 
 type Bookshelves struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Items: A list of bookshelves.
 	Items []*Bookshelf `json:"items,omitempty"`
 
@@ -773,6 +809,10 @@ func (s *Bookshelves) MarshalJSON() ([]byte, error) {
 }
 
 type Category struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Items: A list of onboarding categories.
 	Items []*CategoryItems `json:"items,omitempty"`
 
@@ -1317,6 +1357,10 @@ func (s *DownloadAccessRestriction) MarshalJSON() ([]byte, error) {
 }
 
 type DownloadAccesses struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// DownloadAccessList: A list of download access responses.
 	DownloadAccessList []*DownloadAccessRestriction `json:"downloadAccessList,omitempty"`
 
@@ -1523,6 +1567,10 @@ func (s *GeolayerdataGeoViewportLo) MarshalJSON() ([]byte, error) {
 }
 
 type Layersummaries struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Items: A list of layer summary items.
 	Items []*Layersummary `json:"items,omitempty"`
 
@@ -1548,6 +1596,10 @@ func (s *Layersummaries) MarshalJSON() ([]byte, error) {
 }
 
 type Layersummary struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// AnnotationCount: The number of annotations for this layer.
 	AnnotationCount int64 `json:"annotationCount,omitempty"`
 
@@ -1608,6 +1660,10 @@ func (s *Layersummary) MarshalJSON() ([]byte, error) {
 }
 
 type Metadata struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Items: A list of offline dictionary metadata.
 	Items []*MetadataItems `json:"items,omitempty"`
 
@@ -1656,6 +1712,10 @@ func (s *MetadataItems) MarshalJSON() ([]byte, error) {
 }
 
 type Offers struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Items: A list of offers.
 	Items []*OffersItems `json:"items,omitempty"`
 
@@ -1730,6 +1790,10 @@ func (s *OffersItemsItems) MarshalJSON() ([]byte, error) {
 }
 
 type ReadingPosition struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// EpubCfiPosition: Position in an EPUB as a CFI.
 	EpubCfiPosition string `json:"epubCfiPosition,omitempty"`
 
@@ -1768,6 +1832,10 @@ func (s *ReadingPosition) MarshalJSON() ([]byte, error) {
 }
 
 type RequestAccess struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// ConcurrentAccess: A concurrent access response.
 	ConcurrentAccess *ConcurrentAccessRestriction `json:"concurrentAccess,omitempty"`
 
@@ -1890,6 +1958,10 @@ func (s *ReviewSource) MarshalJSON() ([]byte, error) {
 }
 
 type Usersettings struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Kind: Resource type.
 	Kind string `json:"kind,omitempty"`
 
@@ -1935,6 +2007,10 @@ func (s *UsersettingsNotesExport) MarshalJSON() ([]byte, error) {
 }
 
 type Volume struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// AccessInfo: Any information about a volume related to reading or
 	// obtaining that volume text. This information can depend on country
 	// (books may be public domain in one country but not in another, e.g.).
@@ -2736,6 +2812,10 @@ func (s *VolumeVolumeInfoIndustryIdentifiers) MarshalJSON() ([]byte, error) {
 }
 
 type Volume2 struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Items: A list of volumes.
 	Items []*Volume `json:"items,omitempty"`
 
@@ -2760,6 +2840,10 @@ func (s *Volume2) MarshalJSON() ([]byte, error) {
 }
 
 type Volumeannotation struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// AnnotationDataId: The annotation data id for this volume annotation.
 	AnnotationDataId string `json:"annotationDataId,omitempty"`
 
@@ -2851,6 +2935,10 @@ func (s *VolumeannotationContentRanges) MarshalJSON() ([]byte, error) {
 }
 
 type Volumeannotations struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Items: A list of volume annotations.
 	Items []*Volumeannotation `json:"items,omitempty"`
 
@@ -2886,6 +2974,10 @@ func (s *Volumeannotations) MarshalJSON() ([]byte, error) {
 }
 
 type Volumes struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Items: A list of volumes.
 	Items []*Volume `json:"items,omitempty"`
 
@@ -2946,6 +3038,14 @@ func (c *BookshelvesGetCall) Fields(s ...googleapi.Field) *BookshelvesGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *BookshelvesGetCall) IfNoneMatch(entityTag string) *BookshelvesGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -2972,26 +3072,37 @@ func (c *BookshelvesGetCall) doRequest(alt string) (*http.Response, error) {
 		"shelf":  c.shelf,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "books.bookshelves.get" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *BookshelvesGetCall) Do() (*Bookshelf, error) {
 	res, err := c.doRequest("json")
+	ret := &Bookshelf{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Bookshelf
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Retrieves metadata for a specific bookshelf for the specified user.",
 	//   "httpMethod": "GET",
@@ -3061,6 +3172,14 @@ func (c *BookshelvesListCall) Fields(s ...googleapi.Field) *BookshelvesListCall 
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *BookshelvesListCall) IfNoneMatch(entityTag string) *BookshelvesListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -3086,26 +3205,37 @@ func (c *BookshelvesListCall) doRequest(alt string) (*http.Response, error) {
 		"userId": c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "books.bookshelves.list" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *BookshelvesListCall) Do() (*Bookshelves, error) {
 	res, err := c.doRequest("json")
+	ret := &Bookshelves{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Bookshelves
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Retrieves a list of public bookshelves for the specified user.",
 	//   "httpMethod": "GET",
@@ -3192,6 +3322,14 @@ func (c *BookshelvesVolumesListCall) Fields(s ...googleapi.Field) *BookshelvesVo
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *BookshelvesVolumesListCall) IfNoneMatch(entityTag string) *BookshelvesVolumesListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -3227,26 +3365,37 @@ func (c *BookshelvesVolumesListCall) doRequest(alt string) (*http.Response, erro
 		"shelf":  c.shelf,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "books.bookshelves.volumes.list" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *BookshelvesVolumesListCall) Do() (*Volumes, error) {
 	res, err := c.doRequest("json")
+	ret := &Volumes{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Volumes
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Retrieves volumes in a specific bookshelf for the specified user.",
 	//   "httpMethod": "GET",
@@ -3353,6 +3502,14 @@ func (c *CloudloadingAddBookCall) Fields(s ...googleapi.Field) *CloudloadingAddB
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *CloudloadingAddBookCall) IfNoneMatch(entityTag string) *CloudloadingAddBookCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -3385,26 +3542,37 @@ func (c *CloudloadingAddBookCall) doRequest(alt string) (*http.Response, error) 
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "books.cloudloading.addBook" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *CloudloadingAddBookCall) Do() (*BooksCloudloadingResource, error) {
 	res, err := c.doRequest("json")
+	ret := &BooksCloudloadingResource{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *BooksCloudloadingResource
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "",
 	//   "httpMethod": "POST",
@@ -3465,6 +3633,14 @@ func (c *CloudloadingDeleteBookCall) Fields(s ...googleapi.Field) *CloudloadingD
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *CloudloadingDeleteBookCall) IfNoneMatch(entityTag string) *CloudloadingDeleteBookCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -3486,12 +3662,16 @@ func (c *CloudloadingDeleteBookCall) doRequest(alt string) (*http.Response, erro
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "books.cloudloading.deleteBook" call.
 func (c *CloudloadingDeleteBookCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -3549,6 +3729,14 @@ func (c *CloudloadingUpdateBookCall) Fields(s ...googleapi.Field) *CloudloadingU
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *CloudloadingUpdateBookCall) IfNoneMatch(entityTag string) *CloudloadingUpdateBookCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -3575,26 +3763,37 @@ func (c *CloudloadingUpdateBookCall) doRequest(alt string) (*http.Response, erro
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "books.cloudloading.updateBook" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *CloudloadingUpdateBookCall) Do() (*BooksCloudloadingResource, error) {
 	res, err := c.doRequest("json")
+	ret := &BooksCloudloadingResource{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *BooksCloudloadingResource
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "",
 	//   "httpMethod": "POST",
@@ -3638,6 +3837,14 @@ func (c *DictionaryListOfflineMetadataCall) Fields(s ...googleapi.Field) *Dictio
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *DictionaryListOfflineMetadataCall) IfNoneMatch(entityTag string) *DictionaryListOfflineMetadataCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -3659,26 +3866,37 @@ func (c *DictionaryListOfflineMetadataCall) doRequest(alt string) (*http.Respons
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "books.dictionary.listOfflineMetadata" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *DictionaryListOfflineMetadataCall) Do() (*Metadata, error) {
 	res, err := c.doRequest("json")
+	ret := &Metadata{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Metadata
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Returns a list of offline dictionary meatadata available",
 	//   "httpMethod": "GET",
@@ -3745,6 +3963,14 @@ func (c *LayersGetCall) Fields(s ...googleapi.Field) *LayersGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *LayersGetCall) IfNoneMatch(entityTag string) *LayersGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -3774,26 +4000,37 @@ func (c *LayersGetCall) doRequest(alt string) (*http.Response, error) {
 		"summaryId": c.summaryId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "books.layers.get" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *LayersGetCall) Do() (*Layersummary, error) {
 	res, err := c.doRequest("json")
+	ret := &Layersummary{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Layersummary
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Gets the layer summary for a volume.",
 	//   "httpMethod": "GET",
@@ -3889,6 +4126,14 @@ func (c *LayersListCall) Fields(s ...googleapi.Field) *LayersListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *LayersListCall) IfNoneMatch(entityTag string) *LayersListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -3923,26 +4168,37 @@ func (c *LayersListCall) doRequest(alt string) (*http.Response, error) {
 		"volumeId": c.volumeId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "books.layers.list" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *LayersListCall) Do() (*Layersummaries, error) {
 	res, err := c.doRequest("json")
+	ret := &Layersummaries{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Layersummaries
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "List the layer summaries for a volume.",
 	//   "httpMethod": "GET",
@@ -4066,6 +4322,14 @@ func (c *LayersAnnotationDataGetCall) Fields(s ...googleapi.Field) *LayersAnnota
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *LayersAnnotationDataGetCall) IfNoneMatch(entityTag string) *LayersAnnotationDataGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -4109,26 +4373,37 @@ func (c *LayersAnnotationDataGetCall) doRequest(alt string) (*http.Response, err
 		"annotationDataId": c.annotationDataId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "books.layers.annotationData.get" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *LayersAnnotationDataGetCall) Do() (*Annotationdata, error) {
 	res, err := c.doRequest("json")
+	ret := &Annotationdata{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Annotationdata
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Gets the annotation data.",
 	//   "httpMethod": "GET",
@@ -4312,6 +4587,14 @@ func (c *LayersAnnotationDataListCall) Fields(s ...googleapi.Field) *LayersAnnot
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *LayersAnnotationDataListCall) IfNoneMatch(entityTag string) *LayersAnnotationDataListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -4366,26 +4649,37 @@ func (c *LayersAnnotationDataListCall) doRequest(alt string) (*http.Response, er
 		"layerId":  c.layerId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "books.layers.annotationData.list" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *LayersAnnotationDataListCall) Do() (*Annotationsdata, error) {
 	res, err := c.doRequest("json")
+	ret := &Annotationsdata{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Annotationsdata
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Gets the annotation data for a volume and layer.",
 	//   "httpMethod": "GET",
@@ -4527,6 +4821,14 @@ func (c *LayersVolumeAnnotationsGetCall) Fields(s ...googleapi.Field) *LayersVol
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *LayersVolumeAnnotationsGetCall) IfNoneMatch(entityTag string) *LayersVolumeAnnotationsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -4557,26 +4859,37 @@ func (c *LayersVolumeAnnotationsGetCall) doRequest(alt string) (*http.Response, 
 		"annotationId": c.annotationId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "books.layers.volumeAnnotations.get" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *LayersVolumeAnnotationsGetCall) Do() (*Volumeannotation, error) {
 	res, err := c.doRequest("json")
+	ret := &Volumeannotation{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Volumeannotation
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Gets the volume annotation.",
 	//   "httpMethod": "GET",
@@ -4744,6 +5057,14 @@ func (c *LayersVolumeAnnotationsListCall) Fields(s ...googleapi.Field) *LayersVo
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *LayersVolumeAnnotationsListCall) IfNoneMatch(entityTag string) *LayersVolumeAnnotationsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -4804,26 +5125,37 @@ func (c *LayersVolumeAnnotationsListCall) doRequest(alt string) (*http.Response,
 		"layerId":  c.layerId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "books.layers.volumeAnnotations.list" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *LayersVolumeAnnotationsListCall) Do() (*Volumeannotations, error) {
 	res, err := c.doRequest("json")
+	ret := &Volumeannotations{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Volumeannotations
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Gets the volume annotations for a volume and layer.",
 	//   "httpMethod": "GET",
@@ -4949,6 +5281,14 @@ func (c *MyconfigGetUserSettingsCall) Fields(s ...googleapi.Field) *MyconfigGetU
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *MyconfigGetUserSettingsCall) IfNoneMatch(entityTag string) *MyconfigGetUserSettingsCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -4969,26 +5309,37 @@ func (c *MyconfigGetUserSettingsCall) doRequest(alt string) (*http.Response, err
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "books.myconfig.getUserSettings" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *MyconfigGetUserSettingsCall) Do() (*Usersettings, error) {
 	res, err := c.doRequest("json")
+	ret := &Usersettings{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Usersettings
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Gets the current settings for the user.",
 	//   "httpMethod": "GET",
@@ -5044,6 +5395,14 @@ func (c *MyconfigReleaseDownloadAccessCall) Fields(s ...googleapi.Field) *Myconf
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *MyconfigReleaseDownloadAccessCall) IfNoneMatch(entityTag string) *MyconfigReleaseDownloadAccessCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -5074,26 +5433,37 @@ func (c *MyconfigReleaseDownloadAccessCall) doRequest(alt string) (*http.Respons
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "books.myconfig.releaseDownloadAccess" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *MyconfigReleaseDownloadAccessCall) Do() (*DownloadAccesses, error) {
 	res, err := c.doRequest("json")
+	ret := &DownloadAccesses{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *DownloadAccesses
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Release downloaded content access restriction.",
 	//   "httpMethod": "POST",
@@ -5187,6 +5557,14 @@ func (c *MyconfigRequestAccessCall) Fields(s ...googleapi.Field) *MyconfigReques
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *MyconfigRequestAccessCall) IfNoneMatch(entityTag string) *MyconfigRequestAccessCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -5217,26 +5595,37 @@ func (c *MyconfigRequestAccessCall) doRequest(alt string) (*http.Response, error
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "books.myconfig.requestAccess" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *MyconfigRequestAccessCall) Do() (*RequestAccess, error) {
 	res, err := c.doRequest("json")
+	ret := &RequestAccess{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *RequestAccess
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Request concurrent and download access restrictions.",
 	//   "httpMethod": "POST",
@@ -5364,6 +5753,14 @@ func (c *MyconfigSyncVolumeLicensesCall) Fields(s ...googleapi.Field) *MyconfigS
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *MyconfigSyncVolumeLicensesCall) IfNoneMatch(entityTag string) *MyconfigSyncVolumeLicensesCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -5399,26 +5796,37 @@ func (c *MyconfigSyncVolumeLicensesCall) doRequest(alt string) (*http.Response, 
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "books.myconfig.syncVolumeLicenses" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *MyconfigSyncVolumeLicensesCall) Do() (*Volumes, error) {
 	res, err := c.doRequest("json")
+	ret := &Volumes{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Volumes
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Request downloaded content access for specified volumes on the My eBooks shelf.",
 	//   "httpMethod": "POST",
@@ -5513,6 +5921,14 @@ func (c *MyconfigUpdateUserSettingsCall) Fields(s ...googleapi.Field) *MyconfigU
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *MyconfigUpdateUserSettingsCall) IfNoneMatch(entityTag string) *MyconfigUpdateUserSettingsCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -5539,26 +5955,37 @@ func (c *MyconfigUpdateUserSettingsCall) doRequest(alt string) (*http.Response, 
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "books.myconfig.updateUserSettings" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *MyconfigUpdateUserSettingsCall) Do() (*Usersettings, error) {
 	res, err := c.doRequest("json")
+	ret := &Usersettings{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Usersettings
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Sets the settings for the user. If a sub-object is specified, it will overwrite the existing sub-object stored in the server. Unspecified sub-objects will retain the existing value.",
 	//   "httpMethod": "POST",
@@ -5608,6 +6035,14 @@ func (c *MylibraryAnnotationsDeleteCall) Fields(s ...googleapi.Field) *Mylibrary
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *MylibraryAnnotationsDeleteCall) IfNoneMatch(entityTag string) *MylibraryAnnotationsDeleteCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -5633,12 +6068,16 @@ func (c *MylibraryAnnotationsDeleteCall) doRequest(alt string) (*http.Response, 
 		"annotationId": c.annotationId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "books.mylibrary.annotations.delete" call.
 func (c *MylibraryAnnotationsDeleteCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -5723,6 +6162,14 @@ func (c *MylibraryAnnotationsInsertCall) Fields(s ...googleapi.Field) *Mylibrary
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *MylibraryAnnotationsInsertCall) IfNoneMatch(entityTag string) *MylibraryAnnotationsInsertCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -5758,26 +6205,37 @@ func (c *MylibraryAnnotationsInsertCall) doRequest(alt string) (*http.Response, 
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "books.mylibrary.annotations.insert" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *MylibraryAnnotationsInsertCall) Do() (*Annotation, error) {
 	res, err := c.doRequest("json")
+	ret := &Annotation{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Annotation
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Inserts a new annotation.",
 	//   "httpMethod": "POST",
@@ -5908,6 +6366,14 @@ func (c *MylibraryAnnotationsListCall) Fields(s ...googleapi.Field) *MylibraryAn
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *MylibraryAnnotationsListCall) IfNoneMatch(entityTag string) *MylibraryAnnotationsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -5958,26 +6424,37 @@ func (c *MylibraryAnnotationsListCall) doRequest(alt string) (*http.Response, er
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "books.mylibrary.annotations.list" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *MylibraryAnnotationsListCall) Do() (*Annotations, error) {
 	res, err := c.doRequest("json")
+	ret := &Annotations{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Annotations
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Retrieves a list of annotations, possibly filtered.",
 	//   "httpMethod": "GET",
@@ -6075,6 +6552,14 @@ func (c *MylibraryAnnotationsSummaryCall) Fields(s ...googleapi.Field) *Mylibrar
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *MylibraryAnnotationsSummaryCall) IfNoneMatch(entityTag string) *MylibraryAnnotationsSummaryCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -6099,26 +6584,37 @@ func (c *MylibraryAnnotationsSummaryCall) doRequest(alt string) (*http.Response,
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "books.mylibrary.annotations.summary" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *MylibraryAnnotationsSummaryCall) Do() (*AnnotationsSummary, error) {
 	res, err := c.doRequest("json")
+	ret := &AnnotationsSummary{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *AnnotationsSummary
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Gets the summary of specified layers.",
 	//   "httpMethod": "POST",
@@ -6186,6 +6682,14 @@ func (c *MylibraryAnnotationsUpdateCall) Fields(s ...googleapi.Field) *Mylibrary
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *MylibraryAnnotationsUpdateCall) IfNoneMatch(entityTag string) *MylibraryAnnotationsUpdateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -6217,26 +6721,37 @@ func (c *MylibraryAnnotationsUpdateCall) doRequest(alt string) (*http.Response, 
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "books.mylibrary.annotations.update" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *MylibraryAnnotationsUpdateCall) Do() (*Annotation, error) {
 	res, err := c.doRequest("json")
+	ret := &Annotation{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Annotation
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Updates an existing annotation.",
 	//   "httpMethod": "PUT",
@@ -6316,6 +6831,14 @@ func (c *MylibraryBookshelvesAddVolumeCall) Fields(s ...googleapi.Field) *Mylibr
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *MylibraryBookshelvesAddVolumeCall) IfNoneMatch(entityTag string) *MylibraryBookshelvesAddVolumeCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -6345,12 +6868,16 @@ func (c *MylibraryBookshelvesAddVolumeCall) doRequest(alt string) (*http.Respons
 		"shelf": c.shelf,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "books.mylibrary.bookshelves.addVolume" call.
 func (c *MylibraryBookshelvesAddVolumeCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -6442,6 +6969,14 @@ func (c *MylibraryBookshelvesClearVolumesCall) Fields(s ...googleapi.Field) *Myl
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *MylibraryBookshelvesClearVolumesCall) IfNoneMatch(entityTag string) *MylibraryBookshelvesClearVolumesCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -6467,12 +7002,16 @@ func (c *MylibraryBookshelvesClearVolumesCall) doRequest(alt string) (*http.Resp
 		"shelf": c.shelf,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "books.mylibrary.bookshelves.clearVolumes" call.
 func (c *MylibraryBookshelvesClearVolumesCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -6543,6 +7082,14 @@ func (c *MylibraryBookshelvesGetCall) Fields(s ...googleapi.Field) *MylibraryBoo
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *MylibraryBookshelvesGetCall) IfNoneMatch(entityTag string) *MylibraryBookshelvesGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -6568,26 +7115,37 @@ func (c *MylibraryBookshelvesGetCall) doRequest(alt string) (*http.Response, err
 		"shelf": c.shelf,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "books.mylibrary.bookshelves.get" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *MylibraryBookshelvesGetCall) Do() (*Bookshelf, error) {
 	res, err := c.doRequest("json")
+	ret := &Bookshelf{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Bookshelf
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Retrieves metadata for a specific bookshelf belonging to the authenticated user.",
 	//   "httpMethod": "GET",
@@ -6649,6 +7207,14 @@ func (c *MylibraryBookshelvesListCall) Fields(s ...googleapi.Field) *MylibraryBo
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *MylibraryBookshelvesListCall) IfNoneMatch(entityTag string) *MylibraryBookshelvesListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -6672,26 +7238,37 @@ func (c *MylibraryBookshelvesListCall) doRequest(alt string) (*http.Response, er
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "books.mylibrary.bookshelves.list" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *MylibraryBookshelvesListCall) Do() (*Bookshelves, error) {
 	res, err := c.doRequest("json")
+	ret := &Bookshelves{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Bookshelves
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Retrieves a list of bookshelves belonging to the authenticated user.",
 	//   "httpMethod": "GET",
@@ -6749,6 +7326,14 @@ func (c *MylibraryBookshelvesMoveVolumeCall) Fields(s ...googleapi.Field) *Mylib
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *MylibraryBookshelvesMoveVolumeCall) IfNoneMatch(entityTag string) *MylibraryBookshelvesMoveVolumeCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -6776,12 +7361,16 @@ func (c *MylibraryBookshelvesMoveVolumeCall) doRequest(alt string) (*http.Respon
 		"shelf": c.shelf,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "books.mylibrary.bookshelves.moveVolume" call.
 func (c *MylibraryBookshelvesMoveVolumeCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -6878,6 +7467,14 @@ func (c *MylibraryBookshelvesRemoveVolumeCall) Fields(s ...googleapi.Field) *Myl
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *MylibraryBookshelvesRemoveVolumeCall) IfNoneMatch(entityTag string) *MylibraryBookshelvesRemoveVolumeCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -6907,12 +7504,16 @@ func (c *MylibraryBookshelvesRemoveVolumeCall) doRequest(alt string) (*http.Resp
 		"shelf": c.shelf,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "books.mylibrary.bookshelves.removeVolume" call.
 func (c *MylibraryBookshelvesRemoveVolumeCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -7046,6 +7647,14 @@ func (c *MylibraryBookshelvesVolumesListCall) Fields(s ...googleapi.Field) *Myli
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *MylibraryBookshelvesVolumesListCall) IfNoneMatch(entityTag string) *MylibraryBookshelvesVolumesListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -7089,26 +7698,37 @@ func (c *MylibraryBookshelvesVolumesListCall) doRequest(alt string) (*http.Respo
 		"shelf": c.shelf,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "books.mylibrary.bookshelves.volumes.list" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *MylibraryBookshelvesVolumesListCall) Do() (*Volumes, error) {
 	res, err := c.doRequest("json")
+	ret := &Volumes{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Volumes
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Gets volume information for volumes on a bookshelf.",
 	//   "httpMethod": "GET",
@@ -7220,6 +7840,14 @@ func (c *MylibraryReadingpositionsGetCall) Fields(s ...googleapi.Field) *Mylibra
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *MylibraryReadingpositionsGetCall) IfNoneMatch(entityTag string) *MylibraryReadingpositionsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -7248,26 +7876,37 @@ func (c *MylibraryReadingpositionsGetCall) doRequest(alt string) (*http.Response
 		"volumeId": c.volumeId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "books.mylibrary.readingpositions.get" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *MylibraryReadingpositionsGetCall) Do() (*ReadingPosition, error) {
 	res, err := c.doRequest("json")
+	ret := &ReadingPosition{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *ReadingPosition
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Retrieves my reading position information for a volume.",
 	//   "httpMethod": "GET",
@@ -7368,6 +8007,14 @@ func (c *MylibraryReadingpositionsSetPositionCall) Fields(s ...googleapi.Field) 
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *MylibraryReadingpositionsSetPositionCall) IfNoneMatch(entityTag string) *MylibraryReadingpositionsSetPositionCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -7404,12 +8051,16 @@ func (c *MylibraryReadingpositionsSetPositionCall) doRequest(alt string) (*http.
 		"volumeId": c.volumeId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "books.mylibrary.readingpositions.setPosition" call.
 func (c *MylibraryReadingpositionsSetPositionCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -7522,6 +8173,14 @@ func (c *OnboardingListCategoriesCall) Fields(s ...googleapi.Field) *OnboardingL
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OnboardingListCategoriesCall) IfNoneMatch(entityTag string) *OnboardingListCategoriesCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -7545,26 +8204,37 @@ func (c *OnboardingListCategoriesCall) doRequest(alt string) (*http.Response, er
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "books.onboarding.listCategories" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *OnboardingListCategoriesCall) Do() (*Category, error) {
 	res, err := c.doRequest("json")
+	ret := &Category{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Category
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "List categories for onboarding experience.",
 	//   "httpMethod": "GET",
@@ -7651,6 +8321,14 @@ func (c *OnboardingListCategoryVolumesCall) Fields(s ...googleapi.Field) *Onboar
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OnboardingListCategoryVolumesCall) IfNoneMatch(entityTag string) *OnboardingListCategoryVolumesCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -7686,26 +8364,37 @@ func (c *OnboardingListCategoryVolumesCall) doRequest(alt string) (*http.Respons
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "books.onboarding.listCategoryVolumes" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *OnboardingListCategoryVolumesCall) Do() (*Volume2, error) {
 	res, err := c.doRequest("json")
+	ret := &Volume2{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Volume2
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "List available volumes under categories for onboarding experience.",
 	//   "httpMethod": "GET",
@@ -7830,6 +8519,14 @@ func (c *PromoofferAcceptCall) Fields(s ...googleapi.Field) *PromoofferAcceptCal
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *PromoofferAcceptCall) IfNoneMatch(entityTag string) *PromoofferAcceptCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -7874,12 +8571,16 @@ func (c *PromoofferAcceptCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "books.promooffer.accept" call.
 func (c *PromoofferAcceptCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -8008,6 +8709,14 @@ func (c *PromoofferDismissCall) Fields(s ...googleapi.Field) *PromoofferDismissC
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *PromoofferDismissCall) IfNoneMatch(entityTag string) *PromoofferDismissCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -8049,12 +8758,16 @@ func (c *PromoofferDismissCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "books.promooffer.dismiss" call.
 func (c *PromoofferDismissCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -8173,6 +8886,14 @@ func (c *PromoofferGetCall) Fields(s ...googleapi.Field) *PromoofferGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *PromoofferGetCall) IfNoneMatch(entityTag string) *PromoofferGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -8211,26 +8932,37 @@ func (c *PromoofferGetCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "books.promooffer.get" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *PromoofferGetCall) Do() (*Offers, error) {
 	res, err := c.doRequest("json")
+	ret := &Offers{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Offers
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Returns a list of promo offers available to the user",
 	//   "httpMethod": "GET",
@@ -8341,6 +9073,14 @@ func (c *VolumesGetCall) Fields(s ...googleapi.Field) *VolumesGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *VolumesGetCall) IfNoneMatch(entityTag string) *VolumesGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -8378,26 +9118,37 @@ func (c *VolumesGetCall) doRequest(alt string) (*http.Response, error) {
 		"volumeId": c.volumeId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "books.volumes.get" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *VolumesGetCall) Do() (*Volume, error) {
 	res, err := c.doRequest("json")
+	ret := &Volume{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Volume
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Gets volume information for a single volume.",
 	//   "httpMethod": "GET",
@@ -8589,6 +9340,14 @@ func (c *VolumesListCall) Fields(s ...googleapi.Field) *VolumesListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *VolumesListCall) IfNoneMatch(entityTag string) *VolumesListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -8646,26 +9405,37 @@ func (c *VolumesListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "books.volumes.list" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *VolumesListCall) Do() (*Volumes, error) {
 	res, err := c.doRequest("json")
+	ret := &Volumes{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Volumes
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Performs a book search.",
 	//   "httpMethod": "GET",
@@ -8875,6 +9645,14 @@ func (c *VolumesAssociatedListCall) Fields(s ...googleapi.Field) *VolumesAssocia
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *VolumesAssociatedListCall) IfNoneMatch(entityTag string) *VolumesAssociatedListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -8909,26 +9687,37 @@ func (c *VolumesAssociatedListCall) doRequest(alt string) (*http.Response, error
 		"volumeId": c.volumeId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "books.volumes.associated.list" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *VolumesAssociatedListCall) Do() (*Volumes, error) {
 	res, err := c.doRequest("json")
+	ret := &Volumes{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Volumes
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Return a list of associated books.",
 	//   "httpMethod": "GET",
@@ -9073,6 +9862,14 @@ func (c *VolumesMybooksListCall) Fields(s ...googleapi.Field) *VolumesMybooksLis
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *VolumesMybooksListCall) IfNoneMatch(entityTag string) *VolumesMybooksListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -9111,26 +9908,37 @@ func (c *VolumesMybooksListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "books.volumes.mybooks.list" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *VolumesMybooksListCall) Do() (*Volumes, error) {
 	res, err := c.doRequest("json")
+	ret := &Volumes{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Volumes
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Return a list of books in My Library.",
 	//   "httpMethod": "GET",
@@ -9263,6 +10071,14 @@ func (c *VolumesRecommendedListCall) Fields(s ...googleapi.Field) *VolumesRecomm
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *VolumesRecommendedListCall) IfNoneMatch(entityTag string) *VolumesRecommendedListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -9292,26 +10108,37 @@ func (c *VolumesRecommendedListCall) doRequest(alt string) (*http.Response, erro
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "books.volumes.recommended.list" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *VolumesRecommendedListCall) Do() (*Volumes, error) {
 	res, err := c.doRequest("json")
+	ret := &Volumes{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Volumes
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Return a list of recommended books for the current user.",
 	//   "httpMethod": "GET",
@@ -9393,6 +10220,14 @@ func (c *VolumesRecommendedRateCall) Fields(s ...googleapi.Field) *VolumesRecomm
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *VolumesRecommendedRateCall) IfNoneMatch(entityTag string) *VolumesRecommendedRateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -9421,26 +10256,37 @@ func (c *VolumesRecommendedRateCall) doRequest(alt string) (*http.Response, erro
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "books.volumes.recommended.rate" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *VolumesRecommendedRateCall) Do() (*BooksVolumesRecommendedRateResponse, error) {
 	res, err := c.doRequest("json")
+	ret := &BooksVolumesRecommendedRateResponse{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *BooksVolumesRecommendedRateResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Rate a recommended book for the current user.",
 	//   "httpMethod": "POST",
@@ -9563,6 +10409,14 @@ func (c *VolumesUseruploadedListCall) Fields(s ...googleapi.Field) *VolumesUseru
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *VolumesUseruploadedListCall) IfNoneMatch(entityTag string) *VolumesUseruploadedListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -9601,26 +10455,37 @@ func (c *VolumesUseruploadedListCall) doRequest(alt string) (*http.Response, err
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "books.volumes.useruploaded.list" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *VolumesUseruploadedListCall) Do() (*Volumes, error) {
 	res, err := c.doRequest("json")
+	ret := &Volumes{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Volumes
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Return a list of books uploaded by the current user.",
 	//   "httpMethod": "GET",

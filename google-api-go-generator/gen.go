@@ -58,9 +58,10 @@ type API struct {
 
 	m map[string]interface{}
 
-	forceJSON []byte // if non-nil, the JSON schema file. else fetched.
-	usedNames namePool
-	schemas   map[string]*Schema // apiName -> schema
+	forceJSON     []byte // if non-nil, the JSON schema file. else fetched.
+	usedNames     namePool
+	schemas       map[string]*Schema // apiName -> schema
+	responseTypes map[string]bool
 
 	p  func(format string, args ...interface{}) // print raw
 	pn func(format string, args ...interface{}) // print with newline
@@ -552,6 +553,14 @@ func (a *API) GenerateCode() ([]byte, error) {
 	}
 
 	a.PopulateSchemas()
+
+	a.responseTypes = make(map[string]bool)
+	for _, meth := range a.APIMethods() {
+		meth.cacheResponseTypes(a)
+	}
+	for _, res := range reslist {
+		res.cacheResponseTypes(a)
+	}
 
 	for _, name := range a.sortedSchemaNames() {
 		a.schemas[name].writeSchemaCode(a)
@@ -1215,6 +1224,11 @@ func (s *Schema) writeSchemaStruct(api *API) {
 		s.api.p("%s", asComment("", fmt.Sprintf("%s: %s", s.GoName(), des)))
 	}
 	s.api.p("type %s struct {\n", s.GoName())
+	if s.isResponseType() {
+		s.api.p("\t// ServerResponse contains the HTTP response code and headers\n")
+		s.api.p("\t// from the server.\n")
+		s.api.p("\tgoogleapi.ServerResponse\n\n")
+	}
 
 	np := new(namePool)
 
@@ -1284,6 +1298,10 @@ func (s *Schema) writeSchemaMarshal(forceSendFieldName string) {
 	s.api.pn("}")
 }
 
+func (s *Schema) isResponseType() bool {
+	return s.api.responseTypes["*"+s.goName]
+}
+
 // PopulateSchemas reads all the API types ("schemas") from the JSON file
 // and converts them to *Schema instances, returning an identically
 // keyed map, additionally containing subresources.  For instance,
@@ -1347,6 +1365,15 @@ func (r *Resource) generateType() {
 
 	for _, res := range r.resources {
 		res.generateType()
+	}
+}
+
+func (r *Resource) cacheResponseTypes(api *API) {
+	for _, meth := range r.Methods() {
+		meth.cacheResponseTypes(api)
+	}
+	for _, res := range r.resources {
+		res.cacheResponseTypes(api)
 	}
 }
 
@@ -1474,6 +1501,12 @@ func (m *Method) RequiredQueryParams() []*Param {
 	})
 }
 
+func (meth *Method) cacheResponseTypes(api *API) {
+	if retType := responseType(api, meth.m); retType != "" && strings.HasPrefix(retType, "*") {
+		api.responseTypes[retType] = true
+	}
+}
+
 func (meth *Method) generateCode() {
 	res := meth.r // may be nil if a top-level method
 	a := meth.api
@@ -1585,6 +1618,13 @@ func (meth *Method) generateCode() {
 	pn(`c.opt_["fields"] = googleapi.CombineFields(s)`)
 	pn("return c")
 	pn("}")
+	pn("\n// IfNoneMatch sets the optional parameter which makes the operation fail if")
+	pn("// the object's Etag matches the given value. This is useful for getting updates")
+	pn("// only after the object has changed since the last request.")
+	pn("func (c *%s) IfNoneMatch(entityTag string) *%s {", callName, callName)
+	pn(`c.opt_["ifNoneMatch"] = entityTag`)
+	pn("return c")
+	pn("}")
 
 	doMethod := "Do method"
 	if meth.supportsMediaDownload() {
@@ -1684,6 +1724,9 @@ func (meth *Method) generateCode() {
 		pn(`req.Header.Set("Content-Type", ctype)`)
 	}
 	pn(`req.Header.Set("User-Agent", c.s.userAgent())`)
+	pn(`if v, ok := c.opt_["ifNoneMatch"]; ok {`)
+	pn("	req.Header.Set(\"If-None-Match\", fmt.Sprintf(\"%%v\", v))")
+	pn("}")
 	pn("if c.ctx_ != nil {")
 	pn(" return ctxhttp.Do(c.ctx_, c.s.client, req)")
 	pn("}")
@@ -1705,15 +1748,36 @@ func (meth *Method) generateCode() {
 		pn("}")
 	}
 
-	pn("\nfunc (c *%s) Do() (%serror) {", callName, retTypeComma)
-	nilRet := ""
+	mapRetType := strings.HasPrefix(retTypeComma, "map[")
+	pn("\n// Do executes the %q call.", jstr(meth.m, "id"))
+	if retTypeComma != "" && !mapRetType {
+		pn("// ServerResponse is populated with the response header and status code when")
+		pn("// a response is received, regardless of the status code returned.")
+		pn("// IsNotModified can be called to check if http.StatusNotModified is returned.")
+	}
+	pn("func (c *%s) Do() (%serror) {", callName, retTypeComma)
+	errRet := ""
 	if retTypeComma != "" {
-		nilRet = "nil, "
+		if mapRetType {
+			pn("var ret %s", responseType(a, meth.m))
+			errRet = "nil, "
+		} else {
+			errRet = "ret, "
+		}
 	}
 	pn(`res, err := c.doRequest("json")`)
-	pn("if err != nil { return %serr }", nilRet)
+	if retTypeComma != "" && !mapRetType {
+		pn("ret := &%s{}", responseTypeLiteral(a, meth.m))
+		pn("if res != nil {")
+		pn(" ret.ServerResponse = googleapi.ServerResponse{")
+		pn("  Header: res.Header,")
+		pn("  HTTPStatusCode: res.StatusCode,")
+		pn(" }")
+		pn("}")
+	}
+	pn("if err != nil { return %serr }", errRet)
 	pn("defer googleapi.CloseBody(res)")
-	pn("if err := googleapi.CheckResponse(res); err != nil { return %serr }", nilRet)
+	pn("if err := googleapi.CheckResponse(res); err != nil { return %serr }", errRet)
 	if meth.supportsMediaUpload() {
 		pn("var progressUpdater_ googleapi.ProgressUpdater")
 		pn("if v, ok := c.opt_[\"progressUpdater\"]; ok {")
@@ -1733,16 +1797,23 @@ func (meth *Method) generateCode() {
 		pn("  Callback:      progressUpdater_,")
 		pn(" }")
 		pn(" res, err = rx.Upload(c.ctx_)")
-		pn(" if err != nil { return %serr }", nilRet)
+		if retTypeComma != "" && !mapRetType {
+			pn("if res != nil {")
+			pn(" ret.ServerResponse = googleapi.ServerResponse{")
+			pn("  Header: res.Header,")
+			pn("  HTTPStatusCode: res.StatusCode,")
+			pn(" }")
+			pn("}")
+		}
+		pn(" if err != nil { return %serr }", errRet)
 		pn(" defer res.Body.Close()")
 		pn("}")
 	}
 	if retTypeComma == "" {
 		pn("return nil")
 	} else {
-		pn("var ret %s", responseType(a, meth.m))
-		pn("if err := json.NewDecoder(res.Body).Decode(&ret); err != nil { return nil, err }")
-		pn("return ret, nil")
+		pn("err = json.NewDecoder(res.Body).Decode(&ret)")
+		pn("return ret, err")
 	}
 
 	bs, _ := json.MarshalIndent(meth.m, "\t// ", "  ")
@@ -2088,6 +2159,15 @@ func responseType(api *API, m map[string]interface{}) string {
 		}
 	}
 	return ""
+}
+
+// Strips the leading '*' from a type name so that it can be used to create a literal.
+func responseTypeLiteral(api *API, m map[string]interface{}) string {
+	v := responseType(api, m)
+	if strings.HasPrefix(v, "*") {
+		return v[1:]
+	}
+	return v
 }
 
 // initialCap returns the identifier with a leading capital letter.

@@ -228,7 +228,7 @@ func TestNoMedia(t *testing.T) {
 	if w, k := "gzip", "Accept-Encoding"; len(g.Header[k]) != 1 || g.Header[k][0] != w {
 		t.Errorf("header %q = %#v; want %q", k, g.Header[k], w)
 	}
-	if w := int64(116); g.ContentLength != w {
+	if w := int64(149); g.ContentLength != w {
 		t.Errorf("ContentLength = %v; want %v", g.ContentLength, w)
 	}
 	if len(g.TransferEncoding) != 0 {
@@ -249,7 +249,7 @@ func TestNoMedia(t *testing.T) {
 	if w := s.BasePath + "/b/mybucket/o?alt=json"; g.RequestURI != w {
 		t.Errorf("RequestURI = %q; want %q", g.RequestURI, w)
 	}
-	if w := `{"bucket":"mybucket","contentEncoding":"utf-8","contentLanguage":"en","contentType":"plain/text","name":"filename"}` + "\n"; string(handler.body) != w {
+	if w := `{"HTTPStatusCode":0,"Header":null,"bucket":"mybucket","contentEncoding":"utf-8","contentLanguage":"en","contentType":"plain/text","name":"filename"}` + "\n"; string(handler.body) != w {
 		t.Errorf("Body = %q, want %q", handler.body, w)
 	}
 	if handler.err != nil {

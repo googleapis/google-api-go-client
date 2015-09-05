@@ -116,6 +116,10 @@ type UserinfoV2MeService struct {
 }
 
 type Jwk struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	Keys []*JwkKeys `json:"keys,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Keys") to
@@ -162,6 +166,10 @@ func (s *JwkKeys) MarshalJSON() ([]byte, error) {
 }
 
 type Raw struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	Keyvalues []*RawKeyvalues `json:"keyvalues,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Keyvalues") to
@@ -204,6 +212,10 @@ func (s *RawKeyvalues) MarshalJSON() ([]byte, error) {
 }
 
 type Tokeninfo struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// AccessType: The access type granted with this token. It can be
 	// offline or online.
 	AccessType string `json:"access_type,omitempty"`
@@ -263,6 +275,10 @@ func (s *Tokeninfo) MarshalJSON() ([]byte, error) {
 }
 
 type Userinfoplus struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Email: The user's email address.
 	Email string `json:"email,omitempty"`
 
@@ -338,6 +354,14 @@ func (c *GetCertForOpenIdConnectCall) Fields(s ...googleapi.Field) *GetCertForOp
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *GetCertForOpenIdConnectCall) IfNoneMatch(entityTag string) *GetCertForOpenIdConnectCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -358,13 +382,18 @@ func (c *GetCertForOpenIdConnectCall) doRequest(alt string) (*http.Response, err
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "oauth2.getCertForOpenIdConnect" call.
 func (c *GetCertForOpenIdConnectCall) Do() (map[string]string, error) {
+	var ret map[string]string
 	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
@@ -373,11 +402,8 @@ func (c *GetCertForOpenIdConnectCall) Do() (map[string]string, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret map[string]string
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "httpMethod": "GET",
 	//   "id": "oauth2.getCertForOpenIdConnect",
@@ -411,6 +437,14 @@ func (c *GetCertForOpenIdConnectRawCall) Fields(s ...googleapi.Field) *GetCertFo
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *GetCertForOpenIdConnectRawCall) IfNoneMatch(entityTag string) *GetCertForOpenIdConnectRawCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -431,26 +465,37 @@ func (c *GetCertForOpenIdConnectRawCall) doRequest(alt string) (*http.Response, 
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "oauth2.getCertForOpenIdConnectRaw" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *GetCertForOpenIdConnectRawCall) Do() (*Raw, error) {
 	res, err := c.doRequest("json")
+	ret := &Raw{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Raw
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "httpMethod": "GET",
 	//   "id": "oauth2.getCertForOpenIdConnectRaw",
@@ -486,6 +531,14 @@ func (c *GetRobotJwkCall) Fields(s ...googleapi.Field) *GetRobotJwkCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *GetRobotJwkCall) IfNoneMatch(entityTag string) *GetRobotJwkCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -508,26 +561,37 @@ func (c *GetRobotJwkCall) doRequest(alt string) (*http.Response, error) {
 		"robotEmail": c.robotEmail,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "oauth2.getRobotJwk" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *GetRobotJwkCall) Do() (*Jwk, error) {
 	res, err := c.doRequest("json")
+	ret := &Jwk{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Jwk
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "httpMethod": "GET",
 	//   "id": "oauth2.getRobotJwk",
@@ -574,6 +638,14 @@ func (c *GetRobotMetadataRawCall) Fields(s ...googleapi.Field) *GetRobotMetadata
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *GetRobotMetadataRawCall) IfNoneMatch(entityTag string) *GetRobotMetadataRawCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -596,26 +668,37 @@ func (c *GetRobotMetadataRawCall) doRequest(alt string) (*http.Response, error) 
 		"robotEmail": c.robotEmail,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "oauth2.getRobotMetadataRaw" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *GetRobotMetadataRawCall) Do() (*Raw, error) {
 	res, err := c.doRequest("json")
+	ret := &Raw{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Raw
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "httpMethod": "GET",
 	//   "id": "oauth2.getRobotMetadataRaw",
@@ -662,6 +745,14 @@ func (c *GetRobotMetadataX509Call) Fields(s ...googleapi.Field) *GetRobotMetadat
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *GetRobotMetadataX509Call) IfNoneMatch(entityTag string) *GetRobotMetadataX509Call {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -684,13 +775,18 @@ func (c *GetRobotMetadataX509Call) doRequest(alt string) (*http.Response, error)
 		"robotEmail": c.robotEmail,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "oauth2.getRobotMetadataX509" call.
 func (c *GetRobotMetadataX509Call) Do() (map[string]string, error) {
+	var ret map[string]string
 	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
@@ -699,11 +795,8 @@ func (c *GetRobotMetadataX509Call) Do() (map[string]string, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret map[string]string
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "httpMethod": "GET",
 	//   "id": "oauth2.getRobotMetadataX509",
@@ -761,6 +854,14 @@ func (c *TokeninfoCall) Fields(s ...googleapi.Field) *TokeninfoCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *TokeninfoCall) IfNoneMatch(entityTag string) *TokeninfoCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -787,26 +888,37 @@ func (c *TokeninfoCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "oauth2.tokeninfo" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *TokeninfoCall) Do() (*Tokeninfo, error) {
 	res, err := c.doRequest("json")
+	ret := &Tokeninfo{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Tokeninfo
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Get token info",
 	//   "httpMethod": "POST",
@@ -853,6 +965,14 @@ func (c *UserinfoGetCall) Fields(s ...googleapi.Field) *UserinfoGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *UserinfoGetCall) IfNoneMatch(entityTag string) *UserinfoGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -873,26 +993,37 @@ func (c *UserinfoGetCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "oauth2.userinfo.get" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *UserinfoGetCall) Do() (*Userinfoplus, error) {
 	res, err := c.doRequest("json")
+	ret := &Userinfoplus{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Userinfoplus
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Get user info",
 	//   "httpMethod": "GET",
@@ -933,6 +1064,14 @@ func (c *UserinfoV2MeGetCall) Fields(s ...googleapi.Field) *UserinfoV2MeGetCall 
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *UserinfoV2MeGetCall) IfNoneMatch(entityTag string) *UserinfoV2MeGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -953,26 +1092,37 @@ func (c *UserinfoV2MeGetCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "oauth2.userinfo.v2.me.get" call.
+// ServerResponse is populated with the response header and status code when
+// a response is received, regardless of the status code returned.
+// IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *UserinfoV2MeGetCall) Do() (*Userinfoplus, error) {
 	res, err := c.doRequest("json")
+	ret := &Userinfoplus{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Userinfoplus
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Get user info",
 	//   "httpMethod": "GET",

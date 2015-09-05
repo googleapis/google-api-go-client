@@ -109,7 +109,7 @@ func (t *predictionType) predictModel() {
 	// Model has now been trained.  Predict with it.
 	input := &prediction.Input{
 		&prediction.InputInput{
-			[]interface{}{
+			CsvInstance: []interface{}{
 				"Hola, con quien hablo",
 			},
 		},

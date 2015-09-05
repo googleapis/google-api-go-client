@@ -173,6 +173,10 @@ type TurnBasedMatchesService struct {
 // AchievementResetAllResponse: This is a JSON template for achievement
 // reset all response.
 type AchievementResetAllResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string gamesManagement#achievementResetAllResponse.
 	Kind string `json:"kind,omitempty"`
@@ -224,6 +228,10 @@ func (s *AchievementResetMultipleForAllRequest) MarshalJSON() ([]byte, error) {
 // AchievementResetResponse: This is a JSON template for an achievement
 // reset response.
 type AchievementResetResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// CurrentState: The current state of the achievement. This is the same
 	// as the initial state of the achievement.
 	// Possible values are:
@@ -401,6 +409,10 @@ func (s *HiddenPlayer) MarshalJSON() ([]byte, error) {
 // HiddenPlayerList: This is a JSON template for a list of hidden
 // players.
 type HiddenPlayerList struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Items: The players.
 	Items []*HiddenPlayer `json:"items,omitempty"`
 
@@ -502,6 +514,10 @@ func (s *PlayerName) MarshalJSON() ([]byte, error) {
 // PlayerScoreResetAllResponse: This is a JSON template for a list of
 // leaderboard reset resources.
 type PlayerScoreResetAllResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string gamesManagement#playerScoreResetResponse.
 	Kind string `json:"kind,omitempty"`
@@ -527,6 +543,10 @@ func (s *PlayerScoreResetAllResponse) MarshalJSON() ([]byte, error) {
 // PlayerScoreResetResponse: This is a JSON template for a list of reset
 // leaderboard entry resources.
 type PlayerScoreResetResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// DefinitionId: The ID of an leaderboard for which player state has
 	// been updated.
 	DefinitionId string `json:"definitionId,omitempty"`
@@ -661,8 +681,23 @@ func (c *AchievementsResetCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "gamesManagement.achievements.reset" call.
+// Exactly one of *AchievementResetResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *AchievementResetResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AchievementsResetCall) Do() (*AchievementResetResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -670,7 +705,12 @@ func (c *AchievementsResetCall) Do() (*AchievementResetResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *AchievementResetResponse
+	ret := &AchievementResetResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -752,8 +792,23 @@ func (c *AchievementsResetAllCall) doRequest(alt string) (*http.Response, error)
 	return c.s.client.Do(req)
 }
 
+// Do executes the "gamesManagement.achievements.resetAll" call.
+// Exactly one of *AchievementResetAllResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *AchievementResetAllResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AchievementsResetAllCall) Do() (*AchievementResetAllResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -761,7 +816,12 @@ func (c *AchievementsResetAllCall) Do() (*AchievementResetAllResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *AchievementResetAllResponse
+	ret := &AchievementResetAllResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -832,6 +892,7 @@ func (c *AchievementsResetAllForAllPlayersCall) doRequest(alt string) (*http.Res
 	return c.s.client.Do(req)
 }
 
+// Do executes the "gamesManagement.achievements.resetAllForAllPlayers" call.
 func (c *AchievementsResetAllForAllPlayersCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -909,6 +970,7 @@ func (c *AchievementsResetForAllPlayersCall) doRequest(alt string) (*http.Respon
 	return c.s.client.Do(req)
 }
 
+// Do executes the "gamesManagement.achievements.resetForAllPlayers" call.
 func (c *AchievementsResetForAllPlayersCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -1001,6 +1063,7 @@ func (c *AchievementsResetMultipleForAllPlayersCall) doRequest(alt string) (*htt
 	return c.s.client.Do(req)
 }
 
+// Do executes the "gamesManagement.achievements.resetMultipleForAllPlayers" call.
 func (c *AchievementsResetMultipleForAllPlayersCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -1069,6 +1132,16 @@ func (c *ApplicationsListHiddenCall) Fields(s ...googleapi.Field) *ApplicationsL
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *ApplicationsListHiddenCall) IfNoneMatch(entityTag string) *ApplicationsListHiddenCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -1097,14 +1170,32 @@ func (c *ApplicationsListHiddenCall) doRequest(alt string) (*http.Response, erro
 		"applicationId": c.applicationId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "gamesManagement.applications.listHidden" call.
+// Exactly one of *HiddenPlayerList or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *HiddenPlayerList.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ApplicationsListHiddenCall) Do() (*HiddenPlayerList, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1112,7 +1203,12 @@ func (c *ApplicationsListHiddenCall) Do() (*HiddenPlayerList, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *HiddenPlayerList
+	ret := &HiddenPlayerList{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1212,6 +1308,7 @@ func (c *EventsResetCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "gamesManagement.events.reset" call.
 func (c *EventsResetCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -1297,6 +1394,7 @@ func (c *EventsResetAllCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "gamesManagement.events.resetAll" call.
 func (c *EventsResetAllCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -1370,6 +1468,7 @@ func (c *EventsResetAllForAllPlayersCall) doRequest(alt string) (*http.Response,
 	return c.s.client.Do(req)
 }
 
+// Do executes the "gamesManagement.events.resetAllForAllPlayers" call.
 func (c *EventsResetAllForAllPlayersCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -1448,6 +1547,7 @@ func (c *EventsResetForAllPlayersCall) doRequest(alt string) (*http.Response, er
 	return c.s.client.Do(req)
 }
 
+// Do executes the "gamesManagement.events.resetForAllPlayers" call.
 func (c *EventsResetForAllPlayersCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -1541,6 +1641,7 @@ func (c *EventsResetMultipleForAllPlayersCall) doRequest(alt string) (*http.Resp
 	return c.s.client.Do(req)
 }
 
+// Do executes the "gamesManagement.events.resetMultipleForAllPlayers" call.
 func (c *EventsResetMultipleForAllPlayersCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -1624,6 +1725,7 @@ func (c *PlayersHideCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "gamesManagement.players.hide" call.
 func (c *PlayersHideCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -1722,6 +1824,7 @@ func (c *PlayersUnhideCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "gamesManagement.players.unhide" call.
 func (c *PlayersUnhideCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -1817,6 +1920,7 @@ func (c *QuestsResetCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "gamesManagement.quests.reset" call.
 func (c *QuestsResetCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -1901,6 +2005,7 @@ func (c *QuestsResetAllCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "gamesManagement.quests.resetAll" call.
 func (c *QuestsResetAllCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -1973,6 +2078,7 @@ func (c *QuestsResetAllForAllPlayersCall) doRequest(alt string) (*http.Response,
 	return c.s.client.Do(req)
 }
 
+// Do executes the "gamesManagement.quests.resetAllForAllPlayers" call.
 func (c *QuestsResetAllForAllPlayersCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -2050,6 +2156,7 @@ func (c *QuestsResetForAllPlayersCall) doRequest(alt string) (*http.Response, er
 	return c.s.client.Do(req)
 }
 
+// Do executes the "gamesManagement.quests.resetForAllPlayers" call.
 func (c *QuestsResetForAllPlayersCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -2142,6 +2249,7 @@ func (c *QuestsResetMultipleForAllPlayersCall) doRequest(alt string) (*http.Resp
 	return c.s.client.Do(req)
 }
 
+// Do executes the "gamesManagement.quests.resetMultipleForAllPlayers" call.
 func (c *QuestsResetMultipleForAllPlayersCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -2218,6 +2326,7 @@ func (c *RoomsResetCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "gamesManagement.rooms.reset" call.
 func (c *RoomsResetCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -2291,6 +2400,7 @@ func (c *RoomsResetForAllPlayersCall) doRequest(alt string) (*http.Response, err
 	return c.s.client.Do(req)
 }
 
+// Do executes the "gamesManagement.rooms.resetForAllPlayers" call.
 func (c *RoomsResetForAllPlayersCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -2368,8 +2478,23 @@ func (c *ScoresResetCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "gamesManagement.scores.reset" call.
+// Exactly one of *PlayerScoreResetResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *PlayerScoreResetResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ScoresResetCall) Do() (*PlayerScoreResetResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -2377,7 +2502,12 @@ func (c *ScoresResetCall) Do() (*PlayerScoreResetResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *PlayerScoreResetResponse
+	ret := &PlayerScoreResetResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -2459,8 +2589,23 @@ func (c *ScoresResetAllCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "gamesManagement.scores.resetAll" call.
+// Exactly one of *PlayerScoreResetAllResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *PlayerScoreResetAllResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ScoresResetAllCall) Do() (*PlayerScoreResetAllResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -2468,7 +2613,12 @@ func (c *ScoresResetAllCall) Do() (*PlayerScoreResetAllResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *PlayerScoreResetAllResponse
+	ret := &PlayerScoreResetAllResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -2539,6 +2689,7 @@ func (c *ScoresResetAllForAllPlayersCall) doRequest(alt string) (*http.Response,
 	return c.s.client.Do(req)
 }
 
+// Do executes the "gamesManagement.scores.resetAllForAllPlayers" call.
 func (c *ScoresResetAllForAllPlayersCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -2616,6 +2767,7 @@ func (c *ScoresResetForAllPlayersCall) doRequest(alt string) (*http.Response, er
 	return c.s.client.Do(req)
 }
 
+// Do executes the "gamesManagement.scores.resetForAllPlayers" call.
 func (c *ScoresResetForAllPlayersCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -2709,6 +2861,7 @@ func (c *ScoresResetMultipleForAllPlayersCall) doRequest(alt string) (*http.Resp
 	return c.s.client.Do(req)
 }
 
+// Do executes the "gamesManagement.scores.resetMultipleForAllPlayers" call.
 func (c *ScoresResetMultipleForAllPlayersCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -2784,6 +2937,7 @@ func (c *TurnBasedMatchesResetCall) doRequest(alt string) (*http.Response, error
 	return c.s.client.Do(req)
 }
 
+// Do executes the "gamesManagement.turnBasedMatches.reset" call.
 func (c *TurnBasedMatchesResetCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -2858,6 +3012,7 @@ func (c *TurnBasedMatchesResetForAllPlayersCall) doRequest(alt string) (*http.Re
 	return c.s.client.Do(req)
 }
 
+// Do executes the "gamesManagement.turnBasedMatches.resetForAllPlayers" call.
 func (c *TurnBasedMatchesResetForAllPlayersCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {

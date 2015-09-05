@@ -1020,6 +1020,10 @@ func (s *TripsSearchRequest) MarshalJSON() ([]byte, error) {
 
 // TripsSearchResponse: A QPX Express search response.
 type TripsSearchResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Kind: Identifies this as a QPX Express API search response resource.
 	// Value: the fixed string qpxExpress#tripsSearch.
 	Kind string `json:"kind,omitempty"`
@@ -1098,8 +1102,23 @@ func (c *TripsSearchCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "qpxExpress.trips.search" call.
+// Exactly one of *TripsSearchResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *TripsSearchResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *TripsSearchCall) Do() (*TripsSearchResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1107,7 +1126,12 @@ func (c *TripsSearchCall) Do() (*TripsSearchResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *TripsSearchResponse
+	ret := &TripsSearchResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}

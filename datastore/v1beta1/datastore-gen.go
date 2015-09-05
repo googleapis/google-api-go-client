@@ -109,6 +109,10 @@ func (s *AllocateIdsRequest) MarshalJSON() ([]byte, error) {
 }
 
 type AllocateIdsResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	Header *ResponseHeader `json:"header,omitempty"`
 
 	// Keys: The keys specified in the request (in the same order), each
@@ -156,6 +160,10 @@ func (s *BeginTransactionRequest) MarshalJSON() ([]byte, error) {
 }
 
 type BeginTransactionResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	Header *ResponseHeader `json:"header,omitempty"`
 
 	// Transaction: The transaction identifier (always present).
@@ -196,6 +204,10 @@ func (s *BlindWriteRequest) MarshalJSON() ([]byte, error) {
 }
 
 type BlindWriteResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	Header *ResponseHeader `json:"header,omitempty"`
 
 	// MutationResult: The result of performing the mutation (always
@@ -243,6 +255,10 @@ func (s *CommitRequest) MarshalJSON() ([]byte, error) {
 }
 
 type CommitResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	Header *ResponseHeader `json:"header,omitempty"`
 
 	// MutationResult: The result of performing the mutation (if any).
@@ -536,6 +552,10 @@ func (s *LookupRequest) MarshalJSON() ([]byte, error) {
 }
 
 type LookupResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Deferred: A list of keys that were not looked up due to resource
 	// constraints.
 	Deferred []*Key `json:"deferred,omitempty"`
@@ -940,6 +960,10 @@ func (s *RollbackRequest) MarshalJSON() ([]byte, error) {
 }
 
 type RollbackResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	Header *ResponseHeader `json:"header,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Header") to
@@ -993,6 +1017,10 @@ func (s *RunQueryRequest) MarshalJSON() ([]byte, error) {
 }
 
 type RunQueryResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Batch: A batch of query results (always present).
 	Batch *QueryResultBatch `json:"batch,omitempty"`
 
@@ -1135,8 +1163,23 @@ func (c *DatasetsAllocateIdsCall) doRequest(alt string) (*http.Response, error) 
 	return c.s.client.Do(req)
 }
 
+// Do executes the "datastore.datasets.allocateIds" call.
+// Exactly one of *AllocateIdsResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *AllocateIdsResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *DatasetsAllocateIdsCall) Do() (*AllocateIdsResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1144,7 +1187,12 @@ func (c *DatasetsAllocateIdsCall) Do() (*AllocateIdsResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *AllocateIdsResponse
+	ret := &AllocateIdsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1240,8 +1288,23 @@ func (c *DatasetsBeginTransactionCall) doRequest(alt string) (*http.Response, er
 	return c.s.client.Do(req)
 }
 
+// Do executes the "datastore.datasets.beginTransaction" call.
+// Exactly one of *BeginTransactionResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *BeginTransactionResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *DatasetsBeginTransactionCall) Do() (*BeginTransactionResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1249,7 +1312,12 @@ func (c *DatasetsBeginTransactionCall) Do() (*BeginTransactionResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *BeginTransactionResponse
+	ret := &BeginTransactionResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1346,8 +1414,23 @@ func (c *DatasetsBlindWriteCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "datastore.datasets.blindWrite" call.
+// Exactly one of *BlindWriteResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *BlindWriteResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *DatasetsBlindWriteCall) Do() (*BlindWriteResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1355,7 +1438,12 @@ func (c *DatasetsBlindWriteCall) Do() (*BlindWriteResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *BlindWriteResponse
+	ret := &BlindWriteResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1452,8 +1540,23 @@ func (c *DatasetsCommitCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "datastore.datasets.commit" call.
+// Exactly one of *CommitResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *CommitResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *DatasetsCommitCall) Do() (*CommitResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1461,7 +1564,12 @@ func (c *DatasetsCommitCall) Do() (*CommitResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *CommitResponse
+	ret := &CommitResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1557,8 +1665,23 @@ func (c *DatasetsLookupCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "datastore.datasets.lookup" call.
+// Exactly one of *LookupResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *LookupResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *DatasetsLookupCall) Do() (*LookupResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1566,7 +1689,12 @@ func (c *DatasetsLookupCall) Do() (*LookupResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *LookupResponse
+	ret := &LookupResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1662,8 +1790,23 @@ func (c *DatasetsRollbackCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "datastore.datasets.rollback" call.
+// Exactly one of *RollbackResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *RollbackResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *DatasetsRollbackCall) Do() (*RollbackResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1671,7 +1814,12 @@ func (c *DatasetsRollbackCall) Do() (*RollbackResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *RollbackResponse
+	ret := &RollbackResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1767,8 +1915,23 @@ func (c *DatasetsRunQueryCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "datastore.datasets.runQuery" call.
+// Exactly one of *RunQueryResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *RunQueryResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *DatasetsRunQueryCall) Do() (*RunQueryResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1776,7 +1939,12 @@ func (c *DatasetsRunQueryCall) Do() (*RunQueryResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *RunQueryResponse
+	ret := &RunQueryResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}

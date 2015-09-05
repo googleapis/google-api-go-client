@@ -110,6 +110,10 @@ type ProjectsService struct {
 // Console](https://console.developers.google.com/). You can assign a
 // billing account to one or more projects.
 type BillingAccount struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// DisplayName: The display name given to the billing account, such as
 	// `My Billing Account`. This name is displayed in the Google Developers
 	// Console.
@@ -145,6 +149,10 @@ func (s *BillingAccount) MarshalJSON() ([]byte, error) {
 // ListBillingAccountsResponse: Response message for
 // `ListBillingAccounts`.
 type ListBillingAccountsResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// BillingAccounts: A list of billing accounts.
 	BillingAccounts []*BillingAccount `json:"billingAccounts,omitempty"`
 
@@ -172,6 +180,10 @@ func (s *ListBillingAccountsResponse) MarshalJSON() ([]byte, error) {
 // ListProjectBillingInfoResponse: Request message for
 // `ListProjectBillingInfoResponse`.
 type ListProjectBillingInfoResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// NextPageToken: A token to retrieve the next page of results. To
 	// retrieve the next page, call `ListProjectBillingInfo` again with the
 	// `page_token` field set to this value. This field is empty if there
@@ -202,6 +214,10 @@ func (s *ListProjectBillingInfoResponse) MarshalJSON() ([]byte, error) {
 // billing account at a time (but a billing account can be assigned to
 // multiple projects).
 type ProjectBillingInfo struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// BillingAccountName: The resource name of the billing account
 	// associated with the project, if any. For example,
 	// `billingAccounts/012345-567890-ABCDEF`.
@@ -267,6 +283,16 @@ func (c *BillingAccountsGetCall) Fields(s ...googleapi.Field) *BillingAccountsGe
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *BillingAccountsGetCall) IfNoneMatch(entityTag string) *BillingAccountsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -289,14 +315,32 @@ func (c *BillingAccountsGetCall) doRequest(alt string) (*http.Response, error) {
 		"name": c.name,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "cloudbilling.billingAccounts.get" call.
+// Exactly one of *BillingAccount or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *BillingAccount.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *BillingAccountsGetCall) Do() (*BillingAccount, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -304,7 +348,12 @@ func (c *BillingAccountsGetCall) Do() (*BillingAccount, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *BillingAccount
+	ret := &BillingAccount{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -376,6 +425,16 @@ func (c *BillingAccountsListCall) Fields(s ...googleapi.Field) *BillingAccountsL
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *BillingAccountsListCall) IfNoneMatch(entityTag string) *BillingAccountsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -402,14 +461,32 @@ func (c *BillingAccountsListCall) doRequest(alt string) (*http.Response, error) 
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "cloudbilling.billingAccounts.list" call.
+// Exactly one of *ListBillingAccountsResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *ListBillingAccountsResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *BillingAccountsListCall) Do() (*ListBillingAccountsResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -417,7 +494,12 @@ func (c *BillingAccountsListCall) Do() (*ListBillingAccountsResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *ListBillingAccountsResponse
+	ret := &ListBillingAccountsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -493,6 +575,16 @@ func (c *BillingAccountsProjectsListCall) Fields(s ...googleapi.Field) *BillingA
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *BillingAccountsProjectsListCall) IfNoneMatch(entityTag string) *BillingAccountsProjectsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -521,14 +613,32 @@ func (c *BillingAccountsProjectsListCall) doRequest(alt string) (*http.Response,
 		"name": c.name,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "cloudbilling.billingAccounts.projects.list" call.
+// Exactly one of *ListProjectBillingInfoResponse or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *ListProjectBillingInfoResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *BillingAccountsProjectsListCall) Do() (*ListProjectBillingInfoResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -536,7 +646,12 @@ func (c *BillingAccountsProjectsListCall) Do() (*ListProjectBillingInfoResponse,
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *ListProjectBillingInfoResponse
+	ret := &ListProjectBillingInfoResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -606,6 +721,16 @@ func (c *ProjectsGetBillingInfoCall) Fields(s ...googleapi.Field) *ProjectsGetBi
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *ProjectsGetBillingInfoCall) IfNoneMatch(entityTag string) *ProjectsGetBillingInfoCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -628,14 +753,32 @@ func (c *ProjectsGetBillingInfoCall) doRequest(alt string) (*http.Response, erro
 		"name": c.name,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "cloudbilling.projects.getBillingInfo" call.
+// Exactly one of *ProjectBillingInfo or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *ProjectBillingInfo.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ProjectsGetBillingInfoCall) Do() (*ProjectBillingInfo, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -643,7 +786,12 @@ func (c *ProjectsGetBillingInfoCall) Do() (*ProjectBillingInfo, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *ProjectBillingInfo
+	ret := &ProjectBillingInfo{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -762,8 +910,23 @@ func (c *ProjectsUpdateBillingInfoCall) doRequest(alt string) (*http.Response, e
 	return c.s.client.Do(req)
 }
 
+// Do executes the "cloudbilling.projects.updateBillingInfo" call.
+// Exactly one of *ProjectBillingInfo or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *ProjectBillingInfo.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ProjectsUpdateBillingInfoCall) Do() (*ProjectBillingInfo, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -771,7 +934,12 @@ func (c *ProjectsUpdateBillingInfoCall) Do() (*ProjectBillingInfo, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *ProjectBillingInfo
+	ret := &ProjectBillingInfo{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}

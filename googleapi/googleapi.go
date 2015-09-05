@@ -43,6 +43,16 @@ type SizeReaderAt interface {
 	Size() int64
 }
 
+// ServerResponse is embedded in each Do response and provides the
+// HTTPStatusCode and Header even when the response body is empty.
+type ServerResponse struct {
+	// HTTPStatusCode is the server's response status code.
+	// When using a resource method's Do call, this will always be in the 2xx range.
+	HTTPStatusCode int
+	// Header contains the response header fields from the server.
+	Header http.Header
+}
+
 const (
 	Version = "0.5"
 
@@ -66,6 +76,8 @@ type Error struct {
 	// Body is the raw response returned by the server.
 	// It is often but not always JSON, depending on how the request fails.
 	Body string
+	// Header contains the response header fields from the server.
+	Header http.Header
 
 	Errors []ErrorItem
 }
@@ -124,9 +136,24 @@ func CheckResponse(res *http.Response) error {
 		}
 	}
 	return &Error{
-		Code: res.StatusCode,
-		Body: string(slurp),
+		Code:   res.StatusCode,
+		Body:   string(slurp),
+		Header: res.Header,
 	}
+}
+
+// IsNotModified returns true if the response code is StatusNotModified.
+func IsNotModified(err error) bool {
+	return IsError(err, http.StatusNotModified)
+}
+
+// IsError checks if an error (of type *Error) is the same as the provided code.
+func IsError(err error, code int) bool {
+	if err == nil {
+		return false
+	}
+	ae, ok := err.(*Error)
+	return ok && ae.Code == code
 }
 
 // CheckMediaResponse returns an error (of type *Error) if the response

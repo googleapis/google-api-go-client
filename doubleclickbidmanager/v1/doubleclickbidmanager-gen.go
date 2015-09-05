@@ -138,6 +138,10 @@ func (s *DownloadLineItemsRequest) MarshalJSON() ([]byte, error) {
 
 // DownloadLineItemsResponse: Download line items response.
 type DownloadLineItemsResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// LineItems: Retrieved line items in CSV format. Refer to  Entity Write
 	// File Format for more information on file format.
 	LineItems string `json:"lineItems,omitempty"`
@@ -263,6 +267,10 @@ func (s *FilterPair) MarshalJSON() ([]byte, error) {
 
 // ListQueriesResponse: List queries response.
 type ListQueriesResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "doubleclickbidmanager#listQueriesResponse".
 	Kind string `json:"kind,omitempty"`
@@ -287,6 +295,10 @@ func (s *ListQueriesResponse) MarshalJSON() ([]byte, error) {
 
 // ListReportsResponse: List reports response.
 type ListReportsResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "doubleclickbidmanager#listReportsResponse".
 	Kind string `json:"kind,omitempty"`
@@ -692,6 +704,10 @@ func (s *Parameters) MarshalJSON() ([]byte, error) {
 
 // Query: Represents a query.
 type Query struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "doubleclickbidmanager#query".
 	Kind string `json:"kind,omitempty"`
@@ -1150,6 +1166,10 @@ func (s *UploadLineItemsRequest) MarshalJSON() ([]byte, error) {
 
 // UploadLineItemsResponse: Upload line items response.
 type UploadLineItemsResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// UploadStatus: Status of upload.
 	UploadStatus *UploadStatus `json:"uploadStatus,omitempty"`
 
@@ -1247,8 +1267,23 @@ func (c *LineitemsDownloadlineitemsCall) doRequest(alt string) (*http.Response, 
 	return c.s.client.Do(req)
 }
 
+// Do executes the "doubleclickbidmanager.lineitems.downloadlineitems" call.
+// Exactly one of *DownloadLineItemsResponse,  or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *DownloadLineItemsResponse, .ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *LineitemsDownloadlineitemsCall) Do() (*DownloadLineItemsResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1256,7 +1291,12 @@ func (c *LineitemsDownloadlineitemsCall) Do() (*DownloadLineItemsResponse, error
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *DownloadLineItemsResponse
+	ret := &DownloadLineItemsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1332,8 +1372,23 @@ func (c *LineitemsUploadlineitemsCall) doRequest(alt string) (*http.Response, er
 	return c.s.client.Do(req)
 }
 
+// Do executes the "doubleclickbidmanager.lineitems.uploadlineitems" call.
+// Exactly one of *UploadLineItemsResponse,  or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *UploadLineItemsResponse, .ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *LineitemsUploadlineitemsCall) Do() (*UploadLineItemsResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1341,7 +1396,12 @@ func (c *LineitemsUploadlineitemsCall) Do() (*UploadLineItemsResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *UploadLineItemsResponse
+	ret := &UploadLineItemsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1417,8 +1477,23 @@ func (c *QueriesCreatequeryCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "doubleclickbidmanager.queries.createquery" call.
+// Exactly one of *Query,  or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Query, .ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *QueriesCreatequeryCall) Do() (*Query, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1426,7 +1501,12 @@ func (c *QueriesCreatequeryCall) Do() (*Query, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Query
+	ret := &Query{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1499,6 +1579,7 @@ func (c *QueriesDeletequeryCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "doubleclickbidmanager.queries.deletequery" call.
 func (c *QueriesDeletequeryCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -1554,6 +1635,16 @@ func (c *QueriesGetqueryCall) Fields(s ...googleapi.Field) *QueriesGetqueryCall 
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *QueriesGetqueryCall) IfNoneMatch(entityTag string) *QueriesGetqueryCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -1576,14 +1667,32 @@ func (c *QueriesGetqueryCall) doRequest(alt string) (*http.Response, error) {
 		"queryId": strconv.FormatInt(c.queryId, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "doubleclickbidmanager.queries.getquery" call.
+// Exactly one of *Query,  or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Query, .ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *QueriesGetqueryCall) Do() (*Query, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1591,7 +1700,12 @@ func (c *QueriesGetqueryCall) Do() (*Query, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Query
+	ret := &Query{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1642,6 +1756,16 @@ func (c *QueriesListqueriesCall) Fields(s ...googleapi.Field) *QueriesListquerie
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *QueriesListqueriesCall) IfNoneMatch(entityTag string) *QueriesListqueriesCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -1662,14 +1786,32 @@ func (c *QueriesListqueriesCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "doubleclickbidmanager.queries.listqueries" call.
+// Exactly one of *ListQueriesResponse,  or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *ListQueriesResponse, .ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *QueriesListqueriesCall) Do() (*ListQueriesResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1677,7 +1819,12 @@ func (c *QueriesListqueriesCall) Do() (*ListQueriesResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *ListQueriesResponse
+	ret := &ListQueriesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1754,6 +1901,7 @@ func (c *QueriesRunqueryCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "doubleclickbidmanager.queries.runquery" call.
 func (c *QueriesRunqueryCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -1812,6 +1960,16 @@ func (c *ReportsListreportsCall) Fields(s ...googleapi.Field) *ReportsListreport
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *ReportsListreportsCall) IfNoneMatch(entityTag string) *ReportsListreportsCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -1834,14 +1992,32 @@ func (c *ReportsListreportsCall) doRequest(alt string) (*http.Response, error) {
 		"queryId": strconv.FormatInt(c.queryId, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "doubleclickbidmanager.reports.listreports" call.
+// Exactly one of *ListReportsResponse,  or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *ListReportsResponse, .ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ReportsListreportsCall) Do() (*ListReportsResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1849,7 +2025,12 @@ func (c *ReportsListreportsCall) Do() (*ListReportsResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *ListReportsResponse
+	ret := &ListReportsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}

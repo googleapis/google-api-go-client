@@ -84,6 +84,10 @@ type ArchiveService struct {
 
 // Groups: JSON response template for groups migration API.
 type Groups struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Kind: The kind of insert resource this is.
 	Kind string `json:"kind,omitempty"`
 
@@ -215,8 +219,23 @@ func (c *ArchiveInsertCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "groupsmigration.archive.insert" call.
+// Exactly one of *Groups,  or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Groups, .ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ArchiveInsertCall) Do() (*Groups, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -247,7 +266,12 @@ func (c *ArchiveInsertCall) Do() (*Groups, error) {
 		}
 		defer res.Body.Close()
 	}
-	var ret *Groups
+	ret := &Groups{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}

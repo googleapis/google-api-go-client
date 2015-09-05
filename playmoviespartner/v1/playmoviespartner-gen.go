@@ -329,6 +329,10 @@ func (s *Avail) MarshalJSON() ([]byte, error) {
 // identified by partners using its EIDR IDs, AltCutID or `custom_id`
 // (when provided).
 type ExperienceLocale struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// AltCutId: Alternative Cut ID, sometimes available in lieu of the main
 	// Edit-level EIDR ID. This is not an EIDR ID, but a Partner-provided
 	// ID. Example: "206346_79838".
@@ -449,6 +453,10 @@ func (s *ExperienceLocale) MarshalJSON() ([]byte, error) {
 
 // ListAvailsResponse: Response to the 'ListAvails' method.
 type ListAvailsResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Avails: List of Avails that match the request criteria.
 	Avails []*Avail `json:"avails,omitempty"`
 
@@ -473,6 +481,10 @@ func (s *ListAvailsResponse) MarshalJSON() ([]byte, error) {
 // ListExperienceLocalesResponse: Response to the
 // 'ListExperienceLocales' method.
 type ListExperienceLocalesResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// ExperienceLocales: List of ExperienceLocales that match the request
 	// criteria.
 	ExperienceLocales []*ExperienceLocale `json:"experienceLocales,omitempty"`
@@ -497,6 +509,10 @@ func (s *ListExperienceLocalesResponse) MarshalJSON() ([]byte, error) {
 
 // ListOrdersResponse: Response to the 'ListOrders' method.
 type ListOrdersResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// NextPageToken: See _List methods rules_ for info about this field.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
@@ -520,6 +536,10 @@ func (s *ListOrdersResponse) MarshalJSON() ([]byte, error) {
 
 // ListStoreInfosResponse: Response to the 'ListStoreInfos' method.
 type ListStoreInfosResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// NextPageToken: See 'List methods rules' for info about this field.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
@@ -547,6 +567,10 @@ func (s *ListStoreInfosResponse) MarshalJSON() ([]byte, error) {
 // Externally, Orders can also be identified by partners using its
 // `custom_id` (when provided).
 type Order struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// ApprovedTime: Timestamp when the Order was approved.
 	ApprovedTime string `json:"approvedTime,omitempty"`
 
@@ -684,6 +708,10 @@ func (s *Order) MarshalJSON() ([]byte, error) {
 // Externally, Title-level EIDR or Edit-level EIDR, if provided, can
 // also be used to identify a specific title or edit in a country.
 type StoreInfo struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// AudioTracks: Audio tracks available for this Edit.
 	AudioTracks []string `json:"audioTracks,omitempty"`
 
@@ -880,6 +908,16 @@ func (c *AccountsAvailsListCall) Fields(s ...googleapi.Field) *AccountsAvailsLis
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *AccountsAvailsListCall) IfNoneMatch(entityTag string) *AccountsAvailsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -926,14 +964,32 @@ func (c *AccountsAvailsListCall) doRequest(alt string) (*http.Response, error) {
 		"accountId": c.accountId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "playmoviespartner.accounts.avails.list" call.
+// Exactly one of *ListAvailsResponse,  or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *ListAvailsResponse, .ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsAvailsListCall) Do() (*ListAvailsResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -941,7 +997,12 @@ func (c *AccountsAvailsListCall) Do() (*ListAvailsResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *ListAvailsResponse
+	ret := &ListAvailsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1045,6 +1106,16 @@ func (c *AccountsExperienceLocalesGetCall) Fields(s ...googleapi.Field) *Account
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *AccountsExperienceLocalesGetCall) IfNoneMatch(entityTag string) *AccountsExperienceLocalesGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -1068,14 +1139,32 @@ func (c *AccountsExperienceLocalesGetCall) doRequest(alt string) (*http.Response
 		"elId":      c.elId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "playmoviespartner.accounts.experienceLocales.get" call.
+// Exactly one of *ExperienceLocale,  or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *ExperienceLocale, .ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsExperienceLocalesGetCall) Do() (*ExperienceLocale, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1083,7 +1172,12 @@ func (c *AccountsExperienceLocalesGetCall) Do() (*ExperienceLocale, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *ExperienceLocale
+	ret := &ExperienceLocale{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1220,6 +1314,16 @@ func (c *AccountsExperienceLocalesListCall) Fields(s ...googleapi.Field) *Accoun
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *AccountsExperienceLocalesListCall) IfNoneMatch(entityTag string) *AccountsExperienceLocalesListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -1269,14 +1373,32 @@ func (c *AccountsExperienceLocalesListCall) doRequest(alt string) (*http.Respons
 		"accountId": c.accountId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "playmoviespartner.accounts.experienceLocales.list" call.
+// Exactly one of *ListExperienceLocalesResponse,  or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *ListExperienceLocalesResponse, .ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsExperienceLocalesListCall) Do() (*ListExperienceLocalesResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1284,7 +1406,12 @@ func (c *AccountsExperienceLocalesListCall) Do() (*ListExperienceLocalesResponse
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *ListExperienceLocalesResponse
+	ret := &ListExperienceLocalesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1400,6 +1527,16 @@ func (c *AccountsOrdersGetCall) Fields(s ...googleapi.Field) *AccountsOrdersGetC
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *AccountsOrdersGetCall) IfNoneMatch(entityTag string) *AccountsOrdersGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -1423,14 +1560,32 @@ func (c *AccountsOrdersGetCall) doRequest(alt string) (*http.Response, error) {
 		"orderId":   c.orderId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "playmoviespartner.accounts.orders.get" call.
+// Exactly one of *Order,  or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *Order, .ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsOrdersGetCall) Do() (*Order, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1438,7 +1593,12 @@ func (c *AccountsOrdersGetCall) Do() (*Order, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Order
+	ret := &Order{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1559,6 +1719,16 @@ func (c *AccountsOrdersListCall) Fields(s ...googleapi.Field) *AccountsOrdersLis
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *AccountsOrdersListCall) IfNoneMatch(entityTag string) *AccountsOrdersListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -1602,14 +1772,32 @@ func (c *AccountsOrdersListCall) doRequest(alt string) (*http.Response, error) {
 		"accountId": c.accountId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "playmoviespartner.accounts.orders.list" call.
+// Exactly one of *ListOrdersResponse,  or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *ListOrdersResponse, .ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsOrdersListCall) Do() (*ListOrdersResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1617,7 +1805,12 @@ func (c *AccountsOrdersListCall) Do() (*ListOrdersResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *ListOrdersResponse
+	ret := &ListOrdersResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1779,6 +1972,16 @@ func (c *AccountsStoreInfosListCall) Fields(s ...googleapi.Field) *AccountsStore
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *AccountsStoreInfosListCall) IfNoneMatch(entityTag string) *AccountsStoreInfosListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -1825,14 +2028,32 @@ func (c *AccountsStoreInfosListCall) doRequest(alt string) (*http.Response, erro
 		"accountId": c.accountId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "playmoviespartner.accounts.storeInfos.list" call.
+// Exactly one of *ListStoreInfosResponse,  or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *ListStoreInfosResponse, .ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsStoreInfosListCall) Do() (*ListStoreInfosResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1840,7 +2061,12 @@ func (c *AccountsStoreInfosListCall) Do() (*ListStoreInfosResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *ListStoreInfosResponse
+	ret := &ListStoreInfosResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1946,6 +2172,16 @@ func (c *AccountsStoreInfosCountryGetCall) Fields(s ...googleapi.Field) *Account
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *AccountsStoreInfosCountryGetCall) IfNoneMatch(entityTag string) *AccountsStoreInfosCountryGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -1970,14 +2206,32 @@ func (c *AccountsStoreInfosCountryGetCall) doRequest(alt string) (*http.Response
 		"country":   c.country,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "playmoviespartner.accounts.storeInfos.country.get" call.
+// Exactly one of *StoreInfo,  or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *StoreInfo, .ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsStoreInfosCountryGetCall) Do() (*StoreInfo, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1985,7 +2239,12 @@ func (c *AccountsStoreInfosCountryGetCall) Do() (*StoreInfo, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *StoreInfo
+	ret := &StoreInfo{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}

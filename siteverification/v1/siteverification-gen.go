@@ -137,6 +137,10 @@ func (s *SiteVerificationWebResourceGettokenRequestSite) MarshalJSON() ([]byte, 
 }
 
 type SiteVerificationWebResourceGettokenResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Method: The verification method to use in conjunction with this
 	// token. For FILE, the token should be placed in the top-level
 	// directory of the site, stored inside a file of the same name. For
@@ -165,6 +169,10 @@ func (s *SiteVerificationWebResourceGettokenResponse) MarshalJSON() ([]byte, err
 }
 
 type SiteVerificationWebResourceListResponse struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Items: The list of sites that are owned by the authenticated user.
 	Items []*SiteVerificationWebResourceResource `json:"items,omitempty"`
 
@@ -184,6 +192,10 @@ func (s *SiteVerificationWebResourceListResponse) MarshalJSON() ([]byte, error) 
 }
 
 type SiteVerificationWebResourceResource struct {
+	// ServerResponse contains the HTTP response code and headers
+	// from the server.
+	googleapi.ServerResponse
+
 	// Id: The string used to identify this site. This value should be used
 	// in the "id" portion of the REST URL for the Get, Update, and Delete
 	// operations.
@@ -289,6 +301,7 @@ func (c *WebResourceDeleteCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "siteVerification.webResource.delete" call.
 func (c *WebResourceDeleteCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -346,6 +359,16 @@ func (c *WebResourceGetCall) Fields(s ...googleapi.Field) *WebResourceGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *WebResourceGetCall) IfNoneMatch(entityTag string) *WebResourceGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -368,14 +391,32 @@ func (c *WebResourceGetCall) doRequest(alt string) (*http.Response, error) {
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "siteVerification.webResource.get" call.
+// Exactly one of *SiteVerificationWebResourceResource,  or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *SiteVerificationWebResourceResource, .ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *WebResourceGetCall) Do() (*SiteVerificationWebResourceResource, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -383,7 +424,12 @@ func (c *WebResourceGetCall) Do() (*SiteVerificationWebResourceResource, error) 
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *SiteVerificationWebResourceResource
+	ret := &SiteVerificationWebResourceResource{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -471,8 +517,23 @@ func (c *WebResourceGetTokenCall) doRequest(alt string) (*http.Response, error) 
 	return c.s.client.Do(req)
 }
 
+// Do executes the "siteVerification.webResource.getToken" call.
+// Exactly one of *SiteVerificationWebResourceGettokenResponse,  or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *SiteVerificationWebResourceGettokenResponse, .ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *WebResourceGetTokenCall) Do() (*SiteVerificationWebResourceGettokenResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -480,7 +541,12 @@ func (c *WebResourceGetTokenCall) Do() (*SiteVerificationWebResourceGettokenResp
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *SiteVerificationWebResourceGettokenResponse
+	ret := &SiteVerificationWebResourceGettokenResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -563,8 +629,23 @@ func (c *WebResourceInsertCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "siteVerification.webResource.insert" call.
+// Exactly one of *SiteVerificationWebResourceResource,  or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *SiteVerificationWebResourceResource, .ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *WebResourceInsertCall) Do() (*SiteVerificationWebResourceResource, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -572,7 +653,12 @@ func (c *WebResourceInsertCall) Do() (*SiteVerificationWebResourceResource, erro
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *SiteVerificationWebResourceResource
+	ret := &SiteVerificationWebResourceResource{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -629,6 +715,16 @@ func (c *WebResourceListCall) Fields(s ...googleapi.Field) *WebResourceListCall 
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+// Use googleapi.IsNotModified to check whether the response error from Do
+// is the result of In-None-Match.
+func (c *WebResourceListCall) IfNoneMatch(entityTag string) *WebResourceListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -649,14 +745,32 @@ func (c *WebResourceListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "siteVerification.webResource.list" call.
+// Exactly one of *SiteVerificationWebResourceListResponse,  or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *SiteVerificationWebResourceListResponse, .ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *WebResourceListCall) Do() (*SiteVerificationWebResourceListResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -664,7 +778,12 @@ func (c *WebResourceListCall) Do() (*SiteVerificationWebResourceListResponse, er
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *SiteVerificationWebResourceListResponse
+	ret := &SiteVerificationWebResourceListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -745,8 +864,23 @@ func (c *WebResourcePatchCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "siteVerification.webResource.patch" call.
+// Exactly one of *SiteVerificationWebResourceResource,  or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *SiteVerificationWebResourceResource, .ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *WebResourcePatchCall) Do() (*SiteVerificationWebResourceResource, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -754,7 +888,12 @@ func (c *WebResourcePatchCall) Do() (*SiteVerificationWebResourceResource, error
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *SiteVerificationWebResourceResource
+	ret := &SiteVerificationWebResourceResource{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -848,8 +987,23 @@ func (c *WebResourceUpdateCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "siteVerification.webResource.update" call.
+// Exactly one of *SiteVerificationWebResourceResource,  or error will be non-nil.
+// Any non-2xx status code is an error.
+// Response headers are in either *SiteVerificationWebResourceResource, .ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *WebResourceUpdateCall) Do() (*SiteVerificationWebResourceResource, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -857,7 +1011,12 @@ func (c *WebResourceUpdateCall) Do() (*SiteVerificationWebResourceResource, erro
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *SiteVerificationWebResourceResource
+	ret := &SiteVerificationWebResourceResource{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}

@@ -90,6 +90,10 @@ type Groups struct {
 	// ResponseCode: The status of the insert request.
 	ResponseCode string `json:"responseCode,omitempty"`
 
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
 	// ForceSendFields is a list of field names (e.g. "Kind") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -215,8 +219,24 @@ func (c *ArchiveInsertCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "groupsmigration.archive.insert" call.
+// Exactly one of *Groups or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Groups.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the return error was because http.StatusNotModified was
+// returned.
 func (c *ArchiveInsertCall) Do() (*Groups, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -247,7 +267,12 @@ func (c *ArchiveInsertCall) Do() (*Groups, error) {
 		}
 		defer res.Body.Close()
 	}
-	var ret *Groups
+	ret := &Groups{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}

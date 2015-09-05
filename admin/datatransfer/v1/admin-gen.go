@@ -116,6 +116,10 @@ type Application struct {
 	// user in this application to be transfered.
 	TransferParams []*ApplicationTransferParam `json:"transferParams,omitempty"`
 
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -202,6 +206,10 @@ type ApplicationsListResponse struct {
 	// page in list API.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
 	// ForceSendFields is a list of field names (e.g. "Applications") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -248,6 +256,10 @@ type DataTransfer struct {
 	// (Read-only).
 	RequestTime string `json:"requestTime,omitempty"`
 
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
 	// ForceSendFields is a list of field names (e.g.
 	// "ApplicationDataTransfers") to unconditionally include in API
 	// requests. By default, fields with empty values are omitted from API
@@ -280,6 +292,10 @@ type DataTransfersListResponse struct {
 	// NextPageToken: Continuation token which will be used to specify next
 	// page in list API.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 
 	// ForceSendFields is a list of field names (e.g. "DataTransfers") to
 	// unconditionally include in API requests. By default, fields with
@@ -321,6 +337,17 @@ func (c *ApplicationsGetCall) Fields(s ...googleapi.Field) *ApplicationsGetCall 
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+
+func (c *ApplicationsGetCall) IfNoneMatch(entityTag string) *ApplicationsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -343,14 +370,33 @@ func (c *ApplicationsGetCall) doRequest(alt string) (*http.Response, error) {
 		"applicationId": strconv.FormatInt(c.applicationId, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "datatransfer.applications.get" call.
+// Exactly one of *Application or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Application.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. googleapi.IsNotModified can
+// be called to check if http.StatusNotModified is returned.
+
 func (c *ApplicationsGetCall) Do() (*Application, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -358,7 +404,12 @@ func (c *ApplicationsGetCall) Do() (*Application, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Application
+	ret := &Application{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -435,6 +486,17 @@ func (c *ApplicationsListCall) Fields(s ...googleapi.Field) *ApplicationsListCal
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+
+func (c *ApplicationsListCall) IfNoneMatch(entityTag string) *ApplicationsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -464,14 +526,34 @@ func (c *ApplicationsListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "datatransfer.applications.list" call.
+// Exactly one of *ApplicationsListResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ApplicationsListResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if
+// http.StatusNotModified is returned.
+
 func (c *ApplicationsListCall) Do() (*ApplicationsListResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -479,7 +561,12 @@ func (c *ApplicationsListCall) Do() (*ApplicationsListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *ApplicationsListResponse
+	ret := &ApplicationsListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -544,6 +631,17 @@ func (c *TransfersGetCall) Fields(s ...googleapi.Field) *TransfersGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+
+func (c *TransfersGetCall) IfNoneMatch(entityTag string) *TransfersGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -566,14 +664,33 @@ func (c *TransfersGetCall) doRequest(alt string) (*http.Response, error) {
 		"dataTransferId": c.dataTransferId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "datatransfer.transfers.get" call.
+// Exactly one of *DataTransfer or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *DataTransfer.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. googleapi.IsNotModified can
+// be called to check if http.StatusNotModified is returned.
+
 func (c *TransfersGetCall) Do() (*DataTransfer, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -581,7 +698,12 @@ func (c *TransfersGetCall) Do() (*DataTransfer, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *DataTransfer
+	ret := &DataTransfer{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -669,8 +791,24 @@ func (c *TransfersInsertCall) doRequest(alt string) (*http.Response, error) {
 	return c.s.client.Do(req)
 }
 
+// Do executes the "datatransfer.transfers.insert" call.
+// Exactly one of *DataTransfer or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *DataTransfer.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. googleapi.IsNotModified can
+// be called to check if http.StatusNotModified is returned.
+
 func (c *TransfersInsertCall) Do() (*DataTransfer, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -678,7 +816,12 @@ func (c *TransfersInsertCall) Do() (*DataTransfer, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *DataTransfer
+	ret := &DataTransfer{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -765,6 +908,17 @@ func (c *TransfersListCall) Fields(s ...googleapi.Field) *TransfersListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+
+func (c *TransfersListCall) IfNoneMatch(entityTag string) *TransfersListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -803,14 +957,34 @@ func (c *TransfersListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "datatransfer.transfers.list" call.
+// Exactly one of *DataTransfersListResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *DataTransfersListResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header.
+// googleapi.IsNotModified can be called to check if
+// http.StatusNotModified is returned.
+
 func (c *TransfersListCall) Do() (*DataTransfersListResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -818,7 +992,12 @@ func (c *TransfersListCall) Do() (*DataTransfersListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *DataTransfersListResponse
+	ret := &DataTransfersListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}

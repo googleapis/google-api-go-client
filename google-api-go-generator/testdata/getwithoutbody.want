@@ -139,10 +139,10 @@ func (c *MetricDescriptorsListCall) Fields(s ...googleapi.Field) *MetricDescript
 	return c
 }
 
-func (c *MetricDescriptorsListCall) Do() (*ListMetricResponse, error) {
+func (c *MetricDescriptorsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
-	params.Set("alt", "json")
+	params.Set("alt", alt)
 	if v, ok := c.opt_["count"]; ok {
 		params.Set("count", fmt.Sprintf("%v", v))
 	}
@@ -159,7 +159,11 @@ func (c *MetricDescriptorsListCall) Do() (*ListMetricResponse, error) {
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	res, err := c.s.client.Do(req)
+	return c.s.client.Do(req)
+}
+
+func (c *MetricDescriptorsListCall) Do() (*ListMetricResponse, error) {
+	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}

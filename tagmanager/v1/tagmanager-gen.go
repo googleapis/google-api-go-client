@@ -232,6 +232,7 @@ type AccountsPermissionsService struct {
 
 // Account: Represents a Google Tag Manager Account.
 type Account struct {
+	googleapi.ServerResponse
 	// AccountId: The Account ID uniquely identifies the GTM Account.
 	AccountId string `json:"accountId,omitempty"`
 
@@ -297,6 +298,7 @@ type Condition struct {
 
 // Container: Represents a Google Tag Manager Container.
 type Container struct {
+	googleapi.ServerResponse
 	// AccountId: GTM Account ID.
 	AccountId string `json:"accountId,omitempty"`
 
@@ -410,6 +412,7 @@ type ContainerAccess struct {
 
 // ContainerVersion: Represents a Google Tag Manager Container Version.
 type ContainerVersion struct {
+	googleapi.ServerResponse
 	// AccountId: GTM Account ID.
 	AccountId string `json:"accountId,omitempty"`
 
@@ -513,6 +516,7 @@ type CreateContainerVersionRequestVersionOptions struct {
 
 // CreateContainerVersionResponse: Create container versions response.
 type CreateContainerVersionResponse struct {
+	googleapi.ServerResponse
 	// CompilerError: Compiler errors or not.
 	CompilerError bool `json:"compilerError,omitempty"`
 
@@ -522,6 +526,7 @@ type CreateContainerVersionResponse struct {
 
 // Folder: Represents a Google Tag Manager Folder.
 type Folder struct {
+	googleapi.ServerResponse
 	// AccountId: GTM Account ID.
 	AccountId string `json:"accountId,omitempty"`
 
@@ -541,6 +546,7 @@ type Folder struct {
 
 // FolderEntities: Represents a Google Tag Manager Folder's contents.
 type FolderEntities struct {
+	googleapi.ServerResponse
 	// Tag: The list of tags inside the folder.
 	Tag []*Tag `json:"tag,omitempty"`
 
@@ -553,18 +559,21 @@ type FolderEntities struct {
 
 // ListAccountUsersResponse: List AccountUsers Response.
 type ListAccountUsersResponse struct {
+	googleapi.ServerResponse
 	// UserAccess: All GTM AccountUsers of a GTM Account.
 	UserAccess []*UserAccess `json:"userAccess,omitempty"`
 }
 
 // ListAccountsResponse: List Accounts Response.
 type ListAccountsResponse struct {
+	googleapi.ServerResponse
 	// Accounts: List of GTM Accounts that a user has access to.
 	Accounts []*Account `json:"accounts,omitempty"`
 }
 
 // ListContainerVersionsResponse: List container versions response.
 type ListContainerVersionsResponse struct {
+	googleapi.ServerResponse
 	// ContainerVersion: All versions of a GTM Container.
 	ContainerVersion []*ContainerVersion `json:"containerVersion,omitempty"`
 
@@ -575,48 +584,56 @@ type ListContainerVersionsResponse struct {
 
 // ListContainersResponse: List Containers Response.
 type ListContainersResponse struct {
+	googleapi.ServerResponse
 	// Containers: All Containers of a GTM Account.
 	Containers []*Container `json:"containers,omitempty"`
 }
 
 // ListFoldersResponse: List Folders Response.
 type ListFoldersResponse struct {
+	googleapi.ServerResponse
 	// Folders: All GTM Folders of a GTM Container.
 	Folders []*Folder `json:"folders,omitempty"`
 }
 
 // ListMacrosResponse: List Macros Response.
 type ListMacrosResponse struct {
+	googleapi.ServerResponse
 	// Macros: All GTM Macros of a GTM Container.
 	Macros []*Macro `json:"macros,omitempty"`
 }
 
 // ListRulesResponse: List Rules Response.
 type ListRulesResponse struct {
+	googleapi.ServerResponse
 	// Rules: All GTM Rules of a GTM Container.
 	Rules []*Rule `json:"rules,omitempty"`
 }
 
 // ListTagsResponse: List Tags Response.
 type ListTagsResponse struct {
+	googleapi.ServerResponse
 	// Tags: All GTM Tags of a GTM Container.
 	Tags []*Tag `json:"tags,omitempty"`
 }
 
 // ListTriggersResponse: List triggers response.
 type ListTriggersResponse struct {
+	googleapi.ServerResponse
 	// Triggers: All GTM Triggers of a GTM Container.
 	Triggers []*Trigger `json:"triggers,omitempty"`
 }
 
 // ListVariablesResponse: List Variables Response.
 type ListVariablesResponse struct {
+	googleapi.ServerResponse
 	// Variables: All GTM Variables of a GTM Container.
 	Variables []*Variable `json:"variables,omitempty"`
 }
 
 // Macro: Represents a Google Tag Manager Macro.
 type Macro struct {
+	googleapi.ServerResponse
 	// AccountId: GTM Account ID.
 	AccountId string `json:"accountId,omitempty"`
 
@@ -703,6 +720,7 @@ type Parameter struct {
 
 // PublishContainerVersionResponse: Publish container version response.
 type PublishContainerVersionResponse struct {
+	googleapi.ServerResponse
 	// CompilerError: Compiler errors or not.
 	CompilerError bool `json:"compilerError,omitempty"`
 
@@ -712,6 +730,7 @@ type PublishContainerVersionResponse struct {
 
 // Rule: Represents a Google Tag Manager Rule.
 type Rule struct {
+	googleapi.ServerResponse
 	// AccountId: GTM Account ID.
 	AccountId string `json:"accountId,omitempty"`
 
@@ -748,6 +767,7 @@ type SetupTag struct {
 
 // Tag: Represents a Google Tag Manager Tag.
 type Tag struct {
+	googleapi.ServerResponse
 	// AccountId: GTM Account ID.
 	AccountId string `json:"accountId,omitempty"`
 
@@ -830,6 +850,7 @@ type TeardownTag struct {
 
 // Trigger: Represents a Google Tag Manager Trigger
 type Trigger struct {
+	googleapi.ServerResponse
 	// AccountId: GTM Account ID.
 	AccountId string `json:"accountId,omitempty"`
 
@@ -930,6 +951,7 @@ type Trigger struct {
 // UserAccess: Represents a user's permissions to an account and its
 // container.
 type UserAccess struct {
+	googleapi.ServerResponse
 	// AccountAccess: GTM Account access permissions.
 	AccountAccess *AccountAccess `json:"accountAccess,omitempty"`
 
@@ -948,6 +970,7 @@ type UserAccess struct {
 
 // Variable: Represents a Google Tag Manager Variable.
 type Variable struct {
+	googleapi.ServerResponse
 	// AccountId: GTM Account ID.
 	AccountId string `json:"accountId,omitempty"`
 
@@ -1021,6 +1044,14 @@ func (c *AccountsGetCall) Fields(s ...googleapi.Field) *AccountsGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsGetCall) IfNoneMatch(entityTag string) *AccountsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *AccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1035,23 +1066,34 @@ func (c *AccountsGetCall) doRequest(alt string) (*http.Response, error) {
 		"accountId": c.accountId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "tagmanager.accounts.get" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsGetCall) Do() (*Account, error) {
 	res, err := c.doRequest("json")
+	ret := &Account{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Account
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Gets a GTM Account.",
 	//   "httpMethod": "GET",
@@ -1101,6 +1143,14 @@ func (c *AccountsListCall) Fields(s ...googleapi.Field) *AccountsListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsListCall) IfNoneMatch(entityTag string) *AccountsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *AccountsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1113,23 +1163,34 @@ func (c *AccountsListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "tagmanager.accounts.list" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsListCall) Do() (*ListAccountsResponse, error) {
 	res, err := c.doRequest("json")
+	ret := &ListAccountsResponse{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *ListAccountsResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Lists all GTM Accounts that a user has access to.",
 	//   "httpMethod": "GET",
@@ -1180,6 +1241,14 @@ func (c *AccountsUpdateCall) Fields(s ...googleapi.Field) *AccountsUpdateCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsUpdateCall) IfNoneMatch(entityTag string) *AccountsUpdateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *AccountsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.account)
@@ -1203,23 +1272,34 @@ func (c *AccountsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "tagmanager.accounts.update" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsUpdateCall) Do() (*Account, error) {
 	res, err := c.doRequest("json")
+	ret := &Account{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Account
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Updates a GTM Account.",
 	//   "httpMethod": "PUT",
@@ -1279,6 +1359,14 @@ func (c *AccountsContainersCreateCall) Fields(s ...googleapi.Field) *AccountsCon
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsContainersCreateCall) IfNoneMatch(entityTag string) *AccountsContainersCreateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *AccountsContainersCreateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.container)
@@ -1299,23 +1387,34 @@ func (c *AccountsContainersCreateCall) doRequest(alt string) (*http.Response, er
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "tagmanager.accounts.containers.create" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsContainersCreateCall) Do() (*Container, error) {
 	res, err := c.doRequest("json")
+	ret := &Container{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Container
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Creates a Container.",
 	//   "httpMethod": "POST",
@@ -1370,6 +1469,14 @@ func (c *AccountsContainersDeleteCall) Fields(s ...googleapi.Field) *AccountsCon
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsContainersDeleteCall) IfNoneMatch(entityTag string) *AccountsContainersDeleteCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *AccountsContainersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1385,9 +1492,13 @@ func (c *AccountsContainersDeleteCall) doRequest(alt string) (*http.Response, er
 		"containerId": c.containerId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "tagmanager.accounts.containers.delete" call.
 func (c *AccountsContainersDeleteCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -1453,6 +1564,14 @@ func (c *AccountsContainersGetCall) Fields(s ...googleapi.Field) *AccountsContai
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsContainersGetCall) IfNoneMatch(entityTag string) *AccountsContainersGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *AccountsContainersGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1468,23 +1587,34 @@ func (c *AccountsContainersGetCall) doRequest(alt string) (*http.Response, error
 		"containerId": c.containerId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "tagmanager.accounts.containers.get" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsContainersGetCall) Do() (*Container, error) {
 	res, err := c.doRequest("json")
+	ret := &Container{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Container
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Gets a Container.",
 	//   "httpMethod": "GET",
@@ -1542,6 +1672,14 @@ func (c *AccountsContainersListCall) Fields(s ...googleapi.Field) *AccountsConta
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsContainersListCall) IfNoneMatch(entityTag string) *AccountsContainersListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *AccountsContainersListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1556,23 +1694,34 @@ func (c *AccountsContainersListCall) doRequest(alt string) (*http.Response, erro
 		"accountId": c.accountId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "tagmanager.accounts.containers.list" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsContainersListCall) Do() (*ListContainersResponse, error) {
 	res, err := c.doRequest("json")
+	ret := &ListContainersResponse{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *ListContainersResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Lists all Containers that belongs to a GTM Account.",
 	//   "httpMethod": "GET",
@@ -1635,6 +1784,14 @@ func (c *AccountsContainersUpdateCall) Fields(s ...googleapi.Field) *AccountsCon
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsContainersUpdateCall) IfNoneMatch(entityTag string) *AccountsContainersUpdateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *AccountsContainersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.container)
@@ -1659,23 +1816,34 @@ func (c *AccountsContainersUpdateCall) doRequest(alt string) (*http.Response, er
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "tagmanager.accounts.containers.update" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsContainersUpdateCall) Do() (*Container, error) {
 	res, err := c.doRequest("json")
+	ret := &Container{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Container
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Updates a Container.",
 	//   "httpMethod": "PUT",
@@ -1744,6 +1912,14 @@ func (c *AccountsContainersFoldersCreateCall) Fields(s ...googleapi.Field) *Acco
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsContainersFoldersCreateCall) IfNoneMatch(entityTag string) *AccountsContainersFoldersCreateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *AccountsContainersFoldersCreateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.folder)
@@ -1765,23 +1941,34 @@ func (c *AccountsContainersFoldersCreateCall) doRequest(alt string) (*http.Respo
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "tagmanager.accounts.containers.folders.create" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsContainersFoldersCreateCall) Do() (*Folder, error) {
 	res, err := c.doRequest("json")
+	ret := &Folder{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Folder
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Creates a GTM Folder.",
 	//   "httpMethod": "POST",
@@ -1845,6 +2032,14 @@ func (c *AccountsContainersFoldersDeleteCall) Fields(s ...googleapi.Field) *Acco
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsContainersFoldersDeleteCall) IfNoneMatch(entityTag string) *AccountsContainersFoldersDeleteCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *AccountsContainersFoldersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1861,9 +2056,13 @@ func (c *AccountsContainersFoldersDeleteCall) doRequest(alt string) (*http.Respo
 		"folderId":    c.folderId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "tagmanager.accounts.containers.folders.delete" call.
 func (c *AccountsContainersFoldersDeleteCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -1938,6 +2137,14 @@ func (c *AccountsContainersFoldersGetCall) Fields(s ...googleapi.Field) *Account
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsContainersFoldersGetCall) IfNoneMatch(entityTag string) *AccountsContainersFoldersGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *AccountsContainersFoldersGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1954,23 +2161,34 @@ func (c *AccountsContainersFoldersGetCall) doRequest(alt string) (*http.Response
 		"folderId":    c.folderId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "tagmanager.accounts.containers.folders.get" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsContainersFoldersGetCall) Do() (*Folder, error) {
 	res, err := c.doRequest("json")
+	ret := &Folder{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Folder
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Gets a GTM Folder.",
 	//   "httpMethod": "GET",
@@ -2037,6 +2255,14 @@ func (c *AccountsContainersFoldersListCall) Fields(s ...googleapi.Field) *Accoun
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsContainersFoldersListCall) IfNoneMatch(entityTag string) *AccountsContainersFoldersListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *AccountsContainersFoldersListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2052,23 +2278,34 @@ func (c *AccountsContainersFoldersListCall) doRequest(alt string) (*http.Respons
 		"containerId": c.containerId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "tagmanager.accounts.containers.folders.list" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsContainersFoldersListCall) Do() (*ListFoldersResponse, error) {
 	res, err := c.doRequest("json")
+	ret := &ListFoldersResponse{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *ListFoldersResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Lists all GTM Folders of a Container.",
 	//   "httpMethod": "GET",
@@ -2139,6 +2376,14 @@ func (c *AccountsContainersFoldersUpdateCall) Fields(s ...googleapi.Field) *Acco
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsContainersFoldersUpdateCall) IfNoneMatch(entityTag string) *AccountsContainersFoldersUpdateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *AccountsContainersFoldersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.folder)
@@ -2164,23 +2409,34 @@ func (c *AccountsContainersFoldersUpdateCall) doRequest(alt string) (*http.Respo
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "tagmanager.accounts.containers.folders.update" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsContainersFoldersUpdateCall) Do() (*Folder, error) {
 	res, err := c.doRequest("json")
+	ret := &Folder{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Folder
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Updates a GTM Folder.",
 	//   "httpMethod": "PUT",
@@ -2256,6 +2512,14 @@ func (c *AccountsContainersFoldersEntitiesListCall) Fields(s ...googleapi.Field)
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsContainersFoldersEntitiesListCall) IfNoneMatch(entityTag string) *AccountsContainersFoldersEntitiesListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *AccountsContainersFoldersEntitiesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2272,23 +2536,34 @@ func (c *AccountsContainersFoldersEntitiesListCall) doRequest(alt string) (*http
 		"folderId":    c.folderId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "tagmanager.accounts.containers.folders.entities.list" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsContainersFoldersEntitiesListCall) Do() (*FolderEntities, error) {
 	res, err := c.doRequest("json")
+	ret := &FolderEntities{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *FolderEntities
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "List all entities in a GTM Folder.",
 	//   "httpMethod": "GET",
@@ -2357,6 +2632,14 @@ func (c *AccountsContainersMacrosCreateCall) Fields(s ...googleapi.Field) *Accou
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsContainersMacrosCreateCall) IfNoneMatch(entityTag string) *AccountsContainersMacrosCreateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *AccountsContainersMacrosCreateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.macro)
@@ -2378,23 +2661,34 @@ func (c *AccountsContainersMacrosCreateCall) doRequest(alt string) (*http.Respon
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "tagmanager.accounts.containers.macros.create" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsContainersMacrosCreateCall) Do() (*Macro, error) {
 	res, err := c.doRequest("json")
+	ret := &Macro{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Macro
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Creates a GTM Macro.",
 	//   "httpMethod": "POST",
@@ -2458,6 +2752,14 @@ func (c *AccountsContainersMacrosDeleteCall) Fields(s ...googleapi.Field) *Accou
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsContainersMacrosDeleteCall) IfNoneMatch(entityTag string) *AccountsContainersMacrosDeleteCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *AccountsContainersMacrosDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2474,9 +2776,13 @@ func (c *AccountsContainersMacrosDeleteCall) doRequest(alt string) (*http.Respon
 		"macroId":     c.macroId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "tagmanager.accounts.containers.macros.delete" call.
 func (c *AccountsContainersMacrosDeleteCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -2551,6 +2857,14 @@ func (c *AccountsContainersMacrosGetCall) Fields(s ...googleapi.Field) *Accounts
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsContainersMacrosGetCall) IfNoneMatch(entityTag string) *AccountsContainersMacrosGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *AccountsContainersMacrosGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2567,23 +2881,34 @@ func (c *AccountsContainersMacrosGetCall) doRequest(alt string) (*http.Response,
 		"macroId":     c.macroId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "tagmanager.accounts.containers.macros.get" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsContainersMacrosGetCall) Do() (*Macro, error) {
 	res, err := c.doRequest("json")
+	ret := &Macro{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Macro
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Gets a GTM Macro.",
 	//   "httpMethod": "GET",
@@ -2650,6 +2975,14 @@ func (c *AccountsContainersMacrosListCall) Fields(s ...googleapi.Field) *Account
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsContainersMacrosListCall) IfNoneMatch(entityTag string) *AccountsContainersMacrosListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *AccountsContainersMacrosListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2665,23 +2998,34 @@ func (c *AccountsContainersMacrosListCall) doRequest(alt string) (*http.Response
 		"containerId": c.containerId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "tagmanager.accounts.containers.macros.list" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsContainersMacrosListCall) Do() (*ListMacrosResponse, error) {
 	res, err := c.doRequest("json")
+	ret := &ListMacrosResponse{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *ListMacrosResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Lists all GTM Macros of a Container.",
 	//   "httpMethod": "GET",
@@ -2752,6 +3096,14 @@ func (c *AccountsContainersMacrosUpdateCall) Fields(s ...googleapi.Field) *Accou
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsContainersMacrosUpdateCall) IfNoneMatch(entityTag string) *AccountsContainersMacrosUpdateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *AccountsContainersMacrosUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.macro)
@@ -2777,23 +3129,34 @@ func (c *AccountsContainersMacrosUpdateCall) doRequest(alt string) (*http.Respon
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "tagmanager.accounts.containers.macros.update" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsContainersMacrosUpdateCall) Do() (*Macro, error) {
 	res, err := c.doRequest("json")
+	ret := &Macro{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Macro
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Updates a GTM Macro.",
 	//   "httpMethod": "PUT",
@@ -2890,6 +3253,14 @@ func (c *AccountsContainersMoveFoldersUpdateCall) Fields(s ...googleapi.Field) *
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsContainersMoveFoldersUpdateCall) IfNoneMatch(entityTag string) *AccountsContainersMoveFoldersUpdateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *AccountsContainersMoveFoldersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2915,9 +3286,13 @@ func (c *AccountsContainersMoveFoldersUpdateCall) doRequest(alt string) (*http.R
 		"folderId":    c.folderId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "tagmanager.accounts.containers.move_folders.update" call.
 func (c *AccountsContainersMoveFoldersUpdateCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -3007,6 +3382,14 @@ func (c *AccountsContainersRulesCreateCall) Fields(s ...googleapi.Field) *Accoun
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsContainersRulesCreateCall) IfNoneMatch(entityTag string) *AccountsContainersRulesCreateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *AccountsContainersRulesCreateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.rule)
@@ -3028,23 +3411,34 @@ func (c *AccountsContainersRulesCreateCall) doRequest(alt string) (*http.Respons
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "tagmanager.accounts.containers.rules.create" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsContainersRulesCreateCall) Do() (*Rule, error) {
 	res, err := c.doRequest("json")
+	ret := &Rule{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Rule
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Creates a GTM Rule.",
 	//   "httpMethod": "POST",
@@ -3108,6 +3502,14 @@ func (c *AccountsContainersRulesDeleteCall) Fields(s ...googleapi.Field) *Accoun
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsContainersRulesDeleteCall) IfNoneMatch(entityTag string) *AccountsContainersRulesDeleteCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *AccountsContainersRulesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3124,9 +3526,13 @@ func (c *AccountsContainersRulesDeleteCall) doRequest(alt string) (*http.Respons
 		"ruleId":      c.ruleId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "tagmanager.accounts.containers.rules.delete" call.
 func (c *AccountsContainersRulesDeleteCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -3201,6 +3607,14 @@ func (c *AccountsContainersRulesGetCall) Fields(s ...googleapi.Field) *AccountsC
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsContainersRulesGetCall) IfNoneMatch(entityTag string) *AccountsContainersRulesGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *AccountsContainersRulesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3217,23 +3631,34 @@ func (c *AccountsContainersRulesGetCall) doRequest(alt string) (*http.Response, 
 		"ruleId":      c.ruleId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "tagmanager.accounts.containers.rules.get" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsContainersRulesGetCall) Do() (*Rule, error) {
 	res, err := c.doRequest("json")
+	ret := &Rule{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Rule
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Gets a GTM Rule.",
 	//   "httpMethod": "GET",
@@ -3300,6 +3725,14 @@ func (c *AccountsContainersRulesListCall) Fields(s ...googleapi.Field) *Accounts
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsContainersRulesListCall) IfNoneMatch(entityTag string) *AccountsContainersRulesListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *AccountsContainersRulesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3315,23 +3748,34 @@ func (c *AccountsContainersRulesListCall) doRequest(alt string) (*http.Response,
 		"containerId": c.containerId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "tagmanager.accounts.containers.rules.list" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsContainersRulesListCall) Do() (*ListRulesResponse, error) {
 	res, err := c.doRequest("json")
+	ret := &ListRulesResponse{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *ListRulesResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Lists all GTM Rules of a Container.",
 	//   "httpMethod": "GET",
@@ -3402,6 +3846,14 @@ func (c *AccountsContainersRulesUpdateCall) Fields(s ...googleapi.Field) *Accoun
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsContainersRulesUpdateCall) IfNoneMatch(entityTag string) *AccountsContainersRulesUpdateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *AccountsContainersRulesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.rule)
@@ -3427,23 +3879,34 @@ func (c *AccountsContainersRulesUpdateCall) doRequest(alt string) (*http.Respons
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "tagmanager.accounts.containers.rules.update" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsContainersRulesUpdateCall) Do() (*Rule, error) {
 	res, err := c.doRequest("json")
+	ret := &Rule{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Rule
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Updates a GTM Rule.",
 	//   "httpMethod": "PUT",
@@ -3519,6 +3982,14 @@ func (c *AccountsContainersTagsCreateCall) Fields(s ...googleapi.Field) *Account
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsContainersTagsCreateCall) IfNoneMatch(entityTag string) *AccountsContainersTagsCreateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *AccountsContainersTagsCreateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.tag)
@@ -3540,23 +4011,34 @@ func (c *AccountsContainersTagsCreateCall) doRequest(alt string) (*http.Response
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "tagmanager.accounts.containers.tags.create" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsContainersTagsCreateCall) Do() (*Tag, error) {
 	res, err := c.doRequest("json")
+	ret := &Tag{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Tag
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Creates a GTM Tag.",
 	//   "httpMethod": "POST",
@@ -3620,6 +4102,14 @@ func (c *AccountsContainersTagsDeleteCall) Fields(s ...googleapi.Field) *Account
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsContainersTagsDeleteCall) IfNoneMatch(entityTag string) *AccountsContainersTagsDeleteCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *AccountsContainersTagsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3636,9 +4126,13 @@ func (c *AccountsContainersTagsDeleteCall) doRequest(alt string) (*http.Response
 		"tagId":       c.tagId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "tagmanager.accounts.containers.tags.delete" call.
 func (c *AccountsContainersTagsDeleteCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -3713,6 +4207,14 @@ func (c *AccountsContainersTagsGetCall) Fields(s ...googleapi.Field) *AccountsCo
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsContainersTagsGetCall) IfNoneMatch(entityTag string) *AccountsContainersTagsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *AccountsContainersTagsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3729,23 +4231,34 @@ func (c *AccountsContainersTagsGetCall) doRequest(alt string) (*http.Response, e
 		"tagId":       c.tagId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "tagmanager.accounts.containers.tags.get" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsContainersTagsGetCall) Do() (*Tag, error) {
 	res, err := c.doRequest("json")
+	ret := &Tag{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Tag
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Gets a GTM Tag.",
 	//   "httpMethod": "GET",
@@ -3812,6 +4325,14 @@ func (c *AccountsContainersTagsListCall) Fields(s ...googleapi.Field) *AccountsC
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsContainersTagsListCall) IfNoneMatch(entityTag string) *AccountsContainersTagsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *AccountsContainersTagsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3827,23 +4348,34 @@ func (c *AccountsContainersTagsListCall) doRequest(alt string) (*http.Response, 
 		"containerId": c.containerId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "tagmanager.accounts.containers.tags.list" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsContainersTagsListCall) Do() (*ListTagsResponse, error) {
 	res, err := c.doRequest("json")
+	ret := &ListTagsResponse{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *ListTagsResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Lists all GTM Tags of a Container.",
 	//   "httpMethod": "GET",
@@ -3914,6 +4446,14 @@ func (c *AccountsContainersTagsUpdateCall) Fields(s ...googleapi.Field) *Account
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsContainersTagsUpdateCall) IfNoneMatch(entityTag string) *AccountsContainersTagsUpdateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *AccountsContainersTagsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.tag)
@@ -3939,23 +4479,34 @@ func (c *AccountsContainersTagsUpdateCall) doRequest(alt string) (*http.Response
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "tagmanager.accounts.containers.tags.update" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsContainersTagsUpdateCall) Do() (*Tag, error) {
 	res, err := c.doRequest("json")
+	ret := &Tag{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Tag
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Updates a GTM Tag.",
 	//   "httpMethod": "PUT",
@@ -4031,6 +4582,14 @@ func (c *AccountsContainersTriggersCreateCall) Fields(s ...googleapi.Field) *Acc
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsContainersTriggersCreateCall) IfNoneMatch(entityTag string) *AccountsContainersTriggersCreateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *AccountsContainersTriggersCreateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.trigger)
@@ -4052,23 +4611,34 @@ func (c *AccountsContainersTriggersCreateCall) doRequest(alt string) (*http.Resp
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "tagmanager.accounts.containers.triggers.create" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsContainersTriggersCreateCall) Do() (*Trigger, error) {
 	res, err := c.doRequest("json")
+	ret := &Trigger{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Trigger
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Creates a GTM Trigger.",
 	//   "httpMethod": "POST",
@@ -4132,6 +4702,14 @@ func (c *AccountsContainersTriggersDeleteCall) Fields(s ...googleapi.Field) *Acc
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsContainersTriggersDeleteCall) IfNoneMatch(entityTag string) *AccountsContainersTriggersDeleteCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *AccountsContainersTriggersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4148,9 +4726,13 @@ func (c *AccountsContainersTriggersDeleteCall) doRequest(alt string) (*http.Resp
 		"triggerId":   c.triggerId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "tagmanager.accounts.containers.triggers.delete" call.
 func (c *AccountsContainersTriggersDeleteCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -4225,6 +4807,14 @@ func (c *AccountsContainersTriggersGetCall) Fields(s ...googleapi.Field) *Accoun
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsContainersTriggersGetCall) IfNoneMatch(entityTag string) *AccountsContainersTriggersGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *AccountsContainersTriggersGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4241,23 +4831,34 @@ func (c *AccountsContainersTriggersGetCall) doRequest(alt string) (*http.Respons
 		"triggerId":   c.triggerId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "tagmanager.accounts.containers.triggers.get" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsContainersTriggersGetCall) Do() (*Trigger, error) {
 	res, err := c.doRequest("json")
+	ret := &Trigger{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Trigger
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Gets a GTM Trigger.",
 	//   "httpMethod": "GET",
@@ -4324,6 +4925,14 @@ func (c *AccountsContainersTriggersListCall) Fields(s ...googleapi.Field) *Accou
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsContainersTriggersListCall) IfNoneMatch(entityTag string) *AccountsContainersTriggersListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *AccountsContainersTriggersListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4339,23 +4948,34 @@ func (c *AccountsContainersTriggersListCall) doRequest(alt string) (*http.Respon
 		"containerId": c.containerId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "tagmanager.accounts.containers.triggers.list" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsContainersTriggersListCall) Do() (*ListTriggersResponse, error) {
 	res, err := c.doRequest("json")
+	ret := &ListTriggersResponse{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *ListTriggersResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Lists all GTM Triggers of a Container.",
 	//   "httpMethod": "GET",
@@ -4427,6 +5047,14 @@ func (c *AccountsContainersTriggersUpdateCall) Fields(s ...googleapi.Field) *Acc
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsContainersTriggersUpdateCall) IfNoneMatch(entityTag string) *AccountsContainersTriggersUpdateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *AccountsContainersTriggersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.trigger)
@@ -4452,23 +5080,34 @@ func (c *AccountsContainersTriggersUpdateCall) doRequest(alt string) (*http.Resp
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "tagmanager.accounts.containers.triggers.update" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsContainersTriggersUpdateCall) Do() (*Trigger, error) {
 	res, err := c.doRequest("json")
+	ret := &Trigger{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Trigger
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Updates a GTM Trigger.",
 	//   "httpMethod": "PUT",
@@ -4544,6 +5183,14 @@ func (c *AccountsContainersVariablesCreateCall) Fields(s ...googleapi.Field) *Ac
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsContainersVariablesCreateCall) IfNoneMatch(entityTag string) *AccountsContainersVariablesCreateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *AccountsContainersVariablesCreateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.variable)
@@ -4565,23 +5212,34 @@ func (c *AccountsContainersVariablesCreateCall) doRequest(alt string) (*http.Res
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "tagmanager.accounts.containers.variables.create" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsContainersVariablesCreateCall) Do() (*Variable, error) {
 	res, err := c.doRequest("json")
+	ret := &Variable{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Variable
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Creates a GTM Variable.",
 	//   "httpMethod": "POST",
@@ -4645,6 +5303,14 @@ func (c *AccountsContainersVariablesDeleteCall) Fields(s ...googleapi.Field) *Ac
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsContainersVariablesDeleteCall) IfNoneMatch(entityTag string) *AccountsContainersVariablesDeleteCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *AccountsContainersVariablesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4661,9 +5327,13 @@ func (c *AccountsContainersVariablesDeleteCall) doRequest(alt string) (*http.Res
 		"variableId":  c.variableId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "tagmanager.accounts.containers.variables.delete" call.
 func (c *AccountsContainersVariablesDeleteCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -4738,6 +5408,14 @@ func (c *AccountsContainersVariablesGetCall) Fields(s ...googleapi.Field) *Accou
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsContainersVariablesGetCall) IfNoneMatch(entityTag string) *AccountsContainersVariablesGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *AccountsContainersVariablesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4754,23 +5432,34 @@ func (c *AccountsContainersVariablesGetCall) doRequest(alt string) (*http.Respon
 		"variableId":  c.variableId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "tagmanager.accounts.containers.variables.get" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsContainersVariablesGetCall) Do() (*Variable, error) {
 	res, err := c.doRequest("json")
+	ret := &Variable{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Variable
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Gets a GTM Variable.",
 	//   "httpMethod": "GET",
@@ -4837,6 +5526,14 @@ func (c *AccountsContainersVariablesListCall) Fields(s ...googleapi.Field) *Acco
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsContainersVariablesListCall) IfNoneMatch(entityTag string) *AccountsContainersVariablesListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *AccountsContainersVariablesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4852,23 +5549,34 @@ func (c *AccountsContainersVariablesListCall) doRequest(alt string) (*http.Respo
 		"containerId": c.containerId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "tagmanager.accounts.containers.variables.list" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsContainersVariablesListCall) Do() (*ListVariablesResponse, error) {
 	res, err := c.doRequest("json")
+	ret := &ListVariablesResponse{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *ListVariablesResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Lists all GTM Variables of a Container.",
 	//   "httpMethod": "GET",
@@ -4940,6 +5648,14 @@ func (c *AccountsContainersVariablesUpdateCall) Fields(s ...googleapi.Field) *Ac
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsContainersVariablesUpdateCall) IfNoneMatch(entityTag string) *AccountsContainersVariablesUpdateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *AccountsContainersVariablesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.variable)
@@ -4965,23 +5681,34 @@ func (c *AccountsContainersVariablesUpdateCall) doRequest(alt string) (*http.Res
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "tagmanager.accounts.containers.variables.update" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsContainersVariablesUpdateCall) Do() (*Variable, error) {
 	res, err := c.doRequest("json")
+	ret := &Variable{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Variable
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Updates a GTM Variable.",
 	//   "httpMethod": "PUT",
@@ -5057,6 +5784,14 @@ func (c *AccountsContainersVersionsCreateCall) Fields(s ...googleapi.Field) *Acc
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsContainersVersionsCreateCall) IfNoneMatch(entityTag string) *AccountsContainersVersionsCreateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *AccountsContainersVersionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.createcontainerversionrequestversionoptions)
@@ -5078,23 +5813,34 @@ func (c *AccountsContainersVersionsCreateCall) doRequest(alt string) (*http.Resp
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "tagmanager.accounts.containers.versions.create" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsContainersVersionsCreateCall) Do() (*CreateContainerVersionResponse, error) {
 	res, err := c.doRequest("json")
+	ret := &CreateContainerVersionResponse{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *CreateContainerVersionResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Creates a Container Version.",
 	//   "httpMethod": "POST",
@@ -5158,6 +5904,14 @@ func (c *AccountsContainersVersionsDeleteCall) Fields(s ...googleapi.Field) *Acc
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsContainersVersionsDeleteCall) IfNoneMatch(entityTag string) *AccountsContainersVersionsDeleteCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *AccountsContainersVersionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5174,9 +5928,13 @@ func (c *AccountsContainersVersionsDeleteCall) doRequest(alt string) (*http.Resp
 		"containerVersionId": c.containerVersionId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "tagmanager.accounts.containers.versions.delete" call.
 func (c *AccountsContainersVersionsDeleteCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -5251,6 +6009,14 @@ func (c *AccountsContainersVersionsGetCall) Fields(s ...googleapi.Field) *Accoun
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsContainersVersionsGetCall) IfNoneMatch(entityTag string) *AccountsContainersVersionsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *AccountsContainersVersionsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5267,23 +6033,34 @@ func (c *AccountsContainersVersionsGetCall) doRequest(alt string) (*http.Respons
 		"containerVersionId": c.containerVersionId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "tagmanager.accounts.containers.versions.get" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsContainersVersionsGetCall) Do() (*ContainerVersion, error) {
 	res, err := c.doRequest("json")
+	ret := &ContainerVersion{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *ContainerVersion
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Gets a Container Version.",
 	//   "httpMethod": "GET",
@@ -5358,6 +6135,14 @@ func (c *AccountsContainersVersionsListCall) Fields(s ...googleapi.Field) *Accou
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsContainersVersionsListCall) IfNoneMatch(entityTag string) *AccountsContainersVersionsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *AccountsContainersVersionsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5376,23 +6161,34 @@ func (c *AccountsContainersVersionsListCall) doRequest(alt string) (*http.Respon
 		"containerId": c.containerId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "tagmanager.accounts.containers.versions.list" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsContainersVersionsListCall) Do() (*ListContainerVersionsResponse, error) {
 	res, err := c.doRequest("json")
+	ret := &ListContainerVersionsResponse{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *ListContainerVersionsResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Lists all Container Versions of a GTM Container.",
 	//   "httpMethod": "GET",
@@ -5469,6 +6265,14 @@ func (c *AccountsContainersVersionsPublishCall) Fields(s ...googleapi.Field) *Ac
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsContainersVersionsPublishCall) IfNoneMatch(entityTag string) *AccountsContainersVersionsPublishCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *AccountsContainersVersionsPublishCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5488,23 +6292,34 @@ func (c *AccountsContainersVersionsPublishCall) doRequest(alt string) (*http.Res
 		"containerVersionId": c.containerVersionId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "tagmanager.accounts.containers.versions.publish" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsContainersVersionsPublishCall) Do() (*PublishContainerVersionResponse, error) {
 	res, err := c.doRequest("json")
+	ret := &PublishContainerVersionResponse{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *PublishContainerVersionResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Publishes a Container Version.",
 	//   "httpMethod": "POST",
@@ -5580,6 +6395,14 @@ func (c *AccountsContainersVersionsRestoreCall) Fields(s ...googleapi.Field) *Ac
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsContainersVersionsRestoreCall) IfNoneMatch(entityTag string) *AccountsContainersVersionsRestoreCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *AccountsContainersVersionsRestoreCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5596,23 +6419,34 @@ func (c *AccountsContainersVersionsRestoreCall) doRequest(alt string) (*http.Res
 		"containerVersionId": c.containerVersionId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "tagmanager.accounts.containers.versions.restore" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsContainersVersionsRestoreCall) Do() (*ContainerVersion, error) {
 	res, err := c.doRequest("json")
+	ret := &ContainerVersion{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *ContainerVersion
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Restores a Container Version. This will overwrite the container's current configuration (including its macros, rules and tags). The operation will not have any effect on the version that is being served (i.e. the published version).",
 	//   "httpMethod": "POST",
@@ -5680,6 +6514,14 @@ func (c *AccountsContainersVersionsUndeleteCall) Fields(s ...googleapi.Field) *A
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsContainersVersionsUndeleteCall) IfNoneMatch(entityTag string) *AccountsContainersVersionsUndeleteCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *AccountsContainersVersionsUndeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5696,23 +6538,34 @@ func (c *AccountsContainersVersionsUndeleteCall) doRequest(alt string) (*http.Re
 		"containerVersionId": c.containerVersionId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "tagmanager.accounts.containers.versions.undelete" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsContainersVersionsUndeleteCall) Do() (*ContainerVersion, error) {
 	res, err := c.doRequest("json")
+	ret := &ContainerVersion{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *ContainerVersion
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Undeletes a Container Version.",
 	//   "httpMethod": "POST",
@@ -5790,6 +6643,14 @@ func (c *AccountsContainersVersionsUpdateCall) Fields(s ...googleapi.Field) *Acc
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsContainersVersionsUpdateCall) IfNoneMatch(entityTag string) *AccountsContainersVersionsUpdateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *AccountsContainersVersionsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.containerversion)
@@ -5815,23 +6676,34 @@ func (c *AccountsContainersVersionsUpdateCall) doRequest(alt string) (*http.Resp
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "tagmanager.accounts.containers.versions.update" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsContainersVersionsUpdateCall) Do() (*ContainerVersion, error) {
 	res, err := c.doRequest("json")
+	ret := &ContainerVersion{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *ContainerVersion
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Updates a Container Version.",
 	//   "httpMethod": "PUT",
@@ -5905,6 +6777,14 @@ func (c *AccountsPermissionsCreateCall) Fields(s ...googleapi.Field) *AccountsPe
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsPermissionsCreateCall) IfNoneMatch(entityTag string) *AccountsPermissionsCreateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *AccountsPermissionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.useraccess)
@@ -5925,23 +6805,34 @@ func (c *AccountsPermissionsCreateCall) doRequest(alt string) (*http.Response, e
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "tagmanager.accounts.permissions.create" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsPermissionsCreateCall) Do() (*UserAccess, error) {
 	res, err := c.doRequest("json")
+	ret := &UserAccess{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *UserAccess
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Creates a user's Account \u0026 Container Permissions.",
 	//   "httpMethod": "POST",
@@ -5997,6 +6888,14 @@ func (c *AccountsPermissionsDeleteCall) Fields(s ...googleapi.Field) *AccountsPe
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsPermissionsDeleteCall) IfNoneMatch(entityTag string) *AccountsPermissionsDeleteCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *AccountsPermissionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -6012,9 +6911,13 @@ func (c *AccountsPermissionsDeleteCall) doRequest(alt string) (*http.Response, e
 		"permissionId": c.permissionId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "tagmanager.accounts.permissions.delete" call.
 func (c *AccountsPermissionsDeleteCall) Do() error {
 	res, err := c.doRequest("json")
 	if err != nil {
@@ -6080,6 +6983,14 @@ func (c *AccountsPermissionsGetCall) Fields(s ...googleapi.Field) *AccountsPermi
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsPermissionsGetCall) IfNoneMatch(entityTag string) *AccountsPermissionsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *AccountsPermissionsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -6095,23 +7006,34 @@ func (c *AccountsPermissionsGetCall) doRequest(alt string) (*http.Response, erro
 		"permissionId": c.permissionId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "tagmanager.accounts.permissions.get" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsPermissionsGetCall) Do() (*UserAccess, error) {
 	res, err := c.doRequest("json")
+	ret := &UserAccess{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *UserAccess
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Gets a user's Account \u0026 Container Permissions.",
 	//   "httpMethod": "GET",
@@ -6169,6 +7091,14 @@ func (c *AccountsPermissionsListCall) Fields(s ...googleapi.Field) *AccountsPerm
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsPermissionsListCall) IfNoneMatch(entityTag string) *AccountsPermissionsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *AccountsPermissionsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -6183,23 +7113,34 @@ func (c *AccountsPermissionsListCall) doRequest(alt string) (*http.Response, err
 		"accountId": c.accountId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "tagmanager.accounts.permissions.list" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsPermissionsListCall) Do() (*ListAccountUsersResponse, error) {
 	res, err := c.doRequest("json")
+	ret := &ListAccountUsersResponse{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *ListAccountUsersResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "List all users that have access to the account along with Account and Container Permissions granted to each of them.",
 	//   "httpMethod": "GET",
@@ -6253,6 +7194,14 @@ func (c *AccountsPermissionsUpdateCall) Fields(s ...googleapi.Field) *AccountsPe
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsPermissionsUpdateCall) IfNoneMatch(entityTag string) *AccountsPermissionsUpdateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *AccountsPermissionsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.useraccess)
@@ -6274,23 +7223,34 @@ func (c *AccountsPermissionsUpdateCall) doRequest(alt string) (*http.Response, e
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "tagmanager.accounts.permissions.update" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsPermissionsUpdateCall) Do() (*UserAccess, error) {
 	res, err := c.doRequest("json")
+	ret := &UserAccess{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *UserAccess
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Updates a user's Account \u0026 Container Permissions.",
 	//   "httpMethod": "PUT",

@@ -145,6 +145,7 @@ type InstanceUpdateErrorErrors struct {
 
 // InstanceUpdateList: Response returned by ListInstanceUpdates method.
 type InstanceUpdateList struct {
+	googleapi.ServerResponse
 	// Items: Collection of requested instance updates.
 	Items []*InstanceUpdate `json:"items,omitempty"`
 
@@ -161,6 +162,7 @@ type InstanceUpdateList struct {
 // Operation: An operation resource, used to manage asynchronous API
 // requests.
 type Operation struct {
+	googleapi.ServerResponse
 	ClientOperationId string `json:"clientOperationId,omitempty"`
 
 	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
@@ -274,6 +276,7 @@ type OperationWarningsData struct {
 // single update (rollout) of a group of instances to the given
 // template.
 type RollingUpdate struct {
+	googleapi.ServerResponse
 	// ActionType: Specifies the action to take for each instance within the
 	// instance group. This can be RECREATE which will recreate each
 	// instance and is only available for managed instance groups. It can
@@ -407,6 +410,7 @@ type RollingUpdatePolicy struct {
 
 // RollingUpdateList: Response returned by List method.
 type RollingUpdateList struct {
+	googleapi.ServerResponse
 	// Items: Collection of requested updates.
 	Items []*RollingUpdate `json:"items,omitempty"`
 
@@ -449,6 +453,14 @@ func (c *RollingUpdatesCancelCall) Fields(s ...googleapi.Field) *RollingUpdatesC
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *RollingUpdatesCancelCall) IfNoneMatch(entityTag string) *RollingUpdatesCancelCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *RollingUpdatesCancelCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -465,23 +477,34 @@ func (c *RollingUpdatesCancelCall) doRequest(alt string) (*http.Response, error)
 		"rollingUpdate": c.rollingUpdate,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "replicapoolupdater.rollingUpdates.cancel" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *RollingUpdatesCancelCall) Do() (*Operation, error) {
 	res, err := c.doRequest("json")
+	ret := &Operation{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Operation
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Cancels an update. The update must be PAUSED before it can be cancelled. This has no effect if the update is already CANCELLED.",
 	//   "httpMethod": "POST",
@@ -552,6 +575,14 @@ func (c *RollingUpdatesGetCall) Fields(s ...googleapi.Field) *RollingUpdatesGetC
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *RollingUpdatesGetCall) IfNoneMatch(entityTag string) *RollingUpdatesGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *RollingUpdatesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -568,23 +599,34 @@ func (c *RollingUpdatesGetCall) doRequest(alt string) (*http.Response, error) {
 		"rollingUpdate": c.rollingUpdate,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "replicapoolupdater.rollingUpdates.get" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *RollingUpdatesGetCall) Do() (*RollingUpdate, error) {
 	res, err := c.doRequest("json")
+	ret := &RollingUpdate{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *RollingUpdate
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Returns information about an update.",
 	//   "httpMethod": "GET",
@@ -657,6 +699,14 @@ func (c *RollingUpdatesInsertCall) Fields(s ...googleapi.Field) *RollingUpdatesI
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *RollingUpdatesInsertCall) IfNoneMatch(entityTag string) *RollingUpdatesInsertCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *RollingUpdatesInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.rollingupdate)
@@ -678,23 +728,34 @@ func (c *RollingUpdatesInsertCall) doRequest(alt string) (*http.Response, error)
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "replicapoolupdater.rollingUpdates.insert" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *RollingUpdatesInsertCall) Do() (*Operation, error) {
 	res, err := c.doRequest("json")
+	ret := &Operation{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Operation
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Inserts and starts a new update.",
 	//   "httpMethod": "POST",
@@ -783,6 +844,14 @@ func (c *RollingUpdatesListCall) Fields(s ...googleapi.Field) *RollingUpdatesLis
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *RollingUpdatesListCall) IfNoneMatch(entityTag string) *RollingUpdatesListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *RollingUpdatesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -807,23 +876,34 @@ func (c *RollingUpdatesListCall) doRequest(alt string) (*http.Response, error) {
 		"zone":    c.zone,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "replicapoolupdater.rollingUpdates.list" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *RollingUpdatesListCall) Do() (*RollingUpdateList, error) {
 	res, err := c.doRequest("json")
+	ret := &RollingUpdateList{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *RollingUpdateList
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Lists recent updates for a given managed instance group, in reverse chronological order and paginated format.",
 	//   "httpMethod": "GET",
@@ -932,6 +1012,14 @@ func (c *RollingUpdatesListInstanceUpdatesCall) Fields(s ...googleapi.Field) *Ro
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *RollingUpdatesListInstanceUpdatesCall) IfNoneMatch(entityTag string) *RollingUpdatesListInstanceUpdatesCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *RollingUpdatesListInstanceUpdatesCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -957,23 +1045,34 @@ func (c *RollingUpdatesListInstanceUpdatesCall) doRequest(alt string) (*http.Res
 		"rollingUpdate": c.rollingUpdate,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "replicapoolupdater.rollingUpdates.listInstanceUpdates" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *RollingUpdatesListInstanceUpdatesCall) Do() (*InstanceUpdateList, error) {
 	res, err := c.doRequest("json")
+	ret := &InstanceUpdateList{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *InstanceUpdateList
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Lists the current status for each instance within a given update.",
 	//   "httpMethod": "GET",
@@ -1067,6 +1166,14 @@ func (c *RollingUpdatesPauseCall) Fields(s ...googleapi.Field) *RollingUpdatesPa
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *RollingUpdatesPauseCall) IfNoneMatch(entityTag string) *RollingUpdatesPauseCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *RollingUpdatesPauseCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1083,23 +1190,34 @@ func (c *RollingUpdatesPauseCall) doRequest(alt string) (*http.Response, error) 
 		"rollingUpdate": c.rollingUpdate,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "replicapoolupdater.rollingUpdates.pause" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *RollingUpdatesPauseCall) Do() (*Operation, error) {
 	res, err := c.doRequest("json")
+	ret := &Operation{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Operation
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Pauses the update in state from ROLLING_FORWARD or ROLLING_BACK. Has no effect if invoked when the state of the update is PAUSED.",
 	//   "httpMethod": "POST",
@@ -1171,6 +1289,14 @@ func (c *RollingUpdatesResumeCall) Fields(s ...googleapi.Field) *RollingUpdatesR
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *RollingUpdatesResumeCall) IfNoneMatch(entityTag string) *RollingUpdatesResumeCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *RollingUpdatesResumeCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1187,23 +1313,34 @@ func (c *RollingUpdatesResumeCall) doRequest(alt string) (*http.Response, error)
 		"rollingUpdate": c.rollingUpdate,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "replicapoolupdater.rollingUpdates.resume" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *RollingUpdatesResumeCall) Do() (*Operation, error) {
 	res, err := c.doRequest("json")
+	ret := &Operation{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Operation
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Continues an update in PAUSED state. Has no effect if invoked when the state of the update is ROLLED_OUT.",
 	//   "httpMethod": "POST",
@@ -1276,6 +1413,14 @@ func (c *RollingUpdatesRollbackCall) Fields(s ...googleapi.Field) *RollingUpdate
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *RollingUpdatesRollbackCall) IfNoneMatch(entityTag string) *RollingUpdatesRollbackCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *RollingUpdatesRollbackCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1292,23 +1437,34 @@ func (c *RollingUpdatesRollbackCall) doRequest(alt string) (*http.Response, erro
 		"rollingUpdate": c.rollingUpdate,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "replicapoolupdater.rollingUpdates.rollback" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *RollingUpdatesRollbackCall) Do() (*Operation, error) {
 	res, err := c.doRequest("json")
+	ret := &Operation{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Operation
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Rolls back the update in state from ROLLING_FORWARD or PAUSED. Has no effect if invoked when the state of the update is ROLLED_BACK.",
 	//   "httpMethod": "POST",
@@ -1378,6 +1534,14 @@ func (c *ZoneOperationsGetCall) Fields(s ...googleapi.Field) *ZoneOperationsGetC
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ZoneOperationsGetCall) IfNoneMatch(entityTag string) *ZoneOperationsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *ZoneOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1394,23 +1558,34 @@ func (c *ZoneOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 		"operation": c.operation,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "replicapoolupdater.zoneOperations.get" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ZoneOperationsGetCall) Do() (*Operation, error) {
 	res, err := c.doRequest("json")
+	ret := &Operation{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Operation
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Retrieves the specified zone-specific operation resource.",
 	//   "httpMethod": "GET",

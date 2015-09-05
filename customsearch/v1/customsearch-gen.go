@@ -256,6 +256,7 @@ type ResultPagemap struct {
 }
 
 type Search struct {
+	googleapi.ServerResponse
 	Context *Context `json:"context,omitempty"`
 
 	Items []*Result `json:"items,omitempty"`
@@ -629,6 +630,14 @@ func (c *CseListCall) Fields(s ...googleapi.Field) *CseListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *CseListCall) IfNoneMatch(entityTag string) *CseListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *CseListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -735,23 +744,34 @@ func (c *CseListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "search.cse.list" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *CseListCall) Do() (*Search, error) {
 	res, err := c.doRequest("json")
+	ret := &Search{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Search
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Returns metadata about the search performed, metadata about the custom search engine used for the search, and the search results.",
 	//   "httpMethod": "GET",

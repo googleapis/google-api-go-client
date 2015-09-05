@@ -94,6 +94,7 @@ type CreativesService struct {
 
 // Account: Configuration data for an Ad Exchange buyer account.
 type Account struct {
+	googleapi.ServerResponse
 	// BidderLocation: Your bidder locations that have distinct URLs.
 	BidderLocation []*AccountBidderLocation `json:"bidderLocation,omitempty"`
 
@@ -148,6 +149,7 @@ type AccountBidderLocation struct {
 // the user has access to. Each entry in the feed corresponds to a
 // single buyer account.
 type AccountsList struct {
+	googleapi.ServerResponse
 	// Items: A list of accounts.
 	Items []*Account `json:"items,omitempty"`
 
@@ -157,6 +159,7 @@ type AccountsList struct {
 
 // Creative: A creative and its classification data.
 type Creative struct {
+	googleapi.ServerResponse
 	// HTMLSnippet: The HTML snippet that displays the ad when inserted in
 	// the web page. If set, videoURL should not be set.
 	HTMLSnippet string `json:"HTMLSnippet,omitempty"`
@@ -278,6 +281,7 @@ type CreativeFilteringReasonsReasons struct {
 // Ad Exchange buyer accounts that the user has access to. Each entry in
 // the feed corresponds to a single creative.
 type CreativesList struct {
+	googleapi.ServerResponse
 	// Items: A list of creatives.
 	Items []*Creative `json:"items,omitempty"`
 
@@ -313,6 +317,14 @@ func (c *AccountsGetCall) Fields(s ...googleapi.Field) *AccountsGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsGetCall) IfNoneMatch(entityTag string) *AccountsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *AccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -327,23 +339,34 @@ func (c *AccountsGetCall) doRequest(alt string) (*http.Response, error) {
 		"id": strconv.FormatInt(c.id, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "adexchangebuyer.accounts.get" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsGetCall) Do() (*Account, error) {
 	res, err := c.doRequest("json")
+	ret := &Account{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Account
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Gets one account by ID.",
 	//   "httpMethod": "GET",
@@ -392,6 +415,14 @@ func (c *AccountsListCall) Fields(s ...googleapi.Field) *AccountsListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsListCall) IfNoneMatch(entityTag string) *AccountsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *AccountsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -404,23 +435,34 @@ func (c *AccountsListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "adexchangebuyer.accounts.list" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsListCall) Do() (*AccountsList, error) {
 	res, err := c.doRequest("json")
+	ret := &AccountsList{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *AccountsList
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Retrieves the authenticated user's list of accounts.",
 	//   "httpMethod": "GET",
@@ -462,6 +504,14 @@ func (c *AccountsPatchCall) Fields(s ...googleapi.Field) *AccountsPatchCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsPatchCall) IfNoneMatch(entityTag string) *AccountsPatchCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *AccountsPatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.account)
@@ -482,23 +532,34 @@ func (c *AccountsPatchCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "adexchangebuyer.accounts.patch" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsPatchCall) Do() (*Account, error) {
 	res, err := c.doRequest("json")
+	ret := &Account{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Account
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Updates an existing account. This method supports patch semantics.",
 	//   "httpMethod": "PATCH",
@@ -554,6 +615,14 @@ func (c *AccountsUpdateCall) Fields(s ...googleapi.Field) *AccountsUpdateCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsUpdateCall) IfNoneMatch(entityTag string) *AccountsUpdateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *AccountsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.account)
@@ -574,23 +643,34 @@ func (c *AccountsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "adexchangebuyer.accounts.update" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *AccountsUpdateCall) Do() (*Account, error) {
 	res, err := c.doRequest("json")
+	ret := &Account{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Account
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Updates an existing account.",
 	//   "httpMethod": "PUT",
@@ -647,6 +727,14 @@ func (c *CreativesGetCall) Fields(s ...googleapi.Field) *CreativesGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *CreativesGetCall) IfNoneMatch(entityTag string) *CreativesGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *CreativesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -662,23 +750,34 @@ func (c *CreativesGetCall) doRequest(alt string) (*http.Response, error) {
 		"buyerCreativeId": c.buyerCreativeId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "adexchangebuyer.creatives.get" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *CreativesGetCall) Do() (*Creative, error) {
 	res, err := c.doRequest("json")
+	ret := &Creative{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Creative
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Gets the status for a single creative. A creative will be available 30-40 minutes after submission.",
 	//   "httpMethod": "GET",
@@ -736,6 +835,14 @@ func (c *CreativesInsertCall) Fields(s ...googleapi.Field) *CreativesInsertCall 
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *CreativesInsertCall) IfNoneMatch(entityTag string) *CreativesInsertCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *CreativesInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.creative)
@@ -754,23 +861,34 @@ func (c *CreativesInsertCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "adexchangebuyer.creatives.insert" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *CreativesInsertCall) Do() (*Creative, error) {
 	res, err := c.doRequest("json")
+	ret := &Creative{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Creative
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Submit a new creative.",
 	//   "httpMethod": "POST",
@@ -840,6 +958,14 @@ func (c *CreativesListCall) Fields(s ...googleapi.Field) *CreativesListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *CreativesListCall) IfNoneMatch(entityTag string) *CreativesListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *CreativesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -861,23 +987,34 @@ func (c *CreativesListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "adexchangebuyer.creatives.list" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *CreativesListCall) Do() (*CreativesList, error) {
 	res, err := c.doRequest("json")
+	ret := &CreativesList{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *CreativesList
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Retrieves a list of the authenticated user's active creatives. A creative will be available 30-40 minutes after submission.",
 	//   "httpMethod": "GET",

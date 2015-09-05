@@ -184,6 +184,7 @@ type CustomFieldDef struct {
 // CustomFieldDefListResponse: Collection of custom field definitions
 // for a team.
 type CustomFieldDefListResponse struct {
+	googleapi.ServerResponse
 	// Items: Collection of custom field definitions in a team.
 	Items []*CustomFieldDef `json:"items,omitempty"`
 
@@ -217,6 +218,7 @@ type EnumItemDef struct {
 
 // Job: A job.
 type Job struct {
+	googleapi.ServerResponse
 	// Id: Job id.
 	Id uint64 `json:"id,omitempty,string"`
 
@@ -247,6 +249,7 @@ type JobChange struct {
 
 // JobListResponse: Response from a List Jobs request.
 type JobListResponse struct {
+	googleapi.ServerResponse
 	// Items: Jobs in the collection.
 	Items []*Job `json:"items,omitempty"`
 
@@ -305,6 +308,7 @@ type Location struct {
 
 // LocationListResponse: Response from a List Locations request.
 type LocationListResponse struct {
+	googleapi.ServerResponse
 	// Items: Locations in the collection.
 	Items []*LocationRecord `json:"items,omitempty"`
 
@@ -339,6 +343,7 @@ type LocationRecord struct {
 
 // Schedule: Job schedule.
 type Schedule struct {
+	googleapi.ServerResponse
 	// AllDay: Whether the job is scheduled for the whole day. Time of day
 	// in start/end times is ignored if this is true.
 	AllDay bool `json:"allDay,omitempty"`
@@ -371,6 +376,7 @@ type Team struct {
 
 // TeamListResponse: Response from a List Teams request.
 type TeamListResponse struct {
+	googleapi.ServerResponse
 	// Items: Teams in the collection.
 	Items []*Team `json:"items,omitempty"`
 
@@ -403,6 +409,7 @@ type Worker struct {
 
 // WorkerListResponse: Response from a List Workers request.
 type WorkerListResponse struct {
+	googleapi.ServerResponse
 	// Items: Workers in the collection.
 	Items []*Worker `json:"items,omitempty"`
 
@@ -433,6 +440,14 @@ func (c *CustomFieldDefListCall) Fields(s ...googleapi.Field) *CustomFieldDefLis
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *CustomFieldDefListCall) IfNoneMatch(entityTag string) *CustomFieldDefListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *CustomFieldDefListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -447,23 +462,34 @@ func (c *CustomFieldDefListCall) doRequest(alt string) (*http.Response, error) {
 		"teamId": c.teamId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "coordinate.customFieldDef.list" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *CustomFieldDefListCall) Do() (*CustomFieldDefListResponse, error) {
 	res, err := c.doRequest("json")
+	ret := &CustomFieldDefListResponse{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *CustomFieldDefListResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Retrieves a list of custom field definitions for a team.",
 	//   "httpMethod": "GET",
@@ -516,6 +542,14 @@ func (c *JobsGetCall) Fields(s ...googleapi.Field) *JobsGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *JobsGetCall) IfNoneMatch(entityTag string) *JobsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *JobsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -531,23 +565,34 @@ func (c *JobsGetCall) doRequest(alt string) (*http.Response, error) {
 		"jobId":  strconv.FormatUint(c.jobId, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "coordinate.jobs.get" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *JobsGetCall) Do() (*Job, error) {
 	res, err := c.doRequest("json")
+	ret := &Job{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Job
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Retrieves a job, including all the changes made to the job.",
 	//   "httpMethod": "GET",
@@ -657,6 +702,14 @@ func (c *JobsInsertCall) Fields(s ...googleapi.Field) *JobsInsertCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *JobsInsertCall) IfNoneMatch(entityTag string) *JobsInsertCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *JobsInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.job)
@@ -696,23 +749,34 @@ func (c *JobsInsertCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "coordinate.jobs.insert" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *JobsInsertCall) Do() (*Job, error) {
 	res, err := c.doRequest("json")
+	ret := &Job{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Job
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Inserts a new job. Only the state field of the job should be set.",
 	//   "httpMethod": "POST",
@@ -849,6 +913,14 @@ func (c *JobsListCall) Fields(s ...googleapi.Field) *JobsListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *JobsListCall) IfNoneMatch(entityTag string) *JobsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *JobsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -875,23 +947,34 @@ func (c *JobsListCall) doRequest(alt string) (*http.Response, error) {
 		"teamId": c.teamId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "coordinate.jobs.list" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *JobsListCall) Do() (*JobListResponse, error) {
 	res, err := c.doRequest("json")
+	ret := &JobListResponse{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *JobListResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Retrieves jobs created or modified since the given timestamp.",
 	//   "httpMethod": "GET",
@@ -1049,6 +1132,14 @@ func (c *JobsPatchCall) Fields(s ...googleapi.Field) *JobsPatchCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *JobsPatchCall) IfNoneMatch(entityTag string) *JobsPatchCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *JobsPatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.job)
@@ -1100,23 +1191,34 @@ func (c *JobsPatchCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "coordinate.jobs.patch" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *JobsPatchCall) Do() (*Job, error) {
 	res, err := c.doRequest("json")
+	ret := &Job{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Job
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Updates a job. Fields that are set in the job state will be updated. This method supports patch semantics.",
 	//   "httpMethod": "PATCH",
@@ -1329,6 +1431,14 @@ func (c *JobsUpdateCall) Fields(s ...googleapi.Field) *JobsUpdateCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *JobsUpdateCall) IfNoneMatch(entityTag string) *JobsUpdateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *JobsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.job)
@@ -1380,23 +1490,34 @@ func (c *JobsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "coordinate.jobs.update" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *JobsUpdateCall) Do() (*Job, error) {
 	res, err := c.doRequest("json")
+	ret := &Job{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Job
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Updates a job. Fields that are set in the job state will be updated.",
 	//   "httpMethod": "PUT",
@@ -1541,6 +1662,14 @@ func (c *LocationListCall) Fields(s ...googleapi.Field) *LocationListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *LocationListCall) IfNoneMatch(entityTag string) *LocationListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *LocationListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1563,23 +1692,34 @@ func (c *LocationListCall) doRequest(alt string) (*http.Response, error) {
 		"workerEmail": c.workerEmail,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "coordinate.location.list" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *LocationListCall) Do() (*LocationListResponse, error) {
 	res, err := c.doRequest("json")
+	ret := &LocationListResponse{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *LocationListResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Retrieves a list of locations for a worker.",
 	//   "httpMethod": "GET",
@@ -1658,6 +1798,14 @@ func (c *ScheduleGetCall) Fields(s ...googleapi.Field) *ScheduleGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ScheduleGetCall) IfNoneMatch(entityTag string) *ScheduleGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *ScheduleGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1673,23 +1821,34 @@ func (c *ScheduleGetCall) doRequest(alt string) (*http.Response, error) {
 		"jobId":  strconv.FormatUint(c.jobId, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "coordinate.schedule.get" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ScheduleGetCall) Do() (*Schedule, error) {
 	res, err := c.doRequest("json")
+	ret := &Schedule{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Schedule
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Retrieves the schedule for a job.",
 	//   "httpMethod": "GET",
@@ -1782,6 +1941,14 @@ func (c *SchedulePatchCall) Fields(s ...googleapi.Field) *SchedulePatchCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *SchedulePatchCall) IfNoneMatch(entityTag string) *SchedulePatchCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *SchedulePatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.schedule)
@@ -1815,23 +1982,34 @@ func (c *SchedulePatchCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "coordinate.schedule.patch" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *SchedulePatchCall) Do() (*Schedule, error) {
 	res, err := c.doRequest("json")
+	ret := &Schedule{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Schedule
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Replaces the schedule of a job with the provided schedule. This method supports patch semantics.",
 	//   "httpMethod": "PATCH",
@@ -1948,6 +2126,14 @@ func (c *ScheduleUpdateCall) Fields(s ...googleapi.Field) *ScheduleUpdateCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ScheduleUpdateCall) IfNoneMatch(entityTag string) *ScheduleUpdateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *ScheduleUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.schedule)
@@ -1981,23 +2167,34 @@ func (c *ScheduleUpdateCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "coordinate.schedule.update" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ScheduleUpdateCall) Do() (*Schedule, error) {
 	res, err := c.doRequest("json")
+	ret := &Schedule{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Schedule
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Replaces the schedule of a job with the provided schedule.",
 	//   "httpMethod": "PUT",
@@ -2100,6 +2297,14 @@ func (c *TeamListCall) Fields(s ...googleapi.Field) *TeamListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *TeamListCall) IfNoneMatch(entityTag string) *TeamListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *TeamListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2121,23 +2326,34 @@ func (c *TeamListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "coordinate.team.list" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *TeamListCall) Do() (*TeamListResponse, error) {
 	res, err := c.doRequest("json")
+	ret := &TeamListResponse{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *TeamListResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Retrieves a list of teams for a user.",
 	//   "httpMethod": "GET",
@@ -2194,6 +2410,14 @@ func (c *WorkerListCall) Fields(s ...googleapi.Field) *WorkerListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *WorkerListCall) IfNoneMatch(entityTag string) *WorkerListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *WorkerListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2208,23 +2432,34 @@ func (c *WorkerListCall) doRequest(alt string) (*http.Response, error) {
 		"teamId": c.teamId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "coordinate.worker.list" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *WorkerListCall) Do() (*WorkerListResponse, error) {
 	res, err := c.doRequest("json")
+	ret := &WorkerListResponse{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *WorkerListResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Retrieves a list of workers in a team.",
 	//   "httpMethod": "GET",

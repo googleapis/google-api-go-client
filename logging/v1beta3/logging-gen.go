@@ -387,6 +387,7 @@ type DatasetUpdateResponse struct {
 // (google.protobuf.Empty); } The JSON representation for `Empty` is
 // empty JSON object `{}`.
 type Empty struct {
+	googleapi.ServerResponse
 }
 
 // Entry: Access control entry.
@@ -614,6 +615,7 @@ type JobStatus struct {
 // ListLogServiceIndexesResponse: Result returned from
 // ListLogServiceIndexesRequest.
 type ListLogServiceIndexesResponse struct {
+	googleapi.ServerResponse
 	// NextPageToken: If there are more results, then `nextPageToken` is
 	// returned in the response. To get the next batch of indexes, use the
 	// value of `nextPageToken` as `pageToken` in the next call of
@@ -628,6 +630,7 @@ type ListLogServiceIndexesResponse struct {
 // ListLogServiceSinksResponse: Result returned from
 // `ListLogServiceSinks`.
 type ListLogServiceSinksResponse struct {
+	googleapi.ServerResponse
 	// Sinks: The requested log service sinks. If any of the returned
 	// `LogSink` objects have an empty `destination` field, then call
 	// `logServices.sinks.get` to retrieve the complete `LogSink` object.
@@ -637,6 +640,7 @@ type ListLogServiceSinksResponse struct {
 // ListLogServicesResponse: Result returned from
 // `ListLogServicesRequest`.
 type ListLogServicesResponse struct {
+	googleapi.ServerResponse
 	// LogServices: A list of log services.
 	LogServices []*LogService `json:"logServices,omitempty"`
 
@@ -650,6 +654,7 @@ type ListLogServicesResponse struct {
 
 // ListLogSinksResponse: Result returned from `ListLogSinks`.
 type ListLogSinksResponse struct {
+	googleapi.ServerResponse
 	// Sinks: The requested log sinks. If any of the returned `LogSink`
 	// objects have an empty `destination` field, then call
 	// `logServices.sinks.get` to retrieve the complete `LogSink` object.
@@ -658,6 +663,7 @@ type ListLogSinksResponse struct {
 
 // ListLogsResponse: Result returned from ListLogs.
 type ListLogsResponse struct {
+	googleapi.ServerResponse
 	// Logs: A list of log resources.
 	Logs []*Log `json:"logs,omitempty"`
 
@@ -671,6 +677,7 @@ type ListLogsResponse struct {
 
 // ListSinksResponse: Result returned from `ListSinks`.
 type ListSinksResponse struct {
+	googleapi.ServerResponse
 	// Sinks: The requested sinks.
 	Sinks []*LogSink `json:"sinks,omitempty"`
 }
@@ -858,6 +865,7 @@ type LogService struct {
 
 // LogSink: An object that describes where a log may be written.
 type LogSink struct {
+	googleapi.ServerResponse
 	// Destination: The resource to send log entries to. The supported sink
 	// resource types are: + Google Cloud Storage:
 	// `storage.googleapis.com/BUCKET` or `BUCKET.storage.googleapis.com/` +
@@ -1297,6 +1305,7 @@ type WriteLogEntriesRequest struct {
 
 // WriteLogEntriesResponse: Result returned from WriteLogEntries. empty
 type WriteLogEntriesResponse struct {
+	googleapi.ServerResponse
 }
 
 // method id "logging.projects.logServices.list":
@@ -1348,6 +1357,14 @@ func (c *ProjectsLogServicesListCall) Fields(s ...googleapi.Field) *ProjectsLogS
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLogServicesListCall) IfNoneMatch(entityTag string) *ProjectsLogServicesListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *ProjectsLogServicesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1371,23 +1388,34 @@ func (c *ProjectsLogServicesListCall) doRequest(alt string) (*http.Response, err
 		"projectsId": c.projectsId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "logging.projects.logServices.list" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ProjectsLogServicesListCall) Do() (*ListLogServicesResponse, error) {
 	res, err := c.doRequest("json")
+	ret := &ListLogServicesResponse{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *ListLogServicesResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Lists log services associated with log entries ingested for a project.",
 	//   "httpMethod": "GET",
@@ -1508,6 +1536,14 @@ func (c *ProjectsLogServicesIndexesListCall) Fields(s ...googleapi.Field) *Proje
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLogServicesIndexesListCall) IfNoneMatch(entityTag string) *ProjectsLogServicesIndexesListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *ProjectsLogServicesIndexesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1538,23 +1574,34 @@ func (c *ProjectsLogServicesIndexesListCall) doRequest(alt string) (*http.Respon
 		"logServicesId": c.logServicesId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "logging.projects.logServices.indexes.list" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ProjectsLogServicesIndexesListCall) Do() (*ListLogServiceIndexesResponse, error) {
 	res, err := c.doRequest("json")
+	ret := &ListLogServiceIndexesResponse{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *ListLogServiceIndexesResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Lists log service indexes associated with a log service.",
 	//   "httpMethod": "GET",
@@ -1644,6 +1691,14 @@ func (c *ProjectsLogServicesSinksCreateCall) Fields(s ...googleapi.Field) *Proje
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLogServicesSinksCreateCall) IfNoneMatch(entityTag string) *ProjectsLogServicesSinksCreateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *ProjectsLogServicesSinksCreateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.logsink)
@@ -1665,23 +1720,34 @@ func (c *ProjectsLogServicesSinksCreateCall) doRequest(alt string) (*http.Respon
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "logging.projects.logServices.sinks.create" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ProjectsLogServicesSinksCreateCall) Do() (*LogSink, error) {
 	res, err := c.doRequest("json")
+	ret := &LogSink{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *LogSink
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Creates the specified log service sink resource.",
 	//   "httpMethod": "POST",
@@ -1746,6 +1812,14 @@ func (c *ProjectsLogServicesSinksDeleteCall) Fields(s ...googleapi.Field) *Proje
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLogServicesSinksDeleteCall) IfNoneMatch(entityTag string) *ProjectsLogServicesSinksDeleteCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *ProjectsLogServicesSinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1762,23 +1836,34 @@ func (c *ProjectsLogServicesSinksDeleteCall) doRequest(alt string) (*http.Respon
 		"sinksId":       c.sinksId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "logging.projects.logServices.sinks.delete" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ProjectsLogServicesSinksDeleteCall) Do() (*Empty, error) {
 	res, err := c.doRequest("json")
+	ret := &Empty{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Empty
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Deletes the specified log service sink.",
 	//   "httpMethod": "DELETE",
@@ -1847,6 +1932,14 @@ func (c *ProjectsLogServicesSinksGetCall) Fields(s ...googleapi.Field) *Projects
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLogServicesSinksGetCall) IfNoneMatch(entityTag string) *ProjectsLogServicesSinksGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *ProjectsLogServicesSinksGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1863,23 +1956,34 @@ func (c *ProjectsLogServicesSinksGetCall) doRequest(alt string) (*http.Response,
 		"sinksId":       c.sinksId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "logging.projects.logServices.sinks.get" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ProjectsLogServicesSinksGetCall) Do() (*LogSink, error) {
 	res, err := c.doRequest("json")
+	ret := &LogSink{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *LogSink
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Gets the specified log service sink resource.",
 	//   "httpMethod": "GET",
@@ -1947,6 +2051,14 @@ func (c *ProjectsLogServicesSinksListCall) Fields(s ...googleapi.Field) *Project
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLogServicesSinksListCall) IfNoneMatch(entityTag string) *ProjectsLogServicesSinksListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *ProjectsLogServicesSinksListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1962,23 +2074,34 @@ func (c *ProjectsLogServicesSinksListCall) doRequest(alt string) (*http.Response
 		"logServicesId": c.logServicesId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "logging.projects.logServices.sinks.list" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ProjectsLogServicesSinksListCall) Do() (*ListLogServiceSinksResponse, error) {
 	res, err := c.doRequest("json")
+	ret := &ListLogServiceSinksResponse{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *ListLogServiceSinksResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Lists log service sinks associated with the specified service.",
 	//   "httpMethod": "GET",
@@ -2043,6 +2166,14 @@ func (c *ProjectsLogServicesSinksUpdateCall) Fields(s ...googleapi.Field) *Proje
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLogServicesSinksUpdateCall) IfNoneMatch(entityTag string) *ProjectsLogServicesSinksUpdateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *ProjectsLogServicesSinksUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.logsink)
@@ -2065,23 +2196,34 @@ func (c *ProjectsLogServicesSinksUpdateCall) doRequest(alt string) (*http.Respon
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "logging.projects.logServices.sinks.update" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ProjectsLogServicesSinksUpdateCall) Do() (*LogSink, error) {
 	res, err := c.doRequest("json")
+	ret := &LogSink{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *LogSink
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Creates or update the specified log service sink resource.",
 	//   "httpMethod": "PUT",
@@ -2152,6 +2294,14 @@ func (c *ProjectsLogsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLogsDelet
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLogsDeleteCall) IfNoneMatch(entityTag string) *ProjectsLogsDeleteCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *ProjectsLogsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2167,23 +2317,34 @@ func (c *ProjectsLogsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"logsId":     c.logsId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "logging.projects.logs.delete" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ProjectsLogsDeleteCall) Do() (*Empty, error) {
 	res, err := c.doRequest("json")
+	ret := &Empty{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Empty
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Deletes the specified log resource and all log entries contained in it.",
 	//   "httpMethod": "DELETE",
@@ -2282,6 +2443,14 @@ func (c *ProjectsLogsListCall) Fields(s ...googleapi.Field) *ProjectsLogsListCal
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLogsListCall) IfNoneMatch(entityTag string) *ProjectsLogsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *ProjectsLogsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2308,23 +2477,34 @@ func (c *ProjectsLogsListCall) doRequest(alt string) (*http.Response, error) {
 		"projectsId": c.projectsId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "logging.projects.logs.list" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ProjectsLogsListCall) Do() (*ListLogsResponse, error) {
 	res, err := c.doRequest("json")
+	ret := &ListLogsResponse{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *ListLogsResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Lists log resources belonging to the specified project.",
 	//   "httpMethod": "GET",
@@ -2408,6 +2588,14 @@ func (c *ProjectsLogsEntriesWriteCall) Fields(s ...googleapi.Field) *ProjectsLog
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLogsEntriesWriteCall) IfNoneMatch(entityTag string) *ProjectsLogsEntriesWriteCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *ProjectsLogsEntriesWriteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.writelogentriesrequest)
@@ -2429,23 +2617,34 @@ func (c *ProjectsLogsEntriesWriteCall) doRequest(alt string) (*http.Response, er
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "logging.projects.logs.entries.write" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ProjectsLogsEntriesWriteCall) Do() (*WriteLogEntriesResponse, error) {
 	res, err := c.doRequest("json")
+	ret := &WriteLogEntriesResponse{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *WriteLogEntriesResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Creates one or more log entries in a log. You must supply a list of `LogEntry` objects, named `entries`. Each `LogEntry` object must contain a payload object and a `LogEntryMetadata` object that describes the entry. You must fill in all the fields of the entry, metadata, and payload. You can also supply a map, `commonLabels`, that supplies default (key, value) data for the `entries[].metadata.labels` maps, saving you the trouble of creating identical copies for each entry.",
 	//   "httpMethod": "POST",
@@ -2511,6 +2710,14 @@ func (c *ProjectsLogsSinksCreateCall) Fields(s ...googleapi.Field) *ProjectsLogs
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLogsSinksCreateCall) IfNoneMatch(entityTag string) *ProjectsLogsSinksCreateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *ProjectsLogsSinksCreateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.logsink)
@@ -2532,23 +2739,34 @@ func (c *ProjectsLogsSinksCreateCall) doRequest(alt string) (*http.Response, err
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "logging.projects.logs.sinks.create" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ProjectsLogsSinksCreateCall) Do() (*LogSink, error) {
 	res, err := c.doRequest("json")
+	ret := &LogSink{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *LogSink
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Creates the specified log sink resource.",
 	//   "httpMethod": "POST",
@@ -2613,6 +2831,14 @@ func (c *ProjectsLogsSinksDeleteCall) Fields(s ...googleapi.Field) *ProjectsLogs
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLogsSinksDeleteCall) IfNoneMatch(entityTag string) *ProjectsLogsSinksDeleteCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *ProjectsLogsSinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2629,23 +2855,34 @@ func (c *ProjectsLogsSinksDeleteCall) doRequest(alt string) (*http.Response, err
 		"sinksId":    c.sinksId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "logging.projects.logs.sinks.delete" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ProjectsLogsSinksDeleteCall) Do() (*Empty, error) {
 	res, err := c.doRequest("json")
+	ret := &Empty{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Empty
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Deletes the specified log sink resource.",
 	//   "httpMethod": "DELETE",
@@ -2714,6 +2951,14 @@ func (c *ProjectsLogsSinksGetCall) Fields(s ...googleapi.Field) *ProjectsLogsSin
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLogsSinksGetCall) IfNoneMatch(entityTag string) *ProjectsLogsSinksGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *ProjectsLogsSinksGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2730,23 +2975,34 @@ func (c *ProjectsLogsSinksGetCall) doRequest(alt string) (*http.Response, error)
 		"sinksId":    c.sinksId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "logging.projects.logs.sinks.get" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ProjectsLogsSinksGetCall) Do() (*LogSink, error) {
 	res, err := c.doRequest("json")
+	ret := &LogSink{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *LogSink
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Gets the specified log sink resource.",
 	//   "httpMethod": "GET",
@@ -2814,6 +3070,14 @@ func (c *ProjectsLogsSinksListCall) Fields(s ...googleapi.Field) *ProjectsLogsSi
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLogsSinksListCall) IfNoneMatch(entityTag string) *ProjectsLogsSinksListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *ProjectsLogsSinksListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2829,23 +3093,34 @@ func (c *ProjectsLogsSinksListCall) doRequest(alt string) (*http.Response, error
 		"logsId":     c.logsId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "logging.projects.logs.sinks.list" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ProjectsLogsSinksListCall) Do() (*ListLogSinksResponse, error) {
 	res, err := c.doRequest("json")
+	ret := &ListLogSinksResponse{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *ListLogSinksResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Lists log sinks associated with the specified log.",
 	//   "httpMethod": "GET",
@@ -2910,6 +3185,14 @@ func (c *ProjectsLogsSinksUpdateCall) Fields(s ...googleapi.Field) *ProjectsLogs
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLogsSinksUpdateCall) IfNoneMatch(entityTag string) *ProjectsLogsSinksUpdateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *ProjectsLogsSinksUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.logsink)
@@ -2932,23 +3215,34 @@ func (c *ProjectsLogsSinksUpdateCall) doRequest(alt string) (*http.Response, err
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "logging.projects.logs.sinks.update" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ProjectsLogsSinksUpdateCall) Do() (*LogSink, error) {
 	res, err := c.doRequest("json")
+	ret := &LogSink{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *LogSink
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Creates or updates the specified log sink resource.",
 	//   "httpMethod": "PUT",
@@ -3018,6 +3312,14 @@ func (c *ProjectsSinksCreateCall) Fields(s ...googleapi.Field) *ProjectsSinksCre
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsSinksCreateCall) IfNoneMatch(entityTag string) *ProjectsSinksCreateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *ProjectsSinksCreateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.logsink)
@@ -3038,23 +3340,34 @@ func (c *ProjectsSinksCreateCall) doRequest(alt string) (*http.Response, error) 
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "logging.projects.sinks.create" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ProjectsSinksCreateCall) Do() (*LogSink, error) {
 	res, err := c.doRequest("json")
+	ret := &LogSink{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *LogSink
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Creates the specified sink resource.",
 	//   "httpMethod": "POST",
@@ -3110,6 +3423,14 @@ func (c *ProjectsSinksDeleteCall) Fields(s ...googleapi.Field) *ProjectsSinksDel
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsSinksDeleteCall) IfNoneMatch(entityTag string) *ProjectsSinksDeleteCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *ProjectsSinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3125,23 +3446,34 @@ func (c *ProjectsSinksDeleteCall) doRequest(alt string) (*http.Response, error) 
 		"sinksId":    c.sinksId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "logging.projects.sinks.delete" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ProjectsSinksDeleteCall) Do() (*Empty, error) {
 	res, err := c.doRequest("json")
+	ret := &Empty{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Empty
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Deletes the specified sink.",
 	//   "httpMethod": "DELETE",
@@ -3201,6 +3533,14 @@ func (c *ProjectsSinksGetCall) Fields(s ...googleapi.Field) *ProjectsSinksGetCal
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsSinksGetCall) IfNoneMatch(entityTag string) *ProjectsSinksGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *ProjectsSinksGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3216,23 +3556,34 @@ func (c *ProjectsSinksGetCall) doRequest(alt string) (*http.Response, error) {
 		"sinksId":    c.sinksId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "logging.projects.sinks.get" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ProjectsSinksGetCall) Do() (*LogSink, error) {
 	res, err := c.doRequest("json")
+	ret := &LogSink{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *LogSink
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Gets the specified sink resource.",
 	//   "httpMethod": "GET",
@@ -3291,6 +3642,14 @@ func (c *ProjectsSinksListCall) Fields(s ...googleapi.Field) *ProjectsSinksListC
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsSinksListCall) IfNoneMatch(entityTag string) *ProjectsSinksListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *ProjectsSinksListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3305,23 +3664,34 @@ func (c *ProjectsSinksListCall) doRequest(alt string) (*http.Response, error) {
 		"projectsId": c.projectsId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "logging.projects.sinks.list" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ProjectsSinksListCall) Do() (*ListSinksResponse, error) {
 	res, err := c.doRequest("json")
+	ret := &ListSinksResponse{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *ListSinksResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Lists sinks associated with the specified project.",
 	//   "httpMethod": "GET",
@@ -3377,6 +3747,14 @@ func (c *ProjectsSinksUpdateCall) Fields(s ...googleapi.Field) *ProjectsSinksUpd
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsSinksUpdateCall) IfNoneMatch(entityTag string) *ProjectsSinksUpdateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *ProjectsSinksUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.logsink)
@@ -3398,23 +3776,34 @@ func (c *ProjectsSinksUpdateCall) doRequest(alt string) (*http.Response, error) 
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "logging.projects.sinks.update" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *ProjectsSinksUpdateCall) Do() (*LogSink, error) {
 	res, err := c.doRequest("json")
+	ret := &LogSink{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *LogSink
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Creates or update the specified sink resource.",
 	//   "httpMethod": "PUT",

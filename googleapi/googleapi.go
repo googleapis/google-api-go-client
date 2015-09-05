@@ -42,6 +42,13 @@ type SizeReaderAt interface {
 	Size() int64
 }
 
+// ServerResponse is embedded in each Do response and provides the
+// HTTPStatusCode and Header even when the response body is empty.
+type ServerResponse struct {
+	HTTPStatusCode int
+	Header         http.Header
+}
+
 const (
 	Version = "0.5"
 
@@ -104,6 +111,16 @@ type errorReply struct {
 	Error *Error `json:"error"`
 }
 
+// Etag returns the Etag from the response header.
+func (r *ServerResponse) Etag() string {
+	return r.Header.Get("Etag")
+}
+
+// IsNotModified returns true if the response code is StatusNotModified.
+func (r *ServerResponse) IsNotModified() bool {
+	return r.HTTPStatusCode == http.StatusNotModified
+}
+
 // CheckResponse returns an error (of type *Error) if the response
 // status code is not 2xx.
 func CheckResponse(res *http.Response) error {
@@ -126,6 +143,15 @@ func CheckResponse(res *http.Response) error {
 		Code: res.StatusCode,
 		Body: string(slurp),
 	}
+}
+
+// IsError checks if an error (of type *Error) is the same as the provided code.
+func IsError(err error, code int) bool {
+	if err == nil {
+		return false
+	}
+	ae, ok := err.(*Error)
+	return ok && ae.Code == code
 }
 
 // CheckMediaResponse returns an error (of type *Error) if the response

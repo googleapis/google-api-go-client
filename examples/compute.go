@@ -79,4 +79,14 @@ func computeMain(client *http.Client, argv []string) {
 
 	op, err := service.Instances.Insert(projectId, zone, instance).Do()
 	log.Printf("Got compute.Operation, err: %#v, %v", op, err)
+	etag := op.Etag()
+	log.Printf("Etag=%v", etag)
+
+	inst, err := service.Instances.Get(projectId, zone, instanceName).IfNoneMatch(etag).Do()
+	log.Printf("Got compute.Instance, err: %#v, %v", inst, err)
+	if inst.IsNotModified() {
+		log.Printf("Instance not modified since insert.")
+	} else {
+		log.Printf("Instance modified since insert.")
+	}
 }

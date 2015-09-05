@@ -158,6 +158,7 @@ type AttachmentInfo struct {
 
 // Beacon: Details of a beacon device.
 type Beacon struct {
+	googleapi.ServerResponse
 	// AdvertisedId: The identifier of a beacon as advertised by it. This
 	// field must be populated when registering. It may be empty when
 	// updating a beacon record because it is ignored in updates.
@@ -219,6 +220,7 @@ type Beacon struct {
 
 // BeaconAttachment: Project-specific data associated with a beacon.
 type BeaconAttachment struct {
+	googleapi.ServerResponse
 	// AttachmentName: Resource name of this attachment. Attachment names
 	// have the format: beacons/beacon_id/attachments/attachment_id. Leave
 	// this empty on creation.
@@ -283,6 +285,7 @@ type Date struct {
 // DeleteAttachmentsResponse: Response for a request to delete
 // attachments.
 type DeleteAttachmentsResponse struct {
+	googleapi.ServerResponse
 	// NumDeleted: The number of attachments that were deleted.
 	NumDeleted int64 `json:"numDeleted,omitempty"`
 }
@@ -320,6 +323,7 @@ type Diagnostics struct {
 // (google.protobuf.Empty); } The JSON representation for `Empty` is
 // empty JSON object `{}`.
 type Empty struct {
+	googleapi.ServerResponse
 }
 
 // GetInfoForObservedBeaconsRequest: Request for beacon and attachment
@@ -341,6 +345,7 @@ type GetInfoForObservedBeaconsRequest struct {
 // GetInfoForObservedBeaconsResponse: Information about the requested
 // beacons, optionally including attachment data.
 type GetInfoForObservedBeaconsResponse struct {
+	googleapi.ServerResponse
 	// Beacons: Public information about beacons. May be empty if the
 	// request matched no beacons.
 	Beacons []*BeaconInfo `json:"beacons,omitempty"`
@@ -391,6 +396,7 @@ type LatLng struct {
 // ListBeaconAttachmentsResponse: Response to ListBeaconAttachments that
 // contains the requested attachments.
 type ListBeaconAttachmentsResponse struct {
+	googleapi.ServerResponse
 	// Attachments: The attachments that corresponded to the request params.
 	Attachments []*BeaconAttachment `json:"attachments,omitempty"`
 }
@@ -398,6 +404,7 @@ type ListBeaconAttachmentsResponse struct {
 // ListBeaconsResponse: Response that contains list beacon results and
 // pagination help.
 type ListBeaconsResponse struct {
+	googleapi.ServerResponse
 	// Beacons: The beacons that matched the search criteria.
 	Beacons []*Beacon `json:"beacons,omitempty"`
 
@@ -413,6 +420,7 @@ type ListBeaconsResponse struct {
 // ListDiagnosticsResponse: Response that contains the requested
 // diagnostics.
 type ListDiagnosticsResponse struct {
+	googleapi.ServerResponse
 	// Diagnostics: The diagnostics matching the given request.
 	Diagnostics []*Diagnostics `json:"diagnostics,omitempty"`
 
@@ -425,6 +433,7 @@ type ListDiagnosticsResponse struct {
 // ListNamespacesResponse: Response to ListNamespacesRequest that
 // contains all the project's namespaces.
 type ListNamespacesResponse struct {
+	googleapi.ServerResponse
 	// Namespaces: The attachments that corresponded to the request params.
 	Namespaces []*Namespace `json:"namespaces,omitempty"`
 }
@@ -488,6 +497,14 @@ func (c *BeaconinfoGetforobservedCall) Fields(s ...googleapi.Field) *BeaconinfoG
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *BeaconinfoGetforobservedCall) IfNoneMatch(entityTag string) *BeaconinfoGetforobservedCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *BeaconinfoGetforobservedCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.getinfoforobservedbeaconsrequest)
@@ -506,23 +523,34 @@ func (c *BeaconinfoGetforobservedCall) doRequest(alt string) (*http.Response, er
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "proximitybeacon.beaconinfo.getforobserved" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *BeaconinfoGetforobservedCall) Do() (*GetInfoForObservedBeaconsResponse, error) {
 	res, err := c.doRequest("json")
+	ret := &GetInfoForObservedBeaconsResponse{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *GetInfoForObservedBeaconsResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Given one or more beacon observations, returns any beacon information and attachments accessible to your application.",
 	//   "httpMethod": "POST",
@@ -564,6 +592,14 @@ func (c *BeaconsActivateCall) Fields(s ...googleapi.Field) *BeaconsActivateCall 
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *BeaconsActivateCall) IfNoneMatch(entityTag string) *BeaconsActivateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *BeaconsActivateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -578,23 +614,34 @@ func (c *BeaconsActivateCall) doRequest(alt string) (*http.Response, error) {
 		"beaconName": c.beaconName,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "proximitybeacon.beacons.activate" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *BeaconsActivateCall) Do() (*Empty, error) {
 	res, err := c.doRequest("json")
+	ret := &Empty{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Empty
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "(Re)activates a beacon. A beacon that is active will return information and attachment data when queried via `beaconinfo.getforobserved`. Calling this method on an already active beacon will do nothing (but will return a successful response code).",
 	//   "httpMethod": "POST",
@@ -646,6 +693,14 @@ func (c *BeaconsDeactivateCall) Fields(s ...googleapi.Field) *BeaconsDeactivateC
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *BeaconsDeactivateCall) IfNoneMatch(entityTag string) *BeaconsDeactivateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *BeaconsDeactivateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -660,23 +715,34 @@ func (c *BeaconsDeactivateCall) doRequest(alt string) (*http.Response, error) {
 		"beaconName": c.beaconName,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "proximitybeacon.beacons.deactivate" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *BeaconsDeactivateCall) Do() (*Empty, error) {
 	res, err := c.doRequest("json")
+	ret := &Empty{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Empty
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Deactivates a beacon. Once deactivated, the API will not return information nor attachment data for the beacon when queried via `beaconinfo.getforobserved`. Calling this method on an already inactive beacon will do nothing (but will return a successful response code).",
 	//   "httpMethod": "POST",
@@ -727,6 +793,14 @@ func (c *BeaconsDecommissionCall) Fields(s ...googleapi.Field) *BeaconsDecommiss
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *BeaconsDecommissionCall) IfNoneMatch(entityTag string) *BeaconsDecommissionCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *BeaconsDecommissionCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -741,23 +815,34 @@ func (c *BeaconsDecommissionCall) doRequest(alt string) (*http.Response, error) 
 		"beaconName": c.beaconName,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "proximitybeacon.beacons.decommission" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *BeaconsDecommissionCall) Do() (*Empty, error) {
 	res, err := c.doRequest("json")
+	ret := &Empty{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Empty
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Decommissions the specified beacon in the service. This beacon will no longer be returned from `beaconinfo.getforobserved`. This operation is permanent -- you will not be able to re-register a beacon with this ID again.",
 	//   "httpMethod": "POST",
@@ -805,6 +890,14 @@ func (c *BeaconsGetCall) Fields(s ...googleapi.Field) *BeaconsGetCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *BeaconsGetCall) IfNoneMatch(entityTag string) *BeaconsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *BeaconsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -819,23 +912,34 @@ func (c *BeaconsGetCall) doRequest(alt string) (*http.Response, error) {
 		"beaconName": c.beaconName,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "proximitybeacon.beacons.get" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *BeaconsGetCall) Do() (*Beacon, error) {
 	res, err := c.doRequest("json")
+	ret := &Beacon{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Beacon
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Returns detailed information about the specified beacon.",
 	//   "httpMethod": "GET",
@@ -950,6 +1054,14 @@ func (c *BeaconsListCall) Fields(s ...googleapi.Field) *BeaconsListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *BeaconsListCall) IfNoneMatch(entityTag string) *BeaconsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *BeaconsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -971,23 +1083,34 @@ func (c *BeaconsListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "proximitybeacon.beacons.list" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *BeaconsListCall) Do() (*ListBeaconsResponse, error) {
 	res, err := c.doRequest("json")
+	ret := &ListBeaconsResponse{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *ListBeaconsResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Searches the beacon registry for beacons that match the given search criteria. Only those beacons that the client has permission to list will be returned.",
 	//   "httpMethod": "GET",
@@ -1043,6 +1166,14 @@ func (c *BeaconsRegisterCall) Fields(s ...googleapi.Field) *BeaconsRegisterCall 
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *BeaconsRegisterCall) IfNoneMatch(entityTag string) *BeaconsRegisterCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *BeaconsRegisterCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.beacon)
@@ -1061,23 +1192,34 @@ func (c *BeaconsRegisterCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "proximitybeacon.beacons.register" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *BeaconsRegisterCall) Do() (*Beacon, error) {
 	res, err := c.doRequest("json")
+	ret := &Beacon{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Beacon
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Registers a previously unregistered beacon given its `advertisedId`. These IDs are unique within the system. An ID can be registered only once.",
 	//   "httpMethod": "POST",
@@ -1124,6 +1266,14 @@ func (c *BeaconsUpdateCall) Fields(s ...googleapi.Field) *BeaconsUpdateCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *BeaconsUpdateCall) IfNoneMatch(entityTag string) *BeaconsUpdateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *BeaconsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.beacon)
@@ -1144,23 +1294,34 @@ func (c *BeaconsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "proximitybeacon.beacons.update" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *BeaconsUpdateCall) Do() (*Beacon, error) {
 	res, err := c.doRequest("json")
+	ret := &Beacon{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Beacon
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Updates the information about the specified beacon. **Any field that you do not populate in the submitted beacon will be permanently erased**, so you should follow the \"read, modify, write\" pattern to avoid inadvertently destroying data. Changes to the beacon status via this method will be silently ignored. To update beacon status, use the separate methods on this API for (de)activation and decommissioning.",
 	//   "httpMethod": "PUT",
@@ -1225,6 +1386,14 @@ func (c *BeaconsAttachmentsBatchDeleteCall) Fields(s ...googleapi.Field) *Beacon
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *BeaconsAttachmentsBatchDeleteCall) IfNoneMatch(entityTag string) *BeaconsAttachmentsBatchDeleteCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *BeaconsAttachmentsBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1242,23 +1411,34 @@ func (c *BeaconsAttachmentsBatchDeleteCall) doRequest(alt string) (*http.Respons
 		"beaconName": c.beaconName,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "proximitybeacon.beacons.attachments.batchDelete" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *BeaconsAttachmentsBatchDeleteCall) Do() (*DeleteAttachmentsResponse, error) {
 	res, err := c.doRequest("json")
+	ret := &DeleteAttachmentsResponse{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *DeleteAttachmentsResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Deletes multiple attachments on a given beacon. This operation is permanent and cannot be undone. You can optionally specify `namespacedType` to choose which attachments should be deleted. If you do not specify `namespacedType`, all your attachments on the given beacon will be deleted. You also may explicitly specify `*/*` to delete all.",
 	//   "httpMethod": "POST",
@@ -1321,6 +1501,14 @@ func (c *BeaconsAttachmentsCreateCall) Fields(s ...googleapi.Field) *BeaconsAtta
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *BeaconsAttachmentsCreateCall) IfNoneMatch(entityTag string) *BeaconsAttachmentsCreateCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *BeaconsAttachmentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.beaconattachment)
@@ -1341,23 +1529,34 @@ func (c *BeaconsAttachmentsCreateCall) doRequest(alt string) (*http.Response, er
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "proximitybeacon.beacons.attachments.create" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *BeaconsAttachmentsCreateCall) Do() (*BeaconAttachment, error) {
 	res, err := c.doRequest("json")
+	ret := &BeaconAttachment{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *BeaconAttachment
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Associates the given data with the specified beacon. Attachment data must contain two parts:  \n- A namespaced type. \n- The actual attachment data itself.  The namespaced type consists of two parts, the namespace and the type. The namespace must be one of the values returned by the `namespaces` endpoint, while the type can be a string of any characters except for the forward slash (`/`) up to 100 characters in length. Attachment data can be up to 1024 bytes long.",
 	//   "httpMethod": "POST",
@@ -1412,6 +1611,14 @@ func (c *BeaconsAttachmentsDeleteCall) Fields(s ...googleapi.Field) *BeaconsAtta
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *BeaconsAttachmentsDeleteCall) IfNoneMatch(entityTag string) *BeaconsAttachmentsDeleteCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *BeaconsAttachmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1426,23 +1633,34 @@ func (c *BeaconsAttachmentsDeleteCall) doRequest(alt string) (*http.Response, er
 		"attachmentName": c.attachmentName,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "proximitybeacon.beacons.attachments.delete" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *BeaconsAttachmentsDeleteCall) Do() (*Empty, error) {
 	res, err := c.doRequest("json")
+	ret := &Empty{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *Empty
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Deletes the specified attachment for the given beacon. Each attachment has a unique attachment name (`attachmentName`) which is returned when you fetch the attachment data via this API. You specify this with the delete request to control which attachment is removed. This operation cannot be undone.",
 	//   "httpMethod": "DELETE",
@@ -1504,6 +1722,14 @@ func (c *BeaconsAttachmentsListCall) Fields(s ...googleapi.Field) *BeaconsAttach
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *BeaconsAttachmentsListCall) IfNoneMatch(entityTag string) *BeaconsAttachmentsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *BeaconsAttachmentsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1521,23 +1747,34 @@ func (c *BeaconsAttachmentsListCall) doRequest(alt string) (*http.Response, erro
 		"beaconName": c.beaconName,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "proximitybeacon.beacons.attachments.list" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *BeaconsAttachmentsListCall) Do() (*ListBeaconAttachmentsResponse, error) {
 	res, err := c.doRequest("json")
+	ret := &ListBeaconAttachmentsResponse{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *ListBeaconAttachmentsResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Returns the attachments for the specified beacon that match the specified namespaced-type pattern. To control which namespaced types are returned, you add the `namespacedType` query parameter to the request. You must either use `*/*`, to return all attachments, or the namespace must be one of the ones returned from the `namespaces` endpoint.",
 	//   "httpMethod": "GET",
@@ -1620,6 +1857,14 @@ func (c *BeaconsDiagnosticsListCall) Fields(s ...googleapi.Field) *BeaconsDiagno
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *BeaconsDiagnosticsListCall) IfNoneMatch(entityTag string) *BeaconsDiagnosticsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *BeaconsDiagnosticsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1643,23 +1888,34 @@ func (c *BeaconsDiagnosticsListCall) doRequest(alt string) (*http.Response, erro
 		"beaconName": c.beaconName,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "proximitybeacon.beacons.diagnostics.list" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *BeaconsDiagnosticsListCall) Do() (*ListDiagnosticsResponse, error) {
 	res, err := c.doRequest("json")
+	ret := &ListDiagnosticsResponse{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *ListDiagnosticsResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "List the diagnostics for a single beacon. You can also list diagnostics for all the beacons owned by your Google Developers Console project by using the beacon name `beacons/-`.",
 	//   "httpMethod": "GET",
@@ -1729,6 +1985,14 @@ func (c *NamespacesListCall) Fields(s ...googleapi.Field) *NamespacesListCall {
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *NamespacesListCall) IfNoneMatch(entityTag string) *NamespacesListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 func (c *NamespacesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1741,23 +2005,34 @@ func (c *NamespacesListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "proximitybeacon.namespaces.list" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *NamespacesListCall) Do() (*ListNamespacesResponse, error) {
 	res, err := c.doRequest("json")
+	ret := &ListNamespacesResponse{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *ListNamespacesResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "Lists all attachment namespaces owned by your Google Developers Console project. Attachment data associated with a beacon must include a namespaced type, and the namespace must be owned by your project.",
 	//   "httpMethod": "GET",

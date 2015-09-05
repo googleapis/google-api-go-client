@@ -51,4 +51,13 @@ func storageMain(client *http.Client, argv []string) {
 	}
 
 	log.Printf("Downloaded %d bytes", n)
+
+	// Test If-None-Match - should get a "HTTP 304 Not Modified" response.
+	obj, err := service.Objects.Get(bucket, filename).IfNoneMatch(storageObject.Etag).Do()
+	log.Printf("Got obj, err: %#v, %v", obj, err)
+	if obj.IsNotModified() {
+		log.Printf("Success. Object not modified since upload.")
+	} else {
+		log.Printf("Error: expected object to not be modified since upload.")
+	}
 }

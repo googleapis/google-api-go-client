@@ -99,6 +99,7 @@ func (s *AggregatedStats) MarshalJSON() ([]byte, error) {
 }
 
 type AggregatedStatsReply struct {
+	googleapi.ServerResponse
 	TestValue string `json:"testValue,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "TestValue") to
@@ -181,6 +182,7 @@ func (s *Stats) MarshalJSON() ([]byte, error) {
 }
 
 type StatsReply struct {
+	googleapi.ServerResponse
 	TestValue string `json:"testValue,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "TestValue") to
@@ -242,6 +244,14 @@ func (c *StatscollectionUpdateaggregatedstatsCall) Fields(s ...googleapi.Field) 
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *StatscollectionUpdateaggregatedstatsCall) IfNoneMatch(entityTag string) *StatscollectionUpdateaggregatedstatsCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -268,26 +278,37 @@ func (c *StatscollectionUpdateaggregatedstatsCall) doRequest(alt string) (*http.
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "cloudlatencytest.statscollection.updateaggregatedstats" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *StatscollectionUpdateaggregatedstatsCall) Do() (*AggregatedStatsReply, error) {
 	res, err := c.doRequest("json")
+	ret := &AggregatedStatsReply{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *AggregatedStatsReply
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "RPC to update the new TCP stats.",
 	//   "httpMethod": "POST",
@@ -330,6 +351,14 @@ func (c *StatscollectionUpdatestatsCall) Fields(s ...googleapi.Field) *Statscoll
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation fail if
+// the object's Etag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *StatscollectionUpdatestatsCall) IfNoneMatch(entityTag string) *StatscollectionUpdatestatsCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -356,26 +385,37 @@ func (c *StatscollectionUpdatestatsCall) doRequest(alt string) (*http.Response, 
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "cloudlatencytest.statscollection.updatestats" call.
+// ret.Header and ret.HTTPStatusCode are populated with the response header and
+// status code when a response is received, regardless of the status code returned.
+// ret.IsNotModified can be called to check if http.StatusNotModified is returned.
 func (c *StatscollectionUpdatestatsCall) Do() (*StatsReply, error) {
 	res, err := c.doRequest("json")
+	ret := &StatsReply{}
+	if res != nil {
+		ret.ServerResponse = googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		}
+	}
 	if err != nil {
-		return nil, err
+		return ret, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return ret, err
 	}
-	var ret *StatsReply
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
+	err = json.NewDecoder(res.Body).Decode(&ret)
+	return ret, err
 	// {
 	//   "description": "RPC to update the new TCP stats.",
 	//   "httpMethod": "POST",

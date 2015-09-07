@@ -17,6 +17,7 @@ import (
 	"golang.org/x/net/context"
 	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
+	"google.golang.org/api/internal"
 	"io"
 	"net/http"
 	"net/url"
@@ -96,12 +97,40 @@ type CreateAuthUriResponse struct {
 	// Registered: Whether the user is registered if the identifier is an
 	// email.
 	Registered bool `json:"registered,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AuthUri") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *CreateAuthUriResponse) MarshalJSON() ([]byte, error) {
+	type noMethod CreateAuthUriResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DeleteAccountResponse: Respone of deleting account.
 type DeleteAccountResponse struct {
 	// Kind: The fixed string "identitytoolkit#DeleteAccountResponse".
 	Kind string `json:"kind,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *DeleteAccountResponse) MarshalJSON() ([]byte, error) {
+	type noMethod DeleteAccountResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DownloadAccountResponse: Respone of downloading accounts in batch.
@@ -115,6 +144,20 @@ type DownloadAccountResponse struct {
 
 	// Users: The user accounts data.
 	Users []*UserInfo `json:"users,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *DownloadAccountResponse) MarshalJSON() ([]byte, error) {
+	type noMethod DownloadAccountResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // GetAccountInfoResponse: Response of getting account information.
@@ -124,6 +167,20 @@ type GetAccountInfoResponse struct {
 
 	// Users: The info of the users.
 	Users []*UserInfo `json:"users,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *GetAccountInfoResponse) MarshalJSON() ([]byte, error) {
+	type noMethod GetAccountInfoResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // GetOobConfirmationCodeResponse: Response of getting a code for user
@@ -135,6 +192,20 @@ type GetOobConfirmationCodeResponse struct {
 
 	// OobCode: The code to be send to the user.
 	OobCode string `json:"oobCode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *GetOobConfirmationCodeResponse) MarshalJSON() ([]byte, error) {
+	type noMethod GetOobConfirmationCodeResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // GetRecaptchaParamResponse: Response of getting recaptcha param.
@@ -148,6 +219,20 @@ type GetRecaptchaParamResponse struct {
 	// RecaptchaStoken: The stoken field for the recaptcha widget, used to
 	// request captcha challenge.
 	RecaptchaStoken string `json:"recaptchaStoken,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *GetRecaptchaParamResponse) MarshalJSON() ([]byte, error) {
+	type noMethod GetRecaptchaParamResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // IdentitytoolkitRelyingpartyCreateAuthUriRequest: Request to get the
@@ -191,6 +276,20 @@ type IdentitytoolkitRelyingpartyCreateAuthUriRequest struct {
 	// name e.g. google.com, aol.com, live.net and yahoo.com. For other
 	// OpenID IdPs it's the OP identifier.
 	ProviderId string `json:"providerId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AppId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *IdentitytoolkitRelyingpartyCreateAuthUriRequest) MarshalJSON() ([]byte, error) {
+	type noMethod IdentitytoolkitRelyingpartyCreateAuthUriRequest
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // IdentitytoolkitRelyingpartyDeleteAccountRequest: Request to delete
@@ -198,6 +297,20 @@ type IdentitytoolkitRelyingpartyCreateAuthUriRequest struct {
 type IdentitytoolkitRelyingpartyDeleteAccountRequest struct {
 	// LocalId: The local ID of the user.
 	LocalId string `json:"localId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LocalId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *IdentitytoolkitRelyingpartyDeleteAccountRequest) MarshalJSON() ([]byte, error) {
+	type noMethod IdentitytoolkitRelyingpartyDeleteAccountRequest
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // IdentitytoolkitRelyingpartyDownloadAccountRequest: Request to
@@ -209,6 +322,20 @@ type IdentitytoolkitRelyingpartyDownloadAccountRequest struct {
 	// NextPageToken: The token for the next page. This should be taken from
 	// the previous response.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MaxResults") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *IdentitytoolkitRelyingpartyDownloadAccountRequest) MarshalJSON() ([]byte, error) {
+	type noMethod IdentitytoolkitRelyingpartyDownloadAccountRequest
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // IdentitytoolkitRelyingpartyGetAccountInfoRequest: Request to get the
@@ -222,6 +349,20 @@ type IdentitytoolkitRelyingpartyGetAccountInfoRequest struct {
 
 	// LocalId: The list of local ID's of the users to inquiry.
 	LocalId []string `json:"localId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Email") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *IdentitytoolkitRelyingpartyGetAccountInfoRequest) MarshalJSON() ([]byte, error) {
+	type noMethod IdentitytoolkitRelyingpartyGetAccountInfoRequest
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // IdentitytoolkitRelyingpartyResetPasswordRequest: Request to reset the
@@ -238,6 +379,20 @@ type IdentitytoolkitRelyingpartyResetPasswordRequest struct {
 
 	// OobCode: The confirmation code.
 	OobCode string `json:"oobCode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Email") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *IdentitytoolkitRelyingpartyResetPasswordRequest) MarshalJSON() ([]byte, error) {
+	type noMethod IdentitytoolkitRelyingpartyResetPasswordRequest
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // IdentitytoolkitRelyingpartySetAccountInfoRequest: Request to set the
@@ -281,6 +436,20 @@ type IdentitytoolkitRelyingpartySetAccountInfoRequest struct {
 
 	// ValidSince: Timestamp in seconds for valid login token.
 	ValidSince int64 `json:"validSince,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "CaptchaChallenge") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *IdentitytoolkitRelyingpartySetAccountInfoRequest) MarshalJSON() ([]byte, error) {
+	type noMethod IdentitytoolkitRelyingpartySetAccountInfoRequest
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // IdentitytoolkitRelyingpartyUploadAccountRequest: Request to upload
@@ -305,6 +474,20 @@ type IdentitytoolkitRelyingpartyUploadAccountRequest struct {
 
 	// Users: The account info to be stored.
 	Users []*UserInfo `json:"users,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "HashAlgorithm") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *IdentitytoolkitRelyingpartyUploadAccountRequest) MarshalJSON() ([]byte, error) {
+	type noMethod IdentitytoolkitRelyingpartyUploadAccountRequest
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // IdentitytoolkitRelyingpartyVerifyAssertionRequest: Request to verify
@@ -323,6 +506,20 @@ type IdentitytoolkitRelyingpartyVerifyAssertionRequest struct {
 
 	// ReturnRefreshToken: Whether to return refresh tokens.
 	ReturnRefreshToken bool `json:"returnRefreshToken,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PendingIdToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *IdentitytoolkitRelyingpartyVerifyAssertionRequest) MarshalJSON() ([]byte, error) {
+	type noMethod IdentitytoolkitRelyingpartyVerifyAssertionRequest
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // IdentitytoolkitRelyingpartyVerifyPasswordRequest: Request to verify
@@ -343,6 +540,20 @@ type IdentitytoolkitRelyingpartyVerifyPasswordRequest struct {
 	// PendingIdToken: The GITKit token for the non-trusted IDP, which is to
 	// be confirmed by the user.
 	PendingIdToken string `json:"pendingIdToken,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CaptchaChallenge") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *IdentitytoolkitRelyingpartyVerifyPasswordRequest) MarshalJSON() ([]byte, error) {
+	type noMethod IdentitytoolkitRelyingpartyVerifyPasswordRequest
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Relyingparty: Request of getting a code for user confirmation (reset
@@ -371,6 +582,20 @@ type Relyingparty struct {
 
 	// UserIp: The IP address of the user.
 	UserIp string `json:"userIp,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CaptchaResp") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Relyingparty) MarshalJSON() ([]byte, error) {
+	type noMethod Relyingparty
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ResetPasswordResponse: Response of resetting the password.
@@ -380,6 +605,20 @@ type ResetPasswordResponse struct {
 
 	// Kind: The fixed string "identitytoolkit#ResetPasswordResponse".
 	Kind string `json:"kind,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Email") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ResetPasswordResponse) MarshalJSON() ([]byte, error) {
+	type noMethod ResetPasswordResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SetAccountInfoResponse: Respone of setting the account information.
@@ -401,6 +640,20 @@ type SetAccountInfoResponse struct {
 
 	// ProviderUserInfo: The user's profiles at the associated IdPs.
 	ProviderUserInfo []*SetAccountInfoResponseProviderUserInfo `json:"providerUserInfo,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *SetAccountInfoResponse) MarshalJSON() ([]byte, error) {
+	type noMethod SetAccountInfoResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type SetAccountInfoResponseProviderUserInfo struct {
@@ -414,6 +667,20 @@ type SetAccountInfoResponseProviderUserInfo struct {
 	// name, e.g., google.com, aol.com, live.net and yahoo.com. For other
 	// OpenID IdPs it's the OP identifier.
 	ProviderId string `json:"providerId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *SetAccountInfoResponseProviderUserInfo) MarshalJSON() ([]byte, error) {
+	type noMethod SetAccountInfoResponseProviderUserInfo
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // UploadAccountResponse: Respone of uploading accounts in batch.
@@ -423,6 +690,20 @@ type UploadAccountResponse struct {
 
 	// Kind: The fixed string "identitytoolkit#UploadAccountResponse".
 	Kind string `json:"kind,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Error") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *UploadAccountResponse) MarshalJSON() ([]byte, error) {
+	type noMethod UploadAccountResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type UploadAccountResponseError struct {
@@ -431,6 +712,20 @@ type UploadAccountResponseError struct {
 
 	// Message: Detailed error message for the account info.
 	Message string `json:"message,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Index") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *UploadAccountResponseError) MarshalJSON() ([]byte, error) {
+	type noMethod UploadAccountResponseError
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // UserInfo: Template for an individual account info.
@@ -470,6 +765,20 @@ type UserInfo struct {
 
 	// Version: Version of the user's password.
 	Version int64 `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Disabled") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *UserInfo) MarshalJSON() ([]byte, error) {
+	type noMethod UserInfo
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type UserInfoProviderUserInfo struct {
@@ -486,6 +795,20 @@ type UserInfoProviderUserInfo struct {
 	// name, e.g., google.com, aol.com, live.net and yahoo.com. For other
 	// OpenID IdPs it's the OP identifier.
 	ProviderId string `json:"providerId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *UserInfoProviderUserInfo) MarshalJSON() ([]byte, error) {
+	type noMethod UserInfoProviderUserInfo
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // VerifyAssertionResponse: Response of verifying the IDP assertion.
@@ -594,6 +917,20 @@ type VerifyAssertionResponse struct {
 	// VerifiedProvider: When action is 'map', contains the idps which can
 	// be used for confirmation.
 	VerifiedProvider []string `json:"verifiedProvider,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Action") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *VerifyAssertionResponse) MarshalJSON() ([]byte, error) {
+	type noMethod VerifyAssertionResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // VerifyPasswordResponse: Request of verifying the password.
@@ -629,6 +966,20 @@ type VerifyPasswordResponse struct {
 
 	// Registered: Whether the email is registered.
 	Registered bool `json:"registered,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *VerifyPasswordResponse) MarshalJSON() ([]byte, error) {
+	type noMethod VerifyPasswordResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "identitytoolkit.relyingparty.createAuthUri":

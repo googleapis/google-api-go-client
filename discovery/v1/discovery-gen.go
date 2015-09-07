@@ -17,6 +17,7 @@ import (
 	"golang.org/x/net/context"
 	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
+	"google.golang.org/api/internal"
 	"io"
 	"net/http"
 	"net/url"
@@ -85,6 +86,20 @@ type DirectoryList struct {
 
 	// Kind: The kind for this response.
 	Kind string `json:"kind,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DiscoveryVersion") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *DirectoryList) MarshalJSON() ([]byte, error) {
+	type noMethod DirectoryList
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type DirectoryListItems struct {
@@ -125,6 +140,20 @@ type DirectoryListItems struct {
 
 	// Version: The version of the API.
 	Version string `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *DirectoryListItems) MarshalJSON() ([]byte, error) {
+	type noMethod DirectoryListItems
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DirectoryListItemsIcons: Links to 16x16 and 32x32 icons representing
@@ -135,6 +164,20 @@ type DirectoryListItemsIcons struct {
 
 	// X32: The URL of the 32x32 icon.
 	X32 string `json:"x32,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "X16") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *DirectoryListItemsIcons) MarshalJSON() ([]byte, error) {
+	type noMethod DirectoryListItemsIcons
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type JsonSchema struct {
@@ -213,6 +256,20 @@ type JsonSchema struct {
 	// determine how to interpret the entire entity. Its value must exist in
 	// a map of descriminant values to schema names.
 	Variant *JsonSchemaVariant `json:"variant,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Ref") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *JsonSchema) MarshalJSON() ([]byte, error) {
+	type noMethod JsonSchema
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // JsonSchemaAnnotations: Additional information about this property.
@@ -220,6 +277,20 @@ type JsonSchemaAnnotations struct {
 	// Required: A list of methods for which this property is required on
 	// requests.
 	Required []string `json:"required,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Required") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *JsonSchemaAnnotations) MarshalJSON() ([]byte, error) {
+	type noMethod JsonSchemaAnnotations
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // JsonSchemaVariant: In a variant data type, the value of one property
@@ -231,12 +302,40 @@ type JsonSchemaVariant struct {
 
 	// Map: The map of discriminant value to schema to use for parsing..
 	Map []*JsonSchemaVariantMap `json:"map,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Discriminant") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *JsonSchemaVariant) MarshalJSON() ([]byte, error) {
+	type noMethod JsonSchemaVariant
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type JsonSchemaVariantMap struct {
 	Ref string `json:"$ref,omitempty"`
 
 	TypeValue string `json:"type_value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Ref") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *JsonSchemaVariantMap) MarshalJSON() ([]byte, error) {
+	type noMethod JsonSchemaVariantMap
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type RestDescription struct {
@@ -333,18 +432,60 @@ type RestDescription struct {
 
 	// Version: The version of this API.
 	Version string `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Auth") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *RestDescription) MarshalJSON() ([]byte, error) {
+	type noMethod RestDescription
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RestDescriptionAuth: Authentication information.
 type RestDescriptionAuth struct {
 	// Oauth2: OAuth 2.0 authentication information.
 	Oauth2 *RestDescriptionAuthOauth2 `json:"oauth2,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Oauth2") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *RestDescriptionAuth) MarshalJSON() ([]byte, error) {
+	type noMethod RestDescriptionAuth
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RestDescriptionAuthOauth2: OAuth 2.0 authentication information.
 type RestDescriptionAuthOauth2 struct {
 	// Scopes: Available OAuth 2.0 scopes.
 	Scopes *RestDescriptionAuthOauth2Scopes `json:"scopes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Scopes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *RestDescriptionAuthOauth2) MarshalJSON() ([]byte, error) {
+	type noMethod RestDescriptionAuthOauth2
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RestDescriptionAuthOauth2Scopes: Available OAuth 2.0 scopes.
@@ -359,6 +500,20 @@ type RestDescriptionIcons struct {
 
 	// X32: The URL of the 32x32 icon.
 	X32 string `json:"x32,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "X16") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *RestDescriptionIcons) MarshalJSON() ([]byte, error) {
+	type noMethod RestDescriptionIcons
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type RestMethod struct {
@@ -413,6 +568,20 @@ type RestMethod struct {
 	// should use the download service URL (i.e. "/download"). Only applies
 	// if the method supports media download.
 	UseMediaDownloadService bool `json:"useMediaDownloadService,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *RestMethod) MarshalJSON() ([]byte, error) {
+	type noMethod RestMethod
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RestMethodMediaUpload: Media upload parameters.
@@ -427,6 +596,20 @@ type RestMethodMediaUpload struct {
 
 	// Protocols: Supported upload protocols.
 	Protocols *RestMethodMediaUploadProtocols `json:"protocols,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Accept") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *RestMethodMediaUpload) MarshalJSON() ([]byte, error) {
+	type noMethod RestMethodMediaUpload
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RestMethodMediaUploadProtocols: Supported upload protocols.
@@ -436,6 +619,20 @@ type RestMethodMediaUploadProtocols struct {
 
 	// Simple: Supports uploading as a single HTTP request.
 	Simple *RestMethodMediaUploadProtocolsSimple `json:"simple,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Resumable") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *RestMethodMediaUploadProtocols) MarshalJSON() ([]byte, error) {
+	type noMethod RestMethodMediaUploadProtocols
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RestMethodMediaUploadProtocolsResumable: Supports the Resumable Media
@@ -449,6 +646,20 @@ type RestMethodMediaUploadProtocolsResumable struct {
 	// Path: The URI path to be used for upload. Should be used in
 	// conjunction with the basePath property at the api-level.
 	Path string `json:"path,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Multipart") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *RestMethodMediaUploadProtocolsResumable) MarshalJSON() ([]byte, error) {
+	type noMethod RestMethodMediaUploadProtocolsResumable
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RestMethodMediaUploadProtocolsSimple: Supports uploading as a single
@@ -462,6 +673,20 @@ type RestMethodMediaUploadProtocolsSimple struct {
 	// Path: The URI path to be used for upload. Should be used in
 	// conjunction with the basePath property at the api-level.
 	Path string `json:"path,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Multipart") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *RestMethodMediaUploadProtocolsSimple) MarshalJSON() ([]byte, error) {
+	type noMethod RestMethodMediaUploadProtocolsSimple
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RestMethodRequest: The schema for the request.
@@ -471,12 +696,40 @@ type RestMethodRequest struct {
 
 	// ParameterName: parameter name.
 	ParameterName string `json:"parameterName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Ref") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *RestMethodRequest) MarshalJSON() ([]byte, error) {
+	type noMethod RestMethodRequest
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RestMethodResponse: The schema for the response.
 type RestMethodResponse struct {
 	// Ref: Schema ID for the response schema.
 	Ref string `json:"$ref,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Ref") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *RestMethodResponse) MarshalJSON() ([]byte, error) {
+	type noMethod RestMethodResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type RestResource struct {
@@ -485,6 +738,20 @@ type RestResource struct {
 
 	// Resources: Sub-resources on this resource.
 	Resources map[string]RestResource `json:"resources,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Methods") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *RestResource) MarshalJSON() ([]byte, error) {
+	type noMethod RestResource
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "discovery.apis.getRest":

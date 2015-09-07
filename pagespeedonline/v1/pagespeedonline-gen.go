@@ -111,6 +111,26 @@ type Result struct {
 
 	// Version: The version of PageSpeed used to generate these results.
 	Version *ResultVersion `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FormattedResults") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s Result) MarshalJSON() ([]byte, error) {
+	mustInclude := make(map[string]struct{})
+	for _, f := range s.ForceSendFields {
+		mustInclude[f] = struct{}{}
+	}
+	dataMap, err := googleapi.SchemaToMap(s, mustInclude)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // ResultFormattedResults: Localized PageSpeed results. Contains a
@@ -123,6 +143,26 @@ type ResultFormattedResults struct {
 	// RuleResults: Dictionary of formatted rule results, with one entry for
 	// each PageSpeed rule instantiated and run by the server.
 	RuleResults *ResultFormattedResultsRuleResults `json:"ruleResults,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Locale") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s ResultFormattedResults) MarshalJSON() ([]byte, error) {
+	mustInclude := make(map[string]struct{})
+	for _, f := range s.ForceSendFields {
+		mustInclude[f] = struct{}{}
+	}
+	dataMap, err := googleapi.SchemaToMap(s, mustInclude)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // ResultFormattedResultsRuleResults: Dictionary of formatted rule
@@ -182,6 +222,26 @@ type ResultPageStats struct {
 
 	// TotalRequestBytes: Total size of all request bytes sent by the page.
 	TotalRequestBytes int64 `json:"totalRequestBytes,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "CssResponseBytes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s ResultPageStats) MarshalJSON() ([]byte, error) {
+	mustInclude := make(map[string]struct{})
+	for _, f := range s.ForceSendFields {
+		mustInclude[f] = struct{}{}
+	}
+	dataMap, err := googleapi.SchemaToMap(s, mustInclude)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // ResultScreenshot: Base64-encoded screenshot of the page that was
@@ -198,6 +258,26 @@ type ResultScreenshot struct {
 
 	// Width: Width of screenshot in pixels.
 	Width int64 `json:"width,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Data") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s ResultScreenshot) MarshalJSON() ([]byte, error) {
+	mustInclude := make(map[string]struct{})
+	for _, f := range s.ForceSendFields {
+		mustInclude[f] = struct{}{}
+	}
+	dataMap, err := googleapi.SchemaToMap(s, mustInclude)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // ResultVersion: The version of PageSpeed used to generate these
@@ -210,6 +290,26 @@ type ResultVersion struct {
 	// Minor: The minor version number of PageSpeed used to generate these
 	// results.
 	Minor int64 `json:"minor,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Major") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s ResultVersion) MarshalJSON() ([]byte, error) {
+	mustInclude := make(map[string]struct{})
+	for _, f := range s.ForceSendFields {
+		mustInclude[f] = struct{}{}
+	}
+	dataMap, err := googleapi.SchemaToMap(s, mustInclude)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // method id "pagespeedonline.pagespeedapi.runpagespeed":

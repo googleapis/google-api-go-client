@@ -1207,20 +1207,26 @@ func (s *Schema) writeSchemaStruct(api *API) {
 		s.api.p("%s", asComment("", fmt.Sprintf("%s: %s", s.GoName(), des)))
 	}
 	s.api.p("type %s struct {\n", s.GoName())
+
+	np := new(namePool)
+
+	firstFieldName := "" // used to store a struct field name for use in documentation.
 	for i, p := range s.properties() {
 		if i > 0 {
 			s.api.p("\n")
 		}
-		pname := p.GoName()
+		pname := np.Get(p.GoName())
 		des := p.Description()
 		if des != "" {
 			s.api.p("%s", asComment("\t", fmt.Sprintf("%s: %s", pname, des)))
 		}
 		addFieldValueComments(s.api.p, p, "\t", des != "")
+
 		var extraOpt string
 		if p.Type().isIntAsString() {
 			extraOpt += ",string"
 		}
+
 		typ := p.Type().AsGo()
 		if p.forcePointerType() {
 			if p.Type().isIntAsString() {
@@ -1230,9 +1236,55 @@ func (s *Schema) writeSchemaStruct(api *API) {
 				typ = "*" + typ
 			}
 		}
-		s.api.p("\t%s %s `json:\"%s,omitempty%s\"`\n", p.GoName(), typ, p.APIName(), extraOpt)
+
+		s.api.p("\t%s %s `json:\"%s,omitempty%s\"`\n", pname, typ, p.APIName(), extraOpt)
+		if firstFieldName == "" {
+			firstFieldName = pname
+		}
 	}
-	s.api.p("}\n")
+
+	if firstFieldName == "" {
+		// There were no fields in the struct, so there is no point
+		// adding any custom JSON marshaling code.
+		s.api.pn("}")
+		return
+	}
+
+	forceSendName := np.Get("ForceSendFields")
+
+	commentFmtStr := "%s is a list of field names (e.g. %q) to " +
+		"unconditionally include in API requests. By default, fields " +
+		"with empty values are omitted from API requests. However, " +
+		"any non-pointer, non-interface field appearing in %s will " +
+		"be sent to the server regardless of whether the field is " +
+		"empty or not. This may be used to include empty fields in " +
+		"Patch requests."
+	comment := fmt.Sprintf(commentFmtStr, forceSendName, firstFieldName, forceSendName)
+	s.api.p("\n")
+	s.api.p("%s", asComment("\t", comment))
+
+	s.api.pn("\t%s []string", forceSendName)
+	s.api.pn("}")
+	s.writeSchemaMarshal(forceSendName)
+	return
+}
+
+// writeSchemaMarshal writes a custom MarshalJSON function for s, which allows
+// fields to be explicitly transmitted by listing them in the field identified
+// by forceSendFieldName.
+func (s *Schema) writeSchemaMarshal(forceSendFieldName string) {
+	s.api.pn("func (s %s) MarshalJSON() ([]byte, error) {", s.GoName())
+	s.api.pn("\tmustInclude := make(map[string]struct{})")
+	s.api.pn("\tfor _, f := range s.%s {", forceSendFieldName)
+	s.api.pn("\t\tmustInclude[f] = struct{}{}")
+	s.api.pn("\t}")
+
+	s.api.pn("\tdataMap, err := googleapi.SchemaToMap(s, mustInclude)")
+	s.api.pn("\tif err != nil {")
+	s.api.pn("\t\treturn nil, err")
+	s.api.pn("\t}")
+	s.api.pn("\treturn json.Marshal(dataMap)")
+	s.api.pn("}")
 }
 
 // PopulateSchemas reads all the API types ("schemas") from the JSON file

@@ -16,6 +16,7 @@ import (
 	"fmt"
 	"golang.org/x/net/context"
 	"google.golang.org/api/googleapi"
+	"google.golang.org/api/internal"
 	"io"
 	"net/http"
 	"net/url"
@@ -104,6 +105,20 @@ type AnalyticsSnapshot struct {
 
 	// ShortUrlClicks: Number of clicks on this short URL.
 	ShortUrlClicks int64 `json:"shortUrlClicks,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "Browsers") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *AnalyticsSnapshot) MarshalJSON() ([]byte, error) {
+	type noMethod AnalyticsSnapshot
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AnalyticsSummary struct {
@@ -121,6 +136,20 @@ type AnalyticsSummary struct {
 
 	// Week: Click analytics over the last week.
 	Week *AnalyticsSnapshot `json:"week,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AllTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *AnalyticsSummary) MarshalJSON() ([]byte, error) {
+	type noMethod AnalyticsSummary
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type StringCount struct {
@@ -130,6 +159,20 @@ type StringCount struct {
 
 	// Id: Label assigned to this top entry, e.g. "US" or "Chrome".
 	Id string `json:"id,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Count") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *StringCount) MarshalJSON() ([]byte, error) {
+	type noMethod StringCount
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type Url struct {
@@ -156,6 +199,20 @@ type Url struct {
 	// "PHISHING", or "REMOVED". A URL might be marked "REMOVED" if it was
 	// flagged as spam, for example.
 	Status string `json:"status,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Analytics") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *Url) MarshalJSON() ([]byte, error) {
+	type noMethod Url
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type UrlHistory struct {
@@ -176,6 +233,20 @@ type UrlHistory struct {
 	// TotalItems: Total number of short URLs associated with this user (may
 	// be approximate).
 	TotalItems int64 `json:"totalItems,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Items") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *UrlHistory) MarshalJSON() ([]byte, error) {
+	type noMethod UrlHistory
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "urlshortener.url.get":

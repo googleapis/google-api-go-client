@@ -16,6 +16,7 @@ import (
 	"fmt"
 	"golang.org/x/net/context"
 	"google.golang.org/api/googleapi"
+	"google.golang.org/api/internal"
 	"io"
 	"net/http"
 	"net/url"
@@ -141,6 +142,20 @@ type AdvertisedId struct {
 	//   "IBEACON"
 	//   "ALTBEACON"
 	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *AdvertisedId) MarshalJSON() ([]byte, error) {
+	type noMethod AdvertisedId
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AttachmentInfo: A subset of attachment information served via the
@@ -154,6 +169,20 @@ type AttachmentInfo struct {
 	// client how to interpret the `data` field. Format is namespace/type,
 	// for example scrupulous-wombat-12345/welcome-message
 	NamespacedType string `json:"namespacedType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Data") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *AttachmentInfo) MarshalJSON() ([]byte, error) {
+	type noMethod AttachmentInfo
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Beacon: Details of a beacon device.
@@ -215,6 +244,20 @@ type Beacon struct {
 	//   "DECOMMISSIONED"
 	//   "INACTIVE"
 	Status string `json:"status,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdvertisedId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *Beacon) MarshalJSON() ([]byte, error) {
+	type noMethod Beacon
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // BeaconAttachment: Project-specific data associated with a beacon.
@@ -236,6 +279,20 @@ type BeaconAttachment struct {
 	// the type of `data`, for use by the client when parsing the `data`
 	// field. Required.
 	NamespacedType string `json:"namespacedType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AttachmentName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *BeaconAttachment) MarshalJSON() ([]byte, error) {
+	type noMethod BeaconAttachment
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // BeaconInfo: A subset of beacon information served via the
@@ -256,6 +313,20 @@ type BeaconInfo struct {
 	// registered establishment. For example: "entrance", "room 101", etc.
 	// May be empty.
 	Description string `json:"description,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdvertisedId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *BeaconInfo) MarshalJSON() ([]byte, error) {
+	type noMethod BeaconInfo
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Date: Represents a whole calendar date, e.g. date of birth. The time
@@ -278,6 +349,20 @@ type Date struct {
 	// Year: Year of date. Must be from 1 to 9,999, or 0 if specifying a
 	// date without a year.
 	Year int64 `json:"year,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Day") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *Date) MarshalJSON() ([]byte, error) {
+	type noMethod Date
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DeleteAttachmentsResponse: Response for a request to delete
@@ -285,6 +370,20 @@ type Date struct {
 type DeleteAttachmentsResponse struct {
 	// NumDeleted: The number of attachments that were deleted.
 	NumDeleted int64 `json:"numDeleted,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "NumDeleted") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *DeleteAttachmentsResponse) MarshalJSON() ([]byte, error) {
+	type noMethod DeleteAttachmentsResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Diagnostics: Diagnostics for a single beacon.
@@ -311,6 +410,20 @@ type Diagnostics struct {
 	// battery will be low. This value is only an estimate, not an exact
 	// date.
 	EstimatedLowBatteryDate *Date `json:"estimatedLowBatteryDate,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Alerts") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *Diagnostics) MarshalJSON() ([]byte, error) {
+	type noMethod Diagnostics
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -336,6 +449,20 @@ type GetInfoForObservedBeaconsRequest struct {
 	// Observations: The beacons that the client has encountered. At least
 	// one must be given.
 	Observations []*Observation `json:"observations,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "NamespacedTypes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *GetInfoForObservedBeaconsRequest) MarshalJSON() ([]byte, error) {
+	type noMethod GetInfoForObservedBeaconsRequest
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // GetInfoForObservedBeaconsResponse: Information about the requested
@@ -344,6 +471,20 @@ type GetInfoForObservedBeaconsResponse struct {
 	// Beacons: Public information about beacons. May be empty if the
 	// request matched no beacons.
 	Beacons []*BeaconInfo `json:"beacons,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Beacons") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *GetInfoForObservedBeaconsResponse) MarshalJSON() ([]byte, error) {
+	type noMethod GetInfoForObservedBeaconsResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // IndoorLevel: Indoor level, a human-readable string as returned by
@@ -352,6 +493,20 @@ type GetInfoForObservedBeaconsResponse struct {
 type IndoorLevel struct {
 	// Name: The name of this level.
 	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *IndoorLevel) MarshalJSON() ([]byte, error) {
+	type noMethod IndoorLevel
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // LatLng: An object representing a latitude/longitude pair. This is
@@ -386,6 +541,20 @@ type LatLng struct {
 	// Longitude: The longitude in degrees. It must be in the range [-180.0,
 	// +180.0].
 	Longitude float64 `json:"longitude,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Latitude") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *LatLng) MarshalJSON() ([]byte, error) {
+	type noMethod LatLng
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListBeaconAttachmentsResponse: Response to ListBeaconAttachments that
@@ -393,6 +562,20 @@ type LatLng struct {
 type ListBeaconAttachmentsResponse struct {
 	// Attachments: The attachments that corresponded to the request params.
 	Attachments []*BeaconAttachment `json:"attachments,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Attachments") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *ListBeaconAttachmentsResponse) MarshalJSON() ([]byte, error) {
+	type noMethod ListBeaconAttachmentsResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListBeaconsResponse: Response that contains list beacon results and
@@ -408,6 +591,20 @@ type ListBeaconsResponse struct {
 	// TotalCount: Estimate of the total number of beacons matched by the
 	// query. Higher values may be less accurate.
 	TotalCount int64 `json:"totalCount,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "Beacons") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *ListBeaconsResponse) MarshalJSON() ([]byte, error) {
+	type noMethod ListBeaconsResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListDiagnosticsResponse: Response that contains the requested
@@ -420,6 +617,20 @@ type ListDiagnosticsResponse struct {
 	// if the request matches more beacons than can be returned in this
 	// response.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Diagnostics") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *ListDiagnosticsResponse) MarshalJSON() ([]byte, error) {
+	type noMethod ListDiagnosticsResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListNamespacesResponse: Response to ListNamespacesRequest that
@@ -427,6 +638,20 @@ type ListDiagnosticsResponse struct {
 type ListNamespacesResponse struct {
 	// Namespaces: The attachments that corresponded to the request params.
 	Namespaces []*Namespace `json:"namespaces,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Namespaces") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *ListNamespacesResponse) MarshalJSON() ([]byte, error) {
+	type noMethod ListNamespacesResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Namespace: An attachment namespace defines read and write access for
@@ -446,6 +671,20 @@ type Namespace struct {
 	//   "UNLISTED"
 	//   "PUBLIC"
 	ServingVisibility string `json:"servingVisibility,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "NamespaceName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *Namespace) MarshalJSON() ([]byte, error) {
+	type noMethod Namespace
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Observation: Represents one beacon observed once.
@@ -462,6 +701,20 @@ type Observation struct {
 	// TimestampMs: Time when the beacon was observed. Being sourced from a
 	// mobile device, this time may be suspect.
 	TimestampMs string `json:"timestampMs,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdvertisedId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *Observation) MarshalJSON() ([]byte, error) {
+	type noMethod Observation
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "proximitybeacon.beaconinfo.getforobserved":

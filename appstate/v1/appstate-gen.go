@@ -16,6 +16,7 @@ import (
 	"fmt"
 	"golang.org/x/net/context"
 	"google.golang.org/api/googleapi"
+	"google.golang.org/api/internal"
 	"io"
 	"net/http"
 	"net/url"
@@ -94,6 +95,20 @@ type GetResponse struct {
 
 	// StateKey: The key for the data.
 	StateKey int64 `json:"stateKey,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CurrentStateVersion")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *GetResponse) MarshalJSON() ([]byte, error) {
+	type noMethod GetResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListResponse: This is a JSON template to convert a list-response for
@@ -108,6 +123,20 @@ type ListResponse struct {
 
 	// MaximumKeyCount: The maximum number of keys allowed for this user.
 	MaximumKeyCount int64 `json:"maximumKeyCount,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Items") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ListResponse) MarshalJSON() ([]byte, error) {
+	type noMethod ListResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // UpdateRequest: This is a JSON template for a requests which update
@@ -120,6 +149,20 @@ type UpdateRequest struct {
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string appstate#updateRequest.
 	Kind string `json:"kind,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Data") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *UpdateRequest) MarshalJSON() ([]byte, error) {
+	type noMethod UpdateRequest
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // WriteResult: This is a JSON template for an app state write result.
@@ -134,6 +177,20 @@ type WriteResult struct {
 
 	// StateKey: The written key.
 	StateKey int64 `json:"stateKey,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CurrentStateVersion")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *WriteResult) MarshalJSON() ([]byte, error) {
+	type noMethod WriteResult
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "appstate.states.clear":

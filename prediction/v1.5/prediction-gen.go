@@ -16,6 +16,7 @@ import (
 	"fmt"
 	"golang.org/x/net/context"
 	"google.golang.org/api/googleapi"
+	"google.golang.org/api/internal"
 	"io"
 	"net/http"
 	"net/url"
@@ -119,6 +120,20 @@ type Analyze struct {
 
 	// SelfLink: A URL to re-request this resource.
 	SelfLink string `json:"selfLink,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DataDescription") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Analyze) MarshalJSON() ([]byte, error) {
+	type noMethod Analyze
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AnalyzeDataDescription: Description of the data the model was trained
@@ -129,6 +144,20 @@ type AnalyzeDataDescription struct {
 
 	// OutputFeature: Description of the output value or label.
 	OutputFeature *AnalyzeDataDescriptionOutputFeature `json:"outputFeature,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Features") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *AnalyzeDataDescription) MarshalJSON() ([]byte, error) {
+	type noMethod AnalyzeDataDescription
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AnalyzeDataDescriptionFeatures struct {
@@ -143,6 +172,20 @@ type AnalyzeDataDescriptionFeatures struct {
 
 	// Text: Description of multiple-word text values of this feature.
 	Text *AnalyzeDataDescriptionFeaturesText `json:"text,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Categorical") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *AnalyzeDataDescriptionFeatures) MarshalJSON() ([]byte, error) {
+	type noMethod AnalyzeDataDescriptionFeatures
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AnalyzeDataDescriptionFeaturesCategorical: Description of the
@@ -153,6 +196,20 @@ type AnalyzeDataDescriptionFeaturesCategorical struct {
 
 	// Values: List of all the categories for this feature in the data set.
 	Values []*AnalyzeDataDescriptionFeaturesCategoricalValues `json:"values,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Count") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *AnalyzeDataDescriptionFeaturesCategorical) MarshalJSON() ([]byte, error) {
+	type noMethod AnalyzeDataDescriptionFeaturesCategorical
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AnalyzeDataDescriptionFeaturesCategoricalValues struct {
@@ -161,6 +218,20 @@ type AnalyzeDataDescriptionFeaturesCategoricalValues struct {
 
 	// Value: The category name.
 	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Count") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *AnalyzeDataDescriptionFeaturesCategoricalValues) MarshalJSON() ([]byte, error) {
+	type noMethod AnalyzeDataDescriptionFeaturesCategoricalValues
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AnalyzeDataDescriptionFeaturesNumeric: Description of the numeric
@@ -175,6 +246,20 @@ type AnalyzeDataDescriptionFeaturesNumeric struct {
 	// Variance: Variance of the numeric values of this feature in the data
 	// set.
 	Variance float64 `json:"variance,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Count") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *AnalyzeDataDescriptionFeaturesNumeric) MarshalJSON() ([]byte, error) {
+	type noMethod AnalyzeDataDescriptionFeaturesNumeric
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AnalyzeDataDescriptionFeaturesText: Description of multiple-word text
@@ -182,6 +267,20 @@ type AnalyzeDataDescriptionFeaturesNumeric struct {
 type AnalyzeDataDescriptionFeaturesText struct {
 	// Count: Number of multiple-word text values for this feature.
 	Count int64 `json:"count,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "Count") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *AnalyzeDataDescriptionFeaturesText) MarshalJSON() ([]byte, error) {
+	type noMethod AnalyzeDataDescriptionFeaturesText
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AnalyzeDataDescriptionOutputFeature: Description of the output value
@@ -192,6 +291,20 @@ type AnalyzeDataDescriptionOutputFeature struct {
 
 	// Text: Description of the output labels in the data set.
 	Text []*AnalyzeDataDescriptionOutputFeatureText `json:"text,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Numeric") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *AnalyzeDataDescriptionOutputFeature) MarshalJSON() ([]byte, error) {
+	type noMethod AnalyzeDataDescriptionOutputFeature
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AnalyzeDataDescriptionOutputFeatureNumeric: Description of the output
@@ -205,6 +318,20 @@ type AnalyzeDataDescriptionOutputFeatureNumeric struct {
 
 	// Variance: Variance of the output values in the data set.
 	Variance float64 `json:"variance,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Count") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *AnalyzeDataDescriptionOutputFeatureNumeric) MarshalJSON() ([]byte, error) {
+	type noMethod AnalyzeDataDescriptionOutputFeatureNumeric
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AnalyzeDataDescriptionOutputFeatureText struct {
@@ -213,6 +340,20 @@ type AnalyzeDataDescriptionOutputFeatureText struct {
 
 	// Value: The output label.
 	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Count") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *AnalyzeDataDescriptionOutputFeatureText) MarshalJSON() ([]byte, error) {
+	type noMethod AnalyzeDataDescriptionOutputFeatureText
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AnalyzeModelDescription: Description of the model.
@@ -231,6 +372,20 @@ type AnalyzeModelDescription struct {
 
 	// Modelinfo: Basic information about the model.
 	Modelinfo *Training `json:"modelinfo,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConfusionMatrix") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *AnalyzeModelDescription) MarshalJSON() ([]byte, error) {
+	type noMethod AnalyzeModelDescription
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AnalyzeModelDescriptionConfusionMatrix: An output confusion matrix.
@@ -251,6 +406,20 @@ type AnalyzeModelDescriptionConfusionMatrixRowTotals struct {
 type Input struct {
 	// Input: Input to the model for a prediction
 	Input *InputInput `json:"input,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Input") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Input) MarshalJSON() ([]byte, error) {
+	type noMethod Input
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // InputInput: Input to the model for a prediction
@@ -258,6 +427,20 @@ type InputInput struct {
 	// CsvInstance: A list of input features, these can be strings or
 	// doubles.
 	CsvInstance []interface{} `json:"csvInstance,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CsvInstance") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *InputInput) MarshalJSON() ([]byte, error) {
+	type noMethod InputInput
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type List struct {
@@ -273,6 +456,20 @@ type List struct {
 
 	// SelfLink: A URL to re-request this resource.
 	SelfLink string `json:"selfLink,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Items") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *List) MarshalJSON() ([]byte, error) {
+	type noMethod List
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type Output struct {
@@ -294,6 +491,20 @@ type Output struct {
 
 	// SelfLink: A URL to re-request this resource.
 	SelfLink string `json:"selfLink,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Output) MarshalJSON() ([]byte, error) {
+	type noMethod Output
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OutputOutputMulti struct {
@@ -302,6 +513,20 @@ type OutputOutputMulti struct {
 
 	// Score: The probability of the class label.
 	Score float64 `json:"score,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Label") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *OutputOutputMulti) MarshalJSON() ([]byte, error) {
+	type noMethod OutputOutputMulti
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type Training struct {
@@ -348,6 +573,20 @@ type Training struct {
 	// Utility: A class weighting function, which allows the importance
 	// weights for class labels to be specified [Categorical models only].
 	Utility []*TrainingUtility `json:"utility,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Created") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Training) MarshalJSON() ([]byte, error) {
+	type noMethod Training
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TrainingModelInfo: Model metadata.
@@ -379,6 +618,21 @@ type TrainingModelInfo struct {
 	// NumberLabels: Number of class labels in the trained model
 	// [Categorical models only].
 	NumberLabels int64 `json:"numberLabels,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ClassWeightedAccuracy") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *TrainingModelInfo) MarshalJSON() ([]byte, error) {
+	type noMethod TrainingModelInfo
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type TrainingTrainingInstances struct {
@@ -387,6 +641,20 @@ type TrainingTrainingInstances struct {
 
 	// Output: The generic output value - could be regression or class label
 	Output string `json:"output,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CsvInstance") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *TrainingTrainingInstances) MarshalJSON() ([]byte, error) {
+	type noMethod TrainingTrainingInstances
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TrainingUtility: Class label (string).
@@ -403,6 +671,20 @@ type Update struct {
 	// Output: The generic output value - could be regression value or class
 	// label
 	Output string `json:"output,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CsvInstance") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Update) MarshalJSON() ([]byte, error) {
+	type noMethod Update
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "prediction.hostedmodels.predict":

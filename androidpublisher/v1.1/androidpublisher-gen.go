@@ -16,6 +16,7 @@ import (
 	"fmt"
 	"golang.org/x/net/context"
 	"google.golang.org/api/googleapi"
+	"google.golang.org/api/internal"
 	"io"
 	"net/http"
 	"net/url"
@@ -118,6 +119,20 @@ type InappPurchase struct {
 	// PurchaseTime: The time the product was purchased, in milliseconds
 	// since the epoch (Jan 1, 1970).
 	PurchaseTime int64 `json:"purchaseTime,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "ConsumptionState") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *InappPurchase) MarshalJSON() ([]byte, error) {
+	type noMethod InappPurchase
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SubscriptionPurchase: A SubscriptionPurchase resource indicates the
@@ -138,6 +153,20 @@ type SubscriptionPurchase struct {
 	// ValidUntilTimestampMsec: Time at which the subscription will expire,
 	// in milliseconds since Epoch.
 	ValidUntilTimestampMsec int64 `json:"validUntilTimestampMsec,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "AutoRenewing") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *SubscriptionPurchase) MarshalJSON() ([]byte, error) {
+	type noMethod SubscriptionPurchase
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "androidpublisher.inapppurchases.get":

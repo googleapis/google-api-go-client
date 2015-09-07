@@ -16,6 +16,7 @@ import (
 	"fmt"
 	"golang.org/x/net/context"
 	"google.golang.org/api/googleapi"
+	"google.golang.org/api/internal"
 	"io"
 	"net/http"
 	"net/url"
@@ -301,6 +302,20 @@ type Avail struct {
 	//   "SEASON"
 	//   "EPISODE"
 	WorkType string `json:"workType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AltId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Avail) MarshalJSON() ([]byte, error) {
+	type noMethod Avail
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ExperienceLocale: An ExperienceLocale tracks the fulfillment of a
@@ -415,6 +430,20 @@ type ExperienceLocale struct {
 	// VideoId: Video ID, as defined by Google, linked to the feature video
 	// in the ExperienceLocale. Example: 'gtry456_xc'.
 	VideoId string `json:"videoId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AltCutId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ExperienceLocale) MarshalJSON() ([]byte, error) {
+	type noMethod ExperienceLocale
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListAvailsResponse: Response to the 'ListAvails' method.
@@ -424,6 +453,20 @@ type ListAvailsResponse struct {
 
 	// NextPageToken: See _List methods rules_ for info about this field.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Avails") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ListAvailsResponse) MarshalJSON() ([]byte, error) {
+	type noMethod ListAvailsResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListExperienceLocalesResponse: Response to the
@@ -435,6 +478,20 @@ type ListExperienceLocalesResponse struct {
 
 	// NextPageToken: See _List methods rules_ for info about this field.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ExperienceLocales")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ListExperienceLocalesResponse) MarshalJSON() ([]byte, error) {
+	type noMethod ListExperienceLocalesResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListOrdersResponse: Response to the 'ListOrders' method.
@@ -444,6 +501,20 @@ type ListOrdersResponse struct {
 
 	// Orders: List of Orders that match the request criteria.
 	Orders []*Order `json:"orders,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ListOrdersResponse) MarshalJSON() ([]byte, error) {
+	type noMethod ListOrdersResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListStoreInfosResponse: Response to the 'ListStoreInfos' method.
@@ -453,6 +524,20 @@ type ListStoreInfosResponse struct {
 
 	// StoreInfos: List of StoreInfos that match the request criteria.
 	StoreInfos []*StoreInfo `json:"storeInfos,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ListStoreInfosResponse) MarshalJSON() ([]byte, error) {
+	type noMethod ListStoreInfosResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Order: An Order tracks the fulfillment of an Edit when delivered
@@ -576,6 +661,20 @@ type Order struct {
 	// VideoId: Google-generated ID identifying the video linked to this
 	// Order, once delivered. Example: 'gtry456_xc'.
 	VideoId string `json:"videoId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ApprovedTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Order) MarshalJSON() ([]byte, error) {
+	type noMethod Order
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // StoreInfo: Information about a playable sequence (video) associated
@@ -681,6 +780,20 @@ type StoreInfo struct {
 	// VideoId: Google-generated ID identifying the video linked to the
 	// Edit. Example: 'gtry456_xc'
 	VideoId string `json:"videoId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AudioTracks") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *StoreInfo) MarshalJSON() ([]byte, error) {
+	type noMethod StoreInfo
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "playmoviespartner.accounts.avails.list":

@@ -395,7 +395,7 @@ func (s *MetricDescriptorTypeDescriptor) MarshalJSON() ([]byte, error) {
 // start time, an end time, and a value.
 type Point struct {
 	// BoolValue: The value of this data point. Either "true" or "false".
-	BoolValue bool `json:"boolValue,omitempty"`
+	BoolValue *bool `json:"boolValue,omitempty"`
 
 	// DistributionValue: The value of this data point as a distribution. A
 	// distribution value can contain a list of buckets and/or an
@@ -405,7 +405,7 @@ type Point struct {
 
 	// DoubleValue: The value of this data point as a double-precision
 	// floating-point number.
-	DoubleValue float64 `json:"doubleValue,omitempty"`
+	DoubleValue *float64 `json:"doubleValue,omitempty"`
 
 	// End: The interval [start, end] is the time period to which the
 	// point's value applies. For gauge metrics, whose values are
@@ -416,7 +416,7 @@ type Point struct {
 	End string `json:"end,omitempty"`
 
 	// Int64Value: The value of this data point as a 64-bit integer.
-	Int64Value int64 `json:"int64Value,omitempty,string"`
+	Int64Value *int64 `json:"int64Value,omitempty,string"`
 
 	// Start: The interval [start, end] is the time period to which the
 	// point's value applies. For gauge metrics, whose values are
@@ -427,7 +427,7 @@ type Point struct {
 	Start string `json:"start,omitempty"`
 
 	// StringValue: The value of this data point in string format.
-	StringValue string `json:"stringValue,omitempty"`
+	StringValue *string `json:"stringValue,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BoolValue") to
 	// unconditionally include in API requests. By default, fields with

@@ -17,6 +17,7 @@ import (
 	"golang.org/x/net/context"
 	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
+	"google.golang.org/api/internal"
 	"io"
 	"net/http"
 	"net/url"
@@ -217,6 +218,20 @@ type HttpRequest struct {
 	// UserAgent: User agent sent by the client, e.g., "Mozilla/4.0
 	// (compatible; MSIE 6.0; Windows 98; Q312461; .NET CLR 1.0.3705)".
 	UserAgent string `json:"userAgent,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Referer") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *HttpRequest) MarshalJSON() ([]byte, error) {
+	type noMethod HttpRequest
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListLogServiceIndexesResponse: Result returned from
@@ -234,6 +249,20 @@ type ListLogServiceIndexesResponse struct {
 	// in the primary index, `value2` is a value in the secondary index, and
 	// so forth.
 	ServiceIndexPrefixes []string `json:"serviceIndexPrefixes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ListLogServiceIndexesResponse) MarshalJSON() ([]byte, error) {
+	type noMethod ListLogServiceIndexesResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListLogServiceSinksResponse: Result returned from
@@ -243,6 +272,20 @@ type ListLogServiceSinksResponse struct {
 	// object has an empty `destination` field, the client can retrieve the
 	// complete `LogSink` object by calling `logServices.sinks.get`.
 	Sinks []*LogSink `json:"sinks,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Sinks") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ListLogServiceSinksResponse) MarshalJSON() ([]byte, error) {
+	type noMethod ListLogServiceSinksResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListLogServicesResponse: Result returned from
@@ -257,6 +300,20 @@ type ListLogServicesResponse struct {
 	// `ListLogServices`. If `nextPageToken` is empty, then there are no
 	// more results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LogServices") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ListLogServicesResponse) MarshalJSON() ([]byte, error) {
+	type noMethod ListLogServicesResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListLogSinksResponse: Result returned from `ListLogSinks`.
@@ -265,6 +322,20 @@ type ListLogSinksResponse struct {
 	// empty `destination` field, the client can retrieve the complete
 	// `LogSink` object by calling `log.sinks.get`.
 	Sinks []*LogSink `json:"sinks,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Sinks") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ListLogSinksResponse) MarshalJSON() ([]byte, error) {
+	type noMethod ListLogSinksResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListLogsResponse: Result returned from ListLogs.
@@ -278,6 +349,20 @@ type ListLogsResponse struct {
 	// `ListLogs`. If `nextPageToken` is empty, then there are no more
 	// results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Logs") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ListLogsResponse) MarshalJSON() ([]byte, error) {
+	type noMethod ListLogsResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListSinksResponse: Result returned from `ListSinks`.
@@ -286,6 +371,20 @@ type ListSinksResponse struct {
 	// empty `destination` field, the client can retrieve the complete
 	// `LogSink` object by calling `projects.sinks.get`.
 	Sinks []*LogSink `json:"sinks,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Sinks") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ListSinksResponse) MarshalJSON() ([]byte, error) {
+	type noMethod ListSinksResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Log: _Output only._ Describes a log, which is a named stream of log
@@ -308,6 +407,20 @@ type Log struct {
 	// PayloadType: _Optional_. A URI representing the expected payload type
 	// for log entries.
 	PayloadType string `json:"payloadType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Log) MarshalJSON() ([]byte, error) {
+	type noMethod Log
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // LogEntry: An individual entry in a log.
@@ -339,6 +452,20 @@ type LogEntry struct {
 
 	// TextPayload: The log entry payload, represented as a text string.
 	TextPayload string `json:"textPayload,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "HttpRequest") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *LogEntry) MarshalJSON() ([]byte, error) {
+	type noMethod LogEntry
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type LogEntryProtoPayload interface{}
@@ -400,6 +527,20 @@ type LogEntryMetadata struct {
 	// Zone: The zone of the Google Cloud Platform service that created the
 	// log entry. For example, "us-central1-a".
 	Zone string `json:"zone,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Labels") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *LogEntryMetadata) MarshalJSON() ([]byte, error) {
+	type noMethod LogEntryMetadata
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // LogError: Describes a problem with a logging resource or operation.
@@ -416,6 +557,20 @@ type LogError struct {
 	// TimeNanos: The time the error was observed, in nanoseconds since the
 	// Unix epoch.
 	TimeNanos int64 `json:"timeNanos,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "Resource") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *LogError) MarshalJSON() ([]byte, error) {
+	type noMethod LogError
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // LogLine: Application log line emitted while processing a request.
@@ -442,6 +597,20 @@ type LogLine struct {
 
 	// Time: Time when log entry was made. May be inaccurate.
 	Time string `json:"time,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LogMessage") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *LogLine) MarshalJSON() ([]byte, error) {
+	type noMethod LogLine
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // LogService: _Output only._ Describes a service that writes log
@@ -461,6 +630,20 @@ type LogService struct {
 	// value can appear in the `LogEntry.metadata.serviceName` field of log
 	// entries associated with this log service.
 	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IndexKeys") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *LogService) MarshalJSON() ([]byte, error) {
+	type noMethod LogService
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // LogSink: Describes where log entries are written outside of Cloud
@@ -484,6 +667,20 @@ type LogSink struct {
 	// "my-syslog-sink". The name must be unique among the sinks of a
 	// similar kind in the project.
 	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Destination") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *LogSink) MarshalJSON() ([]byte, error) {
+	type noMethod LogSink
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RequestLog: Complete log information about a single request to an
@@ -609,6 +806,20 @@ type RequestLog struct {
 	// WasLoadingRequest: Was this request a loading request for this
 	// instance?
 	WasLoadingRequest bool `json:"wasLoadingRequest,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AppEngineRelease") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *RequestLog) MarshalJSON() ([]byte, error) {
+	type noMethod RequestLog
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SourceLocation: Specifies a location in a source file.
@@ -627,6 +838,20 @@ type SourceLocation struct {
 
 	// Line: Line within the source file.
 	Line int64 `json:"line,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "File") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *SourceLocation) MarshalJSON() ([]byte, error) {
+	type noMethod SourceLocation
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SourceReference: A reference to a particular snapshot of the source
@@ -639,6 +864,20 @@ type SourceReference struct {
 	// RevisionId: The canonical (and persistent) identifier of the deployed
 	// revision. Example (git): "0035781c50ec7aa23385dc841529ce8a4b70db1b"
 	RevisionId string `json:"revisionId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Repository") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *SourceReference) MarshalJSON() ([]byte, error) {
+	type noMethod SourceReference
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Status: The `Status` type defines a logical error model that is
@@ -692,6 +931,20 @@ type Status struct {
 	// in the [google.rpc.Status.details][google.rpc.Status.details] field,
 	// or localized by the client.
 	Message string `json:"message,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Code") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Status) MarshalJSON() ([]byte, error) {
+	type noMethod Status
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type StatusDetails interface{}
@@ -707,6 +960,20 @@ type WriteLogEntriesRequest struct {
 
 	// Entries: Log entries to insert.
 	Entries []*LogEntry `json:"entries,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CommonLabels") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *WriteLogEntriesRequest) MarshalJSON() ([]byte, error) {
+	type noMethod WriteLogEntriesRequest
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // WriteLogEntriesResponse: Result returned from WriteLogEntries. empty

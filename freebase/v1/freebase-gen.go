@@ -17,6 +17,7 @@ import (
 	"golang.org/x/net/context"
 	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
+	"google.golang.org/api/internal"
 	"io"
 	"net/http"
 	"net/url"
@@ -79,6 +80,20 @@ type ReconcileCandidate struct {
 
 	// Notable: Type or profession the candidate is notable for.
 	Notable *ReconcileCandidateNotable `json:"notable,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Confidence") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ReconcileCandidate) MarshalJSON() ([]byte, error) {
+	type noMethod ReconcileCandidate
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ReconcileCandidateNotable: Type or profession the candidate is
@@ -89,6 +104,20 @@ type ReconcileCandidateNotable struct {
 
 	// Name: Name of notable category in specified language.
 	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ReconcileCandidateNotable) MarshalJSON() ([]byte, error) {
+	type noMethod ReconcileCandidateNotable
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ReconcileGet struct {
@@ -111,6 +140,20 @@ type ReconcileGet struct {
 	// considered valid results, with the caveat that sections of the
 	// request were ignored as specified by the warning text.
 	Warning []*ReconcileGetWarning `json:"warning,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Candidate") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ReconcileGet) MarshalJSON() ([]byte, error) {
+	type noMethod ReconcileGet
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ReconcileGetCosts: Server costs for reconciling.
@@ -120,6 +163,20 @@ type ReconcileGetCosts struct {
 
 	// Ms: Total milliseconds spent.
 	Ms int64 `json:"ms,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Hits") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ReconcileGetCosts) MarshalJSON() ([]byte, error) {
+	type noMethod ReconcileGetCosts
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ReconcileGetWarning struct {
@@ -131,6 +188,20 @@ type ReconcileGetWarning struct {
 
 	// Reason: Code for identifying classes of warnings.
 	Reason string `json:"reason,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Location") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ReconcileGetWarning) MarshalJSON() ([]byte, error) {
+	type noMethod ReconcileGetWarning
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "freebase.reconcile":

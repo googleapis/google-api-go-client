@@ -15,6 +15,7 @@ import (
 	"golang.org/x/net/context"
 	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
+	"google.golang.org/api/internal"
 	"io"
 	"net/http"
 	"net/url"
@@ -196,4 +197,18 @@ type Thing struct {
 	// Accepts empty value: no (pattern)
 	// Unfortunate default: no
 	StringNonemptyDefaultPatternDoesntAcceptEmpty string `json:"string_nonempty_default_pattern_doesnt_accept_empty,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BoolEmptyDefaultA")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Thing) MarshalJSON() ([]byte, error) {
+	type noMethod Thing
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }

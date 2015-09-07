@@ -17,6 +17,7 @@ import (
 	"golang.org/x/net/context"
 	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
+	"google.golang.org/api/internal"
 	"io"
 	"net/http"
 	"net/url"
@@ -121,6 +122,21 @@ type AdministrationRegion struct {
 	// Sources: A list of sources for this area. If multiple sources are
 	// listed the data has been aggregated from those sources.
 	Sources []*Source `json:"sources,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ElectionAdministrationBody") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *AdministrationRegion) MarshalJSON() ([]byte, error) {
+	type noMethod AdministrationRegion
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AdministrativeBody: Information about an election administrative body
@@ -176,6 +192,21 @@ type AdministrativeBody struct {
 	// VotingLocationFinderUrl: A URL provided by this administrative body
 	// for looking up where to vote.
 	VotingLocationFinderUrl string `json:"votingLocationFinderUrl,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AbsenteeVotingInfoUrl") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *AdministrativeBody) MarshalJSON() ([]byte, error) {
+	type noMethod AdministrativeBody
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Candidate: Information about a candidate running for elected office.
@@ -204,6 +235,20 @@ type Candidate struct {
 
 	// PhotoUrl: A URL for a photo of the candidate.
 	PhotoUrl string `json:"photoUrl,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CandidateUrl") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Candidate) MarshalJSON() ([]byte, error) {
+	type noMethod Candidate
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Channel: A social media or web channel for a candidate.
@@ -215,6 +260,20 @@ type Channel struct {
 	// channels, but is not exhaustive. More channel types may be added at a
 	// later time. One of: GooglePlus, YouTube, Facebook, Twitter
 	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Channel) MarshalJSON() ([]byte, error) {
+	type noMethod Channel
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Contest: Information about a contest that appears on a voter's
@@ -326,6 +385,20 @@ type Contest struct {
 	// or 'Run-off' for contests with candidates. For referenda this will be
 	// 'Referendum'.
 	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BallotPlacement") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Contest) MarshalJSON() ([]byte, error) {
+	type noMethod Contest
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DivisionSearchResponse: The result of a division search query.
@@ -335,6 +408,20 @@ type DivisionSearchResponse struct {
 	Kind string `json:"kind,omitempty"`
 
 	Results []*DivisionSearchResult `json:"results,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *DivisionSearchResponse) MarshalJSON() ([]byte, error) {
+	type noMethod DivisionSearchResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DivisionSearchResult: Represents a political geographic division that
@@ -353,6 +440,20 @@ type DivisionSearchResult struct {
 
 	// OcdId: The unique Open Civic Data identifier for this division.
 	OcdId string `json:"ocdId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Aliases") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *DivisionSearchResult) MarshalJSON() ([]byte, error) {
+	type noMethod DivisionSearchResult
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Election: Information about the election that was queried.
@@ -372,6 +473,20 @@ type Election struct {
 	// ocd-division/country:us/state:ca or for the midterms or general
 	// election the entire US (i.e. ocd-division/country:us).
 	OcdDivisionId string `json:"ocdDivisionId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ElectionDay") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Election) MarshalJSON() ([]byte, error) {
+	type noMethod Election
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ElectionOfficial: Information about individual election officials.
@@ -390,6 +505,20 @@ type ElectionOfficial struct {
 
 	// Title: The title of the election official.
 	Title string `json:"title,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EmailAddress") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ElectionOfficial) MarshalJSON() ([]byte, error) {
+	type noMethod ElectionOfficial
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ElectionsQueryResponse: The list of elections available for this
@@ -401,6 +530,20 @@ type ElectionsQueryResponse struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "civicinfo#electionsQueryResponse".
 	Kind string `json:"kind,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Elections") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ElectionsQueryResponse) MarshalJSON() ([]byte, error) {
+	type noMethod ElectionsQueryResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ElectoralDistrict: Describes the geographic scope of a contest.
@@ -419,6 +562,20 @@ type ElectoralDistrict struct {
 	// schoolBoard, cityWide, township, countyCouncil, cityCouncil, ward,
 	// special
 	Scope string `json:"scope,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ElectoralDistrict) MarshalJSON() ([]byte, error) {
+	type noMethod ElectoralDistrict
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // GeographicDivision: Describes a political geography.
@@ -445,6 +602,20 @@ type GeographicDivision struct {
 	// office elected from this division. Will only be present if
 	// includeOffices was true (or absent) in the request.
 	OfficeIndices []int64 `json:"officeIndices,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AlsoKnownAs") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *GeographicDivision) MarshalJSON() ([]byte, error) {
+	type noMethod GeographicDivision
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Office: Information about an Office held by one or more Officials.
@@ -477,6 +648,20 @@ type Office struct {
 	// Sources: A list of sources for this office. If multiple sources are
 	// listed, the data has been aggregated from those sources.
 	Sources []*Source `json:"sources,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DivisionId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Office) MarshalJSON() ([]byte, error) {
+	type noMethod Office
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Official: Information about a person holding an elected office.
@@ -504,6 +689,20 @@ type Official struct {
 
 	// Urls: The official's public website URLs.
 	Urls []string `json:"urls,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Address") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Official) MarshalJSON() ([]byte, error) {
+	type noMethod Official
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PollingLocation: A location where a voter can vote. This may be an
@@ -545,6 +744,20 @@ type PollingLocation struct {
 	// VoterServices: The services provided by this early vote site or drop
 	// off location. This field is not populated for polling locations.
 	VoterServices string `json:"voterServices,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Address") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *PollingLocation) MarshalJSON() ([]byte, error) {
+	type noMethod PollingLocation
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type RepresentativeInfoData struct {
@@ -559,6 +772,20 @@ type RepresentativeInfoData struct {
 	// Officials: Officials holding the offices listed above. Will only be
 	// present if includeOffices was true in the request.
 	Officials []*Official `json:"officials,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Divisions") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *RepresentativeInfoData) MarshalJSON() ([]byte, error) {
+	type noMethod RepresentativeInfoData
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RepresentativeInfoResponse: The result of a representative info
@@ -582,6 +809,20 @@ type RepresentativeInfoResponse struct {
 	// Officials: Officials holding the offices listed above. Will only be
 	// present if includeOffices was true in the request.
 	Officials []*Official `json:"officials,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Divisions") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *RepresentativeInfoResponse) MarshalJSON() ([]byte, error) {
+	type noMethod RepresentativeInfoResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SimpleAddressType: A simple representation of an address.
@@ -606,6 +847,20 @@ type SimpleAddressType struct {
 
 	// Zip: The US Postal Zip Code of the address.
 	Zip string `json:"zip,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "City") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *SimpleAddressType) MarshalJSON() ([]byte, error) {
+	type noMethod SimpleAddressType
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Source: Contains information about the data source for the element
@@ -616,6 +871,20 @@ type Source struct {
 
 	// Official: Whether this data comes from an official government source.
 	Official bool `json:"official,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Source) MarshalJSON() ([]byte, error) {
+	type noMethod Source
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // VoterInfoResponse: The result of a voter info lookup query.
@@ -663,6 +932,20 @@ type VoterInfoResponse struct {
 	// State: Local Election Information for the state that the voter votes
 	// in. For the US, there will only be one element in this array.
 	State []*AdministrationRegion `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Contests") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *VoterInfoResponse) MarshalJSON() ([]byte, error) {
+	type noMethod VoterInfoResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "civicinfo.divisions.search":

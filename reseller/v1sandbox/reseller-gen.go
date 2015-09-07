@@ -17,6 +17,7 @@ import (
 	"golang.org/x/net/context"
 	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
+	"google.golang.org/api/internal"
 	"io"
 	"net/http"
 	"net/url"
@@ -129,6 +130,20 @@ type Address struct {
 	// Region: Name of the region. This is in accordance with -
 	// http://portablecontacts.net/draft-spec.html#address_element.
 	Region string `json:"region,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AddressLine1") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Address) MarshalJSON() ([]byte, error) {
+	type noMethod Address
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ChangePlanRequest: JSON template for the ChangePlan rpc request.
@@ -144,6 +159,20 @@ type ChangePlanRequest struct {
 
 	// Seats: Number/Limit of seats in the new plan.
 	Seats *Seats `json:"seats,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ChangePlanRequest) MarshalJSON() ([]byte, error) {
+	type noMethod ChangePlanRequest
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Customer: JSON template for a customer.
@@ -168,6 +197,20 @@ type Customer struct {
 
 	// ResourceUiUrl: Ui url for customer resource.
 	ResourceUiUrl string `json:"resourceUiUrl,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AlternateEmail") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Customer) MarshalJSON() ([]byte, error) {
+	type noMethod Customer
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RenewalSettings: JSON template for a subscription renewal settings.
@@ -177,6 +220,20 @@ type RenewalSettings struct {
 
 	// RenewalType: Subscription renewal type.
 	RenewalType string `json:"renewalType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *RenewalSettings) MarshalJSON() ([]byte, error) {
+	type noMethod RenewalSettings
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Seats: JSON template for subscription seats.
@@ -197,6 +254,20 @@ type Seats struct {
 	// NumberOfSeats: Number of seats to purchase. This is applicable only
 	// for a commitment plan.
 	NumberOfSeats int64 `json:"numberOfSeats,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Seats) MarshalJSON() ([]byte, error) {
+	type noMethod Seats
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Subscription: JSON template for a subscription.
@@ -246,6 +317,20 @@ type Subscription struct {
 
 	// TrialSettings: Trial Settings of the subscription.
 	TrialSettings *SubscriptionTrialSettings `json:"trialSettings,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BillingMethod") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Subscription) MarshalJSON() ([]byte, error) {
+	type noMethod Subscription
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SubscriptionPlan: Plan details of the subscription
@@ -259,6 +344,20 @@ type SubscriptionPlan struct {
 
 	// PlanName: The plan name of this subscription's plan.
 	PlanName string `json:"planName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CommitmentInterval")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *SubscriptionPlan) MarshalJSON() ([]byte, error) {
+	type noMethod SubscriptionPlan
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SubscriptionPlanCommitmentInterval: Interval of the commitment if it
@@ -271,6 +370,20 @@ type SubscriptionPlanCommitmentInterval struct {
 	// StartTime: Start time of the commitment interval in milliseconds
 	// since Unix epoch.
 	StartTime int64 `json:"startTime,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "EndTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *SubscriptionPlanCommitmentInterval) MarshalJSON() ([]byte, error) {
+	type noMethod SubscriptionPlanCommitmentInterval
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SubscriptionTransferInfo: Transfer related information for the
@@ -281,6 +394,21 @@ type SubscriptionTransferInfo struct {
 	// TransferabilityExpirationTime: Time when transfer token or intent to
 	// transfer will expire.
 	TransferabilityExpirationTime int64 `json:"transferabilityExpirationTime,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "MinimumTransferableSeats") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *SubscriptionTransferInfo) MarshalJSON() ([]byte, error) {
+	type noMethod SubscriptionTransferInfo
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SubscriptionTrialSettings: Trial Settings of the subscription.
@@ -290,6 +418,20 @@ type SubscriptionTrialSettings struct {
 
 	// TrialEndTime: End time of the trial in milliseconds since Unix epoch.
 	TrialEndTime int64 `json:"trialEndTime,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "IsInTrial") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *SubscriptionTrialSettings) MarshalJSON() ([]byte, error) {
+	type noMethod SubscriptionTrialSettings
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Subscriptions: JSON template for a subscription list.
@@ -304,6 +446,20 @@ type Subscriptions struct {
 
 	// Subscriptions: The subscriptions in this page of results.
 	Subscriptions []*Subscription `json:"subscriptions,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Subscriptions) MarshalJSON() ([]byte, error) {
+	type noMethod Subscriptions
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "reseller.customers.get":
